@@ -1,0 +1,279 @@
+/* ========================================================================
+Reset
+========================================================================== */
+
+*, *:before, *:after {
+	-webkit-box-sizing: 		border-box;
+	-moz-box-sizing: 			border-box;
+	-o-box-sizing: 				border-box;
+	-ms-box-sizing: 			border-box;
+	box-sizing: 				border-box;
+}
+
+// Margin & Padding
+p, figure {
+	margin: 					0;
+	padding: 					0;
+}
+
+// line-height (in case I ever want to reset it)
+// ##{$prefix}-pre-header,
+// .wpbf-page-header,
+// .wpbf-page-footer,
+button {
+	line-height: 				normal;
+}
+
+/* ========================================================================
+Defaults
+========================================================================== */
+
+// pre
+pre {
+	background: 				$base-color-alt;
+	padding: 					$padding;
+	margin-bottom: 				$margin;
+	line-height: 				$base-lineheight;
+	overflow: 					auto;
+}
+
+// code
+code {
+	background: 				$base-color-alt;
+	padding: 					2px;
+}
+
+// Paragraph
+p {
+	margin-bottom: 				$margin;
+}
+
+figure {
+	margin-bottom: 				$margin;
+}
+
+// Lists
+ul, ol {
+	margin: 					0 0 $margin 0;
+}
+
+// Opacity
+.opacity {
+	opacity:					0;
+}
+
+// Image alignment
+img {
+	vertical-align: 			middle;
+	max-width: 					100%;
+	height:						auto;
+}
+
+// Blockquote
+blockquote {
+	margin: 					$margin 0 $margin $margin;
+	padding: 					0 0 0 $padding;
+	border-left: 				5px solid $base-color;
+	font-style: 				italic;
+}
+
+// Strong
+b,
+strong {
+	font-weight: 				$bold;
+}
+
+// Links
+a {
+	text-decoration:			none;
+	outline: 					none;
+	color:						$accent-color;
+	@include					transition(color 0.2s);
+}
+
+// Hover
+a:hover {
+	color: 						$accent-color-alt;
+}
+
+// Yoast Breadcrumbs
+#breadcrumbs {
+	font-size: 					$tiny-fontsize;
+	line-height: 				normal;
+	margin-bottom: 				$margin-small;
+	a {
+		color: 					$accent-color;
+	}
+	a:hover {
+		border-bottom: 			1px dotted $accent-color;
+	}
+}
+
+// Form
+textarea {
+	vertical-align: 			top;
+	resize:						vertical;
+}
+
+// Pagination
+.pagination {
+	h2 {
+		display: 				none;
+	}
+	.page-numbers {
+		height: 				50px;
+		line-height: 			50px;
+		padding: 				0 20px;
+		background: 			$base-color-alt;
+		display: 				inline-block;
+	}
+	.page-numbers.current {
+		background: 			$base-color;
+	}
+}
+
+/* ========================================================================
+WordPress
+========================================================================== */
+
+
+// Images
+img.alignright, figure.alignright {float:right; margin:0 0 $margin $margin}
+img.alignleft, figure.alignleft {float:left; margin:0 $margin $margin 0}
+img.aligncenter, figure.aligncenter {display: block; margin-left: auto; margin-right: auto}
+
+// Caption
+.wp-caption {
+	background: #fff;
+	text-align: center;
+	max-width: 100%;
+}
+
+.wp-caption-text {
+	font-size: $small-fontsize;
+	padding: $padding-small;
+}
+
+// Gallery
+.gallery:before {
+	content:				"";
+	display:				table-cell;
+}
+
+.gallery:after {
+	content:				"";
+	display:				table;
+	clear:					both;
+}
+
+.gallery {
+	margin-bottom: $margin;
+}
+
+.gallery .gallery-item {
+	float: left;
+	margin-top: 0;
+	text-align: center;
+	padding: $padding-small;
+}
+
+.gallery-columns-1 .gallery-item {
+	width: 100%;
+}
+
+.gallery-columns-2 .gallery-item {
+	width: 50%;
+}
+
+.gallery-columns-3 .gallery-item {
+	width: 33.333%;
+}
+
+.gallery-columns-4 .gallery-item {
+	width: 25%;
+}
+
+.gallery-columns-5 .gallery-item {
+	width: 20%;
+}
+
+.gallery-columns-6 .gallery-item {
+	width: 16.666%;
+}
+
+.gallery-columns-7 .gallery-item {
+	width: 14.285%;
+}
+
+.gallery-columns-8 .gallery-item {
+	width: 12.5%;
+}
+
+.gallery-columns-9 .gallery-item {
+	width: 11.111%;
+}
+
+.gallery img {
+	width: 100%;
+	height: auto;
+	@include transition(opacity 0.25s);
+}
+
+.gallery img:hover {
+	opacity: .7;
+}
+
+.gallery .gallery-caption {
+	font-size: 12px;
+}
+
+// sticky posts
+.sticky {
+	border: 5px solid $base-color-alt !important;
+	padding: $padding $padding 0 $padding;
+}
+
+.page-links {
+	margin-bottom: $margin;
+	clear: both;
+}
+
+/* ========================================================================
+Accessibility
+========================================================================== */
+
+.screen-reader-text {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 999;
+	width: 0px;
+	height: 0px;
+	background: #fff;
+	overflow: hidden;
+	text-align: center;
+	color: #000;
+	font-size: 18px !important;
+}
+
+.screen-reader-text:focus {
+	height: 50px;
+	width: 200px;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	line-height: 50px;
+	font-weight: 700;
+}
+
+/* ========================================================================
+Page Builders
+========================================================================== */
+
+/* Elementor */
+
+// Transparent Header Preview
+.elementor-editor-active {
+	.wpbf-navigation-transparent {
+		display: none !important;
+	}
+}

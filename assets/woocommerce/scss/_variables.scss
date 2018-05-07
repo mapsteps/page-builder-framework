@@ -1,0 +1,47 @@
+/**
+ * WooCommerce CSS Variables
+ */
+
+$woocommerce:				#3ba9d2;
+$green:						#4fe190;
+$red:						#ff6347;
+$orange:					#ffba00;
+$blue:						#3ba9d2;
+
+$base-color-alt:			#f5f5f7;
+$base-color:				darken($base-color-alt, 10%);
+
+$brand-color:				#3e4349;
+$brand-color-alt:			lighten($brand-color, 20%);
+
+$accent-color:				#3ba9d2;
+$accent-color-alt:			lighten($accent-color,15%);
+
+$secondary-color:			#4fe190;
+$secondary-color-alt:		#004170;
+
+$primary:					#3ba9d2;                                    // Primary colour for buttons (alt)
+$primarytext:				#fff;										// Text on primary colour bg
+
+$secondary:					darken($base-color-alt,5%);					// Secondary buttons
+$secondarytext:				$brand-color-alt;							// Text on secondary colour bg
+
+$highlight:					#4fe190;									// Prices, In stock labels, sales flash
+$highlightext:				#fff;										// Text on highlight colour bg
+
+$contentbg:					#fff;										// Content BG - Tabs (active state)
+$subtext:					$brand-color-alt;							// small, breadcrumbs etc
+
+// Page Builder Framework
+$margin:					20px;
+$margin-small:				10px;
+$margin-medium:				40px;
+
+$padding:					20px;
+$padding-small:				10px;
+$padding-medium:			40px;
+
+$base-fontsize:				16px;
+$small-fontsize:			14px;
+$bigger-fontsize:			20px;
+$big-fontsize:				32px;

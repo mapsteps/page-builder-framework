@@ -1,0 +1,671 @@
+/* From 481 | Phone Landscape & Bigger */
+@media (min-width: $breakpoint0 + 1) {
+
+	/* Grid */
+	.#{$prefix}-grid-small-1-2 > * {
+		width: 50%;
+	}
+	.#{$prefix}-grid-small-1-3 > * {
+		width: 33.333%;
+	}
+	.#{$prefix}-grid-small-2-3 > * {
+		width: 66.666%;
+	}
+	.#{$prefix}-grid-small-1-4 > * {
+		width: 25%;
+	}
+	.#{$prefix}-grid-small-1-5 > * {
+		width: 20%;
+	}
+	.#{$prefix}-grid-small-1-6 > * {
+		width: 16.666%;
+	}
+	.#{$prefix}-grid-small-1-10 > * {
+		width: 10%;
+	}
+
+	/* Grid Cells */
+
+	/* Whole */
+	.#{$prefix}-small-1-1 {
+		width: 100%;
+	}
+	/* Halves */
+	.#{$prefix}-small-1-2,
+	.#{$prefix}-small-2-4,
+	.#{$prefix}-small-3-6,
+	.#{$prefix}-small-5-10 {
+		width: 50%;
+	}
+	/* Thirds */
+	.#{$prefix}-small-1-3,
+	.#{$prefix}-small-2-6 {
+		width: 33.333%;
+	}
+	.#{$prefix}-small-2-3,
+	.#{$prefix}-small-4-6 {
+		width: 66.666%;
+	}
+	/* Quarters */
+	.#{$prefix}-small-1-4 {
+		width: 25%;
+	}
+	.#{$prefix}-small-3-4 {
+		width: 75%;
+	}
+	/* Fifths */
+	.#{$prefix}-small-1-5,
+	.#{$prefix}-small-2-10 {
+		width: 20%;
+	}
+	.#{$prefix}-small-2-5,
+	.#{$prefix}-small-4-10 {
+		width: 40%;
+	}
+	.#{$prefix}-small-3-5,
+	.#{$prefix}-small-6-10 {
+		width: 60%;
+	}
+	.#{$prefix}-small-4-5,
+	.#{$prefix}-small-8-10 {
+		width: 80%;
+	}
+	/* Sixths */
+	.#{$prefix}-small-1-6 {
+		width: 16.666%;
+	}
+	.#{$prefix}-small-5-6 {
+		width: 83.333%;
+	}
+	/* Tenths */
+	.#{$prefix}-small-1-10 {
+		width: 10%;
+	}
+	.#{$prefix}-small-3-10 {
+		width: 30%;
+	}
+	.#{$prefix}-small-7-10 {
+		width: 70%;
+	}
+	.#{$prefix}-small-9-10 {
+		width: 90%;
+	}
+
+}
+
+/* From 769 | Tablet & Bigger */
+@media (min-width: $breakpoint1 + 1) {
+
+	/* Sidebar */
+	.#{$prefix}-grid-divider > [class*='#{$prefix}-medium-']:not(.#{$prefix}-medium-1-1):nth-child(n+2) {
+		border-left:		1px solid $base-color;
+	}
+
+	/* Grid */
+	.#{$prefix}-grid-medium-1-2 > * {
+		width: 50%;
+	}
+	.#{$prefix}-grid-medium-1-3 > * {
+		width: 33.333%;
+	}
+	.#{$prefix}-grid-medium-2-3 > * {
+		width: 66.666%;
+	}
+	.#{$prefix}-grid-medium-1-4 > * {
+		width: 25%;
+	}
+	.#{$prefix}-grid-medium-1-5 > * {
+		width: 20%;
+	}
+	.#{$prefix}-grid-medium-1-6 > * {
+		width: 16.666%;
+	}
+	.#{$prefix}-grid-medium-1-10 > * {
+		width: 10%;
+	}
+
+	/* Grid Cells */
+
+	/* Whole */
+	.#{$prefix}-medium-1-1 {
+		width: 100%;
+	}
+	/* Halves */
+	.#{$prefix}-medium-1-2,
+	.#{$prefix}-medium-2-4,
+	.#{$prefix}-medium-3-6,
+	.#{$prefix}-medium-5-10 {
+		width: 50%;
+	}
+	/* Thirds */
+	.#{$prefix}-medium-1-3,
+	.#{$prefix}-medium-2-6 {
+		width: 33.333%;
+	}
+	.#{$prefix}-medium-2-3,
+	.#{$prefix}-medium-4-6 {
+		width: 66.666%;
+	}
+	/* Quarters */
+	.#{$prefix}-medium-1-4 {
+		width: 25%;
+	}
+	.#{$prefix}-medium-3-4 {
+		width: 75%;
+	}
+	/* Fifths */
+	.#{$prefix}-medium-1-5,
+	.#{$prefix}-medium-2-10 {
+		width: 20%;
+	}
+	.#{$prefix}-medium-2-5,
+	.#{$prefix}-medium-4-10 {
+		width: 40%;
+	}
+	.#{$prefix}-medium-3-5,
+	.#{$prefix}-medium-6-10 {
+		width: 60%;
+	}
+	.#{$prefix}-medium-4-5,
+	.#{$prefix}-medium-8-10 {
+		width: 80%;
+	}
+	/* Sixths */
+	.#{$prefix}-medium-1-6 {
+		width: 16.666%;
+	}
+	.#{$prefix}-medium-5-6 {
+		width: 83.333%;
+	}
+	/* Tenths */
+	.#{$prefix}-medium-1-10 {
+		width: 10%;
+	}
+	.#{$prefix}-medium-3-10 {
+		width: 30%;
+	}
+	.#{$prefix}-medium-7-10 {
+		width: 70%;
+	}
+	.#{$prefix}-medium-9-10 {
+		width: 90%;
+	}
+
+}
+
+/* From 1025 | Desktop & Bigger */
+@media (min-width: $breakpoint2 + 1) {
+
+	/* Sidebar */
+	.#{$prefix}-grid-divider > [class*='#{$prefix}-large-']:not(.#{$prefix}-large-1-1):nth-child(n+2) {
+		border-left:		1px solid $base-color;
+	}
+
+	/* Grid */
+	.#{$prefix}-grid-large-1-2 > * {
+		width: 50%;
+	}
+	.#{$prefix}-grid-large-1-3 > * {
+		width: 33.333%;
+	}
+	.#{$prefix}-grid-large-2-3 > * {
+		width: 66.666%;
+	}
+	.#{$prefix}-grid-large-1-4 > * {
+		width: 25%;
+	}
+	.#{$prefix}-grid-large-1-5 > * {
+		width: 20%;
+	}
+	.#{$prefix}-grid-large-1-6 > * {
+		width: 16.666%;
+	}
+	.#{$prefix}-grid-large-1-10 > * {
+		width: 10%;
+	}
+
+	/* Grid Cells */
+
+	/* Whole */
+	.#{$prefix}-large-1-1 {
+		width: 100%;
+	}
+	/* Halves */
+	.#{$prefix}-large-1-2,
+	.#{$prefix}-large-2-4,
+	.#{$prefix}-large-3-6,
+	.#{$prefix}-large-5-10 {
+		width: 50%;
+	}
+	/* Thirds */
+	.#{$prefix}-large-1-3,
+	.#{$prefix}-large-2-6 {
+		width: 33.333%;
+	}
+	.#{$prefix}-large-2-3,
+	.#{$prefix}-large-4-6 {
+		width: 66.666%;
+	}
+	/* Quarters */
+	.#{$prefix}-large-1-4 {
+		width: 25%;
+	}
+	.#{$prefix}-large-3-4 {
+		width: 75%;
+	}
+	/* Fifths */
+	.#{$prefix}-large-1-5,
+	.#{$prefix}-large-2-10 {
+		width: 20%;
+	}
+	.#{$prefix}-large-2-5,
+	.#{$prefix}-large-4-10 {
+		width: 40%;
+	}
+	.#{$prefix}-large-3-5,
+	.#{$prefix}-large-6-10 {
+		width: 60%;
+	}
+	.#{$prefix}-large-4-5,
+	.#{$prefix}-large-8-10 {
+		width: 80%;
+	}
+	/* Sixths */
+	.#{$prefix}-large-1-6 {
+		width: 16.666%;
+	}
+	.#{$prefix}-large-5-6 {
+		width: 83.333%;
+	}
+	/* Tenths */
+	.#{$prefix}-large-1-10 {
+		width: 10%;
+	}
+	.#{$prefix}-large-3-10 {
+		width: 30%;
+	}
+	.#{$prefix}-large-7-10 {
+		width: 70%;
+	}
+	.#{$prefix}-large-9-10 {
+		width: 90%;
+	}
+
+}
+
+/* From 1200 | Large Screen & Bigger */
+@media (min-width: $breakpoint3) {
+
+	// Grid
+	.#{$prefix}-grid-xlarge-1-2 > * {
+		width: 50%;
+	}
+	.#{$prefix}-grid-xlarge-1-3 > * {
+		width: 33.333%;
+	}
+	.#{$prefix}-grid-xlarge-2-3 > * {
+		width: 66.666%;
+	}
+	.#{$prefix}-grid-xlarge-1-4 > * {
+		width: 25%;
+	}
+	.#{$prefix}-grid-xlarge-1-5 > * {
+		width: 20%;
+	}
+	.#{$prefix}-grid-xlarge-1-6 > * {
+		width: 16.666%;
+	}
+	.#{$prefix}-grid-xlarge-1-10 > * {
+		width: 10%;
+	}
+
+	/* Grid Cells */
+
+	/* Whole */
+	.#{$prefix}-xlarge-1-1 {
+		width: 100%;
+	}
+	/* Halves */
+	.#{$prefix}-xlarge-1-2,
+	.#{$prefix}-xlarge-2-4,
+	.#{$prefix}-xlarge-3-6,
+	.#{$prefix}-xlarge-5-10 {
+		width: 50%;
+	}
+	/* Thirds */
+	.#{$prefix}-xlarge-1-3,
+	.#{$prefix}-xlarge-2-6 {
+		width: 33.333%;
+	}
+	.#{$prefix}-xlarge-2-3,
+	.#{$prefix}-xlarge-4-6 {
+		width: 66.666%;
+	}
+	/* Quarters */
+	.#{$prefix}-xlarge-1-4 {
+		width: 25%;
+	}
+	.#{$prefix}-xlarge-3-4 {
+		width: 75%;
+	}
+	/* Fifths */
+	.#{$prefix}-xlarge-1-5,
+	.#{$prefix}-xlarge-2-10 {
+		width: 20%;
+	}
+	.#{$prefix}-xlarge-2-5,
+	.#{$prefix}-xlarge-4-10 {
+		width: 40%;
+	}
+	.#{$prefix}-xlarge-3-5,
+	.#{$prefix}-xlarge-6-10 {
+		width: 60%;
+	}
+	.#{$prefix}-xlarge-4-5,
+	.#{$prefix}-xlarge-8-10 {
+		width: 80%;
+	}
+	/* Sixths */
+	.#{$prefix}-xlarge-1-6 {
+		width: 16.666%;
+	}
+	.#{$prefix}-xlarge-5-6 {
+		width: 83.333%;
+	}
+	/* Tenths */
+	.#{$prefix}-xlarge-1-10 {
+		width: 10%;
+	}
+	.#{$prefix}-xlarge-3-10 {
+		width: 30%;
+	}
+	.#{$prefix}-xlarge-7-10 {
+		width: 70%;
+	}
+	.#{$prefix}-xlarge-9-10 {
+		width: 90%;
+	}
+
+}
+
+/* Until 1200 */
+@media screen and (max-width:$breakpoint3) {
+
+	/* Margin */
+	.#{$prefix}-margin-xlarge {
+		margin-top: $margin-large;
+		margin-bottom: $margin-large;
+	}
+	.#{$prefix}-margin-xlarge-top {
+		margin-top: $margin-large;
+	}
+	.#{$prefix}-margin-xlarge-bottom {
+		margin-bottom: $margin-large;
+	}
+	.#{$prefix}-margin-xlarge-left {
+		margin-left: $margin-large;
+	}
+	.#{$prefix}-margin-xlarge-right {
+		margin-right: $margin-large;
+	}
+
+	/* Padding */
+	.#{$prefix}-padding-xlarge {
+		padding-top: $padding-large;
+		padding-bottom: $padding-large;
+	}
+	.#{$prefix}-padding-xlarge-top {
+		padding-top: $padding-large;
+	}
+	.#{$prefix}-padding-xlarge-bottom {
+		padding-bottom: $padding-large;
+	}
+	.#{$prefix}-padding-xlarge-left {
+		padding-left: $padding-large;
+	}
+	.#{$prefix}-padding-xlarge-right {
+		padding-right: $padding-large;
+	}
+
+}
+
+/* Until 1024 */
+@media screen and (max-width:$breakpoint2) {
+
+	/* Margin */
+	.#{$prefix}-margin-large, .#{$prefix}-margin-xlarge {
+		margin-top: $margin-medium;
+		margin-bottom: $margin-medium;
+	}
+	.#{$prefix}-margin-large-top {
+		margin-top: $margin-medium;
+	}
+	.#{$prefix}-margin-large-bottom {
+		margin-bottom: $margin-medium;
+	}
+	.#{$prefix}-margin-large-left {
+		margin-left: $margin-medium;
+	}
+	.#{$prefix}-margin-large-right {
+		margin-right: $margin-medium;
+	}
+	.#{$prefix}-margin-xlarge-top {
+		margin-top: $margin-medium;
+	}
+	.#{$prefix}-margin-xlarge-bottom {
+		margin-bottom: $margin-medium;
+	}
+	.#{$prefix}-margin-xlarge-left {
+		margin-left: $margin-medium;
+	}
+	.#{$prefix}-margin-xlarge-right {
+		margin-right: $margin-medium;
+	}
+
+	/* Padding */
+	.#{$prefix}-padding-large, .#{$prefix}-padding-xlarge {
+		padding-top: $padding-medium;
+		padding-bottom: $padding-medium;
+	}
+	.#{$prefix}-padding-large-top {
+		padding-top: $padding-medium;
+	}
+	.#{$prefix}-padding-large-bottom {
+		padding-bottom: $padding-medium;
+	}
+	.#{$prefix}-padding-large-left {
+		padding-left: $padding-medium;
+	}
+	.#{$prefix}-padding-large-right {
+		padding-right: $padding-medium;
+	}
+	.#{$prefix}-padding-xlarge-top {
+		padding-top: $padding-medium;
+	}
+	.#{$prefix}-padding-xlarge-bottom {
+		padding-bottom: $padding-medium;
+	}
+	.#{$prefix}-padding-xlarge-left {
+		padding-left: $padding-medium;
+	}
+	.#{$prefix}-padding-xlarge-right {
+		padding-right: $padding-medium;
+	}
+
+}
+
+/* Until 768 */
+@media screen and (max-width:$breakpoint1) {
+
+	/* General */
+
+	// Pre Header / Footer
+	.#{$prefix}-footer-two-columns,
+	.#{$prefix}-pre-header-two-columns {
+		display: 					block;
+		.#{$prefix}-inner-footer-left,
+		.#{$prefix}-inner-footer-right,
+		.#{$prefix}-inner-pre-header-left,
+		.#{$prefix}-inner-pre-header-right {
+			display: 				block;
+			width: 					100%;
+			text-align: 			center;
+		}
+	}
+
+ // Right Navigation
+ .#{$prefix}-page-footer {
+ 	.#{$prefix}-inner-footer-right {
+		.#{$prefix}-menu {
+			float: none;
+			width: 100%;
+	 		display: flex;
+	 		align-items: center;
+	 		justify-content: center;
+		}
+	}
+}
+
+// Left Navigation
+.#{$prefix}-page-footer {
+	.#{$prefix}-inner-footer-left {
+		.#{$prefix}-menu {
+			float: none;
+			width: 100%;
+	 		display: flex;
+	 		align-items: center;
+	 		justify-content: center;
+		}
+	}
+}
+
+}
+
+/* Until 480 */
+@media screen and (max-width:$breakpoint0) {
+
+	/* Margin */
+	.#{$prefix}-margin-medium, .#{$prefix}-margin-large, .#{$prefix}-margin-xlarge {
+		margin-top: $margin;
+		margin-bottom: $margin;
+	}
+	.#{$prefix}-margin-large-top {
+		margin-top: $margin;
+	}
+	.#{$prefix}-margin-large-bottom {
+		margin-bottom: $margin;
+	}
+	.#{$prefix}-margin-large-left {
+		margin-left: $margin;
+	}
+	.#{$prefix}-margin-large-right {
+		margin-right: $margin;
+	}
+	.#{$prefix}-margin-medium-top {
+		margin-top: $margin;
+	}
+	.#{$prefix}-margin-medium-bottom {
+		margin-bottom: $margin;
+	}
+	.#{$prefix}-margin-medium-left {
+		margin-left: $margin;
+	}
+	.#{$prefix}-margin-medium-right {
+		margin-right: $margin;
+	}
+	.#{$prefix}-margin-xlarge-top {
+		margin-top: $margin;
+	}
+	.#{$prefix}-margin-xlarge-bottom {
+		margin-bottom: $margin;
+	}
+	.#{$prefix}-margin-xlarge-left {
+		margin-left: $margin;
+	}
+	.#{$prefix}-margin-xlarge-right {
+		margin-right: $margin;
+	}
+
+	/* Padding */
+	.#{$prefix}-padding-medium, .#{$prefix}-padding-large, .#{$prefix}-padding-xlarge {
+		padding-top: $padding;
+		padding-bottom: $padding;
+	}
+	.#{$prefix}-padding-large-top {
+		padding-top: $padding;
+	}
+	.#{$prefix}-padding-large-bottom {
+		padding-bottom: $padding;
+	}
+	.#{$prefix}-padding-large-left {
+		padding-left: $padding;
+	}
+	.#{$prefix}-padding-large-right {
+		padding-right: $padding;
+	}
+	.#{$prefix}-padding-medium-top {
+		padding-top: $padding;
+	}
+	.#{$prefix}-padding-medium-bottom {
+		padding-bottom: $padding;
+	}
+	.#{$prefix}-padding-medium-left {
+		padding-left: $padding;
+	}
+	.#{$prefix}-padding-medium-right {
+		padding-right: $padding;
+	}
+	.#{$prefix}-padding-xlarge-top {
+		padding-top: $padding;
+	}
+	.#{$prefix}-padding-xlarge-bottom {
+		padding-bottom: $padding;
+	}
+	.#{$prefix}-padding-xlarge-left {
+		padding-left: $padding;
+	}
+	.#{$prefix}-padding-xlarge-right {
+		padding-right: $padding;
+	}
+
+}
+
+
+/* Visibility */
+
+/* Desktop and bigger */
+@media (min-width: $breakpoint2 + 1) {
+	.#{$prefix}-visible-small {
+		display: none !important;
+	}
+	.#{$prefix}-visible-medium {
+		display: none !important;
+	}
+	.#{$prefix}-hidden-large {
+		display: none !important;
+	}
+}
+/* Tablets portrait */
+@media (min-width: $breakpoint1 + 1) and (max-width: $breakpoint2) {
+	.#{$prefix}-visible-small {
+		display: none !important;
+	}
+	.#{$prefix}-visible-large {
+		display: none !important ;
+	}
+	.#{$prefix}-hidden-medium {
+		display: none !important;
+	}
+}
+/* Tablets */
+@media (max-width: $breakpoint1) {
+	.#{$prefix}-visible-medium {
+		display: none !important;
+	}
+	.#{$prefix}-visible-large {
+		display: none !important;
+	}
+	.#{$prefix}-hidden-small {
+		display: none !important;
+	}
+}

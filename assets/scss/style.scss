@@ -1,0 +1,33 @@
+/*!
+Theme Name: 	Page Builder Framework
+Theme URI:		https://wp-pagebuilderframework.com
+Author: 		David Vongries
+Author URI: 	http://davidvongries.com
+Description: 	Page Builder Framework is a lightweight, fast and highly customizible WordPress theme made to work with all page builders like Beaver Builder, Elementor, Divi, and more. It has been written from ground up with SEO in mind and follows the latest web standards (HTML5 and schema.org markup).
+Version: 		1.7.5
+License:		GNU General Public License v3 or later
+License URI:	https://www.gnu.org/licenses/gpl-3.0.html
+Tags: 			one-column, two-columns, left-sidebar, right-sidebar, custom-colors, custom-menu, featured-images, full-width-template, custom-logo, custom-background, threaded-comments, blog, e-commerce
+Text Domain:	page-builder-framework
+*/
+
+// Normalize
+@import "config/normalize";
+
+// Config
+@import "config/config";
+
+// Framework
+@import "base/framework";
+
+// Typography
+@import "base/typography";
+
+// Defaults
+@import "base/defaults";
+
+// Navigation
+@import "base/navigation";
+
+// WordPress
+@import "modules/content";

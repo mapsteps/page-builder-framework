@@ -1,0 +1,51 @@
+<?php
+/**
+ * Template Name: Sidebar
+ *
+ * Page Template to display Content with Sidebar
+ *
+ * @package Page Builder Framework
+ */
+ 
+// exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+$grid_gap = get_theme_mod( 'sidebar_gap' ) ? get_theme_mod( 'sidebar_gap' ) : "divider";
+
+get_header(); ?>
+
+		<div id="content">
+
+			<?php wpbf_inner_content(); ?>
+
+				<div class="wpbf-grid wpbf-main-grid wpbf-grid-<?php echo esc_attr( $grid_gap ); ?>">
+
+					<?php do_action( 'wpbf_sidebar_left' ); ?>
+
+					<main id="main" class="wpbf-main wpbf-medium-2-3 wpbf-page-content">
+
+						<?php wpbf_title(); ?>
+						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+						<?php the_content(); ?>
+						<?php
+						wp_link_pages( array(
+							'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
+							'after'  => '</div>',
+						) );
+						?>
+
+						<?php endwhile; endif; ?>
+
+						<?php comments_template(); ?>
+
+					</main>
+
+					<?php do_action( 'wpbf_sidebar_right' ); ?>
+
+				</div>
+
+			<?php wpbf_inner_content_close(); ?>
+
+		</div>
+
+<?php get_footer(); ?>

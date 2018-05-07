@@ -1,0 +1,61 @@
+﻿/* Responsive Font Size Control */
+.wpbf-responsive-options {
+	margin-bottom: 5px;
+}
+
+
+.wpbf-responsive-options li {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.wpbf-responsive-options li button {
+	display: inline-block;
+	background: #fff;
+	text-align: center;
+	padding: 0;
+	border-radius: 100%;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	outline: 0;
+}
+
+.wpbf-responsive-options li button i {
+	font-size: 16px;
+	width: 33px;
+	height: 33px;
+	line-height: 33px;
+}
+
+.wpbf-responsive-options li button:hover {
+	background: #ccc;
+}
+
+.wpbf-responsive-options li:hover {
+}
+
+.wpbf-responsive-options li button.active {
+	background: #ccc;
+}
+
+.wpbf-control-desktop, .wpbf-control-tablet, .wpbf-control-mobile {
+	display: none;
+}
+
+.wpbf-control-desktop.active, .wpbf-control-tablet.active, .wpbf-control-mobile.active {
+	display: block !important;
+}
+
+/* Padding Control */
+.wpbf-control-padding-top, .wpbf-control-padding-right, .wpbf-control-padding-bottom, .wpbf-control-padding-left {
+	width: 21.5%;
+	float: left;
+	margin-right: 1%;
+	text-align: center;
+}
+
+#customize-control-sub_menu_padding .px {
+	line-height: 18px;
+	float: left;
+	padding: 3px 5px;
+}

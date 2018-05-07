@@ -1,0 +1,383 @@
+/* ========================================================================
+Header/Footer
+========================================================================== */
+
+// Pre Header
+##{$prefix}-pre-header {
+	font-size: 					$small-fontsize;
+	background: 				#fff;
+}
+
+.#{$prefix}-inner-pre-header {
+	padding-top: 				$padding-small;
+	padding-bottom: 			$padding-small;
+}
+
+.#{$prefix}-page-footer {
+	font-size: 					$small-fontsize;
+	background: 				$base-color-alt;
+}
+	
+.#{$prefix}-inner-footer {
+	padding-top: 				$padding;
+	padding-bottom: 			$padding;
+}
+
+.#{$prefix}-footer-one-column,
+.#{$prefix}-pre-header-one-column {
+		text-align: 			center;
+}
+
+.#{$prefix}-footer-two-columns,
+.#{$prefix}-pre-header-two-columns {
+	width: 						100%;
+	display: 					table;
+	.#{$prefix}-inner-footer-left,
+	.#{$prefix}-inner-footer-right,
+	.#{$prefix}-inner-pre-header-left,
+	.#{$prefix}-inner-pre-header-right {
+		display: 				table-cell;
+		width: 					50%;
+		vertical-align:			middle;
+	}
+	.#{$prefix}-inner-footer-right,
+	.#{$prefix}-inner-pre-header-right {
+		text-align: 			right;
+	}
+}
+
+/* ========================================================================
+Content
+========================================================================== */
+
+// Body
+body {
+	background:					#fff;
+	}
+
+// Wrapper
+.#{$prefix}-page {
+	position: 					relative;
+	-ms-word-wrap:				break-word;
+	word-wrap:					break-word;
+}
+
+// Inner Content (deprecated)
+// #inner-content {
+// 	padding-top: 				$padding-medium;
+// 	padding-bottom:				$padding-medium;
+// }
+
+/* ========================================================================
+Blog
+========================================================================== */
+
+.#{$prefix}-index-content .#{$prefix}-post,
+.#{$prefix}-archive-content .#{$prefix}-post,
+.#{$prefix}-category-content .#{$prefix}-post,
+.#{$prefix}-search-content .#{$prefix}-post {
+	margin-bottom: $margin;
+	border-bottom: 1px solid $base-color;
+	// if footer is hidden completely, reset excerpt margin
+	// > *:last-child .wpbf-excerpt {
+	// 	margin-bottom: 			0;
+	// }
+}
+
+.#{$prefix}-index-content .#{$prefix}-post:last-child,
+.#{$prefix}-archive-content .#{$prefix}-post:last-child,
+.#{$prefix}-category-content .#{$prefix}-post:last-child,
+.#{$prefix}-search-content .#{$prefix}-post:last-child {
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+// Headlines
+.archive-title, .category-title {
+	margin-bottom: 				$margin-medium;
+}
+
+// Author Box
+.wpbf-author-box {
+	background: 				$base-color-alt;
+	margin-bottom: 				$margin;
+	padding: 					20px;
+	.avatar {
+		border-radius: 			100%;
+		width: 					60px;
+	}
+}
+
+// Article Header
+.#{$prefix}-post-image-link,
+.#{$prefix}-single-content .#{$prefix}-post-image {
+	margin-bottom: 				$margin;
+	display: 					block;
+}
+
+// Article Meta
+.article-meta {
+	font-size: 					$small-fontsize;
+	.article-time {
+		text-decoration: 		underline;
+	}
+}
+
+// Excerpt
+.#{$prefix}-excerpt {
+	margin-bottom: 				$margin;
+}
+
+// Article Footer
+.article-footer {
+	clear: 						both;
+}
+
+.wpbf-read-more {
+	margin-bottom: 				$margin;
+}
+
+.footer-categories, .footer-tags {
+	a {
+		text-decoration: 		underline;
+	}
+}
+
+// Post image
+.#{$prefix}-post-image {
+	width: 						100%;
+	height: 					auto;
+}
+
+/* Comments */
+.commentlist {
+	ul {
+		margin: 				0;
+		padding: 				0;
+	}
+	li {
+		list-style: 			none;
+	}
+}
+
+#comments-title {
+	margin-top: 				$margin-medium;
+	padding-top: 				$margin-medium;
+	border-top: 				10px solid $base-color-alt;
+}
+
+#reply-title {
+	padding-top: 				$padding-medium;
+	margin-top: 				$margin-medium;
+	border-top: 				10px solid $base-color-alt;
+	// WooCommerce Fix
+	display: 					block;
+	small {
+		font-size: 				$tiny-fontsize;
+	}
+}
+
+.commentlist {
+	.children {
+		margin-left: 			$margin;
+	}
+}
+
+// Comment
+.comment {
+	position: 					relative;
+	padding: 					25px;
+	border: 					3px solid darken($base-color-alt,8%);
+	margin-bottom: 				$margin;
+	.comment-edit-link {
+		position: 				absolute;
+		right: 					20px;
+		top: 					20px;
+	}
+	.comment-meta {
+		font-size: 				$small-fontsize;
+		margin-bottom: 			$margin;
+	}
+	.avatar {
+		width: 					65px;
+		@include				border-radius(100%);
+		height: 				auto;
+		margin-right:			$margin-small;
+	}
+	.comment-author {
+		font-style: 			normal;
+		font-weight: 			$bold;
+	}
+	.comment-time {
+		color: 					$base-color;
+		margin-left: 			$margin-small;
+		a {
+			color: 				$base-color;
+		}
+	}
+	.comment-time:before {
+		font-family:			"page-builder-framework";
+		content:				"\f107";
+		margin-right: 			3px;
+		speak:					none;
+		font-style:				normal;
+		font-weight:			normal;
+		font-variant:			normal;
+		text-transform:			none;
+		-webkit-font-smoothing:	antialiased;
+		-moz-osx-font-smoothing:	grayscale;
+	}
+	.comment-reply-link {
+		display: 				inline-block;
+	}
+}
+
+.pingback {
+	position: 					relative;
+	padding: 					25px;
+	border: 					3px solid darken($base-color-alt,8%);
+	margin-bottom: 				$margin;
+	a {
+		display:				block;
+	}
+	.comment-edit-link {
+		position: 				absolute;
+		right: 					20px;
+		top: 					20px;
+		font-size: 				$small-fontsize;
+	}
+}
+
+// by author modifier
+.bypostauthor {
+	border-color:				$accent-color;
+	.avatar {
+		border-color:			$accent-color;
+	}
+}
+
+// Comment Navigation
+.wpbf-comment-nav {
+	font-size: 					$small-fontsize;
+	padding: 					0;
+	> div {
+		float: left;
+		width: 50%;
+	}
+	> div:last-child {
+		text-align: 			right;
+	}
+}
+
+/* ========================================================================
+Sidebar
+========================================================================== */
+.widget {
+	ul {
+		margin: 				0;
+		padding: 				0;
+		li {
+			list-style: 		none;
+		}
+	}
+}
+
+.#{$prefix}-sidebar,
+.elementor-widget-sidebar {
+	.widget {
+		margin-bottom: 			$margin;
+		padding: 				$padding;
+		background: 			$base-color-alt;
+	}
+}
+
+#s {
+	background: 				#fff url(img/magnifier.png) right 12px center no-repeat;
+	background-size: 			20px auto;
+}
+
+.#{$prefix}-no-sidebar {
+	.#{$prefix}-single-content,
+	.#{$prefix}-page-content,
+	.#{$prefix}-archive-content,
+	.#{$prefix}-index-content,
+	.#{$prefix}-search-content,
+	.#{$prefix}-category-content {
+		width: 100% !important;
+	}
+	.#{$prefix}-main-grid {
+		margin-left: 0;
+		margin-right: 0;
+		> * {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}
+
+/* ========================================================================
+Footer
+========================================================================== */
+.scrolltop {
+	position: 					fixed;
+	width: 						40px;
+	height: 					40px;
+	text-align: 				center;
+	line-height: 				40px;
+	z-index: 					222;
+	background: 				rgba($brand-color, .5);
+	bottom: 					20px;
+	right: 						20px;
+	@include					transition(background 0.2s);
+	cursor: 					pointer;
+	display: 					none;
+	color: 						#fff;
+}
+
+.scrolltop:before {
+	font-family: "page-builder-framework";
+	content: "\f101";
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.scrolltop:hover {
+	background: 				rgba($brand-color,.7);
+}
+
+/* ========================================================================
+Contact Form 7
+========================================================================== */
+span.wpcf7-not-valid-tip {
+	position:					absolute;
+	top: 						0;
+	left: 						5px;
+	height: 					auto;
+	background: 				$base-color-alt;
+	font-size: 					$small-fontsize;
+	color: 						tomato;
+}
+
+div.wpcf7-response-output {
+	font-size: 					$small-fontsize;
+	padding:					$padding-small;
+	margin:						0 0 40px 0;
+	@include					border-radius(2px);
+}
+
+
+div.wpcf7-spam-blocked, div.wpcf7-validation-errors {
+	border-color: 				tomato;
+	color: 						tomato;
+
+}
+
+div.wpcf7-mail-sent-ok {
+	border-color: 				$accent-color;
+	color: 						$accent-color;
+}

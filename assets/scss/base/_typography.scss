@@ -1,0 +1,55 @@
+/* ========================================================================
+Typography
+========================================================================== */
+
+// Body
+body {
+	font-family:				$base-font;
+	color:						$brand-color-alt;
+	font-size:					$base-fontsize;
+	line-height: 				$base-lineheight;
+}
+
+// Forms	
+button,
+input,
+optgroup,
+select,
+textarea {
+	font-family:				$base-font;
+	font-size: 					$base-fontsize;
+	line-height: 				$base-lineheight;
+}
+
+// Headlines
+h1, h2, h3, h4, h5, h6 {
+	color: 						$brand-color;
+	font-family: 				$head-font;
+	margin: 					0 0 $margin 0;
+	font-weight:				$bold;
+	line-height: 				$head-lineheight;
+}
+
+h1 {
+	font-size: 					32px;
+}
+
+h2 {
+	font-size: 					28px;
+}
+
+h3 {
+	font-size: 					24px;
+}
+
+h4 {
+	font-size: 					20px;
+}
+
+h5 {
+	font-size: 					18px;
+}
+
+h6 {
+	font-size: 					16px;
+}
