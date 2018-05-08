@@ -170,17 +170,5 @@ function wpbf_scripts() {
 
 }
 
-// load FA4 after FA5 and remove all other FA's to keep loading speed high and make sure FA4 overrides FA5 to ensure compatibility
-add_action( 'wp_enqueue_scripts', 'wpbf_fa_fallback', 9999 );
-function wpbf_fa_fallback() {
-
-	wp_enqueue_style( 'font-awesome-4-fallback', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', '', '4.7.0' );
-	wp_dequeue_style( 'font-awesome' );
-	wp_deregister_style( 'font-awesome' );
-	wp_dequeue_style( 'fontawesome' );
-	wp_deregister_style( 'fontawesome' );
-
-}
-
 // Init
 require_once( WPBF_THEME_DIR . '/inc/init.php' );
