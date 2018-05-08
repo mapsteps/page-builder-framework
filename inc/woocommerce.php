@@ -34,7 +34,7 @@ function wpbf_woocommerce_sidebar() {
 
 }
 
-// shop sidebars
+// Shop Sidebars
 function wpbf_woocommerce_sidebars( $sidebar ) {
 
 	if( is_woocommerce() ) {
