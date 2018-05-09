@@ -2,9 +2,8 @@
 /**
  * Custom Controls
  *
- * Custom Customizer Controls
- *
  * @package Page Builder Framework
+ * @subpackage Customizer
  */
 
 // exit if accessed directly
