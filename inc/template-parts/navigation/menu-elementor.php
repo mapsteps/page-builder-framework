@@ -1,6 +1,6 @@
 <?php
 /**
- * Full Screen Menu
+ * Custom Menu
  *
  * @package Page Builder Framework
  * @subpackage Template Parts

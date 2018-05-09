@@ -1,6 +1,6 @@
 <?php
 /**
- * Mobile Menu - Hamburger
+ * Mobile Menu - Default
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
