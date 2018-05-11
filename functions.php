@@ -137,9 +137,6 @@ function wpbf_scripts() {
 
 	}
 
-	// Font Awesome
-	wp_enqueue_style( 'wpbf-font-awesome', get_template_directory_uri() . '/css/min/fontawesome-all-min.css', '', '5.0.9' );
-
 	// style.css
 	wp_enqueue_style( 'wpbf-style', get_template_directory_uri() . '/style.css', '', WPBF_VERSION );
 
