@@ -1,4 +1,23 @@
 <?php
+/**
+ * Plugin Name:   Kirki Toolkit
+ * Plugin URI:    http://aristath.github.io/kirki
+ * Description:   The ultimate WordPress Customizer Toolkit
+ * Author:        Aristeides Stathopoulos
+ * Author URI:    http://aristath.github.io
+ * Version:       3.0.27
+ * Text Domain:   kirki
+ *
+ * GitHub Plugin URI: aristath/kirki
+ * GitHub Plugin URI: https://github.com/aristath/kirki
+ *
+ * @package     Kirki
+ * @category    Core
+ * @author      Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @since       1.0
+ */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
