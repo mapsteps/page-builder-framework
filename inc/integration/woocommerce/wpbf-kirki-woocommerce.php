@@ -28,7 +28,21 @@ Kirki::add_section( 'wpbf_woocommerce_sidebar_options', array(
 	'priority'			=>			30,
 ) );
 
-/* Fields – WooCommerce */
+// Product Page
+Kirki::add_section( 'wpbf_woocommerce_product_options', array(
+	'title'				=>			__( 'Product Page', 'page-builder-framework' ),
+	'panel'				=>			'woocommerce',
+	'priority'			=>			40,
+) );
+
+// Checkout
+Kirki::add_section( 'wpbf_woocommerce_checkout_options', array(
+	'title'				=>			__( 'Checkout Page', 'page-builder-framework' ),
+	'panel'				=>			'woocommerce',
+	'priority'			=>			50,
+) );
+
+/* Fields – Sidebar */
 
 // Shop Sidebar Layout
 Kirki::add_field( 'wpbf', array(
@@ -62,7 +76,7 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-/* Shop Pages & Archives (Products) */
+/* Fields – Shop & Archive Pages */
 
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'custom',
@@ -201,5 +215,40 @@ Kirki::add_field( 'wpbf', array(
 		'operator'		=>			'!=',
 		'value'			=>			'none',
 		),
+	)
+) );
+
+/* Fields – Product Page */
+
+// Alignment
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'radio-image',
+	'settings'			=>			'woocommerce_product_alignment',
+	'label'				=>			esc_attr__( 'Image Alignment', 'page-builder-framework' ),
+	'section'			=>			'wpbf_woocommerce_product_options',
+	'default'			=>			'left',
+	'priority'			=>			1,
+	'multiple'			=>			1,
+	'choices'			=>			array(
+		'left'			=>			WPBF_PREMIUM_URI . '/inc/customizer/img/align-left.jpg',
+		'right'			=>			WPBF_PREMIUM_URI . '/inc/customizer/img/align-right.jpg',
+	)
+) );
+
+/* Fields – Checkout Page */
+
+// Alignment
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'select',
+	'settings'			=>			'woocommerce_checkout_layout',
+	'label'				=>			esc_attr__( 'Layout', 'page-builder-framework' ),
+	'section'			=>			'wpbf_woocommerce_checkout_options',
+	'default'			=>			'default',
+	'priority'			=>			1,
+	'multiple'			=>			1,
+	'choices'			=>			array(
+		'default'		=>			esc_attr__( 'Default', 'page-builder-framework' ),
+		'side'			=>			esc_attr__( 'Side by Side', 'page-builder-framework' ),
+		'multistep'		=>			esc_attr__( 'Multi-Step Checkout', 'page-builder-framework' ),
 	)
 ) );

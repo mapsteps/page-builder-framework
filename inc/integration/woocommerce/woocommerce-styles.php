@@ -87,20 +87,6 @@ function wpbf_do_woocommerce_customizer_css() { ?>
 
 	<?php } ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
 	<?php // Loop ?>
 
 	<?php if( get_theme_mod( 'woocommerce_loop_content_alignment' ) ) { ?>
@@ -158,6 +144,74 @@ function wpbf_do_woocommerce_customizer_css() { ?>
 	}
 	<?php } ?>
 
-	<?php }
+	<?php } ?>
+
+	<?php // Product Page ?>
+
+	<?php if( get_theme_mod( 'woocommerce_product_alignment' ) == 'right' ) { ?>
+
+		.woocommerce div.product div.summary,
+		.woocommerce #content div.product div.summary,
+		.woocommerce-page div.product div.summary,
+		.woocommerce-page #content div.product div.summary {
+
+			float: left;
+			
+		}
+
+		.woocommerce div.product div.images,
+		.woocommerce #content div.product div.images,
+		.woocommerce-page div.product div.images,
+		.woocommerce-page #content div.product div.images {
+			float: right;
+		}
+
+	<?php } ?>
+
+	<?php if( get_theme_mod( 'woocommerce_checkout_layout' ) == 'side' ) { ?>
+
+	.woocommerce .col2-set,
+	.woocommerce-page .col2-set {
+		width: 48%;
+		float: left;
+	}
+
+	.woocommerce .col2-set .col-1,
+	.woocommerce-page .col2-set .col-1,
+	.woocommerce .col2-set .col-2,
+	.woocommerce-page .col2-set .col-2 {
+		float: none;
+		width: 100%;
+	}
+
+	#order_review_heading {
+		float: right;
+		width: 48%;
+	}
+
+	.woocommerce-checkout-review-order {
+		width: 48%;
+		float: right;
+	}
+
+	<?php if( !wpbf_has_responsive_breakpoints() ) { ?>		
+
+		@media screen and (max-width:768px) {
+
+			.woocommerce .col2-set,
+			.woocommerce-page .col2-set,
+			#order_review_heading,
+			.woocommerce-checkout-review-order {
+				width: 100%;
+				float: none;
+			}
+
+		}
+
+	<?php } ?>
+
+	<?php } ?>
+
+<?php
 
 }
