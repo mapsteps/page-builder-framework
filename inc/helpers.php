@@ -628,7 +628,6 @@ function wpbf_sub_menu_animation() {
 }
 
 // Navigation Attributes
-
 function wpbf_navigation_attributes() {
 
 	// vars
