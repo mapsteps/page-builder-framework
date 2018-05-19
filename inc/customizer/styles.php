@@ -550,15 +550,15 @@ a:hover {
 
 <?php } ?>
 
-<?php if( get_theme_mod( 'sidebar_width' ) ) { ?>
+<?php if( get_theme_mod( 'sidebar_width' ) && !wpbf_has_responsive_breakpoints() ) { ?>
 
 @media (min-width: 769px) {
 
-	body:not(.wpbf-no-sidebar):not(.wpbf-responsive-breakpoints) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {
+	body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {
 		width: <?php echo esc_attr( get_theme_mod( 'sidebar_width' ) ) ?>%;
 	}
 
-	body:not(.wpbf-no-sidebar):not(.wpbf-responsive-breakpoints) .wpbf-main.wpbf-medium-2-3 {
+	body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3 {
 		width: <?php echo esc_attr( 100 - get_theme_mod( 'sidebar_width' ) ) ?>%;
 	}
 
