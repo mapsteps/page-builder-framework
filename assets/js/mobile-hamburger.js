@@ -17,7 +17,7 @@
 
 	$('.wpbf-mobile-menu a').click(function() {
 		var attribute = $(this).attr('href');
-		if(attribute.match("^#")) {
+		if(attribute.match("^#") || attribute.match("^/#") ) {
 			mobileToggle();
 		}
 	});

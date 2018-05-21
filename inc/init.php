@@ -39,13 +39,14 @@ require_once( WPBF_THEME_DIR . '/inc/theme-mods.php' );
 
 // WooCommerce
 if ( class_exists( 'WooCommerce' ) ) {
-	require_once( WPBF_THEME_DIR . '/inc/woocommerce.php' );
+	require_once( WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php' );
 }
 
 /* Template Parts */
 
 // Pre Header
 add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
+
 function wpbf_do_pre_header() {
 	get_template_part( 'inc/template-parts/pre-header' );
 }

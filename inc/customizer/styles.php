@@ -60,6 +60,13 @@ if( $page_font_toggle && $page_font_family_value ) { ?>
 <?php } ?>
 
 <?php
+if( get_theme_mod( 'page_font_color' ) ) { ?>
+body {
+	color: <?php echo esc_attr( get_theme_mod( 'page_font_color' ) ); ?>;
+}
+<?php } ?>
+
+<?php
 
 // Menu Font Settings
 $menu_font_family_value = get_theme_mod( 'menu_font_family', array() );
@@ -543,15 +550,15 @@ a:hover {
 
 <?php } ?>
 
-<?php if( get_theme_mod( 'sidebar_width' ) ) { ?>
+<?php if( get_theme_mod( 'sidebar_width' ) && !wpbf_has_responsive_breakpoints() ) { ?>
 
 @media (min-width: 769px) {
 
-	body:not(.wpbf-no-sidebar):not(.wpbf-responsive-breakpoints) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {
+	body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {
 		width: <?php echo esc_attr( get_theme_mod( 'sidebar_width' ) ) ?>%;
 	}
 
-	body:not(.wpbf-no-sidebar):not(.wpbf-responsive-breakpoints) .wpbf-main.wpbf-medium-2-3 {
+	body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3 {
 		width: <?php echo esc_attr( 100 - get_theme_mod( 'sidebar_width' ) ) ?>%;
 	}
 
@@ -967,5 +974,9 @@ a:hover {
 	font-size: <?php echo esc_attr( get_theme_mod( 'footer_font_size' ) ) ?>;
 }
 <?php } ?>
+
+<?php // WooCommerce ?>
+
+<?php do_action( 'wpbf_woocommerce_customizer_css' ); ?>
 
 <?php do_action( 'wpbf_after_customizer_css' ); ?>

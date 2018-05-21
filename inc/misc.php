@@ -69,9 +69,3 @@ function wpbf_theme_change_fonts_load_method( $method ) {
 }
 
 add_filter( 'kirki_googlefonts_load_method', 'wpbf_theme_change_fonts_load_method' );
-
-// Remove Kirki FontAwesome
-function wpbf_remove_kirki_fontawesome() {
-	return false;
-}
-add_filter( 'kirki_load_fontawesome', 'wpbf_remove_kirki_fontawesome' );

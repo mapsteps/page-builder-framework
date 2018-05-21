@@ -1,13 +1,11 @@
 <?php
 /**
- * WooCommerce
+ * WooCommerce Functions
  *
  * @package Page Builder Framework
+ * @subpackage Integration/WooCommerce
  */
  
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
-
 // WooCommerce Sidebar
 add_action( 'widgets_init', 'wpbf_woocommerce_sidebar' );
 function wpbf_woocommerce_sidebar() {
@@ -201,3 +199,59 @@ function wpbf_output_content_wrapper_end() {
 
 // remove default sidebar
 remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+
+/* Theme Mods */
+
+// Hide Star Rating from Catalog
+add_action( 'wp', 'wpbf_woocommerce_loop_remove_star_rating' );
+function wpbf_woocommerce_loop_remove_star_rating() {
+	if ( get_theme_mod( 'woocommerce_loop_remove_star_rating' ) ) {
+		remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_rating', 5 );
+	}
+}
+
+// remove sales badge from loop
+add_action( 'wp', 'wpbf_woocommerce_loop_remove_sale_badge' );
+function wpbf_woocommerce_loop_remove_sale_badge() {
+	if ( get_theme_mod( 'woocommerce_loop_sale_position' ) && get_theme_mod( 'woocommerce_loop_sale_position' ) == 'none' ) {
+		remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
+	}
+}
+
+
+// hide woocommerce page title for archives
+add_filter( 'woocommerce_show_page_title' , 'wpbf_woocommerce_loop_show_page_title' );
+function wpbf_woocommerce_loop_show_page_title() {
+	if ( !get_theme_mod( 'woocommerce_loop_show_page_title' ) ) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+// remove woocommerce breadcrumbs from shop pages
+add_action( 'wp', 'wpbf_woocommerce_loop_show_breadcrumbs' );
+function wpbf_woocommerce_loop_show_breadcrumbs() {
+	if( !get_theme_mod( 'woocommerce_loop_show_breadcrumbs' ) ) {
+    	remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0 );
+	}
+}
+
+// Remove the result count from WooCommerce
+add_action( 'wp', 'wpbf_woocommerce_loop_remove_result_count' );
+function wpbf_woocommerce_loop_remove_result_count() {
+	if( get_theme_mod( 'woocommerce_loop_remove_result_count' ) ) {
+		remove_action( 'woocommerce_before_shop_loop' , 'woocommerce_result_count', 20 );
+	}
+}
+
+// Remove the sorting dropdown from Woocommerce
+add_action( 'wp', 'wpbf_woocommerce_loop_remove_ordering' );
+function wpbf_woocommerce_loop_remove_ordering() {
+	if( get_theme_mod( 'woocommerce_loop_remove_ordering' ) ) {
+		remove_action( 'woocommerce_before_shop_loop' , 'woocommerce_catalog_ordering', 30 );
+	}
+}
+
+// remove sales badge from product pages
+// remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 );

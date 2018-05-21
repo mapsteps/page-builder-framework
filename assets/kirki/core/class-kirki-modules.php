@@ -59,6 +59,7 @@ class Kirki_Modules {
 		self::$modules = apply_filters(
 			'kirki_modules', array(
 				'css'                => 'Kirki_Modules_CSS',
+				'css-vars'           => 'Kirki_Modules_CSS_Vars',
 				'customizer-styling' => 'Kirki_Modules_Customizer_Styling',
 				'icons'              => 'Kirki_Modules_Icons',
 				'loading'            => 'Kirki_Modules_Loading',
@@ -69,6 +70,8 @@ class Kirki_Modules {
 				'field-dependencies' => 'Kirki_Modules_Field_Dependencies',
 				'custom-sections'    => 'Kirki_Modules_Custom_Sections',
 				'webfonts'           => 'Kirki_Modules_Webfonts',
+				'webfont-loader'     => 'Kirki_Modules_Webfont_Loader',
+				'preset'             => 'Kirki_Modules_Preset',
 			)
 		);
 

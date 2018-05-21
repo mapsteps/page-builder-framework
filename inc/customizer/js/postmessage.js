@@ -168,7 +168,7 @@
 
 	wp.customize( 'button_border_radius', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-button, input[type="submit"]').css('border-radius', newval + 'px' );
+			$('.wpbf-button, input[type="submit"], .woocommerce a.button, .woocommerce button.button').css('border-radius', newval + 'px' );
 		} );
 	} );
 

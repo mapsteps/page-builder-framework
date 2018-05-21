@@ -44,13 +44,6 @@ WooCommerce
 WooCommerce is licensed under the GNU General Public License v3 or later – https://www.gnu.org/licenses/gpl-3.0.html
 
 -------------------------------------------------------
-FontAwesome
--------------------------------------------------------
-
-Font License: SIL OFL 1.1 - http://scripts.sil.org/OFL
-Code License: MIT License - http://opensource.org/licenses/mit-license.html
-
--------------------------------------------------------
 kirki
 -------------------------------------------------------
 

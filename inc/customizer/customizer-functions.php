@@ -15,7 +15,7 @@ function wpbf_generate_css() {
 	$css  = '';
 
 	ob_start();
-	include_once( get_template_directory() . '/inc/customizer/styles.css.php' );
+	include_once( get_template_directory() . '/inc/customizer/styles.php' );
 	$css = ob_get_clean();
 
 	// Remove Comments
@@ -46,7 +46,7 @@ if( is_customize_preview() ) {
 	add_action( 'wp_head', 'wpbf_customizer_preview_css', 999 );
 	function wpbf_customizer_preview_css() { ?>
 		<style type='text/css'>
-		<?php require( get_template_directory() . '/inc/customizer/styles.css.php' ); ?>
+		<?php require( get_template_directory() . '/inc/customizer/styles.php' ); ?>
 		</style>
 	<?php }
 

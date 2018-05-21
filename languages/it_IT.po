@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-07 09:52+0000\n"
-"PO-Revision-Date: 2018-04-25 11:38+0200\n"
+"PO-Revision-Date: 2018-05-17 16:02+0200\n"
 "Language-Team: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
@@ -135,7 +135,7 @@ msgstr "Nessuna intestazione (deprecata)"
 
 #: single.php:83
 msgid "&larr; Previous Post"
-msgstr "&larr Post precedente"
+msgstr "&larr; Post precedente"
 
 #: single.php:84
 msgid "Next Post &rarr;"
@@ -443,7 +443,7 @@ msgstr "Immagine in primo piano"
 #: inc/customizer/wpbf-kirki.php:396 inc/customizer/wpbf-kirki.php:480
 #: inc/customizer/wpbf-kirki.php:564
 msgid "Read More"
-msgstr "Approfondisci"
+msgstr "Leggi Tutto"
 
 #: inc/customizer/wpbf-kirki.php:397 inc/customizer/wpbf-kirki.php:481
 #: inc/customizer/wpbf-kirki.php:565 inc/customizer/wpbf-kirki.php:618

@@ -27,13 +27,13 @@ final class Kirki_Fonts_Google {
 	private static $instance = null;
 
 	/**
-     * DUMMY. DOESN'T DO ANYTHING, SIMPLY BACKWARDS-COMPATIBILITY.
-     *
-     * @static
-     * @access public
-     * @var bool
-     */
-    public static $force_load_all_subsets = false;
+	 * DUMMY. DOESN'T DO ANYTHING, SIMPLY BACKWARDS-COMPATIBILITY.
+	 *
+	 * @static
+	 * @access public
+	 * @var bool
+	 */
+	public static $force_load_all_subsets = false;
 
 	/**
 	 * If set to true, forces loading ALL variants.
@@ -61,6 +61,15 @@ final class Kirki_Fonts_Google {
 	private $google_fonts = array();
 
 	/**
+	 * An array of fonts that should be hosted locally instead of served via the google-CDN.
+	 *
+	 * @access protected
+	 * @since 3.0.32
+	 * @var array
+	 */
+	protected $hosted_fonts = array();
+
+	/**
 	 * The class constructor.
 	 */
 	private function __construct() {
@@ -73,9 +82,9 @@ final class Kirki_Fonts_Google {
 		}
 
 		add_action( 'wp_ajax_kirki_fonts_google_all_get', array( $this, 'get_googlefonts_json' ) );
-		add_action( 'wp_ajax_noprinv_kirki_fonts_google_all_get', array( $this, 'get_googlefonts_json' ) );
-		add_action( 'wp_ajax_kirki_fonts_standard_all_get', array( $this, 'get_strandardfonts_json' ) );
-		add_action( 'wp_ajax_noprinv_kirki_fonts_standard_all_get', array( $this, 'get_strandardfonts_json' ) );
+		add_action( 'wp_ajax_nopriv_kirki_fonts_google_all_get', array( $this, 'get_googlefonts_json' ) );
+		add_action( 'wp_ajax_kirki_fonts_standard_all_get', array( $this, 'get_standardfonts_json' ) );
+		add_action( 'wp_ajax_nopriv_kirki_fonts_standard_all_get', array( $this, 'get_standardfonts_json' ) );
 
 		// Populate the array of google fonts.
 		$this->google_fonts = Kirki_Fonts::get_google_fonts();
@@ -103,14 +112,20 @@ final class Kirki_Fonts_Google {
 	 */
 	public function generate_google_font( $args ) {
 
+		global $wp_customize;
+
 		// Process typography fields.
 		if ( isset( $args['type'] ) && 'kirki-typography' === $args['type'] ) {
 
 			// Get the value.
 			$value = Kirki_Values::get_sanitized_field_value( $args );
 
+			if ( isset( $value['downloadFont'] ) && $value['downloadFont'] ) {
+				$this->hosted_fonts[] = $value['font-family'];
+			}
+
 			// If we don't have a font-family then we can skip this.
-			if ( ! isset( $value['font-family'] ) ) {
+			if ( ! $wp_customize && ( ! isset( $value['font-family'] ) || in_array( $value['font-family'], $this->hosted_fonts ) ) ) {
 				return;
 			}
 
@@ -230,8 +245,19 @@ final class Kirki_Fonts_Google {
 	 * @since 3.0.17
 	 * @return void
 	 */
-	public function get_strandardfonts_json() {
+	public function get_standardfonts_json() {
 		echo wp_json_encode( Kirki_Fonts::get_standard_fonts() ); // WPCS: XSS ok.
 		wp_die();
+	}
+
+	/**
+	 * Gets $this->hosted_fonts.
+	 *
+	 * @access public
+	 * @since 3.0.32
+	 * @return array
+	 */
+	public function get_hosted_fonts() {
+		return $this->hosted_fonts;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Kirki
+ * kirki
  *
  * @package Page Builder Framework
  * @subpackage Customizer
@@ -30,7 +30,7 @@ function wpbf_customizer_setup( $wp_customize ) {
 
 	// move sections
 	$wp_customize->get_section( 'title_tagline' )-> panel ='header_panel';
-	$wp_customize->get_section( 'background_image' )-> panel ='layout_panel'; // under general
+	$wp_customize->get_section( 'background_image' )-> panel ='layout_panel';
 
 	// move controls
 	$wp_customize->get_control( 'background_color' )->section = 'background_image';
@@ -64,9 +64,9 @@ if( !is_plugin_active( 'wpbf-premium/wpbf-premium.php' ) ) {
 
 	// Premium Addon
 	Kirki::add_section( 'wpbf_premium_addon', array(
-		'title'				=>		esc_attr__( 'Premium Features available!', 'page-builder-framework' ),
-		'priority'			=>		1,
-		'type'				=>		'expanded'
+		'title'			=>		esc_attr__( 'Premium Features available!', 'page-builder-framework' ),
+		'priority'		=>		1,
+		'type'			=>		'expanded'
 	) );
 
 	$wpbf_premium_ad_link = sprintf(
@@ -76,11 +76,11 @@ if( !is_plugin_active( 'wpbf-premium/wpbf-premium.php' ) ) {
 	);
 
 	Kirki::add_field( 'wpbf', array(
-		'type'				=>		'custom',
-		'settings'			=>		'wpbf_premium_ad',
-		'section'			=>		'wpbf_premium_addon',
-		'default'			=>		$wpbf_premium_ad_link,
-		'priority'			=>		1,
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad',
+		'section'		=>		'wpbf_premium_addon',
+		'default'		=>		$wpbf_premium_ad_link,
+		'priority'		=>		1,
 	) );
 
 }
@@ -231,19 +231,6 @@ Kirki::add_section( 'wpbf_single_options', array(
 	'panel'				=>			'layout_panel',
 	'priority'			=>			900,
 ) );
-
-/* Sections – WooCommerce */
-
-if( class_exists( 'WooCommerce' ) ) {
-
-	// Sidebar
-	Kirki::add_section( 'wpbf_woocommerce_sidebar_options', array(
-		'title'				=>			__( 'Sidebar', 'page-builder-framework' ),
-		'panel'				=>			'woocommerce',
-		'priority'			=>			30,
-	) );
-
-}
 
 /* Sections – Header */
 
@@ -1371,6 +1358,19 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			1,
 ) );
 
+// Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'page_font_color',
+	'label'				=>			esc_attr__( 'Color', 'page-builder-framework' ),
+	'section'			=>			'wpbf_font_options',
+	'default'			=>			'#6D7680',
+	'priority'			=>			2,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	)
+) );
+
 // Menu
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
@@ -1410,7 +1410,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'wpbf_h1_options',
 	'default'			=>			0,
 	'priority'			=>			0,
-	'description'		=>			esc_attr__( "The settings below will apply to all headlines if not configured seperately.", "page-builder-framework" ),
+	'description'		=>			esc_attr__( "The settings below will apply to all headlines if not configured separately.", "page-builder-framework" ),
 ) );
 
 // Font Family
@@ -2563,43 +2563,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'priority' => 2,
 		)
 	));
-
-}
-
-/* Fields – WooCommerce */
-if( class_exists( 'WooCommerce' ) ) {
-
-	// Shop Sidebar Layout
-	Kirki::add_field( 'wpbf', array(
-		'type'				=>			'select',
-		'settings'			=>			'woocommerce_sidebar_layout',
-		'label'				=>			esc_attr__( 'Shop Page Sidebar', 'page-builder-framework' ),
-		'section'			=>			'wpbf_woocommerce_sidebar_options',
-		'default'			=>			'none',
-		'priority'			=>			0,
-		'multiple'			=>			1,
-		'choices'			=>			array(
-			'right'			=>			esc_attr__( 'Right', 'page-builder-framework' ),
-			'left'			=>			esc_attr__( 'Left', 'page-builder-framework' ),
-			'none'			=>			esc_attr__( 'No Sidebar', 'page-builder-framework' ),
-		),
-	) );
-
-	// Product Sidebar Layout
-	Kirki::add_field( 'wpbf', array(
-		'type'				=>			'select',
-		'settings'			=>			'woocommerce_single_sidebar_layout',
-		'label'				=>			esc_attr__( 'Product Page Sidebar', 'page-builder-framework' ),
-		'section'			=>			'wpbf_woocommerce_sidebar_options',
-		'default'			=>			'none',
-		'priority'			=>			1,
-		'multiple'			=>			1,
-		'choices'			=>			array(
-			'right'			=>			esc_attr__( 'Right', 'page-builder-framework' ),
-			'left'			=>			esc_attr__( 'Left', 'page-builder-framework' ),
-			'none'			=>			esc_attr__( 'No Sidebar', 'page-builder-framework' ),
-		),
-	) );
 
 }
 
