@@ -39,7 +39,7 @@ require_once( WPBF_THEME_DIR . '/inc/theme-mods.php' );
 
 // WooCommerce
 if ( class_exists( 'WooCommerce' ) ) {
-	// require_once( WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php' );
+	require_once( WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php' );
 }
 
 /* Template Parts */
