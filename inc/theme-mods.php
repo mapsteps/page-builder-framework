@@ -39,7 +39,7 @@ function wpbf_menu_search( $items, $args ) {
 				$items .= '<div class="wpbf-menu-search">';
 				$items .= get_search_form( $echo = false );
 				$items .= '</div>';
-				$items .= '<i class="fas fa-search" aria-hidden="true"></i>';
+				$items .= '<i class="wpbff wpbff-search" aria-hidden="true"></i>';
 				$items .= '</a>';
 				$items .= '</li>';
 
