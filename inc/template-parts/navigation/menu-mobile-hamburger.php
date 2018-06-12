@@ -23,7 +23,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		<div class="wpbf-menu-toggle-container wpbf-1-3">
 
+			<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
+
 			<i class="wpbf-mobile-menu-toggle wpbff wpbff-hamburger" aria-hidden="true"></i>
+
+			<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
 
 		</div>
 
