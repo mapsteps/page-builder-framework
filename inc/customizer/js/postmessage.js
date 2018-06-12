@@ -168,7 +168,7 @@
 
 	wp.customize( 'button_border_radius', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-button, input[type="submit"], .woocommerce a.button, .woocommerce button.button').css('border-radius', newval + 'px' );
+			$('.wpbf-button, input[type="submit"]').css('border-radius', newval + 'px' );
 		} );
 	} );
 
@@ -182,6 +182,122 @@
 	wp.customize( 'button_border_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-button, input[type="submit"]').css('border-color', newval );
+		} );
+	} );
+
+	/* WooCommerce */
+
+	/* Defaults */
+
+	// Buttons
+	wp.customize( 'button_border_radius', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce a.button, .woocommerce button.button').css('border-radius', newval + 'px' );
+		} );
+	} );
+
+	/* Sidebar */
+
+	// Sidebar
+	wp.customize( 'woocommerce_single_image_width', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images').css('width', (newval-2) + '%' );
+			$('.woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary').css('width', 98 - newval + '%' );
+		} );
+	} );
+
+	/* Loop */
+
+	// Loop Title Font Size
+	wp.customize( 'woocommerce_loop_title_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce ul.products li.product h3, .woocommerce ul.products li.product .woocommerce-loop-product__title, .woocommerce ul.products li.product .woocommerce-loop-category__title').css('font-size', newval );
+		} );
+	} );
+
+	// Loop Title Font Color
+	wp.customize( 'woocommerce_loop_title_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce ul.products li.product h3, .woocommerce ul.products li.product .woocommerce-loop-product__title, .woocommerce ul.products li.product .woocommerce-loop-category__title').css('color', newval );
+		} );
+	} );
+
+	// Loop Price Font Size
+	wp.customize( 'woocommerce_loop_price_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce ul.products li.product .price').css('font-size', newval );
+		} );
+	} );
+
+	// Loop Price Font Color
+	wp.customize( 'woocommerce_loop_price_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce ul.products li.product .price').css('color', newval );
+		} );
+	} );
+
+	// Loop Out of Stock Font Size
+	wp.customize( 'woocommerce_loop_out_of_stock_font_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock').css('font-size', newval );
+		} );
+	} );
+
+	// Loop Out of Stock Font Color
+	wp.customize( 'woocommerce_loop_out_of_stock_font_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock').css('color', newval );
+		} );
+	} );
+
+	// Loop Out of Stock Background Color
+	wp.customize( 'woocommerce_loop_out_of_stock_background_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock').css('background-color', newval );
+		} );
+	} );
+
+	// Loop Out of Stock Font Size
+	wp.customize( 'woocommerce_loop_sale_font_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce span.onsale').css('font-size', newval );
+		} );
+	} );
+
+	// Loop Badge Color
+	wp.customize( 'woocommerce_loop_sale_font_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce span.onsale').css('color', newval );
+		} );
+	} );
+
+	// Loop Badge Background Color
+	wp.customize( 'woocommerce_loop_sale_background_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce span.onsale').css('background-color', newval );
+		} );
+	} );
+
+	/* Single */
+
+	// Single Price Font Size
+	wp.customize( 'woocommerce_single_price_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce div.product span.price, .woocommerce div.product p.price').css('font-size', newval );
+		} );
+	} );
+
+	// Single Price Font Color
+	wp.customize( 'woocommerce_single_price_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce div.product span.price, .woocommerce div.product p.price').css('color', newval );
+		} );
+	} );
+
+	// Single Tabs Font Size
+	wp.customize( 'woocommerce_single_tabs_font_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce div.product .woocommerce-tabs ul.tabs li a').css('font-size', newval );
 		} );
 	} );
 
