@@ -294,8 +294,10 @@ Component: Navigation
 }
 
 // Toggle
-.#{$prefix}-menu-toggle {
+.#{$prefix}-menu-toggle,
+.#{$prefix}-mobile-menu-toggle, {
 	cursor:					pointer;
+	vertical-align: 		middle;
 }
 
 .#{$prefix}-mobile-nav-wrapper {
