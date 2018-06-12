@@ -41,11 +41,6 @@
 		}
 	}
 
-	// img { already defined by page builder framework
-	// 	height: auto;
-	// 	max-width: 100%;
-	// }
-
 	/**
 	 * Product page
 	 */
@@ -126,94 +121,8 @@
 	 * Product loops
 	 */
 	ul.products {
-		clear: both;
-		@include clearfix();
-
 		li.product {
-			float: left;
-			margin: 0 3% $margin-medium 0;
-			padding: 0;
-			position: relative;
-			width: 22.75%;
-			margin-left: 0;
-		}
-
-		li.first {
-			clear: both;
-		}
-
-		li.last {
-			margin-right: 0;
-		}
-	}
-
-	ul.products {
-		&.columns-1 {
-			li.product {
-				width: 100%;
-				margin-right: 0;
-			}
-		}
-		&.columns-2 {
-			li.product {
-				width: 48.5%;
-			}
-		}
-		&.columns-3 {
-			li.product {
-				width: 31.333%;
-			}
-		}
-		&.columns-5 {
-			li.product {
-				width: 17.666%;
-			}
-		}
-		&.columns-6 {
-			li.product {
-				width: 14.166%;
-			}
-		}
-	}
-
-	&.columns-1 {
-		ul.products {
-			li.product {
-				width: 100%;
-				margin-right: 0;
-			}
-		}
-	}
-
-	&.columns-2 {
-		ul.products {
-			li.product {
-				width: 48%;
-			}
-		}
-	}
-
-	&.columns-3 {
-		ul.products {
-			li.product {
-				width: 31.333%;
-			}
-		}
-	}
-
-	&.columns-5 {
-		ul.products {
-			li.product {
-				width: 17.666%;
-			}
-		}
-	}
-
-	&.columns-6 {
-		ul.products {
-			li.product {
-				width: 14.166%;
-			}
+			margin-bottom: $margin-medium;
 		}
 	}
 
