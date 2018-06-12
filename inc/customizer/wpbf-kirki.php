@@ -2102,7 +2102,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'menu_font_color',
 	'label'				=>			esc_attr__( 'Font Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_menu_options',
-	// 'default'			=>			'#3ba9d2',
 	'priority'			=>			6,
 	'choices'			=>			array(
 		'alpha'			=>			true,
@@ -2115,7 +2114,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'menu_font_color_alt',
 	'label'				=>			esc_attr__( 'Hover', 'page-builder-framework' ),
 	'section'			=>			'wpbf_menu_options',
-	// 'default'			=>			'#8ecde5',
 	'priority'			=>			7,
 	'choices'			=>			array(
 		'alpha'			=>			true,
@@ -2524,7 +2522,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		$wp_customize, 
 		'sub_menu_padding',
 		array(
-			'label'	=> esc_attr__( 'Padding Top', 'page-builder-framework' ),
+			'label'	=> esc_attr__( 'Padding', 'page-builder-framework' ),
 			'section' => 'wpbf_sub_menu_options',
 			'settings' => 'sub_menu_padding_top',
 			'priority' => 2,
@@ -2535,7 +2533,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		$wp_customize, 
 		'sub_menu_padding',
 		array(
-			'label'	=> esc_attr__( 'Padding Right', 'page-builder-framework' ),
+			'label'	=> esc_attr__( 'Padding', 'page-builder-framework' ),
 			'section' => 'wpbf_sub_menu_options',
 			'settings' => 'sub_menu_padding_right',
 			'priority' => 2,
@@ -2546,7 +2544,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		$wp_customize, 
 		'sub_menu_padding',
 		array(
-			'label'	=> esc_attr__( 'Padding Bottom', 'page-builder-framework' ),
+			'label'	=> esc_attr__( 'Padding', 'page-builder-framework' ),
 			'section' => 'wpbf_sub_menu_options',
 			'settings' => 'sub_menu_padding_bottom',
 			'priority' => 2,
@@ -2557,7 +2555,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		$wp_customize, 
 		'sub_menu_padding',
 		array(
-			'label'	=> esc_attr__( 'Padding Left', 'page-builder-framework' ),
+			'label'	=> esc_attr__( 'Padding', 'page-builder-framework' ),
 			'section' => 'wpbf_sub_menu_options',
 			'settings' => 'sub_menu_padding_left',
 			'priority' => 2,
