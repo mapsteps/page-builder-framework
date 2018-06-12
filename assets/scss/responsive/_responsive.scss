@@ -294,7 +294,7 @@
 }
 
 /* From 1200 | Large Screen & Bigger */
-@media (min-width: $breakpoint3) {
+@media (min-width: $breakpoint3 + 1) {
 
 	// Grid
 	.#{$prefix}-grid-xlarge-1-2 > * {
