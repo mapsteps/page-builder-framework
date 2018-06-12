@@ -9,6 +9,31 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+// Adjust Tablet Size
+function wpbf_adjust_customizer_responsive_sizes() {
+
+	if( function_exists( 'wpbf_breakpoint_medium' ) ) {
+		$medium_breakpoint = wpbf_breakpoint_medium();
+	} else {
+		$medium_breakpoint = 768;
+	}
+
+	$tablet_margin_left = -$medium_breakpoint/2 . 'px';
+	$tablet_width = $medium_breakpoint . 'px';
+	$tablet_height = '720px';
+
+	?>
+	<style>
+		.wp-customizer .preview-tablet .wp-full-overlay-main {
+			margin-left: <?php echo $tablet_margin_left; ?>;
+			width: <?php echo $tablet_width; ?>;
+		}
+	</style>
+	<?php
+}
+
+add_action( 'customize_controls_print_styles', 'wpbf_adjust_customizer_responsive_sizes' );
+
 // Generate & Minify Customizer CSS
 function wpbf_generate_css() {
 
