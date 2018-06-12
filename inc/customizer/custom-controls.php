@@ -24,7 +24,7 @@ if( class_exists( 'WP_Customize_Control' ) ):
 
 			$devices = array( 'desktop', 'tablet', 'mobile' ); ?>
 
-			<span class="customize-control-title"><?php _e( 'Font Size', 'page-builder-framework' ); // WPCS: XSS ok. ?></span>
+			<span class="customize-control-title"><?php echo esc_attr( $this->label ); ?></span>
 
 			<ul class="wpbf-responsive-options">
 				<li class="desktop">
@@ -80,7 +80,7 @@ if( class_exists( 'WP_Customize_Control' ) ):
 
 			$areas = array( 'top', 'right', 'bottom', 'left' ); ?>
 
-			<span class="customize-control-title"><?php _e( 'Padding', 'page-builder-framework' ); // WPCS: XSS ok. ?></span>
+			<span class="customize-control-title"><?php echo esc_attr( $this->label ); ?></span>
 
 			<?php foreach ( $areas as $area ) { ?>
 
@@ -126,7 +126,7 @@ if( class_exists( 'WP_Customize_Control' ) ):
 
 			?>
 
-			<span class="customize-control-title"><?php _e( 'Padding', 'page-builder-framework' ); // WPCS: XSS ok. ?></span>
+			<span class="customize-control-title"><?php echo esc_attr( $this->label ); ?></span>
 
 			<ul class="wpbf-responsive-options">
 				<li class="desktop">
