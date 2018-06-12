@@ -175,10 +175,10 @@ Component: Buttons
 	border:					none;
 	display:				inline-block;
 	cursor:					pointer;
-	font-weight:			700;
 	color:					$brand-color-alt;
 	@include				transition(all 0.2s);
 	line-height: 			1;
+	font-weight: 			700;
 }
 
 .#{$prefix}-button:hover, input[type="submit"]:hover {
@@ -234,7 +234,8 @@ input[type="datetime"] {
 	/* Remove default style in iOS */
 	-webkit-appearance:		none;
 	width:					100%;
-	background:				$base-color-alt;
+	// background:				$base-color-alt;
+	background: 			#fff;
 	border:					1px solid $base-color;
 	padding:				13px 15px;
 	outline:				none;
@@ -242,24 +243,28 @@ input[type="datetime"] {
 	line-height: 			1;
 }
 
-textarea:focus,
-select:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="number"]:focus,
-input[type="datetime"]:focus {
-	// background:				lighten($base-color-alt,2%);
-	background-color:		#fff;
-}
+// textarea:focus,
+// select:focus,
+// input[type="text"]:focus,
+// input[type="password"]:focus,
+// input[type="email"]:focus,
+// input[type="url"]:focus,
+// input[type="search"]:focus,
+// input[type="tel"]:focus,
+// input[type="number"]:focus,
+// input[type="datetime"]:focus {
+// 	// background:				lighten($base-color-alt,2%);
+// 	// background-color:		#fff;
+// }
 
 /* Placeholder */
-form :-ms-input-placeholder {color: lighten($brand-color,20%) !important;}
-form ::-moz-placeholder {color: lighten($brand-color,20%);}
-form ::-webkit-input-placeholder {color: lighten($brand-color,20%);}
+form :-ms-input-placeholder {color: $brand-color; opacity: .5;}
+form ::-ms-input-placeholder {color: $brand-color; opacity: .5;}
+form ::placeholder {color: $brand-color; opacity: .5;}
+
+form [placeholder]:focus:-ms-input-placeholder {color: $brand-color; opacity: .7;}
+form [placeholder]:focus::-ms-input-placeholder {color: $brand-color; opacity: .7;}
+form [placeholder]:focus::placeholder {color: $brand-color; opacity: .7;}
 
 .#{$prefix}-page {
 
@@ -327,19 +332,19 @@ Component: Table
 	}
 
 	/* Caption and footer */
-	table caption,
-	table tfoot,
-	.#{$prefix}-table caption,
-	.#{$prefix}-table tfoot {
-		font-size:				$tiny-fontsize;
-		font-style:				italic;
-	}
+	// table caption,
+	// table tfoot,
+	// .#{$prefix}-table caption,
+	// .#{$prefix}-table tfoot {
+	// 	font-size:				$tiny-fontsize;
+	// 	font-style:				italic;
+	// }
 
-	table caption,
-	.#{$prefix}-table caption {
-		text-align:				left;
-		color:					$base-color;
-	}
+	// table caption,
+	// .#{$prefix}-table caption {
+	// 	text-align:				left;
+	// 	color:					$base-color;
+	// }
 
 }
 
