@@ -96,8 +96,8 @@ Kirki::add_field( 'wpbf', array(
 // Menu Item
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',
-	'settings'			=>			'woocommerce_menu_item',
-	'label'				=>			esc_attr__( 'Cart Icon', 'page-builder-framework' ),
+	'settings'			=>			'woocommerce_menu_item_desktop',
+	'label'				=>			esc_attr__( 'Cart Icon (Desktop)', 'page-builder-framework' ),
 	'description'		=>			__( 'Adds a cart icon to your main navigation', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'show',
@@ -109,33 +109,11 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Menu Item Count
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'select',
-	'settings'			=>			'woocommerce_menu_item_count',
-	'label'				=>			esc_attr__( 'Count', 'page-builder-framework' ),
-	'section'			=>			'wpbf_woocommerce_menu_item_options',
-	'default'			=>			'show',
-	'priority'			=>			1,
-	'multiple'			=>			1,
-	'choices'			=>			array(
-		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
-		'hide'			=>			esc_attr__( 'Hide', 'page-builder-framework' ),
-	),
-	'active_callback'	=>			array(
-		array(
-		'setting'		=>			'woocommerce_menu_item',
-		'operator'		=>			'!=',
-		'value'			=>			'hide',
-		),
-	)
-) );
-
 // Menu Item Color
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
-	'settings'			=>			'woocommerce_menu_item_color',
-	'label'				=>			esc_attr__( 'Count Color', 'page-builder-framework' ),
+	'settings'			=>			'woocommerce_menu_item_desktop_color',
+	'label'				=>			esc_attr__( 'Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'',
 	'priority'			=>			2,
@@ -144,7 +122,7 @@ Kirki::add_field( 'wpbf', array(
 	),
 	'active_callback'	=>			array(
 		array(
-		'setting'		=>			'woocommerce_menu_item',
+		'setting'		=>			'woocommerce_menu_item_desktop',
 		'operator'		=>			'!=',
 		'value'			=>			'hide',
 		),
@@ -154,6 +132,100 @@ Kirki::add_field( 'wpbf', array(
 		'value'			=>			'hide',
 		),
 	)
+) );
+
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-75733',
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			3,
+) );
+
+// Mobile Menu Item
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'select',
+	'settings'			=>			'woocommerce_menu_item_mobile',
+	'label'				=>			esc_attr__( 'Cart Icon (Mobile)', 'page-builder-framework' ),
+	'description'		=>			__( 'Adds a cart icon to your mobile navigation', 'page-builder-framework' ),
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			'show',
+	'priority'			=>			4,
+	'multiple'			=>			1,
+	'choices'			=>			array(
+		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
+		'hide'			=>			esc_attr__( 'Hide', 'page-builder-framework' ),
+	),
+) );
+
+// Menu Item Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'woocommerce_menu_item_mobile_color',
+	'label'				=>			esc_attr__( 'Color', 'page-builder-framework' ),
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			'',
+	'priority'			=>			4,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'woocommerce_menu_item_mobile',
+		'operator'		=>			'!=',
+		'value'			=>			'hide',
+		),
+		array(
+		'setting'		=>			'woocommerce_menu_item_count',
+		'operator'		=>			'!=',
+		'value'			=>			'hide',
+		),
+	)
+) );
+
+// Menu Item Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'woocommerce_menu_item_mobile_icon_color',
+	'label'				=>			esc_attr__( 'Icon Color', 'page-builder-framework' ),
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			'',
+	'priority'			=>			4,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'woocommerce_menu_item_mobile',
+		'operator'		=>			'!=',
+		'value'			=>			'hide',
+		),
+	)
+) );
+
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-36652',
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			5,
+) );
+
+// Menu Item Count
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'select',
+	'settings'			=>			'woocommerce_menu_item_count',
+	'label'				=>			esc_attr__( 'Count', 'page-builder-framework' ),
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			'show',
+	'priority'			=>			6,
+	'multiple'			=>			1,
+	'choices'			=>			array(
+		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
+		'hide'			=>			esc_attr__( 'Hide', 'page-builder-framework' ),
+	),
 ) );
 
 /* Fields – Shop & Archive Pages */
@@ -578,7 +650,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'woocommerce_loop_out_of_stock_font_color',
-	'label'				=>			esc_attr__( 'Text Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font Color', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#fff',

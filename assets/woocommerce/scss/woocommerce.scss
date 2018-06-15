@@ -1852,9 +1852,16 @@ p.demo_store,
 }
 
 .wpbf-mobile-nav-wrapper .wpbf-woo-menu-item {
+	.icon-count {
+		color: #6d7680;
+	}
+}
+
+.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item {
 	display: inline-block;
 	margin-right: 10px;
 	vertical-align: middle;
+	list-style: none;
 }
 
 // Product Search Widget

@@ -557,6 +557,14 @@ function wpbf_mobile_menu() {
 
 }
 
+function wpbf_is_off_canvas_menu() {
+	if( get_theme_mod( 'menu_position' ) == 'menu-off-canvas' || get_theme_mod( 'menu_position' ) == 'menu-off-canvas-left' || get_theme_mod( 'menu_position' ) == 'menu-full-screen' ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 // Alignment
 function wpbf_menu_alignment() {
 

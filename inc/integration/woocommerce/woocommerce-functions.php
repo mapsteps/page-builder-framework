@@ -417,7 +417,6 @@ function wpbf_loop_columns() {
 }
 
 /* Menu Item */
-
 function wpbf_woo_menu_item() {
 
 	// vars
@@ -446,18 +445,23 @@ function wpbf_woo_menu_item() {
 // Add menu item to mobile menu toggle
 function wpbf_woo_menu_item_mobile_menu() {
 
+	if( get_theme_mod( 'woocommerce_menu_item_mobile' ) == 'hide' ) return;
+
 	$menu_item = wpbf_woo_menu_item();
 	echo $menu_item;
 
 }
-add_action( 'wpbf_before_mobile_toggle', 'wpbf_woo_menu_item_mobile_menu' );
+add_action( 'wpbf_before_mobile_toggle', 'wpbf_woo_menu_item_mobile_menu', 10 );
 
 // Add menu item to main navigation
 add_filter( 'wp_nav_menu_items', 'wpbf_woo_cart_menu_icon', 10, 2 );
 function wpbf_woo_cart_menu_icon( $items, $args ) {
 
 	// stop right here if menu item is hidden
-	if( get_theme_mod( 'woocommerce_menu_item' ) == 'hide' ) return $items;
+	if( get_theme_mod( 'woocommerce_menu_item_desktop' ) == 'hide' ) return $items;
+
+	// stop here if we're on a off canvas menu
+	if( wpbf_is_off_canvas_menu() ) return $items;
 
 	if ( $args->theme_location === 'main_menu' ) {
 
