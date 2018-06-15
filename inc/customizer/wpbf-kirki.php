@@ -1111,7 +1111,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'button_text_color',
-	'label'				=>			esc_attr__( 'Button Text Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Button Font Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
 	'default'			=>			'#6d7680',
@@ -1137,7 +1137,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'button_text_color_alt',
-	'label'				=>			esc_attr__( 'Button Text Color Hover', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Button Font Color Hover', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
 	'default'			=>			'#6d7680',
@@ -1171,7 +1171,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'button_primary_text_color',
-	'label'				=>			esc_attr__( 'Button Primary Text Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Button Primary Font Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
 	'choices'			=>			array(
@@ -1196,7 +1196,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'button_primary_text_color_alt',
-	'label'				=>			esc_attr__( 'Button Primary Text Color Hover', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Button Primary Font Color Hover', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
 	// 'default'			=>			'#fff',
