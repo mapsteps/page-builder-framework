@@ -2,6 +2,9 @@
 @media (min-width: $breakpoint0 + 1) {
 
 	/* Grid */
+	.#{$prefix}-grid-small-1-1 > * {
+		width: 100%;
+	}
 	.#{$prefix}-grid-small-1-2 > * {
 		width: 50%;
 	}
@@ -102,6 +105,9 @@
 	}
 
 	/* Grid */
+	.#{$prefix}-grid-medium-1-1 > * {
+		width: 100%;
+	}
 	.#{$prefix}-grid-medium-1-2 > * {
 		width: 50%;
 	}
@@ -202,6 +208,9 @@
 	}
 
 	/* Grid */
+	.#{$prefix}-grid-large-1-1 > * {
+		width: 100%;
+	}
 	.#{$prefix}-grid-large-1-2 > * {
 		width: 50%;
 	}
@@ -297,6 +306,9 @@
 @media (min-width: $breakpoint3 + 1) {
 
 	// Grid
+	.#{$prefix}-grid-xlarge-1-1 > * {
+		width: 100%;
+	}
 	.#{$prefix}-grid-xlarge-1-2 > * {
 		width: 50%;
 	}

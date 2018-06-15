@@ -376,6 +376,8 @@ Component: Grid
 ========================================================================== */
 .#{$prefix}-grid {
 	margin-left:			(-$grid);
+	display: 				flex;
+	flex-wrap:				wrap;
 }
 .#{$prefix}-grid > * {
 	width:					100%;
@@ -503,12 +505,14 @@ Component: Grid
 /* Grid cells
 ========================================================================== */
 .#{$prefix}-grid > * {
-	// width:					100%;
 	float:					left;
 }
 
 /* Grid
 ========================================================================== */
+.#{$prefix}-grid-1-1 > * {
+	width: 100%;
+}
 .#{$prefix}-grid-1-2 > * {
 	width: 50%;
 }
@@ -697,7 +701,6 @@ Component: Utility
 .#{$prefix}-margin-large-right {
 	margin-right: $margin-large;
 }
-
 
 /* Medium Margins */
 .#{$prefix}-margin-medium {
