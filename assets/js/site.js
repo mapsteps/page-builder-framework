@@ -25,6 +25,9 @@
 		$('.wpbf-menu-item').each(function() {
 			itemWidth += $(this).outerWidth();
 		});
+		if( itemWidth < 200 ) {
+			var itemWidth = 250;
+		}
 		$('.wpbf-menu-search').stop().css({display:'block'}).animate({width : itemWidth, opacity : '1'}, 200);
 		$('.wpbf-menu-search #s').focus();
 	});
