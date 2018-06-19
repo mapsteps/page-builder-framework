@@ -243,8 +243,8 @@ Kirki::add_field( 'wpbf', array(
 // Remove Page Title
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
-	'settings'			=>			'woocommerce_loop_show_page_title',
-	'label'				=>			esc_attr__( 'Show Page Title', 'page-builder-framework' ),
+	'settings'			=>			'woocommerce_loop_remove_page_title',
+	'label'				=>			esc_attr__( 'Hide Page Title', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			0,
 	'priority'			=>			$loop_priority++,
@@ -253,8 +253,8 @@ Kirki::add_field( 'wpbf', array(
 // Remove Breadcrumbs
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
-	'settings'			=>			'woocommerce_loop_show_breadcrumbs',
-	'label'				=>			esc_attr__( 'Show Breadcrumbs', 'page-builder-framework' ),
+	'settings'			=>			'woocommerce_loop_remove_breadcrumbs',
+	'label'				=>			esc_attr__( 'Hide Breadcrumbs', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			0,
 	'priority'			=>			$loop_priority++,

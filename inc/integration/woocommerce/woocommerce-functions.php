@@ -260,9 +260,9 @@ function wpbf_woo_loop_remove_sale_badge() {
 }
 
 // hide woocommerce page title for archives
-add_filter( 'woocommerce_show_page_title' , 'wpbf_woo_loop_show_page_title' );
-function wpbf_woo_loop_show_page_title() {
-	if ( !get_theme_mod( 'woocommerce_loop_show_page_title' ) ) {
+add_filter( 'woocommerce_show_page_title' , 'wpbf_woo_loop_remove_page_title' );
+function wpbf_woo_loop_remove_page_title() {
+	if ( get_theme_mod( 'woocommerce_loop_remove_page_title' ) ) {
 		return false;
 	} else {
 		return true;
@@ -270,9 +270,9 @@ function wpbf_woo_loop_show_page_title() {
 }
 
 // remove woocommerce breadcrumbs from shop pages
-add_action( 'wp', 'wpbf_woo_loop_show_breadcrumbs' );
-function wpbf_woo_loop_show_breadcrumbs() {
-	if( !get_theme_mod( 'woocommerce_loop_show_breadcrumbs' ) ) {
+add_action( 'wp', 'wpbf_woo_loop_remove_breadcrumbs' );
+function wpbf_woo_loop_remove_breadcrumbs() {
+	if( get_theme_mod( 'woocommerce_loop_remove_breadcrumbs' ) ) {
     	remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0 );
 	}
 }

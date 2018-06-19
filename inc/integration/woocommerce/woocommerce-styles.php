@@ -83,6 +83,36 @@ function wpbf_do_woocommerce_customizer_css() { ?>
 			color: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_mobile_color' ) ) ?>;
 		}
 
+		<?php } elseif( get_theme_mod( 'mobile_menu_font_color' ) ) { ?>
+
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count {
+				background: <?php echo esc_attr( get_theme_mod( 'mobile_menu_font_color' ) ) ?>;
+			}
+
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count:before {
+				color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_font_color' ) ) ?>;
+			}
+
+		<?php } elseif( get_theme_mod( 'menu_font_color' ) ) { ?>
+
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count {
+				background: <?php echo esc_attr( get_theme_mod( 'menu_font_color' ) ) ?>;
+			}
+
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count:before {
+				color: <?php echo esc_attr( get_theme_mod( 'menu_font_color' ) ) ?>;
+			}
+
+		<?php } elseif( get_theme_mod( 'page_accent_color' ) ) { ?>
+
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count {
+				background: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
+			}
+
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count:before {
+				color: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
+			}
+
 		<?php } ?>
 
 		<?php if( get_theme_mod( 'woocommerce_menu_item_mobile_icon_color' ) ) { ?>
