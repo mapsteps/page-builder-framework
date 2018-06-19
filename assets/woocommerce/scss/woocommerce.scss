@@ -82,7 +82,7 @@ p.demo_store,
 
 	.woocommerce-breadcrumb {
 		@include clearfix();
-		// margin: 0 0 $margin-small;
+		margin-bottom: $margin;
 		font-size: $small-fontsize;
 	}
 
