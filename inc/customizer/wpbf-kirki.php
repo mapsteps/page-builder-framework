@@ -2562,6 +2562,79 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		)
 	));
 
+	// Mobile Menu Padding
+	$wp_customize->add_setting( 'mobile_menu_padding_top',
+		array(
+			'default' => '10',
+			'sanitize_callback' => 'absint'
+		)
+	); 
+
+	$wp_customize->add_setting( 'mobile_menu_padding_right',
+		array(
+			'default' => '20',
+			'sanitize_callback' => 'absint'
+		)
+	); 
+
+	$wp_customize->add_setting( 'mobile_menu_padding_bottom',
+		array(
+			'default' => '10',
+			'sanitize_callback' => 'absint'
+		)
+	); 
+
+	$wp_customize->add_setting( 'mobile_menu_padding_left',
+		array(
+			'default' => '20',
+			'sanitize_callback' => 'absint'
+		)
+	); 
+
+	$wp_customize->add_control( new WPBF_Customize_Padding_Control( 
+		$wp_customize, 
+		'mobile_menu_padding',
+		array(
+			'label'	=> esc_attr__( 'Menu Item Padding', 'page-builder-framework' ),
+			'section' => 'wpbf_mobile_menu_options',
+			'settings' => 'mobile_menu_padding_top',
+			'priority' => 7,
+		)
+	));
+
+	$wp_customize->add_control( new WPBF_Customize_Padding_Control( 
+		$wp_customize, 
+		'mobile_menu_padding',
+		array(
+			'label'	=> esc_attr__( 'Menu Item Padding', 'page-builder-framework' ),
+			'section' => 'wpbf_mobile_menu_options',
+			'settings' => 'mobile_menu_padding_right',
+			'priority' => 7,
+		)
+	));
+
+	$wp_customize->add_control( new WPBF_Customize_Padding_Control( 
+		$wp_customize, 
+		'mobile_menu_padding',
+		array(
+			'label'	=> esc_attr__( 'Menu Item Padding', 'page-builder-framework' ),
+			'section' => 'wpbf_mobile_menu_options',
+			'settings' => 'mobile_menu_padding_bottom',
+			'priority' => 7,
+		)
+	));
+
+	$wp_customize->add_control( new WPBF_Customize_Padding_Control( 
+		$wp_customize, 
+		'mobile_menu_padding',
+		array(
+			'label'	=> esc_attr__( 'Menu Item Padding', 'page-builder-framework' ),
+			'section' => 'wpbf_mobile_menu_options',
+			'settings' => 'mobile_menu_padding_left',
+			'priority' => 7,
+		)
+	));
+
 }
 
 /* Premium Addon */

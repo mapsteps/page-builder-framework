@@ -878,6 +878,27 @@ a:hover {
 }
 <?php } ?>
 
+<?php if( get_theme_mod( 'mobile_menu_padding_top' ) || get_theme_mod( 'mobile_menu_padding_right' ) || get_theme_mod( 'mobile_menu_padding_bottom' ) || get_theme_mod( 'mobile_menu_padding_left' ) ) { ?>
+.wpbf-mobile-menu a,
+.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {
+	<?php if( get_theme_mod( 'mobile_menu_padding_top' ) ) { ?>
+	padding-top: <?php echo esc_attr( get_theme_mod( 'mobile_menu_padding_top' ) ) ?>px;
+	<?php } ?>
+
+	<?php if( get_theme_mod( 'mobile_menu_padding_right' ) ) { ?>
+	padding-right: <?php echo esc_attr( get_theme_mod( 'mobile_menu_padding_right' ) ) ?>px;
+	<?php } ?>
+
+	<?php if( get_theme_mod( 'mobile_menu_padding_bottom' ) ) { ?>
+	padding-bottom: <?php echo esc_attr( get_theme_mod( 'mobile_menu_padding_bottom' ) ) ?>px;
+	<?php } ?>
+
+	<?php if( get_theme_mod( 'mobile_menu_padding_left' ) ) { ?>
+	padding-left: <?php echo esc_attr( get_theme_mod( 'mobile_menu_padding_left' ) ) ?>px;
+	<?php } ?>
+}
+<?php } ?>
+
 <?php if( get_theme_mod( 'mobile_menu_font_color' ) ){ ?>
 .wpbf-mobile-menu a,
 .wpbf-mobile-menu-container .wpbf-close {
