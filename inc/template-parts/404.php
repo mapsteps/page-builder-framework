@@ -15,9 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		<div id="content">
 
+			<?php do_action( 'wpbf_content_open' ); ?>
+
 			<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">
 
+				<?php do_action( 'wpbf_inner_content_open' ); ?>
+
 				<main id="main" class="wpbf-main" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
+
+					<?php do_action( 'wpbf_before_article' ); ?>
 					
 					<article id="post-not-found" class="wpbf-post wpbf-404 wpbf-text-center">
 
@@ -45,8 +51,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 					</article>
 
+					<?php do_action( 'wpbf_after_article' ); ?>
+
 				</main>
 
+				<?php do_action( 'wpbf_inner_content_close' ); ?>
+
 			</div>
+
+			<?php do_action( 'wpbf_content_close' ); ?>
 			
 		</div>

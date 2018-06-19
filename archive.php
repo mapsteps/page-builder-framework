@@ -14,7 +14,11 @@ get_header(); ?>
 
 		<div id="content">
 
+			<?php do_action( 'wpbf_content_open' ); ?>
+
 			<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">
+
+				<?php do_action( 'wpbf_inner_content_open' ); ?>
 
 				<div class="wpbf-grid wpbf-main-grid wpbf-grid-<?php echo esc_attr( $grid_gap ); ?>">
 
@@ -46,7 +50,11 @@ get_header(); ?>
 
 				</div>
 
+				<?php do_action( 'wpbf_inner_content_close' ); ?>
+
 			</div>
+
+			<?php do_action( 'wpbf_content_close' ); ?>
 			
 		</div>
 

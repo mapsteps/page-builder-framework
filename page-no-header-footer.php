@@ -17,14 +17,21 @@ remove_action( 'wpbf_before_footer', 'wpbf_custom_footer' );
 get_header(); ?>
 
 		<div id="content">
+
+			<?php do_action( 'wpbf_content_open' ); ?>
 			
 			<?php wpbf_inner_content(); ?>
+
+				<?php do_action( 'wpbf_inner_content_open' ); ?>
 
 				<main id="main" class="wpbf-main wpbf-page-content">
 
 					<?php wpbf_title(); ?>
+
 					<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+
 					<?php the_content(); ?>
+
 					<?php
 					wp_link_pages( array(
 						'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
@@ -38,7 +45,11 @@ get_header(); ?>
 
 				</main>
 
+				<?php do_action( 'wpbf_inner_content_close' ); ?>
+
 			<?php wpbf_inner_content_close(); ?>
+
+			<?php do_action( 'wpbf_content_close' ); ?>
 			
 		</div>
 
