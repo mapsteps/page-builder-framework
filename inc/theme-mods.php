@@ -21,7 +21,7 @@ if ( get_theme_mod( 'excerpt_lenght' ) && get_theme_mod( 'excerpt_lenght' ) != 0
 }
 
 // Search
-add_filter( 'wp_nav_menu_items','wpbf_menu_search', 10, 2 );
+add_filter( 'wp_nav_menu_items','wpbf_menu_search', 20, 2 );
 function wpbf_menu_search( $items, $args ) {
 
 	if( $args->theme_location == 'main_menu' ) {
