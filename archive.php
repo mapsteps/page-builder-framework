@@ -8,7 +8,7 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$grid_gap = get_theme_mod( 'sidebar_gap' ) ? get_theme_mod( 'sidebar_gap' ) : "divider";
+$grid_gap = get_theme_mod( 'sidebar_gap' ) ? get_theme_mod( 'sidebar_gap' ) : 'medium';
 
 get_header(); ?>
 
