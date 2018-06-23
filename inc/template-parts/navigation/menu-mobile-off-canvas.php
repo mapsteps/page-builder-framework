@@ -52,3 +52,5 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 
 </div>
+
+<?php if( get_theme_mod( 'mobile_menu_overlay' ) ) echo '<div class="wpbf-mobile-menu-overlay"></div>'; ?>

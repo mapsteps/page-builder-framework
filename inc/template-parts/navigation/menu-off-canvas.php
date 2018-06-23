@@ -57,3 +57,5 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<div class="wpbf-close wpbff wpbff-times"></div>
 
 </div>
+
+<?php if( get_theme_mod( 'menu_off_canvas_overlay' ) ) echo '<div class="wpbf-menu-off-canvas-overlay"></div>'; ?>
