@@ -6,6 +6,15 @@
  * @subpackage Integration/WooCommerce
  */
 
+// Styles & Scripts
+add_action( 'wp_enqueue_scripts', 'wpbf_woo_fragment_refresh' );
+
+function wpbf_woo_fragment_refresh() {
+
+    wp_enqueue_script( 'wpbf-woocommerce-fragment-refresh', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce-fragment-refresh.js', array(  'jquery', 'customize-preview' ), '', true  );
+
+}
+
 // Deregister Defaults
 add_action( 'wp', 'wpbf_woo_deregister_defaults' );
 function wpbf_woo_deregister_defaults() {
@@ -422,19 +431,91 @@ function wpbf_woo_menu_item() {
 	// vars
 	$icon = get_theme_mod( 'woocommerce_menu_item_icon' ) ? get_theme_mod( 'woocommerce_menu_item_icon' ) : 'cart';
 	$css_classes = 'menu-item wpbf-woo-menu-item';
-	$title = apply_filters( 'wpbf_woo_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
-	$menu_item = "";
-
 	if ( is_cart() ) $css_classes .= ' current-menu-item';
+	$title = apply_filters( 'wpbf_woo_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
+
+	// premium
+	$cart_items = WC()->cart->get_cart();
+	$cart_total = WC()->cart->get_cart_total();
+	$cart_count = WC()->cart->get_cart_contents_count();
+	if ( wpbf_is_premium() && $cart_items && ( !get_theme_mod( 'woocommerce_menu_item_dropdown' ) || get_theme_mod( 'woocommerce_menu_item_dropdown' ) !== 'hide' ) ) $css_classes .= ' menu-item-has-children';
+
+	$menu_item = "";
 
 	$menu_item .= '<li class="' . esc_attr( $css_classes ) . '">';
 
 		$menu_item .= '<a href="' . esc_url( wc_get_cart_url() ) . '" title="'. $title .'">';
 		$menu_item .= '<span class="icon-count">';
+			if( wpbf_is_premium() && ( !get_theme_mod( 'woocommerce_menu_item_label' ) || get_theme_mod( 'woocommerce_menu_item_label' ) !== 'hide' ) ) $menu_item .= __( 'Cart ', 'page-builder-framework' );
+			if( wpbf_is_premium() && ( !get_theme_mod( 'woocommerce_menu_item_amount' ) || get_theme_mod( 'woocommerce_menu_item_amount' ) !== 'hide' ) ) $menu_item .= '<span class="total">' . wp_kses_data( $cart_total ) . '</span> - ';
 			$menu_item .= '<i class="wpbff wpbff-'. esc_attr( $icon ) .'"></i>';
-			if( get_theme_mod( 'woocommerce_menu_item_count' ) !== 'hide' ) $menu_item .= '<span class="count">' . wp_kses_data( WC()->cart->get_cart_contents_count() ) . '</span>';
+			if( get_theme_mod( 'woocommerce_menu_item_count' ) !== 'hide' ) $menu_item .= '<span class="count">' . wp_kses_data( $cart_count ) . '</span>';
 		$menu_item .= '</span>';
 		$menu_item .= '</a>';
+
+		if( wpbf_is_premium() && $cart_items && ( !get_theme_mod( 'woocommerce_menu_item_dropdown' ) || get_theme_mod( 'woocommerce_menu_item_dropdown' ) !== 'hide' ) ) {
+
+			$menu_item .= '<div class="woo-sub-menu">';
+			$menu_item .= '<table class="wpbf-table">';
+
+			$menu_item .= '<thead>';
+
+				$menu_item .= '<tr>';
+
+				$menu_item .= '<th>'. __( 'Product/s', 'page-builder-framework' ) .'</th>';
+				$menu_item .= '<th>'. __( 'Quantity', 'page-builder-framework' ) .'</th>';
+
+				$menu_item .= '</tr>';
+
+			$menu_item .= '</thead>';
+
+			foreach( $cart_items as $cart_item => $values ) { 
+
+				// vars
+				$_product = wc_get_product( $values['data']->get_id() ); 
+				$item_name = $_product->get_title();
+				$quantity = $values['quantity'];
+				$price = $_product->get_price();
+				$image = $_product->get_image();
+				$link = $_product->get_permalink();
+
+				$menu_item .= '<tr>';
+
+					$menu_item .= '<td>';
+					$menu_item .= '<a href="'. esc_url( $link ) .'">';
+					$menu_item .= $image;
+					$menu_item .= $item_name;
+					$menu_item .= '</a>';
+					$menu_item .= '</td>';
+
+					$menu_item .= '<td>';
+					$menu_item .= $quantity;
+					$menu_item .= '</td>';
+
+				$menu_item .= '</tr>';
+
+			}
+
+			$menu_item .= '<tr>';
+			$menu_item .= '<th>'. __( 'Subtotal', 'page-builder-framework' ) .'</th>';
+			$menu_item .= '<td>'. WC()->cart->get_cart_subtotal() .'</td>';
+			$menu_item .= '</tr>';
+
+			$menu_item .= '</table>';
+
+			if( get_theme_mod( 'woocommerce_menu_item_dropdown_cart_button' ) !== 'hide' || get_theme_mod( 'woocommerce_menu_item_dropdown_checkout_button' ) !== 'hide' ) {
+
+				$menu_item .= '<div class="woo-sub-menu-button-wrap">';
+					if( !get_theme_mod( 'woocommerce_menu_item_dropdown_cart_button' ) || get_theme_mod( 'woocommerce_menu_item_dropdown_cart_button' ) !== 'hide' ) $menu_item .= '<a href="'. esc_url( wc_get_cart_url() ) .'" class="wpbf-button">'. __( 'Cart', 'page-builder-framework' ) .'</a>';
+					if( ( !get_theme_mod( 'woocommerce_menu_item_dropdown_cart_button' ) || get_theme_mod( 'woocommerce_menu_item_dropdown_cart_button' ) !== 'hide' ) && ( !get_theme_mod( 'woocommerce_menu_item_dropdown_checkout_button' ) || get_theme_mod( 'woocommerce_menu_item_dropdown_checkout_button' ) !== 'hide' ) ) $menu_item .= '<div class="test"></div>';
+					if( !get_theme_mod( 'woocommerce_menu_item_dropdown_checkout_button' ) || get_theme_mod( 'woocommerce_menu_item_dropdown_checkout_button' ) !== 'hide' ) $menu_item .= '<a href="'. esc_url( wc_get_checkout_url() ) .'" class="wpbf-button wpbf-button-primary">'. __( 'Checkout', 'page-builder-framework' ) .'</a>';
+				$menu_item .= '</div>';
+
+			}
+
+			$menu_item .= '</div>';
+
+		}
 
 	$menu_item .= '</li>';
 
@@ -473,11 +554,16 @@ function wpbf_woo_cart_menu_icon( $items, $args ) {
 }
 
 // WooCommerce Fragments
-add_filter( 'woocommerce_add_to_cart_fragments', array( 'wpbf_woo_menu_item', 'wpbf_woo_fragments' ) );
+add_filter( 'woocommerce_add_to_cart_fragments', 'wpbf_woo_fragments' );
 
 function wpbf_woo_fragments( $fragments ) {
 
-	$fragments['li.wpbf-woo-menu-item'];
+	global $woocommerce;
+
+	ob_start();
+	echo wpbf_woo_menu_item();
+	$fragments['li.wpbf-woo-menu-item'] = ob_get_clean();
 
 	return $fragments;
+
 }
