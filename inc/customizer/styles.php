@@ -540,6 +540,40 @@ a:hover {
 
 <?php } ?>
 
+<?php // Blog ?>
+
+<?php if( get_theme_mod( 'blog_custom_width' ) ) { ?>
+
+.blog #inner-content {
+	max-width: <?php echo esc_attr( get_theme_mod( 'blog_custom_width' ) ) ?>;
+}
+
+<?php } ?>
+
+<?php if( get_theme_mod( 'single_custom_width' ) ) { ?>
+
+.single #inner-content {
+	max-width: <?php echo esc_attr( get_theme_mod( 'single_custom_width' ) ) ?>;
+}
+
+<?php } ?>
+
+<?php if( get_theme_mod( 'archive_custom_width' ) ) { ?>
+
+.archive #inner-content {
+	max-width: <?php echo esc_attr( get_theme_mod( 'archive_custom_width' ) ) ?>;
+}
+
+<?php } ?>
+
+<?php if( get_theme_mod( 'category_custom_width' ) ) { ?>
+
+.category #inner-content {
+	max-width: <?php echo esc_attr( get_theme_mod( 'category_custom_width' ) ) ?>;
+}
+
+<?php } ?>
+
 <?php // Sidebar ?>
 
 <?php if( get_theme_mod( 'sidebar_bg_color' ) ) { ?>
