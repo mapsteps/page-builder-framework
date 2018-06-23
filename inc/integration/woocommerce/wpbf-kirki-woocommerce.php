@@ -97,7 +97,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',
 	'settings'			=>			'woocommerce_menu_item_desktop',
-	'label'				=>			esc_attr__( 'Cart Icon (Desktop)', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Visibility (Desktop)', 'page-builder-framework' ),
 	'description'		=>			__( 'Adds a cart icon to your main navigation', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'show',
@@ -147,7 +147,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',
 	'settings'			=>			'woocommerce_menu_item_mobile',
-	'label'				=>			esc_attr__( 'Cart Icon (Mobile)', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Visibility (Mobile)', 'page-builder-framework' ),
 	'description'		=>			__( 'Adds a cart icon to your mobile navigation', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'show',
