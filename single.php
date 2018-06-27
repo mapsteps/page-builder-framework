@@ -95,14 +95,14 @@ get_header(); ?>
 							<?php comments_template(); ?>
 
 						</article>
-
-						<?php do_action( 'wpbf_after_article' ); ?>
 						
 						<?php endwhile; else : ?>
 
 						<?php get_template_part( 'inc/template-parts/article-none' ); ?>
 
 						<?php endif; ?>
+
+						<?php do_action( 'wpbf_after_article' ); ?>
 
 					</main>
 
