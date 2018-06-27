@@ -90,8 +90,8 @@ if ( ! isset( $content_width ) ) {
 add_action( 'widgets_init', 'wpbf_sidebars' );
 function wpbf_sidebars() {
 
-    register_sidebar( array(
-		'name'          => __( 'Sidebar', 'page-builder-framework' ),
+	register_sidebar( array(
+		'name'			=> __( 'Sidebar', 'page-builder-framework' ),
 		'id'			=> 'sidebar-1',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
