@@ -11,7 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // don't load it if you can't comment
 if ( post_password_required() )	return;
 
-if ( have_comments() ) : ?>
+?>
+
+<?php if ( have_comments() ) : ?>
+
+	<?php do_action( 'wpbf_before_comments' ); ?>
 
 	<section class="commentlist">
 
@@ -55,5 +59,7 @@ $args = array(
 );
 
 comment_form( $args );
+
+do_action( 'wpbf_after_comments' );
 
 ?>
