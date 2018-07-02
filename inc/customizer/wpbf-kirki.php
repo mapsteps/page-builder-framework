@@ -810,7 +810,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'			=>			'rgba(0,0,0,.15)',
 	'priority'			=>			7,
 	'choices'			=>			array(
-		'alpha'		=>			true,
+		'alpha'			=>			true,
 	),
 	'active_callback'	=>			array(
 		array(
@@ -1107,8 +1107,11 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Widget Background Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_sidebar_options',
 	'default'			=>			'#f5f5f7',
-	'priority'			=>			3,
+	'priority'			=>			4,
 	'transport'			=>			'postMessage',
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
 ) );
 
 /* Fields – Accent Color */
@@ -1145,7 +1148,6 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Button Background Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
-	'default'			=>			'#e7e7ec',
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -1158,7 +1160,6 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Button Font Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
-	'default'			=>			'#6d7680',
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -1171,7 +1172,6 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Button Background Color Hover', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
-	'default'			=>			'#d9d9e0',
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -1184,7 +1184,6 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Button Font Color Hover', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
-	'default'			=>			'#6d7680',
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -1856,6 +1855,23 @@ Kirki::add_field( 'wpbf', array(
 	'choices'			=>			array(
 		'min'			=>			'10',
 		'max'			=>			'40',
+		'step'			=>			'1',
+	),
+) );
+
+// Container Width
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'slider',
+	'settings'			=>			'mobile_menu_logo_container_width',
+	'label'				=>			esc_attr__( 'Logo Container Width (Mobile)', 'page-builder-framework' ),
+	'description'		=>			esc_attr__( 'Defines the space in % the logo area takes in the navigation', 'page-builder-framework' ),
+	'section'			=>			'title_tagline',
+	'priority'			=>			7,
+	'default'			=>			'66',
+	'transport'			=>			'postMessage',
+	'choices'			=>			array(
+		'min'			=>			'25',
+		'max'			=>			'75',
 		'step'			=>			'1',
 	),
 ) );
@@ -2676,6 +2692,79 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'section' => 'wpbf_mobile_menu_options',
 			'settings' => 'mobile_menu_padding_left',
 			'priority' => 8,
+		)
+	));
+
+	// Sidebar Widget Padding
+	$wp_customize->add_setting( 'sidebar_widget_padding_top',
+		array(
+			'default' => '20',
+			'sanitize_callback' => 'absint'
+		)
+	); 
+
+	$wp_customize->add_setting( 'sidebar_widget_padding_right',
+		array(
+			'default' => '20',
+			'sanitize_callback' => 'absint'
+		)
+	); 
+
+	$wp_customize->add_setting( 'sidebar_widget_padding_bottom',
+		array(
+			'default' => '20',
+			'sanitize_callback' => 'absint'
+		)
+	); 
+
+	$wp_customize->add_setting( 'sidebar_widget_padding_left',
+		array(
+			'default' => '20',
+			'sanitize_callback' => 'absint'
+		)
+	); 
+
+	$wp_customize->add_control( new WPBF_Customize_Padding_Control( 
+		$wp_customize, 
+		'mobile_menu_padding',
+		array(
+			'label'	=> esc_attr__( 'Sidebar Widget Padding', 'page-builder-framework' ),
+			'section' => 'wpbf_sidebar_options',
+			'settings' => 'sidebar_widget_padding_top',
+			'priority' => 3,
+		)
+	));
+
+	$wp_customize->add_control( new WPBF_Customize_Padding_Control( 
+		$wp_customize, 
+		'mobile_menu_padding',
+		array(
+			'label'	=> esc_attr__( 'Sidebar Widget Padding', 'page-builder-framework' ),
+			'section' => 'wpbf_sidebar_options',
+			'settings' => 'sidebar_widget_padding_right',
+			'priority' => 3,
+		)
+	));
+
+	$wp_customize->add_control( new WPBF_Customize_Padding_Control( 
+		$wp_customize, 
+		'mobile_menu_padding',
+		array(
+			'label'	=> esc_attr__( 'Sidebar Widget Padding', 'page-builder-framework' ),
+			'section' => 'wpbf_sidebar_options',
+			'settings' => 'sidebar_widget_padding_bottom',
+			'priority' => 3,
+		)
+	));
+
+	$wp_customize->add_control( new WPBF_Customize_Padding_Control( 
+		$wp_customize, 
+		'mobile_menu_padding',
+		array(
+			'label'	=> esc_attr__( 'Sidebar Widget Padding', 'page-builder-framework' ),
+			'section' => 'wpbf_sidebar_options',
+			'settings' => 'sidebar_widget_padding_left',
+			'priority' => 3,
 		)
 	));
 
