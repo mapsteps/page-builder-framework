@@ -1818,50 +1818,45 @@ p.demo_store,
 // Menu Item
 // Main Menu Cart Item
 .wpbf-woo-menu-item {
-	.icon-count {
+	.wpbf-woo-menu-item-count {
+		border-radius: 3px;
+		vertical-align: middle;
+		display: inline-block;
+		padding: 2px 7px;
+		margin-left: 10px;
+		text-align: center;
+		background: $accent-color;
+		color: #fff;
+		font-size: $small-fontsize - 2;
 		position: relative;
-		.count {
-			border-radius: 3px;
-			vertical-align: middle;
-			display: inline-block;
-			padding: 2px 7px;
-			margin-left: 10px;
-			text-align: center;
-			background: $accent-color;
-			color: #fff;
-			font-size: $small-fontsize - 2;
-			position: relative;
-		}
-		.count:before {
-			content: "\f10d";
-			font-family: 'page-builder-framework' !important;
-			speak: none;
-			font-style: normal;
-			font-weight: normal;
-			font-variant: normal;
-			text-transform: none;
-			line-height: 1;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-			position: absolute;
-			left: -6px;
-			color: $accent-color;
-			@include vertical-align();
-		}
+	}
+	.wpbf-woo-menu-item-count:before {
+		content: "\f10d";
+		font-family: 'page-builder-framework' !important;
+		speak: none;
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		position: absolute;
+		left: -6px;
+		color: $accent-color;
+		@include vertical-align();
 	}
 }
 
-.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item {
-	.icon-count {
-		color: #6d7680;
+.wpbf-mobile-nav-wrapper {
+	.wpbf-woo-menu-item-wrapper {
+		display: inline-block;
+		margin: 0 20px 0 0;
+		padding: 0;
 	}
-}
-
-.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item {
-	display: inline-block;
-	margin-right: 10px;
-	vertical-align: middle;
-	list-style: none;
+	.wpbf-woo-menu-item {
+		list-style: none;
+	}
 }
 
 // Product Search Widget
@@ -1931,27 +1926,6 @@ p.demo_store,
 	padding-bottom: $padding;
 	font-size: 16px;
 }
-
-// #order_review_heading {
-// 	font-size: 16px;
-// 	border: 2px solid $base-color-alt;
-// 	border-bottom: 0;
-// 	padding: $padding-medium - 10;
-// 	padding-bottom: 0;
-// 	margin: 0;
-// }
-
-// #order_review {
-// 	padding: $padding-medium - 10;
-// 	border: 2px solid $base-color-alt;
-// 	border-top: 0;
-// 	table {
-// 		border: none;
-// 		th {
-// 			background: transparent;
-// 		}
-// 	}
-// }
 
 #order_review {
 	table {
