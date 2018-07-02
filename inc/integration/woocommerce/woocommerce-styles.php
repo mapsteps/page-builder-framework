@@ -11,7 +11,7 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-add_action( 'wpbf_woocommerce_customizer_css', 'wpbf_do_woocommerce_customizer_css', 10 );
+add_action( 'wpbf_after_customizer_css', 'wpbf_do_woocommerce_customizer_css', 10 );
 function wpbf_do_woocommerce_customizer_css() { ?>
 
 	<?php // Accent Color ?>
@@ -37,31 +37,31 @@ function wpbf_do_woocommerce_customizer_css() { ?>
 
 		<?php if( get_theme_mod( 'woocommerce_menu_item_desktop_color' ) ) { ?>
 
-			.wpbf-menu .wpbf-woo-menu-item .icon-count .count {
+			.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count {
 				background: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_desktop_color' ) ) ?>;
 			}
 
-			.wpbf-menu .wpbf-woo-menu-item .icon-count .count:before {
+			.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {
 				color: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_desktop_color' ) ) ?>;
 			}
 
 		<?php } elseif( get_theme_mod( 'menu_font_color' ) ) { ?>
 
-			.wpbf-menu .wpbf-woo-menu-item .icon-count .count {
+			.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count {
 				background: <?php echo esc_attr( get_theme_mod( 'menu_font_color' ) ) ?>;
 			}
 
-			.wpbf-menu .wpbf-woo-menu-item .icon-count .count:before {
+			.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {
 				color: <?php echo esc_attr( get_theme_mod( 'menu_font_color' ) ) ?>;
 			}
 
 		<?php } elseif( get_theme_mod( 'page_accent_color' ) ) { ?>
 
-			.wpbf-menu .wpbf-woo-menu-item .icon-count .count {
+			.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count {
 				background: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
 			}
 
-			.wpbf-menu .wpbf-woo-menu-item .icon-count .count:before {
+			.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {
 				color: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
 			}
 
@@ -73,50 +73,68 @@ function wpbf_do_woocommerce_customizer_css() { ?>
 
 	<?php if( ( get_theme_mod( 'woocommerce_menu_item_mobile' ) !== 'hide' ) ) { ?>
 
+		<?php if( get_theme_mod( 'woocommerce_menu_item_mobile_font_size' ) ) { ?>
+
+		.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item {
+			font-size: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_mobile_font_size' ) ) ?>;
+		}
+
+		<?php } ?>
+
 		<?php if( get_theme_mod( 'woocommerce_menu_item_mobile_color' ) ) { ?>
 
-		.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count {
+		.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count {
 			background: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_mobile_color' ) ) ?>;
 		}
 
-		.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count:before {
+		.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {
 			color: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_mobile_color' ) ) ?>;
 		}
 
+		<?php } elseif( get_theme_mod( 'woocommerce_menu_item_desktop_color' ) ) { ?>
+
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count {
+				background: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_desktop_color' ) ) ?>;
+			}
+
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {
+				color: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_desktop_color' ) ) ?>;
+			}
+
 		<?php } elseif( get_theme_mod( 'mobile_menu_font_color' ) ) { ?>
 
-			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count {
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count {
 				background: <?php echo esc_attr( get_theme_mod( 'mobile_menu_font_color' ) ) ?>;
 			}
 
-			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count:before {
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {
 				color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_font_color' ) ) ?>;
 			}
 
 		<?php } elseif( get_theme_mod( 'menu_font_color' ) ) { ?>
 
-			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count {
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count {
 				background: <?php echo esc_attr( get_theme_mod( 'menu_font_color' ) ) ?>;
 			}
 
-			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count:before {
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {
 				color: <?php echo esc_attr( get_theme_mod( 'menu_font_color' ) ) ?>;
 			}
 
 		<?php } elseif( get_theme_mod( 'page_accent_color' ) ) { ?>
 
-			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count {
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count {
 				background: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
 			}
 
-			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count .count:before {
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {
 				color: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
 			}
 
 		<?php } ?>
 
 		<?php if( get_theme_mod( 'woocommerce_menu_item_mobile_icon_color' ) ) { ?>
-			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .icon-count {
+			.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item > a {
 				color: <?php echo esc_attr( get_theme_mod( 'woocommerce_menu_item_mobile_icon_color' ) ) ?>;
 			}
 		<?php } ?>
@@ -197,6 +215,12 @@ function wpbf_do_woocommerce_customizer_css() { ?>
 	<?php } ?>
 
 	<?php // Loop ?>
+
+	<?php if( get_theme_mod( 'woocommerce_loop_custom_width' ) ) { ?>
+	.archive.woocommerce #inner-content {
+		max-width: <?php echo esc_attr( get_theme_mod( 'woocommerce_loop_custom_width' ) ) ?>;
+	}
+	<?php } ?>
 
 	<?php if( get_theme_mod( 'woocommerce_loop_content_alignment' ) ) { ?>
 	.woocommerce ul.products li.product, .woocommerce-page ul.products li.product {
@@ -336,6 +360,12 @@ function wpbf_do_woocommerce_customizer_css() { ?>
 	<?php } ?>
 
 	<?php // Single ?>
+
+	<?php if( get_theme_mod( 'woocommerce_single_custom_width' ) ) { ?>
+	.single.woocommerce #inner-content {
+		max-width: <?php echo esc_attr( get_theme_mod( 'woocommerce_single_custom_width' ) ) ?>;
+	}
+	<?php } ?>
 
 	<?php if( get_theme_mod( 'woocommerce_single_alignment' ) == 'right' ) { ?>
 
