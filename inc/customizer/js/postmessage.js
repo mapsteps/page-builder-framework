@@ -96,6 +96,15 @@
 		} );
 	} );
 
+	// Logo Container Width
+	wp.customize( 'mobile_menu_logo_container_width', function( value ) {
+		value.bind( function( newval ) {
+			var calculation = 100-newval;
+			$('.wpbf-navigation .wpbf-2-3').css('width', newval + '%' );
+			$('.wpbf-navigation .wpbf-1-3').css('width', calculation + '%' );
+		} );
+	} );
+
 	/* Tagline */
 
 	// tagline color
@@ -232,7 +241,22 @@
 		} );
 	} );
 
+	/* Menu Item */
+
+	// Menu Item Font Size
+	wp.customize( 'woocommerce_menu_item_mobile_font_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item').css('font-size', newval );
+		} );
+	} );
+
 	/* Loop */
+
+	wp.customize( 'woocommerce_loop_custom_width', function( value ) {
+		value.bind( function( newval ) {
+			$('.archive.woocommerce #inner-content').css('max-width', newval );
+		} );
+	} );
 
 	// Loop Title Font Size
 	wp.customize( 'woocommerce_loop_title_size', function( value ) {
@@ -305,6 +329,12 @@
 	} );
 
 	/* Single */
+
+	wp.customize( 'woocommerce_single_custom_width', function( value ) {
+		value.bind( function( newval ) {
+			$('.single.woocommerce #inner-content').css('max-width', newval );
+		} );
+	} );
 
 	// Single Price Font Size
 	wp.customize( 'woocommerce_single_price_size', function( value ) {
