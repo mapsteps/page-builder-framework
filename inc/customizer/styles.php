@@ -584,6 +584,26 @@ a:hover {
 
 <?php } ?>
 
+<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_top' ) ) || is_numeric( get_theme_mod( 'sidebar_widget_padding_right' ) ) || is_numeric( get_theme_mod( 'sidebar_widget_padding_bottom' ) ) || is_numeric( get_theme_mod( 'sidebar_widget_padding_left' ) ) ) { ?>
+.wpbf-sidebar .widget {
+	<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_top' ) ) ) { ?>
+	padding-top: <?php echo esc_attr( get_theme_mod( 'sidebar_widget_padding_top' ) ) ?>px;
+	<?php } ?>
+
+	<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_right' ) ) ) { ?>
+	padding-right: <?php echo esc_attr( get_theme_mod( 'sidebar_widget_padding_right' ) ) ?>px;
+	<?php } ?>
+
+	<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_bottom' ) ) ) { ?>
+	padding-bottom: <?php echo esc_attr( get_theme_mod( 'sidebar_widget_padding_bottom' ) ) ?>px;
+	<?php } ?>
+
+	<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_left' ) ) ) { ?>
+	padding-left: <?php echo esc_attr( get_theme_mod( 'sidebar_widget_padding_left' ) ) ?>px;
+	<?php } ?>
+}
+<?php } ?>
+
 <?php if( get_theme_mod( 'sidebar_width' ) && !wpbf_has_responsive_breakpoints() ) { ?>
 
 @media (min-width: 769px) {
@@ -611,6 +631,20 @@ a:hover {
 }
 
 .wpbf-navigation .wpbf-3-4 {
+	width: <?php echo esc_attr( $calculation ) ?>%;
+}
+
+<?php } ?>
+
+<?php if( get_theme_mod( 'mobile_menu_logo_container_width' ) ) { ?>
+
+<?php $calculation = 100 - get_theme_mod( 'mobile_menu_logo_container_width' ); ?>
+
+.wpbf-navigation .wpbf-2-3 {
+	width: <?php echo esc_attr( get_theme_mod( 'mobile_menu_logo_container_width' ) ) ?>%;
+}
+
+.wpbf-navigation .wpbf-1-3 {
 	width: <?php echo esc_attr( $calculation ) ?>%;
 }
 
@@ -1029,9 +1063,5 @@ a:hover {
 	font-size: <?php echo esc_attr( get_theme_mod( 'footer_font_size' ) ) ?>;
 }
 <?php } ?>
-
-<?php // WooCommerce ?>
-
-<?php do_action( 'wpbf_woocommerce_customizer_css' ); ?>
 
 <?php do_action( 'wpbf_after_customizer_css' ); ?>
