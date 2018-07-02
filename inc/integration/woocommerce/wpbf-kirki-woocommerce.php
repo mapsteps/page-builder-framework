@@ -159,6 +159,18 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Menu Item Font Size
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'dimension',
+	'label'				=>			esc_attr__( 'Font Size', 'page-builder-framework' ),
+	'settings'			=>			'woocommerce_menu_item_mobile_font_size',
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'transport'			=>			'postMessage',
+	'priority'			=>			4,
+	'default'			=>			'',
+) );
+
+
 // Menu Item Color
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
@@ -228,9 +240,20 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-/* Fields – Shop & Archive Pages */
+/* Fields – Shop & Archive Pages (Loop) */
 
 $loop_priority = 10;
+
+// Custom Width
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'dimension',
+	'label'				=>			esc_attr__( 'Custom Content Width', 'page-builder-framework' ),
+	'settings'			=>			'woocommerce_loop_custom_width',
+	'section'			=>			'woocommerce_product_catalog',
+	'description'		=>			esc_attr__( 'Default: 1200px', 'page-builder-framework' ), 
+	'priority'			=>			$loop_priority++,
+	'transport'			=>			'postMessage'
+) );
 
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'custom',
@@ -292,7 +315,7 @@ add_action( 'customize_register' , 'wpbf_woo_custom_controls_default' );
 
 function wpbf_woo_custom_controls_default( $wp_customize ) {
 
-	$loop_priority = 14;
+	$loop_priority = 15;
 
 	$wp_customize->add_setting( 'woocommerce_loop_products_per_row_desktop',
 		array(
@@ -691,6 +714,17 @@ Kirki::add_field( 'wpbf', array(
 /* Fields – Product Page */
 
 $product_priority = 0;
+
+// Custom Width
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'dimension',
+	'label'				=>			esc_attr__( 'Custom Content Width', 'page-builder-framework' ),
+	'settings'			=>			'woocommerce_single_custom_width',
+	'section'			=>			'wpbf_woocommerce_product_options',
+	'description'		=>			esc_attr__( 'Default: 1200px', 'page-builder-framework' ), 
+	'priority'			=>			$product_priority++,
+	'transport'			=>			'postMessage'
+) );
 
 // Alignment
 Kirki::add_field( 'wpbf', array(
