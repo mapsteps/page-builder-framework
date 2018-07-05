@@ -30,7 +30,7 @@ function wpbf_inner_content() {
 
 	$inner_content = $fullwidth ? false : '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">';
 
-	if ( function_exists( 'wpbf_premium' ) ) {
+	if ( wpbf_is_premium() ) {
 
 		$wpbf_settings = get_option( 'wpbf_settings' );
 
@@ -55,7 +55,7 @@ function wpbf_inner_content_close() {
 
 	$inner_content_close = $fullwidth ? false : '</div>';
 
-	if ( function_exists( 'wpbf_premium' ) ) {
+	if ( wpbf_is_premium() ) {
 
 		$wpbf_settings = get_option( 'wpbf_settings' );
 
@@ -80,7 +80,7 @@ function wpbf_title() {
 
 	$title = $removetitle ? false : '<h1 class="entry-title">'. get_the_title() .'</h1>';
 
-	if ( function_exists( 'wpbf_premium' ) ) {
+	if ( wpbf_is_premium() ) {
 
 		$wpbf_settings = get_option( 'wpbf_settings' );
 
@@ -196,7 +196,7 @@ if( !function_exists( 'wpbf_has_responsive_breakpoints' ) ) {
 	function wpbf_has_responsive_breakpoints() {
 
 		// stop here if premium add-on doesn't exist
-		if( !function_exists( 'wpbf_premium' ) ) return false;
+		if( !wpbf_is_premium() ) return false;
 
 		// check if custom breakpoints are set, otherwise return false
 		$wpbf_settings = get_option( 'wpbf_settings' );
