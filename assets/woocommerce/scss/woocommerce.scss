@@ -1851,11 +1851,14 @@ p.demo_store,
 .wpbf-mobile-nav-wrapper {
 	.wpbf-woo-menu-item-wrapper {
 		display: inline-block;
-		margin: 0 20px 0 0;
+		margin: 0 15px 0 0;
 		padding: 0;
 	}
 	.wpbf-woo-menu-item {
 		list-style: none;
+		a {
+			color: $brand-color-alt;
+		}
 	}
 }
 
