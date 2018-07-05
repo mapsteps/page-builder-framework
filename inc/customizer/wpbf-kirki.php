@@ -1859,7 +1859,7 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Container Width
+// Mobile Container Width
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'slider',
 	'settings'			=>			'mobile_menu_logo_container_width',
@@ -1943,7 +1943,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'menu_logo_font_size',
 	'section'			=>			'title_tagline',
 	'priority'			=>			11,
-	'default'			=>			'20px',
+	'default'			=>			'22px',
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'custom_logo',
