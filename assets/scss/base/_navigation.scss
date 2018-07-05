@@ -36,7 +36,22 @@ Component: Navigation
 	}
 	a {
 		display: 			block;
+		// color: 				$brand-color;
 	}
+	// a:hover {
+	// 	color:				$brand-color-alt;
+	// }
+}
+
+// Clearfix Container
+.#{$prefix}-menu:before,
+.#{$prefix}-menu:after {
+	content:				"";
+	display:				table;
+}
+
+.#{$prefix}-menu:after {
+	clear:					both;
 }
 
 /* Logo
@@ -48,8 +63,12 @@ Component: Navigation
 .#{$prefix}-logo {
 	a {
 		font-weight: 		700;
-		font-size: 			$bigger-fontsize;
+		font-size: 			$bigger-fontsize + 2;
+		// color: 				$brand-color-alt;
 	}
+	// a:hover {
+		// color: 				$brand-color-alt;
+	// }
 	img {
 		height:				48px;
 		width:				auto;
@@ -85,16 +104,6 @@ Component: Navigation
 
 /* Menu
 ========================================================================== */
-// Clearfix Container
-.#{$prefix}-menu:before,
-.#{$prefix}-menu:after {
-	content:				"";
-	display:				table;
-}
-
-.#{$prefix}-menu:after {
-	clear:					both;
-}
 
 // Animation
 .#{$prefix}-mobile-menu a, .#{$prefix}-menu a {
@@ -116,8 +125,8 @@ Component: Navigation
 
 // List reset
 .#{$prefix}-menu .sub-menu {
-	margin: 				0;
-	padding: 				0;
+	margin: 0;
+	padding: 0;
 }
 
 // All Sub Menus
@@ -148,7 +157,7 @@ Component: Navigation
 	}
 }
 
-// Default Sub Menus | Excluding Mega Menu
+// Default Sub Menus (excluding Mega Menu)
 .#{$prefix}-sub-menu {
 	// All Sub Menus
 	> .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {
@@ -277,10 +286,10 @@ Component: Navigation
 }
 
 // Stacked Advanced
-.#{$prefix}-nav-wrapper.#{$prefix}-menu-stacked-advanced {
+// .#{$prefix}-nav-wrapper.#{$prefix}-menu-stacked-advanced {
 	// padding-top: 0;
 	// padding-bottom: 0;
-}
+// }
 
 /* Mobiletoggle
 ========================================================================== */
@@ -288,10 +297,15 @@ Component: Navigation
 // Defaults
 .#{$prefix}-mobile-logo {
 	font-weight: 			700;
+	// color: 					$brand-color;
 	img {
 		height:				35px;
 	}
 }
+
+// .#{$prefix}-mobile-logo:hover {
+// 	color: 					$brand-color-alt;
+// }
 
 // Toggle
 .#{$prefix}-menu-toggle,
@@ -347,7 +361,11 @@ Component: Navigation
 	a {
 		display: 			block;
 		padding: 			$padding-small $padding;
+		// color: 				$brand-color;
 	}
+	// a:hover {
+	// 	color: 				$brand-color-alt;
+	// }
 	.menu-item {
 		border-top: 		1px solid $base-color;
 	}
