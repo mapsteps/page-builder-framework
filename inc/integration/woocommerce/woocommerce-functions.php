@@ -425,103 +425,41 @@ function wpbf_loop_columns() {
 
 }
 
+function wpbf_woo_menu_item_class_current( $css_classes ) {
+
+	if ( is_cart() ) $css_classes .= ' current-menu-item';
+	return $css_classes;
+
+}
+add_filter( 'wpbf_woo_menu_item_classes', 'wpbf_woo_menu_item_class_current' );
+
 /* Menu Item */
 function wpbf_woo_menu_item() {
 
 	// vars
 	$icon = get_theme_mod( 'woocommerce_menu_item_icon' ) ? get_theme_mod( 'woocommerce_menu_item_icon' ) : 'cart';
-	$css_classes = 'menu-item wpbf-woo-menu-item';
-	if ( is_cart() ) $css_classes .= ' current-menu-item';
+	$css_classes = apply_filters( 'wpbf_woo_menu_item_classes', 'menu-item wpbf-woo-menu-item' );
 	$title = apply_filters( 'wpbf_woo_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
+	$cart_count = WC()->cart->get_cart_contents_count();
 	$cart_url = wc_get_cart_url();
 
-	// premium
-	$cart_items = WC()->cart->get_cart();
-	$cart_total = WC()->cart->get_cart_total();
-	$cart_count = WC()->cart->get_cart_contents_count();
-	if ( wpbf_is_premium() && $cart_items && ( !get_theme_mod( 'woocommerce_menu_item_dropdown' ) || get_theme_mod( 'woocommerce_menu_item_dropdown' ) !== 'hide' ) ) $css_classes .= ' menu-item-has-children';
-	$label = apply_filters( 'wpbf_woo_menu_item_label', __( 'Cart', 'page-builder-framework' ) );
-	$separator = apply_filters( 'wpbf_woo_menu_item_separator', __( '-', 'page-builder-framework' ) );
-	$checkout_url = wc_get_checkout_url();
+	// construct menu item
+	$menu_item = '';
 
-	$menu_item = "";
-
-	$menu_item .= '<li class="' . esc_attr( $css_classes ) . '">';
+	$menu_item .= '<li class="'. esc_attr( $css_classes ) .'">';
 
 		$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="'. esc_attr( $title ) .'">';
-			if( wpbf_is_premium() && ( get_theme_mod( 'woocommerce_menu_item_label' ) !== 'hide' ) ) $menu_item .= '<span class="wpbf-woo-menu-item-label">'. esc_html( $label ) .'</span>';
-			if( wpbf_is_premium() && ( get_theme_mod( 'woocommerce_menu_item_amount' ) !== 'hide' ) ) $menu_item .= '<span class="wpbf-woo-menu-item-total">' . wp_kses_data( $cart_total ) . '</span>';
-			if( wpbf_is_premium() && ( get_theme_mod( 'woocommerce_menu_item_amount' ) !== 'hide' ) ) $menu_item .= '<span class="wpbf-woo-menu-item-separator">'. esc_html( $separator ) .'</span>';
+
+			$menu_item .= apply_filters( 'wpbf_woo_before_menu_item', '' );
+
 			$menu_item .= '<i class="wpbff wpbff-'. esc_attr( $icon ) .'"></i>';
 			if( get_theme_mod( 'woocommerce_menu_item_count' ) !== 'hide' ) $menu_item .= '<span class="wpbf-woo-menu-item-count">' . wp_kses_data( $cart_count ) . '</span>';
+
+			$menu_item .= apply_filters( 'wpbf_woo_after_menu_item', '' );
+
 		$menu_item .= '</a>';
 
-		if( wpbf_is_premium() && $cart_items && get_theme_mod( 'woocommerce_menu_item_dropdown' ) !== 'hide' ) {
-
-			$menu_item .= '<ul class="wpbf-woo-sub-menu">';
-			$menu_item .= '<li>';
-
-			$menu_item .= '<table class="wpbf-table">';
-
-			$menu_item .= '<thead>';
-
-				$menu_item .= '<tr>';
-
-				$menu_item .= '<th>'. __( 'Product/s', 'page-builder-framework' ) .'</th>';
-				$menu_item .= '<th>'. __( 'Quantity', 'page-builder-framework' ) .'</th>';
-
-				$menu_item .= '</tr>';
-
-			$menu_item .= '</thead>';
-
-			foreach( $cart_items as $cart_item => $values ) { 
-
-				// vars
-				$product = wc_get_product( $values['data']->get_id() ); 
-				$item_name = $product->get_title();
-				$quantity = $values['quantity'];
-				$price = $product->get_price();
-				$image = $product->get_image();
-				$link = $product->get_permalink();
-
-				$menu_item .= '<tr>';
-
-					$menu_item .= '<td>';
-					$menu_item .= '<a href="'. esc_url( $link ) .'">';
-					$menu_item .= $image;
-					$menu_item .= $item_name;
-					$menu_item .= '</a>';
-					$menu_item .= '</td>';
-
-					$menu_item .= '<td>';
-					$menu_item .= $quantity;
-					$menu_item .= '</td>';
-
-				$menu_item .= '</tr>';
-
-			}
-
-			$menu_item .= '<tr>';
-			$menu_item .= '<th>'. __( 'Subtotal', 'page-builder-framework' ) .'</th>';
-			$menu_item .= '<td>'. WC()->cart->get_cart_subtotal() .'</td>';
-			$menu_item .= '</tr>';
-
-			$menu_item .= '</table>';
-
-			if( get_theme_mod( 'woocommerce_menu_item_dropdown_cart_button' ) !== 'hide' || get_theme_mod( 'woocommerce_menu_item_dropdown_checkout_button' ) !== 'hide' ) {
-
-				$menu_item .= '<div class="wpbf-woo-sub-menu-button-wrap">';
-					if( get_theme_mod( 'woocommerce_menu_item_dropdown_cart_button' ) !== 'hide' ) $menu_item .= '<a href="'. esc_url( $cart_url ) .'" class="wpbf-button">'. __( 'Cart', 'page-builder-framework' ) .'</a>';
-					if( get_theme_mod( 'woocommerce_menu_item_dropdown_cart_button' ) !== 'hide' &&  get_theme_mod( 'woocommerce_menu_item_dropdown_checkout_button' ) !== 'hide' ) $menu_item .= '<div class="wpbf-woo-sub-menu-button-separator"></div>';
-					if( get_theme_mod( 'woocommerce_menu_item_dropdown_checkout_button' ) !== 'hide' ) $menu_item .= '<a href="'. esc_url( $checkout_url ) .'" class="wpbf-button wpbf-button-primary">'. __( 'Checkout', 'page-builder-framework' ) .'</a>';
-				$menu_item .= '</div>';
-
-			}
-
-			$menu_item .= '</li>';
-			$menu_item .= '</ul>';
-
-		}
+		$menu_item .= apply_filters( 'wpbf_woo_menu_item_dropdown', '' );
 
 	$menu_item .= '</li>';
 
