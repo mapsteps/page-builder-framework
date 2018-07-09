@@ -58,4 +58,4 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 </div>
 
-<?php if( get_theme_mod( 'menu_off_canvas_overlay' ) ) echo '<div class="wpbf-menu-off-canvas-overlay"></div>'; ?>
+<?php if( get_theme_mod( 'menu_overlay' ) ) echo '<div class="wpbf-menu-overlay"></div>'; ?>
