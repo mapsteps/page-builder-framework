@@ -20,13 +20,12 @@ function wpbf_adjust_customizer_responsive_sizes() {
 
 	$tablet_margin_left = -$medium_breakpoint/2 . 'px';
 	$tablet_width = $medium_breakpoint . 'px';
-	$tablet_height = '720px';
 
 	?>
 	<style>
 		.wp-customizer .preview-tablet .wp-full-overlay-main {
-			margin-left: <?php echo $tablet_margin_left; ?>;
-			width: <?php echo $tablet_width; ?>;
+			margin-left: <?php echo esc_attr( $tablet_margin_left ); ?>;
+			width: <?php echo esc_attr( $tablet_width ); ?>;
 		}
 	</style>
 	<?php

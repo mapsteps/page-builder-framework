@@ -478,7 +478,7 @@ function wpbf_woo_menu_item_mobile_menu() {
 	$menu_item .= wpbf_woo_menu_item();
 	$menu_item .= '</ul>';
 
-	echo $menu_item;
+	echo $menu_item; // WPCS: XSS ok.
 
 }
 
@@ -509,7 +509,7 @@ function wpbf_woo_fragments( $fragments ) {
 	global $woocommerce;
 
 	ob_start();
-	echo wpbf_woo_menu_item();
+	echo wpbf_woo_menu_item(); // WPCS: XSS ok.
 	$fragments['li.wpbf-woo-menu-item'] = ob_get_clean();
 
 	return $fragments;
