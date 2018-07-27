@@ -168,6 +168,13 @@ Kirki::add_field( 'wpbf', array(
 	'transport'			=>			'postMessage',
 	'priority'			=>			4,
 	'default'			=>			'',
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'woocommerce_menu_item_mobile',
+		'operator'		=>			'!=',
+		'value'			=>			'hide',
+		)
+	)
 ) );
 
 
