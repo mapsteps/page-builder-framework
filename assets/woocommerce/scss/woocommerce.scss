@@ -427,11 +427,10 @@ p.demo_store,
 
 		.wpbf-woo-loop-out-of-stock {
 			position: absolute;
-			bottom: 10px;
+			top: 10px;
 			left: 10px;
-			right: 10px;
-			width: calc(100%-20px);
 			padding: $padding-small;
+			line-height: 1;
 			font-size: $small-fontsize;
 			text-align: center;
 			background: rgba(black,.7);
