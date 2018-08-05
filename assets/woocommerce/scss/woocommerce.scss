@@ -374,10 +374,6 @@ p.demo_store,
 					padding-left: $padding-small;
 				}
 
-				td:first-child {
-					width: 35%;
-				}
-
 				.wc-grouped-product-add-to-cart-checkbox {
 					display: inline-block;
 					width: auto;
@@ -928,36 +924,37 @@ p.demo_store,
 	// 	}
 	// }
 
-	// td.product-name {
-	// 	dl.variation, .wc-item-meta {
-	// 		list-style: none outside;
+	td.product-name {
+		dl.variation, .wc-item-meta {
+			// list-style: none outside;
+			margin: 0;
 
-	// 		dt, .wc-item-meta-label {
-	// 			float: left;
-	// 			clear: both;
-	// 			margin-right: .25em;
-	// 			display: inline-block;
-	// 			list-style: none outside;
-	// 		}
+			dt, .wc-item-meta-label {
+				float: left;
+				clear: both;
+				margin-right: $margin-small;
+				display: inline-block;
+				// list-style: none outside;
+			}
 
-	// 		dd {
-	// 			margin: 0;
-	// 		}
+			dd {
+				// margin: 0;
+			}
 
-	// 		p,
-	// 		&:last-child {
-	// 			margin-bottom: 0;
-	// 		}
-	// 	}
+			p,
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
 
-	// 	p.backorder_notification {
-	// 		font-size: 0.83em;
-	// 	}
-	// }
+		p.backorder_notification {
+			font-size: $small-fontsize;
+		}
+	}
 
-	// td.product-quantity {
-	// 	min-width: 80px;
-	// }
+	td.product-quantity {
+		min-width: 80px;
+	}
 
 	/**
 	 * Cart sidebar
