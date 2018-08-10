@@ -590,7 +590,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'woocommerce_loop_title_color',
-	'label'				=>			esc_attr__( 'Title Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font Color', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#3e4349',
@@ -624,7 +624,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'woocommerce_loop_price_color',
-	'label'				=>			esc_attr__( 'Price Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font Color', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#3e4349',
@@ -661,7 +661,7 @@ Kirki::add_field( 'wpbf', array(
 // Out of Stock Font Size
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'dimension',
-	'label'				=>			esc_attr__( 'Out of Stock Font Size', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font Size', 'page-builder-framework' ),
 	'settings'			=>			'woocommerce_loop_out_of_stock_font_size',
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
@@ -793,7 +793,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'woocommerce_single_price_color',
-	'label'				=>			esc_attr__( 'Price Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_product_options',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#3e4349',
