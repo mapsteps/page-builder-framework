@@ -16,7 +16,7 @@ function wpbf_woo_fragment_refresh() {
 }
 
 // Deregister Defaults
-add_action( 'wp', 'wpbf_woo_deregister_defaults' );
+add_action( 'wp', 'wpbf_woo_deregister_defaults', 10 );
 function wpbf_woo_deregister_defaults() {
 
 	// Default Sidebar
@@ -31,9 +31,17 @@ function wpbf_woo_deregister_defaults() {
 	remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
 	remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_rating', 5 );
 	remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+
+	remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
+	remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
 	// remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 	// remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 );
 
+}
+
+add_action( 'wp', 'wpbf_woo_register_defaults', 20 );
+function wpbf_woo_register_defaults() {
+	add_action( 'woocommerce_after_shop_loop_item', 'wpbf_woo_loop_content' );
 }
 
 // remove first & last classes from WooCommerce Loop
@@ -249,11 +257,13 @@ function woocommerce_product_loop_end() {
 // Thumbnail Wrapper Start
 function wpbf_woo_loop_thumbnail_wrap_start() {
 	echo '<div class="wpbf-woo-loop-thumbnail-wrapper">';
+	echo '<a href="' . esc_url( get_the_permalink() ) . '" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">';
 }
 add_action( 'woocommerce_before_shop_loop_item_title', 'wpbf_woo_loop_thumbnail_wrap_start', 5 );
 
 // Thumbnail Wrapper End
 function wpbf_woo_loop_thumbnail_wrap_end() {
+	echo '</a>';
 	echo '</div>';
 }
 add_action( 'woocommerce_before_shop_loop_item_title', 'wpbf_woo_loop_thumbnail_wrap_end', 12 );
@@ -413,7 +423,6 @@ function wpbf_woo_loop_content() {
 		do_action( 'wpbf_woo_loop_after_summary' );
 	}
 }
-add_action( 'woocommerce_after_shop_loop_item', 'wpbf_woo_loop_content' );
 
 // Products per Row
 add_filter( 'loop_shop_columns', 'wpbf_loop_columns' );
