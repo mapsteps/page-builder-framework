@@ -153,7 +153,17 @@ function wpbf_archive_header() {
 
 			<h1 class="entry-title category-title"><?php the_archive_title(); ?></h1>
 
-		<?php }
+		<?php
+
+		}
+
+		if( category_description() ) { ?>
+
+		<div class="wpbf-category-description"><?php echo category_description(); ?></div>
+
+		<?php
+
+		}
 
 	} elseif( is_search() ) { ?>
 
