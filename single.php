@@ -18,7 +18,7 @@ get_header(); ?>
 
 			<?php do_action( 'wpbf_content_open' ); ?>
 
-			<?php if( !is_singular( 'elementor_library' ) && !is_singular( 'et_pb_layout' ) ) : ?>
+			<?php if( !is_singular( array( 'elementor_library', 'et_pb_layout', 'wpbf_hooks' ) ) ) : ?>
 
 			<?php wpbf_inner_content(); ?>
 
