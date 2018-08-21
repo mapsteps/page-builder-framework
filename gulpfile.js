@@ -31,7 +31,7 @@ gulp.task('styles', function() {
 	return sass('assets/scss/style.scss', {
 		style: 'compressed' 
 	})
-	.pipe(gulp.dest('./'))
+	.pipe(gulp.dest(''))
 	.pipe(reload({ stream: true }))
 
 });﻿
@@ -87,15 +87,15 @@ gulp.task('serve', function() {
 gulp.task('watch', function() {
 
 	// Styles & Scripts to be watched
-	gulp.watch('assets/js/*.js', gulp.parallel('scripts_min'));
-	gulp.watch('assets/scss/**/*.scss', gulp.parallel('styles'));
-	gulp.watch('assets/scss/**/*.scss', gulp.parallel('responsive_styles_min'));
-	gulp.watch('assets/scss/**/*.scss', gulp.parallel('rtl_styles_min'));
-	gulp.watch('assets/woocommerce/scss/**/*.scss', gulp.parallel('woo_styles_min'));
+	gulp.watch('assets/js/*.js', ['scripts_min']);
+	gulp.watch('assets/scss/**/*.scss', ['styles']);
+	gulp.watch('assets/scss/**/*.scss', ['responsive_styles_min']);
+	gulp.watch('assets/scss/**/*.scss', ['rtl_styles_min']);
+	gulp.watch('assets/woocommerce/scss/**/*.scss', ['woo_styles_min']);
 
 	// browserSync
 	gulp.watch('**/*.php').on('change', reload);
 })
 
 // Gulp
-gulp.task('default', gulp.parallel('scripts_min', 'styles', 'responsive_styles_min', 'rtl_styles_min', 'woo_styles_min', 'watch', 'serve'));
+gulp.task('default', ['scripts_min', 'styles', 'responsive_styles_min', 'rtl_styles_min', 'woo_styles_min', 'watch', 'serve']);
