@@ -409,8 +409,7 @@ p.demo_store,
 	ul.products {
 		padding: 0;
 		clear: both;
-		@include clearfix();
-
+		// @include clearfix();
 		li {
 			list-style: none;
 		}
