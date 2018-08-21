@@ -8,9 +8,6 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// post types array
-$post_types = get_post_types( array( 'public' => true ) );
-
 add_action( 'load-post.php', 'wpbf_metabox_setup' );
 add_action( 'load-post-new.php', 'wpbf_metabox_setup' );
 
@@ -25,7 +22,13 @@ function wpbf_metabox_setup() {
 
 }
 
-function wpbf_add_metaboxes( $post_types ) {
+function wpbf_add_metaboxes() {
+
+	// get all public post types
+	$post_types = get_post_types( array( 'public' => true ) );
+
+	// remove post types from array
+	unset( $post_types['wpbf_hooks'], $post_types['elementor_library'], $post_types['fl-builder-template'] );
 
 	add_meta_box( 'wpbf', esc_html__( 'Template Settings', 'page-builder-framework' ), 'wpbf_options_metabox', $post_types, 'side', 'default' );
 
