@@ -62,12 +62,6 @@ function wpbf_theme_setup() {
 	// Selective Refresh for Widgets
 	add_theme_support( 'customize-selective-refresh-widgets' );
 
-	// WooCommerce
-	add_theme_support( 'woocommerce' );
-	add_theme_support( 'wc-product-gallery-zoom' );
-	add_theme_support( 'wc-product-gallery-lightbox' );
-	add_theme_support( 'wc-product-gallery-slider' );
-
 	register_nav_menus( array(
 
 		'main_menu' => __( 'Main Menu', 'page-builder-framework' ),
@@ -115,9 +109,6 @@ if( !empty( $wpbf_current_sidebars['wpbf-sidebar'] ) ) {
 
 }
 
-// Remove Default WooCommerce Styles
-add_filter( 'woocommerce_enqueue_styles', '__return_false' );
-
 // Styles & Scripts
 add_action( 'wp_enqueue_scripts', 'wpbf_scripts', 10 );
 function wpbf_scripts() {
@@ -148,20 +139,6 @@ function wpbf_scripts() {
 	if ( is_rtl() ) {
 
 		wp_enqueue_style( 'wpbf-rtl', get_template_directory_uri() . '/css/min/rtl-min.css', '', WPBF_VERSION );
-
-	}
-
-	// WooCommerce
-	if ( class_exists( 'WooCommerce' ) ) {
-
-		// woocommerce layout
-		wp_enqueue_style( 'wpbf-woocommerce-layout', get_template_directory_uri() . '/css/min/woocommerce-layout-min.css', '', WPBF_VERSION );
-
-		// woocommerce
-		wp_enqueue_style( 'wpbf-woocommerce', get_template_directory_uri() . '/css/min/woocommerce-min.css', '', WPBF_VERSION );
-
-		// woocommerce smallscreen
-		wp_enqueue_style( 'wpbf-woocommerce-smallscreen', get_template_directory_uri() . '/css/min/woocommerce-smallscreen-min.css', '', WPBF_VERSION );
 
 	}
 

@@ -37,6 +37,11 @@ require_once( WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php' );
 // Theme Mods
 require_once( WPBF_THEME_DIR . '/inc/theme-mods.php' );
 
+// Easy Digital Downloads
+if ( class_exists( 'Easy_Digital_Downloads' ) ) {
+	require_once( WPBF_THEME_DIR . '/inc/integration/edd/edd.php' );
+}
+
 // WooCommerce
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once( WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php' );
