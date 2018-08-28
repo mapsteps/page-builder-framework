@@ -1030,6 +1030,13 @@ a:hover {
 
 <?php // Footer ?>
 
+<?php if( get_theme_mod( 'footer_height' ) && get_theme_mod( 'footer_layout' ) != 'none' ) { ?>
+.wpbf-inner-footer {
+	padding-top: <?php echo esc_attr( get_theme_mod( 'footer_height' ) ) ?>px;
+	padding-bottom: <?php echo esc_attr( get_theme_mod( 'footer_height' ) ) ?>px;
+}
+<?php } ?>
+
 <?php if( ( get_theme_mod( 'footer_bg_color' ) || get_theme_mod( 'footer_font_color' ) ) && get_theme_mod( 'footer_layout' ) != 'none' ) { ?>
 
 .wpbf-page-footer {

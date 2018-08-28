@@ -357,4 +357,41 @@
 		} );
 	} );
 
+	/* Footer */
+
+	// Height
+	wp.customize( 'footer_height', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-inner-footer').css('padding-top', newval + 'px' );
+			$('.wpbf-inner-footer').css('padding-bottom', newval + 'px' );
+		} );
+	} );
+
+	// Background Color
+	wp.customize( 'footer_bg_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-page-footer').css('background-color', newval );
+		} );
+	} );
+
+	// Color
+	wp.customize( 'footer_font_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-page-footer').css('color', newval );
+		} );
+	} );
+
+	// Color
+	wp.customize( 'footer_accent_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-page-footer a').css('color', newval );
+		} );
+	} );
+
+	wp.customize( 'footer_font_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-inner-footer').css('font-size', newval );
+		} );
+	} );
+
 } )( jQuery );

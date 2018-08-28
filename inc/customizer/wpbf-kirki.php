@@ -2207,8 +2207,8 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			1,
 	'default'			=>			'220',
 	'choices'			=>			array(
-		'min'			=>			'180',
-		'max'			=>			'280',
+		'min'			=>			'100',
+		'max'			=>			'400',
 		'step'			=>			'1',
 	),
 ) );
@@ -2461,6 +2461,29 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields – Footer */
 
+// Footer Height
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'slider',
+	'settings'			=>			'footer_height',
+	'label'				=>			esc_attr__( 'Height', 'page-builder-framework' ),
+	'section'			=>			'wpbf_footer_options',
+	'priority'			=>			4,
+	'default'			=>			20,
+	'transport'			=>			'postMessage',
+	'choices'			=>			array(
+		'min'			=>			'1',
+		'max'			=>			'100',
+		'step'			=>			'1',
+	),
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'footer_layout',
+		'operator'		=>			'!=',
+		'value'			=>			'none',
+		),
+	)
+) );
+
 // Background Color
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
@@ -2468,7 +2491,11 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Background Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_footer_options',
 	'default'			=>			'#f5f5f7',
+	'transport'			=>			'postMessage',
 	'priority'			=>			4,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'footer_layout',
@@ -2485,7 +2512,11 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Font Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_footer_options',
 	'default'			=>			'#6D7680',
+	'transport'			=>			'postMessage',
 	'priority'			=>			5,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'footer_layout',
@@ -2502,6 +2533,10 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Accent Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_footer_options',
 	'priority'			=>			6,
+	'transport'			=>			'postMessage',
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'footer_layout',
@@ -2518,6 +2553,9 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Hover', 'page-builder-framework' ),
 	'section'			=>			'wpbf_footer_options',
 	'priority'			=>			7,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'footer_layout',
@@ -2535,6 +2573,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'wpbf_footer_options',
 	'priority'			=>			8,
 	'default'			=>			'14px',
+	'transport'			=>			'postMessage',
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'footer_layout',
