@@ -21,6 +21,10 @@ textarea {
 	line-height: 				$base-lineheight;
 }
 
+select {
+	line-height:				1;
+}
+
 // Headlines
 h1, h2, h3, h4, h5, h6 {
 	color: 						$brand-color;
