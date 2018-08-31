@@ -15,8 +15,6 @@ if ( post_password_required() )	return;
 
 <?php if ( have_comments() ) : ?>
 
-	<?php do_action( 'wpbf_before_comments' ); ?>
-
 	<section class="commentlist">
 
 		<h3 id="comments-title"><?php comments_number( __( '<span>No</span> Comments', 'page-builder-framework' ), __( '<span>One</span> Comment', 'page-builder-framework' ), __( '<span>%</span> Comments', 'page-builder-framework' ) );?></h3>
@@ -59,7 +57,5 @@ $args = array(
 );
 
 comment_form( $args );
-
-do_action( 'wpbf_after_comments' );
 
 ?>

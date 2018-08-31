@@ -41,7 +41,11 @@ get_header(); ?>
 
 					<?php endwhile; endif; ?>
 
+					<?php do_action( 'wpbf_before_comments' ); ?>
+
 					<?php comments_template(); ?>
+
+					<?php do_action( 'wpbf_after_comments' ); ?>
 
 				</main>
 
