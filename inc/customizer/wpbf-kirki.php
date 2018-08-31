@@ -976,6 +976,29 @@ Kirki::add_field( 'wpbf', array(
 	)
 ) );
 
+// Show after
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'slider',
+	'settings'			=>			'scrolltop_value',
+	'label'				=>			esc_attr__( 'Show after', 'page-builder-framework' ),
+	'description'		=>			esc_attr__( 'Value in px', 'page-builder-framework' ),
+	'section'			=>			'wpbf_page_options',
+	'priority'			=>			14,
+	'default'			=>			'400',
+	'choices'			=>			array(
+		'min'			=>			'50',
+		'max'			=>			'1000',
+		'step'			=>			'10',
+	),
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'layout_scrolltop',
+		'operator'		=>			'==',
+		'value'			=>			1,
+		),
+	)
+) );
+
 // Background Color
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',

@@ -2,8 +2,11 @@
 
 	// ScrollTop
 	if ($('.scrolltop').length) {
+
+		var scrollTopVal = $('.scrolltop').attr('data-scrolltop-value');
+
 		$(window).scroll(function () {
-			if ($(this).scrollTop() > 400) {
+			if ($(this).scrollTop() > scrollTopVal) {
 				$('.scrolltop').fadeIn();
 			} else {
 				$('.scrolltop').fadeOut();
