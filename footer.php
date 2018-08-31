@@ -16,12 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		?>
 
-		<?php if ( get_theme_mod( 'layout_scrolltop' ) ) { ?>
-
-		<div class="scrolltop"></div>
-
-		<?php } ?>
-
 	</div>
 
 <?php wp_footer(); ?>

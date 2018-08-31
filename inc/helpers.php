@@ -133,6 +133,22 @@ function wpbf_remove_footer() {
 }
 add_action( 'wp', 'wpbf_remove_footer' );
 
+// ScrollTop
+function wpbf_scrolltop() {
+
+	if ( get_theme_mod( 'layout_scrolltop' ) ) {
+
+		$scrollTop = get_theme_mod( 'scrolltop_value' ) ? get_theme_mod( 'scrolltop_value' ) : 400;
+
+		?>
+
+		<div class="scrolltop" data-scrolltop-value="<?php echo (int) $scrollTop; ?>" ></div>
+
+	<?php }
+
+}
+add_action( 'wp_footer', 'wpbf_scrolltop' );
+
 // Archive Class
 function wpbf_archive_class() {
 	$archive_class = '';
