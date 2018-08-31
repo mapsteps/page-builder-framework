@@ -237,12 +237,11 @@ input[type="datetime"] {
 	/* Remove default style in iOS */
 	-webkit-appearance:		none;
 	width:					100%;
-	// background:				$base-color-alt;
 	background: 			#fff;
 	border:					1px solid $base-color;
 	padding:				13px 15px;
 	outline:				none;
-	@include				transition(all 0.2s);
+	// @include				transition(all 0.2s);
 	line-height: 			1;
 }
 
