@@ -21,11 +21,11 @@ function wpbf_edd_scripts() {
 
 }
 
-// // WooCommerce Customizer Settings
+// // EDD Customizer Settings
 // require_once( WPBF_THEME_DIR . '/inc/integration/edd/wpbf-kirki-edd.php' );
 
-// // WooCommerce Functions
+// // EDD Functions
 // require_once( WPBF_THEME_DIR . '/inc/integration/edd/edd-functions.php' );
 
-// // WooCommerce Customizer Styles
+// // EDD Customizer Styles
 // require_once( WPBF_THEME_DIR . '/inc/integration/edd/edd-styles.php' );
