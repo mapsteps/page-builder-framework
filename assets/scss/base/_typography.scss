@@ -18,11 +18,10 @@ select,
 textarea {
 	font-family:				$base-font;
 	font-size: 					$base-fontsize;
-	line-height: 				$base-lineheight;
 }
 
-select {
-	line-height:				1;
+textarea {
+	line-height: 				$base-lineheight;
 }
 
 // Headlines
