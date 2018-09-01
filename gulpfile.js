@@ -60,7 +60,7 @@ gulp.task('rtl_styles_min', function() {
 
 });﻿
 
-// Compile RTL Styles
+// Compile EDD Styles
 gulp.task('edd_styles_min', function() {
 
 	return sass('assets/edd/scss/edd.scss', {
