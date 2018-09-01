@@ -357,8 +357,15 @@ Component: Table
 }
 /* Table Modifier: Small
 ========================================================================== */
-.#{$prefix}-table-small td {
+.wpbf-page .#{$prefix}-table-small th,
+.wpbf-page .#{$prefix}-table-small td {
 	padding:				4px 8px;
+}
+/* Table Modifier: Large
+========================================================================== */
+.wpbf-page .#{$prefix}-table-large th,
+.wpbf-page .#{$prefix}-table-large td {
+	padding:				15px;
 }
 /* Table Modifier: Hover
 ========================================================================== */
@@ -367,7 +374,7 @@ Component: Table
 }
 
 .#{$prefix}-table-hover tbody tr:hover {
-	background:				darken($base-color-alt,3%);
+	background:				$base-color-alt;
 }
 
 /* ========================================================================
