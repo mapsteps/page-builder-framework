@@ -314,7 +314,11 @@ p.demo_store,
 			}
 
 			table {
-				border-width: 0 0 1px;
+				border: none;
+				th,
+				td {
+					border: none;
+				}
 
 				td {
 					padding-left: 0;
@@ -854,11 +858,10 @@ p.demo_store,
 	 * Tables
 	 */
 	table.shop_attributes {
-		border: 0;
-		border-top: 1px solid $base-color;
-
+		font-size: $small-fontsize;
 		th {
 			width: 150px;
+			background: transparent;
 		}
 
 		td {
@@ -876,31 +879,28 @@ p.demo_store,
 	}
 
 	table.shop_table {
-		border-collapse: separate;
-		// border-radius: 5px;
-
+		// nothing here
+		td,
 		th {
-			padding: 7px;
-			background: $base-color-alt;
+			border: none;
 		}
 
-		td {
-			border-top: 1px solid $base-color;
-			padding: 7px;
+		tr {
+			border-bottom: 1px solid $base-color;
 		}
 
-		tbody:first-child tr:first-child {
+		tbody:first-child tr {
 			th,
 			td {
-				border-top: 0;
+				border-bottom: 1px solid $base-color;
 			}
 		}
 
-		tfoot td,
-		tfoot th,
-		tbody th {
-			font-weight: 700;
-			border-top: 1px solid $base-color;
+		tbody:first-child tr:last-child {
+			th,
+			td {
+				border-bottom: none;
+			}
 		}
 	}
 
@@ -1519,12 +1519,13 @@ p.demo_store,
 		}
 
 		td.actions {
-			padding: $padding;
+			padding: 8px;
+			background: $base-color-alt;
 		}
 
 		td.actions .coupon .input-text {
 			float: left;
-			margin: 0 8px 0 0;
+			margin: 0 $margin-small 0 0;
 		}
 
 	}
@@ -1548,7 +1549,8 @@ p.demo_store,
 				border: 1px solid $base-color;
 				border-bottom: 0;
 				font-size: 16px;
-				padding: $padding;
+				padding: 8px;
+				line-height: 1.7;
 				background: $base-color-alt;
 				display: block;
 			}
@@ -1557,8 +1559,9 @@ p.demo_store,
 			}
 
 			table {
-				padding: $padding;
+
 				border-collapse: separate;
+				padding: $padding;
 
 				th {
 					width: 40%;
@@ -1931,6 +1934,23 @@ p.demo_store,
 			th {
 				background: transparent;
 			}
+		}
+	}
+}
+
+// Premium Fix
+
+.wpbf-woo-sub-menu-table-wrap {
+	.wpbf-table {
+		th {
+			background: transparent;
+		}
+		td,
+		th {
+			border: none;
+		}
+		tr {
+			border-bottom: 1px solid $base-color-alt;
 		}
 	}
 }
