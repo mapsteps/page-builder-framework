@@ -16,6 +16,13 @@ function wpbf_edd_scripts() {
 	wp_dequeue_style( 'edd-styles' );
 	wp_deregister_style( 'edd-styles' );
 
+	if( class_exists( 'EDD_Software_Licensing' ) ) {
+
+		wp_dequeue_style( 'edd-sl-styles' );
+		wp_deregister_style( 'edd-sl-styles' );
+
+	}
+
 	// EDD Default Style
 	wp_enqueue_style( 'wpbf-edd', get_template_directory_uri() . '/css/min/edd-min.css', '', WPBF_VERSION );
 
