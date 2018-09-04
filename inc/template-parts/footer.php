@@ -21,7 +21,7 @@ $footer_column_two = get_theme_mod( 'footer_column_two' );
 // fallbacks/defaults
 $footer_layout = $footer_layout == false ? 'two' : $footer_layout;
 $footer_column_one = $footer_column_one == false ? '&copy; [year] - [blogname] | All rights reserved' : $footer_column_one;
-$footer_column_two = $footer_column_two == false ? 'Powered by <a href="https://wp-pagebuilderframework.com/">Page Builder Framework</a>' : $footer_column_two;
+$footer_column_two = $footer_column_two == false ? 'Powered by <a href="https://wp-pagebuilderframework.com/" rel="nofollow">Page Builder Framework</a>' : $footer_column_two;
 
 // replace year and blogname "shortcodes"
 $footer_column_one = str_replace( '[year]', date( 'Y' ), $footer_column_one );
