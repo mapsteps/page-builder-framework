@@ -268,86 +268,98 @@ form [placeholder]:focus:-ms-input-placeholder {color: $brand-color; opacity: .7
 form [placeholder]:focus::-ms-input-placeholder {color: $brand-color; opacity: .7;}
 form [placeholder]:focus::placeholder {color: $brand-color; opacity: .7;}
 
-.#{$prefix}-page {
+/* Select */
+select {
+	-webkit-appearance:		none;
+	-moz-appearance:		none;
+	appearance:				none;
+}
 
-	/* Select */
-	select {
-		-webkit-appearance:		none;
-		-moz-appearance:		none;
-		appearance:				none;
-	}
+select:-moz-focusring {
+	color: 					transparent;
+	text-shadow: 			0 0 0 #000;
+}
 
-	select:-moz-focusring {
-		color: 					transparent;
-		text-shadow: 			0 0 0 #000;
-	}
+select::-ms-expand {
+	display:				none;
+}
 
-	select::-ms-expand {
-		display:				none;
-	}
+select {
+	background-image:		url(img/arrow-down.png);
+	background-position: 	right 20px center;
+	background-repeat: 		no-repeat;
+	background-size: 		10px auto;
+}
 
-	select {
-		background-image:		url(img/arrow-down.png);
-		background-position: 	right 20px center;
-		background-repeat: 		no-repeat;
-		background-size: 		10px auto;
-	}
+/* ========================================================================
+Component: Notices
+========================================================================== */
 
+.#{$prefix}-notice {
+	background: $base-color-alt;
+	border: 2px solid $base-color;
+	padding: $padding-small;
+	border-radius: 4px;
+	line-height: 1;
+	margin-bottom: $margin;
+}
+
+.#{$prefix}-notice-warning {
+	background: rgba($yellow,.15);
+	border-color: $yellow;
+	color: $yellow;
+}
+
+.#{$prefix}-notice-error {
+	background: rgba(tomato,.15);
+	border-color: tomato;
+	color: tomato;
+}
+
+.#{$prefix}-notice-success {
+	background: rgba($secondary-color,.15);
+	border-color: $secondary-color;
+	color: $secondary-color;
 }
 
 /* ========================================================================
 Component: Table
 ========================================================================== */
 
-.#{$prefix}-page {
+table,
+.#{$prefix}-table {
+	border-collapse:		collapse;
+	border-spacing:			0;
+	width:					100%;
+	border:					1px solid $base-color;
+	margin-bottom: 			$margin;
+}
 
-	table,
-	.#{$prefix}-table {
-		border-collapse:		collapse;
-		border-spacing:			0;
-		width:					100%;
-		border:					1px solid $base-color;
-		margin-bottom: 			$margin;
-	}
+table th,
+table td,
+.#{$prefix}-table th,
+.#{$prefix}-table td {
+	padding:				8px;
+	// let's see how that goes
+	border:					1px solid $base-color;
+}
 
-	table th,
-	table td,
-	.#{$prefix}-table th,
-	.#{$prefix}-table td {
-		padding:				8px 8px;
-	}
+// table tr,
+// .#{$prefix}-table tr {
+// 	border-bottom:			1px solid $base-color;
+// }
 
-	table tr,
-	.#{$prefix}-table tr {
-		border-bottom:			1px solid $base-color;
-	}
+/* Alignments */
+table th,
+.#{$prefix}-table th {
+	text-align:				left;
+	// let's see how that goes
+	background:				$base-color-alt;
+}
 
-	/* Alignments */
-	table th,
-	.#{$prefix}-table th {
-		text-align:				left;
-	}
-
-	table thead th,
-	.#{$prefix}-table thead th {
-		vertical-align:			bottom;
-	}
-
-	/* Caption and footer */
-	// table caption,
-	// table tfoot,
-	// .#{$prefix}-table caption,
-	// .#{$prefix}-table tfoot {
-	// 	font-size:				$tiny-fontsize;
-	// 	font-style:				italic;
-	// }
-
-	// table caption,
-	// .#{$prefix}-table caption {
-	// 	text-align:				left;
-	// 	color:					$base-color;
-	// }
-
+table thead th,
+.#{$prefix}-table thead th {
+	vertical-align:			bottom;
 }
 
 /* Table Modifier: Striped
@@ -357,14 +369,14 @@ Component: Table
 }
 /* Table Modifier: Small
 ========================================================================== */
-.wpbf-page .#{$prefix}-table-small th,
-.wpbf-page .#{$prefix}-table-small td {
+.#{$prefix}-table-small th,
+.#{$prefix}-table-small td {
 	padding:				4px 8px;
 }
 /* Table Modifier: Large
 ========================================================================== */
-.wpbf-page .#{$prefix}-table-large th,
-.wpbf-page .#{$prefix}-table-large td {
+.#{$prefix}-table-large th,
+.#{$prefix}-table-large td {
 	padding:				15px;
 }
 /* Table Modifier: Hover
