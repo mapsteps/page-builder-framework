@@ -292,8 +292,19 @@ Sidebar
 }
 
 #s {
-	background: 				#fff url(img/magnifier.png) right 12px center no-repeat;
-	background-size: 			20px auto;
+	padding-right: 40px;
+	// position: relative;
+}
+
+#searchform {
+	position: relative;
+}
+
+#searchform:before {
+	content: "\f118";
+	font-family: "page-builder-framework";
+	right: 15px;
+	@include vertical-align($position: absolute);
 }
 
 .#{$prefix}-no-sidebar {

@@ -1862,13 +1862,21 @@ p.demo_store,
 
 // Product Search Widget
 .woocommerce-product-search {
+	position: relative;
 	.search-field {
-		background: #fff url(../../img/magnifier.png) right 12px center no-repeat;
-		background-size: 20px auto;
+		padding-right: 40px;
 	}
 	button {
 		display: none;
 	}
+}
+
+.woocommerce-product-search:before {
+	content: "\f118";
+	font-family: "page-builder-framework";
+	right: 15px;
+	@include vertical-align();
+	position: absolute;
 }
 
 // Account Navigation
