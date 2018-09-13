@@ -240,19 +240,24 @@ function wpbf_woo_output_content_wrapper_end() {
 }
 
 // Loop Start
-function woocommerce_product_loop_start() {
+function wpbf_woo_product_loop_start() {
 	$mobile_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_mobile' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_mobile' ) : 1;
 	$tablet_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_tablet' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_tablet' ) : 3;
 	$desktop_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_desktop' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_desktop' ) : 4;
 	$grid_gap = get_theme_mod( 'woocommerce_loop_grid_gap' ) ? get_theme_mod( 'woocommerce_loop_grid_gap' ) : 'large';
 
-	echo '<ul class="wpbf-grid wpbf-grid-'. esc_attr( $grid_gap ) .' wpbf-grid-1-'. esc_attr( $mobile_breakpoint ) .' wpbf-grid-small-1-'. esc_attr( $tablet_breakpoint ) .' wpbf-grid-large-1-'. esc_attr( $desktop_breakpoint ) .' products">'; 
+	return '<ul class="wpbf-grid wpbf-grid-'. esc_attr( $grid_gap ) .' wpbf-grid-1-'. esc_attr( $mobile_breakpoint ) .' wpbf-grid-small-1-'. esc_attr( $tablet_breakpoint ) .' wpbf-grid-large-1-'. esc_attr( $desktop_breakpoint ) .' products">'; 
+
 }
 
+add_filter( 'woocommerce_product_loop_start', 'wpbf_woo_product_loop_start', 0 );
+
 // Loop End
-function woocommerce_product_loop_end() {
-	echo '</ul>'; 
+function wpbf_woo_product_loop_end() {
+	return '</ul>'; 
 }
+
+add_filter( 'woocommerce_product_loop_end', 'wpbf_woo_product_loop_end', 0 );
 
 // Thumbnail Wrapper Start
 function wpbf_woo_loop_thumbnail_wrap_start() {
