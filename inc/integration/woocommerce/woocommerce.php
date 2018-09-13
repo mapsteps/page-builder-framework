@@ -15,7 +15,10 @@ add_action( 'after_setup_theme', 'wpbf_woo_theme_setup' );
 function wpbf_woo_theme_setup() {
 
 	// WooCommerce
-	add_theme_support( 'woocommerce' );
+	add_theme_support( 'woocommerce', array(
+		'gallery_thumbnail_image_width' => 300,
+		'single_image_width' => 800,
+	) );
 	add_theme_support( 'wc-product-gallery-zoom' );
 	add_theme_support( 'wc-product-gallery-lightbox' );
 	add_theme_support( 'wc-product-gallery-slider' );
