@@ -523,7 +523,7 @@ function wpbf_do_woocommerce_customizer_css() { ?>
 	<?php } ?>
 
 	<?php if( get_theme_mod( 'woocommerce_single_tabs_remove_headline' ) == 'hide' ) { ?>
-		.woocommerce div.product .woocommerce-tabs .panel h2 {
+		.woocommerce div.product .woocommerce-tabs .panel h2:first-child {
 			display: none;
 		}
 	<?php } ?>
