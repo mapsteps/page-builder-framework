@@ -47,8 +47,8 @@ function wpbf_customizer_setup( $wp_customize ) {
 
 	// change control priority
 	$wp_customize->get_control( 'custom_logo' )->priority = 0;
-	$wp_customize->get_control( 'blogname' )->priority = 1;
-	$wp_customize->get_control( 'blogdescription' )->priority = 2;
+	$wp_customize->get_control( 'blogname' )->priority = 9;
+	$wp_customize->get_control( 'blogdescription' )->priority = 19;
 
 }
 
@@ -1773,59 +1773,13 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields – Logo */
 
-// Logo URL
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'text',
-	'settings'			=>			'menu_logo_url',
-	'label'				=>			esc_attr__( 'Custom Logo URL', 'page-builder-framework' ),
-	'description'		=>			esc_attr__( 'URL including http:// or https://', 'page-builder-framework' ),
-	'section'			=>			'title_tagline',
-	'transport'			=>			'postMessage',
-	'priority'			=>			3,
-) );
-
-// Alt Tag
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'text',
-	'settings'			=>			'menu_logo_alt',
-	'label'				=>			esc_attr__( 'Custom alt tag (optional)', 'page-builder-framework' ),
-	'section'			=>			'title_tagline',
-	'priority'			=>			4,
-	'description'		=>			esc_attr__( 'If not declared, the site title will be used', 'page-builder-framework' ),
-	'transport'			=>			'postMessage',
-	'active_callback'	=>			array(
-		array(
-		'setting'		=>			'custom_logo',
-		'operator'		=>			'!==',
-		'value'			=>			'',
-		),
-	),
-) );
-
-// Title Tag
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'text',
-	'settings'			=>			'menu_logo_title',
-	'label'				=>			esc_attr__( 'Title tag (optional)', 'page-builder-framework' ),
-	'section'			=>			'title_tagline',
-	'priority'			=>			5,
-	'transport'			=>			'postMessage',
-	'active_callback'	=>			array(
-		array(
-		'setting'		=>			'custom_logo',
-		'operator'		=>			'!==',
-		'value'			=>			'',
-		),
-	),
-) );
-
 // Size
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'slider',
 	'settings'			=>			'menu_logo_size',
 	'label'				=>			esc_attr__( 'Logo Size (height)', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
-	'priority'			=>			6,
+	'priority'			=>			2,
 	'default'			=>			'48',
 	'transport'			=>			'postMessage',
 	'choices'			=>			array(
@@ -1843,12 +1797,28 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Size Mobile
+// Kirki::add_field( 'wpbf', array(
+// 	'type'				=>			'upload',
+// 	'settings'			=>			'menu_mobile_logo',
+// 	'label'				=>			esc_attr__( 'Mobile Logo', 'page-builder-framework' ),
+// 	'section'			=>			'title_tagline',
+// 	'priority'			=>			3,
+// 	'active_callback'	=>			array(
+// 		array(
+// 		'setting'		=>			'custom_logo',
+// 		'operator'		=>			'!==',
+// 		'value'			=>			'',
+// 		),
+// 	)
+// ) );
+
+// Size Mobile
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'slider',
 	'settings'			=>			'menu_mobile_logo_size',
 	'label'				=>			esc_attr__( 'Logo Size on mobiles (height)', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
-	'priority'			=>			7,
+	'priority'			=>			3,
 	'default'			=>			'25',
 	'transport'			=>			'postMessage',
 	'choices'			=>			array(
@@ -1865,45 +1835,20 @@ Kirki::add_field( 'wpbf', array(
 	)
 ) );
 
-// Container Width
+// Separator
 Kirki::add_field( 'wpbf', array(
-	'type'				=>			'slider',
-	'settings'			=>			'menu_logo_container_width',
-	'label'				=>			esc_attr__( 'Logo Container Width', 'page-builder-framework' ),
-	'description'		=>			esc_attr__( 'Defines the space in % the logo area takes in the navigation', 'page-builder-framework' ),
+	'type'				=>			'custom',
+	'settings'			=>			'separator-05198',
 	'section'			=>			'title_tagline',
-	'priority'			=>			7,
-	'default'			=>			'25',
-	'transport'			=>			'postMessage',
-	'choices'			=>			array(
-		'min'			=>			'10',
-		'max'			=>			'40',
-		'step'			=>			'1',
-	),
-) );
-
-// Mobile Container Width
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'slider',
-	'settings'			=>			'mobile_menu_logo_container_width',
-	'label'				=>			esc_attr__( 'Logo Container Width (Mobile)', 'page-builder-framework' ),
-	'description'		=>			esc_attr__( 'Defines the space in % the logo area takes in the navigation', 'page-builder-framework' ),
-	'section'			=>			'title_tagline',
-	'priority'			=>			7,
-	'default'			=>			'66',
-	'transport'			=>			'postMessage',
-	'choices'			=>			array(
-		'min'			=>			'25',
-		'max'			=>			'75',
-		'step'			=>			'1',
-	),
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			4,
 ) );
 
 // Font Family
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'typography',
 	'settings'			=>			'menu_logo_font_family',
-	'label'				=>			esc_attr__( 'Logo Font', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
 	'default'			=>			array(
 		'font-family'	=>			'Helvetica, Arial, sans-serif',
@@ -1911,7 +1856,7 @@ Kirki::add_field( 'wpbf', array(
 		'subsets'		=>			array( 'latin-ext' ),
 	),
 	'choices'			=>			wpbf_default_font_choices(),
-	'priority'			=>			8,
+	'priority'			=>			10,
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'custom_logo',
@@ -1925,9 +1870,9 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'menu_logo_color',
-	'label'				=>			esc_attr__( 'Logo Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Color', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
-	'priority'			=>			9,
+	'priority'			=>			11,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -1944,9 +1889,9 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'menu_logo_color_alt',
-	'label'				=>			esc_attr__( 'Logo Hover Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Hover', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
-	'priority'			=>			10,
+	'priority'			=>			12,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -1962,10 +1907,10 @@ Kirki::add_field( 'wpbf', array(
 // Font Size
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'dimension',
-	'label'				=>			esc_attr__( 'Logo Font Size', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font Size', 'page-builder-framework' ),
 	'settings'			=>			'menu_logo_font_size',
 	'section'			=>			'title_tagline',
-	'priority'			=>			11,
+	'priority'			=>			13,
 	'default'			=>			'22px',
 	'active_callback'	=>			array(
 		array(
@@ -1974,6 +1919,15 @@ Kirki::add_field( 'wpbf', array(
 		'value'			=>			'',
 		),
 	)
+) );
+
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-898067',
+	'section'			=>			'title_tagline',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			14,
 ) );
 
 /* Fields – Tagline */
@@ -1985,7 +1939,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Display Tagline', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
 	'default'			=>			'0',
-	'priority'			=>			2,
+	'priority'			=>			20,
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'custom_logo',
@@ -1999,7 +1953,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'typography',
 	'settings'			=>			'menu_logo_description_font_family',
-	'label'				=>			esc_attr__( 'Tagline Font', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
 	'default'			=>			array(
 		'font-family'	=>			'Helvetica, Arial, sans-serif',
@@ -2007,7 +1961,7 @@ Kirki::add_field( 'wpbf', array(
 		'subsets'		=>			array( 'latin-ext' ),
 	),
 	'choices'			=>			wpbf_default_font_choices(),
-	'priority'			=>			13,
+	'priority'			=>			21,
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'custom_logo',
@@ -2026,9 +1980,9 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'menu_logo_description_color',
-	'label'				=>			esc_attr__( 'Tagline Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Color', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
-	'priority'			=>			14,
+	'priority'			=>			22,
 	'transport'			=>			'postMessage',
 	'choices'			=>			array(
 		'alpha'			=>			true,
@@ -2050,10 +2004,10 @@ Kirki::add_field( 'wpbf', array(
 // Font Size
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'dimension',
-	'label'				=>			esc_attr__( 'Tagline Font Size', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Font Size', 'page-builder-framework' ),
 	'settings'			=>			'menu_logo_description_font_size',
 	'section'			=>			'title_tagline',
-	'priority'			=>			15,
+	'priority'			=>			23,
 	'transport'			=>			'postMessage',
 	'active_callback'	=>			array(
 		array(
@@ -2067,6 +2021,117 @@ Kirki::add_field( 'wpbf', array(
 		'value'			=>			true,
 		),
 	)
+) );
+
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-212074',
+	'section'			=>			'title_tagline',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			24,
+) );
+
+/* Fields – Logo Settings Misc */
+
+// Logo URL
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'text',
+	'settings'			=>			'menu_logo_url',
+	'label'				=>			esc_attr__( 'Custom Logo URL', 'page-builder-framework' ),
+	'description'		=>			esc_attr__( 'URL including http:// or https://', 'page-builder-framework' ),
+	'section'			=>			'title_tagline',
+	'transport'			=>			'postMessage',
+	'priority'			=>			30,
+) );
+
+// Alt Tag
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'text',
+	'settings'			=>			'menu_logo_alt',
+	'label'				=>			esc_attr__( 'Custom alt tag (optional)', 'page-builder-framework' ),
+	'section'			=>			'title_tagline',
+	'priority'			=>			31,
+	'description'		=>			esc_attr__( 'If not declared, the site title will be used', 'page-builder-framework' ),
+	'transport'			=>			'postMessage',
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'custom_logo',
+		'operator'		=>			'!==',
+		'value'			=>			'',
+		),
+	),
+) );
+
+// Title Tag
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'text',
+	'settings'			=>			'menu_logo_title',
+	'label'				=>			esc_attr__( 'Title tag (optional)', 'page-builder-framework' ),
+	'section'			=>			'title_tagline',
+	'priority'			=>			32,
+	'transport'			=>			'postMessage',
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'custom_logo',
+		'operator'		=>			'!==',
+		'value'			=>			'',
+		),
+	),
+) );
+
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-791190',
+	'section'			=>			'title_tagline',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			33,
+) );
+
+/* Fields – Logo Container Width */
+
+// Container Width
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'slider',
+	'settings'			=>			'menu_logo_container_width',
+	'label'				=>			esc_attr__( 'Logo Container Width', 'page-builder-framework' ),
+	'description'		=>			esc_attr__( 'Defines the space in % the logo area takes in the navigation', 'page-builder-framework' ),
+	'section'			=>			'title_tagline',
+	'priority'			=>			40,
+	'default'			=>			'25',
+	'transport'			=>			'postMessage',
+	'choices'			=>			array(
+		'min'			=>			'10',
+		'max'			=>			'40',
+		'step'			=>			'1',
+	),
+) );
+
+// Mobile Container Width
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'slider',
+	'settings'			=>			'mobile_menu_logo_container_width',
+	'label'				=>			esc_attr__( 'Logo Container Width (Mobile)', 'page-builder-framework' ),
+	'description'		=>			esc_attr__( 'Defines the space in % the logo area takes in the navigation', 'page-builder-framework' ),
+	'section'			=>			'title_tagline',
+	'priority'			=>			41,
+	'default'			=>			'66',
+	'transport'			=>			'postMessage',
+	'choices'			=>			array(
+		'min'			=>			'25',
+		'max'			=>			'75',
+		'step'			=>			'1',
+	),
+) );
+
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-44545',
+	'section'			=>			'title_tagline',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			42,
 ) );
 
 /* Fields – Navigation */
