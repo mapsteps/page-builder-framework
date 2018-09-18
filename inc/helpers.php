@@ -94,6 +94,21 @@ function wpbf_title() {
 
 }
 
+// Mobile Logo
+// function wpbf_mobile_logo( $custom_logo_url ) {
+
+// 	$custom_mobile_logo = get_theme_mod( 'menu_mobile_logo' );
+
+// 	// check if custom mobile logo is set
+// 	if( $custom_mobile_logo ) {
+// 		$custom_logo_url = $custom_mobile_logo;
+// 	}
+
+// 	return $custom_logo_url;
+
+// }
+// add_filter( 'wpbf_logo_mobile', 'wpbf_mobile_logo', 10 );
+
 // Remove Header
 function wpbf_remove_header() {
 
