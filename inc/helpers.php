@@ -142,7 +142,7 @@ function wpbf_scrolltop() {
 
 		?>
 
-		<div class="scrolltop" data-scrolltop-value="<?php echo (int) $scrollTop; ?>" ></div>
+		<div class="scrolltop" data-scrolltop-value="<?php echo (int) $scrollTop; ?>"></div>
 
 	<?php }
 
@@ -578,7 +578,7 @@ function wpbf_nav_menu() {
 function wpbf_menu() {
 
 	$menu = get_theme_mod( 'menu_position' );
-	$menu ? "" : $menu = "menu-right";
+	$menu = $menu ? $menu : "menu-right";
 	return $menu;
 
 }
@@ -587,7 +587,7 @@ function wpbf_menu() {
 function wpbf_mobile_menu() {
 
 	$mobile_menu = get_theme_mod( 'mobile_menu_options' );
-	$mobile_menu ? "" : $mobile_menu = "menu-mobile-hamburger";
+	$mobile_menu = $mobile_menu ? $mobile_menu : "menu-mobile-hamburger";
 	return $mobile_menu;
 
 }
