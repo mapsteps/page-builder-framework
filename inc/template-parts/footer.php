@@ -12,23 +12,21 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // vars
-$footer_layout = get_theme_mod( 'footer_layout' );
+$footer_layout = get_theme_mod( 'footer_layout', 'two' );
 $layout = $footer_layout == 'one' ? ' wpbf-footer-one-column' : ' wpbf-footer-two-columns';
 $inner_layout = $footer_layout == 'one' ? 'wpbf-inner-footer-content' : 'wpbf-inner-footer-left';
-$footer_column_one = get_theme_mod( 'footer_column_one' );
-$footer_column_two = get_theme_mod( 'footer_column_two' );
-
-// fallbacks/defaults
-$footer_layout = $footer_layout == false ? 'two' : $footer_layout;
-$footer_column_one = $footer_column_one == false ? '&copy; [year] - [blogname] | All rights reserved' : $footer_column_one;
-$footer_column_two = $footer_column_two == false ? 'Powered by <a href="https://wp-pagebuilderframework.com/" rel="nofollow">Page Builder Framework</a>' : $footer_column_two;
+$footer_column_one = get_theme_mod( 'footer_column_one', '&copy; [year] - [blogname] | All rights reserved' );
+$footer_column_two = get_theme_mod( 'footer_column_two', 'Powered by <a href="https://wp-pagebuilderframework.com/" rel="nofollow">Page Builder Framework</a>' );
 
 // replace year and blogname "shortcodes"
-$footer_column_one = str_replace( '[year]', date( 'Y' ), $footer_column_one );
-$footer_column_one = str_replace( '[blogname]', get_option( 'blogname' ), $footer_column_one );
+// $footer_column_one = str_replace( '[year]', date( 'Y' ), $footer_column_one );
+// $footer_column_one = str_replace( '[blogname]', get_option( 'blogname' ), $footer_column_one );
 
-$footer_column_two = str_replace( '[year]', date( 'Y' ), $footer_column_two );
-$footer_column_two = str_replace( '[blogname]', get_option( 'blogname' ), $footer_column_two );
+$search = array( '[year]', '[blogname]' );
+$replace = array( date( 'Y' ), get_option( 'blogname' ) );
+
+$footer_column_one = str_replace( $search, $replace, $footer_column_one );
+$footer_column_two = str_replace( $search, $replace, $footer_column_two );
 
 ?>
 

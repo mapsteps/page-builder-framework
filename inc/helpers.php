@@ -138,9 +138,9 @@ function wpbf_remove_footer() {
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
 	// checking if transparent header is checked (returns true if so)
-	$remove_header = $options ? in_array( 'remove-footer', $options ) : false;
+	$remove_footer = $options ? in_array( 'remove-footer', $options ) : false;
 
-	if( $remove_header ) {
+	if( $remove_footer ) {
 		remove_action( 'wpbf_footer', 'wpbf_do_footer' );
 		remove_action( 'wpbf_before_footer', 'wpbf_custom_footer' );
 	}
@@ -153,7 +153,7 @@ function wpbf_scrolltop() {
 
 	if ( get_theme_mod( 'layout_scrolltop' ) ) {
 
-		$scrollTop = get_theme_mod( 'scrolltop_value' ) ? get_theme_mod( 'scrolltop_value' ) : 400;
+		$scrollTop = get_theme_mod( 'scrolltop_value', 400 );
 
 		?>
 
@@ -166,7 +166,6 @@ add_action( 'wp_footer', 'wpbf_scrolltop' );
 
 // Archive Class
 function wpbf_archive_class() {
-	$archive_class = '';
 	if( is_category() ) {
 		$archive_class = 'wpbf-category-content';
 	} else {
@@ -547,7 +546,7 @@ function wpbf_nav_menu() {
 
 		echo do_shortcode( $custom_menu );
 
-	} elseif( get_theme_mod( 'menu_position' ) == 'menu-right' || get_theme_mod( 'menu_position' ) == 'menu-left' || get_theme_mod( 'menu_position' ) == 'menu-centered' || get_theme_mod( 'menu_position' ) == 'menu-stacked' || get_theme_mod( 'menu_position' ) == 'menu-stacked-advanced' ) {
+	} elseif( in_array( get_theme_mod( 'menu_position' ), [ 'menu-right', 'menu-left', 'menu-centered', 'menu-stacked', 'menu-stacked-advanced' ] ) ) {
 
 		wp_nav_menu( array(
 			'theme_location'	=>		'main_menu',
@@ -557,7 +556,7 @@ function wpbf_nav_menu() {
 			'fallback_cb'		=>		'wpbf_menu_fallback'
 		));
 
-	} elseif ( get_theme_mod( 'menu_position' ) == 'menu-off-canvas' || get_theme_mod( 'menu_position' ) == 'menu-off-canvas-left' ) {
+	} elseif( in_array( get_theme_mod( 'menu_position' ), [ 'menu-off-canvas', 'menu-off-canvas-left' ] ) ) {
 
 		wp_nav_menu( array(
 			'theme_location'	=>		'main_menu',
@@ -591,24 +590,16 @@ function wpbf_nav_menu() {
 
 // Menu
 function wpbf_menu() {
-
-	$menu = get_theme_mod( 'menu_position' );
-	$menu = $menu ? $menu : "menu-right";
-	return $menu;
-
+	return get_theme_mod( 'menu_position', 'menu-right' );
 }
 
 // Mobile Menu
 function wpbf_mobile_menu() {
-
-	$mobile_menu = get_theme_mod( 'mobile_menu_options' );
-	$mobile_menu = $mobile_menu ? $mobile_menu : "menu-mobile-hamburger";
-	return $mobile_menu;
-
+	return get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
 }
 
 function wpbf_is_off_canvas_menu() {
-	if( get_theme_mod( 'menu_position' ) == 'menu-off-canvas' || get_theme_mod( 'menu_position' ) == 'menu-off-canvas-left' || get_theme_mod( 'menu_position' ) == 'menu-full-screen' ) {
+	if( in_array( get_theme_mod( 'menu_position' ), [ 'menu-off-canvas', 'menu-off-canvas-left', 'menu-full-screen' ] ) ) {
 		return true;
 	} else {
 		return false;
@@ -618,8 +609,9 @@ function wpbf_is_off_canvas_menu() {
 // Alignment
 function wpbf_menu_alignment() {
 
-	if ( get_theme_mod( 'menu_alignment' ) ) {
-		$alignment = get_theme_mod( 'menu_alignment', true );
+	$alignment = get_theme_mod( 'menu_alignment' );
+
+	if ( $alignment ) {
 		$alignment = ' menu-align-' . $alignment;
 	} else {
 		$alignment = ' menu-align-left';
@@ -632,9 +624,10 @@ function wpbf_menu_alignment() {
 // Menu Effect
 function wpbf_menu_effect() {
 
-	if ( get_theme_mod( 'menu_effect' ) ) {
-		$effect = get_theme_mod( 'menu_effect', true );
-		$menu_effect = ' wpbf-menu-effect-' . $effect;
+	$menu_effect = get_theme_mod( 'menu_effect');
+
+	if ( $menu_effect ) {
+		$menu_effect = ' wpbf-menu-effect-' . $menu_effect;
 	} else {
 		$menu_effect = ' wpbf-menu-effect-none';
 	}
@@ -646,9 +639,10 @@ function wpbf_menu_effect() {
 // Menu Animation
 function wpbf_menu_effect_animation() {
 
-	if ( get_theme_mod( 'menu_effect_animation' ) ) {
-		$animation = get_theme_mod( 'menu_effect_animation', true );
-		$menu_effect_animation = ' wpbf-menu-animation-' . $animation;
+	$menu_effect_animation = get_theme_mod( 'menu_effect_animation' );
+
+	if ( $menu_effect_animation ) {
+		$menu_effect_animation = ' wpbf-menu-animation-' . $menu_effect_animation;
 	} else {
 		$menu_effect_animation = ' wpbf-menu-animation-fade';
 	}
@@ -660,9 +654,10 @@ function wpbf_menu_effect_animation() {
 // Menu Alignment
 function wpbf_menu_effect_alignment() {
 
-	if ( get_theme_mod( 'menu_effect_alignment' ) ) {
-		$alignment = get_theme_mod( 'menu_effect_alignment', true );
-		$menu_effect_alignment = ' wpbf-menu-align-' . $alignment;
+	$menu_effect_alignment = get_theme_mod( 'menu_effect_alignment' );
+
+	if ( $menu_effect_alignment ) {
+		$menu_effect_alignment = ' wpbf-menu-align-' . $menu_effect_alignment;
 	} else {
 		$menu_effect_alignment = ' wpbf-menu-align-left';
 	}
@@ -674,9 +669,10 @@ function wpbf_menu_effect_alignment() {
 // Sub Menu Animation
 function wpbf_sub_menu_animation() {
 
-	if ( get_theme_mod( 'sub_menu_animation' ) ) {
-		$animation = get_theme_mod( 'sub_menu_animation', true );
-		$sub_menu_animation = ' wpbf-sub-menu-animation-' . $animation;
+	$sub_menu_animation = get_theme_mod( 'sub_menu_animation' );
+
+	if ( $sub_menu_animation ) {
+		$sub_menu_animation = ' wpbf-sub-menu-animation-' . $sub_menu_animation;
 	} else {
 		$sub_menu_animation = ' wpbf-sub-menu-animation-fade';
 	}
@@ -692,8 +688,7 @@ function wpbf_navigation_attributes() {
 	$submenu_animation_duration = get_theme_mod( 'sub_menu_animation_duration' );
 
 	// Construct Navigation Attributes
-	$navigation_attributes = "";
-	$navigation_attributes .= $submenu_animation_duration ? 'data-sub-menu-animation-duration="' . esc_attr( $submenu_animation_duration ) . '"' : 'data-sub-menu-animation-duration="250"';
+	$navigation_attributes = $submenu_animation_duration ? 'data-sub-menu-animation-duration="' . esc_attr( $submenu_animation_duration ) . '"' : 'data-sub-menu-animation-duration="250"';
 
 	echo $navigation_attributes; // WPCS: XSS ok.
 
