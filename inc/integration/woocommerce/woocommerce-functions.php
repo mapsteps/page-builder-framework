@@ -113,7 +113,7 @@ function wpbf_woo_output_content_wrapper() {
 	// vars
 	$single_sidebar_position_global = get_theme_mod( 'woocommerce_single_sidebar_layout' );
 	$sidebar_position_global = get_theme_mod( 'woocommerce_sidebar_layout' );
-	$grid_gap = get_theme_mod('sidebar_gap') ? get_theme_mod('sidebar_gap') : 'divider';
+	$grid_gap = get_theme_mod( 'sidebar_gap', 'medium' );
 
 	echo '<div id="content">';
 
@@ -244,7 +244,7 @@ function wpbf_woo_product_loop_start() {
 	$mobile_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_mobile' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_mobile' ) : 1;
 	$tablet_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_tablet' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_tablet' ) : 3;
 	$desktop_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_desktop' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_desktop' ) : 4;
-	$grid_gap = get_theme_mod( 'woocommerce_loop_grid_gap' ) ? get_theme_mod( 'woocommerce_loop_grid_gap' ) : 'large';
+	$grid_gap = get_theme_mod( 'sidebar_gap', 'large' );
 
 	return '<ul class="wpbf-grid wpbf-grid-'. esc_attr( $grid_gap ) .' wpbf-grid-1-'. esc_attr( $mobile_breakpoint ) .' wpbf-grid-small-1-'. esc_attr( $tablet_breakpoint ) .' wpbf-grid-large-1-'. esc_attr( $desktop_breakpoint ) .' products">'; 
 
