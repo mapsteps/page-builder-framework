@@ -22,6 +22,11 @@ require_once( WPBF_THEME_DIR . '/inc/customizer/wpbf-kirki.php' );
 // Body Classes
 require_once( WPBF_THEME_DIR . '/inc/body-classes.php' );
 
+// Breadcrumbs
+if ( ! function_exists( 'breadcrumb_trail' ) ) {
+	require_once( WPBF_THEME_DIR . '/inc/breadcrumbs.php' );
+}
+
 // Helpers
 require_once( WPBF_THEME_DIR . '/inc/helpers.php' );
 
