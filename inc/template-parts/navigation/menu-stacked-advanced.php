@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</div>
 
 			<div class="wpbf-3-4">
-				<?php echo do_shortcode( get_theme_mod('menu_stacked_wysiwyg') ); ?>
+				<?php echo do_shortcode( get_theme_mod( 'menu_stacked_wysiwyg' ) ); ?>
 			</div>
 
 		</div>
