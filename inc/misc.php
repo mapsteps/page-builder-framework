@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // Navigation Fallback
 function wpbf_menu_fallback() {
 	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) { ?>
-			<a style="float: right" href="<?php echo esc_url( admin_url( '/nav-menus.php' ) ); ?>"><?php _e( 'Add Menu', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
+			<a style="float: right" target="_blank" href="<?php echo esc_url( admin_url( '/nav-menus.php' ) ); ?>"><?php _e( 'Add Menu', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
 	<?php }
 }
 
