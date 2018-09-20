@@ -95,20 +95,6 @@ function wpbf_sidebars() {
 
 }
 
-// Sidebars fix (no hook is being used for update_option to fire immediately)
-$wpbf_current_sidebars = get_option( 'sidebars_widgets' );
-
-if( !empty( $wpbf_current_sidebars['wpbf-sidebar'] ) ) {
-
-	$wpbf_new_sidebars = $wpbf_current_sidebars;
-
-	$wpbf_new_sidebars['sidebar-1'] = $wpbf_new_sidebars['wpbf-sidebar'];
-	unset( $wpbf_new_sidebars['wpbf-sidebar'] );
-
-	update_option( 'sidebars_widgets', $wpbf_new_sidebars );
-
-}
-
 // Styles & Scripts
 add_action( 'wp_enqueue_scripts', 'wpbf_scripts', 10 );
 function wpbf_scripts() {
