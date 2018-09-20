@@ -8,7 +8,7 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$grid_gap = get_theme_mod( 'sidebar_gap' ) ? get_theme_mod( 'sidebar_gap' ) : 'medium';
+$grid_gap = get_theme_mod( 'sidebar_gap', 'medium' );
 $template_parts_header = get_theme_mod( 'single_sortable_header', array( 'title', 'meta', 'featured' ) );
 $template_parts_footer = get_theme_mod( 'single_sortable_footer', array( 'categories' ) );
 
