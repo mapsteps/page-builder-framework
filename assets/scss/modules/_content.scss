@@ -92,6 +92,16 @@ Blog
 	border-bottom: none;
 }
 
+// Breadcrumbs
+.wpbf-breadcrumbs {
+	padding: 0;
+	font-size: 14px;
+	.wpbf-breadcrumb {
+		list-style: none;
+		display: inline-block;
+	}
+}
+
 // Headlines
 .archive-title, .category-title, .wpbf-category-description {
 	margin-bottom: 				$margin-medium;
