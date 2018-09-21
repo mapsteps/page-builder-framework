@@ -36,8 +36,6 @@ add_action( 'customize_controls_print_styles', 'wpbf_adjust_customizer_responsiv
 // Generate & Minify Customizer CSS
 function wpbf_generate_css() {
 
-	$css  = '';
-
 	ob_start();
 	include_once( get_template_directory() . '/inc/customizer/styles.php' );
 	$css = ob_get_clean();
