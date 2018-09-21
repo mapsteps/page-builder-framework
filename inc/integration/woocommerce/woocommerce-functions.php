@@ -241,9 +241,9 @@ function wpbf_woo_output_content_wrapper_end() {
 
 // Loop Start
 function wpbf_woo_product_loop_start() {
-	$mobile_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_mobile' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_mobile' ) : 1;
-	$tablet_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_tablet' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_tablet' ) : 3;
-	$desktop_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_desktop' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_desktop' ) : 4;
+	$mobile_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_mobile', 1 );
+	$tablet_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_tablet', 3 );
+	$desktop_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_desktop', 4 );
 	$grid_gap = get_theme_mod( 'sidebar_gap', 'large' );
 
 	return '<ul class="wpbf-grid wpbf-grid-'. esc_attr( $grid_gap ) .' wpbf-grid-1-'. esc_attr( $mobile_breakpoint ) .' wpbf-grid-small-1-'. esc_attr( $tablet_breakpoint ) .' wpbf-grid-large-1-'. esc_attr( $desktop_breakpoint ) .' products">'; 
@@ -433,7 +433,7 @@ function wpbf_woo_loop_content() {
 add_filter( 'loop_shop_columns', 'wpbf_loop_columns' );
 function wpbf_loop_columns() {
 
-	$columns = get_theme_mod( 'woocommerce_loop_products_per_row_desktop' ) ? get_theme_mod( 'woocommerce_loop_products_per_row_desktop' ) : 4;
+	$columns = get_theme_mod( 'woocommerce_loop_products_per_row_desktop',4 );
 
 	return $columns;
 
@@ -451,7 +451,7 @@ add_filter( 'wpbf_woo_menu_item_classes', 'wpbf_woo_menu_item_class_current' );
 function wpbf_woo_menu_item() {
 
 	// vars
-	$icon = get_theme_mod( 'woocommerce_menu_item_icon' ) ? get_theme_mod( 'woocommerce_menu_item_icon' ) : 'cart';
+	$icon = get_theme_mod( 'woocommerce_menu_item_icon', 'cart' );
 	$css_classes = apply_filters( 'wpbf_woo_menu_item_classes', 'menu-item wpbf-woo-menu-item' );
 	$title = apply_filters( 'wpbf_woo_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
 	$cart_count = WC()->cart->get_cart_contents_count();
