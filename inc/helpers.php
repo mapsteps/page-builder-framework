@@ -609,13 +609,8 @@ function wpbf_is_off_canvas_menu() {
 // Alignment
 function wpbf_menu_alignment() {
 
-	$alignment = get_theme_mod( 'menu_alignment' );
-
-	if ( $alignment ) {
-		$alignment = ' menu-align-' . $alignment;
-	} else {
-		$alignment = ' menu-align-left';
-	}
+	$alignment = get_theme_mod( 'menu_alignment', 'left' );
+	$alignment = ' menu-align-' . $alignment;
 
 	return $alignment;
 
@@ -624,13 +619,8 @@ function wpbf_menu_alignment() {
 // Menu Effect
 function wpbf_menu_effect() {
 
-	$menu_effect = get_theme_mod( 'menu_effect');
-
-	if ( $menu_effect ) {
-		$menu_effect = ' wpbf-menu-effect-' . $menu_effect;
-	} else {
-		$menu_effect = ' wpbf-menu-effect-none';
-	}
+	$menu_effect = get_theme_mod( 'menu_effect', 'none' );
+	$menu_effect = ' wpbf-menu-effect-' . $menu_effect;
 
 	return $menu_effect;
 
@@ -639,13 +629,8 @@ function wpbf_menu_effect() {
 // Menu Animation
 function wpbf_menu_effect_animation() {
 
-	$menu_effect_animation = get_theme_mod( 'menu_effect_animation' );
-
-	if ( $menu_effect_animation ) {
-		$menu_effect_animation = ' wpbf-menu-animation-' . $menu_effect_animation;
-	} else {
-		$menu_effect_animation = ' wpbf-menu-animation-fade';
-	}
+	$menu_effect_animation = get_theme_mod( 'menu_effect_animation', 'fade' );
+	$menu_effect_animation = ' wpbf-menu-animation-' . $menu_effect_animation;
 
 	return $menu_effect_animation;
 
@@ -654,13 +639,8 @@ function wpbf_menu_effect_animation() {
 // Menu Alignment
 function wpbf_menu_effect_alignment() {
 
-	$menu_effect_alignment = get_theme_mod( 'menu_effect_alignment' );
-
-	if ( $menu_effect_alignment ) {
-		$menu_effect_alignment = ' wpbf-menu-align-' . $menu_effect_alignment;
-	} else {
-		$menu_effect_alignment = ' wpbf-menu-align-left';
-	}
+	$menu_effect_alignment = get_theme_mod( 'menu_effect_alignment', 'center' );
+	$menu_effect_alignment = ' wpbf-menu-align-' . $menu_effect_alignment;
 
 	return $menu_effect_alignment;
 
@@ -669,13 +649,8 @@ function wpbf_menu_effect_alignment() {
 // Sub Menu Animation
 function wpbf_sub_menu_animation() {
 
-	$sub_menu_animation = get_theme_mod( 'sub_menu_animation' );
-
-	if ( $sub_menu_animation ) {
-		$sub_menu_animation = ' wpbf-sub-menu-animation-' . $sub_menu_animation;
-	} else {
-		$sub_menu_animation = ' wpbf-sub-menu-animation-fade';
-	}
+	$sub_menu_animation = get_theme_mod( 'sub_menu_animation', 'fade' );
+	$sub_menu_animation = ' wpbf-sub-menu-animation-' . $sub_menu_animation;
 
 	return $sub_menu_animation;
 
