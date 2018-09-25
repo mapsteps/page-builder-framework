@@ -27,7 +27,7 @@ function wpbf_menu_search( $items, $args ) {
 
 	if( $args->theme_location == 'main_menu' && get_theme_mod( 'menu_search_icon' ) ) {
 
-		if ( in_array( get_theme_mod( 'menu_position', 'menu-right' ), [ 'menu-right', 'menu-left', 'menu-stacked', 'menu-stacked-advanced', 'menu-centered' ] ) ) {
+		if ( in_array( get_theme_mod( 'menu_position', 'menu-right' ), array( 'menu-right', 'menu-left', 'menu-stacked', 'menu-stacked-advanced', 'menu-centered' ) ) ) {
 
 			$items .= '<li class="menu-item wpbf-menu-item-search">';
 			$items .= '<a href="#">';

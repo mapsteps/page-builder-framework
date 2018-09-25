@@ -546,7 +546,7 @@ function wpbf_nav_menu() {
 
 		echo do_shortcode( $custom_menu );
 
-	} elseif( in_array( get_theme_mod( 'menu_position' ), [ 'menu-right', 'menu-left', 'menu-centered', 'menu-stacked', 'menu-stacked-advanced' ] ) ) {
+	} elseif( in_array( get_theme_mod( 'menu_position' ), array( 'menu-right', 'menu-left', 'menu-centered', 'menu-stacked', 'menu-stacked-advanced' ) ) ) {
 
 		wp_nav_menu( array(
 			'theme_location'	=>		'main_menu',
@@ -556,7 +556,7 @@ function wpbf_nav_menu() {
 			'fallback_cb'		=>		'wpbf_menu_fallback'
 		));
 
-	} elseif( in_array( get_theme_mod( 'menu_position' ), [ 'menu-off-canvas', 'menu-off-canvas-left' ] ) ) {
+	} elseif( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ) ) ) {
 
 		wp_nav_menu( array(
 			'theme_location'	=>		'main_menu',
@@ -599,7 +599,7 @@ function wpbf_mobile_menu() {
 }
 
 function wpbf_is_off_canvas_menu() {
-	if( in_array( get_theme_mod( 'menu_position' ), [ 'menu-off-canvas', 'menu-off-canvas-left', 'menu-full-screen' ] ) ) {
+	if( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left', 'menu-full-screen' ) ) ) {
 		return true;
 	} else {
 		return false;
