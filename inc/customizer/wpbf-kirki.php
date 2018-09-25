@@ -191,7 +191,7 @@ Kirki::add_section( 'wpbf_accent_options', array(
 
 // Buttons
 Kirki::add_section( 'wpbf_button_options', array(
-	'title'				=>			esc_attr__( 'Buttons', 'page-builder-framework' ),
+	'title'				=>			esc_attr__( 'Theme Buttons', 'page-builder-framework' ),
 	'panel'				=>			'layout_panel',
 	'priority'			=>			300,
 ) );
