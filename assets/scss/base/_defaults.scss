@@ -96,17 +96,23 @@ a:hover {
 	color: 						$accent-color-alt;
 }
 
+// Breadcrumbs
+
+// Theme Breadcrumbs
+.wpbf-breadcrumbs {
+	padding:					0;
+	font-size:					$small-fontsize;
+	margin-bottom:				$margin-small;
+	.wpbf-breadcrumb {
+		list-style:				none;
+		display:				inline-block;
+	}
+}
+
 // Yoast Breadcrumbs
 #breadcrumbs {
-	font-size: 					$tiny-fontsize;
-	line-height: 				normal;
+	font-size: 					$small-fontsize;
 	margin-bottom: 				$margin-small;
-	a {
-		color: 					$accent-color;
-	}
-	a:hover {
-		border-bottom: 			1px dotted $accent-color;
-	}
 }
 
 // Form
