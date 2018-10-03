@@ -433,7 +433,7 @@ function wpbf_woo_loop_content() {
 add_filter( 'loop_shop_columns', 'wpbf_loop_columns' );
 function wpbf_loop_columns() {
 
-	$columns = get_theme_mod( 'woocommerce_loop_products_per_row_desktop',4 );
+	$columns = get_theme_mod( 'woocommerce_loop_products_per_row_desktop', 4 );
 
 	return $columns;
 
