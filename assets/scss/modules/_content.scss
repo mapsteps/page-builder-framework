@@ -368,7 +368,7 @@ span.wpcf7-not-valid-tip {
 	top: 						0;
 	left: 						5px;
 	height: 					auto;
-	background: 				$base-color-alt;
+	background: 				#fff;
 	font-size: 					$small-fontsize;
 	color: 						tomato;
 }
@@ -376,7 +376,7 @@ span.wpcf7-not-valid-tip {
 div.wpcf7-response-output {
 	font-size: 					$small-fontsize;
 	padding:					$padding-small;
-	margin:						0 0 40px 0;
+	margin:						0;
 	@include					border-radius(2px);
 }
 
