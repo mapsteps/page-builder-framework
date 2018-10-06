@@ -47,7 +47,7 @@ function wpbf_breadcrumbs_2804( $args = array() ) {
 
 			switch ( $excluded_breadcrumb ) {
 				case 'archive':
-					if( is_achive() ) return;
+					if( is_archive() ) return;
 					break;
 				case 'single':
 					if( is_single() ) return;
