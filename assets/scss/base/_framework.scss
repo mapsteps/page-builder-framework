@@ -298,9 +298,8 @@ Component: Notices
 .#{$prefix}-notice {
 	background: $base-color-alt;
 	border: 2px solid $base-color;
-	padding: $padding-small;
+	padding: 5px $padding-small;
 	border-radius: 4px;
-	line-height: 1;
 	margin-bottom: $margin;
 }
 
