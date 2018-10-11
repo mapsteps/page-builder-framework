@@ -21,37 +21,21 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 				<?php do_action( 'wpbf_inner_content_open' ); ?>
 
-				<main id="main" class="wpbf-main" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
-
-					<?php do_action( 'wpbf_before_article' ); ?>
+				<main id="main" class="wpbf-main wpbf-404-content">
 					
-					<article id="post-not-found" class="wpbf-post wpbf-404 wpbf-text-center">
+					<div id="post-not-found" class="wpbf-404 wpbf-text-center">
 
-						<header class="article-header">
+						<?php echo '<h1>' . apply_filters( 'wpbf_404_headline', __( "404 - This page couldn't be found.", 'page-builder-framework' ) ) . '</h1>'; // WPCS: XSS ok. ?>
 
-							<h1 class="entry-title">
+						<?php echo '<p>' . apply_filters( 'wpbf_404_text', __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) ) . '</p>'; // WPCS: XSS ok. ?>
 
-							<?php echo '<h1 class="entry-title">' . apply_filters( 'wpbf_404_headline', __( "404 - This page couldn't be found.", 'page-builder-framework' ) ) . '</h1>'; // WPCS: XSS ok. ?>
-
-							</h1>
-
-						</header>
-
-						<section class="article-content">
-
-							<?php echo '<p>' . apply_filters( 'wpbf_404_text', __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) ) . '</p>'; // WPCS: XSS ok. ?>
-
-							<div class="wpbf-container-center wpbf-medium-1-2">
+						<div class="wpbf-container-center wpbf-medium-1-2">
 
 							<?php get_search_form(); ?>
 
-							</div>
+						</div>
 
-						</section>
-
-					</article>
-
-					<?php do_action( 'wpbf_after_article' ); ?>
+					</div>
 
 				</main>
 
