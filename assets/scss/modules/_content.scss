@@ -203,6 +203,10 @@ Blog
 		@include				border-radius(100%);
 		height: 				auto;
 		margin-right:			$margin-small;
+		display:				inline-block;
+	}
+	.comment-author-info {
+		display: 				inline-block;
 	}
 	.comment-author {
 		font-style: 			normal;
@@ -210,7 +214,7 @@ Blog
 	}
 	.comment-time {
 		color: 					$base-color;
-		margin-left: 			$margin-small;
+		margin-left: 			5px;
 		a {
 			color: 				$base-color;
 		}
