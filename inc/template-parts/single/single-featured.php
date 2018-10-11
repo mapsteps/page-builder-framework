@@ -11,6 +11,6 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-the_post_thumbnail( 'full', array( 'class' => 'wpbf-post-image' ) );
+the_post_thumbnail( 'full', array( 'class' => 'wpbf-post-image', 'itemprop' => 'image' ) );
 
 ?>

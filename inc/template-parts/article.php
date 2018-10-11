@@ -45,7 +45,7 @@ if ( is_category() ) {
 
 <?php  if ( $article_layout == 'beside' ) { ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> class="<?php echo esc_attr( $post_class ); ?>">
+						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> class="<?php echo esc_attr( $post_class ); ?>" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 							<?php if( has_post_thumbnail() ) { ?>
 
@@ -75,7 +75,7 @@ if ( is_category() ) {
 
 									?>
 
-									<div class="wpbf-excerpt">
+									<div class="wpbf-excerpt entry-summary" itemprop="text">
 										<?php the_excerpt(); ?>
 										<?php
 										wp_link_pages( array(
@@ -117,7 +117,7 @@ if ( is_category() ) {
 
 <?php } else { ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> class="<?php echo esc_attr( $post_class ); ?>">
+						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> class="<?php echo esc_attr( $post_class ); ?>" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 							<header class="article-header">
 
@@ -133,17 +133,15 @@ if ( is_category() ) {
 
 							</header>
 
-							<section class="article-content">
+							<section class="article-content entry-summary wpbf-excerpt" itemprop="text">
 
-								<div class="wpbf-excerpt">
-									<?php the_excerpt(); ?>
-									<?php
-									wp_link_pages( array(
-										'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
-										'after'  => '</div>',
-									) );
-									?>
-								</div>
+								<?php the_excerpt(); ?>
+								<?php
+								wp_link_pages( array(
+									'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
+									'after'  => '</div>',
+								) );
+								?>
 
 							</section>
 

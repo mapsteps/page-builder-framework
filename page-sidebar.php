@@ -32,14 +32,18 @@ get_header(); ?>
 
 						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-						<?php the_content(); ?>
+						<div class="entry-content" itemprop="text">
 
-						<?php
-						wp_link_pages( array(
-							'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
-							'after'  => '</div>',
-						) );
-						?>
+							<?php the_content(); ?>
+
+							<?php
+							wp_link_pages( array(
+								'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
+								'after'  => '</div>',
+							) );
+							?>
+
+						</div>
 
 						<?php endwhile; endif; ?>
 

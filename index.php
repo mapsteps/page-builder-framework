@@ -24,7 +24,7 @@ get_header(); ?>
 
 					<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3 wpbf-index-content" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
+					<main id="main" class="wpbf-main wpbf-medium-2-3 wpbf-index-content">
 					
 						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 

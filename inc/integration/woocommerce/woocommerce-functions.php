@@ -130,7 +130,7 @@ function wpbf_woo_output_content_wrapper() {
 
 			$single_sidebar_position == 'left' ? get_sidebar() : '';
 
-			echo $single_sidebar_position !== 'none' ? '<main id="main" class="wpbf-main wpbf-woocommerce-content wpbf-medium-2-3" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">' : '<main id="main" class="wpbf-main wpbf-woocommerce-content" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">';
+			echo $single_sidebar_position !== 'none' ? '<main id="main" class="wpbf-main wpbf-woocommerce-content wpbf-medium-2-3">' : '<main id="main" class="wpbf-main wpbf-woocommerce-content">';
 
 		} elseif( $single_sidebar_position_global && $single_sidebar_position_global !== 'none' ) {
 
@@ -138,7 +138,7 @@ function wpbf_woo_output_content_wrapper() {
 
 			$single_sidebar_position_global == 'left' ? get_sidebar() : '';
 
-			echo '<main id="main" class="wpbf-main wpbf-woocommerce-content wpbf-medium-2-3" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">';
+			echo '<main id="main" class="wpbf-main wpbf-woocommerce-content wpbf-medium-2-3">';
 
 		} else {
 
@@ -156,7 +156,7 @@ function wpbf_woo_output_content_wrapper() {
 
 			$sidebar_position_global == 'left' ? get_sidebar() : '';
 
-			echo '<main id="main" class="wpbf-main wpbf-woocommerce-content wpbf-medium-2-3" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">';
+			echo '<main id="main" class="wpbf-main wpbf-woocommerce-content wpbf-medium-2-3">';
 
 		} else {
 

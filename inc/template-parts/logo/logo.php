@@ -20,10 +20,16 @@ $custom_logo_url = apply_filters( 'wpbf_logo', $custom_logo_url[0] );
 
 if ( has_custom_logo() ) {
 
-	echo '<div class="wpbf-logo"'. esc_html( $menu_active_logo ) .' itemscope itemtype="http://schema.org/Organization"><a class="wpbf-remove-font-size" href="'. esc_url( $menu_logo_url ) .'"><img src="'. esc_url( $custom_logo_url ) .'" alt="'. esc_attr( $menu_alt_tag ) .'" title="'. esc_attr( $menu_title_tag ) .'"></a></div>';
+	echo '<div class="wpbf-logo"'. esc_html( $menu_active_logo ) .' itemscope="itemscope" itemtype="http://schema.org/Organization">
+	<a class="wpbf-remove-font-size" href="'. esc_url( $menu_logo_url ) .'">
+	<img src="'. esc_url( $custom_logo_url ) .'" alt="'. esc_attr( $menu_alt_tag ) .'" title="'. esc_attr( $menu_title_tag ) .'">
+	</a>
+	</div>';
 
 } else {
 
-	echo '<div class="wpbf-logo" itemscope itemtype="http://schema.org/Organization"><a href="'. esc_url( $menu_logo_url ) .'">'. esc_html( get_bloginfo( 'name' ) ) .'</a></div>';
+	echo '<div class="wpbf-logo" itemscope="itemscope" itemtype="http://schema.org/Organization">
+	<a href="'. esc_url( $menu_logo_url ) .'">'. esc_html( get_bloginfo( 'name' ) ) .'</a>
+	</div>';
 
 }

@@ -28,13 +28,13 @@ get_header(); ?>
 
 					<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3 wpbf-single-content" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
+					<main id="main" class="wpbf-main wpbf-medium-2-3 wpbf-single-content">
 
 						<?php do_action( 'wpbf_before_article' ); ?>
 
 						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 							<header class="article-header">
 
@@ -50,7 +50,7 @@ get_header(); ?>
 
 							</header>
 
-							<section class="article-content" itemprop="articleBody">
+							<section class="article-content entry-content" itemprop="text">
 
 								<?php the_content(); ?>
 
@@ -100,11 +100,7 @@ get_header(); ?>
 
 						</article>
 						
-						<?php endwhile; else : ?>
-
-						<?php get_template_part( 'inc/template-parts/article-none' ); ?>
-
-						<?php endif; ?>
+						<?php endwhile; endif; ?>
 
 						<?php do_action( 'wpbf_after_article' ); ?>
 
