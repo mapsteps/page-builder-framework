@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php do_action( 'wpbf_before_off_canvas_menu' ); ?>
 
-	<nav itemscope itemtype="http://schema.org/SiteNavigationElement">
+	<nav id="site-navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 
 		<?php do_action( 'wpbf_main_menu' ); ?>
 
