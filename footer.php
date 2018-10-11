@@ -18,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	</div>
 
+<?php do_action( 'wpbf_body_close' ); ?>
+
 <?php wp_footer(); ?>
 
 </body>
