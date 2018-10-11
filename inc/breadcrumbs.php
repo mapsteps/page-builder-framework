@@ -213,7 +213,7 @@ class WPBF_Breadcrumbs {
 
 			// Open the unordered list.
 			$breadcrumb .= sprintf(
-				'<%s class="wpbf-breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">',
+				'<%s class="wpbf-breadcrumbs" itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList">',
 				tag_escape( $this->args['list_tag'] )
 			);
 
@@ -251,7 +251,7 @@ class WPBF_Breadcrumbs {
 				}
 
 				// Create list item attributes.
-				$attributes = 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="' . $item_class . '"';
+				$attributes = 'itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem" class="' . $item_class . '"';
 
 				// Build the meta position HTML.
 				$meta = sprintf( '<meta itemprop="position" content="%s" />', absint( $item_position ) );
