@@ -27,9 +27,6 @@ Page Builder Framework WordPress Theme, Copyright 2017 wp-pagebuilderframework.c
 Page Builder Framework is licensed under the GNU General Public License 3 or later
 More details here: https://www.gnu.org/licenses/gpl-3.0.html
 
-Page Builder Framework is partially based on Bones – https://themble.com/bones/
-Bones is distributed under the WTFPL license – https://en.wikipedia.org/wiki/WTFPL
-
 -------------------------------------------------------
 Screenshot Licenses
 -------------------------------------------------------
