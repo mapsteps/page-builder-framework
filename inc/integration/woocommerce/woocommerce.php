@@ -9,6 +9,17 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+function wpbf_woo_change_inline_style_location( $location ) {
+
+	if ( !wpbf_is_premium() ) {
+		$location = 'wpbf-woocommerce';
+	}
+
+	return $location;
+
+}
+add_filter( 'wpbf_add_inline_style', 'wpbf_woo_change_inline_style_location' );
+
 // Theme Setup
 add_action( 'after_setup_theme', 'wpbf_woo_theme_setup' );
 
