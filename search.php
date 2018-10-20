@@ -26,7 +26,9 @@ get_header(); ?>
 
 					<main id="main" class="wpbf-main wpbf-medium-2-3 wpbf-search-content">
 
-						<h1 class="entry-title search-title">
+						<?php if( have_posts() ) : ?>
+
+						<h1 class="search-title">
 							<?php
 							printf( // WPCS: XSS ok.
 								/* translators: 1: Search query name */
@@ -36,7 +38,7 @@ get_header(); ?>
 							?>
 						</h1>
 
-						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+						<?php while ( have_posts() ) : the_post(); ?>
 
 						<?php get_template_part( 'inc/template-parts/article' ); ?>
 

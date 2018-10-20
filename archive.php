@@ -24,11 +24,13 @@ get_header(); ?>
 
 					<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3 <?php wpbf_archive_class(); ?>">
+					<main id="main" class="wpbf-main wpbf-medium-2-3<?php wpbf_archive_class(); ?>">
+
+						<?php if( have_posts() ) : ?>
 
 						<?php wpbf_archive_header(); ?>
 						
-						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+						<?php while ( have_posts() ) : the_post(); ?>
 
 						<?php get_template_part( 'inc/template-parts/article' ); ?>
 
