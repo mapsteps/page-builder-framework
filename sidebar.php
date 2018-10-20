@@ -16,7 +16,7 @@ $sidebar = apply_filters( 'wpbf_do_sidebar', 'sidebar-1' );
 
 		<?php do_action( 'wpbf_before_sidebar' ); ?>
 
-		<aside id="secondary" class="wpbf-sidebar" itemscope="itemscope" itemtype="http://schema.org/WPSideBar">
+		<aside id="sidebar" class="wpbf-sidebar" itemscope="itemscope" itemtype="http://schema.org/WPSideBar">
 
 		<?php do_action( 'wpbf_sidebar_open' ); ?>
 
