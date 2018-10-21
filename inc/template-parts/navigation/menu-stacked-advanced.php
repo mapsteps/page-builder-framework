@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php do_action( 'wpbf_before_main_menu' ); ?>
 
-	<nav id="site-navigation" class="wpbf-container wpbf-container-center wpbf-nav-wrapper" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+	<nav navigation class="wpbf-container wpbf-container-center wpbf-nav-wrapper" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 
 		<?php do_action( 'wpbf_main_menu_open' ); ?>
 
