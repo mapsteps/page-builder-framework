@@ -13,28 +13,24 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( is_category() ) {
 
-	$post_class = ' wpbf-category-post';
 	$template_parts_header = get_theme_mod( 'category_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'category_sortable_footer', array( 'readmore', 'categories' ) );
 	$article_layout = get_theme_mod( 'category_layout' );
 
 } elseif ( is_archive() ) {
 
-	$post_class = ' wpbf-archive-post';
 	$template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
 	$article_layout = get_theme_mod( 'archive_layout' );
 
 } elseif ( is_search() ) {
 
-	$post_class = ' wpbf-search-post';
 	$template_parts_header = get_theme_mod( 'blog_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
 	$article_layout = get_theme_mod( 'blog_layout' );
 
 } else {
 
-	$post_class = ' wpbf-index-post';
 	$template_parts_header = get_theme_mod( 'blog_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
 	$article_layout = get_theme_mod( 'blog_layout' );
@@ -45,7 +41,7 @@ if ( is_category() ) {
 
 <?php  if ( $article_layout == 'beside' ) { ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> class="<?php echo esc_attr( $post_class ); ?>" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 							<?php if( has_post_thumbnail() ) { ?>
 
@@ -75,7 +71,7 @@ if ( is_category() ) {
 
 									?>
 
-									<div class="wpbf-excerpt entry-summary" itemprop="text">
+									<div class="entry-summary" itemprop="text">
 										<?php the_excerpt(); ?>
 										<?php
 										wp_link_pages( array(
@@ -117,7 +113,7 @@ if ( is_category() ) {
 
 <?php } else { ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> class="<?php echo esc_attr( $post_class ); ?>" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 							<header class="article-header">
 
@@ -133,7 +129,7 @@ if ( is_category() ) {
 
 							</header>
 
-							<section class="article-content entry-summary wpbf-excerpt" itemprop="text">
+							<section class="entry-summary article-content" itemprop="text">
 
 								<?php the_excerpt(); ?>
 								<?php
