@@ -21,15 +21,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 				<?php do_action( 'wpbf_inner_content_open' ); ?>
 
-				<main id="main" class="wpbf-main wpbf-404-content">
-					
-					<div id="post-not-found" class="wpbf-404 wpbf-text-center">
+				<main id="main" class="wpbf-main">
 
-						<?php echo '<h1>' . apply_filters( 'wpbf_404_headline', __( "404 - This page couldn't be found.", 'page-builder-framework' ) ) . '</h1>'; // WPCS: XSS ok. ?>
+					<div class="wpbf-text-center">
 
-						<?php echo '<p>' . apply_filters( 'wpbf_404_text', __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) ) . '</p>'; // WPCS: XSS ok. ?>
+						<?php echo '<h1 class="entry-title" itemprop="headline">' . apply_filters( 'wpbf_404_headline', __( "404 - This page couldn't be found.", 'page-builder-framework' ) ) . '</h1>'; // WPCS: XSS ok. ?>
 
-						<div class="wpbf-container-center wpbf-medium-1-2">
+						<div class="wpbf-container-center wpbf-medium-1-2" itemprop="text">
+
+							<?php echo '<p>' . apply_filters( 'wpbf_404_text', __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) ) . '</p>'; // WPCS: XSS ok. ?>
 
 							<?php get_search_form(); ?>
 
