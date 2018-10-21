@@ -28,7 +28,7 @@ get_header(); ?>
 
 					<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3 wpbf-single-content">
+					<main id="main" class="wpbf-main wpbf-medium-2-3">
 
 						<?php do_action( 'wpbf_before_article' ); ?>
 
@@ -50,7 +50,7 @@ get_header(); ?>
 
 							</header>
 
-							<section class="article-content entry-content" itemprop="text">
+							<section class="entry-content article-content" itemprop="text">
 
 								<?php the_content(); ?>
 
@@ -77,7 +77,7 @@ get_header(); ?>
 
 								<?php if( !get_theme_mod( 'single_post_nav' ) || get_theme_mod( 'single_post_nav' ) == 'show' ) { ?>
 
-								<div class="post-links">
+								<div class="post-links wpbf-clearfix">
 
 									<?php
 

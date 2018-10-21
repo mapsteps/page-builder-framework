@@ -18,7 +18,7 @@ get_header(); ?>
 
 				<?php do_action( 'wpbf_inner_content_open' ); ?>
 
-				<main id="main" class="wpbf-main wpbf-page-content">
+				<main id="main" class="wpbf-main">
 
 					<?php wpbf_title(); ?>
 

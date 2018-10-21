@@ -24,7 +24,7 @@ get_header(); ?>
 
 					<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3<?php wpbf_archive_class(); ?>">
+					<main id="main" class="wpbf-main wpbf-medium-2-3">
 
 						<?php if( have_posts() ) : ?>
 

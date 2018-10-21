@@ -24,11 +24,11 @@ get_header(); ?>
 
 					<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3 wpbf-search-content">
+					<main id="main" class="wpbf-main wpbf-medium-2-3">
 
 						<?php if( have_posts() ) : ?>
 
-						<h1 class="search-title">
+						<h1 class="page-title">
 							<?php
 							printf( // WPCS: XSS ok.
 								/* translators: 1: Search query name */
