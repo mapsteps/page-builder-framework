@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php do_action( 'wpbf_body_open' ); ?>
 
-	<div id="container" class="wpbf-page">
+	<div id="container" class="hfeed wpbf-page">
 
 		<?php do_action( 'wpbf_before_header' ); ?>
 
