@@ -28,9 +28,9 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 	<?php } else { ?>
 
-	<li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
+	<li id="comment-<?php comment_ID(); ?>">
 
-		<article itemscope="itemscope" itemtype="https://schema.org/Comment">
+		<article <?php comment_class(); ?> itemscope="itemscope" itemtype="https://schema.org/Comment">
 
 			<footer class="comment-meta">
 
@@ -38,16 +38,16 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 				<div class="comment-author-info">
 
-					<span class="comment-author vcard" itemprop="author" itemscope itemtype="https://schema.org/Person">
+					<span class="comment-author author vcard" itemprop="author" itemscope itemtype="https://schema.org/Person">
 
 					<?php if ( $comment->user_id ) {
 
 						$user = get_userdata( $comment->user_id ); ?>
-						<?php printf( '<cite itemprop="name" class="comment-author">%s</cite>', esc_html( $user->display_name ) ); ?>
+						<?php printf( '<cite itemprop="name" class="fn">%s</cite>', esc_html( $user->display_name ) ); ?>
 
 					<?php } else { ?>
 
-						<?php printf( '<cite itemprop="name" class="comment-author">%s</cite>', get_comment_author_link() ); ?>
+						<?php printf( '<cite itemprop="name" class="fn">%s</cite>', get_comment_author_link() ); ?>
 
 					<?php } ?>
 
@@ -65,7 +65,7 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 			</footer>
 
-			<?php if ($comment->comment_approved == '0') : ?>
+			<?php if ( $comment->comment_approved == '0' ) : ?>
 
 			<div class="wpbf-notice wpbf-notice-warning">
 
