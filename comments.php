@@ -19,7 +19,7 @@ if ( post_password_required() )	return;
 
 		<h3 id="comments-title"><?php comments_number( __( '<span>No</span> Comments', 'page-builder-framework' ), __( '<span>One</span> Comment', 'page-builder-framework' ), __( '<span>%</span> Comments', 'page-builder-framework' ) );?></h3>
 
-		<ul>
+		<ul class="comments">
 
 			<?php
 				wp_list_comments( array(
