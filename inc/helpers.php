@@ -199,12 +199,36 @@ add_action( 'wp_footer', 'wpbf_scrolltop' );
 
 // Archive Class
 function wpbf_archive_class() {
-	if( is_category() ) {
-		$archive_class = 'wpbf-category-content';
-	} else {
-		$archive_class = 'wpbf-archive-content';
+
+	$archive_class = '';
+
+	if( is_date() ) {
+		$archive_class = ' wpbf-date-content';
+	} elseif( is_category() ) {
+		$archive_class = ' wpbf-category-content';
+	} elseif( is_tag() ) {
+		$archive_class = ' wpbf-tag-content';
+	} elseif( is_author() ) {
+		$archive_class = ' wpbf-author-content';
 	}
+
 	echo $archive_class; // WPCS: XSS ok.
+
+}
+
+// Single Class
+function wpbf_single_class() {
+
+	$single_class = '';
+
+	if( is_singular( 'post' ) ) {
+		$single_class = ' wpbf-single-content';
+	} elseif( is_attachment() ) {
+		$single_class = ' wpbf-attachment-content';
+	}
+
+	echo $single_class; // WPCS: XSS ok.
+
 }
 
 // Archive Header
@@ -212,26 +236,17 @@ function wpbf_archive_header() {
 
 	if( is_category() ) {
 
-		if ( !get_theme_mod( 'category_headline' ) || get_theme_mod( 'category_headline' ) == 'show' ) { ?>
+		if ( !get_theme_mod( 'category_headline' ) || get_theme_mod( 'category_headline' ) == 'show' ) {
 
-			<h1 class="category-title"><?php the_archive_title(); ?></h1>
-
-		<?php
-
-		}
-
-		if( category_description() ) { ?>
-
-		<div class="wpbf-category-description"><?php echo category_description(); ?></div>
-
-		<?php
+			the_archive_title( '<h1 class="page-title">', '</h1>' );
+			the_archive_description( '<div class="taxonomy-description">', '</div>' );
 
 		}
 
 	} elseif( is_author() ) { ?>
 
 		<section class="wpbf-author-box">
-			<h1 class="author-title"><?php echo get_the_author(); ?></h1>
+			<h1 class="page-title"><?php echo get_the_author(); ?></h1>
 			<p><?php echo wp_kses_post( get_the_author_meta( 'description' ) ); ?></p>
 			<div class="wpbf-avatar">
 				<?php echo get_avatar( get_the_author_meta( 'email' ), 120 ); ?>
@@ -242,7 +257,7 @@ function wpbf_archive_header() {
 
 		if ( !get_theme_mod( 'archive_headline' ) || get_theme_mod( 'archive_headline' ) == 'show' ) {
 
-			the_archive_title( '<h1 class="archive-title">', '</h1>' );
+			the_archive_title( '<h1 class="page-title">', '</h1>' );
 			the_archive_description( '<div class="taxonomy-description">', '</div>' );
 
 		}
