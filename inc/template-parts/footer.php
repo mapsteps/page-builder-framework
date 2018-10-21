@@ -26,7 +26,7 @@ $footer_column_two = str_replace( $search, $replace, $footer_column_two );
 
 ?>
 
-		<footer id="page-footer" class="wpbf-page-footer" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+		<footer id="page-footer" class="wpbf-page-footer" itemscope="itemscope" itemtype="https://schema.org/WPFooter">
 
 			<?php do_action( 'wpbf_footer_open' ); ?>
 

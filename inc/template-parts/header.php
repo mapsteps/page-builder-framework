@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 
-		<header id="page-header" class="wpbf-page-header" itemscope="itemscope" itemtype="http://schema.org/WPHeader">
+		<header id="page-header" class="wpbf-page-header" itemscope="itemscope" itemtype="https://schema.org/WPHeader">
 
 			<?php do_action( 'wpbf_header_open' ); ?>
 
