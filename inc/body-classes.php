@@ -140,9 +140,16 @@ function wpbf_body_classes( $classes ) {
 add_filter( 'post_class', 'wpbf_post_classes' );
 function wpbf_post_classes( $classes ) {
 
-	if( is_singular( 'post' ) ) {
-		$classes[] = 'wpbf-post';
-	}
+	// add class to all post types
+	$classes[] = 'wpbf-post';
+
+	// add class only single
+	// if( is_singular( 'post' ) {
+	// }
+
+	// add class to default archives
+	// if( is_home() || is_date() || is_category() || is_tag() || is_attachment() || is_author() || is_search() ) {
+	// }
 
 	// don't take it further if we're on a single
 	// if( is_single() ) return $classes;
