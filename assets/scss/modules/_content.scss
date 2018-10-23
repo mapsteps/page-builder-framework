@@ -72,28 +72,18 @@ body {
 Blog
 ========================================================================== */
 
-.#{$prefix}-index-content .#{$prefix}-post,
-.#{$prefix}-archive-content .#{$prefix}-post,
-.#{$prefix}-category-content .#{$prefix}-post,
-.#{$prefix}-search-content .#{$prefix}-post {
+.#{$prefix}-post {
 	margin-bottom: $margin;
 	border-bottom: 1px solid $base-color;
-	// if footer is hidden completely, reset excerpt margin
-	// > *:last-child .wpbf-excerpt {
-	// 	margin-bottom: 			0;
-	// }
 }
 
-.#{$prefix}-index-content .#{$prefix}-post:last-child,
-.#{$prefix}-archive-content .#{$prefix}-post:last-child,
-.#{$prefix}-category-content .#{$prefix}-post:last-child,
-.#{$prefix}-search-content .#{$prefix}-post:last-child {
+.#{$prefix}-post:last-child {
 	margin-bottom: 0;
 	border-bottom: none;
 }
 
 // Headlines
-.archive-title, .category-title, .wpbf-category-description {
+.page-title {
 	margin-bottom: 				$margin-medium;
 }
 
@@ -101,7 +91,7 @@ Blog
 .wpbf-author-box {
 	background: 				$base-color-alt;
 	margin-bottom: 				$margin;
-	padding: 					20px;
+	padding: 					$padding;
 	.avatar {
 		border-radius: 			100%;
 		width: 					60px;
@@ -109,10 +99,10 @@ Blog
 }
 
 // Article Header
-.#{$prefix}-post-image-link,
-.#{$prefix}-single-content .#{$prefix}-post-image {
+.wpbf-post-image {
 	margin-bottom: 				$margin;
-	display: 					block;
+	// width: 						100%;
+	// height: 					auto;
 }
 
 // Article Meta
@@ -123,11 +113,6 @@ Blog
 	}
 }
 
-// Excerpt
-.#{$prefix}-excerpt {
-	margin-bottom: 				$margin;
-}
-
 // Article Footer
 .article-footer {
 	clear: 						both;
@@ -135,18 +120,6 @@ Blog
 
 .wpbf-read-more {
 	margin-bottom: 				$margin;
-}
-
-.footer-categories, .footer-tags {
-	a {
-		text-decoration: 		underline;
-	}
-}
-
-// Post image
-.#{$prefix}-post-image {
-	width: 						100%;
-	height: 					auto;
 }
 
 /* Comments */
