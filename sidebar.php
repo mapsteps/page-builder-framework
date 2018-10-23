@@ -25,8 +25,8 @@ $sidebar = apply_filters( 'wpbf_do_sidebar', 'sidebar-1' );
 			<?php if( current_user_can( 'edit_theme_options' ) ) { ?>
 
 				<div class="widget no-widgets">
-					<?php _e( 'Your sidebar widgets will appear here', 'page-builder-framework' ); ?><br>
-					<a href='<?php echo esc_url( admin_url( 'widgets.php' ) ); ?>'><?php _e( 'Add Widgets', 'page-builder-framework' ); ?></a>
+					<?php _e( 'Your sidebar widgets will appear here', 'page-builder-framework' ); // WPCS: XSS ok. ?><br>
+					<a href='<?php echo esc_url( admin_url( 'widgets.php' ) ); ?>'><?php _e( 'Add Widgets', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
 				</div>
 
 			<?php } ?>
