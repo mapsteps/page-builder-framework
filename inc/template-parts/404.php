@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 				<?php do_action( 'wpbf_inner_content_open' ); ?>
 
-				<main id="main" class="wpbf-main">
+				<main id="main" class="wpbf-main<?php echo wpbf_singular_class(); ?>">
 
 					<div class="wpbf-text-center">
 
