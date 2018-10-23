@@ -203,31 +203,58 @@ function wpbf_archive_class() {
 	$archive_class = '';
 
 	if( is_date() ) {
-		$archive_class = ' wpbf-date-content';
+		$archive_class .= ' wpbf-post-archive wpbf-date-content';
 	} elseif( is_category() ) {
-		$archive_class = ' wpbf-category-content';
+		$archive_class = ' wpbf-post-archive wpbf-category-content';
 	} elseif( is_tag() ) {
-		$archive_class = ' wpbf-tag-content';
+		$archive_class = ' wpbf-post-archive wpbf-tag-content';
 	} elseif( is_author() ) {
-		$archive_class = ' wpbf-author-content';
+		$archive_class = ' wpbf-post-archive wpbf-author-content';
+	} elseif( is_home() ) {
+		$archive_class = ' wpbf-post-archive wpbf-index-content';
+	} elseif( is_search() ) {
+		$archive_class = ' wpbf-post-archive wpbf-search-content';
+	} elseif( is_tax() ) {
+
+		$post_type = get_post_type();
+		if( !$post_type ) return $archive_class;
+
+		$archive_class = ' wpbf-'. $post_type .'-archive';
+		$archive_class .= ' wpbf-'. $post_type .'-taxonomy-content';
+
+	} elseif( is_post_type_archive() ) {
+
+		$post_type = get_post_type();
+		if( !$post_type ) return $archive_class;
+
+		$archive_class = ' wpbf-'. $post_type .'-archive';
+		$archive_class .= ' wpbf-'. $post_type .'-archive-content';
+
 	}
 
-	echo $archive_class; // WPCS: XSS ok.
+	return $archive_class;
 
 }
 
-// Single Class
-function wpbf_single_class() {
+// Singular Class
+function wpbf_singular_class() {
 
-	$single_class = '';
+	$singular_class = '';
 
 	if( is_singular( 'post' ) ) {
-		$single_class = ' wpbf-single-content';
+		$singular_class = ' wpbf-single-content';
 	} elseif( is_attachment() ) {
-		$single_class = ' wpbf-attachment-content';
+		$singular_class = ' wpbf-attachment-content';
+	} elseif( is_page() ) {
+		$singular_class = ' wpbf-page-content';
+	} elseif( is_404() ) {
+		$singular_class = ' wpbf-404-content';
+	} else {
+		$post_type = get_post_type();
+		$singular_class = ' wpbf-'. $post_type .'-content';
 	}
 
-	echo $single_class; // WPCS: XSS ok.
+	return $singular_class;
 
 }
 
