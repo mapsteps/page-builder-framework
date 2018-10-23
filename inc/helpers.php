@@ -203,7 +203,7 @@ function wpbf_archive_class() {
 	$archive_class = '';
 
 	if( is_date() ) {
-		$archive_class .= ' wpbf-post-archive wpbf-date-content';
+		$archive_class = ' wpbf-post-archive wpbf-date-content';
 	} elseif( is_category() ) {
 		$archive_class = ' wpbf-post-archive wpbf-category-content';
 	} elseif( is_tag() ) {
