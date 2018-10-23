@@ -11,6 +11,8 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if( !has_post_thumbnail() ) return;
+
 ?>
 
 <a class="wpbf-post-image-link" href="<?php echo esc_url( get_permalink() ); ?>">
