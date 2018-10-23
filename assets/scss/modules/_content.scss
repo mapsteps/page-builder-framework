@@ -72,12 +72,12 @@ body {
 Blog
 ========================================================================== */
 
-.#{$prefix}-post {
+.wpbf-post-archive .wpbf-post {
 	margin-bottom: $margin;
 	border-bottom: 1px solid $base-color;
 }
 
-.#{$prefix}-post:last-child {
+.wpbf-post-archive .wpbf-post:last-child {
 	margin-bottom: 0;
 	border-bottom: none;
 }
@@ -99,10 +99,15 @@ Blog
 }
 
 // Article Header
-.wpbf-post-image {
-	margin-bottom: 				$margin;
+.single .wpbf-post-image {
+	margin-bottom: $margin;
 	// width: 						100%;
 	// height: 					auto;
+}
+
+.wpbf-post-image-link {
+	display: block;
+	margin-bottom: $margin;
 }
 
 // Article Meta
