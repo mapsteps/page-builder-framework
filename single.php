@@ -117,8 +117,10 @@ get_header(); ?>
 			<?php else : ?>
 
 				<?php 
-				the_post();
-				the_content();
+				if( have_posts() ) {
+					the_post();
+					the_content();
+				}
 				?>
 
 			<?php endif; ?>
