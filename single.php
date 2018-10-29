@@ -116,7 +116,10 @@ get_header(); ?>
 
 			<?php else : ?>
 
-				<?php the_content(); ?>
+				<?php 
+				the_post();
+				the_content();
+				?>
 
 			<?php endif; ?>
 
