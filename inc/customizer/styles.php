@@ -16,31 +16,21 @@ do_action( 'wpbf_before_customizer_css' );
 /* Typography */
 
 // Page Font Settings
-$page_font_family_value = get_theme_mod( 'page_font_family', array() );
 $page_font_toggle = get_theme_mod( 'page_font_toggle' );
+$page_font_family_value = get_theme_mod( 'page_font_family', array() );
+$page_font_color = get_theme_mod( 'page_font_color' );
 
-if( $page_font_toggle && $page_font_family_value ) { ?>
+if( $page_font_toggle && $page_font_family_value ) {
 
-	body,
-	button,
-	input,
-	optgroup,
-	select,
-	textarea,
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
+	echo 'body, button, input, optgroup, select, textarea, h1, h2, h3, h4, h5, h6 {';
 
-	<?php if( isset( $page_font_family_value['font-family'] ) && !empty( $page_font_family_value['font-family'] ) ) { ?>
+	if( isset( $page_font_family_value['font-family'] ) && !empty( $page_font_family_value['font-family'] ) ) {
 
-		font-family: <?php echo html_entity_decode( esc_attr( $page_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
 
-	<?php } ?>
+	}
 
-	<?php if( isset( $page_font_family_value['variant'] ) && !empty( $page_font_family_value['variant'] ) ) {
+	if( isset( $page_font_family_value['variant'] ) && !empty( $page_font_family_value['variant'] ) ) {
 
 		$page_font_family_font_weight = str_replace( 'italic', '', $page_font_family_value['variant'] );
 		$page_font_family_font_weight = ( in_array( $page_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_font_family_font_weight;
@@ -48,39 +38,40 @@ if( $page_font_toggle && $page_font_family_value ) { ?>
 		$page_font_family_is_italic = ( false !== strpos( $page_font_family_value['variant'], 'italic' ) );
 		$page_font_family_font_style = $page_font_family_is_italic ? 'italic' : 'normal' ;
 
-		?>
-
-		font-weight: <?php echo esc_attr( $page_font_family_font_weight ); ?>;
-		font-style: <?php echo esc_attr( $page_font_family_font_style ); ?>;
-
-	<?php } ?>
+		echo sprintf( 'font-weight: %s;', esc_attr( $page_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $page_font_family_font_style ) );
 
 	}
 
-<?php } ?>
+	echo '}';
 
-<?php
-if( get_theme_mod( 'page_font_color' ) ) { ?>
-body {
-	color: <?php echo esc_attr( get_theme_mod( 'page_font_color' ) ); ?>;
 }
-<?php } ?>
 
-<?php
+if( $page_font_color ) { 
+
+	echo 'body {';
+
+		echo sprintf( 'color: %s;', esc_attr( $page_font_color ) );
+
+	echo '}';
+
+}
 
 // Menu Font Settings
-$menu_font_family_value = get_theme_mod( 'menu_font_family', array() );
 $menu_font_family_toggle = get_theme_mod( 'menu_font_family_toggle' );
+$menu_font_family_value = get_theme_mod( 'menu_font_family', array() );
 
-if( $menu_font_family_toggle && $menu_font_family_value ) { ?>
+if( $menu_font_family_toggle && $menu_font_family_value ) {
 
-	.wpbf-menu, .wpbf-mobile-menu {
+	echo '.wpbf-menu, .wpbf-mobile-menu {';
 
-	<?php if( isset( $menu_font_family_value['font-family'] ) && !empty( $menu_font_family_value['font-family'] ) ) { ?>
-		font-family: <?php echo html_entity_decode( esc_attr( $menu_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
-	<?php } ?>
+	if( isset( $menu_font_family_value['font-family'] ) && !empty( $menu_font_family_value['font-family'] ) ) {
 
-	<?php if( isset( $menu_font_family_value['variant'] ) && !empty( $menu_font_family_value['variant'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $menu_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
+	}
+
+	if( isset( $menu_font_family_value['variant'] ) && !empty( $menu_font_family_value['variant'] ) ) {
 
 		$menu_font_family_font_weight = str_replace( 'italic', '', $menu_font_family_value['variant'] );
 		$menu_font_family_font_weight = ( in_array( $menu_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $menu_font_family_font_weight;
@@ -88,37 +79,30 @@ if( $menu_font_family_toggle && $menu_font_family_value ) { ?>
 		$menu_font_family_is_italic = ( false !== strpos( $menu_font_family_value['variant'], 'italic' ) );
 		$menu_font_family_is_style = $menu_font_family_is_italic ? 'italic' : 'normal' ;
 
-		?>
-		
-		font-weight: <?php echo esc_attr( $menu_font_family_font_weight ); ?>;
-		font-style: <?php echo esc_attr( $menu_font_family_is_style ); ?>;
-
-	<?php } ?>
+		echo sprintf( 'font-weight: %s;', esc_attr( $menu_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $menu_font_family_is_style ) );
 
 	}
 
-<?php } ?>
+	echo '}';
 
-<?php
+}
 
 // H1 Font Settings
-$page_h1_font_family_value = get_theme_mod( 'page_h1_font_family', array() );
 $page_h1_toggle = get_theme_mod( 'page_h1_toggle' );
+$page_h1_font_family_value = get_theme_mod( 'page_h1_font_family', array() );
 
-if( $page_h1_toggle && $page_h1_font_family_value ) { ?>
+if( $page_h1_toggle && $page_h1_font_family_value ) {
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
+	echo 'h1, h2, h3, h4, h5, h6 {';
 
-	<?php if( isset( $page_h1_font_family_value['font-family'] ) && !empty( $page_h1_font_family_value['font-family'] ) ) { ?>
-		font-family: <?php echo html_entity_decode( esc_attr( $page_h1_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
-	<?php } ?>
+	if( isset( $page_h1_font_family_value['font-family'] ) && !empty( $page_h1_font_family_value['font-family'] ) ) {
 
-	<?php if( isset( $page_h1_font_family_value['variant'] ) && !empty( $page_h1_font_family_value['variant'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h1_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
+	}
+
+	if( isset( $page_h1_font_family_value['variant'] ) && !empty( $page_h1_font_family_value['variant'] ) ) {
 
 		$page_h1_font_family_font_weight = str_replace( 'italic', '', $page_h1_font_family_value['variant'] );
 		$page_h1_font_family_font_weight = ( in_array( $page_h1_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h1_font_family_font_weight;
@@ -126,32 +110,30 @@ if( $page_h1_toggle && $page_h1_font_family_value ) { ?>
 		$page_h1_font_family_is_italic = ( false !== strpos( $page_h1_font_family_value['variant'], 'italic' ) );
 		$page_h1_font_family_is_style = $page_h1_font_family_is_italic ? 'italic' : 'normal' ;
 
-		?>
-
-		font-weight: <?php echo esc_attr( $page_h1_font_family_font_weight ); ?>;
-		font-style: <?php echo esc_attr( $page_h1_font_family_is_style ); ?>;
-
-	<?php } ?>
+		echo sprintf( 'font-weight: %s;', esc_attr( $page_h1_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $page_h1_font_family_is_style ) );
 
 	}
 
-<?php } ?>
+	echo '}';
 
-<?php
+}
 
 // H2 Font Settings
 $page_h2_font_family_value = get_theme_mod( 'page_h2_font_family', array() );
 $page_h2_toggle = get_theme_mod( 'page_h2_toggle' );
 
-if( $page_h2_toggle && $page_h2_font_family_value ) { ?>
+if( $page_h2_toggle && $page_h2_font_family_value ) {
 
-	h2 {
+	echo 'h2 {';
 
-	<?php if( isset( $page_h2_font_family_value['font-family'] ) && !empty( $page_h2_font_family_value['font-family'] ) ) { ?>
-		font-family: <?php echo html_entity_decode( esc_attr( $page_h2_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
-	<?php } ?>
+	if( isset( $page_h2_font_family_value['font-family'] ) && !empty( $page_h2_font_family_value['font-family'] ) ) {
 
-	<?php if( isset( $page_h2_font_family_value['variant'] ) && !empty( $page_h2_font_family_value['variant'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h2_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
+	}
+
+	if( isset( $page_h2_font_family_value['variant'] ) && !empty( $page_h2_font_family_value['variant'] ) ) {
 
 		$page_h2_font_family_font_weight = str_replace( 'italic', '', $page_h2_font_family_value['variant'] );
 		$page_h2_font_family_font_weight = ( in_array( $page_h2_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h2_font_family_font_weight;
@@ -159,32 +141,29 @@ if( $page_h2_toggle && $page_h2_font_family_value ) { ?>
 		$page_h2_font_family_is_italic = ( false !== strpos( $page_h2_font_family_value['variant'], 'italic' ) );
 		$page_h2_font_family_is_style = $page_h2_font_family_is_italic ? 'italic' : 'normal';
 
-		?>
-
-		font-weight: <?php echo esc_attr( $page_h2_font_family_font_weight ); ?>;
-		font-style: <?php echo esc_attr( $page_h2_font_family_is_style ); ?>;
-
-	<?php } ?>
+		echo sprintf( 'font-weight: %s;', esc_attr( $page_h2_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $page_h2_font_family_is_style ) );
 
 	}
 
-<?php } ?>
+	echo '}';
 
-<?php
+}
 
 // H3 Font Settings
-$page_h3_font_family_value = get_theme_mod( 'page_h3_font_family', array() );
 $page_h3_toggle = get_theme_mod( 'page_h3_toggle' );
+$page_h3_font_family_value = get_theme_mod( 'page_h3_font_family', array() );
 
-if( $page_h3_toggle && $page_h3_font_family_value ) { ?>
+if( $page_h3_toggle && $page_h3_font_family_value ) {
 
-	h3 {
+	echo 'h3 {';
 
-	<?php if( isset( $page_h3_font_family_value['font-family'] ) && !empty( $page_h3_font_family_value['font-family'] ) ) { ?>
-		font-family: <?php echo html_entity_decode( esc_attr( $page_h3_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
-	<?php } ?>
+	if( isset( $page_h3_font_family_value['font-family'] ) && !empty( $page_h3_font_family_value['font-family'] ) ) {
 
-	<?php if( isset( $page_h3_font_family_value['variant'] ) && !empty( $page_h3_font_family_value['variant'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h3_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+	}
+
+	if( isset( $page_h3_font_family_value['variant'] ) && !empty( $page_h3_font_family_value['variant'] ) ) {
 
 		$page_h3_font_family_font_weight = str_replace( 'italic', '', $page_h3_font_family_value['variant'] );
 		$page_h3_font_family_font_weight = ( in_array( $page_h3_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h3_font_family_font_weight;
@@ -192,32 +171,30 @@ if( $page_h3_toggle && $page_h3_font_family_value ) { ?>
 		$page_h3_font_family_is_italic = ( false !== strpos( $page_h3_font_family_value['variant'], 'italic' ) );
 		$page_h3_font_family_is_style = $page_h3_font_family_is_italic ? 'italic' : 'normal' ;
 
-		?>
-
-		font-weight: <?php echo esc_attr( $page_h3_font_family_font_weight ); ?>;
-		font-style: <?php echo esc_attr( $page_h3_font_family_is_style ); ?>;
-
-	<?php } ?>
+		echo sprintf( 'font-weight: %s;', esc_attr( $page_h3_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $page_h3_font_family_is_style ) );
 
 	}
 
-<?php } ?>
+	echo '}';
 
-<?php
+}
 
 // H4 Font Settings
-$page_h4_font_family_value = get_theme_mod( 'page_h4_font_family', array() );
 $page_h4_toggle = get_theme_mod( 'page_h4_toggle' );
+$page_h4_font_family_value = get_theme_mod( 'page_h4_font_family', array() );
 
-if( $page_h4_toggle && $page_h4_font_family_value ) { ?>
+if( $page_h4_toggle && $page_h4_font_family_value ) {
 
-	h4 {
+	echo 'h4 {';
 
-	<?php if( isset( $page_h4_font_family_value['font-family'] ) && !empty( $page_h4_font_family_value['font-family'] ) ) { ?>
-		font-family: <?php echo html_entity_decode( esc_attr( $page_h4_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
-	<?php } ?>
+	if( isset( $page_h4_font_family_value['font-family'] ) && !empty( $page_h4_font_family_value['font-family'] ) ) {
 
-	<?php if( isset( $page_h4_font_family_value['variant'] ) && !empty( $page_h4_font_family_value['variant'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h4_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
+	}
+
+	if( isset( $page_h4_font_family_value['variant'] ) && !empty( $page_h4_font_family_value['variant'] ) ) {
 
 		$page_h4_font_family_font_weight = str_replace( 'italic', '', $page_h4_font_family_value['variant'] );
 		$page_h4_font_family_font_weight = ( in_array( $page_h4_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h4_font_family_font_weight;
@@ -225,32 +202,30 @@ if( $page_h4_toggle && $page_h4_font_family_value ) { ?>
 		$page_h4_font_family_is_italic = ( false !== strpos( $page_h4_font_family_value['variant'], 'italic' ) );
 		$page_h4_font_family_is_style = $page_h4_font_family_is_italic ? 'italic' : 'normal' ;
 
-		?>
-
-		font-weight: <?php echo esc_attr( $page_h4_font_family_font_weight ); ?>;
-		font-style: <?php echo esc_attr( $page_h4_font_family_is_style ); ?>;
-
-	<?php } ?>
+		echo sprintf( 'font-weight: %s;', esc_attr( $page_h4_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $page_h4_font_family_is_style ) );
 
 	}
 
-<?php } ?>
+	echo '}';
 
-<?php
+}
 
 // H5 Font Settings
-$page_h5_font_family_value = get_theme_mod( 'page_h5_font_family', array() );
 $page_h5_toggle = get_theme_mod( 'page_h5_toggle' );
+$page_h5_font_family_value = get_theme_mod( 'page_h5_font_family', array() );
 
-if( $page_h5_toggle && $page_h5_font_family_value ) { ?>
+if( $page_h5_toggle && $page_h5_font_family_value ) {
 
-	h5 {
+	echo 'h5 {';
 
-	<?php if( isset( $page_h5_font_family_value['font-family'] ) && !empty( $page_h5_font_family_value['font-family'] ) ) { ?>
-		font-family: <?php echo html_entity_decode( esc_attr( $page_h5_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
-	<?php } ?>
+	if( isset( $page_h5_font_family_value['font-family'] ) && !empty( $page_h5_font_family_value['font-family'] ) ) {
 
-	<?php if( isset( $page_h5_font_family_value['variant'] ) && !empty( $page_h5_font_family_value['variant'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h5_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
+	}
+
+	if( isset( $page_h5_font_family_value['variant'] ) && !empty( $page_h5_font_family_value['variant'] ) ) {
 
 		$page_h5_font_family_font_weight = str_replace( 'italic', '', $page_h5_font_family_value['variant'] );
 		$page_h5_font_family_font_weight = ( in_array( $page_h5_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h5_font_family_font_weight;
@@ -258,32 +233,31 @@ if( $page_h5_toggle && $page_h5_font_family_value ) { ?>
 		$page_h5_font_family_is_italic = ( false !== strpos( $page_h5_font_family_value['variant'], 'italic' ) );
 		$page_h5_font_family_is_style = $page_h5_font_family_is_italic ? 'italic' : 'normal' ;
 
-		?>
-
-		font-weight: <?php echo esc_attr( $page_h5_font_family_font_weight ); ?>;
-		font-style: <?php echo esc_attr( $page_h5_font_family_is_style ); ?>;
-
-	<?php } ?>
+		echo sprintf( 'font-weight: %s;', esc_attr( $page_h5_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $page_h5_font_family_is_style ) );
 
 	}
 
-<?php } ?>
+	echo '}';
 
-<?php
+}
 
  // H6 Font Settings
-$page_h6_font_family_value = get_theme_mod( 'page_h6_font_family', array() );
 $page_h6_toggle = get_theme_mod( 'page_h6_toggle' );
+$page_h6_font_family_value = get_theme_mod( 'page_h6_font_family', array() );
 
-if( $page_h6_toggle && $page_h6_font_family_value ) { ?>
 
-	h6 {
+if( $page_h6_toggle && $page_h6_font_family_value ) {
 
-	<?php if( isset( $page_h6_font_family_value['font-family'] ) && !empty( $page_h6_font_family_value['font-family'] ) ) { ?>
-		font-family: <?php echo html_entity_decode( esc_attr( $page_h6_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
-	<?php } ?>
+	echo 'h6 {';
 
-	<?php if( isset( $page_h6_font_family_value['variant'] ) && !empty( $page_h6_font_family_value['variant'] ) ) {
+	if( isset( $page_h6_font_family_value['font-family'] ) && !empty( $page_h6_font_family_value['font-family'] ) ) {
+
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h6_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
+	}
+
+	if( isset( $page_h6_font_family_value['variant'] ) && !empty( $page_h6_font_family_value['variant'] ) ) {
 
 		$page_h6_font_family_font_weight = str_replace( 'italic', '', $page_h6_font_family_value['variant'] );
 		$page_h6_font_family_font_weight = ( in_array( $page_h6_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h6_font_family_font_weight;
@@ -291,380 +265,538 @@ if( $page_h6_toggle && $page_h6_font_family_value ) { ?>
 		$page_h6_font_family_is_italic = ( false !== strpos( $page_h6_font_family_value['variant'], 'italic' ) );
 		$page_h6_font_family_is_style = $page_h6_font_family_is_italic ? 'italic' : 'normal' ;
 
-		?>
-
-		font-weight: <?php echo esc_attr( $page_h6_font_family_font_weight ); ?>;
-		font-style: <?php echo esc_attr( $page_h6_font_family_is_style ); ?>;
-
-	<?php } ?>
+		echo sprintf( 'font-weight: %s;', esc_attr( $page_h6_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $page_h6_font_family_is_style ) );
 
 	}
 
-<?php } ?>
-
-<?php
-
-// General
-if( get_theme_mod( 'page_max_width' ) ) { ?>
-
-.wpbf-container {
-	max-width: <?php echo esc_attr( get_theme_mod( 'page_max_width' ) ) ?>;
-}
-
-<?php } ?>
-
-<?php if( get_theme_mod( 'page_boxed' ) ) { ?>
-
-	<?php if( get_theme_mod( 'page_boxed_padding' ) ) { ?>
-
-	.wpbf-container {
-			padding-left: <?php echo esc_attr( get_theme_mod( 'page_boxed_padding' ) ) ?>px;
-			padding-right: <?php echo esc_attr( get_theme_mod( 'page_boxed_padding' ) ) ?>px;
-	}
-
-	<?php } ?>
-
-	.wpbf-page {
-		<?php if( get_theme_mod( 'page_max_width' ) ) { ?>
-			max-width: <?php echo esc_attr( get_theme_mod( 'page_max_width' ) ) ?>;
-		<?php } else { ?>
-			max-width: 1200px;
-		<?php } ?>
-			margin: 0 auto;
-
-		<?php if( get_theme_mod( 'page_boxed_margin' ) ) { ?>
-			margin-top: <?php echo esc_attr( get_theme_mod( 'page_boxed_margin' ) ) ?>px;
-			margin-bottom: <?php echo esc_attr( get_theme_mod( 'page_boxed_margin' ) ) ?>px;
-		<?php } ?>
-
-		<?php if( get_theme_mod( 'page_boxed_background' ) ) { ?>
-			background-color: <?php echo esc_attr( get_theme_mod( 'page_boxed_background' ) ) ?>;
-		<?php } ?>
-	}
-
-	<?php if( get_theme_mod( 'page_boxed_box_shadow' ) ) { ?>
-	#container {
-		box-shadow: <?php if( get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) . 'px'; else : echo'0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) . 'px'; else : echo '0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_blur' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_blur' ) ) . 'px'; else : echo '25px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_spread' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_spread' ) ) . 'px'; else : echo '0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_color' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_color' ) ); else : echo 'rgba(0,0,0,.15)'; endif; ?>;
-		-moz-box-shadow: <?php if( get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) . 'px'; else : echo'0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) . 'px'; else : echo '0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_blur' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_blur' ) ) . 'px'; else : echo '25px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_spread' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_spread' ) ) . 'px'; else : echo '0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_color' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_color' ) ); else : echo 'rgba(0,0,0,.15)'; endif; ?>;
-		-webkit-box-shadow: <?php if( get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) . 'px'; else : echo '0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) . 'px'; else : echo '0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_blur' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_blur' ) ) . 'px'; else : echo '25px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_spread' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_spread' ) ) . 'px'; else : echo '0px'; endif; ?> <?php if( get_theme_mod( 'page_boxed_box_shadow_color' ) ) : echo esc_attr( get_theme_mod( 'page_boxed_box_shadow_color' ) ); else : echo 'rgba(0,0,0,.15)'; endif; ?>;
-	}
-	<?php } ?>
-
-<?php } ?>
-
-<?php // ScrollTop ?>
-
-<?php if( get_theme_mod( 'layout_scrolltop' ) ) { ?>
-
-	<?php if( get_theme_mod( 'scrolltop_position' ) == 'left' ) { ?>
-
-	.scrolltop {
-		right: auto;
-		left: 20px;
-	}
-
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'scrolltop_bg_color' ) || get_theme_mod( 'scrolltop_border_radius' ) ) { ?>
-
-	.scrolltop {
-
-		<?php if( get_theme_mod( 'scrolltop_bg_color' ) ) { ?>
-		background: <?php echo esc_attr( get_theme_mod( 'scrolltop_bg_color' ) ) ?>;
-		<?php } ?>
-
-		<?php if( get_theme_mod( 'scrolltop_border_radius' ) ) { ?>
-		border-radius: <?php echo esc_attr( get_theme_mod( 'scrolltop_border_radius' ) ) ?>px;
-		<?php } ?>
-
-	}
-
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'scrolltop_bg_color_alt' ) ) { ?>
-
-	.scrolltop:hover {
-		background: <?php echo esc_attr( get_theme_mod( 'scrolltop_bg_color_alt' ) ) ?>;
-	}
-
-	<?php } ?>
-
-<?php } ?>
-
-<?php // Background (backwards compatibility) ?>
-
-<?php if( get_theme_mod( 'page_background_color' ) || get_theme_mod( 'page_background_image' ) ) { ?>
-
-body {
-
-<?php if( get_theme_mod( 'page_background_color' ) ) { ?>
-	background-color: <?php echo esc_attr( get_theme_mod( 'page_background_color' ) ) ?>;
-<?php } ?>
-
-<?php if( get_theme_mod( 'page_background_image' ) ) { ?>
-	background-image: url(<?php echo esc_url( get_theme_mod( 'page_background_image' ) ) ?>);
-<?php } ?>
-
-<?php if( get_theme_mod( 'page_background_attachment' ) ) { ?>
-	background-attachment: <?php echo esc_attr( get_theme_mod( 'page_background_attachment' ) ) ?>;
-<?php } ?>
-
-<?php if( get_theme_mod( 'page_background_position' ) ) { ?>
-	background-position: <?php echo esc_attr( get_theme_mod( 'page_background_position' ) ) ?>;
-<?php } ?>
-
-<?php if( get_theme_mod( 'page_background_repeat' ) ) { ?>
-	background-repeat: <?php echo esc_attr( get_theme_mod( 'page_background_repeat' ) ) ?>;
-<?php } ?>
-
-<?php if( get_theme_mod( 'page_background_size' ) ) { ?>
-	background-size: <?php echo esc_attr( get_theme_mod( 'page_background_size' ) ) ?>;
-<?php } ?>
+	echo '}';
 
 }
 
-<?php } ?>
+/* General */
 
-<?php // Accent Color ?>
+// Page Settings
+$page_width = get_theme_mod( 'page_max_width' );
+$page_boxed = get_theme_mod( 'page_boxed' );
+$page_boxed_padding = get_theme_mod( 'page_boxed_padding' );
+$page_boxed_margin = get_theme_mod( 'page_boxed_margin' );
+$page_boxed_background = get_theme_mod( 'page_boxed_background' );
+$page_boxed_shadow = get_theme_mod( 'page_boxed_box_shadow' );
+$page_boxed_shadow_horizontal = ($val = get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) ? $val . 'px' : '0px';
+$page_boxed_shadow_vertical = ($val = get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) ? $val . 'px' : '0px';
+$page_boxed_shadow_blur = ($val = get_theme_mod( 'page_boxed_box_shadow_blur' ) ) ? $val . 'px' : '25px';
+$page_boxed_shadow_spread = ($val = get_theme_mod( 'page_boxed_box_shadow_spread' ) ) ? $val . 'px' : '0px';
+$page_boxed_shadow_color = ($val = get_theme_mod( 'page_boxed_box_shadow_color' ) ) ? $val : 'rgba(0,0,0,.15)';
 
-<?php if( get_theme_mod( 'page_accent_color' ) ) { ?>
-a {
-	color: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
-}
-.bypostauthor, .bypostauthor .avatar {
-	border-color: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
-}
-.wpbf-button-primary {
-	background: <?php echo esc_attr( get_theme_mod( 'page_accent_color' ) ) ?>;
-}
-<?php } ?>
+if( $page_width ) {
 
-<?php if( get_theme_mod( 'page_accent_color_alt' ) ) { ?>
-a:hover {
-	color: <?php echo esc_attr( get_theme_mod( 'page_accent_color_alt' ) ) ?>;
-}
-.wpbf-button-primary:hover {
-	background: <?php echo esc_attr( get_theme_mod( 'page_accent_color_alt' ) ) ?>;
-}
+	echo '.wpbf-container {';
+	echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
+	echo '}';
 
-.wpbf-menu > .current-menu-item > a {
-	color: <?php echo esc_attr( get_theme_mod( 'page_accent_color_alt' ) ) ?> !important;
 }
 
-<?php } ?>
+if( $page_boxed ) {
 
-<?php // Buttons ?>
+	if( $page_boxed_padding ) {
 
-<?php if( get_theme_mod( 'button_border_width' ) ) { ?>
+		echo '.wpbf-container {';
+		echo sprintf( 'padding-left: %s;', esc_attr( $page_boxed_padding ) . 'px' );
+		echo sprintf( 'padding-right: %s;', esc_attr( $page_boxed_padding ) . 'px' );
+		echo '}';
 
-	.wpbf-button, input[type="submit"] {
-		border-width: <?php echo esc_attr( get_theme_mod( 'button_border_width' ) ) ?>px;
-		border-style: solid;
-	<?php if( get_theme_mod( 'button_border_color' ) ) { ?>
-		border-color: <?php echo esc_attr( get_theme_mod( 'button_border_color' ) ) ?>;
-	<?php } ?>
-	}	
-
-	<?php if( get_theme_mod( 'button_border_color_alt' ) ) { ?>
-	.wpbf-button:hover, input[type="submit"]:hover {
-		border-color: <?php echo esc_attr( get_theme_mod( 'button_border_color_alt' ) ) ?>;
-	}
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'button_primary_border_color' ) ) { ?>
-	.wpbf-button-primary {
-		border-color: <?php echo esc_attr( get_theme_mod( 'button_primary_border_color' ) ) ?>;
-	}
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'button_primary_border_color_alt' ) ) { ?>
-	.wpbf-button-primary:hover {
-		border-color: <?php echo esc_attr( get_theme_mod( 'button_primary_border_color_alt' ) ) ?>;
-	}
-	<?php } ?>
-
-<?php } ?>
-
-<?php if( get_theme_mod( 'button_bg_color' ) || get_theme_mod( 'button_text_color' ) || get_theme_mod( 'button_border_radius' ) ) { ?>
-
-	.wpbf-button, input[type="submit"] {
-	<?php if( get_theme_mod( 'button_border_radius' ) ) { ?>
-		border-radius: <?php echo esc_attr( get_theme_mod( 'button_border_radius' ) ) ?>px;
-	<?php } ?>
-	<?php if( get_theme_mod( 'button_bg_color' ) ) { ?>
-		background: <?php echo esc_attr( get_theme_mod( 'button_bg_color' ) ) ?>;
-	<?php } ?>
-	<?php if( get_theme_mod( 'button_text_color' ) ) { ?>
-		color: <?php echo esc_attr( get_theme_mod( 'button_text_color' ) ) ?>;
-	<?php } ?>
 	}
 
-<?php } ?>
+	echo '.wpbf-page {';
 
-<?php if( get_theme_mod( 'button_bg_color_alt' ) || get_theme_mod( 'button_text_color_alt' ) ) { ?>
+	if( $page_width ) {
 
-	.wpbf-button:hover, input[type="submit"]:hover {
-	<?php if( get_theme_mod( 'button_bg_color_alt' ) ) { ?>
-		background: <?php echo esc_attr( get_theme_mod( 'button_bg_color_alt' ) ) ?>;
-	<?php } ?>
-	<?php if( get_theme_mod( 'button_text_color_alt' ) ) { ?>
-		color: <?php echo esc_attr( get_theme_mod( 'button_text_color_alt' ) ) ?>;
-	<?php } ?>
+		echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
+
+	} else {
+
+		echo 'max-width: 1200px;';
+
 	}
 
-<?php } ?>
+	echo 'margin: 0 auto;';
 
-<?php if( get_theme_mod( 'button_primary_bg_color' ) || get_theme_mod( 'button_primary_text_color' ) ) { ?>
+	if( $page_boxed_margin ) {
 
-	.wpbf-button-primary {
-	<?php if( get_theme_mod( 'button_primary_bg_color' ) ) { ?>
-		background: <?php echo esc_attr( get_theme_mod( 'button_primary_bg_color' ) ) ?>;
-	<?php } ?>
-	<?php if( get_theme_mod( 'button_primary_text_color' ) ) { ?>
-		color: <?php echo esc_attr( get_theme_mod( 'button_primary_text_color' ) ) ?>;
-	<?php } ?>
+		echo sprintf( 'margin-top: %s;', esc_attr( $page_boxed_margin ) . 'px' );
+		echo sprintf( 'margin-bottom: %s;', esc_attr( $page_boxed_margin ) . 'px' );
+
 	}
 
-<?php } ?>
+	if( $page_boxed_background ) {
 
-<?php if( get_theme_mod( 'button_primary_bg_color_alt' ) || get_theme_mod( 'button_primary_text_color_alt' ) ) { ?>
+		echo sprintf( 'background-color: %s;', esc_attr( $page_boxed_background ) );
 
-	.wpbf-button-primary:hover {
-	<?php if( get_theme_mod( 'button_primary_bg_color_alt' ) ) { ?>
-		background: <?php echo esc_attr( get_theme_mod( 'button_primary_bg_color_alt' ) ) ?>;
-	<?php } ?>
-	<?php if( get_theme_mod( 'button_primary_text_color_alt' ) ) { ?>
-		color: <?php echo esc_attr( get_theme_mod( 'button_primary_text_color_alt' ) ) ?>;
-	<?php } ?>
 	}
 
-<?php } ?>
+	echo '}';
 
-<?php // Blog ?>
+	if( $page_boxed_shadow ) {
 
-<?php if( get_theme_mod( 'blog_custom_width' ) ) { ?>
+		echo '#container {';
 
-.blog #inner-content {
-	max-width: <?php echo esc_attr( get_theme_mod( 'blog_custom_width' ) ) ?>;
-}
+		echo sprintf( 'box-shadow: %1$s %2$s %3$s %4$s %5$s;', esc_attr( $page_boxed_shadow_horizontal ), esc_attr( $page_boxed_shadow_vertical ), esc_attr( $page_boxed_shadow_blur ), esc_attr( $page_boxed_shadow_spread ), esc_attr( $page_boxed_shadow_color ) );
 
-<?php } ?>
+		echo '}';
 
-<?php if( get_theme_mod( 'single_custom_width' ) ) { ?>
-
-.single #inner-content {
-	max-width: <?php echo esc_attr( get_theme_mod( 'single_custom_width' ) ) ?>;
-}
-
-<?php } ?>
-
-<?php if( get_theme_mod( 'archive_custom_width' ) ) { ?>
-
-.archive #inner-content {
-	max-width: <?php echo esc_attr( get_theme_mod( 'archive_custom_width' ) ) ?>;
-}
-
-<?php } ?>
-
-<?php if( get_theme_mod( 'category_custom_width' ) ) { ?>
-
-.category #inner-content {
-	max-width: <?php echo esc_attr( get_theme_mod( 'category_custom_width' ) ) ?>;
-}
-
-<?php } ?>
-
-<?php // Sidebar ?>
-
-<?php if( get_theme_mod( 'sidebar_bg_color' ) ) { ?>
-
-.wpbf-sidebar .widget {
-	background: <?php echo esc_attr( get_theme_mod( 'sidebar_bg_color' ) ) ?>;
-}
-
-<?php } ?>
-
-<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_top' ) ) || is_numeric( get_theme_mod( 'sidebar_widget_padding_right' ) ) || is_numeric( get_theme_mod( 'sidebar_widget_padding_bottom' ) ) || is_numeric( get_theme_mod( 'sidebar_widget_padding_left' ) ) ) { ?>
-.wpbf-sidebar .widget {
-	<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_top' ) ) ) { ?>
-	padding-top: <?php echo esc_attr( get_theme_mod( 'sidebar_widget_padding_top' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_right' ) ) ) { ?>
-	padding-right: <?php echo esc_attr( get_theme_mod( 'sidebar_widget_padding_right' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_bottom' ) ) ) { ?>
-	padding-bottom: <?php echo esc_attr( get_theme_mod( 'sidebar_widget_padding_bottom' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( is_numeric( get_theme_mod( 'sidebar_widget_padding_left' ) ) ) { ?>
-	padding-left: <?php echo esc_attr( get_theme_mod( 'sidebar_widget_padding_left' ) ) ?>px;
-	<?php } ?>
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'sidebar_width' ) && !wpbf_has_responsive_breakpoints() ) { ?>
-
-@media (min-width: 769px) {
-
-	body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {
-		width: <?php echo esc_attr( get_theme_mod( 'sidebar_width' ) ) ?>%;
-	}
-
-	body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3 {
-		width: <?php echo esc_attr( 100 - get_theme_mod( 'sidebar_width' ) ) ?>%;
 	}
 
 }
 
-<?php } ?>
+// ScrollTop
+$scrolltop = get_theme_mod( 'layout_scrolltop' );
+$scrolltop_position = get_theme_mod( 'scrolltop_position' );
+$scrolltop_bg_color = get_theme_mod( 'scrolltop_bg_color' );
+$scrolltop_border_radius = get_theme_mod( 'scrolltop_border_radius' );
+$scrolltop_bg_color_alt = get_theme_mod( 'scrolltop_bg_color_alt' );
 
-<?php // Logo ?>
+if( $scrolltop ) {
 
-<?php if( get_theme_mod( 'menu_logo_container_width' ) ) { ?>
+	if( $scrolltop_position == 'left' ) {
 
-<?php $calculation = 100 - get_theme_mod( 'menu_logo_container_width' ); ?>
+		echo '.scrolltop {';
+		echo 'right: auto;';
+		echo 'left: 20px;';
+		echo '}';
 
-.wpbf-navigation .wpbf-1-4 {
-	width: <?php echo esc_attr( get_theme_mod( 'menu_logo_container_width' ) ) ?>%;
+	}
+
+	if( $scrolltop_bg_color || $scrolltop_border_radius ) {
+
+		echo '.scrolltop {';
+
+		if( $scrolltop_bg_color ) {
+
+			echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color ) );
+
+		}
+
+		if( $scrolltop_border_radius ) {
+			
+			echo sprintf( 'border-radius: %s;', esc_attr( $scrolltop_border_radius ) . 'px' );
+
+		}
+
+		echo '}';
+
+	}
+
+	if( $scrolltop_bg_color_alt ) {
+
+		echo '.scrolltop:hover {';
+
+		echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color_alt ) );
+
+		echo '}';
+
+	}
+
 }
 
-.wpbf-navigation .wpbf-3-4 {
-	width: <?php echo esc_attr( $calculation ) ?>%;
+// Background (Backwards Compatibility)
+$page_background_color = get_theme_mod( 'page_background_color' );
+$page_background_image = get_theme_mod( 'page_background_image' );
+$page_background_attachment = get_theme_mod( 'page_background_attachment' );
+$page_background_position = get_theme_mod( 'page_background_position' );
+$page_background_repeat = get_theme_mod( 'page_background_repeat' );
+$page_background_size = get_theme_mod( 'page_background_size' );
+
+if( $page_background_color || $page_background_image ) {
+
+	echo 'body{';
+
+	if( $page_background_color ) {
+	echo sprintf( 'background-color: %s;', esc_attr( $page_background_color ) );
+	}
+
+	if( $page_background_image ) {
+	echo sprintf( 'background-image: url(%s);', esc_url( $page_background_image ) );
+	}
+
+	if( $page_background_attachment ) {
+	echo sprintf( 'background-attachment: %s;', esc_attr( $page_background_attachment ) );
+	}
+
+	if( $page_background_position ) {
+	echo sprintf( 'background-position: %s;', esc_attr( $page_background_position ) );
+	}
+
+	if( $page_background_repeat ) {
+	echo sprintf( 'background-repeat: %s;', esc_attr( $page_background_repeat ) );
+	}
+
+	if( $page_background_size ) {
+	echo sprintf( 'background-size: %s;', esc_attr( $page_background_size ) );
+	}
+
+	echo '}';
+
 }
 
-<?php } ?>
+// Accent Color
+$page_accent_color = get_theme_mod( 'page_accent_color' );
+$page_accent_color_alt = get_theme_mod( 'page_accent_color_alt' );
 
-<?php if( get_theme_mod( 'mobile_menu_logo_container_width' ) ) { ?>
+if( $page_accent_color ) {
 
-<?php $calculation = 100 - get_theme_mod( 'mobile_menu_logo_container_width' ); ?>
+	echo 'a {';
+	echo sprintf( 'color: %s;', esc_attr( $page_accent_color ) );
+	echo '}';
 
-.wpbf-navigation .wpbf-2-3 {
-	width: <?php echo esc_attr( get_theme_mod( 'mobile_menu_logo_container_width' ) ) ?>%;
+	echo '.bypostauthor {';
+	echo sprintf( 'border-color: %s;', esc_attr( $page_accent_color ) );
+	echo '}';
+
+	echo '.wpbf-button-primary {';
+	echo sprintf( 'background: %s;', esc_attr( $page_accent_color ) );
+	echo '}';
+
 }
 
-.wpbf-navigation .wpbf-1-3 {
-	width: <?php echo esc_attr( $calculation ) ?>%;
+if( $page_accent_color_alt ) {
+
+	echo 'a:hover {';
+	echo sprintf( 'color: %s;', esc_attr( $page_accent_color_alt ) );
+	echo '}';
+
+	echo '.wpbf-button-primary:hover {';
+	echo sprintf( 'background: %s;', esc_attr( $page_accent_color_alt ) );
+	echo '}';
+
+	echo '.wpbf-menu > .current-menu-item > a {';
+	echo sprintf( 'color: %s;', esc_attr( $page_accent_color_alt ) . '!important' );
+	echo '}';
+
 }
 
-<?php } ?>
+// Theme Buttons
+$button_border_width = get_theme_mod( 'button_border_width' );
+$button_border_color = get_theme_mod( 'button_border_color' );
+$button_border_color_alt = get_theme_mod( 'button_border_color_alt' );
+$button_primary_border_color = get_theme_mod( 'button_primary_border_color' );
+$button_primary_border_color_alt = get_theme_mod( 'button_primary_border_color_alt' );
+$button_bg_color = get_theme_mod( 'button_bg_color' );
+$button_text_color = get_theme_mod( 'button_text_color' );
+$button_border_radius = get_theme_mod( 'button_border_radius' );
+$button_bg_color_alt = get_theme_mod( 'button_bg_color_alt' );
+$button_text_color_alt = get_theme_mod( 'button_text_color_alt' );
+$button_primary_bg_color = get_theme_mod( 'button_primary_bg_color' );
+$button_primary_text_color = get_theme_mod( 'button_primary_text_color' );
+$button_primary_bg_color_alt = get_theme_mod( 'button_primary_bg_color_alt' );
+$button_primary_text_color_alt = get_theme_mod( 'button_primary_text_color_alt' );
 
-<?php $menu_logo_font_family_value = get_theme_mod( 'menu_logo_font_family', array() ); ?>
+if( $button_border_width ) {
 
-<?php if( !get_theme_mod( 'custom_logo' ) ) { ?>
+	echo '.wpbf-button, input[type="submit"] {';
+	echo sprintf( 'border-width: %s;', esc_attr( $button_border_width ) . 'px' );
+	echo 'border-style: solid;';
 
-	<?php if( $menu_logo_font_family_value || get_theme_mod( 'menu_logo_font_size' ) || get_theme_mod( 'menu_logo_color' ) ) { ?>
+	if( $button_border_color ) {
 
-		.wpbf-logo a, .wpbf-mobile-logo {
+		echo sprintf( 'border-color: %s;', esc_attr( $button_border_color ) );
 
-		<?php if( isset( $menu_logo_font_family_value['font-family'] ) && !empty( $menu_logo_font_family_value['font-family'] ) ) { ?>
+	}
 
-			font-family: <?php echo html_entity_decode( esc_attr( $menu_logo_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
+	echo '}';
 
-		<?php } ?>
+	if( $button_border_color_alt ) {
 
-		<?php if( isset( $menu_logo_font_family_value['variant'] ) && !empty( $menu_logo_font_family_value['variant'] ) ) {
+		echo '.wpbf-button:hover, input[type="submit"]:hover {';
+
+		echo sprintf( 'border-color: %s;', esc_attr( $button_border_color_alt ) );
+
+		echo '}';
+
+	}
+
+	if( $button_primary_border_color ) {
+
+		echo '.wpbf-button-primary {';
+
+		echo sprintf( 'border-color: %s;', esc_attr( $button_primary_border_color ) );
+
+		echo '}';
+
+	}
+
+	if( $button_primary_border_color_alt ) {
+
+		echo '.wpbf-button-primary:hover {';
+
+		echo sprintf( 'border-color: %s;', esc_attr( $button_primary_border_color_alt ) );
+
+		echo '}';
+
+	}
+
+}
+
+if( $button_bg_color || $button_text_color || $button_border_radius ) {
+
+	echo '.wpbf-button, input[type="submit"] {';
+
+	if( $button_border_radius ) {
+
+		echo sprintf( 'border-radius: %s;', esc_attr( $button_border_radius ) . 'px' );
+
+	}
+
+	if( $button_bg_color ) {
+
+		echo sprintf( 'background: %s;', esc_attr( $button_bg_color ) );
+
+	}
+
+	if( $button_text_color ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $button_text_color ) );
+
+	}
+
+	echo '}';
+
+}
+
+if( $button_bg_color_alt || $button_text_color_alt ) {
+
+	echo '.wpbf-button:hover, input[type="submit"]:hover {';
+
+	if( $button_bg_color_alt ) {
+
+		echo sprintf( 'background: %s;', esc_attr( $button_bg_color_alt ) );
+
+	}
+
+	if( $button_text_color_alt ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $button_text_color_alt ) );
+
+	}
+
+	echo '}';
+
+}
+
+if( $button_primary_bg_color || $button_primary_text_color ) {
+
+	echo '.wpbf-button-primary {';
+
+	if( $button_primary_bg_color ) {
+
+		echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color ) );
+
+	}
+
+	if( $button_primary_text_color ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
+
+	}
+
+	echo '}';
+
+}
+
+if( $button_primary_bg_color || $button_primary_text_color ) {
+
+	echo '.wpbf-button-primary:hover {';
+
+	if( $button_primary_bg_color_alt ) {
+
+		echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color_alt ) );
+
+	}
+
+	if( $button_primary_text_color_alt ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color_alt ) );
+
+	}
+
+	echo '}';
+
+}
+
+// Sidebar
+$sidebar_bg_color = get_theme_mod( 'sidebar_bg_color' );
+$sidebar_widget_padding_top = get_theme_mod( 'sidebar_widget_padding_top' );
+$sidebar_widget_padding_right = get_theme_mod( 'sidebar_widget_padding_right' );
+$sidebar_widget_padding_bottom = get_theme_mod( 'sidebar_widget_padding_bottom' );
+$sidebar_widget_padding_left = get_theme_mod( 'sidebar_widget_padding_left' );
+$sidebar_width = get_theme_mod( 'sidebar_width' );
+
+if( $sidebar_bg_color ) {
+
+	echo '.wpbf-sidebar .widget {';
+	echo sprintf( 'background: %s;', esc_attr( $sidebar_bg_color ) );
+	echo '}';
+
+}
+
+if( is_numeric( $sidebar_widget_padding_top ) || is_numeric( $sidebar_widget_padding_right ) || is_numeric( $sidebar_widget_padding_bottom ) || is_numeric( $sidebar_widget_padding_left ) ) {
+
+	echo '.wpbf-sidebar .widget {';
+
+	if( is_numeric( $sidebar_widget_padding_top ) ) {
+
+		echo sprintf( 'padding-top: %s;', esc_attr( $sidebar_widget_padding_top ) . 'px' );
+
+	}
+
+	if( is_numeric( $sidebar_widget_padding_right ) ) {
+
+		echo sprintf( 'padding-right: %s;', esc_attr( $sidebar_widget_padding_right ) . 'px' );
+
+	}
+
+	if( is_numeric( $sidebar_widget_padding_bottom ) ) {
+
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $sidebar_widget_padding_bottom ) . 'px' );
+
+	}
+
+	if( is_numeric( $sidebar_widget_padding_left ) ) {
+
+		echo sprintf( 'padding-left: %s;', esc_attr( $sidebar_widget_padding_left ) . 'px' );
+
+	}
+
+	echo '}';
+
+}
+
+if( $sidebar_width && !wpbf_has_responsive_breakpoints() ) {
+
+	echo '@media (min-width: 769px) {';
+
+		echo 'body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {';
+
+			echo sprintf( 'width: %s;', esc_attr( $sidebar_width ) . '%' );
+
+		echo '}';
+
+		echo 'body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3 {';
+
+			echo sprintf( 'width: %s;', 100 - esc_attr( $sidebar_width ) . '%' );
+
+		echo '}';
+
+	echo '}';
+
+}
+
+/* Blog */
+
+// Blog ESCAPING!!!!!!!!!!!!!
+$archives = array( 'blog', 'archive', 'category', 'single' );
+
+foreach ( $archives as $archive ) {
+
+	$custom_width = get_theme_mod( $archive . '_custom_width' );
+	$content_alignment = get_theme_mod( $archive . '_post_content_alignment', 'left' );
+	$background_color = get_theme_mod( $archive . '_post_background_color' );
+
+	if( $custom_width ) {
+
+		echo '.' . $archive . ' #inner-content {';
+		echo sprintf( 'max-width: %s;', $custom_width );
+		echo '}';
+
+	}
+
+	if( $content_alignment !== 'left' ) {
+
+		echo '.wpbf-' . $archive . '-content .wpbf-post {';
+		if( $content_alignment == 'center' ) {
+		echo 'text-align: center;';
+		} else {
+		echo 'text-align: right;';
+		}
+		echo '}';
+
+	}
+
+	if( $background_color ) {
+
+		// with this, we only affect post archives - not other cpt's. we'll later see if we want that or not.
+		echo '.wpbf-' . $archive . '-content .wpbf-post {';
+		echo sprintf( 'background-color: %s;', $background_color );
+		echo 'padding: 20px;';
+		echo 'border-bottom: none;';
+		echo '}';
+
+	}
+
+	// don't take it further for posts
+	// if( $archive == 'single' ) return;
+	// we may need a separate thing for single
+
+}
+
+/* Header */
+
+// Logo
+$menu_logo_container_width = get_theme_mod( 'menu_logo_container_width' );
+$mobile_menu_logo_container_width = get_theme_mod( 'mobile_menu_logo_container_width' );
+$custom_logo = get_theme_mod( 'custom_logo' );
+$menu_logo_font_size = get_theme_mod( 'menu_logo_font_size' );
+$menu_logo_color = get_theme_mod( 'menu_logo_color' );
+$menu_logo_font_family_value = get_theme_mod( 'menu_logo_font_family', array() );
+$menu_logo_color_alt = get_theme_mod( 'menu_logo_color_alt' );
+$menu_logo_size = get_theme_mod( 'menu_logo_size' );
+$menu_mobile_logo_size = get_theme_mod( 'menu_mobile_logo_size' );
+
+if( $menu_logo_container_width ) {
+
+	echo '.wpbf-navigation .wpbf-1-4 {';
+
+		echo sprintf( 'width: %s;', esc_attr( $menu_logo_container_width ) . '%' );
+
+	echo '}';
+
+	echo '.wpbf-navigation .wpbf-3-4 {';
+
+		echo sprintf( 'width: %s;', 100 - esc_attr( $menu_logo_container_width ) . '%' );
+
+	echo '}';
+
+}
+
+if( $mobile_menu_logo_container_width ) {
+
+	echo '.wpbf-navigation .wpbf-2-3 {';
+
+		echo sprintf( 'width: %s;', esc_attr( $mobile_menu_logo_container_width ) . '%' );
+
+	echo '}';
+
+	echo '.wpbf-navigation .wpbf-1-3 {';
+
+		echo sprintf( 'width: %s;', 100 - esc_attr( $mobile_menu_logo_container_width ) . '%' );
+
+	echo '}';
+
+}
+
+if( !$custom_logo ) {
+
+	if( $menu_logo_font_family_value || $menu_logo_font_size || $menu_logo_color ) {
+
+		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+
+		if( isset( $menu_logo_font_family_value['font-family'] ) && !empty( $menu_logo_font_family_value['font-family'] ) ) {
+
+			echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $menu_logo_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
+		}
+
+		if( isset( $menu_logo_font_family_value['variant'] ) && !empty( $menu_logo_font_family_value['variant'] ) ) {
 
 			$menu_logo_font_family_font_weight = str_replace( 'italic', '', $menu_logo_font_family_value['variant'] );
 			$menu_logo_font_family_font_weight = ( in_array( $menu_logo_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $menu_logo_font_family_font_weight;
@@ -672,403 +804,600 @@ a:hover {
 			$menu_logo_font_family_is_italic = ( false !== strpos( $menu_logo_font_family_value['variant'], 'italic' ) );
 			$menu_logo_font_family_font_style = $menu_logo_font_family_is_italic ? 'italic' : 'normal' ;
 
-			?>
-			
-			font-weight: <?php echo esc_attr( $menu_logo_font_family_font_weight ); ?>;
-			font-style: <?php echo esc_attr( $menu_logo_font_family_font_style ); ?>;
-
-		<?php } ?>
-
-		<?php if( isset( $menu_logo_font_family_value['color'] ) && !empty( $menu_logo_font_family_value['color'] ) ) { ?>
-
-			color: <?php echo esc_attr( $menu_logo_font_family_value['color'] ) ?>;
-
-		<?php } ?>
-
-		<?php if( get_theme_mod( 'menu_logo_color' ) ) { ?>
-
-		color: <?php echo esc_attr( get_theme_mod( 'menu_logo_color' ) ) ?>;
-
-		<?php } ?>
-
-		<?php if( get_theme_mod( 'menu_logo_font_size' ) ) { ?>
-
-		font-size: <?php echo esc_attr( get_theme_mod( 'menu_logo_font_size' ) ) ?>;
-		
-		<?php } ?>
+			echo sprintf( 'font-weight: %s;', esc_attr( $menu_logo_font_family_font_weight ) );
+			echo sprintf( 'font-style: %s;', esc_attr( $menu_logo_font_family_font_style ) );
 
 		}
 
-	<?php } ?>
+		if( isset( $menu_logo_font_family_value['color'] ) && !empty( $menu_logo_font_family_value['color'] ) ) {
 
-	<?php if( get_theme_mod( 'menu_logo_color_alt' ) ) { ?>
+			echo sprintf( 'color: %s;', esc_attr( $menu_logo_font_family_value['color'] ) );
 
-	.wpbf-logo a:hover, .wpbf-mobile-logo:hover {
-		color: <?php echo esc_attr( get_theme_mod( 'menu_logo_color_alt' ) ) ?>;
+		}
+
+		if( $menu_logo_color ) {
+
+			echo sprintf( 'color: %s;', esc_attr( $menu_logo_color ) );
+
+		}
+
+		if( $menu_logo_font_size ) {
+
+			echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_font_size ) );
+
+		}
+
+		echo '}';
+
 	}
 
-	<?php } ?>
+	if( $menu_logo_color_alt ) {
 
-<?php } else { ?>
+		echo '.wpbf-logo a:hover, .wpbf-mobile-logo:hover {';
 
-	<?php if( get_theme_mod( 'menu_logo_size' ) ) { ?>
-	.wpbf-logo img {
-		height: <?php echo esc_attr( get_theme_mod( 'menu_logo_size' ) ) ?>px;
+			echo sprintf( 'color: %s;', esc_attr( $menu_logo_color_alt ) );
+
+		echo '}';
+
 	}
-	<?php } ?>
 
-	<?php if( get_theme_mod( 'menu_mobile_logo_size' ) ) { ?>
-	.wpbf-mobile-logo img {
-		height: <?php echo esc_attr( get_theme_mod( 'menu_mobile_logo_size' ) ) ?>px;
+} else {
+
+	if( $menu_logo_size ) {
+
+		echo '.wpbf-logo img {';
+
+			echo sprintf( 'height: %s;', esc_attr( $menu_logo_size ) . 'px' );
+
+		echo '}';
+
 	}
-	<?php } ?>
 
-<?php } ?>
+	if( $menu_mobile_logo_size ) {
 
-<?php // Tagline ?>
+		echo '.wpbf-mobile-logo img {';
 
-<?php $menu_logo_description_font_family_value = get_theme_mod( 'menu_logo_description_font_family', array() ); ?>
+			echo sprintf( 'height: %s;', esc_attr( $menu_mobile_logo_size ) . 'px' );
 
-<?php if( !get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ) { ?>
+		echo '}';
 
-	<?php if( $menu_logo_description_font_family_value || get_theme_mod( 'menu_logo_description_font_size' ) || get_theme_mod( 'menu_logo_description_color' ) ) { ?>
+	}
 
-		.wpbf-tagline {
+}
 
-		<?php if( isset( $menu_logo_description_font_family_value['font-family'] ) && !empty( $menu_logo_description_font_family_value['font-family'] ) ) { ?>
+// Tagline
+$menu_logo_description = get_theme_mod( 'menu_logo_description' );
+$menu_logo_description_font_size = get_theme_mod( 'menu_logo_description_font_size' );
+$menu_logo_description_color = get_theme_mod( 'menu_logo_description_color' );
+$menu_logo_description_font_family_value = get_theme_mod( 'menu_logo_description_font_family', array() );
 
-			font-family: <?php echo html_entity_decode( esc_attr( $menu_logo_description_font_family_value['font-family'] ), ENT_QUOTES ); // WPCS: XSS ok. ?>;
+if( !$custom_logo && $menu_logo_description ) {
 
-		<?php } ?>
+	if( $menu_logo_description_font_family_value || $menu_logo_description_font_size || $menu_logo_description_color ) {
 
-		<?php if( isset( $menu_logo_description_font_family_value['variant'] ) && !empty( $menu_logo_description_font_family_value['variant'] ) ) {
+		echo '.wpbf-tagline {';
+
+		if( isset( $menu_logo_description_font_family_value['font-family'] ) && !empty( $menu_logo_description_font_family_value['font-family'] ) ) {
+
+			echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $menu_logo_description_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
+		}
+
+		if( isset( $menu_logo_description_font_family_value['variant'] ) && !empty( $menu_logo_description_font_family_value['variant'] ) ) {
 
 			$menu_logo_description_font_family_font_weight = str_replace( 'italic', '', $menu_logo_description_font_family_value['variant'] );
 			$menu_logo_description_font_family_font_weight = ( in_array( $menu_logo_description_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $menu_logo_description_font_family_font_weight;
 
-			$menu_logo_font_family_is_italic = ( false !== strpos( $menu_logo_description_font_family_value['variant'], 'italic' ) );
-			$menu_logo_description_font_family_font_style = $menu_logo_font_family_is_italic ? 'italic' : 'normal' ;
+			$menu_logo__description_font_family_is_italic = ( false !== strpos( $menu_logo_description_font_family_value['variant'], 'italic' ) );
+			$menu_logo_description_font_family_font_style = $menu_logo__description_font_family_is_italic ? 'italic' : 'normal' ;
 
-			?>
-			
-			font-weight: <?php echo esc_attr( $menu_logo_description_font_family_font_weight ); ?>;
-			font-style: <?php echo esc_attr( $menu_logo_description_font_family_font_style ); ?>;
-
-		<?php } ?>
-
-		<?php if( get_theme_mod( 'menu_logo_description_color' ) ) { ?>
-
-		color: <?php echo esc_attr( get_theme_mod( 'menu_logo_description_color' ) ) ?>;
-
-		<?php } ?>
-
-		<?php if( get_theme_mod( 'menu_logo_description_font_size' ) ) { ?>
-
-		font-size: <?php echo esc_attr( get_theme_mod( 'menu_logo_description_font_size' ) ) ?>;
-		
-		<?php } ?>
+			echo sprintf( 'font-weight: %s;', esc_attr( $menu_logo_description_font_family_font_weight ) );
+			echo sprintf( 'font-style: %s;', esc_attr( $menu_logo_description_font_family_font_style ) );
 
 		}
 
-	<?php } ?>
+		if( $menu_logo_description_color ) {
 
-<?php } ?>
+			echo sprintf( 'color: %s;', esc_attr( $menu_logo_description_color ) );
 
-<?php // Pre Header ?>
+		}
 
-<?php if( get_theme_mod( 'pre_header_layout' ) && get_theme_mod( 'pre_header_layout' ) != 'none' ) { ?>
+		if( $menu_logo_description_font_size ) {
 
-	<?php if( get_theme_mod( 'pre_header_bg_color' ) || get_theme_mod( 'pre_header_font_color' ) ) { ?>
+			echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_description_font_size ) );
 
-	#wpbf-pre-header {
+		}
 
-	<?php if( get_theme_mod( 'pre_header_bg_color' ) ) { ?>
-		background-color: <?php echo esc_attr( get_theme_mod( 'pre_header_bg_color' ) ) ?>;
-	<?php } ?>
-	<?php if( get_theme_mod( 'pre_header_font_color' ) ) { ?>
-		color: <?php echo esc_attr( get_theme_mod( 'pre_header_font_color' ) ) ?>;
-	<?php } ?>
+		echo '}';
 
 	}
 
-	<?php } ?>
+}
 
-	<?php if( get_theme_mod( 'pre_header_height' ) ) { ?>
-	.wpbf-inner-pre-header {
-		padding-top: <?php echo esc_attr( get_theme_mod( 'pre_header_height' ) ) ?>px;
-		padding-bottom: <?php echo esc_attr( get_theme_mod( 'pre_header_height' ) ) ?>px;
+// Pre Header
+$pre_header_layout = get_theme_mod( 'pre_header_layout' );
+$pre_header_bg_color = get_theme_mod( 'pre_header_bg_color' );
+$pre_header_font_color = get_theme_mod( 'pre_header_font_color' );
+$pre_header_height = get_theme_mod( 'pre_header_height' );
+
+if( $pre_header_layout && $pre_header_layout !== 'none' ) {
+
+	if( $pre_header_bg_color || $pre_header_font_color ) {
+
+		echo '#wpbf-pre-header {';
+
+		if( $pre_header_bg_color ) {
+
+			echo sprintf( 'background-color: %s;', esc_attr( $pre_header_bg_color ) );
+
+		}
+
+		if( $pre_header_font_color ) {
+
+			echo sprintf( 'color: %s;', esc_attr( $pre_header_font_color ) );
+
+		}
+
+		echo '}';
+
 	}
-	<?php } ?>
 
-<?php } ?>
+	if( $pre_header_height ) {
 
-<?php // Navigation ?>
+		echo '.wpbf-inner-pre-header {';
 
-<?php if( get_theme_mod( 'menu_width' ) || get_theme_mod( 'menu_height' ) ) { ?>
+			echo sprintf( 'padding-top: %s;', esc_attr( $pre_header_height ) . 'px' );
+			echo sprintf( 'padding-bottom: %s;', esc_attr( $pre_header_height ) . 'px' );
 
-.wpbf-nav-wrapper {
+		echo '}';
 
-	<?php if( get_theme_mod( 'menu_width' ) ) { ?>
-		max-width: <?php echo esc_attr( get_theme_mod( 'menu_width' ) ); ?>;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'menu_height' ) ) { ?>
-		padding-top: <?php echo esc_attr( get_theme_mod( 'menu_height' ) ); ?>px;
-		padding-bottom: <?php echo esc_attr( get_theme_mod( 'menu_height' ) ); ?>px;
-	<?php } ?>
+	}
 
 }
 
-<?php } ?>
+// Navigation
+$menu_position = get_theme_mod( 'menu_position' );
+$menu_width = get_theme_mod( 'menu_width' );
+$menu_height = get_theme_mod( 'menu_height' );
+$menu_padding = get_theme_mod( 'menu_padding' );
+$menu_bg_color = get_theme_mod( 'menu_bg_color' );
+$menu_font_color = get_theme_mod( 'menu_font_color' );
+$menu_font_color_alt = get_theme_mod( 'menu_font_color_alt' );
 
-<?php if( get_theme_mod( 'menu_height' ) && get_theme_mod( 'menu_position' ) == 'menu-stacked' ) { ?>
+if( $menu_width || $menu_height ) {
 
-.wpbf-menu-stacked nav {
-	margin-top: <?php echo esc_attr( get_theme_mod( 'menu_height' ) ); ?>px;
-}
+	echo '.wpbf-nav-wrapper {';
 
-<?php } ?>
+		if( $menu_width ) {
 
-<?php if( get_theme_mod( 'menu_padding' ) ) { ?>
-.wpbf-menu > .menu-item > a {
-	padding-left: <?php echo esc_attr( get_theme_mod( 'menu_padding' ) ); ?>px;
-	padding-right: <?php echo esc_attr( get_theme_mod( 'menu_padding' ) ); ?>px;
-}
+			echo sprintf( 'max-width: %s;', esc_attr( $menu_width ) );
 
-<?php if( get_theme_mod( 'menu_position' ) == 'menu-centered' ) { ?>
-.wpbf-menu-centered .logo-container {
-	padding: 0 <?php echo esc_attr( get_theme_mod( 'menu_padding' ) ); ?>px;
-}
-<?php } ?>
+		}
 
-<?php } ?>
+		if( $menu_height ) {
 
-<?php if( get_theme_mod( 'menu_bg_color' ) ) { ?>
-.wpbf-navigation {
-	background-color: <?php echo esc_attr( get_theme_mod( 'menu_bg_color' ) ) ?>;
-}
-<?php } ?>
+			echo sprintf( 'padding-top: %s;', esc_attr( $menu_height ) . 'px' );
+			echo sprintf( 'padding-bottom: %s;', esc_attr( $menu_height ) . 'px' );
 
-<?php if( get_theme_mod( 'menu_font_color' ) ) { ?>
-.wpbf-menu a,
-.wpbf-mobile-menu a,
-.wpbf-close {
-	color: <?php echo esc_attr( get_theme_mod( 'menu_font_color' ) ) ?>;
-}
-<?php } ?>
+		}
 
-<?php if( get_theme_mod( 'menu_font_color_alt' ) ) { ?>
-.wpbf-menu a:hover,
-.wpbf-mobile-menu a:hover {
-	color: <?php echo esc_attr( get_theme_mod( 'menu_font_color_alt' ) ) ?>;
-}
-.wpbf-menu > .current-menu-item > a,
-.wpbf-mobile-menu > .current-menu-item > a {
-	color: <?php echo esc_attr( get_theme_mod( 'menu_font_color_alt' ) ) ?> !important;
-}
-<?php } ?>
-
-<?php // Sub Menu ?>
-
-<?php if( get_theme_mod( 'sub_menu_bg_color' ) ) { ?>
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li,
-.wpbf-sub-menu > .wpbf-mega-menu > .sub-menu {
-	background-color: <?php echo esc_attr( get_theme_mod( 'sub_menu_bg_color' ) ) ?>;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'sub_menu_bg_color_alt' ) ) { ?>
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li:hover {
-	background-color: <?php echo esc_attr( get_theme_mod( 'sub_menu_bg_color_alt' ) ) ?>;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'sub_menu_width' ) ) { ?>
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {
-	width: <?php echo esc_attr( get_theme_mod( 'sub_menu_width' ) ) ?>px;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'sub_menu_padding_top' ) || get_theme_mod( 'sub_menu_padding_right' ) || get_theme_mod( 'sub_menu_padding_bottom' ) || get_theme_mod( 'sub_menu_padding_left' ) ) { ?>
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {
-	<?php if( get_theme_mod( 'sub_menu_padding_top' ) ) { ?>
-	padding-top: <?php echo esc_attr( get_theme_mod( 'sub_menu_padding_top' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'sub_menu_padding_right' ) ) { ?>
-	padding-right: <?php echo esc_attr( get_theme_mod( 'sub_menu_padding_right' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'sub_menu_padding_bottom' ) ) { ?>
-	padding-bottom: <?php echo esc_attr( get_theme_mod( 'sub_menu_padding_bottom' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'sub_menu_padding_left' ) ) { ?>
-	padding-left: <?php echo esc_attr( get_theme_mod( 'sub_menu_padding_left' ) ) ?>px;
-	<?php } ?>
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'sub_menu_accent_color' ) || get_theme_mod( 'sub_menu_font_size' ) ) { ?>
-
-.wpbf-menu .sub-menu a {
-
-	<?php if( get_theme_mod( 'sub_menu_accent_color' ) ) { ?>
-		color: <?php echo esc_attr( get_theme_mod( 'sub_menu_accent_color' ) ) ?>;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'sub_menu_font_size' ) ) { ?>
-		font-size: <?php echo esc_attr( get_theme_mod( 'sub_menu_font_size' ) ) ?>;
-	<?php } ?>
+	echo '}';
 
 }
 
-<?php } ?>
+if( $menu_height && $menu_position == 'menu-stacked' ) {
 
-<?php if( get_theme_mod( 'sub_menu_accent_color_alt' ) ) { ?>
-.wpbf-menu .sub-menu a:hover {
-	color: <?php echo esc_attr( get_theme_mod( 'sub_menu_accent_color_alt' ) ) ?>;
-}
-<?php } ?>
+	echo '.wpbf-menu-stacked nav {';
 
-<?php // Mobile Navigation ?>
+		echo sprintf( 'margin-top: %s;', esc_attr( $menu_height ) . 'px' );
 
-<?php if( get_theme_mod( 'mobile_menu_height' ) ){ ?>
-.wpbf-mobile-nav-wrapper {
-		padding-top: <?php echo esc_attr( get_theme_mod( 'mobile_menu_height' ) ) ?>px;
-		padding-bottom: <?php echo esc_attr( get_theme_mod( 'mobile_menu_height' ) ) ?>px;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_background_color' ) ){ ?>
-.wpbf-mobile-nav-wrapper {
-		background: <?php echo esc_attr( get_theme_mod( 'mobile_menu_background_color' ) ) ?>;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_padding_top' ) || get_theme_mod( 'mobile_menu_padding_right' ) || get_theme_mod( 'mobile_menu_padding_bottom' ) || get_theme_mod( 'mobile_menu_padding_left' ) ) { ?>
-.wpbf-mobile-menu a,
-.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {
-	<?php if( get_theme_mod( 'mobile_menu_padding_top' ) ) { ?>
-	padding-top: <?php echo esc_attr( get_theme_mod( 'mobile_menu_padding_top' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'mobile_menu_padding_right' ) ) { ?>
-	padding-right: <?php echo esc_attr( get_theme_mod( 'mobile_menu_padding_right' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'mobile_menu_padding_bottom' ) ) { ?>
-	padding-bottom: <?php echo esc_attr( get_theme_mod( 'mobile_menu_padding_bottom' ) ) ?>px;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'mobile_menu_padding_left' ) ) { ?>
-	padding-left: <?php echo esc_attr( get_theme_mod( 'mobile_menu_padding_left' ) ) ?>px;
-	<?php } ?>
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_font_color' ) ){ ?>
-.wpbf-mobile-menu a,
-.wpbf-mobile-menu-container .wpbf-close {
-		color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_font_color' ) ) ?>;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_font_color_alt' ) ){ ?>
-.wpbf-mobile-menu a:hover {
-		color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_font_color_alt' ) ) ?>;
-}
-.wpbf-mobile-menu > .current-menu-item > a {
-		color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_font_color_alt' ) ) ?> !important;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_border_color' ) ){ ?>
-.wpbf-mobile-menu .menu-item {
-		border-top-color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_border_color' ) ) ?>;
-}
-.wpbf-mobile-menu > .menu-item:last-child {
-		border-bottom-color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_border_color' ) ) ?>;
-}
-<?php } ?>
-
-<?php if( ( !get_theme_mod( 'mobile_menu_options' ) || get_theme_mod( 'mobile_menu_options' ) == 'menu-mobile-hamburger' || get_theme_mod( 'mobile_menu_options' ) == 'menu-mobile-off-canvas' ) && ( get_theme_mod( 'mobile_menu_hamburger_color' ) || get_theme_mod( 'mobile_menu_hamburger_size' ) ) ) { ?>
-.wpbf-mobile-menu-toggle {
-	<?php if( get_theme_mod( 'mobile_menu_hamburger_color' ) ) { ?>
-	color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_hamburger_color' ) ) ?>;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'mobile_menu_hamburger_size' ) ) { ?>
-	font-size: <?php echo esc_attr( get_theme_mod( 'mobile_menu_hamburger_size' ) ) ?>px;
-	<?php } ?>
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_bg_color' ) ){ ?>
-.wpbf-mobile-menu > .menu-item a {
-	background-color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_bg_color' ) ) ?>;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_bg_color_alt' ) ){ ?>
-.wpbf-mobile-menu > .menu-item a:hover {
-	background-color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_bg_color_alt' ) ) ?>;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_submenu_arrow_color' ) ){ ?>
-.wpbf-mobile-menu .wpbf-submenu-toggle {
-	color: <?php echo esc_attr( get_theme_mod( 'mobile_menu_submenu_arrow_color' ) ) ?>;
-}
-<?php } ?>
-
-<?php if( get_theme_mod( 'mobile_menu_font_size' ) ){ ?>
-.wpbf-mobile-menu {
-	font-size: <?php echo esc_attr( get_theme_mod( 'mobile_menu_font_size' ) ) ?>;
-}
-<?php } ?>
-
-<?php // Footer ?>
-
-<?php if( get_theme_mod( 'footer_height' ) && get_theme_mod( 'footer_layout' ) != 'none' ) { ?>
-.wpbf-inner-footer {
-	padding-top: <?php echo esc_attr( get_theme_mod( 'footer_height' ) ) ?>px;
-	padding-bottom: <?php echo esc_attr( get_theme_mod( 'footer_height' ) ) ?>px;
-}
-<?php } ?>
-
-<?php if( ( get_theme_mod( 'footer_bg_color' ) || get_theme_mod( 'footer_font_color' ) ) && get_theme_mod( 'footer_layout' ) != 'none' ) { ?>
-
-.wpbf-page-footer {
-
-	<?php if( get_theme_mod( 'footer_bg_color' ) ) { ?>
-	background-color: <?php echo esc_attr( get_theme_mod( 'footer_bg_color' ) ) ?>;
-	<?php } ?>
-
-	<?php if( get_theme_mod( 'footer_font_color' ) ) { ?>
-		color: <?php echo esc_attr( get_theme_mod( 'footer_font_color' ) ) ?>;
-	<?php } ?>
+	echo '}';
 
 }
 
-<?php } ?>
+if( $menu_padding ) {
 
-<?php if( get_theme_mod( 'footer_accent_color' ) && get_theme_mod( 'footer_layout' ) != 'none' ) { ?>
-.wpbf-page-footer a {
-	color: <?php echo esc_attr( get_theme_mod( 'footer_accent_color' ) ) ?>;
+	echo '.wpbf-menu > .menu-item > a {';
+
+		echo sprintf( 'padding-left: %s;', esc_attr( $menu_padding ) . 'px' );
+		echo sprintf( 'padding-right: %s;', esc_attr( $menu_padding ) . 'px' );
+
+	echo '}';
+
+	if( $menu_position == 'menu-centered' ) {
+
+		echo '.wpbf-menu-centered .logo-container {';
+
+			echo sprintf( 'padding: 0 %s;', esc_attr( $menu_padding ) . 'px' );
+
+		echo '}';
+
+	}
+
 }
-<?php } ?>
 
-<?php if( get_theme_mod( 'footer_accent_color_alt' ) && get_theme_mod( 'footer_layout' ) != 'none' ) { ?>
-.wpbf-page-footer a:hover {
-	color: <?php echo esc_attr( get_theme_mod( 'footer_accent_color_alt' ) ) ?>;
+if( $menu_bg_color ) {
+
+	echo '.wpbf-navigation {';
+
+		echo sprintf( 'background-color: %s;', esc_attr( $menu_bg_color ) );
+
+	echo '}';
+
 }
-<?php } ?>
 
-<?php if( get_theme_mod( 'footer_font_size' ) && get_theme_mod( 'footer_layout' ) != 'none' ) { ?>
-.wpbf-inner-footer {
-	font-size: <?php echo esc_attr( get_theme_mod( 'footer_font_size' ) ) ?>;
+if( $menu_font_color ) {
+
+	echo '.wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close {';
+
+		echo sprintf( 'color: %s;', esc_attr( $menu_font_color ) );
+
+	echo '}';
+
 }
-<?php } ?>
 
-<?php do_action( 'wpbf_after_customizer_css' ); ?>
+if( $menu_font_color_alt ) {
+
+	echo '.wpbf-menu a:hover, .wpbf-mobile-menu a:hover {';
+
+		echo sprintf( 'color: %s;', esc_attr( $menu_font_color_alt ) );
+
+	echo '}';
+
+	echo '.wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a {';
+
+		echo sprintf( 'color: %s;', esc_attr( $menu_font_color_alt ) . '!important' );
+
+	echo '}';
+
+}
+
+// Sub Menu
+$sub_menu_bg_color = get_theme_mod( 'sub_menu_bg_color' );
+$sub_menu_bg_color_alt = get_theme_mod( 'sub_menu_bg_color_alt' );
+$sub_menu_width = get_theme_mod( 'sub_menu_width' );
+$sub_menu_padding_top = get_theme_mod( 'sub_menu_padding_top' );
+$sub_menu_padding_right = get_theme_mod( 'sub_menu_padding_right' );
+$sub_menu_padding_bottom = get_theme_mod( 'sub_menu_padding_bottom' );
+$sub_menu_padding_left = get_theme_mod( 'sub_menu_padding_left' );
+$sub_menu_accent_color = get_theme_mod( 'sub_menu_accent_color' );
+$sub_menu_font_size = get_theme_mod( 'sub_menu_font_size' );
+$sub_menu_accent_color_alt = get_theme_mod( 'sub_menu_accent_color_alt' );
+
+if( $sub_menu_bg_color ) {
+
+	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li, .wpbf-sub-menu > .wpbf-mega-menu > .sub-menu {';
+
+		echo sprintf( 'background-color: %s;', esc_attr( $sub_menu_bg_color ) );
+
+	echo '}';
+
+}
+
+if( $sub_menu_bg_color_alt ) {
+
+	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li:hover {';
+
+		echo sprintf( 'background-color: %s;', esc_attr( $sub_menu_bg_color_alt ) );
+
+	echo '}';
+
+}
+
+if( $sub_menu_width ) {
+
+	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {';
+
+		echo sprintf( 'width: %s;', esc_attr( $sub_menu_width ) . 'px' );
+
+	echo '}';
+
+}
+
+if( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_bottom || $sub_menu_padding_left ) {
+
+	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {';
+
+	if( $sub_menu_padding_top ) {
+
+		echo sprintf( 'padding-top: %s;', esc_attr( $sub_menu_padding_top ) . 'px' );
+
+	}
+
+	if( $sub_menu_padding_right ) {
+
+		echo sprintf( 'padding-right: %s;', esc_attr( $sub_menu_padding_right ) . 'px' );
+
+	}
+
+	if( $sub_menu_padding_bottom ) {
+
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $sub_menu_padding_bottom ) . 'px' );
+
+	}
+
+	if( $sub_menu_padding_left ) {
+
+		echo sprintf( 'padding-left: %s;', esc_attr( $sub_menu_padding_left ) . 'px' );
+
+	}
+
+	echo '}';
+
+}
+
+if( $sub_menu_accent_color || $sub_menu_font_size ) {
+
+	echo '.wpbf-menu .sub-menu a {';
+
+	if( $sub_menu_accent_color ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $sub_menu_accent_color ) );
+
+	}
+
+	if( $sub_menu_font_size ) {
+
+		echo sprintf( 'font-size: %s;', esc_attr( $sub_menu_font_size ) );
+
+	}
+
+	echo '}';
+
+}
+
+if( $sub_menu_accent_color_alt ) {
+
+	echo '.wpbf-menu .sub-menu a:hover {';
+
+		echo sprintf( 'color: %s;', esc_attr( $sub_menu_accent_color_alt ) );
+
+	echo '}';
+
+}
+
+// Mobile Navigation
+$mobile_menu_height = get_theme_mod( 'mobile_menu_height' );
+$mobile_menu_background_color = get_theme_mod( 'mobile_menu_background_color' );
+$mobile_menu_padding_top = get_theme_mod( 'mobile_menu_padding_top' );
+$mobile_menu_padding_right = get_theme_mod( 'mobile_menu_padding_right' );
+$mobile_menu_padding_bottom = get_theme_mod( 'mobile_menu_padding_bottom' );
+$mobile_menu_padding_left = get_theme_mod( 'mobile_menu_padding_left' );
+$mobile_menu_font_color = get_theme_mod( 'mobile_menu_font_color' );
+$mobile_menu_font_color_alt = get_theme_mod( 'mobile_menu_font_color_alt' );
+$mobile_menu_border_color = get_theme_mod( 'mobile_menu_border_color' );
+$mobile_menu_options = get_theme_mod( 'mobile_menu_options' );
+$mobile_menu_hamburger_color = get_theme_mod( 'mobile_menu_hamburger_color' );
+$mobile_menu_hamburger_size = get_theme_mod( 'mobile_menu_hamburger_size' );
+$mobile_menu_bg_color = get_theme_mod( 'mobile_menu_bg_color' );
+$mobile_menu_bg_color_alt = get_theme_mod( 'mobile_menu_bg_color_alt' );
+$mobile_menu_submenu_arrow_color = get_theme_mod( 'mobile_menu_submenu_arrow_color' );
+$mobile_menu_font_size = get_theme_mod( 'mobile_menu_font_size' );
+
+if( $mobile_menu_height ) {
+
+	echo '.wpbf-mobile-nav-wrapper {';
+
+		echo sprintf( 'padding-top: %s;', esc_attr( $mobile_menu_height ) . 'px' );
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $mobile_menu_height ) . 'px' );
+
+	echo '}';
+
+}
+
+if( $mobile_menu_background_color ) {
+
+	echo '.wpbf-mobile-nav-wrapper {';
+
+		echo sprintf( 'background: %s;', esc_attr( $mobile_menu_background_color ) );
+
+	echo '}';
+
+}
+
+if( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padding_bottom || $mobile_menu_padding_left ) {
+
+	echo '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {';
+
+	if( $mobile_menu_padding_top ) {
+
+		echo sprintf( 'padding-top: %s;', esc_attr( $mobile_menu_padding_top ) . 'px' );
+
+	}
+
+	if( $mobile_menu_padding_right ) {
+
+		echo sprintf( 'padding-right: %s;', esc_attr( $mobile_menu_padding_right ) . 'px' );
+
+	}
+
+	if( $mobile_menu_padding_bottom ) {
+
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $mobile_menu_padding_bottom ) . 'px' );
+
+	}
+
+	if( $mobile_menu_padding_left ) {
+
+		echo sprintf( 'padding-left: %s;', esc_attr( $mobile_menu_padding_left ) . 'px' );
+
+	}
+
+	echo '}';
+
+}
+
+if( $mobile_menu_font_color ) {
+
+	echo '.wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close {';
+
+		echo sprintf( 'color: %s;', esc_attr( $mobile_menu_font_color ) );
+
+	echo '}';
+
+}
+
+if( $mobile_menu_font_color_alt ) {
+
+	echo '.wpbf-mobile-menu a:hover {';
+
+		echo sprintf( 'color: %s;', esc_attr( $mobile_menu_font_color_alt ) );
+
+	echo '}';
+
+	echo '.wpbf-mobile-menu > .current-menu-item > a {';
+
+		echo sprintf( 'color: %s;', esc_attr( $mobile_menu_font_color_alt ) . '!important' );
+
+	echo '}';
+
+}
+
+if( $mobile_menu_border_color ) {
+
+	echo '.wpbf-mobile-menu .menu-item {';
+
+		echo sprintf( 'border-top-color: %s;', esc_attr( $mobile_menu_border_color ) );
+
+	echo '}';
+
+	echo '.wpbf-mobile-menu > .menu-item:last-child {';
+
+		echo sprintf( 'border-bottom-color: %s;', esc_attr( $mobile_menu_border_color ) );
+
+	echo '}';
+
+}
+
+if( !$mobile_menu_options || in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ) ) && ( $mobile_menu_hamburger_color || $mobile_menu_hamburger_size ) ) {
+
+	echo '.wpbf-mobile-menu-toggle {';
+
+	if( $mobile_menu_hamburger_color ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $mobile_menu_hamburger_color ) );
+
+	}
+
+	if( $mobile_menu_hamburger_size ) {
+
+		echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_hamburger_size ) . 'px' );
+
+	}
+
+	echo '}';
+
+}
+
+if( $mobile_menu_bg_color ) {
+
+	echo '.wpbf-mobile-menu > .menu-item a {';
+
+		echo sprintf( 'background-color: %s;', esc_attr( $mobile_menu_bg_color ) );
+
+	echo '}';
+
+}
+
+if( $mobile_menu_bg_color_alt ) {
+
+	echo '.wpbf-mobile-menu > .menu-item a:hover {';
+
+		echo sprintf( 'background-color: %s;', esc_attr( $mobile_menu_bg_color_alt ) );
+
+	echo '}';
+
+}
+
+if( $mobile_menu_submenu_arrow_color ) {
+
+	echo '.wpbf-mobile-menu .wpbf-submenu-toggle {';
+
+		echo sprintf( 'color: %s;', esc_attr( $mobile_menu_submenu_arrow_color ) );
+
+	echo '}';
+
+}
+
+if( $mobile_menu_font_size ) {
+
+	echo '.wpbf-mobile-menu {';
+
+		echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_font_size ) );
+
+	echo '}';
+
+}
+
+/* Footer */
+
+$footer_layout = get_theme_mod( 'footer_layout' );
+$footer_height = get_theme_mod( 'footer_height' );
+$footer_bg_color = get_theme_mod( 'footer_bg_color' );
+$footer_font_color = get_theme_mod( 'footer_font_color' );
+$footer_accent_color = get_theme_mod( 'footer_accent_color' );
+$footer_accent_color_alt = get_theme_mod( 'footer_accent_color_alt' );
+$footer_font_size = get_theme_mod( 'footer_font_size' );
+
+if( $footer_layout != 'none' && $footer_height ) {
+
+	echo '.wpbf-inner-footer {';
+
+		echo sprintf( 'padding-top: %s;', esc_attr( $footer_height ) . 'px' );
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $footer_height ) . 'px' );
+
+	echo '}';
+
+}
+
+if( $footer_layout != 'none' && ( $footer_bg_color || $footer_font_color ) ) {
+
+	echo '.wpbf-page-footer {';
+
+	if( $footer_bg_color ) {
+
+		echo sprintf( 'background-color: %s;', esc_attr( $footer_bg_color ) );
+
+	}
+
+	if( $footer_font_color ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $footer_font_color ) );
+
+	}
+
+	echo '}';
+
+}
+
+if( $footer_layout != 'none' && $footer_accent_color ) {
+
+	echo '.wpbf-page-footer a {';
+
+		echo sprintf( 'color: %s;', esc_attr( $footer_accent_color ) );
+
+	echo '}';
+
+}
+
+if( $footer_layout != 'none' && $footer_accent_color_alt ) {
+
+	echo '.wpbf-page-footer a:hover {';
+
+		echo sprintf( 'color: %s;', esc_attr( $footer_accent_color_alt ) );
+
+	echo '}';
+
+}
+
+if( $footer_layout != 'none' && $footer_font_size ) {
+
+	echo '.wpbf-inner-footer {';
+
+		echo sprintf( 'font-size: %s;', esc_attr( $footer_font_size ) );
+
+	echo '}';
+
+}
+
+do_action( 'wpbf_after_customizer_css' );
