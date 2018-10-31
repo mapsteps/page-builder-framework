@@ -26,11 +26,19 @@ get_header(); ?>
 
 					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_archive_class(); ?>">
 
-						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+						<?php if( have_posts() ) : ?>
+
+						<?php do_action( 'wpbf_loop_open' ); ?>
+
+						<?php while ( have_posts() ) : the_post(); ?>
 
 						<?php get_template_part( 'inc/template-parts/article' ); ?>
 
-						<?php endwhile; else : ?>
+						<?php endwhile; ?>
+
+						<?php do_action( 'wpbf_loop_close' ); ?>
+
+						<?php else : ?>
 
 						<?php get_template_part( 'inc/template-parts/article-none' ); ?>
 

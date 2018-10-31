@@ -211,7 +211,7 @@ function wpbf_archive_class() {
 	} elseif( is_author() ) {
 		$archive_class = ' wpbf-post-archive wpbf-author-content';
 	} elseif( is_home() ) {
-		$archive_class = ' wpbf-post-archive wpbf-index-content';
+		$archive_class = ' wpbf-post-archive wpbf-blog-content';
 	} elseif( is_search() ) {
 		$archive_class = ' wpbf-post-archive wpbf-search-content';
 	} elseif( is_tax() ) {
@@ -721,3 +721,17 @@ function wpbf_navigation_attributes() {
 	echo $navigation_attributes; // WPCS: XSS ok.
 
 }
+
+/* Blog Layouts */
+
+function wpbf_something_cool() {
+	// echo '<div class="wpbf-grid wpbf-grid-medium-1-3">';
+}
+
+add_action( 'wpbf_loop_open', 'wpbf_something_cool' );
+
+function wpbf_something_cool_close() {
+	// echo '</div>';
+}
+
+add_action( 'wpbf_loop_close', 'wpbf_something_cool_close' );

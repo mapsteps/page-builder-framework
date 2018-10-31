@@ -7,158 +7,154 @@
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
+
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( is_category() ) {
+$template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
+$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
+$blog_layout = get_theme_mod( 'archive_layout', 'default' );
 
+if ( is_category() ) {
+	
 	$template_parts_header = get_theme_mod( 'category_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'category_sortable_footer', array( 'readmore', 'categories' ) );
-	$article_layout = get_theme_mod( 'category_layout' );
+	$blog_layout = get_theme_mod( 'category_layout', 'default' );
 
-} elseif ( is_archive() ) {
+} 
 
-	$template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
-	$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
-	$article_layout = get_theme_mod( 'archive_layout' );
-
-} elseif ( is_search() ) {
+if ( is_home() ) {
 
 	$template_parts_header = get_theme_mod( 'blog_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
-	$article_layout = get_theme_mod( 'blog_layout' );
+	$blog_layout = get_theme_mod( 'blog_layout', 'default' );
 
-} else {
-
-	$template_parts_header = get_theme_mod( 'blog_sortable_header', array( 'title', 'meta', 'featured' ) );
-	$template_parts_footer = get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
-	$article_layout = get_theme_mod( 'blog_layout' );
+	// $blog_layout .= ' wpbf-medium-1-3';
 
 }
 
 ?>
 
-<?php  if ( $article_layout == 'beside' ) { ?>
+<?php if( $blog_layout == 'beside' ) { ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'wpbf-blog-layout-' . $blog_layout ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
-							<?php if( has_post_thumbnail() ) { ?>
+	<?php if( has_post_thumbnail() ) { ?>
 
-							<div class="wpbf-grid wpbf-grid-medium">
+	<div class="wpbf-grid wpbf-grid-medium">
 
-								<header class="article-header wpbf-large-2-5">
+		<header class="article-header wpbf-large-2-5">
 
-									<?php get_template_part( 'inc/template-parts/blog/blog-featured' ); ?>
+			<?php get_template_part( 'inc/template-parts/blog/blog-featured' ); ?>
 
-								</header>
+		</header>
 
-								<div class="wpbf-large-3-5">
+		<div class="wpbf-large-3-5">
 
-							<?php } ?>
+	<?php } ?>
 
-								<section class="article-content">
+		<section class="article-content">
 
-									<?php
+			<?php
 
-									if ( ! empty( $template_parts_header ) && is_array( $template_parts_header ) ) {
-										foreach ( $template_parts_header as $part ) {
-											if ( $part !== 'featured') {
-												get_template_part( 'inc/template-parts/blog/blog-' . $part );
-											}
-										}
-									}
+			if ( ! empty( $template_parts_header ) && is_array( $template_parts_header ) ) {
+				foreach ( $template_parts_header as $part ) {
+					if ( $part !== 'featured') {
+						get_template_part( 'inc/template-parts/blog/blog-' . $part );
+					}
+				}
+			}
 
-									?>
+			?>
 
-									<div class="entry-summary" itemprop="text">
-										<?php the_excerpt(); ?>
-										<?php
-										wp_link_pages( array(
-											'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
-											'after'  => '</div>',
-										) );
-										?>
-									</div>
+			<div class="entry-summary" itemprop="text">
+				<?php the_excerpt(); ?>
+				<?php
+				wp_link_pages( array(
+					'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
+					'after'  => '</div>',
+				) );
+				?>
+			</div>
 
-								</section>
+		</section>
 
-								<?php if ( $template_parts_footer != false ) { ?>
+		<?php if ( $template_parts_footer != false ) { ?>
 
-								<footer class="article-footer">
+		<footer class="article-footer">
 
-									<?php
+			<?php
 
-									if ( ! empty( $template_parts_footer ) && is_array( $template_parts_footer ) ) {
-										foreach ( $template_parts_footer as $part ) {
-											get_template_part( 'inc/template-parts/blog/blog-' . $part );
-										}
-									}
+			if ( ! empty( $template_parts_footer ) && is_array( $template_parts_footer ) ) {
+				foreach ( $template_parts_footer as $part ) {
+					get_template_part( 'inc/template-parts/blog/blog-' . $part );
+				}
+			}
 
-									?>
+			?>
 
-								</footer>
+		</footer>
 
-								<?php } ?>
+		<?php } ?>
 
-							<?php if( has_post_thumbnail() ) { ?>
+	<?php if( has_post_thumbnail() ) { ?>
 
-								</div>
+		</div>
 
-							</div>
+	</div>
 
-							<?php } ?>
+	<?php } ?>
 
-						</article>
+</article>
 
 <?php } else { ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'wpbf-blog-layout-' . $blog_layout ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
-							<header class="article-header">
+	<header class="article-header">
 
-								<?php
+		<?php
 
-								if ( ! empty( $template_parts_header ) && is_array( $template_parts_header ) ) {
-									foreach ( $template_parts_header as $part ) {
-										get_template_part( 'inc/template-parts/blog/blog-' . $part );
-									}
-								}
+		if ( ! empty( $template_parts_header ) && is_array( $template_parts_header ) ) {
+			foreach ( $template_parts_header as $part ) {
+				get_template_part( 'inc/template-parts/blog/blog-' . $part );
+			}
+		}
 
-								?>
+		?>
 
-							</header>
+	</header>
 
-							<section class="entry-summary article-content" itemprop="text">
+	<section class="entry-summary article-content" itemprop="text">
 
-								<?php the_excerpt(); ?>
-								<?php
-								wp_link_pages( array(
-									'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
-									'after'  => '</div>',
-								) );
-								?>
+		<?php the_excerpt(); ?>
+		<?php
+		wp_link_pages( array(
+			'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
+			'after'  => '</div>',
+		) );
+		?>
 
-							</section>
+	</section>
 
-							<?php if ( $template_parts_footer != false ) { ?>
+	<?php if ( $template_parts_footer != false ) { ?>
 
-							<footer class="article-footer">
+		<footer class="article-footer">
 
-								<?php
+			<?php
 
-								if ( ! empty( $template_parts_footer ) && is_array( $template_parts_footer ) ) {
-									foreach ( $template_parts_footer as $part ) {
-										get_template_part( 'inc/template-parts/blog/blog-' . $part );
-									}
-								}
+			if ( ! empty( $template_parts_footer ) && is_array( $template_parts_footer ) ) {
+				foreach ( $template_parts_footer as $part ) {
+					get_template_part( 'inc/template-parts/blog/blog-' . $part );
+				}
+			}
 
-								?>
+			?>
 
-							</footer>
+		</footer>
 
-							<?php } ?>
+	<?php } ?>
 
-						</article>
+</article>
 
 <?php } ?>
