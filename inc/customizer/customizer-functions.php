@@ -33,23 +33,29 @@ function wpbf_adjust_customizer_responsive_sizes() {
 
 add_action( 'customize_controls_print_styles', 'wpbf_adjust_customizer_responsive_sizes' );
 
-// Generate & Minify Customizer CSS
-function wpbf_generate_css() {
-
-	ob_start();
-	include_once( get_template_directory() . '/inc/customizer/styles.php' );
-	$css = ob_get_clean();
-
+// Minify CSS
+function wpbf_minify_css( $generated_css ) {
+ 
 	// Remove Comments
-	$css = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css );
-	// // Remove space after colons
+	$css = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $generated_css );
+	// Remove space after colons
 	$css = str_replace( ': ', ':', $css );
 	$css = str_replace( ' {', '{', $css );
 	$css = str_replace( ', ', ',', $css );
-	// // Remove whitespace
+	// Remove whitespace
 	$css = str_replace( array( "\r\n", "\r", "\n", "\t", '  ', '    ', '    ' ), '', $css );
-
+ 
 	return $css;
+ 
+}
+
+// Generate Customizer CSS
+function wpbf_generate_css() {
+ 
+	ob_start();
+	include_once( get_template_directory() . '/inc/customizer/styles.php' );
+ 
+	return wpbf_minify_css( ob_get_clean() );
 
 }
 
@@ -57,8 +63,8 @@ function wpbf_generate_css() {
 add_action( 'wp_enqueue_scripts', 'wpbf_customizer_frontend_scripts', 11 );
 function wpbf_customizer_frontend_scripts() {
 
-	$wpbf_inline_style = wpbf_generate_css();
-	wp_add_inline_style( apply_filters( 'wpbf_add_inline_style', 'wpbf-style' ), $wpbf_inline_style );
+	$inline_styles = wpbf_generate_css();
+	wp_add_inline_style( apply_filters( 'wpbf_add_inline_style', 'wpbf-style' ), $inline_styles );
 
 }
 
