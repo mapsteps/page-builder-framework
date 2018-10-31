@@ -73,6 +73,56 @@ function wpbf_theme_setup() {
 
 	) );
 
+	// Gutenberg Wide Aligned Elements
+	add_theme_support( 'align-wide' );
+
+	// Gutenberg Default Font Sizes
+	add_theme_support( 'editor-font-sizes', array(
+
+		array(
+			'name' => __( 'tiny', 'page-builder-framework' ),
+			'shortName' => __( 'XS', 'page-builder-framework' ),
+			'size' => 12,
+			'slug' => 'tiny'
+		),
+
+		array(
+			'name' => __( 'small', 'page-builder-framework' ),
+			'shortName' => __( 'S', 'page-builder-framework' ),
+			'size' => 14,
+			'slug' => 'small'
+		),
+
+		array(
+			'name' => __( 'regular', 'page-builder-framework' ),
+			'shortName' => __( 'M', 'page-builder-framework' ),
+			'size' => 16,
+			'slug' => 'regular'
+		),
+
+		array(
+			'name' => __( 'large', 'page-builder-framework' ),
+			'shortName' => __( 'L', 'page-builder-framework' ),
+			'size' => 20,
+			'slug' => 'large'
+		),
+
+		array(
+			'name' => __( 'larger', 'page-builder-framework' ),
+			'shortName' => __( 'XL', 'page-builder-framework' ),
+			'size' => 32,
+			'slug' => 'larger'
+		),
+
+		array(
+			'name' => __( 'extra', 'page-builder-framework' ),
+			'shortName' => __( 'XXL', 'page-builder-framework' ),
+			'size' => 44,
+			'slug' => 'extra'
+		)
+
+	) );
+
 }
 
 // Content Width
@@ -91,12 +141,13 @@ function wpbf_sidebars() {
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="wpbf-widgettitle">',
 		'after_title'   => '</h4>'
-    ) );
+	) );
 
 }
 
 // Styles & Scripts
 add_action( 'wp_enqueue_scripts', 'wpbf_scripts', 10 );
+
 function wpbf_scripts() {
 
 	// site.js
