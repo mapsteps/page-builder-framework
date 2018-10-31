@@ -144,9 +144,9 @@ WordPress
 
 
 // Images
-img.alignright, figure.alignright {float:right; margin:0 0 $margin $margin}
-img.alignleft, figure.alignleft {float:left; margin:0 $margin $margin 0}
-img.aligncenter, figure.aligncenter {display: block; margin-left: auto; margin-right: auto}
+img.alignright, figure.alignright, div.alignright {float:right; margin:0 0 $margin $margin}
+img.alignleft, figure.alignleft, div.alignleft {float:left; margin:0 $margin $margin 0}
+img.aligncenter, figure.aligncenter div.aligncenter {display: block; margin-left: auto; margin-right: auto}
 
 // Caption
 .wp-caption {

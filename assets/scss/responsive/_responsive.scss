@@ -99,6 +99,16 @@
 /* From 769 | Tablet & Bigger */
 @media (min-width: $breakpoint1 + 1) {
 
+	/* Gutenberg */
+
+	// Wide Aligned Images
+	.wpbf-no-sidebar .alignwide {
+		margin-left: -50px;
+		margin-right: -50px;
+		max-width: unset;
+		width: auto;
+	}
+
 	/* Sidebar */
 	.#{$prefix}-grid-divider > [class*='#{$prefix}-medium-']:not(.#{$prefix}-medium-1-1):nth-child(n+2) {
 		border-left:		1px solid $base-color;
@@ -201,6 +211,14 @@
 
 /* From 1025 | Desktop & Bigger */
 @media (min-width: $breakpoint2 + 1) {
+
+	/* Gutenberg */
+
+	// Wide Aligned Images
+	.wpbf-no-sidebar .alignwide {
+		margin-left: -75px;
+		margin-right: -75px;
+	}
 
 	/* Sidebar */
 	.#{$prefix}-grid-divider > [class*='#{$prefix}-large-']:not(.#{$prefix}-large-1-1):nth-child(n+2) {
