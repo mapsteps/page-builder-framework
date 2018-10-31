@@ -36,6 +36,9 @@ require_once( WPBF_THEME_DIR . '/inc/comments.php' );
 // Misc
 require_once( WPBF_THEME_DIR . '/inc/misc.php' );
 
+// Gutenberg
+require_once( WPBF_THEME_DIR . '/inc/integration/gutenberg/gutenberg.php' );
+
 // Customizer
 require_once( WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php' );
 
