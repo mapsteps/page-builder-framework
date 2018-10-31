@@ -72,16 +72,6 @@ body {
 Blog
 ========================================================================== */
 
-.wpbf-post-archive .wpbf-post {
-	margin-bottom: $margin;
-	border-bottom: 1px solid $base-color;
-}
-
-.wpbf-post-archive .wpbf-post:last-child {
-	margin-bottom: 0;
-	border-bottom: none;
-}
-
 // Headlines
 .page-title {
 	margin-bottom: 				$margin-medium;
@@ -101,8 +91,6 @@ Blog
 // Article Header
 .single .wpbf-post-image {
 	margin-bottom: $margin;
-	// width: 						100%;
-	// height: 					auto;
 }
 
 .wpbf-post-image-link {
@@ -125,6 +113,28 @@ Blog
 
 .wpbf-read-more {
 	margin-bottom: 				$margin;
+}
+
+/* Blog Layouts */
+
+// Defaults
+.wpbf-blog-layout-default,
+.wpbf-blog-layout-beside {
+	margin-bottom: $margin;
+	border-bottom: 1px solid $base-color;
+}
+
+.wpbf-blog-layout-default:last-child,
+.wpbf-blog-layout-beside:last-child {
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+// Beside
+.wpbf-blog-layout-beside {
+	.wpbf-grid{
+		// flex-direction: row-reverse;
+	}
 }
 
 /* Comments */
@@ -233,9 +243,6 @@ Blog
 // by author modifier
 .bypostauthor {
 	border-color:				$accent-color;
-	.avatar {
-		border-color:			$accent-color;
-	}
 }
 
 // Comment Navigation
@@ -250,6 +257,79 @@ Blog
 		text-align: 			right;
 	}
 }
+
+// Gutenberg
+
+// Full Aligned Items
+.wpbf-no-sidebar .alignfull {
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+	width: auto;
+	max-width: unset;
+}
+
+.alignwide,
+.alignfull {
+	iframe {
+		width: 100%;
+	}
+}
+
+// Separator
+.wp-block-separator {
+	width: 280px;
+	margin: $margin-medium auto;
+	border: none;
+	border-top: 1px solid darken($base-color, 5%);
+}
+
+// Separator Wide Modifier
+.wp-block-separator.is-style-wide {
+	width: 100%;
+}
+
+// Separator Dots Modifier
+.wp-block-separator.is-style-dots:before {
+	color: darken( $base-color, 15% );
+	font-size: 30px;
+}
+
+// Blockquote
+.wp-block-quote cite {
+	opacity: .75;
+}
+
+.wp-block-quote.is-large,
+.wp-block-quote.is-style-large {
+	margin: 					$margin 0 $margin $margin;
+	padding: 					0 0 0 $padding;
+}
+
+// Pullquote
+.wp-block-pullquote {
+	blockquote {
+		padding: $padding 0 0 0;
+		margin: 0;
+		border-left: none;
+		border-top: 5px solid $base-color;
+		border-bottom: 5px solid $base-color;
+	}
+	cite {
+		font-size: 18px;
+		opacity: .75;
+	}
+}
+
+.wp-block-pullquote.alignleft,
+.wp-block-pullquote.alignright {
+	padding: 0;
+}
+
+// Audio
+.wp-block-audio audio {
+	width: 100%;
+}
+
 
 /* ========================================================================
 Sidebar
@@ -292,7 +372,7 @@ Sidebar
 	.#{$prefix}-single-content,
 	.#{$prefix}-page-content,
 	.#{$prefix}-archive-content,
-	.#{$prefix}-index-content,
+	.#{$prefix}-blog-content,
 	.#{$prefix}-search-content,
 	.#{$prefix}-category-content {
 		width: 100% !important;
