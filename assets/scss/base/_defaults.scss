@@ -75,11 +75,14 @@ blockquote {
 	padding: 					0 0 0 $padding;
 	border-left: 				5px solid $base-color;
 	font-style: 				italic;
+	cite {
+		opacity:				.75;
+		font-size: 				$small-fontsize;
+	}
 }
 
 // Strong
-b,
-strong {
+b, strong {
 	font-weight: 				$bold;
 }
 

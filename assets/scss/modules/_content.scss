@@ -268,8 +268,7 @@ Blog
 	max-width: unset;
 }
 
-.alignwide,
-.alignfull {
+.alignwide, .alignfull {
 	iframe {
 		width: 100%;
 	}
@@ -295,10 +294,6 @@ Blog
 }
 
 // Blockquote
-.wp-block-quote cite {
-	opacity: .75;
-}
-
 .wp-block-quote.is-large,
 .wp-block-quote.is-style-large {
 	margin: 					$margin 0 $margin $margin;
@@ -313,10 +308,6 @@ Blog
 		border-left: none;
 		border-top: 5px solid $base-color;
 		border-bottom: 5px solid $base-color;
-	}
-	cite {
-		font-size: 18px;
-		opacity: .75;
 	}
 }
 
