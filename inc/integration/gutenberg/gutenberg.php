@@ -66,9 +66,6 @@ function wpbf_gutenberg_theme_setup() {
 
 }
 
-add_action( 'enqueue_block_editor_assets', 'wpbf_gutenberg_block_editor_assets' );
-
-
 // Generate Customizer CSS
 function wpbf_generate_gutenberg_css() {
  
@@ -86,3 +83,5 @@ function wpbf_gutenberg_block_editor_assets() {
 	wp_add_inline_style( 'wpbf-gutenberg-style', $inline_styles );
 
 }
+
+add_action( 'enqueue_block_editor_assets', 'wpbf_gutenberg_block_editor_assets' );
