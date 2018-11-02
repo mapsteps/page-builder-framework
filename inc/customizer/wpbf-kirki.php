@@ -203,13 +203,6 @@ Kirki::add_section( 'wpbf_sidebar_options', array(
 	'priority'			=>			400,
 ) );
 
-// Blog Settings
-Kirki::add_section( 'wpbf_blog_settings', array(
-	'title'				=>			esc_attr__( 'Blog Settings', 'page-builder-framework' ),
-	'panel'				=>			'layout_panel',
-	'priority'			=>			500,
-) );
-
 // Breadcrumbs
 Kirki::add_section( 'wpbf_breadcrumb_settings', array(
 	'title'				=>			esc_attr__( 'Breadcrumbs', 'page-builder-framework' ),
@@ -218,6 +211,13 @@ Kirki::add_section( 'wpbf_breadcrumb_settings', array(
 ) );
 
 /* Sections – Blog */
+
+// Blog Settings
+Kirki::add_section( 'wpbf_blog_settings', array(
+	'title'				=>			esc_attr__( 'General', 'page-builder-framework' ),
+	'panel'				=>			'blog_panel',
+	'priority'			=>			100,
+) );
 
 $archives = array( 'blog', 'archive', 'category', 'single' );
 
@@ -261,7 +261,45 @@ Kirki::add_section( 'wpbf_pre_header_options', array(
 	'priority'			=>			800,
 ) );
 
-/* Fields – Blog Settings */
+/* Fields – Breadcrumb Settings */
+
+// Activate
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'toggle',
+	'settings'			=>			'breadcrumbs_toggle',
+	'label'				=>			esc_attr__( 'Breadcrumbs', 'page-builder-framework' ),
+	'section'			=>			'wpbf_breadcrumb_settings',
+	'default'			=>			0,
+	'priority'			=>			1,
+) );
+
+// Archive
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'select',
+	'settings'			=>			'breadcrumbs',
+	'label'				=>			esc_attr__( 'Display Breadcrumbs on', 'page-builder-framework' ),
+	'section'			=>			'wpbf_breadcrumb_settings',
+	'default'			=>			array( 'archive', 'single' ),
+	'priority'			=>			2,
+	'multiple'			=>			6,
+	'choices'			=>			array(
+		'front_page'	=>			esc_attr__( 'Front Page', 'page-builder-framework' ),
+		'archive'		=>			esc_attr__( 'Archives', 'page-builder-framework' ),
+		'single'		=>			esc_attr__( 'Single', 'page-builder-framework' ),
+		'search'		=>			esc_attr__( 'Search Page', 'page-builder-framework' ),
+		'404'			=>			esc_attr__( '404 Page', 'page-builder-framework' ),
+		'page'			=>			esc_attr__( 'Pages', 'page-builder-framework' ),
+	),
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'breadcrumbs_toggle',
+		'operator'		=>			'==',
+		'value'			=>			1,
+		),
+	),
+) );
+
+/* Fields – Blog */
 
 // Author
 Kirki::add_field( 'wpbf', array(
@@ -319,46 +357,6 @@ Kirki::add_field( 'wpbf', array(
 	'default'			=>			'Read more',
 	'priority'			=>			2,
 ) );
-
-/* Fields – Breadcrumb Settings */
-
-// Activate
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'toggle',
-	'settings'			=>			'breadcrumbs_toggle',
-	'label'				=>			esc_attr__( 'Breadcrumbs', 'page-builder-framework' ),
-	'section'			=>			'wpbf_breadcrumb_settings',
-	'default'			=>			0,
-	'priority'			=>			1,
-) );
-
-// Archive
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'select',
-	'settings'			=>			'breadcrumbs',
-	'label'				=>			esc_attr__( 'Display Breadcrumbs on', 'page-builder-framework' ),
-	'section'			=>			'wpbf_breadcrumb_settings',
-	'default'			=>			array( 'archive', 'single' ),
-	'priority'			=>			2,
-	'multiple'			=>			6,
-	'choices'			=>			array(
-		'front_page'	=>			esc_attr__( 'Front Page', 'page-builder-framework' ),
-		'archive'		=>			esc_attr__( 'Archives', 'page-builder-framework' ),
-		'single'		=>			esc_attr__( 'Single', 'page-builder-framework' ),
-		'search'		=>			esc_attr__( 'Search Page', 'page-builder-framework' ),
-		'404'			=>			esc_attr__( '404 Page', 'page-builder-framework' ),
-		'page'			=>			esc_attr__( 'Pages', 'page-builder-framework' ),
-	),
-	'active_callback'	=>			array(
-		array(
-		'setting'		=>			'breadcrumbs_toggle',
-		'operator'		=>			'==',
-		'value'			=>			1,
-		),
-	),
-) );
-
-/* Fields – Blog */
 
 foreach ( $archives as $archive ) {
 
