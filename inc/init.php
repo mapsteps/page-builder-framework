@@ -10,6 +10,15 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+// Is Premium
+function wpbf_is_premium() {
+	if ( function_exists( 'wpbf_premium' ) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 // Options
 require_once( WPBF_THEME_DIR . '/inc/options.php' );
 

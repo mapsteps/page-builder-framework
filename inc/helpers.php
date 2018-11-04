@@ -10,15 +10,6 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Is Premium
-function wpbf_is_premium() {
-	if ( function_exists( 'wpbf_premium' ) ) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
 // Pingback
 function wpbf_pingback_header() {
 
