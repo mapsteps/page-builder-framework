@@ -60,7 +60,7 @@ Kirki::add_config( 'wpbf', array(
 ) );
 
 /* Panels */
-if( !is_plugin_active( 'wpbf-premium/wpbf-premium.php' ) ) {
+if( !wpbf_is_premium() ) {
 
 	// Premium Addon
 	Kirki::add_section( 'wpbf_premium_addon', array(
@@ -72,7 +72,7 @@ if( !is_plugin_active( 'wpbf-premium/wpbf-premium.php' ) ) {
 	$wpbf_premium_ad_link = sprintf(
 		/* translators: 1: link target */
 		__( 'Get all features with the <a href="%1s" target="_blank">Premium Add-On</a>!', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/?utm_source=repository&utm_medium=customizer&utm_campaign=wpbf' )
+		esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer&utm_campaign=wpbf#premium' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -1320,6 +1320,25 @@ Kirki::add_field( 'wpbf', array(
 	)
 ) );
 
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_typography_text',
+		'section'		=>		'wpbf_font_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
+
 // Menu
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
@@ -1350,6 +1369,25 @@ Kirki::add_field( 'wpbf', array(
 	),
 	'priority'			=>			1,
 ) );
+
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_typography_menu',
+		'section'		=>		'wpbf_menu_font_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
 
 // H1
 Kirki::add_field( 'wpbf', array(
@@ -1383,6 +1421,25 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			1,
 ) );
 
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_typography_h1',
+		'section'		=>		'wpbf_h1_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
+
 // H2
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
@@ -1413,6 +1470,25 @@ Kirki::add_field( 'wpbf', array(
 	),
 	'priority'			=>			1,
 ) );
+
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_typography_h2',
+		'section'		=>		'wpbf_h2_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
 
 // H3
 Kirki::add_field( 'wpbf', array(
@@ -1445,6 +1521,25 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			1,
 ) );
 
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_typography_h3',
+		'section'		=>		'wpbf_h3_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
+
 // H4
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
@@ -1475,6 +1570,25 @@ Kirki::add_field( 'wpbf', array(
 	),
 	'priority'			=>			1,
 ) );
+
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_typography_h4',
+		'section'		=>		'wpbf_h4_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
 
 // H5
 Kirki::add_field( 'wpbf', array(
@@ -1507,6 +1621,25 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			1,
 ) );
 
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_typography_h5',
+		'section'		=>		'wpbf_h5_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
+
 // H6
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
@@ -1537,6 +1670,25 @@ Kirki::add_field( 'wpbf', array(
 	),
 	'priority'			=>			1,
 ) );
+
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_typography_h6',
+		'section'		=>		'wpbf_h6_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
 
 /* Fields – Pre Header */
 
@@ -2151,6 +2303,25 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_navigation_panel&utm_campaign=wpbf#premium' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_header_menu',
+		'section'		=>		'wpbf_menu_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
+
 /* Fields – Sub Menu */
 
 // Alignment
@@ -2242,6 +2413,25 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			6,
 	'transport'			=>			'postMessage',
 ) );
+
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_sub_menu_panel&utm_campaign=wpbf#premium' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_header_sub_menu',
+		'section'		=>		'wpbf_sub_menu_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
 
 /* Fields – Mobile Navigation */
 
@@ -2430,6 +2620,25 @@ Kirki::add_field( 'wpbf', array(
 	'default'			=>			'16px',
 ) );
 
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_mobile_navigation_panel&utm_campaign=wpbf#premium' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_header_mobile_menu',
+		'section'		=>		'wpbf_mobile_menu_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
+
 /* Fields – Footer */
 
 // Footer Height
@@ -2553,6 +2762,25 @@ Kirki::add_field( 'wpbf', array(
 		),
 	)
 ) );
+
+if( !wpbf_is_premium() ) {
+
+	$wpbf_premium_ad_link = sprintf(
+		/* translators: 1: link target */
+		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/docs/footer/?utm_source=repository&utm_medium=customizer_footer_panel&utm_campaign=wpbf' ),
+		esc_attr( '_blank' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'			=>		'custom',
+		'settings'		=>		'wpbf_premium_ad_footer',
+		'section'		=>		'wpbf_footer_options',
+		'default'		=>		'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority'		=>		9999,
+	) );
+
+}
 
 /* Custom Controls */
 add_action( 'customize_register' , 'wpbf_custom_controls_default' );
@@ -2780,7 +3008,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 
 	// Archive Post Padding (Responsive)
 
-
 	$settings = array(
 		'test_padding_top_desktop', 'test_padding_top_tablet', 'test_padding_top_mobile',
 		'test_padding_right_desktop', 'test_padding_right_tablet', 'test_padding_right_mobile',
@@ -2808,9 +3035,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		));
 
 	}
-
-
-
 
 }
 
