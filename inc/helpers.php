@@ -114,7 +114,7 @@ function wpbf_title() {
 
 	}
 
-	echo apply_filters( 'wpbf_title', $title ); // WPCS: XSS ok.
+	echo $title; // WPCS: XSS ok.
 
 }
 
