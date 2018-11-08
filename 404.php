@@ -15,5 +15,3 @@ get_header();
 do_action( 'wpbf_404' );
 
 get_footer();
-
-?>
