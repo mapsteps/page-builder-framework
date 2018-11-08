@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // variables
 $page_width						= get_theme_mod( 'page_max_width' );
 $single_custom_width			= get_theme_mod( 'single_custom_width' );
-$content_width = $single_custom_width ? $single_custom_width : $page_width;
+$content_width					= $single_custom_width ? $single_custom_width : $page_width;
 if ( strpos( $content_width, 'px' ) !== false ) {
     $page_width_int				= (int) $content_width;
 } else {
