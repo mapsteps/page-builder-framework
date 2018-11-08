@@ -54,7 +54,7 @@ function wpbf_theme_setup() {
 	add_theme_support( 'post-thumbnails' );
 
 	// Automatic Feed Links
-	add_theme_support( 'automatic-feed-links' ).
+	add_theme_support( 'automatic-feed-links' );
 
 	// HTML5 Support
 	add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'gallery', 'caption' ) );
