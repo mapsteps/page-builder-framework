@@ -520,8 +520,6 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'wpbf_woo_fragments' );
 
 function wpbf_woo_fragments( $fragments ) {
 
-	global $woocommerce;
-
 	ob_start();
 	echo wpbf_woo_menu_item(); // WPCS: XSS ok.
 	$fragments['li.wpbf-woo-menu-item'] = ob_get_clean();
