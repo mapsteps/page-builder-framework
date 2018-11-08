@@ -29,8 +29,6 @@ if ( is_home() ) {
 	$template_parts_footer = get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
 	$blog_layout = get_theme_mod( 'blog_layout', 'default' );
 
-	// $blog_layout .= ' wpbf-medium-1-3';
-
 }
 
 ?>
