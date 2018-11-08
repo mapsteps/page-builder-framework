@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Navigation Fallback
 function wpbf_menu_fallback() {
-	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) { ?>
-			<a style="float: right" target="_blank" href="<?php echo esc_url( admin_url( '/nav-menus.php' ) ); ?>"><?php _e( 'Add Menu', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
-	<?php }
+	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+		echo '<a style="float: right" target="_blank" href="'. esc_url( admin_url( '/nav-menus.php' ) ) .'">'. __( 'Add Menu', 'page-builder-framework' ) .'</a>'; // WPCS: XSS ok.
+	}
 }
 
 // add description to main menu
