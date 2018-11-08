@@ -480,62 +480,7 @@ foreach ( $archives as $archive ) {
 			),
 		) );
 
-		/* All Layouts */
-
-		// Alignment
-		// Kirki::add_field( 'wpbf', array(
-		// 	'type'				=>			'radio-image',
-		// 	'settings'			=>			$archive . '_post_content_alignment',
-		// 	'label'				=>			esc_attr__( 'Content Alignment', 'page-builder-framework' ),
-		// 	'section'			=>			'wpbf_' . $archive . '_options',
-		// 	'default'			=>			'left',
-		// 	'priority'			=>			0,
-		// 	'multiple'			=>			1,
-		// 	'choices'			=>			array(
-		// 		'left'			=>			WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
-		// 		'center'		=>			WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
-		// 		'right'			=>			WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-		// 	),
-		// ) );
-
-		// Background Color
-		// Kirki::add_field( 'wpbf', array(
-		// 	'type'				=>			'color',
-		// 	'settings'			=>			$archive . '_post_background_color',
-		// 	'label'				=>			esc_attr__( 'Background Color', 'page-builder-framework' ),
-		// 	'section'			=>			'wpbf_' . $archive . '_options',
-		// 	'priority'			=>			0,
-		// 	'choices'			=>			array(
-		// 		'alpha'			=>			true,
-		// 	),
-		// ) );
-
-		/* Default */
-
-		/* Image Beside Post */
-
-		// Image Width
-		// Kirki::add_field( 'wpbf', array(
-		// 	'type'				=>			'slider',
-		// 	'settings'			=>			$archive . '_post_image_width',
-		// 	'label'				=>			esc_attr__( 'Image Width', 'page-builder-framework' ),
-		// 	'section'			=>			'wpbf_' . $archive . '_options',
-		// 	'default'			=>			40,
-		// 	'priority'			=>			0,
-		// 	'transport'			=>			'postMessage',
-		// 	'choices'			=>			array(
-		// 		'min'			=>			'10',
-		// 		'max'			=>			'80',
-		// 		'step'			=>			'1',
-		// 	),
-		// 	'active_callback'	=>			array(
-		// 		array(
-		// 		'setting'		=>			$archive . '_layout',
-		// 		'operator'		=>			'==',
-		// 		'value'			=>			'beside',
-		// 		),
-		// 	),
-		// ) );
+		/* All Layouts (coming soon) */
 
 	} else {
 
@@ -3003,36 +2948,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'priority' => 3,
 		)
 	));
-
-	// Archive Post Padding (Responsive)
-
-	// $settings = array(
-	// 	'test_padding_top_desktop', 'test_padding_top_tablet', 'test_padding_top_mobile',
-	// 	'test_padding_right_desktop', 'test_padding_right_tablet', 'test_padding_right_mobile',
-	// 	'test_padding_bottom_desktop', 'test_padding_bottom_tablet', 'test_padding_bottom_mobile',
-	// 	'test_padding_left_desktop', 'test_padding_left_tablet', 'test_padding_left_mobile',
-	// );
-
-	// foreach ($settings as $setting) {
-	// 	$wp_customize->add_setting( $setting,
-	// 		array(
-	// 			'default' => '10',
-	// 			'sanitize_callback' => 'absint'
-	// 		)
-	// 	);
-
-	// 	$wp_customize->add_control( new WPBF_Customize_Responsive_Padding_Control( 
-	// 		$wp_customize, 
-	// 		'test_padding',
-	// 		array(
-	// 			'label'	=> esc_attr__( 'Padding', 'page-builder-framework' ),
-	// 			'section' => 'wpbf_blog_options',
-	// 			'settings' => $setting,
-	// 			'priority' => 2,
-	// 		)
-	// 	));
-
-	// }
 
 }
 
