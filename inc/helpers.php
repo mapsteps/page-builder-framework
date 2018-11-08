@@ -58,7 +58,7 @@ function wpbf_inner_content() {
 
 		$wpbf_settings = get_option( 'wpbf_settings' );
 
-		$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : false;
+		$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
 		$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
 
@@ -83,7 +83,7 @@ function wpbf_inner_content_close() {
 
 		$wpbf_settings = get_option( 'wpbf_settings' );
 
-		$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : false;
+		$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
 		$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
 
@@ -108,7 +108,7 @@ function wpbf_title() {
 
 		$wpbf_settings = get_option( 'wpbf_settings' );
 
-		$removetitle_global = isset( $wpbf_settings['wpbf_removetitle_global'] ) ? $wpbf_settings['wpbf_removetitle_global'] : false;
+		$removetitle_global = isset( $wpbf_settings['wpbf_removetitle_global'] ) ? $wpbf_settings['wpbf_removetitle_global'] : array();
 
 		$removetitle_global && in_array( get_post_type(), $removetitle_global ) ? $title = false : '';
 
@@ -227,8 +227,6 @@ function wpbf_archive_class() {
 
 // Singular Class
 function wpbf_singular_class() {
-
-	$singular_class = '';
 
 	if( is_singular( 'post' ) ) {
 		$singular_class = ' wpbf-single-content';
@@ -713,21 +711,3 @@ function wpbf_navigation_attributes() {
 	echo $navigation_attributes; // WPCS: XSS ok.
 
 }
-
-/**
- *
- * Blog Layouts HTML markup
- * Currently in the making
- */
-
-function wpbf_something_cool() {
-	echo '<div class="wpbf-grid wpbf-grid-medium-1-3">';
-}
-
-// add_action( 'wpbf_loop_open', 'wpbf_something_cool' );
-
-function wpbf_something_cool_close() {
-	echo '</div>';
-}
-
-// add_action( 'wpbf_loop_close', 'wpbf_something_cool_close' );
