@@ -36,7 +36,7 @@ function wpbf_add_metaboxes() {
 
 }
 
-function wpbf_options_metabox( $post, $post_types ) {
+function wpbf_options_metabox( $post ) {
 
 	wp_nonce_field( basename( __FILE__ ), 'wpbf_options_nonce' );
 	$wpbf_stored_meta = get_post_meta( $post->ID );
