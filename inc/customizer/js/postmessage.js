@@ -5,16 +5,14 @@
 	// Page Boxed Margin
 	wp.customize( 'page_boxed_margin', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-page').css('margin-top', newval + 'px' );
-			$('.wpbf-page').css('margin-bottom', newval + 'px' );
+			$('.wpbf-page').css('margin-top', newval + 'px' ).css('margin-bottom', newval + 'px' );
 		} );
 	} );
 
 	// Page Boxed Padding
 	wp.customize( 'page_boxed_padding', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-container').css('padding-left', newval + 'px' );
-			$('.wpbf-container').css('padding-right', newval + 'px' );
+			$('.wpbf-container').css('padding-left', newval + 'px' ).css('padding-right', newval + 'px' );
 		} );
 	} );
 
@@ -126,8 +124,7 @@
 	/* Mobile Menu */
 	wp.customize( 'mobile_menu_height', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-mobile-nav-wrapper').css('padding-top', newval + 'px' );
-			$('.wpbf-mobile-nav-wrapper').css('padding-bottom', newval + 'px' );
+			$('.wpbf-mobile-nav-wrapper').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
 		} );
 	} );
 
@@ -147,8 +144,7 @@
 
 	wp.customize( 'pre_header_height', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-inner-pre-header').css('padding-top', newval + 'px' );
-			$('.wpbf-inner-pre-header').css('padding-bottom', newval + 'px' );
+			$('.wpbf-inner-pre-header').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
 		} );
 	} );
 
@@ -209,8 +205,7 @@
 
 	wp.customize( 'button_border_width', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-button, input[type="submit"]').css('border-width', newval + 'px' );
-			$('.wpbf-button, input[type="submit"]').css('border-type', 'solid' );
+			$('.wpbf-button, input[type="submit"]').css('border-width', newval + 'px' ).css('border-type', 'solid' );
 		} );
 	} );
 
@@ -362,8 +357,7 @@
 	// Height
 	wp.customize( 'footer_height', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-inner-footer').css('padding-top', newval + 'px' );
-			$('.wpbf-inner-footer').css('padding-bottom', newval + 'px' );
+			$('.wpbf-inner-footer').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
 		} );
 	} );
 
