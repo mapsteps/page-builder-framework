@@ -13,12 +13,16 @@ function wpbf_global_sidebar_class() {
 
 	$global_sidebar_position = get_theme_mod( 'sidebar_position' );
 
-	if ( $global_sidebar_position == 'left' ) {
-		$sidebar_class = 'wpbf-sidebar-left';
-	} elseif ( $global_sidebar_position == 'none' ) {
-		$sidebar_class = 'wpbf-no-sidebar';
-	} else {
-		$sidebar_class = 'wpbf-sidebar-right';
+	switch ( $global_sidebar_position ) {
+		case 'left':
+			$sidebar_class = 'wpbf-sidebar-left';
+			break;
+		case 'none':
+			$sidebar_class = 'wpbf-no-sidebar';
+			break;
+		default:
+			$sidebar_class = 'wpbf-sidebar-right';
+			break;
 	}
 
 	return $sidebar_class;
@@ -140,35 +144,8 @@ function wpbf_body_classes( $classes ) {
 add_filter( 'post_class', 'wpbf_post_classes' );
 function wpbf_post_classes( $classes ) {
 
-	// add class to all post types
+	// add class to all posts
 	$classes[] = 'wpbf-post';
-
-	// add class only single
-	// if( is_singular( 'post' ) {
-	// }
-
-	// add class to default archives
-	// if( is_home() || is_date() || is_category() || is_tag() || is_attachment() || is_author() || is_search() ) {
-	// }
-
-	// don't take it further if we're on a single
-	// if( is_single() ) return $classes;
-
-	// if( is_home() ) {
-	// 	$classes[] = 'wpbf-index-post';
-	// } elseif( is_date() ) {
-	// 	$classes[] = 'wpbf-date-post';
-	// } elseif( is_category() ) {
-	// 	$classes[] = 'wpbf-category-post';
-	// } elseif( is_tag() ) {
-	// 	$classes[] = 'wpbf-tag-post';
-	// } elseif( is_attachment() ) {
-	// 	$classes[] = 'wpbf-attachment-post';
-	// } elseif( is_author() ) {
-	// 	$classes[] = 'wpbf-author-post';
-	// } elseif( is_search() ) {
-	// 	$classes[] = 'wpbf-search-post';
-	// }
 
 	return $classes;
 
