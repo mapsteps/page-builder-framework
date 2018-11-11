@@ -21,7 +21,7 @@ function wpbf_global_sidebar_class() {
 			$sidebar_class = 'wpbf-no-sidebar';
 			break;
 		default:
-			$sidebar_class = is_page() && is_page_template( 'default' ) ? 'wpbf-no-sidebar' : 'wpbf-sidebar-right';
+			$sidebar_class = is_page() && !is_page_template( 'page-sidebar.php' ) ? 'wpbf-no-sidebar' : 'wpbf-sidebar-right';
 			break;
 	}
 
