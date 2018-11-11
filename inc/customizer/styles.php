@@ -691,53 +691,7 @@ if( $sidebar_width && !wpbf_has_responsive_breakpoints() ) {
 
 }
 
-/* Blog */
-
-// Blog ESCAPING!!!!!!!!!!!!!
-$archives = array( 'blog', 'archive', 'category', 'single' );
-
-foreach ( $archives as $archive ) {
-
-	$custom_width = get_theme_mod( $archive . '_custom_width' );
-	$content_alignment = get_theme_mod( $archive . '_post_content_alignment', 'left' );
-	$background_color = get_theme_mod( $archive . '_post_background_color' );
-
-	if( $custom_width ) {
-
-		echo '.' . $archive . ' #inner-content {';
-		echo sprintf( 'max-width: %s;', $custom_width );
-		echo '}';
-
-	}
-
-	if( $content_alignment !== 'left' ) {
-
-		echo '.wpbf-' . $archive . '-content .wpbf-post {';
-		if( $content_alignment == 'center' ) {
-		echo 'text-align: center;';
-		} else {
-		echo 'text-align: right;';
-		}
-		echo '}';
-
-	}
-
-	if( $background_color ) {
-
-		// with this, we only affect post archives - not other cpt's. we'll later see if we want that or not.
-		echo '.wpbf-' . $archive . '-content .wpbf-post {';
-		echo sprintf( 'background-color: %s;', $background_color );
-		echo 'padding: 20px;';
-		echo 'border-bottom: none;';
-		echo '}';
-
-	}
-
-	// don't take it further for posts
-	// if( $archive == 'single' ) return;
-	// we may need a separate thing for single
-
-}
+/* Blog (coming soon) */
 
 /* Header */
 
@@ -1331,20 +1285,31 @@ if( $mobile_menu_font_size ) {
 
 /* Footer */
 
-$footer_layout = get_theme_mod( 'footer_layout' );
-$footer_height = get_theme_mod( 'footer_height' );
-$footer_bg_color = get_theme_mod( 'footer_bg_color' );
-$footer_font_color = get_theme_mod( 'footer_font_color' );
-$footer_accent_color = get_theme_mod( 'footer_accent_color' );
-$footer_accent_color_alt = get_theme_mod( 'footer_accent_color_alt' );
-$footer_font_size = get_theme_mod( 'footer_font_size' );
+$footer_layout				= get_theme_mod( 'footer_layout' );
+$footer_width				= get_theme_mod( 'footer_width' );
+$footer_height				= get_theme_mod( 'footer_height' );
+$footer_bg_color			= get_theme_mod( 'footer_bg_color' );
+$footer_font_color			= get_theme_mod( 'footer_font_color' );
+$footer_accent_color		= get_theme_mod( 'footer_accent_color' );
+$footer_accent_color_alt	= get_theme_mod( 'footer_accent_color_alt' );
+$footer_font_size			= get_theme_mod( 'footer_font_size' );
 
-if( $footer_layout != 'none' && $footer_height ) {
+if( $footer_layout != 'none' && ( $footer_height || $footer_width ) ) {
 
 	echo '.wpbf-inner-footer {';
 
+	if( $footer_height ) {
+
 		echo sprintf( 'padding-top: %s;', esc_attr( $footer_height ) . 'px' );
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $footer_height ) . 'px' );
+
+	}
+
+	if( $footer_width ) {
+
+		echo sprintf( 'max-width: %s;', esc_attr( $footer_width ) );
+
+	}
 
 	echo '}';
 
