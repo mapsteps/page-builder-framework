@@ -21,7 +21,7 @@ function wpbf_global_sidebar_class() {
 			$sidebar_class = 'wpbf-no-sidebar';
 			break;
 		default:
-			$sidebar_class = 'wpbf-sidebar-right';
+			$sidebar_class = is_page() && is_page_template( 'default' ) ? 'wpbf-no-sidebar' : 'wpbf-sidebar-right';
 			break;
 	}
 
@@ -33,10 +33,10 @@ function wpbf_global_sidebar_class() {
 add_filter( 'body_class', 'wpbf_body_classes' );
 function wpbf_body_classes( $classes ) {
 
-	global $post;
-	
-	if ( isset( $post ) ) {
-		$classes[] = 'wpbf';
+	$classes[] = 'wpbf';
+
+	if( is_singular() ) {
+		global $post;
 		$classes[] = 'wpbf-' . $post->post_name;
 	}
 	
