@@ -28,17 +28,11 @@ get_header(); ?>
 
 						<?php if( have_posts() ) : ?>
 
-						<?php do_action( 'wpbf_loop_open' ); ?>
-
 						<?php while ( have_posts() ) : the_post(); ?>
 
 						<?php get_template_part( 'inc/template-parts/article' ); ?>
 
-						<?php endwhile; ?>
-
-						<?php do_action( 'wpbf_loop_close' ); ?>
-
-						<?php else : ?>
+						<?php endwhile; else : ?>
 
 						<?php get_template_part( 'inc/template-parts/article-none' ); ?>
 
