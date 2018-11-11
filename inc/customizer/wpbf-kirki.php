@@ -2584,6 +2584,24 @@ if( !wpbf_is_premium() ) {
 
 /* Fields – Footer */
 
+// Width
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'dimension',
+	'label'				=>			esc_attr__( 'Footer Width', 'page-builder-framework' ),
+	'description'		=>			esc_attr__( 'Default: 1200px', 'page-builder-framework' ),
+	'settings'			=>			'footer_width',
+	'section'			=>			'wpbf_footer_options',
+	'priority'			=>			4,
+	'transport'			=>			'postMessage',
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'footer_layout',
+		'operator'		=>			'!=',
+		'value'			=>			'none',
+		),
+	)
+) );
+
 // Footer Height
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'slider',

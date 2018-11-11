@@ -354,6 +354,13 @@
 
 	/* Footer */
 
+	// Width
+	wp.customize( 'footer_width', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-inner-footer').css('max-width', newval );
+		} );
+	} );
+
 	// Height
 	wp.customize( 'footer_height', function( value ) {
 		value.bind( function( newval ) {
