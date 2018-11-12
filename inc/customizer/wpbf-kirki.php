@@ -2357,6 +2357,36 @@ Kirki::add_field( 'wpbf', array(
 	'transport'			=>			'postMessage',
 ) );
 
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'toggle',
+	'settings'			=>			'sub_menu_separator',
+	'label'				=>			esc_attr__( 'Sub Menu Separator', 'page-builder-framework' ),
+	'section'			=>			'wpbf_sub_menu_options',
+	'default'			=>			0,
+	'priority'			=>			6,
+) );
+
+// Separator Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'sub_menu_separator_color',
+	'label'				=>			esc_attr__( 'Color', 'page-builder-framework' ),
+	'section'			=>			'wpbf_sub_menu_options',
+	'default'			=>			'#f5f5f7',
+	'priority'			=>			6,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'sub_menu_separator',
+		'operator'		=>			'==',
+		'value'			=>			true,
+		),
+	)
+) );
+
 if( !wpbf_is_premium() ) {
 
 	$wpbf_premium_ad_link = sprintf(
