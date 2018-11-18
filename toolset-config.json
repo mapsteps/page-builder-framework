@@ -1,0 +1,192 @@
+{
+"data" : [
+	{
+	    "name": "page_boxed",
+	    "type": [ "customizer" ],
+	    "group": "Global",
+	    "target": [ "archive", "single" ],
+           "global_key": "theme_mods_page-builder-framework",
+	    "gui": {
+	        "display_name": "Boxed Layout",
+	        "type": "select",
+	        "values": [
+	            {
+	                "text": "On",
+	                "value": "1"
+	            },
+	            {
+	                "text": "Off",
+	                "value": "0"
+	            }
+	        ]
+	    },
+	    "default_value": "toolset_use_theme_setting"
+	},
+	{
+	    "name": "page_boxed_box_shadow",
+	    "type": [ "customizer" ],
+	    "group": "Global",
+	    "target": [ "archive", "single" ],
+           "global_key": "theme_mods_page-builder-framework",
+	    "gui": {
+	        "display_name": "Box Shadow",
+	        "type": "select",
+	        "values": [
+	            {
+	                "text": "On",
+	                "value": "1"
+	            },
+	            {
+	                "text": "Off",
+	                "value": "0"
+	            }
+	        ]
+	    },
+	    "default_value": "toolset_use_theme_setting"
+	},
+	{
+	    "name": "layout_scrolltop",
+	    "type": [ "customizer" ],
+	    "group": "Global",
+	    "target": [ "archive", "single" ],
+           "global_key": "theme_mods_page-builder-framework",
+	    "gui": {
+	        "display_name": "Scroll To Top",
+	        "type": "select",
+	        "values": [
+	            {
+	                "text": "On",
+	                "value": "1"
+	            },
+	            {
+	                "text": "Off",
+	                "value": "0"
+	            }
+	        ]
+	    },
+	    "default_value": "toolset_use_theme_setting"
+	},
+	{
+	    "name": "sidebar_position",
+	    "type": [ "customizer" ],
+	    "group": "Global",
+	    "target": [ "archive", "single" ],
+           "global_key": "theme_mods_page-builder-framework",
+	    "gui": {
+	        "display_name": "Sidebar Position",
+	        "type": "select",
+	        "values": [
+	            {
+	                "text": "Right",
+	                "value": "right"
+	            },
+	            {
+	                "text": "Left",
+	                "value": "left"
+	            },
+				{
+	                "text": "No Sidebar",
+	                "value": "none"
+	            }
+	        ]
+	    },
+	    "default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "blog_author",
+		"type": [ "customizer" ],
+		"group": "Global",
+		"target": [ "archive", "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Author",
+			"type": "select",
+			"values": [
+				{
+					"text": "Show",
+					"value": "show"
+				},
+				{
+					"text": "Hide",
+					"value": "hide"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "breadcrumbs_toggle",
+		"type": [ "customizer" ],
+		"group": "Global",
+		"target": [ "archive", "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Breadcrumbs",
+			"type": "select",
+			"values": [
+				{
+					"text": "On",
+					"value": "1"
+				},
+				{
+					"text": "Off",
+					"value": "0"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "menu_position",
+		"type": [ "customizer" ],
+		"group": "Header",
+		"target": [ "archive", "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Navigation",
+			"type": "select",
+			"values": [
+				{
+					"text": "Right",
+					"value": "menu-right"
+				},
+				{
+					"text": "Left",
+					"value": "menu-left"
+				},
+				{
+					"text": "Centered",
+					"value": "menu-centered"
+				},
+				{
+					"text": "Stacked",
+					"value": "menu-stacked"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "menu_search_icon",
+		"type": [ "customizer" ],
+		"group": "Header",
+		"target": [ "archive", "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Search Icon",
+			"type": "select",
+			"values": [
+				{
+					"text": "On",
+					"value": "1"
+				},
+				{
+					"text": "Off",
+					"value": "0"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	}
+]
+}
