@@ -293,7 +293,7 @@ if( !function_exists( 'wpbf_has_responsive_breakpoints' ) ) {
 		// check if custom breakpoints are set, otherwise return false
 		$wpbf_settings = get_option( 'wpbf_settings' );
 
-		if ( !empty( $wpbf_settings['wpbf_breakpoint_medium'] ) || !empty( $wpbf_settings['wpbf_breakpoint_desktop'] ) ) {
+		if ( !empty( $wpbf_settings['wpbf_breakpoint_medium'] ) || !empty( $wpbf_settings['wpbf_breakpoint_desktop'] ) || !empty( $wpbf_settings['wpbf_breakpoint_mobile'] ) ) {
 			return true;
 		} else {
 			return false;
