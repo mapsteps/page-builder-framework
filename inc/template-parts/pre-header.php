@@ -38,7 +38,7 @@ if( ! $pre_header_layout || $pre_header_layout == 'none' ) return;
 							wp_nav_menu(array(
 								'theme_location'	=>		'pre_header_menu',
 								'container'			=>		false,
-								'menu_class'		=>		'wpbf-menu wpbf-sub-menu wpbf-visible-large',
+								'menu_class'		=>		'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_animation(),
 								'depth'				=>		'2',
 								'fallback_cb'		=>		false,
 							));
@@ -64,7 +64,7 @@ if( ! $pre_header_layout || $pre_header_layout == 'none' ) return;
 							wp_nav_menu(array(
 								'theme_location'	=>		'pre_header_menu_right',
 								'container'			=>		false,
-								'menu_class'		=>		'wpbf-menu wpbf-sub-menu wpbf-visible-large',
+								'menu_class'		=>		'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_animation(),
 								'depth'				=>		'2',
 								'fallback_cb'		=>		false,
 							));
