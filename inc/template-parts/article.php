@@ -13,13 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 $template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
 $template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
-$blog_layout = get_theme_mod( 'archive_layout', 'default' );
+$wpbf_blog_layout = get_theme_mod( 'archive_layout', 'default' );
 
 if ( is_category() ) {
 	
 	$template_parts_header = get_theme_mod( 'category_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'category_sortable_footer', array( 'readmore', 'categories' ) );
-	$blog_layout = get_theme_mod( 'category_layout', 'default' );
+	$wpbf_blog_layout = get_theme_mod( 'category_layout', 'default' );
 
 } 
 
@@ -27,15 +27,15 @@ if ( is_home() ) {
 
 	$template_parts_header = get_theme_mod( 'blog_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
-	$blog_layout = get_theme_mod( 'blog_layout', 'default' );
+	$wpbf_blog_layout = get_theme_mod( 'blog_layout', 'default' );
 
 }
 
 ?>
 
-<?php if( $blog_layout == 'beside' ) { ?>
+<?php if( $wpbf_blog_layout == 'beside' ) { ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'wpbf-blog-layout-' . $blog_layout ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'wpbf-blog-layout-' . $wpbf_blog_layout ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 	<?php if( has_post_thumbnail() ) { ?>
 
@@ -107,7 +107,7 @@ if ( is_home() ) {
 
 <?php } else { ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'wpbf-blog-layout-' . $blog_layout ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'wpbf-blog-layout-' . $wpbf_blog_layout ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 	<header class="article-header">
 
