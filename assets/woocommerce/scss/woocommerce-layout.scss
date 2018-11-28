@@ -110,6 +110,10 @@
 			}
 		}
 
+		.related {
+			clear: both;
+		}
+
 		#reviews {
 			.comment {
 				@include mediaright();
