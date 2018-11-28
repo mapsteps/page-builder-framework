@@ -702,7 +702,7 @@ foreach ( $archives as $archive ) {
 	if( $custom_width ) {
 
 		echo '.' . $archive . ' #inner-content {';
-		echo sprintf( 'max-width: %s;', $custom_width );
+		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
 	}
