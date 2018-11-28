@@ -691,7 +691,23 @@ if( $sidebar_width && !wpbf_has_responsive_breakpoints() ) {
 
 }
 
-/* Blog (coming soon) */
+/* Blog */
+
+$archives = array( 'blog', 'archive', 'category', 'single' );
+
+foreach ( $archives as $archive ) {
+
+	$custom_width = get_theme_mod( $archive . '_custom_width' );
+
+	if( $custom_width ) {
+
+		echo '.' . $archive . ' #inner-content {';
+		echo sprintf( 'max-width: %s;', $custom_width );
+		echo '}';
+
+	}
+
+}
 
 /* Header */
 
