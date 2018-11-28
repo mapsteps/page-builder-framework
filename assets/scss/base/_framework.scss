@@ -635,7 +635,7 @@ Component: Grid
 Component: Text
 ========================================================================== */
 
-/* Text modifier: alignment
+/* Text modifier
 ========================================================================== */
 .#{$prefix}-text-left {
 	text-align:				left;
@@ -650,9 +650,8 @@ Component: Text
 	text-align:				justify;
 }
 
-/* Text modifier: uppercase
-========================================================================== */
-.#{$prefix}-uppercase {
+.#{$prefix}-uppercase,
+.#{$prefix}-text-uppercase {
 	text-transform: 		uppercase;
 }
 
