@@ -277,7 +277,8 @@
 transition:					$transition;
 };
 
-@mixin vertical-align() {
+@mixin vertical-align($position: relative) {
+position:					$position;
 top:						50%;
 -webkit-transform:			translateY(-50%);
 -ms-transform:				translateY(-50%);
