@@ -1842,21 +1842,7 @@ p.demo_store,
 		position: absolute;
 		left: -6px;
 		color: $accent-color;
-		@include vertical-align();
-	}
-}
-
-.wpbf-mobile-nav-wrapper {
-	.wpbf-woo-menu-item-wrapper {
-		display: inline-block;
-		margin: 0 15px 0 0;
-		padding: 0;
-	}
-	.wpbf-woo-menu-item {
-		list-style: none;
-		a {
-			color: $brand-color-alt;
-		}
+		@include vertical-align($position: absolute);
 	}
 }
 
@@ -1873,10 +1859,21 @@ p.demo_store,
 
 .woocommerce-product-search:before {
 	content: "\f118";
-	font-family: "page-builder-framework";
 	right: 15px;
-	@include vertical-align();
-	position: absolute;
+	@include vertical-align($position: absolute);
+	color: $brand-color-alt;
+
+	font-family: 'page-builder-framework' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 // Account Navigation
