@@ -36,11 +36,7 @@ Component: Navigation
 	}
 	a {
 		display: 			block;
-		// color: 				$brand-color;
 	}
-	// a:hover {
-	// 	color:				$brand-color-alt;
-	// }
 }
 
 // Clearfix Container
@@ -64,11 +60,7 @@ Component: Navigation
 	a {
 		font-weight: 		700;
 		font-size: 			$bigger-fontsize + 2;
-		// color: 				$brand-color-alt;
 	}
-	// a:hover {
-		// color: 				$brand-color-alt;
-	// }
 	img {
 		height:				48px;
 		width:				auto;
@@ -79,10 +71,10 @@ Component: Navigation
 ========================================================================== */
 .#{$prefix}-menu-item-search {
 	position: 				relative;
-	a i {
+	i {
 		@include			transition(all .2s);
 	}
-	a.active i {
+	&.active i {
 		opacity: 			0;
 	}
 	.#{$prefix}-menu-search {
@@ -91,12 +83,11 @@ Component: Navigation
 		top:				50%;
 		margin-top: 		-25px;
 		right: 				0;
-		width: 				200px;
 		display: 			none;
 		opacity: 			0;
 		width: 				0;
-		#s {
-			padding: 		0 14px;
+		max-width: 			350px;
+		input[type=search] {
 			height: 		50px;
 		}
 	}
@@ -285,38 +276,36 @@ Component: Navigation
 	}
 }
 
-// Stacked Advanced
-// .#{$prefix}-nav-wrapper.#{$prefix}-menu-stacked-advanced {
-	// padding-top: 0;
-	// padding-bottom: 0;
-// }
-
 /* Mobiletoggle
 ========================================================================== */
 
 // Defaults
 .#{$prefix}-mobile-logo {
-	font-weight: 			700;
-	// color: 					$brand-color;
+	font-weight: 700;
 	img {
-		height:				35px;
+		height: 35px;
 	}
 }
 
-// .#{$prefix}-mobile-logo:hover {
-// 	color: 					$brand-color-alt;
-// }
-
-// Toggle
-.#{$prefix}-menu-toggle,
-.#{$prefix}-mobile-menu-toggle, {
-	cursor:					pointer;
-	vertical-align: 		middle;
+// Toggle & Navigation Menu Items
+.wpbf-nav-item,
+.wpbf-mobile-nav-item {
+	cursor: pointer;
+	display: inline-block;
+	padding: 0;
+	margin: 0 0 0 15px;
+	vertical-align: middle;
+	li {
+		list-style: none;
+	}
+	a {
+		color: inherit;
+	}
 }
 
 .#{$prefix}-mobile-nav-wrapper {
-	padding-top: 			$padding;
-	padding-bottom: 		$padding;
+	padding-top: $padding;
+	padding-bottom: $padding;
 }
 
 // Hamburger & Off-Canvas Toggle
