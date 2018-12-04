@@ -19,10 +19,10 @@
 	}
 
 	// Menu Search
-	$('.wpbf-menu-item-search a').click(function(event) {
+	$('.wpbf-menu-item-search').click(function(event) {
 		event.preventDefault();
 		event.stopPropagation();
-		$('.wpbf-menu-item-search a').addClass('active');
+		$('.wpbf-menu-item-search').addClass('active');
 		$('.wpbf-navigation .wpbf-menu > li').slice(-3).addClass('wpbf-menu-item');
     	var itemWidth = 0;
 		$('.wpbf-menu-item').each(function() {
@@ -32,18 +32,19 @@
 			var itemWidth = 250;
 		}
 		$('.wpbf-menu-search').stop().css({display:'block'}).animate({width : itemWidth, opacity : '1'}, 200);
-		$('.wpbf-menu-search #s').focus();
+		$('.wpbf-menu-search button').remove();
+		$('.wpbf-menu-search input[type=search]').val('').focus();
 	});
 
 	$(window).click(function() {
-		if ( $('.wpbf-menu-item-search a').hasClass('active') ) {
+		if ( $('.wpbf-menu-item-search').hasClass('active') ) {
 
 			$('.wpbf-menu-search').stop().animate({opacity:'0', width:'0px'}, 250, function() {
 				$(this).css({display:'none'});
 			});
 
 			setTimeout(function(){
-				$('.wpbf-menu-item-search a').removeClass('active');
+				$('.wpbf-menu-item-search').removeClass('active');
 			}, 400);
 		}
 	});

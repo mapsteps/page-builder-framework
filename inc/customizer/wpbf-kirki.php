@@ -2027,7 +2027,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'text',
 	'settings'			=>			'menu_logo_alt',
-	'label'				=>			esc_attr__( 'Custom alt tag (optional)', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Custom alt Tag', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
 	'priority'			=>			31,
 	'description'		=>			esc_attr__( 'If not declared, the site title will be used', 'page-builder-framework' ),
@@ -2045,7 +2045,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'text',
 	'settings'			=>			'menu_logo_title',
-	'label'				=>			esc_attr__( 'Title tag (optional)', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Custom Title Tag', 'page-builder-framework' ),
 	'section'			=>			'title_tagline',
 	'priority'			=>			32,
 	'transport'			=>			'postMessage',
@@ -2097,8 +2097,8 @@ Kirki::add_field( 'wpbf', array(
 	'default'			=>			'66',
 	'transport'			=>			'postMessage',
 	'choices'			=>			array(
-		'min'			=>			'25',
-		'max'			=>			'75',
+		'min'			=>			'10',
+		'max'			=>			'80',
 		'step'			=>			'1',
 	),
 ) );
@@ -2147,24 +2147,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'menu_search_icon',
 	'label'				=>			esc_attr__( 'Search Icon', 'page-builder-framework' ),
 	'section'			=>			'wpbf_menu_options',
-	'priority'			=>			2,
-	'active_callback'	=>			array(
-		array(
-		'setting'		=>			'menu_position',
-		'operator'		=>			'!=',
-		'value'			=>			'menu-off-canvas',
-		),
-		array(
-		'setting'		=>			'menu_position',
-		'operator'		=>			'!=',
-		'value'			=>			'menu-off-canvas-left',
-		),
-		array(
-		'setting'		=>			'menu_position',
-		'operator'		=>			'!=',
-		'value'			=>			'menu-full-screen',
-		),
-	)
+	'priority'			=>			2
 ) );
 
 // Height
@@ -2423,6 +2406,15 @@ Kirki::add_field( 'wpbf', array(
 	) ),
 ) );
 
+// Mobile Search Icon
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'toggle',
+	'settings'			=>			'mobile_menu_search_icon',
+	'label'				=>			esc_attr__( 'Mobile Search Icon', 'page-builder-framework' ),
+	'section'			=>			'wpbf_mobile_menu_options',
+	'priority'			=>			2,
+) );
+
 // Height
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'slider',
@@ -2443,13 +2435,13 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'slider',
 	'settings'			=>			'mobile_menu_hamburger_size',
-	'label'				=>			esc_attr__( 'Hamburger Icon Size', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Icon Size', 'page-builder-framework' ),
 	'section'			=>			'wpbf_mobile_menu_options',
 	'default'			=>			'16',
 	'priority'			=>			3,
 	'transport'			=>			'postMessage',
 	'choices'			=>			array(
-		'min'			=>			'16',
+		'min'			=>			'12',
 		'max'			=>			'24',
 		'step'			=>			'1',
 	),
@@ -2466,7 +2458,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
 	'settings'			=>			'mobile_menu_hamburger_color',
-	'label'				=>			esc_attr__( 'Hamburger Icon Color', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Icon Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_mobile_menu_options',
 	'default'			=>			'#6d7680',
 	'priority'			=>			4,

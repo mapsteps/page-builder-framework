@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
 
-			<i class="wpbf-mobile-menu-toggle wpbff wpbff-hamburger" aria-hidden="true"></i>
+			<i class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger" aria-hidden="true"></i>
 
 			<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
 

@@ -1261,7 +1261,7 @@ if( $mobile_menu_border_color ) {
 
 if( !$mobile_menu_options || in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ) ) && ( $mobile_menu_hamburger_color || $mobile_menu_hamburger_size ) ) {
 
-	echo '.wpbf-mobile-menu-toggle {';
+	echo '.wpbf-mobile-nav-item {';
 
 	if( $mobile_menu_hamburger_color ) {
 
@@ -1276,6 +1276,16 @@ if( !$mobile_menu_options || in_array( $mobile_menu_options, array( 'menu-mobile
 	}
 
 	echo '}';
+
+	if( $mobile_menu_hamburger_color ) {
+
+		echo '.wpbf-mobile-nav-item a {';
+
+		echo sprintf( 'color: %s;', esc_attr( $mobile_menu_hamburger_color ) );
+
+		echo '}';
+
+	}
 
 }
 

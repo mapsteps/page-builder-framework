@@ -77,20 +77,10 @@ function wpbf_do_woocommerce_customizer_css() {
 
 	// Menu Item Mobile
 	$woocommerce_menu_item_mobile = get_theme_mod( 'woocommerce_menu_item_mobile' );
-	$woocommerce_menu_item_mobile_font_size = get_theme_mod( 'woocommerce_menu_item_mobile_font_size' );
 	$woocommerce_menu_item_mobile_color = get_theme_mod( 'woocommerce_menu_item_mobile_color' );
 	$mobile_menu_font_color = get_theme_mod( 'mobile_menu_font_color' );
-	$woocommerce_menu_item_mobile_icon_color = get_theme_mod( 'woocommerce_menu_item_mobile_icon_color' );
 
 	if( $woocommerce_menu_item_mobile !== 'hide' ) {
-
-		if( $woocommerce_menu_item_mobile_font_size ) {
-
-			echo '.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item {';
-			echo sprintf( 'font-size: %s;', esc_attr( $woocommerce_menu_item_mobile_font_size ) );
-			echo '}';
-
-		}
 
 		if( $woocommerce_menu_item_mobile_color ) {
 
@@ -140,14 +130,6 @@ function wpbf_do_woocommerce_customizer_css() {
 
 			echo '.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {';
 			echo sprintf( 'color: %s;', esc_attr( $page_accent_color ) );
-			echo '}';
-
-		}
-
-		if( $woocommerce_menu_item_mobile_icon_color ) {
-
-			echo '.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item > a {';
-			echo sprintf( 'color: %s;', esc_attr( $woocommerce_menu_item_mobile_icon_color ) );
 			echo '}';
 
 		}

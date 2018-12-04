@@ -65,7 +65,7 @@
 	// Hamburger Size
 	wp.customize( 'mobile_menu_hamburger_size', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-mobile-menu-toggle').css('font-size', newval + 'px' );
+			$('.wpbf-mobile-nav-item').css('font-size', newval + 'px' );
 		} );
 	} );
 
@@ -233,15 +233,6 @@
 		value.bind( function( newval ) {
 			$('.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images').css('width', (newval-2) + '%' );
 			$('.woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary').css('width', 98 - newval + '%' );
-		} );
-	} );
-
-	/* Menu Item */
-
-	// Menu Item Font Size
-	wp.customize( 'woocommerce_menu_item_mobile_font_size', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item').css('font-size', newval );
 		} );
 	} );
 

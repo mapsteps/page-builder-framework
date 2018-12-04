@@ -34,8 +34,6 @@ function wpbf_woo_deregister_defaults() {
 
 	remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
 	remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
-	// remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
-	// remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 );
 
 }
 
@@ -447,7 +445,9 @@ function wpbf_woo_menu_item_class_current( $css_classes ) {
 }
 add_filter( 'wpbf_woo_menu_item_classes', 'wpbf_woo_menu_item_class_current' );
 
-/* Menu Item */
+/* Menu Items */
+
+// Cart
 function wpbf_woo_menu_item() {
 
 	// vars
@@ -481,24 +481,8 @@ function wpbf_woo_menu_item() {
 
 }
 
-// Add menu item to mobile menu toggle
-add_action( 'wpbf_before_mobile_toggle', 'wpbf_woo_menu_item_mobile_menu', 10 );
-function wpbf_woo_menu_item_mobile_menu() {
-
-	if( get_theme_mod( 'woocommerce_menu_item_mobile' ) == 'hide' ) return;
-
-	$menu_item = '';
-	$menu_item .= '<ul class="wpbf-woo-menu-item-wrapper">';
-	$menu_item .= wpbf_woo_menu_item();
-	$menu_item .= '</ul>';
-
-	echo $menu_item; // WPCS: XSS ok.
-
-}
-
-// Add menu item to main navigation
-add_filter( 'wp_nav_menu_items', 'wpbf_woo_cart_menu_icon', 10, 2 );
-function wpbf_woo_cart_menu_icon( $items, $args ) {
+// Add cart menu item to main navigation
+function wpbf_woo_menu_icon( $items, $args ) {
 
 	// stop right here if menu item is hidden
 	if( get_theme_mod( 'woocommerce_menu_item_desktop' ) == 'hide' ) return $items;
@@ -514,16 +498,28 @@ function wpbf_woo_cart_menu_icon( $items, $args ) {
 	return $items;
 
 }
+add_filter( 'wp_nav_menu_items', 'wpbf_woo_menu_icon', 10, 2 );
+
+// Add cart menu item to mobile menu toggle
+function wpbf_woo_menu_icon_mobile() {
+
+	if( get_theme_mod( 'woocommerce_menu_item_mobile' ) == 'hide' ) return;
+
+	$menu_item = '<ul class="wpbf-mobile-nav-item">';
+	$menu_item .= wpbf_woo_menu_item( $dropdown = false );
+	$menu_item .= '</ul>';
+
+	echo $menu_item; // WPCS: XSS ok.
+
+}
+add_action( 'wpbf_before_mobile_toggle', 'wpbf_woo_menu_icon_mobile' );
 
 // WooCommerce Fragments
-add_filter( 'woocommerce_add_to_cart_fragments', 'wpbf_woo_fragments' );
-
 function wpbf_woo_fragments( $fragments ) {
 
-	ob_start();
-	echo wpbf_woo_menu_item(); // WPCS: XSS ok.
-	$fragments['li.wpbf-woo-menu-item'] = ob_get_clean();
+	$fragments['li.wpbf-woo-menu-item'] = wpbf_woo_menu_item();
 
 	return $fragments;
 
 }
+add_filter( 'woocommerce_add_to_cart_fragments', 'wpbf_woo_fragments' );

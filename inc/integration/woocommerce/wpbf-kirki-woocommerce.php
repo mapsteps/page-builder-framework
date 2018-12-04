@@ -159,25 +159,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Menu Item Font Size
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'dimension',
-	'label'				=>			esc_attr__( 'Font Size', 'page-builder-framework' ),
-	'settings'			=>			'woocommerce_menu_item_mobile_font_size',
-	'section'			=>			'wpbf_woocommerce_menu_item_options',
-	'transport'			=>			'postMessage',
-	'priority'			=>			4,
-	'default'			=>			'',
-	'active_callback'	=>			array(
-		array(
-		'setting'		=>			'woocommerce_menu_item_mobile',
-		'operator'		=>			'!=',
-		'value'			=>			'hide',
-		)
-	)
-) );
-
-
 // Menu Item Color
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'color',
@@ -197,26 +178,6 @@ Kirki::add_field( 'wpbf', array(
 		),
 		array(
 		'setting'		=>			'woocommerce_menu_item_count',
-		'operator'		=>			'!=',
-		'value'			=>			'hide',
-		),
-	)
-) );
-
-// Menu Item Color
-Kirki::add_field( 'wpbf', array(
-	'type'				=>			'color',
-	'settings'			=>			'woocommerce_menu_item_mobile_icon_color',
-	'label'				=>			esc_attr__( 'Icon Color', 'page-builder-framework' ),
-	'section'			=>			'wpbf_woocommerce_menu_item_options',
-	'default'			=>			'',
-	'priority'			=>			4,
-	'choices'			=>			array(
-		'alpha'			=>			true,
-	),
-	'active_callback'	=>			array(
-		array(
-		'setting'		=>			'woocommerce_menu_item_mobile',
 		'operator'		=>			'!=',
 		'value'			=>			'hide',
 		),

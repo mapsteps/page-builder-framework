@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 				<?php do_action( 'wpbf_before_main_menu' ); ?>
 
-				<i class="wpbf-menu-toggle wpbff wpbff-hamburger"></i>
+				<i class="wpbf-nav-item wpbf-menu-toggle wpbff wpbff-hamburger"></i>
 
 				<?php do_action( 'wpbf_after_main_menu' ); ?>
 
