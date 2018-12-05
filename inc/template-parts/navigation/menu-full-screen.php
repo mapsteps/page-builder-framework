@@ -24,15 +24,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		<div class="wpbf-3-4 wpbf-menu-container">
 
-			<?php do_action( 'wpbf_before_main_menu' ); ?>
-
 			<div class="wpbf-menu">
+
+				<?php do_action( 'wpbf_before_main_menu' ); ?>
 
 				<i class="wpbf-nav-item wpbf-menu-toggle wpbff wpbff-hamburger"></i>
 
-			</div>
+				<?php do_action( 'wpbf_after_main_menu' ); ?>
 
-			<?php do_action( 'wpbf_after_main_menu' ); ?>
+			</div>
 
 		</div>
 
