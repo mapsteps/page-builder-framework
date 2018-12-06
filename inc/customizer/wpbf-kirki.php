@@ -210,6 +210,13 @@ Kirki::add_section( 'wpbf_breadcrumb_settings', array(
 	'priority'			=>			600,
 ) );
 
+// 404
+Kirki::add_section( 'wpbf_404_options', array(
+	'title'				=>			esc_attr__( '404 Page', 'page-builder-framework' ),
+	'panel'				=>			'layout_panel',
+	'priority'			=>			700,
+) );
+
 /* Sections – Blog */
 
 // Blog Settings
@@ -519,6 +526,41 @@ foreach ( $archives as $archive ) {
 }
 
 /* Fields – General */
+
+// 404 Title
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'text',
+	'label'				=>			esc_attr__( 'Title', 'page-builder-framework' ),
+	'settings'			=>			'404_headline',
+	'section'			=>			'wpbf_404_options',
+	'default'			=>			esc_html__( "404 - This page couldn't be found.", "page-builder-framework" ),
+	'priority'			=>			1,
+) );
+
+// 404 Text
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'text',
+	'label'				=>			esc_attr__( 'Text', 'page-builder-framework' ),
+	'settings'			=>			'404_text',
+	'section'			=>			'wpbf_404_options',
+	'default'			=>			esc_html__( "Oops! We're sorry, this page couldn't be found!", "page-builder-framework" ),
+	'priority'			=>			2,
+) );
+
+// Author
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'select',
+	'settings'			=>			'404_search_form',
+	'label'				=>			esc_attr__( 'Search Form', 'page-builder-framework' ),
+	'section'			=>			'wpbf_404_options',
+	'default'			=>			'show',
+	'priority'			=>			3,
+	'multiple'			=>			1,
+	'choices'			=>			array(
+		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
+		'hide'			=>			esc_attr__( 'Hide', 'page-builder-framework' ),
+	),
+) );
 
 // Max Width
 Kirki::add_field( 'wpbf', array(
@@ -2410,7 +2452,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
 	'settings'			=>			'mobile_menu_search_icon',
-	'label'				=>			esc_attr__( 'Mobile Search Icon', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Search Icon', 'page-builder-framework' ),
 	'section'			=>			'wpbf_mobile_menu_options',
 	'priority'			=>			2,
 ) );

@@ -24,6 +24,51 @@ function wpbf_excerpt_length( $excerpt_length ) {
 }
 add_filter( 'excerpt_length', 'wpbf_excerpt_length', 999 );
 
+// 404 Page Title
+function wpbf_custom_404_page_title() {
+
+}
+
+function wpbf_custom_404_title( $title ) {
+
+	$custom_title = get_theme_mod( '404_headline' );
+
+	if( $custom_title ) {
+		$title = $custom_title;
+	}
+
+	return $title;
+
+}
+add_filter( 'wpbf_404_headline', 'wpbf_custom_404_title' );
+
+// 404 Text
+function wpbf_custom_404_text( $text ) {
+
+	$custom_text = get_theme_mod( '404_text' );
+
+	if( $custom_text ) {
+		$text = $custom_text;
+	}
+
+	return $text;
+
+}
+add_filter( 'wpbf_404_text', 'wpbf_custom_404_text' );
+
+// Hide Search Form from 404 Page
+function wpbf_remove_404_search_form() {
+
+    if( is_404() && get_theme_mod( '404_search_form' ) == 'hide' ) {
+
+        add_filter( 'get_search_form', '__return_false' );
+
+    }
+
+}
+
+add_action( 'wp', 'wpbf_remove_404_search_form' );
+
 /**
  * Search Menu Item
  * 
@@ -36,7 +81,7 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 
 	$search_item = '';
 
-	// we have a slightly different markup for the search menu item if it's being displayed inside the main menu
+	// we have a slightly different markup for the search menu item if it's being displayed outside the main menu
 	$search_item .= $is_navigation ? '<li class="menu-item wpbf-menu-item-search"><a href="#">' : '<div class="'. $class .' wpbf-menu-item-search">';
 	$search_item .= '<div class="wpbf-menu-search">';
 
