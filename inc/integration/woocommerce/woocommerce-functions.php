@@ -487,6 +487,9 @@ function wpbf_woo_menu_icon( $items, $args ) {
 	// stop right here if menu item is hidden
 	if( get_theme_mod( 'woocommerce_menu_item_desktop' ) == 'hide' ) return $items;
 
+	// hide if we're on non-WooCommerce pages
+	if( get_theme_mod( 'woocommerce_menu_item_hide_if_not_wc' ) && !is_woocommerce() ) return $items;
+
 	// stop here if we're on a off canvas menu
 	if( wpbf_is_off_canvas_menu() ) return $items;
 
@@ -503,10 +506,14 @@ add_filter( 'wp_nav_menu_items', 'wpbf_woo_menu_icon', 10, 2 );
 // Add cart menu item to mobile menu toggle
 function wpbf_woo_menu_icon_mobile() {
 
+	// hide if mobile WooCommerce menu item is disabled
 	if( get_theme_mod( 'woocommerce_menu_item_mobile' ) == 'hide' ) return;
 
+	// hide if we're on non-WooCommerce pages
+	if( get_theme_mod( 'woocommerce_menu_item_hide_if_not_wc' ) && !is_woocommerce() ) return;
+
 	$menu_item = '<ul class="wpbf-mobile-nav-item">';
-	$menu_item .= wpbf_woo_menu_item( $dropdown = false );
+	$menu_item .= wpbf_woo_menu_item();
 	$menu_item .= '</ul>';
 
 	echo $menu_item; // WPCS: XSS ok.

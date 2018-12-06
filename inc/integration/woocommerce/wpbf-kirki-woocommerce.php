@@ -93,6 +93,17 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields – Menu Item */
 
+// Hide from non WC-Pages
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'toggle',
+	'settings'			=>			'woocommerce_menu_item_hide_if_not_wc',
+	'label'				=>			esc_attr__( 'Hide from non-Shop Pages', 'page-builder-framework' ),
+	'description'		=>			__( 'Display menu item only on WooCommerce related pages', 'page-builder-framework' ),
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			0,
+	'priority'			=>			5,
+) );
+
 // Menu Item
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',
@@ -101,7 +112,7 @@ Kirki::add_field( 'wpbf', array(
 	'description'		=>			__( 'Adds a cart icon to your main navigation', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'show',
-	'priority'			=>			0,
+	'priority'			=>			10,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
@@ -116,7 +127,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'',
-	'priority'			=>			2,
+	'priority'			=>			11,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -140,7 +151,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'separator-75733',
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'			=>			3,
+	'priority'			=>			12,
 ) );
 
 // Mobile Menu Item
@@ -151,7 +162,7 @@ Kirki::add_field( 'wpbf', array(
 	'description'		=>			__( 'Adds a cart icon to your mobile navigation', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'show',
-	'priority'			=>			4,
+	'priority'			=>			13,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
@@ -166,7 +177,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'',
-	'priority'			=>			4,
+	'priority'			=>			14,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -190,7 +201,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'separator-36652',
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'			=>			5,
+	'priority'			=>			15,
 ) );
 
 // Menu Item Count
@@ -200,7 +211,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Count', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'show',
-	'priority'			=>			6,
+	'priority'			=>			16,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
