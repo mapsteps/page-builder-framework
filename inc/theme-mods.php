@@ -24,11 +24,9 @@ function wpbf_excerpt_length( $excerpt_length ) {
 }
 add_filter( 'excerpt_length', 'wpbf_excerpt_length', 999 );
 
-// 404 Page Title
-function wpbf_custom_404_page_title() {
-
-}
-
+/**
+ * Filter 404 Page Title
+ */
 function wpbf_custom_404_title( $title ) {
 
 	$custom_title = get_theme_mod( '404_headline' );
@@ -42,7 +40,9 @@ function wpbf_custom_404_title( $title ) {
 }
 add_filter( 'wpbf_404_headline', 'wpbf_custom_404_title' );
 
-// 404 Text
+/**
+ * Filter 404 Page Text
+ */
 function wpbf_custom_404_text( $text ) {
 
 	$custom_text = get_theme_mod( '404_text' );
@@ -56,7 +56,9 @@ function wpbf_custom_404_text( $text ) {
 }
 add_filter( 'wpbf_404_text', 'wpbf_custom_404_text' );
 
-// Hide Search Form from 404 Page
+/**
+ * Hide Search Form from 404 Page
+ */
 function wpbf_remove_404_search_form() {
 
     if( is_404() && get_theme_mod( '404_search_form' ) == 'hide' ) {
