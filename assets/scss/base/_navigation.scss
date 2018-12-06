@@ -72,7 +72,7 @@ Component: Navigation
 .#{$prefix}-menu-item-search {
 	position: 				relative;
 	i {
-		@include			transition(all .2s);
+		// @include			transition(all .2s);
 	}
 	&.active i {
 		opacity: 			0;
@@ -293,14 +293,19 @@ Component: Navigation
 	cursor: pointer;
 	display: inline-block;
 	padding: 0;
-	margin: 0 0 0 15px;
+	margin: 0 15px 0 0;
 	vertical-align: middle;
 	li {
 		list-style: none;
 	}
-	a {
+	> a {
 		color: inherit;
 	}
+}
+
+.wpbf-mobile-menu-toggle,
+.wpbf-menu-toggle {
+	margin: 0;
 }
 
 .#{$prefix}-mobile-nav-wrapper {
