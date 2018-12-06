@@ -71,9 +71,6 @@ Component: Navigation
 ========================================================================== */
 .#{$prefix}-menu-item-search {
 	position: 				relative;
-	i {
-		// @include			transition(all .2s);
-	}
 	&.active i {
 		opacity: 			0;
 	}
@@ -298,7 +295,7 @@ Component: Navigation
 	li {
 		list-style: none;
 	}
-	> a {
+	a {
 		color: inherit;
 	}
 }
@@ -355,11 +352,7 @@ Component: Navigation
 	a {
 		display: 			block;
 		padding: 			$padding-small $padding;
-		// color: 				$brand-color;
 	}
-	// a:hover {
-	// 	color: 				$brand-color-alt;
-	// }
 	.menu-item {
 		border-top: 		1px solid $base-color;
 	}
