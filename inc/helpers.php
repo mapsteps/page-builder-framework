@@ -52,7 +52,7 @@ function wpbf_inner_content() {
 	// checking if template is set to full width (returns true if so)
 	$fullwidth = $options ? in_array( 'full-width', $options ) : false;
 
-	$inner_content = $fullwidth ? false : '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">';
+	$inner_content = $fullwidth ? false : apply_filter( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
 
 	if ( wpbf_is_premium() ) {
 
