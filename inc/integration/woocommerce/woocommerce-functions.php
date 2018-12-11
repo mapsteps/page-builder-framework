@@ -124,7 +124,7 @@ function wpbf_woo_output_content_wrapper() {
 
 		if( $single_sidebar_position && $single_sidebar_position !== 'global' ) {
 
-			echo $single_sidebar_position !== 'none' ? '<div class="wpbf-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">' : '';
+			echo $single_sidebar_position !== 'none' ? '<div class="wpbf-grid wpbf-main-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">' : '';
 
 			$single_sidebar_position == 'left' ? get_sidebar() : '';
 
@@ -132,7 +132,7 @@ function wpbf_woo_output_content_wrapper() {
 
 		} elseif( $single_sidebar_position_global && $single_sidebar_position_global !== 'none' ) {
 
-			echo '<div class="wpbf-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">';
+			echo '<div class="wpbf-grid wpbf-main-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">';
 
 			$single_sidebar_position_global == 'left' ? get_sidebar() : '';
 
@@ -150,7 +150,7 @@ function wpbf_woo_output_content_wrapper() {
 
 		if ( $sidebar_position_global && $sidebar_position_global !== 'none' ) {
 
-			echo '<div class="wpbf-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">';
+			echo '<div class="wpbf-grid wpbf-main-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">';
 
 			$sidebar_position_global == 'left' ? get_sidebar() : '';
 
