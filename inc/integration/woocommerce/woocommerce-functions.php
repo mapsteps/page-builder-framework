@@ -146,7 +146,7 @@ function wpbf_woo_output_content_wrapper() {
 
 	} else {
 
-		echo '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">';
+		wpbf_inner_content();
 
 		if ( $sidebar_position_global && $sidebar_position_global !== 'none' ) {
 
@@ -161,6 +161,7 @@ function wpbf_woo_output_content_wrapper() {
 			echo '<main id="main" class="wpbf-main'. wpbf_archive_class() .'">';
 
 		}
+
 	}
 
 }
@@ -228,7 +229,7 @@ function wpbf_woo_output_content_wrapper_end() {
 		}
 
 		// inner content
-		echo '</div>';
+		wpbf_inner_content_close();
 
 	}
 

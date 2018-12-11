@@ -46,21 +46,29 @@ function wpbf_body_schema_markup() {
 // Inner Content
 function wpbf_inner_content() {
 
-	// get options
-	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
+	if( is_singular() ) {
 
-	// checking if template is set to full width (returns true if so)
-	$fullwidth = $options ? in_array( 'full-width', $options ) : false;
+		// get options
+		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-	$inner_content = $fullwidth ? false : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
+		// checking if template is set to full width (returns true if so)
+		$fullwidth = $options ? in_array( 'full-width', $options ) : false;
 
-	if ( wpbf_is_premium() ) {
+		$inner_content = $fullwidth ? false : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
 
-		$wpbf_settings = get_option( 'wpbf_settings' );
+		if( wpbf_is_premium() ) {
 
-		$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
+			$wpbf_settings = get_option( 'wpbf_settings' );
 
-		$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
+			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
+
+			$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
+
+		}
+
+	} else {
+
+		$inner_content = apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
 
 	}
 
@@ -71,21 +79,29 @@ function wpbf_inner_content() {
 // Inner Content Close
 function wpbf_inner_content_close() {
 
-	// get options
-	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
+	if( is_singular() ) {
 
-	// checking if template is set to full width (returns true if so)
-	$fullwidth = $options ? in_array( 'full-width', $options ) : false;
+		// get options
+		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-	$inner_content_close = $fullwidth ? false : '</div>';
+		// checking if template is set to full width (returns true if so)
+		$fullwidth = $options ? in_array( 'full-width', $options ) : false;
 
-	if ( wpbf_is_premium() ) {
+		$inner_content_close = $fullwidth ? false : '</div>';
 
-		$wpbf_settings = get_option( 'wpbf_settings' );
+		if( wpbf_is_premium() ) {
 
-		$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
+			$wpbf_settings = get_option( 'wpbf_settings' );
 
-		$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
+			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
+
+			$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
+
+		}
+
+	} else {
+
+		$inner_content_close = '</div>';
 
 	}
 

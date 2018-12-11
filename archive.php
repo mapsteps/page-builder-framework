@@ -16,7 +16,7 @@ get_header(); ?>
 
 			<?php do_action( 'wpbf_content_open' ); ?>
 
-			<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">
+			<?php wpbf_inner_content(); ?>
 
 				<?php do_action( 'wpbf_inner_content_open' ); ?>
 
@@ -54,7 +54,7 @@ get_header(); ?>
 
 				<?php do_action( 'wpbf_inner_content_close' ); ?>
 
-			</div>
+			<?php wpbf_inner_content_close(); ?>
 
 			<?php do_action( 'wpbf_content_close' ); ?>
 			
