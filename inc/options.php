@@ -8,21 +8,22 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+ * Load Metaboxes
+ */
+function wpbf_metabox_setup() {
+
+	add_action( 'add_meta_boxes', 'wpbf_metaboxes' );
+	add_action( 'save_post', 'wpbf_save_metadata', 10, 2 );
+
+}
 add_action( 'load-post.php', 'wpbf_metabox_setup' );
 add_action( 'load-post-new.php', 'wpbf_metabox_setup' );
 
-/* Meta box setup function. */
-function wpbf_metabox_setup() {
-
-	/* Add meta boxes on the 'add_meta_boxes' hook. */
-	add_action( 'add_meta_boxes', 'wpbf_add_metaboxes' );
-
-	/* Save post meta on the 'save_post' hook. */
-	add_action( 'save_post', 'wpbf_meta_save', 10, 2 );
-
-}
-
-function wpbf_add_metaboxes() {
+/**
+ * Metaboxes
+ */
+function wpbf_metaboxes() {
 
 	// get all public post types
 	$post_types = get_post_types( array( 'public' => true ) );
@@ -30,12 +31,17 @@ function wpbf_add_metaboxes() {
 	// remove post types from array
 	unset( $post_types['wpbf_hooks'], $post_types['elementor_library'], $post_types['fl-builder-template'] );
 
+	// add Options Metabox
 	add_meta_box( 'wpbf', esc_html__( 'Template Settings', 'page-builder-framework' ), 'wpbf_options_metabox', $post_types, 'side', 'default' );
 
+	// add Sidebar Metabox
 	add_meta_box( 'wpbf_sidebar', esc_html__( 'Sidebar', 'page-builder-framework' ), 'wpbf_sidebar_metabox', $post_types, 'side', 'default' );
 
 }
 
+/**
+ * Options Metabox
+ */
 function wpbf_options_metabox( $post ) {
 
 	wp_nonce_field( basename( __FILE__ ), 'wpbf_options_nonce' );
@@ -49,52 +55,81 @@ function wpbf_options_metabox( $post ) {
 
 	if ( strpos( $mydata[0], 'remove-title' ) !== false ) {
 		$remove_title = 'remove-title';
-	} else {
-		$remove_title = false;
 	}
 
 	if ( strpos( $mydata[0], 'full-width') !== false ) {
 		$full_width = 'full-width';
+	} elseif( strpos( $mydata[0], 'contained') !== false ) {
+		$full_width = 'contained';
 	} else {
-		$full_width = false;
+		$full_width = 'layout-global';
+	}
+
+	if ( strpos( $mydata[0], 'remove-featured') !== false ) {
+		$remove_featured = 'remove-featured';
 	}
 
 	if ( strpos( $mydata[0], 'remove-header') !== false ) {
 		$remove_header = 'remove-header';
-	} else {
-		$remove_header = false;
 	}
 
 	if ( strpos( $mydata[0], 'remove-footer') !== false ) {
 		$remove_footer = 'remove-footer';
-	} else {
-		$remove_footer = false;
 	}
 
 	?>
 
+	<!-- Layout -->
+
+	<h3><?php _e( 'Layout', 'page-builder-framework' ); // WPCS: XSS ok. ?></h3>
+
 	<div>
-		<input id="remove-title" type="checkbox" name="wpbf_options[]" value="remove-title" <?php checked( $remove_title, 'remove-title' ); ?> />
-		<label for="remove-title"><?php _e( 'Hide Page Title', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
+		<input id="layout-global" type="radio" name="wpbf_options[]" value="layout-global" <?php checked( $full_width, 'layout-global' ); ?> />
+		<label for="layout-global"><?php _e( 'Inherit Global Settings', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
+		<?php if( !wpbf_is_premium() ) {
+			echo '<a style="text-decoration: none;" href="https://wp-pagebuilderframework.com/docs/global-template-settings/" target="_blank"><i style="font-size: 18px; margin-top: -3px; width: 15px; height: 15px;" class="dashicons dashicons-editor-help"></i></a>';
+		} ?>
 	</div>
 
 	<div>
-		<input id="full-width" type="checkbox" name="wpbf_options[]" value="full-width" <?php checked( $full_width, 'full-width' ); ?> />
-		<label for="full-width"><?php _e( 'Full Width', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
+		<input id="layout-contained" type="radio" name="wpbf_options[]" value="contained" <?php checked( $full_width, 'contained' ); ?> />
+		<label for="layout-contained"><?php _e( 'Contained', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
+	</div>
+
+	<div>
+		<input id="layout-full-width" type="radio" name="wpbf_options[]" value="full-width" <?php checked( $full_width, 'full-width' ); ?> />
+		<label for="layout-full-width"><?php _e( 'Full Width', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
+	</div>
+
+	<!-- Disable Elements -->
+
+	<h3><?php _e( 'Disable Elements', 'page-builder-framework' ); // WPCS: XSS ok. ?></h3>
+
+	<div>
+		<input id="remove-title" type="checkbox" name="wpbf_options[]" value="remove-title" <?php checked( $remove_title, 'remove-title' ); ?> />
+		<label for="remove-title"><?php _e( 'Page Title', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
+	</div>
+
+	<div>
+		<input id="remove-featured" type="checkbox" name="wpbf_options[]" value="remove-featured" <?php checked( $remove_featured, 'remove-featured' ); ?> />
+		<label for="remove-featured"><?php _e( 'Featured Image', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
 	</div>
 
 	<div>
 		<input id="remove-header" type="checkbox" name="wpbf_options[]" value="remove-header" <?php checked( $remove_header, 'remove-header' ); ?> />
-		<label for="remove-header"><?php _e( 'Disable Header', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
+		<label for="remove-header"><?php _e( 'Header', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
 	</div>
 
 	<div>
 		<input id="remove-footer" type="checkbox" name="wpbf_options[]" value="remove-footer" <?php checked( $remove_footer, 'remove-footer' ); ?> />
-		<label for="remove-footer"><?php _e( 'Disable Footer', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
+		<label for="remove-footer"><?php _e( 'Footer', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
 	</div>
 
 <?php }
 
+/**
+ * Sidebar Metabox
+ */
 function wpbf_sidebar_metabox( $post ) {
 
 	wp_nonce_field( basename( __FILE__ ), 'wpbf_sidebar_nonce' );
@@ -126,33 +161,49 @@ function wpbf_sidebar_metabox( $post ) {
 
 <?php }
 
-function wpbf_meta_save( $post_id ) {
+/**
+ * Save Metadata
+ */
+function wpbf_save_metadata( $post_id ) {
 
 	$is_autosave = wp_is_post_autosave( $post_id );
 	$is_revision = wp_is_post_revision( $post_id );
 	$is_valid_nonce = ( isset( $_POST['wpbf_options_nonce'] ) && wp_verify_nonce( sanitize_key( $_POST['wpbf_options_nonce'] ), basename( __FILE__ ) ) ) ? true : false;
 	$is_valid_sidebar_nonce = ( isset( $_POST['wpbf_sidebar_nonce'] ) && wp_verify_nonce( sanitize_key( $_POST['wpbf_sidebar_nonce'] ), basename( __FILE__ ) ) ) ? true : false;
 
+	// stop here if is autosave, revision or nonce is invalid
 	if ( $is_autosave || $is_revision || !$is_valid_nonce || !$is_valid_sidebar_nonce ) {
 		return;
 	}
 
+	// stop if current user can't edit posts
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return $post_id;
 	}
 
-	// save template options
+	// save options metadata
 	if ( isset( $_POST['wpbf_options'] ) ) {
 
 		$checked = array();
 
-		// sanitizing
 		if ( in_array( 'remove-title', $_POST['wpbf_options'] ) !== false ) { // WPCS: sanitization ok.
 			$checked[] .= 'remove-title';
 		}
 
 		if ( in_array( 'full-width', $_POST['wpbf_options'] ) !== false ) { // WPCS: sanitization ok.
 			$checked[] .= 'full-width';
+		}
+
+		if ( in_array( 'contained', $_POST['wpbf_options'] ) !== false ) { // WPCS: sanitization ok.
+			$checked[] .= 'contained';
+		}
+
+		if ( in_array( 'layout-global', $_POST['wpbf_options'] ) !== false ) { // WPCS: sanitization ok.
+			$checked[] .= 'layout-global';
+		}
+
+		if ( in_array( 'remove-featured', $_POST['wpbf_options'] ) !== false ) { // WPCS: sanitization ok.
+			$checked[] .= 'remove-featured';
 		}
 
 		if ( in_array( 'remove-header', $_POST['wpbf_options'] ) !== false ) { // WPCS: sanitization ok.
@@ -163,17 +214,12 @@ function wpbf_meta_save( $post_id ) {
 			$checked[] .= 'remove-footer';
 		}
 
-	} else {
-
-		// if sanitization fails, pass an empty array.
-		$checked = array();
-
 	}
 
 	update_post_meta( $post_id, 'wpbf_options', $checked );
 
-	// save sidebar options
-	$wpbf_sidebar_position = isset( $_POST['wpbf_sidebar_position'] ) ? sanitize_text_field( wp_unslash( $_POST['wpbf_sidebar_position'] ) ) : '';
+	// save sidebar metadata
+	$wpbf_sidebar_position = isset( $_POST['wpbf_sidebar_position'] ) ? $_POST['wpbf_sidebar_position'] : '';
 
 	update_post_meta( $post_id, 'wpbf_sidebar_position', $wpbf_sidebar_position );
 
