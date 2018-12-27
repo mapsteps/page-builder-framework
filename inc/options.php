@@ -87,7 +87,7 @@ function wpbf_options_metabox( $post ) {
 		<input id="layout-global" type="radio" name="wpbf_options[]" value="layout-global" <?php checked( $full_width, 'layout-global' ); ?> />
 		<label for="layout-global"><?php _e( 'Inherit Global Settings', 'page-builder-framework' ); // WPCS: XSS ok. ?></label>
 		<?php if( !wpbf_is_premium() ) {
-			echo '<a style="text-decoration: none;" href="https://wp-pagebuilderframework.com/docs/global-template-settings/" target="_blank"><i style="font-size: 18px; margin-top: -3px; width: 15px; height: 15px;" class="dashicons dashicons-editor-help"></i></a>';
+			echo '<a style="text-decoration: none; box-shadow: none;" href="https://wp-pagebuilderframework.com/docs/global-template-settings/" target="_blank"><i style="font-size: 18px; margin-top: -3px; width: 15px; height: 15px;" class="dashicons dashicons-editor-help"></i></a>';
 		} ?>
 	</div>
 
