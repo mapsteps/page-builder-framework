@@ -117,7 +117,7 @@ function wpbf_inner_content_close() {
 
 			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
-			$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
+			$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content_close = false : '';
 
 		}
 
