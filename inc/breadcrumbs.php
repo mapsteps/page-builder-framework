@@ -172,7 +172,7 @@ class WPBF_Breadcrumbs {
 			'after'           => '',
 			'list_tag'        => 'ul',
 			'item_tag'        => 'li',
-			'separator'		  => ' / ',
+			'separator'		  => apply_filters( 'wpbf_breadcrumbs_separator', ' / ' ),
 			'show_on_front'   => true,
 			'network'         => false,
 			'show_title'      => true,

@@ -12,11 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // Textdomain
 load_theme_textdomain( 'page-builder-framework', get_template_directory() . '/languages' );
 
-// make sure we can use is_plugin_active() here
-if( !function_exists( 'is_plugin_active' ) ) {
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-}
-
 // Default Font Choice
 function wpbf_default_font_choices(){
 	return array(
@@ -280,7 +275,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			1,
 ) );
 
-// Archive
+// Breadcrumbs
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',
 	'settings'			=>			'breadcrumbs',
@@ -297,6 +292,23 @@ Kirki::add_field( 'wpbf', array(
 		'404'			=>			esc_attr__( '404 Page', 'page-builder-framework' ),
 		'page'			=>			esc_attr__( 'Pages', 'page-builder-framework' ),
 	),
+	'active_callback'	=>			array(
+		array(
+		'setting'		=>			'breadcrumbs_toggle',
+		'operator'		=>			'==',
+		'value'			=>			1,
+		),
+	),
+) );
+
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'text',
+	'settings'			=>			'breadcrumbs_separator',
+	'label'				=>			esc_attr__( 'Separator', 'page-builder-framework' ),
+	'section'			=>			'wpbf_breadcrumb_settings',
+	'default'			=>			' / ',
+	'priority'			=>			2,
 	'active_callback'	=>			array(
 		array(
 		'setting'		=>			'breadcrumbs_toggle',
@@ -1814,22 +1826,6 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Size Mobile
-// Kirki::add_field( 'wpbf', array(
-// 	'type'				=>			'upload',
-// 	'settings'			=>			'menu_mobile_logo',
-// 	'label'				=>			esc_attr__( 'Mobile Logo', 'page-builder-framework' ),
-// 	'section'			=>			'title_tagline',
-// 	'priority'			=>			3,
-// 	'active_callback'	=>			array(
-// 		array(
-// 		'setting'		=>			'custom_logo',
-// 		'operator'		=>			'!==',
-// 		'value'			=>			'',
-// 		),
-// 	)
-// ) );
-
-// Size Mobile
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'slider',
 	'settings'			=>			'menu_mobile_logo_size',
@@ -3033,7 +3029,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 /* Premium Addon */
 do_action( 'wpbf_kirki_premium' );
 
-// Kirki Custom Default Fonts
+// kirki Custom Default Fonts
 function wpbf_custom_default_fonts( $standard_fonts ) {
 
 	$standard_fonts['helvetica_neue'] = array(
@@ -3057,5 +3053,4 @@ function wpbf_custom_default_fonts( $standard_fonts ) {
 	return $standard_fonts;
 
 }
-
 add_filter( 'kirki/fonts/standard_fonts', 'wpbf_custom_default_fonts', 0 );

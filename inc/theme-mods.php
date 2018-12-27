@@ -78,9 +78,9 @@ add_action( 'wp', 'wpbf_remove_404_search_form' );
  */
 function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 
-	// vars
 	$class = $is_mobile ? 'wpbf-mobile-nav-item' : 'wpbf-nav-item';
 
+	// initialize $search_item
 	$search_item = '';
 
 	// we have a slightly different markup for the search menu item if it's being displayed outside the main menu
@@ -141,3 +141,19 @@ function wpbf_search_menu_icon_mobile() {
 
 }
 add_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile', 20 );
+
+/**
+ * Custom Breadcrumbs Separator
+ */
+function wpbf_breadcrumbs_custom_separator( $separator ) {
+
+	$custom_separator = get_theme_mod( 'breadcrumbs_separator' );
+
+	if( $custom_separator ) {
+		$separator = $custom_separator;
+	}
+
+	return $separator;
+
+}
+add_filter( 'wpbf_breadcrumbs_separator', 'wpbf_breadcrumbs_custom_separator' );
