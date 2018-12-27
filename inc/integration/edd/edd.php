@@ -9,8 +9,9 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Styles & Scripts
-add_action( 'wp_enqueue_scripts', 'wpbf_edd_scripts', 10 );
+/**
+ * Scripts & Styles
+ */
 function wpbf_edd_scripts() {
 
 	wp_dequeue_style( 'edd-styles' );
@@ -27,12 +28,13 @@ function wpbf_edd_scripts() {
 	wp_enqueue_style( 'wpbf-edd', get_template_directory_uri() . '/css/min/edd-min.css', '', WPBF_VERSION );
 
 }
+add_action( 'wp_enqueue_scripts', 'wpbf_edd_scripts', 10 );
 
-// // EDD Customizer Settings
+// EDD Customizer Settings
 // require_once( WPBF_THEME_DIR . '/inc/integration/edd/wpbf-kirki-edd.php' );
 
-// // EDD Functions
+// EDD Functions
 // require_once( WPBF_THEME_DIR . '/inc/integration/edd/edd-functions.php' );
 
-// // EDD Customizer Styles
+// EDD Customizer Styles
 // require_once( WPBF_THEME_DIR . '/inc/integration/edd/edd-styles.php' );

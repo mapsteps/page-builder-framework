@@ -11,6 +11,7 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+// stop here if this is not a blog post
 if( get_post_type() !== 'post' ) return;
 
 do_action( 'wpbf_before_article_meta' );

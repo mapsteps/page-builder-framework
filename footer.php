@@ -1,6 +1,7 @@
 <?php
 /**
  * Theme Footer
+ * See also inc/template-parts/footer.php
  *
  * @package Page Builder Framework
  */

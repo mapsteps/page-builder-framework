@@ -2,7 +2,7 @@
 /**
  * Article
  *
- * displays posts on archives, category, search and index pages.
+ * Displays posts on archives, category, search and index pages.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
@@ -11,23 +11,24 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
-$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
-$wpbf_blog_layout = get_theme_mod( 'archive_layout', 'default' );
+// vars
+$template_parts_header	= get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
+$template_parts_footer	= get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
+$wpbf_blog_layout		= get_theme_mod( 'archive_layout', 'default' );
 
 if ( is_category() ) {
 	
-	$template_parts_header = get_theme_mod( 'category_sortable_header', array( 'title', 'meta', 'featured' ) );
-	$template_parts_footer = get_theme_mod( 'category_sortable_footer', array( 'readmore', 'categories' ) );
-	$wpbf_blog_layout = get_theme_mod( 'category_layout', 'default' );
+	$template_parts_header	= get_theme_mod( 'category_sortable_header', array( 'title', 'meta', 'featured' ) );
+	$template_parts_footer	= get_theme_mod( 'category_sortable_footer', array( 'readmore', 'categories' ) );
+	$wpbf_blog_layout		= get_theme_mod( 'category_layout', 'default' );
 
-} 
+}
 
 if ( is_home() ) {
 
-	$template_parts_header = get_theme_mod( 'blog_sortable_header', array( 'title', 'meta', 'featured' ) );
-	$template_parts_footer = get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
-	$wpbf_blog_layout = get_theme_mod( 'blog_layout', 'default' );
+	$template_parts_header	= get_theme_mod( 'blog_sortable_header', array( 'title', 'meta', 'featured' ) );
+	$template_parts_footer	= get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
+	$wpbf_blog_layout		= get_theme_mod( 'blog_layout', 'default' );
 
 }
 

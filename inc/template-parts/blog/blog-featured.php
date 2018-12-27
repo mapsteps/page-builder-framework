@@ -11,6 +11,7 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+// stop if there's no thumbnail
 if( !has_post_thumbnail() ) return;
 
 ?>

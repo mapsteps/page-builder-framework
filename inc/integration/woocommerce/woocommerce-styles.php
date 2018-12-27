@@ -35,9 +35,9 @@ function wpbf_do_woocommerce_customizer_css() {
 	}
 
 	// Menu Item Desktop
-	$woocommerce_menu_item_desktop = get_theme_mod( 'woocommerce_menu_item_desktop' );
-	$woocommerce_menu_item_desktop_color = get_theme_mod( 'woocommerce_menu_item_desktop_color' );
-	$menu_font_color = get_theme_mod( 'menu_font_color' );
+	$woocommerce_menu_item_desktop			= get_theme_mod( 'woocommerce_menu_item_desktop' );
+	$woocommerce_menu_item_desktop_color	= get_theme_mod( 'woocommerce_menu_item_desktop_color' );
+	$menu_font_color						= get_theme_mod( 'menu_font_color' );
 
 	if( $woocommerce_menu_item_desktop !== 'hide' ) {
 
@@ -76,9 +76,9 @@ function wpbf_do_woocommerce_customizer_css() {
 	}
 
 	// Menu Item Mobile
-	$woocommerce_menu_item_mobile = get_theme_mod( 'woocommerce_menu_item_mobile' );
-	$woocommerce_menu_item_mobile_color = get_theme_mod( 'woocommerce_menu_item_mobile_color' );
-	$mobile_menu_font_color = get_theme_mod( 'mobile_menu_font_color' );
+	$woocommerce_menu_item_mobile		= get_theme_mod( 'woocommerce_menu_item_mobile' );
+	$woocommerce_menu_item_mobile_color	= get_theme_mod( 'woocommerce_menu_item_mobile_color' );
+	$mobile_menu_font_color				= get_theme_mod( 'mobile_menu_font_color' );
 
 	if( $woocommerce_menu_item_mobile !== 'hide' ) {
 
@@ -137,14 +137,14 @@ function wpbf_do_woocommerce_customizer_css() {
 	}
 
 	// Buttons
-	$button_border_width = get_theme_mod( 'button_border_width' );
-	$button_primary_border_color = get_theme_mod( 'button_primary_border_color' );
-	$button_primary_border_color_alt = get_theme_mod( 'button_primary_border_color_alt' );
-	$button_primary_bg_color = get_theme_mod( 'button_primary_bg_color' );
-	$button_primary_text_color = get_theme_mod( 'button_primary_text_color' );
-	$button_border_radius = get_theme_mod( 'button_border_radius' );
-	$button_primary_bg_color_alt = get_theme_mod( 'button_primary_bg_color_alt' );
-	$button_primary_text_color_alt = get_theme_mod( 'button_primary_text_color_alt' );
+	$button_border_width				= get_theme_mod( 'button_border_width' );
+	$button_primary_border_color		= get_theme_mod( 'button_primary_border_color' );
+	$button_primary_border_color_alt	= get_theme_mod( 'button_primary_border_color_alt' );
+	$button_primary_bg_color			= get_theme_mod( 'button_primary_bg_color' );
+	$button_primary_text_color			= get_theme_mod( 'button_primary_text_color' );
+	$button_border_radius				= get_theme_mod( 'button_border_radius' );
+	$button_primary_bg_color_alt		= get_theme_mod( 'button_primary_bg_color_alt' );
+	$button_primary_text_color_alt		= get_theme_mod( 'button_primary_text_color_alt' );
 
 	if( $button_border_width ) {
 
@@ -219,22 +219,22 @@ function wpbf_do_woocommerce_customizer_css() {
 	}
 
 	// Loop
-	$woocommerce_loop_custom_width = get_theme_mod( 'woocommerce_loop_custom_width' );
-	$woocommerce_loop_content_alignment = get_theme_mod( 'woocommerce_loop_content_alignment' );
-	$woocommerce_loop_sale_alignment = get_theme_mod( 'woocommerce_loop_sale_alignment' );
-	$woocommerce_loop_sale_layout = get_theme_mod( 'woocommerce_loop_sale_layout' );
-	$woocommerce_loop_sale_position = get_theme_mod( 'woocommerce_loop_sale_position' );
-	$woocommerce_loop_sale_font_size = get_theme_mod( 'woocommerce_loop_sale_font_size' );
-	$woocommerce_loop_sale_font_color = get_theme_mod( 'woocommerce_loop_sale_font_color' );
-	$woocommerce_loop_sale_background_color = get_theme_mod( 'woocommerce_loop_sale_background_color' );
-	$woocommerce_loop_title_size = get_theme_mod( 'woocommerce_loop_title_size' );
-	$woocommerce_loop_title_color = get_theme_mod( 'woocommerce_loop_title_color' );
-	$woocommerce_loop_price_size = get_theme_mod( 'woocommerce_loop_price_size' );
-	$woocommerce_loop_price_color = get_theme_mod( 'woocommerce_loop_price_color' );
-	$woocommerce_single_price_color = get_theme_mod( 'woocommerce_single_price_color' );
-	$woocommerce_loop_out_of_stock_font_size = get_theme_mod( 'woocommerce_loop_out_of_stock_font_size' );
-	$woocommerce_loop_out_of_stock_font_color = get_theme_mod( 'woocommerce_loop_out_of_stock_font_color' );
-	$woocommerce_loop_out_of_stock_background_color = get_theme_mod( 'woocommerce_loop_out_of_stock_background_color' );
+	$woocommerce_loop_custom_width					= get_theme_mod( 'woocommerce_loop_custom_width' );
+	$woocommerce_loop_content_alignment				= get_theme_mod( 'woocommerce_loop_content_alignment' );
+	$woocommerce_loop_sale_alignment				= get_theme_mod( 'woocommerce_loop_sale_alignment' );
+	$woocommerce_loop_sale_layout					= get_theme_mod( 'woocommerce_loop_sale_layout' );
+	$woocommerce_loop_sale_position					= get_theme_mod( 'woocommerce_loop_sale_position' );
+	$woocommerce_loop_sale_font_size				= get_theme_mod( 'woocommerce_loop_sale_font_size' );
+	$woocommerce_loop_sale_font_color				= get_theme_mod( 'woocommerce_loop_sale_font_color' );
+	$woocommerce_loop_sale_background_color			= get_theme_mod( 'woocommerce_loop_sale_background_color' );
+	$woocommerce_loop_title_size					= get_theme_mod( 'woocommerce_loop_title_size' );
+	$woocommerce_loop_title_color					= get_theme_mod( 'woocommerce_loop_title_color' );
+	$woocommerce_loop_price_size					= get_theme_mod( 'woocommerce_loop_price_size' );
+	$woocommerce_loop_price_color					= get_theme_mod( 'woocommerce_loop_price_color' );
+	$woocommerce_single_price_color					= get_theme_mod( 'woocommerce_single_price_color' );
+	$woocommerce_loop_out_of_stock_font_size		= get_theme_mod( 'woocommerce_loop_out_of_stock_font_size' );
+	$woocommerce_loop_out_of_stock_font_color		= get_theme_mod( 'woocommerce_loop_out_of_stock_font_color' );
+	$woocommerce_loop_out_of_stock_background_color	= get_theme_mod( 'woocommerce_loop_out_of_stock_background_color' );
 
 	if( $woocommerce_loop_custom_width ) {
 
@@ -426,20 +426,20 @@ function wpbf_do_woocommerce_customizer_css() {
 	}
 
 	// Proudct
-	$woocommerce_single_custom_width = get_theme_mod( 'woocommerce_single_custom_width' );
-	$woocommerce_single_alignment = get_theme_mod( 'woocommerce_single_alignment' );
-	$woocommerce_single_image_width = get_theme_mod( 'woocommerce_single_image_width' );
-	$woocommerce_single_summary_separator = get_theme_mod( 'woocommerce_single_summary_separator' );
-	$woocommerce_single_tabs_font_size = get_theme_mod( 'woocommerce_single_tabs_font_size' );
-	$woocommerce_single_tabs_font_color = get_theme_mod( 'woocommerce_single_tabs_font_color' );
-	$woocommerce_single_tabs_font_color_alt = get_theme_mod( 'woocommerce_single_tabs_font_color_alt' );
-	$woocommerce_single_tabs_font_color_active = get_theme_mod( 'woocommerce_single_tabs_font_color_active' );
-	$woocommerce_single_tabs = get_theme_mod( 'woocommerce_single_tabs' );
-	$woocommerce_single_tabs_background_color = get_theme_mod( 'woocommerce_single_tabs_background_color' );
-	$woocommerce_single_tabs_background_color_alt = get_theme_mod( 'woocommerce_single_tabs_background_color_alt' );
-	$woocommerce_single_tabs_background_color_active = get_theme_mod( 'woocommerce_single_tabs_background_color_active' );
-	$woocommerce_single_tabs_remove_headline = get_theme_mod( 'woocommerce_single_tabs_remove_headline' );
-	$woocommerce_single_price_size = get_theme_mod( 'woocommerce_single_price_size' );
+	$woocommerce_single_custom_width					= get_theme_mod( 'woocommerce_single_custom_width' );
+	$woocommerce_single_alignment						= get_theme_mod( 'woocommerce_single_alignment' );
+	$woocommerce_single_image_width						= get_theme_mod( 'woocommerce_single_image_width' );
+	$woocommerce_single_summary_separator				= get_theme_mod( 'woocommerce_single_summary_separator' );
+	$woocommerce_single_tabs_font_size					= get_theme_mod( 'woocommerce_single_tabs_font_size' );
+	$woocommerce_single_tabs_font_color					= get_theme_mod( 'woocommerce_single_tabs_font_color' );
+	$woocommerce_single_tabs_font_color_alt				= get_theme_mod( 'woocommerce_single_tabs_font_color_alt' );
+	$woocommerce_single_tabs_font_color_active			= get_theme_mod( 'woocommerce_single_tabs_font_color_active' );
+	$woocommerce_single_tabs							= get_theme_mod( 'woocommerce_single_tabs' );
+	$woocommerce_single_tabs_background_color			= get_theme_mod( 'woocommerce_single_tabs_background_color' );
+	$woocommerce_single_tabs_background_color_alt		= get_theme_mod( 'woocommerce_single_tabs_background_color_alt' );
+	$woocommerce_single_tabs_background_color_active	= get_theme_mod( 'woocommerce_single_tabs_background_color_active' );
+	$woocommerce_single_tabs_remove_headline			= get_theme_mod( 'woocommerce_single_tabs_remove_headline' );
+	$woocommerce_single_price_size						= get_theme_mod( 'woocommerce_single_price_size' );
 
 	if( $woocommerce_single_custom_width ) {
 

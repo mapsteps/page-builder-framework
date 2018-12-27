@@ -9,20 +9,14 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Adjust Tablet Size
+/**
+ * Adjust Customizer Preview Responsive Sizes
+ */
 function wpbf_adjust_customizer_responsive_sizes() {
 
-	if( function_exists( 'wpbf_breakpoint_medium' ) ) {
-		$medium_breakpoint = wpbf_breakpoint_medium();
-	} else {
-		$medium_breakpoint = 768;
-	}
-
-	if( function_exists( 'wpbf_breakpoint_mobile' ) ) {
-		$mobile_breakpoint = wpbf_breakpoint_mobile();
-	} else {
-		$mobile_breakpoint = 480;
-	}
+	// vars
+	$medium_breakpoint = function_exists( 'wpbf_breakpoint_medium' ) ? wpbf_breakpoint_medium() : 768;
+	$mobile_breakpoint = function_exists( 'wpbf_breakpoint_mobile' ) ? wpbf_breakpoint_mobile() : 480;
 
 	$tablet_margin_left = -$medium_breakpoint/2 . 'px';
 	$tablet_width = $medium_breakpoint . 'px';
@@ -47,10 +41,13 @@ function wpbf_adjust_customizer_responsive_sizes() {
 	<?php
 
 }
-
 add_action( 'customize_controls_print_styles', 'wpbf_adjust_customizer_responsive_sizes' );
 
-// Minify CSS
+/**
+ * Minify CSS
+ *
+ * Function that's being used to minify Custom CSS
+ */
 function wpbf_minify_css( $generated_css ) {
  
 	// Remove Comments
@@ -66,7 +63,9 @@ function wpbf_minify_css( $generated_css ) {
  
 }
 
-// Generate Customizer CSS
+/**
+ * Generate Customizer CSS
+ */
 function wpbf_generate_css() {
  
 	ob_start();
@@ -76,16 +75,20 @@ function wpbf_generate_css() {
 
 }
 
-// Enqueue Customizer CSS
-add_action( 'wp_enqueue_scripts', 'wpbf_customizer_frontend_scripts', 11 );
+/**
+ * Enqueue Customizer CSS
+ */
 function wpbf_customizer_frontend_scripts() {
 
 	$inline_styles = wpbf_generate_css();
 	wp_add_inline_style( apply_filters( 'wpbf_add_inline_style', 'wpbf-style' ), $inline_styles );
 
 }
+add_action( 'wp_enqueue_scripts', 'wpbf_customizer_frontend_scripts', 11 );
 
-// Customizer Live Preview CSS
+/**
+ * Customizer CSS Live Preview
+ */
 if( is_customize_preview() ) {
 
 	add_action( 'wp_head', 'wpbf_customizer_preview_css', 999 );
@@ -97,19 +100,26 @@ if( is_customize_preview() ) {
 
 }
 
-// Post Message
-add_action( 'customize_preview_init' , 'wpbf_customizer_preview_js' );
+/**
+ * Post Message
+ */
 function wpbf_customizer_preview_js() {
+
 	wp_enqueue_script( 'wpbf-postmessage', get_template_directory_uri() . '/inc/customizer/js/postmessage.js', array(  'jquery', 'customize-preview' ), '', true );
+
 }
+add_action( 'customize_preview_init' , 'wpbf_customizer_preview_js' );
 
-// Customizer Scripts & Styles
-add_action( 'customize_controls_print_styles' , 'wpbf_customizer_scripts_styles' );
-
+/**
+ * Scripts & Styles
+ */
 function wpbf_customizer_scripts_styles() {
+
 	wp_enqueue_script( 'wpbf-customizer', get_template_directory_uri() . '/inc/customizer/js/wpbf-customizer.js', array( 'jquery' ), false, true );
 	wp_enqueue_style( 'wpbf-customizer', get_template_directory_uri() . '/inc/customizer/css/wpbf-customizer.css' );
+
 }
+add_action( 'customize_controls_print_styles' , 'wpbf_customizer_scripts_styles' );
 
 // Custom Controls
 require( get_template_directory() . '/inc/customizer/custom-controls.php' );

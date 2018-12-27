@@ -8,7 +8,11 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Global Sidebar function
+/**
+ * Global Sidebar Function
+ * 
+ * Helper function to define the Global Sidebar Class
+ */
 function wpbf_global_sidebar_class() {
 
 	$global_sidebar_position = get_theme_mod( 'sidebar_position' );
@@ -29,24 +33,26 @@ function wpbf_global_sidebar_class() {
 
 }
 
-/* Body Classes */
-add_filter( 'body_class', 'wpbf_body_classes' );
+/**
+ * Body Classes
+ */
 function wpbf_body_classes( $classes ) {
 
+	// Add wpbf Body Class
 	$classes[] = 'wpbf';
 
+	// Add wpbf-{post-name} Body Class on Singular
 	if( is_singular() ) {
 		global $post;
 		$classes[] = 'wpbf-' . $post->post_name;
 	}
 	
-	/* Sidebar */
+	// Sidebar Body Classes
 	$blog_sidebar_position = get_theme_mod( 'blog_sidebar_layout' );
 	$category_sidebar_position = get_theme_mod( 'category_sidebar_layout' );
 	$archive_sidebar_position = get_theme_mod( 'archive_sidebar_layout' );
 	$single_sidebar_position_global = get_theme_mod( 'single_sidebar_layout' );
-	
-	// if singular, fetch sidebar position from post if provided. otherwise fall back to global sidebar position
+
 	if( is_singular() ) {
 
 		$single_sidebar_position = get_post_meta( $post->ID, 'wpbf_sidebar_position', true );
@@ -125,7 +131,7 @@ function wpbf_body_classes( $classes ) {
 
 	}
 
-	// Sub Menu
+	// Sub Menu Alignment Body Class
 	$sub_menu_alignment = get_theme_mod( 'sub_menu_alignment' );
 
 	if( $sub_menu_alignment == 'right' ) {
@@ -139,14 +145,17 @@ function wpbf_body_classes( $classes ) {
 	return $classes;
 
 }
+add_filter( 'body_class', 'wpbf_body_classes' );
 
-/* Post Classes */
-add_filter( 'post_class', 'wpbf_post_classes' );
+/**
+ * Post Classes
+ */
 function wpbf_post_classes( $classes ) {
 
-	// add class to all posts
+	// Add wpbf-post Class to all Posts
 	$classes[] = 'wpbf-post';
 
 	return $classes;
 
 }
+add_filter( 'post_class', 'wpbf_post_classes' );

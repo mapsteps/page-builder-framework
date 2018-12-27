@@ -12,11 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Is Premium
 function wpbf_is_premium() {
-	if ( function_exists( 'wpbf_premium' ) ) {
-		return true;
-	} else {
-		return false;
-	}
+	return function_exists( 'wpbf_premium' ) ? true : false;
 }
 
 // Options
@@ -32,7 +28,7 @@ require_once( WPBF_THEME_DIR . '/inc/customizer/wpbf-kirki.php' );
 require_once( WPBF_THEME_DIR . '/inc/body-classes.php' );
 
 // Breadcrumbs
-if ( ! function_exists( 'breadcrumb_trail' ) ) {
+if ( !function_exists( 'breadcrumb_trail' ) ) {
 	require_once( WPBF_THEME_DIR . '/inc/breadcrumbs.php' );
 }
 
@@ -64,32 +60,34 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require_once( WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php' );
 }
 
-/* Template Parts */
-
-// Pre Header
-add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
-
+/**
+ * Pre Header
+ */
 function wpbf_do_pre_header() {
 	get_template_part( 'inc/template-parts/pre-header' );
 }
+add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
 
-// Header
-add_action( 'wpbf_header', 'wpbf_do_header' );
-
+/**
+ * Header
+ */
 function wpbf_do_header() {
 	get_template_part( 'inc/template-parts/header' );
 }
+add_action( 'wpbf_header', 'wpbf_do_header' );
 
-// Footer
-add_action( 'wpbf_footer', 'wpbf_do_footer' );
-
+/**
+ * Footer
+ */
 function wpbf_do_footer() {
 	get_template_part( 'inc/template-parts/footer' );
 }
+add_action( 'wpbf_footer', 'wpbf_do_footer' );
 
-// 404
-add_action('wpbf_404', 'wpbf_do_404');
-
+/**
+ * 404 Page
+ */
 function wpbf_do_404() {
 	get_template_part( 'inc/template-parts/404' );
 }
+add_action('wpbf_404', 'wpbf_do_404');

@@ -10,9 +10,12 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Pingback
+/**
+ * Pingback
+ */
 function wpbf_pingback_header() {
 
+	// add Pingback header if we're on a singular & pings are open
 	if ( is_singular() && pings_open() ) {
 		echo '<link rel="pingback" href="'. esc_url( get_bloginfo( 'pingback_url' ) ) .'">';
 	}
@@ -20,52 +23,69 @@ function wpbf_pingback_header() {
 }
 add_action( 'wp_head', 'wpbf_pingback_header' );
 
-// Schema Markup
+/**
+ * Schema Markup
+ */
 function wpbf_body_schema_markup() {
 
-	// Set up blog variable
+	// Blog variable
 	$is_blog = ( is_home() || is_date() || is_category() || is_author() || is_tag() || is_attachment() || is_singular( 'post' ) ) ? true : false;
 
-	// Set up default itemtype
+	// Default itemtype
 	$itemtype = 'WebPage';
 
-	// Get itemtype for the blog
+	// Define itemtype for Blog pages, otherwise use WebPage
 	$itemtype = ( $is_blog ) ? 'Blog' : $itemtype;
 
-	// Get itemtype for search results
+	// Define itemtype for search results, otherwise use WebPage
 	$itemtype = ( is_search() ) ? 'SearchResultsPage' : $itemtype;
 
-	// Get the result
+	// Make result filterable
 	$result = apply_filters( 'wpbf_body_itemtype', $itemtype );
 
-	// Return our HTML
+	// Output
 	echo 'itemscope="itemscope" itemtype="https://schema.org/'. esc_html( $result ) . '"'; // WPCS: XSS ok.
 
 }
 
-// Inner Content
+/**
+ * Inner Content
+ */
 function wpbf_inner_content() {
 
 	if( is_singular() ) {
 
-		// get options
+		// vars
 		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-		// checking if template is set to full width (returns true if so)
+		// checking if template is set to full width
+		// return false if $options is empty
 		$fullwidth = $options ? in_array( 'full-width', $options ) : false;
 
+		// checking if template is set to contained
+		// return false if $options is empty
+		$contained = $options ? in_array( 'contained', $options ) : false;
+
+		// construct inner-content wrapper
+		// return false if template is set to full-width
 		$inner_content = $fullwidth ? false : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
 
-		if( wpbf_is_premium() ) {
+		// check if Premium Add-On is active
+		// only proceed if template is not set to contained
+		if( wpbf_is_premium() && !$contained ) {
 
+			// vars
 			$wpbf_settings = get_option( 'wpbf_settings' );
 
+			// get the array of post types that are set to full width under Appearance -> Theme Settings -> Global Templat Settings
 			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
+			// if current post type has been set to full-width globally, set $inner_content to false
 			$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
 
 		}
 
+	// on archives, we only add the wpbf_inner_content filter
 	} else {
 
 		$inner_content = apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
@@ -76,20 +96,22 @@ function wpbf_inner_content() {
 
 }
 
-// Inner Content Close
+/**
+ * Inner Content Close
+ */
 function wpbf_inner_content_close() {
 
 	if( is_singular() ) {
 
-		// get options
 		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-		// checking if template is set to full width (returns true if so)
 		$fullwidth = $options ? in_array( 'full-width', $options ) : false;
+
+		$contained = $options ? in_array( 'contained', $options ) : false;
 
 		$inner_content_close = $fullwidth ? false : '</div>';
 
-		if( wpbf_is_premium() ) {
+		if( wpbf_is_premium() && !$contained ) {
 
 			$wpbf_settings = get_option( 'wpbf_settings' );
 
@@ -109,13 +131,13 @@ function wpbf_inner_content_close() {
 
 }
 
-// Title
+/**
+ * WPBF Title
+ */
 function wpbf_title() {
 
-	// get options
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-	// checking if remove title is checked (returns true if so)
 	$removetitle = $options ? in_array( 'remove-title', $options ) : false;
 
 	$title = $removetitle ? false : '<h1 class="entry-title" itemprop="headline">'. get_the_title() .'</h1>';
@@ -134,33 +156,22 @@ function wpbf_title() {
 
 }
 
-// Mobile Logo
-function wpbf_mobile_logo( $custom_logo_url ) {
-
-	$custom_mobile_logo = get_theme_mod( 'menu_mobile_logo' );
-
-	// check if custom mobile logo is set
-	if( $custom_mobile_logo ) {
-		$custom_logo_url = $custom_mobile_logo;
-	}
-
-	return $custom_logo_url;
-
-}
-// add_filter( 'wpbf_logo_mobile', 'wpbf_mobile_logo', 10 );
-
-// Remove Header
+/**
+ * Disable Header
+ */
 function wpbf_remove_header() {
 
-	// don't take it further if we're on archives
+	// stop here if we're on archives
 	if( !is_singular() ) return;
 
-	// get options
+	// vars
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-	// checking if transparent header is checked (returns true if so)
+	// checking if disable header is checked
+	// return false if $options is empty
 	$remove_header = $options ? in_array( 'remove-header', $options ) : false;
 
+	// remove header if disable header is checked
 	if( $remove_header ) {
 		remove_action( 'wpbf_header', 'wpbf_do_header' );
 	}
@@ -168,18 +179,23 @@ function wpbf_remove_header() {
 }
 add_action( 'wp', 'wpbf_remove_header' );
 
-// Remove Footer
+/**
+ * Disable Footer
+ */
 function wpbf_remove_footer() {
 
-	// don't take it further if we're on archives
+	// stop here if we're on archives
 	if( !is_singular() ) return;
 
-	// get options
+	// vars
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-	// checking if transparent header is checked (returns true if so)
+	// checking if disable footer is checked
+	// return false if $options is empty
 	$remove_footer = $options ? in_array( 'remove-footer', $options ) : false;
 
+	// remove footer if disable footer is checked
+	// also remove custom footer that has been added in the customizer
 	if( $remove_footer ) {
 		remove_action( 'wpbf_footer', 'wpbf_do_footer' );
 		remove_action( 'wpbf_before_footer', 'wpbf_custom_footer' );
@@ -188,13 +204,14 @@ function wpbf_remove_footer() {
 }
 add_action( 'wp', 'wpbf_remove_footer' );
 
-// ScrollTop
+/**
+ * ScrollTop
+ */
 function wpbf_scrolltop() {
 
 	if ( get_theme_mod( 'layout_scrolltop' ) ) {
 
 		$scrollTop = get_theme_mod( 'scrolltop_value', 400 );
-
 		echo '<div class="scrolltop" data-scrolltop-value="'. (int) $scrollTop .'"></div>';
 
 	}
@@ -202,7 +219,9 @@ function wpbf_scrolltop() {
 }
 add_action( 'wp_footer', 'wpbf_scrolltop' );
 
-// Archive Class
+/**
+ * Archive Class
+ */
 function wpbf_archive_class() {
 
 	$archive_class = '';
@@ -241,7 +260,9 @@ function wpbf_archive_class() {
 
 }
 
-// Singular Class
+/**
+ * Singular Class
+ */
 function wpbf_singular_class() {
 
 	if( is_singular( 'post' ) ) {
@@ -261,7 +282,9 @@ function wpbf_singular_class() {
 
 }
 
-// Archive Header
+/**
+ * Archive Header
+ */
 function wpbf_archive_header() {
 
 	if( is_author() ) { ?>
@@ -283,6 +306,9 @@ function wpbf_archive_header() {
 
 }
 
+/**
+ * Remove Archive Headers
+ */
 function wpbf_remove_archive_header( $archive_header ) {
 
 	if( is_archive() && get_theme_mod( 'archive_headline' ) == 'hide' ) {
@@ -298,17 +324,22 @@ function wpbf_remove_archive_header( $archive_header ) {
 }
 add_filter( 'get_the_archive_title', 'wpbf_remove_archive_header' );
 
-// Responsive Breakpoints
+/**
+ * Responsive Breakpoints
+ * 
+ * Simple check if responsive breakpoints are set
+ */
 if( !function_exists( 'wpbf_has_responsive_breakpoints' ) ) {
 
 	function wpbf_has_responsive_breakpoints() {
 
-		// stop here if premium add-on doesn't exist
+		// there can't be responsive breakpoints if there's no Premium Add-On
 		if( !wpbf_is_premium() ) return false;
 
-		// check if custom breakpoints are set, otherwise return false
+		// vars
 		$wpbf_settings = get_option( 'wpbf_settings' );
 
+		// check if custom breakpoints are set, otherwise return false
 		if ( !empty( $wpbf_settings['wpbf_breakpoint_medium'] ) || !empty( $wpbf_settings['wpbf_breakpoint_desktop'] ) || !empty( $wpbf_settings['wpbf_breakpoint_mobile'] ) ) {
 			return true;
 		} else {
@@ -319,7 +350,9 @@ if( !function_exists( 'wpbf_has_responsive_breakpoints' ) ) {
 
 }
 
-// Sidebar Right
+/**
+ * Right Sidebar
+ */
 function wpbf_do_sidebar_right() {
 
 	$global_sidebar_position = get_theme_mod( 'sidebar_position' );
@@ -458,10 +491,11 @@ function wpbf_do_sidebar_right() {
 	}
 
 }
-
 add_action( 'wpbf_sidebar_right', 'wpbf_do_sidebar_right' );
 
-// Sidebar Left
+/**
+ * Left Sidebar
+ */
 function wpbf_do_sidebar_left() {
 
 	$global_sidebar_position = get_theme_mod( 'sidebar_position' );
@@ -600,17 +634,20 @@ function wpbf_do_sidebar_left() {
 	}
 
 }
-
 add_action( 'wpbf_sidebar_left', 'wpbf_do_sidebar_left' );
 
-// Navigation
+/**
+ * Navigation
+ * 
+ * Set wp_nav_menu for main navigations
+ */
 add_action( 'wpbf_main_menu', 'wpbf_nav_menu' );
 
 function wpbf_nav_menu() {
 
-	if( get_theme_mod( 'menu_custom' ) ) {
+	$custom_menu = get_theme_mod( 'menu_custom' );
 
-		$custom_menu = get_theme_mod( 'menu_custom' );
+	if( $custom_menu ) {
 
 		echo do_shortcode( $custom_menu );
 
@@ -647,25 +684,44 @@ function wpbf_nav_menu() {
 	}
 }
 
-// Menu
+/**
+ * Menu
+ * 
+ * returns the menu selected under Header -> Navigation in the WordPress customizer
+ */
 function wpbf_menu() {
 	return get_theme_mod( 'menu_position', 'menu-right' );
 }
 
-// Mobile Menu
+/**
+ * Mobile Menu
+ * 
+ * returns the menu selected under Header -> Mobile Navigation in the WordPress customizer
+ */
 function wpbf_mobile_menu() {
 	return get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
 }
 
+/**
+ * Is Off Canvas Menu
+ * 
+ * A simple check that returns true if an Off-Canvas menu is being used
+ */
 function wpbf_is_off_canvas_menu() {
+
 	if( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left', 'menu-full-screen' ) ) ) {
 		return true;
 	} else {
 		return false;
 	}
+
 }
 
-// Alignment
+/**
+ * Menu Alignment
+ * 
+ * return the stacked advanced menu alignment
+ */
 function wpbf_menu_alignment() {
 
 	$alignment = get_theme_mod( 'menu_alignment', 'left' );
@@ -675,7 +731,9 @@ function wpbf_menu_alignment() {
 
 }
 
-// Menu Effect
+/**
+ * Menu Effect
+ */
 function wpbf_menu_effect() {
 
 	$menu_effect = get_theme_mod( 'menu_effect', 'none' );
@@ -685,7 +743,9 @@ function wpbf_menu_effect() {
 
 }
 
-// Menu Animation
+/**
+ * Menu Effect Animation
+ */
 function wpbf_menu_effect_animation() {
 
 	$menu_effect_animation = get_theme_mod( 'menu_effect_animation', 'fade' );
@@ -695,7 +755,9 @@ function wpbf_menu_effect_animation() {
 
 }
 
-// Menu Alignment
+/**
+ * Menu Effect Alignment
+ */
 function wpbf_menu_effect_alignment() {
 
 	$menu_effect_alignment = get_theme_mod( 'menu_effect_alignment', 'center' );
@@ -705,7 +767,9 @@ function wpbf_menu_effect_alignment() {
 
 }
 
-// Sub Menu Animation
+/**
+ * Sub Menu Animation
+ */
 function wpbf_sub_menu_animation() {
 
 	$sub_menu_animation = get_theme_mod( 'sub_menu_animation', 'fade' );
@@ -715,7 +779,11 @@ function wpbf_sub_menu_animation() {
 
 }
 
-// Navigation Attributes
+/**
+ * Navigation Attributes
+ * 
+ * Currently only being used to add the sub menu animation duration
+ */
 function wpbf_navigation_attributes() {
 
 	// vars

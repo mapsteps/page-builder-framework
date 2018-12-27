@@ -9,7 +9,9 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Custom Typography Control
+/**
+ * Custom Controls
+ */
 if( class_exists( 'WP_Customize_Control' ) ):
 
 	class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {

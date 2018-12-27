@@ -3,6 +3,7 @@
  * 404 Page
  *
  * Displayed if a page couldn't be found.
+ * See also inc/template-parts/404.php
  *
  * @package Page Builder Framework
  */

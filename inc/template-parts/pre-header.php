@@ -10,16 +10,16 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // vars
-$pre_header_layout = get_theme_mod( 'pre_header_layout' );
-$layout = $pre_header_layout == 'one' ? ' wpbf-pre-header-one-column' : ' wpbf-pre-header-two-columns';
-$inner_layout = $pre_header_layout == 'one' ? 'wpbf-inner-pre-header-content' : 'wpbf-inner-pre-header-left';
-$pre_header_hook_open = $pre_header_layout == 'one' ? 'wpbf_pre_header_open' : 'wpbf_pre_header_left_open';
-$pre_header_hook_close = $pre_header_layout == 'one' ? 'wpbf_pre_header_close' : 'wpbf_pre_header_left_close';
-$pre_header_column_one = get_theme_mod( 'pre_header_column_one', __( 'Column 1', 'page-builder-framework' ) );
-$pre_header_column_two = get_theme_mod( 'pre_header_column_two', __( 'Column 2', 'page-builder-framework' ) );
+$pre_header_layout		= get_theme_mod( 'pre_header_layout' );
+$layout					= $pre_header_layout == 'one' ? ' wpbf-pre-header-one-column' : ' wpbf-pre-header-two-columns';
+$inner_layout			= $pre_header_layout == 'one' ? 'wpbf-inner-pre-header-content' : 'wpbf-inner-pre-header-left';
+$pre_header_hook_open	= $pre_header_layout == 'one' ? 'wpbf_pre_header_open' : 'wpbf_pre_header_left_open';
+$pre_header_hook_close	= $pre_header_layout == 'one' ? 'wpbf_pre_header_close' : 'wpbf_pre_header_left_close';
+$pre_header_column_one	= get_theme_mod( 'pre_header_column_one', __( 'Column 1', 'page-builder-framework' ) );
+$pre_header_column_two	= get_theme_mod( 'pre_header_column_two', __( 'Column 2', 'page-builder-framework' ) );
 
 // stop here if there's no pre-header or it has been set to none
-if( ! $pre_header_layout || $pre_header_layout == 'none' ) return;
+if( !$pre_header_layout || $pre_header_layout == 'none' ) return;
 
 ?>
 

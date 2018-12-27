@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 load_theme_textdomain( 'page-builder-framework', get_template_directory() . '/languages' );
 
 /* Setup */
-add_action( 'customize_register' , 'wpbf_woo_customizer_setup', 20 );
 function wpbf_woo_customizer_setup( $wp_customize ) {
 
 	// change section priorities
@@ -26,8 +25,10 @@ function wpbf_woo_customizer_setup( $wp_customize ) {
 	$wp_customize->get_section( 'woocommerce_product_catalog' )->title = esc_attr__( 'Shop Page', 'page-builder-framework' );
 
 }
+add_action( 'customize_register' , 'wpbf_woo_customizer_setup', 20 );
 
 /* kirki Configuration */
+
 Kirki::add_config( 'wpbf', array(
 	'capability'		=>			'edit_theme_options',
 	'option_type'		=>			'theme_mod',

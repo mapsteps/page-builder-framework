@@ -13,11 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $page_width						= get_theme_mod( 'page_max_width' );
 $single_custom_width			= get_theme_mod( 'single_custom_width' );
 $content_width					= $single_custom_width ? $single_custom_width : $page_width;
+
 if ( strpos( $content_width, 'px' ) !== false ) {
     $page_width_int				= (int) $content_width;
 } else {
 	$page_width_int				= false;
 }
+
 $background_color				= get_theme_mod( 'background_color' );
 $page_accent_color				= get_theme_mod( 'page_accent_color' );
 $page_bold_color				= get_theme_mod( 'page_bold_color' );
