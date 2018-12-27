@@ -1196,7 +1196,6 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Border Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
-	'default'			=>			'#e7e7ec',
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -1216,7 +1215,6 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Border Color Hover', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
-	'default'			=>			'#d9d9e0',
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -1236,7 +1234,6 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Primary Border Color', 'page-builder-framework' ),
 	'section'			=>			'wpbf_button_options',
 	'priority'			=>			1,
-	// 'default'			=>			'#e7e7ec',
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
