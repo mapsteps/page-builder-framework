@@ -2,7 +2,7 @@
 /**
  * Meta
  *
- * Renders Author/Post meta on archives, category, search and index pages.
+ * Renders Author/Post meta on Archives, Category, Search and Index Pages.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
@@ -22,7 +22,7 @@ if( get_post_type() !== 'post' ) return;
 
 		echo '<span class="posted-on">'. __( 'Posted on', 'page-builder-framework' ) .'</span> <time class="article-time published" datetime="'. get_the_date( 'c' ) .'" itemprop="datePublished">'. get_the_date() .'</time>'; // WPCS: XSS ok.
 
-		if( !get_theme_mod( 'blog_author' ) || get_theme_mod( 'blog_author' ) == 'show' ) {
+		if( get_theme_mod( 'blog_author' ) !== 'hide' ) {
 
 			echo sprintf( ' <span class="by">%1$s</span> <span class="article-author author vcard" itemscope="itemscope" itemprop="author" itemtype="https://schema.org/Person"><a class="url fn" href="%2$s" title="%3$s" rel="author" itemprop="url"><span itemprop="name">%4$s</span></a></span>', // WPCS: XSS ok, sanitization ok.
 				__( 'by', 'page-builder-framework' ),

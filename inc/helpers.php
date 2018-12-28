@@ -327,13 +327,13 @@ add_filter( 'get_the_archive_title', 'wpbf_remove_archive_header' );
 /**
  * Responsive Breakpoints
  * 
- * Simple check if responsive breakpoints are set
+ * Simple check if Responsive Breakpoints are set
  */
 if( !function_exists( 'wpbf_has_responsive_breakpoints' ) ) {
 
 	function wpbf_has_responsive_breakpoints() {
 
-		// there can't be responsive breakpoints if there's no Premium Add-On
+		// there can't be Responsive Breakpoints if there's no Premium Add-On
 		if( !wpbf_is_premium() ) return false;
 
 		// vars

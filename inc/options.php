@@ -25,16 +25,16 @@ add_action( 'load-post-new.php', 'wpbf_metabox_setup' );
  */
 function wpbf_metaboxes() {
 
-	// get all public post types
+	// Get public Post Types
 	$post_types = get_post_types( array( 'public' => true ) );
 
-	// remove post types from array
+	// Remove Post Types from array
 	unset( $post_types['wpbf_hooks'], $post_types['elementor_library'], $post_types['fl-builder-template'] );
 
-	// add Options Metabox
+	// Add Options Metabox
 	add_meta_box( 'wpbf', esc_html__( 'Template Settings', 'page-builder-framework' ), 'wpbf_options_metabox', $post_types, 'side', 'default' );
 
-	// add Sidebar Metabox
+	// Add Sidebar Metabox
 	add_meta_box( 'wpbf_sidebar', esc_html__( 'Sidebar', 'page-builder-framework' ), 'wpbf_sidebar_metabox', $post_types, 'side', 'default' );
 
 }
@@ -190,9 +190,9 @@ function wpbf_save_metadata( $post_id ) {
 	}
 
 	// save options metadata
-	if ( isset( $_POST['wpbf_options'] ) ) {
+	$checked = array();
 
-		$checked = array();
+	if ( isset( $_POST['wpbf_options'] ) ) {
 
 		if ( in_array( 'remove-title', $_POST['wpbf_options'] ) !== false ) { // WPCS: sanitization ok.
 			$checked[] .= 'remove-title';
