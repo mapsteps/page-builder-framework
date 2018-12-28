@@ -76,18 +76,25 @@ get_header(); ?>
 
 								?>
 
-								<?php if( !get_theme_mod( 'single_post_nav' ) || get_theme_mod( 'single_post_nav' ) == 'show' ) { ?>
+								<?php if( get_theme_mod( 'single_post_nav' ) !== 'hide' ) { ?>
+
+								<?php do_action( 'wpbf_before_post_links' ); ?>
 
 								<div class="post-links wpbf-clearfix">
 
 									<?php
 
-									 previous_post_link( '<span class="previous-post-link">%link</span>', __( '&larr; Previous Post', 'page-builder-framework' ) );
-									 next_post_link( '<span class="next-post-link">%link</span>', __( 'Next Post &rarr;', 'page-builder-framework' ) );
+									$previous	= apply_filters( 'wpbf_previous_post_link', '&larr; Previous Post' );
+									$next		= apply_filters( 'wpbf_next_post_link', 'Next Post &rarr;' );
 
-									 ?>
+									previous_post_link( '<span class="previous-post-link">%link</span>', esc_attr( $previous ) );
+									next_post_link( '<span class="next-post-link">%link</span>', esc_attr( $next ) );
+
+									?>
 
 								 </div>
+
+								 <?php do_action( 'wpbf_after_post_links' ); ?>
 
 								<?php } ?>
 
