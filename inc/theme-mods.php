@@ -157,3 +157,31 @@ function wpbf_breadcrumbs_custom_separator( $separator ) {
 
 }
 add_filter( 'wpbf_breadcrumbs_separator', 'wpbf_breadcrumbs_custom_separator' );
+
+/**
+ * Next Post Link
+ */
+function wpbf_next_post_link( $next ) {
+
+	if( get_theme_mod( 'single_post_nav' ) !== 'default' ) return $next;
+
+	$next = '%title &rarr;';
+
+	return $next;
+
+}
+add_filter( 'wpbf_next_post_link', 'wpbf_next_post_link' );
+
+/**
+ * Previous Post Link
+ */
+function wpbf_previous_post_link( $prev ) {
+
+	if( get_theme_mod( 'single_post_nav' ) !== 'default' ) return $prev;
+
+	$prev = '&larr; %title';
+
+	return $prev;
+
+}
+add_filter( 'wpbf_previous_post_link', 'wpbf_previous_post_link' );

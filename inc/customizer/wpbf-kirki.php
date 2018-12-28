@@ -528,7 +528,8 @@ foreach ( $archives as $archive ) {
 			'priority'			=>			0,
 			'multiple'			=>			1,
 			'choices'			=>			array(
-				'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
+				'show'			=>			esc_attr__( 'Previous/Next Post', 'page-builder-framework' ),
+				'default'		=>			esc_attr__( 'Post Title', 'page-builder-framework' ),
 				'hide'			=>			esc_attr__( 'Hide', 'page-builder-framework' ),
 			),
 		) );
@@ -559,7 +560,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			2,
 ) );
 
-// Author
+// Search Form
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',
 	'settings'			=>			'404_search_form',
