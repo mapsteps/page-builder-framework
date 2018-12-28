@@ -55,6 +55,8 @@ function wpbf_options_metabox( $post ) {
 
 	if ( strpos( $mydata[0], 'remove-title' ) !== false ) {
 		$remove_title = 'remove-title';
+	} else {
+		$remove_title = false;
 	}
 
 	if ( strpos( $mydata[0], 'full-width') !== false ) {
@@ -67,14 +69,20 @@ function wpbf_options_metabox( $post ) {
 
 	if ( strpos( $mydata[0], 'remove-featured') !== false ) {
 		$remove_featured = 'remove-featured';
+	} else {
+		$remove_featured = false;
 	}
 
 	if ( strpos( $mydata[0], 'remove-header') !== false ) {
 		$remove_header = 'remove-header';
+	} else {
+		$remove_header = false;
 	}
 
 	if ( strpos( $mydata[0], 'remove-footer') !== false ) {
 		$remove_footer = 'remove-footer';
+	} else {
+		$remove_footer = false;
 	}
 
 	?>
