@@ -11,7 +11,7 @@
  */
 function wpbf_woo_fragment_refresh() {
 
-    wp_enqueue_script( 'wpbf-woocommerce-fragment-refresh', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce-fragment-refresh.js', array(  'jquery', 'customize-preview' ), '', true  );
+	wp_enqueue_script( 'wpbf-woocommerce-fragment-refresh', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce-fragment-refresh.js', array(  'jquery', 'customize-preview' ), '', true  );
 
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_woo_fragment_refresh' );
@@ -533,11 +533,11 @@ add_filter( 'wpbf_woo_menu_item_classes', 'wpbf_woo_menu_item_class_current' );
 function wpbf_woo_menu_item() {
 
 	// vars
-	$icon = get_theme_mod( 'woocommerce_menu_item_icon', 'cart' );
-	$css_classes = apply_filters( 'wpbf_woo_menu_item_classes', 'menu-item wpbf-woo-menu-item' );
-	$title = apply_filters( 'wpbf_woo_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
-	$cart_count = WC()->cart->get_cart_contents_count();
-	$cart_url = wc_get_cart_url();
+	$icon			= get_theme_mod( 'woocommerce_menu_item_icon', 'cart' );
+	$css_classes	= apply_filters( 'wpbf_woo_menu_item_classes', 'menu-item wpbf-woo-menu-item' );
+	$title			= apply_filters( 'wpbf_woo_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
+	$cart_count		= WC()->cart->get_cart_contents_count();
+	$cart_url		= wc_get_cart_url();
 
 	// construct menu item
 	$menu_item = '';
