@@ -713,9 +713,9 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 	}
 }
 
-.edd-submit,
-#edd-purchase-button,
-[type="submit"].edd-submit {
+// #edd-purchase-button,
+// [type="submit"].edd-submit,
+.edd-submit {
 	// display: inline-block;
 	// padding: 6px 12px;
 	// margin: 0;
@@ -774,19 +774,12 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 
 /** Gray (Default) */
 .edd-submit.button,
-.edd-submit.button,
-.edd-submit.button:visited,
-.edd-submit.button,
 .edd-submit.button.gray {
 	color: $brand-color-alt;
 	background: darken($base-color-alt,5%);
 }
 .edd-submit.button:hover,
-.edd-submit.button:focus,
-.edd-submit.button:active,
-.edd-submit.button.gray:hover,
-.edd-submit.button.gray:focus,
-.edd-submit.button.gray:active {
+.edd-submit.button.gray:hover {
 	background: $base-color;
 	color: $brand-color-alt;
 }
@@ -799,9 +792,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 	color: $brand-color-alt;
 	background: #ffffff;
 }
-.edd-submit.button.white:hover,
-.edd-submit.button.white:focus,
-.edd-submit.button.white:active {
+.edd-submit.button.white:hover {
 	color: $brand-color-alt;
 	background: #ebebeb;
 }
@@ -814,9 +805,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 	color: #ffffff;
 	background: $accent-color;
 }
-.edd-submit.button.blue:hover,
-.edd-submit.button.blue:focus,
-.edd-submit.button.blue.active {
+.edd-submit.button.blue:hover {
 	color: #ffffff;
 	background: $accent-color-alt;
 }
@@ -829,9 +818,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 	color: #ffffff;
 	background: #d9534f;
 }
-.edd-submit.button.red:hover,
-.edd-submit.button.red:focus,
-.edd-submit.button.red:active {
+.edd-submit.button.red:hover {
 	color: #ffffff;
 	background: #d2322d;
 }
@@ -844,9 +831,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 	color: #ffffff;
 	background: #4fe190;
 }
-.edd-submit.button.green:hover,
-.edd-submit.button.green:focus,
-.edd-submit.button.green:active {
+.edd-submit.button.green:hover {
 	color: #ffffff;
 	background: lighten(#4fe190,15%);
 }
@@ -859,9 +844,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 	color: #ffffff;
 	background: #f0ad4e;
 }
-.edd-submit.button.yellow:hover,
-.edd-submit.button.yellow:focus,
-.edd-submit.button.yellow:active {
+.edd-submit.button.yellow:hover {
 	color: #ffffff;
 	background: #ed9c28;
 }
@@ -874,9 +857,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 	color: #ffffff;
 	background: #ed9c28;
 }
-.edd-submit.button.orange:hover,
-.edd-submit.button.orange:focus,
-.edd-submit.button.orange:active {
+.edd-submit.button.orange:hover {
 	color: #ffffff;
 	background: #e59016;
 }
@@ -889,9 +870,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 	color: #fff;
 	background: #363636;
 }
-.edd-submit.button.dark-gray:hover,
-.edd-submit.button.dark-gray:focus,
-.edd-submit.button.dark-gray:active {
+.edd-submit.button.dark-gray:hover {
 	color: #fff;
 	background: #333;
 }
@@ -920,6 +899,16 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 .edd_download_inner {
 	padding: 0 $padding-small $padding-small;
 	margin: 0 0 $margin-small;
+	.edd_download_image {
+		margin-bottom: $margin;
+	}
+	.edd_download_title {
+		// font-size: 16px;
+		font-weight: 400;
+		a {
+			color: $brand-color;
+		}
+	}
 }
 .edd_download_columns_2 .edd_download:nth-child(2n+1),
 .edd_download_columns_3 .edd_download:nth-child(3n+1),
@@ -1177,4 +1166,37 @@ edd-hide-on-empty.cart-not.empty {
 .edd-sl-renewal-discount-details .edd-sl-renewal-discount-amount {
 	font-style: italic;
 	word-break: keep-all;
+}
+
+// Menu Item
+// Main Menu Cart Item
+.wpbf-edd-menu-item {
+	.wpbf-edd-menu-item-count {
+		border-radius: 3px;
+		vertical-align: middle;
+		display: inline-block;
+		padding: 2px 7px;
+		margin-left: 10px;
+		text-align: center;
+		background: $accent-color;
+		color: #fff;
+		font-size: $small-fontsize - 2;
+		position: relative;
+	}
+	.wpbf-edd-menu-item-count:before {
+		content: "\f10d";
+		font-family: 'page-builder-framework' !important;
+		speak: none;
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		position: absolute;
+		left: -6px;
+		color: $accent-color;
+		@include vertical-align($position: absolute);
+	}
 }
