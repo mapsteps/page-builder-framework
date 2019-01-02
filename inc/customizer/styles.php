@@ -603,7 +603,7 @@ if( $button_primary_bg_color || $button_primary_text_color ) {
 
 }
 
-if( $button_primary_bg_color || $button_primary_text_color ) {
+if( $button_primary_bg_color_alt || $button_primary_bg_color_alt ) {
 
 	echo '.wpbf-button-primary:hover {';
 
