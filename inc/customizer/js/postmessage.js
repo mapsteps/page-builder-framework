@@ -386,4 +386,16 @@
 		} );
 	} );
 
+	/* Easy Digital Downloads */
+
+	/* Defaults */
+
+	// Buttons
+	wp.customize( 'button_border_radius', function( value ) {
+		value.bind( function( newval ) {
+			$('.edd-submit.button').css('border-radius', newval + 'px' );
+		} );
+	} );
+
+
 } )( jQuery );
