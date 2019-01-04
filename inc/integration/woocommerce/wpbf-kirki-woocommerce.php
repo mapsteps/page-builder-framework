@@ -105,6 +105,17 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			5,
 ) );
 
+// Turn Search into Product Search
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'toggle',
+	'settings'			=>			'woocommerce_search_menu_item',
+	'label'				=>			esc_attr__( 'Product Search', 'page-builder-framework' ),
+	'description'		=>			__( 'Turn the Search Menu Item into a Product Search', 'page-builder-framework' ),
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			0,
+	'priority'			=>			5,
+) );
+
 // Menu Item
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',

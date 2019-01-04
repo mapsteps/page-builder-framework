@@ -88,7 +88,7 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 	$search_item .= '<div class="wpbf-menu-search">';
 
 	// if we have a shop, we're going to call the product search form
-	if ( class_exists( 'WooCommerce' ) ) {
+	if ( class_exists( 'WooCommerce' ) && get_theme_mod( 'woocommerce_search_menu_item' ) ) {
 		$search_item .= get_product_search_form( $echo = false );
 	} else {
 		$search_item .= get_search_form( $echo = false );
