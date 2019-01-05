@@ -372,13 +372,8 @@ Sidebar
 }
 
 .#{$prefix}-no-sidebar {
-	.#{$prefix}-single-content,
-	.#{$prefix}-page-content,
-	.#{$prefix}-archive-content,
-	.#{$prefix}-blog-content,
-	.#{$prefix}-search-content,
-	.#{$prefix}-category-content {
-		width: 100% !important;
+	.wpbf-main.wpbf-medium-2-3 {
+		width: 100%;
 	}
 	.#{$prefix}-main-grid {
 		margin-left: 0;
