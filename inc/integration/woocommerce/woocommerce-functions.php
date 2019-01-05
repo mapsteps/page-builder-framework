@@ -76,7 +76,7 @@ function wpbf_woo_sidebar() {
 		'after_widget'	=> '</div>',
 		'before_title'	=> '<h4 class="wpbf-widgettitle">',
 		'after_title'	=> '</h4>',
-		'description'	=> __( 'WooCommerce sidebar widgets will appear here.', 'page-builder-framework' ),
+		'description'	=> __( 'This Sidebar is being displayed on WooCommerce Archive Pages.', 'page-builder-framework' ),
 	) );
 
 	// Product Page Sidebar
@@ -87,7 +87,7 @@ function wpbf_woo_sidebar() {
 		'after_widget'  => '</div>',
 		'before_title'	=> '<h4 class="wpbf-widgettitle">',
 		'after_title'	=> '</h4>',
-		'description'	=> __( 'WooCommerce sidebar widgets will appear here.', 'page-builder-framework' ),
+		'description'	=> __( 'This Sidebar is being displayed on WooCommerce Product Pages.', 'page-builder-framework' ),
 	) );
 
 }
@@ -265,10 +265,10 @@ add_action( 'woocommerce_after_main_content', 'wpbf_woo_output_content_wrapper_e
  */
 function wpbf_woo_product_loop_start() {
 
-	$mobile_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_mobile', 1 );
-	$tablet_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_tablet', 3 );
-	$desktop_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_desktop', 4 );
-	$grid_gap = get_theme_mod( 'woocommerce_loop_grid_gap', 'large' );
+	$mobile_breakpoint	= get_theme_mod( 'woocommerce_loop_products_per_row_mobile', 1 );
+	$tablet_breakpoint	= get_theme_mod( 'woocommerce_loop_products_per_row_tablet', 3 );
+	$desktop_breakpoint	= get_theme_mod( 'woocommerce_loop_products_per_row_desktop', 4 );
+	$grid_gap			= get_theme_mod( 'woocommerce_loop_grid_gap', 'large' );
 
 	return '<ul class="wpbf-grid wpbf-grid-'. esc_attr( $grid_gap ) .' wpbf-grid-1-'. esc_attr( $mobile_breakpoint ) .' wpbf-grid-small-1-'. esc_attr( $tablet_breakpoint ) .' wpbf-grid-large-1-'. esc_attr( $desktop_breakpoint ) .' products">'; 
 
