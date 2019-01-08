@@ -99,7 +99,7 @@ Kirki::add_field( 'wpbf', array(
 	'type'				=>			'toggle',
 	'settings'			=>			'woocommerce_menu_item_hide_if_not_wc',
 	'label'				=>			esc_attr__( 'Hide from non-Shop Pages', 'page-builder-framework' ),
-	'description'		=>			__( 'Display menu item only on WooCommerce related pages', 'page-builder-framework' ),
+	'description'		=>			__( 'Display Menu Item only on WooCommerce related pages', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			0,
 	'priority'			=>			5,
@@ -116,12 +116,21 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			5,
 ) );
 
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-88057',
+	'section'			=>			'wpbf_woocommerce_menu_item_options',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			5,
+) );
+
 // Menu Item
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',
 	'settings'			=>			'woocommerce_menu_item_desktop',
 	'label'				=>			esc_attr__( 'Visibility (Desktop)', 'page-builder-framework' ),
-	'description'		=>			__( 'Adds a cart icon to your main navigation', 'page-builder-framework' ),
+	'description'		=>			__( 'Adds a Cart Icon to your Main Navigation', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'show',
 	'priority'			=>			10,
@@ -171,7 +180,7 @@ Kirki::add_field( 'wpbf', array(
 	'type'				=>			'select',
 	'settings'			=>			'woocommerce_menu_item_mobile',
 	'label'				=>			esc_attr__( 'Visibility (Mobile)', 'page-builder-framework' ),
-	'description'		=>			__( 'Adds a cart icon to your mobile navigation', 'page-builder-framework' ),
+	'description'		=>			__( 'Adds a Cart Icon to your Mobile Navigation', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_menu_item_options',
 	'default'			=>			'show',
 	'priority'			=>			13,
