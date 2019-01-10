@@ -51,7 +51,7 @@ function wpbf_body_schema_markup() {
 /**
  * Inner Content
  */
-function wpbf_inner_content() {
+function wpbf_inner_content( $echo = true ) {
 
 	if( is_singular() ) {
 
@@ -92,7 +92,15 @@ function wpbf_inner_content() {
 
 	}
 
-	echo $inner_content; // WPCS: XSS ok.
+	if( $echo ) {
+
+		echo $inner_content; // WPCS: XSS ok.
+
+	} else {
+
+		return $inner_content;
+
+	}
 
 }
 

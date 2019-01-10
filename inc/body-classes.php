@@ -40,6 +40,13 @@ function wpbf_body_classes( $classes ) {
 		$classes[] = 'wpbf-sub-menu-align-left';
 	}
 
+	// Full Width Body Class
+	$inner_content = wpbf_inner_content( $echo = false );
+
+	if( !$inner_content ) {
+		$classes[] = 'wpbf-full-width';
+	}
+
 	return $classes;
 
 }
