@@ -1112,7 +1112,7 @@ p.demo_store,
 					line-height: 1;
 				}
 				.select2-selection__arrow {
-					@include vertical-align();
+					@include vertical-align($position: absolute);
 				}
 			}
 		}
