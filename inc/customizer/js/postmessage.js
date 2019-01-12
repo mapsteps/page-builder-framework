@@ -184,7 +184,7 @@
 
 	wp.customize( 'sidebar_bg_color', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-sidebar .widget').css('background-color', newval );
+			$('.wpbf-sidebar .widget, .elementor-widget-sidebar .widget').css('background-color', newval );
 		} );
 	} );
 

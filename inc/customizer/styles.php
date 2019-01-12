@@ -633,7 +633,7 @@ $sidebar_width					= get_theme_mod( 'sidebar_width' );
 
 if( $sidebar_bg_color ) {
 
-	echo '.wpbf-sidebar .widget {';
+	echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
 	echo sprintf( 'background: %s;', esc_attr( $sidebar_bg_color ) );
 	echo '}';
 
@@ -641,7 +641,7 @@ if( $sidebar_bg_color ) {
 
 if( is_numeric( $sidebar_widget_padding_top ) || is_numeric( $sidebar_widget_padding_right ) || is_numeric( $sidebar_widget_padding_bottom ) || is_numeric( $sidebar_widget_padding_left ) ) {
 
-	echo '.wpbf-sidebar .widget {';
+	echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
 
 	if( is_numeric( $sidebar_widget_padding_top ) ) {
 
