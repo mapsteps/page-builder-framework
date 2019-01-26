@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 				<?php do_action( 'wpbf_main_menu' ); ?>
 
-			<?php do_action( 'wpbf_main_menu_close' ); ?>
+				<?php do_action( 'wpbf_main_menu_close' ); ?>
 
 			</nav>
 
