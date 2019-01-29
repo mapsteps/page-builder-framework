@@ -6,7 +6,116 @@
  * @subpackage Integration/EDD
  */
 
-/* Menu Item */
+/**
+ * Helpers
+ */
+function wpbf_is_edd_single() {
+
+	if( is_singular( 'download' ) ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+function wpbf_is_edd_archive() {
+
+	if( is_post_type_archive( 'download' ) || is_tax( 'download_category' ) || is_tax( 'download_tag' ) ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+function wpbf_is_edd_page() {
+
+	if ( is_singular( 'download' ) || is_post_type_archive( 'download' ) || is_tax( 'download_category' ) || is_tax( 'download_tag' ) || edd_is_checkout() || edd_is_success_page() || edd_is_failed_transaction_page() || edd_is_purchase_history_page() ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+/**
+ * Register Sidebars
+ */
+function wpbf_edd_sidebar() {
+
+	// Shop Page Sidebar
+	register_sidebar( array(
+		'id'			=> 'wpbf-edd-sidebar',
+		'name'			=> __( 'Easy Digital Downloads Sidebar', 'page-builder-framework' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'	=> '</div>',
+		'before_title'	=> '<h4 class="wpbf-widgettitle">',
+		'after_title'	=> '</h4>',
+		'description'	=> __( 'This Sidebar is being displayed on EDD Archive Pages.', 'page-builder-framework' ),
+	) );
+
+	// Product Page Sidebar
+	register_sidebar( array(
+		'id'			=> 'wpbf-edd-product-sidebar',
+		'name'			=> __( 'Easy Digital Downloads Product Page Sidebar', 'page-builder-framework' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'	=> '<h4 class="wpbf-widgettitle">',
+		'after_title'	=> '</h4>',
+		'description'	=> __( 'This Sidebar is being displayed on EDD Product Pages.', 'page-builder-framework' ),
+	) );
+
+}
+add_action( 'widgets_init', 'wpbf_edd_sidebar' );
+
+/**
+ * Apply Sidebars
+ */
+function wpbf_edd_sidebars( $sidebar ) {
+
+		if( wpbf_is_edd_archive() ) {
+
+			$sidebar = 'wpbf-edd-sidebar';
+
+		} elseif( wpbf_is_edd_single() ) {
+
+			$sidebar ='wpbf-edd-product-sidebar';
+
+		}
+
+	return $sidebar;
+
+}
+add_filter( 'wpbf_do_sidebar', 'wpbf_edd_sidebars' );
+
+/**
+ * Filter Sidebar Layout
+ */
+function wpbf_edd_sidebar_layout( $sidebar ) {
+
+	if( wpbf_is_edd_single() ) {
+
+		$edd_single_sidebar_layout = get_theme_mod( 'edd_single_sidebar_layout' );
+
+		if( $edd_single_sidebar_layout && $edd_single_sidebar_layout !== 'global' ) {
+			$sidebar = $edd_single_sidebar_layout;
+		}
+	}
+
+	if( wpbf_is_edd_archive() ) {
+
+		$edd_sidebar_layout = get_theme_mod( 'edd_sidebar_layout' );
+
+		if( $edd_sidebar_layout && $edd_sidebar_layout !== 'global' ) {
+			$sidebar = $edd_sidebar_layout;
+		}
+	}
+
+	return $sidebar;
+
+}
+add_filter( 'wpbf_sidebar_layout', 'wpbf_edd_sidebar_layout' );
 
 /**
  * Cart Menu Item
@@ -53,7 +162,7 @@ function wpbf_edd_menu_icon( $items, $args ) {
 	if( get_theme_mod( 'edd_menu_item_desktop' ) == 'hide' ) return $items;
 
 	// hide if we're on non-EDD pages
-	// if( get_theme_mod( 'edd_menu_item_hide_if_not_edd' ) && !is_woocommerce() ) return $items;
+	if( get_theme_mod( 'edd_menu_item_hide_if_not_edd' ) && !wpbf_is_edd_page() ) return $items;
 
 	// stop here if we're on a off canvas menu
 	if( wpbf_is_off_canvas_menu() ) return $items;
@@ -77,7 +186,7 @@ function wpbf_edd_menu_icon_mobile() {
 	if( get_theme_mod( 'edd_menu_item_mobile' ) == 'hide' ) return;
 
 	// hide if we're on non-EDD pages
-	// if( get_theme_mod( 'edd_menu_item_hide_if_not_edd' ) && !is_woocommerce() ) return;
+	if( get_theme_mod( 'edd_menu_item_hide_if_not_edd' ) && !wpbf_is_edd_page() ) return;
 
 	$menu_item = '<ul class="wpbf-mobile-nav-item">';
 	$menu_item .= wpbf_edd_menu_item();

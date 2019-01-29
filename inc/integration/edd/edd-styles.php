@@ -15,6 +15,21 @@ add_action( 'wpbf_after_customizer_css', 'wpbf_do_edd_customizer_css', 10 );
 
 function wpbf_do_edd_customizer_css() {
 
+	// Radio Buttons
+	$page_accent_color = get_theme_mod( 'page_accent_color' );
+
+	if( $page_accent_color ) {
+
+		echo '.edd_download_purchase_form .edd_single_mode input[type="radio"]:checked + .edd_price_option_name::before {';
+		echo sprintf( 'border-color: %s;', esc_attr( $page_accent_color ) );
+		echo '}';
+
+		echo '.edd_download_purchase_form .edd_single_mode input[type="radio"]:checked + .edd_price_option_name::after {';
+		echo sprintf( 'background: %s;', esc_attr( $page_accent_color ) );
+		echo '}';
+
+	}
+
 	// Theme Buttons
 	$button_border_width				= get_theme_mod( 'button_border_width' );
 	$button_border_color				= get_theme_mod( 'button_border_color' );
@@ -162,5 +177,116 @@ function wpbf_do_edd_customizer_css() {
 		echo '}';
 
 	}
+
+
+
+
+
+
+	// Menu Item Desktop
+	$edd_menu_item_desktop       = get_theme_mod( 'edd_menu_item_desktop' );
+	$edd_menu_item_desktop_color = get_theme_mod( 'edd_menu_item_desktop_color' );
+	$menu_font_color             = get_theme_mod( 'menu_font_color' );
+
+	if( $edd_menu_item_desktop !== 'hide' ) {
+
+		if( $edd_menu_item_desktop_color ) {
+
+			echo '.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count {';
+			echo sprintf( 'background: %s;', esc_attr( $edd_menu_item_desktop_color ) );
+			echo '}';
+
+			echo '.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {';
+			echo sprintf( 'color: %s;', esc_attr( $edd_menu_item_desktop_color ) );
+			echo '}';
+
+		} elseif( $menu_font_color ) {
+
+			echo '.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count {';
+			echo sprintf( 'background: %s;', esc_attr( $menu_font_color ) );
+			echo '}';
+
+			echo '.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {';
+			echo sprintf( 'color: %s;', esc_attr( $menu_font_color ) );
+			echo '}';
+
+		} elseif( $page_accent_color ) {
+
+			echo '.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count {';
+			echo sprintf( 'background: %s;', esc_attr( $page_accent_color ) );
+			echo '}';
+
+			echo '.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {';
+			echo sprintf( 'color: %s;', esc_attr( $page_accent_color ) );
+			echo '}';
+
+		}
+
+	}
+
+	// Menu Item Mobile
+	$edd_menu_item_mobile       = get_theme_mod( 'edd_menu_item_mobile' );
+	$edd_menu_item_mobile_color = get_theme_mod( 'edd_menu_item_mobile_color' );
+	$mobile_menu_font_color     = get_theme_mod( 'mobile_menu_font_color' );
+
+	if( $edd_menu_item_mobile !== 'hide' ) {
+
+		if( $edd_menu_item_mobile_color ) {
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count {';
+			echo sprintf( 'background: %s;', esc_attr( $edd_menu_item_mobile_color ) );
+			echo '}';
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {';
+			echo sprintf( 'color: %s;', esc_attr( $edd_menu_item_mobile_color ) );
+			echo '}';
+
+		} elseif( $edd_menu_item_desktop_color ) {
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count {';
+			echo sprintf( 'background: %s;', esc_attr( $edd_menu_item_desktop_color ) );
+			echo '}';
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {';
+			echo sprintf( 'color: %s;', esc_attr( $edd_menu_item_desktop_color ) );
+			echo '}';
+
+		} elseif( $mobile_menu_font_color ) {
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count {';
+			echo sprintf( 'background: %s;', esc_attr( $mobile_menu_font_color ) );
+			echo '}';
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {';
+			echo sprintf( 'color: %s;', esc_attr( $mobile_menu_font_color ) );
+			echo '}';
+
+		} elseif( $menu_font_color ) {
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count {';
+			echo sprintf( 'background: %s;', esc_attr( $menu_font_color ) );
+			echo '}';
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {';
+			echo sprintf( 'color: %s;', esc_attr( $menu_font_color ) );
+			echo '}';
+
+		} elseif( $page_accent_color ) {
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count {';
+			echo sprintf( 'background: %s;', esc_attr( $page_accent_color ) );
+			echo '}';
+
+			echo '.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {';
+			echo sprintf( 'color: %s;', esc_attr( $page_accent_color ) );
+			echo '}';
+
+		}
+
+	}
+
+
+
+
 
 }

@@ -31,7 +31,7 @@ function wpbf_edd_scripts() {
 add_action( 'wp_enqueue_scripts', 'wpbf_edd_scripts', 10 );
 
 // EDD Customizer Settings
-// require_once( WPBF_THEME_DIR . '/inc/integration/edd/wpbf-kirki-edd.php' );
+require_once( WPBF_THEME_DIR . '/inc/integration/edd/wpbf-kirki-edd.php' );
 
 // EDD Functions
 require_once( WPBF_THEME_DIR . '/inc/integration/edd/edd-functions.php' );
