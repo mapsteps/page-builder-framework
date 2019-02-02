@@ -25,10 +25,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				<?php do_action( 'wpbf_before_main_navigation' ); ?>
 
 				<!-- Main Navigation -->
-				<?php get_template_part( 'inc/template-parts/navigation/'. wpbf_menu() .'' ); ?>
+				<?php get_template_part( 'inc/template-parts/navigation/' . wpbf_menu() ); ?>
 
 				<!-- Mobile Navigation -->
-				<?php get_template_part( 'inc/template-parts/navigation/'. wpbf_mobile_menu() .'' ); ?>
+				<?php get_template_part( 'inc/template-parts/navigation/' . wpbf_mobile_menu() ); ?>
 
 				<?php do_action( 'wpbf_after_main_navigation' ); ?>
 
