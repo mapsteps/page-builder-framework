@@ -89,7 +89,7 @@ function wpbf_options_metabox( $post ) {
 
 	<!-- Layout -->
 
-	<h3><?php _e( 'Layout', 'page-builder-framework' ); // WPCS: XSS ok. ?></h3>
+	<h4><?php _e( 'Layout', 'page-builder-framework' ); // WPCS: XSS ok. ?></h4>
 
 	<div>
 		<input id="layout-global" type="radio" name="wpbf_options[]" value="layout-global" <?php checked( $full_width, 'layout-global' ); ?> />
@@ -111,7 +111,7 @@ function wpbf_options_metabox( $post ) {
 
 	<!-- Disable Elements -->
 
-	<h3><?php _e( 'Disable Elements', 'page-builder-framework' ); // WPCS: XSS ok. ?></h3>
+	<h4><?php _e( 'Disable Elements', 'page-builder-framework' ); // WPCS: XSS ok. ?></h4>
 
 	<div>
 		<input id="remove-title" type="checkbox" name="wpbf_options[]" value="remove-title" <?php checked( $remove_title, 'remove-title' ); ?> />
