@@ -156,27 +156,9 @@
 
 	/* Blog */
 
-	wp.customize( 'blog_custom_width', function( value ) {
-		value.bind( function( newval ) {
-			$('.blog #inner-content').css('max-width', newval );
-		} );
-	} );
-
 	wp.customize( 'single_custom_width', function( value ) {
 		value.bind( function( newval ) {
 			$('.single #inner-content').css('max-width', newval );
-		} );
-	} );
-
-	wp.customize( 'archive_custom_width', function( value ) {
-		value.bind( function( newval ) {
-			$('.archive #inner-content').css('max-width', newval );
-		} );
-	} );
-
-	wp.customize( 'category_custom_width', function( value ) {
-		value.bind( function( newval ) {
-			$('.category #inner-content').css('max-width', newval );
 		} );
 	} );
 
