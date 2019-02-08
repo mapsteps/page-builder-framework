@@ -9,15 +9,85 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Main Navigation Fallback
+ *
+ * is displayed if no menu is selected and user is logged in + able to edit theme options
+ */
+function wpbf_main_menu_fallback() {
+
+	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
+
+		?>
+
+		<ul class="wpbf-menu">
+		<li class="menu-item">
+		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+		</li>
+		</ul>
+
+		<?php
+
+	} elseif( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+
+		echo '<ul class="wpbf-menu">';
+		echo '<li class="menu-item">';
+		echo '<a href="'. esc_url( admin_url( '/nav-menus.php' ) ) .'">'. __( 'Add Menu', 'page-builder-framework' ) .'</a>'; // WPCS: XSS ok.
+		echo '</li>';
+		echo '</ul>';
+
+	}
+
+}
+
+/**
+ * Mobile Navigation Fallback
+ *
+ * is displayed if no menu is selected and user is logged in + able to edit theme options
+ */
+function wpbf_mobile_menu_fallback() {
+
+	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
+
+		?>
+
+		<ul class="wpbf-mobile-menu">
+		<li class="menu-item">
+		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+		</li>
+		</ul>
+
+		<?php
+
+	} elseif( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+
+		echo '<ul class="wpbf-menu">';
+		echo '<li class="menu-item">';
+		echo '<a href="'. esc_url( admin_url( '/nav-menus.php' ) ) .'">'. __( 'Add Menu', 'page-builder-framework' ) .'</a>'; // WPCS: XSS ok.
+		echo '</li>';
+		echo '</ul>';
+
+	}
+
+}
+
+/**
  * Navigation Fallback
- * 
+ *
  * is displayed if no menu is selected and user is logged in + able to edit theme options
  */
 function wpbf_menu_fallback() {
 
-	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
 
-		echo '<a style="float: right" target="_blank" href="'. esc_url( admin_url( '/nav-menus.php' ) ) .'">'. __( 'Add Menu', 'page-builder-framework' ) .'</a>'; // WPCS: XSS ok.
+		?>
+
+		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+
+		<?php
+
+	} elseif( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+
+		echo '<a href="'. esc_url( admin_url( '/nav-menus.php' ) ) .'">'. __( 'Add Menu', 'page-builder-framework' ) .'</a>'; // WPCS: XSS ok.
 
 	}
 

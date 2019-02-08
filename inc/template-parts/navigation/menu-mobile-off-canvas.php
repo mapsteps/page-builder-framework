@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				'container'			=>		false,
 				'menu_class'		=>		'wpbf-mobile-menu',
 				'depth'				=>		'3',
-				'fallback_cb'		=>		'wpbf_menu_fallback'
+				'fallback_cb'		=>		'wpbf_mobile_menu_fallback'
 			)); ?>
 
 		</nav>

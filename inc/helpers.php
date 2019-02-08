@@ -449,13 +449,6 @@ function wpbf_sidebar_layout() {
 
 	}
 
-	if ( is_home() ) {
-
-		$blog_sidebar_position = get_theme_mod( 'blog_sidebar_layout' );
-		$sidebar = $blog_sidebar_position && $blog_sidebar_position !== 'global' ? $blog_sidebar_position : $sidebar;
-
-	}
-
 	if ( is_archive() ) {
 
 		$archive_sidebar_position = get_theme_mod( 'archive_sidebar_layout' );
@@ -475,14 +468,6 @@ function wpbf_blog_layout() {
 	$template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
 	$blog_layout           = get_theme_mod( 'archive_layout', 'default' );
-
-	if( is_home() ) {
-
-		$template_parts_header = get_theme_mod( 'blog_sortable_header', array( 'title', 'meta', 'featured' ) );
-		$template_parts_footer = get_theme_mod( 'blog_sortable_footer', array( 'readmore', 'categories' ) );
-		$blog_layout           = get_theme_mod( 'blog_layout', 'default' );
-
-	}
 
 	return apply_filters( 'wpbf_blog_layout', array( 'blog_layout' => $blog_layout, 'template_parts_header' => $template_parts_header, 'template_parts_footer' => $template_parts_footer ) );
 
@@ -508,7 +493,7 @@ function wpbf_nav_menu() {
 			'container'			=> false,
 			'menu_class'		=> 'wpbf-menu',
 			'depth'				=> 3,
-			'fallback_cb'		=> 'wpbf_menu_fallback'
+			'fallback_cb'		=> 'wpbf_main_menu_fallback'
 		));
 
 	} elseif ( get_theme_mod( 'menu_position' ) == 'menu-full-screen' ) {
@@ -518,7 +503,7 @@ function wpbf_nav_menu() {
 			'container'			=> false,
 			'menu_class'		=> 'wpbf-menu',
 			'depth'				=> 1,
-			'fallback_cb'		=> 'wpbf_menu_fallback'
+			'fallback_cb'		=> 'wpbf_main_menu_fallback'
 		));
 
 	} else {
@@ -528,7 +513,7 @@ function wpbf_nav_menu() {
 			'container'			=> false,
 			'menu_class'		=> 'wpbf-menu wpbf-sub-menu'. wpbf_sub_menu_animation() . wpbf_menu_effect() . wpbf_menu_effect_animation() . wpbf_menu_effect_alignment() .'',
 			'depth'				=> 3,
-			'fallback_cb'		=> 'wpbf_menu_fallback'
+			'fallback_cb'		=> 'wpbf_main_menu_fallback'
 		));
 
 	}
