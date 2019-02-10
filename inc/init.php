@@ -15,6 +15,9 @@ function wpbf_is_premium() {
 	return function_exists( 'wpbf_premium' ) ? true : false;
 }
 
+// Backwards Compatibility
+require_once( WPBF_THEME_DIR . '/inc/backwards-compatibility.php' );
+
 // Options
 require_once( WPBF_THEME_DIR . '/inc/options.php' );
 
