@@ -1,124 +1,116 @@
-/* ========================================================================
-Component: Navigation
-========================================================================== */
-.#{$prefix}-navigation {
-	width:					100%;
-	background: 			$base-color-alt;
-	position: 				relative;
-	z-index:				555;
+/* Navigation */
+.wpbf-navigation {
+	width: 100%;
+	background: $base-color-alt;
+	position: relative;
+	z-index: 555;
 }
 
-.#{$prefix}-nav-wrapper {
-	padding-top: 			$padding;
-	padding-bottom: 		$padding;
-	position:				relative;
+.wpbf-nav-wrapper {
+	padding-top: $padding;
+	padding-bottom: $padding;
+	position: relative;
 }
 
-// Navigation Setup
-.#{$prefix}-navigation {	
-	.#{$prefix}-grid-collapse {
-		display: 			table;
-		width: 				100%;
+.wpbf-navigation {	
+	.wpbf-grid-collapse {
+		display: table;
+		width: 100%;
 	}
-	.#{$prefix}-logo-container, .#{$prefix}-menu-container {
-		display: 			table-cell;
-		float: 				none;
-		vertical-align: 	middle;
+	.wpbf-logo-container,
+	.wpbf-menu-container {
+		display: table-cell;
+		float: none;
+		vertical-align: middle;
 	}
 }
 
-.#{$prefix}-menu {
-	// list reset
-	margin: 				0;
-	padding: 				0;
+.wpbf-menu {
+	margin: 0;
+	padding: 0;
 	li {
-		list-style: 		none;
+		list-style: none;
 	}
 	a {
-		display: 			block;
+		display: block;
 	}
 }
 
-// Clearfix Container
-.#{$prefix}-menu:before,
-.#{$prefix}-menu:after {
-	content:				"";
-	display:				table;
+// Clearfix
+.wpbf-menu:before,
+.wpbf-menu:after {
+	content: "";
+	display: table;
 }
 
-.#{$prefix}-menu:after {
-	clear:					both;
+.wpbf-menu:after {
+	clear: both;
 }
 
-/* Logo
-========================================================================== */
-.#{$prefix}-logo-container {
-	line-height:			$base-lineheight - .2;
+/* Logo */
+.wpbf-logo-container {
+	line-height: $base-lineheight - .2;
 }
 
-.#{$prefix}-logo {
+.wpbf-logo {
 	a {
-		font-weight: 		700;
-		font-size: 			$bigger-fontsize + 2;
+		font-weight: 700;
+		font-size: $bigger-fontsize + 2;
 	}
 	img {
-		height:				48px;
-		width:				auto;
+		height: 48px;
+		width: auto;
 	}
 }
 
-/* Search
-========================================================================== */
-.#{$prefix}-menu-item-search {
-	position: 				relative;
+/* Search Menu Item */
+.wpbf-menu-item-search {
+	position: relative;
 	&.active i {
-		opacity: 			0;
+		opacity: 0;
 	}
-	.#{$prefix}-menu-search {
-		position: 			absolute;
-		z-index: 			3;
-		top:				50%;
-		margin-top: 		-25px;
-		right: 				0;
-		display: 			none;
-		opacity: 			0;
-		width: 				0;
-		max-width: 			350px;
+	.wpbf-menu-search {
+		position: absolute;
+		z-index: 3;
+		top: 50%;
+		margin-top: -25px;
+		right: 0;
+		display: none;
+		opacity: 0;
+		width: 0;
+		max-width: 350px;
 		input[type=search] {
-			height: 		50px;
+			height: 50px;
 		}
 	}
 }
 
-/* Menu
-========================================================================== */
+/* Menu */
 
 // Animation
-.#{$prefix}-mobile-menu a, .#{$prefix}-menu a {
-	@include				transition(all 0.2s);
+.wpbf-mobile-menu a, .wpbf-menu a {
+	@include transition(all 0.2s);
 }
 
-.#{$prefix}-menu li {
-	@include				transition(background-color 0.2s);
+.wpbf-menu li {
+	@include transition(background-color 0.2s);
 }
 
-/* Current Menu Item
-========================================================================== */
-.#{$prefix}-menu > .current-menu-item > a {
-	color:					$accent-color-alt !important;
+// Current Menu Item
+.wpbf-menu > .current-menu-item > a {
+	color: $accent-color-alt !important;
 }
 
-/* Submenu
-========================================================================== */
+/* Sub Menu */
 
 // List reset
-.#{$prefix}-menu .sub-menu {
+.wpbf-menu .sub-menu {
 	margin: 0;
 	padding: 0;
 }
 
 // All Sub Menus
-.#{$prefix}-sub-menu {
+.wpbf-sub-menu {
 	// First Level Sub Menu Container
 	> .menu-item-has-children {
 		// First Level Sub Menu
@@ -146,7 +138,7 @@ Component: Navigation
 }
 
 // Default Sub Menus (excluding Mega Menu)
-.#{$prefix}-sub-menu {
+.wpbf-sub-menu {
 	// All Sub Menus
 	> .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {
 		width: 220px;
@@ -184,23 +176,23 @@ Component: Navigation
 	}
 }
 
-// Sub Menu Alignment modifiers
-.#{$prefix}-sub-menu-align-right {
-	.#{$prefix}-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu {
+// Sub Menu Modifier (Alignment)
+.wpbf-sub-menu-align-right {
+	.wpbf-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu {
 		right: 0;
 	}
-	.#{$prefix}-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children {
+	.wpbf-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children {
 		>a:after {
 			display: none;
 		}
 	}
-	.#{$prefix}-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children > .sub-menu {
+	.wpbf-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children > .sub-menu {
 		left: -100%;
 	}
 }
 
-.#{$prefix}-sub-menu-align-center {
-	.#{$prefix}-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu {
+.wpbf-sub-menu-align-center {
+	.wpbf-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu {
 		left: 0;
 		left: 50%;
 		-webkit-transform: translateX(-50%);
@@ -209,18 +201,17 @@ Component: Navigation
 	}
 }
 
-/* Navigation Modifier
-========================================================================== */
+/* Navigation Variations */
 
 // Defaults
-.#{$prefix}-menu-right,
-.#{$prefix}-menu-left,
-.#{$prefix}-menu-stacked,
-.#{$prefix}-menu-stacked-advanced,
-.#{$prefix}-menu-centered,
-##{$prefix}-pre-header,
-.#{$prefix}-page-footer {
-	.#{$prefix}-menu {
+.wpbf-menu-right,
+.wpbf-menu-left,
+.wpbf-menu-stacked,
+.wpbf-menu-stacked-advanced,
+.wpbf-menu-centered,
+#wpbf-pre-header,
+.wpbf-page-footer {
+	.wpbf-menu {
 		a {
 			padding: $padding-small $padding;
 		}
@@ -231,24 +222,24 @@ Component: Navigation
 }
 
 // Right Navigation
-.#{$prefix}-menu-right {
-	.#{$prefix}-menu {
+.wpbf-menu-right {
+	.wpbf-menu {
 		float: right;
 	}
 }
 
 // Left Navigation
-.#{$prefix}-menu-left {
-	.#{$prefix}-logo-container {
+.wpbf-menu-left {
+	.wpbf-logo-container {
 		text-align: right;
 	}
-	.#{$prefix}-menu {
+	.wpbf-menu {
 		float: left;
 	}
 }
 
 // Centered Navigation
-.#{$prefix}-menu-centered {
+.wpbf-menu-centered {
 	.logo-container {
 		display: none;
 		text-align: center;
@@ -257,34 +248,33 @@ Component: Navigation
 			padding: 0;
 		}
 	}
-	.#{$prefix}-menu {
-		display: flex;
+	.wpbf-menu {
+		@include flex();
 		align-items: center;
 		justify-content: center;
 	}
 }
 
 // Stacked Navigation
-.#{$prefix}-menu-stacked {
+.wpbf-menu-stacked {
 	text-align: center;
-	.#{$prefix}-menu {
+	.wpbf-menu {
 		display: inline-block;
 		text-align: left;
 	}
 }
 
-/* Mobiletoggle
-========================================================================== */
+/* Mobiletoggle */
 
 // Defaults
-.#{$prefix}-mobile-logo {
+.wpbf-mobile-logo {
 	font-weight: 700;
 	img {
 		height: 35px;
 	}
 }
 
-// Toggle & Navigation Menu Items
+// Toggle & Nav Menu Items
 .wpbf-nav-item,
 .wpbf-mobile-nav-item {
 	cursor: pointer;
@@ -305,27 +295,29 @@ Component: Navigation
 	margin: 0;
 }
 
-.#{$prefix}-mobile-nav-wrapper {
+.wpbf-mobile-nav-wrapper {
 	padding-top: $padding;
 	padding-bottom: $padding;
 }
 
 // Hamburger & Off-Canvas Toggle
-.#{$prefix}-mobile-menu-hamburger, .#{$prefix}-mobile-menu-off-canvas {
-	.#{$prefix}-mobile-nav-wrapper {
-		display: 				flex;
-		align-items:			center;
-		justify-content:		space-between;
-		width:					100%;
+.wpbf-mobile-menu-hamburger,
+.wpbf-mobile-menu-off-canvas {
+	.wpbf-mobile-nav-wrapper {
+		@include flex();
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
 	}
-	.#{$prefix}-menu-toggle-container {
-		text-align: 			right;
+	.wpbf-menu-toggle-container {
+		text-align: right;
 	}
 }
 
 // Default Toggle
-.#{$prefix}-mobile-menu-default {
-	.wpbf-mobile-logo-container, .wpbf-menu-toggle-container {
+.wpbf-mobile-menu-default {
+	.wpbf-mobile-logo-container,
+	.wpbf-menu-toggle-container {
 		text-align: center;
 	}
 	.wpbf-menu-toggle-container {
@@ -333,35 +325,33 @@ Component: Navigation
 	}
 }
 
-/* Menu Mobile
-========================================================================== */
-.#{$prefix}-mobile-menu-container {
-	display:				none;
-	background:				#fff;
+/* Mobile Menu */
+.wpbf-mobile-menu-container {
+	display: none;
+	background: #fff;
 }
 
 // Defaults
-.#{$prefix}-mobile-menu {
-	// list reset
-	margin: 				0;
-	padding: 				0;
+.wpbf-mobile-menu {
+	margin: 0;
+	padding: 0;
 	li {
-		list-style: 		none;
+		list-style: none;
 	}
-	z-index:				111;
+	z-index: 111;
 	a {
-		display: 			block;
-		padding: 			$padding-small $padding;
+		display: block;
+		padding: $padding-small $padding;
 	}
 	.menu-item {
-		border-top: 		1px solid $base-color;
+		border-top: 1px solid $base-color;
 	}
 	> .menu-item:last-child {
-		border-bottom:		1px solid $base-color;
+		border-bottom: 1px solid $base-color;
 	}
 }
 
-.#{$prefix}-mobile-menu-container {
+.wpbf-mobile-menu-container {
 	nav {
 		overflow-y: auto;
 		height: 100%;
@@ -369,16 +359,15 @@ Component: Navigation
 }
 
 // Submenu
-.#{$prefix}-mobile-menu .sub-menu {
-	// list reset
-	margin: 				0;
-	padding: 				0;
-	display:				none;
+.wpbf-mobile-menu .sub-menu {
+	margin: 0;
+	padding: 0;
+	display: none;
 }
 
-.#{$prefix}-mobile-menu .menu-item-has-children {
+.wpbf-mobile-menu .menu-item-has-children {
 	position: relative;
-	.#{$prefix}-submenu-toggle {
+	.wpbf-submenu-toggle {
 		position: absolute;
 		cursor: pointer;
 		top: 0;
@@ -387,12 +376,10 @@ Component: Navigation
 	}
 }
 
-/* Pre Header
-========================================================================== */
+/* Pre Header */
 
-// Pre Header
- ##{$prefix}-pre-header {
- 	.#{$prefix}-menu {
+ #wpbf-pre-header {
+ 	.wpbf-menu {
  		float: right;
  		.sub-menu {
  			z-index: 999;
@@ -401,9 +388,9 @@ Component: Navigation
  }
 
  // Right Navigation
- ##{$prefix}-pre-header {
- 	.#{$prefix}-inner-pre-header-right {
-		.#{$prefix}-menu {
+ #wpbf-pre-header {
+ 	.wpbf-inner-pre-header-right {
+		.wpbf-menu {
 			float: right;
 			.sub-menu {
 				text-align: left;
@@ -413,22 +400,21 @@ Component: Navigation
 }
 
 // Left Navigation
-##{$prefix}-pre-header {
-	.#{$prefix}-inner-pre-header-left {
-		.#{$prefix}-menu {
+#wpbf-pre-header {
+	.wpbf-inner-pre-header-left {
+		.wpbf-menu {
 			float: left;
 		}
 	}
 }
 
-/* Footer
-========================================================================== */
+/* Footer */
 
 // One Column Navigation
- .#{$prefix}-page-footer {
-	.#{$prefix}-inner-footer-content {
- 		.#{$prefix}-menu {
-	 		display: flex;
+ .wpbf-page-footer {
+	.wpbf-inner-footer-content {
+ 		.wpbf-menu {
+	 		@include flex();
 	 		align-items: center;
 	 		justify-content: center;
 			flex-wrap: wrap;
@@ -437,25 +423,24 @@ Component: Navigation
  }
 
  // Right Navigation
- .#{$prefix}-page-footer {
- 	.#{$prefix}-inner-footer-right {
-		.#{$prefix}-menu {
+ .wpbf-page-footer {
+ 	.wpbf-inner-footer-right {
+		.wpbf-menu {
 			float: right;
 		}
 	}
 }
 
 // Left Navigation
-.#{$prefix}-page-footer {
-	.#{$prefix}-inner-footer-left {
-		.#{$prefix}-menu {
+.wpbf-page-footer {
+	.wpbf-inner-footer-left {
+		.wpbf-menu {
 			float: left;
 		}
 	}
 }
 
-/* Posts Navigation
-========================================================================== */
+/* Post Navigation */
 .post-links {
 	margin-bottom: $margin;
 }
@@ -467,8 +452,7 @@ Component: Navigation
 	float: right;
 }
 
-/* Sticky Navigation
-========================================================================== */
-.admin-bar .#{$prefix}-navigation-active {
+/* Sticky Navigation */
+.admin-bar .wpbf-navigation-active {
 	margin-top: 32px;
 }

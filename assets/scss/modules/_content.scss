@@ -1,90 +1,76 @@
-/* ========================================================================
-Header/Footer
-========================================================================== */
-
-// Pre Header
-##{$prefix}-pre-header {
-	font-size: 					$small-fontsize;
-	background: 				#fff;
+/* Pre Header & Footer */
+#wpbf-pre-header {
+	font-size: $small-fontsize;
+	background: #fff;
 }
 
-.#{$prefix}-inner-pre-header {
-	padding-top: 				$padding-small;
-	padding-bottom: 			$padding-small;
+.wpbf-inner-pre-header {
+	padding-top: $padding-small;
+	padding-bottom: $padding-small;
 }
 
-.#{$prefix}-page-footer {
-	font-size: 					$small-fontsize;
-	background: 				$base-color-alt;
+.wpbf-page-footer {
+	font-size: $small-fontsize;
+	background: $base-color-alt;
 }
 	
-.#{$prefix}-inner-footer {
-	padding-top: 				$padding;
-	padding-bottom: 			$padding;
+.wpbf-inner-footer {
+	padding-top: $padding;
+	padding-bottom: $padding;
 }
 
-.#{$prefix}-footer-one-column,
-.#{$prefix}-pre-header-one-column {
-		text-align: 			center;
+.wpbf-footer-one-column,
+.wpbf-pre-header-one-column {
+		text-align: center;
 }
 
-.#{$prefix}-footer-two-columns,
-.#{$prefix}-pre-header-two-columns {
-	width: 						100%;
-	display: 					table;
-	.#{$prefix}-inner-footer-left,
-	.#{$prefix}-inner-footer-right,
-	.#{$prefix}-inner-pre-header-left,
-	.#{$prefix}-inner-pre-header-right {
-		display: 				table-cell;
-		width: 					50%;
-		vertical-align:			middle;
+.wpbf-footer-two-columns,
+.wpbf-pre-header-two-columns {
+	width: 100%;
+	display: table;
+	.wpbf-inner-footer-left,
+	.wpbf-inner-footer-right,
+	.wpbf-inner-pre-header-left,
+	.wpbf-inner-pre-header-right {
+		display: table-cell;
+		width: 50%;
+		vertical-align: middle;
 	}
-	.#{$prefix}-inner-footer-right,
-	.#{$prefix}-inner-pre-header-right {
-		text-align: 			right;
+	.wpbf-inner-footer-right,
+	.wpbf-inner-pre-header-right {
+		text-align: right;
 	}
 }
 
-/* ========================================================================
-Content
-========================================================================== */
+/* Content */
 
 // Body
 body {
-	background:					#fff;
+	background: #fff;
 	}
 
 // Wrapper
-.#{$prefix}-page {
-	position: 					relative;
-	-ms-word-wrap:				break-word;
-	word-wrap:					break-word;
+.wpbf-page {
+	position: relative;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
 }
 
-// Inner Content (deprecated)
-// #inner-content {
-// 	padding-top: 				$padding-medium;
-// 	padding-bottom:				$padding-medium;
-// }
-
-/* ========================================================================
-Blog
-========================================================================== */
+/* Blog */
 
 // Headlines
 .page-title {
-	margin-bottom: 				$margin-medium;
+	margin-bottom: $margin-medium;
 }
 
 // Author Box
 .wpbf-author-box {
-	background: 				$base-color-alt;
-	margin-bottom: 				$margin;
-	padding: 					$padding;
+	background: $base-color-alt;
+	margin-bottom: $margin;
+	padding: $padding;
 	.avatar {
-		border-radius: 			100%;
-		width: 					60px;
+		border-radius: 100%;
+		width: 60px;
 	}
 }
 
@@ -100,19 +86,19 @@ Blog
 
 // Article Meta
 .article-meta {
-	font-size: 					$small-fontsize;
+	font-size: $small-fontsize;
 	.article-time {
-		text-decoration: 		underline;
+		text-decoration: underline;
 	}
 }
 
 // Article Footer
 .article-footer {
-	clear: 						both;
+	clear: both;
 }
 
 .wpbf-read-more {
-	margin-bottom: 				$margin;
+	margin-bottom: $margin;
 }
 
 /* Blog Layouts */
@@ -131,134 +117,133 @@ Blog
 }
 
 // Beside
-.wpbf-blog-layout-beside {
-	.wpbf-grid{
-		// flex-direction: row-reverse;
-	}
-}
+// .wpbf-blog-layout-beside {
+// 	.wpbf-grid{
+// 		flex-direction: row-reverse;
+// 	}
+// }
 
 /* Comments */
 .commentlist {
 	ul {
-		margin: 				0;
-		padding: 				0;
+		margin: 0;
+		padding: 0;
 	}
 	li {
-		list-style: 			none;
+		list-style: none;
 	}
 }
 
 #comments-title {
-	margin-top: 				$margin-medium;
-	padding-top: 				$margin-medium;
-	border-top: 				10px solid $base-color-alt;
+	margin-top: $margin-medium;
+	padding-top: $margin-medium;
+	border-top: 10px solid $base-color-alt;
 }
 
 #reply-title {
-	padding-top: 				$padding-medium;
-	margin-top: 				$margin-medium;
-	border-top: 				10px solid $base-color-alt;
-	// WooCommerce Fix
-	display: 					block;
+	padding-top: $padding-medium;
+	margin-top: $margin-medium;
+	border-top: 10px solid $base-color-alt;
+	display: block;
 	small {
-		font-size: 				$tiny-fontsize;
+		font-size: $tiny-fontsize;
 	}
 }
 
 .commentlist {
 	.children {
-		margin-left: 			$margin;
+		margin-left: $margin;
 	}
 }
 
 // Comment
 .comment {
-	position: 					relative;
-	padding: 					25px;
-	border: 					3px solid darken($base-color-alt,8%);
-	margin-bottom: 				$margin;
+	position: relative;
+	padding: 25px;
+	border: 3px solid darken($base-color-alt,8%);
+	margin-bottom: $margin;
 	.comment-edit-link {
-		position: 				absolute;
-		right: 					20px;
-		top: 					20px;
+		position: absolute;
+		right: 20px;
+		top: 20px;
 	}
 	.comment-meta {
-		font-size: 				$small-fontsize;
-		margin-bottom: 			$margin;
+		font-size: $small-fontsize;
+		margin-bottom: $margin;
 	}
 	.avatar {
-		width: 					65px;
-		@include				border-radius(100%);
-		height: 				auto;
-		margin-right:			$margin-small;
-		display:				inline-block;
+		width: 65px;
+		@include border-radius(100%);
+		height: auto;
+		margin-right: $margin-small;
+		display: inline-block;
 	}
 	.comment-author-info {
-		display: 				inline-block;
+		display: inline-block;
 	}
 	.comment-author .fn {
-		font-style: 			normal;
-		font-weight: 			$bold;
+		font-style: normal;
+		font-weight: $bold;
 	}
 	.comment-time {
-		color: 					$base-color;
-		margin-left: 			5px;
+		color: $base-color;
+		margin-left: 5px;
 		a {
-			color: 				$base-color;
+			color: $base-color;
 		}
 	}
 	.comment-time:before {
-		font-family:			"page-builder-framework";
-		content:				"\f107";
-		margin-right: 			3px;
-		speak:					none;
-		font-style:				normal;
-		font-weight:			normal;
-		font-variant:			normal;
-		text-transform:			none;
-		-webkit-font-smoothing:	antialiased;
-		-moz-osx-font-smoothing:	grayscale;
+		font-family: "page-builder-framework";
+		content: "\f107";
+		margin-right: 3px;
+		speak: none;
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 	.comment-reply-link {
-		display: 				inline-block;
+		display: inline-block;
 	}
 }
 
 .pingback {
-	position: 					relative;
-	padding: 					25px;
-	border: 					3px solid darken($base-color-alt,8%);
-	margin-bottom: 				$margin;
+	position: relative;
+	padding: 25px;
+	border: 3px solid darken($base-color-alt,8%);
+	margin-bottom: $margin;
 	a {
-		display:				block;
+		display: block;
 	}
 	.comment-edit-link {
-		position: 				absolute;
-		right: 					20px;
-		top: 					20px;
-		font-size: 				$small-fontsize;
+		position: absolute;
+		right: 20px;
+		top: 20px;
+		font-size: $small-fontsize;
 	}
 }
 
-// by author modifier
+// By Post Author Modifier
 .bypostauthor {
-	border-color:				$accent-color;
+	border-color: $accent-color;
 }
 
 // Comment Navigation
 .wpbf-comment-nav {
-	font-size: 					$small-fontsize;
-	padding: 					0;
+	font-size: $small-fontsize;
+	padding: 0;
 	> div {
 		float: left;
 		width: 50%;
 	}
 	> div:last-child {
-		text-align: 			right;
+		text-align: right;
 	}
 }
 
-// Gutenberg
+/* Gutenberg */
 
 // Full Aligned Items
 .wpbf-no-sidebar .alignfull {
@@ -321,26 +306,23 @@ Blog
 	width: 100%;
 }
 
-
-/* ========================================================================
-Sidebar
-========================================================================== */
+/* Sidebar */
 .widget {
 	ul {
-		margin: 				0;
-		padding: 				0;
+		margin: 0;
+		padding: 0;
 		li {
-			list-style: 		none;
+			list-style: none;
 		}
 	}
 }
 
-.#{$prefix}-sidebar,
+.wpbf-sidebar,
 .elementor-widget-sidebar {
 	.widget {
-		margin-bottom: 			$margin;
-		padding: 				$padding;
-		background: 			$base-color-alt;
+		margin-bottom: $margin;
+		padding: $padding;
+		background: $base-color-alt;
 	}
 }
 
@@ -357,7 +339,6 @@ Sidebar
 	right: 15px;
 	@include vertical-align($position: absolute);
 	color: $brand-color-alt;
-
 	font-family: 'page-builder-framework' !important;
 	speak: none;
 	font-style: normal;
@@ -365,17 +346,15 @@ Sidebar
 	font-variant: normal;
 	text-transform: none;
 	line-height: 1;
-
-	/* Better Font Rendering */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.#{$prefix}-no-sidebar {
+.wpbf-no-sidebar {
 	.wpbf-main.wpbf-medium-2-3 {
 		width: 100%;
 	}
-	.#{$prefix}-main-grid {
+	.wpbf-main-grid {
 		margin-left: 0;
 		margin-right: 0;
 		> * {
@@ -385,23 +364,21 @@ Sidebar
 	}
 }
 
-/* ========================================================================
-Footer
-========================================================================== */
+/* ScrollTop */
 .scrolltop {
-	position: 					fixed;
-	width: 						40px;
-	height: 					40px;
-	text-align: 				center;
-	line-height: 				40px;
-	z-index: 					222;
-	background: 				rgba($brand-color, .5);
-	bottom: 					20px;
-	right: 						20px;
-	@include					transition(background 0.2s);
-	cursor: 					pointer;
-	display: 					none;
-	color: 						#fff;
+	position: fixed;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	z-index: 222;
+	background: rgba($brand-color, .5);
+	bottom: 20px;
+	right: 20px;
+	@include transition(background 0.2s);
+	cursor: pointer;
+	display: none;
+	color: #fff;
 }
 
 .scrolltop:before {
@@ -417,37 +394,35 @@ Footer
 }
 
 .scrolltop:hover {
-	background: 				rgba($brand-color,.7);
+	background: rgba($brand-color,.7);
 }
 
-/* ========================================================================
-Contact Form 7
-========================================================================== */
+/* Contact Form 7 */
 span.wpcf7-not-valid-tip {
-	position:					absolute;
-	top: 						0;
-	left: 						5px;
-	height: 					auto;
-	background: 				#fff;
-	font-size: 					$small-fontsize;
-	color: 						tomato;
+	position: absolute;
+	top: 0;
+	left: 5px;
+	height: auto;
+	background: #fff;
+	font-size: $small-fontsize;
+	color: tomato;
 }
 
 div.wpcf7-response-output {
-	font-size: 					$small-fontsize;
-	padding:					$padding-small;
-	margin:						0;
-	@include					border-radius(2px);
+	font-size: $small-fontsize;
+	padding: $padding-small;
+	margin: 0;
+	@include border-radius(2px);
 }
 
 
 div.wpcf7-spam-blocked, div.wpcf7-validation-errors {
-	border-color: 				tomato;
-	color: 						tomato;
+	border-color: tomato;
+	color: tomato;
 
 }
 
 div.wpcf7-mail-sent-ok {
-	border-color: 				$accent-color;
-	color: 						$accent-color;
+	border-color: $accent-color;
+	color: $accent-color;
 }

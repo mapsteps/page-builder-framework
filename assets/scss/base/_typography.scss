@@ -1,13 +1,11 @@
-/* ========================================================================
-Typography
-========================================================================== */
+/* Typography */
 
 // Body
 body {
-	font-family:				$base-font;
-	color:						$brand-color-alt;
-	font-size:					$base-fontsize;
-	line-height: 				$base-lineheight;
+	font-family: $base-font;
+	color: $brand-color-alt;
+	font-size: $base-fontsize;
+	line-height: $base-lineheight;
 }
 
 // Forms	
@@ -16,43 +14,42 @@ input,
 optgroup,
 select,
 textarea {
-	font-family:				$base-font;
-	font-size: 					$base-fontsize;
+	font-size: $base-fontsize;
 }
 
 textarea {
-	line-height: 				$base-lineheight;
+	line-height: $base-lineheight;
 }
 
 // Headlines
 h1, h2, h3, h4, h5, h6 {
-	color: 						$brand-color;
-	font-family: 				$head-font;
-	margin: 					0 0 $margin 0;
-	font-weight:				$bold;
-	line-height: 				$head-lineheight;
+	color: $brand-color;
+	font-family: $head-font;
+	margin: 0 0 $margin 0;
+	font-weight: $bold;
+	line-height: $head-lineheight;
 }
 
 h1 {
-	font-size: 					32px;
+	font-size: 32px;
 }
 
 h2 {
-	font-size: 					28px;
+	font-size: 28px;
 }
 
 h3 {
-	font-size: 					24px;
+	font-size: 24px;
 }
 
 h4 {
-	font-size: 					20px;
+	font-size: 20px;
 }
 
 h5 {
-	font-size: 					18px;
+	font-size: 18px;
 }
 
 h6 {
-	font-size: 					16px;
+	font-size: 16px;
 }

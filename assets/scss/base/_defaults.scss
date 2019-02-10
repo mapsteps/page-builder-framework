@@ -1,152 +1,151 @@
-/* ========================================================================
-Reset
-========================================================================== */
-
-*, *:before, *:after {
-	-webkit-box-sizing: 		border-box;
-	-moz-box-sizing: 			border-box;
-	-o-box-sizing: 				border-box;
-	-ms-box-sizing: 			border-box;
-	box-sizing: 				border-box;
+/* Reset */
+*,
+*:before,
+*:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
-// Margin & Padding
-p, figure {
-	margin: 					0;
-	padding: 					0;
+p,
+figure {
+	margin: 0;
+	padding: 0;
 }
 
-// line-height
 button {
-	line-height: 				normal;
+	line-height: normal;
 }
 
-/* ========================================================================
-Defaults
-========================================================================== */
-
-// pre
+/* Defaults */
 pre {
-	background: 				$base-color-alt;
-	padding: 					$padding;
-	margin-bottom: 				$margin;
-	line-height: 				$base-lineheight;
-	overflow: 					auto;
+	background: $base-color-alt;
+	padding: $padding;
+	margin-bottom: $margin;
+	line-height: $base-lineheight;
+	overflow: auto;
 }
 
-// code
 code {
-	background: 				$base-color-alt;
-	padding: 					2px;
+	background: $base-color-alt;
+	padding: 2px;
 }
 
-// Paragraph
 p {
-	margin-bottom: 				$margin;
+	margin-bottom: $margin;
 }
 
 figure {
-	margin-bottom: 				$margin;
+	margin-bottom: $margin;
 }
 
-// Lists
-ul, ol {
-	margin: 					0 0 $margin 0;
+ul,
+ol {
+	margin: 0 0 $margin 0;
 }
 
-// Opacity
 .opacity {
-	opacity:					0;
+	opacity: 0;
 }
 
-// Image alignment
 img {
-	vertical-align: 			middle;
-	max-width: 					100%;
-	height:						auto;
+	vertical-align: middle;
+	max-width: 100%;
+	height: auto;
 }
 
-// Blockquote
 blockquote {
-	margin: 					$margin 0 $margin $margin;
-	padding: 					0 0 0 $padding;
-	border-left: 				5px solid $base-color;
-	font-style: 				italic;
+	margin: $margin 0 $margin $margin;
+	padding: 0 0 0 $padding;
+	border-left: 5px solid $base-color;
+	font-style: italic;
 	cite {
-		opacity:				.75;
-		font-size: 				$small-fontsize;
+		opacity: .75;
+		font-size: $small-fontsize;
 	}
 }
 
-// Strong
-b, strong {
-	font-weight: 				$bold;
+b,
+strong {
+	font-weight: $bold;
 }
 
-// Links
 a {
-	text-decoration:			none;
-	outline: 					none;
-	color:						$accent-color;
-	@include					transition(color 0.2s);
+	text-decoration: none;
+	outline: none;
+	color: $accent-color;
+	@include transition(color 0.2s);
 }
 
-// Hover
 a:hover {
-	color: 						$accent-color-alt;
+	color: $accent-color-alt;
 }
 
-// Breadcrumbs
-
-// Theme Breadcrumbs
-.wpbf-breadcrumbs {
-	padding:					0;
-	font-size:					$small-fontsize;
-	margin-bottom:				$margin-small;
-	.wpbf-breadcrumb {
-		list-style:				none;
-		display:				inline-block;
-	}
-}
-
-// Yoast Breadcrumbs
-#breadcrumbs {
-	font-size: 					$small-fontsize;
-	margin-bottom: 				$margin-small;
-}
-
-// Form
 textarea {
-	vertical-align: 			top;
-	resize:						vertical;
+	vertical-align: top;
+	resize: vertical;
 }
 
-// Pagination
 .pagination {
 	h2 {
-		display: 				none;
+		display: none;
 	}
 	.page-numbers {
-		height: 				50px;
-		line-height: 			50px;
-		padding: 				0 20px;
-		background: 			$base-color-alt;
-		display: 				inline-block;
+		height: 50px;
+		line-height: 50px;
+		padding: 0 20px;
+		background: $base-color-alt;
+		display: inline-block;
 	}
 	.page-numbers.current {
-		background: 			$base-color;
+		background: $base-color;
 	}
 }
 
-/* ========================================================================
-WordPress
-========================================================================== */
+/* Breadcrumbs */
 
+// Theme
+.wpbf-breadcrumbs {
+	padding: 0;
+	font-size: $small-fontsize;
+	margin-bottom: $margin-small;
+	.wpbf-breadcrumb {
+		list-style: none;
+		display: inline-block;
+	}
+}
 
-// Images
-img.alignright, figure.alignright, div.alignright {float:right; margin:0 0 $margin $margin}
-img.alignleft, figure.alignleft, div.alignleft {float:left; margin:0 $margin $margin 0}
-img.aligncenter, figure.aligncenter div.aligncenter {display: block; margin-left: auto; margin-right: auto}
+// Yoast
+#breadcrumbs {
+	font-size: $small-fontsize;
+	margin-bottom: $margin-small;
+}
+
+/* WordPress */
+
+// Image Alignments
+img.alignright,
+figure.alignright,
+div.alignright {
+	float: right;
+	margin: 0 0 $margin $margin;
+}
+
+img.alignleft,
+figure.alignleft,
+div.alignleft {
+	float: left;
+	margin: 0 $margin $margin 0;
+}
+
+img.aligncenter,
+figure.aligncenter div.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 // Caption
 .wp-caption {
@@ -161,14 +160,14 @@ img.aligncenter, figure.aligncenter div.aligncenter {display: block; margin-left
 
 // Gallery
 .gallery:before {
-	content:				"";
-	display:				table-cell;
+	content: "";
+	display: table-cell;
 }
 
 .gallery:after {
-	content:				"";
-	display:				table;
-	clear:					both;
+	content: "";
+	display: table;
+	clear: both;
 }
 
 .gallery {
@@ -232,7 +231,7 @@ img.aligncenter, figure.aligncenter div.aligncenter {display: block; margin-left
 	font-size: 12px;
 }
 
-// sticky posts
+// Sticky Posts
 .sticky {
 	border: 5px solid $base-color-alt !important;
 	padding: $padding $padding 0 $padding;
@@ -243,10 +242,7 @@ img.aligncenter, figure.aligncenter div.aligncenter {display: block; margin-left
 	clear: both;
 }
 
-/* ========================================================================
-Accessibility
-========================================================================== */
-
+/* Accessibility */
 .screen-reader-text {
 	position: absolute;
 	left: 0;
@@ -270,11 +266,7 @@ Accessibility
 	font-weight: 700;
 }
 
-/* ========================================================================
-Page Builders
-========================================================================== */
-
-/* Elementor */
+/* Page Builders – Elementor */
 
 // Transparent Header Preview
 .elementor-editor-active {
