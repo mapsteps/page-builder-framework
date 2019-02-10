@@ -37,6 +37,15 @@
 		} );
 	} );
 
+	/* Menu */
+
+	// Font Size
+	wp.customize( 'menu_font_size', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-menu a, .wpbf-mobile-menu a').css('font-size', newval );
+		} );
+	} );
+
 	/* Sub Menu */
 
 	// Background Color
@@ -66,6 +75,13 @@
 	wp.customize( 'mobile_menu_hamburger_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-mobile-nav-item').css('font-size', newval + 'px' );
+		} );
+	} );
+
+	// Hamburger Border Radius (Filled)
+	wp.customize( 'mobile_menu_hamburger_border_radius', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-nav-item').css('border-radius', newval + 'px' );
 		} );
 	} );
 
