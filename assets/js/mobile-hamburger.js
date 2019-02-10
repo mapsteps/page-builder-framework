@@ -4,10 +4,10 @@
 		var wpbf_mobile_menu_toggle = $('.wpbf-mobile-menu-toggle');
 		if(wpbf_mobile_menu_toggle.hasClass("active")) {
 			$('.wpbf-mobile-menu-container').removeClass('active').slideUp();
-			wpbf_mobile_menu_toggle.removeClass("active");
+			wpbf_mobile_menu_toggle.removeClass("active").removeClass('wpbff-times').addClass('wpbff-hamburger');
 		} else {
 			$('.wpbf-mobile-menu-container').addClass('active').slideDown();
-			wpbf_mobile_menu_toggle.addClass("active");
+			wpbf_mobile_menu_toggle.addClass("active").removeClass('wpbff-hamburger').addClass('wpbff-times');
 			$(window).trigger('resize');
 		}
 	}
