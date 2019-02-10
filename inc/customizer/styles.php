@@ -693,7 +693,7 @@ if( $sidebar_width && !wpbf_has_responsive_breakpoints() ) {
 
 /* Blog */
 
-$archives = apply_filters( 'wpbf_archives', array( 'archive', 'blog' ) );
+$archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
 
 foreach ( $archives as $archive ) {
 
@@ -1190,22 +1190,25 @@ if( $sub_menu_accent_color_alt ) {
 }
 
 // Mobile Navigation
-$mobile_menu_height					= get_theme_mod( 'mobile_menu_height' );
-$mobile_menu_background_color		= get_theme_mod( 'mobile_menu_background_color' );
-$mobile_menu_padding_top			= get_theme_mod( 'mobile_menu_padding_top' );
-$mobile_menu_padding_right			= get_theme_mod( 'mobile_menu_padding_right' );
-$mobile_menu_padding_bottom			= get_theme_mod( 'mobile_menu_padding_bottom' );
-$mobile_menu_padding_left			= get_theme_mod( 'mobile_menu_padding_left' );
-$mobile_menu_font_color				= get_theme_mod( 'mobile_menu_font_color' );
-$mobile_menu_font_color_alt			= get_theme_mod( 'mobile_menu_font_color_alt' );
-$mobile_menu_border_color			= get_theme_mod( 'mobile_menu_border_color' );
-$mobile_menu_options				= get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
-$mobile_menu_hamburger_color		= get_theme_mod( 'mobile_menu_hamburger_color' );
-$mobile_menu_hamburger_size			= get_theme_mod( 'mobile_menu_hamburger_size' );
-$mobile_menu_bg_color				= get_theme_mod( 'mobile_menu_bg_color' );
-$mobile_menu_bg_color_alt			= get_theme_mod( 'mobile_menu_bg_color_alt' );
-$mobile_menu_submenu_arrow_color	= get_theme_mod( 'mobile_menu_submenu_arrow_color' );
-$mobile_menu_font_size				= get_theme_mod( 'mobile_menu_font_size' );
+$mobile_menu_height					 = get_theme_mod( 'mobile_menu_height' );
+$mobile_menu_background_color		 = get_theme_mod( 'mobile_menu_background_color' );
+$mobile_menu_padding_top			 = get_theme_mod( 'mobile_menu_padding_top' );
+$mobile_menu_padding_right			 = get_theme_mod( 'mobile_menu_padding_right' );
+$mobile_menu_padding_bottom			 = get_theme_mod( 'mobile_menu_padding_bottom' );
+$mobile_menu_padding_left			 = get_theme_mod( 'mobile_menu_padding_left' );
+$mobile_menu_font_color				 = get_theme_mod( 'mobile_menu_font_color' );
+$mobile_menu_font_color_alt			 = get_theme_mod( 'mobile_menu_font_color_alt' );
+$mobile_menu_border_color			 = get_theme_mod( 'mobile_menu_border_color' );
+$mobile_menu_options				 = get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
+$mobile_menu_hamburger_color		 = get_theme_mod( 'mobile_menu_hamburger_color' );
+$mobile_menu_hamburger_size			 = get_theme_mod( 'mobile_menu_hamburger_size' );
+$mobile_menu_hamburger_style		 = get_theme_mod( 'mobile_menu_hamburger_style', 'default' );
+$mobile_menu_hamburger_border_radius = get_theme_mod( 'mobile_menu_hamburger_border_radius' );
+$mobile_menu_hamburger_bg_color		 = get_theme_mod( 'mobile_menu_hamburger_bg_color' );
+$mobile_menu_bg_color				 = get_theme_mod( 'mobile_menu_bg_color' );
+$mobile_menu_bg_color_alt			 = get_theme_mod( 'mobile_menu_bg_color_alt' );
+$mobile_menu_submenu_arrow_color	 = get_theme_mod( 'mobile_menu_submenu_arrow_color' );
+$mobile_menu_font_size				 = get_theme_mod( 'mobile_menu_font_size' );
 
 if( $mobile_menu_height ) {
 
@@ -1302,30 +1305,47 @@ if( $mobile_menu_border_color ) {
 
 }
 
-if( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ) ) && ( $mobile_menu_hamburger_color || $mobile_menu_hamburger_size ) ) {
+if( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas') ) ) {
 
-	echo '.wpbf-mobile-nav-item {';
+	if( $mobile_menu_hamburger_color || $mobile_menu_hamburger_size ) {
 
-	if( $mobile_menu_hamburger_color ) {
+		echo '.wpbf-mobile-nav-item {';
 
-		echo sprintf( 'color: %s;', esc_attr( $mobile_menu_hamburger_color ) );
+		if( $mobile_menu_hamburger_color ) {
+
+			echo sprintf( 'color: %s;', esc_attr( $mobile_menu_hamburger_color ) );
+
+		}
+
+		if( $mobile_menu_hamburger_size ) {
+
+			echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_hamburger_size ) . 'px' );
+
+		}
+
+		echo '}';
+
+		if( $mobile_menu_hamburger_color ) {
+
+			echo '.wpbf-mobile-nav-item a {';
+
+			echo sprintf( 'color: %s;', esc_attr( $mobile_menu_hamburger_color ) );
+
+			echo '}';
+
+		}
 
 	}
 
-	if( $mobile_menu_hamburger_size ) {
+	if( $mobile_menu_hamburger_style == 'filled' ) {
 
-		echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_hamburger_size ) . 'px' );
-
-	}
-
-	echo '}';
-
-	if( $mobile_menu_hamburger_color ) {
-
-		echo '.wpbf-mobile-nav-item a {';
-
-		echo sprintf( 'color: %s;', esc_attr( $mobile_menu_hamburger_color ) );
-
+		echo '.wpbf-mobile-menu-toggle {';
+		echo $mobile_menu_hamburger_bg_color ? sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) ) : 'background: #3ba9d2;' ;
+		echo 'color: #ffffff !important;';
+		echo 'padding: 10px;';
+		if( $mobile_menu_hamburger_border_radius ) {
+			echo sprintf( 'border-radius: %s;', esc_attr( $mobile_menu_hamburger_border_radius ) . 'px' );
+		}
 		echo '}';
 
 	}
