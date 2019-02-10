@@ -13,6 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 do_action( 'wpbf_before_customizer_css' );
 
+$breakpoint_medium = wpbf_breakpoint_medium() . 'px';
+$breakpoint_mobile = wpbf_breakpoint_mobile() . 'px';
+
+
 /* Typography */
 
 // Page Font Settings
@@ -754,16 +758,9 @@ if( $single_custom_width ) {
 
 /* Header */
 
-// Logo
+// Logo Container
 $menu_logo_container_width			= get_theme_mod( 'menu_logo_container_width' );
 $mobile_menu_logo_container_width	= get_theme_mod( 'mobile_menu_logo_container_width' );
-$custom_logo						= get_theme_mod( 'custom_logo' );
-$menu_logo_font_size				= get_theme_mod( 'menu_logo_font_size' );
-$menu_logo_color					= get_theme_mod( 'menu_logo_color' );
-$menu_logo_font_family_value		= get_theme_mod( 'menu_logo_font_family', array() );
-$menu_logo_color_alt				= get_theme_mod( 'menu_logo_color_alt' );
-$menu_logo_size						= get_theme_mod( 'menu_logo_size' );
-$menu_mobile_logo_size				= get_theme_mod( 'menu_mobile_logo_size' );
 
 if( $menu_logo_container_width ) {
 
@@ -797,9 +794,21 @@ if( $mobile_menu_logo_container_width ) {
 
 }
 
+// Logo
+$custom_logo						= get_theme_mod( 'custom_logo' );
+$menu_logo_font_toggle				= get_theme_mod( 'menu_logo_font_toggle' );
+$menu_logo_font_size_desktop		= get_theme_mod( 'menu_logo_font_size_desktop' );
+$menu_logo_font_size_tablet			= get_theme_mod( 'menu_logo_font_size_tablet' );
+$menu_logo_font_size_mobile			= get_theme_mod( 'menu_logo_font_size_mobile' );
+$menu_logo_color					= get_theme_mod( 'menu_logo_color' );
+$menu_logo_font_family_value		= get_theme_mod( 'menu_logo_font_family', array() );
+$menu_logo_color_alt				= get_theme_mod( 'menu_logo_color_alt' );
+$menu_logo_size						= get_theme_mod( 'menu_logo_size' );
+$menu_mobile_logo_size				= get_theme_mod( 'menu_mobile_logo_size' );
+
 if( !$custom_logo ) {
 
-	if( $menu_logo_font_family_value || $menu_logo_font_size || $menu_logo_color ) {
+	if( $menu_logo_font_toggle && $menu_logo_font_family_value ) {
 
 		echo '.wpbf-logo a, .wpbf-mobile-logo {';
 
@@ -828,17 +837,15 @@ if( !$custom_logo ) {
 
 		}
 
-		if( $menu_logo_color ) {
+		echo '}';
+
+	}
+
+	if( $menu_logo_color ) {
+
+		echo '.wpbf-logo a, .wpbf-mobile-logo {';
 
 			echo sprintf( 'color: %s;', esc_attr( $menu_logo_color ) );
-
-		}
-
-		if( $menu_logo_font_size ) {
-
-			echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_font_size ) );
-
-		}
 
 		echo '}';
 
@@ -852,6 +859,28 @@ if( !$custom_logo ) {
 
 		echo '}';
 
+	}
+
+	if( $menu_logo_font_size_desktop ) {
+		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_font_size_desktop ) );
+		echo '}';
+	}
+
+	if( $menu_logo_font_size_tablet ) {
+		echo '@media screen and (max-width: '. esc_attr( $breakpoint_medium ) .') {';
+		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_font_size_tablet ) );
+		echo '}';
+		echo '}';
+	}
+
+	if( $menu_logo_font_size_mobile ) {
+		echo '@media screen and (max-width: '. esc_attr( $breakpoint_mobile ) .') {';
+		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_font_size_mobile ) );
+		echo '}';
+		echo '}';
 	}
 
 } else {
@@ -880,13 +909,16 @@ if( !$custom_logo ) {
 
 // Tagline
 $menu_logo_description						= get_theme_mod( 'menu_logo_description' );
-$menu_logo_description_font_size			= get_theme_mod( 'menu_logo_description_font_size' );
+$menu_logo_description_toggle				= get_theme_mod( 'menu_logo_description_toggle' );
+$menu_logo_description_font_size_desktop	= get_theme_mod( 'menu_logo_description_font_size_desktop' );
+$menu_logo_description_font_size_tablet		= get_theme_mod( 'menu_logo_description_font_size_tablet' );
+$menu_logo_description_font_size_mobile		= get_theme_mod( 'menu_logo_description_font_size_mobile' );
 $menu_logo_description_color				= get_theme_mod( 'menu_logo_description_color' );
 $menu_logo_description_font_family_value	= get_theme_mod( 'menu_logo_description_font_family', array() );
 
 if( !$custom_logo && $menu_logo_description ) {
 
-	if( $menu_logo_description_font_family_value || $menu_logo_description_font_size || $menu_logo_description_color ) {
+	if( $menu_logo_description_toggle && $menu_logo_description_font_family_value ) {
 
 		echo '.wpbf-tagline {';
 
@@ -909,20 +941,44 @@ if( !$custom_logo && $menu_logo_description ) {
 
 		}
 
+		echo '}';
+
+	}
+
+	if( $menu_logo_description_color ) {
+
+		echo '.wpbf-tagline {';
+
 		if( $menu_logo_description_color ) {
 
 			echo sprintf( 'color: %s;', esc_attr( $menu_logo_description_color ) );
 
 		}
 
-		if( $menu_logo_description_font_size ) {
-
-			echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_description_font_size ) );
-
-		}
-
 		echo '}';
 
+	}
+
+	if( $menu_logo_description_font_size_desktop ) {
+		echo '.wpbf-tagline {';
+		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_description_font_size_desktop ) );
+		echo '}';
+	}
+
+	if( $menu_logo_description_font_size_tablet ) {
+		echo '@media screen and (max-width: '. esc_attr( $breakpoint_medium ) .') {';
+		echo '.wpbf-tagline {';
+		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_description_font_size_tablet ) );
+		echo '}';
+		echo '}';
+	}
+
+	if( $menu_logo_description_font_size_mobile ) {
+		echo '@media screen and (max-width: '. esc_attr( $breakpoint_mobile ) .') {';
+		echo '.wpbf-tagline {';
+		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_description_font_size_mobile ) );
+		echo '}';
+		echo '}';
 	}
 
 }
