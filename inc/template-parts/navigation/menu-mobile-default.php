@@ -19,6 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<?php get_template_part( 'inc/template-parts/logo/logo-mobile' ); ?>
 
+			<?php if( get_theme_mod( 'menu_logo_description_mobile' ) ) {
+
+				get_template_part( 'inc/template-parts/logo/tagline' );
+
+			} ?>
+
 		</div>
 
 		<div class="wpbf-menu-toggle-container">
