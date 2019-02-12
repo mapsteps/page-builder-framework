@@ -21,7 +21,7 @@ function wpbf_main_menu_fallback() {
 
 		<ul class="wpbf-menu">
 		<li class="menu-item">
-		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
 		</li>
 		</ul>
 
@@ -52,7 +52,7 @@ function wpbf_mobile_menu_fallback() {
 
 		<ul class="wpbf-mobile-menu">
 		<li class="menu-item">
-		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
 		</li>
 		</ul>
 
@@ -81,7 +81,7 @@ function wpbf_menu_fallback() {
 
 		?>
 
-		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+		<a href="javascript:void(0)" onclick="parent.wp.customize.panel('nav_menus').focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
 
 		<?php
 
@@ -165,11 +165,11 @@ add_filter( 'kirki_googlefonts_load_method', 'wpbf_change_fonts_load_method' );
 class WPBF_Featured_Plugin {
 
 	public static function init() {
-		add_filter( 'install_plugins_table_api_args_featured', [__CLASS__, 'featured_plugins_tab'] );
+		add_filter( 'install_plugins_table_api_args_featured', array( __CLASS__, 'featured_plugins_tab' ) );
 	}
 
 	public static function featured_plugins_tab( $args ) {
-		add_filter( 'plugins_api_result', [__CLASS__, 'inject_plugin'], 10, 3 );
+		add_filter( 'plugins_api_result', array( __CLASS__, 'inject_plugin' ), 10, 3 );
 
 		return $args;
 	}
@@ -177,7 +177,7 @@ class WPBF_Featured_Plugin {
 	public static function inject_plugin( $res, $action, $args ) {
 
 		//remove filter to avoid infinite loop.
-		remove_filter( 'plugins_api_result', [__CLASS__, 'inject_plugin'], 10, 3 );
+		remove_filter( 'plugins_api_result', array( __CLASS__, 'inject_plugin' ), 10, 3 );
 
 		$api = plugins_api( 'plugin_information', array(
 			'slug'   => 'ultimate-dashboard',
@@ -200,7 +200,7 @@ class WPBF_Featured_Plugin {
 	}
 
 	public static function instance() {
-		add_action( 'after_setup_theme', [__CLASS__, 'init'] );
+		add_action( 'after_setup_theme', array( __CLASS__, 'init' ) );
 	}
 
 }

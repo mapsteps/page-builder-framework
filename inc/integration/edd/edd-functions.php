@@ -221,7 +221,7 @@ function wpbf_edd_fragments() {
 	check_ajax_referer( 'edd_ajax_nonce', 'security' );
 
 	$menu_item = wpbf_edd_menu_item();
-	echo $menu_item;
+	echo $menu_item; // WPCS: XSS ok.
 	die();
 
 }

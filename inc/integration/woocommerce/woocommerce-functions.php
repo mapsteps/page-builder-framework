@@ -144,7 +144,7 @@ function wpbf_woo_output_content_wrapper() {
 
 			$single_sidebar_position == 'left' ? get_sidebar() : '';
 
-			echo $single_sidebar_position !== 'none' ? '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'">' : '<main id="main" class="wpbf-main'. wpbf_singular_class() .'">';
+			echo $single_sidebar_position !== 'none' ? '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'">' : '<main id="main" class="wpbf-main'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
 
 		} elseif( $single_sidebar_position_global && $single_sidebar_position_global !== 'none' ) {
 
@@ -152,11 +152,11 @@ function wpbf_woo_output_content_wrapper() {
 
 			$single_sidebar_position_global == 'left' ? get_sidebar() : '';
 
-			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'">';
+			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
 
 		} else {
 
-			echo '<main id="main" class="wpbf-main'. wpbf_singular_class() .'">';
+			echo '<main id="main" class="wpbf-main'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
 
 		}
 
@@ -170,11 +170,11 @@ function wpbf_woo_output_content_wrapper() {
 
 			$sidebar_position_global == 'left' ? get_sidebar() : '';
 
-			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_archive_class() .'">';
+			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_archive_class() .'">'; // WPCS: XSS ok.
 
 		} else {
 
-			echo '<main id="main" class="wpbf-main'. wpbf_archive_class() .'">';
+			echo '<main id="main" class="wpbf-main'. wpbf_archive_class() .'">'; // WPCS: XSS ok.
 
 		}
 
