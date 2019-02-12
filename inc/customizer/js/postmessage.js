@@ -87,20 +87,6 @@
 
 	/* Logo */
 
-	// logo size
-	wp.customize( 'menu_logo_size', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-logo img').css('height', newval );
-		} );
-	} );
-
-	// logo mobile size
-	wp.customize( 'menu_mobile_logo_size', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-mobile-logo img').css('height', newval );
-		} );
-	} );
-
 	// Logo Container Width
 	wp.customize( 'menu_logo_container_width', function( value ) {
 		value.bind( function( newval ) {
