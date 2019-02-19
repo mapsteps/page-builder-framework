@@ -438,21 +438,17 @@ function wpbf_sidebar_layout() {
 	// Default Sidebar Position is 'right'
 	$sidebar = get_theme_mod( 'sidebar_position', 'right' );
 
-	if ( is_singular() ) {
+	$archive_sidebar_position = get_theme_mod( 'archive_sidebar_layout', 'global' );
+	$sidebar = $archive_sidebar_position !== 'global' ? $archive_sidebar_position : $sidebar;
+
+	if( is_singular() ) {
 
 		$id                             = get_the_ID();
 		$single_sidebar_position        = get_post_meta( $id, 'wpbf_sidebar_position', true );
-		$single_sidebar_position_global = get_theme_mod( 'single_sidebar_layout' );
+		$single_sidebar_position_global = get_theme_mod( 'single_sidebar_layout', 'global' );
 
+		$sidebar = $single_sidebar_position_global !== 'global' ? $single_sidebar_position_global : $sidebar;
 		$sidebar = $single_sidebar_position && $single_sidebar_position !== 'global' ? $single_sidebar_position : $sidebar;
-		$sidebar = $single_sidebar_position_global && $single_sidebar_position_global !== 'global' ? $single_sidebar_position_global : $sidebar;
-
-	}
-
-	if ( is_archive() ) {
-
-		$archive_sidebar_position = get_theme_mod( 'archive_sidebar_layout' );
-		$sidebar = $archive_sidebar_position && $archive_sidebar_position !== 'global' ? $archive_sidebar_position : $sidebar;
 
 	}
 

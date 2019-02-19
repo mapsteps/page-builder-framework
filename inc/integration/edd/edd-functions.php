@@ -96,18 +96,18 @@ function wpbf_edd_sidebar_layout( $sidebar ) {
 
 	if( wpbf_is_edd_single() ) {
 
-		$edd_single_sidebar_layout = get_theme_mod( 'edd_single_sidebar_layout' );
+		$edd_single_sidebar_layout = get_theme_mod( 'edd_single_sidebar_layout', 'global' );
 
-		if( $edd_single_sidebar_layout && $edd_single_sidebar_layout !== 'global' ) {
+		if( $edd_single_sidebar_layout !== 'global' ) {
 			$sidebar = $edd_single_sidebar_layout;
 		}
 	}
 
 	if( wpbf_is_edd_archive() ) {
 
-		$edd_sidebar_layout = get_theme_mod( 'edd_sidebar_layout' );
+		$edd_sidebar_layout = get_theme_mod( 'edd_sidebar_layout', 'global' );
 
-		if( $edd_sidebar_layout && $edd_sidebar_layout !== 'global' ) {
+		if( $edd_sidebar_layout !== 'global' ) {
 			$sidebar = $edd_sidebar_layout;
 		}
 	}
