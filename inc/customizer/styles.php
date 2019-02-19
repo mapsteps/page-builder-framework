@@ -13,9 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 do_action( 'wpbf_before_customizer_css' );
 
-$breakpoint_medium = wpbf_breakpoint_medium() . 'px';
-$breakpoint_mobile = wpbf_breakpoint_mobile() . 'px';
-
+$breakpoint_mobile_int  = function_exists( 'wpbf_breakpoint_mobile' ) ? wpbf_breakpoint_mobile() : 480;
+$breakpoint_medium_int  = function_exists( 'wpbf_breakpoint_medium' ) ? wpbf_breakpoint_medium() : 768;
+$breakpoint_desktop_int = function_exists( 'wpbf_breakpoint_desktop' ) ? wpbf_breakpoint_desktop() : 1024;
+$breakpoint_mobile      = $breakpoint_mobile_int . 'px';
+$breakpoint_medium      = $breakpoint_medium_int . 'px';
+$breakpoint_desktop     = $breakpoint_desktop_int . 'px';
 
 /* Typography */
 
@@ -675,9 +678,9 @@ if( is_numeric( $sidebar_widget_padding_top ) || is_numeric( $sidebar_widget_pad
 
 }
 
-if( $sidebar_width && !wpbf_has_responsive_breakpoints() ) {
+if( $sidebar_width ) {
 
-	echo '@media (min-width: 769px) {';
+	echo '@media (min-width: '. esc_attr( $breakpoint_medium_int + 1 ) .'px) {';
 
 		echo 'body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {';
 
@@ -703,7 +706,17 @@ foreach ( $archives as $archive ) {
 
 	$custom_width = get_theme_mod( $archive . '_custom_width' );
 
-	if( $custom_width && strpos( $archive, '-' ) ) {
+	// all archives
+	if( $custom_width && $archive == 'archive' ) {
+
+		echo '.blog #inner-content,'; // WPCS: XSS ok.
+		echo '.search #inner-content,'; // WPCS: XSS ok.
+		echo '.' . $archive . ' #inner-content {'; // WPCS: XSS ok.
+		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
+		echo '}';
+
+	// cpt archives & taxonomies
+	} elseif( $custom_width && strpos( $archive, '-' ) ) {
 
 		$cpt = substr( $archive, 0, strpos( $archive, '-' ) );
 
@@ -713,6 +726,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
+	// other archives
 	} elseif( $custom_width ) {
 
 		echo '.' . $archive . ' #inner-content {'; // WPCS: XSS ok.
@@ -721,9 +735,13 @@ foreach ( $archives as $archive ) {
 
 	}
 
+	$archive_layout    = get_theme_mod( $archive . '_layout' );
 	$content_alignment = get_theme_mod( $archive . '_post_content_alignment' );
 	$background_color  = get_theme_mod( $archive . '_post_background_color' );
+	$title_size        = get_theme_mod( $archive . '_post_title_size' );
+	$font_size         = get_theme_mod( $archive . '_post_font_size' );
 
+	// General Layout Settings
 	if( $content_alignment ) {
 
 		echo '.wpbf-' . $archive . '-content .wpbf-post {'; // WPCS: XSS ok.
@@ -739,6 +757,47 @@ foreach ( $archives as $archive ) {
 		echo 'padding: 20px;';
 		echo 'border-bottom: none;';
 		echo '}';
+
+	}
+
+	if( $title_size ) {
+
+		$suffix = is_numeric( $title_size ) ? 'px' : '';
+		echo '.wpbf-' . $archive . '-content .wpbf-post .entry-title {'; // WPCS: XSS ok.
+		echo sprintf( 'font-size: %s;', esc_attr( $title_size ) . $suffix );
+		echo '}';
+
+	}
+
+	if( $font_size ) {
+
+		$suffix = is_numeric( $font_size ) ? 'px' : '';
+		echo '.wpbf-' . $archive . '-content .wpbf-post .entry-summary {'; // WPCS: XSS ok.
+		echo sprintf( 'font-size: %s;', esc_attr( $font_size ) . $suffix );
+		echo '}';
+
+	}
+
+	// Beside
+	if( $archive_layout == 'beside' ) {
+
+		$image_width = get_theme_mod( $archive . '_post_image_width' );
+
+		if( $image_width && $image_width !== '40' ) {
+
+			echo '@media (min-width: '. esc_attr( $breakpoint_desktop_int + 1 ) .'px) {';
+
+			echo '.wpbf-' . $archive . '-content .wpbf-post .wpbf-large-2-5 {'; // WPCS: XSS ok.
+			echo sprintf( 'width: %s;', esc_attr( $image_width ) . '%' );
+			echo '}';
+
+			echo '.wpbf-' . $archive . '-content .wpbf-post .wpbf-large-3-5 {'; // WPCS: XSS ok.
+			echo sprintf( 'width: %s;', 100 - esc_attr( $image_width ) . '%' );
+			echo '}';
+
+			echo '}';
+
+		}
 
 	}
 
@@ -759,8 +818,8 @@ if( $single_custom_width ) {
 /* Header */
 
 // Logo Container
-$menu_logo_container_width			= get_theme_mod( 'menu_logo_container_width' );
-$mobile_menu_logo_container_width	= get_theme_mod( 'mobile_menu_logo_container_width' );
+$menu_logo_container_width        = get_theme_mod( 'menu_logo_container_width' );
+$mobile_menu_logo_container_width = get_theme_mod( 'mobile_menu_logo_container_width' );
 
 if( $menu_logo_container_width ) {
 
