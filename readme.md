@@ -1,4 +1,4 @@
-# Welcome to Page Builder Framework – The only theme you'll ever need.
+# Page Builder Framework – The only theme you'll ever need
 Website: https://wp-pagebuilderframework.com
 Documentation: https://wp-pagebuilderframework.com/docs/
 Premium Add-On: https://wp-pagebuilderframework.com/premium/
