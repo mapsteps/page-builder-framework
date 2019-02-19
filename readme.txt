@@ -34,7 +34,7 @@ Page Builder Framework is licensed under the GNU General Public License 3 or lat
 More details here: https://www.gnu.org/licenses/gpl-3.0.html
 
 -------------------------------------------------------
-Screenshot License
+Screenshot
 -------------------------------------------------------
 Screenshot image is licensed under CC0 1.0 Universal - https://creativecommons.org/publicdomain/zero/1.0/
 Image: https://www.pexels.com/photo/woman-in-white-t-shirt-holding-smartphone-in-front-of-laptop-914931/
