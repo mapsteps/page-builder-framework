@@ -11,9 +11,12 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-add_action( 'wpbf_after_customizer_css', 'wpbf_do_woocommerce_customizer_css', 10 );
-
 function wpbf_do_woocommerce_customizer_css() {
+
+	$breakpoint_mobile_int	= function_exists( 'wpbf_breakpoint_mobile' ) ? wpbf_breakpoint_mobile() : 480;
+	$breakpoint_medium_int	= function_exists( 'wpbf_breakpoint_medium' ) ? wpbf_breakpoint_medium() : 768;
+	$breakpoint_mobile		= $breakpoint_mobile_int . 'px';
+	$breakpoint_medium		= $breakpoint_medium_int . 'px';
 
 	// Accent Color
 	$page_accent_color = get_theme_mod( 'page_accent_color' );
@@ -465,9 +468,9 @@ function wpbf_do_woocommerce_customizer_css() {
 
 	}
 
-	if( $woocommerce_single_image_width && $woocommerce_single_image_width !== '50' && !wpbf_has_responsive_breakpoints() ) {
+	if( $woocommerce_single_image_width && $woocommerce_single_image_width !== '50' ) {
 
-		echo '@media screen and (min-width:769px) {';
+		echo '@media (min-width: '. esc_attr( $breakpoint_medium_int + 1 ) .'px) {';
 
 			echo '.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images {';
 			echo sprintf( 'width: %s;', esc_attr( $woocommerce_single_image_width ) - 2 . '%' );
@@ -658,20 +661,16 @@ function wpbf_do_woocommerce_customizer_css() {
 		echo 'width: 100%;';
 		echo '}';
 
-		if( !wpbf_has_responsive_breakpoints() ) {
+		echo '@media screen and (max-width: '. esc_attr( $breakpoint_medium ) .') {';
 
-			echo '@media screen and (max-width:768px) {';
+		echo '.woocommerce-checkout .col2-set, #order_review_heading, .woocommerce-checkout-review-order {';
+		echo 'width: 100%;';
+		echo 'float: none;';
+		echo '}';
 
-			echo '.woocommerce-checkout .col2-set, #order_review_heading, .woocommerce-checkout-review-order {';
-			echo 'width: 100%;';
-			echo 'float: none;';
-			echo '}';
-
-
-			echo '}';
-
-		}
+		echo '}';
 
 	}
 
 }
+add_action( 'wpbf_after_customizer_css', 'wpbf_do_woocommerce_customizer_css', 10 );
