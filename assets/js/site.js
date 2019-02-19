@@ -108,4 +108,11 @@
 		$('.wpbf-menu-centered .logo-container').insertAfter('.wpbf-navigation .wpbf-menu >li:eq('+ divided +')').css({'display':'block'});
 	}
 
+	document.body.addEventListener('mousedown', function() {
+		document.body.classList.add('using-mouse');
+	});
+	document.body.addEventListener('keydown', function() {
+		document.body.classList.remove('using-mouse');
+	});
+
 })( jQuery );
