@@ -84,7 +84,7 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 	$search_item = '';
 
 	// we have a slightly different markup for the search menu item if it's being displayed outside the main menu
-	$search_item .= $is_navigation ? '<li class="menu-item wpbf-menu-item-search"><a href="#">' : '<div class="'. $class .' wpbf-menu-item-search">';
+	$search_item .= $is_navigation ? '<li class="menu-item wpbf-menu-item-search"><a href="#" aria-label="Search">' : '<div class="'. $class .' wpbf-menu-item-search">';
 	$search_item .= '<div class="wpbf-menu-search">';
 
 	// if we have a shop, we're going to call the product search form
