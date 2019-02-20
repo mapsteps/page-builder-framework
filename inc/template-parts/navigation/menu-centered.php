@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<li class="menu-item logo-container">
 
 	<?php get_template_part( 'inc/template-parts/logo/logo' ); ?>
-	<?php get_template_part( 'inc/template-parts/logo/tagline' ); ?>
 
 	</li>
 

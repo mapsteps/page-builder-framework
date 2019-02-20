@@ -20,7 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<div class="wpbf-1-4">
 
 			<?php get_template_part( 'inc/template-parts/logo/logo' ); ?>
-			<?php get_template_part( 'inc/template-parts/logo/tagline' ); ?>
 
 			</div>
 
