@@ -1,8 +1,6 @@
 <?php
 /**
- * Init
- *
- * All files are being called from here.
+ * Backwards Compatibility
  *
  * @package Page Builder Framework
  */
