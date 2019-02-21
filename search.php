@@ -24,7 +24,7 @@ get_header(); ?>
 
 					<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_archive_class(); // WPCS: XSS ok. ?>">
+					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_archive_class(); // WPCS: XSS ok. ?>" role="main">
 
 						<?php if( have_posts() ) : ?>
 
