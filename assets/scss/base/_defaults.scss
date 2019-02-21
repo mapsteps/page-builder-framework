@@ -257,24 +257,33 @@ figure.aligncenter div.aligncenter {
 }
 
 .screen-reader-text {
-	position: absolute;
-	left: 10px;
-	top: 10px;
-	z-index: 999;
-	width: 0px;
-	height: 0px;
-	background: #fff;
-	overflow: hidden;
-	text-align: center;
-	color: #000;
-	font-size: 16px !important;
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
 }
 
 .screen-reader-text:focus {
-	height: 50px;
-	width: 200px;
-	line-height: 50px;
-	font-weight: 700;
+  background-color: #fff;
+  clip: auto !important;
+  clip-path: none;
+  color: #000;
+  display: block;
+  font-size: 16px;
+  height: auto;
+  left: 10px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 10px;
+  width: auto;
+  z-index: 100000; /* Above WP toolbar. */
 }
 
 /* Page Builders – Elementor */
