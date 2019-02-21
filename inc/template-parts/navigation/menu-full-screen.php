@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php do_action( 'wpbf_before_full_screen_menu' ); ?>
 
-	<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
+	<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" role="navigation" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>">
 
 		<?php do_action( 'wpbf_main_menu' ); ?>
 

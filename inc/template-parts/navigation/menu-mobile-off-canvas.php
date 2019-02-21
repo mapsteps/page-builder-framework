@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="wpbf-mobile-menu-container">
 
-		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
+		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" role="navigation" aria-label="<?php _e( 'Mobile Navigation', 'page-builder-framework' ); ?>">
 
 			<?php wp_nav_menu(array(
 				'theme_location'	=>		'mobile_menu',
