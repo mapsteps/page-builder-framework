@@ -34,7 +34,7 @@ $footer_column_two_layout = get_theme_mod( 'footer_column_two_layout', 'text' );
 
 ?>
 
-		<footer id="footer" class="wpbf-page-footer" itemscope="itemscope" itemtype="https://schema.org/WPFooter" role="contentinfo">
+		<footer id="footer" class="wpbf-page-footer" itemscope="itemscope" itemtype="https://schema.org/WPFooter">
 
 			<?php do_action( 'wpbf_footer_open' ); ?>
 

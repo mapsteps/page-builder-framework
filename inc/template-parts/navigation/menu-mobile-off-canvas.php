@@ -25,7 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
 
-			<i class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger" aria-hidden="true"></i>
+			<a id="wpbf-mobile-menu-toggle" href="javascript:void(0)" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true" role="button">
+				<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
+			</a>
 
 			<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
 
@@ -35,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="wpbf-mobile-menu-container">
 
-		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" role="navigation" aria-label="<?php _e( 'Mobile Navigation', 'page-builder-framework' ); ?>">
+		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
 
 			<?php wp_nav_menu(array(
 				'theme_location'	=>		'mobile_menu',
@@ -47,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		</nav>
 
-		<div class="wpbf-close wpbff wpbff-times"></div>
+		<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
 
 	</div>
 

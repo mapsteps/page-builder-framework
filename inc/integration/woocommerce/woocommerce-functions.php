@@ -144,7 +144,7 @@ function wpbf_woo_output_content_wrapper() {
 
 			$single_sidebar_position == 'left' ? get_sidebar() : '';
 
-			echo $single_sidebar_position !== 'none' ? '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'" role="main">' : '<main id="main" class="wpbf-main'. wpbf_singular_class() .'" role="main">'; // WPCS: XSS ok.
+			echo $single_sidebar_position !== 'none' ? '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'">' : '<main id="main" class="wpbf-main'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
 
 		} elseif( $single_sidebar_position_global && $single_sidebar_position_global !== 'none' ) {
 
@@ -152,11 +152,11 @@ function wpbf_woo_output_content_wrapper() {
 
 			$single_sidebar_position_global == 'left' ? get_sidebar() : '';
 
-			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'" role="main">'; // WPCS: XSS ok.
+			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
 
 		} else {
 
-			echo '<main id="main" class="wpbf-main'. wpbf_singular_class() .'" role="main">'; // WPCS: XSS ok.
+			echo '<main id="main" class="wpbf-main'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
 
 		}
 
@@ -170,11 +170,11 @@ function wpbf_woo_output_content_wrapper() {
 
 			$sidebar_position_global == 'left' ? get_sidebar() : '';
 
-			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_archive_class() .'" role="main">'; // WPCS: XSS ok.
+			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_archive_class() .'">'; // WPCS: XSS ok.
 
 		} else {
 
-			echo '<main id="main" class="wpbf-main'. wpbf_archive_class() .'" role="main">'; // WPCS: XSS ok.
+			echo '<main id="main" class="wpbf-main'. wpbf_archive_class() .'">'; // WPCS: XSS ok.
 
 		}
 
@@ -546,10 +546,14 @@ function wpbf_woo_menu_item() {
 
 		$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="'. esc_attr( $title ) .'">';
 
+			$menu_item .= '<span class="screen-reader-text">'. __( 'Shopping Cart', 'page-builder-framework' ) .'</span>';
+
 			$menu_item .= apply_filters( 'wpbf_woo_before_menu_item', '' );
 
 			$menu_item .= '<i class="wpbff wpbff-'. esc_attr( $icon ) .'"></i>';
-			if( get_theme_mod( 'woocommerce_menu_item_count' ) !== 'hide' ) $menu_item .= '<span class="wpbf-woo-menu-item-count">' . wp_kses_data( $cart_count ) . '</span>';
+			if( get_theme_mod( 'woocommerce_menu_item_count' ) !== 'hide' ) {
+				$menu_item .= '<span class="wpbf-woo-menu-item-count">' . wp_kses_data( $cart_count ) . '<span class="screen-reader-text">'. __( 'Items in Cart', 'page-builder-framework' ) .'</span></span>';
+			}
 
 			$menu_item .= apply_filters( 'wpbf_woo_after_menu_item', '' );
 

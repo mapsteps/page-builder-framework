@@ -29,7 +29,7 @@ get_header(); ?>
 
 					<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_singular_class(); // WPCS: XSS ok. ?>" role="main">
+					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_singular_class(); // WPCS: XSS ok. ?>">
 
 						<?php do_action( 'wpbf_before_article' ); ?>
 
@@ -80,19 +80,18 @@ get_header(); ?>
 
 								<?php do_action( 'wpbf_before_post_links' ); ?>
 
-								<div class="post-links wpbf-clearfix">
+								<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
+
+									<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
 
 									<?php
 
-									$previous	= apply_filters( 'wpbf_previous_post_link', '&larr; Previous Post' );
-									$next		= apply_filters( 'wpbf_next_post_link', 'Next Post &rarr;' );
-
-									previous_post_link( '<span class="previous-post-link">%link</span>', esc_attr( $previous ) );
-									next_post_link( '<span class="next-post-link">%link</span>', esc_attr( $next ) );
+									previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', '&larr; Previous Post' ) );
+									next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', 'Next Post &rarr;' ) );
 
 									?>
 
-								 </div>
+								 </nav>
 
 								 <?php do_action( 'wpbf_after_post_links' ); ?>
 

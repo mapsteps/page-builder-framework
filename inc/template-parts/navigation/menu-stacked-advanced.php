@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<?php do_action( 'wpbf_before_main_menu' ); ?>
 
-	<nav id="navigation" class="wpbf-container wpbf-container-center wpbf-nav-wrapper" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" role="navigation" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>">
+	<nav id="navigation" class="wpbf-container wpbf-container-center wpbf-nav-wrapper" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>">
 
 		<?php do_action( 'wpbf_main_menu_open' ); ?>
 

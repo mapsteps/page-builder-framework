@@ -49,6 +49,24 @@ function wpbf_body_schema_markup() {
 }
 
 /**
+ * Add Sub Menu Indicators to Mobile Menu's
+ */
+function wpbf_mobile_sub_menu_indicators( $item_output, $items, $depth, $args ) {
+
+	if ( $args->theme_location == 'mobile_menu' ) {
+
+		if ( isset( $items->classes ) && in_array( 'menu-item-has-children', $items->classes ) ) {
+			$item_output .= '<a href="javascript:void(0)" class="wpbf-submenu-toggle" role="button" aria-expanded="false"><i class="wpbff wpbff-arrow-down"></i><span class="screen-reader-text">'. __( 'Menu Toggle', 'page-builder-framework' ) .'</span></a>';
+		}
+	}
+
+	return $item_output;
+
+}
+add_filter( 'walker_nav_menu_start_el', 'wpbf_mobile_sub_menu_indicators', 10, 4 );
+
+
+/**
  * Inner Content
  */
 function wpbf_inner_content( $echo = true ) {
@@ -220,7 +238,9 @@ function wpbf_scrolltop() {
 	if ( get_theme_mod( 'layout_scrolltop' ) ) {
 
 		$scrollTop = get_theme_mod( 'scrolltop_value', 400 );
-		echo '<div class="scrolltop" data-scrolltop-value="'. (int) $scrollTop .'"></div>';
+		echo '<a class="scrolltop" href="javascript:void(0)" data-scrolltop-value="'. (int) $scrollTop .'">';
+		echo '<span class="screen-reader-text">'. __( 'Scroll to Top', 'page-builder-framework' ) .'</span>';
+		echo '</a>';
 
 	}
 

@@ -32,7 +32,8 @@ if ( post_password_required() )	return;
 		</ul>
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
-		<nav class="wpbf-container wpbf-comment-nav" role="navigation" aria-label="<?php _e( 'Comments Navigation', 'page-builder-framework' ); ?>">
+		<nav class="wpbf-comment-nav wpbf-clearfix" aria-label="<?php _e( 'Comments Navigation', 'page-builder-framework' ); ?>">
+			<span class="screen-reader-text"><?php _e( 'Comments Navigation', 'page-builder-framework' ) ?></span>
 			<div class="previous"><?php previous_comments_link( __( '&larr; Older Comments', 'page-builder-framework' ) ); ?></div>
 			<div class="next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'page-builder-framework' ) ); ?></div>
 		</nav>
@@ -57,5 +58,3 @@ $args = array(
 );
 
 comment_form( $args );
-
-?>

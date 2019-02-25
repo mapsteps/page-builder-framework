@@ -136,10 +136,14 @@ function wpbf_edd_menu_item() {
 
 		$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="'. esc_attr( $title ) .'">';
 
+			$menu_item .= '<span class="screen-reader-text">'. __( 'Shopping Cart', 'page-builder-framework' ) .'</span>';
+
 			$menu_item .= apply_filters( 'wpbf_edd_before_menu_item', '' );
 
 			$menu_item .= '<i class="wpbff wpbff-'. esc_attr( $icon ) .'"></i>';
-			if( get_theme_mod( 'edd_menu_item_count' ) !== 'hide' ) $menu_item .= '<span class="wpbf-edd-menu-item-count">' . wp_kses_data( $cart_count ) . '</span>';
+			if( get_theme_mod( 'edd_menu_item_count' ) !== 'hide' ) {
+				$menu_item .= '<span class="wpbf-edd-menu-item-count">' . wp_kses_data( $cart_count ) . '<span class="screen-reader-text">'. __( 'Items in Cart', 'page-builder-framework' ) .'</span></span>';
+			}
 
 			$menu_item .= apply_filters( 'wpbf_edd_after_menu_item', '' );
 

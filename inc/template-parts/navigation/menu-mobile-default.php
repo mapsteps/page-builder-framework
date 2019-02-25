@@ -23,7 +23,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		<div class="wpbf-menu-toggle-container">
 
-			<span class="wpbf-mobile-menu-toggle wpbf-button wpbf-button-full"><?php echo apply_filters( 'wpbf_mobile_menu_text', __( 'Menu', 'page-builder-framework' ) ); // WPCS: XSS ok. ?></span>
+			<a id="wpbf-mobile-menu-toggle" href="javascript:void(0)" class="wpbf-mobile-menu-toggle wpbf-button wpbf-button-full" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true" role="button">
+				<?php echo apply_filters( 'wpbf_mobile_menu_text', __( 'Menu', 'page-builder-framework' ) ); // WPCS: XSS ok. ?>
+			</a>
 
 		</div>
 
@@ -31,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<div class="wpbf-mobile-menu-container">
 
-		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" role="navigation" aria-label="<?php _e( 'Mobile Navigation', 'page-builder-framework' ); ?>">
+		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
 
 			<?php wp_nav_menu(array(
 				'theme_location'	=>		'mobile_menu',
