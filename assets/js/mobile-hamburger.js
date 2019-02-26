@@ -102,7 +102,7 @@
 
 	}
 
-	$('.wpbf-submenu-toggle').click(function(event) {
+	$('.wpbf-mobile-menu-hamburger .wpbf-submenu-toggle').click(function(event) {
 		event.preventDefault();
 		SubMenuMobileToggle(this);
 	});

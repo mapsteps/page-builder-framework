@@ -80,7 +80,7 @@ body {
 }
 
 .wpbf-post-image-link {
-	display: block;
+	display: inline-block;
 	margin-bottom: $margin;
 }
 
@@ -234,12 +234,11 @@ body {
 .wpbf-comment-nav {
 	font-size: $small-fontsize;
 	padding: 0;
-	> div {
+	.previous {
 		float: left;
-		width: 50%;
 	}
-	> div:last-child {
-		text-align: right;
+	.next {
+		float: right;
 	}
 }
 
@@ -376,9 +375,8 @@ body {
 	bottom: 20px;
 	right: 20px;
 	@include transition(background 0.2s);
-	cursor: pointer;
 	display: none;
-	color: #fff;
+	color: #fff !important;
 }
 
 .scrolltop:before {

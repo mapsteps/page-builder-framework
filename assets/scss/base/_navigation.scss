@@ -61,6 +61,7 @@
 
 .wpbf-tagline {
 	font-weight: 700;
+	margin: 0;
 }
 
 /* Search Menu Item */
@@ -267,8 +268,16 @@
 /* Mobiletoggle */
 
 // Defaults
-.wpbf-mobile-logo {
+.wpbf-mobile-logo a {
 	font-weight: 700;
+}
+
+.wpbf-menu-toggle-container {
+	text-align: right;
+}
+
+.wpbf-menu-left .wpbf-menu-toggle-container {
+	text-align: left;
 }
 
 // Toggle & Nav Menu Items
@@ -305,9 +314,6 @@
 		align-items: center;
 		justify-content: space-between;
 		width: 100%;
-	}
-	.wpbf-menu-toggle-container {
-		text-align: right;
 	}
 }
 
