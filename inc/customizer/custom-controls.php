@@ -199,7 +199,7 @@ if( class_exists( 'WP_Customize_Control' ) ) {
 	/**
 	 * Input Slider Conltrol
 	 */
-	class WPBF_Customize_Input_Slider extends WP_Customize_Control {
+	class WPBF_Customize_Input_Slider extends Kirki_Control_Base {
 
 		public $type = 'wpbf-input-slider';
 
