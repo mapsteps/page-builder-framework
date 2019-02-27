@@ -29,17 +29,6 @@ function wpbf_body_classes( $classes ) {
 		$classes[] = wpbf_sidebar_layout() == 'none' ? 'wpbf-no-sidebar' : 'wpbf-sidebar-' . wpbf_sidebar_layout();
 	}
 
-	// Sub Menu Alignment Body Class
-	$sub_menu_alignment = get_theme_mod( 'sub_menu_alignment' );
-
-	if( $sub_menu_alignment == 'right' ) {
-		$classes[] = 'wpbf-sub-menu-align-right';
-	} elseif( $sub_menu_alignment == 'center' ) {
-		$classes[] = 'wpbf-sub-menu-align-center';
-	} else {
-		$classes[] = 'wpbf-sub-menu-align-left';
-	}
-
 	// Full Width Body Class
 	$inner_content = wpbf_inner_content( $echo = false );
 
@@ -57,7 +46,7 @@ add_filter( 'body_class', 'wpbf_body_classes' );
  */
 function wpbf_post_classes( $classes ) {
 
-	// Add wpbf-post Class to all Posts
+	// Add wpbf-post class to all Posts
 	$classes[] = 'wpbf-post';
 
 	return $classes;

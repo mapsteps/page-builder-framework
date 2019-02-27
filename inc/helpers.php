@@ -466,8 +466,9 @@ function wpbf_blog_layout() {
 	$template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
 	$blog_layout           = get_theme_mod( 'archive_layout', 'default' );
+	$boxed                 = get_theme_mod( 'archive_post_background' );
 
-	return apply_filters( 'wpbf_blog_layout', array( 'blog_layout' => $blog_layout, 'template_parts_header' => $template_parts_header, 'template_parts_footer' => $template_parts_footer ) );
+	return apply_filters( 'wpbf_blog_layout', array( 'blog_layout' => $blog_layout, 'template_parts_header' => $template_parts_header, 'template_parts_footer' => $template_parts_footer, 'boxed' => $boxed ) );
 
 }
 
@@ -509,7 +510,7 @@ function wpbf_nav_menu() {
 		wp_nav_menu( array(
 			'theme_location'	=> 'main_menu',
 			'container'			=> false,
-			'menu_class'		=> 'wpbf-menu wpbf-sub-menu'. wpbf_sub_menu_animation() . wpbf_menu_effect() . wpbf_menu_effect_animation() . wpbf_menu_effect_alignment() .'',
+			'menu_class'		=> 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect(),
 			'depth'				=> 3,
 			'fallback_cb'		=> 'wpbf_main_menu_fallback'
 		));
@@ -569,8 +570,32 @@ function wpbf_mobile_sub_menu_indicators( $item_output, $items, $depth, $args ) 
 add_filter( 'walker_nav_menu_start_el', 'wpbf_mobile_sub_menu_indicators', 10, 4 );
 
 /**
+ * Sub Menu Alignment
+ */
+function wpbf_sub_menu_alignment() {
+
+	$sub_menu_alignment = get_theme_mod( 'sub_menu_alignment', 'left' );
+	$alignment = ' wpbf-sub-menu-align-' . $sub_menu_alignment;
+
+	return $alignment;
+
+}
+
+/**
+ * Sub Menu Animation
+ */
+function wpbf_sub_menu_animation() {
+
+	$sub_menu_animation = get_theme_mod( 'sub_menu_animation', 'fade' );
+	$sub_menu_animation = ' wpbf-sub-menu-animation-' . $sub_menu_animation;
+
+	return $sub_menu_animation;
+
+}
+
+/**
  * Menu Alignment
- * 
+ *
  * return the stacked advanced menu alignment
  */
 function wpbf_menu_alignment() {
@@ -585,48 +610,17 @@ function wpbf_menu_alignment() {
 /**
  * Menu Effect
  */
-function wpbf_menu_effect() {
+function wpbf_menu_hover_effect() {
 
-	$menu_effect = get_theme_mod( 'menu_effect', 'none' );
-	$menu_effect = ' wpbf-menu-effect-' . $menu_effect;
-
-	return $menu_effect;
-
-}
-
-/**
- * Menu Effect Animation
- */
-function wpbf_menu_effect_animation() {
-
+	$menu_effect           = get_theme_mod( 'menu_effect', 'none' );
 	$menu_effect_animation = get_theme_mod( 'menu_effect_animation', 'fade' );
-	$menu_effect_animation = ' wpbf-menu-animation-' . $menu_effect_animation;
-
-	return $menu_effect_animation;
-
-}
-
-/**
- * Menu Effect Alignment
- */
-function wpbf_menu_effect_alignment() {
-
 	$menu_effect_alignment = get_theme_mod( 'menu_effect_alignment', 'center' );
-	$menu_effect_alignment = ' wpbf-menu-align-' . $menu_effect_alignment;
 
-	return $menu_effect_alignment;
+	$hover_effect = ' wpbf-menu-effect-' . $menu_effect;
+	$hover_effect .= ' wpbf-menu-animation-' . $menu_effect_animation;
+	$hover_effect .= ' wpbf-menu-align-' . $menu_effect_alignment;
 
-}
-
-/**
- * Sub Menu Animation
- */
-function wpbf_sub_menu_animation() {
-
-	$sub_menu_animation = get_theme_mod( 'sub_menu_animation', 'fade' );
-	$sub_menu_animation = ' wpbf-sub-menu-animation-' . $sub_menu_animation;
-
-	return $sub_menu_animation;
+	return $hover_effect;
 
 }
 
