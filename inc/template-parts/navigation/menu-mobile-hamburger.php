@@ -25,9 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
 
-			<a id="wpbf-mobile-menu-toggle" href="javascript:void(0)" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true" role="button">
+			<button id="wpbf-mobile-menu-toggle" href="javascript:void(0)" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true" role="button">
 				<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
-			</a>
+			</button>
 
 			<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
 

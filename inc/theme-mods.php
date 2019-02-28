@@ -84,7 +84,7 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 	$search_item = '';
 
 	// we have a slightly different markup for the search menu item if it's being displayed outside the main menu
-	$search_item .= $is_navigation ? '<li class="menu-item wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false"><a href="javascript:void(0)" role="button">' : '<a href="javascript:void(0)" class="'. $class .' wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false" role="button">';
+	$search_item .= $is_navigation ? '<li class="menu-item wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false"><a href="javascript:void(0)" role="button">' : '<button href="javascript:void(0)" class="'. $class .' wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false">';
 	$search_item .= '<span class="screen-reader-text">'. __( 'Search Toggle', 'page-builder-framework' ) .'</span>';
 	$search_item .= '<div class="wpbf-menu-search">';
 
@@ -97,7 +97,7 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 
 	$search_item .= '</div>';
 	$search_item .=  '<i class="wpbff wpbff-search"></i>';
-	$search_item .= $is_navigation ? '</a></li>' : '</a>';
+	$search_item .= $is_navigation ? '</a></li>' : '</button>';
 
 	return $search_item;
 
