@@ -97,31 +97,45 @@ body {
 	clear: both;
 }
 
+.footer-tags,
+.footer-categories,
+.footer-comment-count {
+	font-size: $small-fontsize;
+}
+
 .wpbf-read-more {
 	margin-bottom: $margin;
 }
 
 /* Blog Layouts */
 
-// Defaults
-.wpbf-blog-layout-default,
-.wpbf-blog-layout-beside {
+// Default Style
+.wpbf-post-style-plain {
 	margin-bottom: $margin;
+	padding-bottom: $padding;
 	border-bottom: 1px solid $base-color;
 }
 
-.wpbf-blog-layout-default:last-child,
-.wpbf-blog-layout-beside:last-child {
-	margin-bottom: 0;
-	border-bottom: none;
+.wpbf-post-style-plain:last-child {
+	padding-bottom: 0 !important;
+	border-bottom: none !important;
 }
 
-// Beside
-// .wpbf-blog-layout-beside {
-// 	.wpbf-grid{
-// 		flex-direction: row-reverse;
-// 	}
-// }
+// Boxed Style
+.wpbf-post-style-boxed {
+	padding: 20px;
+	background: $base-color-alt;
+	// .wpbf-post-image-link {
+	// 	margin-left: -20px;
+	// 	width: calc(100% + 40px);
+	// }
+	.article-header > .wpbf-post-image-link:first-child {
+		// margin-top: -20px; use this to add margin-bottom later if there are padding settings
+	}
+	.article-footer >*:last-child {
+		margin-bottom: 0;
+	}
+}
 
 /* Comments */
 .commentlist {

@@ -9,15 +9,17 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$template_parts_header = wpbf_blog_layout();
-$template_parts_header = $template_parts_header['template_parts_header'];
-
-$template_parts_footer = wpbf_blog_layout();
-$template_parts_footer = $template_parts_footer['template_parts_footer'];
+// vars
+$template_parts        = wpbf_blog_layout();
+$template_parts_header = $template_parts['template_parts_header'];
+$template_parts_footer = $template_parts['template_parts_footer'];
+$style                 = $template_parts['style'];
+$post_classes          = array( 'wpbf-blog-layout-beside' );
+$post_classes[]        = 'wpbf-post-style-' . $style;
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'wpbf-blog-layout-beside' ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 	<?php if( has_post_thumbnail() ) { ?>
 

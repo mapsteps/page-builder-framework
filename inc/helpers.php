@@ -466,9 +466,9 @@ function wpbf_blog_layout() {
 	$template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
 	$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
 	$blog_layout           = get_theme_mod( 'archive_layout', 'default' );
-	$boxed                 = get_theme_mod( 'archive_post_background' );
+	$style                 = get_theme_mod( 'archive_post_style', 'plain' );
 
-	return apply_filters( 'wpbf_blog_layout', array( 'blog_layout' => $blog_layout, 'template_parts_header' => $template_parts_header, 'template_parts_footer' => $template_parts_footer, 'boxed' => $boxed ) );
+	return apply_filters( 'wpbf_blog_layout', array( 'blog_layout' => $blog_layout, 'template_parts_header' => $template_parts_header, 'template_parts_footer' => $template_parts_footer, 'style' => $style ) );
 
 }
 

@@ -631,12 +631,20 @@ if( $button_primary_bg_color_alt || $button_primary_bg_color_alt ) {
 }
 
 // Sidebar
-$sidebar_bg_color				= get_theme_mod( 'sidebar_bg_color' );
-$sidebar_widget_padding_top		= get_theme_mod( 'sidebar_widget_padding_top' );
-$sidebar_widget_padding_right	= get_theme_mod( 'sidebar_widget_padding_right' );
-$sidebar_widget_padding_bottom	= get_theme_mod( 'sidebar_widget_padding_bottom' );
-$sidebar_widget_padding_left	= get_theme_mod( 'sidebar_widget_padding_left' );
-$sidebar_width					= get_theme_mod( 'sidebar_width' );
+$sidebar_bg_color                      = get_theme_mod( 'sidebar_bg_color' );
+$sidebar_width                         = get_theme_mod( 'sidebar_width' );
+$sidebar_widget_padding_top_desktop    = get_theme_mod( 'sidebar_widget_padding_top_desktop' );
+$sidebar_widget_padding_right_desktop  = get_theme_mod( 'sidebar_widget_padding_right_desktop' );
+$sidebar_widget_padding_bottom_desktop = get_theme_mod( 'sidebar_widget_padding_bottom_desktop' );
+$sidebar_widget_padding_left_desktop   = get_theme_mod( 'sidebar_widget_padding_left_desktop' );
+$sidebar_widget_padding_top_tablet     = get_theme_mod( 'sidebar_widget_padding_top_tablet' );
+$sidebar_widget_padding_right_tablet   = get_theme_mod( 'sidebar_widget_padding_right_tablet' );
+$sidebar_widget_padding_bottom_tablet  = get_theme_mod( 'sidebar_widget_padding_bottom_tablet' );
+$sidebar_widget_padding_left_tablet    = get_theme_mod( 'sidebar_widget_padding_left_tablet' );
+$sidebar_widget_padding_top_mobile     = get_theme_mod( 'sidebar_widget_padding_top_mobile' );
+$sidebar_widget_padding_right_mobile   = get_theme_mod( 'sidebar_widget_padding_right_mobile' );
+$sidebar_widget_padding_bottom_mobile  = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
+$sidebar_widget_padding_left_mobile    = get_theme_mod( 'sidebar_widget_padding_left_mobile' );
 
 if( $sidebar_bg_color ) {
 
@@ -646,33 +654,105 @@ if( $sidebar_bg_color ) {
 
 }
 
-if( is_numeric( $sidebar_widget_padding_top ) || is_numeric( $sidebar_widget_padding_right ) || is_numeric( $sidebar_widget_padding_bottom ) || is_numeric( $sidebar_widget_padding_left ) ) {
+if( isset( $sidebar_widget_padding_top_desktop ) || isset( $sidebar_widget_padding_right_desktop ) || isset( $sidebar_widget_padding_bottom_desktop ) || isset( $sidebar_widget_padding_left_desktop ) ) {
 
 	echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
 
-	if( is_numeric( $sidebar_widget_padding_top ) ) {
+	if( isset( $sidebar_widget_padding_top_desktop ) ) {
 
-		echo sprintf( 'padding-top: %s;', esc_attr( $sidebar_widget_padding_top ) . 'px' );
-
-	}
-
-	if( is_numeric( $sidebar_widget_padding_right ) ) {
-
-		echo sprintf( 'padding-right: %s;', esc_attr( $sidebar_widget_padding_right ) . 'px' );
+		echo sprintf( 'padding-top: %s;', esc_attr( $sidebar_widget_padding_top_desktop ) . 'px' );
 
 	}
 
-	if( is_numeric( $sidebar_widget_padding_bottom ) ) {
+	if( isset( $sidebar_widget_padding_right_desktop ) ) {
 
-		echo sprintf( 'padding-bottom: %s;', esc_attr( $sidebar_widget_padding_bottom ) . 'px' );
+		echo sprintf( 'padding-right: %s;', esc_attr( $sidebar_widget_padding_right_desktop ) . 'px' );
+
+	}
+
+	if( isset( $sidebar_widget_padding_bottom_desktop ) ) {
+
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $sidebar_widget_padding_bottom_desktop ) . 'px' );
 
 	}
 
-	if( is_numeric( $sidebar_widget_padding_left ) ) {
+	if( isset( $sidebar_widget_padding_left_desktop ) ) {
 
-		echo sprintf( 'padding-left: %s;', esc_attr( $sidebar_widget_padding_left ) . 'px' );
+		echo sprintf( 'padding-left: %s;', esc_attr( $sidebar_widget_padding_left_desktop ) . 'px' );
 
 	}
+
+	echo '}';
+
+}
+
+if( isset( $sidebar_widget_padding_top_tablet ) || isset( $sidebar_widget_padding_right_tablet ) || isset( $sidebar_widget_padding_bottom_tablet ) || isset( $sidebar_widget_padding_left_tablet ) ) {
+
+	echo '@media screen and (max-width: '. esc_attr( $breakpoint_desktop ) .') {';
+
+		echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
+
+		if( isset( $sidebar_widget_padding_top_tablet ) ) {
+
+			echo sprintf( 'padding-top: %s;', esc_attr( $sidebar_widget_padding_top_tablet ) . 'px' );
+
+		}
+
+		if( isset( $sidebar_widget_padding_right_tablet ) ) {
+
+			echo sprintf( 'padding-right: %s;', esc_attr( $sidebar_widget_padding_right_tablet ) . 'px' );
+
+		}
+
+		if( isset( $sidebar_widget_padding_bottom_tablet ) ) {
+
+			echo sprintf( 'padding-bottom: %s;', esc_attr( $sidebar_widget_padding_bottom_tablet ) . 'px' );
+
+		}
+
+		if( isset( $sidebar_widget_padding_left_tablet ) ) {
+
+			echo sprintf( 'padding-left: %s;', esc_attr( $sidebar_widget_padding_left_tablet ) . 'px' );
+
+		}
+
+		echo '}';
+
+	echo '}';
+
+}
+
+if( isset( $sidebar_widget_padding_top_mobile ) || isset( $sidebar_widget_padding_right_mobile ) || isset( $sidebar_widget_padding_bottom_mobile ) || isset( $sidebar_widget_padding_left_mobile ) ) {
+
+	echo '@media screen and (max-width: '. esc_attr( $breakpoint_mobile ) .') {';
+
+		echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
+
+		if( isset( $sidebar_widget_padding_top_mobile ) ) {
+
+			echo sprintf( 'padding-top: %s;', esc_attr( $sidebar_widget_padding_top_mobile ) . 'px' );
+
+		}
+
+		if( isset( $sidebar_widget_padding_right_mobile ) ) {
+
+			echo sprintf( 'padding-right: %s;', esc_attr( $sidebar_widget_padding_right_mobile ) . 'px' );
+
+		}
+
+		if( isset( $sidebar_widget_padding_bottom_mobile ) ) {
+
+			echo sprintf( 'padding-bottom: %s;', esc_attr( $sidebar_widget_padding_bottom_mobile ) . 'px' );
+
+		}
+
+		if( isset( $sidebar_widget_padding_left_mobile ) ) {
+
+			echo sprintf( 'padding-left: %s;', esc_attr( $sidebar_widget_padding_left_mobile ) . 'px' );
+
+		}
+
+		echo '}';
 
 	echo '}';
 
@@ -699,10 +779,9 @@ if( $sidebar_width ) {
 }
 
 /* Blog */
-
 $archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
 
-foreach ( $archives as $archive ) {
+foreach( $archives as $archive ) {
 
 	$custom_width = get_theme_mod( $archive . '_custom_width' );
 
@@ -736,8 +815,12 @@ foreach ( $archives as $archive ) {
 	}
 
 	$archive_layout    = get_theme_mod( $archive . '_layout' );
-	$content_alignment = get_theme_mod( $archive . '_post_content_alignment' );
+	$content_alignment = get_theme_mod( $archive . '_post_content_alignment', 'left' );
+	$accent_color      = get_theme_mod( $archive . '_post_accent_color' );
+	$accent_color_alt  = get_theme_mod( $archive . '_post_accent_color_alt' );
+	$style             = get_theme_mod( $archive . '_post_style', 'default' );
 	$background_color  = get_theme_mod( $archive . '_post_background_color' );
+	$space_between     = get_theme_mod( $archive . '_post_space_between' );
 	$title_size        = get_theme_mod( $archive . '_post_title_size' );
 	$font_size         = get_theme_mod( $archive . '_post_font_size' );
 
@@ -750,13 +833,168 @@ foreach ( $archives as $archive ) {
 
 	}
 
-	if( $background_color ) {
+	if( $accent_color ) {
 
-		echo '.wpbf-' . $archive . '-content .wpbf-post {'; // WPCS: XSS ok.
-		echo sprintf( 'background-color: %s;', esc_attr( $background_color ) );
-		echo 'padding: 20px;';
-		echo 'border-bottom: none;';
+		echo '.wpbf-' . $archive . '-content .wpbf-post a:not(.wpbf-read-more) {'; // WPCS: XSS ok.
+		echo sprintf( 'color: %s;', esc_attr( $accent_color ) );
 		echo '}';
+
+	}
+
+	if( $accent_color_alt ) {
+
+		echo '.wpbf-' . $archive . '-content .wpbf-post a:not(.wpbf-read-more):hover {'; // WPCS: XSS ok.
+		echo sprintf( 'color: %s;', esc_attr( $accent_color_alt ) );
+		echo '}';
+
+	}
+
+	if( $style == 'default' && $space_between ) {
+
+		echo '.wpbf-' . $archive . '-content .wpbf-post-style-default {'; // WPCS: XSS ok.
+		echo sprintf( 'margin-bottom: %s;', esc_attr( $space_between ) . 'px' );
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $space_between ) . 'px' );
+		echo '}';
+
+	}
+
+	// Boxed
+	if( $style == 'boxed' ) {
+
+		if( $background_color ) {
+
+			echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
+			echo sprintf( 'background-color: %s;', esc_attr( $background_color ) );
+			echo '}';
+
+		}
+
+		if( $space_between ) {
+
+			echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
+			echo sprintf( 'margin-bottom: %s;', esc_attr( $space_between ) . 'px' );
+			echo '}';
+
+		}
+
+		$boxed_padding_top_desktop    = get_theme_mod( $archive . '_boxed_padding_top_desktop' );
+		$boxed_padding_right_desktop  = get_theme_mod( $archive . '_boxed_padding_right_desktop' );
+		$boxed_padding_bottom_desktop = get_theme_mod( $archive . '_boxed_padding_bottom_desktop' );
+		$boxed_padding_left_desktop   = get_theme_mod( $archive . '_boxed_padding_left_desktop' );
+
+		$boxed_padding_top_tablet     = get_theme_mod( $archive . '_boxed_padding_top_tablet' );
+		$boxed_padding_right_tablet   = get_theme_mod( $archive . '_boxed_padding_right_tablet' );
+		$boxed_padding_bottom_tablet  = get_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
+		$boxed_padding_left_tablet    = get_theme_mod( $archive . '_boxed_padding_left_tablet' );
+
+		$boxed_padding_top_mobile     = get_theme_mod( $archive . '_boxed_padding_top_mobile' );
+		$boxed_padding_right_mobile   = get_theme_mod( $archive . '_boxed_padding_right_mobile' );
+		$boxed_padding_bottom_mobile  = get_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
+		$boxed_padding_left_mobile    = get_theme_mod( $archive . '_boxed_padding_left_mobile' );
+
+		if( isset( $boxed_padding_top_desktop ) || isset( $boxed_padding_right_desktop ) || isset( $boxed_padding_bottom_desktop ) || isset( $boxed_padding_left_desktop ) ) {
+
+			echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
+
+			if( isset( $boxed_padding_top_desktop ) ) {
+
+				echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_desktop ) . 'px' );
+
+			}
+
+			if( isset( $boxed_padding_right_desktop ) ) {
+
+				echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_desktop ) . 'px' );
+
+			}
+
+			if( isset( $boxed_padding_bottom_desktop ) ) {
+
+				echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_desktop ) . 'px' );
+
+			}
+
+			if( isset( $boxed_padding_left_desktop ) ) {
+
+				echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_desktop ) . 'px' );
+
+			}
+
+			echo '}';
+
+		}
+
+		if( isset( $boxed_padding_top_tablet ) || isset( $boxed_padding_right_tablet ) || isset( $boxed_padding_bottom_tablet ) || isset( $boxed_padding_left_tablet ) ) {
+
+			echo '@media screen and (max-width: '. esc_attr( $breakpoint_desktop ) .') {';
+
+				echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
+
+				if( isset( $boxed_padding_top_tablet ) ) {
+
+					echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_tablet ) . 'px' );
+
+				}
+
+				if( isset( $boxed_padding_right_tablet ) ) {
+
+					echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_tablet ) . 'px' );
+
+				}
+
+				if( isset( $boxed_padding_bottom_tablet ) ) {
+
+					echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_tablet ) . 'px' );
+
+				}
+
+				if( isset( $boxed_padding_left_tablet ) ) {
+
+					echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_tablet ) . 'px' );
+
+				}
+
+				echo '}';
+
+			echo '}';
+
+		}
+
+		if( isset( $boxed_padding_top_mobile ) || isset( $boxed_padding_right_mobile ) || isset( $boxed_padding_bottom_mobile ) || isset( $boxed_padding_left_mobile ) ) {
+
+			echo '@media screen and (max-width: '. esc_attr( $breakpoint_mobile ) .') {';
+
+				echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
+
+				if( isset( $boxed_padding_top_mobile ) ) {
+
+					echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_mobile ) . 'px' );
+
+				}
+
+				if( isset( $boxed_padding_right_mobile ) ) {
+
+					echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_mobile ) . 'px' );
+
+				}
+
+				if( isset( $boxed_padding_bottom_mobile ) ) {
+
+					echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_mobile ) . 'px' );
+
+				}
+
+				if( isset( $boxed_padding_left_mobile ) ) {
+
+					echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_mobile ) . 'px' );
+
+				}
+
+				echo '}';
+
+			echo '}';
+
+		}
 
 	}
 
@@ -787,14 +1025,29 @@ foreach ( $archives as $archive ) {
 
 			echo '@media (min-width: '. esc_attr( $breakpoint_desktop_int + 1 ) .'px) {';
 
-			echo '.wpbf-' . $archive . '-content .wpbf-post .wpbf-large-2-5 {'; // WPCS: XSS ok.
+			echo '.wpbf-' . $archive . '-content .wpbf-blog-layout-beside .wpbf-large-2-5 {'; // WPCS: XSS ok.
 			echo sprintf( 'width: %s;', esc_attr( $image_width ) . '%' );
 			echo '}';
 
-			echo '.wpbf-' . $archive . '-content .wpbf-post .wpbf-large-3-5 {'; // WPCS: XSS ok.
+			echo '.wpbf-' . $archive . '-content .wpbf-blog-layout-beside .wpbf-large-3-5 {'; // WPCS: XSS ok.
 			echo sprintf( 'width: %s;', 100 - esc_attr( $image_width ) . '%' );
 			echo '}';
 
+			echo '}';
+
+		}
+
+		$image_alignment = get_theme_mod( $archive . '_post_image_alignment', 'left' );
+
+		if( $image_alignment ) {
+
+			echo '.wpbf-' . $archive . '-content .wpbf-blog-layout-beside .wpbf-grid {'; // WPCS: XSS ok.
+			if( $image_alignment == 'left' ) {
+			echo 'flex-direction: row;';
+			}
+			if( $image_alignment == 'right' ) {
+			echo 'flex-direction: row-reverse;';
+			}
 			echo '}';
 
 		}
@@ -872,7 +1125,7 @@ if( !$custom_logo ) {
 
 	if( $menu_logo_font_toggle && $menu_logo_font_family_value ) {
 
-		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+		echo '.wpbf-logo a, .wpbf-mobile-logo a {';
 
 		if( isset( $menu_logo_font_family_value['font-family'] ) && !empty( $menu_logo_font_family_value['font-family'] ) ) {
 
@@ -905,7 +1158,7 @@ if( !$custom_logo ) {
 
 	if( $menu_logo_color ) {
 
-		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+		echo '.wpbf-logo a, .wpbf-mobile-logo a {';
 
 			echo sprintf( 'color: %s;', esc_attr( $menu_logo_color ) );
 
@@ -915,7 +1168,7 @@ if( !$custom_logo ) {
 
 	if( $menu_logo_color_alt ) {
 
-		echo '.wpbf-logo a:hover, .wpbf-mobile-logo:hover {';
+		echo '.wpbf-logo a:hover, .wpbf-mobile-logo a:hover {';
 
 			echo sprintf( 'color: %s;', esc_attr( $menu_logo_color_alt ) );
 
@@ -924,14 +1177,14 @@ if( !$custom_logo ) {
 	}
 
 	if( $menu_logo_font_size_desktop ) {
-		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+		echo '.wpbf-logo a, .wpbf-mobile-logo a {';
 		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_font_size_desktop ) );
 		echo '}';
 	}
 
 	if( $menu_logo_font_size_tablet ) {
 		echo '@media screen and (max-width: '. esc_attr( $breakpoint_medium ) .') {';
-		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+		echo '.wpbf-logo a, .wpbf-mobile-logo a {';
 		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_font_size_tablet ) );
 		echo '}';
 		echo '}';
@@ -939,7 +1192,7 @@ if( !$custom_logo ) {
 
 	if( $menu_logo_font_size_mobile ) {
 		echo '@media screen and (max-width: '. esc_attr( $breakpoint_mobile ) .') {';
-		echo '.wpbf-logo a, .wpbf-mobile-logo {';
+		echo '.wpbf-logo a, .wpbf-mobile-logo a {';
 		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_font_size_mobile ) );
 		echo '}';
 		echo '}';
