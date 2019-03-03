@@ -156,8 +156,7 @@
 		} );
 	} );
 
-	/* Blog */
-
+	/* Blog – Single */
 	wp.customize( 'single_custom_width', function( value ) {
 		value.bind( function( newval ) {
 			$('.single #inner-content').css('max-width', newval );
