@@ -104,7 +104,7 @@ if( class_exists( 'WP_Customize_Control' ) ) {
 
 				<label>
 
-					<input style="text-align:center;" type="text" <?php echo esc_attr( $link ) ?> value="<?php echo esc_textarea( $this->value() ); ?>">
+					<input style="text-align:center;" type="number" <?php echo esc_attr( $link ) ?> value="<?php echo esc_textarea( $this->value() ); ?>">
 					<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 
 				</label>
@@ -177,7 +177,7 @@ if( class_exists( 'WP_Customize_Control' ) ) {
 
 				<label>
 
-					<input style="text-align:center;" type="text" <?php echo esc_attr( $link ) ?> value="<?php echo esc_textarea( $this->value() ); ?>">
+					<input style="text-align:center;" type="number" <?php echo esc_attr( $link ) ?> value="<?php echo esc_textarea( $this->value() ); ?>">
 					<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 
 				</label>
