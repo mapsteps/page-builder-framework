@@ -778,11 +778,12 @@ if( $sidebar_width ) {
 
 }
 
-/* Blog */
+/* Blog Layouts */
 $archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
 
 foreach( $archives as $archive ) {
 
+	// Custom Width
 	$custom_width = get_theme_mod( $archive . '_custom_width' );
 
 	// all archives
@@ -814,12 +815,11 @@ foreach( $archives as $archive ) {
 
 	}
 
-	$archive_layout    = get_theme_mod( $archive . '_layout' );
+	$layout            = get_theme_mod( $archive . '_layout' );
+	$style             = get_theme_mod( $archive . '_post_style', 'default' );
 	$content_alignment = get_theme_mod( $archive . '_post_content_alignment', 'left' );
 	$accent_color      = get_theme_mod( $archive . '_post_accent_color' );
 	$accent_color_alt  = get_theme_mod( $archive . '_post_accent_color_alt' );
-	$style             = get_theme_mod( $archive . '_post_style', 'default' );
-	$background_color  = get_theme_mod( $archive . '_post_background_color' );
 	$space_between     = get_theme_mod( $archive . '_post_space_between' );
 	$title_size        = get_theme_mod( $archive . '_post_title_size' );
 	$font_size         = get_theme_mod( $archive . '_post_font_size' );
@@ -861,6 +861,8 @@ foreach( $archives as $archive ) {
 	// Boxed
 	if( $style == 'boxed' ) {
 
+		$background_color  = get_theme_mod( $archive . '_post_background_color' );
+
 		if( $background_color ) {
 
 			echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
@@ -881,12 +883,10 @@ foreach( $archives as $archive ) {
 		$boxed_padding_right_desktop  = get_theme_mod( $archive . '_boxed_padding_right_desktop' );
 		$boxed_padding_bottom_desktop = get_theme_mod( $archive . '_boxed_padding_bottom_desktop' );
 		$boxed_padding_left_desktop   = get_theme_mod( $archive . '_boxed_padding_left_desktop' );
-
 		$boxed_padding_top_tablet     = get_theme_mod( $archive . '_boxed_padding_top_tablet' );
 		$boxed_padding_right_tablet   = get_theme_mod( $archive . '_boxed_padding_right_tablet' );
 		$boxed_padding_bottom_tablet  = get_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
 		$boxed_padding_left_tablet    = get_theme_mod( $archive . '_boxed_padding_left_tablet' );
-
 		$boxed_padding_top_mobile     = get_theme_mod( $archive . '_boxed_padding_top_mobile' );
 		$boxed_padding_right_mobile   = get_theme_mod( $archive . '_boxed_padding_right_mobile' );
 		$boxed_padding_bottom_mobile  = get_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
@@ -1017,7 +1017,7 @@ foreach( $archives as $archive ) {
 	}
 
 	// Beside
-	if( $archive_layout == 'beside' ) {
+	if( $layout == 'beside' ) {
 
 		$image_width = get_theme_mod( $archive . '_post_image_width' );
 
