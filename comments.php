@@ -53,7 +53,7 @@ $args = array(
 	'title_reply'          => apply_filters( 'wpbf_leave_comment', __( 'Leave a Comment', 'page-builder-framework' ) ),
 	/* translators: 1: comment title */
 	'title_reply_to'       => apply_filters( 'wpbf_leave_reply', __( 'Leave a Reply to %s', 'page-builder-framework' ) ),
-	'cancel_reply_link'    => apply_filters( 'wpbf_cancel_reply', __( 'Cancel reply', 'page-builder-framework' ) ),
+	'cancel_reply_link'    => apply_filters( 'wpbf_cancel_reply', __( 'Cancel Reply', 'page-builder-framework' ) ),
 	'label_submit'         => apply_filters( 'wpbf_post_comment', __( 'Post Comment', 'page-builder-framework' ) ),
 );
 
