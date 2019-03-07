@@ -1746,7 +1746,7 @@ if( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobile
 
 if( $mobile_menu_bg_color ) {
 
-	echo '.wpbf-mobile-menu > .menu-item a:not(.wpbf-submenu-toggle) {';
+	echo '.wpbf-mobile-menu > .menu-item a {';
 
 		echo sprintf( 'background-color: %s;', esc_attr( $mobile_menu_bg_color ) );
 
@@ -1756,7 +1756,7 @@ if( $mobile_menu_bg_color ) {
 
 if( $mobile_menu_bg_color_alt ) {
 
-	echo '.wpbf-mobile-menu > .menu-item a:not(.wpbf-submenu-toggle):hover {';
+	echo '.wpbf-mobile-menu > .menu-item a:hover {';
 
 		echo sprintf( 'background-color: %s;', esc_attr( $mobile_menu_bg_color_alt ) );
 
