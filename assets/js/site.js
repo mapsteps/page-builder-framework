@@ -169,4 +169,17 @@
 		document.body.classList.remove('using-mouse');
 	});
 
+	function wpbf_on_focus() {
+
+		if( $('body').hasClass('using-mouse') ) return;
+		if( !$('#navigation > ul').hasClass('wpbf-sub-menu') ) return;
+
+		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
+
+	}
+
+	$('.wpbf-menu-container #navigation a').on('focus', wpbf_on_focus );
+	$('.wpbf-menu-container #navigation a').on('blur', wpbf_on_focus );
+
 })( jQuery );

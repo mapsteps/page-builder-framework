@@ -198,6 +198,11 @@
 	transform: translateX(-50%);
 }
 
+.wpbf-sub-menu-focus > .sub-menu {
+	display: block !important;
+	opacity: 1 !important;
+}
+
 /* Navigation Variations */
 
 // Defaults
