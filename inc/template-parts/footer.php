@@ -25,10 +25,10 @@ $layout				= $footer_layout == 'one' ? ' wpbf-footer-one-column' : ' wpbf-footer
 $inner_layout		= $footer_layout == 'one' ? 'wpbf-inner-footer-content' : 'wpbf-inner-footer-left';
 $footer_column_one	= get_theme_mod( 'footer_column_one', '&copy; [year] - [blogname] | All rights reserved' );
 $footer_column_two	= get_theme_mod( 'footer_column_two', 'Powered by [theme_author]' );
-$search				= array( '[year]', '[blogname]', '[theme_author]' );
-$replace			= array( date( 'Y' ), get_option( 'blogname' ), '<a href="' . esc_url( $theme_author['url'] ) . '">' . $theme_author['name'] . '</a>' );
-$footer_column_one	= str_replace( $search, $replace, $footer_column_one );
-$footer_column_two	= str_replace( $search, $replace, $footer_column_two );
+$search_for			= array( '[year]', '[blogname]', '[theme_author]' );
+$replace_with		= array( date( 'Y' ), get_option( 'blogname' ), '<a href="' . esc_url( $theme_author['url'] ) . '">' . $theme_author['name'] . '</a>' );
+$footer_column_one	= str_replace( $search_for, $replace_with, $footer_column_one );
+$footer_column_two	= str_replace( $search_for, $replace_with, $footer_column_two );
 $footer_column_one_layout = get_theme_mod( 'footer_column_one_layout', 'text' );
 $footer_column_two_layout = get_theme_mod( 'footer_column_two_layout', 'text' );
 
