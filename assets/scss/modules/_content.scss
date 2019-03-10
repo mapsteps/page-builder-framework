@@ -114,6 +114,9 @@ body {
 	margin-bottom: $margin;
 	padding-bottom: $padding;
 	border-bottom: 1px solid $base-color;
+	.article-footer > *:last-child{
+		margin-bottom: 0;
+	}
 }
 
 .wpbf-post-style-plain:last-child {
