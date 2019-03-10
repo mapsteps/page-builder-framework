@@ -816,7 +816,7 @@ foreach( $archives as $archive ) {
 	}
 
 	$layout            = get_theme_mod( $archive . '_layout' );
-	$style             = get_theme_mod( $archive . '_post_style', 'default' );
+	$style             = get_theme_mod( $archive . '_post_style', 'plain' );
 	$content_alignment = get_theme_mod( $archive . '_post_content_alignment', 'left' );
 	$accent_color      = get_theme_mod( $archive . '_post_accent_color' );
 	$accent_color_alt  = get_theme_mod( $archive . '_post_accent_color_alt' );
@@ -849,9 +849,9 @@ foreach( $archives as $archive ) {
 
 	}
 
-	if( $style == 'default' && $space_between ) {
+	if( $style == 'plain' && $space_between ) {
 
-		echo '.wpbf-' . $archive . '-content .wpbf-post-style-default {'; // WPCS: XSS ok.
+		echo '.wpbf-' . $archive . '-content .wpbf-post-style-plain {'; // WPCS: XSS ok.
 		echo sprintf( 'margin-bottom: %s;', esc_attr( $space_between ) . 'px' );
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $space_between ) . 'px' );
 		echo '}';
