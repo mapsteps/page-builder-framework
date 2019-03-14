@@ -58,6 +58,13 @@ Kirki::add_section( 'wpbf_woocommerce_sidebar_options', array(
 	'priority'			=>			60,
 ) );
 
+// Notices
+Kirki::add_section( 'wpbf_woocommerce_notices_options', array(
+	'title'				=>			__( 'Notices', 'page-builder-framework' ),
+	'panel'				=>			'woocommerce',
+	'priority'			=>			70,
+) );
+
 /* Fields – Sidebar */
 
 // Shop Sidebar Layout
@@ -944,6 +951,24 @@ Kirki::add_field( 'wpbf', array(
 	)
 ) );
 
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-9987953',
+	'section'			=>			'wpbf_woocommerce_product_options',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			$product_priority++,
+) );
+
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'checkbox',
+	'settings'			=>			'woocommerce_single_add_to_cart_ajax',
+	'label'				=>			esc_attr__( 'Enable Ajax Add to Cart Button on Product Pages', 'page-builder-framework' ),
+	'section'			=> 			'wpbf_woocommerce_product_options',
+	'priority'			=>			$product_priority++,
+	'default'			=>			false,
+) );
+
 /* Fields – Checkout Page */
 
 // Alignment
@@ -967,4 +992,67 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'woocommerce_checkout',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority'			=>			2,
+) );
+
+/* Fields – Messages/Notices */
+
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-06205833',
+	'section'			=>			'woocommerce_store_notice',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			100,
+) );
+
+// Store Notice Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'woocommerce_store_notice_color',
+	'label'				=>			esc_attr__( 'Store Notice', 'page-builder-framework' ),
+	'section'			=>			'woocommerce_store_notice',
+	'default'			=>			'',
+	'priority'			=>			100,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	)
+) );
+
+// Info Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'woocommerce_info_notice_color',
+	'label'				=>			esc_attr__( 'Info Notice', 'page-builder-framework' ),
+	'section'			=>			'woocommerce_store_notice',
+	'default'			=>			'',
+	'priority'			=>			100,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	)
+) );
+
+// Message Color (Success)
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'woocommerce_message_notice_color',
+	'label'				=>			esc_attr__( 'Success Notice', 'page-builder-framework' ),
+	'section'			=>			'woocommerce_store_notice',
+	'default'			=>			'',
+	'priority'			=>			100,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	)
+) );
+
+// Error Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'woocommerce_error_notice_color',
+	'label'				=>			esc_attr__( 'Error Notice', 'page-builder-framework' ),
+	'section'			=>			'woocommerce_store_notice',
+	'default'			=>			'',
+	'priority'			=>			100,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	)
 ) );
