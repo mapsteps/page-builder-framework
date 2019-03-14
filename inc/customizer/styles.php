@@ -1732,7 +1732,15 @@ if( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobile
 	if( $mobile_menu_hamburger_style == 'filled' ) {
 
 		echo '.wpbf-mobile-menu-toggle {';
-		echo $mobile_menu_hamburger_bg_color ? sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) ) : 'background: #3ba9d2;' ;
+
+		if( $mobile_menu_hamburger_bg_color ) {
+			echo sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) );
+		} elseif( $page_accent_color ) {
+			echo sprintf( 'background: %s;', esc_attr( $page_accent_color ) );
+		} else {
+			echo 'background: #3ba9d2;';
+		}
+
 		echo 'color: #ffffff !important;';
 		echo 'padding: 10px;';
 		if( $mobile_menu_hamburger_border_radius ) {
