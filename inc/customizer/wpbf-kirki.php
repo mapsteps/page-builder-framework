@@ -360,6 +360,21 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Comments
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'select',
+	'settings'			=>			'blog_comments',
+	'label'				=>			esc_attr__( 'Comments', 'page-builder-framework' ),
+	'section'			=>			'wpbf_blog_settings',
+	'default'			=>			'hide',
+	'priority'			=>			1,
+	'multiple'			=>			1,
+	'choices'			=>			array(
+		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
+		'hide'			=>			esc_attr__( 'Hide', 'page-builder-framework' ),
+	),
+) );
+
 // Excerpt Length
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'number',
@@ -401,6 +416,17 @@ Kirki::add_field( 'wpbf', array(
 	'default'			=>			'Read more',
 	'priority'			=>			2,
 ) );
+
+// Categories Title
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'text',
+	'settings'			=>			'blog_categories_title',
+	'label'				=>			esc_attr__( 'Categories Title', 'page-builder-framework' ),
+	'section'			=>			'wpbf_blog_settings',
+	'default'			=>			'Filed under:',
+	'priority'			=>			2,
+) );
+
 
 foreach ( $archives as $archive ) {
 
@@ -493,7 +519,6 @@ foreach ( $archives as $archive ) {
 			'readmore'		=>			esc_attr__( 'Read More', 'page-builder-framework' ),
 			'categories'	=>			esc_attr__( 'Categories', 'page-builder-framework' ),
 			'tags'			=>			esc_attr__( 'Tags', 'page-builder-framework' ),
-			'comments'		=>			esc_attr__( 'Comments', 'page-builder-framework' ),
 		),
 		'priority'			=>			0,
 	) );
@@ -776,7 +801,6 @@ Kirki::add_field( 'wpbf', array(
 		'readmore'		=>			esc_attr__( 'Read More', 'page-builder-framework' ),
 		'categories'	=>			esc_attr__( 'Categories', 'page-builder-framework' ),
 		'tags'			=>			esc_attr__( 'Tags', 'page-builder-framework' ),
-		'comments'		=>			esc_attr__( 'Comments', 'page-builder-framework' ),
 	),
 	'priority'			=>			0,
 ) );

@@ -68,7 +68,6 @@ function wpbf_remove_404_search_form() {
     }
 
 }
-
 add_action( 'wp', 'wpbf_remove_404_search_form' );
 
 /**
@@ -185,3 +184,39 @@ function wpbf_previous_post_link( $prev ) {
 
 }
 add_filter( 'wpbf_previous_post_link', 'wpbf_previous_post_link' );
+
+/**
+ * Categories Title
+ */
+function wpbf_categories_title( $title ) {
+
+	$cat_title = get_theme_mod( 'blog_categories_title' );
+
+	if( $cat_title && $cat_title !== 'Filed under:' ) {
+
+		$title = $cat_title;
+
+	}
+
+	return $title;
+
+}
+add_filter( 'wpbf_categories_title', 'wpbf_categories_title' );
+
+/**
+ * Read More Text
+ */
+function wpbf_read_more_text( $text ) {
+
+	$read_more_text = get_theme_mod( 'blog_read_more_text' );
+
+	if( $read_more_text && $read_more_text !== 'Read more' ) {
+
+		$text = $read_more_text;
+
+	}
+
+	return $text;
+
+}
+add_filter( 'wpbf_read_more_text', 'wpbf_read_more_text' );
