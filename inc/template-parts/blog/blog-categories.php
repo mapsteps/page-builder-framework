@@ -2,7 +2,7 @@
 /**
  * Categories
  *
- * Renders categories on archives, category, search and index pages.
+ * Renders categories on archives, category, search & index pages.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
@@ -14,6 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // stop here if this is not a blog post
 if( get_post_type() !== 'post' ) return;
 
-printf( '<p class="footer-categories">' . __( 'Filed under', 'page-builder-framework' ) . ': %1$s</p>' , get_the_category_list(', ') ); // WPCS: XSS ok.
+echo '<p class="footer-categories">';
 
-?>
+echo '<span class="categories-title">' . apply_filters( 'wpbf_categories_title', __( 'Filed under:', 'page-builder-framework' ) ) . '</span> ';
+
+echo get_the_category_list(', ');
+
+echo '</p>';
