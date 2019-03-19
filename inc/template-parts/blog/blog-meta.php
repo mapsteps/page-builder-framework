@@ -14,11 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // stop here if this is not a blog post
 if( get_post_type() !== 'post' ) return;
 
+do_action( 'wpbf_before_article_meta' );
+
 ?>
 
 <p class="article-meta">
 
 	<?php
+
+		do_action( 'wpbf_article_meta_open' );
 
 		echo '<span class="posted-on">'. __( 'Posted on', 'page-builder-framework' ) .'</span> <time class="article-time published" datetime="'. get_the_date( 'c' ) .'" itemprop="datePublished">'. get_the_date() .'</time>'; // WPCS: XSS ok.
 
@@ -32,6 +36,22 @@ if( get_post_type() !== 'post' ) return;
 			);
 		}
 
+		if( get_theme_mod( 'blog_comments' ) == 'show' ) {
+
+			echo '<span class="article-meta-separator">'. apply_filters( 'wpbf_article_meta_separator', ' | ' ) .'</span>';
+
+			echo '<span class="comments-count">';
+
+			comments_number( __( '<span>No</span> Comments', 'page-builder-framework' ), __( '<span>1</span> Comment', 'page-builder-framework' ), __( '<span>%</span> Comments', 'page-builder-framework' ) );
+
+			echo '</span>';
+
+		}
+
+		do_action( 'wpbf_article_meta_close' );
+
 	?>
 
 </p>
+
+<?php do_action( 'wpbf_after_article_meta' ); ?>

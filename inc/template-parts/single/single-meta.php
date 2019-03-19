@@ -22,6 +22,8 @@ do_action( 'wpbf_before_article_meta' );
 
 	<?php
 
+		do_action( 'wpbf_article_meta_open' );
+
 		echo '<span class="posted-on">'. __( 'Posted on', 'page-builder-framework' ) .'</span> <time class="article-time published" datetime="'. get_the_date( 'c' ) .'" itemprop="datePublished">'. get_the_date() .'</time>'; // WPCS: XSS ok.
 
 		if( get_theme_mod( 'single_author' ) !== 'hide' ) {
@@ -34,6 +36,8 @@ do_action( 'wpbf_before_article_meta' );
 			);
 
 		}
+
+		do_action( 'wpbf_article_meta_close' );
 
 	?>
 
