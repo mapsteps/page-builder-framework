@@ -1205,7 +1205,7 @@ if( $custom_logo ) {
 	// Backwards Compatibility
 	if( $menu_logo_size && !$menu_logo_size_desktop ) {
 		echo '.wpbf-logo img {';
-		echo sprintf( 'height: %s;', esc_attr( $menu_logo_size ) );
+		echo sprintf( 'height: %s;', esc_attr( $menu_logo_size ) . 'px' );
 		echo '}';
 	}
 
