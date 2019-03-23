@@ -73,7 +73,7 @@ add_action( 'after_setup_theme', 'wpbf_gutenberg_theme_setup' );
 function wpbf_generate_gutenberg_css() {
  
 	ob_start();
-	include_once( get_template_directory() . '/inc/integration/gutenberg/gutenberg-styles.php' );
+	include_once( WPBF_THEME_DIR . '/inc/integration/gutenberg/gutenberg-styles.php' );
 	return wpbf_minify_css( ob_get_clean() );
 
 }
