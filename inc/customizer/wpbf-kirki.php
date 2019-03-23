@@ -674,7 +674,7 @@ foreach ( $archives as $archive ) {
 		'type'				=>			'custom',
 		'settings'			=>			$archive . '-separator-824021',
 		'section'			=>			'wpbf_' . $archive . '_options',
-		'default'			=>			'<h3 style="padding:15px 10px; background:#fff; margin:0;">'. __( 'Image Beside Post', 'wpbfpremium' ) .'</h3>',
+		'default'			=>			'<h3 style="padding:15px 10px; background:#fff; margin:0;">'. __( 'Image Beside Post', 'page-builder-framework' ) .'</h3>',
 		'priority'			=>			100,
 		'active_callback'	=>			array(
 			array(
@@ -3357,15 +3357,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 
 	// Logo Size
 	$wp_customize->add_setting( 'menu_logo_size_desktop',
-		array()
+		array(
+			'sanitize_callback' => 'esc_textarea',
+		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_size_tablet',
-		array()
+		array(
+			'sanitize_callback' => 'esc_textarea',
+		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_size_mobile',
-		array()
+		array(
+			'sanitize_callback' => 'esc_textarea',
+		)
 	);
 
 	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
@@ -3422,16 +3428,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	// Site Title
 	$wp_customize->add_setting( 'menu_logo_font_size_desktop',
 		array(
-			'default' => '22px'
+			'default' => '22px',
+			'sanitize_callback' => 'esc_textarea',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_font_size_tablet',
-		array()
+		array(
+			'sanitize_callback' => 'esc_textarea',
+		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_font_size_mobile',
-		array()
+		array(
+			'sanitize_callback' => 'esc_textarea',
+		)
 	);
 
 	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control( 
@@ -3472,15 +3483,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 
 	// Tagline
 	$wp_customize->add_setting( 'menu_logo_description_font_size_desktop',
-		array()
+		array(
+			'sanitize_callback' => 'esc_textarea',
+		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_description_font_size_tablet',
-		array()
+		array(
+			'sanitize_callback' => 'esc_textarea',
+		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_description_font_size_mobile',
-		array()
+		array(
+			'sanitize_callback' => 'esc_textarea',
+		)
 	);
 
 	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control( 
