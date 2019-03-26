@@ -278,7 +278,7 @@ function wpbf_archive_class() {
 
 	}
 
-	return $archive_class;
+	return apply_filters( 'wpbf_archive_class', $archive_class );
 
 }
 
