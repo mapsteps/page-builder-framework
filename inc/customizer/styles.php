@@ -1225,7 +1225,7 @@ if( $custom_logo ) {
 
 	if( $menu_logo_size_tablet ) {
 		$suffix = is_numeric( $menu_logo_size_tablet ) ? 'px' : '';
-		echo '@media screen and (max-width: '. esc_attr( $breakpoint_medium ) .') {';
+		echo '@media screen and (max-width: '. esc_attr( $breakpoint_desktop ) .') {';
 		echo '.wpbf-mobile-logo img {';
 		echo sprintf( 'width: %s;', esc_attr( $menu_logo_size_tablet ) . $suffix );
 		echo '}';
