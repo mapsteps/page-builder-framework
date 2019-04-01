@@ -22,6 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 <body <?php body_class(); ?> <?php wpbf_body_schema_markup(); ?>>
 	<a class="screen-reader-text skip-link" href="#content" title="<?php echo esc_attr__( 'Skip to content', 'page-builder-framework' ); ?>"><?php _e( 'Skip to content', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
 
+	<?php do_action( 'wp_body_open' ); ?>
+
 	<?php do_action( 'wpbf_body_open' ); ?>
 
 	<div id="container" class="hfeed wpbf-page">
