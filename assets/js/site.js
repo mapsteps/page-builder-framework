@@ -125,7 +125,7 @@
 	 */
 	$(window).load(function(){
 
-		$('.opacity').delay(250).animate({opacity:'1'}, 250);
+		$('.opacity').delay(200).animate({opacity:'1'}, 200);
 		$('.display-none').show();
 		$(window).trigger('resize');
 		$(window).trigger('scroll');
@@ -159,14 +159,12 @@
 		$('.wpbf-menu-centered .logo-container').insertAfter('.wpbf-navigation .wpbf-menu >li:eq('+ divided +')').css({'display':'block'});
 	}
 
-	/**
-	 * Add "using-mouse" class to body if mouse being used to improve accessibility
-	 */
-	document.body.addEventListener('mousedown', function() {
-		document.body.classList.add('using-mouse');
+	$('body').mousedown(function() {
+		$(this).addClass('using-mouse');
+		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
 	});
-	document.body.addEventListener('keydown', function() {
-		document.body.classList.remove('using-mouse');
+	$('body').keydown(function() {
+		$(this).removeClass('using-mouse');
 	});
 
 	function wpbf_on_focus() {
