@@ -467,6 +467,11 @@ function wpbf_blog_layout() {
 	$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
 	$blog_layout           = get_theme_mod( 'archive_layout', 'default' );
 	$style                 = get_theme_mod( 'archive_post_style', 'plain' );
+	$stretched             = get_theme_mod( 'archive_boxed_image_streched', false );
+
+	if( $blog_layout !== 'beside' && $style == 'boxed' && $stretched ) {
+		$style             .= ' stretched';
+	}
 
 	return apply_filters( 'wpbf_blog_layout', array( 'blog_layout' => $blog_layout, 'template_parts_header' => $template_parts_header, 'template_parts_footer' => $template_parts_footer, 'style' => $style ) );
 
