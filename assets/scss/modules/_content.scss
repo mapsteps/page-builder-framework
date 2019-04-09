@@ -79,9 +79,12 @@ body {
 	margin-bottom: $margin;
 }
 
+.wpbf-post-image-wrapper {
+	margin-bottom: $margin;
+}
+
 .wpbf-post-image-link {
 	display: inline-block;
-	margin-bottom: $margin;
 }
 
 // Article Meta
@@ -128,15 +131,19 @@ body {
 .wpbf-post-style-boxed {
 	padding: 20px;
 	background: $base-color-alt;
-	// .wpbf-post-image-link {
-	// 	margin-left: -20px;
-	// 	width: calc(100% + 40px);
-	// }
-	// .article-header > .wpbf-post-image-link:first-child {
-		// margin-top: -20px; use this to add margin-bottom later if there are padding settings
-	// }
 	.article-footer >*:last-child {
 		margin-bottom: 0;
+	}
+}
+
+// Stretched Image Default
+.wpbf-post-style-boxed.stretched {
+	.wpbf-post-image-wrapper {
+		margin-left: -20px;
+		margin-right: -20px;
+	}
+	.article-header > .wpbf-post-image-wrapper:first-child {
+		margin-top: -20px;
 	}
 }
 
