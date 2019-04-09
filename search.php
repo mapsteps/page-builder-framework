@@ -38,11 +38,17 @@ get_header(); ?>
 							?>
 						</h1>
 
+						<?php do_action( 'wpbf_before_loop' ); ?>
+
 						<?php while ( have_posts() ) : the_post(); ?>
 
 						<?php get_template_part( 'inc/template-parts/article' ); ?>
 
-						<?php endwhile; else : ?>
+						<?php endwhile; ?>
+
+						<?php do_action( 'wpbf_after_loop' ); ?>
+
+						<?php else : ?>
 
 						<?php get_template_part( 'inc/template-parts/article-none' ); ?>
 
