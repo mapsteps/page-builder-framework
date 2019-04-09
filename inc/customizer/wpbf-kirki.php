@@ -562,6 +562,29 @@ foreach ( $archives as $archive ) {
 		),
 	) );
 
+	// Stretch Image
+	Kirki::add_field( 'wpbf', array(
+		'type'				=>			'toggle',
+		'settings'			=>			$archive . '_boxed_image_streched',
+		'label'				=>			esc_attr__( 'Stretch Featured Image', 'page-builder-framework' ),
+		'section'			=>			'wpbf_' . $archive . '_options',
+		'default'			=>			0,
+		'priority'			=>			20,
+		'active_callback'	=>			array(
+			array(
+			'setting'		=>			$archive . '_post_style',
+			'operator'		=>			'==',
+			'value'			=>			'boxed',
+			),
+			array(
+			'setting'		=>			$archive . '_layout',
+			'operator'		=>			'!=',
+			'value'			=>			'beside',
+			),
+
+		),
+	) );
+
 	// Space Between
 	Kirki::add_field( 'wpbf', array(
 		'type'				=>			'slider',
@@ -674,7 +697,7 @@ foreach ( $archives as $archive ) {
 		'type'				=>			'custom',
 		'settings'			=>			$archive . '-separator-824021',
 		'section'			=>			'wpbf_' . $archive . '_options',
-		'default'			=>			'<h3 style="padding:15px 10px; background:#fff; margin:0;">'. __( 'Image Beside Post', 'page-builder-framework' ) .'</h3>',
+		'default'			=>			'<h3 style="padding:15px 10px; background:#fff; margin:0;">'. __( 'Image Beside Post Layout Settings', 'page-builder-framework' ) .'</h3>',
 		'priority'			=>			100,
 		'active_callback'	=>			array(
 			array(
@@ -3722,8 +3745,8 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			$archive . '_boxed_padding_left_desktop', $archive . '_boxed_padding_left_tablet', $archive . '_boxed_padding_left_mobile',
 		);
 
-		foreach( $responsive_boxed_style_post_settings as $responsive_boxed_style_post_settings ) {
-			$wp_customize->add_setting( $responsive_boxed_style_post_settings,
+		foreach( $responsive_boxed_style_post_settings as $responsive_boxed_style_post_setting ) {
+			$wp_customize->add_setting( $responsive_boxed_style_post_setting,
 				array(
 					'sanitize_callback' => 'absint'
 				)
@@ -3735,7 +3758,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 				array(
 					'label'	=> esc_attr__( 'Padding', 'page-builder-framework' ),
 					'section' => 'wpbf_' . $archive . '_options',
-					'settings' => $responsive_boxed_style_post_settings,
+					'settings' => $responsive_boxed_style_post_setting,
 					'priority' => 25,
 					'active_callback' => function() use ($archive) { return get_theme_mod( $archive . '_post_style' ) == 'boxed' ? true : false; },
 				)
