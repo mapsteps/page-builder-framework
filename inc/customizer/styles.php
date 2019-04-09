@@ -823,6 +823,7 @@ foreach( $archives as $archive ) {
 	$space_between     = get_theme_mod( $archive . '_post_space_between' );
 	$title_size        = get_theme_mod( $archive . '_post_title_size' );
 	$font_size         = get_theme_mod( $archive . '_post_font_size' );
+	$stretched         = get_theme_mod( $archive . '_boxed_image_streched', false );
 
 	// General Layout Settings
 	if( $content_alignment ) {
@@ -892,29 +893,29 @@ foreach( $archives as $archive ) {
 		$boxed_padding_bottom_mobile  = get_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
 		$boxed_padding_left_mobile    = get_theme_mod( $archive . '_boxed_padding_left_mobile' );
 
-		if( isset( $boxed_padding_top_desktop ) || isset( $boxed_padding_right_desktop ) || isset( $boxed_padding_bottom_desktop ) || isset( $boxed_padding_left_desktop ) ) {
+		if( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop ) {
 
 			echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
 
-			if( isset( $boxed_padding_top_desktop ) ) {
+			if( $boxed_padding_top_desktop ) {
 
 				echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_desktop ) . 'px' );
 
 			}
 
-			if( isset( $boxed_padding_right_desktop ) ) {
+			if( $boxed_padding_right_desktop ) {
 
 				echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_desktop ) . 'px' );
 
 			}
 
-			if( isset( $boxed_padding_bottom_desktop ) ) {
+			if( $boxed_padding_bottom_desktop ) {
 
 				echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_desktop ) . 'px' );
 
 			}
 
-			if( isset( $boxed_padding_left_desktop ) ) {
+			if( $boxed_padding_left_desktop ) {
 
 				echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_desktop ) . 'px' );
 
@@ -922,33 +923,64 @@ foreach( $archives as $archive ) {
 
 			echo '}';
 
+			if( $stretched && $layout !== 'beside' ) {
+
+				echo '.wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+
+					if( $boxed_padding_left_desktop ) {
+
+						echo sprintf( 'margin-left: -%s;', esc_attr( $boxed_padding_left_desktop ) . 'px' );
+
+					}
+
+					if( $boxed_padding_right_desktop ) {
+
+						echo sprintf( 'margin-right: -%s;', esc_attr( $boxed_padding_right_desktop ) . 'px' );
+
+					}
+
+				echo '}';
+
+				echo '.wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+
+					if( $boxed_padding_top_desktop ) {
+
+						echo sprintf( 'margin-top: -%s;', esc_attr( $boxed_padding_top_desktop ) . 'px' );
+						echo sprintf( 'margin-bottom: %s;', esc_attr( $boxed_padding_top_desktop ) . 'px' );
+
+					}
+
+				echo '}';
+
+			}
+
 		}
 
-		if( isset( $boxed_padding_top_tablet ) || isset( $boxed_padding_right_tablet ) || isset( $boxed_padding_bottom_tablet ) || isset( $boxed_padding_left_tablet ) ) {
+		if( $boxed_padding_top_tablet || $boxed_padding_right_tablet || $boxed_padding_bottom_tablet || $boxed_padding_left_tablet ) {
 
 			echo '@media screen and (max-width: '. esc_attr( $breakpoint_desktop ) .') {';
 
 				echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
 
-				if( isset( $boxed_padding_top_tablet ) ) {
+				if( $boxed_padding_top_tablet ) {
 
 					echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_tablet ) . 'px' );
 
 				}
 
-				if( isset( $boxed_padding_right_tablet ) ) {
+				if( $boxed_padding_right_tablet ) {
 
 					echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_tablet ) . 'px' );
 
 				}
 
-				if( isset( $boxed_padding_bottom_tablet ) ) {
+				if( $boxed_padding_bottom_tablet ) {
 
 					echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_tablet ) . 'px' );
 
 				}
 
-				if( isset( $boxed_padding_left_tablet ) ) {
+				if( $boxed_padding_left_tablet ) {
 
 					echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_tablet ) . 'px' );
 
@@ -956,41 +988,103 @@ foreach( $archives as $archive ) {
 
 				echo '}';
 
+				if( $stretched && $layout !== 'beside' ) {
+
+					echo '.wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+
+						if( $boxed_padding_left_tablet ) {
+
+							echo sprintf( 'margin-left: -%s;', esc_attr( $boxed_padding_left_tablet ) . 'px' );
+
+						}
+
+						if( $boxed_padding_right_tablet ) {
+
+							echo sprintf( 'margin-right: -%s;', esc_attr( $boxed_padding_right_tablet ) . 'px' );
+
+						}
+
+					echo '}';
+
+					echo '.wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+
+						if( $boxed_padding_top_tablet ) {
+
+							echo sprintf( 'margin-top: -%s;', esc_attr( $boxed_padding_top_tablet ) . 'px' );
+							echo sprintf( 'margin-bottom: %s;', esc_attr( $boxed_padding_top_tablet ) . 'px' );
+
+						}
+
+					echo '}';
+
+				}
+
 			echo '}';
 
 		}
 
-		if( isset( $boxed_padding_top_mobile ) || isset( $boxed_padding_right_mobile ) || isset( $boxed_padding_bottom_mobile ) || isset( $boxed_padding_left_mobile ) ) {
+		if( $boxed_padding_top_mobile || $boxed_padding_right_mobile || $boxed_padding_bottom_mobile || $boxed_padding_left_mobile ) {
 
 			echo '@media screen and (max-width: '. esc_attr( $breakpoint_mobile ) .') {';
 
 				echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed {'; // WPCS: XSS ok.
 
-				if( isset( $boxed_padding_top_mobile ) ) {
+				if( $boxed_padding_top_mobile ) {
 
 					echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_mobile ) . 'px' );
 
 				}
 
-				if( isset( $boxed_padding_right_mobile ) ) {
+				if( $boxed_padding_right_mobile ) {
 
 					echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_mobile ) . 'px' );
 
 				}
 
-				if( isset( $boxed_padding_bottom_mobile ) ) {
+				if( $boxed_padding_bottom_mobile ) {
 
 					echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_mobile ) . 'px' );
 
 				}
 
-				if( isset( $boxed_padding_left_mobile ) ) {
+				if( $boxed_padding_left_mobile ) {
 
 					echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_mobile ) . 'px' );
 
 				}
 
 				echo '}';
+
+				if( $stretched && $layout !== 'beside' ) {
+
+					echo '.wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+
+						if( $boxed_padding_left_mobile ) {
+
+							echo sprintf( 'margin-left: -%s;', esc_attr( $boxed_padding_left_mobile ) . 'px' );
+
+						}
+
+						if( $boxed_padding_right_mobile ) {
+
+							echo sprintf( 'margin-right: -%s;', esc_attr( $boxed_padding_right_mobile ) . 'px' );
+
+						}
+
+					echo '}';
+
+					echo '.wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+
+						if( $boxed_padding_top_mobile ) {
+
+							echo sprintf( 'margin-top: -%s;', esc_attr( $boxed_padding_top_mobile ) . 'px' );
+							echo sprintf( 'margin-bottom: %s;', esc_attr( $boxed_padding_top_mobile ) . 'px' );
+
+						}
+
+					echo '}';
+
+				}
 
 			echo '}';
 
