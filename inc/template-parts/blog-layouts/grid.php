@@ -14,7 +14,6 @@ $template_parts        = wpbf_blog_layout();
 $template_parts_header = $template_parts['template_parts_header'];
 $template_parts_footer = $template_parts['template_parts_footer'];
 $style                 = $template_parts['style'];
-// $masonry               = isset( $template_parts['masonry'] ) ? '' : false;
 $post_classes          = array( 'wpbf-blog-layout-grid' );
 $post_classes[]        = 'wpbf-post-style-' . $style;
 
