@@ -86,8 +86,8 @@ get_header(); ?>
 
 									<?php
 
-									previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', '&larr; Previous Post' ) );
-									next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', 'Next Post &rarr;' ) );
+									previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
+									next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
 
 									?>
 
