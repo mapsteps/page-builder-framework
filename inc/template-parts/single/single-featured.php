@@ -19,5 +19,3 @@ $remove_featured = $options ? in_array( 'remove-featured', $options ) : false;
 if( $remove_featured ) return;
 
 the_post_thumbnail( apply_filters( 'wpbf_single_post_thumbnail_size', 'full' ), array( 'class' => 'wpbf-post-image', 'itemprop' => 'image' ) );
-
-?>

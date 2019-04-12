@@ -11,4 +11,4 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-wpbf_title(); ?>
+wpbf_title();
