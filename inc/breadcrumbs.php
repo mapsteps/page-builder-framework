@@ -77,6 +77,11 @@ function wpbf_breadcrumbs_2804( $args = array() ) {
 		return yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
 	}
 
+	// stop if we're on WooCommerce Pages as they handle breadcrumbs themselves
+	if ( function_exists( 'is_woocommerce' ) ) {
+		if( is_woocommerce() ) return;
+	}
+
 	$breadcrumb = apply_filters( 'breadcrumb_trail_object', null, $args );
 
 	if ( ! is_object( $breadcrumb ) )
