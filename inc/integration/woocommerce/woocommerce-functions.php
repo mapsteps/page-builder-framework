@@ -128,67 +128,22 @@ add_filter( 'wpbf_do_sidebar', 'wpbf_woo_sidebars' );
  */
 function wpbf_woo_output_content_wrapper() {
 
-	// vars
-	$single_sidebar_position_global = get_theme_mod( 'woocommerce_single_sidebar_layout' );
-	$sidebar_position_global        = get_theme_mod( 'woocommerce_sidebar_layout' );
-	$grid_gap                       = get_theme_mod( 'sidebar_gap', 'medium' );
+	//vars
+	$grid_gap = get_theme_mod( 'sidebar_gap', 'medium' );
 
 	echo '<div id="content">';
 
 	do_action( 'wpbf_content_open' );
 
-	if ( is_product() ) {
+	wpbf_inner_content();
 
-		$id                      = get_the_ID();
-		$single_sidebar_position = get_post_meta( $id, 'wpbf_sidebar_position', true );
+	do_action( 'wpbf_inner_content_open' );
 
-		wpbf_inner_content();
+	echo '<div class="wpbf-grid wpbf-main-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">';
 
-		do_action( 'wpbf_inner_content_open' );
+	do_action( 'wpbf_sidebar_left' );
 
-		if( $single_sidebar_position && $single_sidebar_position !== 'global' ) {
-
-			echo $single_sidebar_position !== 'none' ? '<div class="wpbf-grid wpbf-main-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">' : '';
-
-			$single_sidebar_position == 'left' ? get_sidebar() : '';
-
-			echo $single_sidebar_position !== 'none' ? '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'">' : '<main id="main" class="wpbf-main'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
-
-		} elseif( $single_sidebar_position_global && $single_sidebar_position_global !== 'none' ) {
-
-			echo '<div class="wpbf-grid wpbf-main-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">';
-
-			$single_sidebar_position_global == 'left' ? get_sidebar() : '';
-
-			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
-
-		} else {
-
-			echo '<main id="main" class="wpbf-main'. wpbf_singular_class() .'">'; // WPCS: XSS ok.
-
-		}
-
-	} else {
-
-		wpbf_inner_content();
-
-		do_action( 'wpbf_inner_content_open' );
-
-		if ( $sidebar_position_global && $sidebar_position_global !== 'none' ) {
-
-			echo '<div class="wpbf-grid wpbf-main-grid wpbf-grid-'. esc_attr( $grid_gap ) .'">';
-
-			$sidebar_position_global == 'left' ? get_sidebar() : '';
-
-			echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_archive_class() .'">'; // WPCS: XSS ok.
-
-		} else {
-
-			echo '<main id="main" class="wpbf-main'. wpbf_archive_class() .'">'; // WPCS: XSS ok.
-
-		}
-
-	}
+	echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_archive_class() .'">';
 
 }
 add_action( 'woocommerce_before_main_content', 'wpbf_woo_output_content_wrapper', 10 );
@@ -198,81 +153,67 @@ add_action( 'woocommerce_before_main_content', 'wpbf_woo_output_content_wrapper'
  */
 function wpbf_woo_output_content_wrapper_end() {
 
-	$single_sidebar_position_global = get_theme_mod( 'woocommerce_single_sidebar_layout' );
-	$sidebar_position_global        = get_theme_mod( 'woocommerce_sidebar_layout' );
+	echo '</main>';
 
-	if ( is_product() ) {
+	do_action( 'wpbf_sidebar_right' );
 
-		$id                      = get_the_ID();
-		$single_sidebar_position = get_post_meta( $id, 'wpbf_sidebar_position', true );
+	do_action( 'wpbf_inner_content_close' );
 
-		if( $single_sidebar_position && $single_sidebar_position !== 'global' ) {
-
-			// main
-			echo '</main>';
-
-			// right sidebar
-			$single_sidebar_position == 'right' ? get_sidebar() : '';
-
-			// grid
-			echo $single_sidebar_position !== 'none' ? '</div>' : '';
-
-			do_action( 'wpbf_inner_content_close' );
-
-			wpbf_inner_content_close();
-
-		} elseif( $single_sidebar_position_global && $single_sidebar_position_global !== 'none' ) {
-
-			// main
-			echo '</main>';
-
-			// right sidebar
-			$single_sidebar_position_global == 'right' ? get_sidebar() : '';
-
-			// grid
-			echo '</div>';
-
-		} else {
-
-			// main
-			echo '</main>';
-
-		}
-
-	} else {
-
-		if( $sidebar_position_global && $sidebar_position_global !== 'none' ) {
-
-			// main
-			echo '</main>';
-
-			// right sidebar
-			$sidebar_position_global == 'right' ? get_sidebar() : '';
-
-			// grid
-			echo '</div>';
-
-		} else {
-
-			// main
-			echo '</main>';
-
-		}
-
-		do_action( 'wpbf_inner_content_close' );
-
-		// inner content
-		wpbf_inner_content_close();
-
-	}
+	wpbf_inner_content_close();
 
 	do_action( 'wpbf_content_close' );
 
-	// content
 	echo '</div>';
 
 }
 add_action( 'woocommerce_after_main_content', 'wpbf_woo_output_content_wrapper_end', 10 );
+
+/**
+ * Filter Sidebar Layout
+ */
+function wpbf_woo_sidebar_layout( $sidebar ) {
+
+	if( is_product() ) {
+
+		$sidebar = get_theme_mod( 'woocommerce_single_sidebar_layout', 'none' );
+
+		$id               = get_the_ID();
+		$sidebar_position = get_post_meta( $id, 'wpbf_sidebar_position', true );
+
+		if( $sidebar_position && $sidebar_position !== 'global' ) {
+			$sidebar = $sidebar_position;
+		}
+
+	} elseif( is_shop() ) {
+
+		$sidebar = get_theme_mod( 'woocommerce_sidebar_layout', 'none' );
+
+	}
+
+	return $sidebar;
+
+}
+add_filter( 'wpbf_sidebar_layout', 'wpbf_woo_sidebar_layout' );
+
+/**
+ * Apply Content/Archive Class
+ */
+function wpbf_woo_archive_class( $archive_class ) {
+
+	if( is_product() ) {
+
+		$archive_class = ' wpbf-product-content';
+
+	} elseif( is_shop() ) {
+
+		$archive_class = ' wpbf-product-archive';
+
+	}
+
+	return $archive_class;
+
+}
+add_filter( 'wpbf_archive_class', 'wpbf_woo_archive_class' );
 
 /**
  * Product Loop Start
