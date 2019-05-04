@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				'theme_location'	=>		'mobile_menu',
 				'container'			=>		false,
 				'menu_class'		=>		'wpbf-mobile-menu',
-				'depth'				=>		'3',
+				'depth'				=>		4,
 				'fallback_cb'		=>		'wpbf_mobile_menu_fallback'
 			)); ?>
 
