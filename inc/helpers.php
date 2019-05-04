@@ -516,7 +516,7 @@ function wpbf_nav_menu() {
 			'theme_location'	=> 'main_menu',
 			'container'			=> false,
 			'menu_class'		=> 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect(),
-			'depth'				=> 3,
+			'depth'				=> 4,
 			'fallback_cb'		=> 'wpbf_main_menu_fallback'
 		));
 

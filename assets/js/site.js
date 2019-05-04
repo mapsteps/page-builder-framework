@@ -109,7 +109,7 @@
 	 *
 	 * Excluding Mega Menu – this is always going to be a Fade effect
 	 */
-    $('.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children').hover(function() {
+    $('.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children').hover(function() {
 		$('.sub-menu', this).first().stop().css({display:'block'}).animate({opacity:'1'}, duration);
 	},
 	function(){
