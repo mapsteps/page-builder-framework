@@ -8,7 +8,9 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Constants
+/**
+ * Constants
+ */
 define( 'WPBF_THEME_DIR', get_template_directory() );
 define( 'WPBF_THEME_URI', get_template_directory_uri() );
 define( 'WPBF_CHILD_THEME_DIR', get_stylesheet_directory() );
@@ -64,20 +66,20 @@ function wpbf_theme_setup() {
 
 	// Nav Menu's
 	register_nav_menus( array(
-
-		'main_menu'				=> __( 'Main Menu', 'page-builder-framework' ),
-		'mobile_menu'			=> __( 'Mobile Menu', 'page-builder-framework' ),
-		'pre_header_menu'		=> __( 'Pre Header Left', 'page-builder-framework' ),
+		'main_menu'             => __( 'Main Menu', 'page-builder-framework' ),
+		'mobile_menu'           => __( 'Mobile Menu', 'page-builder-framework' ),
+		'pre_header_menu'       => __( 'Pre Header Left', 'page-builder-framework' ),
 		'pre_header_menu_right'	=> __( 'Pre Header Right', 'page-builder-framework' ),
-		'footer_menu'			=> __( 'Footer Left', 'page-builder-framework' ),
-		'footer_menu_right'		=> __( 'Footer Right', 'page-builder-framework' )
-
+		'footer_menu'           => __( 'Footer Left', 'page-builder-framework' ),
+		'footer_menu_right'     => __( 'Footer Right', 'page-builder-framework' )
 	) );
 
 }
 add_action( 'after_setup_theme', 'wpbf_theme_setup' );
 
-// Content Width
+/**
+ * Content Width
+ */
 if ( ! isset( $content_width ) ) {
 	$content_width = 1200;
 }
@@ -88,14 +90,12 @@ if ( ! isset( $content_width ) ) {
 function wpbf_sidebars() {
 
 	register_sidebar( array(
-
-		'name'			=> __( 'Sidebar', 'page-builder-framework' ),
-		'id'			=> 'sidebar-1',
+		'name'          => __( 'Sidebar', 'page-builder-framework' ),
+		'id'            => 'sidebar-1',
 		'before_widget'	=> '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="wpbf-widgettitle">',
 		'after_title'   => '</h4>'
-
 	) );
 
 }
