@@ -158,3 +158,8 @@ function wpbf_change_fonts_load_method( $method ) {
 
 }
 add_filter( 'kirki_googlefonts_load_method', 'wpbf_change_fonts_load_method' );
+
+/**
+ * Remove kirki telemetry
+ */
+add_filter( 'kirki_telemetry', '__return_false' );
