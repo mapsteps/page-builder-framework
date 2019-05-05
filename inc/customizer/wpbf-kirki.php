@@ -9,7 +9,11 @@
 // exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Textdomain
+/**
+ * Textdomain
+ *
+ * Required. Otherwise, strings cannot be translated.
+ */
 load_theme_textdomain( 'page-builder-framework', get_template_directory() . '/languages' );
 
 // Default Font Choice
@@ -51,9 +55,10 @@ add_action( 'customize_register' , 'wpbf_customizer_setup', 20 );
 
 /* kirki Configuration */
 Kirki::add_config( 'wpbf', array(
-	'capability'		=>		'edit_theme_options',
-	'option_type'		=>		'theme_mod',
-	'disable_output'	=>		true
+	'capability'        => 'edit_theme_options',
+	'option_type'       => 'theme_mod',
+	'gutenberg_support' => true,
+	'disable_output'    => true
 ) );
 
 /* Panels */

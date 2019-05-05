@@ -10,24 +10,18 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // variables
-$page_width						= get_theme_mod( 'page_max_width' );
-$single_custom_width			= get_theme_mod( 'single_custom_width' );
-$content_width					= $single_custom_width ? $single_custom_width : $page_width;
-
-if ( strpos( $content_width, 'px' ) !== false ) {
-    $page_width_int				= (int) $content_width;
-} else {
-	$page_width_int				= false;
-}
-
-$background_color				= get_theme_mod( 'background_color' );
-$page_accent_color				= get_theme_mod( 'page_accent_color' );
-$page_bold_color				= get_theme_mod( 'page_bold_color' );
-$page_font_size_desktop			= get_theme_mod( 'page_font_size_desktop' );
-$page_font_toggle				= get_theme_mod( 'page_font_toggle' );
-$page_font_family_value			= get_theme_mod( 'page_font_family', array() );
-$page_font_color				= get_theme_mod( 'page_font_color' );
-$page_line_height				= get_theme_mod( 'page_line_height' );
+$page_width             = get_theme_mod( 'page_max_width' );
+$single_custom_width    = get_theme_mod( 'single_custom_width' );
+$content_width          = $single_custom_width ? $single_custom_width : $page_width;
+$page_width_int         = strpos( $content_width, 'px' ) !== false ? (int) $content_width : false;
+$background_color       = get_theme_mod( 'background_color' );
+$page_accent_color      = get_theme_mod( 'page_accent_color' );
+$page_bold_color        = get_theme_mod( 'page_bold_color' );
+$page_font_size_desktop = get_theme_mod( 'page_font_size_desktop' );
+$page_font_toggle       = get_theme_mod( 'page_font_toggle' );
+$page_font_family_value = get_theme_mod( 'page_font_family', array() );
+$page_font_color        = get_theme_mod( 'page_font_color' );
+$page_line_height       = get_theme_mod( 'page_line_height' );
 
 // Page Width – apply width if we have a px value set in the customizer
 if( $page_width_int ) {
@@ -69,19 +63,16 @@ if( $page_bold_color ) {
 
 }
 
-// Page Font
-// not going for font-style on the main text as it overrides blockquotes
-// assuming no one would ever want to do this anyway
-// not going for the font family until we found a way to enqueue kirki's Google fonts in the editor (and if, see if we need to target headlines directly)
+// Page Font Settings
 if( $page_font_toggle && $page_font_family_value ) {
 
 	echo '#wpwrap .edit-post-visual-editor, #wpwrap .edit-post-visual-editor p {';
 
-	// if( isset( $page_font_family_value['font-family'] ) && !empty( $page_font_family_value['font-family'] ) ) {
-	// 	echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
-	// }
+	if( !empty( $page_font_family_value['font-family'] ) ) {
+		echo  sprintf( 'font-family: %s !important;', html_entity_decode( esc_attr( $page_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+	}
 
-	if( isset( $page_font_family_value['variant'] ) && !empty( $page_font_family_value['variant'] ) ) {
+	if( !empty( $page_font_family_value['variant'] ) ) {
 
 		$page_font_family_font_weight = str_replace( 'italic', '', $page_font_family_value['variant'] );
 		$page_font_family_font_weight = ( in_array( $page_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_font_family_font_weight;
@@ -94,7 +85,6 @@ if( $page_font_toggle && $page_font_family_value ) {
 
 }
 
-// We do the font size separately because it outherwise interferes with the large blockquote
 if( $page_line_height || $page_font_color ) { 
 
 	echo '#wpwrap .edit-post-visual-editor, #wpwrap .edit-post-visual-editor p {';
@@ -115,15 +105,16 @@ if( $page_line_height || $page_font_color ) {
 
 }
 
+// We do the font size separately because it outherwise interferes with the large blockquote
 // going for #wpwrap .editor-styles-wrapper for as much of a global effect as possible
 // (not goint for #wpwrap .editor-styles-wrapper p as it overrides other blocks paragraph styling)
 // blockquotes
 // code & preformatted text
 if( $page_font_size_desktop ) {
 
-echo '#wpwrap .edit-post-visual-editor, #wpwrap .edit-post-visual-editor .wp-block-paragraph, #wpwrap .edit-post-visual-editor .wp-block-quote:not(.is-style-large) p:first-child, #wpwrap .edit-post-visual-editor .wp-block-code, #wpwrap .edit-post-visual-editor .wp-block-preformatted pre {';
-echo sprintf( 'font-size: %s;', esc_attr( $page_font_size_desktop ) );
-echo '}';
+	echo '#wpwrap .edit-post-visual-editor, #wpwrap .edit-post-visual-editor .wp-block-paragraph, #wpwrap .edit-post-visual-editor .wp-block-quote:not(.is-style-large) p:first-child, #wpwrap .edit-post-visual-editor .wp-block-code, #wpwrap .edit-post-visual-editor .wp-block-preformatted pre {';
+	echo sprintf( 'font-size: %s;', esc_attr( $page_font_size_desktop ) );
+	echo '}';
 
 }
 
@@ -152,11 +143,11 @@ if( $page_h1_toggle && $page_h1_font_family_value ) {
 
 	echo '#wpwrap .edit-post-visual-editor h1, #wpwrap .edit-post-visual-editor .editor-post-title__block .editor-post-title__input, #wpwrap .edit-post-visual-editor h2, #wpwrap .edit-post-visual-editor h3, #wpwrap .edit-post-visual-editor h4, #wpwrap .edit-post-visual-editor h5, #wpwrap .edit-post-visual-editor h6 {';
 
-	// if( isset( $page_h1_font_family_value['font-family'] ) && !empty( $page_h1_font_family_value['font-family'] ) ) {
-	// 	echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h1_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
-	// }
+	if( !empty( $page_h1_font_family_value['font-family'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h1_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+	}
 
-	if( isset( $page_h1_font_family_value['variant'] ) && !empty( $page_h1_font_family_value['variant'] ) ) {
+	if( !empty( $page_h1_font_family_value['variant'] ) ) {
 
 		$page_h1_font_family_font_weight = str_replace( 'italic', '', $page_h1_font_family_value['variant'] );
 		$page_h1_font_family_font_weight = ( in_array( $page_h1_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h1_font_family_font_weight;
@@ -220,11 +211,11 @@ if( $page_h2_toggle && $page_h2_font_family_value ) {
 
 	echo '#wpwrap .edit-post-visual-editor h2 {';
 
-	// if( isset( $page_h2_font_family_value['font-family'] ) && !empty( $page_h2_font_family_value['font-family'] ) ) {
-	// 	echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h2_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
-	// }
+	if( !empty( $page_h2_font_family_value['font-family'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h2_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+	}
 
-	if( isset( $page_h2_font_family_value['variant'] ) && !empty( $page_h2_font_family_value['variant'] ) ) {
+	if( !empty( $page_h2_font_family_value['variant'] ) ) {
 
 		$page_h2_font_family_font_weight = str_replace( 'italic', '', $page_h2_font_family_value['variant'] );
 		$page_h2_font_family_font_weight = ( in_array( $page_h2_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h2_font_family_font_weight;
@@ -300,11 +291,11 @@ if( $page_h3_toggle && $page_h3_font_family_value ) {
 
 	echo '#wpwrap .edit-post-visual-editor h3 {';
 
-	// if( isset( $page_h3_font_family_value['font-family'] ) && !empty( $page_h3_font_family_value['font-family'] ) ) {
-	// 	echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h3_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
-	// }
+	if( !empty( $page_h3_font_family_value['font-family'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h3_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+	}
 
-	if( isset( $page_h3_font_family_value['variant'] ) && !empty( $page_h3_font_family_value['variant'] ) ) {
+	if( !empty( $page_h3_font_family_value['variant'] ) ) {
 
 		$page_h3_font_family_font_weight = str_replace( 'italic', '', $page_h3_font_family_value['variant'] );
 		$page_h3_font_family_font_weight = ( in_array( $page_h3_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h3_font_family_font_weight;
@@ -380,11 +371,11 @@ if( $page_h4_toggle && $page_h4_font_family_value ) {
 
 	echo '#wpwrap .edit-post-visual-editor h4 {';
 
-	// if( isset( $page_h4_font_family_value['font-family'] ) && !empty( $page_h4_font_family_value['font-family'] ) ) {
-	// 	echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h4_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
-	// }
+	if( !empty( $page_h4_font_family_value['font-family'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h4_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+	}
 
-	if( isset( $page_h4_font_family_value['variant'] ) && !empty( $page_h4_font_family_value['variant'] ) ) {
+	if( !empty( $page_h4_font_family_value['variant'] ) ) {
 
 		$page_h4_font_family_font_weight = str_replace( 'italic', '', $page_h4_font_family_value['variant'] );
 		$page_h4_font_family_font_weight = ( in_array( $page_h4_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h4_font_family_font_weight;
@@ -460,11 +451,11 @@ if( $page_h5_toggle && $page_h5_font_family_value ) {
 
 	echo '#wpwrap .edit-post-visual-editor h5 {';
 
-	// if( isset( $page_h5_font_family_value['font-family'] ) && !empty( $page_h5_font_family_value['font-family'] ) ) {
-	// 	echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h5_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
-	// }
+	if( !empty( $page_h5_font_family_value['font-family'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h5_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+	}
 
-	if( isset( $page_h5_font_family_value['variant'] ) && !empty( $page_h5_font_family_value['variant'] ) ) {
+	if( !empty( $page_h5_font_family_value['variant'] ) ) {
 
 		$page_h5_font_family_font_weight = str_replace( 'italic', '', $page_h5_font_family_value['variant'] );
 		$page_h5_font_family_font_weight = ( in_array( $page_h5_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h5_font_family_font_weight;
@@ -540,11 +531,11 @@ if( $page_h6_toggle && $page_h6_font_family_value ) {
 
 	echo '#wpwrap .edit-post-visual-editor h6 {';
 
-	// if( isset( $page_h6_font_family_value['font-family'] ) && !empty( $page_h6_font_family_value['font-family'] ) ) {
-	// 	echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h6_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
-	// }
+	if( !empty( $page_h6_font_family_value['font-family'] ) ) {
+		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h6_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+	}
 
-	if( isset( $page_h6_font_family_value['variant'] ) && !empty( $page_h6_font_family_value['variant'] ) ) {
+	if( !empty( $page_h6_font_family_value['variant'] ) ) {
 
 		$page_h6_font_family_font_weight = str_replace( 'italic', '', $page_h6_font_family_value['variant'] );
 		$page_h6_font_family_font_weight = ( in_array( $page_h6_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h6_font_family_font_weight;
