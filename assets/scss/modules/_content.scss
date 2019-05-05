@@ -129,8 +129,9 @@ body {
 
 // Boxed Style
 .wpbf-post-style-boxed {
-	padding: 20px;
+	padding: $padding;
 	background: $base-color-alt;
+	margin-bottom: $margin;
 	.article-footer >*:last-child {
 		margin-bottom: 0;
 	}
