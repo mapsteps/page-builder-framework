@@ -168,6 +168,7 @@ if( $page_h3_toggle && $page_h3_font_family_value ) {
 	if( !empty( $page_h3_font_family_value['font-family'] ) ) {
 
 		echo  sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h3_font_family_value['font-family'] ), ENT_QUOTES ) ); // WPCS: XSS ok.
+
 	}
 
 	if( !empty( $page_h3_font_family_value['variant'] ) ) {
