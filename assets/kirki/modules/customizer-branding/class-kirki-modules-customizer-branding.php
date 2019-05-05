@@ -6,8 +6,8 @@
  *
  * @package     Kirki
  * @category    Modules
- * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @author      Ari Stathopoulos (@aristath)
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       3.0.0
  */
@@ -67,7 +67,6 @@ class Kirki_Modules_Customizer_Branding {
 	 * @since 3.0.0
 	 */
 	public function customize_controls_print_scripts() {
-
 		$config = apply_filters( 'kirki_config', array() );
 		$vars   = array(
 			'logoImage'   => '',

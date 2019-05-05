@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @category    Core
- * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @author      Ari Stathopoulos (@aristath)
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       1.0
  */
@@ -34,8 +34,16 @@ class Kirki_Helper {
 			return array_replace_recursive( $array, $array1 );
 		}
 
-		// Handle the arguments, merge one by one.
-		$args  = func_get_args();
+		/**
+		 * Handle the arguments, merge one by one.
+		 *
+		 * In PHP 7 func_get_args() changed the way it behaves but this doesn't mean anything in this case
+		 * sinc ethis method is only used when the array_replace_recursive() function doesn't exist
+		 * and that was introduced in PHP v5.3.
+		 *
+		 * Once WordPress-Core raises its minimum requirements we''' be able to remove this fallback completely.
+		 */
+		$args  = func_get_args(); // phpcs:ignore PHPCompatibility.FunctionUse.ArgumentFunctionsReportCurrentValue
 		$array = $args[0];
 		if ( ! is_array( $array ) ) {
 			return $array;
@@ -60,6 +68,7 @@ class Kirki_Helper {
 	 */
 	public static function recurse( $array, $array1 ) {
 		foreach ( $array1 as $key => $value ) {
+
 			// Create new key in $array, if it is empty or not an array.
 			if ( ! isset( $array[ $key ] ) || ( isset( $array[ $key ] ) && ! is_array( $array[ $key ] ) ) ) {
 				$array[ $key ] = array();
@@ -120,7 +129,7 @@ class Kirki_Helper {
 		global $wp_filesystem;
 
 		if ( empty( $wp_filesystem ) ) {
-			require_once wp_normalize_path( ABSPATH . '/wp-admin/includes/file.php' );
+			require_once wp_normalize_path( ABSPATH . '/wp-admin/includes/file.php' ); // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 			WP_Filesystem( $credentials );
 		}
 
@@ -161,7 +170,6 @@ class Kirki_Helper {
 	 * @return array
 	 */
 	public static function get_image_from_url( $url ) {
-
 		$image_id = self::get_image_id( $url );
 		$image    = wp_get_attachment_image_src( $image_id, 'full' );
 
@@ -171,7 +179,6 @@ class Kirki_Helper {
 			'height'    => $image[2],
 			'thumbnail' => $image[3],
 		);
-
 	}
 
 	/**
@@ -183,7 +190,6 @@ class Kirki_Helper {
 	 * @return array
 	 */
 	public static function get_posts( $args ) {
-
 		if ( is_string( $args ) ) {
 			$args = add_query_arg(
 				array(
@@ -206,7 +212,6 @@ class Kirki_Helper {
 		wp_reset_postdata();
 
 		return $items;
-
 	}
 
 	/**
@@ -217,7 +222,6 @@ class Kirki_Helper {
 	 * @return array
 	 */
 	public static function get_taxonomies() {
-
 		$items = array();
 
 		// Get the taxonomies.
@@ -235,7 +239,6 @@ class Kirki_Helper {
 		}
 
 		return $items;
-
 	}
 
 	/**
@@ -246,14 +249,14 @@ class Kirki_Helper {
 	 * @return array
 	 */
 	public static function get_post_types() {
-
 		$items = array();
 
 		// Get the post types.
 		$post_types = get_post_types(
 			array(
 				'public' => true,
-			), 'objects'
+			),
+			'objects'
 		);
 
 		// Build the array.
@@ -262,7 +265,6 @@ class Kirki_Helper {
 		}
 
 		return $items;
-
 	}
 
 	/**
@@ -274,7 +276,6 @@ class Kirki_Helper {
 	 * @return array
 	 */
 	public static function get_terms( $taxonomies ) {
-
 		$items = array();
 
 		// Get the post types.
@@ -286,7 +287,6 @@ class Kirki_Helper {
 		}
 
 		return $items;
-
 	}
 
 	/**
@@ -298,7 +298,6 @@ class Kirki_Helper {
 	 * @return array
 	 */
 	public static function get_material_design_colors( $context = 'primary' ) {
-
 		$colors = array(
 			'primary'     => array( '#FFFFFF', '#000000', '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B' ),
 			'red'         => array( '#FFEBEE', '#FFCDD2', '#EF9A9A', '#E57373', '#EF5350', '#F44336', '#E53935', '#D32F2F', '#C62828', '#B71C1C', '#FF8A80', '#FF5252', '#FF1744', '#D50000' ),
@@ -323,7 +322,6 @@ class Kirki_Helper {
 		);
 
 		switch ( $context ) {
-
 			case '50':
 			case '100':
 			case '200':
@@ -387,7 +385,6 @@ class Kirki_Helper {
 	 * @return array
 	 */
 	public static function get_dashicons() {
-
 		return array(
 			'admin-menu'     => array( 'menu', 'admin-site', 'dashboard', 'admin-post', 'admin-media', 'admin-links', 'admin-page', 'admin-comments', 'admin-appearance', 'admin-plugins', 'admin-users', 'admin-tools', 'admin-settings', 'admin-network', 'admin-home', 'admin-generic', 'admin-collapse', 'filter', 'admin-customizer', 'admin-multisite' ),
 			'welcome-screen' => array( 'welcome-write-blog', 'welcome-add-page', 'welcome-view-site', 'welcome-widgets-menus', 'welcome-comments', 'welcome-learn-more' ),
@@ -405,7 +402,6 @@ class Kirki_Helper {
 			'notifications'  => array( 'yes', 'no', 'no-alt', 'plus', 'plus-alt', 'minus', 'dismiss', 'marker', 'star-filled', 'star-half', 'star-empty', 'flag', 'warning' ),
 			'misc'           => array( 'location', 'location-alt', 'vault', 'shield', 'shield-alt', 'sos', 'search', 'slides', 'analytics', 'chart-pie', 'chart-bar', 'chart-line', 'chart-area', 'groups', 'businessman', 'id', 'id-alt', 'products', 'awards', 'forms', 'testimonial', 'portfolio', 'book', 'book-alt', 'download', 'upload', 'backup', 'clock', 'lightbulb', 'microphone', 'desktop', 'tablet', 'smartphone', 'phone', 'index-card', 'carrot', 'building', 'store', 'album', 'palmtree', 'tickets-alt', 'money', 'smiley', 'thumbs-up', 'thumbs-down', 'layout' ),
 		);
-
 	}
 
 	/**
@@ -424,7 +420,7 @@ class Kirki_Helper {
 			return $value1 !== $value2;
 		}
 		if ( ( '!=' === $operator || 'not equal' === $operator ) ) {
-			return $value1 != $value2; // WPCS: loose comparison ok.
+			return $value1 != $value2; // phpcs:ignore WordPress.PHP.StrictComparisons
 		}
 		if ( ( '>=' === $operator || 'greater or equal' === $operator || 'equal or greater' === $operator ) ) {
 			return $value2 >= $value1;
@@ -441,20 +437,20 @@ class Kirki_Helper {
 		if ( 'contains' === $operator || 'in' === $operator ) {
 			if ( is_array( $value1 ) && is_array( $value2 ) ) {
 				foreach ( $value2 as $val ) {
-					if ( in_array( $val, $value1 ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
+					if ( in_array( $val, $value1 ) ) { // phpcs:ignore WordPress.PHP.StrictInArray
 						return true;
 					}
 				}
 				return false;
 			}
 			if ( is_array( $value1 ) && ! is_array( $value2 ) ) {
-				return in_array( $value2, $value1 ); // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
+				return in_array( $value2, $value1 ); // phpcs:ignore WordPress.PHP.StrictInArray
 			}
 			if ( is_array( $value2 ) && ! is_array( $value1 ) ) {
-				return in_array( $value1, $value2 ); // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
+				return in_array( $value1, $value2 ); // phpcs:ignore WordPress.PHP.StrictInArray
 			}
 			return ( false !== strrpos( $value1, $value2 ) || false !== strpos( $value2, $value1 ) );
 		}
-		return $value1 == $value2; // WPCS: loose comparison ok.
+		return $value1 == $value2; // phpcs:ignore WordPress.PHP.StrictComparisons
 	}
 }

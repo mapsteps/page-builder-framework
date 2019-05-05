@@ -5,8 +5,8 @@
  * @package     Kirki
  * @category    Modules
  * @subpackage  Custom Sections Module
- * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @author      Ari Stathopoulos (@aristath)
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       3.0.0
  */
@@ -38,12 +38,16 @@ class Kirki_Modules_Custom_Sections {
 	 * @since 3.0.0
 	 */
 	protected function __construct() {
+
 		// Register the new section types.
 		add_filter( 'kirki_section_types', array( $this, 'set_section_types' ) );
+
 		// Register the new panel types.
 		add_filter( 'kirki_panel_types', array( $this, 'set_panel_types' ) );
+
 		// Include the section-type files.
 		add_action( 'customize_register', array( $this, 'include_sections_and_panels' ) );
+
 		// Enqueue styles & scripts.
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_scrips' ), 999 );
 	}
@@ -73,14 +77,13 @@ class Kirki_Modules_Custom_Sections {
 	 * @return array
 	 */
 	public function set_section_types( $section_types ) {
-
 		$new_types = array(
 			'kirki-default'  => 'Kirki_Sections_Default_Section',
 			'kirki-expanded' => 'Kirki_Sections_Expanded_Section',
 			'kirki-nested'   => 'Kirki_Sections_Nested_Section',
+			'kirki-link'     => 'Kirki_Sections_Link_Section',
 		);
 		return array_merge( $section_types, $new_types );
-
 	}
 
 	/**
@@ -92,12 +95,10 @@ class Kirki_Modules_Custom_Sections {
 	 * @return array
 	 */
 	public function set_panel_types( $panel_types ) {
-
 		$new_types = array(
 			'kirki-nested' => 'Kirki_Panels_Nested_Panel',
 		);
 		return array_merge( $panel_types, $new_types );
-
 	}
 
 	/**
@@ -116,12 +117,12 @@ class Kirki_Modules_Custom_Sections {
 			if ( ! class_exists( $class ) ) {
 				$path = wp_normalize_path( $folder_path . 'class-kirki-sections-' . $id . '-section.php' );
 				if ( file_exists( $path ) ) {
-					include_once $path;
+					include_once $path; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 					continue;
 				}
 				$path = str_replace( 'class-kirki-sections-kirki-', 'class-kirki-sections-', $path );
 				if ( file_exists( $path ) ) {
-					include_once $path;
+					include_once $path; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 				}
 			}
 		}
@@ -134,16 +135,15 @@ class Kirki_Modules_Custom_Sections {
 			if ( ! class_exists( $class ) ) {
 				$path = wp_normalize_path( $folder_path . 'class-kirki-panels-' . $id . '-panel.php' );
 				if ( file_exists( $path ) ) {
-					include_once $path;
+					include_once $path; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 					continue;
 				}
 				$path = str_replace( 'class-kirki-panels-kirki-', 'class-kirki-panels-', $path );
 				if ( file_exists( $path ) ) {
-					include_once $path;
+					include_once $path; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -153,10 +153,7 @@ class Kirki_Modules_Custom_Sections {
 	 * @since 3.0.0
 	 */
 	public function enqueue_scrips() {
-
 		wp_enqueue_style( 'kirki-custom-sections', trailingslashit( Kirki::$url ) . 'modules/custom-sections/sections.css', array(), KIRKI_VERSION );
 		wp_enqueue_script( 'kirki-custom-sections', trailingslashit( Kirki::$url ) . 'modules/custom-sections/sections.js', array( 'jquery', 'customize-base', 'customize-controls' ), KIRKI_VERSION, false );
-
 	}
-
 }

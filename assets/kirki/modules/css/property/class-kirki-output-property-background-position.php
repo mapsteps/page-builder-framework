@@ -4,7 +4,7 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       2.2.0
  */
@@ -20,7 +20,6 @@ class Kirki_Output_Property_Background_Position extends Kirki_Output_Property {
 	 * @access protected
 	 */
 	protected function process_value() {
-
 		$this->value = trim( $this->value );
 
 		// If you use calc() there, I suppose you know what you're doing.

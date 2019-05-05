@@ -4,7 +4,7 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       2.2.7
  */
@@ -96,6 +96,17 @@ class Kirki_Field_Code extends Kirki_Field {
 		if ( ! isset( $this->editor_settings['codemirror']['mode'] ) ) {
 			$this->editor_settings['codemirror']['mode'] = $language;
 		}
+
+		if ( 'text/x-scss' === $this->editor_settings['codemirror']['mode'] ) {
+			$this->editor_settings['codemirror'] = array_merge(
+				$this->editor_settings['codemirror'],
+				array(
+					'lint'              => false,
+					'autoCloseBrackets' => true,
+					'matchBrackets'     => true,
+				)
+			);
+		}
 	}
 
 	/**
@@ -114,6 +125,5 @@ class Kirki_Field_Code extends Kirki_Field {
 		// It is the responsibility of the theme/plugin that registers this field
 		// to properly apply any necessary filtering.
 		$this->sanitize_callback = array( 'Kirki_Sanitize_Values', 'unfiltered' );
-
 	}
 }

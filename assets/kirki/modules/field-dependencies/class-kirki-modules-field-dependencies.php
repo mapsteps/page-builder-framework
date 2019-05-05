@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @category    Modules
- * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @author      Ari Stathopoulos (@aristath)
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       3.0.0
  */
@@ -65,7 +65,6 @@ class Kirki_Modules_Field_Dependencies {
 	 * @return void
 	 */
 	public function field_dependencies() {
-
 		wp_enqueue_script( 'kirki_field_dependencies', trailingslashit( Kirki::$url ) . 'modules/field-dependencies/field-dependencies.js', array( 'jquery', 'customize-base', 'customize-controls' ), KIRKI_VERSION, true );
 	}
 }

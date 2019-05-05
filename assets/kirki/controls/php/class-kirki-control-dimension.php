@@ -4,7 +4,7 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       2.0
  */
@@ -34,10 +34,11 @@ class Kirki_Control_Dimension extends Kirki_Control_Base {
 	 */
 	public function enqueue() {
 		parent::enqueue();
-
 		wp_localize_script(
-			'kirki-script', 'dimensionkirkiL10n', array(
-				'invalid-value' => esc_attr__( 'Invalid Value', 'kirki' ),
+			'kirki-script',
+			'dimensionkirkiL10n',
+			array(
+				'invalid-value' => esc_html__( 'Invalid Value', 'kirki' ),
 			)
 		);
 	}

@@ -5,8 +5,8 @@
  *
  * @package     Kirki
  * @category    Core
- * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @author      Ari Stathopoulos (@aristath)
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       1.0
  */
@@ -73,7 +73,6 @@ final class Kirki_Fonts_Google {
 	 * The class constructor.
 	 */
 	private function __construct() {
-
 		$config = apply_filters( 'kirki_config', array() );
 
 		// If we have set $config['disable_google_fonts'] to true then do not proceed any further.
@@ -112,20 +111,14 @@ final class Kirki_Fonts_Google {
 	 */
 	public function generate_google_font( $args ) {
 
-		global $wp_customize;
-
 		// Process typography fields.
 		if ( isset( $args['type'] ) && 'kirki-typography' === $args['type'] ) {
 
 			// Get the value.
 			$value = Kirki_Values::get_sanitized_field_value( $args );
 
-			if ( isset( $value['downloadFont'] ) && $value['downloadFont'] ) {
-				$this->hosted_fonts[] = $value['font-family'];
-			}
-
 			// If we don't have a font-family then we can skip this.
-			if ( ! $wp_customize && ( ! isset( $value['font-family'] ) || in_array( $value['font-family'], $this->hosted_fonts, true ) ) ) {
+			if ( ! isset( $value['font-family'] ) || in_array( $value['font-family'], $this->hosted_fonts, true ) ) {
 				return;
 			}
 
@@ -146,6 +139,7 @@ final class Kirki_Fonts_Google {
 			if ( ! in_array( $value['variant'], $this->fonts[ $value['font-family'] ], true ) ) {
 				$this->fonts[ $value['font-family'] ][] = $value['variant'];
 			}
+
 			// Are we force-loading all variants?
 			if ( true === self::$force_load_all_variants ) {
 				$all_variants               = Kirki_Fonts::get_all_variants();
@@ -219,7 +213,7 @@ final class Kirki_Fonts_Google {
 
 				// If this is not a valid variant for this font-family
 				// then unset it and move on to the next one.
-				if ( ! in_array( $variant, $font_variants, true ) ) {
+				if ( ! in_array( strval( $variant ), $font_variants, true ) ) {
 					$variant_key = array_search( $variant, $this->fonts[ $font ], true );
 					unset( $this->fonts[ $font ][ $variant_key ] );
 					continue;
@@ -235,7 +229,7 @@ final class Kirki_Fonts_Google {
 	 * @return void
 	 */
 	public function get_googlefonts_json() {
-		include wp_normalize_path( dirname( __FILE__ ) . '/webfonts.json' );
+		include wp_normalize_path( dirname( __FILE__ ) . '/webfonts.json' ); // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 		wp_die();
 	}
 
@@ -248,16 +242,5 @@ final class Kirki_Fonts_Google {
 	public function get_standardfonts_json() {
 		echo wp_json_encode( Kirki_Fonts::get_standard_fonts() );
 		wp_die();
-	}
-
-	/**
-	 * Gets $this->hosted_fonts.
-	 *
-	 * @access public
-	 * @since 3.0.32
-	 * @return array
-	 */
-	public function get_hosted_fonts() {
-		return $this->hosted_fonts;
 	}
 }

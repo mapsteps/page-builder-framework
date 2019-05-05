@@ -4,7 +4,7 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       2.0
  */
@@ -69,7 +69,6 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 	 * @param array                $args    {@see WP_Customize_Control::__construct}.
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
-
 		parent::__construct( $manager, $id, $args );
 
 		// Set up defaults for row labels.
@@ -84,7 +83,7 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 
 		if ( empty( $this->button_label ) ) {
 			/* translators: %s represents the label of the row. */
-			$this->button_label = sprintf( esc_attr__( 'Add new %s', 'kirki' ), $this->row_label['value'] );
+			$this->button_label = sprintf( esc_html__( 'Add new %s', 'kirki' ), $this->row_label['value'] );
 		}
 
 		if ( empty( $args['fields'] ) || ! is_array( $args['fields'] ) ) {
@@ -119,13 +118,14 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 							array(
 								'name'              => '',
 								'echo'              => 0,
-								'show_option_none'  => esc_attr__( 'Select a Page', 'kirki' ),
+								'show_option_none'  => esc_html__( 'Select a Page', 'kirki' ),
 								'option_none_value' => '0',
 								'selected'          => '',
 							)
 						);
+
 						// Hackily add in the data link parameter.
-						$dropdown = str_replace( '<select', '<select data-field="' . esc_attr( $args['fields'][ $key ]['id'] ) . '"' . $this->get_link(), $dropdown ); // phpcs:ignore Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+						$dropdown = str_replace( '<select', '<select data-field="' . esc_attr( $args['fields'][ $key ]['id'] ) . '"' . $this->get_link(), $dropdown ); // phpcs:ignore Generic.Formatting.MultipleStatementAlignment
 						$args['fields'][ $key ]['dropdown'] = $dropdown;
 						break;
 				}
@@ -224,7 +224,7 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 
 		<?php if ( isset( $this->choices['limit'] ) ) : ?>
 			<?php /* translators: %s represents the number of rows we're limiting the repeater to allow. */ ?>
-			<p class="limit"><?php printf( esc_attr__( 'Limit: %s rows', 'kirki' ), esc_html( $this->choices['limit'] ) ); ?></p>
+			<p class="limit"><?php printf( esc_html__( 'Limit: %s rows', 'kirki' ), esc_html( $this->choices['limit'] ) ); ?></p>
 		<?php endif; ?>
 		<button class="button-secondary repeater-add"><?php echo esc_html( $this->button_label ); ?></button>
 
@@ -358,7 +358,7 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 										defaultValue = ' data-default-color="' + defaultValue + '" data-alpha="true"';
 									}
 								} #>
-								<input class="color-picker-hex" type="text" maxlength="7" placeholder="<?php esc_attr_e( 'Hex Value', 'kirki' ); ?>"  value="{{{ field.default }}}" data-field="{{{ field.id }}}" {{ defaultValue }} />
+								<input class="color-picker-hex" type="text" maxlength="7" value="{{{ field.default }}}" data-field="{{{ field.id }}}" {{ defaultValue }} />
 
 							<# } else if ( 'textarea' === field.type ) { #>
 
@@ -378,17 +378,17 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 										<# var defaultImageURL = ( field.default.url ) ? field.default.url : field.default; #>
 										<img src="{{{ defaultImageURL }}}">
 									<# } else { #>
-										<?php esc_attr_e( 'No Image Selected', 'kirki' ); ?>
+										<?php esc_html_e( 'No Image Selected', 'kirki' ); ?>
 									<# } #>
 								</figure>
 
 								<div class="actions">
-									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"><?php esc_attr_e( 'Remove', 'kirki' ); ?></button>
+									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"><?php esc_html_e( 'Remove', 'kirki' ); ?></button>
 									<button type="button" class="button upload-button" data-label=" <?php esc_attr_e( 'Add Image', 'kirki' ); ?>" data-alt-label="<?php echo esc_attr_e( 'Change Image', 'kirki' ); ?>" >
 										<# if ( field.default ) { #>
-											<?php esc_attr_e( 'Change Image', 'kirki' ); ?>
+											<?php esc_html_e( 'Change Image', 'kirki' ); ?>
 										<# } else { #>
-											<?php esc_attr_e( 'Add Image', 'kirki' ); ?>
+											<?php esc_html_e( 'Add Image', 'kirki' ); ?>
 										<# } #>
 									</button>
 									<# if ( field.default.id ) { #>
@@ -410,17 +410,17 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 										<# var defaultFilename = ( field.default.filename ) ? field.default.filename : field.default; #>
 										<span class="file"><span class="dashicons dashicons-media-default"></span> {{ defaultFilename }}</span>
 									<# } else { #>
-										<?php esc_attr_e( 'No File Selected', 'kirki' ); ?>
+										<?php esc_html_e( 'No File Selected', 'kirki' ); ?>
 									<# } #>
 								</figure>
 
 								<div class="actions">
-									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"></button>
+									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"><?php esc_html_e( 'Remove', 'kirki' ); ?></button>
 									<button type="button" class="button upload-button" data-label="<?php esc_attr_e( 'Add File', 'kirki' ); ?>" data-alt-label="<?php esc_attr_e( 'Change File', 'kirki' ); ?>">
 										<# if ( field.default ) { #>
-											<?php esc_attr_e( 'Change File', 'kirki' ); ?>
+											<?php esc_html_e( 'Change File', 'kirki' ); ?>
 										<# } else { #>
-											<?php esc_attr_e( 'Add File', 'kirki' ); ?>
+											<?php esc_html_e( 'Add File', 'kirki' ); ?>
 										<# } #>
 									</button>
 									<# if ( field.default.id ) { #>
@@ -440,7 +440,7 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 
 						</div>
 					<# }); #>
-					<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'kirki' ); ?></button>
+					<button type="button" class="button-link repeater-row-remove"><?php esc_html_e( 'Remove', 'kirki' ); ?></button>
 				</div>
 			</li>
 		</script>
@@ -466,12 +466,12 @@ class Kirki_Control_Repeater extends Kirki_Control_Base {
 
 			// Validating row label type.
 			if ( isset( $args['row_label']['value'] ) && ! empty( $args['row_label']['value'] ) ) {
-				$this->row_label['value'] = esc_attr( $args['row_label']['value'] );
+				$this->row_label['value'] = esc_html( $args['row_label']['value'] );
 			}
 
 			// Validating row label field.
-			if ( isset( $args['row_label']['field'] ) && ! empty( $args['row_label']['field'] ) && isset( $args['fields'][ esc_attr( $args['row_label']['field'] ) ] ) ) {
-				$this->row_label['field'] = esc_attr( $args['row_label']['field'] );
+			if ( isset( $args['row_label']['field'] ) && ! empty( $args['row_label']['field'] ) && isset( $args['fields'][ sanitize_key( $args['row_label']['field'] ) ] ) ) {
+				$this->row_label['field'] = esc_html( $args['row_label']['field'] );
 			} else {
 				// If from field is not set correctly, making sure standard is set as the type.
 				$this->row_label['type'] = 'text';

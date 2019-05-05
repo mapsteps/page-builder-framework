@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @category    Core
- * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @author      Ari Stathopoulos (@aristath)
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       3.0.17
  */
@@ -33,16 +33,15 @@ class Kirki_Sections {
 	 * @return void
 	 */
 	public function outer_sections_css() {
+		echo '<style>';
 		$css = '';
 		if ( ! empty( Kirki::$sections ) ) {
 			foreach ( Kirki::$sections as $section_args ) {
 				if ( isset( $section_args['id'] ) && isset( $section_args['type'] ) && 'outer' === $section_args['type'] || 'kirki-outer' === $section_args['type'] ) {
-					$css .= '#customize-theme-controls li#accordion-section-' . $section_args['id'] . '{display:list-item!important;}';
+					echo '#customize-theme-controls li#accordion-section-' . esc_html( $section_args['id'] ) . '{display:list-item!important;}';
 				}
 			}
 		}
-		if ( ! empty( $css ) ) {
-			echo '<style>' . esc_attr( $css ) . '</style>';
-		}
+		echo '</style>';
 	}
 }

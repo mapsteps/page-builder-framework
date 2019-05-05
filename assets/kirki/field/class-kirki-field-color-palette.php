@@ -4,7 +4,7 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       2.3.2
  */
@@ -20,8 +20,6 @@ class Kirki_Field_Color_Palette extends Kirki_Field {
 	 * @access protected
 	 */
 	protected function set_type() {
-
 		$this->type = 'kirki-color-palette';
-
 	}
 }

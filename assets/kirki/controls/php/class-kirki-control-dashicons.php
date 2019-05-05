@@ -4,7 +4,7 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       2.2.4
  */
@@ -34,7 +34,6 @@ class Kirki_Control_Dashicons extends Kirki_Control_Base {
 	 */
 	public function to_json() {
 		parent::to_json();
-
 		$this->json['icons'] = Kirki_Helper::get_dashicons();
 	}
 

@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @category    Core
- * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @author      Ari Stathopoulos (@aristath)
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       3.0.0
  */
@@ -42,22 +42,22 @@ class Kirki_Modules {
 	 * @since 3.0.0
 	 */
 	public function __construct() {
-
-		$this->default_modules();
-		$this->init();
-
+		add_action( 'after_setup_theme', array( $this, 'setup_default_modules' ), 10 );
+		add_action( 'after_setup_theme', array( $this, 'init' ), 11 );
 	}
 
 	/**
 	 * Set the default modules and apply the 'kirki_modules' filter.
+	 * In v3.0.35 this method was renamed from default_modules to setup_default_modules,
+	 * and its visibility changed from private to public to fix https://github.com/aristath/kirki/issues/2023
 	 *
-	 * @access private
+	 * @access public
 	 * @since 3.0.0
 	 */
-	private function default_modules() {
-
+	public function setup_default_modules() {
 		self::$modules = apply_filters(
-			'kirki_modules', array(
+			'kirki_modules',
+			array(
 				'css'                => 'Kirki_Modules_CSS',
 				'css-vars'           => 'Kirki_Modules_CSS_Vars',
 				'customizer-styling' => 'Kirki_Modules_Customizer_Styling',
@@ -72,19 +72,21 @@ class Kirki_Modules {
 				'webfonts'           => 'Kirki_Modules_Webfonts',
 				'webfont-loader'     => 'Kirki_Modules_Webfont_Loader',
 				'preset'             => 'Kirki_Modules_Preset',
+				'gutenberg'          => 'Kirki_Modules_Gutenberg',
+				'telemetry'          => 'Kirki_Modules_Telemetry',
 			)
 		);
-
 	}
 
 	/**
 	 * Instantiates the modules.
+	 * In v3.0.35 the visibility for this method was changed
+	 * from private to public to fix https://github.com/aristath/kirki/issues/2023
 	 *
-	 * @access private
+	 * @access public
 	 * @since 3.0.0
 	 */
-	private function init() {
-
+	public function init() {
 		foreach ( self::$modules as $key => $module_class ) {
 			if ( class_exists( $module_class ) ) {
 				// Use this syntax instead of $module_class::get_instance()
@@ -103,11 +105,9 @@ class Kirki_Modules {
 	 * @since 3.0.0
 	 */
 	public static function add_module( $module ) {
-
 		if ( ! in_array( $module, self::$modules, true ) ) {
 			self::$modules[] = $module;
 		}
-
 	}
 
 	/**
@@ -119,7 +119,6 @@ class Kirki_Modules {
 	 * @since 3.0.0
 	 */
 	public static function remove_module( $module ) {
-
 		$key = array_search( $module, self::$modules, true );
 		if ( false !== $key ) {
 			unset( self::$modules[ $key ] );
@@ -135,9 +134,7 @@ class Kirki_Modules {
 	 * @return array
 	 */
 	public static function get_modules() {
-
 		return self::$modules;
-
 	}
 
 	/**
@@ -149,8 +146,6 @@ class Kirki_Modules {
 	 * @return array
 	 */
 	public static function get_active_modules() {
-
 		return self::$active_modules;
-
 	}
 }

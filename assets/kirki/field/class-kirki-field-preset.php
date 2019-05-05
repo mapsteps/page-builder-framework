@@ -4,7 +4,7 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license    https://opensource.org/licenses/MIT
  * @since       2.2.7
  */
@@ -20,9 +20,7 @@ class Kirki_Field_Preset extends Kirki_Field_Select {
 	 * @access protected
 	 */
 	protected function set_type() {
-
 		$this->type = 'kirki-select';
-
 	}
 
 	/**
