@@ -128,38 +128,6 @@ function wpbf_menu_description_html( $menuItem ) {
 add_filter( 'wp_setup_nav_menu_item', 'wpbf_menu_description_html' );
 
 /**
- * Load Google Fonts asynchronously
- */
-if ( !class_exists( 'Kirki_Modules_Webfonts_Link' ) ) {
-
-	require_once WPBF_THEME_DIR . '/assets/kirki-webfont-link.php';
-
-}
-
-function wpbf_change_fonts_load_method( $method ) {
-
-	$wpbf_settings = get_option( 'wpbf_settings' );
-
-	if( !isset( $wpbf_settings['wpbf_clean_head'] ) ) {
-
-		$method = 'link';
-
-	} else {
-
-		if ( !in_array( 'google_fonts_async', $wpbf_settings['wpbf_clean_head'] ) ) {
-
-			$method = 'link';
-
-		}
-
-	}
-
-	return $method;
-
-}
-add_filter( 'kirki_googlefonts_load_method', 'wpbf_change_fonts_load_method' );
-
-/**
  * Remove kirki telemetry
  */
 add_filter( 'kirki_telemetry', '__return_false' );
