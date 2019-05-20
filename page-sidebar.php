@@ -29,8 +29,12 @@ get_header(); ?>
 					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_singular_class(); // WPCS: XSS ok. ?>">
 
 						<?php wpbf_title(); ?>
+						
+						<?php if( have_posts() ) : ?>
+						
+						<?php do_action( 'wpbf_before_loop' ); ?>
 
-						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+						<?php while ( have_posts() ) : the_post(); ?>
 
 						<div class="entry-content" itemprop="text">
 
@@ -45,7 +49,11 @@ get_header(); ?>
 
 						</div>
 
-						<?php endwhile; endif; ?>
+						<?php endwhile; ?>
+						
+						<?php do_action( 'wpbf_after_loop' ); ?>
+						
+						<?php endif; ?>
 
 						<?php do_action( 'wpbf_before_comments' ); ?>
 
