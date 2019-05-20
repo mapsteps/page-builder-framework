@@ -22,7 +22,11 @@ get_header(); ?>
 
 					<?php wpbf_title(); ?>
 
-					<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+					<?php if( have_posts() ) ?>
+						
+					<?php do_action( 'wpbf_before_loop' ); ?>
+
+					<?php while ( have_posts() ) : the_post(); ?>
 
 					<div class="entry-content" itemprop="text">
 
@@ -37,7 +41,11 @@ get_header(); ?>
 
 					</div>
 
-					<?php endwhile; endif; ?>
+					<?php endwhile; ?>
+						
+					<?php do_action( 'wpbf_after_loop' ); ?>
+						
+					<?php endif; ?>
 
 					<?php do_action( 'wpbf_before_comments' ); ?>
 
