@@ -30,7 +30,7 @@ get_header(); ?>
 
 						<?php wpbf_title(); ?>
 						
-						<?php if( have_posts() ) : ?>
+						<?php if( have_posts() ) ?>
 						
 						<?php do_action( 'wpbf_before_loop' ); ?>
 
