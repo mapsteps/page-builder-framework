@@ -31,14 +31,10 @@
  * @param  array $args Arguments to pass to WPBF_Breadcrumbs.
  * @return void
  */
-function wpbf_breadcrumbs_2804( $args = array() ) {
+function wpbf_do_breadcrumbs( $args = array() ) {
 
-	// Only go forward if breadcrumbs are enabled
-	if ( !get_theme_mod( 'breadcrumbs_toggle' ) ) return;
-
-	$breadcrumbs = array( 'archive', 'single', 'search', '404', 'page', 'front_page' );
+	$breadcrumbs          = array( 'archive', 'single', 'search', '404', 'page', 'front_page' );
 	$included_breadcrumbs = get_theme_mod( 'breadcrumbs', array( 'archive', 'single' ) );
-
 	$excluded_breadcrumbs = array_diff( $breadcrumbs, $included_breadcrumbs );
 
 	if ( is_array( $excluded_breadcrumbs ) && ! empty( $excluded_breadcrumbs ) ) {
@@ -88,7 +84,42 @@ function wpbf_breadcrumbs_2804( $args = array() ) {
 		$breadcrumb = new WPBF_Breadcrumbs( $args );
 
 	return $breadcrumb->trail();
+
 }
+
+/**
+ * Add Breadcrumbs to Content
+ */
+function wpbf_breadcrumbs_content() {
+
+	if( get_theme_mod( 'breadcrumbs_toggle' ) && get_theme_mod( 'breadcrumbs_position' ) == 'content' ) {
+
+		echo wpbf_do_breadcrumbs();
+
+	}
+
+}
+add_action( 'wpbf_inner_content_open', 'wpbf_breadcrumbs_content' );
+
+/**
+ * Add Breadcrumbs Below Header
+ */
+function wpbf_breadcrumbs_header() {
+
+	if( get_theme_mod( 'breadcrumbs_toggle' ) && get_theme_mod( 'breadcrumbs_position' ) == 'header' ) {
+
+		$breadcrumbs  = '<div class="wpbf-breadcrumbs-container">';
+		$breadcrumbs .= '<div class="wpbf-container wpbf-container-center">';
+		$breadcrumbs .= wpbf_do_breadcrumbs();
+		$breadcrumbs .= '</div>';
+		$breadcrumbs .= '</div>';
+
+		echo $breadcrumbs;
+
+	}
+
+}
+add_action( 'wpbf_after_header', 'wpbf_breadcrumbs_header' );
 
 /**
  * Creates a breadcrumbs menu for the site based on the current page that's being viewed by the user.
@@ -177,13 +208,13 @@ class WPBF_Breadcrumbs {
 			'after'           => '',
 			'list_tag'        => 'ul',
 			'item_tag'        => 'li',
-			'separator'		  => apply_filters( 'wpbf_breadcrumbs_separator', ' / ' ),
+			'separator'		  => apply_filters( 'wpbf_breadcrumbs_separator', '/' ),
 			'show_on_front'   => true,
 			'network'         => false,
 			'show_title'      => true,
 			'labels'          => array(),
 			'post_taxonomy'   => array(),
-			'echo'            => true
+			'echo'            => false
 		);
 
 		// Parse the arguments with the deaults.
@@ -262,7 +293,7 @@ class WPBF_Breadcrumbs {
 				$meta = sprintf( '<meta itemprop="position" content="%s" />', absint( $item_position ) );
 
 				// Build the list item.
-				$breadcrumb .= sprintf( '<%1$s %2$s>%3$s%4$s</%1$s>%5$s', tag_escape( $this->args['item_tag'] ),$attributes, $item, $meta, esc_html( $separator ) );
+				$breadcrumb .= sprintf( '<%1$s %2$s>%3$s%4$s</%1$s>%5$s', tag_escape( $this->args['item_tag'] ),$attributes, $item, $meta, esc_html( '&nbsp;' . $separator . '&nbsp;' ) );
 			}
 
 			// Close the unordered list.
@@ -301,19 +332,19 @@ class WPBF_Breadcrumbs {
 
 		$defaults = array(
 			'aria_label'          => esc_attr_x( 'Breadcrumbs', 'breadcrumbs aria label', 'page-builder-framework' ),
-			'home'                => esc_html__( 'Home',                                  'page-builder-framework' ),
-			'error_404'           => esc_html__( '404 Not Found',                         'page-builder-framework' ),
-			'archives'            => esc_html__( 'Archives',                              'page-builder-framework' ),
+			'home'                => esc_html__( 'Home', 'page-builder-framework' ),
+			'error_404'           => esc_html__( '404 Not Found', 'page-builder-framework' ),
+			'archives'            => esc_html__( 'Archives', 'page-builder-framework' ),
 			// Translators: %s is the search query.
-			'search'              => esc_html__( 'Search results for: %s',                'page-builder-framework' ),
+			'search'              => esc_html__( 'Search results for: %s', 'page-builder-framework' ),
 			// Translators: %s is the page number.
-			'paged'               => esc_html__( 'Page %s',                               'page-builder-framework' ),
+			'paged'               => esc_html__( 'Page %s', 'page-builder-framework' ),
 			// Translators: %s is the page number.
-			'paged_comments'      => esc_html__( 'Comment Page %s',                       'page-builder-framework' ),
+			'paged_comments'      => esc_html__( 'Comment Page %s', 'page-builder-framework' ),
 			// Translators: Minute archive title. %s is the minute time format.
-			'archive_minute'      => esc_html__( 'Minute %s',                             'page-builder-framework' ),
+			'archive_minute'      => esc_html__( 'Minute %s', 'page-builder-framework' ),
 			// Translators: Weekly archive title. %s is the week date format.
-			'archive_week'        => esc_html__( 'Week %s',                               'page-builder-framework' ),
+			'archive_week'        => esc_html__( 'Week %s', 'page-builder-framework' ),
 
 			// "%s" is replaced with the translated date/time format.
 			'archive_minute_hour' => '%s',
@@ -1273,5 +1304,3 @@ class WPBF_Breadcrumbs {
 		}
 	}
 }
-
-add_action( 'wpbf_inner_content_open', 'wpbf_breadcrumbs_2804', 0 );

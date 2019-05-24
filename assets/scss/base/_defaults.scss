@@ -119,6 +119,15 @@ textarea {
 	}
 }
 
+.wpbf-breadcrumbs-container {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	background: $base-color;
+	.wpbf-breadcrumbs {
+		margin-bottom: 0;
+	}
+}
+
 // Yoast
 #breadcrumbs {
 	font-size: $small-fontsize;

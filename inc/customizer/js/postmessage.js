@@ -198,6 +198,31 @@
 		} );
 	} );
 
+	/* Breadcrumbs */
+	wp.customize( 'breadcrumbs_background_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-breadcrumbs-container').css('background', newval );
+		} );
+	} );
+
+	wp.customize( 'breadcrumbs_alignment', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-breadcrumbs-container').css('text-align', newval );
+		} );
+	} );
+
+	wp.customize( 'breadcrumbs_font_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-breadcrumbs').css('color', newval );
+		} );
+	} );
+
+	wp.customize( 'breadcrumbs_accent_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-breadcrumbs a').css('color', newval );
+		} );
+	} );
+
 	/* WooCommerce */
 
 	/* Defaults */

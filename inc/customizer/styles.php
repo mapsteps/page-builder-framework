@@ -779,6 +779,63 @@ if( $sidebar_width ) {
 
 }
 
+/* Breadcrumbs */
+$breadcrumbs_alignment        = get_theme_mod( 'breadcrumbs_alignment' );
+$breadcrumbs_background_color = get_theme_mod( 'breadcrumbs_background_color' );
+$breadcrumbs_font_color       = get_theme_mod( 'breadcrumbs_font_color' );
+$breadcrumbs_accent_color     = get_theme_mod( 'breadcrumbs_accent_color' );
+$breadcrumbs_accent_color_alt = get_theme_mod( 'breadcrumbs_accent_color_alt' );
+
+if( $breadcrumbs_alignment !== 'left' ) {
+
+	echo '.wpbf-breadcrumbs-container {';
+
+		echo sprintf( 'text-align: %s;', esc_attr( $breadcrumbs_alignment ) );
+
+	echo '}';
+
+}
+
+if( $breadcrumbs_background_color ) {
+
+	echo '.wpbf-breadcrumbs-container {';
+
+		echo sprintf( 'background: %s;', esc_attr( $breadcrumbs_background_color ) );
+
+	echo '}';
+
+}
+
+if( $breadcrumbs_font_color ) {
+
+	echo '.wpbf-breadcrumbs {';
+
+		echo sprintf( 'color: %s;', esc_attr( $breadcrumbs_font_color ) );
+
+	echo '}';
+
+}
+
+if( $breadcrumbs_accent_color ) {
+
+	echo '.wpbf-breadcrumbs a {';
+
+		echo sprintf( 'color: %s;', esc_attr( $breadcrumbs_accent_color ) );
+
+	echo '}';
+
+}
+
+if( $breadcrumbs_accent_color_alt ) {
+
+	echo '.wpbf-breadcrumbs a:hover {';
+
+		echo sprintf( 'color: %s;', esc_attr( $breadcrumbs_accent_color_alt ) );
+
+	echo '}';
+
+}
+
 /* Blog Layouts */
 $archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
 
