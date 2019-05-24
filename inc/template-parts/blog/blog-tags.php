@@ -2,7 +2,7 @@
 /**
  * Tags
  *
- * Renders tags on archives, category, search & index pages.
+ * Renders tags on archives.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts

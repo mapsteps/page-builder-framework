@@ -2,7 +2,7 @@
 /**
  * Title
  *
- * Renders the title on single pages
+ * Renders the title on single pages.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts

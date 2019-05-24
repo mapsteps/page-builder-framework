@@ -2,7 +2,7 @@
 /**
  * Title
  *
- * Renders post title on archives, category, search and index pages.
+ * Renders post title on archives.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts

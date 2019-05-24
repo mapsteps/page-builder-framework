@@ -2,7 +2,7 @@
 /**
  * Featured Image
  *
- * Renders featured image on archives, category, search and index pages.
+ * Renders featured image on archives.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts

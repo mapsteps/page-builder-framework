@@ -2,7 +2,7 @@
 /**
  * Categories
  *
- * Renders categories on archives, category, search & index pages.
+ * Renders categories on archives.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts

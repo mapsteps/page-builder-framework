@@ -2,7 +2,7 @@
 /**
  * Read More
  *
- * Renders read more link on archives, category, search and index pages.
+ * Renders read more link on archives.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
