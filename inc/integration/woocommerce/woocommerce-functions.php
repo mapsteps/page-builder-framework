@@ -184,7 +184,7 @@ function wpbf_woo_sidebar_layout( $sidebar ) {
 			$sidebar = $sidebar_position;
 		}
 
-	} elseif( is_shop() ) {
+	} elseif( is_shop() || is_product_category() ) {
 
 		$sidebar = get_theme_mod( 'woocommerce_sidebar_layout', 'none' );
 
@@ -204,7 +204,7 @@ function wpbf_woo_archive_class( $archive_class ) {
 
 		$archive_class = ' wpbf-product-content';
 
-	} elseif( is_shop() ) {
+	} elseif( is_shop() || is_product_category() ) {
 
 		$archive_class = ' wpbf-product-archive';
 
