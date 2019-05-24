@@ -18,4 +18,10 @@ $remove_featured = $options ? in_array( 'remove-featured', $options ) : false;
 // stop here if featured image has been disabled
 if( $remove_featured ) return;
 
-the_post_thumbnail( apply_filters( 'wpbf_single_post_thumbnail_size', 'full' ), array( 'class' => 'wpbf-post-image', 'itemprop' => 'image' ) );
+?>
+
+<div class="wpbf-post-image-wrapper">
+
+	<?php the_post_thumbnail( apply_filters( 'wpbf_single_post_thumbnail_size', 'full' ), array( 'class' => 'wpbf-post-image', 'itemprop' => 'image' ) ); ?>
+
+</div>
