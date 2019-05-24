@@ -93,4 +93,4 @@ add_action( 'wpbf_footer', 'wpbf_do_footer' );
 function wpbf_do_404() {
 	get_template_part( 'inc/template-parts/404' );
 }
-add_action('wpbf_404', 'wpbf_do_404');
+add_action( 'wpbf_404', 'wpbf_do_404' );
