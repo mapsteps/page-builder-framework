@@ -33,6 +33,9 @@
  */
 function wpbf_do_breadcrumbs( $args = array() ) {
 
+	// Only go forward if breadcrumbs are enabled
+	if ( !get_theme_mod( 'breadcrumbs_toggle' ) ) return;
+
 	$breadcrumbs          = array( 'archive', 'single', 'search', '404', 'page', 'front_page' );
 	$included_breadcrumbs = get_theme_mod( 'breadcrumbs', array( 'archive', 'single' ) );
 	$excluded_breadcrumbs = array_diff( $breadcrumbs, $included_breadcrumbs );
@@ -92,9 +95,9 @@ function wpbf_do_breadcrumbs( $args = array() ) {
  */
 function wpbf_breadcrumbs_content() {
 
-	if( get_theme_mod( 'breadcrumbs_toggle' ) && get_theme_mod( 'breadcrumbs_position' ) == 'content' ) {
+	if( get_theme_mod( 'breadcrumbs_position' ) === 'content' ) {
 
-		echo wpbf_do_breadcrumbs();
+		wpbf_do_breadcrumbs();
 
 	}
 
@@ -106,15 +109,9 @@ add_action( 'wpbf_inner_content_open', 'wpbf_breadcrumbs_content' );
  */
 function wpbf_breadcrumbs_header() {
 
-	if( get_theme_mod( 'breadcrumbs_toggle' ) && get_theme_mod( 'breadcrumbs_position' ) == 'header' ) {
+	if( get_theme_mod( 'breadcrumbs_position' ) === 'header' ) {
 
-		$breadcrumbs  = '<div class="wpbf-breadcrumbs-container">';
-		$breadcrumbs .= '<div class="wpbf-container wpbf-container-center">';
-		$breadcrumbs .= wpbf_do_breadcrumbs();
-		$breadcrumbs .= '</div>';
-		$breadcrumbs .= '</div>';
-
-		echo $breadcrumbs;
+		wpbf_do_breadcrumbs();
 
 	}
 
@@ -214,7 +211,7 @@ class WPBF_Breadcrumbs {
 			'show_title'      => true,
 			'labels'          => array(),
 			'post_taxonomy'   => array(),
-			'echo'            => false
+			'echo'            => true
 		);
 
 		// Parse the arguments with the deaults.
@@ -316,7 +313,22 @@ class WPBF_Breadcrumbs {
 		if ( false === $this->args['echo'] )
 			return $breadcrumb;
 
-		echo $breadcrumb; // WPCS: XSS ok.
+		if( get_theme_mod( 'breadcrumbs_position' ) === 'header' ) {
+
+			$output  = '<div class="wpbf-breadcrumbs-container">';
+			$output .= '<div class="wpbf-container wpbf-container-center">';
+			$output .= $breadcrumb;
+			$output .= '</div>';
+			$output .= '</div>';
+
+			echo $output;
+
+		} else {
+
+			echo $breadcrumb; // WPCS: XSS ok.
+
+		}
+
 	}
 
 	/* ====== Protected Methods ====== */
