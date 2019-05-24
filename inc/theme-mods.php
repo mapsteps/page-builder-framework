@@ -220,3 +220,19 @@ function wpbf_read_more_text( $text ) {
 
 }
 add_filter( 'wpbf_read_more_text', 'wpbf_read_more_text' );
+
+/**
+ * Aritlce Meta Separator
+ */
+ function wpbf_article_meta_separator( $separator ) {
+
+	$blog_meta_separator = get_theme_mod( 'blog_meta_separator' );
+
+	if( $blog_meta_separator ) {
+		$separator = ' ' . $blog_meta_separator. ' ';
+	}
+
+	return $separator;
+
+}
+add_filter( 'wpbf_article_meta_separator', 'wpbf_article_meta_separator' );

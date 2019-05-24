@@ -75,10 +75,6 @@ body {
 }
 
 // Article Header
-.single .wpbf-post-image {
-	margin-bottom: $margin;
-}
-
 .wpbf-post-image-wrapper {
 	margin-bottom: $margin;
 }
@@ -92,6 +88,14 @@ body {
 	font-size: $small-fontsize;
 	.article-time {
 		text-decoration: underline;
+	}
+	.article-meta-separator:last-of-type {
+		display: none;
+	}
+	.avatar {
+		border-radius: 100%;
+		margin-right: 5px;
+		width: 32px;
 	}
 }
 
@@ -211,10 +215,10 @@ body {
 		font-weight: $bold;
 	}
 	.comment-time {
-		color: $base-color;
+		color: darken($base-color,20%);
 		margin-left: 5px;
 		a {
-			color: $base-color;
+			color: darken($base-color,20%);
 		}
 	}
 	.comment-time:before {

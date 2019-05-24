@@ -300,7 +300,7 @@ function wpbf_singular_class() {
 		$singular_class = ' wpbf-'. $post_type .'-content';
 	}
 
-	return $singular_class;
+	return apply_filters( 'wpbf_singular_class', $singular_class );
 
 }
 
@@ -455,6 +455,103 @@ function wpbf_sidebar_layout() {
 	}
 
 	return apply_filters( 'wpbf_sidebar_layout', $sidebar );
+
+}
+
+/*
+ * Article Meta
+ *
+ * Construct Sortable Article Meta
+ */
+function wpbf_article_meta() {
+
+	$blog_meta = get_theme_mod( 'blog_sortable_meta', array( 'author', 'date' ) );
+
+	if ( is_array( $blog_meta ) && !empty( $blog_meta ) ) {
+
+		do_action( 'wpbf_before_article_meta' );
+		echo '<p class="article-meta">';
+		do_action( 'wpbf_article_meta_open' );
+
+		foreach ( $blog_meta as $value ) {
+
+			switch ( $value ) {
+				case 'author':
+					do_action( 'wpbf_before_author_meta' );
+					wpbf_author_meta();
+					do_action( 'wpbf_after_author_meta' );
+					break;
+				case 'date':
+					do_action( 'wpbf_before_date_meta' );
+					wpbf_date_meta();
+					do_action( 'wpbf_after_date_meta' );
+					break;
+				case 'comments':
+					do_action( 'wpbf_before_comments_meta' );
+					wpbf_comments_meta();
+					do_action( 'wpbf_after_comments_meta' );
+					break;
+				default:
+					break;
+			}
+		}
+
+		do_action( 'wpbf_article_meta_close' );
+		echo '</p>';
+		do_action( 'wpbf_after_article_meta' );
+
+	}
+
+}
+
+/**
+ * Blog Meta – Author
+ */
+function wpbf_author_meta() {
+
+	$rtl    = is_rtl();
+	$avatar = get_theme_mod( 'blog_author_avatar' );
+
+	if( !$rtl && $avatar ) {
+		echo get_avatar( get_the_author_meta( 'ID' ), 128 );
+	}
+
+	echo sprintf( '<span class="article-author author vcard" itemscope="itemscope" itemprop="author" itemtype="https://schema.org/Person"><a class="url fn" href="%1$s" title="%2$s" rel="author" itemprop="url"><span itemprop="name">%3$s</span></a></span>', // WPCS: XSS ok, sanitization ok.
+		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+		esc_attr( sprintf( __( 'View all posts by %s', 'page-builder-framework' ), get_the_author() ) ),
+		esc_html( get_the_author() )
+	);
+
+	if( $rtl && $avatar ) {
+		echo get_avatar( get_the_author_meta( 'ID' ), 128 );
+	}
+
+	echo '<span class="article-meta-separator">'. apply_filters( 'wpbf_article_meta_separator', ' | ' ) .'</span>';
+
+}
+
+/*
+ * Blog Meta – Date
+ */
+function wpbf_date_meta() {
+
+	echo '<span class="posted-on">'. __( 'Posted on', 'page-builder-framework' ) .'</span> <time class="article-time published" datetime="'. get_the_date( 'c' ) .'" itemprop="datePublished">'. get_the_date() .'</time>'; // WPCS: XSS ok.
+	echo '<span class="article-meta-separator">'. apply_filters( 'wpbf_article_meta_separator', ' | ' ) .'</span>';
+
+}
+
+/**
+ * Blog Meta – Comments
+ */
+function wpbf_comments_meta() {
+
+	echo '<span class="comments-count">';
+
+	comments_number( __( '<span>No</span> Comments', 'page-builder-framework' ), __( '<span>1</span> Comment', 'page-builder-framework' ), __( '<span>%</span> Comments', 'page-builder-framework' ) );
+
+	echo '</span>';
+
+	echo '<span class="article-meta-separator">'. apply_filters( 'wpbf_article_meta_separator', ' | ' ) .'</span>';
 
 }
 
