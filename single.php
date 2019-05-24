@@ -37,67 +37,75 @@ get_header(); ?>
 
 						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
-							<header class="article-header">
+							<div class="wpbf-article-wrapper">
 
-								<?php
+								<?php do_action( 'wpbf_article_open' ); ?>
 
-								if ( !empty( $template_parts_header ) && is_array( $template_parts_header ) ) {
-									foreach ( $template_parts_header as $part ) {
-										get_template_part( 'inc/template-parts/single/single-' . $part );
-									}
-								}
-
-								?>
-
-							</header>
-
-							<section class="entry-content article-content" itemprop="text">
-
-								<?php the_content(); ?>
-
-								<?php
-								wp_link_pages( array(
-									'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
-									'after'  => '</div>',
-								) );
-								?>
-
-							</section>
-
-							<footer class="article-footer">
-
-								<?php
-
-								if ( !empty( $template_parts_footer ) && is_array( $template_parts_footer ) ) {
-									foreach ( $template_parts_footer as $part ) {
-										get_template_part( 'inc/template-parts/single/single-' . $part );
-									}
-								}
-
-								?>
-
-								<?php if( get_theme_mod( 'single_post_nav' ) !== 'hide' ) { ?>
-
-								<?php do_action( 'wpbf_before_post_links' ); ?>
-
-								<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
-
-									<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
+								<header class="article-header">
 
 									<?php
 
-									previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
-									next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
+									if ( !empty( $template_parts_header ) && is_array( $template_parts_header ) ) {
+										foreach ( $template_parts_header as $part ) {
+											get_template_part( 'inc/template-parts/single/single-' . $part );
+										}
+									}
 
 									?>
 
-								 </nav>
+								</header>
 
-								 <?php do_action( 'wpbf_after_post_links' ); ?>
+								<section class="entry-content article-content" itemprop="text">
 
-								<?php } ?>
+									<?php the_content(); ?>
 
-							</footer>
+									<?php
+									wp_link_pages( array(
+										'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
+										'after'  => '</div>',
+									) );
+									?>
+
+								</section>
+
+								<footer class="article-footer">
+
+									<?php
+
+									if ( !empty( $template_parts_footer ) && is_array( $template_parts_footer ) ) {
+										foreach ( $template_parts_footer as $part ) {
+											get_template_part( 'inc/template-parts/single/single-' . $part );
+										}
+									}
+
+									?>
+
+									<?php if( get_theme_mod( 'single_post_nav' ) !== 'hide' ) { ?>
+
+									<?php do_action( 'wpbf_before_post_links' ); ?>
+
+									<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
+
+										<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
+
+										<?php
+
+										previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
+										next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
+
+										?>
+
+									 </nav>
+
+									 <?php do_action( 'wpbf_after_post_links' ); ?>
+
+									<?php } ?>
+
+								</footer>
+
+								<?php do_action( 'wpbf_article_close' ); ?>
+
+							</div>
 
 							<?php do_action( 'wpbf_before_comments' ); ?>
 
