@@ -160,7 +160,15 @@ function wpbf_title() {
 
 	}
 
-	echo $title; // WPCS: XSS ok.
+	if( $title ) {
+
+		do_action( 'wpbf_before_page_title' );
+
+		echo $title; // WPCS: XSS ok.
+
+		do_action( 'wpbf_after_page_title' );
+
+	}
 
 }
 
@@ -321,7 +329,16 @@ function wpbf_archive_header() {
 
 	<?php } else {
 
-		the_archive_title( '<h1 class="page-title">', '</h1>' );
+		if( get_the_archive_title() ) {
+
+			do_action( 'wpbf_before_page_title' );
+
+			the_archive_title( '<h1 class="page-title">', '</h1>' );
+
+			do_action( 'wpbf_after_page_title' );
+
+		}
+
 		the_archive_description( '<div class="taxonomy-description">', '</div>' );
 
 	}
