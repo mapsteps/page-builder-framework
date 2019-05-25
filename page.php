@@ -20,6 +20,8 @@ get_header(); ?>
 
 				<main id="main" class="wpbf-main<?php echo wpbf_singular_class(); // WPCS: XSS ok. ?>">
 
+					<?php do_action( 'wpbf_main_content_open' ); ?>
+
 					<?php wpbf_title(); ?>
 
 					<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
@@ -44,6 +46,8 @@ get_header(); ?>
 					<?php comments_template(); ?>
 
 					<?php do_action( 'wpbf_after_comments' ); ?>
+
+					<?php do_action( 'wpbf_main_content_close' ); ?>
 
 				</main>
 

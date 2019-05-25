@@ -31,6 +31,8 @@ get_header(); ?>
 
 					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_singular_class(); // WPCS: XSS ok. ?>">
 
+						<?php do_action( 'wpbf_main_content_open' ); ?>
+
 						<?php do_action( 'wpbf_before_article' ); ?>
 
 						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
@@ -118,6 +120,8 @@ get_header(); ?>
 						<?php endwhile; endif; ?>
 
 						<?php do_action( 'wpbf_after_article' ); ?>
+
+						<?php do_action( 'wpbf_main_content_close' ); ?>
 
 					</main>
 

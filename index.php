@@ -28,6 +28,8 @@ get_header();
 
 					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_archive_class(); // WPCS: XSS ok. ?>">
 
+						<?php do_action( 'wpbf_main_content_open' ); ?>
+
 						<?php if( have_posts() ) : ?>
 
 						<?php do_action( 'wpbf_before_loop' ); ?>
@@ -51,6 +53,8 @@ get_header();
 							'prev_text' => __( '&larr; Previous', 'page-builder-framework' ),
 							'next_text' => __( 'Next &rarr;', 'page-builder-framework' ),
 						) ); ?>
+
+						<?php do_action( 'wpbf_main_content_close' ); ?>
 
 					</main>
 
