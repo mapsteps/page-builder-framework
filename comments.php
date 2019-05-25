@@ -15,6 +15,8 @@ if ( post_password_required() )	return;
 
 <?php if ( have_comments() ) : ?>
 
+	<?php do_action( 'wpbf_before_comments' ); ?>
+
 	<section class="commentlist">
 
 		<h3 id="comments-title"><?php comments_number( __( '<span>No</span> Comments', 'page-builder-framework' ), __( '<span>One</span> Comment', 'page-builder-framework' ), __( '<span>%</span> Comments', 'page-builder-framework' ) );?></h3>
@@ -45,6 +47,8 @@ if ( post_password_required() )	return;
 	<p class="no-comments"><?php _e( 'Comments are closed.' , 'page-builder-framework' ); // WPCS: XSS ok. ?></p>
 	<?php endif; ?>
 
+	<?php do_action( 'wpbf_after_comments' ); ?>
+
 <?php endif; ?>
 
 <?php
@@ -57,4 +61,8 @@ $args = array(
 	'label_submit'         => apply_filters( 'wpbf_post_comment', __( 'Post Comment', 'page-builder-framework' ) ),
 );
 
+do_action( 'wpbf_before_comment_form' );
+
 comment_form( $args );
+
+do_action( 'wpbf_after_comment_form' );

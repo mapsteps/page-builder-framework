@@ -109,11 +109,7 @@ get_header(); ?>
 
 							</div>
 
-							<?php do_action( 'wpbf_before_comments' ); ?>
-
 							<?php comments_template(); ?>
-
-							<?php do_action( 'wpbf_after_comments' ); ?>
 
 						</article>
 						
