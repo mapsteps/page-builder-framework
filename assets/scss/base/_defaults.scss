@@ -100,7 +100,7 @@ textarea {
 		padding: 0 20px;
 		background: $base-color-alt;
 		display: inline-block;
-		@include transition(background 0.2s);
+		@include transition(all 0.2s);
 	}
 	.page-numbers.current {
 		background: $base-color !important;
