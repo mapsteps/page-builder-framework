@@ -65,6 +65,9 @@ body {
 
 // Author Box
 .wpbf-author-box {
+	h1 {
+		margin-bottom: $margin;
+	}
 	background: $base-color-alt;
 	margin-bottom: $margin;
 	padding: $padding;
