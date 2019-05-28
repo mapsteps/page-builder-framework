@@ -119,16 +119,16 @@ Kirki::add_section( 'wpbf_footer_options', array(
 
 /* Sections – Typography */
 
-// Text
-Kirki::add_section( 'wpbf_font_options', array(
-	'title'				=>			esc_attr__( 'Text', 'page-builder-framework' ),
+// Title / Tagline
+Kirki::add_section( 'wpbf_title_tagline_options', array(
+	'title'				=>			esc_attr__( 'Site Title / Tagline', 'page-builder-framework' ),
 	'panel'				=>			'typo_panel',
 	'priority'			=>			0,
 ) );
 
-// Title / Tagline
-Kirki::add_section( 'wpbf_title_tagline_options', array(
-	'title'				=>			esc_attr__( 'Site Title / Tagline', 'page-builder-framework' ),
+// Text
+Kirki::add_section( 'wpbf_font_options', array(
+	'title'				=>			esc_attr__( 'Text', 'page-builder-framework' ),
 	'panel'				=>			'typo_panel',
 	'priority'			=>			50,
 ) );
@@ -228,13 +228,21 @@ Kirki::add_section( 'wpbf_404_options', array(
 
 /* Sections – Blog */
 
-// Blog Settings
+// General
 Kirki::add_section( 'wpbf_blog_settings', array(
 	'title'				=>			esc_attr__( 'General', 'page-builder-framework' ),
 	'panel'				=>			'blog_panel',
 	'priority'			=>			100,
 ) );
 
+// Pagination
+Kirki::add_section( 'wpbf_pagination_settings', array(
+	'title'				=>			esc_attr__( 'Pagination', 'page-builder-framework' ),
+	'panel'				=>			'blog_panel',
+	'priority'			=>			100,
+) );
+
+// Archive Layout
 $archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
 
 foreach ( $archives as $archive ) {
@@ -257,6 +265,7 @@ foreach ( $archives as $archive ) {
 
 }
 
+// Post Layout
 Kirki::add_section( 'wpbf_single_options', array(
 	'title'				=>			esc_attr__( 'Post Layout', 'page-builder-framework' ),
 	'panel'				=>			'blog_panel',
@@ -591,6 +600,123 @@ Kirki::add_field( 'wpbf', array(
 	'priority'			=>			2,
 ) );
 
+// Separator
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'custom',
+	'settings'			=>			'separator-23124507',
+	'section'			=>			'wpbf_blog_settings',
+	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'			=>			2,
+) );
+
+// Border Radius
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'slider',
+	'settings'			=>			'blog_pagination_border_radius',
+	'label'				=>			esc_attr__( 'Border Radius', 'page-builder-framework' ),
+	'section'			=>			'wpbf_pagination_settings',
+	'priority'			=>			2,
+	'default'			=>			'0',
+	'transport'			=>			'postMessage',
+	'choices'			=>			array(
+		'min'			=>			'0',
+		'max'			=>			'100',
+		'step'			=>			'1',
+	),
+) );
+
+// Pagination Background Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'blog_pagination_background_color',
+	'label'				=>			esc_attr__( 'Background Color', 'page-builder-framework' ),
+	'section'			=>			'wpbf_pagination_settings',
+	'transport'			=>			'postMessage',
+	'priority'			=>			2,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+) );
+
+// Pagination Background Color Alt
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'blog_pagination_background_color_alt',
+	'label'				=>			esc_attr__( 'Hover', 'page-builder-framework' ),
+	'section'			=>			'wpbf_pagination_settings',
+	'priority'			=>			2,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+) );
+
+// Pagination Background Color Active
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'blog_pagination_background_color_active',
+	'label'				=>			esc_attr__( 'Active', 'page-builder-framework' ),
+	'section'			=>			'wpbf_pagination_settings',
+	'transport'			=>			'postMessage',
+	'priority'			=>			2,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+) );
+
+// Pagination Font Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'blog_pagination_font_color',
+	'label'				=>			esc_attr__( 'Font Color', 'page-builder-framework' ),
+	'section'			=>			'wpbf_pagination_settings',
+	'transport'			=>			'postMessage',
+	'priority'			=>			2,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+) );
+
+// Pagination Hover Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'blog_pagination_font_color_alt',
+	'label'				=>			esc_attr__( 'Hover', 'page-builder-framework' ),
+	'section'			=>			'wpbf_pagination_settings',
+	'default'			=>			'',
+	'priority'			=>			2,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+) );
+
+// Pagination Active Color
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'color',
+	'settings'			=>			'blog_pagination_font_color_active',
+	'label'				=>			esc_attr__( 'Active', 'page-builder-framework' ),
+	'section'			=>			'wpbf_pagination_settings',
+	'transport'			=>			'postMessage',
+	'default'			=>			'',
+	'priority'			=>			2,
+	'choices'			=>			array(
+		'alpha'			=>			true,
+	),
+) );
+
+// Pagination Font Size
+Kirki::add_field( 'wpbf', array(
+	'type'				=>			'input_slider',
+	'label'				=>			esc_attr__( 'Font Size', 'page-builder-framework' ),
+	'settings'			=>			'blog_pagination_font_size',
+	'section'			=>			'wpbf_pagination_settings',
+	'transport'			=>			'postMessage',
+	'priority'			=>			2,
+	'choices'			=>			array(
+		'min'			=>			'0',
+		'max'			=>			'100',
+		'step'			=>			'1',
+	),
+) );
 
 foreach ( $archives as $archive ) {
 
@@ -2769,7 +2895,7 @@ Kirki::add_field( 'wpbf', array(
 	'transport'			=>			'postMessage',
 	'choices'			=>			array(
 		'min'			=>			'0',
-		'max'			=>			'50',
+		'max'			=>			'100',
 		'step'			=>			'1',
 	),
 ) );
@@ -2885,7 +3011,7 @@ Kirki::add_field( 'wpbf', array(
 	'transport'			=>			'postMessage',
 		'choices'			=>			array(
 			'min'			=>			'0',
-			'max'			=>			'50',
+			'max'			=>			'100',
 			'step'			=>			'1',
 		),
 ) );

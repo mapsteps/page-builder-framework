@@ -836,6 +836,90 @@ if( $breadcrumbs_accent_color_alt ) {
 
 }
 
+/* Pagination */
+$blog_pagination_background_color           = get_theme_mod( 'blog_pagination_background_color' );
+$blog_pagination_background_color_alt       = get_theme_mod( 'blog_pagination_background_color_alt' );
+$blog_pagination_background_color_active    = get_theme_mod( 'blog_pagination_background_color_active' );
+$blog_pagination_font_color                 = get_theme_mod( 'blog_pagination_font_color' );
+$blog_pagination_font_color_alt             = get_theme_mod( 'blog_pagination_font_color_alt' );
+$blog_pagination_font_color_active          = get_theme_mod( 'blog_pagination_font_color_active' );
+$blog_pagination_font_size                  = get_theme_mod( 'blog_pagination_font_size' );
+$blog_pagination_border_radius              = get_theme_mod( 'blog_pagination_border_radius' );
+$blog_pagination_background_color_next_prev = get_theme_mod( 'blog_pagination_background_color_next_prev' );
+
+if( $blog_pagination_border_radius || $blog_pagination_font_size || $blog_pagination_background_color || $blog_pagination_font_color ) {
+
+	echo '.pagination .page-numbers {';
+
+		if( $blog_pagination_border_radius ) {
+
+			echo sprintf( 'border-radius: %s;', esc_attr( $blog_pagination_border_radius ) . 'px' );
+
+		}
+
+		if( $blog_pagination_font_size ) {
+
+			$suffix = is_numeric( $blog_pagination_font_size ) ? 'px' : '';
+			echo sprintf( 'font-size: %s;', esc_attr( $blog_pagination_font_size ) . $suffix );
+
+		}
+
+		if( $blog_pagination_background_color ) {
+
+			echo sprintf( 'background: %s;', esc_attr( $blog_pagination_background_color ) );
+
+		}
+
+		if( $blog_pagination_font_color ) {
+
+			echo sprintf( 'color: %s;', esc_attr( $blog_pagination_font_color ) );
+
+		}
+
+	echo '}';
+
+}
+
+if( $blog_pagination_background_color_alt || $blog_pagination_font_color_alt ) {
+
+	echo '.pagination .page-numbers:hover {';
+
+	if( $blog_pagination_background_color_alt ) {
+
+		echo sprintf( 'background: %s;', esc_attr( $blog_pagination_background_color_alt ) );
+
+	}
+
+	if( $blog_pagination_font_color_alt ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $blog_pagination_font_color_alt ) );
+
+	}
+
+	echo '}';
+
+}
+
+if( $blog_pagination_background_color_active || $blog_pagination_font_color_active ) {
+
+	echo '.pagination .page-numbers.current {';
+
+	if( $blog_pagination_background_color_active ) {
+
+		echo sprintf( 'background: %s;', esc_attr( $blog_pagination_background_color_active ) . '!important' );
+
+	}
+
+	if( $blog_pagination_background_color_next_prev ) {
+
+		echo sprintf( 'color: %s;', esc_attr( $blog_pagination_background_color_next_prev ) );
+
+	}
+
+	echo '}';
+
+}
+
 /* Blog Layouts */
 $archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
 

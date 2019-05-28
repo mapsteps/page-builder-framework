@@ -42,7 +42,11 @@
 	// Font Size
 	wp.customize( 'menu_font_size', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-menu a, .wpbf-mobile-menu a').css('font-size', newval );
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-menu a, .wpbf-mobile-menu a').css('font-size', newval + suffix );
 		} );
 	} );
 
@@ -65,7 +69,11 @@
 	// Font Size
 	wp.customize( 'sub_menu_font_size', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-menu .sub-menu a').css('font-size', newval );
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-menu .sub-menu a').css('font-size', newval + suffix );
 		} );
 	} );
 
@@ -153,6 +161,47 @@
 	wp.customize( 'pre_header_font_color', function( value ) {
 		value.bind( function( newval ) {
 			$('#wpbf-pre-header').css('color', newval );
+		} );
+	} );
+
+	/* Blog – Pagination */
+	wp.customize( 'blog_pagination_border_radius', function( value ) {
+		value.bind( function( newval ) {
+			$('.pagination .page-numbers').css('border-radius', newval + 'px' );
+		} );
+	} );
+
+	wp.customize( 'blog_pagination_background_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.pagination .page-numbers:not(.current)').css('background', newval );
+		} );
+	} );
+
+	wp.customize( 'blog_pagination_background_color_active', function( value ) {
+		value.bind( function( newval ) {
+			$('.pagination .page-numbers.current').css('background', newval );
+		} );
+	} );
+
+	wp.customize( 'blog_pagination_font_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.pagination .page-numbers:not(.current)').css('color', newval );
+		} );
+	} );
+
+	wp.customize( 'blog_pagination_font_color_active', function( value ) {
+		value.bind( function( newval ) {
+			$('.pagination .page-numbers.current').css('color', newval );
+		} );
+	} );
+
+	wp.customize( 'blog_pagination_font_size', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.pagination .page-numbers').css('font-size', newval + suffix );
 		} );
 	} );
 
