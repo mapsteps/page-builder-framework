@@ -1454,7 +1454,7 @@ if( $custom_logo ) {
 
 	if( $menu_logo_size_desktop ) {
 		$suffix = is_numeric( $menu_logo_size_desktop ) ? 'px' : '';
-		echo '.wpbf-logo img {';
+		echo '.wpbf-logo img, .wpbf-mobile-logo img {';
 		echo sprintf( 'width: %s;', esc_attr( $menu_logo_size_desktop ) . $suffix );
 		echo '}';
 	}
