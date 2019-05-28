@@ -322,9 +322,7 @@ function wpbf_archive_header() {
 		<section class="wpbf-author-box">
 			<h1 class="page-title"><span class="vcard"><?php echo get_the_author(); ?></span></h1>
 			<p><?php echo wp_kses_post( get_the_author_meta( 'description' ) ); ?></p>
-			<div class="wpbf-avatar">
-				<?php echo get_avatar( get_the_author_meta( 'email' ), 120 ); ?>
-			</div>
+			<?php echo get_avatar( get_the_author_meta( 'email' ), 120 ); ?>
 		</section>
 
 	<?php } else {
