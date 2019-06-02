@@ -34,7 +34,6 @@
 	 */
 	 $('.wpbf-menu-item-search').click(function(event) {
 
-		event.preventDefault();
 		event.stopPropagation();
 
 		$('.wpbf-navigation .wpbf-menu > li').slice(-3).addClass('calculate-width');
