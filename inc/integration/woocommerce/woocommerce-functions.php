@@ -145,6 +145,8 @@ function wpbf_woo_output_content_wrapper() {
 
 	echo '<main id="main" class="wpbf-main wpbf-medium-2-3'. wpbf_archive_class() .'">';
 
+	do_action( 'wpbf_main_content_open' );
+
 }
 add_action( 'woocommerce_before_main_content', 'wpbf_woo_output_content_wrapper', 10 );
 
@@ -152,6 +154,8 @@ add_action( 'woocommerce_before_main_content', 'wpbf_woo_output_content_wrapper'
  * Wrapper End
  */
 function wpbf_woo_output_content_wrapper_end() {
+
+	do_action( 'wpbf_main_content_close' );
 
 	echo '</main>';
 
