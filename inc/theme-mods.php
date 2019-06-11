@@ -79,6 +79,15 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 
 	$class = $is_mobile ? 'wpbf-mobile-nav-item' : 'wpbf-nav-item';
 
+	// if we have a shop, we're going to call the product search form
+	if ( class_exists( 'WooCommerce' ) && get_theme_mod( 'woocommerce_search_menu_item' ) ) {
+		$search_form = get_product_search_form( $echo = false );
+	} else {
+		$search_form = get_search_form( $echo = false );
+	}
+
+	$search_form = apply_filters( 'wpbf_search_menu_item_form', $search_form );
+
 	// initialize $search_item
 	$search_item = '';
 
@@ -86,14 +95,7 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 	$search_item .= $is_navigation ? '<li class="menu-item wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false"><a href="javascript:void(0)" role="button">' : '<button href="javascript:void(0)" class="'. $class .' wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false">';
 	$search_item .= '<span class="screen-reader-text">'. __( 'Search Toggle', 'page-builder-framework' ) .'</span>';
 	$search_item .= '<div class="wpbf-menu-search">';
-
-	// if we have a shop, we're going to call the product search form
-	if ( class_exists( 'WooCommerce' ) && get_theme_mod( 'woocommerce_search_menu_item' ) ) {
-		$search_item .= get_product_search_form( $echo = false );
-	} else {
-		$search_item .= get_search_form( $echo = false );
-	}
-
+	$search_item .= $search_form;
 	$search_item .= '</div>';
 	$search_item .=  '<i class="wpbff wpbff-search"></i>';
 	$search_item .= $is_navigation ? '</a></li>' : '</button>';
