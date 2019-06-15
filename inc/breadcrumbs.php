@@ -79,6 +79,8 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 	// stop if we're on WooCommerce Pages as they handle breadcrumbs themselves
 	if ( function_exists( 'is_woocommerce' ) ) {
 		if( is_woocommerce() ) return;
+		if( is_checkout() ) return;
+		if( is_cart() ) return;
 	}
 
 	$breadcrumb = apply_filters( 'breadcrumb_trail_object', null, $args );
