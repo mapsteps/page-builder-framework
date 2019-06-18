@@ -53,6 +53,11 @@ require_once( WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php' );
 // Theme Mods
 require_once( WPBF_THEME_DIR . '/inc/theme-mods.php' );
 
+// Header Footer Elementor
+if( !function_exists( 'wpbf_header_footer_elementor_support' ) ) {
+	require_once( WPBF_THEME_DIR . '/inc/integration/header-footer-elementor.php' );
+}
+
 // Easy Digital Downloads
 if ( class_exists( 'Easy_Digital_Downloads' ) ) {
 	require_once( WPBF_THEME_DIR . '/inc/integration/edd/edd.php' );
