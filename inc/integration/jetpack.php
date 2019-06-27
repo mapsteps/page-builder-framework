@@ -34,3 +34,14 @@ function wpbf_infinite_scroll_render() {
 	get_template_part( 'inc/template-parts/blog-layouts/' . $blog_layout );
 
 }
+
+
+/**
+ * Disable Infinite Scroll on WooCommerce
+ */
+function wpbf_woo_disable_infinite_scroll() {
+	if ( is_woocommerce() ) {
+		remove_theme_support( 'infinite-scroll' );
+	}
+}
+add_action( 'pre_get_posts', 'wpbf_woo_disable_infinite_scroll' );
