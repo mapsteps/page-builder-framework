@@ -68,11 +68,6 @@ if( class_exists( 'WooCommerce' ) ) {
 	require_once( WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php' );
 }
 
-// Jetpack
-if( class_exists( 'Jetpack' ) ) {
-	require_once( WPBF_THEME_DIR . '/inc/integration/jetpack.php' );
-}
-
 /**
  * Pre Header
  */
