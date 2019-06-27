@@ -59,13 +59,18 @@ if( !function_exists( 'wpbf_header_footer_elementor_support' ) ) {
 }
 
 // Easy Digital Downloads
-if ( class_exists( 'Easy_Digital_Downloads' ) ) {
+if( class_exists( 'Easy_Digital_Downloads' ) ) {
 	require_once( WPBF_THEME_DIR . '/inc/integration/edd/edd.php' );
 }
 
 // WooCommerce
-if ( class_exists( 'WooCommerce' ) ) {
+if( class_exists( 'WooCommerce' ) ) {
 	require_once( WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php' );
+}
+
+// Jetpack
+if( class_exists( 'Jetpack' ) ) {
+	require_once( WPBF_THEME_DIR . '/inc/integration/jetpack.php' );
 }
 
 /**
