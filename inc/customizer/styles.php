@@ -780,7 +780,7 @@ if( $sidebar_width ) {
 }
 
 /* Breadcrumbs */
-$breadcrumbs_alignment        = get_theme_mod( 'breadcrumbs_alignment' );
+$breadcrumbs_alignment        = get_theme_mod( 'breadcrumbs_alignment', 'left' );
 $breadcrumbs_background_color = get_theme_mod( 'breadcrumbs_background_color' );
 $breadcrumbs_font_color       = get_theme_mod( 'breadcrumbs_font_color' );
 $breadcrumbs_accent_color     = get_theme_mod( 'breadcrumbs_accent_color' );
