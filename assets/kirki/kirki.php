@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name:   Kirki Toolkit
- * Plugin URI:    http://aristath.github.io/kirki
- * Description:   The ultimate WordPress Customizer Toolkit
+ * Plugin Name:   Kirki Customizer Framework
+ * Plugin URI:    https://kirki.org
+ * Description:   The Ultimate WordPress Customizer Framework
  * Author:        Ari Stathopoulos (@aristath)
- * Author URI:    http://aristath.github.io
- * Version:       3.0.39
+ * Author URI:    https://aristath.github.io
+ * Version:       3.0.44
  * Text Domain:   kirki
  * Requires WP:   4.9
  * Requires PHP:  5.3
@@ -40,12 +40,7 @@ if ( ! defined( 'KIRKI_PLUGIN_FILE' ) ) {
 
 // Define the KIRKI_VERSION constant.
 if ( ! defined( 'KIRKI_VERSION' ) ) {
-	if ( ! function_exists( 'get_plugin_data' ) ) {
-		include_once ABSPATH . 'wp-admin/includes/plugin.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
-	}
-	$data    = get_plugin_data( KIRKI_PLUGIN_FILE );
-	$version = ( isset( $data['Version'] ) ) ? $data['Version'] : false;
-	define( 'KIRKI_VERSION', $version );
+	define( 'KIRKI_VERSION', '3.0.44' );
 }
 
 // Make sure the path is properly set.
