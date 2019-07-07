@@ -97,7 +97,7 @@ function wpbf_do_breadcrumbs( $args = array() ) {
  */
 function wpbf_breadcrumbs_content() {
 
-	if( get_theme_mod( 'breadcrumbs_position' ) === 'content' ) {
+	if( get_theme_mod( 'breadcrumbs_position', 'content' ) === 'content' ) {
 
 		wpbf_do_breadcrumbs();
 
