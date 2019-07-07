@@ -961,9 +961,9 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 Kirki::add_field( 'wpbf', array(
-	'type'				=>			'checkbox',
+	'type'				=>			'toggle',
 	'settings'			=>			'woocommerce_single_add_to_cart_ajax',
-	'label'				=>			esc_attr__( 'Enable Ajax Add to Cart Button on Product Pages', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Enable AJAX add to cart button', 'page-builder-framework' ),
 	'section'			=> 			'wpbf_woocommerce_product_options',
 	'priority'			=>			$product_priority++,
 	'default'			=>			false,
