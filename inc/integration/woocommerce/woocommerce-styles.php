@@ -647,7 +647,7 @@ function wpbf_do_woocommerce_customizer_css() {
 		echo 'border-right: none;';
 		echo '}';
 
-		echo '.woocommerce div.product .woocommerce-tabs ul.tabs li:hover {';
+		echo '.woocommerce div.product .woocommerce-tabs ul.tabs li:hover, .woocommerce div.product .woocommerce-tabs ul.tabs li.active:hover {';
 		echo 'background: none;';
 		echo '}';
 
