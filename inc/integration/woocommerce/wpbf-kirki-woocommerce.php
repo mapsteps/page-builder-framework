@@ -494,22 +494,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Background Color
-Kirki::add_field(
-	'wpbf',
-	array(
-		'type'        => 'color',
-		'settings'    => 'woocommerce_loop_background_color',
-		'label'       => esc_attr__( 'Background Color', 'wpbfpremium' ),
-		'section'     => 'woocommerce_product_catalog',
-		'transport'   => 'postMessage',
-		'priority'    => 20,
-		'choices'     => array(
-			'alpha'   => true,
-		),
-	)
-);
-
 // Separator
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'custom',
