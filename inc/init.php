@@ -54,7 +54,7 @@ require_once( WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php' );
 require_once( WPBF_THEME_DIR . '/inc/theme-mods.php' );
 
 // Header Footer Elementor
-if( !function_exists( 'wpbf_header_footer_elementor_support' ) ) {
+if( !function_exists( 'wpbf_header_footer_elementor_support' ) ) { // backwards compatibility check as this was earlier included in Premium. Will be removed at some point.
 	require_once( WPBF_THEME_DIR . '/inc/integration/header-footer-elementor.php' );
 }
 
