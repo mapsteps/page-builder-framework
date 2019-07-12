@@ -800,6 +800,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'			=>			'left',
 	'priority'			=>			$product_priority++,
 	'multiple'			=>			1,
+	'transport'			=>			'postMessage',
 	'choices'			=>			array(
 		'left'			=>			WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'right'			=>			WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',

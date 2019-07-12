@@ -290,16 +290,6 @@
 		} );
 	} );
 
-	/* Sidebar */
-
-	// Sidebar
-	wp.customize( 'woocommerce_single_image_width', function( value ) {
-		value.bind( function( newval ) {
-			$('.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images').css('width', (newval-2) + '%' );
-			$('.woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary').css('width', 98 - newval + '%' );
-		} );
-	} );
-
 	/* Loop */
 
 	// Image Alignment (List)
@@ -398,6 +388,29 @@
 	wp.customize( 'woocommerce_single_custom_width', function( value ) {
 		value.bind( function( newval ) {
 			$('.single.woocommerce #inner-content').css('max-width', newval );
+		} );
+	} );
+
+	// Image Alignment
+	wp.customize( 'woocommerce_single_alignment', function( value ) {
+		value.bind( function( newval ) {
+			if( newval == 'right' ) {
+				$('.woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary').css('float', 'left' );
+				$('.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images').css('float', 'right' );
+				$('.single-product.woocommerce span.onsale').css('display', 'none' );
+			} else {
+				$('.woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary').css('float', 'right' );
+				$('.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images').css('float', 'left' );
+				$('.single-product.woocommerce span.onsale').css('display', 'block' );
+			}
+		} );
+	} );
+
+	// Image Width
+	wp.customize( 'woocommerce_single_image_width', function( value ) {
+		value.bind( function( newval ) {
+			$('.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images').css('width', newval-2 + '%' );
+			$('.woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary').css('width', 98 - newval + '%' );
 		} );
 	} );
 
