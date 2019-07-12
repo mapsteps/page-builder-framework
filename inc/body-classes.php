@@ -36,6 +36,10 @@ function wpbf_body_classes( $classes ) {
 		$classes[] = 'wpbf-full-width';
 	}
 
+	if( get_theme_mod( 'woocommerce_loop_layout' ) == 'list' ) {
+		$classes[] = 'wpbf-woo-list-view';
+	}
+
 	return $classes;
 
 }

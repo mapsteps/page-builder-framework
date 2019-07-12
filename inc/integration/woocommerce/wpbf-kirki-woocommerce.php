@@ -249,8 +249,6 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields – Shop & Archive Pages (Loop) */
 
-$loop_priority = 10;
-
 // Custom Width
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'dimension',
@@ -258,7 +256,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'woocommerce_loop_custom_width',
 	'section'			=>			'woocommerce_product_catalog',
 	'description'		=>			esc_attr__( 'Default: 1200px', 'page-builder-framework' ), 
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			10,
 	'transport'			=>			'postMessage'
 ) );
 
@@ -267,7 +265,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'separator-56123',
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			10,
 ) );
 
 // Remove Page Title
@@ -277,7 +275,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Hide Page Title', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			0,
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			10,
 ) );
 
 // Remove Breadcrumbs
@@ -287,7 +285,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Hide Breadcrumbs', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			0,
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			10,
 ) );
 
 // Remove Result Count
@@ -297,7 +295,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Hide Result Count', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			0,
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			10,
 ) );
 
 // Remove Ordering
@@ -307,7 +305,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Hide Ordering', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			0,
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			10,
 ) );
 
 Kirki::add_field( 'wpbf', array(
@@ -315,14 +313,10 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'separator-72124',
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			10,
 ) );
 
-add_action( 'customize_register' , 'wpbf_woo_custom_controls_default' );
-
 function wpbf_woo_custom_controls_default( $wp_customize ) {
-
-	$loop_priority = 15;
 
 	$wp_customize->add_setting( 'woocommerce_loop_products_per_row_desktop',
 		array(
@@ -351,7 +345,7 @@ function wpbf_woo_custom_controls_default( $wp_customize ) {
 			'label'	=> esc_attr__( 'Products per Row', 'page-builder-framework' ),
 			'section' => 'woocommerce_product_catalog',
 			'settings' => 'woocommerce_loop_products_per_row_desktop',
-			'priority' => $loop_priority++,
+			'priority' => 15,
 		) 
 	));
 
@@ -362,7 +356,7 @@ function wpbf_woo_custom_controls_default( $wp_customize ) {
 			'label'	=> esc_attr__( 'Products per Row', 'page-builder-framework' ),
 			'section' => 'woocommerce_product_catalog',
 			'settings' => 'woocommerce_loop_products_per_row_tablet',
-			'priority' => $loop_priority++,
+			'priority' => 15,
 		) 
 	));
 
@@ -373,11 +367,12 @@ function wpbf_woo_custom_controls_default( $wp_customize ) {
 			'label'	=> esc_attr__( 'Products per Row', 'page-builder-framework' ),
 			'section' => 'woocommerce_product_catalog',
 			'settings' => 'woocommerce_loop_products_per_row_mobile',
-			'priority' => $loop_priority++,
+			'priority' => 15,
 		) 
 	));
 
 }
+add_action( 'customize_register' , 'wpbf_woo_custom_controls_default' );
 
 // Gap
 Kirki::add_field( 'wpbf', array(
@@ -386,7 +381,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Grid Gap', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'large',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'small'			=>			esc_attr__( 'Small', 'page-builder-framework' ),
@@ -404,7 +399,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Content Alignment', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'left',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'left'			=>			WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
@@ -433,8 +428,87 @@ Kirki::add_field( 'wpbf', array(
 		'add_to_cart'	=>			esc_attr__( 'Add to Cart Button', 'page-builder-framework' ),
 		'excerpt'		=>			esc_attr__( 'Short Description', 'page-builder-framework' ),
 	),
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 ) );
+
+// Layout
+Kirki::add_field(
+	'wpbf',
+	array(
+		'type'        => 'select',
+		'settings'    => 'woocommerce_loop_layout',
+		'label'       => esc_attr__( 'Layout', 'wpbfpremium' ),
+		'section'     => 'woocommerce_product_catalog',
+		'default'     => 'default',
+		'priority'    => 20,
+		'choices'     => array(
+			'default' => esc_attr__( 'Default', 'wpbfpremium' ),
+			'list'    => esc_attr__( 'List', 'wpbfpremium' ),
+		),
+	)
+);
+
+// Alignment
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'radio-image',
+	'settings'        => 'woocommerce_loop_image_alignment',
+	'label'           => esc_attr__( 'Image Alignment', 'wpbfpremium' ),
+	'section'         => 'woocommerce_product_catalog',
+	'default'         => 'left',
+	'priority'        => 20,
+	'multiple'        => 1,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'left'        => WPBF_PREMIUM_URI . '/inc/customizer/img/align-left.jpg',
+		'right'       => WPBF_PREMIUM_URI . '/inc/customizer/img/align-right.jpg',
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'woocommerce_loop_layout',
+			'operator' => '==',
+			'value'    => 'list',
+		),
+	),
+) );
+
+// Image Container Width
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'slider',
+	'settings'        => 'woocommerce_loop_image_width',
+	'label'           => esc_attr__( 'Image Width', 'page-builder-framework' ),
+	'section'         => 'woocommerce_product_catalog',
+	'priority'        => 20,
+	'default'         => 50,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'min'         => '25',
+		'max'         => '75',
+		'step'        => '1',
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'woocommerce_loop_layout',
+			'operator' => '==',
+			'value'    => 'list',
+		),
+	),
+) );
+
+// Background Color
+Kirki::add_field(
+	'wpbf',
+	array(
+		'type'        => 'color',
+		'settings'    => 'woocommerce_loop_background_color',
+		'label'       => esc_attr__( 'Background Color', 'wpbfpremium' ),
+		'section'     => 'woocommerce_product_catalog',
+		'transport'   => 'postMessage',
+		'priority'    => 20,
+		'choices'     => array(
+			'alpha'   => true,
+		),
+	)
+);
 
 // Separator
 Kirki::add_field( 'wpbf', array(
@@ -442,7 +516,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'separator-56377',
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 ) );
 
 // Sale Position
@@ -452,7 +526,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Sale Badge', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'outside',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'outside'		=>			esc_attr__( 'Outside', 'page-builder-framework' ),
@@ -468,7 +542,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Layout', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'round',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'round'			=>			esc_attr__( 'Round', 'page-builder-framework' ),
@@ -490,7 +564,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Alignment', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'left',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'left'			=>			WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
@@ -513,7 +587,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'woocommerce_loop_sale_font_size',
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'default'			=>			'14px',
 	'active_callback'	=>			array(
 		array(
@@ -532,7 +606,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#fff',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -553,7 +627,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#4fe190',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -572,7 +646,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'separator-37611',
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 ) );
 
 // Title Font Size
@@ -582,7 +656,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'woocommerce_loop_title_size',
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'default'			=>			'16px',
 ) );
 
@@ -594,7 +668,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#3e4349',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -606,7 +680,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'separator-58256',
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 ) );
 
 // Price Font Size
@@ -616,7 +690,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'woocommerce_loop_price_size',
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'default'			=>			'16px',
 ) );
 
@@ -628,7 +702,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#3e4349',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -640,7 +714,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'separator-91969',
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 ) );
 
 // Out of Stock Notice
@@ -650,7 +724,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'				=>			esc_attr__( 'Out of Stock Notice', 'page-builder-framework' ),
 	'section'			=>			'woocommerce_product_catalog',
 	'default'			=>			'show',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'multiple'			=>			1,
 	'choices'			=>			array(
 		'show'			=>			esc_attr__( 'Show', 'page-builder-framework' ),
@@ -665,7 +739,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'			=>			'woocommerce_loop_out_of_stock_font_size',
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'default'			=>			'14px',
 	'active_callback'	=>			array(
 		array(
@@ -684,7 +758,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'#fff',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -705,7 +779,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'			=>			'woocommerce_product_catalog',
 	'transport'			=>			'postMessage',
 	'default'			=>			'rgba(0,0,0,.7)',
-	'priority'			=>			$loop_priority++,
+	'priority'			=>			20,
 	'choices'			=>			array(
 		'alpha'			=>			true,
 	),
@@ -752,7 +826,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'				=>			'slider',
 	'settings'			=>			'woocommerce_single_image_width',
-	'label'				=>			esc_attr__( 'Image Container Width', 'page-builder-framework' ),
+	'label'				=>			esc_attr__( 'Image Width', 'page-builder-framework' ),
 	'section'			=>			'wpbf_woocommerce_product_options',
 	'priority'			=>			$product_priority++,
 	'default'			=>			50,
