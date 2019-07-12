@@ -14,9 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function wpbf_woo_change_inline_style_location( $location ) {
 
-	if ( !wpbf_is_premium() ) {
-		$location = 'wpbf-woocommerce';
-	}
+	$location = wpbf_is_premium() ? 'wpbf-premium-woocommerce' : 'wpbf-woocommerce';
 
 	return $location;
 
