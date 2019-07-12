@@ -247,6 +247,26 @@ function wpbf_woo_product_loop_end() {
 add_filter( 'woocommerce_product_loop_end', 'wpbf_woo_product_loop_end', 0 );
 
 /**
+ * Product Wrapper Start
+ */
+function wpbf_woo_loop_product_wrap_start() {
+
+	echo '<div class="wpbf-woo-product-wrapper wpbf-clearfix">';
+
+}
+add_action( 'woocommerce_before_shop_loop_item', 'wpbf_woo_loop_product_wrap_start', 0 );
+
+/**
+ * Product Wrapper End
+ */
+function wpbf_woo_loop_product_wrap_end() {
+
+	echo '</div>';
+
+}
+add_action( 'woocommerce_after_shop_loop_item', 'wpbf_woo_loop_product_wrap_end', 100 );
+
+/**
  * Thumbnail Wrapper Start
  */
 function wpbf_woo_loop_thumbnail_wrap_start() {
