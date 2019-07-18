@@ -677,7 +677,7 @@ function wpbf_mobile_sub_menu_indicators( $item_output, $items, $depth, $args ) 
 	if ( $args->theme_location == 'mobile_menu' || ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ) ) && $args->theme_location == 'main_menu' ) ) {
 
 		if ( isset( $items->classes ) && in_array( 'menu-item-has-children', $items->classes ) ) {
-			$item_output .= '<button href="javascript:void(0)" class="wpbf-submenu-toggle" role="button" aria-expanded="false"><i class="wpbff wpbff-arrow-down"></i><span class="screen-reader-text">'. __( 'Menu Toggle', 'page-builder-framework' ) .'</span></button>';
+			$item_output .= '<button class="wpbf-submenu-toggle" role="button" aria-expanded="false"><i class="wpbff wpbff-arrow-down"></i><span class="screen-reader-text">'. __( 'Menu Toggle', 'page-builder-framework' ) .'</span></button>';
 		}
 	}
 
