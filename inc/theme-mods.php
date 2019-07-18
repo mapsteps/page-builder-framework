@@ -97,7 +97,7 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 	$search_item .= '<div class="wpbf-menu-search">';
 	$search_item .= $search_form;
 	$search_item .= '</div>';
-	$search_item .=  '<i class="wpbff wpbff-search"></i>';
+	$search_item .= '<i class="wpbff wpbff-search"></i>';
 	$search_item .= $is_navigation ? '</a></li>' : '</button>';
 
 	return $search_item;
