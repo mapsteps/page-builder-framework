@@ -437,13 +437,13 @@ Kirki::add_field(
 	array(
 		'type'        => 'select',
 		'settings'    => 'woocommerce_loop_layout',
-		'label'       => esc_attr__( 'Layout', 'wpbfpremium' ),
+		'label'       => esc_attr__( 'Layout', 'page-builder-framework' ),
 		'section'     => 'woocommerce_product_catalog',
 		'default'     => 'default',
 		'priority'    => 20,
 		'choices'     => array(
-			'default' => esc_attr__( 'Default', 'wpbfpremium' ),
-			'list'    => esc_attr__( 'List', 'wpbfpremium' ),
+			'default' => esc_attr__( 'Default', 'page-builder-framework' ),
+			'list'    => esc_attr__( 'List', 'page-builder-framework' ),
 		),
 	)
 );
@@ -452,7 +452,7 @@ Kirki::add_field(
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'radio-image',
 	'settings'        => 'woocommerce_loop_image_alignment',
-	'label'           => esc_attr__( 'Image Alignment', 'wpbfpremium' ),
+	'label'           => esc_attr__( 'Image Alignment', 'page-builder-framework' ),
 	'section'         => 'woocommerce_product_catalog',
 	'default'         => 'left',
 	'priority'        => 20,
