@@ -459,8 +459,8 @@ Kirki::add_field( 'wpbf', array(
 	'multiple'        => 1,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'left'        => WPBF_PREMIUM_URI . '/inc/customizer/img/align-left.jpg',
-		'right'       => WPBF_PREMIUM_URI . '/inc/customizer/img/align-right.jpg',
+		'left'        => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
+		'right'       => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
 	),
 	'active_callback' => array(
 		array(
