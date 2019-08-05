@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 var manifest = require('./assets/manifest.json');
@@ -26,73 +26,62 @@ gulp.task('scripts_min', function(){
 // Styles Task
 
 // Compile Main Styles
-gulp.task('styles', function() {
 
-	return sass('assets/scss/style.scss', {
-		style: 'compressed' 
-	})
+gulp.task('styles', function(){
+	return gulp.src('assets/scss/style.scss')
+	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
 	.pipe(gulp.dest(''))
 	.pipe(reload({ stream: true }))
-
-});﻿
+});
 
 // Compile Responsive Styles
-gulp.task('responsive_styles_min', function() {
-
-	return sass('assets/scss/responsive.scss', {
-		style: 'compressed' 
-	})
+gulp.task('responsive_styles_min', function(){
+	return gulp.src('assets/scss/responsive.scss')
+	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
 	.pipe(rename({ suffix: '-min' }))
 	.pipe(gulp.dest('css/min'))
 	.pipe(reload({ stream: true }))
+});
 
-});﻿
 
 // Compile RTL Styles
-gulp.task('rtl_styles_min', function() {
-
-	return sass('assets/scss/rtl.scss', {
-		style: 'compressed' 
-	})
+gulp.task('rtl_styles_min', function(){
+	return gulp.src('assets/scss/rtl.scss')
+	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
 	.pipe(rename({ suffix: '-min' }))
 	.pipe(gulp.dest('css/min'))
 	.pipe(reload({ stream: true }))
+});
 
-});﻿
 
 // Compile EDD Styles
-gulp.task('edd_styles_min', function() {
-
-	return sass('assets/edd/scss/edd.scss', {
-		style: 'compressed' 
-	})
+gulp.task('edd_styles_min', function(){
+	return gulp.src('assets/edd/scss/edd.scss')
+	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
 	.pipe(rename({ suffix: '-min' }))
 	.pipe(gulp.dest('css/min'))
 	.pipe(reload({ stream: true }))
+});
 
-});﻿
 
 // Compile Woo Styles
-gulp.task('woo_styles_min', function() {
 
-	return sass(['assets/woocommerce/scss/woocommerce-layout.scss', 'assets/woocommerce/scss/woocommerce.scss', 'assets/woocommerce/scss/woocommerce-smallscreen.scss'], {
-		style: 'compressed' 
-	})
+gulp.task('woo_styles_min', function(){
+	return gulp.src(['assets/woocommerce/scss/woocommerce-layout.scss', 'assets/woocommerce/scss/woocommerce.scss', 'assets/woocommerce/scss/woocommerce-smallscreen.scss'])
+	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
 	.pipe(rename({ suffix: '-min' }))
 	.pipe(gulp.dest('css/min'))
 	.pipe(reload({ stream: true }))
+});
 
-});﻿
 
 // Browser Sync
 gulp.task('serve', function() {
-
 	browserSync.init( {
 		proxy: "http://" + config.url,
 		host: config.host,
 		notify: false,
 	});
-
 });
 
 // Watch Tasks
