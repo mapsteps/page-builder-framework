@@ -11,6 +11,21 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * strpos array helper function
+ */
+function wpbf_strposa( $haystack, $needles, $offset = 0 ) {
+
+    if( !is_array( $needles ) ) $needles = array( $needles );
+
+    foreach( $needles as $needle ) {
+        if( strpos( $haystack, $needle, $offset ) !== false ) return true; // stop on first true result
+    }
+
+    return false;
+
+}
+
+/**
  * Pingback
  */
 function wpbf_pingback_header() {
@@ -761,9 +776,15 @@ function wpbf_navigation_attributes() {
 /**
  * Responsive embed/oembed
  */
-function wpbf_responsive_embed( $html ) {
+function wpbf_responsive_embed( $html, $url, $attr ) {
 
-	return '<div class="wpbf-video">' . $html . '</div>';
+	$providers = array( 'vimeo.com', 'youtube.com', 'youtu.be', 'wistia.com', 'wistia.net' );
+
+	if ( wpbf_strposa( $url, $providers ) ) {
+			$html = '<div class="wpbf-video">' . $html . '</div>';
+	}
+
+	return $html;
 
 }
-add_filter( 'embed_oembed_html', 'wpbf_responsive_embed' );
+add_filter( 'embed_oembed_html', 'wpbf_responsive_embed', 10, 3 );
