@@ -8,9 +8,7 @@ var reload = browserSync.reload;
 var manifest = require('./assets/manifest.json');
 var config = manifest.config;
 
-
 // Scripts Task
-
 // Minify JS
 gulp.task('scripts_min', function(){
 
@@ -24,12 +22,10 @@ gulp.task('scripts_min', function(){
 });
 
 // Styles Task
-
 // Compile Main Styles
-
 gulp.task('styles', function(){
 	return gulp.src('assets/scss/style.scss')
-	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
+	.pipe(sass({outputStyle: 'compressed'}))
 	.pipe(gulp.dest(''))
 	.pipe(reload({ stream: true }))
 });
@@ -37,43 +33,38 @@ gulp.task('styles', function(){
 // Compile Responsive Styles
 gulp.task('responsive_styles_min', function(){
 	return gulp.src('assets/scss/responsive.scss')
-	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
+	.pipe(sass({outputStyle: 'compressed'}))
 	.pipe(rename({ suffix: '-min' }))
 	.pipe(gulp.dest('css/min'))
 	.pipe(reload({ stream: true }))
 });
-
 
 // Compile RTL Styles
 gulp.task('rtl_styles_min', function(){
 	return gulp.src('assets/scss/rtl.scss')
-	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
+	.pipe(sass({outputStyle: 'compressed'}))
 	.pipe(rename({ suffix: '-min' }))
 	.pipe(gulp.dest('css/min'))
 	.pipe(reload({ stream: true }))
 });
-
 
 // Compile EDD Styles
 gulp.task('edd_styles_min', function(){
 	return gulp.src('assets/edd/scss/edd.scss')
-	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
+	.pipe(sass({outputStyle: 'compressed'})) 
 	.pipe(rename({ suffix: '-min' }))
 	.pipe(gulp.dest('css/min'))
 	.pipe(reload({ stream: true }))
 });
-
 
 // Compile Woo Styles
-
 gulp.task('woo_styles_min', function(){
 	return gulp.src(['assets/woocommerce/scss/woocommerce-layout.scss', 'assets/woocommerce/scss/woocommerce.scss', 'assets/woocommerce/scss/woocommerce-smallscreen.scss'])
-	.pipe(sass({outputStyle: 'compressed'}))  // Converts Sass to CSS with gulp-sass
+	.pipe(sass({outputStyle: 'compressed'}))
 	.pipe(rename({ suffix: '-min' }))
 	.pipe(gulp.dest('css/min'))
 	.pipe(reload({ stream: true }))
 });
-
 
 // Browser Sync
 gulp.task('serve', function() {
