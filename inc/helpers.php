@@ -757,3 +757,13 @@ function wpbf_navigation_attributes() {
 	echo $navigation_attributes; // WPCS: XSS ok.
 
 }
+
+/**
+ * Responsive embed/oembed
+ */
+function wpbf_responsive_embed( $html ) {
+
+	return '<div class="wpbf-video">' . $html . '</div>';
+
+}
+add_filter( 'embed_oembed_html', 'wpbf_responsive_embed' );
