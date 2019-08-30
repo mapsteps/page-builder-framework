@@ -76,6 +76,11 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 		return yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
 	}
 
+	// Use Rank Math SEO Breadcrumbs if enabled
+	if ( function_exists( 'rank_math_the_breadcrumbs' ) ) {
+		return rank_math_the_breadcrumbs();
+	}
+
 	// stop if we're on WooCommerce Pages as they handle breadcrumbs themselves
 	if ( function_exists( 'is_woocommerce' ) ) {
 		if( is_woocommerce() ) return;
