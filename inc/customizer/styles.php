@@ -992,6 +992,24 @@ foreach( $archives as $archive ) {
 
 	}
 
+	if( $title_size ) {
+
+		$suffix = is_numeric( $title_size ) ? 'px' : '';
+		echo '.wpbf-' . $archive . '-content .wpbf-post .entry-title {'; // WPCS: XSS ok.
+		echo sprintf( 'font-size: %s;', esc_attr( $title_size ) . $suffix );
+		echo '}';
+
+	}
+
+	if( $font_size ) {
+
+		$suffix = is_numeric( $font_size ) ? 'px' : '';
+		echo '.wpbf-' . $archive . '-content .wpbf-post .entry-summary {'; // WPCS: XSS ok.
+		echo sprintf( 'font-size: %s;', esc_attr( $font_size ) . $suffix );
+		echo '}';
+
+	}
+
 	if( $style == 'plain' && $space_between ) {
 
 		echo '.wpbf-' . $archive . '-content .wpbf-post-style-plain {'; // WPCS: XSS ok.
@@ -1067,7 +1085,7 @@ foreach( $archives as $archive ) {
 
 			if( $stretched && $layout !== 'beside' ) {
 
-				echo '.wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+				echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
 
 					if( $boxed_padding_left_desktop ) {
 
@@ -1083,7 +1101,7 @@ foreach( $archives as $archive ) {
 
 				echo '}';
 
-				echo '.wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+				echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
 
 					if( $boxed_padding_top_desktop ) {
 
@@ -1132,7 +1150,7 @@ foreach( $archives as $archive ) {
 
 				if( $stretched && $layout !== 'beside' ) {
 
-					echo '.wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+					echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
 
 						if( $boxed_padding_left_tablet ) {
 
@@ -1148,7 +1166,7 @@ foreach( $archives as $archive ) {
 
 					echo '}';
 
-					echo '.wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+					echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
 
 						if( $boxed_padding_top_tablet ) {
 
@@ -1199,7 +1217,7 @@ foreach( $archives as $archive ) {
 
 				if( $stretched && $layout !== 'beside' ) {
 
-					echo '.wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+					echo '.wpbf-' . $archive . '-content .wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
 
 						if( $boxed_padding_left_mobile ) {
 
@@ -1215,7 +1233,7 @@ foreach( $archives as $archive ) {
 
 					echo '}';
 
-					echo '.wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+					echo '.wpbf-' . $archive . '-content  .wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
 
 						if( $boxed_padding_top_mobile ) {
 
@@ -1234,28 +1252,11 @@ foreach( $archives as $archive ) {
 
 	}
 
-	if( $title_size ) {
-
-		$suffix = is_numeric( $title_size ) ? 'px' : '';
-		echo '.wpbf-' . $archive . '-content .wpbf-post .entry-title {'; // WPCS: XSS ok.
-		echo sprintf( 'font-size: %s;', esc_attr( $title_size ) . $suffix );
-		echo '}';
-
-	}
-
-	if( $font_size ) {
-
-		$suffix = is_numeric( $font_size ) ? 'px' : '';
-		echo '.wpbf-' . $archive . '-content .wpbf-post .entry-summary {'; // WPCS: XSS ok.
-		echo sprintf( 'font-size: %s;', esc_attr( $font_size ) . $suffix );
-		echo '}';
-
-	}
-
 	// Beside
 	if( $layout == 'beside' ) {
 
-		$image_width = get_theme_mod( $archive . '_post_image_width' );
+		$image_width     = get_theme_mod( $archive . '_post_image_width' );
+		$image_alignment = get_theme_mod( $archive . '_post_image_alignment', 'left' );
 
 		if( $image_width && $image_width !== '40' ) {
 
@@ -1272,8 +1273,6 @@ foreach( $archives as $archive ) {
 			echo '}';
 
 		}
-
-		$image_alignment = get_theme_mod( $archive . '_post_image_alignment', 'left' );
 
 		if( $image_alignment ) {
 
@@ -1293,14 +1292,278 @@ foreach( $archives as $archive ) {
 }
 
 /* Single */
+$singles = apply_filters( 'wpbf_singles', array( 'single' ) );
 
-$single_custom_width = get_theme_mod( 'single_custom_width' );
+foreach ( $singles as $single ) {
 
-if( $single_custom_width ) {
+	$custom_width      = get_theme_mod( $single . '_custom_width' );
+	$style             = get_theme_mod( $single . '_post_style' );
+	$title_size        = get_theme_mod( $single . '_post_title_size' );
+	$font_size         = get_theme_mod( $single . '_post_font_size' );
+	// $content_alignment = get_theme_mod( $single . '_post_content_alignment', 'left' );
 
-	echo '.single #inner-content {';
-	echo sprintf( 'max-width: %s;', esc_attr( $single_custom_width ) );
-	echo '}';
+	if( $custom_width ) {
+
+		$post_type = $single === 'single' ? 'post' : $single;
+
+		echo '.single-' . $post_type . ' #inner-content {';
+		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
+		echo '}';
+
+	}
+
+	// General Layout Settings
+	// if( $content_alignment ) {
+
+	// 	echo '.wpbf-' . $single . '-content .wpbf-post {'; // WPCS: XSS ok.
+	// 	echo sprintf( 'text-align: %s;', esc_attr( $content_alignment ) );
+	// 	echo '}';
+
+	// }
+
+	if( $title_size ) {
+
+		$suffix = is_numeric( $title_size ) ? 'px' : '';
+		echo '.wpbf-' . $single . '-content .wpbf-post .entry-title {'; // WPCS: XSS ok.
+		echo sprintf( 'font-size: %s;', esc_attr( $title_size ) . $suffix );
+		echo '}';
+
+	}
+
+	if( $font_size ) {
+
+		$suffix = is_numeric( $font_size ) ? 'px' : '';
+		echo '.wpbf-' . $single . '-content .wpbf-post .entry-content {'; // WPCS: XSS ok.
+		echo sprintf( 'font-size: %s;', esc_attr( $font_size ) . $suffix );
+		echo '}';
+
+	}
+
+	// Boxed
+	if( $style === 'boxed' ) {
+
+		$background_color = get_theme_mod( $single . '_post_background_color' );
+
+		if( $background_color ) {
+
+		echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed .wpbf-article-wrapper, .wpbf-' . $single . '-content .wpbf-post-style-boxed #respond {';
+		echo sprintf( 'background: %s;', esc_attr( $background_color ) );
+		echo '}';
+
+		}
+
+		$stretched                    = get_theme_mod( $single . '_boxed_image_streched', false );
+		$boxed_padding_top_desktop    = get_theme_mod( $single . '_boxed_padding_top_desktop' );
+		$boxed_padding_right_desktop  = get_theme_mod( $single . '_boxed_padding_right_desktop' );
+		$boxed_padding_bottom_desktop = get_theme_mod( $single . '_boxed_padding_bottom_desktop' );
+		$boxed_padding_left_desktop   = get_theme_mod( $single . '_boxed_padding_left_desktop' );
+		$boxed_padding_top_tablet     = get_theme_mod( $single . '_boxed_padding_top_tablet' );
+		$boxed_padding_right_tablet   = get_theme_mod( $single . '_boxed_padding_right_tablet' );
+		$boxed_padding_bottom_tablet  = get_theme_mod( $single . '_boxed_padding_bottom_tablet' );
+		$boxed_padding_left_tablet    = get_theme_mod( $single . '_boxed_padding_left_tablet' );
+		$boxed_padding_top_mobile     = get_theme_mod( $single . '_boxed_padding_top_mobile' );
+		$boxed_padding_right_mobile   = get_theme_mod( $single . '_boxed_padding_right_mobile' );
+		$boxed_padding_bottom_mobile  = get_theme_mod( $single . '_boxed_padding_bottom_mobile' );
+		$boxed_padding_left_mobile    = get_theme_mod( $single . '_boxed_padding_left_mobile' );
+
+		if( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop ) {
+
+			echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed .wpbf-article-wrapper, .wpbf-' . $single . '-content .wpbf-post-style-boxed #respond {'; // WPCS: XSS ok.
+
+			if( $boxed_padding_top_desktop ) {
+
+				echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_desktop ) . 'px' );
+
+			}
+
+			if( $boxed_padding_right_desktop ) {
+
+				echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_desktop ) . 'px' );
+
+			}
+
+			if( $boxed_padding_bottom_desktop ) {
+
+				echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_desktop ) . 'px' );
+
+			}
+
+			if( $boxed_padding_left_desktop ) {
+
+				echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_desktop ) . 'px' );
+
+			}
+
+			echo '}';
+
+			if( $stretched ) {
+
+				echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+
+					if( $boxed_padding_left_desktop ) {
+
+						echo sprintf( 'margin-left: -%s;', esc_attr( $boxed_padding_left_desktop ) . 'px' );
+
+					}
+
+					if( $boxed_padding_right_desktop ) {
+
+						echo sprintf( 'margin-right: -%s;', esc_attr( $boxed_padding_right_desktop ) . 'px' );
+
+					}
+
+				echo '}';
+
+				echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+
+					if( $boxed_padding_top_desktop ) {
+
+						echo sprintf( 'margin-top: -%s;', esc_attr( $boxed_padding_top_desktop ) . 'px' );
+						echo sprintf( 'margin-bottom: %s;', esc_attr( $boxed_padding_top_desktop ) . 'px' );
+
+					}
+
+				echo '}';
+
+			}
+
+		}
+
+		if( $boxed_padding_top_tablet || $boxed_padding_right_tablet || $boxed_padding_bottom_tablet || $boxed_padding_left_tablet ) {
+
+			echo '@media screen and (max-width: '. esc_attr( $breakpoint_desktop ) .') {';
+
+				echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed .wpbf-article-wrapper, .wpbf-' . $single . '-content .wpbf-post-style-boxed #respond {'; // WPCS: XSS ok.
+
+				if( $boxed_padding_top_tablet ) {
+
+					echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_tablet ) . 'px' );
+
+				}
+
+				if( $boxed_padding_right_tablet ) {
+
+					echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_tablet ) . 'px' );
+
+				}
+
+				if( $boxed_padding_bottom_tablet ) {
+
+					echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_tablet ) . 'px' );
+
+				}
+
+				if( $boxed_padding_left_tablet ) {
+
+					echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_tablet ) . 'px' );
+
+				}
+
+				echo '}';
+
+				if( $stretched ) {
+
+					echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+
+						if( $boxed_padding_left_tablet ) {
+
+							echo sprintf( 'margin-left: -%s;', esc_attr( $boxed_padding_left_tablet ) . 'px' );
+
+						}
+
+						if( $boxed_padding_right_tablet ) {
+
+							echo sprintf( 'margin-right: -%s;', esc_attr( $boxed_padding_right_tablet ) . 'px' );
+
+						}
+
+					echo '}';
+
+					echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+
+						if( $boxed_padding_top_tablet ) {
+
+							echo sprintf( 'margin-top: -%s;', esc_attr( $boxed_padding_top_tablet ) . 'px' );
+							echo sprintf( 'margin-bottom: %s;', esc_attr( $boxed_padding_top_tablet ) . 'px' );
+
+						}
+
+					echo '}';
+
+				}
+
+			echo '}';
+
+		}
+
+		if( $boxed_padding_top_mobile || $boxed_padding_right_mobile || $boxed_padding_bottom_mobile || $boxed_padding_left_mobile ) {
+
+			echo '@media screen and (max-width: '. esc_attr( $breakpoint_mobile ) .') {';
+
+				echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed .wpbf-article-wrapper, .wpbf-' . $single . '-content .wpbf-post-style-boxed #respond {'; // WPCS: XSS ok.
+
+				if( $boxed_padding_top_mobile ) {
+
+					echo sprintf( 'padding-top: %s;', esc_attr( $boxed_padding_top_mobile ) . 'px' );
+
+				}
+
+				if( $boxed_padding_right_mobile ) {
+
+					echo sprintf( 'padding-right: %s;', esc_attr( $boxed_padding_right_mobile ) . 'px' );
+
+				}
+
+				if( $boxed_padding_bottom_mobile ) {
+
+					echo sprintf( 'padding-bottom: %s;', esc_attr( $boxed_padding_bottom_mobile ) . 'px' );
+
+				}
+
+				if( $boxed_padding_left_mobile ) {
+
+					echo sprintf( 'padding-left: %s;', esc_attr( $boxed_padding_left_mobile ) . 'px' );
+
+				}
+
+				echo '}';
+
+				if( $stretched ) {
+
+					echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper {';
+
+						if( $boxed_padding_left_mobile ) {
+
+							echo sprintf( 'margin-left: -%s;', esc_attr( $boxed_padding_left_mobile ) . 'px' );
+
+						}
+
+						if( $boxed_padding_right_mobile ) {
+
+							echo sprintf( 'margin-right: -%s;', esc_attr( $boxed_padding_right_mobile ) . 'px' );
+
+						}
+
+					echo '}';
+
+					echo '.wpbf-' . $single . '-content .wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child {';
+
+						if( $boxed_padding_top_mobile ) {
+
+							echo sprintf( 'margin-top: -%s;', esc_attr( $boxed_padding_top_mobile ) . 'px' );
+							echo sprintf( 'margin-bottom: %s;', esc_attr( $boxed_padding_top_mobile ) . 'px' );
+
+						}
+
+					echo '}';
+
+				}
+
+			echo '}';
+
+		}
+
+	}
 
 }
 

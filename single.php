@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $grid_gap				= get_theme_mod( 'sidebar_gap', 'medium' );
 $template_parts_header	= get_theme_mod( 'single_sortable_header', array( 'title', 'meta', 'featured' ) );
 $template_parts_footer	= get_theme_mod( 'single_sortable_footer', array( 'categories' ) );
+$post_style             = get_theme_mod( 'single_post_style', 'plain' );
+$post_style            .= get_theme_mod( 'single_boxed_image_stretched', false ) ? ' stretched' : '';
+$post_classes           = array( 'wpbf-post-style-' . $post_style );
 
 get_header(); ?>
 
@@ -37,7 +40,7 @@ get_header(); ?>
 
 						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+						<article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
 							<div class="wpbf-article-wrapper">
 
@@ -82,32 +85,32 @@ get_header(); ?>
 
 									?>
 
-									<?php if( get_theme_mod( 'single_post_nav' ) !== 'hide' ) { ?>
-
-									<?php do_action( 'wpbf_before_post_links' ); ?>
-
-									<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
-
-										<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
-
-										<?php
-
-										previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
-										next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
-
-										?>
-
-									 </nav>
-
-									 <?php do_action( 'wpbf_after_post_links' ); ?>
-
-									<?php } ?>
-
 								</footer>
 
 								<?php do_action( 'wpbf_article_close' ); ?>
 
 							</div>
+
+							<?php if( get_theme_mod( 'single_post_nav' ) !== 'hide' ) { ?>
+
+							<?php do_action( 'wpbf_before_post_links' ); ?>
+
+							<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
+
+								<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
+
+								<?php
+
+								previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
+								next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
+
+								?>
+
+							 </nav>
+
+							 <?php do_action( 'wpbf_after_post_links' ); ?>
+
+							<?php } ?>
 
 							<?php comments_template(); ?>
 

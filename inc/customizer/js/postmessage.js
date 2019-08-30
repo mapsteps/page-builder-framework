@@ -205,13 +205,6 @@
 		} );
 	} );
 
-	/* Blog – Single */
-	wp.customize( 'single_custom_width', function( value ) {
-		value.bind( function( newval ) {
-			$('.single #inner-content').css('max-width', newval );
-		} );
-	} );
-
 	/* Sidebar */
 
 	wp.customize( 'sidebar_bg_color', function( value ) {

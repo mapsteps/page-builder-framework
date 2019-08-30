@@ -137,22 +137,22 @@ body {
 /* Blog Layouts */
 
 // Default Style
-.wpbf-post-style-plain {
+.wpbf-archive-content .wpbf-post-style-plain {
 	margin-bottom: $margin;
 	padding-bottom: $padding;
 	border-bottom: 1px solid $base-color;
-	.article-footer > *:last-child{
+	.article-footer > *:last-child {
 		margin-bottom: 0;
 	}
 }
 
-.wpbf-post-style-plain:last-child {
+.wpbf-archive-content .wpbf-post-style-plain:last-child {
 	padding-bottom: 0 !important;
 	border-bottom: none !important;
 }
 
 // Boxed Style
-.wpbf-post-style-boxed {
+.wpbf-archive-content .wpbf-post-style-boxed {
 	padding: $padding;
 	background: $base-color-alt;
 	margin-bottom: $margin;
@@ -162,7 +162,62 @@ body {
 }
 
 // Stretched Image Default
-.wpbf-post-style-boxed.stretched {
+.wpbf-archive-content .wpbf-post-style-boxed.stretched {
+	.wpbf-post-image-wrapper {
+		margin-left: -20px;
+		margin-right: -20px;
+	}
+	.article-header > .wpbf-post-image-wrapper:first-child {
+		margin-top: -20px;
+	}
+}
+
+/* Article Layout */
+
+// Plain Style
+.wpbf-single-content .wpbf-post-style-plain {
+	#comments-title {
+		margin-top: $margin-medium;
+		padding-top: $margin-medium;
+		border-top: 10px solid $base-color-alt;
+	}
+	#reply-title {
+		padding-top: $padding-medium;
+		margin-top: $margin-medium;
+		border-top: 10px solid $base-color-alt;
+		display: block;
+		small {
+			font-size: $tiny-fontsize;
+		}
+	}
+}
+
+// Boxed Style
+.wpbf-single-content .wpbf-post-style-boxed {
+	.wpbf-article-wrapper {
+		padding: $padding;
+		background: $base-color-alt;
+		margin-bottom: $margin;
+		.article-footer > *:last-child{
+			margin-bottom: 0;
+		}
+	}
+	.commentlist {
+		margin-top: $margin-medium;
+	}
+	#respond {
+		padding: $padding;
+		background: $base-color-alt;
+		margin-bottom: $margin;
+		margin-top: $margin-medium;
+		#commentform > p:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+}
+
+// Stretched Image Default
+.wpbf-single-content .wpbf-post-style-boxed.stretched {
 	.wpbf-post-image-wrapper {
 		margin-left: -20px;
 		margin-right: -20px;
@@ -181,25 +236,6 @@ body {
 	li {
 		list-style: none;
 	}
-}
-
-#comments-title {
-	margin-top: $margin-medium;
-	padding-top: $margin-medium;
-	border-top: 10px solid $base-color-alt;
-}
-
-#reply-title {
-	padding-top: $padding-medium;
-	margin-top: $margin-medium;
-	border-top: 10px solid $base-color-alt;
-	display: block;
-	small {
-		font-size: $tiny-fontsize;
-	}
-}
-
-.commentlist {
 	.children {
 		margin-left: $margin;
 	}
@@ -329,8 +365,8 @@ body {
 // Blockquote
 .wp-block-quote.is-large,
 .wp-block-quote.is-style-large {
-	margin: 					$margin 0 $margin $margin;
-	padding: 					0 0 0 $padding;
+	margin: $margin 0 $margin $margin;
+	padding: 0 0 0 $padding;
 }
 
 // Pullquote

@@ -311,16 +311,16 @@ function wpbf_archive_class() {
 function wpbf_singular_class() {
 
 	if( is_singular( 'post' ) ) {
-		$singular_class = ' wpbf-single-content';
+		$singular_class = ' wpbf-single-content wpbf-post-content';
 	} elseif( is_attachment() ) {
-		$singular_class = ' wpbf-attachment-content';
+		$singular_class = ' wpbf-single-content wpbf-attachment-content';
 	} elseif( is_page() ) {
-		$singular_class = ' wpbf-page-content';
+		$singular_class = ' wpbf-single-content wpbf-page-content';
 	} elseif( is_404() ) {
-		$singular_class = ' wpbf-404-content';
+		$singular_class = ' wpbf-single-content wpbf-404-content';
 	} else {
 		$post_type = get_post_type();
-		$singular_class = ' wpbf-'. $post_type .'-content';
+		$singular_class = ' wpbf-single-content wpbf-'. $post_type .'-content';
 	}
 
 	return apply_filters( 'wpbf_singular_class', $singular_class );
