@@ -45,12 +45,7 @@
 			var itemWidth = 250;
 		}
 
-		if( $(this).hasClass('active') ) {
-			$(this).removeClass('active').attr('aria-expanded', 'false');
-			$('.wpbf-menu-search', this).stop().animate({opacity:'0', width:'0px'}, 250, function() {
-				$(this).css({display:'none'});
-			});
-		} else {
+		if( !$(this).hasClass('active') ) {
 			$(this).addClass('active').attr('aria-expanded', 'true');
 			$('.wpbf-menu-search', this).stop().css({display:'block'}).animate({width : itemWidth, opacity : '1'}, 200);
 			$('input[type=search]', this).val('').focus();
