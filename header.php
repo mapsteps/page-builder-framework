@@ -9,9 +9,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-?>
-
-<!DOCTYPE html>
+?><!DOCTYPE html>
 
 <html <?php language_attributes(); ?>>
 
