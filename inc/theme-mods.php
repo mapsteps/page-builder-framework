@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme Mods
+ * Theme mods.
  *
  * @package Page Builder Framework
  */
