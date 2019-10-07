@@ -1,13 +1,12 @@
 <?php
 /**
- * Menu Right
+ * Right menu.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 ?>
 

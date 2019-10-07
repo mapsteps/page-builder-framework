@@ -1,13 +1,12 @@
 <?php
 /**
- * Menu Stacked
+ * Stacked menu.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 ?>
 
@@ -28,6 +27,5 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</nav>
 
 	<?php do_action( 'wpbf_after_main_menu' ); ?>
-
 
 </div>

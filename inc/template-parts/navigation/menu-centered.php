@@ -1,13 +1,12 @@
 <?php
 /**
- * Centered Menu
+ * Centered menu.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 ?>
 
@@ -15,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 	<li class="menu-item logo-container">
 
-	<?php get_template_part( 'inc/template-parts/logo/logo' ); ?>
+		<?php get_template_part( 'inc/template-parts/logo/logo' ); ?>
 
 	</li>
 

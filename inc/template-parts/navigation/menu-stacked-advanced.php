@@ -1,13 +1,12 @@
 <?php
 /**
- * Menu Stacked
+ * Stacked advanced menu.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 ?>
 
@@ -19,12 +18,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			<div class="wpbf-1-4">
 
-			<?php get_template_part( 'inc/template-parts/logo/logo' ); ?>
+				<?php get_template_part( 'inc/template-parts/logo/logo' ); ?>
 
 			</div>
 
 			<div class="wpbf-3-4">
+
 				<?php echo do_shortcode( get_theme_mod( 'menu_stacked_wysiwyg' ) ); ?>
+
 			</div>
 
 		</div>

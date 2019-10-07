@@ -1,13 +1,12 @@
 <?php
 /**
- * Mobile Menu - Custom
+ * Mobile menu (custom).
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 echo '<div class="wpbf-mobile-menu-custom wpbf-hidden-large">';
 

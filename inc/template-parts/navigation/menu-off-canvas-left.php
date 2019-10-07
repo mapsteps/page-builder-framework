@@ -1,13 +1,16 @@
 <?php
 /**
- * Off Canvas Menu Left
+ * Off canvas menu left.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+if ( get_theme_mod( 'menu_overlay' ) ) {
+	echo '<div class="wpbf-menu-overlay"></div>';
+}
 
 ?>
 
@@ -41,8 +44,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 </div>
 
-<!-- Off Canvas Menu -->
-
 <div class="wpbf-menu-off-canvas wpbf-menu-off-canvas-left wpbf-visible-large">
 
 	<?php do_action( 'wpbf_before_main_menu' ); ?>
@@ -62,5 +63,3 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
 
 </div>
-
-<?php if( get_theme_mod( 'menu_overlay' ) ) echo '<div class="wpbf-menu-overlay"></div>'; ?>

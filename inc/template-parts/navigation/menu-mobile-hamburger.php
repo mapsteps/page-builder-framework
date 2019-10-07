@@ -1,20 +1,19 @@
 <?php
 /**
- * Mobile Menu - Hamburger
+ * Hamburger mobile menu.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 ?>
 
 <div class="wpbf-mobile-menu-hamburger wpbf-hidden-large">
 
 	<div class="wpbf-mobile-nav-wrapper wpbf-container">
-		
+
 		<div class="wpbf-mobile-logo-container wpbf-2-3">
 
 			<?php get_template_part( 'inc/template-parts/logo/logo-mobile' ); ?>
@@ -39,13 +38,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
 
-			<?php wp_nav_menu(array(
-				'theme_location'	=>		'mobile_menu',
-				'container'			=>		false,
-				'menu_class'		=>		'wpbf-mobile-menu',
-				'depth'				=>		4,
-				'fallback_cb'		=>		'wpbf_mobile_menu_fallback'
-			)); ?>
+			<?php
+			wp_nav_menu( array(
+				'theme_location' => 'mobile_menu',
+				'container'      => false,
+				'menu_class'     => 'wpbf-mobile-menu',
+				'depth'          => 4,
+				'fallback_cb'    => 'wpbf_mobile_menu_fallback',
+			) );
+			?>
 
 		</nav>
 
