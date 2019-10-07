@@ -31,7 +31,7 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 			</article>
 
-		</li>
+		<?php // We're not closing the li tag right here. WordPress does it for us. ?>
 
 	<?php } else { ?>
 
