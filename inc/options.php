@@ -97,7 +97,8 @@ function wpbf_options_metabox_callback( $post ) {
 		<?php
 		if ( ! wpbf_is_premium() ) {
 			echo '<a style="text-decoration: none; box-shadow: none;" href="https://wp-pagebuilderframework.com/docs/global-template-settings/" target="_blank"><i style="font-size: 18px; margin-top: -3px; width: 15px; height: 15px;" class="dashicons dashicons-editor-help"></i></a>';
-		} ?>
+		}
+		?>
 	</div>
 
 	<div>
