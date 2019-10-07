@@ -23,8 +23,8 @@ define( 'WPBF_CHILD_VERSION', '1.1' );
  */
 function wpbf_theme_setup() {
 
-	// Textdomain
-	load_theme_textdomain( 'page-builder-framework', get_template_directory() . '/languages' );
+	// Textdomain (Since 4.6 it's trying to load the .mo file from the languages folder first)
+	load_theme_textdomain( 'page-builder-framework' );
 
 	// Custom Logo
 	add_theme_support( 'custom-logo',
@@ -62,7 +62,18 @@ function wpbf_theme_setup() {
 	add_theme_support( 'automatic-feed-links' );
 
 	// HTML5 Support
-	add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'gallery', 'caption' ) );
+	add_theme_support(
+		'html5',
+		array(
+			'search-form',
+			'comment-form',
+			'comment-list',
+			'gallery',
+			'caption',
+			'script',
+			'style',
+		)
+	);
 
 	// Selective Refresh for Widgets
 	add_theme_support( 'customize-selective-refresh-widgets' );

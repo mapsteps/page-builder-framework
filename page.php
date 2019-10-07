@@ -1,58 +1,59 @@
 <?php
 /**
- * Page Template
+ * Page template.
  *
  * @package Page Builder Framework
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
 
-get_header(); ?>
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-		<div id="content">
+get_header();
 
-			<?php do_action( 'wpbf_content_open' ); ?>
-			
-			<?php wpbf_inner_content(); ?>
+?>
 
-				<?php do_action( 'wpbf_inner_content_open' ); ?>
+<div id="content">
 
-				<main id="main" class="wpbf-main<?php echo wpbf_singular_class(); // WPCS: XSS ok. ?>">
+	<?php do_action( 'wpbf_content_open' ); ?>
+	
+	<?php wpbf_inner_content(); ?>
 
-					<?php do_action( 'wpbf_main_content_open' ); ?>
+		<?php do_action( 'wpbf_inner_content_open' ); ?>
 
-					<?php wpbf_title(); ?>
+		<main id="main" class="wpbf-main<?php echo wpbf_singular_class(); ?>">
 
-					<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+			<?php do_action( 'wpbf_main_content_open' ); ?>
 
-					<div class="entry-content" itemprop="text">
+			<?php wpbf_title(); ?>
 
-						<?php the_content(); ?>
+			<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-						<?php
-						wp_link_pages( array(
-							'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
-							'after'  => '</div>',
-						) );
-						?>
+			<div class="entry-content" itemprop="text">
 
-					</div>
+				<?php the_content(); ?>
 
-					<?php endwhile; endif; ?>
+				<?php
+				wp_link_pages( array(
+					'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
+					'after'  => '</div>',
+				) );
+				?>
 
-					<?php comments_template(); ?>
+			</div>
 
-					<?php do_action( 'wpbf_main_content_close' ); ?>
+			<?php endwhile; endif; ?>
 
-				</main>
+			<?php comments_template(); ?>
 
-				<?php do_action( 'wpbf_inner_content_close' ); ?>
+			<?php do_action( 'wpbf_main_content_close' ); ?>
 
-			<?php wpbf_inner_content_close(); ?>
+		</main>
 
-			<?php do_action( 'wpbf_content_close' ); ?>
-			
-		</div>
-	    
+		<?php do_action( 'wpbf_inner_content_close' ); ?>
+
+	<?php wpbf_inner_content_close(); ?>
+
+	<?php do_action( 'wpbf_content_close' ); ?>
+	
+</div>
+
 <?php get_footer(); ?>

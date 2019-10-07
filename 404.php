@@ -1,15 +1,13 @@
 <?php
 /**
- * 404 Page
+ * 404.
  *
- * Displayed if a page couldn't be found.
- * See also inc/template-parts/404.php
+ * See also inc/template-parts/404.php.
  *
  * @package Page Builder Framework
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 get_header();
 

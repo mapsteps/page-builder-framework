@@ -1,17 +1,19 @@
 <?php
 /**
- * Theme Footer
- * See also inc/template-parts/footer.php
+ * Theme Footer.
+ *
+ * See also inc/template-parts/footer.php.
  *
  * @package Page Builder Framework
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		do_action( 'wpbf_before_footer' );
 
-		if ( get_theme_mod( 'footer_layout' ) !== 'none' ) do_action( 'wpbf_footer' );
+		if ( 'none' !== get_theme_mod( 'footer_layout' ) ) {
+			do_action( 'wpbf_footer' );
+		}
 
 		do_action( 'wpbf_after_footer' );
 

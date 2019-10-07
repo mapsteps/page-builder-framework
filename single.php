@@ -1,14 +1,13 @@
 <?php
 /**
- * Single
+ * Single.
  *
  * @package Page Builder Framework
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
 
-// vars
+defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+// Vars.
 $grid_gap				= get_theme_mod( 'sidebar_gap', 'medium' );
 $template_parts_header	= get_theme_mod( 'single_sortable_header', array( 'title', 'meta', 'featured' ) );
 $template_parts_footer	= get_theme_mod( 'single_sortable_footer', array( 'categories' ) );
@@ -16,134 +15,130 @@ $post_style             = get_theme_mod( 'single_post_style', 'plain' );
 $post_style            .= get_theme_mod( 'single_boxed_image_stretched', false ) ? ' stretched' : '';
 $post_classes           = array( 'wpbf-post-style-' . $post_style );
 
-get_header(); ?>
+get_header();
 
-		<div id="content">
+?>
 
-			<?php do_action( 'wpbf_content_open' ); ?>
+<div id="content">
 
-			<?php if( !is_singular( array( 'elementor_library', 'et_pb_layout', 'wpbf_hooks' ) ) ) : ?>
+	<?php do_action( 'wpbf_content_open' ); ?>
 
-			<?php wpbf_inner_content(); ?>
+	<?php if ( !is_singular( array( 'elementor_library', 'et_pb_layout', 'wpbf_hooks' ) ) ) : ?>
 
-				<?php do_action( 'wpbf_inner_content_open' ); ?>
+	<?php wpbf_inner_content(); ?>
 
-				<div class="wpbf-grid wpbf-main-grid wpbf-grid-<?php echo esc_attr( $grid_gap ); ?>">
+		<?php do_action( 'wpbf_inner_content_open' ); ?>
 
-					<?php do_action( 'wpbf_sidebar_left' ); ?>
+		<div class="wpbf-grid wpbf-main-grid wpbf-grid-<?php echo esc_attr( $grid_gap ); ?>">
 
-					<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_singular_class(); // WPCS: XSS ok. ?>">
+			<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-						<?php do_action( 'wpbf_main_content_open' ); ?>
+			<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_singular_class(); ?>">
 
-						<?php do_action( 'wpbf_before_article' ); ?>
+				<?php do_action( 'wpbf_main_content_open' ); ?>
 
-						<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+				<?php do_action( 'wpbf_before_article' ); ?>
 
-						<article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-							<div class="wpbf-article-wrapper">
+				<article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 
-								<?php do_action( 'wpbf_article_open' ); ?>
+					<div class="wpbf-article-wrapper">
 
-								<header class="article-header">
+						<?php do_action( 'wpbf_article_open' ); ?>
 
-									<?php
+						<header class="article-header">
 
-									if ( !empty( $template_parts_header ) && is_array( $template_parts_header ) ) {
-										foreach ( $template_parts_header as $part ) {
-											get_template_part( 'inc/template-parts/single/single-' . $part );
-										}
-									}
+							<?php
+							if ( ! empty( $template_parts_header ) && is_array( $template_parts_header ) ) {
+								foreach ( $template_parts_header as $part ) {
+									get_template_part( 'inc/template-parts/single/single-' . $part );
+								}
+							}
+							?>
 
-									?>
+						</header>
 
-								</header>
+						<section class="entry-content article-content" itemprop="text">
 
-								<section class="entry-content article-content" itemprop="text">
+							<?php the_content(); ?>
 
-									<?php the_content(); ?>
+							<?php
+							wp_link_pages( array(
+								'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
+								'after'  => '</div>',
+							) );
+							?>
 
-									<?php
-									wp_link_pages( array(
-										'before' => '<div class="page-links">' . __( 'Pages:', 'page-builder-framework' ),
-										'after'  => '</div>',
-									) );
-									?>
+						</section>
 
-								</section>
+						<footer class="article-footer">
 
-								<footer class="article-footer">
+							<?php
+							if ( ! empty( $template_parts_footer ) && is_array( $template_parts_footer ) ) {
+								foreach ( $template_parts_footer as $part ) {
+									get_template_part( 'inc/template-parts/single/single-' . $part );
+								}
+							}
+							?>
 
-									<?php
+						</footer>
 
-									if ( !empty( $template_parts_footer ) && is_array( $template_parts_footer ) ) {
-										foreach ( $template_parts_footer as $part ) {
-											get_template_part( 'inc/template-parts/single/single-' . $part );
-										}
-									}
+						<?php do_action( 'wpbf_article_close' ); ?>
 
-									?>
+					</div>
 
-								</footer>
+					<?php if ( 'hide' !== get_theme_mod( 'single_post_nav' ) ) { ?>
 
-								<?php do_action( 'wpbf_article_close' ); ?>
+					<?php do_action( 'wpbf_before_post_links' ); ?>
 
-							</div>
+					<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
 
-							<?php if( get_theme_mod( 'single_post_nav' ) !== 'hide' ) { ?>
+						<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
 
-							<?php do_action( 'wpbf_before_post_links' ); ?>
+						<?php
+						previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
+						next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
+						?>
 
-							<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
+					 </nav>
 
-								<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
+					 <?php do_action( 'wpbf_after_post_links' ); ?>
 
-								<?php
+					<?php } ?>
 
-								previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
-								next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
+					<?php comments_template(); ?>
 
-								?>
-
-							 </nav>
-
-							 <?php do_action( 'wpbf_after_post_links' ); ?>
-
-							<?php } ?>
-
-							<?php comments_template(); ?>
-
-						</article>
-						
-						<?php endwhile; endif; ?>
-
-						<?php do_action( 'wpbf_after_article' ); ?>
-
-						<?php do_action( 'wpbf_main_content_close' ); ?>
-
-					</main>
-
-					<?php do_action( 'wpbf_sidebar_right' ); ?>
-
-				</div>
-
-				<?php do_action( 'wpbf_inner_content_close' ); ?>
-
-			<?php wpbf_inner_content_close(); ?>
-
-			<?php else : ?>
-
-				<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-
-				<?php the_content(); ?>
-
+				</article>
+				
 				<?php endwhile; endif; ?>
 
-			<?php endif; ?>
+				<?php do_action( 'wpbf_after_article' ); ?>
 
-			<?php do_action( 'wpbf_content_close' ); ?>
+				<?php do_action( 'wpbf_main_content_close' ); ?>
+
+			</main>
+
+			<?php do_action( 'wpbf_sidebar_right' ); ?>
 
 		</div>
+
+		<?php do_action( 'wpbf_inner_content_close' ); ?>
+
+	<?php wpbf_inner_content_close(); ?>
+
+	<?php else : ?>
+
+		<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+
+		<?php the_content(); ?>
+
+		<?php endwhile; endif; ?>
+
+	<?php endif; ?>
+
+	<?php do_action( 'wpbf_content_close' ); ?>
+
+</div>
 
 <?php get_footer(); ?>

@@ -1,14 +1,13 @@
 <?php
 /**
- * Comments Template
+ * Comments template.
  *
  * @package Page Builder Framework
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
 
-// don't load it if you can't comment
+defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+// Don't load it if you can't comment.
 if ( post_password_required() )	return;
 
 ?>
@@ -19,18 +18,24 @@ if ( post_password_required() )	return;
 
 	<section class="commentlist">
 
-		<h3 id="comments-title"><?php comments_number( __( '<span>No</span> Comments', 'page-builder-framework' ), __( '<span>One</span> Comment', 'page-builder-framework' ), __( '<span>%</span> Comments', 'page-builder-framework' ) );?></h3>
+		<h3 id="comments-title">
+			<?php
+			comments_number(
+				__( '<span>No</span> Comments', 'page-builder-framework' ),
+				__( '<span>One</span> Comment', 'page-builder-framework' ),
+				__( '<span>%</span> Comments', 'page-builder-framework' )
+			);
+			?>
+		</h3>
 
 		<ul class="comments">
-
 			<?php
-				wp_list_comments( array(
-					'avatar_size'	=>		80,
-					'callback'		=>		'wpbf_comments',
-					'reply_text'	=>		__( 'Reply', 'page-builder-framework' ),
-				) );
+			wp_list_comments( array(
+				'avatar_size' => 80,
+				'callback'    => 'wpbf_comments',
+				'reply_text'  => __( 'Reply', 'page-builder-framework' ),
+			) );
 			?>
-			
 		</ul>
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
@@ -44,7 +49,7 @@ if ( post_password_required() )	return;
 	</section>
 
 	<?php if ( ! comments_open() ) : ?>
-	<p class="no-comments"><?php _e( 'Comments are closed.' , 'page-builder-framework' ); // WPCS: XSS ok. ?></p>
+	<p class="no-comments"><?php _e( 'Comments are closed.' , 'page-builder-framework' ); ?></p>
 	<?php endif; ?>
 
 	<?php do_action( 'wpbf_after_comments' ); ?>
@@ -55,7 +60,7 @@ if ( post_password_required() )	return;
 
 $args = array(
 	'title_reply'          => apply_filters( 'wpbf_leave_comment', __( 'Leave a Comment', 'page-builder-framework' ) ),
-	/* translators: 1: comment title */
+	/* translators: Comment title */
 	'title_reply_to'       => apply_filters( 'wpbf_leave_reply', __( 'Leave a Reply to %s', 'page-builder-framework' ) ),
 	'cancel_reply_link'    => apply_filters( 'wpbf_cancel_reply', __( 'Cancel Reply', 'page-builder-framework' ) ),
 	'label_submit'         => apply_filters( 'wpbf_post_comment', __( 'Post Comment', 'page-builder-framework' ) ),

@@ -1,14 +1,17 @@
 <?php
 /**
- * Theme Header
+ * Theme Header.
+ *
+ * See also inc/template-parts/header.php.
  *
  * @package Page Builder Framework
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
 
-?><!DOCTYPE html>
+defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+?>
+
+<!DOCTYPE html>
 
 <html <?php language_attributes(); ?>>
 
@@ -20,7 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 </head>
 
 <body <?php body_class(); ?> <?php wpbf_body_schema_markup(); ?>>
-	<a class="screen-reader-text skip-link" href="#content" title="<?php echo esc_attr__( 'Skip to content', 'page-builder-framework' ); ?>"><?php _e( 'Skip to content', 'page-builder-framework' ); // WPCS: XSS ok. ?></a>
+
+	<a class="screen-reader-text skip-link" href="#content" title="<?php echo esc_attr__( 'Skip to content', 'page-builder-framework' ); ?>"><?php _e( 'Skip to content', 'page-builder-framework' ); ?></a>
 
 	<?php do_action( 'wp_body_open' ); ?>
 
