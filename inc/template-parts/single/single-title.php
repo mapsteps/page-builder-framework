@@ -1,14 +1,13 @@
 <?php
 /**
- * Title
+ * Title.
  *
  * Renders the title on single pages.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 wpbf_title();

@@ -1,6 +1,6 @@
 <?php
 /**
- * Article
+ * Article.
  *
  * Displays posts on archives, category, search and index pages.
  *
@@ -8,8 +8,7 @@
  * @subpackage Template Parts
  */
 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 $blog_layout = wpbf_blog_layout();
 $blog_layout = $blog_layout['blog_layout'];

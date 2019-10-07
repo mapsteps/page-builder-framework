@@ -1,48 +1,47 @@
 <?php
 /**
- * 404
+ * 404.
  *
- * Construct the Theme's 404 Page
+ * Construct the theme 404 page.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 ?>
 
-		<div id="content">
+<div id="content">
 
-			<?php do_action( 'wpbf_content_open' ); ?>
+	<?php do_action( 'wpbf_content_open' ); ?>
 
-			<?php wpbf_inner_content(); ?>
+	<?php wpbf_inner_content(); ?>
 
-				<?php do_action( 'wpbf_inner_content_open' ); ?>
+		<?php do_action( 'wpbf_inner_content_open' ); ?>
 
-				<main id="main" class="wpbf-main<?php echo wpbf_singular_class(); // WPCS: XSS ok. ?>">
+		<main id="main" class="wpbf-main<?php echo wpbf_singular_class(); ?>">
 
-					<div class="wpbf-text-center">
+			<div class="wpbf-text-center">
 
-						<?php echo '<h1 class="entry-title" itemprop="headline">' . apply_filters( 'wpbf_404_headline', __( "404 - This page couldn't be found.", 'page-builder-framework' ) ) . '</h1>'; // WPCS: XSS ok. ?>
+				<?php echo '<h1 class="entry-title" itemprop="headline">' . apply_filters( 'wpbf_404_headline', __( "404 - This page couldn't be found.", 'page-builder-framework' ) ) . '</h1>'; ?>
 
-						<div class="wpbf-container-center wpbf-medium-1-2" itemprop="text">
+				<div class="wpbf-container-center wpbf-medium-1-2" itemprop="text">
 
-							<?php echo '<p>' . apply_filters( 'wpbf_404_text', __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) ) . '</p>'; // WPCS: XSS ok. ?>
+					<?php echo '<p>' . apply_filters( 'wpbf_404_text', __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) ) . '</p>'; ?>
 
-							<?php get_search_form(); ?>
+					<?php get_search_form(); ?>
 
-						</div>
+				</div>
 
-					</div>
+			</div>
 
-				</main>
+		</main>
 
-				<?php do_action( 'wpbf_inner_content_close' ); ?>
+		<?php do_action( 'wpbf_inner_content_close' ); ?>
 
-			<?php wpbf_inner_content_close(); ?>
+	<?php wpbf_inner_content_close(); ?>
 
-			<?php do_action( 'wpbf_content_close' ); ?>
-			
-		</div>
+	<?php do_action( 'wpbf_content_close' ); ?>
+
+</div>
