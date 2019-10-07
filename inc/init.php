@@ -61,12 +61,12 @@ if ( ! function_exists( 'wpbf_header_footer_elementor_support' ) ) {
 	require_once WPBF_THEME_DIR . '/inc/integration/header-footer-elementor.php';
 }
 
-// Easy Digital Downloads.
+// Easy Digital Downloads integration.
 if ( class_exists( 'Easy_Digital_Downloads' ) ) {
 	require_once WPBF_THEME_DIR . '/inc/integration/edd/edd.php';
 }
 
-// WooCommerce.
+// WooCommerce integration.
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php';
 }
