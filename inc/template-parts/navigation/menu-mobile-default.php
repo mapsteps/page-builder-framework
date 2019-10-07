@@ -1,6 +1,6 @@
 <?php
 /**
- * Mobile menu (default).
+ * Default mobile menu.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
@@ -34,15 +34,15 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
 
-		<?php
-		wp_nav_menu( array(
-			'theme_location' => 'mobile_menu',
-			'container'      => false,
-			'menu_class'     => 'wpbf-mobile-menu',
-			'depth'          => 4,
-			'fallback_cb'    => 'wpbf_mobile_menu_fallback',
-		) );
-		?>
+			<?php
+			wp_nav_menu( array(
+				'theme_location' => 'mobile_menu',
+				'container'      => false,
+				'menu_class'     => 'wpbf-mobile-menu',
+				'depth'          => 4,
+				'fallback_cb'    => 'wpbf_mobile_menu_fallback',
+			) );
+			?>
 
 		</nav>
 

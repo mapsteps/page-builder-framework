@@ -1,6 +1,6 @@
 <?php
 /**
- * Mobile menu (custom).
+ * Custom mobile menu.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
