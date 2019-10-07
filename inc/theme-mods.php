@@ -4,18 +4,23 @@
  *
  * @package Page Builder Framework
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Excerpt Length
+ * Excerpt length.
+ *
+ * @param integer $excerpt_length The excerpt length.
+ *
+ * @return integer The updated excerpt lenght.
  */
 function wpbf_excerpt_length( $excerpt_length ) {
 
 	$wpbf_excerpt_length = get_theme_mod( 'excerpt_lenght' );
 
-	if( !$wpbf_excerpt_length || $wpbf_excerpt_length == 0 ) return $excerpt_length;
+	if ( ! $wpbf_excerpt_length || 0 == $wpbf_excerpt_length ) {
+		return $excerpt_length;
+	}
 
 	$excerpt_length = $wpbf_excerpt_length;
 
@@ -25,13 +30,17 @@ function wpbf_excerpt_length( $excerpt_length ) {
 add_filter( 'excerpt_length', 'wpbf_excerpt_length', 999 );
 
 /**
- * Filter 404 Page Title
+ * Filter 404 page title.
+ *
+ * @param string $title The page title.
+ *
+ * @return string The updated page title.
  */
 function wpbf_custom_404_title( $title ) {
 
 	$custom_title = get_theme_mod( '404_headline' );
 
-	if( $custom_title ) {
+	if ( $custom_title ) {
 		$title = $custom_title;
 	}
 
@@ -40,14 +49,19 @@ function wpbf_custom_404_title( $title ) {
 }
 add_filter( 'wpbf_404_headline', 'wpbf_custom_404_title' );
 
+
 /**
- * Filter 404 Page Text
+ * Filter 404 page text.
+ *
+ * @param string $text The page text.
+ *
+ * @return string The updated page text.
  */
 function wpbf_custom_404_text( $text ) {
 
 	$custom_text = get_theme_mod( '404_text' );
 
-	if( $custom_text ) {
+	if ( $custom_text ) {
 		$text = $custom_text;
 	}
 
@@ -57,43 +71,44 @@ function wpbf_custom_404_text( $text ) {
 add_filter( 'wpbf_404_text', 'wpbf_custom_404_text' );
 
 /**
- * Hide Search Form from 404 Page
+ * Hide search form from 404 page.
  */
 function wpbf_remove_404_search_form() {
 
-    if( is_404() && get_theme_mod( '404_search_form' ) == 'hide' ) {
+	if ( is_404() && 'hide' === get_theme_mod( '404_search_form' ) ) {
 
-        add_filter( 'get_search_form', '__return_false' );
+		add_filter( 'get_search_form', '__return_false' );
 
-    }
+	}
 
 }
 add_action( 'wp', 'wpbf_remove_404_search_form' );
 
 /**
- * Search Menu Item
- * 
- * Construct Search Menu Item to be displayed inside the main menu and navigation header.
+ * Construct search menu item.
+ *
+ * @param boolean $is_navigation If we're inside the navigation.
+ * @param boolean $is_mobile If we're on mobile.
+ *
+ * @return string The search menu item.
  */
 function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 
 	$class = $is_mobile ? 'wpbf-mobile-nav-item' : 'wpbf-nav-item';
 
-	// if we have a shop, we're going to call the product search form
+	// If we have a shop, let's call the product search form
 	if ( class_exists( 'WooCommerce' ) && get_theme_mod( 'woocommerce_search_menu_item' ) ) {
 		$search_form = get_product_search_form( $echo = false );
 	} else {
 		$search_form = get_search_form( $echo = false );
 	}
 
+	// Allow the search form to be filtered for more flexibility.
 	$search_form = apply_filters( 'wpbf_search_menu_item_form', $search_form );
 
-	// initialize $search_item
-	$search_item = '';
-
-	// we have a slightly different markup for the search menu item if it's being displayed outside the main menu
-	$search_item .= $is_navigation ? '<li class="menu-item wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false"><a href="javascript:void(0)" role="button">' : '<button class="'. $class .' wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false">';
-	$search_item .= '<span class="screen-reader-text">'. __( 'Search Toggle', 'page-builder-framework' ) .'</span>';
+	// We have a slightly different markup for the search menu item if it's being displayed outside the main menu.
+	$search_item  = $is_navigation ? '<li class="menu-item wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false"><a href="javascript:void(0)" role="button">' : '<button class="' . $class . ' wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false">';
+	$search_item .= '<span class="screen-reader-text">' . __( 'Search Toggle', 'page-builder-framework' ) . '</span>';
 	$search_item .= '<div class="wpbf-menu-search">';
 	$search_item .= $search_form;
 	$search_item .= '</div>';
@@ -105,52 +120,59 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 }
 
 /**
- * Search Menu Item
- * 
- * Adding the Search Menu Item to the main navigation
+ * Add search menu item to main menu.
+ *
+ * @param string $items The menu items.
+ * @param object $args The arguments.
+ *
+ * @return string The updated menu items.
  */
 function wpbf_search_menu_icon( $items, $args ) {
 
-	// stop here, if we have an off-canvas menu
-	if( wpbf_is_off_canvas_menu() ) return $items;
+	// Stop here, if we have an off canvas menu.
+	if ( wpbf_is_off_canvas_menu() ) {
+		return $items;
+	}
 
-	// only add the Search Menu Item to the main navigation and if it's enabled
-	if( $args->theme_location == 'main_menu' && get_theme_mod( 'menu_search_icon' ) ) {
-
+	// Only add the search menu item to the main navigation and if it's enabled.
+	if ( 'main_menu' === $args->theme_location && get_theme_mod( 'menu_search_icon' ) ) {
 		$items .= wpbf_search_menu_item();
-
 	}
 
 	return $items;
 
 }
-add_filter( 'wp_nav_menu_items','wpbf_search_menu_icon', 20, 2 );
+add_filter( 'wp_nav_menu_items', 'wpbf_search_menu_icon', 20, 2 );
 
 /**
- * Search Menu Item
- * 
- * Adding the Search Menu Item to the mobile navigation header
+ * Add search menu item to mobile menu.
  */
 function wpbf_search_menu_icon_mobile() {
 
-	// stop here if Search Menu Item is turned off for mobiles
-	if( !get_theme_mod( 'mobile_menu_search_icon' ) ) return;
+	// Stop here if search menu item is turned off.
+	if ( ! get_theme_mod( 'mobile_menu_search_icon' ) ) {
+		return;
+	}
 
 	$menu_item = wpbf_search_menu_item( $is_navigation = false, $is_mobile = true );
 
-	echo $menu_item; // WPCS: XSS ok.
+	echo $menu_item;
 
 }
 add_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile', 20 );
 
 /**
- * Custom Breadcrumbs Separator
+ * Custom breadcrumbs separator.
+ *
+ * @param string $separator The separator.
+ *
+ * @return string The updated separator.
  */
 function wpbf_breadcrumbs_custom_separator( $separator ) {
 
 	$custom_separator = get_theme_mod( 'breadcrumbs_separator' );
 
-	if( $custom_separator ) {
+	if ( $custom_separator ) {
 		$separator = $custom_separator;
 	}
 
@@ -160,11 +182,17 @@ function wpbf_breadcrumbs_custom_separator( $separator ) {
 add_filter( 'wpbf_breadcrumbs_separator', 'wpbf_breadcrumbs_custom_separator' );
 
 /**
- * Next Post Link
+ * Next post link.
+ *
+ * @param string $next The next post link.
+ *
+ * @return string The updated post link.
  */
 function wpbf_next_post_link( $next ) {
 
-	if( get_theme_mod( 'single_post_nav' ) !== 'default' ) return $next;
+	if ( 'default' !== get_theme_mod( 'single_post_nav' ) ) {
+		return $next;
+	}
 
 	$next = '%title &rarr;';
 
@@ -174,11 +202,17 @@ function wpbf_next_post_link( $next ) {
 add_filter( 'wpbf_next_post_link', 'wpbf_next_post_link' );
 
 /**
- * Previous Post Link
+ * Previous post link.
+ *
+ * @param string $next The previous post link.
+ *
+ * @return string The updated post link.
  */
 function wpbf_previous_post_link( $prev ) {
 
-	if( get_theme_mod( 'single_post_nav' ) !== 'default' ) return $prev;
+	if ( 'default' !== get_theme_mod( 'single_post_nav' ) ) {
+		return $prev;
+	}
 
 	$prev = '&larr; %title';
 
@@ -188,13 +222,17 @@ function wpbf_previous_post_link( $prev ) {
 add_filter( 'wpbf_previous_post_link', 'wpbf_previous_post_link' );
 
 /**
- * Categories Title
+ * Categories title.
+ *
+ * @param string $title The categories title.
+ *
+ * @return string The updated categories title.
  */
 function wpbf_categories_title( $title ) {
 
 	$cat_title = get_theme_mod( 'blog_categories_title' );
 
-	if( $cat_title && $cat_title !== 'Filed under:' ) {
+	if ( $cat_title && 'Filed under:' !== $cat_title ) {
 
 		$title = $cat_title;
 
@@ -206,13 +244,17 @@ function wpbf_categories_title( $title ) {
 add_filter( 'wpbf_categories_title', 'wpbf_categories_title' );
 
 /**
- * Read More Text
+ * Read more text.
+ *
+ * @param string $text The read more text.
+ *
+ * @return string The updated read more text.
  */
 function wpbf_read_more_text( $text ) {
 
 	$read_more_text = get_theme_mod( 'blog_read_more_text' );
 
-	if( $read_more_text && $read_more_text !== 'Read more' ) {
+	if ( $read_more_text && 'Read more' !== $read_more_text ) {
 
 		$text = $read_more_text;
 
@@ -224,14 +266,18 @@ function wpbf_read_more_text( $text ) {
 add_filter( 'wpbf_read_more_text', 'wpbf_read_more_text' );
 
 /**
- * Aritlce Meta Separator
+ * Article meta separatpr.
+ *
+ * @param string $separator The separator.
+ *
+ * @return string The updated separator.
  */
- function wpbf_article_meta_separator( $separator ) {
+function wpbf_article_meta_separator( $separator ) {
 
 	$blog_meta_separator = get_theme_mod( 'blog_meta_separator' );
 
-	if( $blog_meta_separator ) {
-		$separator = ' ' . $blog_meta_separator. ' ';
+	if ( $blog_meta_separator ) {
+		$separator = ' ' . $blog_meta_separator . ' ';
 	}
 
 	return $separator;
