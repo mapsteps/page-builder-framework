@@ -1,6 +1,6 @@
 <?php
 /**
- * Meta
+ * Meta.
  *
  * Renders author/post meta on archives.
  *
