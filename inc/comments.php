@@ -92,8 +92,8 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 			</article>
 
-		<?php // We're not closing the li tag right here. WordPress does it for us.
+		<?php // We're not closing the li tag right here. WordPress does it for us. ?>
 
-	}
+	<?php }
 
 }
