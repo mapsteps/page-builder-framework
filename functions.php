@@ -1,32 +1,31 @@
 <?php
 /**
- * Theme Functions
+ * Functions.
  *
  * @package Page Builder Framework
  */
- 
-// exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+
+defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Constants
+ * Constants.
  */
 define( 'WPBF_THEME_DIR', get_template_directory() );
 define( 'WPBF_THEME_URI', get_template_directory_uri() );
 define( 'WPBF_CHILD_THEME_DIR', get_stylesheet_directory() );
 define( 'WPBF_CHILD_THEME_URI', get_stylesheet_directory_uri() );
-define( 'WPBF_VERSION', wp_get_theme( 'page-builder-framework' )->get('Version') );
+define( 'WPBF_VERSION', wp_get_theme( 'page-builder-framework' )->get( 'Version' ) );
 define( 'WPBF_CHILD_VERSION', '1.1' );
 
 /**
- * Theme Setup
+ * Theme setup.
  */
 function wpbf_theme_setup() {
 
-	// Textdomain (Since 4.6 it's trying to load the .mo file from the languages folder first)
+	// Textdomain.
 	load_theme_textdomain( 'page-builder-framework' );
 
-	// Custom Logo
+	// Custom logo.
 	add_theme_support( 'custom-logo',
 		array(
 			'width'       => 180,
@@ -36,32 +35,32 @@ function wpbf_theme_setup() {
 		)
 	);
 
-	// Custom Background
+	// Custom background.
 	add_theme_support( 'custom-background',
 		array(
-			'default-color'          => 'ffffff',
-			'default-image'          => '',
-			'default-repeat'         => 'repeat',
-			'default-position-x'     => 'left',
-			'default-position-y'     => 'top',
-			'default-size'           => 'auto',
-			'default-attachment'     => 'scroll',
+			'default-color'      => 'ffffff',
+			'default-image'      => '',
+			'default-repeat'     => 'repeat',
+			'default-position-x' => 'left',
+			'default-position-y' => 'top',
+			'default-size'       => 'auto',
+			'default-attachment' => 'scroll',
 		)
 	);
 
-	// Title Tag
+	// Title tag.
 	add_theme_support( 'title-tag' );
 
-	// Editor Styles
+	// Editor styles.
 	add_theme_support( 'editor-styles' );
 
-	// Post Thumbnails
+	// Post thumbnails.
 	add_theme_support( 'post-thumbnails' );
 
-	// Automatic Feed Links
+	// Automatic feed links.
 	add_theme_support( 'automatic-feed-links' );
 
-	// HTML5 Support
+	// HTML5 support.
 	add_theme_support(
 		'html5',
 		array(
@@ -75,79 +74,78 @@ function wpbf_theme_setup() {
 		)
 	);
 
-	// Selective Refresh for Widgets
+	// Selective refresh for widgets.
 	add_theme_support( 'customize-selective-refresh-widgets' );
 
-	// Nav Menu's
+	// Register nav menu's.
 	register_nav_menus( array(
 		'main_menu'             => __( 'Main Menu', 'page-builder-framework' ),
 		'mobile_menu'           => __( 'Mobile Menu', 'page-builder-framework' ),
 		'pre_header_menu'       => __( 'Pre Header Left', 'page-builder-framework' ),
-		'pre_header_menu_right'	=> __( 'Pre Header Right', 'page-builder-framework' ),
+		'pre_header_menu_right' => __( 'Pre Header Right', 'page-builder-framework' ),
 		'footer_menu'           => __( 'Footer Left', 'page-builder-framework' ),
-		'footer_menu_right'     => __( 'Footer Right', 'page-builder-framework' )
+		'footer_menu_right'     => __( 'Footer Right', 'page-builder-framework' ),
 	) );
 
 }
 add_action( 'after_setup_theme', 'wpbf_theme_setup' );
 
-/**
- * Content Width
- */
+// Content width.
 if ( ! isset( $content_width ) ) {
 	$content_width = 1200;
 }
 
 /**
- * Sidebar
+ * Register sidebars.
  */
 function wpbf_sidebars() {
 
 	register_sidebar( array(
 		'name'          => __( 'Sidebar', 'page-builder-framework' ),
 		'id'            => 'sidebar-1',
-		'before_widget'	=> '<div id="%1$s" class="widget %2$s">',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="wpbf-widgettitle">',
-		'after_title'   => '</h4>'
+		'after_title'   => '</h4>',
 	) );
 
 }
 add_action( 'widgets_init', 'wpbf_sidebars' );
 
 /**
- * Scripts & Styles
+ * Enqueue scripts & styles.
  */
 function wpbf_scripts() {
 
-	// site.js
+	// Main JS file.
 	wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
-	// mobile menu js
-	if( ! get_theme_mod( 'mobile_menu_options' ) || get_theme_mod( 'mobile_menu_options' ) == 'menu-mobile-hamburger' ) {
+	if ( ! get_theme_mod( 'mobile_menu_options' ) || 'menu-mobile-hamburger' === get_theme_mod( 'mobile_menu_options' ) ) {
 
-		// hamburger
-		wp_enqueue_script( 'wpbf-mobile-menu-hamburger', get_template_directory_uri() . '/js/min/mobile-hamburger-min.js', array( 'jquery', 'wpbf-site' ), WPBF_VERSION, true );		
+		// Hamburger mobile menu.
+		wp_enqueue_script( 'wpbf-mobile-menu-hamburger', get_template_directory_uri() . '/js/min/mobile-hamburger-min.js', array( 'jquery', 'wpbf-site' ), WPBF_VERSION, true );
 
-	} elseif( get_theme_mod( 'mobile_menu_options' ) == 'menu-mobile-default' ) {
+	} elseif ( 'menu-mobile-default' === get_theme_mod( 'mobile_menu_options' ) ) {
 
-		// default
-		wp_enqueue_script( 'wpbf-mobile-menu-default', get_template_directory_uri() . '/js/min/mobile-default-min.js', array( 'jquery', 'wpbf-site' ), WPBF_VERSION, true );		
+		// Default mobile menu.
+		wp_enqueue_script( 'wpbf-mobile-menu-default', get_template_directory_uri() . '/js/min/mobile-default-min.js', array( 'jquery', 'wpbf-site' ), WPBF_VERSION, true );
 
 	}
 
-	// style.css
+	// Main stylesheet.
 	wp_enqueue_style( 'wpbf-style', get_template_directory_uri() . '/style.css', '', WPBF_VERSION );
 
-	// responsive.css
+	// Responsive styles.
 	wp_enqueue_style( 'wpbf-responsive', get_template_directory_uri() . '/css/min/responsive-min.css', '', WPBF_VERSION );
 
-	// comment reply
-	if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
+	// Comment reply.
+	if ( is_singular() ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
 
-	// rtl
 	if ( is_rtl() ) {
 
+		// RTL.
 		wp_enqueue_style( 'wpbf-rtl', get_template_directory_uri() . '/css/min/rtl-min.css', '', WPBF_VERSION );
 
 	}
@@ -155,5 +153,5 @@ function wpbf_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_scripts', 10 );
 
-// Init
-require_once( WPBF_THEME_DIR . '/inc/init.php' );
+// Init.
+require_once WPBF_THEME_DIR . '/inc/init.php';
