@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Integration
+ * WooCommerce integration.
  *
  * @package Page Builder Framework
  * @subpackage Integration/WooCommerce
