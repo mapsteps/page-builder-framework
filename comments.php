@@ -28,7 +28,7 @@ if ( post_password_required() )	return;
 			?>
 		</h3>
 
-		<ul class="comments">
+		<ul id="comments" class="comments">
 			<?php
 			wp_list_comments( array(
 				'avatar_size' => 80,
