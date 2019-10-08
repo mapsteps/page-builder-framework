@@ -7,9 +7,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-/**
- * Constants.
- */
+// Constants
 define( 'WPBF_THEME_DIR', get_template_directory() );
 define( 'WPBF_THEME_URI', get_template_directory_uri() );
 define( 'WPBF_CHILD_THEME_DIR', get_stylesheet_directory() );
