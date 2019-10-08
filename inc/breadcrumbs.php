@@ -332,7 +332,7 @@ class WPBF_Breadcrumbs {
 
 		} else {
 
-			echo $breadcrumb; // WPCS: XSS ok.
+			echo $breadcrumb;
 
 		}
 
