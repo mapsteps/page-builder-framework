@@ -534,9 +534,7 @@ function wpbf_woo_menu_item() {
 	$cart_url    = wc_get_cart_url();
 
 	// Construct.
-	$menu_item = '';
-
-	$menu_item .= '<li class="' . esc_attr( $css_classes ) . '">';
+	$menu_item  = '<li class="' . esc_attr( $css_classes ) . '">';
 
 	$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="' . esc_attr( $title ) . '">';
 
@@ -613,7 +611,7 @@ function wpbf_woo_menu_icon_mobile() {
 	}
 
 	// Construct.
-	$menu_item = '<ul class="wpbf-mobile-nav-item">';
+	$menu_item  = '<ul class="wpbf-mobile-nav-item">';
 	$menu_item .= wpbf_woo_menu_item();
 	$menu_item .= '</ul>';
 

@@ -1,17 +1,21 @@
 <?php
 /**
- * EDD Functions
+ * Easy Digital Downloads functions.
  *
  * @package Page Builder Framework
  * @subpackage Integration/EDD
  */
 
+defined( 'ABSPATH' ) || die( "Can't access directly" );
+
 /**
- * Helpers
+ * Determine if we're on an EDD product page.
+ *
+ * @return boolean.
  */
 function wpbf_is_edd_single() {
 
-	if( is_singular( 'download' ) ) {
+	if ( is_singular( 'download' ) ) {
 		return true;
 	} else {
 		return false;
@@ -19,9 +23,14 @@ function wpbf_is_edd_single() {
 
 }
 
+/**
+ * Determine if we're on an EDD archive page.
+ *
+ * @return boolean.
+ */
 function wpbf_is_edd_archive() {
 
-	if( is_post_type_archive( 'download' ) || is_tax( 'download_category' ) || is_tax( 'download_tag' ) ) {
+	if ( is_post_type_archive( 'download' ) || is_tax( 'download_category' ) || is_tax( 'download_tag' ) ) {
 		return true;
 	} else {
 		return false;
@@ -29,6 +38,11 @@ function wpbf_is_edd_archive() {
 
 }
 
+/**
+ * Determin if we're on an EDD page.
+ *
+ * @return boolean.
+ */
 function wpbf_is_edd_page() {
 
 	if ( is_singular( 'download' ) || is_post_type_archive( 'download' ) || is_tax( 'download_category' ) || is_tax( 'download_tag' ) || edd_is_checkout() || edd_is_success_page() || edd_is_failed_transaction_page() || edd_is_purchase_history_page() ) {
@@ -40,49 +54,53 @@ function wpbf_is_edd_page() {
 }
 
 /**
- * Register Sidebars
+ * Register sidebars.
  */
 function wpbf_edd_sidebar() {
 
-	// Shop Page Sidebar
+	// Shop page sidebar.
 	register_sidebar( array(
-		'id'			=> 'wpbf-edd-sidebar',
-		'name'			=> __( 'Easy Digital Downloads Sidebar', 'page-builder-framework' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'	=> '</div>',
-		'before_title'	=> '<h4 class="wpbf-widgettitle">',
-		'after_title'	=> '</h4>',
-		'description'	=> __( 'This Sidebar is being displayed on EDD Archive Pages.', 'page-builder-framework' ),
-	) );
-
-	// Product Page Sidebar
-	register_sidebar( array(
-		'id'			=> 'wpbf-edd-product-sidebar',
-		'name'			=> __( 'Easy Digital Downloads Product Page Sidebar', 'page-builder-framework' ),
+		'id'            => 'wpbf-edd-sidebar',
+		'name'          => __( 'Easy Digital Downloads Sidebar', 'page-builder-framework' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
-		'before_title'	=> '<h4 class="wpbf-widgettitle">',
-		'after_title'	=> '</h4>',
-		'description'	=> __( 'This Sidebar is being displayed on EDD Product Pages.', 'page-builder-framework' ),
+		'before_title'  => '<h4 class="wpbf-widgettitle">',
+		'after_title'   => '</h4>',
+		'description'   => __( 'This Sidebar is being displayed on EDD Archive Pages.', 'page-builder-framework' ),
+	) );
+
+	// Product page sidebar.
+	register_sidebar( array(
+		'id'            => 'wpbf-edd-product-sidebar',
+		'name'          => __( 'Easy Digital Downloads Product Page Sidebar', 'page-builder-framework' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4 class="wpbf-widgettitle">',
+		'after_title'   => '</h4>',
+		'description'   => __( 'This Sidebar is being displayed on EDD Product Pages.', 'page-builder-framework' ),
 	) );
 
 }
 add_action( 'widgets_init', 'wpbf_edd_sidebar' );
 
 /**
- * Apply Sidebars
+ * Apply sidebars.
+ *
+ * @param string $sidebar The sidebar.
+ *
+ * @return string The updated sidebar.
  */
 function wpbf_edd_sidebars( $sidebar ) {
 
-		if( wpbf_is_edd_archive() ) {
+	if ( wpbf_is_edd_archive() ) {
 
-			$sidebar = 'wpbf-edd-sidebar';
+		$sidebar = 'wpbf-edd-sidebar';
 
-		} elseif( wpbf_is_edd_single() ) {
+	} elseif ( wpbf_is_edd_single() ) {
 
-			$sidebar ='wpbf-edd-product-sidebar';
+		$sidebar = 'wpbf-edd-product-sidebar';
 
-		}
+	}
 
 	return $sidebar;
 
@@ -90,24 +108,28 @@ function wpbf_edd_sidebars( $sidebar ) {
 add_filter( 'wpbf_do_sidebar', 'wpbf_edd_sidebars' );
 
 /**
- * Filter Sidebar Layout
+ * Filter sidebar layout.
+ *
+ * @param string $sidebar The sidebar layout.
+ *
+ * @return string The updated sidebar layout.
  */
 function wpbf_edd_sidebar_layout( $sidebar ) {
 
-	if( wpbf_is_edd_single() ) {
+	if ( wpbf_is_edd_single() ) {
 
 		$edd_single_sidebar_layout = get_theme_mod( 'edd_single_sidebar_layout', 'global' );
 
-		if( $edd_single_sidebar_layout !== 'global' ) {
+		if ( 'global' !== $edd_single_sidebar_layout ) {
 			$sidebar = $edd_single_sidebar_layout;
 		}
 	}
 
-	if( wpbf_is_edd_archive() ) {
+	if ( wpbf_is_edd_archive() ) {
 
 		$edd_sidebar_layout = get_theme_mod( 'edd_sidebar_layout', 'global' );
 
-		if( $edd_sidebar_layout !== 'global' ) {
+		if ( 'global' !== $edd_sidebar_layout ) {
 			$sidebar = $edd_sidebar_layout;
 		}
 	}
@@ -118,38 +140,37 @@ function wpbf_edd_sidebar_layout( $sidebar ) {
 add_filter( 'wpbf_sidebar_layout', 'wpbf_edd_sidebar_layout' );
 
 /**
- * Cart Menu Item
+ * Construct cart menu item.
  */
 function wpbf_edd_menu_item() {
 
-	// vars
-	$icon			= get_theme_mod( 'edd_menu_item_icon', 'cart' );
-	$css_classes	= apply_filters( 'wpbf_edd_menu_item_classes', 'menu-item wpbf-edd-menu-item' );
-	$title			= apply_filters( 'wpbf_edd_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
-	$cart_count		= edd_get_cart_quantity();
-	$cart_url		= edd_get_checkout_uri();
+	// Vars.
+	$icon        = get_theme_mod( 'edd_menu_item_icon', 'cart' );
+	$css_classes = apply_filters( 'wpbf_edd_menu_item_classes', 'menu-item wpbf-edd-menu-item' );
+	$title       = apply_filters( 'wpbf_edd_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
+	$cart_count  = edd_get_cart_quantity();
+	$cart_url    = edd_get_checkout_uri();
 
-	// construct menu item
-	$menu_item = '';
+	// Construct.
+	$menu_item  = '<li class="' . esc_attr( $css_classes ) . '">';
 
-	$menu_item .= '<li class="'. esc_attr( $css_classes ) .'">';
+	$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="' . esc_attr( $title ) . '">';
 
-		$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="'. esc_attr( $title ) .'">';
+	$menu_item .= '<span class="screen-reader-text">' . __( 'Shopping Cart', 'page-builder-framework' ) . '</span>';
 
-			$menu_item .= '<span class="screen-reader-text">'. __( 'Shopping Cart', 'page-builder-framework' ) .'</span>';
+	$menu_item .= apply_filters( 'wpbf_edd_before_menu_item', '' );
 
-			$menu_item .= apply_filters( 'wpbf_edd_before_menu_item', '' );
+	$menu_item .= '<i class="wpbff wpbff-' . esc_attr( $icon ) . '"></i>';
 
-			$menu_item .= '<i class="wpbff wpbff-'. esc_attr( $icon ) .'"></i>';
-			if( get_theme_mod( 'edd_menu_item_count' ) !== 'hide' ) {
-				$menu_item .= '<span class="wpbf-edd-menu-item-count">' . wp_kses_data( $cart_count ) . '<span class="screen-reader-text">'. __( 'Items in Cart', 'page-builder-framework' ) .'</span></span>';
-			}
+	if ( 'hide' !== get_theme_mod( 'edd_menu_item_count' ) ) {
+		$menu_item .= '<span class="wpbf-edd-menu-item-count">' . wp_kses_data( $cart_count ) . '<span class="screen-reader-text">' . __( 'Items in Cart', 'page-builder-framework' ) . '</span></span>';
+	}
 
-			$menu_item .= apply_filters( 'wpbf_edd_after_menu_item', '' );
+	$menu_item .= apply_filters( 'wpbf_edd_after_menu_item', '' );
 
-		$menu_item .= '</a>';
+	$menu_item .= '</a>';
 
-		$menu_item .= apply_filters( 'wpbf_edd_menu_item_dropdown', '' );
+	$menu_item .= apply_filters( 'wpbf_edd_menu_item_dropdown', '' );
 
 	$menu_item .= '</li>';
 
@@ -158,21 +179,32 @@ function wpbf_edd_menu_item() {
 }
 
 /**
- * Add Cart Menu Item to Main Navigation
+ * Add cart menu item to main navigation.
+ *
+ * @param string $items The HTML list content for the menu items.
+ * @param object $args The arguments.
+ *
+ * @return string The updated HTML.
  */
 function wpbf_edd_menu_icon( $items, $args ) {
 
-	// stop right here if menu item is hidden
-	if( get_theme_mod( 'edd_menu_item_desktop' ) == 'hide' ) return $items;
+	// Stop right here if menu item is hidden.
+	if ( 'hide' === get_theme_mod( 'edd_menu_item_desktop' ) ) {
+		return $items;
+	}
 
-	// hide if we're on non-EDD pages
-	if( get_theme_mod( 'edd_menu_item_hide_if_not_edd' ) && !wpbf_is_edd_page() ) return $items;
+	// Hide if we're on non-EDD pages.
+	if ( get_theme_mod( 'edd_menu_item_hide_if_not_edd' ) && ! wpbf_is_edd_page() ) {
+		return $items;
+	}
 
-	// stop here if we're on a off canvas menu
-	if( wpbf_is_off_canvas_menu() ) return $items;
+	// Stop here if we're on a off canvas menu.
+	if ( wpbf_is_off_canvas_menu() ) {
+		return $items;
+	}
 
-	if ( $args->theme_location === 'main_menu' ) {
-
+	// Finally, add menu item to main menu.
+	if ( 'main_menu' === $args->theme_location ) {
 		$items .= wpbf_edd_menu_item();
 	}
 
@@ -182,50 +214,58 @@ function wpbf_edd_menu_icon( $items, $args ) {
 add_filter( 'wp_nav_menu_items', 'wpbf_edd_menu_icon', 10, 2 );
 
 /**
- * Add Cart Menu Item to Mobile Menu Toggle
+ * Add cart menu item to mobile navigation.
  */
 function wpbf_edd_menu_icon_mobile() {
 
-	// hide if mobile EDD menu item is disabled
-	if( get_theme_mod( 'edd_menu_item_mobile' ) == 'hide' ) return;
+	// Stop right here if menu item is hidden.
+	if ( 'hide' === get_theme_mod( 'edd_menu_item_mobile' ) ) {
+		return;
+	}
 
-	// hide if we're on non-EDD pages
-	if( get_theme_mod( 'edd_menu_item_hide_if_not_edd' ) && !wpbf_is_edd_page() ) return;
+	// Hide if we're on non-EDD pages.
+	if ( get_theme_mod( 'edd_menu_item_hide_if_not_edd' ) && ! wpbf_is_edd_page() ) {
+		return;
+	}
 
-	$menu_item = '<ul class="wpbf-mobile-nav-item">';
+	// Construct.
+	$menu_item  = '<ul class="wpbf-mobile-nav-item">';
 	$menu_item .= wpbf_edd_menu_item();
 	$menu_item .= '</ul>';
 
-	echo $menu_item; // WPCS: XSS ok.
+	echo $menu_item;
 
 }
 add_action( 'wpbf_before_mobile_toggle', 'wpbf_edd_menu_icon_mobile' );
 
 /**
- * EDD Ajax
+ * EDD ajax.
  */
 function wpbf_edd_ajax() {
 
-    wp_enqueue_script( 'wpbf-edd-ajax', get_template_directory_uri() . '/assets/edd/js/edd-ajax.js', array(  'jquery' ), '', true );
+	wp_enqueue_script( 'wpbf-edd-ajax', get_template_directory_uri() . '/assets/edd/js/edd-ajax.js', array( 'jquery' ), '', true );
 
 	wp_localize_script(
 		'wpbf-edd-ajax',
 		'wpbf_edd_fragments',
-		array(  
-			'ajaxurl'	=> function_exists( 'edd_get_ajax_url' ) ? edd_get_ajax_url() : admin_url( 'admin-ajax.php' ),
-			'nonce'		=> wp_create_nonce( 'edd_ajax_nonce' )
+		array(
+			'ajaxurl' => function_exists( 'edd_get_ajax_url' ) ? edd_get_ajax_url() : admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'edd_ajax_nonce' ),
 		)
 	);
 
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_edd_ajax' );
 
+
+/**
+ * EDD fragments.
+ */
 function wpbf_edd_fragments() {
 
 	check_ajax_referer( 'edd_ajax_nonce', 'security' );
 
-	$menu_item = wpbf_edd_menu_item();
-	echo $menu_item; // WPCS: XSS ok.
+	echo wpbf_edd_menu_item();
 	die();
 
 }
