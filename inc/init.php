@@ -54,11 +54,35 @@ require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 // Theme mods.
 require_once WPBF_THEME_DIR . '/inc/theme-mods.php';
 
+/* Integration */
+
 // Header/Footer Elementor integration.
 if ( ! function_exists( 'wpbf_header_footer_elementor_support' ) ) {
-	// backwards compatibility check as this was earlier included in Premium.
-	// Will be removed at some point.
+	// Backwards compatibility check as this was included in the Premium Add-On earlier.
 	require_once WPBF_THEME_DIR . '/inc/integration/header-footer-elementor.php';
+}
+
+/**
+ * Elementor Pro integration.
+ *
+ * @since 2.1
+ */
+function wpbf_do_elementor_pro_integration() {
+
+	// Backwards compatibility check as this was included in the Premium Add-On earlier.
+	if ( function_exists( 'wpbf_elementor_pro_integration' ) ) {
+		return;
+	}
+
+	require_once WPBF_THEME_DIR . '/inc/integration/elementor-pro.php';
+
+}
+add_action( 'elementor_pro/init', 'wpbf_do_elementor_pro_integration' );
+
+// Beaver Themer integration.
+// Backwards compatibility check as this was included in the Premium Add-On earlier.
+if ( ! function_exists( 'wpbf_bb_header_footer_support' ) && class_exists( 'FLThemeBuilderLoader' ) && class_exists( 'FLBuilderLoader' ) ) {
+	require_once WPBF_THEME_DIR . '/inc/integration/beaver-themer.php';
 }
 
 // Easy Digital Downloads integration.
