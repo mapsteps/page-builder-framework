@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  */
 function wpbf_elementor_locations( $elementor_theme_manager ) {
 
-	// Header
+	// Header.
 	$elementor_theme_manager->register_location(
 		'header',
 		[
@@ -52,7 +52,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 		]
 	);
 
-	// Footer
+	// Footer.
 	$elementor_theme_manager->register_location(
 		'footer',
 		[
@@ -79,7 +79,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 		]
 	);
 
-	// Article
+	// Article.
 	$elementor_theme_manager->register_location(
 		'before-post',
 		[
@@ -98,7 +98,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 		]
 	);
 
-	// Sidebar
+	// Sidebar.
 	$elementor_theme_manager->register_location(
 		'before-sidebar',
 		[
