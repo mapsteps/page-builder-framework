@@ -1216,7 +1216,7 @@ foreach ( $singles as $single ) {
 
 		}
 
-		$stretched                    = get_theme_mod( $single . '_boxed_image_streched', false );
+		$stretched                    = get_theme_mod( $single . '_boxed_image_stretched', false );
 		$boxed_padding_top_desktop    = get_theme_mod( $single . '_boxed_padding_top_desktop' );
 		$boxed_padding_right_desktop  = get_theme_mod( $single . '_boxed_padding_right_desktop' );
 		$boxed_padding_bottom_desktop = get_theme_mod( $single . '_boxed_padding_bottom_desktop' );
