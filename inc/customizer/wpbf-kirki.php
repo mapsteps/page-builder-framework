@@ -11,6 +11,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 // Textdomain. This is required, otherwise strings aren't translateable.
 load_theme_textdomain( 'page-builder-framework' );
 
+// Kirki global configuration.
+function wpbf_kirki_config( $config ) {
+	return wp_parse_args( array(
+		'disable_loader' => true,
+	), $config );
+}
+add_filter( 'kirki_config', 'wpbf_kirki_config' );
+
 // Default font choice.
 function wpbf_default_font_choices() {
 	return array(
