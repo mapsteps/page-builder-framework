@@ -259,6 +259,10 @@ figure.aligncenter div.aligncenter {
 	outline: 1px dotted rgba(0,0,0,.6);
 }
 
+body:focus {
+	outline: none;
+}
+
 .using-mouse :focus {
 	outline: none;
 }
