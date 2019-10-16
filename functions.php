@@ -21,7 +21,7 @@ define( 'WPBF_CHILD_VERSION', '1.1' );
 function wpbf_theme_setup() {
 
 	// Textdomain.
-	load_theme_textdomain( 'page-builder-framework' );
+	load_theme_textdomain( 'page-builder-framework', WPBF_THEME_DIR . '/languages' );
 
 	// Custom logo.
 	add_theme_support( 'custom-logo',
