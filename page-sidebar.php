@@ -35,6 +35,8 @@ get_header();
 
 				<div class="entry-content" itemprop="text">
 
+					<?php do_action( 'wpbf_entry_content_open' ); ?>
+
 					<?php the_content(); ?>
 
 					<?php
@@ -43,6 +45,8 @@ get_header();
 						'after'  => '</div>',
 					) );
 					?>
+
+					<?php do_action( 'wpbf_entry_content_close' ); ?>
 
 				</div>
 
