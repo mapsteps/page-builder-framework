@@ -1851,7 +1851,8 @@ if ( $sub_menu_accent_color || $sub_menu_font_size ) {
 	}
 
 	if ( $sub_menu_font_size ) {
-		echo sprintf( 'font-size: %s;', esc_attr( $sub_menu_font_size ) );
+		$suffix = is_numeric( $blog_pagination_font_size ) ? 'px' : '';
+		echo sprintf( 'font-size: %s;', esc_attr( $sub_menu_font_size ) . $suffix );
 	}
 
 	echo '}';
