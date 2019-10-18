@@ -33,8 +33,8 @@
  */
 function wpbf_do_breadcrumbs( $args = array() ) {
 
-	// Only go forward if breadcrumbs are enabled
-	if ( !get_theme_mod( 'breadcrumbs_toggle' ) ) return;
+	// Only go forward if breadcrumbs are enabled.
+	if ( ! get_theme_mod( 'breadcrumbs_toggle' ) ) return;
 
 	$breadcrumbs          = array( 'archive', 'single', 'search', '404', 'page', 'front_page' );
 	$included_breadcrumbs = get_theme_mod( 'breadcrumbs', array( 'archive', 'single' ) );
@@ -71,17 +71,22 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 
 	}
 
-	// Use Yoast Breadcrumbs if enabled
+	// Use Yoast Breadcrumbs if enabled.
 	if ( function_exists( 'yoast_breadcrumb' ) ) {
 		return yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
 	}
 
-	// Use Rank Math SEO Breadcrumbs if enabled
+	// Use Rank Math SEO Breadcrumbs if enabled.
 	if ( function_exists( 'rank_math_the_breadcrumbs' ) ) {
 		return rank_math_the_breadcrumbs();
 	}
 
-	// stop if we're on WooCommerce Pages as they handle breadcrumbs themselves
+	// Use SEOPress Breadcrumbs if enabled.
+	if ( function_exists( 'seopress_display_breadcrumbs' ) ) {
+		seopress_display_breadcrumbs();
+	}
+
+	// Stop if we're on WooCommerce Pages as they handle breadcrumbs themselves.
 	if ( function_exists( 'is_woocommerce' ) ) {
 		if( is_woocommerce() ) return;
 		if( is_checkout() ) return;
