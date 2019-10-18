@@ -51,6 +51,25 @@ function wpbf_customizer_setup( $wp_customize ) {
 	$wp_customize->get_control( 'blogname' )->priority        = 9;
 	$wp_customize->get_control( 'blogdescription' )->priority = 19;
 
+	// Change control transport method.
+	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
+
+	// Partial refresh for custom logo.
+    $wp_customize->selective_refresh->add_partial( 'custom_logo', array(
+        'selector' => '.wpbf-logo',
+        'render_callback' => function() {
+			get_template_part( 'inc/template-parts/logo/logo' );
+        },
+    ) );
+
+    // Partial refresh for blogname.
+	$wp_customize->selective_refresh->add_partial( 'blogname', array(
+		'selector' => '.site-title a',
+		'render_callback' => function() {
+			bloginfo( 'name' );
+		},
+	) );
+
 }
 add_action( 'customize_register', 'wpbf_customizer_setup', 20 );
 
