@@ -2672,7 +2672,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'image',
 	'settings'        => 'menu_mobile_logo',
-	'label'           => __( 'Mobile Logo', 'wpbfpremium' ),
+	'label'           => __( 'Mobile Logo', 'page-builder-framework' ),
 	'section'         => 'title_tagline',
 	'priority'        => 1,
 	'partial_refresh' => array(
