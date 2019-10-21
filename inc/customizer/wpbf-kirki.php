@@ -55,14 +55,14 @@ function wpbf_customizer_setup( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
 
 	// Partial refresh for custom logo.
-    $wp_customize->selective_refresh->add_partial( 'custom_logo', array(
-        'selector' => '.wpbf-logo',
-        'render_callback' => function() {
-			get_template_part( 'inc/template-parts/logo/logo' );
-        },
-    ) );
+	// This is faking a partial refresh to have an edit icon displayed for the logo.
+	// A partial refresh isn't possible because the logo & mobile logo are different.
+	// Unfortunately we can't pass multiple arrays with add_partial - this would solve the issue.
+	$wp_customize->selective_refresh->add_partial( 'custom_logo', array(
+		'selector' => '.wpbf-logo',
+	) );
 
-    // Partial refresh for blogname.
+	// Partial refresh for blogname.
 	$wp_customize->selective_refresh->add_partial( 'blogname', array(
 		'selector' => '.site-title a',
 		'render_callback' => function() {
@@ -2667,6 +2667,30 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 /* Fields – Logo */
+
+// Mobile logo.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'image',
+	'settings'        => 'menu_mobile_logo',
+	'label'           => __( 'Mobile Logo', 'wpbfpremium' ),
+	'section'         => 'title_tagline',
+	'priority'        => 1,
+	'partial_refresh' => array(
+		'mobile_logo' => array(
+			'selector'        => '.wpbf-mobile-logo',
+			'render_callback' => function() {
+				get_template_part( 'inc/template-parts/logo/logo-mobile' );
+			}
+		),
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'custom_logo',
+			'operator' => '!=',
+			'value'    => '',
+		),
+	),
+) );
 
 // Separator.
 Kirki::add_field( 'wpbf', array(

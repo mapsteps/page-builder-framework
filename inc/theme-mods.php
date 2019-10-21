@@ -284,3 +284,23 @@ function wpbf_article_meta_separator( $separator ) {
 
 }
 add_filter( 'wpbf_article_meta_separator', 'wpbf_article_meta_separator' );
+
+/**
+ * Custom mobile logo.
+ *
+ * @param string $logo_url The logo url.
+ *
+ * @return string The updated logo url.
+ */
+function wpbf_mobile_logo( $logo_url ) {
+
+	$custom_logo_url = get_theme_mod( 'menu_mobile_logo' );
+
+	if ( $custom_logo_url ) {
+		$logo_url = $custom_logo_url;
+	}
+
+	return $logo_url;
+
+}
+add_filter( 'wpbf_logo_mobile', 'wpbf_mobile_logo' );
