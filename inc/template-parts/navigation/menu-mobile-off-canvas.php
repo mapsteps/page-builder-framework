@@ -40,7 +40,11 @@ if ( get_theme_mod( 'mobile_menu_overlay' ) ) {
 
 	<div class="wpbf-mobile-menu-container">
 
+		<?php do_action( 'wpbf_before_mobile_menu' ); ?>
+
 		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
+
+			<?php do_action( 'wpbf_mobile_menu_open' ); ?>
 
 			<?php
 			wp_nav_menu( array(
@@ -52,7 +56,11 @@ if ( get_theme_mod( 'mobile_menu_overlay' ) ) {
 			) );
 			?>
 
+			<?php do_action( 'wpbf_mobile_menu_close' ); ?>
+
 		</nav>
+
+		<?php do_action( 'wpbf_after_mobile_menu' ); ?>
 
 		<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
 

@@ -36,7 +36,11 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 	<div class="wpbf-mobile-menu-container">
 
+		<?php do_action( 'wpbf_before_mobile_menu' ); ?>
+
 		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
+
+			<?php do_action( 'wpbf_mobile_menu_open' ); ?>
 
 			<?php
 			wp_nav_menu( array(
@@ -48,7 +52,11 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 			) );
 			?>
 
+			<?php do_action( 'wpbf_mobile_menu_close' ); ?>
+
 		</nav>
+
+		<?php do_action( 'wpbf_after_mobile_menu' ); ?>
 
 	</div>
 
