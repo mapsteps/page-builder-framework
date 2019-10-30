@@ -29,7 +29,7 @@ function wpbf_body_classes( $classes ) {
 	if ( is_page() && ! is_page_template( 'page-sidebar.php' ) ) {
 		$classes[] = 'wpbf-no-sidebar';
 	} else {
-		$classes[] = wpbf_sidebar_layout() == 'none' ? 'wpbf-no-sidebar' : 'wpbf-sidebar-' . wpbf_sidebar_layout();
+		$classes[] = 'none' === wpbf_sidebar_layout() ? 'wpbf-no-sidebar' : 'wpbf-sidebar-' . wpbf_sidebar_layout();
 	}
 
 	// Full width body class.
