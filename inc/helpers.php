@@ -850,3 +850,39 @@ function wpbf_responsive_embed( $html, $url, $attr ) {
 
 }
 add_filter( 'embed_oembed_html', 'wpbf_responsive_embed', 10, 3 );
+
+/**
+ * Page builder compatibility.
+ *
+ * Make the page full-width & remove the title if Page Builder is being used.
+ *
+ * @param int $id the ID.
+ */
+function wpbf_page_builder_compatibility( $id ) {
+
+	// Stop here if we're not on a page.
+	if( 'page' !== get_post_type() ) return;
+
+	$elementor  = get_post_meta( $id, '_elementor_edit_mode', true );
+	$fl_enabled = get_post_meta( $id, '_fl_builder_enabled', true );
+
+	if ( $fl_enabled || 'builder' === $elementor ) {
+
+		$wpbf_stored_meta = get_post_meta( $id );
+		$mydata           = $wpbf_stored_meta['wpbf_options'];
+
+		// Stop here if auto conversion already took place.
+		if ( in_array( 'auto-convert', $mydata ) ) {
+			return;
+		}
+
+		$mydata[] .= 'remove-title';
+		$mydata[] .= 'full-width';
+		$mydata[] .= 'auto-convert';
+
+		update_post_meta( $id, 'wpbf_options', $mydata );
+
+	}
+
+}
+// add_action( 'wpbf_page_builder_compatibility', 'task' );
