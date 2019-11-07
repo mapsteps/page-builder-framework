@@ -2022,7 +2022,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'color',
 	'settings' => 'page_accent_color',
-	'label'    => __( 'Link Color', 'page-builder-framework' ),
+	'label'    => __( 'Accent Color', 'page-builder-framework' ),
 	'section'  => 'wpbf_font_options',
 	'priority' => 4,
 	'default'  => '#3ba9d2',
@@ -2592,13 +2592,47 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'separator-264356125',
+	'section'  => 'wpbf_pre_header_options',
+	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority' => 3,
+	'active_callback' => array(
+		array(
+			'setting'  => 'pre_header_layout',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	),
+) );
+
+// Width.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'dimension',
+	'label'           => __( 'Pre Header Width', 'page-builder-framework' ),
+	'description'     => __( 'Default: 1200px', 'page-builder-framework' ),
+	'settings'        => 'pre_header_width',
+	'section'         => 'wpbf_pre_header_options',
+	'priority'        => 3,
+	'transport'       => 'postMessage',
+	'active_callback' => array(
+		array(
+			'setting'  => 'pre_header_layout',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	),
+) );
+
 // Height.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'slider',
 	'settings'        => 'pre_header_height',
 	'label'           => __( 'Height', 'page-builder-framework' ),
 	'section'         => 'wpbf_pre_header_options',
-	'priority'        => 4,
+	'priority'        => 3,
 	'default'         => '10',
 	'transport'       => 'postMessage',
 	'choices'         => array(
@@ -2622,7 +2656,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Background Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => '#ffffff',
-	'priority'        => 5,
+	'priority'        => 4,
 	'transport'       => 'postMessage',
 	'active_callback' => array(
 		array(
@@ -2643,7 +2677,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Font Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => '#6d7680',
-	'priority'        => 6,
+	'priority'        => 4,
 	'transport'       => 'postMessage',
 	'active_callback' => array(
 		array(
@@ -2654,6 +2688,67 @@ Kirki::add_field( 'wpbf', array(
 	),
 	'choices'         => array(
 		'alpha' => true,
+	),
+) );
+
+// Accent color.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'pre_header_accent_color',
+	'label'           => __( 'Accent Color', 'page-builder-framework' ),
+	'section'         => 'wpbf_pre_header_options',
+	'priority'        => 4,
+	'choices'         => array(
+		'alpha' => true,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'pre_header_layout',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	),
+) );
+
+// Accent color alt.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'pre_header_accent_color_alt',
+	'label'           => __( 'Hover', 'page-builder-framework' ),
+	'section'         => 'wpbf_pre_header_options',
+	'priority'        => 4,
+	'choices'         => array(
+		'alpha' => true,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'pre_header_layout',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	),
+) );
+
+// Font size.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'input_slider',
+	'label'           => __( 'Font Size', 'page-builder-framework' ),
+	'settings'        => 'pre_header_font_size',
+	'section'         => 'wpbf_pre_header_options',
+	'priority'        => 4,
+	'default'         => '14px',
+	'transport'       => 'postMessage',
+	'active_callback' => array(
+		array(
+			'setting'  => 'pre_header_layout',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	),
+	'choices'         => array(
+		'min'  => '0',
+		'max'  => '50',
+		'step' => '1',
 	),
 ) );
 
