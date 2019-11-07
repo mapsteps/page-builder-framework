@@ -25,7 +25,7 @@ if ( ! $pre_header_layout || 'none' === $pre_header_layout ) {
 
 ?>
 
-<div id="wpbf-pre-header">
+<div id="wpbf-pre-header" class="wpbf-pre-header">
 
 	<?php do_action( 'wpbf_before_pre_header' ); ?>
 
@@ -42,7 +42,7 @@ if ( ! $pre_header_layout || 'none' === $pre_header_layout ) {
 				wp_nav_menu( array(
 					'theme_location' => 'pre_header_menu',
 					'container'      => false,
-					'menu_class'     => 'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_animation(),
+					'menu_class'     => 'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation(),
 					'depth'          => '2',
 					'fallback_cb'    => false,
 				) );
@@ -54,7 +54,7 @@ if ( ! $pre_header_layout || 'none' === $pre_header_layout ) {
 				wp_nav_menu( array(
 					'theme_location' => 'pre_header_menu',
 					'container'      => false,
-					'menu_class'     => 'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_animation(),
+					'menu_class'     => 'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation(),
 					'depth'          => '2',
 					'fallback_cb'    => 'wpbf_menu_fallback',
 				) );
@@ -82,7 +82,7 @@ if ( ! $pre_header_layout || 'none' === $pre_header_layout ) {
 				wp_nav_menu( array(
 					'theme_location' => 'pre_header_menu_right',
 					'container'      => false,
-					'menu_class'     => 'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_animation(),
+					'menu_class'     => 'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation(),
 					'depth'          => '2',
 					'fallback_cb'    => false,
 				) );
@@ -92,7 +92,7 @@ if ( ! $pre_header_layout || 'none' === $pre_header_layout ) {
 				wp_nav_menu( array(
 					'theme_location' => 'pre_header_menu_right',
 					'container'      => false,
-					'menu_class'     => 'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_animation(),
+					'menu_class'     => 'wpbf-menu wpbf-sub-menu wpbf-visible-large' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation(),
 					'depth'          => '2',
 					'fallback_cb'    => 'wpbf_menu_fallback',
 				) );
