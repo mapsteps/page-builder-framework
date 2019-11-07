@@ -2108,7 +2108,7 @@ if ( 'none' !== $footer_layout && $footer_accent_color_alt ) {
 
 if ( 'none' !== $footer_layout && $footer_font_size ) {
 
-	echo '.wpbf-inner-footer {';
+	echo '.wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu {';
 	echo sprintf( 'font-size: %s;', esc_attr( $footer_font_size ) );
 	echo '}';
 
