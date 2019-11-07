@@ -2,35 +2,35 @@
 
 	/* Layout */
 
-	// Page Boxed Margin
+	// Boxed margin.
 	wp.customize( 'page_boxed_margin', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-page').css('margin-top', newval + 'px' ).css('margin-bottom', newval + 'px' );
 		} );
 	} );
 
-	// Page Boxed Padding
+	// Boxed padding.
 	wp.customize( 'page_boxed_padding', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-container').css('padding-left', newval + 'px' ).css('padding-right', newval + 'px' );
 		} );
 	} );
 
-	// Page Boxed Background Color
+	// Boxed background color.
 	wp.customize( 'page_boxed_background', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-page').css('background-color', newval );
 		} );
 	} );
 
-	// ScrollTop Background Color
+	// ScrollTop background color.
 	wp.customize( 'scrolltop_bg_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.scrolltop').css('background', newval );
 		} );
 	} );
 
-	// ScrollTop Background Color
+	// ScrollTop border radius.
 	wp.customize( 'scrolltop_border_radius', function( value ) {
 		value.bind( function( newval ) {
 			$('.scrolltop').css('border-radius', newval + 'px' );
@@ -39,7 +39,7 @@
 
 	/* Menu */
 
-	// Font Size
+	// Font size.
 	wp.customize( 'menu_font_size', function( value ) {
 		value.bind( function( newval ) {
 			var suffix = '';
@@ -52,21 +52,21 @@
 
 	/* Sub Menu */
 
-	// Background Color
+	// Background color.
 	wp.customize( 'sub_menu_bg_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li, .wpbf-sub-menu > .wpbf-mega-menu > .sub-menu').css('background-color', newval );
 		} );
 	} );
 
-	// Font Color
+	// Accent color.
 	wp.customize( 'sub_menu_accent_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-menu .sub-menu a').css('color', newval );
 		} );
 	} );
 
-	// Font Size
+	// Font size.
 	wp.customize( 'sub_menu_font_size', function( value ) {
 		value.bind( function( newval ) {
 			var suffix = '';
@@ -79,14 +79,14 @@
 
 	/* Mobile Navigation */
 
-	// Hamburger Size
+	// Hamburger size.
 	wp.customize( 'mobile_menu_hamburger_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-mobile-nav-item').css('font-size', newval + 'px' );
 		} );
 	} );
 
-	// Hamburger Border Radius (Filled)
+	// Hamburger border radius (filled).
 	wp.customize( 'mobile_menu_hamburger_border_radius', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-mobile-nav-item').css('border-radius', newval + 'px' );
@@ -95,7 +95,7 @@
 
 	/* Logo */
 
-	// Logo Container Width
+	// Container width.
 	wp.customize( 'menu_logo_container_width', function( value ) {
 		value.bind( function( newval ) {
 			var calculation = 100-newval;
@@ -104,7 +104,7 @@
 		} );
 	} );
 
-	// Logo Container Width
+	// Mobile container width.
 	wp.customize( 'mobile_menu_logo_container_width', function( value ) {
 		value.bind( function( newval ) {
 			var calculation = 100-newval;
@@ -115,29 +115,30 @@
 
 	/* Tagline */
 
-	// tagline color
+	// Font color.
 	wp.customize( 'menu_logo_description_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-tagline').css('color', newval );
 		} );
 	} );
 
-	// tagline font size
+	// Font size.
 	wp.customize( 'menu_logo_description_font_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-tagline').css('font-size', newval );
 		} );
 	} );
 
-	/* Navigation */
-
 	/* Mobile Menu */
+
+	// Height.
 	wp.customize( 'mobile_menu_height', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-mobile-nav-wrapper').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
 		} );
 	} );
 
+	// Sub menu arrow color.
 	wp.customize( 'mobile_menu_submenu_arrow_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-submenu-toggle').css('color', newval );
@@ -146,55 +147,86 @@
 
 	/* Pre Header */
 
-	wp.customize( 'pre_header_bg_color', function( value ) {
+	// Width.
+	wp.customize( 'pre_header_width', function( value ) {
 		value.bind( function( newval ) {
-			$('#wpbf-pre-header').css('background-color', newval );
+			if( newval == '' ) {
+				newval = '1200px';
+			}
+			$('.wpbf-inner-pre-header').css('max-width', newval );
 		} );
 	} );
 
+	// Height.
 	wp.customize( 'pre_header_height', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-inner-pre-header').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
 		} );
 	} );
 
+	// Background color.
+	wp.customize( 'pre_header_bg_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-pre-header').css('background-color', newval );
+		} );
+	} );
+
+	// Font color.
 	wp.customize( 'pre_header_font_color', function( value ) {
 		value.bind( function( newval ) {
-			$('#wpbf-pre-header').css('color', newval );
+			$('.wpbf-pre-header').css('color', newval );
+		} );
+	} );
+
+	// Font size.
+	wp.customize( 'pre_header_font_size', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-pre-header, .wpbf-pre-header .wpbf-menu, .wpbf-pre-header .wpbf-menu .sub-menu a').css('font-size', newval + suffix );
 		} );
 	} );
 
 	/* Blog – Pagination */
+
+	// Border radius.
 	wp.customize( 'blog_pagination_border_radius', function( value ) {
 		value.bind( function( newval ) {
 			$('.pagination .page-numbers').css('border-radius', newval + 'px' );
 		} );
 	} );
 
+	// Background color.
 	wp.customize( 'blog_pagination_background_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.pagination .page-numbers:not(.current)').css('background', newval );
 		} );
 	} );
 
+	// Background color active.
 	wp.customize( 'blog_pagination_background_color_active', function( value ) {
 		value.bind( function( newval ) {
 			$('.pagination .page-numbers.current').css('background', newval );
 		} );
 	} );
 
+	// Font color.
 	wp.customize( 'blog_pagination_font_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.pagination .page-numbers:not(.current)').css('color', newval );
 		} );
 	} );
 
+	// Font color active.
 	wp.customize( 'blog_pagination_font_color_active', function( value ) {
 		value.bind( function( newval ) {
 			$('.pagination .page-numbers.current').css('color', newval );
 		} );
 	} );
 
+	// Font size.
 	wp.customize( 'blog_pagination_font_size', function( value ) {
 		value.bind( function( newval ) {
 			var suffix = '';
@@ -207,12 +239,7 @@
 
 	/* Sidebar */
 
-	wp.customize( 'sidebar_bg_color', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-sidebar .widget, .elementor-widget-sidebar .widget').css('background-color', newval );
-		} );
-	} );
-
+	// Width.
 	wp.customize( 'sidebar_width', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-sidebar-wrapper').css('width', newval + '%' );
@@ -220,20 +247,30 @@
 		} );
 	} );
 
+	// Background color.
+	wp.customize( 'sidebar_bg_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-sidebar .widget, .elementor-widget-sidebar .widget').css('background-color', newval );
+		} );
+	} );
+
 	/* Buttons */
 
+	// Border radius.
 	wp.customize( 'button_border_radius', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-button, input[type="submit"]').css('border-radius', newval + 'px' );
 		} );
 	} );
 
+	// Border width.
 	wp.customize( 'button_border_width', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-button, input[type="submit"]').css('border-width', newval + 'px' ).css('border-type', 'solid' );
 		} );
 	} );
 
+	// Border color.
 	wp.customize( 'button_border_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-button, input[type="submit"]').css('border-color', newval );
@@ -241,51 +278,108 @@
 	} );
 
 	/* Breadcrumbs */
+
+	// Background color.
 	wp.customize( 'breadcrumbs_background_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-breadcrumbs-container').css('background', newval );
 		} );
 	} );
 
+	// Alignment.
 	wp.customize( 'breadcrumbs_alignment', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-breadcrumbs-container').css('text-align', newval );
 		} );
 	} );
 
+	// Font color.
 	wp.customize( 'breadcrumbs_font_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-breadcrumbs').css('color', newval );
 		} );
 	} );
 
+	// Accent color.
 	wp.customize( 'breadcrumbs_accent_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-breadcrumbs a').css('color', newval );
 		} );
 	} );
 
-	/* WooCommerce */
+	/* Footer */
 
-	/* Defaults */
+	// Width.
+	wp.customize( 'footer_width', function( value ) {
+		value.bind( function( newval ) {
+			if( newval == '' ) {
+				newval = '1200px';
+			}
+			$('.wpbf-inner-footer').css('max-width', newval );
+		} );
+	} );
 
-	// Buttons
+	// Height.
+	wp.customize( 'footer_height', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-inner-footer').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
+		} );
+	} );
+
+	// Background color.
+	wp.customize( 'footer_bg_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-page-footer').css('background-color', newval );
+		} );
+	} );
+
+	// Font color.
+	wp.customize( 'footer_font_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-page-footer').css('color', newval );
+		} );
+	} );
+
+	// Accent color.
+	wp.customize( 'footer_accent_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-page-footer a').css('color', newval );
+		} );
+	} );
+
+	// Font size.
+	wp.customize( 'footer_font_size', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu').css('font-size', newval + suffix );
+		} );
+	} );
+
+	/* WooCommerce - Defaults */
+
+	// Button border radius.
 	wp.customize( 'button_border_radius', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce a.button, .woocommerce button.button').css('border-radius', newval + 'px' );
 		} );
 	} );
 
-	// Custom Width
+	// Custom width.
 	wp.customize( 'woocommerce_loop_custom_width', function( value ) {
 		value.bind( function( newval ) {
+			if( newval == '' ) {
+				newval = '1200px';
+			}
 			$('.archive.woocommerce #inner-content').css('max-width', newval );
 		} );
 	} );
 
-	/* Loop */
+	/* WooCommerce - Loop */
 
-	// Image Alignment (List)
+	// Image alignment.
 	wp.customize( 'woocommerce_loop_image_alignment', function( value ) {
 		value.bind( function( newval ) {
 			if( newval == 'left' ) {
@@ -298,7 +392,7 @@
 		} );
 	} );
 
-	// Image Width
+	// Image width.
 	wp.customize( 'woocommerce_loop_image_width', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-woo-list-view .wpbf-woo-loop-thumbnail-wrapper').css('width', newval-2 + '%');
@@ -306,85 +400,89 @@
 		} );
 	} );
 
-	// Loop Title Font Size
+	// Title font size.
 	wp.customize( 'woocommerce_loop_title_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce ul.products li.product h3, .woocommerce ul.products li.product .woocommerce-loop-product__title, .woocommerce ul.products li.product .woocommerce-loop-category__title').css('font-size', newval );
 		} );
 	} );
 
-	// Loop Title Font Color
+	// Title font color.
 	wp.customize( 'woocommerce_loop_title_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce ul.products li.product h3, .woocommerce ul.products li.product .woocommerce-loop-product__title, .woocommerce ul.products li.product .woocommerce-loop-category__title').css('color', newval );
 		} );
 	} );
 
-	// Loop Price Font Size
+	// Price font size.
 	wp.customize( 'woocommerce_loop_price_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce ul.products li.product .price').css('font-size', newval );
 		} );
 	} );
 
-	// Loop Price Font Color
+	// Price font color.
 	wp.customize( 'woocommerce_loop_price_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce ul.products li.product .price').css('color', newval );
 		} );
 	} );
 
-	// Loop Out of Stock Font Size
+	// Out of stock notice.
 	wp.customize( 'woocommerce_loop_out_of_stock_font_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock').css('font-size', newval );
 		} );
 	} );
 
-	// Loop Out of Stock Font Color
+	// Out of stock color.
 	wp.customize( 'woocommerce_loop_out_of_stock_font_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock').css('color', newval );
 		} );
 	} );
 
-	// Loop Out of Stock Background Color
+	// Out of stock background color.
 	wp.customize( 'woocommerce_loop_out_of_stock_background_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock').css('background-color', newval );
 		} );
 	} );
 
-	// Loop Out of Stock Font Size
+	// Sale font size.
 	wp.customize( 'woocommerce_loop_sale_font_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce span.onsale').css('font-size', newval );
 		} );
 	} );
 
-	// Loop Badge Color
+	// Sale font color.
 	wp.customize( 'woocommerce_loop_sale_font_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce span.onsale').css('color', newval );
 		} );
 	} );
 
-	// Loop Badge Background Color
+	// Sale background color.
 	wp.customize( 'woocommerce_loop_sale_background_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce span.onsale').css('background-color', newval );
 		} );
 	} );
 
-	/* Single */
+	/* WooCommerce - Single */
 
+	// Custom width.
 	wp.customize( 'woocommerce_single_custom_width', function( value ) {
 		value.bind( function( newval ) {
+			if( newval == '' ) {
+				newval = '1200px';
+			}
 			$('.single.woocommerce #inner-content').css('max-width', newval );
 		} );
 	} );
 
-	// Image Alignment
+	// Image alignment.
 	wp.customize( 'woocommerce_single_alignment', function( value ) {
 		value.bind( function( newval ) {
 			if( newval == 'right' ) {
@@ -399,7 +497,7 @@
 		} );
 	} );
 
-	// Image Width
+	// Image width.
 	wp.customize( 'woocommerce_single_image_width', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images').css('width', newval-2 + '%' );
@@ -407,75 +505,30 @@
 		} );
 	} );
 
-	// Single Price Font Size
+	// Price font size.
 	wp.customize( 'woocommerce_single_price_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce div.product span.price, .woocommerce div.product p.price').css('font-size', newval );
 		} );
 	} );
 
-	// Single Price Font Color
+	// Price font color.
 	wp.customize( 'woocommerce_single_price_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce div.product span.price, .woocommerce div.product p.price').css('color', newval );
 		} );
 	} );
 
-	// Single Tabs Font Size
+	// Tabs font size.
 	wp.customize( 'woocommerce_single_tabs_font_size', function( value ) {
 		value.bind( function( newval ) {
 			$('.woocommerce div.product .woocommerce-tabs ul.tabs li a').css('font-size', newval );
 		} );
 	} );
 
-	/* Footer */
+	/* Easy Digital Downloads - Defaults */
 
-	// Width
-	wp.customize( 'footer_width', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-inner-footer').css('max-width', newval );
-		} );
-	} );
-
-	// Height
-	wp.customize( 'footer_height', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-inner-footer').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
-		} );
-	} );
-
-	// Background Color
-	wp.customize( 'footer_bg_color', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-page-footer').css('background-color', newval );
-		} );
-	} );
-
-	// Color
-	wp.customize( 'footer_font_color', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-page-footer').css('color', newval );
-		} );
-	} );
-
-	// Color
-	wp.customize( 'footer_accent_color', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-page-footer a').css('color', newval );
-		} );
-	} );
-
-	wp.customize( 'footer_font_size', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-inner-footer').css('font-size', newval );
-		} );
-	} );
-
-	/* Easy Digital Downloads */
-
-	/* Defaults */
-
-	// Buttons
+	// Button border radius.
 	wp.customize( 'button_border_radius', function( value ) {
 		value.bind( function( newval ) {
 			$('.edd-submit.button').css('border-radius', newval + 'px' );
