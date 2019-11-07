@@ -146,16 +146,16 @@ Kirki::add_section( 'wpbf_title_tagline_options', array(
 	'priority' => 0,
 ) );
 
-// Text.
-Kirki::add_section( 'wpbf_font_options', array(
-	'title'    => __( 'Text', 'page-builder-framework' ),
+// Menu.
+Kirki::add_section( 'wpbf_menu_font_options', array(
+	'title'    => __( 'Menu', 'page-builder-framework' ),
 	'panel'    => 'typo_panel',
 	'priority' => 50,
 ) );
 
-// Menu.
-Kirki::add_section( 'wpbf_menu_font_options', array(
-	'title'    => __( 'Menu', 'page-builder-framework' ),
+// Text.
+Kirki::add_section( 'wpbf_font_options', array(
+	'title'    => __( 'Text', 'page-builder-framework' ),
 	'panel'    => 'typo_panel',
 	'priority' => 100,
 ) );
@@ -209,13 +209,6 @@ Kirki::add_section( 'wpbf_page_options', array(
 	'title'    => __( 'Layout', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
 	'priority' => 100,
-) );
-
-// Accent color.
-Kirki::add_section( 'wpbf_accent_options', array(
-	'title'    => __( 'Accent Color', 'page-builder-framework' ),
-	'panel'    => 'layout_panel',
-	'priority' => 200,
 ) );
 
 // Buttons.
@@ -1756,34 +1749,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-/* Fields – Accent Color */
-
-// Accent color.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'page_accent_color',
-	'label'    => __( 'Accent Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_accent_options',
-	'priority' => 1,
-	'default'  => '#3ba9d2',
-	'choices'  => array(
-		'alpha' => true,
-	),
-) );
-
-// Accent color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'page_accent_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_accent_options',
-	'priority' => 2,
-	'default'  => '#8ecde5',
-	'choices'  => array(
-		'alpha' => true,
-	),
-) );
-
 /* Fields – Buttons */
 
 // Background color.
@@ -2053,13 +2018,39 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Accent color.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'color',
+	'settings' => 'page_accent_color',
+	'label'    => __( 'Link Color', 'page-builder-framework' ),
+	'section'  => 'wpbf_font_options',
+	'priority' => 4,
+	'default'  => '#3ba9d2',
+	'choices'  => array(
+		'alpha' => true,
+	),
+) );
+
+// Accent color alt.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'color',
+	'settings' => 'page_accent_color_alt',
+	'label'    => __( 'Hover', 'page-builder-framework' ),
+	'section'  => 'wpbf_font_options',
+	'priority' => 4,
+	'default'  => '#8ecde5',
+	'choices'  => array(
+		'alpha' => true,
+	),
+) );
+
 if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -2180,9 +2171,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -2231,9 +2222,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -2281,9 +2272,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -2331,9 +2322,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -2381,9 +2372,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -2431,9 +2422,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -2481,9 +2472,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -3060,9 +3051,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_navigation_panel&utm_campaign=wpbf#premium' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_navigation_panel&utm_campaign=wpbf#premium" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -3206,9 +3197,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs/sub-menu/?utm_source=repository&utm_medium=customizer_sub_menu_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs/sub-menu/?utm_source=repository&utm_medium=customizer_sub_menu_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -3523,9 +3514,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_mobile_navigation_panel&utm_campaign=wpbf#premium' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_mobile_navigation_panel&utm_campaign=wpbf#premium" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
@@ -3791,9 +3782,9 @@ if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
-		__( 'Premium Features available. <a href="%1$s" target="%2$s">Learn More</a>', 'page-builder-framework' ),
-		esc_url( 'https://wp-pagebuilderframework.com/docs/advanced-footer-settings/?utm_source=repository&utm_medium=customizer_footer_panel&utm_campaign=wpbf' ),
-		esc_attr( '_blank' )
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs/advanced-footer-settings/?utm_source=repository&utm_medium=customizer_footer_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
 	);
 
 	Kirki::add_field( 'wpbf', array(
