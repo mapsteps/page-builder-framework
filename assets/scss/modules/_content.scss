@@ -1,7 +1,13 @@
 /* Pre Header & Footer */
-#wpbf-pre-header {
+.wpbf-pre-header {
 	font-size: $small-fontsize;
 	background: #fff;
+	.wpbf-menu {
+		font-size: $small-fontsize;
+	}
+	.wpbf-menu .sub-menu a {
+		font-size: $small-fontsize;
+	}
 }
 
 .wpbf-inner-pre-header {
@@ -12,6 +18,9 @@
 .wpbf-page-footer {
 	font-size: $small-fontsize;
 	background: $base-color-alt;
+	.wpbf-menu {
+		font-size: $small-fontsize;
+	}
 }
 	
 .wpbf-inner-footer {
