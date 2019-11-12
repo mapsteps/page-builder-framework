@@ -13,6 +13,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  */
 function wpbf_gutenberg_theme_setup() {
 
+	// Editor styles.
+	add_theme_support( 'editor-styles' );
+
 	// Add support for wide aligned elements.
 	add_theme_support( 'align-wide' );
 

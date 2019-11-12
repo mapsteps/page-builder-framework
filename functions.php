@@ -49,9 +49,6 @@ function wpbf_theme_setup() {
 	// Title tag.
 	add_theme_support( 'title-tag' );
 
-	// Editor styles.
-	add_theme_support( 'editor-styles' );
-
 	// Post thumbnails.
 	add_theme_support( 'post-thumbnails' );
 
