@@ -385,6 +385,8 @@ body {
 // Separator Wide Modifier
 .wp-block-separator.is-style-wide {
 	width: 100%;
+	max-width: none;
+	height: 1px;
 }
 
 // Separator Dots Modifier
