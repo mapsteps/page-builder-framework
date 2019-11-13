@@ -73,8 +73,14 @@
 	padding: 20px 0;
 }
 
-/* Preformatted */
-.wp-block-preformatted pre {
+/* Preformatted & code */
+.wp-block-code {
+	padding: 0;
+	border: none;
+	font-size: inherit;
+}
+
+.wp-block-code .block-editor-plain-text, .wp-block-preformatted pre {
 	font-family: monospace, monospace;
 	background: #f5f5f7;
 	padding: 20px;
