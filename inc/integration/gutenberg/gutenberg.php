@@ -20,7 +20,15 @@ function wpbf_gutenberg_theme_setup() {
 	add_theme_support( 'align-wide' );
 
 	// Gutenberg default font sizes.
-	// We could make this reflect font size settings in the customizer.
+
+	// Page font size.
+	$page_font_size_desktop = get_theme_mod( 'page_font_size_desktop' ) ? (int) get_theme_mod( 'page_font_size_desktop' ) : 16;
+
+	// Only use page font size if it's not greater then the next larger font size.
+	if ( $page_font_size_desktop >= 20 ) {
+		$page_font_size_desktop = 16;
+	}
+
 	add_theme_support( 'editor-font-sizes', array(
 
 		array(
@@ -40,7 +48,7 @@ function wpbf_gutenberg_theme_setup() {
 		array(
 			'name'      => __( 'regular', 'page-builder-framework' ),
 			'shortName' => __( 'M', 'page-builder-framework' ),
-			'size'      => 16,
+			'size'      => $page_font_size_desktop,
 			'slug'      => 'regular',
 		),
 
