@@ -26,11 +26,11 @@ $page_line_height       = get_theme_mod( 'page_line_height' );
 // Apply width if we have a px value set in the customizer.
 if ( $page_width_int ) {
 
-	echo '#wpwrap .edit-post-visual-editor .editor-post-title__block, #wpwrap .edit-post-visual-editor .editor-default-block-appender, #wpwrap .edit-post-visual-editor .editor-block-list__block {';
+	echo '.wp-block {';
 	echo sprintf( 'max-width: %s;', esc_attr( $page_width_int ) . 'px' );
 	echo '}';
 
-	echo '#wpwrap .edit-post-visual-editor .editor-block-list__block[data-align=wide] {';
+	echo '.wp-block[data-align="wide"] {';
 	echo sprintf( 'max-width: %s;', esc_attr( $page_width_int ) + 150 . 'px' );
 	echo '}';
 
@@ -39,7 +39,7 @@ if ( $page_width_int ) {
 // Page background color.
 if ( $background_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor {';
+	echo '.editor-styles-wrapper {';
 	echo sprintf( 'background-color: %s;', '#' . esc_attr( $background_color ) );
 	echo '}';
 
@@ -48,7 +48,7 @@ if ( $background_color ) {
 // Accent color.
 if ( $page_accent_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor a {';
+	echo '.editor-styles-wrapper a {';
 	echo sprintf( 'color: %s;', esc_attr( $page_accent_color ) );
 	echo '}';
 
@@ -57,7 +57,7 @@ if ( $page_accent_color ) {
 // Bold color.
 if ( $page_bold_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor strong {';
+	echo '.editor-styles-wrapper strong {';
 	echo sprintf( 'color: %s;', esc_attr( $page_bold_color ) );
 	echo '}';
 
@@ -66,7 +66,7 @@ if ( $page_bold_color ) {
 // Page font settings.
 if ( $page_font_toggle && $page_font_family_value ) {
 
-	echo '#wpwrap .edit-post-visual-editor, #wpwrap .edit-post-visual-editor p {';
+	echo '.editor-styles-wrapper p, .editor-styles-wrapper .editor-block-list__block {';
 
 	if ( ! empty( $page_font_family_value['font-family'] ) ) {
 		echo sprintf( 'font-family: %s !important;', html_entity_decode( esc_attr( $page_font_family_value['font-family'] ), ENT_QUOTES ) );
@@ -87,7 +87,7 @@ if ( $page_font_toggle && $page_font_family_value ) {
 
 if ( $page_line_height || $page_font_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor, #wpwrap .edit-post-visual-editor p {';
+	echo '.editor-styles-wrapper p, .editor-styles-wrapper .editor-block-list__block {';
 
 	if ( $page_line_height ) {
 		echo sprintf( 'line-height: %s;', esc_attr( $page_line_height ) );
@@ -101,26 +101,22 @@ if ( $page_line_height || $page_font_color ) {
 
 }
 
-// We do the font size separately because it outherwise interferes with the large blockquote.
-// Going for #wpwrap .editor-styles-wrapper for as much of a global effect as possible.
-// Also not goint for #wpwrap .editor-styles-wrapper p as it overrides other blocks paragraph styling.
-// Blockquotes.
-// Code & preformatted text.
 if ( $page_font_size_desktop ) {
 
-	echo '#wpwrap .edit-post-visual-editor, #wpwrap .edit-post-visual-editor .wp-block-paragraph, #wpwrap .edit-post-visual-editor .wp-block-quote:not(.is-style-large) p:first-child, #wpwrap .edit-post-visual-editor .wp-block-code, #wpwrap .edit-post-visual-editor .wp-block-preformatted pre {';
+	echo '#wpwrap .editor-styles-wrapper {';
 	echo sprintf( 'font-size: %s;', esc_attr( $page_font_size_desktop ) );
 	echo '}';
 
 }
 
-// Target specific elemenets that were not affected globally.
+// Font color.
+// Global.
+// Code & preformatted.
 // Citation.
-// Code & preformatted text.
 // Verse.
 if ( $page_font_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor .wp-block-code, #wpwrap .edit-post-visual-editor .wp-block-preformatted pre, #wpwrap .edit-post-visual-editor .wp-block-quote__citation, #wpwrap .edit-post-visual-editor .wp-block-pullquote .wp-block-pullquote__citation, #wpwrap .edit-post-visual-editor .wp-block-verse pre, #wpwrap .edit-post-visual-editor pre.wp-block-verse {';
+	echo '#wpwrap .editor-styles-wrapper, .wp-block-code .block-editor-plain-text, .wp-block-preformatted pre, .wp-block-quote__citation, .wp-block-pullquote .wp-block-pullquote__citation, .wp-block-verse pre, pre.wp-block-verse {';
 	echo sprintf( 'color: %s;', esc_attr( $page_font_color ) );
 	echo '}';
 
@@ -137,7 +133,7 @@ $page_h1_font_color        = get_theme_mod( 'page_h1_font_color' );
 
 if ( $page_h1_toggle && $page_h1_font_family_value ) {
 
-	echo '#wpwrap .edit-post-visual-editor h1, #wpwrap .edit-post-visual-editor .editor-post-title__block .editor-post-title__input, #wpwrap .edit-post-visual-editor h2, #wpwrap .edit-post-visual-editor h3, #wpwrap .edit-post-visual-editor h4, #wpwrap .edit-post-visual-editor h5, #wpwrap .edit-post-visual-editor h6 {';
+	echo '#wpwrap .editor-post-title__block .editor-post-title__input, #wpwrap .editor-styles-wrapper h1, #wpwrap .editor-styles-wrapper h2, #wpwrap .editor-styles-wrapper h3, #wpwrap .editor-styles-wrapper h4, #wpwrap .editor-styles-wrapper h5, #wpwrap .editor-styles-wrapper h6 {';
 
 	if ( ! empty( $page_h1_font_family_value['font-family'] ) ) {
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h1_font_family_value['font-family'] ), ENT_QUOTES ) );
@@ -162,7 +158,7 @@ if ( $page_h1_toggle && $page_h1_font_family_value ) {
 
 if ( get_theme_mod( 'page_h1_font_color' ) || get_theme_mod( 'page_h1_line_height' ) || get_theme_mod( 'page_h1_letter_spacing' ) || get_theme_mod( 'page_h1_text_transform' ) ) {
 
-	echo '#wpwrap .edit-post-visual-editor h1, #wpwrap .edit-post-visual-editor .editor-post-title__block .editor-post-title__input, #wpwrap .edit-post-visual-editor h2, #wpwrap .edit-post-visual-editor h3, #wpwrap .edit-post-visual-editor h4, #wpwrap .edit-post-visual-editor h5, #wpwrap .edit-post-visual-editor h6 {';
+	echo '#wpwrap .editor-post-title__block .editor-post-title__input, #wpwrap .editor-styles-wrapper h1, #wpwrap .editor-styles-wrapper h2, #wpwrap .editor-styles-wrapper h3, #wpwrap .editor-styles-wrapper h4, #wpwrap .editor-styles-wrapper h5, #wpwrap .editor-styles-wrapper h6 {';
 
 	if ( $page_h1_font_color ) {
 		echo sprintf( 'color: %s;', esc_attr( $page_h1_font_color ) );
@@ -188,7 +184,7 @@ if ( get_theme_mod( 'page_h1_font_color' ) || get_theme_mod( 'page_h1_line_heigh
 
 if ( $page_h1_font_size_desktop ) {
 
-	echo '#wpwrap .edit-post-visual-editor h1, #wpwrap .edit-post-visual-editor .editor-post-title__block .editor-post-title__input {';
+	echo '#wpwrap .editor-post-title__block .editor-post-title__input, #wpwrap .editor-styles-wrapper h1 {';
 	echo sprintf( 'font-size: %s;', esc_attr( $page_h1_font_size_desktop ) );
 	echo '}';
 
@@ -205,7 +201,7 @@ $page_h2_font_color        = get_theme_mod( 'page_h2_font_color' );
 
 if ( $page_h2_toggle && $page_h2_font_family_value ) {
 
-	echo '#wpwrap .edit-post-visual-editor h2 {';
+	echo '#wpwrap .editor-styles-wrapper h2 {';
 
 	if ( ! empty( $page_h2_font_family_value['font-family'] ) ) {
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h2_font_family_value['font-family'] ), ENT_QUOTES ) );
@@ -232,7 +228,7 @@ if ( $page_h2_toggle ) {
 
 	if ( $page_h2_line_height || $page_h2_letter_spacing || $page_h2_text_transform ) {
 
-		echo '#wpwrap .edit-post-visual-editor h2 {';
+		echo '#wpwrap .editor-styles-wrapper h2 {';
 
 		if ( $page_h2_line_height ) {
 			echo sprintf( 'line-height: %s;', esc_attr( $page_h2_line_height ) );
@@ -256,7 +252,7 @@ if ( $page_h2_toggle ) {
 
 if ( $page_h2_font_size_desktop || $page_h2_font_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor h2 {';
+	echo '#wpwrap .editor-styles-wrapper h2 {';
 
 	if ( $page_h2_font_size_desktop ) {
 		echo sprintf( 'font-size: %s;', esc_attr( $page_h2_font_size_desktop ) );
@@ -281,7 +277,7 @@ $page_h3_font_color        = get_theme_mod( 'page_h3_font_color' );
 
 if ( $page_h3_toggle && $page_h3_font_family_value ) {
 
-	echo '#wpwrap .edit-post-visual-editor h3 {';
+	echo '#wpwrap .editor-styles-wrapper h3 {';
 
 	if ( ! empty( $page_h3_font_family_value['font-family'] ) ) {
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h3_font_family_value['font-family'] ), ENT_QUOTES ) );
@@ -308,7 +304,7 @@ if ( $page_h3_toggle ) {
 
 	if ( $page_h3_line_height || $page_h3_letter_spacing || $page_h3_text_transform ) {
 
-		echo '#wpwrap .edit-post-visual-editor h3 {';
+		echo '#wpwrap .editor-styles-wrapper h3 {';
 
 		if ( $page_h3_line_height ) {
 			echo sprintf( 'line-height: %s;', esc_attr( $page_h3_line_height ) );
@@ -332,7 +328,7 @@ if ( $page_h3_toggle ) {
 
 if ( $page_h3_font_size_desktop || $page_h3_font_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor h3 {';
+	echo '#wpwrap .editor-styles-wrapper h3 {';
 
 	if ( $page_h3_font_size_desktop ) {
 		echo sprintf( 'font-size: %s;', esc_attr( $page_h3_font_size_desktop ) );
@@ -357,7 +353,7 @@ $page_h4_font_color        = get_theme_mod( 'page_h4_font_color' );
 
 if ( $page_h4_toggle && $page_h4_font_family_value ) {
 
-	echo '#wpwrap .edit-post-visual-editor h4 {';
+	echo '#wpwrap .editor-styles-wrapper h4 {';
 
 	if ( ! empty( $page_h4_font_family_value['font-family'] ) ) {
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h4_font_family_value['font-family'] ), ENT_QUOTES ) );
@@ -384,7 +380,7 @@ if ( $page_h4_toggle ) {
 
 	if ( $page_h4_line_height || $page_h4_letter_spacing || $page_h4_text_transform ) {
 
-		echo '#wpwrap .edit-post-visual-editor h4 {';
+		echo '#wpwrap .editor-styles-wrapper h4 {';
 
 		if ( $page_h4_line_height ) {
 			echo sprintf( 'line-height: %s;', esc_attr( $page_h4_line_height ) );
@@ -408,7 +404,7 @@ if ( $page_h4_toggle ) {
 
 if ( $page_h4_font_size_desktop || $page_h4_font_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor h4 {';
+	echo '#wpwrap .editor-styles-wrapper h4 {';
 
 	if ( $page_h4_font_size_desktop ) {
 		echo sprintf( 'font-size: %s;', esc_attr( $page_h4_font_size_desktop ) );
@@ -433,7 +429,7 @@ $page_h5_font_color        = get_theme_mod( 'page_h5_font_color' );
 
 if ( $page_h5_toggle && $page_h5_font_family_value ) {
 
-	echo '#wpwrap .edit-post-visual-editor h5 {';
+	echo '#wpwrap .editor-styles-wrapper h5 {';
 
 	if ( ! empty( $page_h5_font_family_value['font-family'] ) ) {
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h5_font_family_value['font-family'] ), ENT_QUOTES ) );
@@ -460,7 +456,7 @@ if ( $page_h5_toggle ) {
 
 	if ( $page_h5_line_height || $page_h5_letter_spacing || $page_h5_text_transform ) {
 
-		echo '#wpwrap .edit-post-visual-editor h5 {';
+		echo '#wpwrap .editor-styles-wrapper h5 {';
 
 		if ( $page_h5_line_height ) {
 			echo sprintf( 'line-height: %s;', esc_attr( $page_h5_line_height ) );
@@ -484,7 +480,7 @@ if ( $page_h5_toggle ) {
 
 if ( $page_h5_font_size_desktop || $page_h5_font_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor h5 {';
+	echo '#wpwrap .editor-styles-wrapper h5 {';
 
 	if ( $page_h5_font_size_desktop ) {
 		echo sprintf( 'font-size: %s;', esc_attr( $page_h5_font_size_desktop ) );
@@ -509,7 +505,7 @@ $page_h6_font_color        = get_theme_mod( 'page_h6_font_color' );
 
 if ( $page_h6_toggle && $page_h6_font_family_value ) {
 
-	echo '#wpwrap .edit-post-visual-editor h6 {';
+	echo '#wpwrap .editor-styles-wrapper h6 {';
 
 	if ( ! empty( $page_h6_font_family_value['font-family'] ) ) {
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h6_font_family_value['font-family'] ), ENT_QUOTES ) );
@@ -536,7 +532,7 @@ if ( $page_h6_toggle ) {
 
 	if ( $page_h6_line_height || $page_h6_letter_spacing || $page_h6_text_transform ) {
 
-		echo '#wpwrap .edit-post-visual-editor h6 {';
+		echo '#wpwrap .editor-styles-wrapper h6 {';
 
 		if ( $page_h6_line_height ) {
 			echo sprintf( 'line-height: %s;', esc_attr( $page_h6_line_height ) );
@@ -560,7 +556,7 @@ if ( $page_h6_toggle ) {
 
 if ( $page_h6_font_size_desktop || $page_h6_font_color ) {
 
-	echo '#wpwrap .edit-post-visual-editor h6 {';
+	echo '#wpwrap .editor-styles-wrapper h6 {';
 
 	if ( $page_h6_font_size_desktop ) {
 		echo sprintf( 'font-size: %s;', esc_attr( $page_h6_font_size_desktop ) );
