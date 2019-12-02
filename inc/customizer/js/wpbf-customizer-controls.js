@@ -1,8 +1,18 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
+	var api = wp.customize;
+
+	syncPreviewButtons();
+
+	function syncPreviewButtons() {
+		// Bind device changes.
+		api.previewedDevice.bind(function (newDevice) {
+			//
+		});
+	}
 
 	$('.wpbf-control-desktop').addClass('active');
-		
-	$('.wpbf-responsive-options .preview-desktop').click(function() {
+
+	$('.wpbf-responsive-options .preview-desktop').click(function () {
 		$('.wp-full-overlay').removeClass('preview-mobile').removeClass('preview-tablet').addClass('preview-desktop');
 		$('.wpbf-responsive-options button').removeClass('active');
 		$(this).addClass('active');
@@ -10,7 +20,7 @@ jQuery(document).ready(function($) {
 		$('.wpbf-control-desktop').addClass('active');
 	});
 
-	$('.wpbf-responsive-options .preview-tablet').click(function() {
+	$('.wpbf-responsive-options .preview-tablet').click(function () {
 		$('.wp-full-overlay').removeClass('preview-desktop').removeClass('preview-mobile').addClass('preview-tablet');
 		$('.wpbf-responsive-options button').removeClass('active');
 		$(this).addClass('active');
@@ -18,7 +28,7 @@ jQuery(document).ready(function($) {
 		$('.wpbf-control-tablet').addClass('active');
 	});
 
-	$('.wpbf-responsive-options .preview-mobile').click(function() {
+	$('.wpbf-responsive-options .preview-mobile').click(function () {
 		$('.wp-full-overlay').removeClass('preview-desktop').removeClass('preview-tablet').addClass('preview-mobile');
 		$('.wpbf-responsive-options button').removeClass('active');
 		$(this).addClass('active');
@@ -27,7 +37,7 @@ jQuery(document).ready(function($) {
 	});
 
 	// Slider Custom Control
-	$('.wpbf-input-slider-control').each(function(){
+	$('.wpbf-input-slider-control').each(function () {
 		var sliderValue = $(this).find('.customize-control-slider-value').val();
 		var sliderNumber = sliderValue.match(/\d+/);
 		var newSlider = $(this).find('.slider');
@@ -40,14 +50,14 @@ jQuery(document).ready(function($) {
 			min: sliderMinValue,
 			max: sliderMaxValue,
 			step: sliderStepValue,
-			change: function(e,ui){
+			change: function (e, ui) {
 				$(this).parent().find('.customize-control-slider-value').trigger('change');
 			}
 		});
 	});
 
 	// Change the value of the input field as the slider is moved
-	$('.slider').on('slide', function(event, ui) {
+	$('.slider').on('slide', function (event, ui) {
 		var sliderValue = $(this).parent().find('.customize-control-slider-value').val();
 		var sliderSuffix = sliderValue.replace(/\d+/g, '');
 
@@ -55,7 +65,7 @@ jQuery(document).ready(function($) {
 	});
 
 	// Reset slider and input field back to the default value
-	$('.slider-reset').on('click', function() {
+	$('.slider-reset').on('click', function () {
 		var resetValue = $(this).attr('slider-reset-value');
 		var sliderNumber = resetValue.match(/\d+/);
 		$(this).parent().find('.customize-control-slider-value').val(resetValue);
@@ -63,7 +73,7 @@ jQuery(document).ready(function($) {
 	});
 
 	// Update slider if the input field loses focus as it's most likely changed
-	$('.customize-control-slider-value').blur(function() {
+	$('.customize-control-slider-value').blur(function () {
 		var resetValue = $(this).val();
 		var sliderNumber = resetValue.match(/\d+/);
 		var sliderSuffix = resetValue.replace(/\d+/g, '');
@@ -72,11 +82,11 @@ jQuery(document).ready(function($) {
 		var sliderMaxValue = parseInt(slider.attr('slider-max-value'));
 
 		// Make sure our manual input value doesn't exceed the minimum & maxmium values
-		if(sliderNumber < sliderMinValue) {
+		if (sliderNumber < sliderMinValue) {
 			sliderNumber = sliderMinValue;
 			$(this).val(sliderNumber + sliderSuffix);
 		}
-		if(sliderNumber > sliderMaxValue) {
+		if (sliderNumber > sliderMaxValue) {
 			sliderNumber = sliderMaxValue;
 			$(this).val(sliderNumber + sliderSuffix);
 		}
