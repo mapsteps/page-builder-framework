@@ -55,7 +55,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 			<?php foreach ( $devices as $device ) { ?>
 
-			<div class="wpbf-control-<?php echo esc_attr( $device ); ?>">
+			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
 				<?php $link = $this->get_link()?>
 
@@ -171,7 +171,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 			<?php foreach ( $devices as $device ) { ?>
 
-			<div class="wpbf-control-<?php echo esc_attr( $device ); ?>">
+			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
 			<?php foreach ( $areas as $area ) { ?>
 
@@ -296,7 +296,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 			<?php foreach ( $devices as $device ) { ?>
 
-			<div class="wpbf-control-<?php echo esc_attr( $device ); ?>">
+			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
 				<?php $link = $this->get_link()?>
 
