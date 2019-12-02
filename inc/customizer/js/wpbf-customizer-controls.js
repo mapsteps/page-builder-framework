@@ -31,19 +31,12 @@ jQuery(document).ready(function ($) {
 	$('.wpbf-control-desktop').addClass('active');
 
 	// Loop through wpbf device buttons and assign the event.
-	$('.wpbf-responsive-options button').each(function (i, el) {
-		var $el = $(el);
-		var device = $el.data('device');
+	$('.wpbf-responsive-options button').on('click', function (e) {
+		var device = this.getAttribute('data-device');
 
-		console.log(device);
-
-
-		$el.on('click', function (e) {
-			wpbfResponsivePreview(device);
-
-			// Trigger WordPress device event.
-			api.previewedDevice.set(device);
-		});
+		wpbfResponsivePreview(device);
+		// Trigger WordPress device event.
+		api.previewedDevice.set(device);
 	});
 
 	// Slider Custom Control
