@@ -20,11 +20,7 @@ jQuery(document).ready(function ($) {
 	 * @param string device The device (mobile, tablet, or desktop).
 	 * @param bool modifyOverlay Whether or not to modify the wp-full-overlay.
 	 */
-	function wpbfResponsivePreview(device, modifyOverlay) {
-		if (modifyOverlay) {
-			$('.wp-full-overlay').removeClass('preview-mobile').removeClass('preview-tablet').addClass('preview-desktop');
-		}
-
+	function wpbfResponsivePreview(device) {
 		$('.wpbf-responsive-options button').removeClass('active');
 		$('.wpbf-responsive-options .preview-' + device).addClass('active');
 		$('.wpbf-control-device').removeClass('active');
@@ -43,7 +39,7 @@ jQuery(document).ready(function ($) {
 
 
 		$el.on('click', function (e) {
-			wpbfResponsivePreview(device, true);
+			wpbfResponsivePreview(device);
 
 			// Trigger WordPress device event.
 			api.previewedDevice.set(device);
