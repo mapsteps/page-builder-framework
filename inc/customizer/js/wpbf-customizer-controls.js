@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+	// Let's use the API.
 	var api = wp.customize;
 
 	syncPreviewButtons();
