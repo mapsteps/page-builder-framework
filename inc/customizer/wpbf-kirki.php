@@ -2534,6 +2534,14 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => __( 'Column 1', 'page-builder-framework' ),
 	'priority'        => 2,
+	'partial_refresh' => array(
+		'pre_header_column_one' => array(
+			'selector'        => '.wpbf-inner-pre-header-left, .wpbf-inner-pre-header-content',
+			'render_callback' => function() {
+				return do_shortcode( get_theme_mod( 'pre_header_column_one' ) );
+			}
+		),
+	),
 	'active_callback' => array(
 		array(
 			'setting'  => 'pre_header_layout',
@@ -2578,6 +2586,14 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => __( 'Column 2', 'page-builder-framework' ),
 	'priority'        => 2,
+	'partial_refresh' => array(
+		'pre_header_column_two' => array(
+			'selector'        => '.wpbf-inner-pre-header-right',
+			'render_callback' => function() {
+				return do_shortcode( get_theme_mod( 'pre_header_column_two' ) );
+			}
+		),
+	),
 	'active_callback' => array(
 		array(
 			'setting'  => 'pre_header_layout',
