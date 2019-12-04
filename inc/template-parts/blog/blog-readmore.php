@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 $read_more_class = 'text' === get_theme_mod( 'blog_read_more_link' ) ? ' wpbf-inline-block' : ' wpbf-button';
 
-if ( get_theme_mod( 'primary' === 'blog_read_more_link' ) ) {
+if ( 'primary' === get_theme_mod( 'blog_read_more_link' ) ) {
 	$read_more_class .= ' wpbf-button-primary';
 }
 
