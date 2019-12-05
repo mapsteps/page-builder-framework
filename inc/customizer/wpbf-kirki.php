@@ -387,6 +387,23 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'text',
+	'settings'        => 'breadcrumbs_separator',
+	'label'           => __( 'Separator', 'page-builder-framework' ),
+	'section'         => 'wpbf_breadcrumb_settings',
+	'default'         => '/',
+	'priority'        => 2,
+	'active_callback' => array(
+		array(
+			'setting'  => 'breadcrumbs_toggle',
+			'operator' => '==',
+			'value'    => 1,
+		),
+	),
+) );
+
 // Alignment.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'radio-image',
@@ -492,23 +509,6 @@ Kirki::add_field( 'wpbf', array(
 	'choices'         => array(
 		'alpha' => true,
 	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'breadcrumbs_toggle',
-			'operator' => '==',
-			'value'    => 1,
-		),
-	),
-) );
-
-// Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'text',
-	'settings'        => 'breadcrumbs_separator',
-	'label'           => __( 'Separator', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'default'         => '/',
-	'priority'        => 2,
 	'active_callback' => array(
 		array(
 			'setting'  => 'breadcrumbs_toggle',
@@ -1567,6 +1567,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => 'right',
 	'priority'        => 14,
 	'multiple'        => 1,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'right' => __( 'Right', 'page-builder-framework' ),
 		'left'  => __( 'Left', 'page-builder-framework' ),

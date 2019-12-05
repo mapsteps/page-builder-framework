@@ -23,6 +23,17 @@
 		} );
 	} );
 
+	// ScrollTop position.
+	wp.customize( 'scrolltop_position', function( value ) {
+		value.bind( function( newval ) {
+			if( newval == 'left' ) {
+				$('.scrolltop').css('left', '20px', 'right', 'auto' );
+			} else {
+				$('.scrolltop').css( 'left', 'auto', 'right', '20px' );
+			}
+		} );
+	} );
+
 	// ScrollTop background color.
 	wp.customize( 'scrolltop_bg_color', function( value ) {
 		value.bind( function( newval ) {
