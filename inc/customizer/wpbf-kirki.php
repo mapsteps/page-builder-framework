@@ -593,7 +593,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'text',
 	'settings' => 'excerpt_more',
-	'label'    => __( 'Read More Indicator', 'page-builder-framework' ),
+	'label'    => __( 'Excerpt Indicator', 'page-builder-framework' ),
 	'section'  => 'wpbf_blog_settings',
 	'default'  => '[...]',
 	'priority' => 1,
