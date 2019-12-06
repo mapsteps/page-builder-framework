@@ -589,6 +589,16 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Excerpt more.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'text',
+	'settings' => 'excerpt_more',
+	'label'    => __( 'Read More Indicator', 'page-builder-framework' ),
+	'section'  => 'wpbf_blog_settings',
+	'default'  => '[...]',
+	'priority' => 1,
+) );
+
 // Read more button.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'select',

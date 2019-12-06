@@ -30,6 +30,28 @@ function wpbf_excerpt_length( $excerpt_length ) {
 add_filter( 'excerpt_length', 'wpbf_excerpt_length', 999 );
 
 /**
+ * Excerpt more.
+ *
+ * @param integer $excerpt_more The excerpt indicator.
+ *
+ * @return integer The updated excerpt indicator.
+ */
+function wpbf_excerpt_more( $excerpt_more ) {
+
+	$wpbf_excerpt_more = get_theme_mod( 'excerpt_more' );
+
+	if ( ! $wpbf_excerpt_more || '[...]' === $wpbf_excerpt_more ) {
+		return $excerpt_more;
+	}
+
+	$excerpt_more = $wpbf_excerpt_more;
+
+	return $excerpt_more;
+
+}
+add_filter( 'excerpt_more', 'wpbf_excerpt_more', 999 );
+
+/**
  * Filter 404 page title.
  *
  * @param string $title The page title.
