@@ -317,7 +317,7 @@ if ( $page_boxed ) {
 
 	}
 
-	if ( $page_boxed_background ) {
+	if ( $page_boxed_background && '#ffffff' !== $page_boxed_background ) {
 		echo sprintf( 'background-color: %s;', esc_attr( $page_boxed_background ) );
 	}
 
@@ -334,11 +334,13 @@ if ( $page_boxed ) {
 }
 
 // ScrollTop.
-$scrolltop               = get_theme_mod( 'layout_scrolltop' );
-$scrolltop_position      = get_theme_mod( 'scrolltop_position' );
-$scrolltop_bg_color      = get_theme_mod( 'scrolltop_bg_color' );
-$scrolltop_border_radius = get_theme_mod( 'scrolltop_border_radius' );
-$scrolltop_bg_color_alt  = get_theme_mod( 'scrolltop_bg_color_alt' );
+$scrolltop                 = get_theme_mod( 'layout_scrolltop' );
+$scrolltop_position        = get_theme_mod( 'scrolltop_position' );
+$scrolltop_bg_color        = get_theme_mod( 'scrolltop_bg_color' );
+$scrolltop_bg_color_alt    = get_theme_mod( 'scrolltop_bg_color_alt' );
+$scrolltop_icon_color      = get_theme_mod( 'scrolltop_icon_color' );
+$scrolltop_icon_color_alt  = get_theme_mod( 'scrolltop_icon_color_alt' );
+$scrolltop_border_radius   = get_theme_mod( 'scrolltop_border_radius' );
 
 if ( $scrolltop ) {
 
@@ -367,10 +369,26 @@ if ( $scrolltop ) {
 
 	}
 
-	if ( $scrolltop_bg_color_alt ) {
+	if ( $scrolltop_icon_color ) {
+
+		echo '.scrolltop, .scrolltop:hover {';
+		echo sprintf( 'color: %s;', esc_attr( $scrolltop_icon_color ) );
+		echo '}';
+
+	}
+
+	if ( $scrolltop_bg_color_alt || $scrolltop_icon_color_alt ) {
 
 		echo '.scrolltop:hover {';
-		echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color_alt ) );
+
+		if ( $scrolltop_bg_color_alt ) {
+			echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color_alt ) );
+		}
+
+		if ( $scrolltop_icon_color_alt ) {
+			echo sprintf( 'color: %s;', esc_attr( $scrolltop_icon_color_alt ) );
+		}
+
 		echo '}';
 
 	}
@@ -592,7 +610,7 @@ $sidebar_widget_padding_right_mobile   = get_theme_mod( 'sidebar_widget_padding_
 $sidebar_widget_padding_bottom_mobile  = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
 $sidebar_widget_padding_left_mobile    = get_theme_mod( 'sidebar_widget_padding_left_mobile' );
 
-if ( $sidebar_bg_color ) {
+if ( $sidebar_bg_color && '#f5f5f7' !== $sidebar_bg_color ) {
 
 	echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
 	echo sprintf( 'background: %s;', esc_attr( $sidebar_bg_color ) );

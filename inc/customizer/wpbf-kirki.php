@@ -1621,7 +1621,6 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 16,
 	'transport'       => 'postMessage',
-	'default'         => 'rgba(62,67,73,.5)',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1641,7 +1640,45 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'wpbf_page_options',
 	'priority'        => 17,
-	'default'         => 'rgba(62,67,73,.7)',
+	'choices'         => array(
+		'alpha' => true,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'layout_scrolltop',
+			'operator' => '==',
+			'value'    => 1,
+		),
+	),
+) );
+
+// Icon color.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'scrolltop_icon_color',
+	'label'           => __( 'Icon Color', 'page-builder-framework' ),
+	'section'         => 'wpbf_page_options',
+	'priority'        => 18,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'layout_scrolltop',
+			'operator' => '==',
+			'value'    => 1,
+		),
+	),
+) );
+
+// Icon color hover.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'scrolltop_icon_color_alt',
+	'label'           => __( 'Hover', 'page-builder-framework' ),
+	'section'         => 'wpbf_page_options',
+	'priority'        => 19,
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1660,7 +1697,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'scrolltop_border_radius',
 	'label'           => __( 'Border Radius', 'page-builder-framework' ),
 	'section'         => 'wpbf_page_options',
-	'priority'        => 18,
+	'priority'        => 20,
 	'default'         => '0',
 	'transport'       => 'postMessage',
 	'choices'         => array(
