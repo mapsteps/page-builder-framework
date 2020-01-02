@@ -51,7 +51,7 @@ if ( $page_font_toggle && $page_font_family_value ) {
 
 }
 
-if ( $page_font_color ) {
+if ( $page_font_color && '#6D7680' !== $page_font_color ) {
 
 	echo 'body {';
 	echo sprintf( 'color: %s;', esc_attr( $page_font_color ) );
@@ -267,15 +267,15 @@ if ( $page_h6_toggle && $page_h6_font_family_value ) {
 // Page settings.
 $page_width                   = get_theme_mod( 'page_max_width' );
 $page_boxed                   = get_theme_mod( 'page_boxed' );
-$page_boxed_padding           = get_theme_mod( 'page_boxed_padding' );
+$page_boxed_padding           = ( $val = get_theme_mod( 'page_boxed_padding' ) ) === '20' ? false : $val;
 $page_boxed_margin            = get_theme_mod( 'page_boxed_margin' );
-$page_boxed_background        = get_theme_mod( 'page_boxed_background' );
+$page_boxed_background        = ( $val = get_theme_mod( 'page_boxed_background' ) ) === '#ffffff' ? false : $val;
 $page_boxed_shadow            = get_theme_mod( 'page_boxed_box_shadow' );
 $page_boxed_shadow_horizontal = ( $val = get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_vertical   = ( $val = get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_blur       = ( $val = get_theme_mod( 'page_boxed_box_shadow_blur' ) ) ? $val . 'px' : '25px';
 $page_boxed_shadow_spread     = ( $val = get_theme_mod( 'page_boxed_box_shadow_spread' ) ) ? $val . 'px' : '0px';
-$page_boxed_shadow_color      = ( $val = get_theme_mod( 'page_boxed_box_shadow_color' ) ) ? $val : 'rgba(0,0,0,.15)';
+$page_boxed_shadow_color      = get_theme_mod( 'page_boxed_box_shadow_color', 'rgba(0,0,0,.15)' );
 
 if ( $page_width ) {
 
@@ -317,7 +317,7 @@ if ( $page_boxed ) {
 
 	}
 
-	if ( $page_boxed_background && '#ffffff' !== $page_boxed_background ) {
+	if ( $page_boxed_background ) {
 		echo sprintf( 'background-color: %s;', esc_attr( $page_boxed_background ) );
 	}
 
@@ -336,9 +336,9 @@ if ( $page_boxed ) {
 // ScrollTop.
 $scrolltop                 = get_theme_mod( 'layout_scrolltop' );
 $scrolltop_position        = get_theme_mod( 'scrolltop_position' );
-$scrolltop_bg_color        = get_theme_mod( 'scrolltop_bg_color' );
-$scrolltop_bg_color_alt    = get_theme_mod( 'scrolltop_bg_color_alt' );
-$scrolltop_icon_color      = get_theme_mod( 'scrolltop_icon_color' );
+$scrolltop_bg_color        = ( $val = get_theme_mod( 'scrolltop_bg_color' ) ) === 'rgba(62,67,73,0.5)' ? false : $val;
+$scrolltop_bg_color_alt    = ( $val = get_theme_mod( 'scrolltop_bg_color_alt' ) ) === 'rgba(62,67,73,0.7)' ? false : $val;
+$scrolltop_icon_color      = ( $val = get_theme_mod( 'scrolltop_icon_color' ) ) === '#ffffff' ? false : $val;
 $scrolltop_icon_color_alt  = get_theme_mod( 'scrolltop_icon_color_alt' );
 $scrolltop_border_radius   = get_theme_mod( 'scrolltop_border_radius' );
 
@@ -353,11 +353,11 @@ if ( $scrolltop ) {
 
 	}
 
-	if ( $scrolltop_bg_color && 'rgba(62,67,73,0.5)' !== $scrolltop_bg_color || $scrolltop_border_radius ) {
+	if ( $scrolltop_bg_color || $scrolltop_border_radius ) {
 
 		echo '.scrolltop {';
 
-		if ( $scrolltop_bg_color && 'rgba(62,67,73,0.5)' !== $scrolltop_bg_color ) {
+		if ( $scrolltop_bg_color ) {
 			echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color ) );
 		}
 
@@ -369,7 +369,7 @@ if ( $scrolltop ) {
 
 	}
 
-	if ( $scrolltop_icon_color && '#ffffff' !== $scrolltop_icon_color ) {
+	if ( $scrolltop_icon_color ) {
 
 		echo '.scrolltop, .scrolltop:hover {';
 		echo sprintf( 'color: %s;', esc_attr( $scrolltop_icon_color ) );
@@ -377,11 +377,11 @@ if ( $scrolltop ) {
 
 	}
 
-	if ( $scrolltop_bg_color_alt && 'rgba(62,67,73,0.7)' !== $scrolltop_bg_color_alt || $scrolltop_icon_color_alt ) {
+	if ( $scrolltop_bg_color_alt || $scrolltop_icon_color_alt ) {
 
 		echo '.scrolltop:hover {';
 
-		if ( $scrolltop_bg_color_alt && 'rgba(62,67,73,0.7)' !== $scrolltop_bg_color_alt ) {
+		if ( $scrolltop_bg_color_alt ) {
 			echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color_alt ) );
 		}
 
@@ -439,7 +439,7 @@ if ( $page_background_color || $page_background_image ) {
 $page_accent_color     = get_theme_mod( 'page_accent_color' );
 $page_accent_color_alt = get_theme_mod( 'page_accent_color_alt' );
 
-if ( $page_accent_color ) {
+if ( $page_accent_color && '#3ba9d2' !== $page_accent_color ) {
 
 	echo 'a {';
 	echo sprintf( 'color: %s;', esc_attr( $page_accent_color ) );
@@ -455,7 +455,7 @@ if ( $page_accent_color ) {
 
 }
 
-if ( $page_accent_color_alt ) {
+if ( $page_accent_color_alt && '#8ecde5' !== $page_accent_color_alt ) {
 
 	echo 'a:hover {';
 	echo sprintf( 'color: %s;', esc_attr( $page_accent_color_alt ) );
@@ -698,7 +698,7 @@ if ( ! is_bool( $sidebar_widget_padding_top_mobile ) || ! is_bool( $sidebar_widg
 
 }
 
-if ( $sidebar_width ) {
+if ( $sidebar_width && 33.3 !== $sidebar_width ) {
 
 	echo '@media (min-width: ' . esc_attr( $breakpoint_medium_int + 1 ) . 'px) {';
 
@@ -716,7 +716,7 @@ if ( $sidebar_width ) {
 
 // Breadcrumbs.
 $breadcrumbs_alignment        = get_theme_mod( 'breadcrumbs_alignment', 'left' );
-$breadcrumbs_background_color = get_theme_mod( 'breadcrumbs_background_color' );
+$breadcrumbs_background_color = ( $val = get_theme_mod( 'breadcrumbs_background_color' ) ) === '#dedee5' ? false : $val;
 $breadcrumbs_font_color       = get_theme_mod( 'breadcrumbs_font_color' );
 $breadcrumbs_accent_color     = get_theme_mod( 'breadcrumbs_accent_color' );
 $breadcrumbs_accent_color_alt = get_theme_mod( 'breadcrumbs_accent_color_alt' );
@@ -729,7 +729,7 @@ if ( 'left' !== $breadcrumbs_alignment ) {
 
 }
 
-if ( $breadcrumbs_background_color && '#dedee5' !== $breadcrumbs_background_color ) {
+if ( $breadcrumbs_background_color ) {
 
 	echo '.wpbf-breadcrumbs-container {';
 	echo sprintf( 'background: %s;', esc_attr( $breadcrumbs_background_color ) );
@@ -872,7 +872,7 @@ foreach ( $archives as $archive ) {
 	$content_alignment = get_theme_mod( $archive . '_post_content_alignment', 'left' );
 	$accent_color      = get_theme_mod( $archive . '_post_accent_color' );
 	$accent_color_alt  = get_theme_mod( $archive . '_post_accent_color_alt' );
-	$space_between     = get_theme_mod( $archive . '_post_space_between' );
+	$space_between     = ( $val = get_theme_mod( $archive . '_post_space_between' ) ) === '20' ? false : $val;
 	$title_size        = get_theme_mod( $archive . '_post_title_size' );
 	$font_size         = get_theme_mod( $archive . '_post_font_size' );
 	$stretched         = get_theme_mod( $archive . '_boxed_image_streched', false );
@@ -934,7 +934,7 @@ foreach ( $archives as $archive ) {
 	// Boxed
 	if ( 'boxed' === $style ) {
 
-		$background_color = get_theme_mod( $archive . '_post_background_color' );
+		$background_color = ( $val = get_theme_mod( $archive . '_post_background_color' ) ) === '#f5f5f7' ? false : $val;
 
 		if ( $background_color ) {
 
@@ -1131,10 +1131,10 @@ foreach ( $archives as $archive ) {
 	// Beside
 	if ( 'beside' === $layout ) {
 
-		$image_width     = get_theme_mod( $archive . '_post_image_width' );
+		$image_width     = ( $val = get_theme_mod( $archive . '_post_image_width' ) ) === '40' ? false : $val;
 		$image_alignment = get_theme_mod( $archive . '_post_image_alignment', 'left' );
 
-		if ( $image_width && '40' !== $image_width ) {
+		if ( $image_width ) {
 
 			echo '@media (min-width: ' . esc_attr( $breakpoint_desktop_int + 1 ) . 'px) {';
 
@@ -1224,7 +1224,7 @@ foreach ( $singles as $single ) {
 	// Boxed
 	if ( 'boxed' === $style ) {
 
-		$background_color = get_theme_mod( $single . '_post_background_color' );
+		$background_color = ( $val = get_theme_mod( $single . '_post_background_color' ) ) === '#f5f5f7' ? false : $val;
 
 		if ( $background_color ) {
 
@@ -2036,12 +2036,12 @@ if ( $mobile_menu_font_size ) {
 // Pre header.
 $pre_header_layout           = get_theme_mod( 'pre_header_layout' );
 $pre_header_width            = get_theme_mod( 'pre_header_width' );
-$pre_header_height           = get_theme_mod( 'pre_header_height' );
-$pre_header_bg_color         = get_theme_mod( 'pre_header_bg_color' );
+$pre_header_height           = ( $val = get_theme_mod( 'pre_header_height' ) ) === '10' ? false : $val;
+$pre_header_bg_color         = ( $val = get_theme_mod( 'pre_header_bg_color' ) ) === '#ffffff' ? false : $val;
 $pre_header_font_color       = get_theme_mod( 'pre_header_font_color' );
 $pre_header_accent_color     = get_theme_mod( 'pre_header_accent_color' );
 $pre_header_accent_color_alt = get_theme_mod( 'pre_header_accent_color_alt' );
-$pre_header_font_size        = get_theme_mod( 'pre_header_font_size' );
+$pre_header_font_size        = ( $val = get_theme_mod( 'pre_header_font_size' ) ) === '14px' ? false : $val;
 
 if ( 'none' !== $pre_header_layout && ( $pre_header_height || $pre_header_width ) ) {
 
@@ -2110,12 +2110,14 @@ if ( 'none' !== $pre_header_layout && $pre_header_font_size ) {
 
 $footer_layout           = get_theme_mod( 'footer_layout' );
 $footer_width            = get_theme_mod( 'footer_width' );
-$footer_height           = get_theme_mod( 'footer_height' );
-$footer_bg_color         = get_theme_mod( 'footer_bg_color' );
+$footer_height           = ( $val = get_theme_mod( 'footer_height' ) ) === '20' ? false : $val;
+$footer_bg_color         = ( $val = get_theme_mod( 'footer_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $footer_font_color       = get_theme_mod( 'footer_font_color' );
 $footer_accent_color     = get_theme_mod( 'footer_accent_color' );
 $footer_accent_color_alt = get_theme_mod( 'footer_accent_color_alt' );
 $footer_font_size        = get_theme_mod( 'footer_font_size' );
+$footer_font_size        = ( $val = get_theme_mod( 'footer_font_size' ) ) === '14px' ? false : $val;
+
 
 if ( 'none' !== $footer_layout && ( $footer_height || $footer_width ) ) {
 
