@@ -2743,7 +2743,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'pre_header_font_color',
 	'label'           => __( 'Font Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_pre_header_options',
-	'default'         => '#6d7680',
 	'priority'        => 4,
 	'transport'       => 'postMessage',
 	'active_callback' => array(
