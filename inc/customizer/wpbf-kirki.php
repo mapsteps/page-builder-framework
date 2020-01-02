@@ -644,12 +644,12 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Border Radius', 'page-builder-framework' ),
 	'section'   => 'wpbf_pagination_settings',
 	'priority'  => 2,
-	'default'   => '0',
+	'default'   => 0,
 	'transport' => 'postMessage',
 	'choices'   => array(
-		'min'  => '0',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
 	),
 ) );
 
@@ -740,9 +740,9 @@ Kirki::add_field( 'wpbf', array(
 	'transport' => 'postMessage',
 	'priority'  => 2,
 	'choices'   => array(
-		'min'  => '0',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
 	),
 ) );
 
@@ -914,9 +914,9 @@ foreach ( $archives as $archive ) {
 		'priority' => 30,
 		'default'  => 20,
 		'choices'  => array(
-			'min'  => '0',
-			'max'  => '100',
-			'step' => '1',
+			'min'  => 0,
+			'max'  => 100,
+			'step' => 1,
 		),
 	) );
 
@@ -990,9 +990,9 @@ foreach ( $archives as $archive ) {
 		'section'  => 'wpbf_' . $archive . '_options',
 		'priority' => 80,
 		'choices'  => array(
-			'min'  => '0',
-			'max'  => '50',
-			'step' => '1',
+			'min'  => 0,
+			'max'  => 50,
+			'step' => 1,
 		),
 	) );
 
@@ -1004,9 +1004,9 @@ foreach ( $archives as $archive ) {
 		'section'  => 'wpbf_' . $archive . '_options',
 		'priority' => 90,
 		'choices'  => array(
-			'min'  => '0',
-			'max'  => '50',
-			'step' => '1',
+			'min'  => 0,
+			'max'  => 50,
+			'step' => 1,
 		),
 	) );
 
@@ -1059,9 +1059,9 @@ foreach ( $archives as $archive ) {
 		'priority'        => 120,
 		'default'         => 40,
 		'choices'         => array(
-			'min'  => '20',
-			'max'  => '80',
-			'step' => '1',
+			'min'  => 20,
+			'max'  => 80,
+			'step' => 1,
 		),
 		'active_callback' => array(
 			array(
@@ -1252,9 +1252,9 @@ foreach ( $singles as $single ) {
 		'section'  => 'wpbf_' . $single . '_options',
 		'priority' => 20,
 		'choices'  => array(
-			'min'  => '0',
-			'max'  => '50',
-			'step' => '1',
+			'min'  => 0,
+			'max'  => 50,
+			'step' => 1,
 		),
 	) );
 
@@ -1266,9 +1266,9 @@ foreach ( $singles as $single ) {
 		'section'  => 'wpbf_' . $single . '_options',
 		'priority' => 20,
 		'choices'  => array(
-			'min'  => '0',
-			'max'  => '50',
-			'step' => '1',
+			'min'  => 0,
+			'max'  => 50,
+			'step' => 1,
 		),
 	) );
 
@@ -1341,9 +1341,9 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => 0,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'min'  => '0',
-		'max'  => '80',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 80,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1364,9 +1364,9 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => 20,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'min'  => '20',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 20,
+		'max'  => 100,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1424,9 +1424,9 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 7,
 	'default'         => 25,
 	'choices'         => array(
-		'min'  => '0',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1451,9 +1451,9 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 8,
 	'default'         => 0,
 	'choices'         => array(
-		'min'  => '-100',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => -100,
+		'max'  => 100,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1478,9 +1478,9 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 9,
 	'default'         => 0,
 	'choices'         => array(
-		'min'  => '-100',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => -100,
+		'max'  => 100,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1505,9 +1505,9 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 10,
 	'default'         => 0,
 	'choices'         => array(
-		'min'  => '-100',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => -100,
+		'max'  => 100,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1598,11 +1598,11 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Show after (px)', 'page-builder-framework' ),
 	'section'         => 'wpbf_page_options',
 	'priority'        => 15,
-	'default'         => '400',
+	'default'         => 400,
 	'choices'         => array(
-		'min'  => '50',
-		'max'  => '1000',
-		'step' => '1',
+		'min'  => 50,
+		'max'  => 1000,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1701,12 +1701,12 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Border Radius', 'page-builder-framework' ),
 	'section'         => 'wpbf_page_options',
 	'priority'        => 20,
-	'default'         => '0',
+	'default'         => 0,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'min'  => '0',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1761,12 +1761,12 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Width', 'page-builder-framework' ),
 	'section'         => 'wpbf_sidebar_options',
 	'priority'        => 2,
-	'default'         => '33.3',
+	'default'         => 33.3,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'min'  => '20',
-		'max'  => '40',
-		'step' => '.1',
+		'min'  => 20,
+		'max'  => 40,
+		'step' => .1,
 	),
 	'active_callback' => array(
 		array(
@@ -1923,12 +1923,12 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Border Radius', 'page-builder-framework' ),
 	'section'   => 'wpbf_button_options',
 	'priority'  => 1,
-	'default'   => '0',
+	'default'   => 0,
 	'transport' => 'postMessage',
 	'choices'   => array(
-		'min'  => '0',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
 	),
 ) );
 
@@ -1939,11 +1939,11 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Border Width', 'page-builder-framework' ),
 	'section'  => 'wpbf_button_options',
 	'priority' => 1,
-	'default'  => '0',
+	'default'  => 0,
 	'choices'  => array(
-		'min'  => '0',
-		'max'  => '10',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 10,
+		'step' => 1,
 	),
 ) );
 
@@ -2700,12 +2700,12 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Height', 'page-builder-framework' ),
 	'section'         => 'wpbf_pre_header_options',
 	'priority'        => 3,
-	'default'         => '10',
+	'default'         => 10,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'min'  => '1',
-		'max'  => '25',
-		'step' => '1',
+		'min'  => 1,
+		'max'  => 25,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -2812,9 +2812,9 @@ Kirki::add_field( 'wpbf', array(
 		),
 	),
 	'choices'         => array(
-		'min'  => '0',
-		'max'  => '50',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
 	),
 ) );
 
@@ -3040,12 +3040,12 @@ Kirki::add_field( 'wpbf', array(
 	'description' => __( 'Defines the space in % the logo area takes in the navigation', 'page-builder-framework' ),
 	'section'     => 'title_tagline',
 	'priority'    => 40,
-	'default'     => '25',
+	'default'     => 25,
 	'transport'   => 'postMessage',
 	'choices'     => array(
-		'min'  => '10',
-		'max'  => '40',
-		'step' => '1',
+		'min'  => 10,
+		'max'  => 40,
+		'step' => 1,
 	),
 ) );
 
@@ -3057,12 +3057,12 @@ Kirki::add_field( 'wpbf', array(
 	'description' => __( 'Defines the space in % the logo area takes in the navigation', 'page-builder-framework' ),
 	'section'     => 'title_tagline',
 	'priority'    => 41,
-	'default'     => '66',
+	'default'     => 66,
 	'transport'   => 'postMessage',
 	'choices'     => array(
-		'min'  => '10',
-		'max'  => '80',
-		'step' => '1',
+		'min'  => 10,
+		'max'  => 80,
+		'step' => 1,
 	),
 ) );
 
@@ -3120,11 +3120,11 @@ Kirki::add_field( 'wpbf', array(
 	'settings' => 'menu_height',
 	'section'  => 'wpbf_menu_options',
 	'priority' => 3,
-	'default'  => '20',
+	'default'  => 20,
 	'choices'  => array(
-		'min'  => '10',
-		'max'  => '80',
-		'step' => '1',
+		'min'  => 10,
+		'max'  => 80,
+		'step' => 1,
 	),
 ) );
 
@@ -3135,11 +3135,11 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'menu_padding',
 	'section'         => 'wpbf_menu_options',
 	'priority'        => 4,
-	'default'         => '20',
+	'default'         => 20,
 	'choices'         => array(
-		'min'  => '5',
-		'max'  => '40',
-		'step' => '1',
+		'min'  => 5,
+		'max'  => 40,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -3202,9 +3202,9 @@ Kirki::add_field( 'wpbf', array(
 	'default'   => '16px',
 	'transport' => 'postMessage',
 	'choices'   => array(
-		'min'  => '0',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
 	),
 ) );
 
@@ -3252,11 +3252,11 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Width', 'page-builder-framework' ),
 	'section'  => 'wpbf_sub_menu_options',
 	'priority' => 1,
-	'default'  => '220',
+	'default'  => 220,
 	'choices'  => array(
-		'min'  => '100',
-		'max'  => '400',
-		'step' => '1',
+		'min'  => 100,
+		'max'  => 400,
+		'step' => 1,
 	),
 ) );
 
@@ -3318,9 +3318,9 @@ Kirki::add_field( 'wpbf', array(
 	'priority'  => 6,
 	'transport' => 'postMessage',
 	'choices'   => array(
-		'min'  => '0',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
 	),
 ) );
 
@@ -3419,12 +3419,12 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Border Radius', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
 	'priority'        => 1,
-	'default'         => '0',
+	'default'         => 0,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'min'  => '0',
-		'max'  => '50',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -3503,12 +3503,12 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Height', 'page-builder-framework' ),
 	'section'   => 'wpbf_mobile_menu_options',
 	'priority'  => 2,
-	'default'   => '20',
+	'default'   => 20,
 	'transport' => 'postMessage',
 	'choices'   => array(
-		'min'  => '5',
-		'max'  => '80',
-		'step' => '1',
+		'min'  => 5,
+		'max'  => 80,
+		'step' => 1,
 	),
 ) );
 
@@ -3537,13 +3537,13 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'mobile_menu_hamburger_size',
 	'label'           => __( 'Icon Size', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => '16',
+	'default'         => 16,
 	'priority'        => 4,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'min'  => '12',
-		'max'  => '24',
-		'step' => '1',
+		'min'  => 12,
+		'max'  => 24,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -3665,9 +3665,9 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 15,
 	'default'  => '16px',
 	'choices'  => array(
-		'min'  => '0',
-		'max'  => '50',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
 	),
 ) );
 
@@ -3823,9 +3823,9 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => 20,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'min'  => '1',
-		'max'  => '100',
-		'step' => '1',
+		'min'  => 1,
+		'max'  => 100,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -3933,9 +3933,9 @@ Kirki::add_field( 'wpbf', array(
 		),
 	),
 	'choices'         => array(
-		'min'  => '0',
-		'max'  => '50',
-		'step' => '1',
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
 	),
 ) );
 
@@ -3993,9 +3993,9 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'settings'        => 'menu_logo_size_desktop',
 			'priority'        => 2,
 			'choices'         => array(
-				'min'  => '0',
-				'max'  => '500',
-				'step' => '1',
+				'min'  => 0,
+				'max'  => 500,
+				'step' => 1,
 			),
 			'active_callback' => function () { return get_theme_mod( 'custom_logo' ) ? true : false; },
 		)
@@ -4010,9 +4010,9 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'settings'        => 'menu_logo_size_tablet',
 			'priority'        => 2,
 			'choices'         => array(
-				'min'  => '0',
-				'max'  => '500',
-				'step' => '1',
+				'min'  => 0,
+				'max'  => 500,
+				'step' => 1,
 			),
 			'active_callback' => function () { return get_theme_mod( 'custom_logo' ) ? true : false; },
 		)
@@ -4027,9 +4027,9 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'settings'        => 'menu_logo_size_mobile',
 			'priority'        => 2,
 			'choices'         => array(
-				'min'  => '0',
-				'max'  => '500',
-				'step' => '1',
+				'min'  => 0,
+				'max'  => 500,
+				'step' => 1,
 			),
 			'active_callback' => function () { return get_theme_mod( 'custom_logo' ) ? true : false; },
 		)
