@@ -24,7 +24,8 @@ $breakpoint_desktop     = $breakpoint_desktop_int . 'px';
 // Page font settings.
 $page_font_toggle       = get_theme_mod( 'page_font_toggle' );
 $page_font_family_value = get_theme_mod( 'page_font_family' );
-$page_font_color        = get_theme_mod( 'page_font_color' );
+$page_font_color        = ( $val = get_theme_mod( 'page_font_color' ) ) === '#6d7680' ? false : $val;
+
 
 if ( $page_font_toggle && $page_font_family_value ) {
 
@@ -51,7 +52,7 @@ if ( $page_font_toggle && $page_font_family_value ) {
 
 }
 
-if ( $page_font_color && '#6D7680' !== $page_font_color ) {
+if ( $page_font_color ) {
 
 	echo 'body {';
 	echo sprintf( 'color: %s;', esc_attr( $page_font_color ) );
@@ -436,10 +437,10 @@ if ( $page_background_color || $page_background_image ) {
 }
 
 // Accent color.
-$page_accent_color     = get_theme_mod( 'page_accent_color' );
-$page_accent_color_alt = get_theme_mod( 'page_accent_color_alt' );
+$page_accent_color     = ( $val = get_theme_mod( 'page_accent_color' ) ) === '#3ba9d2' ? false : $val;
+$page_accent_color_alt = ( $val = get_theme_mod( 'page_accent_color_alt' ) ) === '#8ecde5' ? false : $val;
 
-if ( $page_accent_color && '#3ba9d2' !== $page_accent_color ) {
+if ( $page_accent_color ) {
 
 	echo 'a {';
 	echo sprintf( 'color: %s;', esc_attr( $page_accent_color ) );
@@ -455,7 +456,7 @@ if ( $page_accent_color && '#3ba9d2' !== $page_accent_color ) {
 
 }
 
-if ( $page_accent_color_alt && '#8ecde5' !== $page_accent_color_alt ) {
+if ( $page_accent_color_alt ) {
 
 	echo 'a:hover {';
 	echo sprintf( 'color: %s;', esc_attr( $page_accent_color_alt ) );
