@@ -1621,6 +1621,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 16,
 	'transport'       => 'postMessage',
+	'default'         => 'rgba(62,67,73,0.5)',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1640,6 +1641,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'wpbf_page_options',
 	'priority'        => 17,
+	'default'         => 'rgba(62,67,73,0.7)',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1660,6 +1662,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 18,
 	'transport'       => 'postMessage',
+	'default'         => '#ffffff',
 	'choices'         => array(
 		'alpha' => true,
 	),

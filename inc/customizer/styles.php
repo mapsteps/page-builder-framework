@@ -353,11 +353,11 @@ if ( $scrolltop ) {
 
 	}
 
-	if ( $scrolltop_bg_color || $scrolltop_border_radius ) {
+	if ( $scrolltop_bg_color && 'rgba(62,67,73,0.5)' !== $scrolltop_bg_color || $scrolltop_border_radius ) {
 
 		echo '.scrolltop {';
 
-		if ( $scrolltop_bg_color ) {
+		if ( $scrolltop_bg_color && 'rgba(62,67,73,0.5)' !== $scrolltop_bg_color ) {
 			echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color ) );
 		}
 
@@ -369,7 +369,7 @@ if ( $scrolltop ) {
 
 	}
 
-	if ( $scrolltop_icon_color ) {
+	if ( $scrolltop_icon_color && '#ffffff' !== $scrolltop_icon_color ) {
 
 		echo '.scrolltop, .scrolltop:hover {';
 		echo sprintf( 'color: %s;', esc_attr( $scrolltop_icon_color ) );
@@ -377,11 +377,11 @@ if ( $scrolltop ) {
 
 	}
 
-	if ( $scrolltop_bg_color_alt || $scrolltop_icon_color_alt ) {
+	if ( $scrolltop_bg_color_alt && 'rgba(62,67,73,0.7)' !== $scrolltop_bg_color_alt || $scrolltop_icon_color_alt ) {
 
 		echo '.scrolltop:hover {';
 
-		if ( $scrolltop_bg_color_alt ) {
+		if ( $scrolltop_bg_color_alt && 'rgba(62,67,73,0.7)' !== $scrolltop_bg_color_alt ) {
 			echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color_alt ) );
 		}
 
@@ -729,7 +729,7 @@ if ( 'left' !== $breadcrumbs_alignment ) {
 
 }
 
-if ( $breadcrumbs_background_color ) {
+if ( $breadcrumbs_background_color && '#dedee5' !== $breadcrumbs_background_color ) {
 
 	echo '.wpbf-breadcrumbs-container {';
 	echo sprintf( 'background: %s;', esc_attr( $breadcrumbs_background_color ) );

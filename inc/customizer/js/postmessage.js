@@ -37,14 +37,14 @@
 	// ScrollTop background color.
 	wp.customize( 'scrolltop_bg_color', function( value ) {
 		value.bind( function( newval ) {
-			$('.scrolltop').css('background', ( newval ? newval : 'rgba(62, 67, 73, .5)' ) );
+			$('.scrolltop').css('background', ( newval ) );
 		} );
 	} );
 
 	// ScrollTop icon color.
 	wp.customize( 'scrolltop_icon_color', function( value ) {
 		value.bind( function( newval ) {
-			$('.scrolltop').css('color', ( newval ? newval : '#ffffff' ) );
+			$('.scrolltop').css('color', ( newval ) );
 		} );
 	} );
 
