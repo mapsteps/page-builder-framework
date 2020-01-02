@@ -2092,6 +2092,10 @@ if ( 'none' !== $pre_header_layout && $pre_header_accent_color_alt ) {
 	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_color_alt ) );
 	echo '}';
 
+	echo '.wpbf-pre-header .wpbf-menu > .current-menu-item > a {';
+	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_color_alt ) . '!important' );
+	echo '}';
+
 }
 
 if ( 'none' !== $pre_header_layout && $pre_header_font_size ) {
