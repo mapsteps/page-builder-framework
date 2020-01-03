@@ -211,6 +211,13 @@ Kirki::add_section( 'wpbf_page_options', array(
 	'priority' => 100,
 ) );
 
+// ScrollTop.
+Kirki::add_section( 'wpbf_scrolltop_options', array(
+	'title'    => __( 'ScrollTop', 'page-builder-framework' ),
+	'panel'    => 'layout_panel',
+	'priority' => 100,
+) );
+
 // Buttons.
 Kirki::add_section( 'wpbf_button_options', array(
 	'title'    => __( 'Theme Buttons', 'page-builder-framework' ),
@@ -1274,7 +1281,7 @@ foreach ( $singles as $single ) {
 
 }
 
-/* Fields – General */
+/* Fields – 404 Page */
 
 // 404 title.
 Kirki::add_field( 'wpbf', array(
@@ -1310,6 +1317,8 @@ Kirki::add_field( 'wpbf', array(
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 	),
 ) );
+
+/* Fields – Layout */
 
 // Max width.
 Kirki::add_field( 'wpbf', array(
@@ -1548,14 +1557,7 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'separator-26125',
-	'section'  => 'wpbf_page_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 12,
-) );
+/* Fields – ScrollTop */
 
 // Scrolltop.
 Kirki::add_field( 'wpbf', array(
@@ -1563,9 +1565,9 @@ Kirki::add_field( 'wpbf', array(
 	'settings'    => 'layout_scrolltop',
 	'label'       => __( 'ScrollTop', 'page-builder-framework' ),
 	'description' => __( 'Select if you would like to display a scroll to top arrow', 'page-builder-framework' ),
-	'section'     => 'wpbf_page_options',
+	'section'     => 'wpbf_scrolltop_options',
 	'default'     => '0',
-	'priority'    => 13,
+	'priority'    => 1,
 ) );
 
 // Position.
@@ -1573,9 +1575,9 @@ Kirki::add_field( 'wpbf', array(
 	'type'            => 'select',
 	'settings'        => 'scrolltop_position',
 	'label'           => __( 'Position', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
+	'section'         => 'wpbf_scrolltop_options',
 	'default'         => 'right',
-	'priority'        => 14,
+	'priority'        => 2,
 	'multiple'        => 1,
 	'transport'       => 'postMessage',
 	'choices'         => array(
@@ -1596,8 +1598,8 @@ Kirki::add_field( 'wpbf', array(
 	'type'            => 'slider',
 	'settings'        => 'scrolltop_value',
 	'label'           => __( 'Show after (px)', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 15,
+	'section'         => 'wpbf_scrolltop_options',
+	'priority'        => 3,
 	'default'         => 400,
 	'choices'         => array(
 		'min'  => 50,
@@ -1618,8 +1620,8 @@ Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
 	'settings'        => 'scrolltop_bg_color',
 	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 16,
+	'section'         => 'wpbf_scrolltop_options',
+	'priority'        => 4,
 	'transport'       => 'postMessage',
 	'default'         => 'rgba(62,67,73,0.5)',
 	'choices'         => array(
@@ -1639,8 +1641,8 @@ Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
 	'settings'        => 'scrolltop_bg_color_alt',
 	'label'           => __( 'Hover', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 17,
+	'section'         => 'wpbf_scrolltop_options',
+	'priority'        => 5,
 	'default'         => 'rgba(62,67,73,0.7)',
 	'choices'         => array(
 		'alpha' => true,
@@ -1659,8 +1661,8 @@ Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
 	'settings'        => 'scrolltop_icon_color',
 	'label'           => __( 'Icon Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 18,
+	'section'         => 'wpbf_scrolltop_options',
+	'priority'        => 6,
 	'transport'       => 'postMessage',
 	'default'         => '#ffffff',
 	'choices'         => array(
@@ -1680,8 +1682,8 @@ Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
 	'settings'        => 'scrolltop_icon_color_alt',
 	'label'           => __( 'Hover', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 19,
+	'section'         => 'wpbf_scrolltop_options',
+	'priority'        => 7,
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1699,8 +1701,8 @@ Kirki::add_field( 'wpbf', array(
 	'type'            => 'slider',
 	'settings'        => 'scrolltop_border_radius',
 	'label'           => __( 'Border Radius', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 20,
+	'section'         => 'wpbf_scrolltop_options',
+	'priority'        => 8,
 	'default'         => 0,
 	'transport'       => 'postMessage',
 	'choices'         => array(
