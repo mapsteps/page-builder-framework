@@ -211,23 +211,16 @@ Kirki::add_section( 'wpbf_page_options', array(
 	'priority' => 100,
 ) );
 
-// ScrollTop.
-Kirki::add_section( 'wpbf_scrolltop_options', array(
-	'title'    => __( 'ScrollTop', 'page-builder-framework' ),
-	'panel'    => 'layout_panel',
-	'priority' => 100,
-) );
-
-// Buttons.
-Kirki::add_section( 'wpbf_button_options', array(
-	'title'    => __( 'Theme Buttons', 'page-builder-framework' ),
+// Sidebar.
+Kirki::add_section( 'wpbf_sidebar_options', array(
+	'title'    => __( 'Sidebar', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
 	'priority' => 300,
 ) );
 
-// Sidebar.
-Kirki::add_section( 'wpbf_sidebar_options', array(
-	'title'    => __( 'Sidebar', 'page-builder-framework' ),
+// 404.
+Kirki::add_section( 'wpbf_404_options', array(
+	'title'    => __( '404 Page', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
 	'priority' => 400,
 ) );
@@ -236,12 +229,19 @@ Kirki::add_section( 'wpbf_sidebar_options', array(
 Kirki::add_section( 'wpbf_breadcrumb_settings', array(
 	'title'    => __( 'Breadcrumbs', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
+	'priority' => 500,
+) );
+
+// Buttons.
+Kirki::add_section( 'wpbf_button_options', array(
+	'title'    => __( 'Theme Buttons', 'page-builder-framework' ),
+	'panel'    => 'layout_panel',
 	'priority' => 600,
 ) );
 
-// 404.
-Kirki::add_section( 'wpbf_404_options', array(
-	'title'    => __( '404 Page', 'page-builder-framework' ),
+// ScrollTop.
+Kirki::add_section( 'wpbf_scrolltop_options', array(
+	'title'    => __( 'ScrollTop', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
 	'priority' => 700,
 ) );
