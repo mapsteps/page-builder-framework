@@ -18,7 +18,7 @@ function wpbf_do_woocommerce_customizer_css() {
 	$breakpoint_medium     = $breakpoint_medium_int . 'px';
 
 	// Notices.
-	$page_accent_color                = get_theme_mod( 'page_accent_color' );
+	$page_accent_color                = ( $val = get_theme_mod( 'page_accent_color' ) ) === '#3ba9d2' ? false : $val;
 	$woocommerce_store_notice_color   = get_theme_mod( 'woocommerce_store_notice_color' );
 	$woocommerce_info_notice_color    = get_theme_mod( 'woocommerce_info_notice_color' );
 	$woocommerce_message_notice_color = get_theme_mod( 'woocommerce_message_notice_color' );
@@ -272,23 +272,23 @@ function wpbf_do_woocommerce_customizer_css() {
 
 	// Loop.
 	$woocommerce_loop_custom_width                  = get_theme_mod( 'woocommerce_loop_custom_width' );
-	$woocommerce_loop_content_alignment             = get_theme_mod( 'woocommerce_loop_content_alignment' );
+	$woocommerce_loop_content_alignment             = ( $val = get_theme_mod( 'woocommerce_loop_content_alignment' ) ) === 'left' ? false : $val;
 	$woocommerce_loop_sale_alignment                = get_theme_mod( 'woocommerce_loop_sale_alignment' );
 	$woocommerce_loop_sale_layout                   = get_theme_mod( 'woocommerce_loop_sale_layout' );
 	$woocommerce_loop_sale_position                 = get_theme_mod( 'woocommerce_loop_sale_position' );
-	$woocommerce_loop_sale_font_size                = get_theme_mod( 'woocommerce_loop_sale_font_size' );
-	$woocommerce_loop_sale_font_color               = get_theme_mod( 'woocommerce_loop_sale_font_color' );
-	$woocommerce_loop_sale_background_color         = get_theme_mod( 'woocommerce_loop_sale_background_color' );
-	$woocommerce_loop_title_size                    = get_theme_mod( 'woocommerce_loop_title_size' );
-	$woocommerce_loop_title_color                   = get_theme_mod( 'woocommerce_loop_title_color' );
-	$woocommerce_loop_price_size                    = get_theme_mod( 'woocommerce_loop_price_size' );
-	$woocommerce_loop_price_color                   = get_theme_mod( 'woocommerce_loop_price_color' );
-	$woocommerce_single_price_color                 = get_theme_mod( 'woocommerce_single_price_color' );
-	$woocommerce_loop_out_of_stock_font_size        = get_theme_mod( 'woocommerce_loop_out_of_stock_font_size' );
-	$woocommerce_loop_out_of_stock_font_color       = get_theme_mod( 'woocommerce_loop_out_of_stock_font_color' );
-	$woocommerce_loop_out_of_stock_background_color = get_theme_mod( 'woocommerce_loop_out_of_stock_background_color' );
+	$woocommerce_loop_sale_font_size                = ( $val = get_theme_mod( 'woocommerce_loop_sale_font_size' ) ) === '14px' ? false : $val;
+	$woocommerce_loop_sale_font_color               = ( $val = get_theme_mod( 'woocommerce_loop_sale_font_color' ) ) === '#ffffff' ? false : $val;
+	$woocommerce_loop_sale_background_color         = ( $val = get_theme_mod( 'woocommerce_loop_sale_background_color' ) ) === '#4fe190' ? false : $val;
+	$woocommerce_loop_title_size                    = ( $val = get_theme_mod( 'woocommerce_loop_title_size' ) ) === '16px' ? false : $val;
+	$woocommerce_loop_title_color                   = ( $val = get_theme_mod( 'woocommerce_loop_title_color' ) ) === '#3e4349' ? false : $val;
+	$woocommerce_loop_price_size                    = ( $val = get_theme_mod( 'woocommerce_loop_price_size' ) ) === '16px' ? false : $val;
+	$woocommerce_loop_price_color                   = ( $val = get_theme_mod( 'woocommerce_loop_price_color' ) ) === '#3e4349' ? false : $val;
+	$woocommerce_single_price_color                 = ( $val = get_theme_mod( 'woocommerce_single_price_color' ) ) === '#3e4349' ? false : $val;
+	$woocommerce_loop_out_of_stock_font_size        = ( $val = get_theme_mod( 'woocommerce_loop_out_of_stock_font_size' ) ) === '14px' ? false : $val;
+	$woocommerce_loop_out_of_stock_font_color       = ( $val = get_theme_mod( 'woocommerce_loop_out_of_stock_font_color' ) ) === '#ffffff' ? false : $val;
+	$woocommerce_loop_out_of_stock_background_color = ( $val = get_theme_mod( 'woocommerce_loop_out_of_stock_background_color' ) ) === 'rgba(0,0,0,.7)' ? false : $val;
 	$woocommerce_loop_image_alignment               = get_theme_mod( 'woocommerce_loop_image_alignment' );
-	$woocommerce_loop_image_width                   = get_theme_mod( 'woocommerce_loop_image_width' );
+	$woocommerce_loop_image_width                   = ( $val = get_theme_mod( 'woocommerce_loop_image_width' ) ) === '50' ? false : $val;
 	$woocommerce_loop_layout                        = get_theme_mod( 'woocommerce_loop_layout' );
 
 	if ( $woocommerce_loop_custom_width ) {
@@ -346,7 +346,7 @@ function wpbf_do_woocommerce_customizer_css() {
 
 	}
 
-	if ( 'right' === $woocommerce_loop_image_alignment ) {
+	if ( 'list' === $woocommerce_loop_layout && 'right' === $woocommerce_loop_image_alignment ) {
 
 		echo '.wpbf-woo-list-view .wpbf-woo-loop-thumbnail-wrapper {';
 		echo 'float: right;';
@@ -358,7 +358,7 @@ function wpbf_do_woocommerce_customizer_css() {
 
 	}
 
-	if ( $woocommerce_loop_image_width && '50' !== $woocommerce_loop_image_width ) {
+	if ( 'list' === $woocommerce_loop_layout && $woocommerce_loop_image_width ) {
 
 		echo '@media (min-width: ' . esc_attr( $breakpoint_mobile_int + 1 ) . 'px) {';
 
@@ -517,18 +517,18 @@ function wpbf_do_woocommerce_customizer_css() {
 	// Proudct.
 	$woocommerce_single_custom_width                 = get_theme_mod( 'woocommerce_single_custom_width' );
 	$woocommerce_single_alignment                    = get_theme_mod( 'woocommerce_single_alignment' );
-	$woocommerce_single_image_width                  = get_theme_mod( 'woocommerce_single_image_width' );
+	$woocommerce_single_image_width                  = ( $val = get_theme_mod( 'woocommerce_single_image_width' ) ) === '50' ? false : $val;
 	$woocommerce_single_summary_separator            = get_theme_mod( 'woocommerce_single_summary_separator' );
-	$woocommerce_single_tabs_font_size               = get_theme_mod( 'woocommerce_single_tabs_font_size' );
-	$woocommerce_single_tabs_font_color              = get_theme_mod( 'woocommerce_single_tabs_font_color' );
+	$woocommerce_single_tabs_font_size               = ( $val = get_theme_mod( 'woocommerce_single_tabs_font_size' ) ) === '16px' ? false : $val;
+	$woocommerce_single_tabs_font_color              = ( $val = get_theme_mod( 'woocommerce_single_tabs_font_color' ) ) === '#3e4349' ? false : $val;
 	$woocommerce_single_tabs_font_color_alt          = get_theme_mod( 'woocommerce_single_tabs_font_color_alt' );
 	$woocommerce_single_tabs_font_color_active       = get_theme_mod( 'woocommerce_single_tabs_font_color_active' );
 	$woocommerce_single_tabs                         = get_theme_mod( 'woocommerce_single_tabs' );
-	$woocommerce_single_tabs_background_color        = get_theme_mod( 'woocommerce_single_tabs_background_color' );
-	$woocommerce_single_tabs_background_color_alt    = get_theme_mod( 'woocommerce_single_tabs_background_color_alt' );
-	$woocommerce_single_tabs_background_color_active = get_theme_mod( 'woocommerce_single_tabs_background_color_active' );
+	$woocommerce_single_tabs_background_color        = ( $val = get_theme_mod( 'woocommerce_single_tabs_background_color' ) ) === '#e7e7ec' ? false : $val;
+	$woocommerce_single_tabs_background_color_alt    = ( $val = get_theme_mod( 'woocommerce_single_tabs_background_color_alt' ) ) === '#f5f5f7' ? false : $val;
+	$woocommerce_single_tabs_background_color_active = ( $val = get_theme_mod( 'woocommerce_single_tabs_background_color_active' ) ) === '#ffffff' ? false : $val;
 	$woocommerce_single_tabs_remove_headline         = get_theme_mod( 'woocommerce_single_tabs_remove_headline' );
-	$woocommerce_single_price_size                   = get_theme_mod( 'woocommerce_single_price_size' );
+	$woocommerce_single_price_size                   = ( $val = get_theme_mod( 'woocommerce_single_price_size' ) ) === '22px' ? false : $val;
 
 	if ( $woocommerce_single_custom_width ) {
 
