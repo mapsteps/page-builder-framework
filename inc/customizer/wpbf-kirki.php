@@ -1334,7 +1334,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'toggle',
 	'settings' => 'page_boxed',
-	'label'    => __( 'Boxed', 'page-builder-framework' ),
+	'label'    => __( 'Boxed Layout', 'page-builder-framework' ),
 	'section'  => 'wpbf_page_options',
 	'default'  => 0,
 	'priority' => 2,
