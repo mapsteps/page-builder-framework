@@ -41,7 +41,7 @@ Kirki::add_config( 'wpbf', array(
 
 // Menu item.
 Kirki::add_section( 'wpbf_woocommerce_menu_item_options', array(
-	'title'    => __( 'Menu Item', 'page-builder-framework' ),
+	'title'    => __( 'Cart Menu Item', 'page-builder-framework' ),
 	'panel'    => 'woocommerce',
 	'priority' => 25,
 ) );
@@ -530,9 +530,9 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 30,
 	'multiple' => 1,
 	'choices'  => array(
+		'none'    => __( 'Hide', 'page-builder-framework' ),
 		'outside' => __( 'Outside', 'page-builder-framework' ),
 		'inside'  => __( 'Inside', 'page-builder-framework' ),
-		'none'    => __( 'Hide', 'page-builder-framework' ),
 	),
 ) );
 

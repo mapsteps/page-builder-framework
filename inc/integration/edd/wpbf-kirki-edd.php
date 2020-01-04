@@ -23,7 +23,7 @@ Kirki::add_panel( 'edd_panel', array(
 
 // Menu item.
 Kirki::add_section( 'wpbf_edd_menu_item_options', array(
-	'title'    => __( 'Menu Item', 'page-builder-framework' ),
+	'title'    => __( 'Cart Menu Item', 'page-builder-framework' ),
 	'panel'    => 'edd_panel',
 	'priority' => 1,
 ) );
