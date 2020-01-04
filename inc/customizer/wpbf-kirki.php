@@ -3121,6 +3121,7 @@ Kirki::add_field( 'wpbf', array(
 	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
 	'settings'    => 'menu_width',
 	'section'     => 'wpbf_menu_options',
+	'transport'   => 'postMessage',
 	'priority'    => 1,
 ) );
 
@@ -3156,6 +3157,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_menu_options',
 	'priority'        => 4,
 	'default'         => 20,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'min'  => 5,
 		'max'  => 40,
