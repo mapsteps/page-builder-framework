@@ -47,9 +47,11 @@ function wpbf_customizer_setup( $wp_customize ) {
 	$wp_customize->get_section( 'background_image' )->priority = 200;
 
 	// Change control priorities.
-	$wp_customize->get_control( 'custom_logo' )->priority     = 0;
-	$wp_customize->get_control( 'blogname' )->priority        = 9;
-	$wp_customize->get_control( 'blogdescription' )->priority = 19;
+	$wp_customize->get_control( 'custom_logo' )->priority      = 0;
+	$wp_customize->get_control( 'blogname' )->priority         = 9;
+	$wp_customize->get_control( 'blogdescription' )->priority  = 19;
+	$wp_customize->get_control( 'background_color' )->priority = 100;
+	$wp_customize->get_control( 'background_image' )->priority = 0;
 
 	// Change control transport method.
 	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
@@ -644,22 +646,6 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields - Blog (Pagination) */
 
-// Border radius.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'slider',
-	'settings'  => 'blog_pagination_border_radius',
-	'label'     => __( 'Border Radius', 'page-builder-framework' ),
-	'section'   => 'wpbf_pagination_settings',
-	'priority'  => 2,
-	'default'   => 0,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'min'  => 0,
-		'max'  => 100,
-		'step' => 1,
-	),
-) );
-
 // Pagination background color.
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'color',
@@ -667,7 +653,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Background Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_pagination_settings',
 	'transport' => 'postMessage',
-	'priority'  => 2,
+	'priority'  => 1,
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -692,7 +678,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Active', 'page-builder-framework' ),
 	'section'   => 'wpbf_pagination_settings',
 	'transport' => 'postMessage',
-	'priority'  => 2,
+	'priority'  => 3,
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -705,7 +691,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Font Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_pagination_settings',
 	'transport' => 'postMessage',
-	'priority'  => 2,
+	'priority'  => 4,
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -718,7 +704,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Hover', 'page-builder-framework' ),
 	'section'  => 'wpbf_pagination_settings',
 	'default'  => '',
-	'priority' => 2,
+	'priority' => 5,
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -732,9 +718,25 @@ Kirki::add_field( 'wpbf', array(
 	'section'   => 'wpbf_pagination_settings',
 	'transport' => 'postMessage',
 	'default'   => '',
-	'priority'  => 2,
+	'priority'  => 6,
 	'choices'   => array(
 		'alpha' => true,
+	),
+) );
+
+// Border radius.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'slider',
+	'settings'  => 'blog_pagination_border_radius',
+	'label'     => __( 'Border Radius', 'page-builder-framework' ),
+	'section'   => 'wpbf_pagination_settings',
+	'priority'  => 7,
+	'default'   => 0,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
 	),
 ) );
 
@@ -745,7 +747,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'blog_pagination_font_size',
 	'section'   => 'wpbf_pagination_settings',
 	'transport' => 'postMessage',
-	'priority'  => 2,
+	'priority'  => 8,
 	'choices'   => array(
 		'min'  => 0,
 		'max'  => 100,
@@ -1398,6 +1400,22 @@ Kirki::add_field( 'wpbf', array(
 	'choices'         => array(
 		'alpha' => true,
 	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'page_boxed',
+			'operator' => '==',
+			'value'    => 1,
+		),
+	),
+) );
+
+// Separator.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'custom',
+	'settings'        => 'separator-7473363',
+	'section'         => 'wpbf_page_options',
+	'default'         => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority'        => 5,
 	'active_callback' => array(
 		array(
 			'setting'  => 'page_boxed',
@@ -3793,6 +3811,22 @@ Kirki::add_field( 'wpbf', array(
 			'setting'  => 'footer_column_two_layout',
 			'operator' => '==',
 			'value'    => 'text',
+		),
+	),
+) );
+
+// Separator.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'separator-16566832',
+	'section'  => 'wpbf_footer_options',
+	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority' => 4,
+	'active_callback' => array(
+		array(
+			'setting'  => 'footer_layout',
+			'operator' => '!=',
+			'value'    => 'none',
 		),
 	),
 ) );
