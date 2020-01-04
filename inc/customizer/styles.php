@@ -1675,11 +1675,12 @@ if ( ! $custom_logo && $menu_logo_description ) {
 // Navigation.
 $menu_position       = get_theme_mod( 'menu_position' );
 $menu_width          = get_theme_mod( 'menu_width' );
-$menu_height         = get_theme_mod( 'menu_height' );
-$menu_padding        = get_theme_mod( 'menu_padding' );
-$menu_bg_color       = get_theme_mod( 'menu_bg_color' );
+$menu_height         = ( $val = get_theme_mod( 'menu_height' ) ) === '20' ? false : $val;
+$menu_padding        = ( $val = get_theme_mod( 'menu_padding' ) ) === '20' ? false : $val;
+$menu_bg_color       = ( $val = get_theme_mod( 'menu_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $menu_font_color     = get_theme_mod( 'menu_font_color' );
 $menu_font_color_alt = get_theme_mod( 'menu_font_color_alt' );
+$menu_font_size      = ( $val = get_theme_mod( 'menu_font_size' ) ) === '16px' ? false : $val;
 
 if ( $menu_width || $menu_height ) {
 
@@ -1710,7 +1711,7 @@ if ( $menu_height && 'menu-stacked' === $menu_position ) {
 
 if ( $menu_padding ) {
 
-	echo '.wpbf-menu > .menu-item > a {';
+	echo '.wpbf-navigation .wpbf-menu > .menu-item > a {';
 	echo sprintf( 'padding-left: %s;', esc_attr( $menu_padding ) . 'px' );
 	echo sprintf( 'padding-right: %s;', esc_attr( $menu_padding ) . 'px' );
 	echo '}';
@@ -1735,7 +1736,7 @@ if ( $menu_bg_color ) {
 
 if ( $menu_font_color ) {
 
-	echo '.wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close {';
+	echo '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close {';
 	echo sprintf( 'color: %s;', esc_attr( $menu_font_color ) );
 	echo '}';
 
@@ -1743,12 +1744,20 @@ if ( $menu_font_color ) {
 
 if ( $menu_font_color_alt ) {
 
-	echo '.wpbf-menu a:hover, .wpbf-mobile-menu a:hover {';
+	echo '.wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover {';
 	echo sprintf( 'color: %s;', esc_attr( $menu_font_color_alt ) );
 	echo '}';
 
-	echo '.wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a {';
+	echo '.wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a {';
 	echo sprintf( 'color: %s;', esc_attr( $menu_font_color_alt ) . '!important' );
+	echo '}';
+
+}
+
+if ( $menu_font_size ) {
+
+	echo '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a {';
+	echo sprintf( 'font-size: %s;', esc_attr( $menu_font_size ) );
 	echo '}';
 
 }
