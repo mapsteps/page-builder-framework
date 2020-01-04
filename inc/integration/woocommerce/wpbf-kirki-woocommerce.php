@@ -874,15 +874,29 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'separator-553014',
+	'section'  => 'wpbf_woocommerce_product_options',
+	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority' => $product_priority++,
+) );
+
 // Price font size.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'dimension',
+	'type'      => 'input_slider',
 	'label'     => __( 'Price Font Size', 'page-builder-framework' ),
 	'settings'  => 'woocommerce_single_price_size',
 	'section'   => 'wpbf_woocommerce_product_options',
 	'transport' => 'postMessage',
 	'priority'  => $product_priority++,
 	'default'   => '22px',
+	'choices'   => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
 ) );
 
 // Price color.
@@ -939,13 +953,18 @@ Kirki::add_field( 'wpbf', array(
 
 // Tabs font size.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'dimension',
+	'type'      => 'input_slider',
 	'label'     => __( 'Font Size', 'page-builder-framework' ),
 	'settings'  => 'woocommerce_single_tabs_font_size',
 	'section'   => 'wpbf_woocommerce_product_options',
 	'transport' => 'postMessage',
 	'priority'  => $product_priority++,
 	'default'   => '16px',
+	'choices'   => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
 ) );
 
 // Tabs font color.
