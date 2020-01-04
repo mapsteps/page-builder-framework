@@ -25,7 +25,7 @@ if ( ! $pre_header_layout || 'none' === $pre_header_layout ) {
 
 ?>
 
-<div id="wpbf-pre-header" class="wpbf-pre-header">
+<div id="pre-header" class="wpbf-pre-header">
 
 	<?php do_action( 'wpbf_before_pre_header' ); ?>
 

@@ -112,7 +112,7 @@ img.alignleft, figure.alignleft {
 .wpbf-menu-stacked .wpbf-menu > .menu-item,
 .wpbf-menu-stacked-advanced .wpbf-menu > .menu-item,
 .wpbf-menu-centered .wpbf-menu > .menu-item,
-#wpbf-pre-header .wpbf-menu > .menu-item {
+.wpbf-pre-header .wpbf-menu > .menu-item {
   float: right;
 }
 
@@ -136,18 +136,18 @@ img.alignleft, figure.alignleft {
 }
 
 /* Pre Header */
-#wpbf-pre-header .wpbf-menu {
+.wpbf-pre-header .wpbf-menu {
   float: left;
 }
 
-#wpbf-pre-header .wpbf-inner-pre-header-right .wpbf-menu {
+.wpbf-pre-header .wpbf-inner-pre-header-right .wpbf-menu {
   float: left;
 }
-#wpbf-pre-header .wpbf-inner-pre-header-right .wpbf-menu .sub-menu {
+.wpbf-pre-header .wpbf-inner-pre-header-right .wpbf-menu .sub-menu {
   text-align: right;
 }
 
-#wpbf-pre-header .wpbf-inner-pre-header-left .wpbf-menu {
+.wpbf-pre-header .wpbf-inner-pre-header-left .wpbf-menu {
   float: right;
 }
 

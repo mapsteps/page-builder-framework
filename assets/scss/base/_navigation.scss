@@ -211,7 +211,7 @@
 .wpbf-menu-stacked,
 .wpbf-menu-stacked-advanced,
 .wpbf-menu-centered,
-#wpbf-pre-header,
+.wpbf-pre-header,
 .wpbf-page-footer {
 	.wpbf-menu {
 		a {
@@ -382,7 +382,7 @@
 
 /* Pre Header */
 
- #wpbf-pre-header {
+ .wpbf-pre-header {
  	.wpbf-menu {
  		float: right;
  		.sub-menu {
@@ -392,7 +392,7 @@
  }
 
  // Right Navigation
- #wpbf-pre-header {
+ .wpbf-pre-header {
  	.wpbf-inner-pre-header-right {
 		.wpbf-menu {
 			float: right;
@@ -404,7 +404,7 @@
 }
 
 // Left Navigation
-#wpbf-pre-header {
+.wpbf-pre-header {
 	.wpbf-inner-pre-header-left {
 		.wpbf-menu {
 			float: left;
