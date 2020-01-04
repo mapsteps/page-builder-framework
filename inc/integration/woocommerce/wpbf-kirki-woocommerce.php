@@ -583,13 +583,18 @@ Kirki::add_field( 'wpbf', array(
 
 // Sale font size.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'dimension',
+	'type'            => 'input_slider',
 	'label'           => __( 'Font Size', 'page-builder-framework' ),
 	'settings'        => 'woocommerce_loop_sale_font_size',
 	'section'         => 'woocommerce_product_catalog',
 	'transport'       => 'postMessage',
 	'priority'        => 30,
 	'default'         => '14px',
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
 	'active_callback' => array(
 		array(
 			'setting'  => 'woocommerce_loop_sale_position',
@@ -652,13 +657,18 @@ Kirki::add_field( 'wpbf', array(
 
 // Title font size.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'dimension',
+	'type'      => 'input_slider',
 	'label'     => __( 'Title Font Size', 'page-builder-framework' ),
 	'settings'  => 'woocommerce_loop_title_size',
 	'section'   => 'woocommerce_product_catalog',
 	'transport' => 'postMessage',
 	'priority'  => 30,
 	'default'   => '16px',
+	'choices'   => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
 ) );
 
 // Title color.
@@ -686,13 +696,18 @@ Kirki::add_field( 'wpbf', array(
 
 // Price font size.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'dimension',
+	'type'      => 'input_slider',
 	'label'     => __( 'Price Font Size', 'page-builder-framework' ),
 	'settings'  => 'woocommerce_loop_price_size',
 	'section'   => 'woocommerce_product_catalog',
 	'transport' => 'postMessage',
 	'priority'  => 30,
 	'default'   => '16px',
+	'choices'   => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
 ) );
 
 // Price color.
@@ -735,13 +750,18 @@ Kirki::add_field( 'wpbf', array(
 
 // Out of stock font size.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'dimension',
+	'type'            => 'input_slider',
 	'label'           => __( 'Font Size', 'page-builder-framework' ),
 	'settings'        => 'woocommerce_loop_out_of_stock_font_size',
 	'section'         => 'woocommerce_product_catalog',
 	'transport'       => 'postMessage',
 	'priority'        => 30,
 	'default'         => '14px',
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
 	'active_callback' => array(
 		array(
 			'setting'  => 'woocommerce_loop_out_of_stock_notice',
