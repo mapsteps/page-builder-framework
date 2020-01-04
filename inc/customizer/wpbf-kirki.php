@@ -4091,7 +4091,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		)
 	);
 
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
+	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
 		$wp_customize,
 		'menu_logo_font_size',
 		array(
@@ -4099,11 +4099,16 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'section'         => 'title_tagline',
 			'settings'        => 'menu_logo_font_size_desktop',
 			'priority'        => 13,
+			'choices'         => array(
+				'min'  => 0,
+				'max'  => 50,
+				'step' => 1,
+			),
 			'active_callback' => function () { return get_theme_mod( 'custom_logo' ) ? false : true; },
 		)
 	) );
 
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
+	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
 		$wp_customize,
 		'menu_logo_font_size',
 		array(
@@ -4111,11 +4116,16 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'section'         => 'title_tagline',
 			'settings'        => 'menu_logo_font_size_tablet',
 			'priority'        => 13,
+			'choices'         => array(
+				'min'  => 0,
+				'max'  => 50,
+				'step' => 1,
+			),
 			'active_callback' => function () { return get_theme_mod( 'custom_logo' ) ? false : true; },
 		)
 	) );
 
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
+	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
 		$wp_customize,
 		'menu_logo_font_size',
 		array(
@@ -4123,6 +4133,11 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'section'         => 'title_tagline',
 			'settings'        => 'menu_logo_font_size_mobile',
 			'priority'        => 13,
+			'choices'         => array(
+				'min'  => 0,
+				'max'  => 50,
+				'step' => 1,
+			),
 			'active_callback' => function () { return get_theme_mod( 'custom_logo' ) ? false : true; },
 		)
 	) );
@@ -4146,7 +4161,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		)
 	);
 
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
+	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
 		$wp_customize,
 		'menu_logo_description_font_size',
 		array(
@@ -4154,11 +4169,16 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'section'         => 'title_tagline',
 			'settings'        => 'menu_logo_description_font_size_desktop',
 			'priority'        => 23,
+			'choices'         => array(
+				'min'  => 0,
+				'max'  => 50,
+				'step' => 1,
+			),
 			'active_callback' => function () { return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false; },
 		)
 	) );
 
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
+	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
 		$wp_customize,
 		'menu_logo_description_font_size',
 		array(
@@ -4166,11 +4186,16 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'section'         => 'title_tagline',
 			'settings'        => 'menu_logo_description_font_size_tablet',
 			'priority'        => 23,
+			'choices'         => array(
+				'min'  => 0,
+				'max'  => 50,
+				'step' => 1,
+			),
 			'active_callback' => function () { return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false; },
 		)
 	) );
 
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
+	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
 		$wp_customize,
 		'menu_logo_description_font_size',
 		array(
@@ -4178,6 +4203,11 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'section'         => 'title_tagline',
 			'settings'        => 'menu_logo_description_font_size_mobile',
 			'priority'        => 23,
+			'choices'         => array(
+				'min'  => 0,
+				'max'  => 50,
+				'step' => 1,
+			),
 			'active_callback' => function () { return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false; },
 		)
 	) );

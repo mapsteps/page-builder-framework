@@ -1447,7 +1447,7 @@ if ( $mobile_menu_logo_container_width ) {
 // Logo.
 $custom_logo                 = get_theme_mod( 'custom_logo' );
 $menu_logo_font_toggle       = get_theme_mod( 'menu_logo_font_toggle' );
-$menu_logo_font_size_desktop = get_theme_mod( 'menu_logo_font_size_desktop' );
+$menu_logo_font_size_desktop = ( $val = get_theme_mod( 'menu_logo_font_size_desktop' ) ) === '22px' ? false : $val;
 $menu_logo_font_size_tablet  = get_theme_mod( 'menu_logo_font_size_tablet' );
 $menu_logo_font_size_mobile  = get_theme_mod( 'menu_logo_font_size_mobile' );
 $menu_logo_color             = get_theme_mod( 'menu_logo_color' );
