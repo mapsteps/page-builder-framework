@@ -1765,16 +1765,16 @@ if ( $menu_font_size ) {
 // Sub menu.
 $sub_menu_bg_color         = get_theme_mod( 'sub_menu_bg_color' );
 $sub_menu_bg_color_alt     = get_theme_mod( 'sub_menu_bg_color_alt' );
-$sub_menu_width            = get_theme_mod( 'sub_menu_width' );
-$sub_menu_padding_top      = get_theme_mod( 'sub_menu_padding_top' );
-$sub_menu_padding_right    = get_theme_mod( 'sub_menu_padding_right' );
-$sub_menu_padding_bottom   = get_theme_mod( 'sub_menu_padding_bottom' );
-$sub_menu_padding_left     = get_theme_mod( 'sub_menu_padding_left' );
+$sub_menu_width            = ( $val = get_theme_mod( 'sub_menu_width' ) ) === '220' ? false : $val;
+$sub_menu_padding_top      = ( $val = get_theme_mod( 'sub_menu_padding_top' ) ) === 10 ? false : $val;
+$sub_menu_padding_right    = ( $val = get_theme_mod( 'sub_menu_padding_right' ) ) === 20 ? false : $val;
+$sub_menu_padding_bottom   = ( $val = get_theme_mod( 'sub_menu_padding_bottom' ) ) === 10 ? false : $val;
+$sub_menu_padding_left     = ( $val = get_theme_mod( 'sub_menu_padding_left' ) ) === 20 ? false : $val;
 $sub_menu_accent_color     = get_theme_mod( 'sub_menu_accent_color' );
 $sub_menu_font_size        = get_theme_mod( 'sub_menu_font_size' );
 $sub_menu_accent_color_alt = get_theme_mod( 'sub_menu_accent_color_alt' );
 $sub_menu_separator        = get_theme_mod( 'sub_menu_separator' );
-$sub_menu_separator_color  = get_theme_mod( 'sub_menu_separator_color' );
+$sub_menu_separator_color  = ( $val = get_theme_mod( 'sub_menu_separator_color' ) ) === '#f5f5f7' ? false : $val;
 
 if ( $sub_menu_bg_color ) {
 
@@ -1795,7 +1795,7 @@ if ( $sub_menu_bg_color_alt ) {
 if ( $sub_menu_separator ) {
 
 	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li {';
-	echo sprintf( 'border-bottom: %s;', esc_attr( '1px solid #f5f5f7' ) );
+	echo 'border-bottom: 1px solid #f5f5f7;';
 
 	if ( $sub_menu_separator_color ) {
 		echo sprintf( 'border-bottom-color: %s;', esc_attr( $sub_menu_separator_color ) );

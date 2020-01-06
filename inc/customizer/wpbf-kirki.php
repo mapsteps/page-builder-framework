@@ -3269,12 +3269,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Width.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'slider',
-	'settings' => 'sub_menu_width',
-	'label'    => __( 'Width', 'page-builder-framework' ),
-	'section'  => 'wpbf_sub_menu_options',
-	'priority' => 1,
-	'default'  => 220,
+	'type'      => 'slider',
+	'settings'  => 'sub_menu_width',
+	'label'     => __( 'Width', 'page-builder-framework' ),
+	'section'   => 'wpbf_sub_menu_options',
+	'priority'  => 1,
+	'default'   => 220,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'min'  => 100,
 		'max'  => 400,
@@ -3341,7 +3342,7 @@ Kirki::add_field( 'wpbf', array(
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'min'  => 0,
-		'max'  => 100,
+		'max'  => 50,
 		'step' => 1,
 	),
 ) );

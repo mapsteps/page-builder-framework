@@ -87,6 +87,13 @@
 
 	/* Sub Menu */
 
+	// Width.
+	wp.customize( 'sub_menu_width', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu').css('width', newval );
+		} );
+	} );
+
 	// Background color.
 	wp.customize( 'sub_menu_bg_color', function( value ) {
 		value.bind( function( newval ) {
