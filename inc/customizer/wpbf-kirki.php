@@ -1588,19 +1588,19 @@ Kirki::add_field( 'wpbf', array(
 	'priority'    => 1,
 ) );
 
-// Position.
+// Alignment.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
+	'type'            => 'radio-image',
 	'settings'        => 'scrolltop_position',
-	'label'           => __( 'Position', 'page-builder-framework' ),
+	'label'           => __( 'Alignment', 'page-builder-framework' ),
 	'section'         => 'wpbf_scrolltop_options',
 	'default'         => 'right',
 	'priority'        => 2,
 	'multiple'        => 1,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'right' => __( 'Right', 'page-builder-framework' ),
-		'left'  => __( 'Left', 'page-builder-framework' ),
+		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
+		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
 	),
 	'active_callback' => array(
 		array(
