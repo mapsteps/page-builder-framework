@@ -32,6 +32,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<?php do_action( 'wpbf_before_header' ); ?>
 
-		<?php do_action('wpbf_header'); ?>
-		
+		<?php do_action( 'wpbf_header' ); ?>
+
 		<?php do_action( 'wpbf_after_header' ); ?>
