@@ -93,6 +93,44 @@
 	    "default_value": "toolset_use_theme_setting"
 	},
 	{
+	    "name": "sidebar_gap",
+	    "type": [ "customizer" ],
+	    "group": "Global",
+	    "target": [ "archive", "single" ],
+           "global_key": "theme_mods_page-builder-framework",
+	    "gui": {
+	        "display_name": "Gap",
+	        "type": "select",
+	        "values": [
+	            {
+	                "text": "Divider",
+	                "value": "divider"
+	            },
+	            {
+	                "text": "xLarge",
+	                "value": "xlarge"
+	            },
+	            {
+	                "text": "Large",
+	                "value": "large"
+	            },
+	            {
+	                "text": "Medium",
+	                "value": "medium"
+	            },
+	            {
+	                "text": "Small",
+	                "value": "small"
+	            },
+				{
+	                "text": "Collapse",
+	                "value": "collapse"
+	            }
+	        ]
+	    },
+	    "default_value": "toolset_use_theme_setting"
+	},
+	{
 		"name": "blog_author",
 		"type": [ "customizer" ],
 		"group": "Global",
@@ -183,6 +221,146 @@
 				{
 					"text": "Off",
 					"value": "0"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "menu_logo_description",
+		"type": [ "customizer" ],
+		"group": "Header",
+		"target": [ "archive", "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Display Tagline",
+			"type": "select",
+			"values": [
+				{
+					"text": "On",
+					"value": "1"
+
+				},
+				{
+					"text": "Off",
+					"value": "0"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "menu_logo_description_mobile",
+		"type": [ "customizer" ],
+		"group": "Header",
+		"target": [ "archive", "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Display Tagline on Mobile",
+			"type": "select",
+			"values": [
+				{
+					"text": "On",
+					"value": "1"
+
+				},
+				{
+					"text": "Off",
+					"value": "0"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "mobile_menu_options",
+		"type": [ "customizer" ],
+		"group": "Header",
+		"target": [ "archive", "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Mobile Menu",
+			"type": "select",
+			"values": [
+				{
+					"text": "Default",
+					"value": "menu-mobile-default"
+
+				},
+				{
+					"text": "Hamburger",
+					"value": "menu-mobile-hamburger"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "mobile_menu_hamburger_style",
+		"type": [ "customizer" ],
+		"group": "Header",
+		"target": [ "archive", "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Display Tagline on Mobile",
+			"type": "select",
+			"values": [
+				{
+					"text": "Default",
+					"value": "default"
+
+				},
+				{
+					"text": "Filled",
+					"value": "filled"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "single_post_nav",
+		"type": [ "customizer" ],
+		"group": "Post Layout",
+		"target": [ "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Post Navigation",
+			"type": "select",
+			"values": [
+				{
+					"text": "Previous/Next Post",
+					"value": "show"
+				},
+				{
+					"text": "Post Title",
+					"value": "default"
+				},
+				{
+					"text": "Hide",
+					"value": "hide"
+				}
+			]
+		},
+		"default_value": "toolset_use_theme_setting"
+	},
+	{
+		"name": "single_post_style",
+		"type": [ "customizer" ],
+		"group": "Post Layout",
+		"target": [ "single" ],
+		"global_key": "theme_mods_page-builder-framework",
+		"gui": {
+			"display_name": "Style",
+			"type": "select",
+			"values": [
+				{
+					"text": "Plain",
+					"value": "plain"
+				},
+				{
+					"text": "Boxed",
+					"value": "boxed"
 				}
 			]
 		},
