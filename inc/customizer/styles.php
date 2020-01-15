@@ -1843,7 +1843,7 @@ if ( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_botto
 
 if ( $sub_menu_accent_color || $sub_menu_font_size ) {
 
-	echo '.wpbf-menu .sub-menu a {';
+	echo '.wpbf-navigation .wpbf-menu .sub-menu a {';
 
 	if ( $sub_menu_accent_color ) {
 		echo sprintf( 'color: %s;', esc_attr( $sub_menu_accent_color ) );
@@ -1860,7 +1860,7 @@ if ( $sub_menu_accent_color || $sub_menu_font_size ) {
 
 if ( $sub_menu_accent_color_alt ) {
 
-	echo '.wpbf-menu .sub-menu a:hover {';
+	echo '.wpbf-navigation .wpbf-menu .sub-menu a:hover {';
 	echo sprintf( 'color: %s;', esc_attr( $sub_menu_accent_color_alt ) );
 	echo '}';
 

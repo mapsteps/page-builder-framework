@@ -382,18 +382,18 @@
 
 /* Pre Header */
 
- .wpbf-pre-header {
- 	.wpbf-menu {
- 		float: right;
- 		.sub-menu {
- 			z-index: 999;
- 		}
- 	}
- }
+.wpbf-pre-header {
+	.wpbf-menu {
+		float: right;
+		.sub-menu {
+			z-index: 999;
+		}
+	}
+}
 
  // Right Navigation
- .wpbf-pre-header {
- 	.wpbf-inner-pre-header-right {
+.wpbf-pre-header {
+	.wpbf-inner-pre-header-right {
 		.wpbf-menu {
 			float: right;
 			.sub-menu {
@@ -415,7 +415,7 @@
 /* Footer */
 
 // One Column Navigation
- .wpbf-page-footer {
+.wpbf-page-footer {
 	.wpbf-inner-footer-content {
  		.wpbf-menu {
 	 		@include flex();
@@ -427,8 +427,8 @@
  }
 
  // Right Navigation
- .wpbf-page-footer {
- 	.wpbf-inner-footer-right {
+.wpbf-page-footer {
+	.wpbf-inner-footer-right {
 		.wpbf-menu {
 			float: right;
 		}
