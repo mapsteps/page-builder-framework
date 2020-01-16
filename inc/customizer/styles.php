@@ -270,7 +270,7 @@ $page_width                   = get_theme_mod( 'page_max_width' );
 $page_boxed                   = get_theme_mod( 'page_boxed' );
 $page_boxed_padding           = ( $val = get_theme_mod( 'page_boxed_padding' ) ) === '20' ? false : $val;
 $page_boxed_margin            = get_theme_mod( 'page_boxed_margin' );
-$page_boxed_background        = ( $val = get_theme_mod( 'page_boxed_background' ) ) === '#ffffff' ? false : $val;
+$page_boxed_background        = get_theme_mod( 'page_boxed_background', '#ffffff' );
 $page_boxed_shadow            = get_theme_mod( 'page_boxed_box_shadow' );
 $page_boxed_shadow_horizontal = ( $val = get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_vertical   = ( $val = get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) ? $val . 'px' : '0px';
