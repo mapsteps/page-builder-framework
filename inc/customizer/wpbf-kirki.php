@@ -3818,22 +3818,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'separator-16566832',
-	'section'  => 'wpbf_footer_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 4,
-	'active_callback' => array(
-		array(
-			'setting'  => 'footer_layout',
-			'operator' => '!=',
-			'value'    => 'none',
-		),
-	),
-) );
-
 // Width.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'dimension',
