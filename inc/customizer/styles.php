@@ -2037,7 +2037,7 @@ if ( $mobile_menu_submenu_arrow_color ) {
 
 if ( $mobile_menu_font_size ) {
 
-	echo '.wpbf-mobile-menu {';
+	echo '.wpbf-mobile-menu a {';
 	echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_font_size ) );
 	echo '}';
 
