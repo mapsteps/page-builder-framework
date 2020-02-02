@@ -308,6 +308,13 @@ foreach ( $singles as $single ) {
 
 /* Sections – Header */
 
+// Pre header.
+Kirki::add_section( 'wpbf_pre_header_options', array(
+	'title'    => __( 'Pre Header', 'page-builder-framework' ),
+	'panel'    => 'header_panel',
+	'priority' => 0,
+) );
+
 // Navigation.
 Kirki::add_section( 'wpbf_menu_options', array(
 	'title'    => __( 'Navigation', 'page-builder-framework' ),
@@ -319,21 +326,14 @@ Kirki::add_section( 'wpbf_menu_options', array(
 Kirki::add_section( 'wpbf_sub_menu_options', array(
 	'title'    => __( 'Sub Menu', 'page-builder-framework' ),
 	'panel'    => 'header_panel',
-	'priority' => 600,
+	'priority' => 250,
 ) );
 
 // Mobile menu.
 Kirki::add_section( 'wpbf_mobile_menu_options', array(
 	'title'    => __( 'Mobile Navigation', 'page-builder-framework' ),
 	'panel'    => 'header_panel',
-	'priority' => 700,
-) );
-
-// Pre header.
-Kirki::add_section( 'wpbf_pre_header_options', array(
-	'title'    => __( 'Pre Header', 'page-builder-framework' ),
-	'panel'    => 'header_panel',
-	'priority' => 800,
+	'priority' => 300,
 ) );
 
 /* Fields – Breadcrumb Settings */
@@ -3464,13 +3464,12 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Hamburger color.
+// Icon color.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
 	'settings'        => 'mobile_menu_hamburger_color',
 	'label'           => __( 'Icon Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => '#6d7680',
 	'priority'        => 4,
 	'choices'         => array(
 		'alpha' => true,
@@ -3569,7 +3568,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings' => 'mobile_menu_bg_color',
 	'label'    => __( 'Background Color', 'page-builder-framework' ),
 	'section'  => 'wpbf_mobile_menu_options',
-	'default'  => '#ffffff',
 	'priority' => 9,
 	'choices'  => array(
 		'alpha' => true,
@@ -3582,7 +3580,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings' => 'mobile_menu_bg_color_alt',
 	'label'    => __( 'Hover', 'page-builder-framework' ),
 	'section'  => 'wpbf_mobile_menu_options',
-	'default'  => '#ffffff',
 	'priority' => 10,
 	'choices'  => array(
 		'alpha' => true,
