@@ -1879,7 +1879,6 @@ $mobile_menu_border_color            = get_theme_mod( 'mobile_menu_border_color'
 $mobile_menu_options                 = get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
 $mobile_menu_hamburger_color         = get_theme_mod( 'mobile_menu_hamburger_color' );
 $mobile_menu_hamburger_size          = get_theme_mod( 'mobile_menu_hamburger_size' );
-$mobile_menu_hamburger_style         = get_theme_mod( 'mobile_menu_hamburger_style', 'default' );
 $mobile_menu_hamburger_border_radius = get_theme_mod( 'mobile_menu_hamburger_border_radius' );
 $mobile_menu_hamburger_bg_color      = get_theme_mod( 'mobile_menu_hamburger_bg_color' );
 $mobile_menu_bg_color                = get_theme_mod( 'mobile_menu_bg_color' );
@@ -1986,19 +1985,13 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 
 	}
 
-	if ( 'filled' === $mobile_menu_hamburger_style ) {
+	if ( $mobile_menu_hamburger_bg_color ) {
 
 		echo '.wpbf-mobile-menu-toggle {';
 
-		if ( $mobile_menu_hamburger_bg_color ) {
-			echo sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) );
-		} elseif ( $page_accent_color ) {
-			echo sprintf( 'background: %s;', esc_attr( $page_accent_color ) );
-		} else {
-			echo 'background: #3ba9d2;';
-		}
+		echo sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) );
 
-		echo 'color: #ffffff !important;';
+		echo 'color: #ffffff;';
 		echo 'padding: 10px;';
 
 		if ( $mobile_menu_hamburger_border_radius ) {
