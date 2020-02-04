@@ -74,7 +74,7 @@ jQuery(document).ready(function ($) {
 			step: sliderStepValue,
 			change: function (e, ui) {
 				// Only executed after the sliding stopped.
-				$(this).parent().find('.customize-control-slider-value').trigger('change');
+				this.parentNode.querySelector('.customize-control-slider-value').dispatchEvent(new Event('change'));
 			}
 		});
 	});
@@ -84,8 +84,8 @@ jQuery(document).ready(function ($) {
 		var sliderValue = $(this).parent().find('.customize-control-slider-value').val();
 		var sliderSuffix = sliderValue.replace(/\d+/g, '');
 
-		$(this).parent().find('.customize-control-slider-value').val(ui.value + sliderSuffix);
-		$(this).parent().find('.customize-control-slider-value').trigger('change');
+		this.parentNode.querySelector('.customize-control-slider-value').value = ui.value + sliderSuffix;
+		this.parentNode.querySelector('.customize-control-slider-value').dispatchEvent(new Event('change'));
 	});
 
 	// Reset slider and input field back to the default value
