@@ -57,7 +57,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
-				<?php $link = $this->get_link()?>
+				<?php $link = $this->get_link(); ?>
 
 				<?php $link = str_replace( 'mobile', $device, $link ); ?>
 
@@ -69,7 +69,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 			</div>
 
-			<?php
+				<?php
 
 			}
 
@@ -112,7 +112,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 				?>
 
 				<label>
-					<input style="text-align:center;" type="number" <?php echo esc_attr( $link ) ?> value="<?php echo esc_textarea( $this->value() ); ?>">
+					<input style="text-align:center;" type="number" <?php echo esc_attr( $link ); ?> value="<?php echo esc_textarea( $this->value() ); ?>">
 					<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 				</label>
 
@@ -173,21 +173,21 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
-			<?php foreach ( $areas as $area ) { ?>
+				<?php foreach ( $areas as $area ) { ?>
 
 			<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 
-				<?php
+					<?php
 
-				$link = $this->get_link();
-				$link = str_replace( 'left', $area, $link );
-				$link = str_replace( 'mobile', $device, $link );
-				$link = str_replace( '"', '', $link );
+					$link = $this->get_link();
+					$link = str_replace( 'left', $area, $link );
+					$link = str_replace( 'mobile', $device, $link );
+					$link = str_replace( '"', '', $link );
 
-				?>
+					?>
 
 				<label>
-					<input style="text-align:center;" type="number" <?php echo esc_attr( $link ) ?> value="<?php echo esc_textarea( $this->value() ); ?>">
+					<input style="text-align:center;" type="number" <?php echo esc_attr( $link ); ?> value="<?php echo esc_textarea( $this->value() ); ?>">
 					<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 				</label>
 
@@ -199,7 +199,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 			</div>
 
-			<?php
+				<?php
 
 			}
 
@@ -222,17 +222,20 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		}
 
 		public function render_content() {
-
+			$saved_value = get_theme_mod( $this->id );
 			?>
 
 			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
 
 			<div class="wpbf-input-slider-control">
-				<div class="slider" slider-min-value="<?php echo esc_attr( $this->choices['min'] ); ?>" slider-max-value="<?php echo esc_attr( $this->choices['max'] ); ?>" slider-step-value="<?php echo esc_attr( $this->choices['step'] ); ?>"></div><span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="<?php echo esc_attr( $this->value() ); ?>"></span>
-				<input type="text" id="<?php echo esc_attr( $this->id ); ?>" name="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $this->value() ); ?>" class="customize-control-slider-value" <?php $this->link();?> />
+				<div class="slider" slider-min-value="<?php echo esc_attr( $this->choices['min'] ); ?>" slider-max-value="<?php echo esc_attr( $this->choices['max'] ); ?>" slider-step-value="<?php echo esc_attr( $this->choices['step'] ); ?>"></div>
+
+				<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="<?php echo esc_attr( $saved_value ); ?>"></span>
+
+				<input type="text" id="<?php echo esc_attr( $this->id ); ?>" name="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $saved_value ); ?>" class="customize-control-slider-value" <?php $this->link(); ?> />
 			</div>
 
-		<?php
+			<?php
 
 		}
 
@@ -245,13 +248,16 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 	 *
 	 * @return array The updated controls.
 	 */
-	add_filter( 'kirki_control_types', function ( $controls ) {
+	add_filter(
+		'kirki_control_types',
+		function ( $controls ) {
 
-		$controls['input_slider'] = 'WPBF_Customize_Input_Slider';
+			$controls['input_slider'] = 'WPBF_Customize_Input_Slider';
 
-		return $controls;
+			return $controls;
 
-	} );
+		}
+	);
 
 	/**
 	 * Responsive input slider control.
@@ -294,26 +300,31 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 				</li>
 			</ul>
 
-			<?php foreach ( $devices as $device ) { ?>
+			<?php foreach ( $devices as $device ) : ?>
 
-			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
+				<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
-				<?php $link = $this->get_link()?>
+					<?php
+					$link = $this->get_link();
+					$link = str_replace( 'mobile', $device, $link );
+					$link = str_replace( '"', '', $link );
 
-				<?php $link = str_replace( 'mobile', $device, $link ); ?>
+					$saved_value = get_theme_mod( 'menu_logo_font_size_' . $device );
+					?>
 
-				<?php $link = str_replace( '"', '', $link ); ?>
+					<div class="wpbf-input-slider-control">
+						<div class="slider" slider-min-value="<?php echo esc_attr( $this->choices['min'] ); ?>" slider-max-value="<?php echo esc_attr( $this->choices['max'] ); ?>" slider-step-value="<?php echo esc_attr( $this->choices['step'] ); ?>"></div>
 
-				<div class="wpbf-input-slider-control">
-					<div class="slider" slider-min-value="<?php echo esc_attr( $this->choices['min'] ); ?>" slider-max-value="<?php echo esc_attr( $this->choices['max'] ); ?>" slider-step-value="<?php echo esc_attr( $this->choices['step'] ); ?>"></div><span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="<?php echo esc_attr( $this->value() ); ?>"></span>
-					<input type="text" id="<?php echo esc_attr( $this->id ); ?>" name="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $this->value() ); ?>" class="customize-control-slider-value" <?php echo $link ?> />
+						<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="<?php echo esc_attr( $saved_value ); ?>"></span>
+
+						<input type="text" id="<?php echo esc_attr( $this->id ); ?>_<?php echo esc_attr( $device ); ?>" name="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $saved_value ); ?>" class="customize-control-slider-value" <?php echo $link; ?> />
+					</div>
+
 				</div>
 
-			</div>
+				<?php
 
-			<?php
-
-			}
+			endforeach;
 
 		}
 
