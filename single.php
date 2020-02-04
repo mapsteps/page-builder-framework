@@ -22,7 +22,7 @@ get_header();
 
 	<?php do_action( 'wpbf_content_open' ); ?>
 
-	<?php if ( !is_singular( array( 'elementor_library', 'et_pb_layout', 'wpbf_hooks' ) ) ) : ?>
+	<?php if ( ! is_singular( array( 'elementor_library', 'et_pb_layout', 'wpbf_hooks' ) ) ) : ?>
 
 	<?php wpbf_inner_content(); ?>
 
@@ -104,9 +104,9 @@ get_header();
 						next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
 						?>
 
-					 </nav>
+					</nav>
 
-					 <?php do_action( 'wpbf_after_post_links' ); ?>
+					<?php do_action( 'wpbf_after_post_links' ); ?>
 
 					<?php } ?>
 
