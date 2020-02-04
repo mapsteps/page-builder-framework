@@ -58,16 +58,8 @@ if ( post_password_required() )	return;
 
 <?php
 
-$args = array(
-	'title_reply'          => apply_filters( 'wpbf_leave_comment', __( 'Leave a Comment', 'page-builder-framework' ) ),
-	/* translators: Comment title */
-	'title_reply_to'       => apply_filters( 'wpbf_leave_reply', __( 'Leave a Reply to %s', 'page-builder-framework' ) ),
-	'cancel_reply_link'    => apply_filters( 'wpbf_cancel_reply', __( 'Cancel Reply', 'page-builder-framework' ) ),
-	'label_submit'         => apply_filters( 'wpbf_post_comment', __( 'Post Comment', 'page-builder-framework' ) ),
-);
-
 do_action( 'wpbf_before_comment_form' );
 
-comment_form( $args );
+comment_form();
 
 do_action( 'wpbf_after_comment_form' );
