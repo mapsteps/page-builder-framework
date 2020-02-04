@@ -32,7 +32,7 @@ get_header();
 
 			<?php do_action( 'wpbf_sidebar_left' ); ?>
 
-			<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo esc_attr( wpbf_singular_class() ); ?>">
+			<main id="main" class="wpbf-main wpbf-medium-2-3<?php echo wpbf_singular_class(); ?>">
 
 				<?php do_action( 'wpbf_main_content_open' ); ?>
 
@@ -110,7 +110,7 @@ get_header();
 												next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
 												?>
 
-					</nav>
+					 </nav>
 
 												<?php do_action( 'wpbf_after_post_links' ); ?>
 
@@ -119,7 +119,7 @@ get_header();
 											<?php comments_template(); ?>
 
 				</article>
-
+				
 									<?php
 				endwhile;
 endif;
