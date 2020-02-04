@@ -22,7 +22,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 		public function enqueue() {
 
-			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), false, true );
+			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), WPBF_VERSION, true );
 			wp_enqueue_style( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/css/wpbf-customizer-controls.css' );
 
 		}
@@ -86,7 +86,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 		public function enqueue() {
 
-			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), false, true );
+			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), WPBF_VERSION, true );
 			wp_enqueue_style( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/css/wpbf-customizer-controls.css' );
 
 		}
@@ -137,7 +137,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 		public function enqueue() {
 
-			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), false, true );
+			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), WPBF_VERSION, true );
 			wp_enqueue_style( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/css/wpbf-customizer-controls.css' );
 
 		}
@@ -216,7 +216,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 		public function enqueue() {
 
-			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), false, true );
+			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), WPBF_VERSION, true );
 			wp_enqueue_style( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/css/wpbf-customizer-controls.css' );
 
 		}
@@ -262,7 +262,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 		public function enqueue() {
 
-			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), false, true );
+			wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/wpbf-customizer-controls.js', array( 'jquery' ), WPBF_VERSION, true );
 			wp_enqueue_style( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/css/wpbf-customizer-controls.css' );
 
 		}
