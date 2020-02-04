@@ -54,6 +54,7 @@ jQuery(document).ready(function ($) {
 			max: sliderMaxValue,
 			step: sliderStepValue,
 			change: function (e, ui) {
+				// Only executed after the sliding stopped.
 				$(this).parent().find('.customize-control-slider-value').trigger('change');
 			}
 		});
@@ -65,6 +66,7 @@ jQuery(document).ready(function ($) {
 		var sliderSuffix = sliderValue.replace(/\d+/g, '');
 
 		$(this).parent().find('.customize-control-slider-value').val(ui.value + sliderSuffix);
+		$(this).parent().find('.customize-control-slider-value').trigger('change');
 	});
 
 	// Reset slider and input field back to the default value
