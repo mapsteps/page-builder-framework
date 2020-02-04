@@ -123,13 +123,6 @@ Kirki::add_field( 'wpbf', array(
 	'section'     => 'wpbf_woocommerce_menu_item_options',
 	'default'     => 0,
 	'priority'    => 5,
-	'active_callback' => array(
-		array(
-			'setting'  => 'menu_search_icon',
-			'operator' => '==',
-			'value'    => true,
-		),
-	),
 ) );
 
 // Separator.

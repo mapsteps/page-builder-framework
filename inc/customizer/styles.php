@@ -270,7 +270,7 @@ $page_width                   = get_theme_mod( 'page_max_width' );
 $page_boxed                   = get_theme_mod( 'page_boxed' );
 $page_boxed_padding           = ( $val = get_theme_mod( 'page_boxed_padding' ) ) === '20' ? false : $val;
 $page_boxed_margin            = get_theme_mod( 'page_boxed_margin' );
-$page_boxed_background        = ( $val = get_theme_mod( 'page_boxed_background' ) ) === '#ffffff' ? false : $val;
+$page_boxed_background        = get_theme_mod( 'page_boxed_background', '#ffffff' );
 $page_boxed_shadow            = get_theme_mod( 'page_boxed_box_shadow' );
 $page_boxed_shadow_horizontal = ( $val = get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_vertical   = ( $val = get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) ? $val . 'px' : '0px';
@@ -1843,7 +1843,7 @@ if ( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_botto
 
 if ( $sub_menu_accent_color || $sub_menu_font_size ) {
 
-	echo '.wpbf-menu .sub-menu a {';
+	echo '.wpbf-navigation .wpbf-menu .sub-menu a {';
 
 	if ( $sub_menu_accent_color ) {
 		echo sprintf( 'color: %s;', esc_attr( $sub_menu_accent_color ) );
@@ -1860,7 +1860,7 @@ if ( $sub_menu_accent_color || $sub_menu_font_size ) {
 
 if ( $sub_menu_accent_color_alt ) {
 
-	echo '.wpbf-menu .sub-menu a:hover {';
+	echo '.wpbf-navigation .wpbf-menu .sub-menu a:hover {';
 	echo sprintf( 'color: %s;', esc_attr( $sub_menu_accent_color_alt ) );
 	echo '}';
 
@@ -1875,11 +1875,10 @@ $mobile_menu_padding_bottom          = get_theme_mod( 'mobile_menu_padding_botto
 $mobile_menu_padding_left            = get_theme_mod( 'mobile_menu_padding_left' );
 $mobile_menu_font_color              = get_theme_mod( 'mobile_menu_font_color' );
 $mobile_menu_font_color_alt          = get_theme_mod( 'mobile_menu_font_color_alt' );
-$mobile_menu_border_color            = get_theme_mod( 'mobile_menu_border_color' );
+$mobile_menu_border_color            = ( $val = get_theme_mod( 'mobile_menu_border_color' ) ) === '#d9d9e0' ? false : $val;
 $mobile_menu_options                 = get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
 $mobile_menu_hamburger_color         = get_theme_mod( 'mobile_menu_hamburger_color' );
 $mobile_menu_hamburger_size          = get_theme_mod( 'mobile_menu_hamburger_size' );
-$mobile_menu_hamburger_style         = get_theme_mod( 'mobile_menu_hamburger_style', 'default' );
 $mobile_menu_hamburger_border_radius = get_theme_mod( 'mobile_menu_hamburger_border_radius' );
 $mobile_menu_hamburger_bg_color      = get_theme_mod( 'mobile_menu_hamburger_bg_color' );
 $mobile_menu_bg_color                = get_theme_mod( 'mobile_menu_bg_color' );
@@ -1986,19 +1985,11 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 
 	}
 
-	if ( 'filled' === $mobile_menu_hamburger_style ) {
+	if ( $mobile_menu_hamburger_bg_color ) {
 
 		echo '.wpbf-mobile-menu-toggle {';
-
-		if ( $mobile_menu_hamburger_bg_color ) {
-			echo sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) );
-		} elseif ( $page_accent_color ) {
-			echo sprintf( 'background: %s;', esc_attr( $page_accent_color ) );
-		} else {
-			echo 'background: #3ba9d2;';
-		}
-
-		echo 'color: #ffffff !important;';
+		echo sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) );
+		echo 'color: #ffffff;';
 		echo 'padding: 10px;';
 
 		if ( $mobile_menu_hamburger_border_radius ) {
@@ -2037,7 +2028,7 @@ if ( $mobile_menu_submenu_arrow_color ) {
 
 if ( $mobile_menu_font_size ) {
 
-	echo '.wpbf-mobile-menu {';
+	echo '.wpbf-mobile-menu a {';
 	echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_font_size ) );
 	echo '}';
 

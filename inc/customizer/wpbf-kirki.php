@@ -308,6 +308,13 @@ foreach ( $singles as $single ) {
 
 /* Sections – Header */
 
+// Pre header.
+Kirki::add_section( 'wpbf_pre_header_options', array(
+	'title'    => __( 'Pre Header', 'page-builder-framework' ),
+	'panel'    => 'header_panel',
+	'priority' => 0,
+) );
+
 // Navigation.
 Kirki::add_section( 'wpbf_menu_options', array(
 	'title'    => __( 'Navigation', 'page-builder-framework' ),
@@ -319,21 +326,14 @@ Kirki::add_section( 'wpbf_menu_options', array(
 Kirki::add_section( 'wpbf_sub_menu_options', array(
 	'title'    => __( 'Sub Menu', 'page-builder-framework' ),
 	'panel'    => 'header_panel',
-	'priority' => 600,
+	'priority' => 250,
 ) );
 
 // Mobile menu.
 Kirki::add_section( 'wpbf_mobile_menu_options', array(
 	'title'    => __( 'Mobile Navigation', 'page-builder-framework' ),
 	'panel'    => 'header_panel',
-	'priority' => 700,
-) );
-
-// Pre header.
-Kirki::add_section( 'wpbf_pre_header_options', array(
-	'title'    => __( 'Pre Header', 'page-builder-framework' ),
-	'panel'    => 'header_panel',
-	'priority' => 800,
+	'priority' => 300,
 ) );
 
 /* Fields – Breadcrumb Settings */
@@ -1588,19 +1588,19 @@ Kirki::add_field( 'wpbf', array(
 	'priority'    => 1,
 ) );
 
-// Position.
+// Alignment.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
+	'type'            => 'radio-image',
 	'settings'        => 'scrolltop_position',
-	'label'           => __( 'Position', 'page-builder-framework' ),
+	'label'           => __( 'Alignment', 'page-builder-framework' ),
 	'section'         => 'wpbf_scrolltop_options',
 	'default'         => 'right',
 	'priority'        => 2,
 	'multiple'        => 1,
 	'transport'       => 'postMessage',
 	'choices'         => array(
-		'right' => __( 'Right', 'page-builder-framework' ),
-		'left'  => __( 'Left', 'page-builder-framework' ),
+		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
+		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
 	),
 	'active_callback' => array(
 		array(
@@ -1980,8 +1980,8 @@ Kirki::add_field( 'wpbf', array(
 	'active_callback' => array(
 		array(
 			'setting'  => 'button_border_width',
-			'operator' => '!==',
-			'value'    => '0',
+			'operator' => '!=',
+			'value'    => 0,
 		),
 	),
 ) );
@@ -1999,8 +1999,8 @@ Kirki::add_field( 'wpbf', array(
 	'active_callback' => array(
 		array(
 			'setting'  => 'button_border_width',
-			'operator' => '!==',
-			'value'    => '0',
+			'operator' => '!=',
+			'value'    => 0,
 		),
 	),
 ) );
@@ -2018,8 +2018,8 @@ Kirki::add_field( 'wpbf', array(
 	'active_callback' => array(
 		array(
 			'setting'  => 'button_border_width',
-			'operator' => '!==',
-			'value'    => '0',
+			'operator' => '!=',
+			'value'    => 0,
 		),
 	),
 ) );
@@ -2037,8 +2037,8 @@ Kirki::add_field( 'wpbf', array(
 	'active_callback' => array(
 		array(
 			'setting'  => 'button_border_width',
-			'operator' => '!==',
-			'value'    => '0',
+			'operator' => '!=',
+			'value'    => 0,
 		),
 	),
 ) );
@@ -3413,96 +3413,6 @@ Kirki::add_field( 'wpbf', array(
 	) ),
 ) );
 
-// Icon style.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'mobile_menu_hamburger_style',
-	'label'           => __( 'Hamburger Icon Style', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => 'default',
-	'priority'        => 1,
-	'multiple'        => 1,
-	'choices'         => array(
-		'default' => __( 'Default', 'page-builder-framework' ),
-		'filled'  => __( 'Filled', 'page-builder-framework' ),
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'mobile_menu_options',
-			'operator' => 'in',
-			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
-		),
-	),
-) );
-
-// Border radius.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'mobile_menu_hamburger_border_radius',
-	'label'           => __( 'Border Radius', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'priority'        => 1,
-	'default'         => 0,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'min'  => 0,
-		'max'  => 50,
-		'step' => 1,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'mobile_menu_options',
-			'operator' => 'in',
-			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
-		),
-		array(
-			'setting'  => 'mobile_menu_hamburger_style',
-			'operator' => '==',
-			'value'    => 'filled',
-		),
-	),
-) );
-
-// Hamburger background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'mobile_menu_hamburger_bg_color',
-	'label'           => __( 'Hamburger Icon Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'priority'        => 1,
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'mobile_menu_options',
-			'operator' => 'in',
-			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
-		),
-		array(
-			'setting'  => 'mobile_menu_hamburger_style',
-			'operator' => '==',
-			'value'    => 'filled',
-		),
-	),
-) );
-
-// Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'custom',
-	'settings'        => 'separator-680902',
-	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'        => 1,
-	'active_callback' => array(
-		array(
-			'setting'  => 'mobile_menu_options',
-			'operator' => 'in',
-			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
-		),
-	),
-) );
-
 // Mobile search icon.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'toggle',
@@ -3554,37 +3464,13 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Hamburger size.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'mobile_menu_hamburger_size',
-	'label'           => __( 'Icon Size', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => 16,
-	'priority'        => 4,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'min'  => 12,
-		'max'  => 24,
-		'step' => 1,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'mobile_menu_options',
-			'operator' => 'in',
-			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
-		),
-	),
-) );
-
-// Hamburger color.
+// Icon color.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
 	'settings'        => 'mobile_menu_hamburger_color',
 	'label'           => __( 'Icon Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => '#6d7680',
-	'priority'        => 5,
+	'priority'        => 4,
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -3597,22 +3483,91 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Separator.
+// Hamburger background color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'separator-71744',
-	'section'  => 'wpbf_mobile_menu_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 6,
+	'type'            => 'color',
+	'settings'        => 'mobile_menu_hamburger_bg_color',
+	'label'           => __( 'Hamburger Icon Color', 'page-builder-framework' ),
+	'section'         => 'wpbf_mobile_menu_options',
+	'priority'        => 4,
+	'choices'         => array(
+		'alpha' => true,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'mobile_menu_options',
+			'operator' => 'in',
+			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
+		),
+	),
+) );
+
+// Border radius.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'slider',
+	'settings'        => 'mobile_menu_hamburger_border_radius',
+	'label'           => __( 'Border Radius', 'page-builder-framework' ),
+	'section'         => 'wpbf_mobile_menu_options',
+	'priority'        => 4,
+	'default'         => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'mobile_menu_options',
+			'operator' => 'in',
+			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
+		),
+		array(
+			'setting'  => 'mobile_menu_hamburger_bg_color',
+			'operator' => '!=',
+			'value'    => false,
+		),
+	),
+) );
+
+// Hamburger size.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'input_slider',
+	'settings'        => 'mobile_menu_hamburger_size',
+	'label'           => __( 'Icon Size', 'page-builder-framework' ),
+	'section'         => 'wpbf_mobile_menu_options',
+	'default'         => 16,
+	'priority'        => 5,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'mobile_menu_options',
+			'operator' => 'in',
+			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
+		),
+	),
+) );
+
+// Menu item settings.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'custom',
+	'settings'        => 'mobile-menu-item-settings-headline',
+	'section'         => 'wpbf_mobile_menu_options',
+	'default'         => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Menu Item Settings', 'page-builder-framework' ) . '</h3>',
+	'priority'        => 6,
 ) );
 
 // Menu item background color.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'color',
 	'settings' => 'mobile_menu_bg_color',
-	'label'    => __( 'Menu Item Background Color', 'page-builder-framework' ),
+	'label'    => __( 'Background Color', 'page-builder-framework' ),
 	'section'  => 'wpbf_mobile_menu_options',
-	'default'  => '#ffffff',
 	'priority' => 9,
 	'choices'  => array(
 		'alpha' => true,
@@ -3625,7 +3580,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings' => 'mobile_menu_bg_color_alt',
 	'label'    => __( 'Hover', 'page-builder-framework' ),
 	'section'  => 'wpbf_mobile_menu_options',
-	'default'  => '#ffffff',
 	'priority' => 10,
 	'choices'  => array(
 		'alpha' => true,
@@ -3814,22 +3768,6 @@ Kirki::add_field( 'wpbf', array(
 			'setting'  => 'footer_column_two_layout',
 			'operator' => '==',
 			'value'    => 'text',
-		),
-	),
-) );
-
-// Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'separator-16566832',
-	'section'  => 'wpbf_footer_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 4,
-	'active_callback' => array(
-		array(
-			'setting'  => 'footer_layout',
-			'operator' => '!=',
-			'value'    => 'none',
 		),
 	),
 ) );
@@ -4321,7 +4259,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		$wp_customize,
 		'mobile_menu_padding',
 		array(
-			'label'    => __( 'Menu Item Padding', 'page-builder-framework' ),
+			'label'    => __( 'Padding', 'page-builder-framework' ),
 			'section'  => 'wpbf_mobile_menu_options',
 			'settings' => 'mobile_menu_padding_top',
 			'priority' => 8,
@@ -4332,7 +4270,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		$wp_customize,
 		'mobile_menu_padding',
 		array(
-			'label'    => __( 'Menu Item Padding', 'page-builder-framework' ),
+			'label'    => __( 'Padding', 'page-builder-framework' ),
 			'section'  => 'wpbf_mobile_menu_options',
 			'settings' => 'mobile_menu_padding_right',
 			'priority' => 8,
@@ -4343,7 +4281,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		$wp_customize,
 		'mobile_menu_padding',
 		array(
-			'label'    => __( 'Menu Item Padding', 'page-builder-framework' ),
+			'label'    => __( 'Padding', 'page-builder-framework' ),
 			'section'  => 'wpbf_mobile_menu_options',
 			'settings' => 'mobile_menu_padding_bottom',
 			'priority' => 8,
@@ -4354,7 +4292,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		$wp_customize,
 		'mobile_menu_padding',
 		array(
-			'label'    => __( 'Menu Item Padding', 'page-builder-framework' ),
+			'label'    => __( 'Padding', 'page-builder-framework' ),
 			'section'  => 'wpbf_mobile_menu_options',
 			'settings' => 'mobile_menu_padding_left',
 			'priority' => 8,

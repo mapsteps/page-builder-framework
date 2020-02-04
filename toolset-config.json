@@ -296,29 +296,6 @@
 		"default_value": "toolset_use_theme_setting"
 	},
 	{
-		"name": "mobile_menu_hamburger_style",
-		"type": [ "customizer" ],
-		"group": "Header",
-		"target": [ "archive", "single" ],
-		"global_key": "theme_mods_page-builder-framework",
-		"gui": {
-			"display_name": "Display Tagline on Mobile",
-			"type": "select",
-			"values": [
-				{
-					"text": "Default",
-					"value": "default"
-
-				},
-				{
-					"text": "Filled",
-					"value": "filled"
-				}
-			]
-		},
-		"default_value": "toolset_use_theme_setting"
-	},
-	{
 		"name": "single_post_nav",
 		"type": [ "customizer" ],
 		"group": "Post Layout",
