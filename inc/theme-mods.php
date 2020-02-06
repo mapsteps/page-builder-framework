@@ -18,13 +18,11 @@ function wpbf_excerpt_length( $excerpt_length ) {
 
 	$wpbf_excerpt_length = get_theme_mod( 'excerpt_lenght' );
 
-	if ( ! $wpbf_excerpt_length || 0 == $wpbf_excerpt_length ) {
+	if ( empty( $wpbf_excerpt_length ) ) {
 		return $excerpt_length;
 	}
 
-	$excerpt_length = $wpbf_excerpt_length;
-
-	return $excerpt_length;
+	return $wpbf_excerpt_length;
 
 }
 add_filter( 'excerpt_length', 'wpbf_excerpt_length', 999 );
@@ -40,13 +38,11 @@ function wpbf_excerpt_more( $excerpt_more ) {
 
 	$wpbf_excerpt_more = get_theme_mod( 'excerpt_more' );
 
-	if ( ! $wpbf_excerpt_more || '[...]' === $wpbf_excerpt_more ) {
+	if ( ! $wpbf_excerpt_more ) {
 		return $excerpt_more;
 	}
 
-	$excerpt_more = $wpbf_excerpt_more;
-
-	return $excerpt_more;
+	return $wpbf_excerpt_more;
 
 }
 add_filter( 'excerpt_more', 'wpbf_excerpt_more', 999 );
@@ -63,7 +59,7 @@ function wpbf_custom_404_title( $title ) {
 	$custom_title = get_theme_mod( '404_headline' );
 
 	if ( $custom_title ) {
-		$title = $custom_title;
+		return $custom_title;
 	}
 
 	return $title;
@@ -84,7 +80,7 @@ function wpbf_custom_404_text( $text ) {
 	$custom_text = get_theme_mod( '404_text' );
 
 	if ( $custom_text ) {
-		$text = $custom_text;
+		return $custom_text;
 	}
 
 	return $text;
@@ -109,12 +105,12 @@ add_action( 'wp', 'wpbf_remove_404_search_form' );
 /**
  * Construct search menu item.
  *
- * @param boolean $is_navigation If we're inside the navigation.
+ * @param boolean $is_inside_main_menu If we're inside the navigation.
  * @param boolean $is_mobile If we're on mobile.
  *
  * @return string The search menu item.
  */
-function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
+function wpbf_search_menu_item( $is_inside_main_menu = true, $is_mobile = false ) {
 
 	$class = $is_mobile ? 'wpbf-mobile-nav-item' : 'wpbf-nav-item';
 
@@ -129,13 +125,13 @@ function wpbf_search_menu_item( $is_navigation = true, $is_mobile = false ) {
 	$search_form = apply_filters( 'wpbf_search_menu_item_form', $search_form );
 
 	// We have a slightly different markup for the search menu item if it's being displayed outside the main menu.
-	$search_item  = $is_navigation ? '<li class="menu-item wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false"><a href="javascript:void(0)" role="button">' : '<div class="' . $class . ' wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false" role="button">';
+	$search_item  = $is_inside_main_menu ? '<li class="menu-item wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false"><a href="javascript:void(0)" role="button">' : '<div class="' . $class . ' wpbf-menu-item-search" aria-haspopup="true" aria-expanded="false" role="button">';
 	$search_item .= '<span class="screen-reader-text">' . __( 'Search Toggle', 'page-builder-framework' ) . '</span>';
 	$search_item .= '<div class="wpbf-menu-search">';
 	$search_item .= $search_form;
 	$search_item .= '</div>';
 	$search_item .= '<i class="wpbff wpbff-search" aria-hidden="true"></i>';
-	$search_item .= $is_navigation ? '</a></li>' : '</div>';
+	$search_item .= $is_inside_main_menu ? '</a></li>' : '</div>';
 
 	return $search_item;
 
@@ -176,9 +172,7 @@ function wpbf_search_menu_icon_mobile() {
 		return;
 	}
 
-	$menu_item = wpbf_search_menu_item( $is_navigation = false, $is_mobile = true );
-
-	echo $menu_item;
+	echo wpbf_search_menu_item( $is_navigation = false, $is_mobile = true );
 
 }
 add_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile', 20 );
@@ -195,7 +189,7 @@ function wpbf_breadcrumbs_custom_separator( $separator ) {
 	$custom_separator = get_theme_mod( 'breadcrumbs_separator' );
 
 	if ( $custom_separator ) {
-		$separator = $custom_separator;
+		return $custom_separator;
 	}
 
 	return $separator;
@@ -216,9 +210,7 @@ function wpbf_next_post_link( $next ) {
 		return $next;
 	}
 
-	$next = '%title &rarr;';
-
-	return $next;
+	return '%title &rarr;';
 
 }
 add_filter( 'wpbf_next_post_link', 'wpbf_next_post_link' );
@@ -236,9 +228,7 @@ function wpbf_previous_post_link( $prev ) {
 		return $prev;
 	}
 
-	$prev = '&larr; %title';
-
-	return $prev;
+	return '&larr; %title';
 
 }
 add_filter( 'wpbf_previous_post_link', 'wpbf_previous_post_link' );
@@ -254,9 +244,9 @@ function wpbf_categories_title( $title ) {
 
 	$cat_title = get_theme_mod( 'blog_categories_title' );
 
-	if ( $cat_title && 'Filed under:' !== $cat_title ) {
+	if ( $cat_title ) {
 
-		$title = $cat_title;
+		return $cat_title;
 
 	}
 
@@ -276,9 +266,9 @@ function wpbf_read_more_text( $text ) {
 
 	$read_more_text = get_theme_mod( 'blog_read_more_text' );
 
-	if ( $read_more_text && 'Read more' !== $read_more_text ) {
+	if ( $read_more_text ) {
 
-		$text = $read_more_text;
+		return $read_more_text;
 
 	}
 
@@ -299,7 +289,7 @@ function wpbf_article_meta_separator( $separator ) {
 	$blog_meta_separator = get_theme_mod( 'blog_meta_separator' );
 
 	if ( $blog_meta_separator ) {
-		$separator = ' ' . $blog_meta_separator . ' ';
+		return ' ' . $blog_meta_separator . ' ';
 	}
 
 	return $separator;
@@ -319,7 +309,7 @@ function wpbf_mobile_logo( $logo_url ) {
 	$custom_logo_url = get_theme_mod( 'menu_mobile_logo' );
 
 	if ( $custom_logo_url ) {
-		$logo_url = $custom_logo_url;
+		return $custom_logo_url;
 	}
 
 	return $logo_url;
