@@ -203,31 +203,31 @@ function wpbf_save_metadata( $post_id ) {
 
 	if ( isset( $_POST['wpbf_options'] ) ) {
 
-		if ( in_array( 'remove-title', $_POST['wpbf_options'] ) !== false ) {
+		if ( in_array( 'remove-title', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'remove-title';
 		}
 
-		if ( in_array( 'full-width', $_POST['wpbf_options'] ) !== false ) {
+		if ( in_array( 'full-width', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'full-width';
 		}
 
-		if ( in_array( 'contained', $_POST['wpbf_options'] ) !== false ) {
+		if ( in_array( 'contained', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'contained';
 		}
 
-		if ( in_array( 'layout-global', $_POST['wpbf_options'] ) !== false ) {
+		if ( in_array( 'layout-global', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'layout-global';
 		}
 
-		if ( in_array( 'remove-featured', $_POST['wpbf_options'] ) !== false ) {
+		if ( in_array( 'remove-featured', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'remove-featured';
 		}
 
-		if ( in_array( 'remove-header', $_POST['wpbf_options'] ) !== false ) {
+		if ( in_array( 'remove-header', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'remove-header';
 		}
 
-		if ( in_array( 'remove-footer', $_POST['wpbf_options'] ) !== false ) {
+		if ( in_array( 'remove-footer', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'remove-footer';
 		}
 
