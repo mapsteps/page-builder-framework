@@ -14,25 +14,33 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  */
 function wpbf_main_menu_fallback() {
 
-	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	if ( current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
 
 		?>
 
 		<ul class="wpbf-menu">
-		<li class="menu-item">
-		<a href="javascript:void(0)" onclick="parent.wp.customize.panel( 'nav_menus' ).focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
-		</li>
+			<li class="menu-item">
+				<a href="javascript:void(0)" onclick="parent.wp.customize.panel( 'nav_menus' ).focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+			</li>
 		</ul>
 
 		<?php
 
-	} elseif ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+	} elseif ( current_user_can( 'edit_theme_options' ) ) {
 
-		echo '<ul class="wpbf-menu">';
-		echo '<li class="menu-item">';
-		echo '<a href="' . esc_url( admin_url( '/nav-menus.php' ) ) . '">' . __( 'Add Menu', 'page-builder-framework' ) . '</a>';
-		echo '</li>';
-		echo '</ul>';
+		?>
+
+		<ul class="wpbf-menu">
+			<li class="menu-item">
+				<a href="<?php echo esc_url( admin_url( '/nav-menus.php' ) ); ?>"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+			</li>
+		</ul>
+
+		<?php
 
 	}
 
@@ -45,25 +53,33 @@ function wpbf_main_menu_fallback() {
  */
 function wpbf_mobile_menu_fallback() {
 
-	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	if ( current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
 
 		?>
 
 		<ul class="wpbf-mobile-menu">
-		<li class="menu-item">
-		<a href="javascript:void(0)" onclick="parent.wp.customize.panel( 'nav_menus' ).focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
-		</li>
+			<li class="menu-item">
+				<a href="javascript:void(0)" onclick="parent.wp.customize.panel( 'nav_menus' ).focus()"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+			</li>
 		</ul>
 
 		<?php
 
-	} elseif ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+	} elseif ( current_user_can( 'edit_theme_options' ) ) {
 
-		echo '<ul class="wpbf-menu">';
-		echo '<li class="menu-item">';
-		echo '<a href="' . esc_url( admin_url( '/nav-menus.php' ) ) . '">' . __( 'Add Menu', 'page-builder-framework' ) . '</a>';
-		echo '</li>';
-		echo '</ul>';
+		?>
+
+		<ul class="wpbf-mobile-menu">
+			<li class="menu-item">
+				<a href="<?php echo esc_url( admin_url( '/nav-menus.php' ) ); ?>"><?php _e( 'Add Menu', 'page-builder-framework' ); ?></a>
+			</li>
+		</ul>
+
+		<?php
 
 	}
 
@@ -76,7 +92,11 @@ function wpbf_mobile_menu_fallback() {
  */
 function wpbf_menu_fallback() {
 
-	if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
+	if ( ! is_user_logged_in() ) {
+		return;
+	}
+
+	if ( current_user_can( 'edit_theme_options' ) && is_customize_preview() ) {
 
 		?>
 
@@ -84,7 +104,7 @@ function wpbf_menu_fallback() {
 
 		<?php
 
-	} elseif ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+	} elseif ( current_user_can( 'edit_theme_options' ) ) {
 
 		echo '<a href="' . esc_url( admin_url( '/nav-menus.php' ) ) . '">' . __( 'Add Menu', 'page-builder-framework' ) . '</a>';
 
