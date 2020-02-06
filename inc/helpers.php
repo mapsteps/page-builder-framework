@@ -100,7 +100,7 @@ function wpbf_inner_content( $echo = true ) {
 			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
 			// If current post type has been set to full-width globally, set $inner_content to false.
-			$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content = false : '';
+			$inner_content = $fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? false : $inner_content;
 
 		}
 
@@ -140,7 +140,7 @@ function wpbf_inner_content_close() {
 
 			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
-			$fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? $inner_content_close = false : '';
+			$inner_content_close = $fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? false : $inner_content_close;
 
 		}
 
