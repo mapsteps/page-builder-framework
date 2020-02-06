@@ -245,9 +245,7 @@ function wpbf_categories_title( $title ) {
 	$cat_title = get_theme_mod( 'blog_categories_title' );
 
 	if ( $cat_title ) {
-
 		return $cat_title;
-
 	}
 
 	return $title;
@@ -267,9 +265,7 @@ function wpbf_read_more_text( $text ) {
 	$read_more_text = get_theme_mod( 'blog_read_more_text' );
 
 	if ( $read_more_text ) {
-
 		return $read_more_text;
-
 	}
 
 	return $text;
