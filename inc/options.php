@@ -141,9 +141,8 @@ function wpbf_sidebar_metabox_callback( $post ) {
 
 	wp_nonce_field( basename( __FILE__ ), 'wpbf_sidebar_nonce' );
 
-	$wpbf_stored_meta = get_post_meta( $post->ID );
-
-	$wpbf_sidebar_position = isset( $wpbf_stored_meta['wpbf_sidebar_position'][0] ) ? $wpbf_stored_meta['wpbf_sidebar_position'][0] : 'global';
+	$wpbf_sidebar_position = get_post_meta( $post->ID, 'wpbf_sidebar_position', true );
+	$wpbf_sidebar_position = ! empty( $wpbf_sidebar_position ) ? $wpbf_sidebar_position : 'global';
 
 	?>
 
