@@ -47,41 +47,36 @@ function wpbf_options_metabox_callback( $post ) {
 
 	wp_nonce_field( basename( __FILE__ ), 'wpbf_options_nonce' );
 
-	$wpbf_stored_meta = get_post_meta( $post->ID );
+	$wpbf_stored_meta = get_post_meta( $post->ID, 'wpbf_options', true );
+	$wpbf_stored_meta = empty( $wpbf_stored_meta ) ? array() : $wpbf_stored_meta;
 
-	if ( ! isset( $wpbf_stored_meta['wpbf_options'][0] ) ) {
-		$wpbf_stored_meta['wpbf_options'][0] = false;
-	}
-
-	$mydata = $wpbf_stored_meta['wpbf_options'];
-
-	if ( strpos( $mydata[0], 'remove-title' ) !== false ) {
+	if ( in_array( 'remove-title', $wpbf_stored_meta, true ) ) {
 		$remove_title = 'remove-title';
 	} else {
 		$remove_title = false;
 	}
 
-	if ( strpos( $mydata[0], 'full-width' ) !== false ) {
+	if ( in_array( 'full-width', $wpbf_stored_meta, true ) ) {
 		$full_width = 'full-width';
-	} elseif ( strpos( $mydata[0], 'contained' ) !== false ) {
+	} elseif ( in_array( 'contained', $wpbf_stored_meta, true ) ) {
 		$full_width = 'contained';
 	} else {
 		$full_width = 'layout-global';
 	}
 
-	if ( strpos( $mydata[0], 'remove-featured' ) !== false ) {
+	if ( in_array( 'remove-featured', $wpbf_stored_meta, true ) ) {
 		$remove_featured = 'remove-featured';
 	} else {
 		$remove_featured = false;
 	}
 
-	if ( strpos( $mydata[0], 'remove-header' ) !== false ) {
+	if ( in_array( 'remove-header', $wpbf_stored_meta, true ) ) {
 		$remove_header = 'remove-header';
 	} else {
 		$remove_header = false;
 	}
 
-	if ( strpos( $mydata[0], 'remove-footer' ) !== false ) {
+	if ( in_array( 'remove-footer', $wpbf_stored_meta, true ) ) {
 		$remove_footer = 'remove-footer';
 	} else {
 		$remove_footer = false;
@@ -133,7 +128,7 @@ function wpbf_options_metabox_callback( $post ) {
 		<label for="remove-footer"><?php _e( 'Footer', 'page-builder-framework' ); ?></label>
 	</div>
 
-<?php
+	<?php
 
 }
 
@@ -172,7 +167,7 @@ function wpbf_sidebar_metabox_callback( $post ) {
 		<label for="no-sidebar"><?php _e( 'No Sidebar', 'page-builder-framework' ); ?></label>
 	</div>
 
-<?php
+	<?php
 
 }
 
@@ -230,7 +225,6 @@ function wpbf_save_metadata( $post_id ) {
 		if ( in_array( 'remove-footer', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'remove-footer';
 		}
-
 	}
 
 	update_post_meta( $post_id, 'wpbf_options', $checked );
