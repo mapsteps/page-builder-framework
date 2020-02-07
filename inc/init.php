@@ -54,6 +54,32 @@ require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 // Theme mods.
 require_once WPBF_THEME_DIR . '/inc/theme-mods.php';
 
+/**
+ * Add theme settings.
+ */
+function wpbf_theme_settings() {
+	add_theme_page( __( 'Theme Settings', 'page-builder-framework' ), __( 'Theme Settings', 'page-builder-framework' ), 'manage_options', 'wpbf-premium', 'wpbf_theme_settings_output' );
+}
+add_action( 'admin_menu', 'wpbf_theme_settings' );
+
+/**
+ * Theme settings output.
+ */
+function wpbf_theme_settings_output() {
+	require __DIR__ . '/settings.php';
+}
+
+/**
+ * Enqueue admin scripts.
+ */
+function wpbf_enqueue_admin_scripts() {
+	wp_enqueue_style( 'settings-page', WPBF_THEME_URI . '/assets/css/settings-page.css', array(), WPBF_VERSION );
+	wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'settings-page' ), WPBF_VERSION );
+
+	wp_enqueue_script( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/js/admin-page.js', array( 'jquery' ), WPBF_VERSION, true );
+}
+add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
+
 /* Integration */
 
 // Header/Footer Elementor integration.
