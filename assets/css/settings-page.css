@@ -1,0 +1,298 @@
+/* General */
+.border-box,
+.border-box * {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.cols {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+.cols .col:last-child {
+	justify-self: flex-end;
+}
+
+.is-centered {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.has-text-centered {
+	text-align: center;
+}
+
+.block-label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: 700;
+}
+
+/* Settings Page */
+.settingstuff.wrap .notice {
+	margin-top: 10px;
+	margin-bottom: 0;
+}
+
+.settingstuff .neatbox.has-subboxes {
+	margin-top: 0;
+	background-color: transparent;
+	border: 0;
+}
+
+.settingstuff .neatbox.has-medium-gap {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.settingstuff .neatbox.has-thin-shadow {
+	-webkit-box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.05);
+	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.05);
+}
+
+.settingstuff .neatbox.has-shadow {
+	-webkit-box-shadow: 0 3px 10px -2px rgba(94, 135, 161, 0.3);
+	box-shadow: 0 3px 10px -2px rgba(94, 135, 161, 0.3);
+}
+
+.settingstuff .neatbox.is-rounded {
+	border-radius: 3px;
+}
+
+.settingstuff .neatbox.is-rounded h2,
+.settingstuff .neatbox.is-smooth h2 {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.settingstuff .neatbox.no-border {
+	border-width: 0;
+}
+
+.settingstuff .neatbox.has-subboxes.is-smooth {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+/**
+ * .is-smooth means:
+ * .has-shadow + is-rounded + .no-border
+ */
+.settingstuff .neatbox.is-smooth {
+	border-width: 0;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 3px 10px -2px rgba(94, 135, 161, 0.3);
+	box-shadow: 0 3px 10px -2px rgba(94, 135, 161, 0.3);
+}
+
+.settingstuff .neatbox {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+}
+
+.settingstuff .neatbox.is-clean {
+	border-width: 0;
+	background-color: transparent;
+}
+
+.settingstuff .neatbox.has-subboxes.is-smooth table {
+	border-width: 0;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-webkit-box-shadow: 0 3px 10px -2px rgba(94, 135, 161, 0.3);
+	box-shadow: 0 3px 10px -2px rgba(94, 135, 161, 0.3);
+}
+
+.settingstuff .neatbox .label {
+	display: block;
+}
+
+.settingstuff .neatbox .is-full {
+	width: 100%;
+}
+
+.settingstuff .neatbox .is-medium {
+	width: 75%;
+}
+
+.settingstuff .neatbox.has-subboxes.is-grouped table:last-child {
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.settingstuff .neatbox.has-subboxes.is-grouped table {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.settingstuff .neatbox.has-subboxes.is-grouped h2:first-child {
+	margin-top: 20px;
+	border-top-width: 0;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.settingstuff .neatbox.has-subboxes.is-grouped h2 {
+	margin-top: 0;
+	border-top: 1px solid #eee;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.settingstuff .neatbox.has-subboxes h2 {
+	margin-top: 20px;
+}
+
+.settingstuff .neatbox h2 {
+	position: relative;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 15px;
+	line-height: 1em;
+	font-size: 14px;
+	font-weight: 600;
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+}
+
+.settingstuff .neatbox h2 .help-icon {
+	height: auto;
+	line-height: inherit;
+}
+
+.settingstuff .neatbox.is-clean h2 {
+	padding-left: 0;
+	padding-right: 0;
+	background-color: transparent;
+}
+
+.settingstuff .has-bigger-heading h2 {
+	font-size: 15px;
+}
+
+.settingstuff .neatbox-body.has-bottom-gapless {
+	margin-bottom: 0;
+}
+
+.settingstuff .neatbox-body {
+	position: relative;
+	padding: 18px 15px;
+}
+
+.settingstuff .neatbox-body > p {
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
+.settingstuff .neatbox-list {
+	margin: 0;
+}
+
+.settingstuff .neatbox-list a {
+	text-decoration: none;
+}
+
+.settingstuff .neatbox-list .list-item:last-child {
+	border-bottom-width: 0;
+}
+
+.settingstuff .neatbox-list .list-item {
+	margin: 0;
+	padding: 12px 15px;
+	border-bottom: 1px solid #eee;
+}
+
+.settingstuff .has-subboxes .form-table {
+	margin-top: 0;
+	background-color: #fff;
+}
+
+.settingstuff .form-table {
+	margin-top: 7px;
+}
+
+.settingstuff .neatbox .form-table th:empty {
+	padding-right: 0;
+	padding-left: 0;
+	width: 15px;
+}
+
+.settingstuff .neatbox .form-table th:empty ~ td {
+	padding-left: 0;
+}
+
+.settingstuff .neatbox .form-table th {
+	padding-left: 15px;
+}
+
+.form-table .is-gapless td {
+	padding-top: 11px;
+	padding-bottom: 0;
+}
+
+.form-table .has-small-text td p {
+	font-size: 13px;
+}
+
+.settingstuff .fields {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.settingstuff .fields-wrapper {
+	padding: 15px 12px;
+	background-color: #fafafa;
+	border: 1px solid #ebebeb;
+	border-radius: 3px;
+}
+
+.settingstuff .fields-wrapper.has-top-gap {
+	margin-top: 13px;
+}
+
+.settingstuff .neatbox.has-subboxes p.submit {
+	margin-top: 20px;
+	margin-bottom: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.settingstuff .neatbox p.submit {
+	margin-top: 13px;
+	margin-bottom: 2px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.settingstuff .neatbox ~ p.submit {
+	margin-top: 20px;
+	padding-top: 0;
+}
+
+.settingstuff .buttons {
+	margin-top: 13px;
+}
+
+.settingstuff .buttons p.submit {
+	margin: 0;
+	padding: 0;
+}
+
+/* Extra Styles */
+.CodeMirror-wrap {
+	border: 1px solid #ddd;
+}
+
+/* Overview Styles */
+td.icon .dashicons {
+	font-size: 22px;
+}
+td.icon .fa {
+	font-size: 18px;
+}

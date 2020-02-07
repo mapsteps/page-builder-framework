@@ -1,0 +1,216 @@
+/**
+ * ------------------------------
+ * General fields
+ * ------------------------------
+ */
+.setting-fields.is-gapless {
+	padding: 0;
+}
+
+.setting-fields {
+	padding: 25px 15px;
+}
+
+hr {
+	margin: 20px 0;
+	border-top: 1px solid #eee;
+	border-bottom: 0;
+}
+
+.setting-fields .field:last-child,
+.setting-fields .fields:last-child {
+	margin-bottom: 0;
+}
+
+.setting-fields.is-gapless .field {
+	margin-bottom: 10px;
+}
+
+.setting-fields .field {
+	margin-bottom: 20px;
+}
+
+.fields {
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+}
+
+.fields .field {
+	position: relative;
+}
+
+.field.is-horizontal {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.field.is-horizontal .field-label {
+	width: 35%;
+}
+
+.field .label {
+	font-weight: 600;
+}
+
+.form-table .field .label {
+	font-weight: 400;
+}
+
+.field.is-horizontal .field-body {
+	padding-left: 20px;
+	width: 65%;
+}
+
+/**
+ * ------------------------------
+ * Copied & modified from https://codepen.io/KenanYusuf/pen/PZKEKd/
+ * ------------------------------
+ */
+.label {
+	display: block;
+	position: relative;
+	line-height: 1.5;
+	cursor: pointer;
+}
+
+.label input {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+}
+
+.label .indicator {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background-color: #e6e6e6;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+.radio-label .indicator {
+	border-radius: 50%;
+}
+
+.label:hover input ~ .indicator,
+.label input:focus ~ .indicator {
+	background-color: #ccc;
+}
+
+.label input:checked ~ .indicator {
+	background-color: #b524ff;
+}
+
+.label:hover input:not([disabled]):checked ~ .indicator,
+.label input:checked:focus ~ .indicator {
+	background-color: #a320e6;
+}
+
+.label input:disabled ~ .indicator {
+	background-color: #e6e6e6;
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.label .indicator::after {
+	display: none;
+	position: absolute;
+	content: "";
+}
+
+.label input:checked ~ .indicator::after {
+	display: block;
+}
+
+.setting-fields .checkbox-label,
+.setting-field .checkbox-label {
+	padding-left: 30px;
+}
+
+.checkbox-label .indicator::after {
+	left: 8px;
+	top: 4px;
+	width: 3px;
+	height: 8px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+.checkbox-label input:disabled ~ .indicator::after {
+	border-color: #7b7b7b;
+}
+
+.radio-label .indicator::after {
+	left: 7px;
+	top: 7px;
+	height: 6px;
+	width: 6px;
+	border-radius: 50%;
+	background-color: #fff;
+}
+
+.radio-label input:disabled ~ .indicator::after {
+	background-color: #7b7b7b;
+}
+
+.select-label {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+
+.select-label select {
+	display: inline-block;
+	width: 100%;
+	cursor: pointer;
+	padding: 10px 15px;
+	outline: 0;
+	border: 0;
+	border-radius: 0;
+	background-color: #e6e6e6;
+	color: #7b7b7b;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.select-label select::-ms-expand {
+	display: none;
+}
+
+.select-label select:hover,
+.select-label select:focus {
+	color: #000;
+	background-color: #ccc;
+}
+
+.select-label select:disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.select-label .arrow {
+	position: absolute;
+	top: 16px;
+	right: 15px;
+	width: 0;
+	height: 0;
+	pointer-events: none;
+	border-style: solid;
+	border-width: 8px 5px 0 5px;
+	border-color: #7b7b7b transparent transparent transparent;
+}
+
+.select-label select:hover ~ .arrow,
+.select-label select:focus ~ .arrow {
+	border-top-color: #000;
+}
+
+.select-label select:disabled ~ .arrow {
+	border-top-color: #ccc;
+}
