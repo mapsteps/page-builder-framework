@@ -72,21 +72,53 @@ function wpbf_theme_settings_page() {
  * Theme settings output.
  */
 function wpbf_theme_settings_output() {
-	require __DIR__ . '/settings.php';
+	require __DIR__ . '/output/settings-page.php';
 }
 
 /**
- * Enqueue admin scripts.
+ * Enqueue nice-notice when necessary.
  */
 function wpbf_enqueue_admin_scripts() {
-	// Enqueue the assets no matter premium add-on is active or not.
+	wp_enqueue_style( 'nice-notice', WPBF_THEME_URI . '/assets/css/nice-notice.css', array(), WPBF_VERSION );
+}
+add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
+
+/**
+ * Enqueue admin scripts no matter premium add-on is active or not.
+ */
+function wpbf_enqueue_setting_scripts() {
+	$current_screen = get_current_screen();
+
+	// Only show to "Theme Settings" page.
+	if ( 'appearance_page_wpbf-premium' !== $current_screen->id ) {
+		return;
+	}
 
 	wp_enqueue_style( 'settings-page', WPBF_THEME_URI . '/assets/css/settings-page.css', array(), WPBF_VERSION );
 	wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'settings-page' ), WPBF_VERSION );
 
 	wp_enqueue_script( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/js/admin-page.js', array( 'jquery' ), WPBF_VERSION, true );
 }
-add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
+add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_setting_scripts' );
+
+/**
+ * Run action after theme activation.
+ *
+ * @param string   $old_theme_name The old theme name.
+ * @param WP_Theme $old_theme Instance of the old theme.
+ */
+function wpbf_after_switch_theme( $old_theme_name, $old_theme ) {
+	delete_option( 'wpbf_activation_notice_dismissed' );
+}
+add_action( 'after_switch_theme', 'wpbf_after_switch_theme', 10, 2 );
+
+/**
+ * Show activation notice when possible.
+ */
+function wpbf_show_activation_notice() {
+	require __DIR__ . '/output/activation-notice.php';
+}
+add_action( 'admin_notices', 'wpbf_show_activation_notice' );
 
 /* Integration */
 

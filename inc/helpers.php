@@ -903,3 +903,18 @@ function wpbf_page_builder_compatibility( $id ) {
 
 }
 // add_action( 'wpbf_page_builder_compatibility', 'task' );
+
+/**
+ * Check if wpbf has activation notice.
+ *
+ * @return bool Whether wpbf has activation notice or not.
+ */
+function wpbf_has_activation_notice() {
+	$has_been_dismissed = get_option( 'wpbf_activation_notice_dismissed', 0 );
+
+	if ( $has_been_dismissed ) {
+		return false;
+	}
+
+	return true;
+}

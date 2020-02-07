@@ -2,7 +2,7 @@
 /**
  * Theme setting's template.
  *
- * @package Swift_Control
+ * @package Page_Builder_Framework
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );

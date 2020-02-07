@@ -33,11 +33,6 @@
 }
 
 /* Settings Page */
-.settingstuff.wrap .notice {
-	margin-top: 10px;
-	margin-bottom: 0;
-}
-
 .settingstuff .neatbox.has-subboxes {
 	margin-top: 0;
 	background-color: transparent;
