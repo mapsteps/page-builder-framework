@@ -133,6 +133,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary button-small buy-button"><?php _e( 'Buy Now', 'page-builder-framework' ); ?></a>
 						</div>
 					</li>
+
 					<?php if ( ! defined( 'SWIFT_CONTROL_PRO_PLUGIN_VERSION' ) ) : ?>
 						<li class="list-item">
 							<a href="https://wpswiftcontrol.com/" target="_blank" class="plugin-name">Swift Control Pro</a>
@@ -140,13 +141,24 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 								<a href="https://wpswiftcontrol.com/pricing/" target="_blank" class="button button-primary button-small buy-button"><?php _e( 'Buy Now', 'page-builder-framework' ); ?></a>
 							</div>
 						</li>
-						<?php endif; ?>
+					<?php endif; ?>
+
+					<?php if ( ! defined( 'ULTIMATE_DASHBOARD_PRO_PLUGIN_URL' ) ) : ?>
 						<li class="list-item">
+							<a href="https://ultimatedashboard.io/" target="_blank" class="plugin-name">Ultimate Dashboard Pro</a>
+							<div class="plugin-link">
+								<a href="https://ultimatedashboard.io/pricing/" target="_blank" class="button button-primary button-small buy-button"><?php _e( 'Buy Now', 'page-builder-framework' ); ?></a>
+							</div>
+						</li>
+					<?php endif; ?>
+
+					<li class="list-item">
 						<a href="https://wp-video-popup.com/" target="_blank" class="plugin-name">WP Video Popup</a>
 						<div class="plugin-link">
 							<a href="https://wp-video-popup.com/pricing/" target="_blank" class="button button-primary button-small buy-button"><?php _e( 'Buy Now', 'page-builder-framework' ); ?></a>
 						</div>
 					</li>
+
 					<?php if ( ! defined( 'CUSTOMIZER_RESET_PLUGIN_VERSION' ) ) : ?>
 						<li class="list-item">
 							<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="plugin-name">Customizer Reset</a>

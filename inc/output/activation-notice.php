@@ -44,12 +44,6 @@ $screen = get_current_screen();
 				<?php endif; ?>
 			</p>
 
-			<?php if ( wpbf_is_premium() ) : ?>
-
-			<?php else : ?>
-
-			<?php endif; ?>
-
 			<p class="buttons">
 				<?php if ( wpbf_is_premium() ) : ?>
 
