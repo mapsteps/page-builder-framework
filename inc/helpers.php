@@ -10,8 +10,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 /**
  * strpos array helper function.
  *
- * @param array $haystack The haystack.
- * @param array $needles The needles.
+ * @param array   $haystack The haystack.
+ * @param array   $needles The needles.
  * @param integer $offset The offset.
  *
  * @return boolean.
@@ -104,7 +104,7 @@ function wpbf_inner_content( $echo = true ) {
 
 		}
 
-	// On archives, we only add the wpbf_inner_content filter.
+		// On archives, we only add the wpbf_inner_content filter.
 	} else {
 
 		$inner_content = apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
@@ -503,7 +503,7 @@ function wpbf_sidebar_layout() {
 	$sidebar = get_theme_mod( 'sidebar_position', 'right' );
 
 	$archive_sidebar_position = get_theme_mod( 'archive_sidebar_layout', 'global' );
-	$sidebar = 'global' !== $archive_sidebar_position ? $archive_sidebar_position : $sidebar;
+	$sidebar                  = 'global' !== $archive_sidebar_position ? $archive_sidebar_position : $sidebar;
 
 	if ( is_singular() ) {
 
@@ -538,23 +538,23 @@ function wpbf_article_meta() {
 		foreach ( $blog_meta as $value ) {
 
 			switch ( $value ) {
-			case 'author':
-				do_action( 'wpbf_before_author_meta' );
-				wpbf_author_meta();
-				do_action( 'wpbf_after_author_meta' );
-				break;
-			case 'date':
-				do_action( 'wpbf_before_date_meta' );
-				wpbf_date_meta();
-				do_action( 'wpbf_after_date_meta' );
-				break;
-			case 'comments':
-				do_action( 'wpbf_before_comments_meta' );
-				wpbf_comments_meta();
-				do_action( 'wpbf_after_comments_meta' );
-				break;
-			default:
-				break;
+				case 'author':
+					do_action( 'wpbf_before_author_meta' );
+					wpbf_author_meta();
+					do_action( 'wpbf_after_author_meta' );
+					break;
+				case 'date':
+					do_action( 'wpbf_before_date_meta' );
+					wpbf_date_meta();
+					do_action( 'wpbf_after_date_meta' );
+					break;
+				case 'comments':
+					do_action( 'wpbf_before_comments_meta' );
+					wpbf_comments_meta();
+					do_action( 'wpbf_after_comments_meta' );
+					break;
+				default:
+					break;
 			}
 
 		}
@@ -579,7 +579,8 @@ function wpbf_author_meta() {
 		echo get_avatar( get_the_author_meta( 'ID' ), 128 );
 	}
 
-	echo sprintf( '<span class="article-author author vcard" itemscope="itemscope" itemprop="author" itemtype="https://schema.org/Person"><a class="url fn" href="%1$s" title="%2$s" rel="author" itemprop="url"><span itemprop="name">%3$s</span></a></span>',
+	echo sprintf(
+		'<span class="article-author author vcard" itemscope="itemscope" itemprop="author" itemtype="https://schema.org/Person"><a class="url fn" href="%1$s" title="%2$s" rel="author" itemprop="url"><span itemprop="name">%3$s</span></a></span>',
 		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
 		esc_attr( sprintf( __( 'View all posts by %s', 'page-builder-framework' ), get_the_author() ) ),
 		esc_html( get_the_author() )
@@ -639,7 +640,15 @@ function wpbf_blog_layout() {
 		$style .= ' stretched';
 	}
 
-	return apply_filters( 'wpbf_blog_layout', array( 'blog_layout' => $blog_layout, 'template_parts_header' => $template_parts_header, 'template_parts_footer' => $template_parts_footer, 'style' => $style ) );
+	return apply_filters(
+		'wpbf_blog_layout',
+		array(
+			'blog_layout'           => $blog_layout,
+			'template_parts_header' => $template_parts_header,
+			'template_parts_footer' => $template_parts_footer,
+			'style'                 => $style,
+		)
+	);
 
 }
 
@@ -659,35 +668,41 @@ function wpbf_nav_menu() {
 	} elseif ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ) ) ) {
 
 		// Off canvas menu.
-		wp_nav_menu( array(
-			'theme_location' => 'main_menu',
-			'container'      => false,
-			'menu_class'     => 'wpbf-menu',
-			'depth'          => 3,
-			'fallback_cb'    => 'wpbf_main_menu_fallback',
-		) );
+		wp_nav_menu(
+			array(
+				'theme_location' => 'main_menu',
+				'container'      => false,
+				'menu_class'     => 'wpbf-menu',
+				'depth'          => 3,
+				'fallback_cb'    => 'wpbf_main_menu_fallback',
+			)
+		);
 
 	} elseif ( 'menu-full-screen' === get_theme_mod( 'menu_position' ) ) {
 
 		// Full screen menu.
-		wp_nav_menu( array(
-			'theme_location' => 'main_menu',
-			'container'      => false,
-			'menu_class'     => 'wpbf-menu',
-			'depth'          => 1,
-			'fallback_cb'    => 'wpbf_main_menu_fallback',
-		) );
+		wp_nav_menu(
+			array(
+				'theme_location' => 'main_menu',
+				'container'      => false,
+				'menu_class'     => 'wpbf-menu',
+				'depth'          => 1,
+				'fallback_cb'    => 'wpbf_main_menu_fallback',
+			)
+		);
 
 	} else {
 
 		// Default menu.
-		wp_nav_menu( array(
-			'theme_location' => 'main_menu',
-			'container'      => false,
-			'menu_class'     => 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect(),
-			'depth'          => 4,
-			'fallback_cb'    => 'wpbf_main_menu_fallback',
-		) );
+		wp_nav_menu(
+			array(
+				'theme_location' => 'main_menu',
+				'container'      => false,
+				'menu_class'     => 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect(),
+				'depth'          => 4,
+				'fallback_cb'    => 'wpbf_main_menu_fallback',
+			)
+		);
 
 	}
 
@@ -732,10 +747,10 @@ function wpbf_is_off_canvas_menu() {
 /**
  * Add sub menu indicators to mobile & off canvas menu's.
  *
- * @param string $item_output The menu item's starting HTML output.
- * @param object $item The menu item data object.
+ * @param string  $item_output The menu item's starting HTML output.
+ * @param object  $item The menu item data object.
  * @param integer $depth Depth of menu item.
- * @param object $args The arguments.
+ * @param object  $args The arguments.
  *
  * @return string The updated mobile menu item's starting HTML output.
  */
@@ -761,7 +776,7 @@ add_filter( 'walker_nav_menu_start_el', 'wpbf_mobile_sub_menu_indicators', 10, 4
 function wpbf_sub_menu_alignment() {
 
 	$sub_menu_alignment = get_theme_mod( 'sub_menu_alignment', 'left' );
-	$alignment = ' wpbf-sub-menu-align-' . $sub_menu_alignment;
+	$alignment          = ' wpbf-sub-menu-align-' . $sub_menu_alignment;
 
 	return $alignment;
 
@@ -834,7 +849,7 @@ function wpbf_navigation_attributes() {
  *
  * @param string $html The HTML output.
  * @param string $url The embed URL.
- * @param array $attr Array of shortcode attributes.
+ * @param array  $attr Array of shortcode attributes.
  *
  * @return string The updated HTML output.
  */
@@ -861,7 +876,9 @@ add_filter( 'embed_oembed_html', 'wpbf_responsive_embed', 10, 3 );
 function wpbf_page_builder_compatibility( $id ) {
 
 	// Stop here if we're not on a page.
-	if( 'page' !== get_post_type() ) return;
+	if ( 'page' !== get_post_type() ) {
+		return;
+	}
 
 	$elementor  = get_post_meta( $id, '_elementor_edit_mode', true );
 	$fl_enabled = get_post_meta( $id, '_fl_builder_enabled', true );
