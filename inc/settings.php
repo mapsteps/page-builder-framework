@@ -1,6 +1,6 @@
 <?php
 /**
- * Swift Control page template.
+ * Theme setting's template.
  *
  * @package Swift_Control
  */

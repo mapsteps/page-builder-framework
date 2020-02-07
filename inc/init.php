@@ -54,13 +54,19 @@ require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 // Theme mods.
 require_once WPBF_THEME_DIR . '/inc/theme-mods.php';
 
+add_action( 'admin_menu', 'wpbf_theme_settings_page' );
+
 /**
  * Add theme settings.
  */
-function wpbf_theme_settings() {
+function wpbf_theme_settings_page() {
+	// Don't add page if premium add-on is active.
+	if ( wpbf_is_premium() ) {
+		return;
+	}
+
 	add_theme_page( __( 'Theme Settings', 'page-builder-framework' ), __( 'Theme Settings', 'page-builder-framework' ), 'manage_options', 'wpbf-premium', 'wpbf_theme_settings_output' );
 }
-add_action( 'admin_menu', 'wpbf_theme_settings' );
 
 /**
  * Theme settings output.
@@ -73,6 +79,8 @@ function wpbf_theme_settings_output() {
  * Enqueue admin scripts.
  */
 function wpbf_enqueue_admin_scripts() {
+	// Enqueue the assets no matter premium add-on is active or not.
+
 	wp_enqueue_style( 'settings-page', WPBF_THEME_URI . '/assets/css/settings-page.css', array(), WPBF_VERSION );
 	wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'settings-page' ), WPBF_VERSION );
 
