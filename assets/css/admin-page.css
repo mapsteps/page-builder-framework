@@ -18,8 +18,17 @@
 }
 
 .wpbf-admin-page > .right-section {
-	padding-left: 50px;
+	padding-left: 40px;
 	width: 35%;
+}
+
+.wpbf-admin-page p {
+	font-size: 14px;
+	opacity: .7;
+}
+
+.wpbf-admin-page > .right-section p {
+	opacity: .7;
 }
 
 /**
@@ -53,6 +62,53 @@
 
 /**
  * --------------------
+ * Premium Add-On List
+ * --------------------
+ */
+.wpbf-admin-page .premium-link-list .list-item {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.wpbf-admin-page .premium-link-list .list-item:last-child {
+	background: #f1f1f1;
+}
+
+.wpbf-admin-page .premium-link-item {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #f3f5f7;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.wpbf-admin-page .premium-link-item .premium-link-item-content {
+	width: 60%;
+}
+
+.wpbf-admin-page .premium-link-item i {
+	color: #47D87C;
+	width: 40%;
+	text-align: right;
+	margin-right: 20px;
+}
+
+.wpbf-admin-page .premium-link-item .button {
+	text-align: right;
+}
+
+.wpbf-admin-page .premium-link-item h3 {
+	font-size: 16px;
+}
+
+.wpbf-admin-page .premium-link-item:last-child {
+	border-bottom: 0;
+}
+
+/**
+ * --------------------
  * Recommended Plugins
  * --------------------
  */
@@ -62,22 +118,21 @@
 	width: 100%;
 }
 
-.wpbf-admin-page .recommended-plugins .plugin-name {
+.wpbf-admin-page .recommended-plugins .plugin-content {
 	width: 70%;
+}
+
+.wpbf-admin-page .recommended-plugins .plugin-content h3 {
+	font-size: 16px;
+}
+
+.wpbf-admin-page .recommended-plugins .dashicons {
+	color: #47D87C;
 }
 
 .wpbf-admin-page .recommended-plugins .plugin-link {
 	width: 30%;
 	text-align: right;
-}
-
-.wpbf-admin-page .recommended-plugins .buy-button:focus {
-	box-shadow: 0 0 0 1px #fff, 0 0 0 3px red;
-}
-
-.wpbf-admin-page .recommended-plugins .buy-button {
-	background-color: red;
-	border-color: red;
 }
 
 /**

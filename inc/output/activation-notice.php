@@ -7,6 +7,13 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+if ( ! wpbf_is_premium() ) {
+	// return;
+}
+
+// Let's implement another check here where we stop if no theme settings are in the customizer yet.
+// With that, we prevent this notice from showing up for people that alreay built their website.
+
 $screen = get_current_screen();
 ?>
 
@@ -17,56 +24,28 @@ $screen = get_current_screen();
 		</div>
 		<div class="notice-content">
 			<h2>
-				<?php _e( 'Thanks for activating Page Builder Framework!', 'page-builder-framework' ); ?>
+				<?php _e( 'Thanks for choosing Page Builder Framework!', 'page-builder-framework' ); ?>
 			</h2>
 
 			<p>
-				<?php if ( wpbf_is_premium() ) : ?>
 
-					<?php
-					_e(
-						"We see that you also have the <strong>Premium Add-On</strong> active which means that you have powerful theme customization.<br>
-						Let's get started and enjoy building your theme!",
-						'page-builder-framework'
-					);
-					?>
+				<?php
+				_e(
+					'We strongly recommend you to activate the <strong>Premium Add-On</strong>.<br>
+					This way you will have more powerful customization and some other nice features.',
+					'page-builder-framework'
+				);
+				?>
 
-				<?php else : ?>
-
-					<?php
-					_e(
-						'We strongly recommend you to activate the <strong>Premium Add-On</strong>.<br>
-						This way you will have more powerful customization and some other nice features.',
-						'page-builder-framework'
-					);
-					?>
-
-				<?php endif; ?>
 			</p>
 
+			<?php if ( 'appearance_page_wpbf-premium' !== $screen->id ) : ?>
 			<p class="buttons">
-				<?php if ( wpbf_is_premium() ) : ?>
-
-					<?php if ( 'appearance_page_wpbf-premium' !== $screen->id ) : ?>
-						<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium&tab=customizer' ) ); ?>" class="button button-primary">
-							<?php _e( 'Theme Settings', 'page-builder-framework' ); ?>
-						</a>
-					<?php endif; ?>
-
-				<?php else : ?>
-
-					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary">
-						<?php _e( 'Buy Premium Add-On', 'page-builder-framework' ); ?>
-					</a>
-
-					<?php if ( 'appearance_page_wpbf-premium' !== $screen->id ) : ?>
-						<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium&tab=customizer' ) ); ?>" class="button">
-							<?php _e( 'Theme Settings', 'page-builder-framework' ); ?>
-						</a>
-					<?php endif; ?>
-
-				<?php endif; ?>
+				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium&tab=customizer' ) ); ?>" class="button">
+					<?php _e( 'Theme Settings', 'page-builder-framework' ); ?>
+				</a>
 			</p>
+			<?php endif; ?>
 		</div>
-		</div>
+	</div>
 </div>

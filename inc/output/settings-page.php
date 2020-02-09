@@ -119,67 +119,205 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				</ul>
 			</div><!-- .customizer-links-box -->
 
+			<div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-links-box">
+				<h2>
+					<?php _e( 'Premium Add-On Options', 'swift-control' ); ?>
+					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;" class=""><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+				</h2>
+				<ul class="neatbox-list premium-link-list">
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3><a href="#" target="_blank">Transparent Header</a></h3>
+								<p>Create customizable transparent headers with just a few clicks.</p>
+							</div>
+							<i class="dashicons dashicons-yes-alt"></i>
+						</div>
+					</li>
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3><a href="#" target="_blank">Sticky Navigation</a></h3>
+								<p>Create a fully customizable sticky navigation with just a few clicks.</p>
+							</div>
+							<i class="dashicons dashicons-yes-alt"></i>
+						</div>
+					</li>
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3><a href="#" target="_blank">White Label Settings</a></h3>
+								<p>Your theme, your branding. Fully white label Page Builder Framework & the Premium Add-On.</p>
+							</div>
+							<i class="dashicons dashicons-yes-alt"></i>
+						</div>
+					</li>
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3><a href="#" target="_blank">Advanced Typography</a></h3>
+								<p>Customize fonts and add Typekit- & Custom Fonts to your website.</p>
+							</div>
+							<i class="dashicons dashicons-yes-alt"></i>
+						</div>
+					</li>
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3><a href="#" target="_blank">Adjustable Breakpoints</a></h3>
+								<p>Set custom responsive breakpoints for tablets and desktops & mobiles for a pixel perfect design.</p>
+							</div>
+							<i class="dashicons dashicons-yes-alt"></i>
+						</div>
+					</li>
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3><a href="#" target="_blank">Advanced WooCommerce Features</a></h3>
+								<p>Take full control over the design of your online store with more advanced WooCommerce features.</p>
+							</div>
+							<i class="dashicons dashicons-yes-alt"></i>
+						</div>
+					</li>
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3><a href="#" target="_blank">Mega Menu</a></h3>
+								<p>Easily create an advanced mega menu with up to 4 rows.</p>
+							</div>
+							<i class="dashicons dashicons-yes-alt"></i>
+						</div>
+					</li>
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3><a href="#" target="_blank">Call to Action Button</a></h3>
+								<p>Add a customizable Call to Action Button to your navigation with just a few clicks.</p>
+							</div>
+							<i class="dashicons dashicons-yes-alt"></i>
+						</div>
+					</li>
+
+					<li class="list-item">
+						<div class="premium-link-item">
+							<div class="premium-link-item-content">
+								<h3>And a lot more!</h3>
+								<p>Check out all the Premium Add-On features.</p>
+							</div>
+							<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
+						</div>
+					</li>
+
+				</ul>
+			</div><!-- .premium-links-box -->
+
 		</div><!-- .left-section -->
 		<div class="right-section">
 
-			<div class="neatbox is-smooth has-medium-gap has-bigger-heading recommended-plugins-box">
+			<div class="neatbox is-smooth has-medium-gap has-bigger-heading recommended-box">
 				<h2>
-					<?php _e( 'Recommended Plugins', 'swift-control' ); ?>
+					<?php _e( 'Recommended', 'swift-control' ); ?>
 				</h2>
 				<ul class="neatbox-list recommended-plugins">
 					<li class="list-item">
-						<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="plugin-name">Premium Add-On</a>
+						<div class="plugin-content">
+							<h3>Premium Add-On</h3>
+							<p class="plugin-description">
+								Take your website to the next level with the Premium Add-On.
+							</p>
+						</div>
 						<div class="plugin-link">
-							<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary button-small buy-button"><?php _e( 'Buy Now', 'page-builder-framework' ); ?></a>
+							<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-small"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
 						</div>
 					</li>
-
-					<?php if ( ! defined( 'SWIFT_CONTROL_PRO_PLUGIN_VERSION' ) ) : ?>
-						<li class="list-item">
-							<a href="https://wpswiftcontrol.com/" target="_blank" class="plugin-name">Swift Control Pro</a>
-							<div class="plugin-link">
-								<a href="https://wpswiftcontrol.com/pricing/" target="_blank" class="button button-primary button-small buy-button"><?php _e( 'Buy Now', 'page-builder-framework' ); ?></a>
-							</div>
-						</li>
-					<?php endif; ?>
-
-					<?php if ( ! defined( 'ULTIMATE_DASHBOARD_PRO_PLUGIN_URL' ) ) : ?>
-						<li class="list-item">
-							<a href="https://ultimatedashboard.io/" target="_blank" class="plugin-name">Ultimate Dashboard Pro</a>
-							<div class="plugin-link">
-								<a href="https://ultimatedashboard.io/pricing/" target="_blank" class="button button-primary button-small buy-button"><?php _e( 'Buy Now', 'page-builder-framework' ); ?></a>
-							</div>
-						</li>
-					<?php endif; ?>
 
 					<li class="list-item">
-						<a href="https://wp-video-popup.com/" target="_blank" class="plugin-name">WP Video Popup</a>
+						<div class="plugin-content">
+							<h3>Customizer Reset</h3>
+							<p class="plugin-description">
+								<strong>Reset, Export & Import</strong> your customizer settings with a simple click of a button.
+							</p>
+						</div>
 						<div class="plugin-link">
-							<a href="https://wp-video-popup.com/pricing/" target="_blank" class="button button-primary button-small buy-button"><?php _e( 'Buy Now', 'page-builder-framework' ); ?></a>
+							<?php if ( ! defined( 'CUSTOMIZER_RESET_PLUGIN_VERSION' ) ) : ?>
+							<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+							<?php else : ?>
+							<i class="dashicons dashicons-yes-alt"></i>
+							<?php endif; ?>
 						</div>
 					</li>
 
-					<?php if ( ! defined( 'CUSTOMIZER_RESET_PLUGIN_VERSION' ) ) : ?>
-						<li class="list-item">
-							<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="plugin-name">Customizer Reset</a>
-						</li>
-					<?php endif; ?>
-				</ul>
-			</div><!-- .recommended-plugins-box -->
+					<li class="list-item">
+						<div class="plugin-content">
+							<h3>Swift Control</h3>
+							<p class="plugin-description">
+								Quickly access all important areas of your WordPress website.
+							</p>
+						</div>
+						<div class="plugin-link">
+							<?php if ( ! defined( 'SWIFT_CONTROL_PRO_PLUGIN_VERSION' ) ) : // Let's check for free & pro version ?>
+							<a href="https://wordpress.org/plugins/swift-control/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+							<?php else : ?>
+							<i class="dashicons dashicons-yes-alt"></i>
+							<?php endif; ?>
+						</div>
+					</li>
 
-			<div class="neatbox is-smooth has-medium-gap has-bigger-heading community-links-box">
+					<li class="list-item">
+						<div class="plugin-content">
+							<h3>Ultimate Dashboard</h3>
+							<div class="plugin-description">
+								<p>
+									Replace the default WordPress dashboard with your own set of icon- & text widgets.
+								</p>
+							</div>
+						</div>
+						<div class="plugin-link">
+							<?php if ( ! defined( 'ULTIMATE_DASHBOARD_PRO_PLUGIN_URL' ) ) : // Let's check for free & pro version ?>
+							<a href="https://wordpress.org/plugins/ultimate-dashboard/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+							<?php else : ?>
+							<i class="dashicons dashicons-yes-alt"></i>
+							<?php endif; ?>
+						</div>
+					</li>
+				</ul>
+			</div><!-- .recommended-box -->
+
+			<div class="neatbox is-smooth has-medium-gap has-bigger-heading documentation-box">
+				<h2>
+					<?php _e( 'Documentation', 'swift-control' ); ?>
+				</h2>
+				<div class="neatbox-body">
+					<p>
+						<?php _e( 'Not sure how something works? Our extensive Documentation is a great place to learn more about Page Builder Framework.', 'page-builder-framework' ); ?>
+					</p>
+					<a href="https://wp-pagebuilderframework.com/docs/" target="_blank" class="button button-primary">
+						<?php _e( 'Documentation', 'page-builder-framework' ); ?>
+					</a>
+				</div>
+			</div><!-- .documentation-box -->
+
+			<div class="neatbox is-smooth has-medium-gap has-bigger-heading community-box">
 				<h2>
 					<?php _e( 'Join the Community', 'swift-control' ); ?>
 				</h2>
 				<div class="neatbox-body">
 					<p>
-						<?php _e( 'Join the Facebook group for updates, discussions, chat with other Page Builder Framework users.', 'page-builder-framework' ); ?>
+						<?php _e( 'Join the community and meet 1000+ Page Builder Framework users in our private Facebook group.', 'page-builder-framework' ); ?>
 					</p>
-					<a href="" class="button button-primary">
-						<?php _e( 'Join Our Facebook Group', 'page-builder-framework' ); ?>
+					<a href="https://www.facebook.com/groups/wpagebuilderframework/" target="_blank" class="button button-primary">
+						<?php _e( 'Join the Community', 'page-builder-framework' ); ?>
 					</a>
 				</div>
-			</div><!-- .community-links-box -->
+			</div><!-- .community-box -->
 
 		</div><!-- .right-section -->
 	</div><!-- .wpbf-admin-page -->
