@@ -36,7 +36,7 @@ $screen = get_current_screen();
 
 			<?php if ( 'appearance_page_wpbf-premium' !== $screen->id ) : ?>
 			<p class="buttons">
-				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium&tab=customizer&action=wpbf_activation_notice_dismissal&dismiss=1&nonce=' . $wpbf_activation_notice_dismissal_nonce ) ); ?>" class="button">
+				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium&tab=settings' ) ); ?>" class="button">
 					<?php _e( 'Theme Settings', 'page-builder-framework' ); ?>
 				</a>
 			</p>
