@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading customizer-box">
 				<h2>
-					<?php _e( 'Links to Customizer Settings', 'page-builder-framework' ); ?>
+					Links to Customizer Settings
 				</h2>
 				<ul class="neatbox-list customizer-list">
 					<li class="list-item">
@@ -239,7 +239,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading recommended-box">
 				<h2>
-					<?php _e( 'Recommended', 'page-builder-framework' ); ?>
+					Recommended
 				</h2>
 				<ul class="neatbox-list recommended-list">
 					<li class="list-item inline-action">
