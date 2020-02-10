@@ -41,12 +41,12 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						<div class="customizer-items">
 							<div class="customizer-item">
 								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=header_panel' ) ); ?>">
-									<?php _e( 'Header Settings', 'page-builder-framework' ); ?>
+									<?php _e( 'Header', 'page-builder-framework' ); ?>
 								</a>
 							</div>
 							<div class="customizer-item">
 								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_footer_options' ) ); ?>">
-									<?php _e( 'Footer Settings', 'page-builder-framework' ); ?>
+									<?php _e( 'Footer', 'page-builder-framework' ); ?>
 								</a>
 							</div>
 						</div>
@@ -57,12 +57,12 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						<div class="customizer-items">
 							<div class="customizer-item">
 								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_page_options' ) ); ?>">
-									<?php _e( 'Layout Settings', 'page-builder-framework' ); ?>
+									<?php _e( 'Layout', 'page-builder-framework' ); ?>
 								</a>
 							</div>
 							<div class="customizer-item">
 								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_sidebar_options' ) ); ?>">
-									<?php _e( 'Sidebar Settings', 'page-builder-framework' ); ?>
+									<?php _e( 'Sidebar', 'page-builder-framework' ); ?>
 								</a>
 							</div>
 						</div>
@@ -73,7 +73,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						<div class="customizer-items">
 							<div class="customizer-item">
 								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=blog_panel' ) ); ?>">
-									<?php _e( 'Blog Settings', 'page-builder-framework' ); ?>
+									<?php _e( 'Blog', 'page-builder-framework' ); ?>
 								</a>
 							</div>
 							<div class="customizer-item">
@@ -109,7 +109,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							</p>
 						</div>
 						<div class="list-action">
-							<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" target="_blank" class="button button-primary">Customize</a>
+							<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" target="_blank" class="button button-primary"><?php _e( 'Customize' ); ?></a>
 						</div>
 					</li>
 
@@ -118,8 +118,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-box">
 				<h2>
-					<?php _e( 'Premium Add-On Options', 'page-builder-framework' ); ?>
-					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+					Premium Add-On Features
+					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 				</h2>
 				<ul class="neatbox-list premium-list">
 
@@ -127,7 +127,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Transparent Header</a></h3>
 							<p class="description">
-								Create customizable transparent headers with just a few clicks.
+								Create a customizable Transparent Header with just a few clicks.
 							</p>
 						</div>
 						<div class="list-action">
@@ -139,7 +139,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Sticky Navigation</a></h3>
 							<p class="description">
-								Create a fully customizable sticky navigation with just a few clicks.
+								Create a beautiful & fully customizable Sticky Navigation in seconds.
 							</p>
 						</div>
 						<div class="list-action">
@@ -175,7 +175,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Adjustable Breakpoints</a></h3>
 							<p class="description">
-								Set custom responsive breakpoints for tablets and desktops & mobiles for a pixel perfect design.
+								Set custom responsive breakpoints for tablets, desktops & mobiles for a pixel perfect design.
 							</p>
 						</div>
 						<div class="list-action">
@@ -227,7 +227,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							</p>
 						</div>
 						<div class="list-action">
-							<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
+							<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary button-large"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 						</div>
 					</li>
 
@@ -253,7 +253,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							<?php if ( wpbf_is_premium() ) : ?>
 								<i class="dashicons dashicons-yes-alt"></i>
 							<?php else : ?>
-								<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-small"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
+								<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 							<?php endif; ?>
 						</div>
 					</li>
@@ -269,7 +269,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							<?php if ( defined( 'CUSTOMIZER_RESET_PLUGIN_VERSION' ) ) : ?>
 								<i class="dashicons dashicons-yes-alt"></i>
 							<?php else : ?>
-								<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+								<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 							<?php endif; ?>
 						</div>
 					</li>
@@ -285,7 +285,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							<?php if ( defined( 'SWIFT_CONTROL_PLUGIN_VERSION' ) || defined( 'SWIFT_CONTROL_PRO_PLUGIN_VERSION' ) ) : ?>
 								<i class="dashicons dashicons-yes-alt"></i>
 							<?php else : ?>
-								<a href="https://wordpress.org/plugins/swift-control/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+								<a href="https://wordpress.org/plugins/swift-control/" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 							<?php endif; ?>
 						</div>
 					</li>
@@ -301,7 +301,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							<?php if ( defined( 'ULTIMATE_DASHBOARD_PLUGIN_URL' ) || defined( 'ULTIMATE_DASHBOARD_PRO_PLUGIN_URL' ) ) : ?>
 								<i class="dashicons dashicons-yes-alt"></i>
 							<?php else : ?>
-								<a href="https://wordpress.org/plugins/ultimate-dashboard/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+								<a href="https://wordpress.org/plugins/ultimate-dashboard/" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 							<?php endif; ?>
 						</div>
 					</li>
@@ -310,52 +310,53 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading documentation-box">
 				<h2>
-					<?php _e( 'Documentation', 'page-builder-framework' ); ?>
+					Documentation
 				</h2>
 				<div class="neatbox-content">
 					<p class="description">
-						<?php _e( 'Not sure how something works? Our extensive Documentation is a great place to learn more about Page Builder Framework.', 'page-builder-framework' ); ?>
+						Not sure how something works? Our extensive Documentation is a great place to learn more about Page Builder Framework.
 					</p>
 					<a href="https://wp-pagebuilderframework.com/docs/" target="_blank" class="button button-primary">
-						<?php _e( 'Documentation', 'page-builder-framework' ); ?>
+						Documentation
 					</a>
 				</div>
 			</div><!-- .documentation-box -->
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading community-box">
 				<h2>
-					<?php _e( 'Join the Community', 'page-builder-framework' ); ?>
+					Join the Community
 				</h2>
 				<div class="neatbox-content">
 					<p class="description">
-						<?php _e( 'Join the community and meet 1000+ Page Builder Framework users in our private Facebook group.', 'page-builder-framework' ); ?>
+						Join the community and meet 1000+ Page Builder Framework users in our private Facebook group.
 					</p>
 					<a href="https://www.facebook.com/groups/wpagebuilderframework/" target="_blank" class="button button-primary">
-						<?php _e( 'Join the Community', 'page-builder-framework' ); ?>
+						Join the Community
 					</a>
 				</div>
 			</div><!-- .community-box -->
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading additional-box">
 				<h2>
-					<?php _e( 'Additional Resources', 'page-builder-framework' ); ?>
+					Additional Resources
 				</h2>
 				<ul class="neatbox-list additional-list">
 					<li class="list-item">
 						<a href="https://wp-pagebuilderframework.com/" target="_blank">
 							<span class="dashicons dashicons-admin-site-alt"></span>
-							<?php _e( 'Page Builder Framework Website', 'page-builder-framework' ); ?>
+							Page Builder Framework Website
 						</a>
 					</li>
 					<li class="list-item">
 						<a href="https://wordpress.org/support/theme/page-builder-framework/" target="_blank">
-							<span class="dashicons dashicons-sos"></span> <?php _e( 'Support Forum', 'page-builder-framework' ); ?>
+							<span class="dashicons dashicons-sos"></span>
+							Support Forum
 						</a>
 					</li>
 					<li class="list-item">
 						<a href="https://wordpress.org/support/theme/page-builder-framework/reviews/#new-post" target="_blank">
 							<span class="dashicons dashicons-star-filled"></span>
-							<?php _e( 'Love PBF? Leave a Review', 'page-builder-framework' ); ?>
+							Love PBF? Leave a Review
 						</a>
 					</li>
 				</ul>
