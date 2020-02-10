@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 	</h2>
 	<ul class="neatbox-list additional-list">
 		<li class="list-item">
-			<a href="https://wp-pagebuilderframework.com/" target="_blank">
+			<a href="https://wp-pagebuilderframework.com/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">
 				<span class="dashicons dashicons-admin-site-alt"></span>
 				Page Builder Framework Website
 			</a>

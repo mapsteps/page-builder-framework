@@ -11,24 +11,24 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * Add theme settings.
  */
 function wpbf_theme_settings_page() {
-	// Don't add page if premium add-on is active.
+	// Stop here if Premium Add-On is active.
 	if ( wpbf_is_premium() ) {
 		return;
 	}
 
-	add_theme_page( __( 'Theme Settings', 'page-builder-framework' ), __( 'Theme Settings', 'page-builder-framework' ), 'manage_options', 'wpbf-premium', 'wpbf_theme_settings_output' );
+	add_theme_page( __( 'Theme Settings', 'page-builder-framework' ), __( 'Theme Settings', 'page-builder-framework' ), 'manage_options', 'wpbf-premium', 'wpbf_theme_settings_callback' );
 }
 add_action( 'admin_menu', 'wpbf_theme_settings_page' );
 
 /**
- * Theme settings output.
+ * Theme settings callback.
  */
-function wpbf_theme_settings_output() {
+function wpbf_theme_settings_callback() {
 	require __DIR__ . '/settings/settings-page.php';
 }
 
 /**
- * Enqueue admin assets.
+ * Enqueue admin scripts & styles.
  */
 function wpbf_enqueue_admin_scripts() {
 	wp_enqueue_style( 'nice-notice', WPBF_THEME_URI . '/assets/css/nice-notice.css', array(), WPBF_VERSION );
@@ -47,7 +47,7 @@ function wpbf_enqueue_admin_scripts() {
 
 	$current_screen = get_current_screen();
 
-	// Only enqueue to "Theme Settings" page.
+	// Only enqueue on "Theme Settings" page.
 	if ( 'appearance_page_wpbf-premium' === $current_screen->id ) {
 		wp_enqueue_style( 'settings-page', WPBF_THEME_URI . '/assets/css/settings-page.css', array(), WPBF_VERSION );
 		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'settings-page' ), WPBF_VERSION );
@@ -79,10 +79,12 @@ add_action( 'wp_ajax_wpbf_activation_notice_dismissal', 'wpbf_activation_notice_
  * Show activation notice when possible.
  */
 function wpbf_show_activation_notice() {
+	// Stop here if Premium Add-On is active.
 	if ( wpbf_is_premium() ) {
 		return;
 	}
 
+	// Stop here if notice has been dismissed.
 	if ( ! empty( get_option( 'wpbf_activation_notice_dismissed', 0 ) ) ) {
 		return;
 	}

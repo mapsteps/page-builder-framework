@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 <div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-box">
 	<h2>
 		Premium Add-On Features
-		<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
+		<a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank" style="float: right;"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 	</h2>
 	<ul class="neatbox-list premium-list">
 
@@ -119,7 +119,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				</p>
 			</div>
 			<div class="list-action">
-				<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary button-large"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
+				<a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank" class="button button-primary button-large"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 			</div>
 		</li>
 

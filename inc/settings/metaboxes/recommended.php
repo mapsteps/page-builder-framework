@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				<?php if ( wpbf_is_premium() ) : ?>
 					<i class="dashicons dashicons-yes-alt"></i>
 				<?php else : ?>
-					<a href="https://wp-pagebuilderframework.com/premium/#premium" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
+					<a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf#premium" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</li>
