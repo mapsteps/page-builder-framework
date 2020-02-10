@@ -117,7 +117,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					</li>
 				</ul>
-			</div><!-- .customizer-items-box -->
+			</div><!-- .customizer-box -->
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-box">
 				<h2>
@@ -235,7 +235,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					</li>
 
 				</ul>
-			</div><!-- .premium-links-box -->
+			</div><!-- .premium-box -->
 
 		</div><!-- .left-section -->
 		<div class="right-section">
