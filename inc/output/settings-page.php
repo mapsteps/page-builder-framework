@@ -128,9 +128,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title"><a href="#" target="_blank">Transparent Header</a></h3>
-							<p class="list-description">
-								Create customizable transparent headers with just a few clicks.</p>
+							<h3 class="item-title"><a href="#" target="_blank">Transparent Header</a></h3>
+							<p class="item-description">
+								Create customizable transparent headers with just a few clicks.
+							</p>
 						</div>
 						<div class="list-action">
 							<i class="dashicons dashicons-yes-alt"></i>
@@ -139,9 +140,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title"><a href="#" target="_blank">Sticky Navigation</a></h3>
-							<p class="list-description">
-								Create a fully customizable sticky navigation with just a few clicks.</p>
+							<h3 class="item-title"><a href="#" target="_blank">Sticky Navigation</a></h3>
+							<p class="item-description">
+								Create a fully customizable sticky navigation with just a few clicks.
+							</p>
 						</div>
 						<div class="list-action">
 							<i class="dashicons dashicons-yes-alt"></i>
@@ -150,9 +152,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title"><a href="#" target="_blank">White Label Settings</a></h3>
-							<p class="list-description">
-								Your theme, your branding. Fully white label Page Builder Framework & the Premium Add-On.</p>
+							<h3 class="item-title"><a href="#" target="_blank">White Label Settings</a></h3>
+							<p class="item-description">
+								Your theme, your branding. Fully white label Page Builder Framework & the Premium Add-On.
+							</p>
 						</div>
 						<div class="list-action">
 							<i class="dashicons dashicons-yes-alt"></i>
@@ -161,9 +164,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title"><a href="#" target="_blank">Advanced Typography</a></h3>
-							<p class="list-description">
-								Customize fonts and add Typekit- & Custom Fonts to your website.</p>
+							<h3 class="item-title"><a href="#" target="_blank">Advanced Typography</a></h3>
+							<p class="item-description">
+								Customize fonts and add Typekit- & Custom Fonts to your website.
+							</p>
 						</div>
 						<div class="list-action">
 							<i class="dashicons dashicons-yes-alt"></i>
@@ -172,9 +176,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title"><a href="#" target="_blank">Adjustable Breakpoints</a></h3>
-							<p class="list-description">
-								Set custom responsive breakpoints for tablets and desktops & mobiles for a pixel perfect design.</p>
+							<h3 class="item-title"><a href="#" target="_blank">Adjustable Breakpoints</a></h3>
+							<p class="item-description">
+								Set custom responsive breakpoints for tablets and desktops & mobiles for a pixel perfect design.
+							</p>
 						</div>
 						<div class="list-action">
 							<i class="dashicons dashicons-yes-alt"></i>
@@ -183,9 +188,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title"><a href="#" target="_blank">Advanced WooCommerce Features</a></h3>
-							<p class="list-description">
-								Take full control over the design of your online store with more advanced WooCommerce features.</p>
+							<h3 class="item-title"><a href="#" target="_blank">Advanced WooCommerce Features</a></h3>
+							<p class="item-description">
+								Take full control over the design of your online store with more advanced WooCommerce features.
+							</p>
 						</div>
 						<div class="list-action">
 							<i class="dashicons dashicons-yes-alt"></i>
@@ -194,9 +200,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title"><a href="#" target="_blank">Mega Menu</a></h3>
-							<p class="list-description">
-								Easily create an advanced mega menu with up to 4 rows.</p>
+							<h3 class="item-title"><a href="#" target="_blank">Mega Menu</a></h3>
+							<p class="item-description">
+								Easily create an advanced mega menu with up to 4 rows.
+							</p>
 						</div>
 						<div class="list-action">
 							<i class="dashicons dashicons-yes-alt"></i>
@@ -205,9 +212,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title"><a href="#" target="_blank">Call to Action Button</a></h3>
-							<p class="list-description">
-								Add a customizable Call to Action Button to your navigation with just a few clicks.</p>
+							<h3 class="item-title"><a href="#" target="_blank">Call to Action Button</a></h3>
+							<p class="item-description">
+								Add a customizable Call to Action Button to your navigation with just a few clicks.
+							</p>
 						</div>
 						<div class="list-action">
 							<i class="dashicons dashicons-yes-alt"></i>
@@ -216,9 +224,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title">And a lot more!</h3>
-							<p class="list-description">
-								Check out all the Premium Add-On features.</p>
+							<h3 class="item-title">And a lot more!</h3>
+							<p class="item-description">
+								Check out all the Premium Add-On features.
+							</p>
 						</div>
 						<div class="list-action">
 							<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
@@ -238,8 +247,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				<ul class="neatbox-list recommended-plugins">
 					<li class="list-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title">Premium Add-On</h3>
-							<p class="list-description">
+							<h3 class="item-title">Premium Add-On</h3>
+							<p class="item-description">
 								Take your website to the next level with the Premium Add-On.
 							</p>
 						</div>
@@ -254,8 +263,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title">Customizer Reset</h3>
-							<p class="list-description">
+							<h3 class="item-title">Customizer Reset</h3>
+							<p class="item-description">
 								<strong>Reset, Export & Import</strong> your customizer settings with a simple click of a button.
 							</p>
 						</div>
@@ -270,8 +279,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title">Swift Control</h3>
-							<p class="list-description">
+							<h3 class="item-title">Swift Control</h3>
+							<p class="item-description">
 								Quickly access all important areas of your WordPress website.
 							</p>
 						</div>
@@ -286,12 +295,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<li class="list-item inline-action">
 						<div class="list-content">
-							<h3 class="list-title">Ultimate Dashboard</h3>
-							<div class="list-description">
-								<p>
-									Replace the default WordPress dashboard with your own set of icon- & text widgets.
-								</p>
-							</div>
+							<h3 class="item-title">Ultimate Dashboard</h3>
+							<p class="item-description">
+								Replace the default WordPress dashboard with your own set of icon- & text widgets.
+							</p>
 						</div>
 						<div class="list-action">
 							<?php if ( defined( 'ULTIMATE_DASHBOARD_PLUGIN_URL' ) || defined( 'ULTIMATE_DASHBOARD_PRO_PLUGIN_URL' ) ) : ?>
@@ -309,7 +316,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					<?php _e( 'Documentation', 'swift-control' ); ?>
 				</h2>
 				<div class="neatbox-body">
-					<p class="description">
+					<p class="item-description">
 						<?php _e( 'Not sure how something works? Our extensive Documentation is a great place to learn more about Page Builder Framework.', 'page-builder-framework' ); ?>
 					</p>
 					<a href="https://wp-pagebuilderframework.com/docs/" target="_blank" class="button button-primary">
@@ -323,7 +330,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					<?php _e( 'Join the Community', 'swift-control' ); ?>
 				</h2>
 				<div class="neatbox-body">
-					<p class="description">
+					<p class="item-description">
 						<?php _e( 'Join the community and meet 1000+ Page Builder Framework users in our private Facebook group.', 'page-builder-framework' ); ?>
 					</p>
 					<a href="https://www.facebook.com/groups/wpagebuilderframework/" target="_blank" class="button button-primary">
@@ -338,22 +345,22 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				</h2>
 				<ul class="neatbox-list additional-resources">
 					<li class="list-item">
-						<?php _e( 'Get the newest information of this theme by visiting', 'page-builder-framework' ); ?>
-						<a href="https://wp-pagebuilderframework.com/" target="_blank" class="">
-							<?php _e( 'Page Builder Framework Website', 'page-builder-framework' ); ?>
-						</a>
+						<p>
+							<?php _e( 'Get the newest information of this theme by visiting', 'page-builder-framework' ); ?>
+							<a href="https://wp-pagebuilderframework.com/" target="_blank" class="">
+								<?php _e( 'Page Builder Framework Website', 'page-builder-framework' ); ?>
+							</a>
+						</p>
 					</li>
 					<li class="list-item inline-action">
-						<div class="list-content">
-							<p class="list-description">
-								<?php
-								_e(
-									'Are you happy with <strong>Page Builder Framework</strong>?<br>Show us your love with 5 stars!',
-									'page-builder-framework'
-								);
-								?>
-							</p>
-						</div>
+						<p class="list-content item-description">
+							<?php
+							_e(
+								'Are you happy with <strong>Page Builder Framework</strong>?<br>Show us your love with 5 stars!',
+								'page-builder-framework'
+							);
+							?>
+						</p>
 						<div class="list-action">
 							<a href="https://wordpress.org/support/theme/page-builder-framework/reviews/#new-post" target="_blank" class="button button-small">
 								<?php _e( 'Leave a Review', 'page-builder-framework' ); ?>
@@ -361,13 +368,13 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 					<li class="list-item inline-action">
-						<p class="list-content list-description">
+						<p class="list-content item-description">
 							<?php
-								_e(
-									'Have problem or need support?<br>Ask your question in our support forum.',
-									'page-builder-framework'
-								);
-								?>
+							_e(
+								'Have problem or need support?<br>Ask your question in our support forum.',
+								'page-builder-framework'
+							);
+							?>
 						</p>
 						<div class="list-action">
 							<a href="https://wordpress.org/support/theme/page-builder-framework/" target="_blank" class="button button-small">

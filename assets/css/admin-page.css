@@ -22,6 +22,11 @@
 	width: 35%;
 }
 
+.wpbf-admin-page .list-item > p,
+.wpbf-admin-page .list-content > p {
+	font-size: 14px;
+}
+
 /**
  * --------------------
  * Customizer Link List

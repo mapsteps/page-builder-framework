@@ -185,7 +185,7 @@
 	margin-bottom: 20px;
 }
 
-.settingstuff .neatbox-body .description {
+.settingstuff .neatbox-body .item-description {
 	color: #8f8f8f;
 	font-size: 14px;
 }
@@ -212,12 +212,11 @@
 	border-bottom: 1px solid #eee;
 }
 
-.settingstuff .neatbox-list .list-description {
+.settingstuff .neatbox-list .item-description {
 	color: #8f8f8f;
-	font-size: 14px;
 }
 
-.settingstuff .neatbox-list .list-title {
+.settingstuff .neatbox-list .item-title {
 	font-size: 16px;
 }
 
