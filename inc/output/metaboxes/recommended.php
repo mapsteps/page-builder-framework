@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 <div class="neatbox is-smooth has-medium-gap has-bigger-heading recommended-box">
 	<h2>
-		<?php _e( 'Recommended', 'page-builder-framework' ); ?>
+		Recommended
 	</h2>
 	<ul class="neatbox-list recommended-list">
 		<li class="list-item inline-action">
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				<?php if ( wpbf_is_premium() ) : ?>
 					<i class="dashicons dashicons-yes-alt"></i>
 				<?php else : ?>
-					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-small"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
+					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</li>
@@ -40,7 +40,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				<?php if ( defined( 'CUSTOMIZER_RESET_PLUGIN_VERSION' ) ) : ?>
 					<i class="dashicons dashicons-yes-alt"></i>
 				<?php else : ?>
-					<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+					<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</li>
@@ -56,7 +56,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				<?php if ( defined( 'SWIFT_CONTROL_PLUGIN_VERSION' ) || defined( 'SWIFT_CONTROL_PRO_PLUGIN_VERSION' ) ) : ?>
 					<i class="dashicons dashicons-yes-alt"></i>
 				<?php else : ?>
-					<a href="https://wordpress.org/plugins/swift-control/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+					<a href="https://wordpress.org/plugins/swift-control/" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</li>
@@ -72,7 +72,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				<?php if ( defined( 'ULTIMATE_DASHBOARD_PLUGIN_URL' ) || defined( 'ULTIMATE_DASHBOARD_PRO_PLUGIN_URL' ) ) : ?>
 					<i class="dashicons dashicons-yes-alt"></i>
 				<?php else : ?>
-					<a href="https://wordpress.org/plugins/ultimate-dashboard/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+					<a href="https://wordpress.org/plugins/ultimate-dashboard/" target="_blank" class="button button-small"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 				<?php endif; ?>
 			</div>
 		</li>

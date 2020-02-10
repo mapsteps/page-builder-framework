@@ -10,8 +10,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 <div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-box">
 	<h2>
-		<?php _e( 'Premium Add-On Options', 'page-builder-framework' ); ?>
-		<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+		Premium Add-On Features
+		<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 	</h2>
 	<ul class="neatbox-list premium-list">
 
@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 			<div class="list-content">
 				<h3 class="title"><a href="#" target="_blank">Transparent Header</a></h3>
 				<p class="description">
-					Create customizable transparent headers with just a few clicks.
+					Create a customizable Transparent Header with just a few clicks.
 				</p>
 			</div>
 			<div class="list-action">
@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 			<div class="list-content">
 				<h3 class="title"><a href="#" target="_blank">Sticky Navigation</a></h3>
 				<p class="description">
-					Create a fully customizable sticky navigation with just a few clicks.
+					Create a beautiful & fully customizable Sticky Navigation in seconds.
 				</p>
 			</div>
 			<div class="list-action">
@@ -67,7 +67,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 			<div class="list-content">
 				<h3 class="title"><a href="#" target="_blank">Adjustable Breakpoints</a></h3>
 				<p class="description">
-					Set custom responsive breakpoints for tablets and desktops & mobiles for a pixel perfect design.
+					Set custom responsive breakpoints for tablets, desktops & mobiles for a pixel perfect design.
 				</p>
 			</div>
 			<div class="list-action">
@@ -119,7 +119,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				</p>
 			</div>
 			<div class="list-action">
-				<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
+				<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-primary button-large"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 			</div>
 		</li>
 
