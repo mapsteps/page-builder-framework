@@ -93,3 +93,12 @@
 .wpbf-admin-page .recommended-list .dashicons {
 	color: #47D87C;
 }
+
+/**
+ * --------------------
+ * Additional Resources
+ * --------------------
+ */
+ .wpbf-admin-page .additional-list .dashicons {
+	margin-right: 5px;
+ }
