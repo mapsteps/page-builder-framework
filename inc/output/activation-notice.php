@@ -19,14 +19,14 @@ $screen = get_current_screen();
 		</div>
 		<div class="notice-content">
 			<h2>
-				<?php _e( 'Thanks for choosing Page Builder Framework!', 'page-builder-framework' ); ?>
+				<?php _e( 'Welcome to Page Builder Framework!', 'page-builder-framework' ); ?>
 			</h2>
 
 			<p>
 
 				<?php
 				_e(
-					'This will have a thank you type & lets get started type of message.',
+					'Thank you for choosing Page Builder Framework! Please visit the theme dashboard page to get started.',
 					'page-builder-framework'
 				);
 				?>
