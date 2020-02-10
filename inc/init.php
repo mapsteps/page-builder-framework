@@ -132,21 +132,14 @@ function wpbf_activation_notice_dismissal() {
 add_action( 'wp_ajax_wpbf_activation_notice_dismissal', 'wpbf_activation_notice_dismissal' );
 
 /**
- * Run action after theme activation.
- *
- * @param string   $old_theme_name The old theme name.
- * @param WP_Theme $old_theme Instance of the old theme.
- */
-function wpbf_after_switch_theme( $old_theme_name, $old_theme ) {
-	delete_option( 'wpbf_activation_notice_dismissed' );
-}
-add_action( 'after_switch_theme', 'wpbf_after_switch_theme', 10, 2 );
-
-/**
  * Show activation notice when possible.
  */
 function wpbf_show_activation_notice() {
 	if ( wpbf_is_premium() ) {
+		return;
+	}
+
+	if ( ! empty( get_option( 'wpbf_activation_notice_dismissed', 0 ) ) ) {
 		return;
 	}
 
