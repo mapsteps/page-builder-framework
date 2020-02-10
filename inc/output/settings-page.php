@@ -235,7 +235,11 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							</p>
 						</div>
 						<div class="plugin-link">
-							<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-small"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
+							<?php if ( wpbf_is_premium() ) : ?>
+								<i class="dashicons dashicons-yes-alt"></i>
+							<?php else : ?>
+								<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" class="button button-small"><?php _e( 'Go Premium', 'page-builder-framework' ); ?></a>
+							<?php endif; ?>
 						</div>
 					</li>
 
@@ -247,10 +251,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							</p>
 						</div>
 						<div class="plugin-link">
-							<?php if ( ! defined( 'CUSTOMIZER_RESET_PLUGIN_VERSION' ) ) : ?>
-							<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+							<?php if ( defined( 'CUSTOMIZER_RESET_PLUGIN_VERSION' ) ) : ?>
+								<i class="dashicons dashicons-yes-alt"></i>
 							<?php else : ?>
-							<i class="dashicons dashicons-yes-alt"></i>
+								<a href="https://wordpress.org/plugins/customizer-reset/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
 							<?php endif; ?>
 						</div>
 					</li>
@@ -263,10 +267,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							</p>
 						</div>
 						<div class="plugin-link">
-							<?php if ( ! defined( 'SWIFT_CONTROL_PRO_PLUGIN_VERSION' ) ) : // Let's check for free & pro version ?>
-							<a href="https://wordpress.org/plugins/swift-control/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+							<?php if ( defined( 'SWIFT_CONTROL_PLUGIN_VERSION' ) || defined( 'SWIFT_CONTROL_PRO_PLUGIN_VERSION' ) ) : ?>
+								<i class="dashicons dashicons-yes-alt"></i>
 							<?php else : ?>
-							<i class="dashicons dashicons-yes-alt"></i>
+								<a href="https://wordpress.org/plugins/swift-control/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
 							<?php endif; ?>
 						</div>
 					</li>
@@ -281,10 +285,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							</div>
 						</div>
 						<div class="plugin-link">
-							<?php if ( ! defined( 'ULTIMATE_DASHBOARD_PRO_PLUGIN_URL' ) ) : // Let's check for free & pro version ?>
-							<a href="https://wordpress.org/plugins/ultimate-dashboard/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+							<?php if ( defined( 'ULTIMATE_DASHBOARD_PLUGIN_URL' ) || defined( 'ULTIMATE_DASHBOARD_PRO_PLUGIN_URL' ) ) : ?>
+								<i class="dashicons dashicons-yes-alt"></i>
 							<?php else : ?>
-							<i class="dashicons dashicons-yes-alt"></i>
+								<a href="https://wordpress.org/plugins/ultimate-dashboard/" target="_blank" class="button button-small"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
 							<?php endif; ?>
 						</div>
 					</li>
