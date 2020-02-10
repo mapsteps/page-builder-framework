@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<li class="list-item inline-action">
 			<div class="list-content">
-				<h3 class="title"><a href="#" target="_blank">Transparent Header</a></h3>
+				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/transparent-headers/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Transparent Header</a></h3>
 				<p class="description">
 					Create a customizable Transparent Header with just a few clicks.
 				</p>
@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<li class="list-item inline-action">
 			<div class="list-content">
-				<h3 class="title"><a href="#" target="_blank">Sticky Navigation</a></h3>
+				<h3 class="title"><a href="https://wp-pagebuilderframework.com/premium/?video=stickynav&utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf#premium" target="_blank">Sticky Navigation</a></h3>
 				<p class="description">
 					Create a beautiful & fully customizable Sticky Navigation in seconds.
 				</p>
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<li class="list-item inline-action">
 			<div class="list-content">
-				<h3 class="title"><a href="#" target="_blank">White Label Settings</a></h3>
+				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/white-label/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">White Label Settings</a></h3>
 				<p class="description">
 					Your theme, your branding. Fully white label Page Builder Framework & the Premium Add-On.
 				</p>
@@ -53,7 +53,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<li class="list-item inline-action">
 			<div class="list-content">
-				<h3 class="title"><a href="#" target="_blank">Advanced Typography</a></h3>
+				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/advanced-typography/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Advanced Typography</a></h3>
 				<p class="description">
 					Customize fonts and add Typekit- & Custom Fonts to your website.
 				</p>
@@ -65,7 +65,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<li class="list-item inline-action">
 			<div class="list-content">
-				<h3 class="title"><a href="#" target="_blank">Adjustable Breakpoints</a></h3>
+				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/custom-responsive-breakpoints/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Adjustable Breakpoints</a></h3>
 				<p class="description">
 					Set custom responsive breakpoints for tablets, desktops & mobiles for a pixel perfect design.
 				</p>
@@ -77,7 +77,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<li class="list-item inline-action">
 			<div class="list-content">
-				<h3 class="title"><a href="#" target="_blank">Advanced WooCommerce Features</a></h3>
+				<h3 class="title"><a href="https://wp-pagebuilderframework.com/free-woocommerce-theme/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf#premium" target="_blank">Advanced WooCommerce Features</a></h3>
 				<p class="description">
 					Take full control over the design of your online store with more advanced WooCommerce features.
 				</p>
@@ -89,7 +89,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<li class="list-item inline-action">
 			<div class="list-content">
-				<h3 class="title"><a href="#" target="_blank">Mega Menu</a></h3>
+				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/mega-menu/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Mega Menu</a></h3>
 				<p class="description">
 					Easily create an advanced mega menu with up to 4 rows.
 				</p>
@@ -101,7 +101,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<li class="list-item inline-action">
 			<div class="list-content">
-				<h3 class="title"><a href="#" target="_blank">Call to Action Button</a></h3>
+				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/call-to-action-button/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Call to Action Button</a></h3>
 				<p class="description">
 					Add a customizable Call to Action Button to your navigation with just a few clicks.
 				</p>
