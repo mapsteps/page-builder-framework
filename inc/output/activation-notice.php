@@ -7,13 +7,6 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-if ( ! wpbf_is_premium() ) {
-	// return;
-}
-
-// Let's implement another check here where we stop if no theme settings are in the customizer yet.
-// With that, we prevent this notice from showing up for people that alreay built their website.
-
 global $wpbf_activation_notice_dismissal_nonce;
 
 $screen = get_current_screen();

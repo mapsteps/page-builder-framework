@@ -186,6 +186,10 @@ add_action( 'after_switch_theme', 'wpbf_after_switch_theme', 10, 2 );
  * Show activation notice when possible.
  */
 function wpbf_show_activation_notice() {
+	if ( wpbf_is_premium() ) {
+		return;
+	}
+
 	require __DIR__ . '/output/activation-notice.php';
 }
 add_action( 'admin_notices', 'wpbf_show_activation_notice' );
