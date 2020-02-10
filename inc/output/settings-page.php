@@ -15,9 +15,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 	<div class="wpbf-admin-page">
 		<div class="left-section">
 
-			<div class="neatbox is-smooth has-medium-gap has-bigger-heading customizer-links-box">
+			<div class="neatbox is-smooth has-medium-gap has-bigger-heading customizer-link-box">
 				<h2>
-					<?php _e( 'Links to Customizer Settings', 'swift-control' ); ?>
+					<?php _e( 'Links to Customizer Settings', 'page-builder-framework' ); ?>
 				</h2>
 				<ul class="neatbox-list customizer-link-list">
 					<li class="list-item">
@@ -119,12 +119,12 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				</ul>
 			</div><!-- .customizer-links-box -->
 
-			<div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-links-box">
+			<div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-link-box">
 				<h2>
-					<?php _e( 'Premium Add-On Options', 'swift-control' ); ?>
+					<?php _e( 'Premium Add-On Options', 'page-builder-framework' ); ?>
 					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;" class=""><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
 				</h2>
-				<ul class="neatbox-list has-thin-border premium-link-list">
+				<ul class="neatbox-list premium-link-list">
 
 					<li class="list-item premium-link-item inline-action">
 						<div class="list-content">
@@ -242,9 +242,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading recommended-box">
 				<h2>
-					<?php _e( 'Recommended', 'swift-control' ); ?>
+					<?php _e( 'Recommended', 'page-builder-framework' ); ?>
 				</h2>
-				<ul class="neatbox-list recommended-plugins">
+				<ul class="neatbox-list recommended-list">
 					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title">Premium Add-On</h3>
@@ -313,9 +313,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading documentation-box">
 				<h2>
-					<?php _e( 'Documentation', 'swift-control' ); ?>
+					<?php _e( 'Documentation', 'page-builder-framework' ); ?>
 				</h2>
-				<div class="neatbox-body">
+				<div class="neatbox-content">
 					<p class="description">
 						<?php _e( 'Not sure how something works? Our extensive Documentation is a great place to learn more about Page Builder Framework.', 'page-builder-framework' ); ?>
 					</p>
@@ -327,9 +327,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading community-box">
 				<h2>
-					<?php _e( 'Join the Community', 'swift-control' ); ?>
+					<?php _e( 'Join the Community', 'page-builder-framework' ); ?>
 				</h2>
-				<div class="neatbox-body">
+				<div class="neatbox-content">
 					<p class="description">
 						<?php _e( 'Join the community and meet 1000+ Page Builder Framework users in our private Facebook group.', 'page-builder-framework' ); ?>
 					</p>
@@ -341,46 +341,25 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<div class="neatbox is-smooth has-medium-gap has-bigger-heading additional-box">
 				<h2>
-					<?php _e( 'Additional Resources', 'swift-control' ); ?>
+					<?php _e( 'Additional Resources', 'page-builder-framework' ); ?>
 				</h2>
-				<ul class="neatbox-list additional-resources">
+				<ul class="neatbox-list additional-list">
 					<li class="list-item">
-						<p>
-							<?php _e( 'Get the newest information of this theme by visiting', 'page-builder-framework' ); ?>
-							<a href="https://wp-pagebuilderframework.com/" target="_blank" class="">
-								<?php _e( 'Page Builder Framework Website', 'page-builder-framework' ); ?>
-							</a>
-						</p>
+						<a href="https://wp-pagebuilderframework.com/" target="_blank" class="">
+							<span class="dashicons dashicons-admin-site-alt"></span>
+							<?php _e( 'Page Builder Framework Website', 'page-builder-framework' ); ?>
+						</a>
 					</li>
-					<li class="list-item inline-action">
-						<p class="list-content description">
-							<?php
-							_e(
-								'Are you happy with <strong>Page Builder Framework</strong>?<br>Show us your love with 5 stars!',
-								'page-builder-framework'
-							);
-							?>
-						</p>
-						<div class="list-action">
-							<a href="https://wordpress.org/support/theme/page-builder-framework/reviews/#new-post" target="_blank" class="button button-small">
-								<?php _e( 'Leave a Review', 'page-builder-framework' ); ?>
-							</a>
-						</div>
+					<li class="list-item">
+						<a href="https://wordpress.org/support/theme/page-builder-framework/" target="_blank">
+							<span class="dashicons dashicons-sos"></span> <?php _e( 'Support Forum', 'page-builder-framework' ); ?>
+						</a>
 					</li>
-					<li class="list-item inline-action">
-						<p class="list-content description">
-							<?php
-							_e(
-								'Have problem or need support?<br>Ask your question in our support forum.',
-								'page-builder-framework'
-							);
-							?>
-						</p>
-						<div class="list-action">
-							<a href="https://wordpress.org/support/theme/page-builder-framework/" target="_blank" class="button button-small">
-								<?php _e( 'Support Forum', 'page-builder-framework' ); ?>
-							</a>
-						</div>
+					<li class="list-item">
+						<a href="https://wordpress.org/support/theme/page-builder-framework/reviews/#new-post" target="_blank">
+							<span class="dashicons dashicons-star-filled"></span>
+							<?php _e( 'Leave a Review', 'page-builder-framework' ); ?>
+						</a>
 					</li>
 				</ul>
 			</div><!-- .additional-box -->

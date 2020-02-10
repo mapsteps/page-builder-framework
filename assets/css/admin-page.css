@@ -22,7 +22,7 @@
 	width: 35%;
 }
 
-.wpbf-admin-page .neatbox-body > p,
+.wpbf-admin-page .neatbox-content > p,
 .wpbf-admin-page .list-item > p,
 .wpbf-admin-page .list-content > p {
 	font-size: 14px;
@@ -86,6 +86,6 @@
  * Recommended Plugins
  * --------------------
  */
-.wpbf-admin-page .recommended-plugins .dashicons {
+.wpbf-admin-page .recommended-list .dashicons {
 	color: #47D87C;
 }

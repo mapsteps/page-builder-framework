@@ -171,26 +171,26 @@
 	font-size: 15px;
 }
 
-.settingstuff .neatbox-body.has-bottom-gapless {
+.settingstuff .neatbox-content.has-bottom-gapless {
 	margin-bottom: 0;
 }
 
-.settingstuff .neatbox-body {
+.settingstuff .neatbox-content {
 	position: relative;
 	padding: 18px 15px;
 }
 
-.settingstuff .neatbox-body > p {
+.settingstuff .neatbox-content > p {
 	margin-top: 0;
 	margin-bottom: 20px;
 }
 
 /* Reset WordPress default */
-.settingstuff .neatbox-body > p.description {
+.settingstuff .neatbox-content > p.description {
 	font-style: normal;
 }
 
-.settingstuff .neatbox-body > .description {
+.settingstuff .neatbox-content > .description {
 	color: #8f8f8f;
 }
 
@@ -204,10 +204,6 @@
 
 .settingstuff .neatbox-list .list-item:last-child {
 	border-bottom-width: 0;
-}
-
-.settingstuff .neatbox-list.has-thin-border .list-item {
-	border-color: #f3f5f7;
 }
 
 .settingstuff .neatbox-list .list-item {
