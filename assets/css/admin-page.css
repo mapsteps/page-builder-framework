@@ -38,6 +38,10 @@
 	padding-bottom: 0;
 }
 
+.wpbf-admin-page .customizer-list .list-item:last-child .customizer-item {
+	width: 100%;
+}
+
 .wpbf-admin-page .customizer-items {
 	display: flex;
 	align-items: center;
@@ -54,8 +58,8 @@
 
 .wpbf-admin-page .customizer-item {
 	width: 50%;
-	padding-top: 12px;
-	padding-bottom: 12px;
+	padding-top: 18px;
+	padding-bottom: 18px;
 }
 
 /**

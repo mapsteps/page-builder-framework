@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						<div class="customizer-items">
 							<div class="customizer-item">
 								<a href="<?php echo esc_url( admin_url() ); ?>/customize.php?autofocus%5Bsection%5D=title_tagline">
-									<?php _e( 'Logo & Site Identity', 'page-builder-framework' ); ?>
+									<?php _e( 'Logo', 'page-builder-framework' ); ?>
 								</a>
 							</div>
 							<div class="customizer-item">
@@ -100,22 +100,19 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 
 					</li>
-					<li class="list-item">
 
-						<div class="customizer-items">
-							<div class="customizer-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=static_front_page' ) ); ?>">
-									<?php _e( 'Homepage Settings', 'page-builder-framework' ); ?>
-								</a>
-							</div>
-							<div class="customizer-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=nav_menus' ) ); ?>">
-									<?php _e( 'Manage Menu', 'page-builder-framework' ); ?>
-								</a>
-							</div>
+					<li class="list-item inline-action">
+						<div class="customizer-item list-content">
+							<h3 class="title">Launch WordPress Customizer</h3>
+							<p class="description">
+								Explore all of the Page Builder Framework features.
+							</p>
 						</div>
-
+						<div class="list-action">
+							<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" target="_blank" class="button button-primary">Customize</a>
+						</div>
 					</li>
+
 				</ul>
 			</div><!-- .customizer-box -->
 
@@ -358,7 +355,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					<li class="list-item">
 						<a href="https://wordpress.org/support/theme/page-builder-framework/reviews/#new-post" target="_blank">
 							<span class="dashicons dashicons-star-filled"></span>
-							<?php _e( 'Leave a Review', 'page-builder-framework' ); ?>
+							<?php _e( 'Love PBF? Leave a Review', 'page-builder-framework' ); ?>
 						</a>
 					</li>
 				</ul>
