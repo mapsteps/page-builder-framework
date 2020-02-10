@@ -185,6 +185,11 @@
 	margin-bottom: 20px;
 }
 
+.settingstuff .neatbox-body .description {
+	color: #8f8f8f;
+	font-size: 14px;
+}
+
 .settingstuff .neatbox-list {
 	margin: 0;
 }
@@ -197,10 +202,39 @@
 	border-bottom-width: 0;
 }
 
+.settingstuff .neatbox-list.has-thin-border .list-item {
+	border-color: #f3f5f7;
+}
+
 .settingstuff .neatbox-list .list-item {
 	margin: 0;
 	padding: 12px 15px;
 	border-bottom: 1px solid #eee;
+}
+
+.settingstuff .neatbox-list .list-description {
+	color: #8f8f8f;
+	font-size: 14px;
+}
+
+.settingstuff .neatbox-list .list-title {
+	font-size: 16px;
+}
+
+.settingstuff .inline-action {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.settingstuff .inline-action .list-content {
+	width: 70%;
+}
+
+.settingstuff .inline-action .list-action {
+	width: 30%;
+	text-align: right;
 }
 
 .settingstuff .has-subboxes .form-table {
