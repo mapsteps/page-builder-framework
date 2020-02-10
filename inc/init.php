@@ -75,9 +75,6 @@ function wpbf_theme_settings_output() {
 	require __DIR__ . '/output/settings-page.php';
 }
 
-// Global variable(s).
-$wpbf_activation_notice_dismissal_nonce = wp_create_nonce( 'WPBF_Dismiss_Activation_Notice' );
-
 /**
  * Enqueue nice-notice when necessary.
  */
@@ -86,14 +83,12 @@ function wpbf_enqueue_admin_scripts() {
 
 	wp_enqueue_script( 'wpbf-admin', WPBF_THEME_URI . '/assets/js/admin.js', array( 'jquery' ), WPBF_VERSION, true );
 
-	global $wpbf_activation_notice_dismissal_nonce;
-
 	wp_localize_script(
 		'wpbf-admin',
 		'wpbfOpts',
 		array(
 			'activationNotice' => array(
-				'dismissalNonce' => $wpbf_activation_notice_dismissal_nonce,
+				'dismissalNonce' => wp_create_nonce( 'WPBF_Dismiss_Activation_Notice' ),
 			),
 		)
 	);
@@ -118,58 +113,23 @@ add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_setting_scripts' );
 
 /**
  * Save activation notice dismissal.
- *
- * @param bool $via_ajax Whether or not the function is called via ajax request.
  */
-function wpbf_activation_notice_dismissal( $via_ajax = true ) {
-	if ( $via_ajax ) {
-		$nonce   = isset( $_POST['nonce'] ) ? $_POST['nonce'] : 0;
-		$dismiss = isset( $_POST['dismiss'] ) ? absint( $_POST['dismiss'] ) : 0;
-	} else {
-		$current_screen = get_current_screen();
-		$action         = isset( $_POST['action'] ) ? $_GET['action'] : 0;
-
-		if ( 'appearance_page_wpbf-premium' !== $current_screen->id || 'wpbf_activation_notice_dismissal' !== $action ) {
-			return;
-		}
-
-		$nonce   = isset( $_POST['nonce'] ) ? $_GET['nonce'] : 0;
-		$dismiss = isset( $_GET['dismiss'] ) ? absint( $_GET['dismiss'] ) : 0;
-	}
+function wpbf_activation_notice_dismissal() {
+	$nonce   = isset( $_POST['nonce'] ) ? $_POST['nonce'] : 0;
+	$dismiss = isset( $_POST['dismiss'] ) ? absint( $_POST['dismiss'] ) : 0;
 
 	if ( empty( $dismiss ) ) {
-		if ( $via_ajax ) {
-			wp_send_json_error( __( 'Invalid Request', 'page-builder-framework' ) );
-		} else {
-			return;
-		}
+		wp_send_json_error( __( 'Invalid Request', 'page-builder-framework' ) );
 	}
 
 	if ( ! wp_verify_nonce( $nonce, 'WPBF_Dismiss_Activation_Notice' ) ) {
-		if ( $via_ajax ) {
-			wp_send_json_error( __( 'Invalid Token', 'page-builder-framework' ) );
-		} else {
-			return;
-		}
+		wp_send_json_error( __( 'Invalid Token', 'page-builder-framework' ) );
 	}
 
-	// If the dismissal scope is per user.
-	update_user_meta( get_current_user_ID(), 'wpbf_activation_notice_dismissed', 1 );
-
-	// If the dismissal scope is general option.
 	update_option( 'wpbf_activation_notice_dismissed', 1 );
-
-	if ( $via_ajax ) {
-		wp_send_json_success( __( 'Activation notice has been dismissed', 'page-builder-framework' ) );
-	}
+	wp_send_json_success( __( 'Activation notice has been dismissed', 'page-builder-framework' ) );
 }
 add_action( 'wp_ajax_wpbf_activation_notice_dismissal', 'wpbf_activation_notice_dismissal' );
-add_action(
-	'current_screen',
-	function () {
-		wpbf_activation_notice_dismissal( false );
-	}
-);
 
 /**
  * Run action after theme activation.
