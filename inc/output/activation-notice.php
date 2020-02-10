@@ -26,8 +26,7 @@ $screen = get_current_screen();
 
 				<?php
 				_e(
-					'We strongly recommend you to activate the <strong>Premium Add-On</strong>.<br>
-					This way you will have more powerful customization and some other nice features.',
+					'This will have a thank you type & lets get started type of message.',
 					'page-builder-framework'
 				);
 				?>
@@ -36,7 +35,7 @@ $screen = get_current_screen();
 
 			<?php if ( 'appearance_page_wpbf-premium' !== $screen->id ) : ?>
 			<p class="buttons">
-				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium&tab=settings' ) ); ?>" class="button">
+				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium' ) ); ?>" class="button">
 					<?php _e( 'Theme Settings', 'page-builder-framework' ); ?>
 				</a>
 			</p>
