@@ -185,9 +185,13 @@
 	margin-bottom: 20px;
 }
 
-.settingstuff .neatbox-body .item-description {
+/* Reset WordPress default */
+.settingstuff .neatbox-body > p.description {
+	font-style: normal;
+}
+
+.settingstuff .neatbox-body > .description {
 	color: #8f8f8f;
-	font-size: 14px;
 }
 
 .settingstuff .neatbox-list {
@@ -212,11 +216,17 @@
 	border-bottom: 1px solid #eee;
 }
 
-.settingstuff .neatbox-list .item-description {
+/* Reset WordPress default */
+.settingstuff .neatbox-list p.description {
+	margin: 1em 0;
+	font-style: normal;
+}
+
+.settingstuff .neatbox-list .description {
 	color: #8f8f8f;
 }
 
-.settingstuff .neatbox-list .item-title {
+.settingstuff .neatbox-list .title {
 	font-size: 16px;
 }
 
