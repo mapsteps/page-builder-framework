@@ -24,11 +24,11 @@ add_action( 'admin_menu', 'wpbf_theme_settings_page' );
  * Theme settings output.
  */
 function wpbf_theme_settings_output() {
-	require __DIR__ . '/output/settings-page.php';
+	require __DIR__ . '/settings/settings-page.php';
 }
 
 /**
- * Enqueue nice-notice when necessary.
+ * Enqueue admin assets.
  */
 function wpbf_enqueue_admin_scripts() {
 	wp_enqueue_style( 'nice-notice', WPBF_THEME_URI . '/assets/css/nice-notice.css', array(), WPBF_VERSION );
@@ -44,24 +44,16 @@ function wpbf_enqueue_admin_scripts() {
 			),
 		)
 	);
-}
-add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
 
-/**
- * Enqueue admin scripts no matter premium add-on is active or not.
- */
-function wpbf_enqueue_setting_scripts() {
 	$current_screen = get_current_screen();
 
-	// Only show to "Theme Settings" page.
-	if ( 'appearance_page_wpbf-premium' !== $current_screen->id ) {
-		return;
+	// Only enqueue to "Theme Settings" page.
+	if ( 'appearance_page_wpbf-premium' === $current_screen->id ) {
+		wp_enqueue_style( 'settings-page', WPBF_THEME_URI . '/assets/css/settings-page.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'settings-page' ), WPBF_VERSION );
 	}
-
-	wp_enqueue_style( 'settings-page', WPBF_THEME_URI . '/assets/css/settings-page.css', array(), WPBF_VERSION );
-	wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'settings-page' ), WPBF_VERSION );
 }
-add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_setting_scripts' );
+add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
 
 /**
  * Save activation notice dismissal.
@@ -95,54 +87,6 @@ function wpbf_show_activation_notice() {
 		return;
 	}
 
-	require __DIR__ . '/output/activation-notice.php';
+	require __DIR__ . '/settings/activation-notice.php';
 }
 add_action( 'admin_notices', 'wpbf_show_activation_notice' );
-
-/**
- * Output customizer setting's box.
- */
-function wpbf_theme_settings_customizer_box() {
-	require __DIR__ . '/output/metaboxes/customizer.php';
-}
-add_action( 'wpbf_theme_settings_customizer_box', 'wpbf_theme_settings_customizer_box' );
-
-/**
- * Output premium setting's box.
- */
-function wpbf_theme_settings_premium_box() {
-	require __DIR__ . '/output/metaboxes/premium.php';
-}
-add_action( 'wpbf_theme_settings_premium_box', 'wpbf_theme_settings_premium_box' );
-
-/**
- * Output recommended plugin's box.
- */
-function wpbf_theme_settings_recommended_box() {
-	require __DIR__ . '/output/metaboxes/recommended.php';
-}
-add_action( 'wpbf_theme_settings_recommended_box', 'wpbf_theme_settings_recommended_box' );
-
-/**
- * Output documentation link's box.
- */
-function wpbf_theme_settings_documentation_box() {
-	require __DIR__ . '/output/metaboxes/documentation.php';
-}
-add_action( 'wpbf_theme_settings_documentation_box', 'wpbf_theme_settings_documentation_box' );
-
-/**
- * Output community link's box.
- */
-function wpbf_theme_settings_community_box() {
-	require __DIR__ . '/output/metaboxes/community.php';
-}
-add_action( 'wpbf_theme_settings_community_box', 'wpbf_theme_settings_community_box' );
-
-/**
- * Output additional link's box.
- */
-function wpbf_theme_settings_additional_box() {
-	require __DIR__ . '/output/metaboxes/additional.php';
-}
-add_action( 'wpbf_theme_settings_additional_box', 'wpbf_theme_settings_additional_box' );

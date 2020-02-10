@@ -18,18 +18,18 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 		<div class="left-section">
 
 			<?php
-			do_action( 'wpbf_theme_settings_customizer_box' );
-			do_action( 'wpbf_theme_settings_premium_box' );
+			require __DIR__ . '/metaboxes/customizer.php';
+			require __DIR__ . '/metaboxes/premium.php';
 			?>
 
 		</div><!-- .left-section -->
 		<div class="right-section">
 
 			<?php
-			do_action( 'wpbf_theme_settings_recommended_box' );
-			do_action( 'wpbf_theme_settings_documentation_box' );
-			do_action( 'wpbf_theme_settings_community_box' );
-			do_action( 'wpbf_theme_settings_additional_box' );
+			require __DIR__ . '/metaboxes/recommended.php';
+			require __DIR__ . '/metaboxes/documentation.php';
+			require __DIR__ . '/metaboxes/community.php';
+			require __DIR__ . '/metaboxes/additional.php';
 			?>
 
 		</div><!-- .right-section -->
