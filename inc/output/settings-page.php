@@ -15,21 +15,21 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 	<div class="wpbf-admin-page">
 		<div class="left-section">
 
-			<div class="neatbox is-smooth has-medium-gap has-bigger-heading customizer-link-box">
+			<div class="neatbox is-smooth has-medium-gap has-bigger-heading customizer-box">
 				<h2>
 					<?php _e( 'Links to Customizer Settings', 'page-builder-framework' ); ?>
 				</h2>
-				<ul class="neatbox-list customizer-link-list">
+				<ul class="neatbox-list customizer-list">
 					<li class="list-item">
 
-						<div class="customizer-link-items">
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url() ); ?>/customize.php?autofocus%5Bsection%5D=title_tagline" class="customizer-link">
+						<div class="customizer-items">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url() ); ?>/customize.php?autofocus%5Bsection%5D=title_tagline">
 									<?php _e( 'Logo & Site Identity', 'page-builder-framework' ); ?>
 								</a>
 							</div>
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url() ); ?>/customize.php?autofocus%5Bsection%5D=wpbf_menu_options" class="customizer-link">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url() ); ?>/customize.php?autofocus%5Bsection%5D=wpbf_menu_options">
 									<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>
 								</a>
 							</div>
@@ -38,14 +38,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					</li>
 					<li class="list-item">
 
-						<div class="customizer-link-items">
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=header_panel' ) ); ?>" class="customizer-link">
+						<div class="customizer-items">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=header_panel' ) ); ?>">
 									<?php _e( 'Header Settings', 'page-builder-framework' ); ?>
 								</a>
 							</div>
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_footer_options' ) ); ?>" class="customizer-link">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_footer_options' ) ); ?>">
 									<?php _e( 'Footer Settings', 'page-builder-framework' ); ?>
 								</a>
 							</div>
@@ -54,14 +54,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					</li>
 					<li class="list-item">
 
-						<div class="customizer-link-items">
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_page_options' ) ); ?>" class="customizer-link">
+						<div class="customizer-items">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_page_options' ) ); ?>">
 									<?php _e( 'Layout Settings', 'page-builder-framework' ); ?>
 								</a>
 							</div>
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_sidebar_options' ) ); ?>" class="customizer-link">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_sidebar_options' ) ); ?>">
 									<?php _e( 'Sidebar Settings', 'page-builder-framework' ); ?>
 								</a>
 							</div>
@@ -70,14 +70,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					</li>
 					<li class="list-item">
 
-						<div class="customizer-link-items">
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=blog_panel' ) ); ?>" class="customizer-link">
+						<div class="customizer-items">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=blog_panel' ) ); ?>">
 									<?php _e( 'Blog Settings', 'page-builder-framework' ); ?>
 								</a>
 							</div>
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_single_options' ) ); ?>" class="customizer-link">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_single_options' ) ); ?>">
 									<?php _e( 'Post Layout', 'page-builder-framework' ); ?>
 								</a>
 							</div>
@@ -86,14 +86,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					</li>
 					<li class="list-item">
 
-						<div class="customizer-link-items">
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=typo_panel' ) ); ?>" class="customizer-link">
+						<div class="customizer-items">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=typo_panel' ) ); ?>">
 									<?php _e( 'Typography', 'page-builder-framework' ); ?>
 								</a>
 							</div>
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_button_options' ) ); ?>" class="customizer-link">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_button_options' ) ); ?>">
 									<?php _e( 'Theme Buttons', 'page-builder-framework' ); ?>
 								</a>
 							</div>
@@ -102,14 +102,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					</li>
 					<li class="list-item">
 
-						<div class="customizer-link-items">
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=static_front_page' ) ); ?>" class="customizer-link">
+						<div class="customizer-items">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bsection%5D=static_front_page' ) ); ?>">
 									<?php _e( 'Homepage Settings', 'page-builder-framework' ); ?>
 								</a>
 							</div>
-							<div class="customizer-link-item">
-								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=nav_menus' ) ); ?>" class="customizer-link">
+							<div class="customizer-item">
+								<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus%5Bpanel%5D=nav_menus' ) ); ?>">
 									<?php _e( 'Manage Menu', 'page-builder-framework' ); ?>
 								</a>
 							</div>
@@ -117,16 +117,16 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					</li>
 				</ul>
-			</div><!-- .customizer-links-box -->
+			</div><!-- .customizer-items-box -->
 
-			<div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-link-box">
+			<div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-box">
 				<h2>
 					<?php _e( 'Premium Add-On Options', 'page-builder-framework' ); ?>
-					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;" class=""><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
+					<a href="https://wp-pagebuilderframework.com/premium/" target="_blank" style="float: right;"><?php _e( 'Learn more', 'page-builder-framework' ); ?></a>
 				</h2>
-				<ul class="neatbox-list premium-link-list">
+				<ul class="neatbox-list premium-list">
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Transparent Header</a></h3>
 							<p class="description">
@@ -138,7 +138,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Sticky Navigation</a></h3>
 							<p class="description">
@@ -150,7 +150,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">White Label Settings</a></h3>
 							<p class="description">
@@ -162,7 +162,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Advanced Typography</a></h3>
 							<p class="description">
@@ -174,7 +174,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Adjustable Breakpoints</a></h3>
 							<p class="description">
@@ -186,7 +186,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Advanced WooCommerce Features</a></h3>
 							<p class="description">
@@ -198,7 +198,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Mega Menu</a></h3>
 							<p class="description">
@@ -210,7 +210,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title"><a href="#" target="_blank">Call to Action Button</a></h3>
 							<p class="description">
@@ -222,7 +222,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 						</div>
 					</li>
 
-					<li class="list-item premium-link-item inline-action">
+					<li class="list-item inline-action">
 						<div class="list-content">
 							<h3 class="title">And a lot more!</h3>
 							<p class="description">
@@ -345,7 +345,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				</h2>
 				<ul class="neatbox-list additional-list">
 					<li class="list-item">
-						<a href="https://wp-pagebuilderframework.com/" target="_blank" class="">
+						<a href="https://wp-pagebuilderframework.com/" target="_blank">
 							<span class="dashicons dashicons-admin-site-alt"></span>
 							<?php _e( 'Page Builder Framework Website', 'page-builder-framework' ); ?>
 						</a>

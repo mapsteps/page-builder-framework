@@ -33,26 +33,26 @@
  * Customizer Link List
  * --------------------
  */
-.wpbf-admin-page .customizer-link-list .list-item {
+.wpbf-admin-page .customizer-list .list-item {
 	padding-top: 0;
 	padding-bottom: 0;
 }
 
-.wpbf-admin-page .customizer-link-items {
+.wpbf-admin-page .customizer-items {
 	display: flex;
 	align-items: center;
 	width: 100%;
 }
 
-.wpbf-admin-page .customizer-link-items .customizer-link-item:first-child {
+.wpbf-admin-page .customizer-items .customizer-item:first-child {
 	border-right: 1px solid #eee;
 }
 
-.wpbf-admin-page .customizer-link-items .customizer-link-item:last-child {
+.wpbf-admin-page .customizer-items .customizer-item:last-child {
 	padding-left: 15px;
 }
 
-.wpbf-admin-page .customizer-link-item {
+.wpbf-admin-page .customizer-item {
 	width: 50%;
 	padding-top: 12px;
 	padding-bottom: 12px;
@@ -63,19 +63,19 @@
  * Premium Add-On List
  * --------------------
  */
-.wpbf-admin-page .premium-link-list .list-item:last-child {
+.wpbf-admin-page .premium-list .list-item:last-child {
 	background: #f1f1f1;
 }
 
-.wpbf-admin-page .premium-link-item .list-content {
+.wpbf-admin-page .premium-list .list-content {
 	width: 60%;
 }
 
-.wpbf-admin-page .premium-link-item .list-action {
+.wpbf-admin-page .premium-list .list-action {
 	width: 40%;
 }
 
-.wpbf-admin-page .premium-link-item i {
+.wpbf-admin-page .premium-list i {
 	color: #47D87C;
 	text-align: right;
 	margin-right: 20px;
