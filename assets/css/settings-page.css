@@ -182,7 +182,7 @@
 }
 
 .settingstuff .neatbox-content.has-bottom-gapless {
-	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 .settingstuff .neatbox-content {
