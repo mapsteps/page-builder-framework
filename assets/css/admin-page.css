@@ -5,6 +5,7 @@
  */
 .wpbf-admin-page {
 	display: flex;
+	flex-wrap: wrap;
 	max-width: 1300px;
 }
 
@@ -75,7 +76,7 @@
 }
 
 .wpbf-admin-page .premium-list i {
-	color: #47D87C;
+	color: #47d87c;
 	text-align: right;
 	margin-right: 20px;
 }
@@ -86,7 +87,7 @@
  * --------------------
  */
 .wpbf-admin-page .recommended-list .dashicons {
-	color: #47D87C;
+	color: #47d87c;
 }
 
 /**
@@ -94,6 +95,17 @@
  * Additional Resources
  * --------------------
  */
- .wpbf-admin-page .additional-list .dashicons {
+.wpbf-admin-page .additional-list .dashicons {
 	margin-right: 5px;
- }
+}
+
+@media (max-width: 991.32px) {
+	.wpbf-admin-page > .left-section {
+		width: 100%;
+	}
+
+	.wpbf-admin-page > .right-section {
+		padding-left: 0;
+		width: 100%;
+	}
+}
