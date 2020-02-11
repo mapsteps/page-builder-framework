@@ -3,11 +3,6 @@
  * Admin Page
  * --------------------
  */
-.wpbf-admin-page,
-.wpbf-admin-page * {
-	box-sizing: border-box;
-}
-
 .wpbf-admin-page {
 	display: flex;
 	max-width: 1300px;
