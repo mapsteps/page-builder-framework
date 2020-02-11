@@ -33,6 +33,16 @@
 }
 
 /* Settings Page */
+.settingstuff h1 .version {
+	font-size: 60%;
+	opacity: 0.6;
+	font-weight: 600;
+	background: #ccc;
+	border-radius: 5px;
+	padding: 5px 12px;
+	line-height: 1;
+}
+
 .settingstuff .neatbox.has-subboxes {
 	margin-top: 0;
 	background-color: transparent;
@@ -316,17 +326,4 @@
 .settingstuff .buttons p.submit {
 	margin: 0;
 	padding: 0;
-}
-
-/* Extra Styles */
-.CodeMirror-wrap {
-	border: 1px solid #ddd;
-}
-
-/* Overview Styles */
-td.icon .dashicons {
-	font-size: 22px;
-}
-td.icon .fa {
-	font-size: 18px;
 }
