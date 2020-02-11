@@ -1,38 +1,10 @@
-/* General */
-.border-box,
-.border-box * {
+/* Settings Page */
+.settingstuff,
+.settingstuff * {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
-.cols {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-wrap: wrap;
-	flex-wrap: wrap;
-}
-
-.cols .col:last-child {
-	justify-self: flex-end;
-}
-
-.is-centered {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.has-text-centered {
-	text-align: center;
-}
-
-.block-label {
-	display: block;
-	margin-bottom: 10px;
-	font-weight: 700;
-}
-
-/* Settings Page */
 .settingstuff h1 .version {
 	font-size: 60%;
 	opacity: 0.6;
@@ -112,6 +84,12 @@
 	border-bottom-right-radius: 3px;
 	-webkit-box-shadow: 0 3px 10px -2px rgba(94, 135, 161, 0.3);
 	box-shadow: 0 3px 10px -2px rgba(94, 135, 161, 0.3);
+}
+
+.settingstuff .block-label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: 700;
 }
 
 .settingstuff .neatbox .label {
