@@ -20,6 +20,12 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 			</a>
 		</li>
 		<li class="list-item">
+			<a href="https://wp-pagebuilderframework.com/child-theme-generator/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">
+				<span class="dashicons dashicons-download"></span>
+				Child Theme
+			</a>
+		</li>
+		<li class="list-item">
 			<a href="https://wordpress.org/support/theme/page-builder-framework/" target="_blank">
 				<span class="dashicons dashicons-sos"></span>
 				Support Forum
