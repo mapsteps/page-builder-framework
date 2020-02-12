@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 ?>
 
-<div class="wrap settingstuff wpbf-settings border-box">
+<div class="wrap settingstuff">
 
 	<h1>
 		<?php echo esc_html( get_admin_page_title() ); ?>

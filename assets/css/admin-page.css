@@ -1,3 +1,8 @@
+/*! 
+ * This file contains the same styling for both PBF & Premium Add-On
+ * Please keep in sync!
+ */
+
 /**
  * --------------------
  * Admin Page
@@ -5,6 +10,7 @@
  */
 .wpbf-admin-page {
 	display: flex;
+	flex-wrap: wrap;
 	max-width: 1300px;
 }
 
@@ -15,6 +21,12 @@
 .wpbf-admin-page > .right-section {
 	padding-left: 40px;
 	width: 35%;
+}
+
+.wpbf-admin-page .neatbox:last-child,
+.wpbf-admin-page > .left-section .neatbox:last-child,
+.wpbf-admin-page > .right-section .neatbox:last-child {
+	margin-bottom: 0;
 }
 
 .wpbf-admin-page .neatbox-content > p,
@@ -29,12 +41,9 @@
  * --------------------
  */
 .wpbf-admin-page .customizer-list .list-item {
+	flex-wrap: wrap;
 	padding-top: 0;
 	padding-bottom: 0;
-}
-
-.wpbf-admin-page .customizer-list .list-item:last-child .customizer-item {
-	width: 100%;
 }
 
 .wpbf-admin-page .customizer-items {
@@ -75,9 +84,36 @@
 }
 
 .wpbf-admin-page .premium-list i {
-	color: #47D87C;
+	color: #47d87c;
 	text-align: right;
 	margin-right: 20px;
+}
+
+/**
+ * --------------------
+ * Setting Fields
+ * --------------------
+ */
+/* Checkbox label */
+.wpbf-admin-page .label input:checked ~ .indicator {
+	background-color: #007cba;
+}
+
+.wpbf-admin-page .label:hover input:not([disabled]):checked ~ .indicator,
+.wpbf-admin-page .label input:checked:focus ~ .indicator {
+	background-color: #00669b;
+}
+
+.wpbf-show-advanced {
+	display: inline-block;
+	margin-top: 10px;
+	box-shadow: none;
+}
+
+.wpbf-show-advanced.button {
+	display: block;
+	margin-top: 15px;
+	width: fit-content;
 }
 
 /**
@@ -86,7 +122,7 @@
  * --------------------
  */
 .wpbf-admin-page .recommended-list .dashicons {
-	color: #47D87C;
+	color: #47d87c;
 }
 
 /**
@@ -94,6 +130,47 @@
  * Additional Resources
  * --------------------
  */
- .wpbf-admin-page .additional-list .dashicons {
+.wpbf-admin-page .additional-list .dashicons {
 	margin-right: 5px;
- }
+}
+
+
+
+@media screen and (max-width: 991.32px) {
+	.wpbf-admin-page > .left-section {
+		width: 100%;
+	}
+
+	.wpbf-admin-page > .right-section {
+		padding-left: 0;
+		width: 100%;
+	}
+}
+
+/* This is WordPres's breakpoint */
+@media screen and (max-width: 782px) {
+	/* Upload & cancel button */
+	.wpbf-admin-page .upload-button,
+	.wpbf-admin-page .cancel-upload-button {
+		margin-top: 7px;
+	}
+}
+
+@media screen and (max-width: 575.32px) {
+	.wpbf-admin-page .customizer-list .list-item:last-child .customizer-item {
+		width: 100%;
+	}
+
+	.wpbf-admin-page .customizer-list .list-item:last-child {
+		padding-bottom: 10px;
+	}
+
+	.wpbf-admin-page .customizer-list .list-item:last-child p {
+		margin-bottom: 0;
+	}
+}
+
+/*! 
+ * This file contains the same styling for both PBF & Premium Add-On
+ * Please keep in sync!
+ */
