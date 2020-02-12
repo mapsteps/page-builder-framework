@@ -50,7 +50,8 @@ function wpbf_enqueue_admin_scripts() {
 	// Only enqueue on "Theme Settings" page.
 	if ( 'appearance_page_wpbf-premium' === $current_screen->id ) {
 		wp_enqueue_style( 'settings-page', WPBF_THEME_URI . '/assets/css/settings-page.css', array(), WPBF_VERSION );
-		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'settings-page' ), WPBF_VERSION );
+		wp_enqueue_style( 'setting-fields', WPBF_THEME_URI . '/assets/css/setting-fields.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'settings-page', 'setting-fields' ), WPBF_VERSION );
 	}
 }
 add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
