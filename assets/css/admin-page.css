@@ -8,12 +8,9 @@
  * Admin Page
  * --------------------
  */
-.wpbf-admin-page.has-sidebar {
+.wpbf-admin-page {
 	display: flex;
 	flex-wrap: wrap;
-}
-
-.wpbf-admin-page {
 	max-width: 1300px;
 }
 
