@@ -30,6 +30,7 @@
  * --------------------
  */
 .wpbf-admin-page .customizer-list .list-item {
+	flex-wrap: wrap;
 	padding-top: 0;
 	padding-bottom: 0;
 }
@@ -107,5 +108,15 @@
 	.wpbf-admin-page > .right-section {
 		padding-left: 0;
 		width: 100%;
+	}
+}
+
+@media (max-width: 575.32px) {
+	.wpbf-admin-page .customizer-list .list-item:last-child {
+		padding-bottom: 10px;
+	}
+
+	.wpbf-admin-page .customizer-list .list-item:last-child p {
+		margin-bottom: 0;
 	}
 }
