@@ -26,7 +26,7 @@ $screen = get_current_screen();
 
 				<?php
 				_e(
-					'Thank you for choosing Page Builder Framework! Please visit the theme dashboard page to get started.',
+					'Thank you for choosing Page Builder Framework! Please visit the theme settings page to get started.',
 					'page-builder-framework'
 				);
 				?>

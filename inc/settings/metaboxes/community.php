@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 	</h2>
 	<div class="neatbox-content">
 		<p class="description">
-			Join the community and meet 1000+ Page Builder Framework users in our private Facebook group.
+			Join the community and meet 1000+ Page Builder Framework users in our Facebook group.
 		</p>
 		<a href="https://www.facebook.com/groups/wpagebuilderframework/" target="_blank" class="button button-primary">
 			Join the Community
