@@ -171,7 +171,7 @@ function wpbf_title() {
 
 		$removetitle_global = isset( $wpbf_settings['wpbf_removetitle_global'] ) ? $wpbf_settings['wpbf_removetitle_global'] : array();
 
-		$removetitle_global && in_array( get_post_type(), $removetitle_global ) ? $title = false : '';
+		$title = $removetitle_global && in_array( get_post_type(), $removetitle_global ) ? false : $title;
 
 	}
 
@@ -507,8 +507,7 @@ function wpbf_sidebar_layout() {
 
 	if ( is_singular() ) {
 
-		$id                             = get_the_ID();
-		$single_sidebar_position        = get_post_meta( $id, 'wpbf_sidebar_position', true );
+		$single_sidebar_position        = get_post_meta( get_the_ID(), 'wpbf_sidebar_position', true );
 		$single_sidebar_position_global = get_theme_mod( 'single_sidebar_layout', 'global' );
 
 		$sidebar = 'global' !== $single_sidebar_position_global ? $single_sidebar_position_global : $sidebar;
@@ -540,17 +539,17 @@ function wpbf_article_meta() {
 			switch ( $value ) {
 				case 'author':
 					do_action( 'wpbf_before_author_meta' );
-					wpbf_author_meta();
+					do_action( 'wpbf_do_author_meta' );
 					do_action( 'wpbf_after_author_meta' );
 					break;
 				case 'date':
 					do_action( 'wpbf_before_date_meta' );
-					wpbf_date_meta();
+					do_action( 'wpbf_do_date_meta' );
 					do_action( 'wpbf_after_date_meta' );
 					break;
 				case 'comments':
 					do_action( 'wpbf_before_comments_meta' );
-					wpbf_comments_meta();
+					do_action( 'wpbf_do_comments_meta' );
 					do_action( 'wpbf_after_comments_meta' );
 					break;
 				default:
@@ -593,6 +592,7 @@ function wpbf_author_meta() {
 	echo '<span class="article-meta-separator">' . apply_filters( 'wpbf_article_meta_separator', ' | ' ) . '</span>';
 
 }
+add_action( 'wpbf_do_author_meta', 'wpbf_author_meta' );
 
 /*
  * Article meta (date).
@@ -603,6 +603,7 @@ function wpbf_date_meta() {
 	echo '<span class="article-meta-separator">' . apply_filters( 'wpbf_article_meta_separator', ' | ' ) . '</span>';
 
 }
+add_action( 'wpbf_do_date_meta', 'wpbf_date_meta' );
 
 /**
  * Article meta (comments).
@@ -622,6 +623,7 @@ function wpbf_comments_meta() {
 	echo '<span class="article-meta-separator">' . apply_filters( 'wpbf_article_meta_separator', ' | ' ) . '</span>';
 
 }
+add_action( 'wpbf_do_comments_meta', 'wpbf_comments_meta' );
 
 /**
  * Blog layout.
@@ -715,7 +717,7 @@ add_action( 'wpbf_main_menu', 'wpbf_nav_menu' );
  * @return string Menu selected under Header > Navigation in the WordPress customizer.
  */
 function wpbf_menu() {
-	return get_theme_mod( 'menu_position', 'menu-right' );
+	return apply_filters( 'wpbf_menu', get_theme_mod( 'menu_position', 'menu-right' ) );
 }
 
 /**
@@ -776,9 +778,8 @@ add_filter( 'walker_nav_menu_start_el', 'wpbf_mobile_sub_menu_indicators', 10, 4
 function wpbf_sub_menu_alignment() {
 
 	$sub_menu_alignment = get_theme_mod( 'sub_menu_alignment', 'left' );
-	$alignment          = ' wpbf-sub-menu-align-' . $sub_menu_alignment;
 
-	return $alignment;
+	return ' wpbf-sub-menu-align-' . $sub_menu_alignment;
 
 }
 
@@ -790,9 +791,8 @@ function wpbf_sub_menu_alignment() {
 function wpbf_sub_menu_animation() {
 
 	$sub_menu_animation = get_theme_mod( 'sub_menu_animation', 'fade' );
-	$sub_menu_animation = ' wpbf-sub-menu-animation-' . $sub_menu_animation;
 
-	return $sub_menu_animation;
+	return ' wpbf-sub-menu-animation-' . $sub_menu_animation;
 
 }
 
@@ -804,9 +804,8 @@ function wpbf_sub_menu_animation() {
 function wpbf_menu_alignment() {
 
 	$alignment = get_theme_mod( 'menu_alignment', 'left' );
-	$alignment = ' menu-align-' . $alignment;
 
-	return $alignment;
+	return ' menu-align-' . $alignment;
 
 }
 
@@ -837,8 +836,7 @@ function wpbf_menu_hover_effect() {
 function wpbf_navigation_attributes() {
 
 	$submenu_animation_duration = get_theme_mod( 'sub_menu_animation_duration' );
-
-	$navigation_attributes = $submenu_animation_duration ? 'data-sub-menu-animation-duration="' . esc_attr( $submenu_animation_duration ) . '"' : 'data-sub-menu-animation-duration="250"';
+	$navigation_attributes      = $submenu_animation_duration ? 'data-sub-menu-animation-duration="' . esc_attr( $submenu_animation_duration ) . '"' : 'data-sub-menu-animation-duration="250"';
 
 	echo $navigation_attributes;
 
@@ -903,18 +901,3 @@ function wpbf_page_builder_compatibility( $id ) {
 
 }
 // add_action( 'wpbf_page_builder_compatibility', 'task' );
-
-/**
- * Check if wpbf has activation notice.
- *
- * @return bool Whether wpbf has activation notice or not.
- */
-function wpbf_has_activation_notice() {
-	$has_been_dismissed = get_option( 'wpbf_activation_notice_dismissed', 0 );
-
-	if ( $has_been_dismissed ) {
-		return false;
-	}
-
-	return true;
-}
