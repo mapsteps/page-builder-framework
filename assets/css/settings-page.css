@@ -305,3 +305,16 @@
 	margin: 0;
 	padding: 0;
 }
+
+
+/* This is WordPres's breakpoint */
+@media screen and (max-width: 782px) {
+	/* Override WordPress style */
+	.settingstuff .neatbox .form-table td {
+		padding-left: 15px;
+	}
+
+	.settingstuff .neatbox .form-table th {
+		padding-bottom: 10px;
+	}
+}
