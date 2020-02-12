@@ -150,29 +150,6 @@
 	}
 }
 
-/* This is WordPres's breakpoint */
-@media screen and (max-width: 782px) {
-	/* Upload & cancel button */
-	.wpbf-admin-page .upload-button,
-	.wpbf-admin-page .cancel-upload-button {
-		margin-top: 7px;
-	}
-}
-
-@media screen and (max-width: 575.32px) {
-	.wpbf-admin-page .customizer-list .list-item:last-child .customizer-item {
-		width: 100%;
-	}
-
-	.wpbf-admin-page .customizer-list .list-item:last-child {
-		padding-bottom: 10px;
-	}
-
-	.wpbf-admin-page .customizer-list .list-item:last-child p {
-		margin-bottom: 0;
-	}
-}
-
 /*! 
  * This file contains the same styling for both PBF & Premium Add-On
  * Please keep in sync!
