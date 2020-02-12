@@ -1,3 +1,8 @@
+/*! 
+ * This file contains the same styling for both PBF & Premium Add-On
+ * Please keep in sync!
+ */
+
 /**
  * --------------------
  * Admin Page
@@ -89,6 +94,33 @@
 
 /**
  * --------------------
+ * Setting Fields
+ * --------------------
+ */
+/* Checkbox label */
+.wpbf-admin-page .label input:checked ~ .indicator {
+	background-color: #007cba;
+}
+
+.wpbf-admin-page .label:hover input:not([disabled]):checked ~ .indicator,
+.wpbf-admin-page .label input:checked:focus ~ .indicator {
+	background-color: #00669b;
+}
+
+.wpbf-show-advanced {
+	display: inline-block;
+	margin-top: 10px;
+	box-shadow: none;
+}
+
+.wpbf-show-advanced.button {
+	display: block;
+	margin-top: 15px;
+	width: fit-content;
+}
+
+/**
+ * --------------------
  * Recommended Plugins
  * --------------------
  */
@@ -118,6 +150,15 @@
 	}
 }
 
+/* This is WordPres's breakpoint */
+@media screen and (max-width: 782px) {
+	/* Upload & cancel button */
+	.wpbf-admin-page .upload-button,
+	.wpbf-admin-page .cancel-upload-button {
+		margin-top: 7px;
+	}
+}
+
 @media screen and (max-width: 575.32px) {
 	.wpbf-admin-page .customizer-list .list-item:last-child .customizer-item {
 		width: 100%;
@@ -131,3 +172,8 @@
 		margin-bottom: 0;
 	}
 }
+
+/*! 
+ * This file contains the same styling for both PBF & Premium Add-On
+ * Please keep in sync!
+ */
