@@ -136,6 +136,11 @@
 
 
 
+/**
+ * --------------------
+ * Responsiveness
+ * --------------------
+ */
 @media screen and (max-width: 991.32px) {
 	.wpbf-admin-page > .left-section {
 		width: 100%;
