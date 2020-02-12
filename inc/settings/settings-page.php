@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 		<?php echo esc_html( get_admin_page_title() ); ?>
 	</h1>
 
-	<div class="wpbf-admin-page">
+	<div class="wpbf-admin-page has-sidebar">
 		<div class="left-section">
 
 			<?php
