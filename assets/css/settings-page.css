@@ -1,3 +1,8 @@
+/* Adjust WordPress default styles */
+.settingstuff .form-table .small-text {
+	min-width: 60px;
+}
+
 /* Settings Page */
 .settingstuff,
 .settingstuff * {
@@ -305,6 +310,7 @@
 	margin: 0;
 	padding: 0;
 }
+
 
 
 /* This is WordPres's breakpoint */
