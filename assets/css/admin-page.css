@@ -3,9 +3,12 @@
  * Admin Page
  * --------------------
  */
-.wpbf-admin-page {
+.wpbf-admin-page.has-sidebar {
 	display: flex;
 	flex-wrap: wrap;
+}
+
+.wpbf-admin-page {
 	max-width: 1300px;
 }
 
@@ -16,6 +19,12 @@
 .wpbf-admin-page > .right-section {
 	padding-left: 40px;
 	width: 35%;
+}
+
+.wpbf-admin-page .neatbox:last-child,
+.wpbf-admin-page > .left-section .neatbox:last-child,
+.wpbf-admin-page > .right-section .neatbox:last-child {
+	margin-bottom: 0;
 }
 
 .wpbf-admin-page .neatbox-content > p,
