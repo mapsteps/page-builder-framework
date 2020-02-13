@@ -54,7 +54,7 @@
 	}
 
 	function setupProductQuantities() {
-		var quantities = document.querySelectorAll('form.cart .quantity');
+		var quantities = document.querySelectorAll('form .quantity');
 
 		if (!quantities.length) return;
 
