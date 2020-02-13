@@ -146,6 +146,7 @@ function wpbf_edd_menu_item() {
 
 	// Vars.
 	$icon        = get_theme_mod( 'edd_menu_item_icon', 'cart' );
+	$icon        = apply_filters( 'wpbf_edd_menu_item_icon', '<i class="wpbff wpbff-' . esc_attr( $icon ) . '"></i>' );
 	$css_classes = apply_filters( 'wpbf_edd_menu_item_classes', 'menu-item wpbf-edd-menu-item' );
 	$title       = apply_filters( 'wpbf_edd_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
 	$cart_count  = edd_get_cart_quantity();
@@ -160,7 +161,7 @@ function wpbf_edd_menu_item() {
 
 	$menu_item .= apply_filters( 'wpbf_edd_before_menu_item', '' );
 
-	$menu_item .= '<i class="wpbff wpbff-' . esc_attr( $icon ) . '"></i>';
+	$menu_item .= $icon;
 
 	if ( 'hide' !== get_theme_mod( 'edd_menu_item_count' ) ) {
 		$menu_item .= '<span class="wpbf-edd-menu-item-count">' . wp_kses_data( $cart_count ) . '<span class="screen-reader-text">' . __( 'Items in Cart', 'page-builder-framework' ) . '</span></span>';
