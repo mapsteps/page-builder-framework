@@ -6,17 +6,42 @@
 		});
 	}
 
+	/**
+	 * The Quickview content is taken via AJAX request.
+	 * Currently we manually waiting for the Quickview content to be ready.
+	 *
+	 * In the future, we might want to add event to the "Premium Add-On",
+	 * so we can just listen to the event.
+	 */
 	function setupQuickView() {
 		var quickViews = document.querySelectorAll('.wpbf-woo-quick-view');
 
 		if (!quickViews.length) return;
 
 		[].slice.call(quickViews).forEach(function (quickView) {
-			quickView.addEventListener('click', function () {
-				setTimeout(function () {
+			var maxWait = 3000; // Max wait of the ajax request of quickview modal.
+			var currentWait = 0;
+
+			quickView.addEventListener('click', waitForQuickViewReponse);
+
+			function waitForQuickViewReponse() {
+				console.log('Waiting for the Quickview request...');
+				
+				if (!document.querySelector('.wpbf-woo-quick-view-modal-content .type-product')) {
+					/**
+					 * The content of the quickview is taken from ajax response.
+					 * Let's wait until ready (but with maximum waiting time).
+					 */
+					if (currentWait <= maxWait) {
+						setTimeout(function () {
+							waitForQuickViewReponse();
+							currentWait += 300;
+						}, 300);
+					}
+				} else {
 					setupProductQuantitiesOnQuickView();
-				}, 500); // The fadeIn in premium add-on is 300ms.
-			})
+				}
+			}
 		});
 	}
 
