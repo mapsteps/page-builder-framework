@@ -151,18 +151,6 @@ function wpbf_scripts() {
 
 	}
 
-	if ( function_exists( 'is_shop' ) && function_exists( 'is_product' ) ) {
-
-		if ( is_shop() || is_product() ) {
-
-			wp_enqueue_style( 'wpbf-woocommerce-temporary', get_template_directory_uri() . '/assets/css/woocommerce.css', array( 'wpbf-woocommerce' ), WPBF_VERSION );
-
-			wp_enqueue_script( 'wpbf-Soocommerce-temporary', get_template_directory_uri() . '/assets/js/woocommerce.js', array(), WPBF_VERSION, true );
-
-		}
-
-	}
-
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_scripts', 10 );
 

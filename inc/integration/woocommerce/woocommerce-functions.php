@@ -9,22 +9,6 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Enqueue scripts & styles.
- */
-function wpbf_woo_fragment_refresh() {
-
-	// Fragments refresh fix.
-	wp_enqueue_script( 'wpbf-woocommerce-fragment-refresh', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce-fragment-refresh.js', array( 'jquery' ), '', true );
-
-	// Single add to cart ajax.
-	if ( is_product() && 'yes' === get_option( 'woocommerce_enable_ajax_add_to_cart' ) && get_theme_mod( 'woocommerce_single_add_to_cart_ajax' ) ) {
-		wp_enqueue_script( 'wpbf-woocommerce-single-add-to-cart-ajax', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce-single-add-to-cart-ajax.js', array( 'jquery' ), '', true );
-	}
-
-}
-add_action( 'wp_enqueue_scripts', 'wpbf_woo_fragment_refresh' );
-
-/**
  * Deregister defaults.
  */
 function wpbf_woo_deregister_defaults() {
