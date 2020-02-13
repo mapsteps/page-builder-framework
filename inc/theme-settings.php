@@ -85,13 +85,13 @@ function wpbf_show_activation_notice() {
 		return;
 	}
 
-	// Stop here if theme modification exists.
-	if ( get_theme_mods() ) {
+	// Stop here if notice has been dismissed.
+	if ( ! empty( get_option( 'wpbf_activation_notice_dismissed', 0 ) ) ) {
 		return;
 	}
 
-	// Stop here if notice has been dismissed.
-	if ( ! empty( get_option( 'wpbf_activation_notice_dismissed', 0 ) ) ) {
+	// Stop here if current user can't manage options.
+	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 
