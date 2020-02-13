@@ -682,3 +682,27 @@ function wpbf_woo_single_add_to_cart_ajax() {
 }
 add_action( 'wp_ajax_wpbf_woo_single_add_to_cart_ajax', 'wpbf_woo_single_add_to_cart_ajax' );
 add_action( 'wp_ajax_nopriv_wpbf_woo_single_add_to_cart_ajax', 'wpbf_woo_single_add_to_cart_ajax' );
+
+/**
+ * Add output before quantity input.
+ */
+function wpbf_woo_before_quantity_input_field() {
+	?>
+
+	<span class="wpbf-qty-decrease"></span>
+
+	<?php
+}
+add_action( 'woocommerce_before_quantity_input_field', 'wpbf_woo_before_quantity_input_field' );
+
+/**
+ * Add output after quantity input.
+ */
+function wpbf_woo_after_quantity_input_field() {
+	?>
+
+	<span class="wpbf-qty-increase"></span>
+
+	<?php
+}
+add_action( 'woocommerce_after_quantity_input_field', 'wpbf_woo_after_quantity_input_field' );

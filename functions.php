@@ -24,7 +24,8 @@ function wpbf_theme_setup() {
 	load_theme_textdomain( 'page-builder-framework', WPBF_THEME_DIR . '/languages' );
 
 	// Custom logo.
-	add_theme_support( 'custom-logo',
+	add_theme_support(
+		'custom-logo',
 		array(
 			'width'       => 180,
 			'height'      => 48,
@@ -34,7 +35,8 @@ function wpbf_theme_setup() {
 	);
 
 	// Custom background.
-	add_theme_support( 'custom-background',
+	add_theme_support(
+		'custom-background',
 		array(
 			'default-color'      => 'ffffff',
 			'default-image'      => '',
@@ -73,14 +75,16 @@ function wpbf_theme_setup() {
 	add_theme_support( 'customize-selective-refresh-widgets' );
 
 	// Register nav menu's.
-	register_nav_menus( array(
-		'main_menu'             => __( 'Main Menu', 'page-builder-framework' ),
-		'mobile_menu'           => __( 'Mobile Menu', 'page-builder-framework' ),
-		'pre_header_menu'       => __( 'Pre Header Left', 'page-builder-framework' ),
-		'pre_header_menu_right' => __( 'Pre Header Right', 'page-builder-framework' ),
-		'footer_menu'           => __( 'Footer Left', 'page-builder-framework' ),
-		'footer_menu_right'     => __( 'Footer Right', 'page-builder-framework' ),
-	) );
+	register_nav_menus(
+		array(
+			'main_menu'             => __( 'Main Menu', 'page-builder-framework' ),
+			'mobile_menu'           => __( 'Mobile Menu', 'page-builder-framework' ),
+			'pre_header_menu'       => __( 'Pre Header Left', 'page-builder-framework' ),
+			'pre_header_menu_right' => __( 'Pre Header Right', 'page-builder-framework' ),
+			'footer_menu'           => __( 'Footer Left', 'page-builder-framework' ),
+			'footer_menu_right'     => __( 'Footer Right', 'page-builder-framework' ),
+		)
+	);
 
 }
 add_action( 'after_setup_theme', 'wpbf_theme_setup' );
@@ -95,14 +99,16 @@ if ( ! isset( $content_width ) ) {
  */
 function wpbf_sidebars() {
 
-	register_sidebar( array(
-		'name'          => __( 'Sidebar', 'page-builder-framework' ),
-		'id'            => 'sidebar-1',
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h4 class="wpbf-widgettitle">',
-		'after_title'   => '</h4>',
-	) );
+	register_sidebar(
+		array(
+			'name'          => __( 'Sidebar', 'page-builder-framework' ),
+			'id'            => 'sidebar-1',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h4 class="wpbf-widgettitle">',
+			'after_title'   => '</h4>',
+		)
+	);
 
 }
 add_action( 'widgets_init', 'wpbf_sidebars' );
@@ -142,6 +148,14 @@ function wpbf_scripts() {
 
 		// RTL.
 		wp_enqueue_style( 'wpbf-rtl', get_template_directory_uri() . '/css/min/rtl-min.css', '', WPBF_VERSION );
+
+	}
+
+	if ( is_singular( 'product' ) ) {
+
+		wp_enqueue_style( 'wpbf-woocommerce-temporary', get_template_directory_uri() . '/assets/css/woocommerce.css', array( 'wpbf-woocommerce' ), WPBF_VERSION );
+
+		wp_enqueue_script( 'wpbf-Soocommerce-temporary', get_template_directory_uri() . '/assets/js/woocommerce.js', array(), WPBF_VERSION, true );
 
 	}
 
