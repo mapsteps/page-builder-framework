@@ -88,8 +88,11 @@ p.demo_store,
 
 	.quantity .qty {
 		width: 70px;
-		padding: 13px 10px 13px 15px;
-		margin-right: 5px;
+		text-align: center;
+		padding: 0;
+		height: 44px;
+		// padding: 13px 10px 13px 15px;
+		// margin-right: 5px;
 	}
 
 	/**
@@ -1930,13 +1933,7 @@ p.demo_store,
 }
 
 .woocommerce .quantity {
-	display: flex;
-}
-
-.woocommerce .quantity .qty {
-	padding: 13px;
-	margin-right: 0;
-	text-align: center;
+	@include flex();
 }
 
 .woocommerce .quantity .wpbf-qty-decrease:hover,
@@ -1946,14 +1943,11 @@ p.demo_store,
 
 .woocommerce .quantity .wpbf-qty-decrease,
 .woocommerce .quantity .wpbf-qty-increase {
-	display: flex;
+	@include flex();
 	align-items: center;
 	justify-content: center;
-	position: relative;
 	width: 44px;
 	height: 44px;
-	line-height: 44px;
-	text-align: center;
 	border: 1px solid $base-color;
 	cursor: pointer;
 }
@@ -2021,7 +2015,7 @@ p.demo_store,
 	}
 }
 
-// Premium Fix
+/* Premium */
 
 .wpbf-woo-sub-menu-table-wrap {
 	.wpbf-table {

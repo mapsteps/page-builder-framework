@@ -284,3 +284,11 @@ top:						50%;
 -ms-transform:				translateY(-50%);
 transform:					translateY(-50%);
 }
+
+@mixin flex() {
+display:					-webkit-box;
+display:					-moz-box;
+display: 					-ms-flexbox;
+display: 					-webkit-flex;
+display: 					flex;
+}
