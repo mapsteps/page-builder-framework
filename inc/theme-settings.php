@@ -33,7 +33,7 @@ function wpbf_theme_settings_callback() {
 function wpbf_enqueue_admin_scripts() {
 	wp_enqueue_style( 'nice-notice', WPBF_THEME_URI . '/assets/css/nice-notice.css', array(), WPBF_VERSION );
 
-	wp_enqueue_script( 'wpbf-admin', WPBF_THEME_URI . '/assets/js/admin.js', array( 'jquery' ), WPBF_VERSION, true );
+	wp_enqueue_script( 'wpbf-admin', WPBF_THEME_URI . '/js/min/admin-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
 	wp_localize_script(
 		'wpbf-admin',
