@@ -354,6 +354,40 @@ function wpbf_archive_header() {
 		</section>
 		<?php
 
+	} elseif ( is_home() ) {
+
+		$blog_title = apply_filters( 'wpbf_blog_page_title', '' );
+
+		if ( ! empty( $blog_title ) ) {
+
+			do_action( 'wpbf_before_page_title' );
+
+			echo '<h1 class="page-title">';
+
+			echo $blog_title;
+
+			echo '</h1>';
+
+			do_action( 'wpbf_after_page_title' );
+
+		}
+
+	} elseif ( is_search() ) {
+
+		do_action( 'wpbf_before_page_title' );
+
+		echo '<h1 class="page-title">';
+
+		echo apply_filters( 'wpbf_search_page_title', sprintf(
+				/* translators: Search query */
+				__( 'Search Results for: %s', 'page-builder-framework' ),
+				'<span>' . get_search_query() . '</span>'
+			) );
+
+		echo '</h1>';
+
+		do_action( 'wpbf_after_page_title' );
+
 	} else {
 
 		if ( get_the_archive_title() ) {

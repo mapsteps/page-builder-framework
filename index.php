@@ -31,6 +31,8 @@ get_header();
 
 				<?php if( have_posts() ) : ?>
 
+				<?php wpbf_archive_header(); ?>
+
 				<?php do_action( 'wpbf_before_loop' ); ?>
 
 				<?php while ( have_posts() ) : the_post(); ?>
