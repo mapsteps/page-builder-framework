@@ -16,6 +16,10 @@
 }
 
 /* Remove the input +/- control */
+.woocommerce .quantity .qty {
+	-moz-appearance:textfield;
+}
+
 .woocommerce .quantity .qty::-webkit-inner-spin-button, 
 .woocommerce .quantity .qty::-webkit-outer-spin-button {
 	-webkit-appearance: none;
