@@ -49,7 +49,6 @@
 		var quantities = document.querySelectorAll('form.cart .quantity');
 
 		if (!quantities.length) return;
-		
 
 		[].slice.call(quantities).forEach(function (quantity) {
 			setupProductQuantity(quantity);
@@ -57,10 +56,13 @@
 	}
 
 	function setupProductQuantitiesOnQuickView() {
-		var quantity = document.querySelector('.wpbf-woo-quick-view-modal-content .quantity');
+		var quantities = document.querySelector('.wpbf-woo-quick-view-modal-content .quantity');
 
-		if (!quantity) return;
-		setupProductQuantity(quantity);
+		if (!quantities.length) return;
+
+		[].slice.call(quantities).forEach(function (quantity) {
+			setupProductQuantity(quantity);
+		});
 	}
 
 	function setupProductQuantity(quantity) {
