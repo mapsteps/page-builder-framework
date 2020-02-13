@@ -56,7 +56,7 @@
 	}
 
 	function setupProductQuantitiesOnQuickView() {
-		var quantities = document.querySelector('.wpbf-woo-quick-view-modal-content .quantity');
+		var quantities = document.querySelectorAll('.wpbf-woo-quick-view-modal-content .quantity');
 
 		if (!quantities.length) return;
 
