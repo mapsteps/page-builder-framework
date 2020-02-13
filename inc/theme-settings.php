@@ -85,6 +85,11 @@ function wpbf_show_activation_notice() {
 		return;
 	}
 
+	// Stop here if theme modification exists.
+	if ( get_theme_mods() ) {
+		return;
+	}
+
 	// Stop here if notice has been dismissed.
 	if ( ! empty( get_option( 'wpbf_activation_notice_dismissed', 0 ) ) ) {
 		return;
