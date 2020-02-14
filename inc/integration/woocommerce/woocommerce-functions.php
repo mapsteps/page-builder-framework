@@ -673,7 +673,9 @@ add_action( 'wp_ajax_nopriv_wpbf_woo_single_add_to_cart_ajax', 'wpbf_woo_single_
 function wpbf_woo_before_quantity_input_field() {
 	?>
 
-	<span class="wpbf-qty-control wpbf-qty-decrease"></span>
+	<button class="wpbf-qty-control wpbf-qty-decrease">
+		<span class="screen-reader-text"><?php _e( 'Decrease quantity', 'page-builder-framework' ); ?></span>
+	</button>
 
 	<?php
 }
@@ -685,7 +687,9 @@ add_action( 'woocommerce_before_quantity_input_field', 'wpbf_woo_before_quantity
 function wpbf_woo_after_quantity_input_field() {
 	?>
 
-	<span class="wpbf-qty-control wpbf-qty-increase"></span>
+	<button class="wpbf-qty-control wpbf-qty-increase">
+		<span class="screen-reader-text"><?php _e( 'Decrease quantity', 'page-builder-framework' ); ?></span>
+	</button>
 
 	<?php
 }
