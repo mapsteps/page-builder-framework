@@ -688,7 +688,7 @@ function wpbf_woo_after_quantity_input_field() {
 	?>
 
 	<button class="wpbf-qty-control wpbf-qty-increase">
-		<span class="screen-reader-text"><?php _e( 'Decrease quantity', 'page-builder-framework' ); ?></span>
+		<span class="screen-reader-text"><?php _e( 'Increase quantity', 'page-builder-framework' ); ?></span>
 	</button>
 
 	<?php
