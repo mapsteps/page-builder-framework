@@ -111,16 +111,18 @@
 
 		if (!qty || !decrease || !increase) return;
 
-		decrease.addEventListener('click', function () {
+		decrease.addEventListener('click', function (e) {
+			e.preventDefault();
 			var value = parseInt(qty.value, 10) - 1;
-
+			
 			value = value < 1 ? 1 : value;
 			qty.value = value;
-
+			
 			qty.dispatchEvent(new Event('change', {bubbles: true}));
 		});
-
-		increase.addEventListener('click', function () {
+		
+		increase.addEventListener('click', function (e) {
+			e.preventDefault();
 			qty.value = parseInt(qty.value, 10) + 1;
 
 			qty.dispatchEvent(new Event('change', {bubbles: true}));
