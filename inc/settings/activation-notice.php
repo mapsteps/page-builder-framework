@@ -2,7 +2,7 @@
 /**
  * Theme activation notice's template.
  *
- * @package Page_Builder_Framework
+ * @package Page Builder Framework
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
