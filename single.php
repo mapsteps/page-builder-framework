@@ -91,24 +91,7 @@ get_header();
 
 					</div>
 
-					<?php if ( 'hide' !== get_theme_mod( 'single_post_nav' ) ) { ?>
-
-					<?php do_action( 'wpbf_before_post_links' ); ?>
-
-					<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
-
-						<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
-
-						<?php
-						previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
-						next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
-						?>
-
-					</nav>
-
-					<?php do_action( 'wpbf_after_post_links' ); ?>
-
-					<?php } ?>
+					<?php do_action( 'wpbf_post_links' ); ?>
 
 					<?php comments_template(); ?>
 

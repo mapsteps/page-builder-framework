@@ -2,7 +2,7 @@
 /**
  * Elementor Pro integration.
  *
- * @package Page Builder Framework Premium Add-On
+ * @package Page Builder Framework
  * @subpackage Integration
  */
 

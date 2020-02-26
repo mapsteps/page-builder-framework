@@ -175,6 +175,10 @@ function wpbf_title() {
 
 	}
 
+	// Use this filter if you want to hide the title from specific pages, etc.
+	// To actually change the title itself please filter the_title() directly.
+	$title = apply_filters( 'wpbf_title', $title );
+
 	if ( $title ) {
 
 		do_action( 'wpbf_before_page_title' );
@@ -472,6 +476,55 @@ function wpbf_archive_title( $title ) {
 
 }
 add_filter( 'get_the_archive_title', 'wpbf_archive_title', 10 );
+
+/**
+ * Post links.
+ *
+ * Display the post navigation on posts.
+ */
+function wpbf_do_post_links() {
+
+	if ( 'hide' === get_theme_mod( 'single_post_nav' ) ) {
+		return;
+	}
+
+	do_action( 'wpbf_before_post_links' );
+
+	?>
+
+	<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
+
+		<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
+
+		<?php
+		previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
+		next_post_link( '<span class="next-post-link">%link</span>', apply_filters( 'wpbf_next_post_link', __( 'Next Post &rarr;', 'page-builder-framework' ) ) );
+		?>
+
+	</nav>
+
+	<?php
+
+	do_action( 'wpbf_after_post_links' );
+
+}
+add_action( 'wpbf_post_links', 'wpbf_do_post_links' );
+
+/**
+ * Posts pagination.
+ *
+ * Display the posts pagination on archives.
+ */
+function wpbf_do_posts_pagination() {
+
+	the_posts_pagination( array(
+		'mid_size'  => apply_filters( 'wpbf_posts_pagination_size', 2 ),
+		'prev_text' => apply_filters( 'wpbf_posts_navigation_prev_text', __( '&larr; Previous', 'page-builder-framework' ) ),
+		'next_text' => apply_filters( 'wpbf_posts_navigation_next_text', __( 'Next &rarr;', 'page-builder-framework' ) ),
+	) );
+
+}
+add_action( 'wpbf_posts_pagination', 'wpbf_do_posts_pagination' );
 
 if ( ! function_exists( 'wpbf_has_responsive_breakpoints' ) ) {
 

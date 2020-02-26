@@ -4,7 +4,7 @@
  *
  * https://wordpress.org/plugins/header-footer-elementor/
  *
- * @package Page Builder Framework Premium Add-On
+ * @package Page Builder Framework
  * @subpackage Integration
  */
 

@@ -49,13 +49,7 @@ get_header();
 
 				<?php endif; ?>
 
-				<?php
-				the_posts_pagination( array(
-					'mid_size'  => 2,
-					'prev_text' => __( '&larr; Previous', 'page-builder-framework' ),
-					'next_text' => __( 'Next &rarr;', 'page-builder-framework' ),
-				) );
-				?>
+				<?php do_action( 'wpbf_posts_pagination' ); ?>
 
 				<?php do_action( 'wpbf_main_content_close' ); ?>
 
