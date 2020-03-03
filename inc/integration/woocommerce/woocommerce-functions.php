@@ -682,7 +682,6 @@ function wpbf_woo_before_quantity_input_field() {
 
 	<?php
 }
-add_action( 'woocommerce_before_quantity_input_field', 'wpbf_woo_before_quantity_input_field' );
 
 /**
  * Add output after quantity input.
@@ -696,4 +695,16 @@ function wpbf_woo_after_quantity_input_field() {
 
 	<?php
 }
-add_action( 'woocommerce_after_quantity_input_field', 'wpbf_woo_after_quantity_input_field' );
+
+/**
+ * Add WooCommerce increase decrease button.
+ */
+function wpbf_woo_qty_increase_decrease_button() {
+	if ( 'hide' === get_theme_mod( 'woocommerce_qty_increase_decrease_button', 'show' ) ) {
+		return;
+	}
+
+	add_action( 'woocommerce_before_quantity_input_field', 'wpbf_woo_before_quantity_input_field' );
+	add_action( 'woocommerce_after_quantity_input_field', 'wpbf_woo_after_quantity_input_field' );
+}
+add_action( 'wp', 'wpbf_woo_qty_increase_decrease_button' );
