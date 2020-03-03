@@ -697,7 +697,7 @@ function wpbf_woo_after_quantity_input_field() {
  * Add WooCommerce increase decrease button.
  */
 function wpbf_woo_qty_increase_decrease_button() {
-	if ( 'hide' === get_theme_mod( 'woocommerce_qty_increase_decrease_button', 'show' ) ) {
+	if ( 'hide' === get_theme_mod( 'woocommerce_quantity_buttons', 'show' ) ) {
 		return;
 	}
 

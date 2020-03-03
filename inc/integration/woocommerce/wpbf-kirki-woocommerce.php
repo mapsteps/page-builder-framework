@@ -867,20 +867,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Increase - Decrease button.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_qty_increase_decrease_button',
-	'label'    => __( 'Quantity +/- Button', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => 'show',
-	'priority' => $product_priority++,
-	'choices'  => array(
-		'show' => __( 'Show', 'page-builder-framework' ),
-		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-) );
-
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
@@ -888,6 +874,20 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_woocommerce_product_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => $product_priority++,
+) );
+
+// Increase - Decrease button.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'select',
+	'settings' => 'woocommerce_quantity_buttons',
+	'label'    => __( 'Price Quantity Buttons (+/-)', 'page-builder-framework' ),
+	'section'  => 'wpbf_woocommerce_product_options',
+	'default'  => 'show',
+	'priority' => $product_priority++,
+	'choices'  => array(
+		'show' => __( 'Show', 'page-builder-framework' ),
+		'hide' => __( 'Hide', 'page-builder-framework' ),
+	),
 ) );
 
 // Price font size.
