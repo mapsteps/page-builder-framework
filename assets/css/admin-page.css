@@ -9,6 +9,7 @@
  * --------------------
  */
 .wpbf-admin-page {
+	display: -webkit-box;
 	display: flex;
 	flex-wrap: wrap;
 	max-width: 1300px;
@@ -40,30 +41,26 @@
  * Customizer Link List
  * --------------------
  */
-.wpbf-admin-page .customizer-list .list-item {
-	flex-wrap: wrap;
-	padding-top: 0;
-	padding-bottom: 0;
-}
-
-.wpbf-admin-page .customizer-items {
+.wpbf-admin-page .customizer-list {
+	display: -webkit-box;
 	display: flex;
-	align-items: center;
-	width: 100%;
+	flex-wrap: wrap;
 }
 
-.wpbf-admin-page .customizer-items .customizer-item:first-child {
+.wpbf-admin-page .customizer-list .list-item:nth-child(even) {
+	padding-left: 15px;
+	border-right-width: 0;
+}
+
+.wpbf-admin-page .customizer-list .list-item {
+	padding-top: 18px;
+	padding-bottom: 18px;
+	width: 50%;
 	border-right: 1px solid #eee;
 }
 
-.wpbf-admin-page .customizer-items .customizer-item:last-child {
-	padding-left: 15px;
-}
-
-.wpbf-admin-page .customizer-item {
-	width: 50%;
-	padding-top: 18px;
-	padding-bottom: 18px;
+.wpbf-admin-page .customizer-list .list-item:last-child {
+	width: 100%;
 }
 
 /**
@@ -113,6 +110,8 @@
 .wpbf-show-advanced.button {
 	display: block;
 	margin-top: 15px;
+	width: -webkit-fit-content;
+	width: -moz-fit-content;
 	width: fit-content;
 }
 
