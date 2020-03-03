@@ -22,6 +22,12 @@ require_once WPBF_THEME_DIR . '/inc/backwards-compatibility.php';
 // Options.
 require_once WPBF_THEME_DIR . '/inc/options.php';
 
+// Kirki framework.
+require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
+
+// Kirki customizer settings.
+require_once WPBF_THEME_DIR . '/inc/customizer/wpbf-kirki.php';
+
 // Body classes.
 require_once WPBF_THEME_DIR . '/inc/body-classes.php';
 
@@ -32,14 +38,6 @@ if ( ! function_exists( 'breadcrumb_trail' ) ) {
 
 // Helpers.
 require_once WPBF_THEME_DIR . '/inc/helpers.php';
-
-if ( ! wpbf_is_inside_happyform() ) {
-	// Kirki framework.
-	require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
-
-	// Kirki customizer settings.
-	require_once WPBF_THEME_DIR . '/inc/customizer/wpbf-kirki.php';
-}
 
 // Comments.
 require_once WPBF_THEME_DIR . '/inc/comments.php';

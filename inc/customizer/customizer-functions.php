@@ -178,7 +178,5 @@ function wpbf_customizer_scripts_styles() {
 }
 add_action( 'customize_controls_print_styles', 'wpbf_customizer_scripts_styles' );
 
-if ( ! wpbf_is_inside_happyform() ) {
-	// Custom controls.
-	require get_template_directory() . '/inc/customizer/custom-controls.php';
-}
+// Custom controls.
+require get_template_directory() . '/inc/customizer/custom-controls.php';
