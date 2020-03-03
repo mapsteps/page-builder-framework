@@ -868,21 +868,18 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Increase - Decrease button.
-Kirki::add_field(
-	'wpbf',
-	array(
-		'type'     => 'select',
-		'settings' => 'woocommerce_qty_increase_decrease_button',
-		'label'    => __( 'Quantity +/- Button', 'page-builder-framework' ),
-		'section'  => 'wpbf_woocommerce_product_options',
-		'default'  => 'show',
-		'priority' => $product_priority++,
-		'choices'  => array(
-			'show' => __( 'Show', 'page-builder-framework' ),
-			'hide' => __( 'Hide', 'page-builder-framework' ),
-		),
-	)
-);
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'select',
+	'settings' => 'woocommerce_qty_increase_decrease_button',
+	'label'    => __( 'Quantity +/- Button', 'page-builder-framework' ),
+	'section'  => 'wpbf_woocommerce_product_options',
+	'default'  => 'show',
+	'priority' => $product_priority++,
+	'choices'  => array(
+		'show' => __( 'Show', 'page-builder-framework' ),
+		'hide' => __( 'Hide', 'page-builder-framework' ),
+	),
+) );
 
 // Separator.
 Kirki::add_field( 'wpbf', array(
