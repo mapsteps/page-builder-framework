@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 /**
  * Output customizer links.
  */
-function wpbf_customizer_links() {
+function wpbf_do_customizer_links() {
 
 	$customizer_links = array(
 		array(
@@ -65,8 +65,6 @@ function wpbf_customizer_links() {
 		),
 	);
 
-	$customizer_links = apply_filters( 'wpbf_customizer_link_items', $customizer_links );
-
 	foreach ( $customizer_links as $link_columns ) {
 		?>
 
@@ -94,7 +92,7 @@ function wpbf_customizer_links() {
 	}
 
 }
-add_action( 'wpbf_customizer_links', 'wpbf_customizer_links' );
+add_action( 'wpbf_customizer_links', 'wpbf_do_customizer_links' );
 ?>
 
 <div class="neatbox is-smooth has-medium-gap has-bigger-heading customizer-box">
