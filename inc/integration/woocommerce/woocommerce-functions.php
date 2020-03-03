@@ -2,7 +2,7 @@
 /**
  * WooCommerce functions.
  *
- * @package    Page Builder Framework
+ * @package Page Builder Framework
  * @subpackage Integration/WooCommerce
  */
 
@@ -61,31 +61,28 @@ add_filter( 'post_class', 'wpbf_woo_loop_remove_first_last_class', 21 );
  * Register sidebars.
  */
 function wpbf_woo_sidebar() {
+
 	// Shop page sidebar.
-	register_sidebar(
-		array(
-			'id'            => 'wpbf-woocommerce-sidebar',
-			'name'          => __( 'WooCommerce Sidebar', 'page-builder-framework' ),
-			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<h4 class="wpbf-widgettitle">',
-			'after_title'   => '</h4>',
-			'description'   => __( 'This Sidebar is being displayed on WooCommerce Archive Pages.', 'page-builder-framework' ),
-		)
-	);
+	register_sidebar( array(
+		'id'            => 'wpbf-woocommerce-sidebar',
+		'name'          => __( 'WooCommerce Sidebar', 'page-builder-framework' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4 class="wpbf-widgettitle">',
+		'after_title'   => '</h4>',
+		'description'   => __( 'This Sidebar is being displayed on WooCommerce Archive Pages.', 'page-builder-framework' ),
+	) );
 
 	// Product page sidebar.
-	register_sidebar(
-		array(
-			'id'            => 'wpbf-woocommerce-product-sidebar',
-			'name'          => __( 'WooCommerce Product Page Sidebar', 'page-builder-framework' ),
-			'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<h4 class="wpbf-widgettitle">',
-			'after_title'   => '</h4>',
-			'description'   => __( 'This Sidebar is being displayed on WooCommerce Product Pages.', 'page-builder-framework' ),
-		)
-	);
+	register_sidebar( array(
+		'id'            => 'wpbf-woocommerce-product-sidebar',
+		'name'          => __( 'WooCommerce Product Page Sidebar', 'page-builder-framework' ),
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4 class="wpbf-widgettitle">',
+		'after_title'   => '</h4>',
+		'description'   => __( 'This Sidebar is being displayed on WooCommerce Product Pages.', 'page-builder-framework' ),
+	) );
 
 }
 add_action( 'widgets_init', 'wpbf_woo_sidebar' );
@@ -374,16 +371,16 @@ function wpbf_woo_loop_category() {
 
 	?>
 	<span class="wpbf-woo-product-category">
-	<?php
-	global $product;
-	$categories = function_exists( 'wc_get_product_category_list' ) ? wc_get_product_category_list( get_the_ID(), ',', '', '' ) : $product->get_categories( ',', '', '' );
+		<?php
+		global $product;
+		$categories = function_exists( 'wc_get_product_category_list' ) ? wc_get_product_category_list( get_the_ID(), ',', '', '' ) : $product->get_categories( ',', '', '' );
 
-	$categories = strip_tags( $categories );
-	if ( $categories ) {
-		list( $parent_category ) = explode( ',', $categories );
-		echo esc_html( $parent_category );
-	}
-	?>
+		$categories = strip_tags( $categories );
+		if ( $categories ) {
+			list( $parent_category ) = explode( ',', $categories );
+			echo esc_html( $parent_category );
+		}
+		?>
 	</span>
 	<?php
 
@@ -408,7 +405,7 @@ function wpbf_woo_loop_short_description() {
 	if ( has_excerpt() ) {
 		?>
 		<div class="wpbf-woo-loop-excerpt">
-		<?php the_excerpt(); ?>
+			<?php the_excerpt(); ?>
 		</div>
 		<?php
 	}
@@ -431,39 +428,40 @@ function wpbf_woo_loop_content() {
 		foreach ( $content as $value ) {
 
 			switch ( $value ) {
-				case 'title':
-					do_action( 'wpbf_woo_loop_before_title' );
-					wpbf_woo_loop_title();
-					do_action( 'wpbf_woo_loop_after_title' );
-					break;
-				case 'price':
-					do_action( 'wpbf_woo_loop_before_price' );
-					woocommerce_template_loop_price();
-					do_action( 'wpbf_woo_loop_after_price' );
-					break;
-				case 'rating':
-					do_action( 'wpbf_woo_loop_before_rating' );
-					woocommerce_template_loop_rating();
-					do_action( 'wpbf_woo_loop_after_rating' );
-					break;
-				case 'excerpt':
-					do_action( 'wpbf_woo_loop_before_excerpt' );
-					wpbf_woo_loop_short_description();
-					do_action( 'wpbf_woo_loop_after_excerpt' );
-					break;
-				case 'add_to_cart':
-					do_action( 'wpbf_woo_loop_before_add_to_cart' );
-					woocommerce_template_loop_add_to_cart();
-					do_action( 'wpbf_woo_loop_after_add_to_cart' );
-					break;
-				case 'category':
-					do_action( 'wpbf_woo_loop_before_category' );
-					wpbf_woo_loop_category();
-					do_action( 'wpbf_woo_loop_after_category' );
-					break;
-				default:
-					break;
+			case 'title':
+				do_action( 'wpbf_woo_loop_before_title' );
+				wpbf_woo_loop_title();
+				do_action( 'wpbf_woo_loop_after_title' );
+				break;
+			case 'price':
+				do_action( 'wpbf_woo_loop_before_price' );
+				woocommerce_template_loop_price();
+				do_action( 'wpbf_woo_loop_after_price' );
+				break;
+			case 'rating':
+				do_action( 'wpbf_woo_loop_before_rating' );
+				woocommerce_template_loop_rating();
+				do_action( 'wpbf_woo_loop_after_rating' );
+				break;
+			case 'excerpt':
+				do_action( 'wpbf_woo_loop_before_excerpt' );
+				wpbf_woo_loop_short_description();
+				do_action( 'wpbf_woo_loop_after_excerpt' );
+				break;
+			case 'add_to_cart':
+				do_action( 'wpbf_woo_loop_before_add_to_cart' );
+				woocommerce_template_loop_add_to_cart();
+				do_action( 'wpbf_woo_loop_after_add_to_cart' );
+				break;
+			case 'category':
+				do_action( 'wpbf_woo_loop_before_category' );
+				wpbf_woo_loop_category();
+				do_action( 'wpbf_woo_loop_after_category' );
+				break;
+			default:
+				break;
 			}
+
 		}
 
 		do_action( 'wpbf_woo_loop_summary_close' );
@@ -521,7 +519,7 @@ function wpbf_woo_menu_item() {
 	$cart_url    = wc_get_cart_url();
 
 	// Construct.
-	$menu_item = '<li class="' . esc_attr( $css_classes ) . '">';
+	$menu_item  = '<li class="' . esc_attr( $css_classes ) . '">';
 
 	$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="' . esc_attr( $title ) . '">';
 
@@ -551,7 +549,7 @@ function wpbf_woo_menu_item() {
  * Add cart menu item to main navigation.
  *
  * @param string $items The HTML list content for the menu items.
- * @param object $args  The arguments.
+ * @param object $args The arguments.
  *
  * @return string The updated HTML.
  */
@@ -658,8 +656,7 @@ function wpbf_woo_single_add_to_cart_ajax() {
 
 		$data = array(
 			'error'       => true,
-			'product_url' => apply_filters( 'woocommerce_cart_redirect_after_error', get_permalink( $product_id ), $product_id ),
-		);
+			'product_url' => apply_filters( 'woocommerce_cart_redirect_after_error', get_permalink( $product_id ), $product_id ) );
 
 		echo wp_send_json( $data );
 	}
