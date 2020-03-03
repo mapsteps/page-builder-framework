@@ -9,3 +9,7 @@ package-lock.json
 
 # DS_Store
 .DS_Store
+
+# phpcs & editor's setting related
+.vscode/
+phpcs.xml
