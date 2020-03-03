@@ -143,7 +143,6 @@ function wpbf_inner_content_close() {
 			$inner_content_close = $fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? false : $inner_content_close;
 
 		}
-
 	} else {
 
 		$inner_content_close = '</div>';
@@ -375,18 +374,20 @@ function wpbf_archive_header() {
 			do_action( 'wpbf_after_page_title' );
 
 		}
-
 	} elseif ( is_search() ) {
 
 		do_action( 'wpbf_before_page_title' );
 
 		echo '<h1 class="page-title">';
 
-		echo apply_filters( 'wpbf_search_page_title', sprintf(
+		echo apply_filters(
+			'wpbf_search_page_title',
+			sprintf(
 				/* translators: Search query */
 				__( 'Search Results for: %s', 'page-builder-framework' ),
 				'<span>' . get_search_query() . '</span>'
-			) );
+			)
+		);
 
 		echo '</h1>';
 
@@ -428,7 +429,6 @@ function wpbf_archive_title( $title ) {
 		} elseif ( 'hide' === $archive_headline ) {
 			$title = false;
 		}
-
 	} elseif ( is_tag() ) {
 
 		if ( 'hide_prefix' === $archive_headline ) {
@@ -436,7 +436,6 @@ function wpbf_archive_title( $title ) {
 		} elseif ( 'hide' === $archive_headline ) {
 			$title = false;
 		}
-
 	} elseif ( is_date() ) {
 
 		$date = get_the_date( 'F Y' );
@@ -453,7 +452,6 @@ function wpbf_archive_title( $title ) {
 		} elseif ( 'hide' === $archive_headline ) {
 			$title = false;
 		}
-
 	} elseif ( is_post_type_archive() ) {
 
 		if ( 'hide_prefix' === $archive_headline ) {
@@ -461,7 +459,6 @@ function wpbf_archive_title( $title ) {
 		} elseif ( 'hide' === $archive_headline ) {
 			$title = false;
 		}
-
 	} elseif ( is_tax() ) {
 
 		if ( 'hide_prefix' === $archive_headline ) {
@@ -469,7 +466,6 @@ function wpbf_archive_title( $title ) {
 		} elseif ( 'hide' === $archive_headline ) {
 			$title = false;
 		}
-
 	}
 
 	return $title;
@@ -494,7 +490,7 @@ function wpbf_do_post_links() {
 
 	<nav class="post-links wpbf-clearfix" aria-label="<?php _e( 'Post Navigation', 'page-builder-framework' ); ?>">
 
-		<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ) ?></span>
+		<span class="screen-reader-text"><?php _e( 'Post Navigation', 'page-builder-framework' ); ?></span>
 
 		<?php
 		previous_post_link( '<span class="previous-post-link">%link</span>', apply_filters( 'wpbf_previous_post_link', __( '&larr; Previous Post', 'page-builder-framework' ) ) );
@@ -517,11 +513,13 @@ add_action( 'wpbf_post_links', 'wpbf_do_post_links' );
  */
 function wpbf_do_posts_pagination() {
 
-	the_posts_pagination( array(
-		'mid_size'  => apply_filters( 'wpbf_posts_pagination_size', 2 ),
-		'prev_text' => apply_filters( 'wpbf_posts_navigation_prev_text', __( '&larr; Previous', 'page-builder-framework' ) ),
-		'next_text' => apply_filters( 'wpbf_posts_navigation_next_text', __( 'Next &rarr;', 'page-builder-framework' ) ),
-	) );
+	the_posts_pagination(
+		array(
+			'mid_size'  => apply_filters( 'wpbf_posts_pagination_size', 2 ),
+			'prev_text' => apply_filters( 'wpbf_posts_navigation_prev_text', __( '&larr; Previous', 'page-builder-framework' ) ),
+			'next_text' => apply_filters( 'wpbf_posts_navigation_next_text', __( 'Next &rarr;', 'page-builder-framework' ) ),
+		)
+	);
 
 }
 add_action( 'wpbf_posts_pagination', 'wpbf_do_posts_pagination' );
@@ -552,7 +550,6 @@ if ( ! function_exists( 'wpbf_has_responsive_breakpoints' ) ) {
 		}
 
 	}
-
 }
 
 /**
@@ -642,7 +639,6 @@ function wpbf_article_meta() {
 				default:
 					break;
 			}
-
 		}
 
 		do_action( 'wpbf_article_meta_close' );
@@ -950,6 +946,20 @@ function wpbf_responsive_embed( $html, $url, $attr ) {
 
 }
 add_filter( 'embed_oembed_html', 'wpbf_responsive_embed', 10, 3 );
+
+/**
+ * Check if currently we're inside HappyForms customize.
+ * This is because HappyForms "conflicts" with Kirki.
+ *
+ * @return bool
+ */
+function wpbf_is_inside_happyform() {
+	if ( isset( $_GET['happyforms'] ) || isset( $_GET['form_id'] ) ) {
+		return true;
+	}
+
+	return false;
+}
 
 /**
  * Page builder compatibility.

@@ -73,8 +73,10 @@ function wpbf_woo_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_woo_scripts', 10 );
 
-// WooCommerce customizer settings.
-require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/wpbf-kirki-woocommerce.php';
+if ( ! wpbf_is_inside_happyform() ) {
+	// WooCommerce customizer settings.
+	require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/wpbf-kirki-woocommerce.php';
+}
 
 // WooCommerce functions.
 require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-functions.php';
