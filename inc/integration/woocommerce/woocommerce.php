@@ -49,6 +49,10 @@ add_filter( 'woocommerce_enqueue_styles', '__return_false' );
  */
 function wpbf_woo_scripts() {
 
+	if ( ! apply_filters( 'wpbf_woocommerce_scripts', true ) ) {
+		return;
+	}
+
 	// WooCommerce layout.
 	wp_enqueue_style( 'wpbf-woocommerce-layout', get_template_directory_uri() . '/css/min/woocommerce-layout-min.css', '', WPBF_VERSION );
 
