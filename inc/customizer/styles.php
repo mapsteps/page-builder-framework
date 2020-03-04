@@ -32,6 +32,11 @@ if ( $page_font_toggle && $page_font_family_value ) {
 	echo 'body, button, input, optgroup, select, textarea, h1, h2, h3, h4, h5, h6 {';
 
 	if ( ! empty( $page_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $page_font_family_value['font-family'], ' ' ) && false === strpos( $page_font_family_value['font-family'], '"' ) ) {
+			$page_font_family_value['font-family'] = '"' . $page_font_family_value['font-family'] . '"';
+		}
+
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_font_family_value['font-family'] ), ENT_QUOTES ) );
 	}
 
@@ -69,7 +74,13 @@ if ( $menu_font_family_toggle && $menu_font_family_value ) {
 	echo '.wpbf-menu, .wpbf-mobile-menu {';
 
 	if ( ! empty( $menu_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $menu_font_family_value['font-family'], ' ' ) && false === strpos( $menu_font_family_value['font-family'], '"' ) ) {
+			$menu_font_family_value['font-family'] = '"' . $menu_font_family_value['font-family'] . '"';
+		}
+
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $menu_font_family_value['font-family'] ), ENT_QUOTES ) );
+
 	}
 
 	if ( ! empty( $menu_font_family_value['variant'] ) ) {
@@ -98,7 +109,13 @@ if ( $page_h1_toggle && $page_h1_font_family_value ) {
 	echo 'h1, h2, h3, h4, h5, h6 {';
 
 	if ( ! empty( $page_h1_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $page_h1_font_family_value['font-family'], ' ' ) && false === strpos( $page_h1_font_family_value['font-family'], '"' ) ) {
+			$page_h1_font_family_value['font-family'] = '"' . $page_h1_font_family_value['font-family'] . '"';
+		}
+
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h1_font_family_value['font-family'] ), ENT_QUOTES ) );
+
 	}
 
 	if ( ! empty( $page_h1_font_family_value['variant'] ) ) {
@@ -127,7 +144,13 @@ if ( $page_h2_toggle && $page_h2_font_family_value ) {
 	echo 'h2 {';
 
 	if ( ! empty( $page_h2_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $page_h2_font_family_value['font-family'], ' ' ) && false === strpos( $page_h2_font_family_value['font-family'], '"' ) ) {
+			$page_h2_font_family_value['font-family'] = '"' . $page_h2_font_family_value['font-family'] . '"';
+		}
+
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h2_font_family_value['font-family'] ), ENT_QUOTES ) );
+
 	}
 
 	if ( ! empty( $page_h2_font_family_value['variant'] ) ) {
@@ -156,7 +179,13 @@ if ( $page_h3_toggle && $page_h3_font_family_value ) {
 	echo 'h3 {';
 
 	if ( ! empty( $page_h3_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $page_h3_font_family_value['font-family'], ' ' ) && false === strpos( $page_h3_font_family_value['font-family'], '"' ) ) {
+			$page_h3_font_family_value['font-family'] = '"' . $page_h3_font_family_value['font-family'] . '"';
+		}
+
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h3_font_family_value['font-family'] ), ENT_QUOTES ) );
+
 	}
 
 	if ( ! empty( $page_h3_font_family_value['variant'] ) ) {
@@ -185,7 +214,13 @@ if ( $page_h4_toggle && $page_h4_font_family_value ) {
 	echo 'h4 {';
 
 	if ( ! empty( $page_h4_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $page_h4_font_family_value['font-family'], ' ' ) && false === strpos( $page_h4_font_family_value['font-family'], '"' ) ) {
+			$page_h4_font_family_value['font-family'] = '"' . $page_h4_font_family_value['font-family'] . '"';
+		}
+
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h4_font_family_value['font-family'] ), ENT_QUOTES ) );
+
 	}
 
 	if ( ! empty( $page_h4_font_family_value['variant'] ) ) {
@@ -214,7 +249,13 @@ if ( $page_h5_toggle && $page_h5_font_family_value ) {
 	echo 'h5 {';
 
 	if ( ! empty( $page_h5_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $page_h5_font_family_value['font-family'], ' ' ) && false === strpos( $page_h5_font_family_value['font-family'], '"' ) ) {
+			$page_h5_font_family_value['font-family'] = '"' . $page_h5_font_family_value['font-family'] . '"';
+		}
+
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h5_font_family_value['font-family'] ), ENT_QUOTES ) );
+
 	}
 
 	if ( ! empty( $page_h5_font_family_value['variant'] ) ) {
@@ -243,7 +284,13 @@ if ( $page_h6_toggle && $page_h6_font_family_value ) {
 	echo 'h6 {';
 
 	if ( ! empty( $page_h6_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $page_h6_font_family_value['font-family'], ' ' ) && false === strpos( $page_h6_font_family_value['font-family'], '"' ) ) {
+			$page_h6_font_family_value['font-family'] = '"' . $page_h6_font_family_value['font-family'] . '"';
+		}
+
 		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h6_font_family_value['font-family'] ), ENT_QUOTES ) );
+
 	}
 
 	if ( ! empty( $page_h6_font_family_value['variant'] ) ) {
@@ -1466,7 +1513,13 @@ if ( ! $custom_logo ) {
 		echo '.wpbf-logo a, .wpbf-mobile-logo a {';
 
 		if ( ! empty( $menu_logo_font_family_value['font-family'] ) ) {
+
+			if ( false !== strpos( $menu_logo_font_family_value['font-family'], ' ' ) && false === strpos( $menu_logo_font_family_value['font-family'], '"' ) ) {
+				$menu_logo_font_family_value['font-family'] = '"' . $menu_logo_font_family_value['font-family'] . '"';
+			}
+
 			echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $menu_logo_font_family_value['font-family'] ), ENT_QUOTES ) );
+
 		}
 
 		if ( ! empty( $menu_logo_font_family_value['variant'] ) ) {
@@ -1614,6 +1667,11 @@ if ( ! $custom_logo && $menu_logo_description ) {
 		echo '.wpbf-tagline {';
 
 		if ( ! empty( $menu_logo_description_font_family_value['font-family'] ) ) {
+
+			if ( false !== strpos( $menu_logo_description_font_family_value['font-family'], ' ' ) && false === strpos( $menu_logo_description_font_family_value['font-family'], '"' ) ) {
+				$menu_logo_description_font_family_value['font-family'] = '"' . $menu_logo_description_font_family_value['font-family'] . '"';
+			}
+
 			echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $menu_logo_description_font_family_value['font-family'] ), ENT_QUOTES ) );
 		}
 
