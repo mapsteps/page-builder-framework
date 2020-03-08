@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Sidebar
+ * Template Name: Sidebar (Deprecated)
  *
  * @package Page Builder Framework
  */

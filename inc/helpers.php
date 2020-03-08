@@ -592,12 +592,21 @@ function wpbf_sidebar_layout() {
 	$archive_sidebar_position = get_theme_mod( 'archive_sidebar_layout', 'global' );
 	$sidebar                  = 'global' !== $archive_sidebar_position ? $archive_sidebar_position : $sidebar;
 
-	if ( is_singular() ) {
+	if ( is_singular() && ! is_page() ) {
 
 		$single_sidebar_position        = get_post_meta( get_the_ID(), 'wpbf_sidebar_position', true );
 		$single_sidebar_position_global = get_theme_mod( 'single_sidebar_layout', 'global' );
 
 		$sidebar = 'global' !== $single_sidebar_position_global ? $single_sidebar_position_global : $sidebar;
+		$sidebar = $single_sidebar_position && 'global' !== $single_sidebar_position ? $single_sidebar_position : $sidebar;
+
+	}
+
+	if ( is_page() ) {
+
+		$single_sidebar_position = get_post_meta( get_the_ID(), 'wpbf_sidebar_position', true );
+
+		$sidebar = 'none';
 		$sidebar = $single_sidebar_position && 'global' !== $single_sidebar_position ? $single_sidebar_position : $sidebar;
 
 	}
