@@ -604,9 +604,17 @@ function wpbf_sidebar_layout() {
 
 	if ( is_page() ) {
 
-		$single_sidebar_position = get_post_meta( get_the_ID(), 'wpbf_sidebar_position', true );
+		$single_sidebar_position        = get_post_meta( get_the_ID(), 'wpbf_sidebar_position', true );
+		$single_sidebar_position_global = get_theme_mod( 'single_sidebar_layout', 'global' );
 
+		// By default there is no sidebar on pages.
 		$sidebar = 'none';
+
+		// Backwards compatibility. For pages that have the sidebar template selected, we inherit the global settings.
+		if ( is_page_template( 'page-sidebar.php' ) ) {
+			$sidebar = 'global' !== $single_sidebar_position_global ? $single_sidebar_position_global : $sidebar;
+		}
+
 		$sidebar = $single_sidebar_position && 'global' !== $single_sidebar_position ? $single_sidebar_position : $sidebar;
 
 	}

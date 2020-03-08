@@ -26,7 +26,9 @@ function wpbf_body_classes( $classes ) {
 	}
 
 	// Sidebar classes.
-	$classes[] = 'none' === wpbf_sidebar_layout() ? 'wpbf-no-sidebar' : 'wpbf-sidebar-' . wpbf_sidebar_layout();
+	$sidebar_layout = wpbf_sidebar_layout();
+
+	$classes[] = 'none' === $sidebar_layout ? 'wpbf-no-sidebar' : 'wpbf-sidebar-' . $sidebar_layout;
 
 	// Full width body class.
 	$inner_content = wpbf_inner_content( $echo = false );
