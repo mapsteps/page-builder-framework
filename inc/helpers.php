@@ -765,13 +765,14 @@ function wpbf_blog_layout() {
  */
 function wpbf_nav_menu() {
 
-	$custom_menu = get_theme_mod( 'menu_custom' );
+	$custom_menu   = get_theme_mod( 'menu_custom' );
+	$menu_position = get_theme_mod( 'menu_position' )
 
 	if ( $custom_menu ) {
 
 		echo do_shortcode( $custom_menu );
 
-	} elseif ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ) ) ) {
+	} elseif ( in_array( $menu_position, array( 'menu-off-canvas', 'menu-off-canvas-left' ) ) ) {
 
 		// Off canvas menu.
 		wp_nav_menu(
@@ -784,7 +785,7 @@ function wpbf_nav_menu() {
 			)
 		);
 
-	} elseif ( 'menu-full-screen' === get_theme_mod( 'menu_position' ) ) {
+	} elseif ( 'menu-full-screen' === $menu_position ) {
 
 		// Full screen menu.
 		wp_nav_menu(
