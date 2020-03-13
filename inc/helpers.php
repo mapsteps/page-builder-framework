@@ -759,14 +759,14 @@ function wpbf_blog_layout() {
 }
 
 /**
- * Register menu's.
+ * Declare menu's.
  *
- * Declare wp_nav_menu based on selected navigation.
+ * Declare wp_nav_menu based on selected menu variation.
  */
 function wpbf_nav_menu() {
 
 	$custom_menu   = get_theme_mod( 'menu_custom' );
-	$menu_position = get_theme_mod( 'menu_position' )
+	$menu_position = get_theme_mod( 'menu_position' );
 
 	if ( $custom_menu ) {
 
@@ -817,22 +817,53 @@ function wpbf_nav_menu() {
 add_action( 'wpbf_main_menu', 'wpbf_nav_menu' );
 
 /**
- * Menu.
+ * Declare mobile menu's.
  *
- * @return string Menu selected under Header > Navigation in the WordPress customizer.
+ * Declare wp_nav_menu based on selected mobile menu variation.
  */
-function wpbf_menu() {
-	return apply_filters( 'wpbf_menu', get_theme_mod( 'menu_position', 'menu-right' ) );
+function wpbf_mobile_nav_menu() {
+
+	$custom_menu   = get_theme_mod( 'menu_custom' );
+	$menu_position = get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
+
+	if ( $custom_menu ) {
+
+		echo do_shortcode( $custom_menu );
+
+	} else {
+
+		wp_nav_menu( array(
+			'theme_location' => 'mobile_menu',
+			'container'      => false,
+			'menu_class'     => 'wpbf-mobile-menu',
+			'depth'          => 4,
+			'fallback_cb'    => 'wpbf_mobile_menu_fallback',
+		) );
+
+	}
+
 }
+add_action( 'wpbf_mobile_menu', 'wpbf_mobile_nav_menu' );
 
 /**
- * Mobile menu.
+ * Render main menu.
  *
- * @return string Mobile menu selected under Header > Mobile Navigation in the WordPress customizer.
+ * Render main menu based on selected menu variation.
+ */
+function wpbf_menu() {
+	get_template_part( 'inc/template-parts/navigation/' . apply_filters( 'wpbf_menu_variation', get_theme_mod( 'menu_position', 'menu-right' ) ) );
+}
+add_action( 'wpbf_navigation', 'wpbf_menu' );
+
+/**
+ * Render mobile menu.
+ *
+ * Render mobile menu based on selected mobile menu variation.
  */
 function wpbf_mobile_menu() {
-	return get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
+	get_template_part( 'inc/template-parts/navigation/' . apply_filters( 'wpbf_mobile_menu_variation', get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' ) ) );
 }
+add_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
 
 /**
  * Is off canvas menu check.
