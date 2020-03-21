@@ -134,9 +134,9 @@ Kirki::add_panel( 'header_panel', array(
 ) );
 
 // Footer.
-Kirki::add_section( 'wpbf_footer_options', array(
-	'title'    => __( 'Footer', 'page-builder-framework' ),
+Kirki::add_panel( 'footer_panel', array(
 	'priority' => 5,
+	'title'    => __( 'Footer', 'page-builder-framework' ),
 ) );
 
 /* Sections – Typography */
@@ -334,6 +334,22 @@ Kirki::add_section( 'wpbf_mobile_menu_options', array(
 	'title'    => __( 'Mobile Navigation', 'page-builder-framework' ),
 	'panel'    => 'header_panel',
 	'priority' => 300,
+) );
+
+/* Sections - Footer */
+
+// Widget footer.
+Kirki::add_section( 'wpbf_widget_footer_options', array(
+	'title'    => __( 'Widget Areas', 'page-builder-framework' ),
+	'panel'    => 'footer_panel',
+	'priority' => 100,
+) );
+
+// Footer.
+Kirki::add_section( 'wpbf_footer_options', array(
+	'title'    => __( 'Footer Bar', 'page-builder-framework' ),
+	'panel'    => 'footer_panel',
+	'priority' => 200,
 ) );
 
 /* Fields – Breadcrumb Settings */
