@@ -3943,6 +3943,25 @@ if ( ! wpbf_is_premium() ) {
 
 	Kirki::add_field( 'wpbf', array(
 		'type'     => 'custom',
+		'settings' => 'wpbf_premium_ad_widget_footer',
+		'section'  => 'wpbf_widget_footer_options',
+		'default'  => $wpbf_premium_ad_link,
+		'priority' => 9999,
+	) );
+
+}
+
+if ( ! wpbf_is_premium() ) {
+
+	// Premium notice.
+	$wpbf_premium_ad_link = sprintf(
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs/advanced-footer-settings/?utm_source=repository&utm_medium=customizer_footer_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'     => 'custom',
 		'settings' => 'wpbf_premium_ad_footer',
 		'section'  => 'wpbf_footer_options',
 		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
