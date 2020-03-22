@@ -378,14 +378,14 @@
 	// Font color.
 	wp.customize( 'footer_font_color', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-page-footer').css('color', newval );
+			$('.wpbf-inner-footer').css('color', newval );
 		} );
 	} );
 
 	// Accent color.
 	wp.customize( 'footer_accent_color', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-page-footer a').css('color', newval );
+			$('.wpbf-inner-footer a').css('color', newval );
 		} );
 	} );
 

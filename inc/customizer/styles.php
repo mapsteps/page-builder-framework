@@ -2197,17 +2197,21 @@ if ( 'none' !== $footer_layout && ( $footer_height || $footer_width ) ) {
 
 }
 
-if ( 'none' !== $footer_layout && ( $footer_bg_color || $footer_font_color ) ) {
+if ( 'none' !== $footer_layout && $footer_bg_color ) {
 
 	echo '.wpbf-page-footer {';
 
-	if ( $footer_bg_color ) {
 		echo sprintf( 'background-color: %s;', esc_attr( $footer_bg_color ) );
-	}
 
-	if ( $footer_font_color ) {
+	echo '}';
+
+}
+
+if ( 'none' !== $footer_layout && $footer_font_color ) {
+
+	echo '.wpbf-inner-footer {';
+
 		echo sprintf( 'color: %s;', esc_attr( $footer_font_color ) );
-	}
 
 	echo '}';
 
@@ -2215,7 +2219,7 @@ if ( 'none' !== $footer_layout && ( $footer_bg_color || $footer_font_color ) ) {
 
 if ( 'none' !== $footer_layout && $footer_accent_color ) {
 
-	echo '.wpbf-page-footer a {';
+	echo '.wpbf-inner-footer a {';
 	echo sprintf( 'color: %s;', esc_attr( $footer_accent_color ) );
 	echo '}';
 
@@ -2223,11 +2227,11 @@ if ( 'none' !== $footer_layout && $footer_accent_color ) {
 
 if ( 'none' !== $footer_layout && $footer_accent_color_alt ) {
 
-	echo '.wpbf-page-footer a:hover {';
+	echo '.wpbf-inner-footer a:hover {';
 	echo sprintf( 'color: %s;', esc_attr( $footer_accent_color_alt ) );
 	echo '}';
 
-	echo '.wpbf-page-footer .wpbf-menu > .current-menu-item > a {';
+	echo '.wpbf-inner-footer .wpbf-menu > .current-menu-item > a {';
 	echo sprintf( 'color: %s;', esc_attr( $footer_accent_color_alt ) . '!important' );
 	echo '}';
 
@@ -2235,7 +2239,7 @@ if ( 'none' !== $footer_layout && $footer_accent_color_alt ) {
 
 if ( 'none' !== $footer_layout && $footer_font_size ) {
 
-	echo '.wpbf-page-footer, .wpbf-page-footer .wpbf-menu {';
+	echo '.wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu {';
 	echo sprintf( 'font-size: %s;', esc_attr( $footer_font_size ) );
 	echo '}';
 
