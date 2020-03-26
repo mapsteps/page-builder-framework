@@ -70,7 +70,7 @@ if ( $page_font_toggle && $page_font_family_value ) {
 
 	if ( ! empty( $page_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_font_family_value['font-family'], ' ' ) && false === strpos( $page_font_family_value['font-family'], '"' ) ) {
+		if ( false !== strpos( $page_font_family_value['font-family'], ' ' ) && false === strpos( $page_font_family_value['font-family'], '"' ) && false === strpos( $page_font_family_value['font-family'], ',' ) ) {
 			$page_font_family_value['font-family'] = '"' . $page_font_family_value['font-family'] . '"';
 		}
 
@@ -142,7 +142,7 @@ if ( $page_h1_toggle && $page_h1_font_family_value ) {
 
 	if ( ! empty( $page_h1_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h1_font_family_value['font-family'], ' ' ) && false === strpos( $page_h1_font_family_value['font-family'], '"' ) ) {
+		if ( false !== strpos( $page_h1_font_family_value['font-family'], ' ' ) && false === strpos( $page_h1_font_family_value['font-family'], '"' ) && false === strpos( $page_h1_font_family_value['font-family'], ',' ) ) {
 			$page_h1_font_family_value['font-family'] = '"' . $page_h1_font_family_value['font-family'] . '"';
 		}
 
@@ -215,7 +215,7 @@ if ( $page_h2_toggle && $page_h2_font_family_value ) {
 
 	if ( ! empty( $page_h2_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h2_font_family_value['font-family'], ' ' ) && false === strpos( $page_h2_font_family_value['font-family'], '"' ) ) {
+		if ( false !== strpos( $page_h2_font_family_value['font-family'], ' ' ) && false === strpos( $page_h2_font_family_value['font-family'], '"' ) && false === strpos( $page_h2_font_family_value['font-family'], ',' ) ) {
 			$page_h2_font_family_value['font-family'] = '"' . $page_h2_font_family_value['font-family'] . '"';
 		}
 
@@ -296,7 +296,7 @@ if ( $page_h3_toggle && $page_h3_font_family_value ) {
 
 	if ( ! empty( $page_h3_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h3_font_family_value['font-family'], ' ' ) && false === strpos( $page_h3_font_family_value['font-family'], '"' ) ) {
+		if ( false !== strpos( $page_h3_font_family_value['font-family'], ' ' ) && false === strpos( $page_h3_font_family_value['font-family'], '"' ) && false === strpos( $page_h3_font_family_value['font-family'], ',' ) ) {
 			$page_h3_font_family_value['font-family'] = '"' . $page_h3_font_family_value['font-family'] . '"';
 		}
 
@@ -378,7 +378,7 @@ if ( $page_h4_toggle && $page_h4_font_family_value ) {
 
 	if ( ! empty( $page_h4_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h4_font_family_value['font-family'], ' ' ) && false === strpos( $page_h4_font_family_value['font-family'], '"' ) ) {
+		if ( false !== strpos( $page_h4_font_family_value['font-family'], ' ' ) && false === strpos( $page_h4_font_family_value['font-family'], '"' ) && false === strpos( $page_h4_font_family_value['font-family'], ',' ) ) {
 			$page_h4_font_family_value['font-family'] = '"' . $page_h4_font_family_value['font-family'] . '"';
 		}
 
@@ -460,7 +460,7 @@ if ( $page_h5_toggle && $page_h5_font_family_value ) {
 
 	if ( ! empty( $page_h5_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h5_font_family_value['font-family'], ' ' ) && false === strpos( $page_h5_font_family_value['font-family'], '"' ) ) {
+		if ( false !== strpos( $page_h5_font_family_value['font-family'], ' ' ) && false === strpos( $page_h5_font_family_value['font-family'], '"' ) && false === strpos( $page_h5_font_family_value['font-family'], ',' ) ) {
 			$page_h5_font_family_value['font-family'] = '"' . $page_h5_font_family_value['font-family'] . '"';
 		}
 
@@ -542,7 +542,7 @@ if ( $page_h6_toggle && $page_h6_font_family_value ) {
 
 	if ( ! empty( $page_h6_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h6_font_family_value['font-family'], ' ' ) && false === strpos( $page_h6_font_family_value['font-family'], '"' ) ) {
+		if ( false !== strpos( $page_h6_font_family_value['font-family'], ' ' ) && false === strpos( $page_h6_font_family_value['font-family'], '"' ) && false === strpos( $page_h6_font_family_value['font-family'], ',' ) ) {
 			$page_h6_font_family_value['font-family'] = '"' . $page_h6_font_family_value['font-family'] . '"';
 		}
 
