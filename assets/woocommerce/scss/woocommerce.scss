@@ -1862,8 +1862,10 @@ p.demo_store,
 
 .woocommerce .wpbf-quantity .qty {
 	position: relative;
-	top: -15px;
+	// top: -15px;
+	// left: -5px;
 	left: -5px;
+	vertical-align: middle;
 }
 
 .woocommerce .quantity .qty::-webkit-inner-spin-button, 
@@ -1885,6 +1887,7 @@ p.demo_store,
 .woocommerce .quantity .wpbf-qty-increase {
 	display: inline-block;
 	position: relative;
+	vertical-align: middle;
 	width: 44px;
 	height: 44px;
 	border: 1px solid $base-color;

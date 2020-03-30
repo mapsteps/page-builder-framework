@@ -41,11 +41,6 @@
 				td {
 					display: block;
 					text-align: right !important; // Important to overwrite order status inline styling
-					&.product-quantity {
-						.quantity {
-							justify-content: flex-end;
-						}
-					}
 
 					&.order-actions {
 						text-align: left !important; // This must always align left on handheld
