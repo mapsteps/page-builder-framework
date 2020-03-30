@@ -17,13 +17,13 @@
 	window.CustomEvent = CustomEvent;
 })();
 
-(function($) {
+(function ($) {
 
-	setTimeout(function() {
-		$( document.body ).trigger( 'wc_fragment_refresh' );
+	setTimeout(function () {
+		$(document.body).trigger('wc_fragment_refresh');
 	}, 150);
 
-})( jQuery );
+})(jQuery);
 
 (function ($) {
 	function init() {
@@ -59,7 +59,7 @@
 
 			function waitForQuickViewReponse() {
 				console.log('Waiting for the Quickview request...');
-				
+
 				if (!document.querySelector('.wpbf-woo-quick-view-modal-content .type-product')) {
 					/**
 					 * The content of the quickview is taken from ajax response.
@@ -111,21 +111,23 @@
 
 		if (!qty || !decrease || !increase) return;
 
+		qty.parentNode.classList.add('wpbf-quantity');
+
 		decrease.addEventListener('click', function (e) {
 			e.preventDefault();
 			var value = parseInt(qty.value, 10) - 1;
-			
+
 			value = value < 1 ? 1 : value;
 			qty.value = value;
-			
-			qty.dispatchEvent(new Event('change', {bubbles: true}));
+
+			qty.dispatchEvent(new Event('change', { bubbles: true }));
 		});
-		
+
 		increase.addEventListener('click', function (e) {
 			e.preventDefault();
 			qty.value = parseInt(qty.value, 10) + 1;
 
-			qty.dispatchEvent(new Event('change', {bubbles: true}));
+			qty.dispatchEvent(new Event('change', { bubbles: true }));
 		});
 	}
 
