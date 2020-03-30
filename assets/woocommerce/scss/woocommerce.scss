@@ -91,8 +91,8 @@ p.demo_store,
 		text-align: center;
 		padding: 0;
 		height: 44px;
-		// padding: 13px 10px 13px 15px;
-		// margin-right: 5px;
+		padding: 13px 10px 13px 15px;
+		margin-right: 5px;
 	}
 
 	/**
@@ -1857,28 +1857,18 @@ p.demo_store,
 
 // Plus & minus indicator.
 .woocommerce .wpbf-quantity .qty {
-	-moz-appearance:textfield;
-}
-
-.woocommerce .wpbf-quantity .qty {
 	position: relative;
 	left: -5px;
 	vertical-align: middle;
+	padding: 0;
+	margin: 0;
+	-moz-appearance:textfield;
 }
 
 .woocommerce .wpbf-quantity .qty::-webkit-inner-spin-button,
 .woocommerce .wpbf-quantity .qty::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
-}
-
-.woocommerce div.product form.cart div.quantity {
-	margin-right: 20px;
-}
-
-.woocommerce .wpbf-quantity .wpbf-qty-decrease:hover,
-.woocommerce .wpbf-quantity .wpbf-qty-increase:hover {
-	background-color: $base-color-alt;
 }
 
 .woocommerce .wpbf-quantity .wpbf-qty-decrease,
@@ -1892,20 +1882,23 @@ p.demo_store,
 	cursor: pointer;
 }
 
+.woocommerce .wpbf-quantity .wpbf-qty-decrease:hover,
+.woocommerce .wpbf-quantity .wpbf-qty-increase:hover {
+	background-color: $base-color-alt;
+}
+
 .woocommerce .wpbf-quantity .wpbf-qty-decrease {
 	border-right-width: 0;
-	/* border-radius: 3px 0 0 3px; */
 }
 
 .woocommerce .wpbf-quantity .wpbf-qty-increase {
 	left: -10px;
 	border-left-width: 0;
-	/* border-radius: 0 3px 3px 0; */
 }
 
-.woocommerce .wpbf-quantity .wpbf-qty-decrease::before,
-.woocommerce .wpbf-quantity .wpbf-qty-increase::before,
-.woocommerce .wpbf-quantity .wpbf-qty-increase::after {
+.woocommerce .wpbf-quantity .wpbf-qty-decrease:before,
+.woocommerce .wpbf-quantity .wpbf-qty-increase:before,
+.woocommerce .wpbf-quantity .wpbf-qty-increase:after {
 	position: absolute;
 	content: '';
 	background-color: $brand-color;
@@ -1914,12 +1907,8 @@ p.demo_store,
 	transform: translate(-50%, -50%);
 }
 
-.woocommerce .wpbf-quantity .wpbf-qty-decrease::before {
-	width: 10px;
-	height: 2px;
-}
-
-.woocommerce .wpbf-quantity .wpbf-qty-increase::before {
+.woocommerce .wpbf-quantity .wpbf-qty-decrease:before,
+.woocommerce .wpbf-quantity .wpbf-qty-increase:before {
 	width: 10px;
 	height: 2px;
 }
