@@ -22,9 +22,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<?php do_action( 'wpbf_before_main_navigation' ); ?>
 
-		<?php get_template_part( 'inc/template-parts/navigation/' . wpbf_menu() ); ?>
+		<?php do_action( 'wpbf_navigation' ); ?>
 
-		<?php get_template_part( 'inc/template-parts/navigation/' . wpbf_mobile_menu() ); ?>
+		<?php do_action( 'wpbf_mobile_navigation' ); ?>
 
 		<?php do_action( 'wpbf_after_main_navigation' ); ?>
 

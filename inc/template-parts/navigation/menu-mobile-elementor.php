@@ -10,6 +10,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 echo '<div class="wpbf-mobile-menu-custom wpbf-hidden-large">';
 
-echo do_shortcode( get_theme_mod( 'menu_custom' ) );
+do_action( 'wpbf_mobile_menu' );
 
 echo '</div>';

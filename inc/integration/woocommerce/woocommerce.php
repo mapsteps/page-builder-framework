@@ -17,6 +17,11 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  */
 function wpbf_woo_change_inline_style_location( $location ) {
 
+	// Don't change location if WooCommerce scripts are removed.
+	if ( ! apply_filters( 'wpbf_woocommerce_scripts', true ) ) {
+		return $location;
+	}
+
 	$location = wpbf_is_premium() ? 'wpbf-premium-woocommerce' : 'wpbf-woocommerce';
 
 	return $location;

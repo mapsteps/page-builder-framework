@@ -42,15 +42,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			<?php do_action( 'wpbf_mobile_menu_open' ); ?>
 
-			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'mobile_menu',
-				'container'      => false,
-				'menu_class'     => 'wpbf-mobile-menu',
-				'depth'          => 4,
-				'fallback_cb'    => 'wpbf_mobile_menu_fallback',
-			) );
-			?>
+			<?php do_action( 'wpbf_mobile_menu' ); ?>
 
 			<?php do_action( 'wpbf_mobile_menu_close' ); ?>
 

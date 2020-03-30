@@ -1818,68 +1818,6 @@ p.demo_store,
 
 /* General */
 
-// Menu Item
-.wpbf-woo-menu-item {
-	.wpbf-woo-menu-item-count {
-		border-radius: 3px;
-		vertical-align: middle;
-		display: inline-block;
-		padding: 2px 7px;
-		margin-left: 10px;
-		text-align: center;
-		background: $accent-color;
-		color: #fff;
-		font-size: $small-fontsize - 2;
-		position: relative;
-	}
-	.wpbf-woo-menu-item-count:before {
-		content: "\f10d";
-		font-family: 'page-builder-framework' !important;
-		speak: none;
-		font-style: normal;
-		font-weight: normal;
-		font-variant: normal;
-		text-transform: none;
-		line-height: 1;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		position: absolute;
-		left: -6px;
-		color: $accent-color;
-		@include vertical-align($position: absolute);
-	}
-}
-
-// Product Search Widget
-.woocommerce-product-search {
-	position: relative;
-	.search-field {
-		padding-right: 40px;
-	}
-	button {
-		display: none;
-	}
-}
-
-.woocommerce-product-search:before {
-	content: "\f118";
-	right: 15px;
-	@include vertical-align($position: absolute);
-	color: $brand-color-alt;
-
-	font-family: 'page-builder-framework' !important;
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-
-	/* Better Font Rendering */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
 // Account Navigation
 .woocommerce-MyAccount-navigation {
 	ul {

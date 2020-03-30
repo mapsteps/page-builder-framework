@@ -60,11 +60,9 @@ class Kirki_Modules {
 			array(
 				'css'                => 'Kirki_Modules_CSS',
 				'css-vars'           => 'Kirki_Modules_CSS_Vars',
-				'customizer-styling' => 'Kirki_Modules_Customizer_Styling',
 				'icons'              => 'Kirki_Modules_Icons',
 				'loading'            => 'Kirki_Modules_Loading',
 				'tooltips'           => 'Kirki_Modules_Tooltips',
-				'branding'           => 'Kirki_Modules_Customizer_Branding',
 				'postMessage'        => 'Kirki_Modules_PostMessage',
 				'selective-refresh'  => 'Kirki_Modules_Selective_Refresh',
 				'field-dependencies' => 'Kirki_Modules_Field_Dependencies',
@@ -73,7 +71,6 @@ class Kirki_Modules {
 				'webfont-loader'     => 'Kirki_Modules_Webfont_Loader',
 				'preset'             => 'Kirki_Modules_Preset',
 				'gutenberg'          => 'Kirki_Modules_Gutenberg',
-				'telemetry'          => 'Kirki_Modules_Telemetry',
 			)
 		);
 	}

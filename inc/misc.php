@@ -155,8 +155,3 @@ function wpbf_menu_description_html( $menu_item ) {
 }
 remove_filter( 'nav_menu_description', 'strip_tags' );
 add_filter( 'wp_setup_nav_menu_item', 'wpbf_menu_description_html' );
-
-/**
- * Remove Kirki telemetry.
- */
-add_filter( 'kirki_telemetry', '__return_false' );

@@ -561,7 +561,7 @@ function wpbf_woo_menu_icon( $items, $args ) {
 	}
 
 	// Hide if we're on non-WooCommerce pages.
-	if ( get_theme_mod( 'woocommerce_menu_item_hide_if_not_wc' ) && ! is_woocommerce() ) {
+	if ( get_theme_mod( 'woocommerce_menu_item_hide_if_not_wc' ) && ! is_woocommerce() && ! is_cart() && ! is_checkout() && ! is_account_page() ) {
 		return $items;
 	}
 
@@ -591,7 +591,7 @@ function wpbf_woo_menu_icon_mobile() {
 	}
 
 	// Hide if we're on non-WooCommerce pages.
-	if ( get_theme_mod( 'woocommerce_menu_item_hide_if_not_wc' ) && ! is_woocommerce() ) {
+	if ( get_theme_mod( 'woocommerce_menu_item_hide_if_not_wc' ) && ! is_woocommerce() && ! is_cart() && ! is_checkout() && ! is_account_page() ) {
 		return;
 	}
 
