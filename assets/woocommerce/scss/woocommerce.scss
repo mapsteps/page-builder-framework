@@ -1856,20 +1856,18 @@ p.demo_store,
 }
 
 // Plus & minus indicator.
-.woocommerce .quantity .qty {
+.woocommerce .wpbf-quantity .qty {
 	-moz-appearance:textfield;
 }
 
 .woocommerce .wpbf-quantity .qty {
 	position: relative;
-	// top: -15px;
-	// left: -5px;
 	left: -5px;
 	vertical-align: middle;
 }
 
-.woocommerce .quantity .qty::-webkit-inner-spin-button, 
-.woocommerce .quantity .qty::-webkit-outer-spin-button {
+.woocommerce .wpbf-quantity .qty::-webkit-inner-spin-button,
+.woocommerce .wpbf-quantity .qty::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
@@ -1878,13 +1876,13 @@ p.demo_store,
 	margin-right: 20px;
 }
 
-.woocommerce .quantity .wpbf-qty-decrease:hover,
-.woocommerce .quantity .wpbf-qty-increase:hover {
+.woocommerce .wpbf-quantity .wpbf-qty-decrease:hover,
+.woocommerce .wpbf-quantity .wpbf-qty-increase:hover {
 	background-color: $base-color-alt;
 }
 
-.woocommerce .quantity .wpbf-qty-decrease,
-.woocommerce .quantity .wpbf-qty-increase {
+.woocommerce .wpbf-quantity .wpbf-qty-decrease,
+.woocommerce .wpbf-quantity .wpbf-qty-increase {
 	display: inline-block;
 	position: relative;
 	vertical-align: middle;
@@ -1894,20 +1892,20 @@ p.demo_store,
 	cursor: pointer;
 }
 
-.woocommerce .quantity .wpbf-qty-decrease {
+.woocommerce .wpbf-quantity .wpbf-qty-decrease {
 	border-right-width: 0;
 	/* border-radius: 3px 0 0 3px; */
 }
 
-.woocommerce .quantity .wpbf-qty-increase {
+.woocommerce .wpbf-quantity .wpbf-qty-increase {
 	left: -10px;
 	border-left-width: 0;
 	/* border-radius: 0 3px 3px 0; */
 }
 
-.woocommerce .quantity .wpbf-qty-decrease::before,
-.woocommerce .quantity .wpbf-qty-increase::before,
-.woocommerce .quantity .wpbf-qty-increase::after {
+.woocommerce .wpbf-quantity .wpbf-qty-decrease::before,
+.woocommerce .wpbf-quantity .wpbf-qty-increase::before,
+.woocommerce .wpbf-quantity .wpbf-qty-increase::after {
 	position: absolute;
 	content: '';
 	background-color: $brand-color;
@@ -1916,17 +1914,17 @@ p.demo_store,
 	transform: translate(-50%, -50%);
 }
 
-.woocommerce .quantity .wpbf-qty-decrease::before {
+.woocommerce .wpbf-quantity .wpbf-qty-decrease::before {
 	width: 10px;
 	height: 2px;
 }
 
-.woocommerce .quantity .wpbf-qty-increase::before {
+.woocommerce .wpbf-quantity .wpbf-qty-increase::before {
 	width: 10px;
 	height: 2px;
 }
 
-.woocommerce .quantity .wpbf-qty-increase::after {
+.woocommerce .wpbf-quantity .wpbf-qty-increase::after {
 	width: 2px;
 	height: 10px;
 }
