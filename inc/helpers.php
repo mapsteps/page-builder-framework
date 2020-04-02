@@ -675,11 +675,12 @@ function wpbf_article_meta() {
  */
 function wpbf_author_meta() {
 
-	$rtl    = is_rtl();
-	$avatar = get_theme_mod( 'blog_author_avatar' );
+	$rtl         = is_rtl();
+	$avatar      = get_theme_mod( 'blog_author_avatar' );
+	$avatar_size = apply_filters( 'wpbf_author_meta_avatar_size', 128 );
 
 	if ( ! $rtl && $avatar ) {
-		echo get_avatar( get_the_author_meta( 'ID' ), 128 );
+		echo get_avatar( get_the_author_meta( 'ID' ), $avatar_size );
 	}
 
 	echo sprintf(
@@ -690,7 +691,7 @@ function wpbf_author_meta() {
 	);
 
 	if ( $rtl && $avatar ) {
-		echo get_avatar( get_the_author_meta( 'ID' ), 128 );
+		echo get_avatar( get_the_author_meta( 'ID' ), $avatar_size );
 	}
 
 	echo '<span class="article-meta-separator">' . apply_filters( 'wpbf_article_meta_separator', ' | ' ) . '</span>';
