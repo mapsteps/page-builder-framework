@@ -424,7 +424,7 @@ body {
 }
 
 /* Sidebar */
-.widget {
+.widget:not(.widget_text) {
 	ul {
 		margin: 0;
 		padding: 0;
