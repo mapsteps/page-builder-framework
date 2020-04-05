@@ -46,15 +46,16 @@ function wpbf_customizer_setup( $wp_customize ) {
 	// Change section priority.
 	$wp_customize->get_section( 'background_image' )->priority = 200;
 
+	// Change setting transport method.
+	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
+	$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
+
 	// Change control priorities.
 	$wp_customize->get_control( 'custom_logo' )->priority      = 0;
 	$wp_customize->get_control( 'blogname' )->priority         = 9;
 	$wp_customize->get_control( 'blogdescription' )->priority  = 19;
 	$wp_customize->get_control( 'background_color' )->priority = 100;
 	$wp_customize->get_control( 'background_image' )->priority = 0;
-
-	// Change control transport method.
-	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
 
 	// Partial refresh for custom logo.
 	// This is faking a partial refresh to have an edit icon displayed for the logo.
@@ -69,6 +70,14 @@ function wpbf_customizer_setup( $wp_customize ) {
 		'selector' => '.site-title a',
 		'render_callback' => function() {
 			bloginfo( 'name' );
+		},
+	) );
+
+	// Partial refresh for blogdescription.
+	$wp_customize->selective_refresh->add_partial( 'blogdescription', array(
+		'selector' => '.wpbf-tagline',
+		'render_callback' => function() {
+			bloginfo( 'description' );
 		},
 	) );
 
@@ -3007,6 +3016,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Color', 'page-builder-framework' ),
 	'section'         => 'title_tagline',
 	'priority'        => 11,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -3064,6 +3074,15 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => '',
 		),
 	),
+	'partial_refresh' => array(
+		'displaytagline' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return wpbf_do_header();
+			}
+		),
+	),
 ) );
 
 // Mobile toggle.
@@ -3084,6 +3103,15 @@ Kirki::add_field( 'wpbf', array(
 			'setting'  => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
+		),
+	),
+	'partial_refresh' => array(
+		'displaytaglinemobile' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return wpbf_do_header();
+			}
 		),
 	),
 ) );
@@ -4135,18 +4163,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	$wp_customize->add_setting( 'menu_logo_size_desktop',
 		array(
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_size_tablet',
 		array(
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_size_mobile',
 		array(
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 
@@ -4206,18 +4237,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '22px',
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_font_size_tablet',
 		array(
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_font_size_mobile',
 		array(
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 
@@ -4276,18 +4310,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	$wp_customize->add_setting( 'menu_logo_description_font_size_desktop',
 		array(
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_description_font_size_tablet',
 		array(
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_description_font_size_mobile',
 		array(
 			'sanitize_callback' => 'esc_textarea',
+			'transport'         => 'postMessage',
 		)
 	);
 

@@ -169,6 +169,79 @@
 
 	/* Logo */
 
+	// Width desktop.
+	wp.customize( 'menu_logo_size_desktop', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-logo img, .wpbf-mobile-logo img').css('width', newval + suffix );
+		} );
+	} );
+
+	// Width tablet.
+	wp.customize( 'menu_logo_size_tablet', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-mobile-logo img').css('width', newval + suffix );
+		} );
+	} );
+
+	// Width mobile.
+	wp.customize( 'menu_logo_size_mobile', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-mobile-logo img').css('width', newval + suffix );
+		} );
+	} );
+
+	// Font size desktop.
+	wp.customize( 'menu_logo_font_size_desktop', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-logo a, .wpbf-mobile-logo a').css('font-size', newval + suffix );
+		} );
+	} );
+
+	// Font size tablet.
+	wp.customize( 'menu_logo_font_size_tablet', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-mobile-logo a').css('font-size', newval + suffix );
+		} );
+	} );
+
+	// Font size mobile.
+	wp.customize( 'menu_logo_font_size_mobile', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-mobile-logo a').css('font-size', newval + suffix );
+		} );
+	} );
+
+	// Color.
+	wp.customize( 'menu_logo_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-logo a, .wpbf-mobile-logo a').css('color', newval );
+		} );
+	} );
+
 	// Container width.
 	wp.customize( 'menu_logo_container_width', function( value ) {
 		value.bind( function( newval ) {
@@ -189,17 +262,43 @@
 
 	/* Tagline */
 
+	// Font size desktop.
+	wp.customize( 'menu_logo_description_font_size_desktop', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline').css('font-size', newval + suffix );
+		} );
+	} );
+
+	// Font size tablet.
+	wp.customize( 'menu_logo_description_font_size_tablet', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-mobile-logo .wpbf-tagline').css('font-size', newval + suffix );
+		} );
+	} );
+
+	// Font size mobile.
+	wp.customize( 'menu_logo_description_font_size_mobile', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-mobile-logo .wpbf-tagline').css('font-size', newval + suffix );
+		} );
+	} );
+
 	// Font color.
 	wp.customize( 'menu_logo_description_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-tagline').css('color', newval );
-		} );
-	} );
-
-	// Font size.
-	wp.customize( 'menu_logo_description_font_size', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-tagline').css('font-size', newval );
 		} );
 	} );
 
