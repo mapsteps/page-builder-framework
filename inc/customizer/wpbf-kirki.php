@@ -57,12 +57,11 @@ function wpbf_customizer_setup( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
 
 	// Partial refresh for custom logo.
+	// This is faking a partial refresh to have an edit icon displayed for the logo.
+	// A partial refresh isn't possible because the logo & mobile logo are the same by default but can be configured differently.
+	// Unfortunately we can't pass multiple arrays with add_partial - this would solve the issue.
 	$wp_customize->selective_refresh->add_partial( 'custom_logo', array(
-		'container_inclusive' => true,
-		'selector'            => '.wpbf-logo',
-		'render_callback'     => function() {
-			get_template_part( 'inc/template-parts/logo/logo' );
-		}
+		'selector' => '.wpbf-logo',
 	) );
 
 	// Partial refresh for blogname.
