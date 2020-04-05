@@ -10,6 +10,11 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+// Stop here if footer bar is disabled.
+if ( 'none' === get_theme_mod( 'footer_layout' ) ) {
+	return;
+}
+
 $theme_author = apply_filters(
 	'wpbf_theme_author',
 	array(

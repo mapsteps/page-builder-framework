@@ -645,18 +645,18 @@ if ( $button_primary_bg_color_alt || $button_primary_bg_color_alt ) {
 // Sidebar.
 $sidebar_bg_color                      = get_theme_mod( 'sidebar_bg_color' );
 $sidebar_width                         = get_theme_mod( 'sidebar_width' );
-$sidebar_widget_padding_top_desktop    = get_theme_mod( 'sidebar_widget_padding_top_desktop' );
-$sidebar_widget_padding_right_desktop  = get_theme_mod( 'sidebar_widget_padding_right_desktop' );
-$sidebar_widget_padding_bottom_desktop = get_theme_mod( 'sidebar_widget_padding_bottom_desktop' );
-$sidebar_widget_padding_left_desktop   = get_theme_mod( 'sidebar_widget_padding_left_desktop' );
-$sidebar_widget_padding_top_tablet     = get_theme_mod( 'sidebar_widget_padding_top_tablet' );
-$sidebar_widget_padding_right_tablet   = get_theme_mod( 'sidebar_widget_padding_right_tablet' );
-$sidebar_widget_padding_bottom_tablet  = get_theme_mod( 'sidebar_widget_padding_bottom_tablet' );
-$sidebar_widget_padding_left_tablet    = get_theme_mod( 'sidebar_widget_padding_left_tablet' );
-$sidebar_widget_padding_top_mobile     = get_theme_mod( 'sidebar_widget_padding_top_mobile' );
-$sidebar_widget_padding_right_mobile   = get_theme_mod( 'sidebar_widget_padding_right_mobile' );
-$sidebar_widget_padding_bottom_mobile  = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
-$sidebar_widget_padding_left_mobile    = get_theme_mod( 'sidebar_widget_padding_left_mobile' );
+$sidebar_widget_padding_top_desktop    = ( $val = get_theme_mod( 'sidebar_widget_padding_top_desktop' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_right_desktop  = ( $val = get_theme_mod( 'sidebar_widget_padding_right_desktop' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_bottom_desktop = ( $val = get_theme_mod( 'sidebar_widget_padding_bottom_desktop' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_left_desktop   = ( $val = get_theme_mod( 'sidebar_widget_padding_left_desktop' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_top_tablet     = ( $val = get_theme_mod( 'sidebar_widget_padding_top_tablet' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_right_tablet   = ( $val = get_theme_mod( 'sidebar_widget_padding_right_tablet' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_bottom_tablet  = ( $val = get_theme_mod( 'sidebar_widget_padding_bottom_tablet' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_left_tablet    = ( $val = get_theme_mod( 'sidebar_widget_padding_left_tablet' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_top_mobile     = ( $val = get_theme_mod( 'sidebar_widget_padding_top_mobile' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_right_mobile   = ( $val = get_theme_mod( 'sidebar_widget_padding_right_mobile' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_bottom_mobile  = ( $val = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' ) ) === '20' ? false : $val;
+$sidebar_widget_padding_left_mobile    = ( $val = get_theme_mod( 'sidebar_widget_padding_left_mobile' ) ) === '20' ? false : $val;
 
 if ( $sidebar_bg_color && '#f5f5f7' !== $sidebar_bg_color ) {
 

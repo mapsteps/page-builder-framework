@@ -619,6 +619,12 @@ function wpbf_sidebar_layout() {
 
 	}
 
+	if ( is_404() ) {
+		// There is no sidebar on 404 pages.
+		// We do this to output the correct body class.
+		$sidebar = 'none';
+	}
+
 	return apply_filters( 'wpbf_sidebar_layout', $sidebar );
 
 }

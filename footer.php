@@ -11,9 +11,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		do_action( 'wpbf_before_footer' );
 
-		if ( 'none' !== get_theme_mod( 'footer_layout' ) ) {
-			do_action( 'wpbf_footer' );
-		}
+		do_action( 'wpbf_footer' );
 
 		do_action( 'wpbf_after_footer' );
 

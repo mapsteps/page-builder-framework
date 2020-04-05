@@ -57,11 +57,12 @@ function wpbf_customizer_setup( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
 
 	// Partial refresh for custom logo.
-	// This is faking a partial refresh to have an edit icon displayed for the logo.
-	// A partial refresh isn't possible because the logo & mobile logo are different.
-	// Unfortunately we can't pass multiple arrays with add_partial - this would solve the issue.
 	$wp_customize->selective_refresh->add_partial( 'custom_logo', array(
-		'selector' => '.wpbf-logo',
+		'container_inclusive' => true,
+		'selector'            => '.wpbf-logo',
+		'render_callback'     => function() {
+			get_template_part( 'inc/template-parts/logo/logo' );
+		}
 	) );
 
 	// Partial refresh for blogname.
@@ -555,6 +556,15 @@ Kirki::add_field( 'wpbf', array(
 		'author',
 		'date',
 	),
+	'partial_refresh' => array(
+		'metasortable' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-meta',
+			'render_callback'     => function() {
+				return wpbf_article_meta();
+			}
+		),
+	),
 	'choices'  => array(
 		'author'   => __( 'Author', 'page-builder-framework' ),
 		'date'     => __( 'Date', 'page-builder-framework' ),
@@ -563,7 +573,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 1,
 ) );
 
-// Alt tag.
+// Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'text',
 	'settings' => 'blog_meta_separator',
@@ -571,9 +581,18 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_blog_settings',
 	'priority' => 1,
 	'default'  => '|',
+	'partial_refresh' => array(
+		'metaseparator' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-meta',
+			'render_callback'     => function() {
+				return wpbf_article_meta();
+			}
+		),
+	),
 ) );
 
-// Alt tag.
+// Author avatar.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'toggle',
 	'settings'        => 'blog_author_avatar',
@@ -585,6 +604,15 @@ Kirki::add_field( 'wpbf', array(
 			'setting'  => 'blog_sortable_meta',
 			'operator' => 'in',
 			'value'    => 'author',
+		),
+	),
+	'partial_refresh' => array(
+		'metaavatar' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-meta',
+			'render_callback'     => function() {
+				return wpbf_article_meta();
+			}
 		),
 	),
 ) );
@@ -612,6 +640,14 @@ Kirki::add_field( 'wpbf', array(
 		'max'  => '100',
 		'step' => '1',
 	),
+	'partial_refresh' => array(
+		'blogexcerpt' => array(
+			'selector'        => '.entry-summary',
+			'render_callback' => function() {
+				return the_excerpt();
+			}
+		),
+	),
 ) );
 
 // Excerpt more.
@@ -622,6 +658,14 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_blog_settings',
 	'default'  => '[...]',
 	'priority' => 1,
+	'partial_refresh' => array(
+		'blogexcerptindicator' => array(
+			'selector'        => '.entry-summary',
+			'render_callback' => function() {
+				return the_excerpt();
+			}
+		),
+	),
 ) );
 
 // Read more button.
@@ -638,6 +682,15 @@ Kirki::add_field( 'wpbf', array(
 		'button'  => __( 'Button', 'page-builder-framework' ),
 		'primary' => __( 'Button (Primary)', 'page-builder-framework' ),
 	),
+	'partial_refresh' => array(
+		'blogreadmore' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-footer .wpbf-read-more',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/blog/blog-readmore' );
+			}
+		),
+	),
 ) );
 
 // Read more text.
@@ -648,6 +701,15 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_blog_settings',
 	'default'  => 'Read more',
 	'priority' => 2,
+	'partial_refresh' => array(
+		'blogreadmoretext' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-footer .wpbf-read-more',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/blog/blog-readmore' );
+			}
+		),
+	),
 ) );
 
 // Categories title.
@@ -658,6 +720,15 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_blog_settings',
 	'default'  => 'Filed under:',
 	'priority' => 2,
+	'partial_refresh' => array(
+		'catstitle' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-footer .footer-categories',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/blog/blog-categories' );
+			}
+		),
+	),
 ) );
 
 /* Fields - Blog (Pagination) */
@@ -1333,9 +1404,10 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 3,
 	'multiple' => 1,
 	'partial_refresh' => array(
-		'searchform' => array(
-			'selector'        => '.wpbf-404-search-form-wrapper',
-			'render_callback' => function() {
+		'404searchform' => array(
+			'container_inclusive' => true,
+			'selector'            => '.wpbf-404-content #searchform',
+			'render_callback'     => function() {
 				return get_search_form();
 			}
 		),
@@ -2111,6 +2183,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_font_options',
 	'default'  => '#6D7680',
 	'priority' => 2,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -2118,13 +2191,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Accent color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'page_accent_color',
-	'label'    => __( 'Accent Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_font_options',
-	'priority' => 4,
-	'default'  => '#3ba9d2',
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'page_accent_color',
+	'label'     => __( 'Accent Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_font_options',
+	'priority'  => 4,
+	'default'   => '#3ba9d2',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
@@ -2600,6 +2673,15 @@ Kirki::add_field( 'wpbf', array(
 		'one'  => __( 'One Column', 'page-builder-framework' ),
 		'two'  => __( 'Two Columns', 'page-builder-framework' ),
 	),
+	'partial_refresh' => array(
+		'preheaderlayout' => array(
+			'container_inclusive' => true,
+			'selector'            => '#pre-header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/pre-header' );
+			}
+		),
+	),
 ) );
 
 // Column one layout.
@@ -2622,6 +2704,15 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => 'none',
 		),
 	),
+	'partial_refresh' => array(
+		'preheadercolumnonelayout' => array(
+			'container_inclusive' => true,
+			'selector'            => '#pre-header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/pre-header' );
+			}
+		),
+	),
 ) );
 
 // Column one.
@@ -2633,7 +2724,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => __( 'Column 1', 'page-builder-framework' ),
 	'priority'        => 2,
 	'partial_refresh' => array(
-		'pre_header_column_one' => array(
+		'preheadercolumnonecontent' => array(
 			'selector'        => '.wpbf-inner-pre-header-left, .wpbf-inner-pre-header-content',
 			'render_callback' => function() {
 				return do_shortcode( get_theme_mod( 'pre_header_column_one' ) );
@@ -2674,6 +2765,15 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => 'two',
 		),
 	),
+	'partial_refresh' => array(
+		'preheadercolumntwolayout' => array(
+			'container_inclusive' => true,
+			'selector'            => '#pre-header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/pre-header' );
+			}
+		),
+	),
 ) );
 
 // Column two.
@@ -2685,7 +2785,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => __( 'Column 2', 'page-builder-framework' ),
 	'priority'        => 2,
 	'partial_refresh' => array(
-		'pre_header_column_two' => array(
+		'preheadercolumntwocontent' => array(
 			'selector'        => '.wpbf-inner-pre-header-right',
 			'render_callback' => function() {
 				return do_shortcode( get_theme_mod( 'pre_header_column_two' ) );
@@ -2875,9 +2975,10 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'title_tagline',
 	'priority'        => 1,
 	'partial_refresh' => array(
-		'mobile_logo' => array(
-			'selector'        => '.wpbf-mobile-logo',
-			'render_callback' => function() {
+		'mobilelogo' => array(
+			'container_inclusive' => true,
+			'selector'            => '.wpbf-mobile-logo',
+			'render_callback'     => function() {
 				get_template_part( 'inc/template-parts/logo/logo-mobile' );
 			}
 		),
@@ -3709,6 +3810,15 @@ Kirki::add_field( 'wpbf', array(
 		'one'  => __( 'One Column', 'page-builder-framework' ),
 		'two'  => __( 'Two Columns', 'page-builder-framework' ),
 	),
+	'partial_refresh' => array(
+		'footerlayout' => array(
+			'container_inclusive' => true,
+			'selector'            => '#footer',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/footer' );
+			}
+		),
+	),
 ) );
 
 // Column one layout.
@@ -3729,6 +3839,15 @@ Kirki::add_field( 'wpbf', array(
 			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
+		),
+	),
+	'partial_refresh' => array(
+		'footercolumnonelayout' => array(
+			'container_inclusive' => true,
+			'selector'            => '#footer',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/footer' );
+			}
 		),
 	),
 ) );
@@ -3753,6 +3872,14 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => 'text',
 		),
 	),
+	'partial_refresh' => array(
+		'footercolumnonecontent' => array(
+			'selector'        => '#footer',
+			'render_callback' => function() {
+				return get_template_part( 'inc/template-parts/footer' );
+			}
+		),
+	),
 ) );
 
 // Column two layout.
@@ -3775,6 +3902,15 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => 'two',
 		),
 	),
+	'partial_refresh' => array(
+		'footercolumntwolayout' => array(
+			'container_inclusive' => true,
+			'selector'            => '#footer',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/footer' );
+			}
+		),
+	),
 ) );
 
 // Column two.
@@ -3795,6 +3931,14 @@ Kirki::add_field( 'wpbf', array(
 			'setting'  => 'footer_column_two_layout',
 			'operator' => '==',
 			'value'    => 'text',
+		),
+	),
+	'partial_refresh' => array(
+		'footercolumntwocontent' => array(
+			'selector'        => '#footer',
+			'render_callback' => function() {
+				return get_template_part( 'inc/template-parts/footer' );
+			}
 		),
 	),
 ) );

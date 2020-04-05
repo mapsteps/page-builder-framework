@@ -30,11 +30,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 					<?php echo '<p>' . apply_filters( 'wpbf_404_text', __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) ) . '</p>'; ?>
 
-					<div class="wpbf-404-search-form-wrapper">
-
 					<?php get_search_form(); ?>
-
-					</div>
 
 				</div>
 

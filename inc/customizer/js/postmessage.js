@@ -65,6 +65,14 @@
 		} );
 	} );
 
+	/* Typography */
+
+	wp.customize( 'page_font_color', function( value ) {
+		value.bind( function( newval ) {
+			$('body').css('color', newval );
+		} );
+	} );
+
 	/* 404 */
 
 	wp.customize( '404_headline', function( value ) {
@@ -309,7 +317,7 @@
 	wp.customize( 'sidebar_width', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-sidebar-wrapper').css('width', newval + '%' );
-			$('.wpbf-main').css('width', 100 - newval + '%' );
+			$('.wpbf-sidebar-left .wpbf-main, .wpbf-sidebar-right .wpbf-main').css('width', 100 - newval + '%' );
 		} );
 	} );
 
