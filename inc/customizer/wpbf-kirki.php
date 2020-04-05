@@ -1308,6 +1308,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings' => '404_headline',
 	'section'  => 'wpbf_404_options',
 	'default'  => __( "404 - This page couldn't be found.", "page-builder-framework" ),
+	'transport'   => 'postMessage',
 	'priority' => 1,
 ) );
 
@@ -1318,6 +1319,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings' => '404_text',
 	'section'  => 'wpbf_404_options',
 	'default'  => __( "Oops! We're sorry, this page couldn't be found!", "page-builder-framework" ),
+	'transport'   => 'postMessage',
 	'priority' => 2,
 ) );
 
@@ -1330,6 +1332,14 @@ Kirki::add_field( 'wpbf', array(
 	'default'  => 'show',
 	'priority' => 3,
 	'multiple' => 1,
+	'partial_refresh' => array(
+		'searchform' => array(
+			'selector'        => '.wpbf-404-search-form-wrapper',
+			'render_callback' => function() {
+				return get_search_form();
+			}
+		),
+	),
 	'choices'  => array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
@@ -1344,6 +1354,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'       => __( 'Page Width', 'page-builder-framework' ),
 	'settings'    => 'page_max_width',
 	'section'     => 'wpbf_page_options',
+	'transport'   => 'postMessage',
 	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
 	'priority'    => 1,
 ) );

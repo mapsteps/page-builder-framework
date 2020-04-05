@@ -19,6 +19,11 @@ function wpbf_body_classes( $classes ) {
 	// Add wpbf body class.
 	$classes[] = 'wpbf';
 
+	if ( get_theme_mod( 'page_boxed' ) ) {
+		$classes[] = 'wpbf-boxed-layout';
+	}
+
+
 	// Add wpbf-{post-name} body class on singular.
 	if ( is_singular() ) {
 		global $post;

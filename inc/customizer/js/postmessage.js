@@ -2,6 +2,16 @@
 
 	/* Layout */
 
+	// Page width.
+	wp.customize( 'page_max_width', function( value ) {
+		value.bind( function( newval ) {
+			if( newval == '' ) {
+				newval = '1200px';
+			}
+			$('.wpbf-container, .wpbf-boxed-layout .wpbf-page').css('max-width', newval );
+		} );
+	} );
+
 	// Boxed margin.
 	wp.customize( 'page_boxed_margin', function( value ) {
 		value.bind( function( newval ) {
@@ -52,6 +62,20 @@
 	wp.customize( 'scrolltop_border_radius', function( value ) {
 		value.bind( function( newval ) {
 			$('.scrolltop').css('border-radius', newval + 'px' );
+		} );
+	} );
+
+	/* 404 */
+
+	wp.customize( '404_headline', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-404-content .entry-title').text( newval );
+		} );
+	} );
+
+	wp.customize( '404_text', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-404-content p').text( newval );
 		} );
 	} );
 
