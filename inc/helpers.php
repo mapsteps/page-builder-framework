@@ -799,6 +799,19 @@ function wpbf_nav_menu() {
 			)
 		);
 
+	} elseif ( 'menu-vertical-left' === $menu_position ) {
+
+		// Full screen menu.
+		wp_nav_menu(
+			array(
+				'theme_location' => 'main_menu',
+				'container'      => false,
+				'menu_class'     => 'wpbf-menu',
+				'depth'          => 1,
+				'fallback_cb'    => 'wpbf_main_menu_fallback',
+			)
+		);
+
 	} else {
 
 		// Default menu.
