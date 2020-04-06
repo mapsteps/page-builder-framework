@@ -1,5 +1,7 @@
-# Node Modules
+# let's ignore our build tools
 node_modules/
+package.json
+gulpfile.js
 
 # Sass Cache
 .sass-cache/
