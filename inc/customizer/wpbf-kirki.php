@@ -3520,6 +3520,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_sub_menu_options',
 	'default'         => '#f5f5f7',
 	'priority'        => 6,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -4384,6 +4385,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '10',
 			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
 		)
 	);
 
@@ -4391,6 +4393,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '20',
 			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
 		)
 	);
 
@@ -4398,6 +4401,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '10',
 			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
 		)
 	);
 
@@ -4405,6 +4409,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '20',
 			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
 		)
 	);
 
