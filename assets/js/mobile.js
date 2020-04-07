@@ -1,11 +1,17 @@
 (function ($) {
-	var desktopBreakpointClass;
 	var desktopBreakpoint;
+	var menuType;
 
 	function init() {
+		setupMenuType();
 		setupDesktopBreakpoint();
 		setupMobileMenu();
 		setupMobileSubmenu();
+	}
+
+	function setupMenuType() {
+		var hamburger = document.querySelector('.wpbf-mobile-menu-hamburger');
+		menuType = hamburger ? 'hamburger' : 'default';
 	}
 
 	/**
@@ -13,7 +19,7 @@
 	 * Retrieve desktop breakpoint based on body class.
 	 */
 	function setupDesktopBreakpoint() {
-		desktopBreakpointClass = $('body').attr("class").match(/wpbf-desktop-breakpoint-[\w-]*\b/);
+		var desktopBreakpointClass = $('body').attr("class").match(/wpbf-desktop-breakpoint-[\w-]*\b/);
 
 		if (desktopBreakpointClass !== null) {
 			desktopBreakpoint = desktopBreakpointClass.toString().match(/\d+/);
@@ -28,8 +34,7 @@
 	 */
 	function setupMobileMenu() {
 		$(document).on('click', '.wpbf-mobile-menu-toggle', function () {
-			toggleMobileMenu('default');
-			toggleMobileMenu('hamburger');
+			toggleMobileMenu(menuType);
 		});
 
 		// Close mobile menu on anchor link clicks but only if menu item doesn't have submenus.
@@ -39,8 +44,7 @@
 
 			if (this.href.match("^#") || this.href.match("^/#")) {
 				if (!hasSubmenu) {
-					toggleMobileMenu('default');
-					toggleMobileMenu('hamburger');
+					toggleMobileMenu(menuType);
 				} else {
 					toggleSubmenuOnEmtyLink(this);
 				}
@@ -58,8 +62,7 @@
 			$('.wpbf-mobile-menu-container.active nav').css({ 'max-height': windowHeight - mobileNavWrapperHeight });
 
 			if (windowWidth > desktopBreakpoint) {
-				closeMobileMenu('default');
-				closeMobileMenu('hamburger');
+				closeMobileMenu(menuType);
 
 				if ($('.wpbf-mobile-mega-menu').length) {
 					$('.wpbf-mobile-mega-menu').removeClass('wpbf-mobile-mega-menu').addClass('wpbf-mega-menu');
@@ -130,8 +133,7 @@
 	 * Setup mobile submenu for both default and hamburger menu.
 	 */
 	function setupMobileSubmenu() {
-		setupSubmenuToggle('default');
-		setupSubmenuToggle('hamburger');
+		setupSubmenuToggle(menuType);
 	}
 
 	/**
