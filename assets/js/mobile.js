@@ -27,13 +27,13 @@
 	 * Setup mobile menu both for default and hamburger menu.
 	 */
 	function setupMobileMenu() {
-		$('document').on('click', '.wpbf-mobile-menu-toggle', function () {
+		$(document).on('click', '.wpbf-mobile-menu-toggle', function () {
 			toggleMobileMenu('default');
 			toggleMobileMenu('hamburger');
 		});
 
 		// Close mobile menu on anchor link clicks but only if menu item doesn't have submenus.
-		$('document').on('click', '.wpbf-mobile-menu a', function () {
+		$(document).on('click', '.wpbf-mobile-menu a', function () {
 
 			var hasSubmenu = this.parentNode.classList.contains('menu-item-has-children');
 
@@ -142,7 +142,7 @@
 	function setupSubmenuToggle(type) {
 		var menuClass = type === 'hamburger' ? '.wpbf-mobile-menu-hamburger .wpbf-submenu-toggle' : '.wpbf-mobile-menu-default .wpbf-submenu-toggle';
 
-		$('document').on('click', menuClass, function (e) {
+		$(document).on('click', menuClass, function (e) {
 			e.preventDefault();
 			toggleMobileSubmenu(this);
 		});

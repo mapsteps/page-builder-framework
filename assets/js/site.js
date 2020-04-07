@@ -22,7 +22,7 @@
 			}
 		});
 
-		$('.scrolltop').click(function() {
+		$(document).on('click', '.scrolltop', function() {
 			$('body').attr('tabindex', '-1').focus();
 			$(this).blur();
 			$('body, html').animate({ scrollTop: 0 }, 500);
@@ -32,9 +32,9 @@
 	/**
 	 * Search Menu Item
 	 */
-	 $('.wpbf-menu-item-search').click(function(event) {
+	$(document).on('click', '.wpbf-menu-item-search', function(e) {
 
-		event.stopPropagation();
+		e.stopPropagation();
 
 		$('.wpbf-navigation .wpbf-menu > li').slice(-3).addClass('calculate-width');
     	var itemWidth = 0;
@@ -68,7 +68,7 @@
 
 	 }
 
-	$(window).click(function() {
+	$(window).on('click', function() {
 		searchClose();
 	});
 
@@ -81,7 +81,7 @@
 	/**
 	 * Contact Form 7 Tips
 	 */
-	$('.wpcf7-form-control-wrap').hover(function(){
+	$(document).on('hover', '.wpcf7-form-control-wrap', function(){
 		$('.wpcf7-not-valid-tip', this).fadeOut();
 	});	
 
@@ -91,7 +91,7 @@
 	var duration = $(".wpbf-navigation").data('sub-menu-animation-duration');
 
 	// Fade Animation
-	$('.wpbf-sub-menu-animation-fade > .menu-item-has-children').hover(function() {
+	$(document).on('hover', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function() {
 		$('.sub-menu', this).first().stop().fadeIn(duration);
 	},
 	function(){
@@ -103,7 +103,7 @@
 	 *
 	 * Excluding Mega Menu – this is always going to be a Fade effect
 	 */
-    $('.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children').hover(function() {
+	$(document).on('hover', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children', function() {
 		$('.sub-menu', this).first().stop().css({display:'block'}).animate({opacity:'1'}, duration);
 	},
 	function(){
