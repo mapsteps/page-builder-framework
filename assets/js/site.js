@@ -45,7 +45,7 @@
 			var itemWidth = 250;
 		}
 
-		if (!$(this).hasClass('active')) {
+		if (!this.classList.contains('active')) {
 			$(this).addClass('active').attr('aria-expanded', 'true');
 			$('.wpbf-menu-search', this).stop().css({ display: 'block' }).animate({ width: itemWidth, opacity: '1' }, 200);
 			$('input[type=search]', this).val('').focus();
