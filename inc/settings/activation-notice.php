@@ -23,20 +23,13 @@ $screen = get_current_screen();
 			</h2>
 
 			<p>
-
-				<?php
-				_e(
-					'Thank you for choosing Page Builder Framework! Please visit the theme settings page to get started.',
-					'page-builder-framework'
-				);
-				?>
-
+				<?php _e( 'Thank you for choosing Page Builder Framework! Please visit the theme settings page to get started.', 'page-builder-framework' ); ?>
 			</p>
 
 			<?php if ( 'appearance_page_wpbf-premium' !== $screen->id ) : ?>
 			<p class="buttons">
-				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium' ) ); ?>" class="button">
-					<?php _e( 'Theme Settings', 'page-builder-framework' ); ?>
+				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium' ) ); ?>" class="button button-primary">
+					<?php _e( 'Get Started', 'page-builder-framework' ); ?>
 				</a>
 			</p>
 			<?php endif; ?>
