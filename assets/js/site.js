@@ -11,12 +11,13 @@ var WPBFSite = (function ($) {
 	 */
 	function init() {
 		setupBreakpoints();
+		setupBodyClasses();
 
 		window.addEventListener('resize', function (e) {
-			setupBreakpoints();
+			setupBodyClasses();
 		});
 	}
-	
+
 	/**
 	 * Setup breakpoints for desktop, tablet, and mobile.
 	 */
@@ -27,21 +28,45 @@ var WPBFSite = (function ($) {
 	}
 
 	/**
+	 * Setup body classes based on breakpoint.
+	 */
+	function setupBodyClasses() {
+		var windowWidth = $(window).width();
+		var bodyClass = '';
+
+		if (windowWidth > breakpoints.desktop) {
+			bodyClass = 'wpbf-is-desktop';
+			activeBreakpoint = 'desktop';
+		} else {
+			if (windowWidth > breakpoints.tablet) {
+				bodyClass = 'wpbf-is-tablet';
+				activeBreakpoint = 'tablet';
+			} else {
+				bodyClass = 'wpbf-is-mobile';
+				activeBreakpoint = 'mobile';
+			}
+		}
+
+		document.body.classList.remove('wpbf-is-desktop');
+		document.body.classList.remove('wpbf-is-tablet');
+		document.body.classList.remove('wpbf-is-mobile');
+
+		document.body.classList.add(bodyClass);
+	}
+
+	/**
 	 * Setup breakpoint.
 	 * Retrieve breakpoint based on body class.
 	 * 
 	 * @param {string} device The device class.
 	 */
 	function setupBreakpoint(device) {
-		var deviceClass = device === 'tablet' ? 'medium' : device;
-		var matchRule = "wpbf-" + deviceClass + "-breakpoint-[\\w-]*\\b";
+		var matchRule = "wpbf-" + device + "-breakpoint-[\\w-]*\\b";
 		var breakpointClass = $('body').attr("class").match(matchRule);
 
 		if (breakpointClass != null) {
 			breakpoints[device] = breakpointClass.toString().match(/\d+/);
 			breakpoints[device] = Array.isArray(breakpoints[device]) ? breakpoints[device][0] : breakpoints[device];
-
-			activeBreakpoint = device;
 		}
 	}
 
