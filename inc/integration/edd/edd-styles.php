@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 function wpbf_do_edd_customizer_css() {
 
 	// Radio buttons.
-	$page_accent_color = get_theme_mod( 'page_accent_color' );
+	$page_accent_color = ( $val = get_theme_mod( 'page_accent_color' ) ) === '#3ba9d2' ? false : $val;
 
 	if ( $page_accent_color ) {
 
