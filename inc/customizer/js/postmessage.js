@@ -472,14 +472,14 @@
 	// Background color.
 	wp.customize( 'blog_pagination_background_color', function( value ) {
 		value.bind( function( newval ) {
-			$('.pagination .page-numbers:not(.current)').css('background', newval );
+			$('.pagination .page-numbers:not(.current)').css('background-color', newval );
 		} );
 	} );
 
 	// Background color active.
 	wp.customize( 'blog_pagination_background_color_active', function( value ) {
 		value.bind( function( newval ) {
-			$('.pagination .page-numbers.current').css('background', newval );
+			$('.pagination .page-numbers.current').css('background-color', newval );
 		} );
 	} );
 
