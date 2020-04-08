@@ -61,7 +61,7 @@
 			desktopBreakpoint = desktopBreakpointClass.toString().match(/\d+/);
 			desktopBreakpoint = Array.isArray(desktopBreakpoint) ? desktopBreakpoint[0] : desktopBreakpoint;
 		} else {
-			desktopBreakpoint = 768;
+			desktopBreakpoint = 480;
 		}
 	}
 
