@@ -37,9 +37,9 @@
 	wp.customize( 'scrolltop_position', function( value ) {
 		value.bind( function( newval ) {
 			if( newval == 'left' ) {
-				$('.scrolltop').css('left', '20px', 'right', 'auto' );
+				$('.scrolltop').css( { 'left' : '20px', 'right' : 'auto' } );
 			} else {
-				$('.scrolltop').css( 'left', 'auto', 'right', '20px' );
+				$('.scrolltop').css( { 'left' : 'auto', 'right' : '20px' } );
 			}
 		} );
 	} );
@@ -199,6 +199,34 @@
 	wp.customize( 'mobile_menu_hamburger_border_radius', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-mobile-nav-item').css('border-radius', newval + 'px' );
+		} );
+	} );
+
+	// Padding top.
+	wp.customize( 'mobile_menu_padding_top', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle').css('padding-top', newval + 'px' );
+		} );
+	} );
+
+	// Padding right.
+	wp.customize( 'mobile_menu_padding_right', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle').css('padding-right', newval + 'px' );
+		} );
+	} );
+
+	// Padding bottom.
+	wp.customize( 'mobile_menu_padding_bottom', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle').css('padding-bottom', newval + 'px' );
+		} );
+	} );
+
+	// Padding left.
+	wp.customize( 'mobile_menu_padding_left', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle').css('padding-left', newval + 'px' );
 		} );
 	} );
 
@@ -474,7 +502,7 @@
 	// Border width.
 	wp.customize( 'button_border_width', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-button, input[type="submit"]').css('border-width', newval + 'px' ).css('border-type', 'solid' );
+			$('.wpbf-button, input[type="submit"]').css( 'border-width', newval + 'px' ).css( 'border-style', 'solid' );
 		} );
 	} );
 
@@ -482,6 +510,13 @@
 	wp.customize( 'button_border_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-button, input[type="submit"]').css('border-color', newval );
+		} );
+	} );
+
+	// Border color.
+	wp.customize( 'button_primary_border_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-button-primary').css('border-color', newval );
 		} );
 	} );
 

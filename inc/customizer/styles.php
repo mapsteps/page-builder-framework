@@ -313,7 +313,7 @@ if ( $page_h6_toggle && $page_h6_font_family_value ) {
 /* General */
 
 // Page settings.
-$page_width                   = get_theme_mod( 'page_max_width' );
+$page_width                   = ( $val = get_theme_mod( 'page_max_width' ) ) === '1200px' ? false : $val;
 $page_boxed                   = get_theme_mod( 'page_boxed' );
 $page_boxed_padding           = ( $val = get_theme_mod( 'page_boxed_padding' ) ) === '20' ? false : $val;
 $page_boxed_margin            = get_theme_mod( 'page_boxed_margin' );
@@ -643,8 +643,8 @@ if ( $button_primary_bg_color_alt || $button_primary_bg_color_alt ) {
 }
 
 // Sidebar.
-$sidebar_bg_color                      = get_theme_mod( 'sidebar_bg_color' );
-$sidebar_width                         = get_theme_mod( 'sidebar_width' );
+$sidebar_bg_color                      = ( $val = get_theme_mod( 'sidebar_bg_color' ) ) === '#f5f5f7' ? false : $val;
+$sidebar_width                         = ( $val = get_theme_mod( 'sidebar_width' ) ) === 33.3 ? false : $val;
 $sidebar_widget_padding_top_desktop    = ( $val = get_theme_mod( 'sidebar_widget_padding_top_desktop' ) ) === '20' ? false : $val;
 $sidebar_widget_padding_right_desktop  = ( $val = get_theme_mod( 'sidebar_widget_padding_right_desktop' ) ) === '20' ? false : $val;
 $sidebar_widget_padding_bottom_desktop = ( $val = get_theme_mod( 'sidebar_widget_padding_bottom_desktop' ) ) === '20' ? false : $val;
@@ -658,7 +658,7 @@ $sidebar_widget_padding_right_mobile   = ( $val = get_theme_mod( 'sidebar_widget
 $sidebar_widget_padding_bottom_mobile  = ( $val = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' ) ) === '20' ? false : $val;
 $sidebar_widget_padding_left_mobile    = ( $val = get_theme_mod( 'sidebar_widget_padding_left_mobile' ) ) === '20' ? false : $val;
 
-if ( $sidebar_bg_color && '#f5f5f7' !== $sidebar_bg_color ) {
+if ( $sidebar_bg_color ) {
 
 	echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
 	echo sprintf( 'background: %s;', esc_attr( $sidebar_bg_color ) );
@@ -746,7 +746,7 @@ if ( ! is_bool( $sidebar_widget_padding_top_mobile ) || ! is_bool( $sidebar_widg
 
 }
 
-if ( $sidebar_width && 33.3 !== $sidebar_width ) {
+if ( $sidebar_width ) {
 
 	echo '@media (min-width: ' . esc_attr( $breakpoint_medium_int + 1 ) . 'px) {';
 
@@ -1933,10 +1933,10 @@ if ( $sub_menu_accent_color_alt ) {
 // Mobile navigation.
 $mobile_menu_height                  = get_theme_mod( 'mobile_menu_height' );
 $mobile_menu_background_color        = get_theme_mod( 'mobile_menu_background_color' );
-$mobile_menu_padding_top             = get_theme_mod( 'mobile_menu_padding_top' );
-$mobile_menu_padding_right           = get_theme_mod( 'mobile_menu_padding_right' );
-$mobile_menu_padding_bottom          = get_theme_mod( 'mobile_menu_padding_bottom' );
-$mobile_menu_padding_left            = get_theme_mod( 'mobile_menu_padding_left' );
+$mobile_menu_padding_top             = ( $val = get_theme_mod( 'mobile_menu_padding_top' ) ) === '10' ? false : $val;
+$mobile_menu_padding_right           = ( $val = get_theme_mod( 'mobile_menu_padding_right' ) ) === '20' ? false : $val;
+$mobile_menu_padding_bottom          = ( $val = get_theme_mod( 'mobile_menu_padding_bottom' ) ) === '10' ? false : $val;
+$mobile_menu_padding_left            = ( $val = get_theme_mod( 'mobile_menu_padding_left' ) ) === '20' ? false : $val;
 $mobile_menu_font_color              = get_theme_mod( 'mobile_menu_font_color' );
 $mobile_menu_font_color_alt          = get_theme_mod( 'mobile_menu_font_color_alt' );
 $mobile_menu_border_color            = ( $val = get_theme_mod( 'mobile_menu_border_color' ) ) === '#d9d9e0' ? false : $val;

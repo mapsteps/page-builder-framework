@@ -436,6 +436,15 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => 1,
 		),
 	),
+	'partial_refresh' => array(
+		'breadcrumbsseparator' => array(
+			'container_inclusive' => true,
+			'selector'            => '.wpbf-breadcrumbs',
+			'render_callback'     => function() {
+				return wpbf_do_breadcrumbs();
+			}
+		),
+	),
 ) );
 
 // Alignment.
@@ -2067,6 +2076,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_button_options',
 	'priority' => 1,
 	'default'  => 0,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'min'  => 0,
 		'max'  => 10,
@@ -2081,6 +2091,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Border Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_button_options',
 	'priority'        => 1,
+	'transport' => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -2119,6 +2130,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Primary Border Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_button_options',
 	'priority'        => 1,
+	'transport' => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -4489,6 +4501,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '10',
 			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
 		)
 	);
 
@@ -4496,6 +4509,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '20',
 			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
 		)
 	);
 
@@ -4503,6 +4517,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '10',
 			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
 		)
 	);
 
@@ -4510,6 +4525,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'default'           => '20',
 			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
 		)
 	);
 
