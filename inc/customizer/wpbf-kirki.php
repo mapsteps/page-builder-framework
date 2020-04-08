@@ -3420,6 +3420,15 @@ Kirki::add_field( 'wpbf', array(
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
 		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
 	),
+	'partial_refresh' => array(
+		'submenualignment' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
+	),
 ) );
 
 // Width.
@@ -3567,6 +3576,15 @@ Kirki::add_field( 'wpbf', array(
 		'menu-mobile-default'   => __( 'Default', 'page-builder-framework' ),
 		'menu-mobile-hamburger' => __( 'Hamburger', 'page-builder-framework' ),
 	) ),
+	'partial_refresh' => array(
+		'mobilemenuoptions' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
+	),
 ) );
 
 // Mobile search icon.
@@ -3581,6 +3599,15 @@ Kirki::add_field( 'wpbf', array(
 			'setting'  => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
+		),
+	),
+	'partial_refresh' => array(
+		'mobilemenusearchicon' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
 		),
 	),
 ) );
