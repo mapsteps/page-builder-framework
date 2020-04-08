@@ -188,10 +188,21 @@
 
 	/* Mobile Navigation */
 
+	// Height.
+	wp.customize( 'mobile_menu_height', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-nav-wrapper').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
+		} );
+	} );
+
 	// Hamburger size.
 	wp.customize( 'mobile_menu_hamburger_size', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-mobile-nav-item').css('font-size', newval + 'px' );
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-mobile-nav-item').css('font-size', newval + suffix );
 		} );
 	} );
 
@@ -227,6 +238,46 @@
 	wp.customize( 'mobile_menu_padding_left', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle').css('padding-left', newval + 'px' );
+		} );
+	} );
+
+	// Menu item background color.
+	wp.customize( 'mobile_menu_bg_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-menu > .menu-item a').css('background-color', newval );
+		} );
+	} );
+
+	// Menu item font color.
+	wp.customize( 'mobile_menu_font_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close').css('color', newval );
+		} );
+	} );
+
+	// Menu item divider color.
+	wp.customize( 'mobile_menu_border_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-mobile-menu .menu-item').css('border-top-color', newval );
+			$('.wpbf-mobile-menu > .menu-item:last-child').css('border-bottom-color', newval );
+		} );
+	} );
+
+	// Sub menu arrow color.
+	wp.customize( 'mobile_menu_submenu_arrow_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-submenu-toggle').css('color', newval );
+		} );
+	} );
+
+	// Menu item font size.
+	wp.customize( 'mobile_menu_font_size', function( value ) {
+		value.bind( function( newval ) {
+			var suffix = '';
+			if( $.isNumeric( newval ) ) {
+				suffix = 'px';
+			};
+			$('.wpbf-mobile-menu a').css('font-size', newval + suffix );
 		} );
 	} );
 
@@ -365,22 +416,6 @@
 		} );
 	} );
 
-	/* Mobile Menu */
-
-	// Height.
-	wp.customize( 'mobile_menu_height', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-mobile-nav-wrapper').css('padding-top', newval + 'px' ).css('padding-bottom', newval + 'px' );
-		} );
-	} );
-
-	// Sub menu arrow color.
-	wp.customize( 'mobile_menu_submenu_arrow_color', function( value ) {
-		value.bind( function( newval ) {
-			$('.wpbf-submenu-toggle').css('color', newval );
-		} );
-	} );
-
 	/* Pre Header */
 
 	// Width.
@@ -491,6 +526,37 @@
 	} );
 
 	/* Buttons */
+
+	// Background color.
+	wp.customize( 'button_bg_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-button:not(.wpbf-button-primary), input[type="submit"]').css('background', newval );
+		} );
+	} );
+
+	// Text color.
+	wp.customize( 'button_text_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-button:not(.wpbf-button-primary), input[type="submit"]').css('color', newval );
+		} );
+	} );
+
+	// Primary background color.
+	wp.customize( 'button_primary_bg_color', function( value ) {
+		value.bind( function( newval ) {
+			if ( ! newval ) {
+				newval = 'unset';
+			}
+			$('.wpbf-button-primary').css('background', newval );
+		} );
+	} );
+
+	// Primary text color.
+	wp.customize( 'button_primary_text_color', function( value ) {
+		value.bind( function( newval ) {
+			$('.wpbf-button-primary').css('color', newval );
+		} );
+	} );
 
 	// Border radius.
 	wp.customize( 'button_border_radius', function( value ) {

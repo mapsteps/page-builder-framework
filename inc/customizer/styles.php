@@ -1820,8 +1820,9 @@ if ( $menu_font_color_alt ) {
 
 if ( $menu_font_size ) {
 
+	$suffix = is_numeric( $menu_font_size ) ? 'px' : '';
 	echo '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a {';
-	echo sprintf( 'font-size: %s;', esc_attr( $menu_font_size ) );
+	echo sprintf( 'font-size: %s;', esc_attr( $menu_font_size ) . $suffix );
 	echo '}';
 
 }
@@ -1931,7 +1932,7 @@ if ( $sub_menu_accent_color_alt ) {
 }
 
 // Mobile navigation.
-$mobile_menu_height                  = get_theme_mod( 'mobile_menu_height' );
+$mobile_menu_height                  = ( $val = get_theme_mod( 'mobile_menu_height' ) ) === '20' ? false : $val;
 $mobile_menu_background_color        = get_theme_mod( 'mobile_menu_background_color' );
 $mobile_menu_padding_top             = ( $val = get_theme_mod( 'mobile_menu_padding_top' ) ) === 10 ? false : $val;
 $mobile_menu_padding_right           = ( $val = get_theme_mod( 'mobile_menu_padding_right' ) ) === 20 ? false : $val;
@@ -1942,13 +1943,13 @@ $mobile_menu_font_color_alt          = get_theme_mod( 'mobile_menu_font_color_al
 $mobile_menu_border_color            = ( $val = get_theme_mod( 'mobile_menu_border_color' ) ) === '#d9d9e0' ? false : $val;
 $mobile_menu_options                 = get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
 $mobile_menu_hamburger_color         = get_theme_mod( 'mobile_menu_hamburger_color' );
-$mobile_menu_hamburger_size          = get_theme_mod( 'mobile_menu_hamburger_size' );
+$mobile_menu_hamburger_size          = ( $val = get_theme_mod( 'mobile_menu_hamburger_size' ) ) === '16px' ? false : $val;
 $mobile_menu_hamburger_border_radius = get_theme_mod( 'mobile_menu_hamburger_border_radius' );
 $mobile_menu_hamburger_bg_color      = get_theme_mod( 'mobile_menu_hamburger_bg_color' );
-$mobile_menu_bg_color                = get_theme_mod( 'mobile_menu_bg_color' );
-$mobile_menu_bg_color_alt            = get_theme_mod( 'mobile_menu_bg_color_alt' );
+$mobile_menu_bg_color                = ( $val = get_theme_mod( 'mobile_menu_bg_color' ) ) === '#ffffff' ? false : $val;
+$mobile_menu_bg_color_alt            = ( $val = get_theme_mod( 'mobile_menu_bg_color' ) ) === '#ffffff' ? false : $val;
 $mobile_menu_submenu_arrow_color     = get_theme_mod( 'mobile_menu_submenu_arrow_color' );
-$mobile_menu_font_size               = get_theme_mod( 'mobile_menu_font_size' );
+$mobile_menu_font_size               = ( $val = get_theme_mod( 'mobile_menu_font_size' ) ) === '16px' ? false : $val;
 
 if ( $mobile_menu_height ) {
 
@@ -2034,7 +2035,8 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 		}
 
 		if ( $mobile_menu_hamburger_size ) {
-			echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_hamburger_size ) . 'px' );
+			$suffix = is_numeric( $mobile_menu_hamburger_size ) ? 'px' : '';
+			echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_hamburger_size ) . $suffix );
 		}
 
 		echo '}';
@@ -2092,8 +2094,9 @@ if ( $mobile_menu_submenu_arrow_color ) {
 
 if ( $mobile_menu_font_size ) {
 
+	$suffix = is_numeric( $mobile_menu_font_size ) ? 'px' : '';
 	echo '.wpbf-mobile-menu a {';
-	echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_font_size ) );
+	echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_font_size ) . $suffix );
 	echo '}';
 
 }
@@ -2165,8 +2168,9 @@ if ( 'none' !== $pre_header_layout && $pre_header_accent_color_alt ) {
 
 if ( 'none' !== $pre_header_layout && $pre_header_font_size ) {
 
+	$suffix = is_numeric( $pre_header_font_size ) ? 'px' : '';
 	echo '.wpbf-pre-header, .wpbf-pre-header .wpbf-menu, .wpbf-pre-header .wpbf-menu .sub-menu a {';
-	echo sprintf( 'font-size: %s;', esc_attr( $pre_header_font_size ) );
+	echo sprintf( 'font-size: %s;', esc_attr( $pre_header_font_size ) . $suffix );
 	echo '}';
 
 }
@@ -2245,8 +2249,9 @@ if ( 'none' !== $footer_layout && $footer_accent_color_alt ) {
 
 if ( 'none' !== $footer_layout && $footer_font_size ) {
 
+	$suffix = is_numeric( $footer_font_size ) ? 'px' : '';
 	echo '.wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu {';
-	echo sprintf( 'font-size: %s;', esc_attr( $footer_font_size ) );
+	echo sprintf( 'font-size: %s;', esc_attr( $footer_font_size ) . $suffix );
 	echo '}';
 
 }

@@ -1940,12 +1940,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Background color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'button_bg_color',
-	'label'    => __( 'Background Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_button_options',
-	'priority' => 1,
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'button_bg_color',
+	'label'     => __( 'Background Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_button_options',
+	'priority'  => 1,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
@@ -1964,11 +1965,12 @@ Kirki::add_field( 'wpbf', array(
 
 // Text color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'button_text_color',
-	'label'    => __( 'Font Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_button_options',
-	'priority' => 1,
+	'type'      => 'color',
+	'settings'  => 'button_text_color',
+	'label'     => __( 'Font Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_button_options',
+	'priority'  => 1,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -1995,13 +1997,14 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 1,
 ) );
 
-// Primary.
+// Primary background color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'button_primary_bg_color',
-	'label'    => __( 'Primary Background Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_button_options',
-	'priority' => 1,
+	'type'      => 'color',
+	'settings'  => 'button_primary_bg_color',
+	'label'     => __( 'Primary Background Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_button_options',
+	'priority'  => 1,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -2021,11 +2024,12 @@ Kirki::add_field( 'wpbf', array(
 
 // Primary text color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'button_primary_text_color',
-	'label'    => __( 'Primary Font Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_button_options',
-	'priority' => 1,
+	'type'      => 'color',
+	'settings'  => 'button_primary_text_color',
+	'label'     => __( 'Primary Font Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_button_options',
+	'priority'  => 1,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -2999,7 +3003,7 @@ Kirki::add_field( 'wpbf', array(
 			'container_inclusive' => true,
 			'selector'            => '.wpbf-mobile-logo',
 			'render_callback'     => function() {
-				get_template_part( 'inc/template-parts/logo/logo-mobile' );
+				return get_template_part( 'inc/template-parts/logo/logo-mobile' );
 			}
 		),
 	),
@@ -3091,7 +3095,7 @@ Kirki::add_field( 'wpbf', array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
 			'render_callback'     => function() {
-				return wpbf_do_header();
+				return get_template_part( 'inc/template-parts/header' );
 			}
 		),
 	),
@@ -3122,7 +3126,7 @@ Kirki::add_field( 'wpbf', array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
 			'render_callback'     => function() {
-				return wpbf_do_header();
+				return get_template_part( 'inc/template-parts/header' );
 			}
 		),
 	),
@@ -3731,7 +3735,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'mobile_menu_hamburger_size',
 	'label'           => __( 'Icon Size', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => 16,
+	'default'         => '16px',
 	'priority'        => 5,
 	'transport'       => 'postMessage',
 	'choices'         => array(
@@ -3759,12 +3763,14 @@ Kirki::add_field( 'wpbf', array(
 
 // Menu item background color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'mobile_menu_bg_color',
-	'label'    => __( 'Background Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_mobile_menu_options',
-	'priority' => 9,
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'mobile_menu_bg_color',
+	'label'     => __( 'Background Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_menu_options',
+	'priority'  => 9,
+	'default'   => '#ffffff',
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
@@ -3776,6 +3782,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Hover', 'page-builder-framework' ),
 	'section'  => 'wpbf_mobile_menu_options',
 	'priority' => 10,
+	'default'  => '#ffffff',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -3783,11 +3790,12 @@ Kirki::add_field( 'wpbf', array(
 
 // Font color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'mobile_menu_font_color',
-	'label'    => __( 'Font Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_mobile_menu_options',
-	'priority' => 11,
+	'type'      => 'color',
+	'settings'  => 'mobile_menu_font_color',
+	'label'     => __( 'Font Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_menu_options',
+	'transport' => 'postMessage',
+	'priority'  => 11,
 ) );
 
 // Font color hover.
@@ -3804,13 +3812,14 @@ Kirki::add_field( 'wpbf', array(
 
 // Divider color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'mobile_menu_border_color',
-	'label'    => __( 'Divider Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_mobile_menu_options',
-	'default'  => '#d9d9e0',
-	'priority' => 13,
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'mobile_menu_border_color',
+	'label'     => __( 'Divider Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_menu_options',
+	'default'   => '#d9d9e0',
+	'priority'  => 13,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
@@ -3830,12 +3839,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Font size.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'input_slider',
-	'label'    => __( 'Font Size', 'page-builder-framework' ),
-	'settings' => 'mobile_menu_font_size',
-	'section'  => 'wpbf_mobile_menu_options',
-	'priority' => 15,
-	'default'  => '16px',
+	'type'      => 'input_slider',
+	'label'     => __( 'Font Size', 'page-builder-framework' ),
+	'settings'  => 'mobile_menu_font_size',
+	'section'   => 'wpbf_mobile_menu_options',
+	'priority'  => 15,
+	'default'   => '16px',
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'min'  => 0,
 		'max'  => 50,
