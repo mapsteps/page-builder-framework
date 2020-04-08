@@ -107,6 +107,15 @@ Kirki::add_field( 'wpbf', array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 	),
+	'partial_refresh' => array(
+		'eddmenuitemdesktop' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
+	),
 ) );
 
 // Menu item color.
@@ -157,6 +166,15 @@ Kirki::add_field( 'wpbf', array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 	),
+	'partial_refresh' => array(
+		'eddmenuitemmobile' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
+	),
 ) );
 
 // Menu item color.
@@ -205,5 +223,14 @@ Kirki::add_field( 'wpbf', array(
 	'choices'  => array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
+	),
+	'partial_refresh' => array(
+		'eddmenuitemcount' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
 	),
 ) );
