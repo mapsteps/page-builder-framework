@@ -1,13 +1,16 @@
-(function ($) {
-	var desktopBreakpoint;
+var WPBFMobile = (function ($) {
+	var breakpoints = WPBFSite.breakpoints;
 	var menuType;
 
 	/**
 	 * Init the main functions.
 	 */
 	function init() {
+		window.addEventListener('resize', function (e) {
+			breakpoints = WPBFSite.breakpoints;
+		});
+
 		setupMenuType();
-		setupDesktopBreakpoint();
 		setupMobileMenu();
 		setupMobileSubmenu();
 	}
@@ -18,51 +21,6 @@
 	function setupMenuType() {
 		var hamburger = document.querySelector('.wpbf-mobile-menu-hamburger');
 		menuType = hamburger ? 'hamburger' : 'default';
-	}
-
-	/**
-	 * Setup desktop breakpoint.
-	 * Retrieve desktop breakpoint based on body class.
-	 */
-	function setupDesktopBreakpoint() {
-		var desktopBreakpointClass = $('body').attr("class").match(/wpbf-desktop-breakpoint-[\w-]*\b/);
-
-		if (desktopBreakpointClass !== null) {
-			desktopBreakpoint = desktopBreakpointClass.toString().match(/\d+/);
-			desktopBreakpoint = Array.isArray(desktopBreakpoint) ? desktopBreakpoint[0] : desktopBreakpoint;
-		} else {
-			desktopBreakpoint = 1024;
-		}
-	}
-
-	/**
-	 * Setup tablet breakpoint.
-	 * Retrieve tablet breakpoint based on body class.
-	 */
-	function setupDesktopBreakpoint() {
-		var desktopBreakpointClass = $('body').attr("class").match(/wpbf-medium-breakpoint-[\w-]*\b/);
-
-		if (desktopBreakpointClass !== null) {
-			desktopBreakpoint = desktopBreakpointClass.toString().match(/\d+/);
-			desktopBreakpoint = Array.isArray(desktopBreakpoint) ? desktopBreakpoint[0] : desktopBreakpoint;
-		} else {
-			desktopBreakpoint = 768;
-		}
-	}
-
-	/**
-	 * Setup mobile breakpoint.
-	 * Retrieve mobile breakpoint based on body class.
-	 */
-	function setupDesktopBreakpoint() {
-		var desktopBreakpointClass = $('body').attr("class").match(/wpbf-mobile-breakpoint-[\w-]*\b/);
-
-		if (desktopBreakpointClass !== null) {
-			desktopBreakpoint = desktopBreakpointClass.toString().match(/\d+/);
-			desktopBreakpoint = Array.isArray(desktopBreakpoint) ? desktopBreakpoint[0] : desktopBreakpoint;
-		} else {
-			desktopBreakpoint = 480;
-		}
 	}
 
 	/**
@@ -97,7 +55,7 @@
 
 			$('.wpbf-mobile-menu-container.active nav').css({ 'max-height': windowHeight - mobileNavWrapperHeight });
 
-			if (windowWidth > desktopBreakpoint) {
+			if (windowWidth > breakpoints.desktop) {
 				closeMobileMenu(menuType);
 
 				if ($('.wpbf-mobile-mega-menu').length) {

@@ -1,4 +1,51 @@
-(function ($) {
+var WPBFSite = (function ($) {
+	var breakpoints = {
+		desktop: 1024,
+		tablet: 768,
+		mobile: 480
+	};
+	var activeBreakpoint = 'desktop';
+
+	/**
+	 * Init the main functions.
+	 */
+	function init() {
+		setupBreakpoints();
+
+		window.addEventListener('resize', function (e) {
+			setupBreakpoints();
+		});
+	}
+	
+	/**
+	 * Setup breakpoints for desktop, tablet, and mobile.
+	 */
+	function setupBreakpoints() {
+		setupBreakpoint('desktop');
+		setupBreakpoint('tablet');
+		setupBreakpoint('mobile');
+	}
+
+	/**
+	 * Setup breakpoint.
+	 * Retrieve breakpoint based on body class.
+	 * 
+	 * @param {string} device The device class.
+	 */
+	function setupBreakpoint(device) {
+		var deviceClass = device === 'tablet' ? 'medium' : device;
+		var matchRule = "wpbf-" + deviceClass + "-breakpoint-[\\w-]*\\b";
+		var breakpointClass = $('body').attr("class").match(matchRule);
+
+		if (breakpointClass != null) {
+			breakpoints[device] = breakpointClass.toString().match(/\d+/);
+			breakpoints[device] = Array.isArray(breakpoints[device]) ? breakpoints[device][0] : breakpoints[device];
+
+			activeBreakpoint = device;
+		}
+	}
+
+	init();
 
 	/**
 	 * add aria-haspopup="true" to all sub-menu li's
@@ -175,5 +222,10 @@
 
 	$('.wpbf-menu-container #navigation a').on('focus', wpbf_on_focus);
 	$('.wpbf-menu-container #navigation a').on('blur', wpbf_on_focus);
+
+	return {
+		breakpoints: breakpoints,
+		activeBreakpoint: activeBreakpoint
+	};
 
 })(jQuery);
