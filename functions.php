@@ -121,18 +121,6 @@ function wpbf_scripts() {
 	// Main JS file.
 	wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
-	if ( ! get_theme_mod( 'mobile_menu_options' ) || 'menu-mobile-hamburger' === get_theme_mod( 'mobile_menu_options' ) ) {
-
-		// Hamburger mobile menu.
-		wp_enqueue_script( 'wpbf-mobile-menu-hamburger', get_template_directory_uri() . '/js/min/mobile-hamburger-min.js', array( 'jquery', 'wpbf-site' ), WPBF_VERSION, true );
-
-	} elseif ( 'menu-mobile-default' === get_theme_mod( 'mobile_menu_options' ) ) {
-
-		// Default mobile menu.
-		wp_enqueue_script( 'wpbf-mobile-menu-default', get_template_directory_uri() . '/js/min/mobile-default-min.js', array( 'jquery', 'wpbf-site' ), WPBF_VERSION, true );
-
-	}
-
 	// Main stylesheet.
 	wp_enqueue_style( 'wpbf-style', get_template_directory_uri() . '/style.css', '', WPBF_VERSION );
 

@@ -1,11 +1,12 @@
-# Node Modules
+# let's ignore our build tools
 node_modules/
+package.json
+package-lock.json
+gulpfile.js
+*.backup.*
 
 # Sass Cache
 .sass-cache/
-
-# Package Lock
-package-lock.json
 
 # DS_Store
 .DS_Store
