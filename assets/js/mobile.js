@@ -2,6 +2,9 @@
 	var desktopBreakpoint;
 	var menuType;
 
+	/**
+	 * Init the main functions.
+	 */
 	function init() {
 		setupMenuType();
 		setupDesktopBreakpoint();
@@ -9,6 +12,9 @@
 		setupMobileSubmenu();
 	}
 
+	/**
+	 * Setup menu type.
+	 */
 	function setupMenuType() {
 		var hamburger = document.querySelector('.wpbf-mobile-menu-hamburger');
 		menuType = hamburger ? 'hamburger' : 'default';
@@ -46,7 +52,7 @@
 				if (!hasSubmenu) {
 					toggleMobileMenu(menuType);
 				} else {
-					toggleSubmenuOnEmtyLink(this);
+					toggleSubmenuOnEmptyLink(this);
 				}
 			}
 
@@ -164,8 +170,13 @@
 		}
 
 	}
-
-	function toggleSubmenuOnEmtyLink(menu) {
+	
+	/**
+	 * Toggle submenu on empty link.
+	 *
+	 * @param {HTMLElement} menu The menu.
+	 */
+	function toggleSubmenuOnEmptyLink(menu) {
 
 		var toggle = $(menu).siblings('.wpbf-submenu-toggle');
 
