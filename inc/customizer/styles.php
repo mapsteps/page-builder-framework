@@ -1947,7 +1947,7 @@ $mobile_menu_hamburger_size          = ( $val = get_theme_mod( 'mobile_menu_hamb
 $mobile_menu_hamburger_border_radius = get_theme_mod( 'mobile_menu_hamburger_border_radius' );
 $mobile_menu_hamburger_bg_color      = get_theme_mod( 'mobile_menu_hamburger_bg_color' );
 $mobile_menu_bg_color                = ( $val = get_theme_mod( 'mobile_menu_bg_color' ) ) === '#ffffff' ? false : $val;
-$mobile_menu_bg_color_alt            = ( $val = get_theme_mod( 'mobile_menu_bg_color' ) ) === '#ffffff' ? false : $val;
+$mobile_menu_bg_color_alt            = ( $val = get_theme_mod( 'mobile_menu_bg_color_alt' ) ) === '#ffffff' ? false : $val;
 $mobile_menu_submenu_arrow_color     = get_theme_mod( 'mobile_menu_submenu_arrow_color' );
 $mobile_menu_font_size               = ( $val = get_theme_mod( 'mobile_menu_font_size' ) ) === '16px' ? false : $val;
 
