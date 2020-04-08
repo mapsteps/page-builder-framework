@@ -36,6 +36,36 @@
 	}
 
 	/**
+	 * Setup tablet breakpoint.
+	 * Retrieve tablet breakpoint based on body class.
+	 */
+	function setupDesktopBreakpoint() {
+		var desktopBreakpointClass = $('body').attr("class").match(/wpbf-medium-breakpoint-[\w-]*\b/);
+
+		if (desktopBreakpointClass !== null) {
+			desktopBreakpoint = desktopBreakpointClass.toString().match(/\d+/);
+			desktopBreakpoint = Array.isArray(desktopBreakpoint) ? desktopBreakpoint[0] : desktopBreakpoint;
+		} else {
+			desktopBreakpoint = 768;
+		}
+	}
+
+	/**
+	 * Setup mobile breakpoint.
+	 * Retrieve mobile breakpoint based on body class.
+	 */
+	function setupDesktopBreakpoint() {
+		var desktopBreakpointClass = $('body').attr("class").match(/wpbf-mobile-breakpoint-[\w-]*\b/);
+
+		if (desktopBreakpointClass !== null) {
+			desktopBreakpoint = desktopBreakpointClass.toString().match(/\d+/);
+			desktopBreakpoint = Array.isArray(desktopBreakpoint) ? desktopBreakpoint[0] : desktopBreakpoint;
+		} else {
+			desktopBreakpoint = 768;
+		}
+	}
+
+	/**
 	 * Setup mobile menu both for default and hamburger menu.
 	 */
 	function setupMobileMenu() {
