@@ -154,6 +154,8 @@ function wpbf_customizer_preview_css() {
 	require get_template_directory() . '/inc/customizer/styles.php';
 	echo '</style>';
 
+	echo '<style id="wpbf-partial-refresh" type="text/css"></style>';
+
 }
 add_action( 'wp_head', 'wpbf_customizer_preview_css', 999 );
 
