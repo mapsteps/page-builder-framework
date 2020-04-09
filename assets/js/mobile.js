@@ -28,6 +28,7 @@ var WPBFMobile = (function ($) {
 	 */
 	function setupMobileMenu() {
 		$(document).on('click', '.wpbf-mobile-menu-toggle', function () {
+			setupMenuType();	
 			toggleMobileMenu(menuType);
 		});
 
@@ -127,7 +128,8 @@ var WPBFMobile = (function ($) {
 	 * Setup mobile submenu for both default and hamburger menu.
 	 */
 	function setupMobileSubmenu() {
-		setupSubmenuToggle(menuType);
+		setupSubmenuToggle('default');
+		setupSubmenuToggle('hamburger');
 	}
 
 	/**
