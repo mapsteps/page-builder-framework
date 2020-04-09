@@ -1,5 +1,6 @@
 var WPBFMobile = (function ($) {
 	var breakpoints = WPBFSite.breakpoints;
+	var menuType;
 
 	/**
 	 * Init the main functions.
@@ -9,8 +10,17 @@ var WPBFMobile = (function ($) {
 			breakpoints = WPBFSite.breakpoints;
 		});
 
+		setupMenuType();
 		setupMobileMenu();
 		setupMobileSubmenu();
+	}
+
+	/**
+	 * Setup menu type.
+	 */
+	function setupMenuType() {
+		var hamburger = document.querySelector('.wpbf-mobile-menu-hamburger');
+		menuType = hamburger ? 'hamburger' : 'default';
 	}
 
 	/**
@@ -18,8 +28,7 @@ var WPBFMobile = (function ($) {
 	 */
 	function setupMobileMenu() {
 		$(document).on('click', '.wpbf-mobile-menu-toggle', function () {
-			toggleMobileMenu('default');
-			toggleMobileMenu('hamburger');
+			toggleMobileMenu(menuType);
 		});
 
 		// Close mobile menu on anchor link clicks but only if menu item doesn't have submenus.
@@ -29,8 +38,7 @@ var WPBFMobile = (function ($) {
 
 			if (this.href.match("^#") || this.href.match("^/#")) {
 				if (!hasSubmenu) {
-					toggleMobileMenu('default');
-					toggleMobileMenu('hamburger');
+					toggleMobileMenu(menuType);
 				} else {
 					toggleSubmenuOnEmptyLink(this);
 				}
@@ -48,8 +56,7 @@ var WPBFMobile = (function ($) {
 			$('.wpbf-mobile-menu-container.active nav').css({ 'max-height': windowHeight - mobileNavWrapperHeight });
 
 			if (windowWidth > breakpoints.desktop) {
-				closeMobileMenu('default');
-				closeMobileMenu('hamburger');
+				closeMobileMenu(menuType);
 
 				if ($('.wpbf-mobile-mega-menu').length) {
 					$('.wpbf-mobile-mega-menu').removeClass('wpbf-mobile-mega-menu').addClass('wpbf-mega-menu');
@@ -120,8 +127,7 @@ var WPBFMobile = (function ($) {
 	 * Setup mobile submenu for both default and hamburger menu.
 	 */
 	function setupMobileSubmenu() {
-		setupSubmenuToggle('default');
-		setupSubmenuToggle('hamburger');
+		setupSubmenuToggle(menuType);
 	}
 
 	/**
