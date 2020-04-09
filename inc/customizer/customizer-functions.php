@@ -148,11 +148,9 @@ function wpbf_customizer_preview_css() {
 		return;
 	}
 
-	echo '<style type="text/css">';
+	echo '<style id="wpbf-customize-saved-styles">';
 	require get_template_directory() . '/inc/customizer/styles.php';
 	echo '</style>';
-
-	echo '<style id="wpbf-customize-live-style"></style>';
 
 }
 add_action( 'wp_head', 'wpbf_customizer_preview_css', 999 );
