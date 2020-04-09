@@ -726,7 +726,7 @@
 
 	/* Breadcrumbs */
 
-	// Background color.
+	// Background background color.
 	wp.customize( 'breadcrumbs_background_color', function( value ) {
 		value.bind( function( newval ) {
 			$('.wpbf-breadcrumbs-container').css('background', newval );
@@ -749,8 +749,19 @@
 
 	// Accent color.
 	wp.customize( 'breadcrumbs_accent_color', function( value ) {
+		var styleTag = setupStyleTag('breadcrumbs_accent_color');
+
 		value.bind( function( newval ) {
-			$('.wpbf-breadcrumbs a').css('color', newval );
+			styleTag.innerHTML = '.wpbf-breadcrumbs a {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Accent color hover.
+	wp.customize( 'breadcrumbs_accent_color_alt', function( value ) {
+		var styleTag = setupStyleTag('breadcrumbs_accent_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-breadcrumbs a:hover {color: ' + newval + ';}';
 		} );
 	} );
 
