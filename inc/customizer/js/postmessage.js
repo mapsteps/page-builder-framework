@@ -445,7 +445,11 @@
 	// Font color.
 	wp.customize( 'pre_header_font_color', function( value ) {
 		value.bind( function( newval ) {
-			$('.wpbf-pre-header').css('color', newval );
+			var liveStyleTag = document.getElementById('wpbf-customize-live-style');
+			if (!liveStyleTag) return;
+
+			var savedStyles = liveStyleTag.innerHTML;
+			liveStyleTag.innerHTML = savedStyles + '.wpbf-pre-header {color: ' + newval + '}';
 		} );
 	} );
 

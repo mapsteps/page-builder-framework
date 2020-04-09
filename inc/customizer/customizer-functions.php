@@ -108,7 +108,6 @@ function wpbf_create_customizer_css_file() {
 			$wp_filesystem->put_contents( $dir . 'wpbf-customizer-styles.css', $css, 0644 );
 
 		}
-
 	}
 
 }
@@ -135,7 +134,6 @@ function wpbf_customizer_frontend_scripts() {
 			wp_enqueue_style( 'wpbf-customizer', $upload_dir['baseurl'] . '/page-builder-framework/wpbf-customizer-styles.css', '', WPBF_VERSION );
 
 		}
-
 	}
 
 }
@@ -154,7 +152,7 @@ function wpbf_customizer_preview_css() {
 	require get_template_directory() . '/inc/customizer/styles.php';
 	echo '</style>';
 
-	echo '<style id="wpbf-partial-refresh" type="text/css"></style>';
+	echo '<style id="wpbf-customize-live-style"></style>';
 
 }
 add_action( 'wp_head', 'wpbf_customizer_preview_css', 999 );
