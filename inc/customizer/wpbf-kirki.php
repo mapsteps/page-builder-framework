@@ -1959,6 +1959,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Hover', 'page-builder-framework' ),
 	'section'  => 'wpbf_button_options',
 	'priority' => 1,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -1984,6 +1985,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Hover', 'page-builder-framework' ),
 	'section'  => 'wpbf_button_options',
 	'priority' => 1,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -2013,11 +2015,12 @@ Kirki::add_field( 'wpbf', array(
 
 // Primary background color alt.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'button_primary_bg_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_button_options',
-	'priority' => 1,
+	'type'      => 'color',
+	'settings'  => 'button_primary_bg_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_button_options',
+	'priority'  => 1,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -2038,11 +2041,12 @@ Kirki::add_field( 'wpbf', array(
 
 // Primary text color alt.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'button_primary_text_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_button_options',
-	'priority' => 1,
+	'type'      => 'color',
+	'settings'  => 'button_primary_text_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_button_options',
+	'priority'  => 1,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -2116,6 +2120,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'wpbf_button_options',
 	'priority'        => 1,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -2155,6 +2160,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'wpbf_button_options',
 	'priority'        => 1,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),

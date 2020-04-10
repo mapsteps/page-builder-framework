@@ -688,8 +688,19 @@
 
 	// Background color.
 	wp.customize( 'button_bg_color', function( value ) {
+		var styleTag = setupStyleTag('button_bg_color');
+
 		value.bind( function( newval ) {
-			$('.wpbf-button:not(.wpbf-button-primary), input[type="submit"]').css('background', newval );
+			styleTag.innerHTML = '.wpbf-button:not(.wpbf-button-primary), input[type="submit"] {background-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Background color hover.
+	wp.customize( 'button_bg_color_alt', function( value ) {
+		var styleTag = setupStyleTag('button_bg_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover {background-color: ' + newval + ';}';
 		} );
 	} );
 
@@ -702,13 +713,30 @@
 		} );
 	} );
 
+	// Text color hover.
+	wp.customize( 'button_text_color_alt', function( value ) {
+		var styleTag = setupStyleTag('button_text_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover {color: ' + newval + ';}';
+		} );
+	} );
+
 	// Primary background color.
 	wp.customize( 'button_primary_bg_color', function( value ) {
 		var styleTag = setupStyleTag('button_primary_bg_color');
 
 		value.bind( function( newval ) {
-			newval = !newval ? 'unset' : newval;
 			styleTag.innerHTML = '.wpbf-button-primary {background-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Primary background color hover.
+	wp.customize( 'button_primary_bg_color_alt', function( value ) {
+		var styleTag = setupStyleTag('button_primary_bg_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-button-primary:hover {background-color: ' + newval + ';}';
 		} );
 	} );
 
@@ -718,6 +746,15 @@
 
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.wpbf-button-primary {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Primary text color hover.
+	wp.customize( 'button_primary_text_color_alt', function( value ) {
+		var styleTag = setupStyleTag('button_primary_text_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-button-primary:hover {color: ' + newval + ';}';
 		} );
 	} );
 
@@ -744,16 +781,34 @@
 		var styleTag = setupStyleTag('button_border_color');
 
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-button, input[type="submit"] {border-color: ' + newval + ';}';
+			styleTag.innerHTML = '.wpbf-button:not(.wpbf-button-primary), input[type="submit"] {border-color: ' + newval + ';}';
 		} );
 	} );
 
-	// Border color.
+	// Border color hover.
+	wp.customize( 'button_border_color_alt', function( value ) {
+		var styleTag = setupStyleTag('button_border_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover {border-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Primary border color.
 	wp.customize( 'button_primary_border_color', function( value ) {
 		var styleTag = setupStyleTag('button_primary_border_color');
 
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.wpbf-button-primary {border-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Primary border color hover.
+	wp.customize( 'button_primary_border_color_alt', function( value ) {
+		var styleTag = setupStyleTag('button_primary_border_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-button-primary:hover {border-color: ' + newval + ';}';
 		} );
 	} );
 
