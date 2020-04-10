@@ -549,6 +549,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'wpbf_breadcrumb_settings',
 	'priority'        => 2,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
