@@ -4145,6 +4145,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'wpbf_footer_options',
 	'priority'        => 10,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),

@@ -992,6 +992,15 @@
 		} );
 	} );
 
+	// Accent color hover.
+	wp.customize( 'footer_accent_color_alt', function( value ) {
+		var styleTag = setupStyleTag('footer_accent_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-inner-footer a:hover, .wpbf-inner-footer .wpbf-menu > .current-menu-item > a {color: ' + newval + ';}';
+		} );
+	} );
+
 	// Font size.
 	wp.customize( 'footer_font_size', function( value ) {
 		var styleTag = setupStyleTag('footer_font_size');
