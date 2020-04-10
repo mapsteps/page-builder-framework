@@ -3065,6 +3065,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'title_tagline',
 	'priority'        => 12,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -3492,12 +3493,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Background color alt.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'sub_menu_bg_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_sub_menu_options',
-	'default'  => '#ffffff',
-	'priority' => 3,
+	'type'      => 'color',
+	'settings'  => 'sub_menu_bg_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_sub_menu_options',
+	'default'   => '#ffffff',
+	'priority'  => 3,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -3515,11 +3517,12 @@ Kirki::add_field( 'wpbf', array(
 
 // Accent color alt.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'sub_menu_accent_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_sub_menu_options',
-	'priority' => 5,
+	'type'      => 'color',
+	'settings'  => 'sub_menu_accent_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_sub_menu_options',
+	'priority'  => 5,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),

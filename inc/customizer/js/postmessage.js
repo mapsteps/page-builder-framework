@@ -239,12 +239,34 @@
 		} );
 	} );
 
+	// Background color hover.
+	wp.customize( 'sub_menu_bg_color_alt', function( value ) {
+		var styleTag = setupStyleTag('sub_menu_bg_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '\
+				.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li:hover {\
+					background-color: ' + newval + ';\
+				}\
+			';
+		} );
+	} );
+
 	// Accent color.
 	wp.customize( 'sub_menu_accent_color', function( value ) {
 		var styleTag = setupStyleTag('sub_menu_accent_color');
 
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.wpbf-menu .sub-menu a {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Accent color hover.
+	wp.customize( 'sub_menu_accent_color_alt', function( value ) {
+		var styleTag = setupStyleTag('sub_menu_accent_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-navigation .wpbf-menu .sub-menu a:hover {color: ' + newval + ';}';
 		} );
 	} );
 
@@ -486,6 +508,15 @@
 
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.wpbf-logo a, .wpbf-mobile-logo a {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Color hover.
+	wp.customize( 'menu_logo_color_alt', function( value ) {
+		var styleTag = setupStyleTag('menu_logo_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-logo a:hover, .wpbf-mobile-logo a:hover {color: ' + newval + ';}';
 		} );
 	} );
 
