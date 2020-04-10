@@ -766,11 +766,12 @@ Kirki::add_field( 'wpbf', array(
 
 // Pagination background color alt.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'blog_pagination_background_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_pagination_settings',
-	'priority' => 2,
+	'type'      => 'color',
+	'settings'  => 'blog_pagination_background_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_pagination_settings',
+	'priority'  => 2,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -804,12 +805,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Pagination hover color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'blog_pagination_font_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_pagination_settings',
-	'default'  => '',
-	'priority' => 5,
+	'type'      => 'color',
+	'settings'  => 'blog_pagination_font_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_pagination_settings',
+	'default'   => '',
+	'priority'  => 5,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),

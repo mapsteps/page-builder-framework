@@ -99,7 +99,7 @@
 	// ScrollTop icon color.
 	wp.customize( 'scrolltop_icon_color', function( value ) {
 		var styleTag = setupStyleTag('scrolltop_icon_color');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.scrolltop {color: ' + newval + ';}';
 		} );
@@ -641,6 +641,15 @@
 		} );
 	} );
 
+	// Background color hover.
+	wp.customize( 'blog_pagination_background_color_alt', function( value ) {
+		var styleTag = setupStyleTag('blog_pagination_background_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.pagination .page-numbers:not(.current):hover {background-color: ' + newval + ';}';
+		} );
+	} );
+
 	// Background color active.
 	wp.customize( 'blog_pagination_background_color_active', function( value ) {
 		var styleTag = setupStyleTag('blog_pagination_background_color_active');
@@ -656,6 +665,15 @@
 
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.pagination .page-numbers:not(.current) {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Font color hover.
+	wp.customize( 'blog_pagination_font_color_alt', function( value ) {
+		var styleTag = setupStyleTag('blog_pagination_font_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.pagination .page-numbers:not(.current):hover {color: ' + newval + ';}';
 		} );
 	} );
 
