@@ -404,14 +404,15 @@ Kirki::add_field( 'wpbf', array(
 
 // Content alignment.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'radio-image',
-	'settings' => 'woocommerce_loop_content_alignment',
-	'label'    => __( 'Content Alignment', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 'left',
-	'priority' => 20,
-	'multiple' => 1,
-	'choices'  => array(
+	'type'      => 'radio-image',
+	'settings'  => 'woocommerce_loop_content_alignment',
+	'label'     => __( 'Content Alignment', 'page-builder-framework' ),
+	'section'   => 'woocommerce_product_catalog',
+	'default'   => 'left',
+	'priority'  => 20,
+	'multiple'  => 1,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
 		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
@@ -597,14 +598,14 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Sale color.
+// Sale background color.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
-	'settings'        => 'woocommerce_loop_sale_font_color',
-	'label'           => __( 'Font Color', 'page-builder-framework' ),
+	'settings'        => 'woocommerce_loop_sale_background_color',
+	'label'           => __( 'Background Color', 'page-builder-framework' ),
 	'section'         => 'woocommerce_product_catalog',
 	'transport'       => 'postMessage',
-	'default'         => '#fff',
+	'default'         => '#4fe190',
 	'priority'        => 30,
 	'choices'         => array(
 		'alpha' => true,
@@ -618,14 +619,14 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Sale background color.
+// Sale color.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
-	'settings'        => 'woocommerce_loop_sale_background_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
+	'settings'        => 'woocommerce_loop_sale_font_color',
+	'label'           => __( 'Font Color', 'page-builder-framework' ),
 	'section'         => 'woocommerce_product_catalog',
 	'transport'       => 'postMessage',
-	'default'         => '#4fe190',
+	'default'         => '#fff',
 	'priority'        => 30,
 	'choices'         => array(
 		'alpha' => true,
@@ -741,19 +742,17 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Out of stock font size.
+// Out of stock background color.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'input_slider',
-	'label'           => __( 'Font Size', 'page-builder-framework' ),
-	'settings'        => 'woocommerce_loop_out_of_stock_font_size',
+	'type'            => 'color',
+	'settings'        => 'woocommerce_loop_out_of_stock_background_color',
+	'label'           => __( 'Background Color', 'page-builder-framework' ),
 	'section'         => 'woocommerce_product_catalog',
 	'transport'       => 'postMessage',
+	'default'         => 'rgba(0,0,0,.7)',
 	'priority'        => 30,
-	'default'         => '14px',
 	'choices'         => array(
-		'min'  => 0,
-		'max'  => 50,
-		'step' => 1,
+		'alpha' => true,
 	),
 	'active_callback' => array(
 		array(
@@ -785,17 +784,19 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Out of stock background color.
+// Out of stock font size.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_loop_out_of_stock_background_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
+	'type'            => 'input_slider',
+	'label'           => __( 'Font Size', 'page-builder-framework' ),
+	'settings'        => 'woocommerce_loop_out_of_stock_font_size',
 	'section'         => 'woocommerce_product_catalog',
 	'transport'       => 'postMessage',
-	'default'         => 'rgba(0,0,0,.7)',
 	'priority'        => 30,
+	'default'         => '14px',
 	'choices'         => array(
-		'alpha' => true,
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -890,22 +891,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Price font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Price Font Size', 'page-builder-framework' ),
-	'settings'  => 'woocommerce_single_price_size',
-	'section'   => 'wpbf_woocommerce_product_options',
-	'transport' => 'postMessage',
-	'priority'  => $product_priority++,
-	'default'   => '22px',
-	'choices'   => array(
-		'min'  => 0,
-		'max'  => 50,
-		'step' => 1,
-	),
-) );
-
 // Price color.
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'color',
@@ -917,6 +902,22 @@ Kirki::add_field( 'wpbf', array(
 	'priority'  => $product_priority++,
 	'choices'   => array(
 		'alpha' => true,
+	),
+) );
+
+// Price font size.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'input_slider',
+	'label'     => __( 'Font Size', 'page-builder-framework' ),
+	'settings'  => 'woocommerce_single_price_size',
+	'section'   => 'wpbf_woocommerce_product_options',
+	'transport' => 'postMessage',
+	'priority'  => $product_priority++,
+	'default'   => '22px',
+	'choices'   => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
 	),
 ) );
 
@@ -944,75 +945,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Tabs headlines.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_single_tabs_remove_headline',
-	'label'    => __( 'Headlines', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => 'show',
-	'priority' => $product_priority++,
-	'choices'  => array(
-		'hide' => __( 'Hide', 'page-builder-framework' ),
-		'show' => __( 'Show', 'page-builder-framework' ),
-	),
-) );
-
-// Tabs font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Font Size', 'page-builder-framework' ),
-	'settings'  => 'woocommerce_single_tabs_font_size',
-	'section'   => 'wpbf_woocommerce_product_options',
-	'transport' => 'postMessage',
-	'priority'  => $product_priority++,
-	'default'   => '16px',
-	'choices'   => array(
-		'min'  => 0,
-		'max'  => 50,
-		'step' => 1,
-	),
-) );
-
-// Tabs font color.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'woocommerce_single_tabs_font_color',
-	'label'    => __( 'Font Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => '#3e4349',
-	'priority' => $product_priority++,
-	'choices'  => array(
-		'alpha' => true,
-	),
-) );
-
-// Tabs hover color.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'woocommerce_single_tabs_font_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => '',
-	'priority' => $product_priority++,
-	'choices'  => array(
-		'alpha' => true,
-	),
-) );
-
-// Tabs active color.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'woocommerce_single_tabs_font_color_active',
-	'label'    => __( 'Active', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => '',
-	'priority' => $product_priority++,
-	'choices'  => array(
-		'alpha' => true,
-	),
-) );
-
 // Tabs background color.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
@@ -1021,6 +953,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_woocommerce_product_options',
 	'default'         => '#e7e7ec',
 	'priority'        => $product_priority++,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1041,6 +974,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_woocommerce_product_options',
 	'default'         => '#f5f5f7',
 	'priority'        => $product_priority++,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1061,6 +995,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_woocommerce_product_options',
 	'default'         => '#ffffff',
 	'priority'        => $product_priority++,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1070,6 +1005,64 @@ Kirki::add_field( 'wpbf', array(
 			'operator' => '!=',
 			'value'    => 'modern',
 		),
+	),
+) );
+
+// Tabs font color.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'woocommerce_single_tabs_font_color',
+	'label'     => __( 'Font Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_woocommerce_product_options',
+	'default'   => '#3e4349',
+	'priority'  => $product_priority++,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+// Tabs hover color.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'woocommerce_single_tabs_font_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_woocommerce_product_options',
+	'default'   => '',
+	'priority'  => $product_priority++,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+// Tabs active color.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'woocommerce_single_tabs_font_color_active',
+	'label'     => __( 'Active', 'page-builder-framework' ),
+	'section'   => 'wpbf_woocommerce_product_options',
+	'default'   => '',
+	'priority'  => $product_priority++,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+// Tabs font size.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'input_slider',
+	'label'     => __( 'Font Size', 'page-builder-framework' ),
+	'settings'  => 'woocommerce_single_tabs_font_size',
+	'section'   => 'wpbf_woocommerce_product_options',
+	'transport' => 'postMessage',
+	'priority'  => $product_priority++,
+	'default'   => '16px',
+	'choices'   => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
 	),
 ) );
 

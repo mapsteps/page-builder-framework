@@ -316,7 +316,7 @@ function wpbf_do_woocommerce_customizer_css() {
 		if ( 'right' === $woocommerce_loop_content_alignment ) {
 
 			echo '.woocommerce .products .star-rating {';
-			echo 'display: inline-block;';
+			echo 'display: block;';
 			echo 'text-align: right;';
 			echo '}';
 
@@ -515,19 +515,18 @@ function wpbf_do_woocommerce_customizer_css() {
 	}
 
 	// Proudct.
-	$woocommerce_single_custom_width                 = get_theme_mod( 'woocommerce_single_custom_width' );
+	$woocommerce_single_custom_width                 = ( $val = get_theme_mod( 'woocommerce_single_custom_width' ) ) === '1200px' ? false : $val;
 	$woocommerce_single_alignment                    = get_theme_mod( 'woocommerce_single_alignment' );
 	$woocommerce_single_image_width                  = ( $val = get_theme_mod( 'woocommerce_single_image_width' ) ) === '50' ? false : $val;
 	$woocommerce_single_summary_separator            = get_theme_mod( 'woocommerce_single_summary_separator' );
+	$woocommerce_single_tabs                         = get_theme_mod( 'woocommerce_single_tabs' );
 	$woocommerce_single_tabs_font_size               = ( $val = get_theme_mod( 'woocommerce_single_tabs_font_size' ) ) === '16px' ? false : $val;
 	$woocommerce_single_tabs_font_color              = ( $val = get_theme_mod( 'woocommerce_single_tabs_font_color' ) ) === '#3e4349' ? false : $val;
 	$woocommerce_single_tabs_font_color_alt          = get_theme_mod( 'woocommerce_single_tabs_font_color_alt' );
 	$woocommerce_single_tabs_font_color_active       = get_theme_mod( 'woocommerce_single_tabs_font_color_active' );
-	$woocommerce_single_tabs                         = get_theme_mod( 'woocommerce_single_tabs' );
 	$woocommerce_single_tabs_background_color        = ( $val = get_theme_mod( 'woocommerce_single_tabs_background_color' ) ) === '#e7e7ec' ? false : $val;
 	$woocommerce_single_tabs_background_color_alt    = ( $val = get_theme_mod( 'woocommerce_single_tabs_background_color_alt' ) ) === '#f5f5f7' ? false : $val;
 	$woocommerce_single_tabs_background_color_active = ( $val = get_theme_mod( 'woocommerce_single_tabs_background_color_active' ) ) === '#ffffff' ? false : $val;
-	$woocommerce_single_tabs_remove_headline         = get_theme_mod( 'woocommerce_single_tabs_remove_headline' );
 	$woocommerce_single_price_size                   = ( $val = get_theme_mod( 'woocommerce_single_price_size' ) ) === '22px' ? false : $val;
 
 	if ( $woocommerce_single_custom_width ) {
@@ -686,14 +685,6 @@ function wpbf_do_woocommerce_customizer_css() {
 		echo 'padding: 0;';
 		echo 'border: none;';
 		echo 'margin-top: 30px;';
-		echo '}';
-
-	}
-
-	if ( $woocommerce_single_tabs_remove_headline ) {
-
-		echo '.woocommerce div.product .woocommerce-tabs .panel h2:first-child {';
-		echo 'display: none;';
 		echo '}';
 
 	}
