@@ -384,12 +384,30 @@
 		} );
 	} );
 
+	// Menu item background color hover.
+	wp.customize( 'mobile_menu_bg_color_alt', function( value ) {
+		var styleTag = setupStyleTag('mobile_menu_bg_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-menu > .menu-item a:hover {background-color: ' + newval + ';}';
+		} );
+	} );
+
 	// Menu item font color.
 	wp.customize( 'mobile_menu_font_color', function( value ) {
 		var styleTag = setupStyleTag('mobile_menu_font_color');
 
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Menu item font color hover.
+	wp.customize( 'mobile_menu_font_color_alt', function( value ) {
+		var styleTag = setupStyleTag('mobile_menu_font_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-menu a:hover, .wpbf-mobile-menu > .current-menu-item > a {color: ' + newval + '!important;}';
 		} );
 	} );
 

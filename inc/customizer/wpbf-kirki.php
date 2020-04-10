@@ -3793,13 +3793,14 @@ Kirki::add_field( 'wpbf', array(
 
 // Menu item background color alt.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'mobile_menu_bg_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_mobile_menu_options',
-	'priority' => 10,
-	'default'  => '#ffffff',
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'mobile_menu_bg_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_menu_options',
+	'priority'  => 10,
+	'default'   => '#ffffff',
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
@@ -3816,12 +3817,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Font color hover.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'mobile_menu_font_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_mobile_menu_options',
-	'priority' => 12,
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'mobile_menu_font_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_menu_options',
+	'priority'  => 12,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
