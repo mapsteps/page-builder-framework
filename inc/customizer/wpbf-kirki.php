@@ -2946,6 +2946,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Accent Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_pre_header_options',
 	'priority'        => 4,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -2965,6 +2966,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'wpbf_pre_header_options',
 	'priority'        => 4,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),

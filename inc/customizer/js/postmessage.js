@@ -605,6 +605,24 @@
 		} );
 	} );
 
+	// Accent color.
+	wp.customize( 'pre_header_accent_color', function( value ) {
+		var styleTag = setupStyleTag('pre_header_accent_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-pre-header a {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Accent color hover.
+	wp.customize( 'pre_header_accent_color_alt', function( value ) {
+		var styleTag = setupStyleTag('pre_header_accent_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-pre-header a:hover, .wpbf-pre-header .wpbf-menu > .current-menu-item > a {color: ' + newval + '!important;}';
+		} );
+	} );
+
 	// Font size.
 	wp.customize( 'pre_header_font_size', function( value ) {
 		var styleTag = setupStyleTag('pre_header_font_size');
