@@ -1779,6 +1779,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_scrolltop_options',
 	'priority'        => 5,
 	'default'         => 'rgba(62,67,73,0.7)',
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1819,6 +1820,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Hover', 'page-builder-framework' ),
 	'section'         => 'wpbf_scrolltop_options',
 	'priority'        => 7,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),

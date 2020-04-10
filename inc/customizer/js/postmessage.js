@@ -87,12 +87,30 @@
 		} );
 	} );
 
+	// ScrollTop background color.
+	wp.customize( 'scrolltop_bg_color_alt', function( value ) {
+		var styleTag = setupStyleTag('scrolltop_bg_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.scrolltop:hover {background-color: ' + newval + ';}';
+		} );
+	} );
+
 	// ScrollTop icon color.
 	wp.customize( 'scrolltop_icon_color', function( value ) {
 		var styleTag = setupStyleTag('scrolltop_icon_color');
 		
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.scrolltop {color: ' + newval + ';}';
+		} );
+	} );
+
+	// ScrollTop icon color.
+	wp.customize( 'scrolltop_icon_color_alt', function( value ) {
+		var styleTag = setupStyleTag('scrolltop_icon_color_alt');
+		
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.scrolltop:hover {color: ' + newval + ';}';
 		} );
 	} );
 
