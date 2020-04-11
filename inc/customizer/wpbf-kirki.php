@@ -3667,6 +3667,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Background Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
 	'priority'        => 3,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -3686,6 +3687,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Icon Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
 	'priority'        => 4,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),

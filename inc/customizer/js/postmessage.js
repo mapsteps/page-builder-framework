@@ -300,6 +300,24 @@
 		} );
 	} );
 
+	// Background color.
+	wp.customize( 'mobile_menu_background_color', function( value ) {
+		var styleTag = setupStyleTag('mobile_menu_background_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-nav-wrapper {background-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Icon color.
+	wp.customize( 'mobile_menu_hamburger_color', function( value ) {
+		var styleTag = setupStyleTag('mobile_menu_hamburger_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-nav-item, .wpbf-mobile-nav-item a {color: ' + newval + ';}';
+		} );
+	} );
+
 	// Hamburger size.
 	wp.customize( 'mobile_menu_hamburger_size', function( value ) {
 		var styleTag = setupStyleTag('mobile_menu_hamburger_size');
