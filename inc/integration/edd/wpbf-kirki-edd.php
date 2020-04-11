@@ -126,6 +126,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_edd_menu_item_options',
 	'default'         => '',
 	'priority'        => 11,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -185,6 +186,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_edd_menu_item_options',
 	'default'         => '',
 	'priority'        => 14,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),

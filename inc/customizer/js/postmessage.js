@@ -1388,6 +1388,32 @@
 		} );
 	} );
 
+	/* EDD - Menu Item */
+
+	// Desktop color.
+	wp.customize( 'edd_menu_item_desktop_color', function( value ) {
+		var styleTag = setupStyleTag('edd_menu_item_desktop_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '\
+				.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count {background-color: ' + newval + ';}\
+				.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {color: ' + newval + ';}\
+			';
+		} );
+	} );
+
+	// Mobile color.
+	wp.customize( 'edd_menu_item_mobile_color', function( value ) {
+		var styleTag = setupStyleTag('edd_menu_item_mobile_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '\
+				.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count {background-color: ' + newval + ';}\
+				.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {color: ' + newval + ';}\
+			';
+		} );
+	} );
+
 	/* Easy Digital Downloads - Defaults */
 
 	// Button border radius.
