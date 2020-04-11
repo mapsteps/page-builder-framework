@@ -1050,6 +1050,32 @@
 		} );
 	} );
 
+	/* WooCommerce - Menu Item */
+
+	// Desktop color.
+	wp.customize( 'woocommerce_menu_item_desktop_color', function( value ) {
+		var styleTag = setupStyleTag('woocommerce_menu_item_desktop_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '\
+				.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count {background-color: ' + newval + ';}\
+				.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {color: ' + newval + ';}\
+			';
+		} );
+	} );
+
+	// Mobile color.
+	wp.customize( 'woocommerce_menu_item_mobile_color', function( value ) {
+		var styleTag = setupStyleTag('woocommerce_menu_item_mobile_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '\
+				.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count {background-color: ' + newval + ';}\
+				.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {color: ' + newval + ';}\
+			';
+		} );
+	} );
+
 	/* WooCommerce - Loop */
 
 	// Content alignment.
@@ -1312,7 +1338,7 @@
 		var styleTag = setupStyleTag('woocommerce_single_tabs_background_color_alt');
 		
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li:hover {background-color: ' + newval + ';}';
+			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li:hover {background-color: ' + newval + '; border-bottom-color: ' + newval + ';}';
 		} );
 	} );
 
@@ -1321,7 +1347,7 @@
 		var styleTag = setupStyleTag('woocommerce_single_tabs_background_color_active');
 		
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li.active, .woocommerce div.product .woocommerce-tabs ul.tabs li.active:hover {background-color: ' + newval + ';}';
+			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li.active, .woocommerce div.product .woocommerce-tabs ul.tabs li.active:hover {background-color: ' + newval + '; border-bottom-color: ' + newval + ';}';
 		} );
 	} );
 

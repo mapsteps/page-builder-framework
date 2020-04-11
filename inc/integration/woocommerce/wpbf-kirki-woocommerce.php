@@ -148,6 +148,15 @@ Kirki::add_field( 'wpbf', array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 	),
+	'partial_refresh' => array(
+		'woocommerce_menu_item_desktop' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
+	),
 ) );
 
 // Menu item color.
@@ -158,6 +167,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_woocommerce_menu_item_options',
 	'default'         => '',
 	'priority'        => 11,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -198,6 +208,15 @@ Kirki::add_field( 'wpbf', array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 	),
+	'partial_refresh' => array(
+		'woocommerce_menu_item_mobile' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
+	),
 ) );
 
 // Menu item color.
@@ -208,6 +227,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_woocommerce_menu_item_options',
 	'default'         => '',
 	'priority'        => 14,
+	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -246,6 +266,15 @@ Kirki::add_field( 'wpbf', array(
 	'choices'  => array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
+	),
+	'partial_refresh' => array(
+		'woocommerce_menu_item_count' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
 	),
 ) );
 
