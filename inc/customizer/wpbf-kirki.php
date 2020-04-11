@@ -3297,6 +3297,15 @@ Kirki::add_field( 'wpbf', array(
 		'menu-centered' => __( 'Centered', 'page-builder-framework' ),
 		'menu-stacked'  => __( 'Stacked', 'page-builder-framework' ),
 	) ),
+	'partial_refresh' => array(
+		'headerlayout' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
+	),
 ) );
 
 // Width.
@@ -3317,16 +3326,26 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Search Icon', 'page-builder-framework' ),
 	'section'  => 'wpbf_menu_options',
 	'priority' => 2,
+	'partial_refresh' => array(
+		'menusearchicon' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function() {
+				return get_template_part( 'inc/template-parts/header' );
+			}
+		),
+	),
 ) );
 
 // Height.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'slider',
-	'label'    => __( 'Menu Height', 'page-builder-framework' ),
-	'settings' => 'menu_height',
-	'section'  => 'wpbf_menu_options',
-	'priority' => 3,
-	'default'  => 20,
+	'type'      => 'slider',
+	'label'     => __( 'Menu Height', 'page-builder-framework' ),
+	'settings'  => 'menu_height',
+	'section'   => 'wpbf_menu_options',
+	'priority'  => 3,
+	'default'   => 20,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'min'  => 10,
 		'max'  => 80,
@@ -3364,12 +3383,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Background color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'menu_bg_color',
-	'label'    => __( 'Background Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_menu_options',
-	'default'  => '#f5f5f7',
-	'priority' => 5,
+	'type'      => 'color',
+	'settings'  => 'menu_bg_color',
+	'label'     => __( 'Background Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_menu_options',
+	'default'   => '#f5f5f7',
+	'priority'  => 5,
+	'transport' => 'postMessage',
 	'choices'  => array(
 		'alpha' => true,
 	),
@@ -3377,24 +3397,26 @@ Kirki::add_field( 'wpbf', array(
 
 // Font color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'menu_font_color',
-	'label'    => __( 'Font Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_menu_options',
-	'priority' => 6,
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'menu_font_color',
+	'label'     => __( 'Font Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_menu_options',
+	'priority'  => 6,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
 
 // Font color alt.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'menu_font_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_menu_options',
-	'priority' => 7,
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'menu_font_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_menu_options',
+	'priority'  => 7,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );

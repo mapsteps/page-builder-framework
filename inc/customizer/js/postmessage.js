@@ -159,12 +159,51 @@
 		} );
 	} );
 
+	// Menu height.
+	wp.customize( 'menu_height', function( value ) {
+		var styleTag = setupStyleTag('menu_height');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-nav-wrapper {padding-top: ' + newval + 'px; padding-bottom: ' + newval + 'px;}';
+		} );
+	} );
+
 	// Menu padding.
 	wp.customize( 'menu_padding', function( value ) {
 		var styleTag = setupStyleTag('menu_padding');
 
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.wpbf-navigation .wpbf-menu > .menu-item > a {padding-left: ' + newval + 'px; padding-right: ' + newval + 'px;}';
+		} );
+	} );
+
+	// Background color.
+	wp.customize( 'menu_bg_color', function( value ) {
+		var styleTag = setupStyleTag('menu_bg_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-navigation {background-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Font color.
+	wp.customize( 'menu_font_color', function( value ) {
+		var styleTag = setupStyleTag('menu_font_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Font color hover.
+	wp.customize( 'menu_font_color_alt', function( value ) {
+		var styleTag = setupStyleTag('menu_font_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '\
+				.wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover {color: ' + newval + ';}\
+				.wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a {color: ' + newval + '!important;}\
+			';
 		} );
 	} );
 

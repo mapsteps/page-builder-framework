@@ -1738,7 +1738,7 @@ if ( ! $custom_logo && $menu_logo_description ) {
 
 // Navigation.
 $menu_position       = get_theme_mod( 'menu_position' );
-$menu_width          = get_theme_mod( 'menu_width' );
+$menu_width          = ( $val = get_theme_mod( 'menu_width' ) ) === '1200px' ? false : $val;
 $menu_height         = ( $val = get_theme_mod( 'menu_height' ) ) === '20' ? false : $val;
 $menu_padding        = ( $val = get_theme_mod( 'menu_padding' ) ) === '20' ? false : $val;
 $menu_bg_color       = ( $val = get_theme_mod( 'menu_bg_color' ) ) === '#f5f5f7' ? false : $val;
