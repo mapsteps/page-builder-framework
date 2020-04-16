@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
@@ -9,15 +10,27 @@ var manifest = require('./assets/manifest.json');
 var config = manifest.config;
 
 // Scripts Task
-// Minify JS
-gulp.task('scripts_min', function(){
+// Combine & Minify JS
+gulp.task('scripts_combine_min', function () {
 
-	gulp.src('assets/js/*.js')
-	.pipe(plumber())
-	.pipe(uglify())
-	.pipe(rename({ suffix: '-min' }))
-	.pipe(gulp.dest('js/min'))
-	.pipe(reload({ stream: true }))
+	gulp.src(['assets/js/site.js', 'assets/js/mobile.js'])
+		.pipe(plumber())
+		.pipe(concat('site-min.js'))
+		.pipe(uglify())
+		.pipe(gulp.dest('js/min'))
+		.pipe(reload({ stream: true }))
+
+});
+
+// Minify JS
+gulp.task('scripts_min', function () {
+
+	gulp.src(['assets/js/*.js', '!assets/js/site.js', '!assets/js/mobile.js'])
+		.pipe(plumber())
+		.pipe(uglify())
+		.pipe(rename({ suffix: '-min' }))
+		.pipe(gulp.dest('js/min'))
+		.pipe(reload({ stream: true }))
 
 });
 
@@ -79,7 +92,9 @@ gulp.task('serve', function() {
 gulp.task('watch', function() {
 
 	// Styles & Scripts to be watched
-	gulp.watch('assets/js/*.js', ['scripts_min']);
+	gulp.watch(['assets/js/site.js', 'assets/js/mobile.js'], ['scripts_combine_min']);
+	gulp.watch(['assets/js/*.js', '!assets/js/site.js', '!assets/js/mobile.js'], ['scripts_min']);
+
 	gulp.watch('assets/scss/**/*.scss', ['styles']);
 	gulp.watch('assets/scss/**/*.scss', ['responsive_styles_min']);
 	gulp.watch('assets/scss/**/*.scss', ['rtl_styles_min']);
@@ -91,4 +106,4 @@ gulp.task('watch', function() {
 })
 
 // Gulp
-gulp.task('default', ['scripts_min', 'styles', 'responsive_styles_min', 'rtl_styles_min', 'edd_styles_min', 'woo_styles_min', 'watch', 'serve']);
+gulp.task('default', ['scripts_combine_min', 'scripts_min', 'styles', 'responsive_styles_min', 'rtl_styles_min', 'edd_styles_min', 'woo_styles_min', 'watch', 'serve']);
