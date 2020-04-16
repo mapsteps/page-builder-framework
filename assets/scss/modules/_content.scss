@@ -447,11 +447,11 @@ body {
 	padding-right: 40px;
 }
 
-#searchform {
+.searchform {
 	position: relative;
 }
 
-#searchform:before {
+.searchform:before {
 	content: "\f118";
 	right: 15px;
 	@include vertical-align($position: absolute);
