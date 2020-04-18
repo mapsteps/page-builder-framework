@@ -1,8 +1,10 @@
-# let's ignore our build tools
+# ignore build tools
 node_modules/
 package.json
 package-lock.json
 gulpfile.js
+
+# ignore old files
 *.backup.*
 
 # Sass Cache
