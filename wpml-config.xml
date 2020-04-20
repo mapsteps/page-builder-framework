@@ -7,14 +7,19 @@
   <admin-texts>
     <key name="theme_mods_page-builder-framework">
       <key name="menu_logo_url"/>
+      <key name="menu_logo_alt"/>
+      <key name="menu_logo_title"/>
       <key name="blog_read_more_text"/>
       <key name="blog_categories_title"/>
       <key name="pre_header_column_one"/>
       <key name="pre_header_column_two"/>
+      <key name="menu_custom"/>
+      <key name="menu_stacked_wysiwyg"/>
       <key name="footer_column_one"/>
       <key name="footer_column_two"/>
       <key name="404_headline"/>
       <key name="404_text"/>
+      <key name="404_custom"/>
       <key name="cta_button_text"/>
       <key name="cta_button_url"/>
     </key>
