@@ -883,7 +883,7 @@ $archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
 foreach ( $archives as $archive ) {
 
 	// Custom width.
-	$custom_width = get_theme_mod( $archive . '_custom_width' );
+	$custom_width = ( $val = get_theme_mod( $archive . '_custom_width' ) ) === '1200px' ? false : $val;
 
 	// All archives.
 	if ( 'archive' === $custom_width && $archive ) {
@@ -1223,7 +1223,7 @@ $singles = apply_filters( 'wpbf_singles', array( 'single' ) );
 
 foreach ( $singles as $single ) {
 
-	$custom_width = get_theme_mod( $single . '_custom_width' );
+	$custom_width = ( $val = get_theme_mod( $single . '_custom_width' ) ) === '1200px' ? false : $val;
 	$style        = get_theme_mod( $single . '_post_style' );
 	$title_size   = get_theme_mod( $single . '_post_title_size' );
 	$font_size    = get_theme_mod( $single . '_post_font_size' );
@@ -1463,8 +1463,8 @@ foreach ( $singles as $single ) {
 /* Header */
 
 // Logo container.
-$menu_logo_container_width        = get_theme_mod( 'menu_logo_container_width' );
-$mobile_menu_logo_container_width = get_theme_mod( 'mobile_menu_logo_container_width' );
+$menu_logo_container_width        = ( $val = get_theme_mod( 'menu_logo_container_width' ) ) === '25' ? false : $val;
+$mobile_menu_logo_container_width = ( $val = get_theme_mod( 'mobile_menu_logo_container_width' ) ) === '66' ? false : $val;
 
 if ( $menu_logo_container_width ) {
 
