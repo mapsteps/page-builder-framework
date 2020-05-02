@@ -117,7 +117,7 @@
 			e.preventDefault();
 			var value = parseInt(qty.value, 10) - 1;
 
-			value = value < 1 ? 1 : value;
+			value = value < 1 ? 0 : value;
 			qty.value = value;
 
 			qty.dispatchEvent(new Event('change', { bubbles: true }));
