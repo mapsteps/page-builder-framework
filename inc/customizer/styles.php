@@ -868,8 +868,8 @@ if ( $blog_pagination_background_color_active || $blog_pagination_font_color_act
 		echo sprintf( 'background: %s;', esc_attr( $blog_pagination_background_color_active ) . '!important' );
 	}
 
-	if ( $blog_pagination_background_color_next_prev ) {
-		echo sprintf( 'color: %s;', esc_attr( $blog_pagination_background_color_next_prev ) );
+	if ( $blog_pagination_font_color_active ) {
+		echo sprintf( 'color: %s;', esc_attr( $blog_pagination_font_color_active ) );
 	}
 
 	echo '}';
