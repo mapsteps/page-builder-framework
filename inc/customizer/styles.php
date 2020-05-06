@@ -2183,7 +2183,6 @@ $footer_bg_color         = ( $val = get_theme_mod( 'footer_bg_color' ) ) === '#f
 $footer_font_color       = get_theme_mod( 'footer_font_color' );
 $footer_accent_color     = get_theme_mod( 'footer_accent_color' );
 $footer_accent_color_alt = get_theme_mod( 'footer_accent_color_alt' );
-$footer_font_size        = get_theme_mod( 'footer_font_size' );
 $footer_font_size        = ( $val = get_theme_mod( 'footer_font_size' ) ) === '14px' ? false : $val;
 
 
