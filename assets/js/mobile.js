@@ -19,8 +19,21 @@ var WPBFMobile = (function ($) {
 	 * Setup menu type.
 	 */
 	function setupMenuType() {
-		var hamburger = document.querySelector('.wpbf-mobile-menu-hamburger');
-		menuType = hamburger ? 'hamburger' : 'default';
+		var menu = document.querySelector('.wpbf-mobile-menu-hamburger');
+
+		if (menu) {
+			menuType = 'hamburger';
+			return;
+		}
+
+		menu = document.querySelector('.wpbf-mobile-menu-hamburger');
+
+		if (menu) {
+			menuType = 'default';
+			return;
+		}
+
+		menuType = 'premium';
 	}
 
 	/**
@@ -28,7 +41,7 @@ var WPBFMobile = (function ($) {
 	 */
 	function setupMobileMenu() {
 		$(document).on('click', '.wpbf-mobile-menu-toggle', function () {
-			setupMenuType();	
+			setupMenuType();
 			toggleMobileMenu(menuType);
 		});
 
@@ -77,6 +90,9 @@ var WPBFMobile = (function ($) {
 	 * @param {string} type Default menu or hamburger menu.
 	 */
 	function toggleMobileMenu(type) {
+		// The most correct way of fixing the overlay problem.
+		// if (type === 'premium') return;
+
 		var menuToggle = $('.wpbf-mobile-menu-toggle');
 
 		if (menuToggle.hasClass("active")) {
@@ -98,7 +114,8 @@ var WPBFMobile = (function ($) {
 				menuToggle.attr('aria-expanded', 'true');
 			}
 
-			$(window).trigger('resize');
+			// The simplest way of fixing the overlay problem.
+			$(document).trigger('wpbf_mobile_menu_open');
 		}
 	}
 
@@ -160,7 +177,7 @@ var WPBFMobile = (function ($) {
 		}
 
 	}
-	
+
 	/**
 	 * Toggle submenu on empty link.
 	 *
