@@ -90,8 +90,7 @@ var WPBFMobile = (function ($) {
 	 * @param {string} type Default menu or hamburger menu.
 	 */
 	function toggleMobileMenu(type) {
-		// The most correct way of fixing the overlay problem.
-		// if (type === 'premium') return;
+		if (type === 'premium') return;
 
 		var menuToggle = $('.wpbf-mobile-menu-toggle');
 
@@ -113,9 +112,6 @@ var WPBFMobile = (function ($) {
 			} else {
 				menuToggle.attr('aria-expanded', 'true');
 			}
-
-			// The simplest way of fixing the overlay problem.
-			$(document).trigger('wpbf_mobile_menu_open');
 		}
 	}
 
