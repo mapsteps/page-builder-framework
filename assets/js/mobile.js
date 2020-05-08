@@ -26,7 +26,7 @@ var WPBFMobile = (function ($) {
 			return;
 		}
 
-		menu = document.querySelector('.wpbf-mobile-menu-hamburger');
+		menu = document.querySelector('.wpbf-mobile-menu-default');
 
 		if (menu) {
 			menuType = 'default';
