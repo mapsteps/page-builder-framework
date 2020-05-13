@@ -177,4 +177,4 @@ function wpbf_customizer_scripts_styles() {
 add_action( 'customize_controls_print_styles', 'wpbf_customizer_scripts_styles' );
 
 // Custom controls.
-require get_template_directory() . '/inc/customizer/custom-controls.php';
+require get_template_directory() . '/inc/customizer/controls/custom-controls.php';
