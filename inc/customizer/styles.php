@@ -2054,7 +2054,7 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 
 		echo '.wpbf-mobile-menu-toggle {';
 		echo sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) );
-		echo 'color: #ffffff;';
+		echo 'color: #ffffff !important;';
 		echo 'padding: 10px;';
 
 		if ( $mobile_menu_hamburger_border_radius ) {
