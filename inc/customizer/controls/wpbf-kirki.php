@@ -4255,21 +4255,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	// Logo size.
 	$wp_customize->add_setting( 'menu_logo_size_desktop',
 		array(
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_size_tablet',
 		array(
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_size_mobile',
 		array(
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
@@ -4329,21 +4329,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	$wp_customize->add_setting( 'menu_logo_font_size_desktop',
 		array(
 			'default'           => '22px',
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_font_size_tablet',
 		array(
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_font_size_mobile',
 		array(
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
@@ -4402,21 +4402,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	// Tagline font size.
 	$wp_customize->add_setting( 'menu_logo_description_font_size_desktop',
 		array(
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_description_font_size_tablet',
 		array(
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
 
 	$wp_customize->add_setting( 'menu_logo_description_font_size_mobile',
 		array(
-			'sanitize_callback' => 'esc_textarea',
+			'sanitize_callback' => 'wp_filter_nohtml_kses',
 			'transport'         => 'postMessage',
 		)
 	);
