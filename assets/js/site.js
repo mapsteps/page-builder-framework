@@ -1,4 +1,5 @@
 var WPBFSite = (function ($) {
+	var isInsideCustomizer = window.wp && wp.customize ? true : false;
 	var breakpoints = {
 		desktop: 1024,
 		tablet: 768,
@@ -12,6 +13,13 @@ var WPBFSite = (function ($) {
 	function init() {
 		setupBreakpoints();
 		setupBodyClasses();
+		buildCenteredMenu();
+
+		if (isInsideCustomizer) {
+			wp.customize.bind('preview-ready', function () {
+				listenPartialRefresh();
+			});
+		}
 
 		window.addEventListener('resize', function (e) {
 			setupBodyClasses();
@@ -218,13 +226,26 @@ var WPBFSite = (function ($) {
 	/**
 	 * Centered Menu
 	 */
-	if ($('.wpbf-menu-centered').length) {
+	function buildCenteredMenu() {
+		if (!document.querySelector('.wpbf-menu-centered')) return;
+
 		var menu_items = $('.wpbf-navigation .wpbf-menu > li > a').length;
 		var divided = menu_items / 2;
 		var divided = Math.floor(divided);
 		var divided = divided - 1;
 
 		$('.wpbf-menu-centered .logo-container').insertAfter('.wpbf-navigation .wpbf-menu >li:eq(' + divided + ')').css({ 'display': 'block' });
+	}
+
+	/**
+	 * Listen to WordPress selective refresh inside customizer.
+	 */
+	function listenPartialRefresh() {
+		wp.customize.selectiveRefresh.bind('partial-content-rendered', function (placement) {
+			if ('headerlayout' === placement.partial.id) {
+				buildCenteredMenu();
+			}
+		});
 	}
 
 	$('body').mousedown(function () {
