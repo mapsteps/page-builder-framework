@@ -242,9 +242,11 @@ var WPBFSite = (function ($) {
 	 */
 	function listenPartialRefresh() {
 		wp.customize.selectiveRefresh.bind('partial-content-rendered', function (placement) {
-			if ('headerlayout' === placement.partial.id) {
-				buildCenteredMenu();
-			}
+			/**
+			 * A lot of partial refresh registered to work on header area.
+			 * Better to not checking the "placement.partial.id".
+			 */
+			buildCenteredMenu();
 		});
 	}
 
