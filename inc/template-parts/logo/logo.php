@@ -12,6 +12,7 @@ $menu_active_logo = get_theme_mod( 'menu_active_logo' ) ? ' data-menu-active-log
 $menu_alt_tag     = get_theme_mod( 'menu_logo_alt', get_bloginfo( 'name' ) );
 $menu_title_tag   = get_theme_mod( 'menu_logo_title', get_bloginfo( 'name' ) );
 $menu_logo_url    = get_theme_mod( 'menu_logo_url', home_url() );
+$menu_logo_url    = is_customize_preview() ? site_url() : $menu_logo_url;
 $custom_logo_id   = get_theme_mod( 'custom_logo' );
 $custom_logo_url  = wp_get_attachment_image_src( $custom_logo_id, 'full' );
 $custom_logo_url  = apply_filters( 'wpbf_logo', $custom_logo_url[0] );
