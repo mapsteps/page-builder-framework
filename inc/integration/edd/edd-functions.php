@@ -251,7 +251,7 @@ add_action( 'wpbf_before_mobile_toggle', 'wpbf_edd_menu_icon_mobile' );
  */
 function wpbf_edd_ajax() {
 
-	wp_enqueue_script( 'wpbf-edd-ajax', get_template_directory_uri() . '/assets/edd/js/edd-ajax.js', array( 'jquery' ), '', true );
+	wp_enqueue_script( 'wpbf-edd-ajax', get_template_directory_uri() . '/assets/edd/js/edd-ajax.js', array( 'jquery' ), WPBF_VERSION, true );
 
 	wp_localize_script(
 		'wpbf-edd-ajax',

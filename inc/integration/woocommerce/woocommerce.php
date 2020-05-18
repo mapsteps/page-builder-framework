@@ -68,11 +68,11 @@ function wpbf_woo_scripts() {
 	wp_enqueue_style( 'wpbf-woocommerce-smallscreen', get_template_directory_uri() . '/css/min/woocommerce-smallscreen-min.css', '', WPBF_VERSION );
 
 	// WooCommerce.
-	wp_enqueue_script( 'wpbf-woocommerce', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce.js', array( 'jquery' ), '', true );
+	wp_enqueue_script( 'wpbf-woocommerce', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce.js', array( 'jquery' ), WPBF_VERSION, true );
 
 	// Single add to cart ajax.
 	if ( is_product() && 'yes' === get_option( 'woocommerce_enable_ajax_add_to_cart' ) && get_theme_mod( 'woocommerce_single_add_to_cart_ajax' ) ) {
-		wp_enqueue_script( 'wpbf-woocommerce-single-add-to-cart-ajax', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce-single-add-to-cart-ajax.js', array( 'jquery' ), '', true );
+		wp_enqueue_script( 'wpbf-woocommerce-single-add-to-cart-ajax', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce-single-add-to-cart-ajax.js', array( 'jquery' ), WPBF_VERSION, true );
 	}
 
 }
