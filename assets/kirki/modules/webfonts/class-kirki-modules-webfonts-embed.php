@@ -5,7 +5,7 @@
  * @package     Kirki
  * @category    Core
  * @author      Ari Stathopoulos (@aristath)
- * @copyright   Copyright (c) 2019, Ari Stathopoulos (@aristath)
+ * @copyright   Copyright (c) 2020, David Vongries
  * @license     https://opensource.org/licenses/MIT
  * @since       3.0
  */
@@ -143,7 +143,7 @@ final class Kirki_Modules_Webfonts_Embed {
 		foreach ( $this->fonts_to_load as $font ) {
 			$family  = str_replace( ' ', '+', trim( $font['family'] ) );
 			$weights = join( ',', $font['weights'] );
-			$url     = "https://fonts.googleapis.com/css?family={$family}:{$weights}&subset=cyrillic,cyrillic-ext,devanagari,greek,greek-ext,khmer,latin,latin-ext,vietnamese,hebrew,arabic,bengali,gujarati,tamil,telugu,thai";
+			$url     = "https://fonts.googleapis.com/css?family={$family}:{$weights}&subset=cyrillic,cyrillic-ext,devanagari,greek,greek-ext,khmer,latin,latin-ext,vietnamese,hebrew,arabic,bengali,gujarati,tamil,telugu,thai&display=swap";
 
 			$transient_id = 'kirki_gfonts_' . md5( $url );
 			$contents     = get_transient( $transient_id );
