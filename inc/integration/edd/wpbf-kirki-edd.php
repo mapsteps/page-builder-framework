@@ -95,15 +95,15 @@ Kirki::add_field( 'wpbf', array(
 
 // Menu item.
 Kirki::add_field( 'wpbf', array(
-	'type'        => 'select',
-	'settings'    => 'edd_menu_item_desktop',
-	'label'       => __( 'Visibility (Desktop)', 'page-builder-framework' ),
-	'description' => __( 'Adds a Cart Icon to your Main Navigation', 'page-builder-framework' ),
-	'section'     => 'wpbf_edd_menu_item_options',
-	'default'     => 'show',
-	'priority'    => 10,
-	'multiple'    => 1,
-	'choices'     => array(
+	'type'            => 'select',
+	'settings'        => 'edd_menu_item_desktop',
+	'label'           => __( 'Visibility (Desktop)', 'page-builder-framework' ),
+	'description'     => __( 'Adds a Cart Icon to your Main Navigation', 'page-builder-framework' ),
+	'section'         => 'wpbf_edd_menu_item_options',
+	'default'         => 'show',
+	'priority'        => 10,
+	'multiple'        => 1,
+	'choices'         => array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 	),
@@ -111,9 +111,9 @@ Kirki::add_field( 'wpbf', array(
 		'eddmenuitemdesktop' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
-			'render_callback'     => function() {
+			'render_callback'     => function () {
 				return get_template_part( 'inc/template-parts/header' );
-			}
+			},
 		),
 	),
 ) );
@@ -155,15 +155,15 @@ Kirki::add_field( 'wpbf', array(
 
 // Mobile menu item.
 Kirki::add_field( 'wpbf', array(
-	'type'        => 'select',
-	'settings'    => 'edd_menu_item_mobile',
-	'label'       => __( 'Visibility (Mobile)', 'page-builder-framework' ),
-	'description' => __( 'Adds a Cart Icon to your Mobile Navigation', 'page-builder-framework' ),
-	'section'     => 'wpbf_edd_menu_item_options',
-	'default'     => 'show',
-	'priority'    => 13,
-	'multiple'    => 1,
-	'choices'     => array(
+	'type'            => 'select',
+	'settings'        => 'edd_menu_item_mobile',
+	'label'           => __( 'Visibility (Mobile)', 'page-builder-framework' ),
+	'description'     => __( 'Adds a Cart Icon to your Mobile Navigation', 'page-builder-framework' ),
+	'section'         => 'wpbf_edd_menu_item_options',
+	'default'         => 'show',
+	'priority'        => 13,
+	'multiple'        => 1,
+	'choices'         => array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 	),
@@ -171,9 +171,9 @@ Kirki::add_field( 'wpbf', array(
 		'eddmenuitemmobile' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
-			'render_callback'     => function() {
+			'render_callback'     => function () {
 				return get_template_part( 'inc/template-parts/header' );
-			}
+			},
 		),
 	),
 ) );
@@ -215,14 +215,14 @@ Kirki::add_field( 'wpbf', array(
 
 // Menu item count.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'edd_menu_item_count',
-	'label'    => __( 'Count', 'page-builder-framework' ),
-	'section'  => 'wpbf_edd_menu_item_options',
-	'default'  => 'show',
-	'priority' => 16,
-	'multiple' => 1,
-	'choices'  => array(
+	'type'            => 'select',
+	'settings'        => 'edd_menu_item_count',
+	'label'           => __( 'Count', 'page-builder-framework' ),
+	'section'         => 'wpbf_edd_menu_item_options',
+	'default'         => 'show',
+	'priority'        => 16,
+	'multiple'        => 1,
+	'choices'         => array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 	),
@@ -230,9 +230,9 @@ Kirki::add_field( 'wpbf', array(
 		'eddmenuitemcount' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
-			'render_callback'     => function() {
+			'render_callback'     => function () {
 				return get_template_part( 'inc/template-parts/header' );
-			}
+			},
 		),
 	),
 ) );
