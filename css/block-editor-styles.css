@@ -106,3 +106,13 @@
 .wp-block-table th {
 	border: 1px solid #dedee5;
 }
+
+/* Buttons */
+.wp-block-button__link {
+	background: #3ba9d2;
+}
+
+.is-style-outline .wp-block-button__link:not(.has-text-color) {
+	border-color: #3ba9d2;
+	color: #3ba9d2;
+}

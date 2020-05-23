@@ -1,0 +1,143 @@
+// Font sizes.
+.has-tiny-font-size {
+	font-size: 12px;
+}
+
+.has-small-font-size {
+	font-size: 14px;
+}
+
+.has-large-font-size {
+	font-size: 20px;
+}
+
+.has-larger-font-size {
+	font-size: 32px;
+}
+
+.has-extra-font-size {
+	font-size: 44px;
+}
+
+// Full Aligned Items
+.wpbf-no-sidebar .alignfull {
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+	width: auto;
+	max-width: unset;
+}
+
+.alignwide, .alignfull {
+	iframe {
+		width: 100%;
+	}
+}
+
+// Separator
+.wp-block-separator {
+	max-width: 280px;
+	margin: $margin-medium auto;
+	border: none;
+	background: darken($base-color, 5%);
+	height: 2px;
+}
+
+// Separator Wide Modifier
+.wp-block-separator.is-style-wide {
+	width: 100%;
+	max-width: none;
+	height: 1px;
+}
+
+// Separator Dots Modifier
+.wp-block-separator.is-style-dots:before {
+	color: darken( $base-color, 15% );
+	font-size: 30px;
+}
+
+// Blockquote
+.wp-block-quote.is-large,
+.wp-block-quote.is-style-large {
+	margin: $margin 0 $margin $margin;
+	padding: 0 0 0 $padding;
+}
+
+.wp-block-quote.has-text-align-right {
+	margin: $margin $margin $margin 0;
+	padding: 0 $padding 0 0;
+	border: none;
+	border-right: 5px solid $base-color;
+}
+
+.wp-block-quote.has-text-align-center {
+	padding: 0;
+	margin-left: 0;
+	border: none;
+}
+
+// Pullquote
+.wp-block-pullquote {
+	blockquote {
+		padding: 0 $padding;
+		margin: 0;
+		border-left: none;
+	}
+}
+
+.wp-block-pullquote {
+	margin: $margin-medium 0;
+	padding: $padding 0;
+	border-top: 5px solid $base-color;
+	border-bottom: 5px solid $base-color;
+}
+
+// Captions
+.wp-block-image figcaption {
+	margin-top: $margin-small;
+	margin-bottom: $margin;
+	text-align: center;
+	font-size: $small-fontsize;
+}
+
+.blocks-gallery-caption {
+	margin-top: 0;
+	margin-bottom: $margin;
+	text-align: center;
+	width: 100%;
+	font-size: $small-fontsize;
+}
+
+// Buttons
+.wp-block-button,
+.wp-block-buttons {
+	margin-bottom: $margin;
+}
+
+.wp-block-button__link,
+.wp-block-file .wp-block-file__button {
+	background: $accent-color;
+}
+
+.is-style-outline .wp-block-button__link:not(.has-text-color) {
+	border-color: $accent-color;
+	color: $accent-color;
+}
+
+// Media & Text
+.wp-block-media-text {
+	margin-bottom: $margin;
+}
+
+// Cover
+.wp-block-cover {
+	margin-bottom: $margin;
+}
+
+.wp-block-cover p:not(.has-text-color) {
+	color: #fff;
+}
+
+// Audio
+.wp-block-audio audio {
+	width: 100%;
+}

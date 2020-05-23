@@ -887,7 +887,11 @@
 		var styleTag = setupStyleTag('button_primary_bg_color');
 
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-button-primary {background-color: ' + newval + ';}';
+			styleTag.innerHTML = '\
+				.wpbf-button-primary {background-color: ' + newval + ';}\
+				.wp-block-button__link, .wp-block-file .wp-block-file__button {background-color: ' + newval + ';}\
+				.is-style-outline .wp-block-button__link:not(.has-text-color) {border-color: ' + newval + '; color: ' + newval + ';}\
+			';
 		} );
 	} );
 

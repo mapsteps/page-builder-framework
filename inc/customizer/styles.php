@@ -641,6 +641,24 @@ if ( $button_primary_bg_color_alt || $button_primary_bg_color_alt ) {
 
 }
 
+// Gutenberg
+if ( $button_primary_bg_color ) {
+
+	echo '.wp-block-button__link, .wp-block-file .wp-block-file__button {';
+
+	echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color ) );
+
+	echo '}';
+
+	echo '.is-style-outline .wp-block-button__link:not(.has-text-color) {';
+
+	echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color ) );
+	echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color ) );
+
+	echo '}';
+
+}
+
 // Sidebar.
 $sidebar_bg_color                      = ( $val = get_theme_mod( 'sidebar_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $sidebar_width                         = ( $val = get_theme_mod( 'sidebar_width' ) ) === 33.3 ? false : $val;

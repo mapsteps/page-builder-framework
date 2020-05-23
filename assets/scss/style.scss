@@ -18,16 +18,19 @@ Text Domain:	page-builder-framework
 @import "config/config";
 
 // CSS Framework
-@import "base/framework";
+@import "main/framework";
 
 // Typography
-@import "base/typography";
+@import "main/typography";
 
 // Defaults
-@import "base/defaults";
+@import "main/defaults";
 
 // Navigation
-@import "base/navigation";
+@import "main/navigation";
 
 // Content
-@import "modules/content";
+@import "main/content";
+
+// Gutenberg
+@import "main/gutenberg";

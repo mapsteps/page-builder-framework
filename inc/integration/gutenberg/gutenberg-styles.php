@@ -608,3 +608,23 @@ if ( $page_h6_font_size_desktop || $page_h6_font_color ) {
 	echo '}';
 
 }
+
+// Buttons
+$button_primary_bg_color = get_theme_mod( 'button_primary_bg_color' );
+
+if ( $button_primary_bg_color ) {
+
+	echo '.wp-block-button__link, .wp-block-file .wp-block-file__button {';
+
+	echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color ) );
+
+	echo '}';
+
+	echo '.is-style-outline .wp-block-button__link:not(.has-text-color) {';
+
+	echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color ) );
+	echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color ) );
+
+	echo '}';
+
+}
