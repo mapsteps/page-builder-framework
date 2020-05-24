@@ -113,9 +113,9 @@
 	margin-bottom: $margin;
 }
 
-.wp-block-button__link,
-.wp-block-file .wp-block-file__button {
+.wp-block-button__link {
 	background: $accent-color;
+	@include transition(all 0.2s);
 }
 
 .is-style-outline .wp-block-button__link:not(.has-text-color) {

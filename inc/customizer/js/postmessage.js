@@ -889,8 +889,8 @@
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '\
 				.wpbf-button-primary {background-color: ' + newval + ';}\
-				.wp-block-button__link, .wp-block-file .wp-block-file__button {background-color: ' + newval + ';}\
-				.is-style-outline .wp-block-button__link:not(.has-text-color) {border-color: ' + newval + '; color: ' + newval + ';}\
+				.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background) {background-color: ' + newval + ';}\
+				.is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background) {border-color: ' + newval + '; color: ' + newval + ';}\
 			';
 		} );
 	} );
@@ -900,7 +900,11 @@
 		var styleTag = setupStyleTag('button_primary_bg_color_alt');
 
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-button-primary:hover {background-color: ' + newval + ';}';
+			styleTag.innerHTML = '\
+				.wpbf-button-primary:hover {background-color: ' + newval + ';}\
+				.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover {background-color: ' + newval + ';}\
+				.is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background):hover {border-color: ' + newval + '; color: ' + newval + ';}\
+			';
 		} );
 	} );
 
@@ -909,7 +913,10 @@
 		var styleTag = setupStyleTag('button_primary_text_color');
 
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-button-primary {color: ' + newval + ';}';
+			styleTag.innerHTML = '\
+				.wpbf-button-primary {color: ' + newval + ';}\
+				.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-text-color) {color: ' + newval + ';}\
+			';
 		} );
 	} );
 
@@ -918,7 +925,10 @@
 		var styleTag = setupStyleTag('button_primary_text_color_alt');
 
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-button-primary:hover {color: ' + newval + ';}';
+			styleTag.innerHTML = '\
+				.wpbf-button-primary:hover {color: ' + newval + ';}\
+				.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover {color: ' + newval + ';}\
+			';
 		} );
 	} );
 

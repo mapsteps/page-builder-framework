@@ -642,20 +642,58 @@ if ( $button_primary_bg_color_alt || $button_primary_bg_color_alt ) {
 }
 
 // Gutenberg
-if ( $button_primary_bg_color ) {
+if ( $button_primary_bg_color || $button_primary_text_color ) {
 
-	echo '.wp-block-button__link, .wp-block-file .wp-block-file__button {';
+	echo '.wp-block-button__link {';
 
-	echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color ) );
+	if ( $button_primary_bg_color ) {
+		echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color ) );
+	}
+
+	if ( $button_primary_text_color ) {
+		echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
+	}
 
 	echo '}';
 
-	echo '.is-style-outline .wp-block-button__link:not(.has-text-color) {';
+	if ( $button_primary_text_color ) {
+		// Gutenberg sets the hover color to white so we need to override thise if a custom color is set.
+		// Thank you, Gutenberg.
+		// Let's also exclude those that have custom font colors.
+		echo '.wp-block-button__link:not(.has-text-color):hover {';
+			echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
+		echo '}';
+	}
 
-	echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color ) );
-	echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color ) );
+	if ( $button_primary_bg_color ) {
+		echo '.is-style-outline .wp-block-button__link:not(.has-text-color) {';
+			echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color ) );
+			echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color ) );
+		echo '}';
+	}
+
+}
+
+if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
+
+	echo '.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover {';
+
+	if ( $button_primary_bg_color_alt ) {
+		echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color_alt ) );
+	}
+
+	if ( $button_primary_text_color_alt ) {
+		echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color_alt ) );
+	}
 
 	echo '}';
+
+	if ( $button_primary_bg_color_alt ) {
+		echo '.is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background):hover {';
+			echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color_alt ) );
+			echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color_alt ) );
+		echo '}';
+	}
 
 }
 

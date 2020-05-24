@@ -116,6 +116,10 @@
 /* Buttons */
 .wp-block-button__link {
 	background: #3ba9d2;
+	-moz-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	-webkit-transition: all 0.2s;
+	transition: all 0.2s;
 }
 
 .is-style-outline .wp-block-button__link:not(.has-text-color) {
