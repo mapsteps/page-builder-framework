@@ -93,7 +93,7 @@ add_action( 'wpbf_customizer_links', 'wpbf_do_customizer_links' );
 				</p>
 			</div>
 			<div class="list-action">
-				<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" target="_blank" class="button button-primary"><?php _e( 'Customize' ); ?></a>
+				<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" target="_blank" class="button button-primary">Customize</a>
 			</div>
 		</li>
 
