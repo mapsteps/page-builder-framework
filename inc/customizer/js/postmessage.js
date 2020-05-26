@@ -40,10 +40,8 @@
 
 	// Boxed margin.
 	wp.customize( 'page_boxed_margin', function( value ) {
-		var styleTag = setupStyleTag('page_boxed_margin');
-
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-page {margin-top: ' + newval + 'px; margin-bottom: ' + newval + 'px;}';
+			$('.wpbf-page').css('margin-top', newval + 'px' ).css('margin-bottom', newval + 'px' );
 		} );
 	} );
 
