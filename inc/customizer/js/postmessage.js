@@ -30,7 +30,7 @@
 
 	// Page width.
 	wp.customize( 'page_max_width', function( value ) {
-		var styleTag = setupStyleTag('page_boxed_margin');
+		var styleTag = setupStyleTag('page_max_width');
 		
 		value.bind( function( newval ) {
 			newval = !newval ? '1200px' : newval;
