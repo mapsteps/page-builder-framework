@@ -6,6 +6,7 @@ var WPBFSite = (function ($) {
 		mobile: 480
 	};
 	var activeBreakpoint = 'desktop';
+	var duration = $(".wpbf-navigation").data("sub-menu-animation-duration");
 
 	/**
 	 * Init the main functions.
@@ -168,9 +169,6 @@ var WPBFSite = (function ($) {
 	/**
 	 * Sub Menu Animation – Fade
 	 */
-	var duration = $(".wpbf-navigation").data('sub-menu-animation-duration');
-
-	// Fade Animation
 	$(document)
 		.on('mouseenter', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
 			$('.sub-menu', this).first().stop().fadeIn(duration);
@@ -246,6 +244,7 @@ var WPBFSite = (function ($) {
 			 * A lot of partial refresh registered to work on header area.
 			 * Better to not checking the "placement.partial.id".
 			 */
+			duration = $(".wpbf-navigation").data("sub-menu-animation-duration");
 			buildCenteredMenu();
 		});
 	}
