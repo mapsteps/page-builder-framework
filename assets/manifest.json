@@ -1,6 +1,6 @@
 {
   "config": {
-    "url": "repo.develop",
+    "url": "repo.local",
     "host": "192.168.0.26"
   }
 }
