@@ -1847,7 +1847,7 @@ if ( $menu_padding ) {
 
 if ( $menu_bg_color ) {
 
-	echo '.wpbf-navigation:not(.wpbf-navigation-transparent) {';
+	echo '.wpbf-navigation:not(.wpbf-navigation-transparent):not(.wpbf-navigation-active) {';
 	echo sprintf( 'background-color: %s;', esc_attr( $menu_bg_color ) );
 	echo '}';
 
