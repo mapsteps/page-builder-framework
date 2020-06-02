@@ -50,7 +50,8 @@ var WPBFMobile = (function ($) {
 
 			var hasSubmenu = this.parentNode.classList.contains('menu-item-has-children');
 
-			if (this.href.match("^#") || this.href.match("^/#")) {
+			if (this.href.match("#") || this.href.match("/#")) {
+				
 				if (!hasSubmenu) {
 					toggleMobileMenu(menuType);
 				} else {
