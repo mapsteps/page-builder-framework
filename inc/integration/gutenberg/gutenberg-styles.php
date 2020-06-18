@@ -66,7 +66,7 @@ if ( $page_bold_color ) {
 // Page font settings.
 if ( $page_font_toggle && $page_font_family_value ) {
 
-	echo '.editor-styles-wrapper p, .editor-styles-wrapper .editor-block-list__block {';
+	echo '#wpwrap .editor-styles-wrapper {';
 
 	if ( ! empty( $page_font_family_value['font-family'] ) ) {
 
