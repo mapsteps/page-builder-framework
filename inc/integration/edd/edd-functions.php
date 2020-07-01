@@ -66,7 +66,7 @@ function wpbf_edd_sidebar() {
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="wpbf-widgettitle">',
 		'after_title'   => '</h4>',
-		'description'   => __( 'This Sidebar is being displayed on EDD Archive Pages.', 'page-builder-framework' ),
+		'description'   => __( 'Widgets in this area will be shown on EDD archive pages.', 'page-builder-framework' ),
 	) );
 
 	// Product page sidebar.
@@ -77,7 +77,7 @@ function wpbf_edd_sidebar() {
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="wpbf-widgettitle">',
 		'after_title'   => '</h4>',
-		'description'   => __( 'This Sidebar is being displayed on EDD Product Pages.', 'page-builder-framework' ),
+		'description'   => __( 'Widgets in this area will be shown on EDD product pages.', 'page-builder-framework' ),
 	) );
 
 }

@@ -70,7 +70,7 @@ function wpbf_woo_sidebar() {
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="wpbf-widgettitle">',
 		'after_title'   => '</h4>',
-		'description'   => __( 'This Sidebar is being displayed on WooCommerce Archive Pages.', 'page-builder-framework' ),
+		'description'   => __( 'Widgets in this area will be shown on WooCommerce archive pages.', 'page-builder-framework' ),
 	) );
 
 	// Product page sidebar.
@@ -81,7 +81,7 @@ function wpbf_woo_sidebar() {
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="wpbf-widgettitle">',
 		'after_title'   => '</h4>',
-		'description'   => __( 'This Sidebar is being displayed on WooCommerce Product Pages.', 'page-builder-framework' ),
+		'description'   => __( 'Widgets in this area will be shown on WooCommerce product pages.', 'page-builder-framework' ),
 	) );
 
 }
