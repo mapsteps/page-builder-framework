@@ -114,7 +114,7 @@
 
 /* Container */
 .wpbf-container {
-	max-width: $breakpoint3;
+	max-width: $large-screen-breakpoint;
 	padding: 0 $padding;
 }
 
@@ -164,12 +164,14 @@
 	-webkit-appearance: none;
 	text-align: center;
 	padding: 14px 16px;
-	background: darken($base-color-alt,5%);
+	// @include css-variable(background, $base-color, $base-color-var);
+	// @include css-variable(color, $brand-color-alt, $brand-color-alt-var);
+	background: $base-color;
+	color: $brand-color-alt;
 	outline: 0;
 	border: none;
 	display: inline-block;
 	cursor: pointer;
-	color: $brand-color-alt;
 	@include transition(all 0.2s);
 	line-height: 1;
 	font-weight: 700;
@@ -276,15 +278,15 @@ select {
 }
 
 .wpbf-notice-error {
-	background: rgba(tomato,.15);
-	border-color: tomato;
-	color: tomato;
+	background: rgba($red,.15);
+	border-color: $red;
+	color: $red;
 }
 
 .wpbf-notice-success {
-	background: rgba($secondary-color,.15);
-	border-color: $secondary-color;
-	color: $secondary-color;
+	background: rgba($green,.15);
+	border-color: $green;
+	color: $green;
 }
 
 /* Table */

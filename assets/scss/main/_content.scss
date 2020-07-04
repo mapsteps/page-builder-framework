@@ -196,7 +196,7 @@ body {
 		border-top: 10px solid $base-color-alt;
 		display: block;
 		small {
-			font-size: $tiny-fontsize;
+			font-size: $small-fontsize;
 		}
 	}
 }
@@ -254,7 +254,7 @@ body {
 .comment {
 	position: relative;
 	padding: 25px;
-	border: 3px solid darken($base-color-alt,8%);
+	border: 3px solid $base-color;
 	margin-bottom: $margin;
 	.comment-edit-link {
 		position: absolute;
@@ -277,13 +277,13 @@ body {
 	}
 	.comment-author .fn {
 		font-style: normal;
-		font-weight: $bold;
+		font-weight: 700;
 	}
 	.comment-time {
-		color: darken($base-color,20%);
+		color: $brand-color-alt;
 		margin-left: 5px;
 		a {
-			color: darken($base-color,20%);
+			color: $brand-color-alt;
 		}
 	}
 	.comment-time:before {
@@ -306,7 +306,7 @@ body {
 .pingback {
 	position: relative;
 	padding: 25px;
-	border: 3px solid darken($base-color-alt,8%);
+	border: 3px solid $base-color;
 	margin-bottom: $margin;
 	a {
 		display: block;
@@ -437,7 +437,7 @@ span.wpcf7-not-valid-tip {
 	height: auto;
 	background: #fff;
 	font-size: $small-fontsize;
-	color: tomato;
+	color: $red;
 }
 
 div.wpcf7-response-output {
@@ -449,8 +449,8 @@ div.wpcf7-response-output {
 
 
 div.wpcf7-spam-blocked, div.wpcf7-validation-errors {
-	border-color: tomato;
-	color: tomato;
+	border-color: $red;
+	color: $red;
 
 }
 

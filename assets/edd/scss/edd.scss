@@ -165,10 +165,10 @@
 }
 #edd_checkout_form_wrap input.edd-input.error,
 #edd_checkout_form_wrap textarea.edd-input.error {
-	border-color: tomato;
+	border-color: $red;
 }
 #edd_checkout_form_wrap span.edd-required-indicator {
-	color: tomato;
+	color: $red;
 	display: inline;
 }
 #edd_checkout_form_wrap input[type="radio"] {
@@ -519,7 +519,7 @@ table#edd_purchase_receipt .edd_receipt_payment_status.pending,
 table#edd_purchase_receipt .edd_receipt_payment_status.cancelled,
 table#edd_purchase_receipt .edd_receipt_payment_status.revoked,
 table#edd_purchase_receipt .edd_receipt_payment_status.failed {
-	color: tomato;
+	color: $red;
 }
 table#edd_purchase_receipt_products li {
 	list-style: none;
@@ -558,7 +558,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 #edd_user_history .edd_purchase_status.failed,
 #edd_user_history .edd_purchase_status.cancelled,
 #edd_user_history .edd_purchase_status.pending {
-	color: tomato;
+	color: $red;
 }
 
 
@@ -782,7 +782,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 .edd-submit.button,
 .edd-submit.button.gray {
 	color: $brand-color-alt;
-	background: darken($base-color-alt,5%);
+	background: $base-color;
 }
 .edd-submit.button:hover,
 .edd-submit.button.gray:hover {
@@ -1036,9 +1036,9 @@ edd-hide-on-empty.cart-not.empty {
 	margin-bottom: 0;
 }
 .edd-alert-error {
-	color: tomato;
-	background-color: rgba(tomato,.15);
-	border-color: tomato;
+	color: $red;
+	background-color: rgba($red,.15);
+	border-color: $red;
 }
 .edd-alert-success {
 	background-color: rgba(#4fe190,.15);
@@ -1051,9 +1051,9 @@ edd-hide-on-empty.cart-not.empty {
 	border-color: $accent-color;
 }
 .edd-alert-warn {
-	color: tomato;
-	background-color: rgba(tomato,.15);
-	border-color: tomato;
+	color: $red;
+	background-color: rgba($red,.15);
+	border-color: $red;
 }
 
 /* Page Builder Framework */
@@ -1137,7 +1137,7 @@ edd-hide-on-empty.cart-not.empty {
 
 #edd-cancel-license-renewal {
 	text-decoration: none;
-	color: tomato;
+	color: $red;
 	font-size: 14px;
 	margin-left: $margin-small;
 }
@@ -1186,7 +1186,7 @@ edd-hide-on-empty.cart-not.empty {
 		text-align: center;
 		background: $accent-color;
 		color: #fff;
-		font-size: $small-fontsize - 2;
+		font-size: $tiny-fontsize;
 		position: relative;
 	}
 	.wpbf-edd-menu-item-count:before {

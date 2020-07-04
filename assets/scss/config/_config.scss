@@ -1,54 +1,91 @@
-// Colors
+/* Colors */
+
+// Defaults
+$base-color:				#dedee5;
 $base-color-alt:			#f5f5f7;
-$base-color:				darken($base-color-alt, 8%);
 
 $brand-color:				#3e4349;
-$brand-color-alt:			lighten($brand-color, 20%);
+$brand-color-alt:			#6d7680;
 
 $accent-color:				#3ba9d2;
-$accent-color-alt:			lighten($accent-color,15%);
+$accent-color-alt:			#79c4e0;
 
-$secondary-color:			#4fe190;
-$secondary-color-alt:		#004170;
-
+$red:						tomato;
+$green:						#4fe190;
 $yellow:					#e8bb1a;
+
+// Globals
+:root {
+
+	// Colors
+	--base-color:			#{$base-color};
+	--base-color-alt:		#{$base-color-alt};
+
+	--brand-color:			#{$brand-color};
+	--brand-color-alt:		#{$brand-color-alt};
+
+	--accent-color:			#{$accent-color};
+	--accent-color-alt:		#{$accent-color-alt};
+
+	// Margins
+	// --margin:				20px;
+	// --margin-xlarge:		120px;
+	// --margin-large:			80px;
+	// --margin-medium:		40px;
+	// --margin-small:			10px;
+	// --paragraph:			20px;
+
+	// // Paddings
+	// --padding:				var(--margin);
+	// --padding-xlarge:		var(--margin-xlarge);
+	// --padding-large:		var(--margin-large);
+	// --padding-medium:		var(--margin-medium);
+	// --padding-small:		var(--margin-small);
+
+}
+
+// Variables
+$base-color:			var(--base-color);
+$base-color-alt:		var(--base-color-alt);
+
+$brand-color:			var(--brand-color);
+$brand-color-alt:		var(--brand-color-alt);
+
+$accent-color-var:			var(--accent-color);
+$accent-color-alt-var:		var(--accent-color-alt);
+
+/* Fonts */
 
 // Fonts
 $base-font:					Helvetica, Arial, sans-serif;
-$head-font:					Helvetica, Arial, sans-serif;
+$head-font:					$base-font;
 
-// Font Sizes
-$tiny-fontsize:				14px;
-$small-fontsize:			14px;
+// Font size
 $base-fontsize:				16px;
-$bigger-fontsize:			20px;
-$big-fontsize:				32px;
+$tiny-fontsize:				$base-fontsize - 4;
+$small-fontsize:			$base-fontsize - 2;
+$bigger-fontsize:			$base-fontsize + 4;
 
-// Line Heights
+// Line height
 $base-lineheight:			1.7;
 $head-lineheight:			1.2;
 
-// Font Weights
-$light:						200;
-$base-fontweight:			400;
-$semibold:					500;
-$bold:						700;
+/* Spacing */
 
-// Margins
 $margin:					20px;
 $margin-xlarge:				120px;
 $margin-large:				80px;
 $margin-medium:				40px;
 $margin-small:				10px;
 
-// Paddings
+// Padding
 $padding:					20px;
 $padding-xlarge:			120px;
 $padding-large:				80px;
 $padding-medium:			40px;
 $padding-small:				10px;
 
-// Grid Spacing
+// Grid spacing
 $grid-xlarge:				45px;
 $grid-large:				35px;
 $grid:						35px;
@@ -56,13 +93,30 @@ $grid-medium:				25px;
 $grid-small:				15px;
 $divider:					25px;
 
-// Breakpoints
-$breakpoint0:				480px;
-$breakpoint1:				768px;
-$breakpoint2:				1024px;
-$breakpoint3:				1200px;
+// Variables
+// $margin:					var(--margin);
+// $margin-xlarge:				var(--margin-xlarge);
+// $margin-large:				var(--margin-large);
+// $margin-medium:				var(--margin-medium);
+// $margin-small:				var(--margin-small);
+// $paragraph:					var(--paragraph);
 
-// Mixins
+// $padding:					var(--padding);
+// $padding-xlarge:			var(--padding-xlarge);
+// $padding-large:				var(--padding-large);
+// $padding-medium:			var(--padding-medium);
+// $padding-small:				var(--padding-small);
+
+/* Breakpoints */
+
+$mobile-breakpoint:			480px;
+$tablet-breakpoint:			768px;
+$desktop-breakpoint:		1024px;
+$large-screen-breakpoint:	1200px;
+
+/* Mixins */
+
+// Border radius
 @mixin border-radius($radius) {
 -moz-border-radius:			$radius;
 -webkit-border-radius:		$radius;
@@ -70,6 +124,7 @@ $breakpoint3:				1200px;
 border-radius:				$radius;
 };
 
+// Transition
 @mixin transition($transition) {
 -moz-transition:			$transition;
 -o-transition:				$transition;
@@ -77,12 +132,14 @@ border-radius:				$radius;
 transition:					$transition;
 };
 
+// Box shadow
 @mixin box-shadow($box-shadow) {
 -webkit-box-shadow:			$box-shadow;
 -moz-box-shadow:			$box-shadow;
 box-shadow:					$box-shadow;
 };
 
+// Scale
 @mixin scale($scale) {
 -moz-transform:				scale($scale);
 -ms-transform:				scale($scale);
@@ -90,6 +147,7 @@ box-shadow:					$box-shadow;
 -webkit-transform:			scale($scale);
 }
 
+// Vertical align
 @mixin vertical-align($position: relative) {
 position:					$position;
 top:						50%;
@@ -98,6 +156,7 @@ top:						50%;
 transform:					translateY(-50%);
 }
 
+// Horizontal align
 @mixin horizontal-align($position: absolute) {
 position:					$position;
 left:						50%;
@@ -106,6 +165,7 @@ left:						50%;
 transform:					translateX(-50%);
 }
 
+// Center align
 @mixin center-align($position: fixed) {
 position:					$position;
 left:						50%;
@@ -115,10 +175,17 @@ top:						50%;
 transform:					translate(-50%, -50%);
 }
 
+// Flex
 @mixin flex() {
 display:					-webkit-box;
 display:					-moz-box;
 display: 					-ms-flexbox;
 display: 					-webkit-flex;
 display: 					flex;
+}
+
+// CSS Variable + iefix
+@mixin css-variable($property, $iefix, $variable) {
+	#{$property}:				$iefix;
+	#{$property}:				$variable;
 }

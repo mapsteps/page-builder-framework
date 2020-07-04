@@ -1,5 +1,5 @@
 /* From 481 | Phone Landscape & Bigger */
-@media (min-width: $breakpoint0 + 1) {
+@media (min-width: $mobile-breakpoint + 1) {
 
 	/* Grid */
 	.wpbf-grid-small-1-1 > * {
@@ -97,7 +97,7 @@
 }
 
 /* From 769 | Tablet & Bigger */
-@media (min-width: $breakpoint1 + 1) {
+@media (min-width: $tablet-breakpoint + 1) {
 
 	/* Gutenberg */
 
@@ -210,7 +210,7 @@
 }
 
 /* From 1025 | Desktop & Bigger */
-@media (min-width: $breakpoint2 + 1) {
+@media (min-width: $desktop-breakpoint + 1) {
 
 	/* Gutenberg */
 
@@ -321,7 +321,7 @@
 }
 
 /* From 1200 | Large Screen & Bigger */
-@media (min-width: $breakpoint3 + 1) {
+@media (min-width: $large-screen-breakpoint + 1) {
 
 	/* Grid */
 	.wpbf-grid-xlarge-1-1 > * {
@@ -419,7 +419,7 @@
 }
 
 /* Until 1200 */
-@media screen and (max-width:$breakpoint3) {
+@media screen and (max-width:$large-screen-breakpoint) {
 
 	/* Margin */
 	.wpbf-margin-xlarge {
@@ -460,7 +460,7 @@
 }
 
 /* Until 1024 */
-@media screen and (max-width:$breakpoint2) {
+@media screen and (max-width:$desktop-breakpoint) {
 
 	/* Margin */
 	.wpbf-margin-large, .wpbf-margin-xlarge {
@@ -525,7 +525,7 @@
 }
 
 /* Until 768 */
-@media screen and (max-width:$breakpoint1) {
+@media screen and (max-width:$tablet-breakpoint) {
 
 	/* General */
 
@@ -574,7 +574,7 @@
 }
 
 /* Until 480 */
-@media screen and (max-width:$breakpoint0) {
+@media screen and (max-width:$mobile-breakpoint) {
 
 	/* Margin */
 	.wpbf-margin-medium, .wpbf-margin-large, .wpbf-margin-xlarge {
@@ -666,7 +666,7 @@
 /* Visibility */
 
 /* Desktop and bigger */
-@media (min-width: $breakpoint2 + 1) {
+@media (min-width: $desktop-breakpoint + 1) {
 	.wpbf-visible-small {
 		display: none !important;
 	}
@@ -678,7 +678,7 @@
 	}
 }
 /* Tablets portrait */
-@media (min-width: $breakpoint1 + 1) and (max-width: $breakpoint2) {
+@media (min-width: $tablet-breakpoint + 1) and (max-width: $desktop-breakpoint) {
 	.wpbf-visible-small {
 		display: none !important;
 	}
@@ -690,7 +690,7 @@
 	}
 }
 /* Tablets */
-@media (max-width: $breakpoint1) {
+@media (max-width: $tablet-breakpoint) {
 	.wpbf-visible-medium {
 		display: none !important;
 	}
