@@ -1,47 +1,51 @@
-/**
- * WooCommerce CSS Variables
- */
+/* Colors */
 
-$woocommerce:				#3ba9d2;
-$green:						#4fe190;
-$red:						#ff6347;
-$orange:					#ffba00;
-$blue:						#3ba9d2;
+// Defaults
+$white: #ffffff;
+$base-color: #dedee5;
+$base-color-alt: #f5f5f7;
 
-$base-color-alt:			#f5f5f7;
-$base-color:				darken($base-color-alt, 8%);
+$brand-color: #3e4349;
+$brand-color-alt: #6d7680;
 
-$brand-color:				#3e4349;
-$brand-color-alt:			lighten($brand-color, 20%);
+$accent-color: #3ba9d2;
+$accent-color-alt: #79c4e0;
 
-$accent-color:				#3ba9d2;
-$accent-color-alt:			lighten($accent-color,15%);
+$green: #4fe190;
+$red: #ff6347;
 
-$green:			#4fe190;
-$green-alt:		#004170;
+// Abstractions
+$primarytext: $white;			// Text on primary colour bg
+$highlight: $green;				// Prices, In stock labels, sales flash
+$highlightext: $white;			// Text on highlight colour bg
+$contentbg: $white;				// Content BG - Tabs (active state)
 
-$primary:					#3ba9d2;                                    // Primary colour for buttons (alt)
-$primarytext:				#fff;										// Text on primary colour bg
+// Variables
+$base-color: var(--base-color);
+$base-color-alt: var(--base-color-alt);
 
-$secondary:					darken($base-color-alt,5%);					// Secondary buttons
-$secondarytext:				$brand-color-alt;							// Text on secondary colour bg
+$brand-color: var(--brand-color);
+$brand-color-alt: var(--brand-color-alt);
 
-$highlight:					#4fe190;									// Prices, In stock labels, sales flash
-$highlightext:				#fff;										// Text on highlight colour bg
+$accent-color: var(--accent-color);
+$accent-color-alt: var(--accent-color-alt);
 
-$contentbg:					#fff;										// Content BG - Tabs (active state)
-$subtext:					$brand-color-alt;							// small, breadcrumbs etc
+/* Spacing */
 
-// Page Builder Framework
-$margin:					20px;
-$margin-small:				10px;
-$margin-medium:				40px;
+// Margin
+$margin: 20px;
+$margin-small: 10px;
+$margin-medium: 40px;
 
-$padding:					20px;
-$padding-small:				10px;
-$padding-medium:			40px;
+// Padding
+$padding: 20px;
+$padding-small: 10px;
+$padding-medium: 40px;
 
-$base-fontsize:				16px;
-$small-fontsize:			14px;
-$bigger-fontsize:			20px;
-$big-fontsize:				32px;
+/* Fonts */
+
+// Font size
+$base-fontsize: 16px;
+$small-fontsize: 14px;
+$bigger-fontsize: 20px;
+$big-fontsize: 32px;

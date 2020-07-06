@@ -24,7 +24,7 @@ p.demo_store,
 	padding: $padding-small 0;
 	font-size: $small-fontsize;
 	text-align: center;
-	background-color: $primary;
+	background-color: $accent-color;
 	color: $primarytext;
 	z-index: 99998;
 	display: none;
@@ -260,7 +260,7 @@ p.demo_store,
 				li {
 					border: 1px solid $base-color;
 					border-right: 0px;
-					background-color: $secondary;
+					background-color: $base-color;
 					float: left;
 					@include transition(all 0.2s);
 					a {
@@ -585,7 +585,7 @@ p.demo_store,
 		}
 
 		&.alt {
-			background-color: $primary;
+			background-color: $accent-color;
 			color: $primarytext;
 
 			&:hover {
@@ -599,7 +599,7 @@ p.demo_store,
 			&.disabled:hover,
 			&:disabled:hover,
 			&:disabled[disabled]:hover {
-				background-color: $primary;
+				background-color: $accent-color;
 				color: $primarytext;
 			}
 		}
@@ -672,7 +672,7 @@ p.demo_store,
 						left: 0;
 						width: 45px;
 						height: auto;
-						background: $secondary;
+						background: $base-color;
 						margin: 0;
 					}
 
@@ -712,7 +712,7 @@ p.demo_store,
 				
 				// wish this would show up.
 				#respond {
-					border: 1px solid $secondary;
+					border: 1px solid $base-color;
 					// border-radius: 4px;
 					padding: $padding;
 					margin: $margin 0 0 $margin;
@@ -740,7 +740,7 @@ p.demo_store,
 
 		&::before {
 			content: "\73\73\73\73\73";
-			color: darken( $secondary, 10% );
+			color: $base-color;
 			float: left;
 			top: 0;
 			left: 0;
@@ -1135,7 +1135,7 @@ p.demo_store,
 			.select2-container,
 			input.input-text,
 			select {
-				border-color: $green - #111;
+				border-color: $green;
 			}
 		}
 	}
@@ -1331,7 +1331,7 @@ p.demo_store,
 			z-index: 2;
 			width: 16px;
 			height: 16px;
-			background-color: $primary;
+			background-color: $accent-color;
 			border-radius: 15px;
 			cursor: ew-resize;
 			outline: none;
@@ -1346,7 +1346,7 @@ p.demo_store,
 			display: block;
 			border: 0;
 			border-radius: 15px;
-			background-color: $primary;
+			background-color: $accent-color;
 		}
 
 		.price_slider_wrapper .ui-widget-content {
@@ -1401,7 +1401,7 @@ p.demo_store,
 	margin: 0 0 $margin-medium;
 	position: relative;
 	background-color: $base-color-alt;
-	border-top: 3px solid $primary;
+	border-top: 3px solid $accent-color;
 	@include clearfix();
 
 	&::before {
@@ -1440,10 +1440,10 @@ p.demo_store,
 }
 
 .woocommerce-info {
-	border-top-color: $blue;
+	border-top-color: $accent-color;
 
 	&::before {
-		color: $blue;
+		color: $accent-color;
 	}
 }
 
@@ -1655,7 +1655,7 @@ p.demo_store,
 			margin: $margin 0;
 			font-size: $small-fontsize;
 			// border-radius: 2px;
-			background-color: darken( $secondary, 5% );
+			background-color: $base-color;
 
 			// input.input-text, textarea {
 			// 	border-color: darken( $secondary, 15% );
@@ -1751,7 +1751,7 @@ p.demo_store,
 			&::before {
 				content: '';
 				display: block;
-				border: 1em solid darken($secondary, 5%); /* arrow size / color */
+				border: 1em solid $base-color; /* arrow size / color */
 				border-right-color: transparent;
 				border-left-color: transparent;
 				border-top-color: transparent;
