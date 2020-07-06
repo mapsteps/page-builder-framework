@@ -787,7 +787,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 .edd-submit.button:hover,
 .edd-submit.button.gray:hover {
 	color: $brand-color-alt;
-	background: $base-color;
+	background: $base-color-alt;
 }
 .edd-submit.button.gray:active {
 	background-image: none;
@@ -826,7 +826,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 }
 .edd-submit.button.red:hover {
 	color: #ffffff;
-	background: $red;
+	background: rgba($red,.75);
 }
 .edd-submit.button.red:active {
 	background-image: none;
@@ -839,7 +839,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 }
 .edd-submit.button.green:hover {
 	color: #ffffff;
-	background: $green;
+	background: rgba($green,.75);
 }
 .edd-submit.button.green:active {
 	background-image: none;
@@ -852,7 +852,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 }
 .edd-submit.button.yellow:hover {
 	color: #ffffff;
-	background: $yellow;
+	background: rgba($yellow,.75);
 }
 .edd-submit.button.yellow:active {
 	background-image: none;
@@ -874,11 +874,11 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 /** Dark Gray */
 .edd-submit.button.dark-gray {
 	color: #fff;
-	background: #363636;
+	background: $brand-color;
 }
 .edd-submit.button.dark-gray:hover {
 	color: #fff;
-	background: #333;
+	background: rgba($brand-color,.75);
 }
 .edd-submit.button.dark-gray:active {
 	background-image: none;
