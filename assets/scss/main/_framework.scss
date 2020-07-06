@@ -175,18 +175,18 @@
 	font-weight: 700;
 }
 
-.wpbf-button:hover {
+.wpbf-button:hover, input[type="submit"]:hover {
 	background: $base-color;
 	color: $brand-color-alt;
 }
 
 // Button modifier (primary)
-.wpbf-button-primary, input[type="submit"] {
+.wpbf-button-primary {
 	background: $accent-color;
 	color: #fff;
 }
 
-.wpbf-button-primary:hover, input[type="submit"]:hover {
+.wpbf-button-primary:hover {
 	background: $accent-color-alt;
 	color: #fff;
 }
