@@ -1,10 +1,10 @@
-// Font sizes.
+// Font sizes
 .has-tiny-font-size {
-	font-size: 12px;
+	font-size: $tiny-fontsize;
 }
 
 .has-small-font-size {
-	font-size: 14px;
+	font-size: $small-fontsize;
 }
 
 .has-large-font-size {
@@ -19,7 +19,7 @@
 	font-size: 44px;
 }
 
-// Full Aligned Items
+// Full aligned items
 .wpbf-no-sidebar .alignfull {
 	margin-left: calc(50% - 50vw);
 	margin-right: calc(50% - 50vw);
@@ -42,14 +42,14 @@
 	height: 2px;
 }
 
-// Separator Wide Modifier
+// Separator modifier (wide)
 .wp-block-separator.is-style-wide {
 	width: 100%;
 	max-width: none;
 	height: 1px;
 }
 
-// Separator Dots Modifier
+// Separator modifier (dots)
 .wp-block-separator.is-style-dots:before {
 	color: $base-color;
 	font-size: 30px;
@@ -124,7 +124,7 @@
 	color: $accent-color;
 }
 
-// Media & Text
+// Media & text
 .wp-block-media-text {
 	margin-bottom: $margin;
 }

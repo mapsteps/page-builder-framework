@@ -1,4 +1,4 @@
-/* From 481 | Phone Landscape & Bigger */
+/* From 481 | Phone landscape & bigger */
 @media (min-width: $mobile-breakpoint + 1) {
 
 	/* Grid */
@@ -27,7 +27,7 @@
 		width: 10%;
 	}
 
-	/* Grid Cells */
+	/* Grid cells */
 
 	// Whole
 	.wpbf-small-1-1 {
@@ -96,12 +96,12 @@
 
 }
 
-/* From 769 | Tablet & Bigger */
+/* From 769 | Tablet & bigger */
 @media (min-width: $tablet-breakpoint + 1) {
 
 	/* Gutenberg */
 
-	// Wide Aligned Images
+	// Wide aligned images
 	.wpbf-no-sidebar .alignwide {
 		margin-left: -50px;
 		margin-right: -50px;
@@ -111,7 +111,7 @@
 
 	// Sidebar
 	.wpbf-grid-divider > [class*='wpbf-medium-']:not(.wpbf-medium-1-1):nth-child(n+2) {
-		border-left:		1px solid $base-color;
+		border-left: 1px solid $base-color;
 	}
 
 	/* Grid */
@@ -140,7 +140,7 @@
 		width: 10%;
 	}
 
-	/* Grid Cells */
+	/* Grid cells */
 
 	// Whole
 	.wpbf-medium-1-1 {
@@ -209,12 +209,12 @@
 
 }
 
-/* From 1025 | Desktop & Bigger */
+/* From 1025 | Desktop & bigger */
 @media (min-width: $desktop-breakpoint + 1) {
 
 	/* Gutenberg */
 
-	// Wide Aligned Images
+	// Wide aligned images
 	.wpbf-no-sidebar .alignwide {
 		margin-left: -75px;
 		margin-right: -75px;
@@ -222,7 +222,7 @@
 
 	/* Sidebar */
 	.wpbf-grid-divider > [class*='wpbf-large-']:not(.wpbf-large-1-1):nth-child(n+2) {
-		border-left:		1px solid $base-color;
+		border-left: 1px solid $base-color;
 	}
 
 	/* Grid */
@@ -251,7 +251,7 @@
 		width: 10%;
 	}
 
-	/* Grid Cells */
+	/* Grid cells */
 
 	// Whole
 	.wpbf-large-1-1 {
@@ -320,7 +320,7 @@
 
 }
 
-/* From 1200 | Large Screen & Bigger */
+/* From 1200 | Large xcreen & bigger */
 @media (min-width: $large-screen-breakpoint + 1) {
 
 	/* Grid */
@@ -349,7 +349,7 @@
 		width: 10%;
 	}
 
-	/* Grid Cells */
+	/* Grid cells */
 
 	// Whole
 	.wpbf-xlarge-1-1 {
@@ -419,7 +419,7 @@
 }
 
 /* Until 1200 */
-@media screen and (max-width:$large-screen-breakpoint) {
+@media screen and (max-width: $large-screen-breakpoint) {
 
 	/* Margin */
 	.wpbf-margin-xlarge {
@@ -460,7 +460,7 @@
 }
 
 /* Until 1024 */
-@media screen and (max-width:$desktop-breakpoint) {
+@media screen and (max-width: $desktop-breakpoint) {
 
 	/* Margin */
 	.wpbf-margin-large, .wpbf-margin-xlarge {
@@ -525,25 +525,25 @@
 }
 
 /* Until 768 */
-@media screen and (max-width:$tablet-breakpoint) {
+@media screen and (max-width: $tablet-breakpoint) {
 
 	/* General */
 
-	// Pre Header / Footer
+	// Pre header & footer
 	.wpbf-footer-two-columns,
 	.wpbf-pre-header-two-columns {
-		display: 					block;
+		display: block;
 		.wpbf-inner-footer-left,
 		.wpbf-inner-footer-right,
 		.wpbf-inner-pre-header-left,
 		.wpbf-inner-pre-header-right {
-			display: 				block;
-			width: 					100%;
-			text-align: 			center;
+			display: block;
+			width: 100%;
+			text-align: center;
 		}
 	}
 
- // Right Navigation
+ // Right navigation
  .wpbf-page-footer {
  	.wpbf-inner-footer-right {
 		.wpbf-menu {
@@ -557,7 +557,7 @@
 	}
 }
 
-// Left Navigation
+// Left navigation
 .wpbf-page-footer {
 	.wpbf-inner-footer-left {
 		.wpbf-menu {
@@ -574,7 +574,7 @@
 }
 
 /* Until 480 */
-@media screen and (max-width:$mobile-breakpoint) {
+@media screen and (max-width: $mobile-breakpoint) {
 
 	/* Margin */
 	.wpbf-margin-medium, .wpbf-margin-large, .wpbf-margin-xlarge {
@@ -677,6 +677,7 @@
 		display: none !important;
 	}
 }
+
 /* Tablets portrait */
 @media (min-width: $tablet-breakpoint + 1) and (max-width: $desktop-breakpoint) {
 	.wpbf-visible-small {
@@ -689,6 +690,7 @@
 		display: none !important;
 	}
 }
+
 /* Tablets */
 @media (max-width: $tablet-breakpoint) {
 	.wpbf-visible-medium {

@@ -49,13 +49,13 @@
 
 /* Logo */
 .wpbf-logo-container {
-	line-height: $base-lineheight - .2;
+	line-height: 1.5;
 }
 
 .wpbf-logo {
 	a {
 		font-weight: 700;
-		font-size: $bigger-fontsize + 2;
+		font-size: 22px;
 	}
 }
 
@@ -64,7 +64,7 @@
 	margin: 0;
 }
 
-/* Search Menu Item */
+/* Search menu item */
 .wpbf-menu-item-search {
 	position: relative;
 	&.active i {
@@ -97,12 +97,12 @@
 	@include transition(background-color 0.2s);
 }
 
-// Current Menu Item
+// Current menu item
 .wpbf-menu > .current-menu-item > a {
 	color: $accent-color-alt !important;
 }
 
-/* Sub Menu */
+/* Sub menu */
 
 // List reset
 .wpbf-menu .sub-menu {
@@ -110,11 +110,11 @@
 	padding: 0;
 }
 
-// All Sub Menus
+// All sub menus
 .wpbf-sub-menu {
-	// First Level Sub Menu Container
+	// First level sub menu container
 	> .menu-item-has-children {
-		// First Level Sub Menu
+		// First level sub menu
 		> a:after {
 			margin-left: 5px;
 			font-family: "page-builder-framework";
@@ -138,17 +138,17 @@
 	}
 }
 
-// Default Sub Menus (excluding Mega Menu)
+// Default sub menus (excluding mega menu)
 .wpbf-sub-menu {
-	// All Sub Menus
+	// All sub menus
 	> .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {
 		width: 220px;
 	}
-	// First Level Sub Menu Container
+	// First level sub menu container
 	> .menu-item-has-children:not(.wpbf-mega-menu) {
 		position: relative;
 	}
-	// Second Level Submenu Container
+	// Second level sub menu container
 	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
 		position: relative;
 		> .sub-menu {
@@ -163,7 +163,7 @@
 		}
 		> a:after {
 			float: right;
-			margin-left: 20px;
+			margin-left: $margin;
 			font-family: "page-builder-framework";
 			content: "\f103";
 			speak: none;
@@ -177,7 +177,7 @@
 	}
 }
 
-// Sub Menu Modifier (Alignment)
+// Sub menu modifier (alignment)
 .wpbf-sub-menu-align-right > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {
 	right: 0;
 }
@@ -203,7 +203,7 @@
 	opacity: 1 !important;
 }
 
-/* Navigation Variations */
+/* Navigation variations */
 
 // Defaults
 .wpbf-menu-right,
@@ -223,14 +223,14 @@
 	}
 }
 
-// Right Navigation
+// Right navigation
 .wpbf-menu-right {
 	.wpbf-menu {
 		float: right;
 	}
 }
 
-// Left Navigation
+// Left navigation
 .wpbf-menu-left {
 	.wpbf-logo-container {
 		text-align: right;
@@ -240,7 +240,7 @@
 	}
 }
 
-// Centered Navigation
+// Centered navigation
 .wpbf-menu-centered {
 	.logo-container {
 		display: none;
@@ -257,7 +257,7 @@
 	}
 }
 
-// Stacked Navigation
+// Stacked navigation
 .wpbf-menu-stacked {
 	text-align: center;
 	.wpbf-menu {
@@ -266,7 +266,7 @@
 	}
 }
 
-/* Mobiletoggle */
+/* Mobile toggle */
 
 // Defaults
 .wpbf-mobile-logo a {
@@ -281,7 +281,7 @@
 	text-align: left;
 }
 
-// Toggle & Nav Menu Items
+// Toggle & nav menu items
 .wpbf-nav-item,
 .wpbf-mobile-nav-item {
 	cursor: pointer;
@@ -307,7 +307,7 @@
 	padding-bottom: $padding;
 }
 
-// Hamburger & Off-Canvas Toggle
+// Hamburger & off-canvas toggle
 .wpbf-mobile-menu-hamburger,
 .wpbf-mobile-menu-off-canvas {
 	.wpbf-mobile-nav-wrapper {
@@ -318,7 +318,7 @@
 	}
 }
 
-// Default Toggle
+// Default toggle
 .wpbf-mobile-menu-default {
 	.wpbf-mobile-logo-container,
 	.wpbf-menu-toggle-container {
@@ -329,7 +329,7 @@
 	}
 }
 
-/* Mobile Menu */
+/* Mobile menu */
 .wpbf-mobile-menu-container {
 	display: none;
 	background: #fff;
@@ -362,7 +362,7 @@
 	}
 }
 
-// Submenu
+// Sub menu
 .wpbf-mobile-menu .sub-menu {
 	margin: 0;
 	padding: 0;
@@ -380,7 +380,7 @@
 	}
 }
 
-/* Pre Header */
+/* Pre header */
 
 .wpbf-pre-header {
 	.wpbf-menu {
@@ -391,7 +391,7 @@
 	}
 }
 
- // Right Navigation
+ // Right navigation
 .wpbf-pre-header {
 	.wpbf-inner-pre-header-right {
 		.wpbf-menu {
@@ -403,7 +403,7 @@
 	}
 }
 
-// Left Navigation
+// Left navigation
 .wpbf-pre-header {
 	.wpbf-inner-pre-header-left {
 		.wpbf-menu {
@@ -414,7 +414,7 @@
 
 /* Footer */
 
-// One Column Navigation
+// One column navigation
 .wpbf-page-footer {
 	.wpbf-inner-footer-content {
  		.wpbf-menu {
@@ -426,7 +426,7 @@
  	}
  }
 
- // Right Navigation
+ // Right navigation
 .wpbf-page-footer {
 	.wpbf-inner-footer-right {
 		.wpbf-menu {
@@ -435,7 +435,7 @@
 	}
 }
 
-// Left Navigation
+// Left navigation
 .wpbf-page-footer {
 	.wpbf-inner-footer-left {
 		.wpbf-menu {
@@ -444,7 +444,7 @@
 	}
 }
 
-/* Post Navigation */
+/* Post navigation */
 .post-links {
 	margin-bottom: $margin;
 }
@@ -456,14 +456,14 @@
 	float: right;
 }
 
-/* Sticky Navigation */
+/* Sticky navigation */
 .admin-bar .wpbf-navigation-active {
 	margin-top: 32px;
 }
 
 /* WooCommerce */
 
-// Menu Item
+// Cart menu item
 .wpbf-woo-menu-item {
 	.wpbf-woo-menu-item-count {
 		border-radius: 3px;
@@ -495,7 +495,7 @@
 	}
 }
 
-// Product Search Widget
+// Product search widget
 .woocommerce-product-search {
 	position: relative;
 	.search-field {
@@ -519,8 +519,6 @@
 	font-variant: normal;
 	text-transform: none;
 	line-height: 1;
-
-	/* Better Font Rendering */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }

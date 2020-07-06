@@ -1,0 +1,49 @@
+/* Contact Form 7 */
+span.wpcf7-not-valid-tip {
+	position: absolute;
+	top: 0;
+	left: 5px;
+	height: auto;
+	background: #fff;
+	font-size: $small-fontsize;
+	color: $red;
+}
+
+div.wpcf7-response-output {
+	font-size: $small-fontsize;
+	padding: $padding-small;
+	margin: 0;
+	@include border-radius(2px);
+}
+
+
+div.wpcf7-spam-blocked, div.wpcf7-validation-errors {
+	border-color: $red;
+	color: $red;
+
+}
+
+div.wpcf7-mail-sent-ok {
+	border-color: $accent-color;
+	color: $accent-color;
+}
+
+/* Elementor */
+
+// Transparent header preview
+.elementor-editor-active {
+	.wpbf-navigation-transparent {
+		display: none !important;
+	}
+}
+
+// Select arrow indicator fix
+.elementor-field-group .elementor-select-wrapper select {
+	background-image: none;
+}
+
+// Yoast
+#breadcrumbs {
+	font-size: $small-fontsize;
+	margin-bottom: $margin-small;
+}

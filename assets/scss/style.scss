@@ -17,7 +17,7 @@ Text Domain:	page-builder-framework
 // Config
 @import "config/config";
 
-// CSS Framework
+// CSS framework
 @import "main/framework";
 
 // Typography
@@ -31,6 +31,9 @@ Text Domain:	page-builder-framework
 
 // Content
 @import "main/content";
+
+// Compatibility
+@import "main/compatibility";
 
 // Gutenberg
 @import "main/gutenberg";

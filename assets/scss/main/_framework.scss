@@ -1,4 +1,4 @@
-/* Icon Font */
+/* Icon font */
 @font-face {
 	font-family: 'page-builder-framework';
 	src: url('fonts/page-builder-framework.woff2') format('woff2'),
@@ -118,7 +118,7 @@
 	padding: 0 $padding;
 }
 
-// Container Modifier (Center)
+// Container modifier (center)
 .wpbf-container-center {
 	margin-left: auto;
 	margin-right: auto;
@@ -164,8 +164,6 @@
 	-webkit-appearance: none;
 	text-align: center;
 	padding: 14px 16px;
-	// @include css-variable(background, $base-color, $base-color-var);
-	// @include css-variable(color, $brand-color-alt, $brand-color-alt-var);
 	background: $base-color;
 	color: $brand-color-alt;
 	outline: 0;
@@ -177,23 +175,23 @@
 	font-weight: 700;
 }
 
-.wpbf-button:hover, input[type="submit"]:hover {
+.wpbf-button:hover {
 	background: $base-color;
 	color: $brand-color-alt;
 }
 
-// Button Modifier (Primary)
-.wpbf-button-primary {
+// Button modifier (primary)
+.wpbf-button-primary, input[type="submit"] {
 	background: $accent-color;
 	color: #fff;
 }
 
-.wpbf-button-primary:hover {
+.wpbf-button-primary:hover, input[type="submit"]:hover {
 	background: $accent-color-alt;
 	color: #fff;
 }
 
-// Button Modifier (Size)
+// Button modifier (size)
 .wpbf-button-small {
 	padding: 10px 12px;
 }
@@ -269,20 +267,24 @@ select {
 	padding: 5px $padding-small;
 	border-radius: 4px;
 	margin-bottom: $margin;
+	font-weight: 700;
 }
 
+// Notice modifier (warning)
 .wpbf-notice-warning {
 	background: rgba($yellow,.15);
 	border-color: $yellow;
 	color: $yellow;
 }
 
+// Notice modifier (error)
 .wpbf-notice-error {
 	background: rgba($red,.15);
 	border-color: $red;
 	color: $red;
 }
 
+// Notice modifier (success)
 .wpbf-notice-success {
 	background: rgba($green,.15);
 	border-color: $green;
@@ -319,24 +321,24 @@ table thead th,
 	vertical-align: bottom;
 }
 
-// Table Modifier (Striped)
+// Table modifier (striped)
 .wpbf-table-striped tr:nth-of-type(odd) {
 	background: $base-color-alt;
 }
 
-// Table Modifier (Small)
+// Table modifier (small)
 .wpbf-table-small th,
 .wpbf-table-small td {
 	padding: 4px 8px;
 }
 
-// Table Modifier (Large)
+// Table modifier (large)
 .wpbf-table-large th,
 .wpbf-table-large td {
 	padding: 15px;
 }
 
-// Table Modifier (Hover)
+// Table modifier (hover)
 .wpbf-table-hover tbody tr {
 	@include transition(background-color 0.2s);
 }
@@ -347,7 +349,7 @@ table thead th,
 
 /* Grid */
 
-// Basic Gutter
+// Basic gutter
 .wpbf-grid {
 	margin-left: (-$grid);
 	@include flex();
@@ -367,7 +369,7 @@ table thead th,
 	margin-top: $grid;
 }
 
-// xLarge Gutter
+// xLarge gutter
 .wpbf-grid-xlarge {
 	margin-left: (-$grid-xlarge);
 }
@@ -379,7 +381,7 @@ table thead th,
 	margin-top: $grid-xlarge;
 }
 
-// Large Gutter
+// Large gutter
 .wpbf-grid-large {
 	margin-left: (-$grid-large);
 }
@@ -391,7 +393,7 @@ table thead th,
 	margin-top: $grid-large;
 }
 
-// Medium Gutter
+// Medium gutter
 .wpbf-grid-medium {
 	margin-left: (-$grid-medium);
 }
@@ -403,7 +405,7 @@ table thead th,
 	margin-top: $grid-medium;
 }
 
-// Small Gutter
+// Small gutter
 .wpbf-grid-small {
 	margin-left: (-$grid-small);
 }
@@ -415,7 +417,7 @@ table thead th,
 	margin-top: $grid-small;
 }
 
-// Collapse Gutter
+// Collapse gutter
 .wpbf-grid-collapse {
 	margin-left: 0;
 }
@@ -428,7 +430,7 @@ table thead th,
 	margin-top: 0;
 }
 
-// Grid Modifier (Divider Gutter)
+// Divider gutter
 .wpbf-grid-divider:not(:empty) {
 	margin-left: -$divider;
 	margin-right: -$divider;
@@ -451,7 +453,7 @@ table thead th,
 	border-left: 1px solid $base-color;
 }
 
-/* Grid Cells */
+/* Grid cells */
 .wpbf-grid > * {
 	float: left;
 }
@@ -549,7 +551,7 @@ table thead th,
 	width: 90%;
 }
 
-// Grid Clearfix
+// Grid clearfix
 .wpbf-grid:before,
 .wpbf-grid:after {
 	content: "";
@@ -560,7 +562,7 @@ table thead th,
 	clear: both;
 }
 
-/* Text Modifier */
+/* Text modifier */
 .wpbf-text-left {
 	text-align: left;
 }
@@ -585,11 +587,6 @@ table thead th,
 
 /* Utility */
 
-// Reset Line-Height
-.wpbf-reset-line-height {
-	line-height: 0;
-}
-
 // Image
 .wpbf-image,
 .wpbf-img {
@@ -604,7 +601,7 @@ table thead th,
 
 /* Margins */
 
-// Xl Margins
+// Xl
 .wpbf-margin-xlarge {
 	margin-top: $margin-xlarge;
 	margin-bottom: $margin-xlarge;
@@ -622,7 +619,7 @@ table thead th,
 	margin-right: $margin-xlarge;
 }
 
-// Large Margins
+// Large
 .wpbf-margin-large {
 	margin-top: $margin-large;
 	margin-bottom: $margin-large;
@@ -640,7 +637,7 @@ table thead th,
 	margin-right: $margin-large;
 }
 
-// Medium Margins
+// Medium
 .wpbf-margin-medium {
 	margin-top: $margin-medium;
 	margin-bottom: $margin-medium;
@@ -658,7 +655,7 @@ table thead th,
 	margin-right: $margin-medium;
 }
 
-// Regular Margins
+// Regular
 .wpbf-margin {
 	margin-top: $margin;
 	margin-bottom: $margin;
@@ -676,7 +673,7 @@ table thead th,
 	margin-right: $margin;
 }
 
-// Small Margins
+// Small
 .wpbf-margin-small {
 	margin-top: $margin-small;
 	margin-bottom: $margin-small;
@@ -694,21 +691,9 @@ table thead th,
 	margin-right: $margin-small;
 }
 
-// Remove Margins
-.wpbf-margin-none,
-.wpbf-remove-margin {
-	margin: 0 !important;
-}
-.wpbf-margin-top-none {
-	margin-top: 0 !important;
-}
-.wpbf-margin-bottom-none {
-	margin-bottom: 0 !important;
-}
-
 /* Paddings */
 
-// Xl Paddings
+// Xl
 .wpbf-padding-xlarge {
 	padding-top: $padding-xlarge;
 	padding-bottom: $padding-xlarge;
@@ -726,7 +711,7 @@ table thead th,
 	padding-right: $padding-xlarge;
 }
 
-// Large Paddings
+// Large
 .wpbf-padding-large {
 	padding-top: $padding-large;
 	padding-bottom: $padding-large;
@@ -744,7 +729,7 @@ table thead th,
 	padding-right: $padding-large;
 }
 
-// Medium Paddings
+// Medium
 .wpbf-padding-medium {
 	padding-top: $padding-medium;
 	padding-bottom: $padding-medium;
@@ -762,7 +747,7 @@ table thead th,
 	padding-right: $padding-medium;
 }
 
-// Regular Paddings
+// Regular
 .wpbf-padding {
 	padding-top: $padding;
 	padding-bottom: $padding;
@@ -780,7 +765,7 @@ table thead th,
 	padding-right: $padding;
 }
 
-// Small Paddings
+// Small
 .wpbf-padding-small {
 	padding-top: $padding-small;
 	padding-bottom: $padding-small;
@@ -796,16 +781,4 @@ table thead th,
 }
 .wpbf-padding-small-right {
 	padding-right: $padding-small;
-}
-
-// Remove Paddings
-.wpbf-padding-none,
-.wpbf-remove-padding {
-	padding: 0 !important;
-}
-.wpbf-padding-top-none {
-	padding-top: 0 !important;
-}
-.wpbf-padding-bottom-none {
-	padding-bottom: 0 !important;
 }
