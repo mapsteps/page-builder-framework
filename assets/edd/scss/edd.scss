@@ -360,9 +360,9 @@
 .edd-loading {
 	-webkit-animation: edd-spinning 1.1s infinite linear;
 	animation: edd-spinning 1.1s infinite linear;
-	border-top: 0.2em solid rgba(255, 255, 255, 0.2);
-	border-right: 0.2em solid rgba(255, 255, 255, 0.2);
-	border-bottom: 0.2em solid rgba(255, 255, 255, 0.2);
+	border-top: 0.2em solid rgba(#fff,.2);
+	border-right: 0.2em solid rgba(#fff,.2);
+	border-bottom: 0.2em solid rgba(#fff,.2);
 	border-left: 0.2em solid #fff;
 	font-size: 0.75em;
 	position: absolute;
@@ -376,9 +376,9 @@
 a.edd-add-to-cart.white .edd-loading,
 .edd-discount-loader.edd-loading,
 .edd-loading-ajax.edd-loading {
-	border-top-color: rgba(0, 0, 0, 0.2);
-	border-right-color: rgba(0, 0, 0, 0.2);
-	border-bottom-color: rgba(0, 0, 0, 0.2);
+	border-top-color: rgba(#000,.2);
+	border-right-color: rgba(#000,.2);
+	border-bottom-color: rgba(#000,.2);
 	border-left-color: #000;
 }
 .edd-loading-ajax.edd-loading {
@@ -878,7 +878,7 @@ table#edd_purchase_receipt_products .edd_bundled_product_name {
 }
 .edd-submit.button.dark-gray:hover {
 	color: #fff;
-	background: rgba($brand-color,.75);
+	background: $brand-color-alt;
 }
 .edd-submit.button.dark-gray:active {
 	background-image: none;
@@ -1035,25 +1035,20 @@ edd-hide-on-empty.cart-not.empty {
 .edd-alert p:last-child {
 	margin-bottom: 0;
 }
-.edd-alert-error {
+.edd-alert-error,
+.edd-alert-warn {
 	color: $red;
-	background-color: rgba($red,.15);
+	background-color: rgba($red,.1);
 	border-color: $red;
 }
 .edd-alert-success {
-	background-color: rgba($green,.15);
+	background-color: rgba($green,.1);
 	border-color: $green;
 	color: $green;
 }
 .edd-alert-info {
-	color: $accent-color;
-	background-color: rgba($accent-color,.15);
-	border-color: $accent-color;
-}
-.edd-alert-warn {
-	color: $red;
-	background-color: rgba($red,.15);
-	border-color: $red;
+	background-color: $base-color-alt;
+	border-color: $base-color;
 }
 
 /* Page Builder Framework */
@@ -1086,7 +1081,7 @@ edd-hide-on-empty.cart-not.empty {
 	width: 250px;
 	top: 20px;
 	left: 10px;
-	@include box-shadow(0px 0px 10px 0px rgba(0,0,0,0.15));
+	@include box-shadow(0px 0px 10px 0px rgba(#000,.15));
 }
 
 .edd_sl_license_row span.edd_sl_license_key {

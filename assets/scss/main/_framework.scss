@@ -272,21 +272,21 @@ select {
 
 // Notice modifier (warning)
 .wpbf-notice-warning {
-	background: rgba($yellow,.15);
+	background: rgba($yellow,.1);
 	border-color: $yellow;
 	color: $yellow;
 }
 
 // Notice modifier (error)
 .wpbf-notice-error {
-	background: rgba($red,.15);
+	background: rgba($red,.1);
 	border-color: $red;
 	color: $red;
 }
 
 // Notice modifier (success)
 .wpbf-notice-success {
-	background: rgba($green,.15);
+	background: rgba($green,.1);
 	border-color: $green;
 	color: $green;
 }

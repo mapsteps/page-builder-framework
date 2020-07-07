@@ -1,24 +1,12 @@
 /* Colors */
 
 // Defaults
-$white: #ffffff;
-$base-color: #dedee5;
-$base-color-alt: #f5f5f7;
-
-$brand-color: #3e4349;
-$brand-color-alt: #6d7680;
-
-$accent-color: #3ba9d2;
-$accent-color-alt: #79c4e0;
-
 $green: #4fe190;
 $red: tomato;
-
-// Abstractions
-$primarytext: $white;			// Text on primary colour bg
+$primarytext: #ffffff;			// Text on primary colour bg
 $highlight: $green;				// Prices, In stock labels, sales flash
-$highlightext: $white;			// Text on highlight colour bg
-$contentbg: $white;				// Content BG - Tabs (active state)
+$highlightext: $primarytext;	// Text on highlight colour bg
+$contentbg: $primarytext;		// Content BG - Tabs (active state)
 
 // Variables
 $base-color: var(--base-color);
@@ -34,18 +22,22 @@ $accent-color-alt: var(--accent-color-alt);
 
 // Margin
 $margin: 20px;
-$margin-small: 10px;
+$margin-xlarge: 120px;
+$margin-large: 80px;
 $margin-medium: 40px;
+$margin-small: 10px;
 
 // Padding
 $padding: 20px;
-$padding-small: 10px;
+$padding-xlarge: 120px;
+$padding-large: 80px;
 $padding-medium: 40px;
+$padding-small: 10px;
 
 /* Fonts */
 
 // Font size
 $base-fontsize: 16px;
-$small-fontsize: 14px;
-$bigger-fontsize: 20px;
-$big-fontsize: 32px;
+$tiny-fontsize: $base-fontsize - 4;
+$small-fontsize: $base-fontsize - 2;
+$bigger-fontsize: $base-fontsize + 4;

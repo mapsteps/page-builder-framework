@@ -222,6 +222,13 @@ Kirki::add_section( 'wpbf_page_options', array(
 	'priority' => 100,
 ) );
 
+// Global colors.
+Kirki::add_section( 'wpbf_global_options', array(
+	'title'    => __( 'Global Colors', 'page-builder-framework' ),
+	'panel'    => 'layout_panel',
+	'priority' => 150,
+) );
+
 // Sidebar.
 Kirki::add_section( 'wpbf_sidebar_options', array(
 	'title'    => __( 'Sidebar', 'page-builder-framework' ),
@@ -1691,6 +1698,170 @@ Kirki::add_field( 'wpbf', array(
 			'operator' => '==',
 			'value'    => 1,
 		),
+	),
+) );
+
+/* Fields - Global colors */
+
+// Base color headline.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'base_color_headline',
+	'section'  => 'wpbf_global_options',
+	'default'  => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Base Color', 'page-builder-framework' ) . '</h3>',
+	'priority' => 0,
+) );
+
+// Base color.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'base_color_global',
+	'label'           => __( 'Base Color', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => '#f5f5f7',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+) );
+
+// Base color alt.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'base_color_alt_global',
+	'label'           => __( 'Base Color Alt', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => '#dedee5',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+) );
+
+// Brand color headline.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'brand_color_headline',
+	'section'  => 'wpbf_global_options',
+	'default'  => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Brand Color', 'page-builder-framework' ) . '</h3>',
+	'priority' => 0,
+) );
+
+// Brand color.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'brand_color_global',
+	'label'           => __( 'Brand Color', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => '#3e4349',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+) );
+
+// Brand color alt.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'brand_color_alt_global',
+	'label'           => __( 'Brand Color Alt', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => '#6d7680',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+) );
+
+// Accent color headline.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'accent_color_headline',
+	'section'  => 'wpbf_global_options',
+	'default'  => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Accent Color', 'page-builder-framework' ) . '</h3>',
+	'priority' => 0,
+) );
+
+// Accent color.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'accent_color_global',
+	'label'           => __( 'Accent Color', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => '#3ba9d2',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+) );
+
+// Accent color alt.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'accent_color_alt_global',
+	'label'           => __( 'Hover', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => '#79c4e0',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+) );
+
+// Misc color headline.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'misc_color_headline',
+	'section'  => 'wpbf_global_options',
+	'default'  => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Misc', 'page-builder-framework' ) . '</h3>',
+	'priority' => 0,
+) );
+
+// Red.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'red_color_global',
+	'label'           => __( 'Red', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => 'ff6347',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+) );
+
+// Green.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'green_color_global',
+	'label'           => __( 'Green', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => '#4fe190',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
+	),
+) );
+
+// Yellow.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'yellow_color_global',
+	'label'           => __( 'Yellow', 'page-builder-framework' ),
+	'section'         => 'wpbf_global_options',
+	'default'         => '#e8bb1a',
+	'priority'        => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'alpha' => true,
 	),
 ) );
 

@@ -133,7 +133,7 @@
 			position: absolute;
 			z-index: 111;
 			background: #fff;
-			@include box-shadow(0px 0px 10px 0px rgba(0,0,0,0.15));
+			@include box-shadow(0px 0px 10px 0px rgba(#000,.15));
 		}
 	}
 }
@@ -159,7 +159,7 @@
 			position: absolute;
 			z-index: 111;
 			background: #fff;
-			@include box-shadow(0px 0px 10px 0px rgba(0,0,0,0.15));
+			@include box-shadow(0px 0px 10px 0px rgba(#000,.15));
 		}
 		> a:after {
 			float: right;

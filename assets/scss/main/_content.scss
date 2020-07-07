@@ -445,7 +445,7 @@ body {
 	text-align: center;
 	line-height: 40px;
 	z-index: 222;
-	background: rgba($brand-color, .5);
+	background: rgba(#000,.5);
 	bottom: 20px;
 	right: 20px;
 	@include transition(background 0.2s);
@@ -469,7 +469,7 @@ body {
 }
 
 .scrolltop:hover {
-	background: rgba($brand-color,.7);
+	background: rgba(#000,.7);
 }
 
 /* Post content */

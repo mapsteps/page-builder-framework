@@ -26,6 +26,17 @@
 		return tag;
 	}
 
+	/* Global colors */
+
+	// Base color alt.
+	wp.customize( 'base_color_global', function( value ) {
+		var styleTag = setupStyleTag('base_color_global');
+		
+		value.bind( function( newval ) {
+			styleTag.innerHTML = ':root {--base-color-alt: ' + newval + ';}';
+		} );
+	} );
+
 	/* Layout */
 
 	// Page width.
