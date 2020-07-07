@@ -2216,7 +2216,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'page_font_color',
 	'label'     => __( 'Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_font_options',
-	'default'   => '#6D7680',
+	'default'   => '#6d7680',
 	'priority'  => 2,
 	'transport' => 'postMessage',
 	'choices'   => array(
@@ -2244,7 +2244,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Hover', 'page-builder-framework' ),
 	'section'  => 'wpbf_font_options',
 	'priority' => 4,
-	'default'  => '#8ecde5',
+	'default'  => '#79c4e0',
 	'choices'  => array(
 		'alpha' => true,
 	),

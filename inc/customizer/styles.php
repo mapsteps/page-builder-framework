@@ -484,7 +484,7 @@ if ( $page_background_color || $page_background_image ) {
 
 // Accent color.
 $page_accent_color     = ( $val = get_theme_mod( 'page_accent_color' ) ) === '#3ba9d2' ? false : $val;
-$page_accent_color_alt = ( $val = get_theme_mod( 'page_accent_color_alt' ) ) === '#8ecde5' ? false : $val;
+$page_accent_color_alt = ( $val = get_theme_mod( 'page_accent_color_alt' ) ) === '#79c4e0' ? false : $val;
 
 if ( $page_accent_color ) {
 
