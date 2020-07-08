@@ -1,48 +1,18 @@
 /* Colors */
 
 // Defaults
-$base-color: #dedee5;
-$base-color-alt: #f5f5f7;
+$base-color-val: #dedee5;
+$base-color-alt-val: #f5f5f7;
 
-$brand-color: #3e4349;
-$brand-color-alt: #6d7680;
+$brand-color-val: #3e4349;
+$brand-color-alt-val: #6d7680;
 
-$accent-color: #3ba9d2;
-$accent-color-alt: #79c4e0;
+$accent-color-val: #3ba9d2;
+$accent-color-alt-val: #79c4e0;
 
 $red: tomato;
 $green: #4fe190;
 $yellow: #e8bb1a;
-
-// Globals
-:root {
-
-	// Colors
-	--base-color: #{$base-color};
-	--base-color-alt: #{$base-color-alt};
-
-	--brand-color: #{$brand-color};
-	--brand-color-alt: #{$brand-color-alt};
-
-	--accent-color: #{$accent-color};
-	--accent-color-alt: #{$accent-color-alt};
-
-	// Margins
-	// --margin: 20px;
-	// --margin-xlarge: 120px;
-	// --margin-large: 80px;
-	// --margin-medium: 40px;
-	// --margin-small: 10px;
-	// --paragraph: 20px;
-
-	// // Paddings
-	// --padding: var(--margin);
-	// --padding-xlarge: var(--margin-xlarge);
-	// --padding-large: var(--margin-large);
-	// --padding-medium: var(--margin-medium);
-	// --padding-small: var(--margin-small);
-
-}
 
 // Variables
 $base-color: var(--base-color);

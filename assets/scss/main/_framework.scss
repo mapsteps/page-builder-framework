@@ -1,3 +1,31 @@
+/* CSS Variables */
+:root {
+	// Colors
+	--base-color: #{$base-color-val};
+	--base-color-alt: #{$base-color-alt-val};
+
+	--brand-color: #{$brand-color-val};
+	--brand-color-alt: #{$brand-color-alt-val};
+
+	--accent-color: #{$accent-color-val};
+	--accent-color-alt: #{$accent-color-alt-val};
+
+	// Margins
+	// --margin: 20px;
+	// --margin-xlarge: 120px;
+	// --margin-large: 80px;
+	// --margin-medium: 40px;
+	// --margin-small: 10px;
+	// --paragraph: 20px;
+
+	// // Paddings
+	// --padding: var(--margin);
+	// --padding-xlarge: var(--margin-xlarge);
+	// --padding-large: var(--margin-large);
+	// --padding-medium: var(--margin-medium);
+	// --padding-small: var(--margin-small);
+}
+
 /* Icon font */
 @font-face {
 	font-family: 'page-builder-framework';
