@@ -103,11 +103,11 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 }
 
 /**
- * Add Breadcrumbs to Content
+ * Add breadcrumbs to content.
  */
 function wpbf_breadcrumbs_content() {
 
-	if( get_theme_mod( 'breadcrumbs_position', 'content' ) === 'content' ) {
+	if( 'content' === get_theme_mod( 'breadcrumbs_position', 'content' ) ) {
 
 		wpbf_do_breadcrumbs();
 
@@ -117,11 +117,11 @@ function wpbf_breadcrumbs_content() {
 add_action( 'wpbf_inner_content_open', 'wpbf_breadcrumbs_content' );
 
 /**
- * Add Breadcrumbs Below Header
+ * Add breadcrumbs below header.
  */
 function wpbf_breadcrumbs_header() {
 
-	if( get_theme_mod( 'breadcrumbs_position' ) === 'header' ) {
+	if( 'header' === get_theme_mod( 'breadcrumbs_position' ) ) {
 
 		wpbf_do_breadcrumbs();
 
@@ -129,6 +129,40 @@ function wpbf_breadcrumbs_header() {
 
 }
 add_action( 'wpbf_after_header', 'wpbf_breadcrumbs_header' );
+
+/**
+ * Breadcrumbs shortcode.
+ */
+function wpbf_breadcrumbs_shortcode( $args = array() ) {
+
+	// Use Yoast Breadcrumbs if enabled.
+	if ( function_exists( 'yoast_breadcrumb' ) ) {
+		return yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+	}
+
+	// Use Rank Math SEO Breadcrumbs if enabled.
+	if ( function_exists( 'rank_math_the_breadcrumbs' ) ) {
+		return rank_math_the_breadcrumbs();
+	}
+
+	// Use SEOPress Breadcrumbs if enabled.
+	if ( function_exists( 'seopress_display_breadcrumbs' ) ) {
+		seopress_display_breadcrumbs();
+	}
+
+	$args = array(
+		'echo' => false,
+	);
+
+	$breadcrumb = apply_filters( 'breadcrumb_trail_object', null, $args );
+
+	if ( ! is_object( $breadcrumb ) )
+		$breadcrumb = new WPBF_Breadcrumbs( $args );
+
+	return $breadcrumb->trail();
+
+}
+add_shortcode( 'wpbf-breadcrumbs', 'wpbf_breadcrumbs_shortcode' );
 
 /**
  * Creates a breadcrumbs menu for the site based on the current page that's being viewed by the user.
@@ -325,7 +359,7 @@ class WPBF_Breadcrumbs {
 		if ( false === $this->args['echo'] )
 			return $breadcrumb;
 
-		if( get_theme_mod( 'breadcrumbs_position' ) === 'header' ) {
+		if( 'header' === get_theme_mod( 'breadcrumbs_position' ) ) {
 
 			$output  = '<div class="wpbf-breadcrumbs-container">';
 			$output .= '<div class="wpbf-container wpbf-container-center">';
