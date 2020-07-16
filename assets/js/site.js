@@ -197,7 +197,7 @@ var WPBFSite = (function ($) {
 	 *
 	 * Firing triggers after page has been loaded
 	 */
-	$(window).load(function () {
+	$(window).on( 'load', function () {
 
 		$('.opacity').delay(200).animate({ opacity: '1' }, 200);
 		$('.display-none').show();
@@ -211,7 +211,7 @@ var WPBFSite = (function ($) {
 	 */
 	var mtpagemargin = $('.wpbf-page').css('margin-top');
 
-	$(window).resize(function () {
+	$(window).on( 'resize', function () {
 		var mtpagewidth = $('.wpbf-page').width();
 
 		if (mtpagewidth >= $(window).width()) {
