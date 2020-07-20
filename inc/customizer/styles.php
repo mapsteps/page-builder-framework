@@ -2150,8 +2150,90 @@ if ( $mobile_menu_submenu_arrow_color ) {
 if ( $mobile_menu_font_size ) {
 
 	$suffix = is_numeric( $mobile_menu_font_size ) ? 'px' : '';
-	echo '.wpbf-mobile-menu a {';
+	echo '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {';
 	echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_font_size ) . $suffix );
+	echo '}';
+
+}
+
+// Mobile sub menu.
+$mobile_sub_menu_indent         = get_theme_mod( 'mobile_sub_menu_indent' );
+$mobile_sub_menu_bg_color       = get_theme_mod( 'mobile_sub_menu_bg_color' );
+$mobile_sub_menu_bg_color_alt   = get_theme_mod( 'mobile_sub_menu_bg_color_alt' );
+$mobile_sub_menu_arrow_color    = get_theme_mod( 'mobile_sub_menu_arrow_color' );
+$mobile_sub_menu_font_size      = get_theme_mod( 'mobile_sub_menu_font_size' );
+$mobile_sub_menu_font_color     = get_theme_mod( 'mobile_sub_menu_font_color' );
+$mobile_sub_menu_font_color_alt = get_theme_mod( 'mobile_sub_menu_font_color_alt' );
+$mobile_sub_menu_border_color   = get_theme_mod( 'mobile_sub_menu_border_color' );
+
+if ( $mobile_sub_menu_indent ) {
+
+	$default                = get_theme_mod( 'mobile_menu_padding_left', '20' );
+	$mobile_sub_menu_indent = $mobile_sub_menu_indent + $default;
+
+	echo '.wpbf-mobile-menu .sub-menu a {';
+	echo sprintf( 'padding-left: %s;', esc_attr( $mobile_sub_menu_indent ) . 'px' );
+	echo '}';
+
+}
+
+if ( $mobile_sub_menu_bg_color ) {
+
+	echo '.wpbf-mobile-menu .sub-menu a {';
+	echo sprintf( 'background-color: %s;', esc_attr( $mobile_sub_menu_bg_color ) );
+	echo '}';
+
+}
+
+if ( $mobile_sub_menu_bg_color_alt ) {
+
+	echo '.wpbf-mobile-menu .sub-menu a:hover {';
+	echo sprintf( 'background-color: %s;', esc_attr( $mobile_sub_menu_bg_color_alt ) );
+	echo '}';
+
+}
+
+if ( $mobile_sub_menu_arrow_color ) {
+
+	echo '.wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle {';
+	echo sprintf( 'color: %s;', esc_attr( $mobile_sub_menu_arrow_color ) );
+	echo '}';
+
+}
+
+if ( $mobile_sub_menu_font_size ) {
+
+	$suffix = is_numeric( $mobile_sub_menu_font_size ) ? 'px' : '';
+	echo '.wpbf-mobile-menu .sub-menu a, .wpbf-mobile-menu .sub-menu .menu-item-has-children .wpbf-submenu-toggle {';
+	echo sprintf( 'font-size: %s;', esc_attr( $mobile_sub_menu_font_size ) . $suffix );
+	echo '}';
+
+}
+
+if ( $mobile_sub_menu_font_color ) {
+
+	echo '.wpbf-mobile-menu .sub-menu a {';
+	echo sprintf( 'color: %s;', esc_attr( $mobile_sub_menu_font_color ) );
+	echo '}';
+
+}
+
+if ( $mobile_sub_menu_font_color_alt ) {
+
+	echo '.wpbf-mobile-menu .sub-menu a:hover {';
+	echo sprintf( 'color: %s;', esc_attr( $mobile_sub_menu_font_color_alt ) );
+	echo '}';
+
+	echo '.wpbf-mobile-menu .sub-menu > .current-menu-item > a {';
+	echo sprintf( 'color: %s;', esc_attr( $mobile_sub_menu_font_color_alt ) . '!important' );
+	echo '}';
+
+}
+
+if ( $mobile_sub_menu_border_color ) {
+
+	echo '.wpbf-mobile-menu .sub-menu .menu-item {';
+	echo sprintf( 'border-top-color: %s;', esc_attr( $mobile_sub_menu_border_color ) );
 	echo '}';
 
 }

@@ -345,6 +345,13 @@ Kirki::add_section( 'wpbf_mobile_menu_options', array(
 	'priority' => 300,
 ) );
 
+// Mobile menu.
+Kirki::add_section( 'wpbf_mobile_sub_menu_options', array(
+	'title'    => __( 'Mobile Sub Menu', 'page-builder-framework' ),
+	'panel'    => 'header_panel',
+	'priority' => 350,
+) );
+
 /* Sections - Footer */
 
 // Widget footer.
@@ -3908,6 +3915,133 @@ if ( ! wpbf_is_premium() ) {
 		'type'     => 'custom',
 		'settings' => 'wpbf_premium_ad_header_mobile_menu',
 		'section'  => 'wpbf_mobile_menu_options',
+		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority' => 9999,
+	) );
+
+}
+
+/* Fields – Mobile Sub Menu */
+
+// Indent.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'slider',
+	'settings'        => 'mobile_sub_menu_indent',
+	'label'           => __( 'Indent', 'page-builder-framework' ),
+	'section'         => 'wpbf_mobile_sub_menu_options',
+	'priority'        => 8,
+	'default'         => 0,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
+) );
+
+// Menu item background color.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'mobile_sub_menu_bg_color',
+	'label'     => __( 'Background Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_sub_menu_options',
+	'priority'  => 9,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+// Menu item background color alt.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'mobile_sub_menu_bg_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_sub_menu_options',
+	'priority'  => 10,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+// Font color.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'mobile_sub_menu_font_color',
+	'label'     => __( 'Font Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_sub_menu_options',
+	'transport' => 'postMessage',
+	'priority'  => 11,
+) );
+
+// Font color hover.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'mobile_sub_menu_font_color_alt',
+	'label'     => __( 'Hover', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_sub_menu_options',
+	'priority'  => 12,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+// Divider color.
+// Kirki::add_field( 'wpbf', array(
+// 	'type'      => 'color',
+// 	'settings'  => 'mobile_sub_menu_border_color',
+// 	'label'     => __( 'Divider Color', 'page-builder-framework' ),
+// 	'section'   => 'wpbf_mobile_sub_menu_options',
+// 	'priority'  => 13,
+// 	'transport' => 'postMessage',
+// 	'choices'   => array(
+// 		'alpha' => true,
+// 	),
+// ) );
+
+// Sub menu arrow color.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'mobile_sub_menu_arrow_color',
+	'label'     => __( 'Sub Menu Arrow Color', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_sub_menu_options',
+	'priority'  => 14,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+// Font size.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'input_slider',
+	'label'     => __( 'Font Size', 'page-builder-framework' ),
+	'settings'  => 'mobile_sub_menu_font_size',
+	'section'   => 'wpbf_mobile_sub_menu_options',
+	'priority'  => 15,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
+) );
+
+if ( ! wpbf_is_premium() ) {
+
+	// Premium notice.
+	$wpbf_premium_ad_link = sprintf(
+		'%1$s. <a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_mobile_navigation_panel&utm_campaign=wpbf#premium" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'     => 'custom',
+		'settings' => 'wpbf_premium_ad_header_mobile_sub_menu',
+		'section'  => 'wpbf_mobile_sub_menu_options',
 		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
 		'priority' => 9999,
 	) );

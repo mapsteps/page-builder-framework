@@ -493,7 +493,84 @@
 
 		value.bind( function( newval ) {
 			var suffix = $.isNumeric(newval) ? 'px' : '';
-			styleTag.innerHTML = '.wpbf-mobile-menu a {font-size: ' + newval + suffix + ';}';
+			styleTag.innerHTML = '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {font-size: ' + newval + suffix + ';}';
+		} );
+	} );
+
+	/* Mobile sub menu */
+
+	// Indent.
+	wp.customize( 'mobile_sub_menu_indent', function( value ) {
+		var styleTag = setupStyleTag('mobile_sub_menu_indent');
+
+		value.bind( function( newval ) {
+			var paddingLeft  = wp.customize('mobile_menu_padding_left').get();
+			var caluculation = parseInt(newval) + parseInt(paddingLeft);
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu a {padding-left: ' + caluculation + 'px;}';
+		} );
+	} );
+
+	// Menu item background color.
+	wp.customize( 'mobile_sub_menu_bg_color', function( value ) {
+		var styleTag = setupStyleTag('mobile_sub_menu_bg_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu a {background-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Menu item background color hover.
+	wp.customize( 'mobile_sub_menu_bg_color_alt', function( value ) {
+		var styleTag = setupStyleTag('mobile_sub_menu_bg_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu a:hover {background-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Menu item font color.
+	wp.customize( 'mobile_sub_menu_font_color', function( value ) {
+		var styleTag = setupStyleTag('mobile_sub_menu_font_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu a {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Menu item font color hover.
+	wp.customize( 'mobile_sub_menu_font_color_alt', function( value ) {
+		var styleTag = setupStyleTag('mobile_sub_menu_font_color_alt');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu a:hover, .wpbf-mobile-menu .sub-menu > .current-menu-item > a {color: ' + newval + '!important;}';
+		} );
+	} );
+
+	// Menu item divider color.
+	wp.customize( 'mobile_sub_menu_border_color', function( value ) {
+		var styleTag = setupStyleTag('mobile_sub_menu_border_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu .menu-item {border-top-color: ' + newval + ';}';
+		} );
+	} );
+
+	// Sub menu arrow color.
+	wp.customize( 'mobile_sub_menu_arrow_color', function( value ) {
+		var styleTag = setupStyleTag('mobile_sub_menu_arrow_color');
+
+		value.bind( function( newval ) {
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle {color: ' + newval + ';}';
+		} );
+	} );
+
+	// Menu item font size.
+	wp.customize( 'mobile_sub_menu_font_size', function( value ) {
+		var styleTag = setupStyleTag('mobile_sub_menu_font_size');
+
+		value.bind( function( newval ) {
+			var suffix = $.isNumeric(newval) ? 'px' : '';
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu a, .wpbf-mobile-menu .sub-menu .menu-item-has-children .wpbf-submenu-toggle {font-size: ' + newval + suffix + ';}';
 		} );
 	} );
 
