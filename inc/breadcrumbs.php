@@ -131,40 +131,6 @@ function wpbf_breadcrumbs_header() {
 add_action( 'wpbf_after_header', 'wpbf_breadcrumbs_header' );
 
 /**
- * Breadcrumbs shortcode.
- */
-function wpbf_breadcrumbs_shortcode( $args = array() ) {
-
-	// Use Yoast Breadcrumbs if enabled.
-	if ( function_exists( 'yoast_breadcrumb' ) ) {
-		return yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
-	}
-
-	// Use Rank Math SEO Breadcrumbs if enabled.
-	if ( function_exists( 'rank_math_the_breadcrumbs' ) ) {
-		return rank_math_the_breadcrumbs();
-	}
-
-	// Use SEOPress Breadcrumbs if enabled.
-	if ( function_exists( 'seopress_display_breadcrumbs' ) ) {
-		seopress_display_breadcrumbs();
-	}
-
-	$args = array(
-		'echo' => false,
-	);
-
-	$breadcrumb = apply_filters( 'breadcrumb_trail_object', null, $args );
-
-	if ( ! is_object( $breadcrumb ) )
-		$breadcrumb = new WPBF_Breadcrumbs( $args );
-
-	return $breadcrumb->trail();
-
-}
-add_shortcode( 'wpbf-breadcrumbs', 'wpbf_breadcrumbs_shortcode' );
-
-/**
  * Creates a breadcrumbs menu for the site based on the current page that's being viewed by the user.
  *
  * @since  0.6.0
