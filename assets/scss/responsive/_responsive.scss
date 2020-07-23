@@ -544,6 +544,41 @@
 	}
 
  // Right navigation
+.wpbf-pre-header {
+	.wpbf-inner-pre-header-right {
+		.wpbf-menu {
+			float: none;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+	}
+}
+
+// Left navigation
+.wpbf-pre-header {
+	.wpbf-inner-pre-header-left {
+		.wpbf-menu {
+			float: none;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+	}
+}
+
+.wpbf-pre-header {
+	.wpbf-menu .sub-menu,
+	.wpbf-sub-menu > .menu-item-has-children > a:after {
+		display: none !important;
+	}
+}
+
+ // Right navigation
  .wpbf-page-footer {
  	.wpbf-inner-footer-right {
 		.wpbf-menu {
