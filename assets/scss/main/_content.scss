@@ -308,6 +308,13 @@ body {
 		font-size: $small-fontsize;
 		margin-bottom: $margin;
 	}
+	.comment-content ul {
+		margin-bottom: $margin;
+		padding-left: $padding-medium;
+		li {
+			list-style: disc;
+		}
+	}
 	.avatar {
 		width: 65px;
 		@include border-radius(100%);
