@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<div class="wpbf-menu-toggle-container">
 
-			<a id="wpbf-mobile-menu-toggle" href="javascript:void(0)" class="wpbf-mobile-menu-toggle wpbf-button wpbf-button-full" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true" role="button">
+			<a id="wpbf-mobile-menu-toggle" href="javascript:void(0)" class="wpbf-mobile-menu-toggle wpbf-button wpbf-button-full" aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true" role="button">
 				<?php echo apply_filters( 'wpbf_mobile_menu_text', __( 'Menu', 'page-builder-framework' ) ); ?>
 			</a>
 
