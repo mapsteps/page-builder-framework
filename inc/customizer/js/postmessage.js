@@ -180,7 +180,7 @@
 		var styleTag = setupStyleTag('menu_bg_color');
 
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-navigation {background-color: ' + newval + ';}';
+			styleTag.innerHTML = '.wpbf-navigation:not(.wpbf-navigation-transparent):not(.wpbf-navigation-active) {background-color: ' + newval + ';}';
 		} );
 	} );
 
