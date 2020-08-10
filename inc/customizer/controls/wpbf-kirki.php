@@ -1138,7 +1138,7 @@ foreach ( $archives as $archive ) {
 	// Beside headline.
 	Kirki::add_field( 'wpbf', array(
 		'type'            => 'custom',
-		'settings'        => $archive . '-separator-824021',
+		'settings'        => $archive . '_image_beside_post_headline',
 		'section'         => 'wpbf_' . $archive . '_options',
 		'default'         => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Image Beside Post Layout Settings', 'page-builder-framework' ) . '</h3>',
 		'priority'        => 100,

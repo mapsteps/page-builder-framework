@@ -87,7 +87,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-76314',
+	'settings' => 'edd_menu_item_separator_1',
 	'section'  => 'wpbf_edd_menu_item_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 5,
@@ -147,7 +147,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-71253',
+	'settings' => 'edd_menu_item_separator_2',
 	'section'  => 'wpbf_edd_menu_item_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 12,
@@ -207,7 +207,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-51073',
+	'settings' => 'edd_menu_item_separator_3',
 	'section'  => 'wpbf_edd_menu_item_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 15,

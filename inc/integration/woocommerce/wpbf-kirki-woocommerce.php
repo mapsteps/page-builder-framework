@@ -128,7 +128,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-88057',
+	'settings' => 'woocommerce_search_menu_item_separator',
 	'section'  => 'wpbf_woocommerce_menu_item_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 5,
@@ -188,7 +188,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-75733',
+	'settings' => 'woocommerce_menu_item_separator_1',
 	'section'  => 'wpbf_woocommerce_menu_item_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 12,
@@ -248,7 +248,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-36652',
+	'settings' => 'woocommerce_menu_item_separator_2',
 	'section'  => 'wpbf_woocommerce_menu_item_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 15,
@@ -294,7 +294,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-56123',
+	'settings' => 'woocommerce_loop_separator_1',
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 10,
@@ -343,7 +343,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-72124',
+	'settings' => 'woocommerce_loop_separator_2',
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 10,
@@ -536,7 +536,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-56377',
+	'settings' => 'woocommerce_loop_sale_separator',
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 20,
@@ -671,7 +671,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-37611',
+	'settings' => 'woocommerce_loop_title_separator',
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 30,
@@ -710,7 +710,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-58256',
+	'settings' => 'woocommerce_loop_price_separator',
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 30,
@@ -749,7 +749,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-91969',
+	'settings' => 'woocommerce_loop_out_of_stock_separator',
 	'section'  => 'woocommerce_product_catalog',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 30,
@@ -899,7 +899,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-553014',
+	'settings' => 'woocommerce_single_quantity_separator',
 	'section'  => 'wpbf_woocommerce_product_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => $product_priority++,
@@ -952,7 +952,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-45153',
+	'settings' => 'woocommerce_single_tabs_separator',
 	'section'  => 'wpbf_woocommerce_product_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => $product_priority++,
@@ -1097,7 +1097,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-9987953',
+	'settings' => 'woocommerce_single_add_to_cart_ajax_separator',
 	'section'  => 'wpbf_woocommerce_product_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => $product_priority++,
@@ -1133,7 +1133,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-82245',
+	'settings' => 'woocommerce_checkout_layout_separator',
 	'section'  => 'woocommerce_checkout',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 2,
@@ -1144,7 +1144,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'separator-06205833',
+	'settings' => 'woocommerce_store_notice_separator',
 	'section'  => 'woocommerce_store_notice',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 100,
