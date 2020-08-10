@@ -381,13 +381,13 @@ if ( $page_boxed ) {
 }
 
 // ScrollTop.
-$scrolltop                 = get_theme_mod( 'layout_scrolltop' );
-$scrolltop_position        = get_theme_mod( 'scrolltop_position' );
-$scrolltop_bg_color        = ( $val = get_theme_mod( 'scrolltop_bg_color' ) ) === 'rgba(62,67,73,0.5)' ? false : $val;
-$scrolltop_bg_color_alt    = ( $val = get_theme_mod( 'scrolltop_bg_color_alt' ) ) === 'rgba(62,67,73,0.7)' ? false : $val;
-$scrolltop_icon_color      = ( $val = get_theme_mod( 'scrolltop_icon_color' ) ) === '#ffffff' ? false : $val;
-$scrolltop_icon_color_alt  = get_theme_mod( 'scrolltop_icon_color_alt' );
-$scrolltop_border_radius   = get_theme_mod( 'scrolltop_border_radius' );
+$scrolltop                = get_theme_mod( 'layout_scrolltop' );
+$scrolltop_position       = get_theme_mod( 'scrolltop_position' );
+$scrolltop_bg_color       = ( $val = get_theme_mod( 'scrolltop_bg_color' ) ) === 'rgba(62,67,73,0.5)' ? false : $val;
+$scrolltop_bg_color_alt   = ( $val = get_theme_mod( 'scrolltop_bg_color_alt' ) ) === 'rgba(62,67,73,0.7)' ? false : $val;
+$scrolltop_icon_color     = ( $val = get_theme_mod( 'scrolltop_icon_color' ) ) === '#ffffff' ? false : $val;
+$scrolltop_icon_color_alt = get_theme_mod( 'scrolltop_icon_color_alt' );
+$scrolltop_border_radius  = get_theme_mod( 'scrolltop_border_radius' );
 
 if ( $scrolltop ) {
 
@@ -661,14 +661,14 @@ if ( $button_primary_bg_color || $button_primary_text_color ) {
 		// Thank you, Gutenberg.
 		// Let's also exclude those that have custom font colors.
 		echo '.wp-block-button__link:not(.has-text-color):hover {';
-			echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
+		echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
 		echo '}';
 	}
 
 	if ( $button_primary_bg_color ) {
 		echo '.is-style-outline .wp-block-button__link:not(.has-text-color) {';
-			echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color ) );
-			echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color ) );
+		echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color ) );
+		echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color ) );
 		echo '}';
 	}
 
@@ -690,8 +690,8 @@ if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 
 	if ( $button_primary_bg_color_alt ) {
 		echo '.is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background):hover {';
-			echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color_alt ) );
-			echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color_alt ) );
+		echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color_alt ) );
+		echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color_alt ) );
 		echo '}';
 	}
 
@@ -950,7 +950,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-	// Custom post type archives & taxonomies.
+		// Custom post type archives & taxonomies.
 	} elseif ( $custom_width && strpos( $archive, '-' ) ) {
 
 		$cpt = substr( $archive, 0, strpos( $archive, '-' ) );
@@ -961,7 +961,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-	// Other archives.
+		// Other archives.
 	} elseif ( $custom_width ) {
 
 		echo '.' . $archive . ' #inner-content {';
@@ -2323,7 +2323,6 @@ $footer_accent_color     = get_theme_mod( 'footer_accent_color' );
 $footer_accent_color_alt = get_theme_mod( 'footer_accent_color_alt' );
 $footer_font_size        = ( $val = get_theme_mod( 'footer_font_size' ) ) === '14px' ? false : $val;
 
-
 if ( 'none' !== $footer_layout && ( $footer_height || $footer_width ) ) {
 
 	echo '.wpbf-inner-footer {';
@@ -2347,7 +2346,7 @@ if ( 'none' !== $footer_layout && $footer_bg_color ) {
 
 	echo '.wpbf-page-footer {';
 
-		echo sprintf( 'background-color: %s;', esc_attr( $footer_bg_color ) );
+	echo sprintf( 'background-color: %s;', esc_attr( $footer_bg_color ) );
 
 	echo '}';
 
@@ -2357,7 +2356,7 @@ if ( 'none' !== $footer_layout && $footer_font_color ) {
 
 	echo '.wpbf-inner-footer {';
 
-		echo sprintf( 'color: %s;', esc_attr( $footer_font_color ) );
+	echo sprintf( 'color: %s;', esc_attr( $footer_font_color ) );
 
 	echo '}';
 

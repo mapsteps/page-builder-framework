@@ -1455,7 +1455,16 @@ Kirki::add_field( 'wpbf', array(
 	'section'     => 'wpbf_page_options',
 	'transport'   => 'postMessage',
 	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
-	'priority'    => 1,
+	'priority'    => 0,
+) );
+
+// Separator.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'separator-5640615563',
+	'section'  => 'wpbf_page_options',
+	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+	'priority' => 2,
 ) );
 
 // Boxed.
@@ -4385,6 +4394,35 @@ if ( ! wpbf_is_premium() ) {
  * @param object $wp_customize The wp_customize object.
  */
 function wpbf_custom_controls_default( $wp_customize ) {
+
+	// Responsive layout padding.
+	// $page_padding_settings = array(
+	// 	'page_padding_top_desktop', 'page_padding_top_tablet', 'page_padding_top_mobile',
+	// 	'page_padding_right_desktop', 'page_padding_right_tablet', 'page_padding_right_mobile',
+	// 	'page_padding_bottom_desktop', 'page_padding_bottom_tablet', 'page_padding_bottom_mobile',
+	// 	'page_padding_left_desktop', 'page_padding_left_tablet', 'page_padding_left_mobile',
+	// );
+
+	// foreach ( $page_padding_settings as $page_padding_setting ) {
+
+	// 	$wp_customize->add_setting( $page_padding_setting,
+	// 		array(
+	// 			'sanitize_callback' => 'absint',
+	// 		)
+	// 	);
+
+	// 	$wp_customize->add_control( new WPBF_Customize_Responsive_Padding_Control(
+	// 		$wp_customize,
+	// 		'page_padding',
+	// 		array(
+	// 			'label'    => __( 'Page Padding', 'page-builder-framework' ),
+	// 			'section'  => 'wpbf_page_options',
+	// 			'settings' => $page_padding_setting,
+	// 			'priority' => 1,
+	// 		)
+	// 	) );
+
+	// }
 
 	// Logo size.
 	$wp_customize->add_setting( 'menu_logo_size_desktop',
