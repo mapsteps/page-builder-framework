@@ -950,7 +950,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-		// Custom post type archives & taxonomies.
+	// Custom post type archives & taxonomies.
 	} elseif ( $custom_width && strpos( $archive, '-' ) ) {
 
 		$cpt = substr( $archive, 0, strpos( $archive, '-' ) );
@@ -961,7 +961,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-		// Other archives.
+	// Other archives.
 	} elseif ( $custom_width ) {
 
 		echo '.' . $archive . ' #inner-content {';
