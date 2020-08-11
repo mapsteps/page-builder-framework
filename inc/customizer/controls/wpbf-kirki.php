@@ -4938,10 +4938,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 }
 add_action( 'customize_register', 'wpbf_custom_controls_default' );
 
-// Deprecated hook to load in Premium Add-On customizer settings.
-// Will be removed at some point.
-do_action( 'wpbf_kirki_premium' );
-
 /**
  * Custom Kirki default fonts.
  *
