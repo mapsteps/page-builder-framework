@@ -323,6 +323,98 @@ $page_boxed_shadow_vertical   = ( $val = get_theme_mod( 'page_boxed_box_shadow_v
 $page_boxed_shadow_blur       = ( $val = get_theme_mod( 'page_boxed_box_shadow_blur' ) ) ? $val . 'px' : '25px';
 $page_boxed_shadow_spread     = ( $val = get_theme_mod( 'page_boxed_box_shadow_spread' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_color      = get_theme_mod( 'page_boxed_box_shadow_color', 'rgba(0,0,0,.15)' );
+$page_padding_top_desktop     = ( $val = get_theme_mod( 'page_padding_top_desktop' ) ) === 40 ? false : $val;
+$page_padding_right_desktop   = ( $val = get_theme_mod( 'page_padding_right_desktop' ) ) === 20 ? false : $val;
+$page_padding_bottom_desktop  = ( $val = get_theme_mod( 'page_padding_bottom_desktop' ) ) === 40 ? false : $val;
+$page_padding_left_desktop    = ( $val = get_theme_mod( 'page_padding_left_desktop' ) ) === 20 ? false : $val;
+$page_padding_top_tablet      = ( $val = get_theme_mod( 'page_padding_top_tablet' ) ) === 40 ? false : $val;
+$page_padding_right_tablet    = ( $val = get_theme_mod( 'page_padding_right_tablet' ) ) === 20 ? false : $val;
+$page_padding_bottom_tablet   = ( $val = get_theme_mod( 'page_padding_bottom_tablet' ) ) === 40 ? false : $val;
+$page_padding_left_tablet     = ( $val = get_theme_mod( 'page_padding_left_tablet' ) ) === 20 ? false : $val;
+$page_padding_top_mobile      = ( $val = get_theme_mod( 'page_padding_top_mobile' ) ) === 40 ? false : $val;
+$page_padding_right_mobile    = ( $val = get_theme_mod( 'page_padding_right_mobile' ) ) === 20 ? false : $val;
+$page_padding_bottom_mobile   = ( $val = get_theme_mod( 'page_padding_bottom_mobile' ) ) === 40 ? false : $val;
+$page_padding_left_mobile     = ( $val = get_theme_mod( 'page_padding_left_mobile' ) ) === 20 ? false : $val;
+
+if ( is_numeric( $page_padding_top_desktop ) || is_numeric( $page_padding_right_desktop ) || is_numeric( $page_padding_bottom_desktop ) || is_numeric( $page_padding_left_desktop ) ) {
+
+	echo '#inner-content {';
+
+	if ( is_numeric( $page_padding_top_desktop ) ) {
+		echo sprintf( 'padding-top: %s;', esc_attr( $page_padding_top_desktop ) . 'px' );
+	}
+
+	if ( $page_padding_right_desktop ) {
+		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_desktop ) . 'px' );
+	}
+
+	if ( $page_padding_bottom_desktop ) {
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $page_padding_bottom_desktop ) . 'px' );
+	}
+
+	if ( $page_padding_left_desktop ) {
+		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_desktop ) . 'px' );
+	}
+
+	echo '}';
+
+}
+
+if ( ! is_bool( $page_padding_top_tablet ) || ! is_bool( $page_padding_right_tablet ) || ! is_bool( $page_padding_bottom_tablet ) || ! is_bool( $page_padding_left_tablet ) ) {
+
+	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_desktop ) . ') {';
+
+	echo '#inner-content {';
+
+	if ( ! is_bool( $page_padding_top_tablet ) ) {
+		echo sprintf( 'padding-top: %s;', esc_attr( $page_padding_top_tablet ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_right_tablet ) ) {
+		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_tablet ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_bottom_tablet ) ) {
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $page_padding_bottom_tablet ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_left_tablet ) ) {
+		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_tablet ) . 'px' );
+	}
+
+	echo '}';
+
+	echo '}';
+
+}
+
+if ( ! is_bool( $page_padding_top_mobile ) || ! is_bool( $page_padding_right_mobile ) || ! is_bool( $page_padding_bottom_mobile ) || ! is_bool( $page_padding_left_mobile ) ) {
+
+	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
+
+	echo '#inner-content {';
+
+	if ( ! is_bool( $page_padding_top_mobile ) ) {
+		echo sprintf( 'padding-top: %s;', esc_attr( $page_padding_top_mobile ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_right_mobile ) ) {
+		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_mobile ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_bottom_mobile ) ) {
+		echo sprintf( 'padding-bottom: %s;', esc_attr( $page_padding_bottom_mobile ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_left_mobile ) ) {
+		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_mobile ) . 'px' );
+	}
+
+	echo '}';
+
+	echo '}';
+
+}
 
 if ( $page_width ) {
 
