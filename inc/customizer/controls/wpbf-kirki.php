@@ -4424,7 +4424,7 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			$wp_customize,
 			'page_padding',
 			array(
-				'label'    => __( 'Page Padding', 'page-builder-framework' ),
+				'label'    => __( 'Padding', 'page-builder-framework' ),
 				'section'  => 'wpbf_page_options',
 				'settings' => $page_padding_setting,
 				'priority' => 1,
