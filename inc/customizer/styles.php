@@ -336,23 +336,23 @@ $page_padding_right_mobile    = ( $val = get_theme_mod( 'page_padding_right_mobi
 $page_padding_bottom_mobile   = ( $val = get_theme_mod( 'page_padding_bottom_mobile' ) ) === 40 ? false : $val;
 $page_padding_left_mobile     = ( $val = get_theme_mod( 'page_padding_left_mobile' ) ) === 20 ? false : $val;
 
-if ( is_numeric( $page_padding_top_desktop ) || is_numeric( $page_padding_right_desktop ) || is_numeric( $page_padding_bottom_desktop ) || is_numeric( $page_padding_left_desktop ) ) {
+if ( ! is_bool( $page_padding_top_desktop ) || is_bool( $page_padding_right_desktop ) || is_bool( $page_padding_bottom_desktop ) || is_bool( $page_padding_left_desktop ) ) {
 
 	echo '#inner-content {';
 
-	if ( is_numeric( $page_padding_top_desktop ) ) {
+	if ( ! is_bool( $page_padding_top_desktop ) ) {
 		echo sprintf( 'padding-top: %s;', esc_attr( $page_padding_top_desktop ) . 'px' );
 	}
 
-	if ( $page_padding_right_desktop ) {
+	if ( ! is_bool( $page_padding_right_desktop ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_desktop ) . 'px' );
 	}
 
-	if ( $page_padding_bottom_desktop ) {
+	if ( ! is_bool( $page_padding_bottom_desktop ) ) {
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $page_padding_bottom_desktop ) . 'px' );
 	}
 
-	if ( $page_padding_left_desktop ) {
+	if ( ! is_bool( $page_padding_left_desktop ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_desktop ) . 'px' );
 	}
 
