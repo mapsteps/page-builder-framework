@@ -128,12 +128,13 @@ function wpbf_customizer_frontend_scripts() {
 	} elseif ( 'file' === $css_output ) {
 
 		$upload_dir = wp_upload_dir();
+		$file_path  = $upload_dir['basedir'] . '/page-builder-framework/wpbf-customizer-styles.css';
+		$file_url   = $upload_dir['baseurl'] . '/page-builder-framework/wpbf-customizer-styles.css';
 
-		if ( file_exists( $upload_dir['basedir'] . '/page-builder-framework/wpbf-customizer-styles.css' ) ) {
-
-			wp_enqueue_style( 'wpbf-customizer', $upload_dir['baseurl'] . '/page-builder-framework/wpbf-customizer-styles.css', '', WPBF_VERSION );
-
+		if ( file_exists( $file_path ) ) {
+			wp_enqueue_style( 'wpbf-customizer', $file_url, '', filemtime( $file_path ) );
 		}
+
 	}
 
 }
