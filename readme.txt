@@ -1,10 +1,9 @@
 -------------------------------------------------------
-Page Builder Framework – The only theme you'll ever need
+Page Builder Framework – A modern, fast & minimalistic theme designed for the new WordPress Era.
 -------------------------------------------------------
 Website: https://wp-pagebuilderframework.com
 Documentation: https://wp-pagebuilderframework.com/docs/
 Premium Add-On: https://wp-pagebuilderframework.com/premium/
-Email: support@wp-pagebuilderframework.com
 
 -------------------------------------------------------
 Features:
@@ -28,17 +27,15 @@ Download the Page Builder Framework child theme or create your own – https://w
 -------------------------------------------------------
 License
 -------------------------------------------------------
-Page Builder Framework WordPress Theme, Copyright 2017 wp-pagebuilderframework.com
+Page Builder Framework WordPress Theme, Copyright 2020 wp-pagebuilderframework.com
 
 Page Builder Framework is licensed under the GNU General Public License 3 or later
-More details here: https://www.gnu.org/licenses/gpl-3.0.html
+More details: https://www.gnu.org/licenses/gpl-3.0.html
 
 -------------------------------------------------------
 Screenshot
 -------------------------------------------------------
-Screenshot image is licensed under CC0 1.0 Universal - https://creativecommons.org/publicdomain/zero/1.0/
-Image: https://www.pexels.com/photo/woman-in-white-t-shirt-holding-smartphone-in-front-of-laptop-914931/
-Illustrations: Self Created
+Screenshot image is entirely self-created
 
 -------------------------------------------------------
 WooCommerce
@@ -49,7 +46,7 @@ WooCommerce is licensed under the GNU General Public License v3 or later – htt
 kirki
 -------------------------------------------------------
 kirki is licensed under the MIT License (MIT)
-created by Aristeides Stathopoulos – https://aristath.github.io/
+created by Aristeides Stathopoulos and David Vongries – https://github.com/kirki-framework/kirki
 
 -------------------------------------------------------
 normalize.css
