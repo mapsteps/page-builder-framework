@@ -4397,26 +4397,25 @@ function wpbf_custom_controls_default( $wp_customize ) {
 
 	// Responsive layout padding.
 	$page_padding_settings = array(
-		'page_padding_top_desktop' => 40,
-		'page_padding_top_tablet' => 40,
-		'page_padding_top_mobile' => 40,
-		'page_padding_right_desktop' => 20,
-		'page_padding_right_tablet' => 20,
-		'page_padding_right_mobile' => 20,
-		'page_padding_bottom_desktop' => 40,
-		'page_padding_bottom_tablet' => 40,
-		'page_padding_bottom_mobile' => 40,
-		'page_padding_left_desktop' => 20,
-		'page_padding_left_tablet' => 20,
-		'page_padding_left_mobile' => 20,
+		'page_padding_top_desktop',
+		'page_padding_top_tablet',
+		'page_padding_top_mobile',
+		'page_padding_right_desktop',
+		'page_padding_right_tablet',
+		'page_padding_right_mobile',
+		'page_padding_bottom_desktop',
+		'page_padding_bottom_tablet',
+		'page_padding_bottom_mobile',
+		'page_padding_left_desktop',
+		'page_padding_left_tablet',
+		'page_padding_left_mobile',
 	);
 
-	foreach ( $page_padding_settings as $page_padding_setting => $default ) {
+	foreach ( $page_padding_settings as $page_padding_setting ) {
 
 		$wp_customize->add_setting( $page_padding_setting,
 			array(
 				'sanitize_callback' => 'absint',
-				'default' => $default,
 			)
 		);
 
@@ -4809,26 +4808,25 @@ function wpbf_custom_controls_default( $wp_customize ) {
 
 	// Responsive sidebar widget padding.
 	$responsive_sidebar_padding_settings = array(
-		'sidebar_widget_padding_top_desktop' => 20,
-		'sidebar_widget_padding_top_tablet' => 20,
-		'sidebar_widget_padding_top_mobile' => 20,
-		'sidebar_widget_padding_right_desktop' => 20,
-		'sidebar_widget_padding_right_tablet' => 20,
-		'sidebar_widget_padding_right_mobile' => 20,
-		'sidebar_widget_padding_bottom_desktop' => 20,
-		'sidebar_widget_padding_bottom_tablet' => 20,
-		'sidebar_widget_padding_bottom_mobile' => 20,
-		'sidebar_widget_padding_left_desktop' => 20,
-		'sidebar_widget_padding_left_tablet' => 20,
-		'sidebar_widget_padding_left_mobile' => 20,
+		'sidebar_widget_padding_top_desktop',
+		'sidebar_widget_padding_top_tablet',
+		'sidebar_widget_padding_top_mobile',
+		'sidebar_widget_padding_right_desktop',
+		'sidebar_widget_padding_right_tablet',
+		'sidebar_widget_padding_right_mobile',
+		'sidebar_widget_padding_bottom_desktop',
+		'sidebar_widget_padding_bottom_tablet',
+		'sidebar_widget_padding_bottom_mobile',
+		'sidebar_widget_padding_left_desktop',
+		'sidebar_widget_padding_left_tablet',
+		'sidebar_widget_padding_left_mobile',
 	);
 
-	foreach ( $responsive_sidebar_padding_settings as $responsive_sidebar_padding_setting => $default ) {
+	foreach ( $responsive_sidebar_padding_settings as $responsive_sidebar_padding_setting ) {
 
 		$wp_customize->add_setting( $responsive_sidebar_padding_setting,
 			array(
 				'sanitize_callback' => 'absint',
-				'default' => $default,
 			)
 		);
 
@@ -4851,26 +4849,25 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	foreach ( $archives as $archive ) {
 
 		$responsive_boxed_style_post_settings = array(
-			$archive . '_boxed_padding_top_desktop' => 20,
-			$archive . '_boxed_padding_top_tablet' => 20,
-			$archive . '_boxed_padding_top_mobile' => 20,
-			$archive . '_boxed_padding_right_desktop' => 20,
-			$archive . '_boxed_padding_right_tablet' => 20,
-			$archive . '_boxed_padding_right_mobile' => 20,
-			$archive . '_boxed_padding_bottom_desktop' => 20,
-			$archive . '_boxed_padding_bottom_tablet' => 20,
-			$archive . '_boxed_padding_bottom_mobile' => 20,
-			$archive . '_boxed_padding_left_desktop' => 20,
-			$archive . '_boxed_padding_left_tablet' => 20,
-			$archive . '_boxed_padding_left_mobile' => 20,
+			$archive . '_boxed_padding_top_desktop',
+			$archive . '_boxed_padding_top_tablet',
+			$archive . '_boxed_padding_top_mobile',
+			$archive . '_boxed_padding_right_desktop',
+			$archive . '_boxed_padding_right_tablet',
+			$archive . '_boxed_padding_right_mobile',
+			$archive . '_boxed_padding_bottom_desktop',
+			$archive . '_boxed_padding_bottom_tablet',
+			$archive . '_boxed_padding_bottom_mobile',
+			$archive . '_boxed_padding_left_desktop',
+			$archive . '_boxed_padding_left_tablet',
+			$archive . '_boxed_padding_left_mobile',
 		);
 
-		foreach ( $responsive_boxed_style_post_settings as $responsive_boxed_style_post_setting => $default ) {
+		foreach ( $responsive_boxed_style_post_settings as $responsive_boxed_style_post_setting ) {
 
 			$wp_customize->add_setting( $responsive_boxed_style_post_setting,
 				array(
 					'sanitize_callback' => 'absint',
-					'default' => $default,
 				)
 			);
 
@@ -4896,26 +4893,25 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	foreach ( $singles as $single ) {
 
 		$responsive_article_style_post_settings = array(
-			$single . '_boxed_padding_top_desktop' => 20,
-			$single . '_boxed_padding_top_tablet' => 20,
-			$single . '_boxed_padding_top_mobile' => 20,
-			$single . '_boxed_padding_right_desktop' => 20,
-			$single . '_boxed_padding_right_tablet' => 20,
-			$single . '_boxed_padding_right_mobile' => 20,
-			$single . '_boxed_padding_bottom_desktop' => 20,
-			$single . '_boxed_padding_bottom_tablet' => 20,
-			$single . '_boxed_padding_bottom_mobile' => 20,
-			$single . '_boxed_padding_left_desktop' => 20,
-			$single . '_boxed_padding_left_tablet' => 20,
-			$single . '_boxed_padding_left_mobile' => 20,
+			$single . '_boxed_padding_top_desktop',
+			$single . '_boxed_padding_top_tablet',
+			$single . '_boxed_padding_top_mobile',
+			$single . '_boxed_padding_right_desktop',
+			$single . '_boxed_padding_right_tablet',
+			$single . '_boxed_padding_right_mobile',
+			$single . '_boxed_padding_bottom_desktop',
+			$single . '_boxed_padding_bottom_tablet',
+			$single . '_boxed_padding_bottom_mobile',
+			$single . '_boxed_padding_left_desktop',
+			$single . '_boxed_padding_left_tablet',
+			$single . '_boxed_padding_left_mobile',
 		);
 
-		foreach ( $responsive_article_style_post_settings as $responsive_article_style_post_setting => $default ) {
+		foreach ( $responsive_article_style_post_settings as $responsive_article_style_post_setting ) {
 
 			$wp_customize->add_setting( $responsive_article_style_post_setting,
 				array(
 					'sanitize_callback' => 'absint',
-					'default' => $default,
 				)
 			);
 
