@@ -13,7 +13,7 @@ define( 'WPBF_THEME_URI', get_template_directory_uri() );
 define( 'WPBF_CHILD_THEME_DIR', get_stylesheet_directory() );
 define( 'WPBF_CHILD_THEME_URI', get_stylesheet_directory_uri() );
 define( 'WPBF_VERSION', wp_get_theme( 'page-builder-framework' )->get( 'Version' ) );
-define( 'WPBF_CHILD_VERSION', '1.1' );
+define( 'WPBF_CHILD_VERSION', '1.2' );
 
 /**
  * Theme setup.

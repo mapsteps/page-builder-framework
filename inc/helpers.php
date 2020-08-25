@@ -72,6 +72,13 @@ function wpbf_body_schema_markup() {
 }
 
 /**
+ * Add a class to our main navigation.
+ */
+function wpbf_navigation_classes() {
+	echo apply_filters( 'wpbf_navigation_classes', 'wpbf-navigation' );
+}
+
+/**
  * Inner content open.
  *
  * @param boolean $echo Determine wether result should return or echo.
@@ -104,7 +111,7 @@ function wpbf_inner_content( $echo = true ) {
 
 		}
 
-		// On archives, we only add the wpbf_inner_content filter.
+	// On archives, we only add the wpbf_inner_content filter.
 	} else {
 
 		$inner_content = apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
@@ -986,8 +993,6 @@ function wpbf_menu_hover_effect() {
 
 /**
  * Navigation attributes.
- *
- * Currently only being used to add the submenu animation duration.
  */
 function wpbf_navigation_attributes() {
 
@@ -995,6 +1000,25 @@ function wpbf_navigation_attributes() {
 	$navigation_attributes      = $submenu_animation_duration ? 'data-sub-menu-animation-duration="' . esc_attr( $submenu_animation_duration ) . '"' : 'data-sub-menu-animation-duration="250"';
 
 	echo apply_filters( 'wpbf_navigation_attributes', $navigation_attributes );
+
+}
+
+/**
+ * Logo attributes.
+ */
+function wpbf_logo_attributes() {
+
+	$attributes = '';
+
+	// This part will be removed with 3.0.
+	// With 3.0 we will pass an empty string which will then be extended by the Premium Add-On.
+	$menu_active_logo = get_theme_mod( 'menu_active_logo' );
+
+	if ( $menu_active_logo ) {
+		$attributes .= ' data-menu-active-logo="' . esc_url( $menu_active_logo ) . '"';
+	}
+
+	return apply_filters( 'wpbf_logo_attributes', $attributes );
 
 }
 
