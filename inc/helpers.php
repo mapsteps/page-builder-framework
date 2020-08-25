@@ -994,7 +994,7 @@ function wpbf_navigation_attributes() {
 	$submenu_animation_duration = get_theme_mod( 'sub_menu_animation_duration' );
 	$navigation_attributes      = $submenu_animation_duration ? 'data-sub-menu-animation-duration="' . esc_attr( $submenu_animation_duration ) . '"' : 'data-sub-menu-animation-duration="250"';
 
-	echo $navigation_attributes;
+	echo apply_filters( 'wpbf_navigation_attributes', $navigation_attributes );
 
 }
 
