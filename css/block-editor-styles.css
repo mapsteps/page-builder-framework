@@ -1,3 +1,12 @@
+:root {
+	--base-color: #dedee5;
+	--base-color-alt: #f5f5f7;
+	--brand-color: #3e4349;
+	--brand-color-alt: #6d7680;
+	--accent-color: #3ba9d2;
+	--accent-color-alt: #79c4e0;
+}
+
 /* Set default margins */
 .editor-styles-wrapper [data-block] {
 	margin-top: 0;
@@ -22,7 +31,7 @@
 
 /* Reset font color */
 #wpwrap .editor-styles-wrapper {
-	color: #6d7680;
+	color: var(--brand-color-alt);
 }
 
 /* Reset headline styles */
@@ -33,7 +42,7 @@
 #wpwrap .editor-styles-wrapper h4,
 #wpwrap .editor-styles-wrapper h5,
 #wpwrap .editor-styles-wrapper h6 {
-	color: #3e4349;
+	color: var(--brand-color);
 	font-weight: 700;
 	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
 }
@@ -41,20 +50,25 @@
 /* Links */
 .editor-styles-wrapper a {
 	text-decoration: none;
+	color: var(--accent-color);
+}
+
+.editor-styles-wrapper a:hover {
+	color: var(--accent-color-alt);
 }
 
 /* Blockquotes */
 .wp-block-quote, .wp-block-quote.is-style-large {
 	margin: 0 20px;
 	padding: 0 20px;
-	border-left: 5px solid #dedee5;
+	border-left: 5px solid var(--base-color);
 	font-style: italic;
 }
 
 .wp-block-quote.has-text-align-right {
 	margin: 0 20px;
 	padding: 0 20px;
-	border-right: 5px solid #dedee5;
+	border-right: 5px solid var(--base-color);
 }
 
 /* Blockquote citations */
@@ -72,8 +86,8 @@
 
 /* Pullquotes */
 .wp-block-pullquote {
-	border-top-color: #dedee5;
-	border-bottom-color: #dedee5;
+	border-top-color: var(--base-color);
+	border-bottom-color: var(--base-color);
 	border-top-width: 5px;
 	border-bottom-width: 5px;
 	padding: 20px 0;
@@ -89,7 +103,7 @@
 
 .wp-block-code .block-editor-plain-text, .wp-block-preformatted {
 	font-family: monospace, monospace;
-	background: #f5f5f7;
+	background: var(--base-color-alt);
 	padding: 20px;
 	font-size: inherit;
 }
@@ -111,12 +125,12 @@
 /* Table */
 .wp-block-table td,
 .wp-block-table th {
-	border: 1px solid #dedee5;
+	border: 1px solid var(--base-color);
 }
 
 /* Buttons */
 .wp-block-button__link {
-	background: #3ba9d2;
+	background: var(--accent-color);
 	-moz-transition: all 0.2s;
 	-o-transition: all 0.2s;
 	-webkit-transition: all 0.2s;
@@ -124,6 +138,6 @@
 }
 
 .is-style-outline .wp-block-button__link:not(.has-text-color) {
-	border-color: #3ba9d2;
-	color: #3ba9d2;
+	border-color: var(--accent-color);
+	color: var(--accent-color);
 }

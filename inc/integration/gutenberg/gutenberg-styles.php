@@ -8,6 +8,46 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+// Global colors.
+$base_color_global       = ( $val = get_theme_mod( 'base_color_global' ) ) === '#f5f5f7' ? false : $val;
+$base_color_alt_global   = ( $val = get_theme_mod( 'base_color_alt_global' ) ) === '#dedee5' ? false : $val;
+$brand_color_global      = ( $val = get_theme_mod( 'brand_color_global' ) ) === '#3e4349' ? false : $val;
+$brand_color_alt_global  = ( $val = get_theme_mod( 'brand_color_alt_global' ) ) === '#6d7680' ? false : $val;
+$accent_color_global     = ( $val = get_theme_mod( 'accent_color_global' ) ) === '#3ba9d2' ? false : $val;
+$accent_color_alt_global = ( $val = get_theme_mod( 'accent_color_alt_global' ) ) === '#79c4e0' ? false : $val;
+
+if ( $base_color_global || $base_color_alt_global || $brand_color_global || $brand_color_alt_global || $accent_color_global || $accent_color_alt_global ) {
+
+	echo ':root {';
+
+	if ( $base_color_global ) {
+		echo sprintf( '--base-color-alt: %s;', esc_attr( $base_color_global ) );
+	}
+
+	if ( $base_color_alt_global ) {
+		echo sprintf( '--base-color: %s;', esc_attr( $base_color_alt_global ) );
+	}
+
+	if ( $brand_color_global ) {
+		echo sprintf( '--brand-color: %s;', esc_attr( $brand_color_global ) );
+	}
+
+	if ( $brand_color_alt_global ) {
+		echo sprintf( '--brand-color-alt: %s;', esc_attr( $brand_color_alt_global ) );
+	}
+
+	if ( $accent_color_global ) {
+		echo sprintf( '--accent-color: %s;', esc_attr( $accent_color_global ) );
+	}
+
+	if ( $accent_color_alt_global ) {
+		echo sprintf( '--accent-color-alt: %s;', esc_attr( $accent_color_alt_global ) );
+	}
+
+	echo '}';
+
+}
+
 // Vars.
 $page_width             = get_theme_mod( 'page_max_width' );
 $single_custom_width    = get_theme_mod( 'single_custom_width' );
@@ -166,7 +206,7 @@ if ( $page_h1_toggle && $page_h1_font_family_value ) {
 
 }
 
-if ( get_theme_mod( 'page_h1_font_color' ) || get_theme_mod( 'page_h1_line_height' ) || get_theme_mod( 'page_h1_letter_spacing' ) || get_theme_mod( 'page_h1_text_transform' ) ) {
+if ( $page_h1_font_color || $page_h1_line_height || $page_h1_letter_spacing || $page_h1_text_transform ) {
 
 	echo '#wpwrap .editor-post-title__block .editor-post-title__input, #wpwrap .editor-styles-wrapper h1, #wpwrap .editor-styles-wrapper h2, #wpwrap .editor-styles-wrapper h3, #wpwrap .editor-styles-wrapper h4, #wpwrap .editor-styles-wrapper h5, #wpwrap .editor-styles-wrapper h6 {';
 
