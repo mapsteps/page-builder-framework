@@ -79,12 +79,33 @@ function wpbf_theme_setup() {
 		array(
 			'main_menu'             => __( 'Main Menu', 'page-builder-framework' ),
 			'mobile_menu'           => __( 'Mobile Menu', 'page-builder-framework' ),
-			'pre_header_menu'       => __( 'Pre Header Left', 'page-builder-framework' ),
-			'pre_header_menu_right' => __( 'Pre Header Right', 'page-builder-framework' ),
-			'footer_menu'           => __( 'Footer Left', 'page-builder-framework' ),
-			'footer_menu_right'     => __( 'Footer Right', 'page-builder-framework' ),
 		)
 	);
+
+	$pre_header_layout = get_theme_mod( 'pre_header_layout' );
+	$footer_layout     = get_theme_mod( 'footer_layout' );
+
+	if ( $pre_header_layout && 'none' !== $pre_header_layout ) {
+
+		register_nav_menus(
+			array(
+				'pre_header_menu'       => __( 'Pre Header Left', 'page-builder-framework' ),
+				'pre_header_menu_right' => __( 'Pre Header Right', 'page-builder-framework' ),
+			)
+		);
+
+	}
+
+	if ( $footer_layout && 'none' !== $footer_layout ) {
+
+		register_nav_menus(
+			array(
+				'footer_menu'           => __( 'Footer Left', 'page-builder-framework' ),
+				'footer_menu_right'     => __( 'Footer Right', 'page-builder-framework' ),
+			)
+		);
+
+	}
 
 }
 add_action( 'after_setup_theme', 'wpbf_theme_setup' );
