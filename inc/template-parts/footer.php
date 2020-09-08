@@ -49,15 +49,7 @@ $footer_column_two_layout = get_theme_mod( 'footer_column_two_layout', 'text' );
 
 			if ( 'text' === $footer_column_one_layout ) {
 
-				wp_nav_menu( array(
-					'theme_location' => 'footer_menu',
-					'container'      => false,
-					'menu_class'     => 'wpbf-menu',
-					'depth'          => '1',
-					'fallback_cb'    => false,
-				) );
-
-				echo do_shortcode( apply_filters( 'footer-column-left', $footer_column_one ) );
+				echo do_shortcode( $footer_column_one );
 
 			} elseif ( 'menu' === $footer_column_one_layout ) {
 
@@ -83,15 +75,7 @@ $footer_column_two_layout = get_theme_mod( 'footer_column_two_layout', 'text' );
 
 			if ( 'text' === $footer_column_two_layout ) {
 
-				echo do_shortcode( apply_filters( 'footer-column-right', $footer_column_two ) );
-
-				wp_nav_menu( array(
-					'theme_location' => 'footer_menu_right',
-					'container'      => false,
-					'menu_class'     => 'wpbf-menu',
-					'depth'          => '1',
-					'fallback_cb'    => false,
-				) );
+				echo do_shortcode( $footer_column_two );
 
 			} elseif ( 'menu' === $footer_column_two_layout ) {
 
