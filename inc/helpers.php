@@ -656,17 +656,17 @@ function wpbf_article_meta() {
 			switch ( $value ) {
 				case 'author':
 					do_action( 'wpbf_before_author_meta' );
-					do_action( 'wpbf_do_author_meta' );
+					do_action( 'wpbf_author_meta' );
 					do_action( 'wpbf_after_author_meta' );
 					break;
 				case 'date':
 					do_action( 'wpbf_before_date_meta' );
-					do_action( 'wpbf_do_date_meta' );
+					do_action( 'wpbf_date_meta' );
 					do_action( 'wpbf_after_date_meta' );
 					break;
 				case 'comments':
 					do_action( 'wpbf_before_comments_meta' );
-					do_action( 'wpbf_do_comments_meta' );
+					do_action( 'wpbf_comments_meta' );
 					do_action( 'wpbf_after_comments_meta' );
 					break;
 				default:
@@ -686,7 +686,7 @@ function wpbf_article_meta() {
 /**
  * Article meta (author).
  */
-function wpbf_author_meta() {
+function wpbf_do_author_meta() {
 
 	$rtl         = is_rtl();
 	$avatar      = get_theme_mod( 'blog_author_avatar' );
@@ -710,23 +710,23 @@ function wpbf_author_meta() {
 	echo '<span class="article-meta-separator">' . apply_filters( 'wpbf_article_meta_separator', ' | ' ) . '</span>';
 
 }
-add_action( 'wpbf_do_author_meta', 'wpbf_author_meta' );
+add_action( 'wpbf_author_meta', 'wpbf_do_author_meta' );
 
 /*
  * Article meta (date).
  */
-function wpbf_date_meta() {
+function wpbf_do_date_meta() {
 
 	echo '<span class="posted-on">' . __( 'Posted on', 'page-builder-framework' ) . '</span> <time class="article-time published" datetime="' . get_the_date( 'c' ) . '" itemprop="datePublished">' . get_the_date() . '</time>';
 	echo '<span class="article-meta-separator">' . apply_filters( 'wpbf_article_meta_separator', ' | ' ) . '</span>';
 
 }
-add_action( 'wpbf_do_date_meta', 'wpbf_date_meta' );
+add_action( 'wpbf_date_meta', 'wpbf_do_date_meta' );
 
 /**
  * Article meta (comments).
  */
-function wpbf_comments_meta() {
+function wpbf_do_comments_meta() {
 
 	echo '<span class="comments-count">';
 
@@ -741,7 +741,7 @@ function wpbf_comments_meta() {
 	echo '<span class="article-meta-separator">' . apply_filters( 'wpbf_article_meta_separator', ' | ' ) . '</span>';
 
 }
-add_action( 'wpbf_do_comments_meta', 'wpbf_comments_meta' );
+add_action( 'wpbf_comments_meta', 'wpbf_do_comments_meta' );
 
 /**
  * Blog layout.
