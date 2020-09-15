@@ -1,6 +1,6 @@
 (function ($) {
 
-	$(document).on('click', '.single_add_to_cart_button', function(e) {
+	$(document).on('click', '.single_add_to_cart_button:not(.disabled)', function(e) {
 		e.preventDefault();
 
 		var $thisbutton      = $(this),
