@@ -1,0 +1,164 @@
+// Config
+@import "../../scss/config/config";
+
+// Buttons.
+.llms-button-primary,
+.llms-button-action {
+	padding: 15px 20px;
+}
+
+// Progress bar.
+.llms-progress .llms-progress-bar,
+.llms-progress .progress-bar-complete {
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.llms-progress .llms-progress-bar {
+	height: 10px;
+	top: 4px;
+	background: #fff;
+}
+
+.progress__indicator {
+	margin-left: 20px;
+	font-weight: 700;
+	font-size: 16px;
+	color: $brand-color;
+}
+
+// Author.
+.llms-author-info.name {
+	color: $brand-color;
+	font-size: $bigger-fontsize;
+}
+
+// Pricing tables.
+.llms-access-plan-title,
+.llms-access-plan-description {
+	padding: 20px;
+}
+
+.llms-access-plan-content .llms-access-plan-pricing {
+	padding-top: 20px;
+}
+
+.llms-access-plan-price {
+	color: $brand-color;
+}
+
+.llms-access-plans .button {
+	display: inline-block;
+}
+
+.llms-access-plan-footer {
+	border-bottom-color: $base-color;
+	padding: 20px;
+}
+
+// Gray areas.
+.llms-instructor-info .llms-instructors .llms-author,
+.llms-access-plan .llms-access-plan-footer,
+.llms-access-plan .llms-access-plan-content {
+	background: $base-color-alt;
+}
+
+// Lessons.
+.llms-syllabus-wrapper {
+	text-align: left;
+	margin: 0;
+}
+
+.llms-lesson-preview {
+	width: 100%;
+	margin: 0;
+	display: block;
+}
+
+.llms-lesson-preview.is-complete {
+	h5, aside {
+		text-decoration: line-through;
+		opacity: .6;
+	}
+}
+
+.llms-syllabus-wrapper .llms-section-title {
+	background: $base-color-alt;
+	padding: 20px;
+	margin: 0;
+	margin-top: 40px;
+	border: 1px solid $base-color;
+}
+
+.llms-lesson-preview .llms-lesson-link {
+	background: none;
+	border: 1px solid $base-color;
+	border-top: 0;
+	padding: 20px;
+	@include transition(all 0.3s);
+	h5, aside {
+		font-size: $base-fontsize;
+	}
+}
+
+// Lesson counter.
+.llms-lesson-preview .llms-lesson-counter,
+.llms-lesson-preview .llms-free-lesson-svg,
+.llms-lesson-preview .llms-lesson-complete,
+.llms-lesson-preview .llms-lesson-complete-placeholder {
+	margin-bottom: 0;
+}
+
+// Locked lessons.
+.llms-lesson-preview .llms-lesson-link:hover {
+	background: $base-color-alt;
+}
+
+.llms-lesson-link-locked, .llms-lesson-link-locked:hover {
+	box-shadow: none;
+	min-height: 0;
+}
+
+// Lesson navigation.
+.llms-course-navigation {
+	margin-top: 20px;
+}
+
+.llms-course-navigation .llms-lesson-link {
+	border: none;
+	background: $base-color-alt;
+	h6 {
+		color: $brand-color-alt;
+		font-size: $small-fontsize;
+	}
+}
+
+.llms-course-navigation .llms-lesson-link:hover {
+	background: $base-color;
+}
+
+// Checkout.
+.llms-checkout-section,
+.llms-checkout-wrapper form.llms-login {
+	// border: none;
+	border-color: $base-color;
+	background: $base-color-alt;
+	margin-bottom: 20px;
+}
+
+.llms-checkout-section-content,
+.llms-checkout-wrapper form.llms-login .llms-form-fields {
+	padding: 20px;
+	background: #fff;
+}
+
+.llms-checkout-wrapper .llms-form-heading {
+	padding: 20px;
+	background: $base-color-alt;
+	color: $brand-color;
+}
+
+// Notices.
+.entry-content .llms-notice {
+	margin-bottom: 20px;
+}

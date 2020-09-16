@@ -39,3 +39,21 @@ function wpbf_lifterlms_remove_post_navigation() {
 
 }
 add_action( 'wp', 'wpbf_lifterlms_remove_post_navigation' );
+
+/**
+ * Add an arbitrary plugin directory to the list.
+ *
+ * @param array $dirs Array of paths to directories to load LifterLMS templates from
+ *
+ * @return array Updated array of paths
+ */
+function wpbf_lifterlms_theme_override_dirs( $dirs ) {
+	
+	array_unshift( $dirs, WPBF_THEME_DIR . '/inc/integration/lifterlms/templates' );
+
+	// var_dump($dirs);
+
+	return $dirs;
+	
+}
+add_filter( 'lifterlms_theme_override_directories', 'wpbf_lifterlms_theme_override_dirs', 10, 1 );

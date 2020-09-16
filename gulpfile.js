@@ -70,6 +70,15 @@ gulp.task('edd_styles_min', function(){
 	.pipe(reload({ stream: true }))
 });
 
+// Compile LifterLMS Styles
+gulp.task('lifterlms_styles_min', function(){
+	return gulp.src('assets/lifterlms/scss/lifterlms.scss')
+	.pipe(sass({outputStyle: 'compressed'})) 
+	.pipe(rename({ suffix: '-min' }))
+	.pipe(gulp.dest('css/min'))
+	.pipe(reload({ stream: true }))
+});
+
 // Compile Woo Styles
 gulp.task('woo_styles_min', function(){
 	return gulp.src(['assets/woocommerce/scss/woocommerce-layout.scss', 'assets/woocommerce/scss/woocommerce.scss', 'assets/woocommerce/scss/woocommerce-smallscreen.scss'])
@@ -100,10 +109,11 @@ gulp.task('watch', function() {
 	gulp.watch('assets/scss/**/*.scss', ['rtl_styles_min']);
 	gulp.watch('assets/woocommerce/scss/**/*.scss', ['woo_styles_min']);
 	gulp.watch('assets/edd/scss/**/*.scss', ['edd_styles_min']);
+	gulp.watch('assets/lifterlms/scss/**/*.scss', ['lifterlms_styles_min']);
 
 	// browserSync
 	gulp.watch('**/*.php').on('change', reload);
 })
 
 // Gulp
-gulp.task('default', ['scripts_combine_min', 'scripts_min', 'styles', 'responsive_styles_min', 'rtl_styles_min', 'edd_styles_min', 'woo_styles_min', 'watch', 'serve']);
+gulp.task('default', ['scripts_combine_min', 'scripts_min', 'styles', 'responsive_styles_min', 'rtl_styles_min', 'edd_styles_min', 'lifterlms_styles_min', 'woo_styles_min', 'watch', 'serve']);
