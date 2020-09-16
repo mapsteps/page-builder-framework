@@ -103,6 +103,11 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php';
 }
 
+// LifterLMS integration.
+if ( class_exists( 'LifterLMS' ) ) {
+	require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/lifterlms.php';
+}
+
 /**
  * Render pre header.
  */
