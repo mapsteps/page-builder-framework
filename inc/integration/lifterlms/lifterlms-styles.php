@@ -12,7 +12,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 function wpbf_do_lifterlms_customizer_css() {
 
-	$primary = ( $val = get_theme_mod( 'lifterlms_primary_color' ) ) === '#2295ff' ? false : $val;
+	$primary = get_theme_mod( 'page_accent_color', '#3ba9d2' );
+	$primary = ( $val = get_theme_mod( 'lifterlms_primary_color' ) ) === '#2295ff' ? $primary : $val;
 	$action  = ( $val = get_theme_mod( 'lifterlms_action_color' ) ) === '#f8954f' ? false : $val;
 	$accent  = ( $val = get_theme_mod( 'lifterlms_accent_color' ) ) === '#ef476f' ? false : $val;
 
