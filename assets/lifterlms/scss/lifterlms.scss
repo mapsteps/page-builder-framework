@@ -8,15 +8,7 @@
 }
 
 // Progress bar.
-.llms-progress .llms-progress-bar,
-.llms-progress .progress-bar-complete {
-	border-radius: 10px;
-	overflow: hidden;
-}
-
-.llms-progress .llms-progress-bar {
-	height: 10px;
-	top: 4px;
+.wpbf-sidebar .llms-progress .llms-progress-bar {
 	background: #fff;
 }
 
