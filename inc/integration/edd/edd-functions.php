@@ -265,7 +265,6 @@ function wpbf_edd_ajax() {
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_edd_ajax' );
 
-
 /**
  * EDD fragments.
  */
@@ -279,3 +278,17 @@ function wpbf_edd_fragments() {
 }
 add_action( 'wp_ajax_wpbf_edd_fragments', 'wpbf_edd_fragments' );
 add_action( 'wp_ajax_nopriv_wpbf_edd_fragments', 'wpbf_edd_fragments' );
+
+/**
+ * Remove post navigation from EDD products.
+ */
+function wpbf_edd_remove_post_navigation() {
+
+	if ( ! is_singular( 'download' ) ) {
+		return;
+	}
+
+	remove_action( 'wpbf_post_links', 'wpbf_do_post_links' );
+
+}
+add_action( 'wp', 'wpbf_edd_remove_post_navigation' );
