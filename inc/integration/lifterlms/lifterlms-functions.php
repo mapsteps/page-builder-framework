@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  *
  * @param string $id The default sidebar id
  *
- * @return string The updated sidebar id
+ * @return string $id The updated sidebar id
  */
 function wpbf_lifterlms_sidebar_function( $sidebar_id ) {
 
@@ -25,13 +25,57 @@ function wpbf_lifterlms_sidebar_function( $sidebar_id ) {
 add_filter( 'llms_get_theme_default_sidebar', 'wpbf_lifterlms_sidebar_function' );
 
 /**
+ * Remove sidebars from LifterLMS archives.
+ *
+ * This is the preferred default state. Users can change this in the customizer.
+ *
+ * @param string $layout The sidebar layout
+ *
+ * @return string $layout The updated sidebar layout
+ */
+function wpbf_lifterlms_default_archive_sidebars( $layout ) {
+
+	// Stop here if we're not on a page.
+	if ( ! is_post_type_archive( 'course' ) && ! is_post_type_archive( 'llms_membership' ) ) {
+		return $layout;
+	}
+
+	return 'none';
+
+}
+add_filter( 'wpbf_sidebar_layout', 'wpbf_lifterlms_default_archive_sidebars' );
+
+/**
+ * Replace sidebar widgets with the ones in LifterLMS' lesson sidebar when viewing a quiz.
+ *
+ * We must do this as they don't provide a more convenient way to manipulate sidebars on quizzes.
+ * Simply replacing the sidebar won't work so we follow their process of replacing the widgets.
+ *
+ * @param array $widgets The widgets array
+ *
+ * @return array $widgets The updated widgets array
+ */
+function wpbf_lifterlms_replace_quiz_sidebar_widgets( $widgets ) {
+
+	$sidebar_id = 'sidebar-1';
+
+	if ( is_singular( 'llms_quiz' ) && array_key_exists( 'llms_lesson_widgets_side', $widgets ) ) {
+		$widgets[$sidebar_id] = $widgets['llms_lesson_widgets_side'];
+	}
+
+	return $widgets;
+
+}
+add_filter( 'sidebars_widgets', 'wpbf_lifterlms_replace_quiz_sidebar_widgets' );
+
+/**
  * Remove post links from lessons.
  *
  * Those are supposed to be handled by LifterLMS.
  */
 function wpbf_lifterlms_remove_post_navigation() {
 
-	if ( ! is_singular( 'lesson' ) ) {
+	if ( ! is_singular( 'lesson' ) && ! is_singular( 'llms_quiz' ) ) {
 		return;
 	}
 
@@ -55,7 +99,7 @@ add_action( 'wp', 'wpbf_lifterlms_remove_archive_sidebar' );
  *
  * @param array $dirs Array of paths to directories to load LifterLMS templates from
  *
- * @return array Updated array of paths
+ * @return array $dirs Updated array of paths
  */
 function wpbf_lifterlms_theme_override_dirs( $dirs ) {
 	

@@ -20,7 +20,7 @@
 }
 
 // Author.
-.llms-author-info.name {
+.llms-instructor-info .llms-instructors .llms-author .llms-author-info.name {
 	color: $brand-color;
 	font-size: $bigger-fontsize;
 }
@@ -153,4 +153,25 @@
 // Notices.
 .entry-content .llms-notice {
 	margin-bottom: 20px;
+}
+
+// Course catalog.
+.llms-loop {}
+
+.llms-loop-item-content {
+	background: $base-color-alt;
+	padding-bottom: 20px;
+	&:hover {
+		background: $base-color-alt;
+	}
+}
+
+.llms-loop-item-content .llms-meta,
+.llms-loop-item-content .llms-author,
+.llms-loop-item-content .llms-loop-title {
+	padding: 0 20px;
+}
+
+.llms-loop-item-content .llms-loop-title {
+	margin-top: 20px;
 }
