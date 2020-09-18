@@ -69,13 +69,12 @@ function wpbf_lifterlms_replace_quiz_sidebar_widgets( $widgets ) {
 add_filter( 'sidebars_widgets', 'wpbf_lifterlms_replace_quiz_sidebar_widgets' );
 
 /**
- * Remove post links from lessons.
+ * Remove post links from lessons, quizzes & memberships.
  *
- * Those are supposed to be handled by LifterLMS.
  */
 function wpbf_lifterlms_remove_post_navigation() {
 
-	if ( ! is_singular( 'lesson' ) && ! is_singular( 'llms_quiz' ) ) {
+	if ( ! is_singular( 'lesson' ) && ! is_singular( 'llms_quiz' ) && ! is_singular( 'llms_membership' ) ) {
 		return;
 	}
 
