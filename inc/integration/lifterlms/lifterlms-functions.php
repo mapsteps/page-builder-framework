@@ -84,6 +84,22 @@ function wpbf_lifterlms_remove_post_navigation() {
 add_action( 'wp', 'wpbf_lifterlms_remove_post_navigation' );
 
 /**
+ * Remove header & footer from certificate pages.
+ *
+ */
+function wpbf_lifterlms_remove_header_footer() {
+
+	if ( ! is_singular( 'llms_certificate' ) ) {
+		return;
+	}
+
+	remove_action( 'wpbf_header', 'wpbf_do_header' );
+	remove_action( 'wpbf_footer', 'wpbf_do_footer' );
+
+}
+add_action( 'wp', 'wpbf_lifterlms_remove_header_footer' );
+
+/**
  * Remove LifterLMS default sidebars.
  */
 function wpbf_lifterlms_remove_archive_sidebar() {
