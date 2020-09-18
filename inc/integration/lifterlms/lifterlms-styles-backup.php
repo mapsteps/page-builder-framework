@@ -12,18 +12,16 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 function wpbf_do_lifterlms_customizer_css() {
 
-	$accent_color     = get_theme_mod( 'page_accent_color', '#3ba9d2' );
-	$accent_color_alt = get_theme_mod( 'page_accent_color_alt', '#79c4e0' );
-
-	$primary = $accent_color === '#3ba9d2' ? 'var(--accent-color)' : $accent_color;
-	$action  = $accent_color === '#3ba9d2' ? 'var(--accent-color)' : $accent_color;
-	$accent  = $accent_color === '#3ba9d2' ? 'var(--accent-color)' : $accent_color;
+	$primary = ( $val = get_theme_mod( 'page_accent_color' ) ) === '#3ba9d2' ? false : $val;
+	$primary = ( $val = get_theme_mod( 'lifterlms_primary_color', '#2295ff' ) ) === '#2295ff' ? $primary : $val;
+	$action  = ( $val = get_theme_mod( 'lifterlms_action_color' ) ) === '#f8954f' ? false : $val;
+	$accent  = ( $val = get_theme_mod( 'lifterlms_accent_color' ) ) === '#ef476f' ? false : $val;
 
 	if ( $primary ) {
 
-		$primary_dark  = $accent_color_alt === '#79c4e0' ? 'var(--accent-color-alt)' : $accent_color_alt;
-		$primary_light = $accent_color_alt === '#79c4e0' ? 'var(--accent-color-alt)' : $accent_color_alt;
-		$primary_text  = '#fff';
+		$primary_dark  = wpbf_lifterlms_adjust_hex( $primary, -0.12 );
+		$primary_light = wpbf_lifterlms_adjust_hex( $primary, 0.08 );
+		$primary_text  = wpbf_lifterlms_get_luminance( $primary ) > 0.179 ? '#000' : '#fff';
 
 		?>
 
@@ -36,7 +34,7 @@ function wpbf_do_lifterlms_customizer_css() {
 		}
 		.llms-button-primary:hover,
 		.llms-button-primary.clicked {
-			background: <?php echo $primary_light; ?>;
+			background: <?php echo $primary_dark; ?>;
 			color: <?php echo $primary_text; ?>;
 		}
 		.llms-button-primary:focus,
@@ -113,9 +111,9 @@ function wpbf_do_lifterlms_customizer_css() {
 
 	<?php } if ( $action ) {
 
-		$action_dark  = $accent_color_alt === '#79c4e0' ? 'var(--accent-color-alt)' : $accent_color_alt;
-		$action_light = $accent_color_alt === '#79c4e0' ? 'var(--accent-color-alt)' : $accent_color_alt;
-		$action_text  = '#fff';
+		$action_dark  = wpbf_lifterlms_adjust_hex( $action, -0.12 );
+		$action_light = wpbf_lifterlms_adjust_hex( $action, 0.08 );
+		$action_text  = wpbf_lifterlms_get_luminance( $action ) > 0.179 ? '#000' : '#fff';
 
 		?>
 
@@ -128,7 +126,7 @@ function wpbf_do_lifterlms_customizer_css() {
 		}
 		.llms-button-action:hover,
 		.llms-button-action.clicked {
-			background: <?php echo $action_light; ?>;
+			background: <?php echo $action_dark; ?>;
 			color: <?php echo $action_text; ?>;
 		}
 		.llms-button-action:focus,

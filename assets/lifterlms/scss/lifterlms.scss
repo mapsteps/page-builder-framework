@@ -28,7 +28,7 @@
 // Pricing tables.
 .llms-access-plan-title,
 .llms-access-plan-description {
-	padding: 20px;
+	padding: 25px 20px;
 }
 
 .llms-access-plan-content .llms-access-plan-pricing {
@@ -37,6 +37,7 @@
 
 .llms-access-plan-price {
 	color: $brand-color;
+	font-size: 24px;
 }
 
 .llms-access-plans .button {
