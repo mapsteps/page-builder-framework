@@ -69,7 +69,7 @@
 }
 
 .llms-lesson-preview.is-complete {
-	h5, aside {
+	h5 {
 		text-decoration: line-through;
 		opacity: .6;
 	}
@@ -154,6 +154,7 @@
 // Notices.
 .entry-content .llms-notice {
 	margin-bottom: 20px;
+	background: #fff;
 }
 
 // Course catalog.
@@ -175,4 +176,34 @@
 
 .llms-loop-item-content .llms-loop-title {
 	margin-top: 20px;
+	@include transition(all 0.2s);
+	&:hover {
+		color: $accent-color;
+	}
+}
+
+// Sidebar.
+.llms-widget-syllabus ul li ul li {
+	margin-left: 20px;
+}
+
+.llms-widget-syllabus .llms-section {
+	margin-bottom: 10px;
+}
+
+.llms-widget-syllabus .llms-section .section-header {
+	margin-bottom: 10px;
+	color: $brand-color;
+}
+
+.llms-widget-syllabus .llms-lesson-complete, .llms-widget-syllabus .lesson-complete-placeholder {
+	color: $base-color;
+	margin-right: 5px;
+}
+
+.llms-widget-syllabus .lesson-title a {
+	color: $brand-color;
+	&:hover {
+		color: $accent-color;
+	}
 }

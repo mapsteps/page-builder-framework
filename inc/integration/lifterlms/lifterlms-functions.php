@@ -35,8 +35,8 @@ add_filter( 'llms_get_theme_default_sidebar', 'wpbf_lifterlms_sidebar_function' 
  */
 function wpbf_lifterlms_default_archive_sidebars( $layout ) {
 
-	// Stop here if we're not on a page.
-	if ( ! is_post_type_archive( 'course' ) && ! is_post_type_archive( 'llms_membership' ) ) {
+	// Stop here if we're not on a LifterLMS archive.
+	if ( ! wpbf_is_lifterlms_archive() ) {
 		return $layout;
 	}
 
@@ -74,7 +74,7 @@ add_filter( 'sidebars_widgets', 'wpbf_lifterlms_replace_quiz_sidebar_widgets' );
  */
 function wpbf_lifterlms_remove_post_navigation() {
 
-	if ( ! is_singular( 'lesson' ) && ! is_singular( 'llms_quiz' ) && ! is_singular( 'llms_membership' ) ) {
+	if ( ! wpbf_is_lifterlms_single() ) {
 		return;
 	}
 

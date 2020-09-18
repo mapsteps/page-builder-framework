@@ -9,6 +9,36 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
+ * Basic function to check if we're on a LifterLMS archive.
+ *
+ * @return boolean
+ */
+function wpbf_is_lifterlms_archive() {
+
+	if ( is_courses() || is_memberships() || is_membership_taxonomy() || is_course_taxonomy() ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+/**
+ * Basic function to check if we're on a LifterLMS single page.
+ *
+ * @return boolean
+ */
+function wpbf_is_lifterlms_single() {
+
+	if ( is_course() || is_lesson() || is_quiz() || is_membership() ) {
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+/**
  * Hex to rgb.
  */
 function wpbf_lifterlms_hex_to_rgb( $hex ) {

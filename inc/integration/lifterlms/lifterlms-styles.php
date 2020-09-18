@@ -64,20 +64,6 @@ function wpbf_do_lifterlms_customizer_css() {
 			border-bottom-color: <?php echo $primary; ?>;
 		}
 
-		/* Checkout */
-		.llms-checkout-wrapper .llms-form-heading {
-			background: <?php echo $primary; ?>;
-			color: <?php echo $primary_text; ?>;
-		}
-		.llms-checkout-section,
-		.llms-checkout-wrapper form.llms-login {
-			border-color: <?php echo $primary; ?>;
-		}
-		.llms-form-field.type-radio input[type=radio]:checked+label:before {
-			background-image: -webkit-radial-gradient(center,ellipse,<?php echo $primary; ?> 0,<?php echo $primary; ?> 40%,#fafafa 45%);
-			background-image: radial-gradient(ellipse at center,<?php echo $primary; ?> 0,<?php echo $primary; ?> 40%,#fafafa 45%);
-		}
-
 		/* Notices */
 		.llms-notice {
 			border-color: <?php echo $primary; ?>;
