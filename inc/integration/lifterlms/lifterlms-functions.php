@@ -25,9 +25,9 @@ function wpbf_lifterlms_sidebar_function( $sidebar_id ) {
 add_filter( 'llms_get_theme_default_sidebar', 'wpbf_lifterlms_sidebar_function' );
 
 /**
- * Remove sidebars from LifterLMS archives.
+ * Remove default theme sidebars from LifterLMS archives & membership pages.
  *
- * This is the preferred default state. Users can change this in the customizer.
+ * This is the preferred/opinionated default state.
  *
  * @param string $layout The sidebar layout
  *
@@ -35,8 +35,8 @@ add_filter( 'llms_get_theme_default_sidebar', 'wpbf_lifterlms_sidebar_function' 
  */
 function wpbf_lifterlms_default_archive_sidebars( $layout ) {
 
-	// Stop here if we're not on a LifterLMS archive.
-	if ( ! wpbf_is_lifterlms_archive() ) {
+	// Stop here if we're not on a LifterLMS archive or membership page.
+	if ( ! wpbf_is_lifterlms_archive() && ! is_membership() ) {
 		return $layout;
 	}
 
