@@ -3,6 +3,7 @@
  * Dynamic LifterLMS CSS.
  *
  * Holds Customizer LifterLMS CSS styles.
+ * Currently used to dynamically override LifterLMS core colors.
  *
  * @package Page Builder Framework
  * @subpackage Integration/LifterLMS

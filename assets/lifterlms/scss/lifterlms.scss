@@ -1,23 +1,37 @@
 // Config
 @import "../../scss/config/config";
 
+/* General */
+
 // Buttons.
+.llms-button-action,
+.llms-button-danger,
 .llms-button-primary,
-.llms-button-action {
+.llms-button-secondary,
+.llms-button-action.large,
+.llms-button-danger.large,
+.llms-button-primary.large,
+.llms-button-secondary.large {
 	padding: 15px 20px;
+	font-weight: 700;
+	display: inline-block;
+	font-size: $base-fontsize; // LifterLMS sets default button size to 16. We make the large button match the regular buttons with this. Problem: adjusting the font size won't adjust the button size.
+	line-height: 1;
 }
 
-// Progress bar.
-.wpbf-sidebar .llms-progress .llms-progress-bar {
+.llms-button-secondary,
+.llms-button-secondary:hover {
+	background: $base-color;
+	color: $brand-color-alt;
+}
+
+// Notices.
+.entry-content .llms-notice {
+	margin-bottom: 20px;
 	background: #fff;
 }
 
-.progress__indicator {
-	margin-left: 20px;
-	font-weight: 700;
-	font-size: 16px;
-	color: $brand-color;
-}
+/* Course */
 
 // Author.
 .llms-instructor-info .llms-instructors .llms-author .llms-author-info.name {
@@ -40,16 +54,12 @@
 	font-size: 24px;
 }
 
-.llms-access-plans .button {
-	display: inline-block;
-}
-
 .llms-access-plan-footer {
 	border-bottom-color: $base-color;
+	border-bottom-width: 4px;
 	padding: 20px;
 }
 
-// Gray areas.
 .llms-instructor-info .llms-instructors .llms-author,
 .llms-access-plan .llms-access-plan-footer,
 .llms-access-plan .llms-access-plan-content {
@@ -94,7 +104,6 @@
 	}
 }
 
-// Lesson counter.
 .llms-lesson-preview .llms-lesson-counter,
 .llms-lesson-preview .llms-free-lesson-svg,
 .llms-lesson-preview .llms-lesson-complete,
@@ -102,7 +111,6 @@
 	margin-bottom: 0;
 }
 
-// Locked lessons.
 .llms-lesson-preview .llms-lesson-link:hover {
 	background: $base-color-alt;
 }
@@ -130,35 +138,7 @@
 	background: $base-color;
 }
 
-// Checkout.
-.llms-checkout-section,
-.llms-checkout-wrapper form.llms-login {
-	// border: none;
-	border-color: $base-color;
-	background: $base-color-alt;
-	margin-bottom: 20px;
-}
-
-.llms-checkout-section-content,
-.llms-checkout-wrapper form.llms-login .llms-form-fields {
-	padding: 20px;
-	background: #fff;
-}
-
-.llms-checkout-wrapper .llms-form-heading {
-	padding: 20px;
-	background: $base-color-alt;
-	color: $brand-color;
-}
-
-// Notices.
-.entry-content .llms-notice {
-	margin-bottom: 20px;
-	background: #fff;
-}
-
-// Course catalog.
-.llms-loop {}
+/* Course & Membership Catalog */
 
 .llms-loop-item-content {
 	background: $base-color-alt;
@@ -182,7 +162,44 @@
 	}
 }
 
-// Sidebar.
+/* Checkout */
+
+.llms-checkout-section,
+.llms-checkout-wrapper form.llms-login {
+	// border: none;
+	border-color: $base-color;
+	background: $base-color-alt;
+	margin-bottom: 20px;
+}
+
+.llms-checkout-section-content,
+.llms-checkout-wrapper form.llms-login .llms-form-fields {
+	padding: 20px;
+	background: #fff;
+}
+
+.llms-checkout-wrapper .llms-form-heading {
+	padding: 20px;
+	background: $base-color-alt;
+	color: $brand-color;
+}
+
+
+/* Sidebar */
+
+// Progress bar.
+.wpbf-sidebar .llms-progress .llms-progress-bar {
+	background: #fff;
+}
+
+.progress__indicator {
+	margin-left: 20px;
+	font-weight: 700;
+	font-size: 16px;
+	color: $brand-color;
+}
+
+// Syllabus.
 .llms-widget-syllabus ul li ul li {
 	margin-left: 20px;
 }
@@ -206,4 +223,52 @@
 	&:hover {
 		color: $accent-color;
 	}
+}
+
+/* Quiz */
+
+.llms-quiz-ui {
+	background: none;
+	padding: 0;
+}
+
+.llms-quiz-ui .llms-progress {
+	background: $base-color-alt;
+}
+
+.single-llms_quiz ul.llms-quiz-meta-info {
+	background: $base-color-alt;
+	color: $brand-color;
+	margin-bottom: 20px;
+	padding: 20px;
+}
+
+.llms-question-wrapper ol.llms-question-choices li.llms-choice {
+	border-bottom-color: $base-color;
+}
+
+.llms-question-wrapper ol.llms-question-choices li.llms-choice label {
+	padding: 10px 0;
+	display: block;
+	cursor: pointer;
+}
+
+.llms-question-wrapper ol.llms-question-choices li.llms-choice.type--picture input:checked ~ .llms-choice-image {
+	background: $base-color-alt;
+}
+
+.llms-quiz-ui .llms-quiz-counter {
+	color: $brand-color;
+}
+
+// Results.
+.single-llms_quiz .llms-quiz-results .llms-quiz-results-main,
+.single-llms_quiz .llms-quiz-results .llms-quiz-results-history {
+	width: calc( 100% - 240px );
+	margin-left: 20px;
+}
+
+.llms-donut {
+	background-color: $base-color-alt;
+	margin-bottom: 20px;
 }
