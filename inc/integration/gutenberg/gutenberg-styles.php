@@ -172,7 +172,7 @@ $page_h1_toggle            = get_theme_mod( 'page_h1_toggle' );
 $page_h1_font_family_value = get_theme_mod( 'page_h1_font_family', array() );
 $page_h1_line_height       = get_theme_mod( 'page_h1_line_height' );
 $page_h1_letter_spacing    = get_theme_mod( 'page_h1_letter_spacing' );
-$page_h1_text_transform    = get_theme_mod( 'page_h1_text_transform' );
+$page_h1_text_transform    = ( $val = get_theme_mod( 'page_h1_text_transform' ) ) === 'none' ? false : $val;
 $page_h1_font_size_desktop = get_theme_mod( 'page_h1_font_size_desktop' );
 $page_h1_font_color        = get_theme_mod( 'page_h1_font_color' );
 
@@ -222,10 +222,8 @@ if ( $page_h1_font_color || $page_h1_line_height || $page_h1_letter_spacing || $
 		echo sprintf( 'letter-spacing: %s;', esc_attr( $page_h1_letter_spacing ) . 'px' );
 	}
 
-	if ( $page_h1_text_transform == 'uppercase' ) {
+	if ( $page_h1_text_transform ) {
 		echo sprintf( 'text-transform: %s;', esc_attr( $page_h1_text_transform ) );
-	} else {
-		echo 'text-transform: none;';
 	}
 
 	echo '}';
@@ -245,7 +243,7 @@ $page_h2_toggle            = get_theme_mod( 'page_h2_toggle' );
 $page_h2_font_family_value = get_theme_mod( 'page_h2_font_family', array() );
 $page_h2_line_height       = get_theme_mod( 'page_h2_line_height' );
 $page_h2_letter_spacing    = get_theme_mod( 'page_h2_letter_spacing' );
-$page_h2_text_transform    = get_theme_mod( 'page_h2_text_transform' );
+$page_h2_text_transform    = get_theme_mod( 'page_h2_text_transform', 'none' );
 $page_h2_font_size_desktop = get_theme_mod( 'page_h2_font_size_desktop' );
 $page_h2_font_color        = get_theme_mod( 'page_h2_font_color' );
 
@@ -293,10 +291,8 @@ if ( $page_h2_toggle ) {
 			echo sprintf( 'letter-spacing: %s;', esc_attr( $page_h2_letter_spacing ) . 'px' );
 		}
 
-		if ( $page_h2_text_transform == 'uppercase' ) {
+		if ( $page_h2_text_transform ) {
 			echo sprintf( 'text-transform: %s;', esc_attr( $page_h2_text_transform ) );
-		} else {
-			echo 'text-transform: none;';
 		}
 
 		echo '}';
@@ -326,7 +322,7 @@ $page_h3_toggle            = get_theme_mod( 'page_h3_toggle' );
 $page_h3_font_family_value = get_theme_mod( 'page_h3_font_family', array() );
 $page_h3_line_height       = get_theme_mod( 'page_h3_line_height' );
 $page_h3_letter_spacing    = get_theme_mod( 'page_h3_letter_spacing' );
-$page_h3_text_transform    = get_theme_mod( 'page_h3_text_transform' );
+$page_h3_text_transform    = get_theme_mod( 'page_h3_text_transform', 'none' );
 $page_h3_font_size_desktop = get_theme_mod( 'page_h3_font_size_desktop' );
 $page_h3_font_color        = get_theme_mod( 'page_h3_font_color' );
 
@@ -375,10 +371,8 @@ if ( $page_h3_toggle ) {
 			echo sprintf( 'letter-spacing: %s;', esc_attr( $page_h3_letter_spacing ) . 'px' );
 		}
 
-		if ( $page_h3_text_transform == 'uppercase' ) {
+		if ( $page_h3_text_transform ) {
 			echo sprintf( 'text-transform: %s;', esc_attr( $page_h3_text_transform ) );
-		} else {
-			echo 'text-transform: none;';
 		}
 
 		echo '}';
@@ -408,7 +402,7 @@ $page_h4_toggle            = get_theme_mod( 'page_h4_toggle' );
 $page_h4_font_family_value = get_theme_mod( 'page_h4_font_family', array() );
 $page_h4_line_height       = get_theme_mod( 'page_h4_line_height' );
 $page_h4_letter_spacing    = get_theme_mod( 'page_h4_letter_spacing' );
-$page_h4_text_transform    = get_theme_mod( 'page_h4_text_transform' );
+$page_h4_text_transform    = get_theme_mod( 'page_h4_text_transform', 'none' );
 $page_h4_font_size_desktop = get_theme_mod( 'page_h4_font_size_desktop' );
 $page_h4_font_color        = get_theme_mod( 'page_h4_font_color' );
 
@@ -457,10 +451,8 @@ if ( $page_h4_toggle ) {
 			echo sprintf( 'letter-spacing: %s;', esc_attr( $page_h4_letter_spacing ) . 'px' );
 		}
 
-		if ( $page_h4_text_transform == 'uppercase' ) {
+		if ( $page_h4_text_transform ) {
 			echo sprintf( 'text-transform: %s;', esc_attr( $page_h4_text_transform ) );
-		} else {
-			echo 'text-transform: none;';
 		}
 
 		echo '}';
@@ -490,7 +482,7 @@ $page_h5_toggle            = get_theme_mod( 'page_h5_toggle' );
 $page_h5_font_family_value = get_theme_mod( 'page_h5_font_family', array() );
 $page_h5_line_height       = get_theme_mod( 'page_h5_line_height' );
 $page_h5_letter_spacing    = get_theme_mod( 'page_h5_letter_spacing' );
-$page_h5_text_transform    = get_theme_mod( 'page_h5_text_transform' );
+$page_h5_text_transform    = get_theme_mod( 'page_h5_text_transform', 'none' );
 $page_h5_font_size_desktop = get_theme_mod( 'page_h5_font_size_desktop' );
 $page_h5_font_color        = get_theme_mod( 'page_h5_font_color' );
 
@@ -539,10 +531,8 @@ if ( $page_h5_toggle ) {
 			echo sprintf( 'letter-spacing: %s;', esc_attr( $page_h5_letter_spacing ) . 'px' );
 		}
 
-		if ( $page_h5_text_transform == 'uppercase' ) {
+		if ( $page_h5_text_transform ) {
 			echo sprintf( 'text-transform: %s;', esc_attr( $page_h5_text_transform ) );
-		} else {
-			echo 'text-transform: none;';
 		}
 
 		echo '}';
@@ -621,10 +611,8 @@ if ( $page_h6_toggle ) {
 			echo sprintf( 'letter-spacing: %s;', esc_attr( $page_h6_letter_spacing ) . 'px' );
 		}
 
-		if ( $page_h6_text_transform == 'uppercase' ) {
+		if ( $page_h6_text_transform ) {
 			echo sprintf( 'text-transform: %s;', esc_attr( $page_h6_text_transform ) );
-		} else {
-			echo 'text-transform: none;';
 		}
 
 		echo '}';
