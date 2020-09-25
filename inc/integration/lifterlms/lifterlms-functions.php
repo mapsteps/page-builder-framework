@@ -9,6 +9,16 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
+ * Remove LifterLMS default sidebars.
+ */
+function wpbf_lifterlms_remove_archive_sidebar() {
+
+	remove_action( 'lifterlms_sidebar', 'lifterlms_get_sidebar' );
+
+}
+add_action( 'wp', 'wpbf_lifterlms_remove_archive_sidebar' );
+
+/**
  * Display LifterLMS course and lesson sidebars.
  *
  * @param string $id The default sidebar id
@@ -44,6 +54,26 @@ function wpbf_lifterlms_default_archive_sidebars( $layout ) {
 
 }
 add_filter( 'wpbf_sidebar_layout', 'wpbf_lifterlms_default_archive_sidebars' );
+
+/**
+ * Remove sidebar from course pages if users are not logged in.
+ *
+ * This is the preferred/opinionated default state.
+ *
+ * @param string $layout The sidebar layout
+ *
+ * @return string $layout The updated sidebar layout
+ */
+function wpbf_lifterlms_remove_course_sidebar_if_not_logged_in( $layout ) {
+
+	if ( is_course() && ! is_user_logged_in() ) {
+		$layout = 'none';
+	}
+
+	return $layout;
+
+}
+add_filter( 'wpbf_sidebar_layout', 'wpbf_lifterlms_remove_course_sidebar_if_not_logged_in' );
 
 /**
  * Replace sidebar widgets with the ones in LifterLMS' lesson sidebar when viewing a quiz.
@@ -98,16 +128,6 @@ function wpbf_lifterlms_remove_header_footer() {
 
 }
 add_action( 'wp', 'wpbf_lifterlms_remove_header_footer' );
-
-/**
- * Remove LifterLMS default sidebars.
- */
-function wpbf_lifterlms_remove_archive_sidebar() {
-
-	remove_action( 'lifterlms_sidebar', 'lifterlms_get_sidebar' );
-
-}
-add_action( 'wp', 'wpbf_lifterlms_remove_archive_sidebar' );
 
 /**
  * Add an arbitrary plugin directory to the list.
