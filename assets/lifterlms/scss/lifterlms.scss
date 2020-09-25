@@ -1,6 +1,394 @@
 // Config
 @import "../../scss/config/config";
 
+/**
+ * Defaults
+ *
+ * Going through the original lifterlms.css and adjust the colors where applied.
+ */
+
+.llms-donut {
+	background-color: $base-color-alt;
+}
+
+.lifterlms [data-tip].tip--top-right:after,
+.lifterlms [data-title-default].tip--top-right:after,
+.lifterlms [data-title-active].tip--top-right:after,
+.llms-metabox [data-tip].tip--top-right:after,
+.llms-metabox [data-title-default].tip--top-right:after,
+.llms-metabox [data-title-active].tip--top-right:after,
+.llms-mb-container [data-tip].tip--top-right:after,
+.llms-mb-container [data-title-default].tip--top-right:after,
+.llms-mb-container [data-title-active].tip--top-right:after,
+.llms-quiz-wrapper [data-tip].tip--top-right:after,
+.llms-quiz-wrapper [data-title-default].tip--top-right:after,
+.llms-quiz-wrapper [data-title-active].tip--top-right:after,
+.lifterlms [data-tip].tip--top-left:after,
+.lifterlms [data-title-default].tip--top-left:after,
+.lifterlms [data-title-active].tip--top-left:after,
+.llms-metabox [data-tip].tip--top-left:after,
+.llms-metabox [data-title-default].tip--top-left:after,
+.llms-metabox [data-title-active].tip--top-left:after,
+.llms-mb-container [data-tip].tip--top-left:after,
+.llms-mb-container [data-title-default].tip--top-left:after,
+.llms-mb-container [data-title-active].tip--top-left:after,
+.llms-quiz-wrapper [data-tip].tip--top-left:after,
+.llms-quiz-wrapper [data-title-default].tip--top-left:after,
+.llms-quiz-wrapper [data-title-active].tip--top-left:after {
+	border-top-color: $brand-color;
+}
+
+.lifterlms [data-tip].tip--bottom-left:after,
+.lifterlms [data-title-default].tip--bottom-left:after,
+.lifterlms [data-title-active].tip--bottom-left:after,
+.llms-metabox [data-tip].tip--bottom-left:after,
+.llms-metabox [data-title-default].tip--bottom-left:after,
+.llms-metabox [data-title-active].tip--bottom-left:after,
+.llms-mb-container [data-tip].tip--bottom-left:after,
+.llms-mb-container [data-title-default].tip--bottom-left:after,
+.llms-mb-container [data-title-active].tip--bottom-left:after,
+.llms-quiz-wrapper [data-tip].tip--bottom-left:after,
+.llms-quiz-wrapper [data-title-default].tip--bottom-left:after,
+.llms-quiz-wrapper [data-title-active].tip--bottom-left:after,
+.lifterlms [data-tip].tip--bottom-right:after,
+.lifterlms [data-title-default].tip--bottom-right:after,
+.lifterlms [data-title-active].tip--bottom-right:after,
+.llms-metabox [data-tip].tip--bottom-right:after,
+.llms-metabox [data-title-default].tip--bottom-right:after,
+.llms-metabox [data-title-active].tip--bottom-right:after,
+.llms-mb-container [data-tip].tip--bottom-right:after,
+.llms-mb-container [data-title-default].tip--bottom-right:after,
+.llms-mb-container [data-title-active].tip--bottom-right:after,
+.llms-quiz-wrapper [data-tip].tip--bottom-right:after,
+.llms-quiz-wrapper [data-title-default].tip--bottom-right:after,
+.llms-quiz-wrapper [data-title-active].tip--bottom-right:after {
+	border-bottom-color: $brand-color;
+ }
+
+.lifterlms [data-tip]:before,
+.lifterlms [data-title-default]:before,
+.lifterlms [data-title-active]:before,
+.llms-metabox [data-tip]:before,
+.llms-metabox [data-title-default]:before,
+.llms-metabox [data-title-active]:before,
+.llms-mb-container [data-tip]:before,
+.llms-mb-container [data-title-default]:before,
+.llms-mb-container [data-title-active]:before,
+.llms-quiz-wrapper [data-tip]:before,
+.llms-quiz-wrapper [data-title-default]:before,
+.llms-quiz-wrapper [data-title-active]:before {
+	background: $brand-color;
+}
+
+.llms-notice-box {
+	border: 1px solid $base-color;
+}
+
+.llms-input-text {
+	border: 1px solid $base-color;
+	color: $brand-color;
+}
+
+.llms-styled-select {
+	border: 1px solid $base-color;
+}
+
+.llms-styled-select select {
+	color: $brand-color;
+}
+
+.llms-styled-select .fa-sort-desc {
+	color: $base-color;
+}
+
+.llms-progress-circle-count {
+	color: $brand-color-alt;
+}
+
+svg .llms-background-circle {
+	stroke: $base-color-alt;
+}
+
+.llms-widget-syllabus .llms-lesson-complete, .llms-widget-syllabus .lesson-complete-placeholder {
+	color: $base-color;
+}
+
+.llms-widget-syllabus .lesson-title.done a {
+	color: $brand-color-alt;
+}
+
+.llms-lesson-link-locked, .llms-lesson-link-locked:hover {
+	background: $base-color-alt;
+	color: $brand-color-alt;
+}
+
+.llms-lesson-tooltip {
+	color: $brand-color;
+	background-color: $base-color-alt;
+	&:after {
+		border-top: 8px solid $base-color-alt;
+	}
+}
+
+.llms-loop-item-content {
+	background: $base-color-alt;
+}
+
+.llms-loop-item-content:hover {
+	background: $base-color;
+}
+
+.llms-loop-item-content .llms-loop-link {
+	color: $brand-color;
+}
+.llms-loop-item-content .llms-loop-link:visited {
+	color: $brand-color;
+}
+
+.llms-loop-item-content .llms-loop-title:hover {
+	color: $accent-color;
+}
+
+.llms-loop-item-content .llms-author {
+	color: $brand-color;
+}
+
+.llms-loop-item-content .llms-progress .llms-progress-bar {
+	background-color: $base-color-alt;
+}
+
+.llms-lesson-preview .llms-lesson-link {
+	background: $base-color-alt;
+	color: $brand-color;
+}
+
+.llms-lesson-preview .llms-lesson-link:visited {
+	color: $brand-color;
+}
+
+.llms-lesson-preview.is-free .llms-lesson-complete, .llms-lesson-preview.is-complete .llms-lesson-complete {
+	color: $accent-color;
+}
+
+.llms-lesson-preview .llms-icon-free {
+	background: $accent-color;
+	color: $base-color-alt;
+}
+
+.llms-lesson-preview.is-incomplete .llms-lesson-complete {
+	color: $base-color;
+}
+
+.llms-progress .llms-progress-bar {
+	background-color: $base-color-alt;
+}
+
+.llms-instructor-info .llms-instructors .llms-author {
+	background: $base-color-alt;
+	border-top: 4px solid $accent-color;
+}
+
+.llms-instructor-info .llms-instructors .llms-author .avatar {
+	background: $accent-color;
+	border: 4px solid $accent-color;
+}
+
+.llms-notice {
+	border-color: $accent-color;
+}
+
+.llms-achievement,
+.llms-certificate {
+	background: $base-color-alt;
+}
+
+.llms-achievement:hover,
+.llms-certificate:hover {
+	background: $base-color;
+}
+
+.llms-certificate {
+	border: 4px double $base-color-alt;
+}
+
+.llms-certificate:hover {
+	background: #fff;
+	border-color: $base-color;
+}
+
+.llms-notification {
+	border-top: 4px solid $accent-color;
+}
+
+.llms-notification .llms-notification-body .llms-mini-cert {
+	background: $base-color-alt;
+	border: 4px double $base-color;
+}
+
+.llms-notification .llms-notification-footer {
+	border-top: 1px solid $base-color;
+}
+
+.llms-sd-notification-center .llms-notification-list-item:hover .llms-notification {
+	background: $base-color-alt;
+}
+
+.llms-sd-notification-center .llms-notification {
+	border-top: 1px solid $base-color;
+}
+
+.llms-sd-notification-center .llms-notification .llms-notification-date {
+	color: $brand-color-alt;
+}
+
+.llms-tooltip {
+	background: $brand-color;
+}
+
+.single-llms_quiz .llms-quiz-attempt-results .llms-quiz-attempt-question {
+	background: $base-color-alt;
+}
+
+.single-llms_quiz .llms-quiz-results .llms-donut.pending {
+	color: $brand-color-alt
+}
+
+.single-llms_quiz .llms-quiz-results .llms-donut.pending svg path {
+	stroke: $brand-color-alt;
+}
+
+.llms-quiz-ui {
+	background: $base-color-alt;
+}
+
+.llms-quiz-ui .llms-progress {
+	background-color: $base-color-alt;
+}
+
+.llms-quiz-ui .llms-quiz-counter {
+	color: $base-color;
+}
+
+.llms-question-wrapper ol.llms-question-choices li.llms-choice {
+	border-bottom: 1px solid $base-color-alt;
+}
+
+.llms-question-wrapper ol.llms-question-choices li.llms-choice.type--picture input:checked ~ .llms-choice-image {
+	background: $base-color-alt;
+}
+
+.llms-question-wrapper ol.llms-question-choices li.llms-choice .llms-marker {
+	background: $base-color-alt;
+}
+
+.llms-access-plan .llms-access-plan-footer,
+.llms-access-plan .llms-access-plan-content {
+	background: $base-color-alt;
+}
+
+.llms-access-plan.featured .llms-access-plan-featured {
+	background: $accent-color;
+}
+
+.llms-access-plan.featured .llms-access-plan-footer,
+.llms-access-plan.featured .llms-access-plan-content {
+	border-left: 3px solid $accent-color;
+	border-right: 3px solid $accent-color;
+}
+
+.llms-access-plan.featured .llms-access-plan-footer {
+	border-bottom-color: $accent-color;
+}
+
+.llms-access-plan .stamp {
+	background: $accent-color;
+}
+
+.llms-access-plan-title {
+	background: $accent-color;
+}
+
+.llms-access-plan-price.sale {
+	border-top: 1px solid $base-color-alt;
+	border-bottom: 1px solid $base-color-alt;
+}
+
+.llms-access-plan-description ul li {
+	border-bottom: 1px solid $base-color-alt;
+}
+
+.llms-access-plan-footer {
+	border-bottom: 3px solid $base-color-alt;
+}
+
+.llms-checkout-wrapper form.llms-login {
+	border: 3px solid $accent-color;
+}
+
+.llms-checkout-wrapper .llms-form-heading {
+	background: $accent-color;
+}
+
+.llms-checkout-section {
+	border: 3px solid $accent-color;
+}
+
+.llms-checkout-section-content .llms-coupon-wrapper {
+	border-top: 1px solid $base-color-alt;
+}
+
+ul.llms-payment-gateways li:last-child:after {
+	border-bottom: 1px solid $base-color-alt;
+}
+
+.llms-form-field.type-radio label:before {
+	background: $base-color-alt;
+}
+
+.llms-form-field.type-radio input[type="radio"]:checked + label:before {
+	background-image: radial-gradient(ellipse at center, $accent-color 0%, $accent-color 40%, $base-color-alt 45%);
+}
+
+.llms-password-strength-meter {
+	border: 1px solid $base-color-alt;
+}
+
+.llms-student-dashboard .orders-table {
+	border: 1px solid $base-color-alt;
+}
+
+.llms-student-dashboard .orders-table tbody tr:nth-child(even) td, .llms-student-dashboard .orders-table tbody tr:nth-child(even) th {
+	background: $base-color-alt;
+}
+
+.llms-student-dashboard .orders-table th, .llms-student-dashboard .orders-table td {
+	border-color: $base-color-alt;
+}
+
+.llms-sd-widgets .llms-sd-widget {
+background: $base-color-alt;
+}
+
+.llms-sd-widgets .llms-sd-widget .llms-sd-widget-title {
+	background: $accent-color;
+}
+
+.llms-table {
+	border: 1px solid $base-color;
+}
+
+.llms-table tbody tr:nth-child(odd) td, .llms-table tbody tr:nth-child(odd) th {
+	background: $base-color-alt;
+}
+
+.llms-table tfoot tr {
+	background: $base-color-alt;
+}
+
+.llms-table th, .llms-table td {
+	border-bottom: 1px solid $base-color;
+}
+
 /* General */
 
 // Buttons.
@@ -11,15 +399,21 @@
 .llms-button-action.large,
 .llms-button-danger.large,
 .llms-button-primary.large,
-.llms-button-secondary.large {
+.llms-button-secondary.large,
+.llms-button-action.small,
+.llms-button-danger.small,
+.llms-button-primary.small,
+.llms-button-secondary.small {
 	padding: 15px 20px;
 	font-weight: 700;
 	display: inline-block;
-	font-size: $base-fontsize; // LifterLMS sets default button size to 16. We make the large button match the regular buttons with this. Problem: adjusting the font size won't adjust the button size.
+	font-size: $base-fontsize; // LifterLMS sets default button size to 16. We make the large & small buttons match the regular buttons with this. Problem: adjusting the font size won't adjust the button size.
 	line-height: 1;
 }
 
 .llms-button-secondary,
+.llms-button-secondary:active,
+.llms-button-secondary:focus,
 .llms-button-secondary:hover {
 	background: $base-color;
 	color: $brand-color-alt;
@@ -271,4 +665,34 @@
 .llms-donut {
 	background-color: $base-color-alt;
 	margin-bottom: 20px;
+}
+
+/* Dashboard */
+
+@media (min-width: $tablet-breakpoint + 1) {
+
+	.llms-student-dashboard .llms-sd-title,
+	.llms-sd-header + * {
+		width: 66.666%;
+		padding-right: 20px;
+	}
+
+	.llms-sd-nav {
+		width: 33.333%;
+		float: right;
+	}
+
+}
+
+.llms-sd-nav {
+	padding: 20px;
+	background: $base-color-alt;
+}
+
+.llms-student-dashboard .llms-sd-item {
+	float: none;
+}
+
+.llms-student-dashboard .llms-sd-item .llms-sep {
+	display: none;
 }
