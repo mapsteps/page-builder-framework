@@ -80,13 +80,17 @@
 	background: $brand-color;
 }
 
-.llms-notice-box {
-	border: 1px solid $base-color;
+.llms-option input[type="radio"] + label span.llms-radio {
+	background: $base-color-alt;
 }
 
 .llms-input-text {
 	border: 1px solid $base-color;
 	color: $brand-color;
+}
+
+.llms-notice-box {
+	border: 1px solid $base-color;
 }
 
 .llms-styled-select {
@@ -266,11 +270,11 @@ svg .llms-background-circle {
 }
 
 .llms-quiz-ui .llms-quiz-counter {
-	color: $base-color;
+	color: $brand-color;
 }
 
 .llms-question-wrapper ol.llms-question-choices li.llms-choice {
-	border-bottom: 1px solid $base-color-alt;
+	border-bottom: 1px solid $base-color;
 }
 
 .llms-question-wrapper ol.llms-question-choices li.llms-choice.type--picture input:checked ~ .llms-choice-image {
@@ -318,19 +322,22 @@ svg .llms-background-circle {
 }
 
 .llms-access-plan-footer {
-	border-bottom: 3px solid $base-color-alt;
+	border-bottom: 3px solid $base-color;
 }
 
 .llms-checkout-wrapper form.llms-login {
-	border: 3px solid $accent-color;
+	// border: 3px solid $accent-color;
+	border: 3px solid $base-color;
 }
 
 .llms-checkout-wrapper .llms-form-heading {
-	background: $accent-color;
+	// background: $accent-color;
+	background: $base-color-alt;
 }
 
 .llms-checkout-section {
-	border: 3px solid $accent-color;
+	// border: 3px solid $accent-color;
+	border: 3px solid $base-color;
 }
 
 .llms-checkout-section-content .llms-coupon-wrapper {
@@ -449,15 +456,8 @@ background: $base-color-alt;
 }
 
 .llms-access-plan-footer {
-	border-bottom-color: $base-color;
 	border-bottom-width: 4px;
 	padding: 20px;
-}
-
-.llms-instructor-info .llms-instructors .llms-author,
-.llms-access-plan .llms-access-plan-footer,
-.llms-access-plan .llms-access-plan-content {
-	background: $base-color-alt;
 }
 
 // Lessons.
@@ -535,7 +535,6 @@ background: $base-color-alt;
 /* Course & Membership Catalog */
 
 .llms-loop-item-content {
-	background: $base-color-alt;
 	padding-bottom: 20px;
 	&:hover {
 		background: $base-color-alt;
@@ -551,33 +550,24 @@ background: $base-color-alt;
 .llms-loop-item-content .llms-loop-title {
 	margin-top: 20px;
 	@include transition(all 0.2s);
-	&:hover {
-		color: $accent-color;
-	}
 }
 
 /* Checkout */
 
 .llms-checkout-section,
 .llms-checkout-wrapper form.llms-login {
-	// border: none;
-	border-color: $base-color;
-	background: $base-color-alt;
 	margin-bottom: 20px;
 }
 
 .llms-checkout-section-content,
 .llms-checkout-wrapper form.llms-login .llms-form-fields {
 	padding: 20px;
-	background: #fff;
 }
 
 .llms-checkout-wrapper .llms-form-heading {
 	padding: 20px;
-	background: $base-color-alt;
 	color: $brand-color;
 }
-
 
 /* Sidebar */
 
@@ -607,11 +597,6 @@ background: $base-color-alt;
 	color: $brand-color;
 }
 
-.llms-widget-syllabus .llms-lesson-complete, .llms-widget-syllabus .lesson-complete-placeholder {
-	color: $base-color;
-	margin-right: 5px;
-}
-
 .llms-widget-syllabus .lesson-title a {
 	color: $brand-color;
 	&:hover {
@@ -626,10 +611,6 @@ background: $base-color-alt;
 	padding: 0;
 }
 
-.llms-quiz-ui .llms-progress {
-	background: $base-color-alt;
-}
-
 .single-llms_quiz ul.llms-quiz-meta-info {
 	background: $base-color-alt;
 	color: $brand-color;
@@ -637,22 +618,10 @@ background: $base-color-alt;
 	padding: 20px;
 }
 
-.llms-question-wrapper ol.llms-question-choices li.llms-choice {
-	border-bottom-color: $base-color;
-}
-
 .llms-question-wrapper ol.llms-question-choices li.llms-choice label {
 	padding: 10px 0;
 	display: block;
 	cursor: pointer;
-}
-
-.llms-question-wrapper ol.llms-question-choices li.llms-choice.type--picture input:checked ~ .llms-choice-image {
-	background: $base-color-alt;
-}
-
-.llms-quiz-ui .llms-quiz-counter {
-	color: $brand-color;
 }
 
 // Results.
@@ -663,7 +632,6 @@ background: $base-color-alt;
 }
 
 .llms-donut {
-	background-color: $base-color-alt;
 	margin-bottom: 20px;
 }
 
