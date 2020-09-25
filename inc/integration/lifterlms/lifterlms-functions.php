@@ -124,3 +124,14 @@ function wpbf_lifterlms_theme_override_dirs( $dirs ) {
 	
 }
 add_filter( 'lifterlms_theme_override_directories', 'wpbf_lifterlms_theme_override_dirs', 10, 1 );
+
+function wpbf_lifterlms_remove_title_from_dashboard( $title ) {
+
+	if ( is_llms_account_page() ) {
+		$title = false;
+	}
+
+	return $title;
+
+}
+add_filter( 'wpbf_title', 'wpbf_lifterlms_remove_title_from_dashboard' );
