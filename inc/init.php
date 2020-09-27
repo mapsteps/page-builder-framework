@@ -87,6 +87,11 @@ if ( class_exists( 'FLBuilderLoader' ) ) {
 	require_once WPBF_THEME_DIR . '/inc/integration/beaver-builder.php';
 }
 
+// Beaver Builder integration.
+if ( class_exists( 'ET_Builder_Plugin' ) ) {
+	require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
+}
+
 // Beaver Themer integration.
 // Backwards compatibility check as this was included in the Premium Add-On earlier.
 if ( ! function_exists( 'wpbf_bb_header_footer_support' ) && class_exists( 'FLThemeBuilderLoader' ) && class_exists( 'FLBuilderLoader' ) ) {
