@@ -30,19 +30,27 @@ div.wpcf7-mail-sent-ok {
 
 /* Elementor */
 
-// Transparent header preview
+// Default line-height fix.
+// We declare headlines specifically to be able to override Elementor defaults.
+// Going only for .elementor-heading-title won't work.
+// Premium Add-On will override defaults again respectively if configured.
+h1.elementor-heading-title, h2.elementor-heading-title, h3.elementor-heading-title, h4.elementor-heading-title, h5.elementor-heading-title, h6.elementor-heading-title {
+	line-height: 1.2;
+}
+
+// Transparent header preview.
 .elementor-editor-active {
 	.wpbf-navigation-transparent {
 		display: none !important;
 	}
 }
 
-// Select arrow indicator fix
+// Select arrow indicator fix.
 .elementor-field-group .elementor-select-wrapper select {
 	background-image: none;
 }
 
-// Yoast
+/* Yoast */
 #breadcrumbs {
 	font-size: $small-fontsize;
 	margin-bottom: $margin-small;
