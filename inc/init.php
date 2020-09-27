@@ -87,10 +87,10 @@ if ( class_exists( 'FLBuilderLoader' ) ) {
 	require_once WPBF_THEME_DIR . '/inc/integration/beaver-builder.php';
 }
 
-// Beaver Builder integration.
-if ( class_exists( 'ET_Builder_Plugin' ) ) {
-	require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
-}
+// Divi integration.
+// if ( class_exists( 'ET_Builder_Plugin' ) ) {
+// 	require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
+// }
 
 // Beaver Themer integration.
 // Backwards compatibility check as this was included in the Premium Add-On earlier.
