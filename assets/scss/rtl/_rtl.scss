@@ -191,3 +191,9 @@ span.wpcf7-not-valid-tip {
   left: auto;
   right: 5px;
 }
+
+/* Searchform */
+.searchform::before {
+  right: auto;
+  left: 15px;
+}
