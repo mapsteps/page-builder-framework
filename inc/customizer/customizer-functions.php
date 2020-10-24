@@ -178,4 +178,8 @@ function wpbf_customizer_scripts_styles() {
 add_action( 'customize_controls_print_styles', 'wpbf_customizer_scripts_styles' );
 
 // Custom controls.
-require get_template_directory() . '/inc/customizer/controls/custom-controls.php';
+require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-font-size-control.php';
+require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-padding-control.php';
+require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-responsive-padding-control.php';
+require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-input-slider-control.php';
+require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-responsive-input-slider-control.php';
