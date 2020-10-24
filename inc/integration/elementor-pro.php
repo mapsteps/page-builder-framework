@@ -19,7 +19,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'pre-header',
 		[
-			'label'        => __( 'Pre Header (Replace)', 'wpbfpremium' ),
+			'label'        => __( 'Pre Header (Replace)', 'page-builder-framework' ),
 			'hook'         => 'wpbf_before_header',
 			'remove_hooks' => ['wpbf_do_pre_header'],
 		]
@@ -28,7 +28,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'header',
 		[
-			'label'        => __( 'Header (Replace)', 'wpbfpremium' ),
+			'label'        => __( 'Header (Replace)', 'page-builder-framework' ),
 			'hook'         => 'wpbf_header',
 			'remove_hooks' => ['wpbf_do_header'],
 		]
@@ -37,7 +37,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'footer',
 		[
-			'label'        => __( 'Footer (Replace)', 'wpbfpremium' ),
+			'label'        => __( 'Footer (Replace)', 'page-builder-framework' ),
 			'hook'         => 'wpbf_footer',
 			'remove_hooks' => ['wpbf_do_footer'],
 		]
@@ -46,7 +46,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'before-header',
 		[
-			'label'    => __( 'Before Header', 'wpbfpremium' ) . ' (wpbf_before_header)',
+			'label'    => __( 'Before Header', 'page-builder-framework' ) . ' (wpbf_before_header)',
 			'multiple' => true,
 			'hook'     => 'wpbf_before_header',
 		]
@@ -55,7 +55,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'after-header',
 		[
-			'label'    => __( 'After Header', 'wpbfpremium' ) . ' (wpbf_after_header)',
+			'label'    => __( 'After Header', 'page-builder-framework' ) . ' (wpbf_after_header)',
 			'multiple' => true,
 			'hook'     => 'wpbf_after_header',
 		]
@@ -65,7 +65,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'before-content',
 		[
-			'label'    => __( 'Before Content', 'wpbfpremium' ) . ' (wpbf_content_open)',
+			'label'    => __( 'Before Content', 'page-builder-framework' ) . ' (wpbf_content_open)',
 			'multiple' => true,
 			'hook'     => 'wpbf_content_open',
 		]
@@ -74,7 +74,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'after-content',
 		[
-			'label'    => __( 'After Content', 'wpbfpremium' ) . ' (wpbf_content_close)',
+			'label'    => __( 'After Content', 'page-builder-framework' ) . ' (wpbf_content_close)',
 			'multiple' => true,
 			'hook'     => 'wpbf_content_close',
 		]
@@ -83,7 +83,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'before-inner-content',
 		[
-			'label'    => __( 'Before Inner Content', 'wpbfpremium' ) . ' (wpbf_inner_content_open)',
+			'label'    => __( 'Before Inner Content', 'page-builder-framework' ) . ' (wpbf_inner_content_open)',
 			'multiple' => true,
 			'hook'     => 'wpbf_inner_content_open',
 		]
@@ -92,7 +92,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'after-inner-content',
 		[
-			'label'    => __( 'After Inner Content', 'wpbfpremium' ) . ' (wpbf_inner_content_close)',
+			'label'    => __( 'After Inner Content', 'page-builder-framework' ) . ' (wpbf_inner_content_close)',
 			'multiple' => true,
 			'hook'     => 'wpbf_inner_content_close',
 		]
@@ -101,7 +101,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'before-main-content',
 		[
-			'label'    => __( 'Before Main Content', 'wpbfpremium' ) . ' (wpbf_main_content_open)',
+			'label'    => __( 'Before Main Content', 'page-builder-framework' ) . ' (wpbf_main_content_open)',
 			'multiple' => true,
 			'hook'     => 'wpbf_main_content_open',
 		]
@@ -110,7 +110,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'after-main-content',
 		[
-			'label'    => __( 'After Main Content', 'wpbfpremium' ) . ' (wpbf_main_content_open)',
+			'label'    => __( 'After Main Content', 'page-builder-framework' ) . ' (wpbf_main_content_open)',
 			'multiple' => true,
 			'hook'     => 'wpbf_main_content_open',
 		]
@@ -119,7 +119,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'before-footer',
 		[
-			'label'    => __( 'Before Footer', 'wpbfpremium' ) . ' (wpbf_before_footer)',
+			'label'    => __( 'Before Footer', 'page-builder-framework' ) . ' (wpbf_before_footer)',
 			'multiple' => true,
 			'hook'     => 'wpbf_before_footer',
 		]
@@ -128,7 +128,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'after-footer',
 		[
-			'label'    => __( 'After Footer', 'wpbfpremium' ) . ' (wpbf_after_footer)',
+			'label'    => __( 'After Footer', 'page-builder-framework' ) . ' (wpbf_after_footer)',
 			'multiple' => true,
 			'hook'     => 'wpbf_after_footer',
 		]
@@ -137,7 +137,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'before-post',
 		[
-			'label'    => __( 'Before Post', 'wpbfpremium' ) . ' (wpbf_before_article)',
+			'label'    => __( 'Before Post', 'page-builder-framework' ) . ' (wpbf_before_article)',
 			'multiple' => true,
 			'hook'     => 'wpbf_before_article',
 		]
@@ -146,7 +146,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'after-post',
 		[
-			'label'    => __( 'After Post', 'wpbfpremium' ) . ' (wpbf_after_article)',
+			'label'    => __( 'After Post', 'page-builder-framework' ) . ' (wpbf_after_article)',
 			'multiple' => true,
 			'hook'     => 'wpbf_after_article',
 		]
@@ -155,7 +155,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'before-sidebar',
 		[
-			'label'    => __( 'Before Sidebar', 'wpbfpremium' ) . ' (wpbf_sidebar_open)',
+			'label'    => __( 'Before Sidebar', 'page-builder-framework' ) . ' (wpbf_sidebar_open)',
 			'multiple' => true,
 			'hook'     => 'wpbf_sidebar_open',
 		]
@@ -164,7 +164,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 	$elementor_theme_manager->register_location(
 		'after-sidebar',
 		[
-			'label'    => __( 'After Sidebar', 'wpbfpremium' ) . ' (wpbf_sidebar_close)',
+			'label'    => __( 'After Sidebar', 'page-builder-framework' ) . ' (wpbf_sidebar_close)',
 			'multiple' => true,
 			'hook'     => 'wpbf_sidebar_close',
 		]
