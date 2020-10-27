@@ -44,3 +44,21 @@ function wpbf_bb_title( $title ) {
 
 }
 add_filter( 'wpbf_title', 'wpbf_bb_title' );
+
+/**
+ * Remove sidebar from fl-builder-template.
+ *
+ * @param string $layout The sidebar layout.
+ *
+ * @return string The updated sidebar layout.
+ */
+function wpbf_bb_template( $layout ) {
+
+	if ( 'fl-builder-template' === get_post_type() ) {
+		$layout = 'none';
+	}
+
+	return $layout;
+
+}
+add_filter( 'wpbf_sidebar_layout', 'wpbf_bb_template' );
