@@ -705,3 +705,24 @@ function wpbf_woo_qty_increase_decrease_button() {
 	add_action( 'woocommerce_after_quantity_input_field', 'wpbf_woo_after_quantity_input_field' );
 }
 add_action( 'wp', 'wpbf_woo_qty_increase_decrease_button' );
+
+/**
+ * Filter Nested Category Layout for WooCommerce product wrapper classes.
+ *
+ * @param array $classes The product wrapper classes
+ *
+ * @return array $classes The updated product wrapper classes
+ */
+function wpbf_woo_nested_category_layout_classes( $classes ) {
+
+	$mobile_breakpoint  = get_theme_mod( 'woocommerce_loop_products_per_row_mobile', 1 );
+	$tablet_breakpoint  = get_theme_mod( 'woocommerce_loop_products_per_row_tablet', 3 );
+	$desktop_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_desktop', 4 );
+	$grid_gap           = get_theme_mod( 'woocommerce_loop_grid_gap', 'large' );
+
+	$classes[] = 'wpbf-grid wpbf-grid-' . esc_attr( $grid_gap ) . ' wpbf-grid-1-' . esc_attr( $mobile_breakpoint ) . ' wpbf-grid-small-1-' . esc_attr( $tablet_breakpoint ) . ' wpbf-grid-large-1-' . esc_attr( $desktop_breakpoint );
+
+	return $classes;
+
+}
+add_filter( 'wc_nested_category_layout_loop_products_wrapper_classes', 'wpbf_woo_nested_category_layout_classes' );
