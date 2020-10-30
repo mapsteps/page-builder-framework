@@ -100,17 +100,17 @@ if ( ! function_exists( 'wpbf_bb_header_footer_support' ) && class_exists( 'FLTh
 
 // Easy Digital Downloads integration.
 if ( class_exists( 'Easy_Digital_Downloads' ) ) {
-	require_once WPBF_THEME_DIR . '/inc/integration/edd/edd.php';
+	// require_once WPBF_THEME_DIR . '/inc/integration/edd/edd.php';
 }
 
 // WooCommerce integration.
 if ( class_exists( 'WooCommerce' ) ) {
-	require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php';
+	// require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce.php';
 }
 
 // LifterLMS integration.
 if ( class_exists( 'LifterLMS' ) ) {
-	require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/lifterlms.php';
+	// require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/lifterlms.php';
 }
 
 /**
