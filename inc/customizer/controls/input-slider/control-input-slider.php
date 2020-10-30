@@ -8,18 +8,14 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-if ( ! class_exists( 'WP_Customize_Control' ) ) {
-	return;
-}
-
 class WPBF_Customize_Input_Slider extends Kirki_Control_Base {
 
 	public $type = 'wpbf-input-slider';
 
 	public function enqueue() {
 
-		wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/customizer-controls.js', array( 'jquery' ), WPBF_VERSION, true );
-		wp_enqueue_style( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/css/customizer-controls.css', '', WPBF_VERSION );
+		wp_enqueue_script( 'input-slider', WPBF_THEME_URI . '/inc/customizer/controls/input-slider/js/input-slider.js', array( 'jquery' ), WPBF_VERSION, true );
+		wp_enqueue_style( 'input-slider', WPBF_THEME_URI . '/inc/customizer/controls/input-slider/css/input-slider.css', '', WPBF_VERSION );
 
 	}
 

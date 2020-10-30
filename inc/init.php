@@ -26,7 +26,7 @@ require_once WPBF_THEME_DIR . '/inc/options.php';
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
 // Kirki customizer controls.
-require_once WPBF_THEME_DIR . '/inc/customizer/controls/wpbf-kirki.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/wpbf-kirki.php';
 
 // Body classes.
 require_once WPBF_THEME_DIR . '/inc/body-classes.php';

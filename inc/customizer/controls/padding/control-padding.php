@@ -8,20 +8,9 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-if ( ! class_exists( 'WP_Customize_Control' ) ) {
-	return;
-}
-
 class WPBF_Customize_Padding_Control extends WP_Customize_Control {
 
 	public $type = 'wpbf-padding';
-
-	public function enqueue() {
-
-		wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/customizer-controls.js', array( 'jquery' ), WPBF_VERSION, true );
-		wp_enqueue_style( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/css/customizer-controls.css', '', WPBF_VERSION );
-
-	}
 
 	public function render_content() {
 

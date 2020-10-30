@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom font size control.
+ * Custom responsive padding control.
  *
  * @package Page Builder Framework
  * @subpackage Customizer
@@ -8,24 +8,14 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-if ( ! class_exists( 'WP_Customize_Control' ) ) {
-	return;
-}
+class WPBF_Customize_Responsive_Padding_Control extends WP_Customize_Control {
 
-class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
-
-	public $type = 'wpbf-responsive-font-size';
-
-	public function enqueue() {
-
-		wp_enqueue_script( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/js/customizer-controls.js', array( 'jquery' ), WPBF_VERSION, true );
-		wp_enqueue_style( 'wpbf-customizer-controls', WPBF_THEME_URI . '/inc/customizer/css/customizer-controls.css', '', WPBF_VERSION );
-
-	}
+	public $type = 'wpbf-responsive-padding';
 
 	public function render_content() {
 
 		$devices = array( 'desktop', 'tablet', 'mobile' );
+		$areas   = array( 'top', 'right', 'bottom', 'left' );
 
 		?>
 
@@ -53,15 +43,29 @@ class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
 
 		<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
-			<?php $link = $this->get_link(); ?>
+			<?php foreach ( $areas as $area ) { ?>
 
-			<?php $link = str_replace( 'mobile', $device, $link ); ?>
+		<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 
-			<?php $link = str_replace( '"', '', $link ); ?>
+				<?php
+
+				$link = $this->get_link();
+				$link = str_replace( 'left', $area, $link );
+				$link = str_replace( 'mobile', $device, $link );
+				$link = str_replace( '"', '', $link );
+
+				?>
 
 			<label>
-				<input type="text" <?php echo esc_html( $link ); ?> value="<?php echo esc_textarea( $this->value() ); ?>">
+				<input style="text-align:center;" type="number" <?php echo esc_attr( $link ); ?> value="<?php echo intval( $this->value() ); ?>">
+				<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 			</label>
+
+		</div>
+
+		<?php } ?>
+
+		<span class="px">px</span>
 
 		</div>
 

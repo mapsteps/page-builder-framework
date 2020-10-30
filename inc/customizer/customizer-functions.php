@@ -171,15 +171,26 @@ add_action( 'customize_preview_init', 'wpbf_customizer_preview_js' );
  */
 function wpbf_customizer_scripts_styles() {
 
-	wp_enqueue_script( 'wpbf-customizer', get_template_directory_uri() . '/inc/customizer/js/customizer.js', array( 'jquery' ), WPBF_VERSION, true );
 	wp_enqueue_style( 'wpbf-customizer', get_template_directory_uri() . '/inc/customizer/css/customizer.css', '', WPBF_VERSION );
+	wp_enqueue_script( 'wpbf-customizer', get_template_directory_uri() . '/inc/customizer/js/customizer.js', array( 'jquery' ), WPBF_VERSION, true );
+
+	wp_enqueue_style( 'responsive-controls', get_template_directory_uri() . '/inc/customizer/css/responsive-controls.css', '', WPBF_VERSION );
+	wp_enqueue_script( 'responsive-controls', get_template_directory_uri() . '/inc/customizer/js/responsive-controls.js', array( 'jquery' ), WPBF_VERSION, true );
 
 }
 add_action( 'customize_controls_print_styles', 'wpbf_customizer_scripts_styles' );
 
+// Core functionality.
+require get_template_directory() . '/inc/customizer/core.php';
+
+// Stop here if WP_Customize_Control doesn't exist.
+if ( ! class_exists( 'WP_Customize_Control' ) ) {
+	return;
+}
+
 // Custom controls.
-require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-font-size-control.php';
-require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-padding-control.php';
-require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-responsive-padding-control.php';
-require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-input-slider-control.php';
-require get_template_directory() . '/inc/customizer/controls/class-wpbf-customize-responsive-input-slider-control.php';
+require get_template_directory() . '/inc/customizer/controls/padding/control-padding.php';
+require get_template_directory() . '/inc/customizer/controls/input-slider/control-input-slider.php';
+require get_template_directory() . '/inc/customizer/controls/responsive-font-size/control-responsive-font-size.php';
+require get_template_directory() . '/inc/customizer/controls/responsive-padding/control-responsive-padding.php';
+require get_template_directory() . '/inc/customizer/controls/responsive-input-slider/control-responsive-input-slider.php';
