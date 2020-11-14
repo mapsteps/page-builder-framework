@@ -227,12 +227,12 @@ var WPBFSite = (function ($) {
 	function buildCenteredMenu() {
 		if (!document.querySelector('.wpbf-menu-centered')) return;
 
-		var menu_items = $('.wpbf-navigation .wpbf-menu > li > a').length;
+		var menu_items = $('.wpbf-navigation .wpbf-menu-centered .wpbf-menu > li > a').length;
 		var divided = menu_items / 2;
 		var divided = Math.floor(divided);
 		var divided = divided - 1;
 
-		$('.wpbf-menu-centered .logo-container').insertAfter('.wpbf-navigation .wpbf-menu >li:eq(' + divided + ')').css({ 'display': 'block' });
+		$('.wpbf-menu-centered .logo-container').insertAfter('.wpbf-navigation .wpbf-menu-centered .wpbf-menu >li:eq(' + divided + ')').css({ 'display': 'block' });
 	}
 
 	/**
