@@ -613,8 +613,11 @@ add_action( 'wpbf_before_mobile_toggle', 'wpbf_woo_menu_icon_mobile' );
  * @return array The updated fragments.
  */
 function wpbf_woo_fragments( $fragments ) {
+	global $woocommerce;
 
-	$fragments['li.wpbf-woo-menu-item'] = wpbf_woo_menu_item();
+	ob_start();
+	echo wpbf_woo_menu_item();
+	$fragments['li.wpbf-woo-menu-item'] = ob_get_clean();
 
 	return $fragments;
 
