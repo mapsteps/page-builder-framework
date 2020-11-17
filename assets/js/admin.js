@@ -32,4 +32,54 @@
 	};
 
 	init();
+
+	$('.wpbf-admin-page-nav-item').on('click', function(event) {
+		// event.preventDefault();
+		$('.wpbf-admin-page-nav-item').removeClass('active');
+		$(this).addClass('active');
+	});
+
+	$('.settings-panel').on('click', function(event) {
+		// event.preventDefault();
+		$('.wpbf-admin-panel').css('display', 'none');
+		$('.wpbf-settings-panel').css('display', 'flex');
+	});
+
+	$('.recommended-panel').on('click', function(event) {
+		// event.preventDefault();
+		$('.wpbf-admin-panel').css('display', 'none');
+		$('.wpbf-recommended-panel').css('display', 'flex');
+	});
+
+	$('.premium-panel').on('click', function(event) {
+		// event.preventDefault();
+		$('.wpbf-admin-panel').css('display', 'none');
+		$('.wpbf-premium-panel').css('display', 'flex');
+	});
+
+	$(window).on('load', function(event) {
+
+		var hash = window.location.hash;
+
+		if ( ! hash ) {
+			hash = '#settings';
+		}
+
+		if ( "#settings" === hash ) {
+			$('.wpbf-admin-page-nav-item.settings-panel').addClass('active');
+			$('.wpbf-settings-panel').css('display', 'flex');
+		}
+
+		if ( "#recommended" === hash ) {
+			$('.wpbf-admin-page-nav-item.recommended-panel').addClass('active');
+			$('.wpbf-recommended-panel').css('display', 'flex');
+		}
+
+		if ( "#premium" === hash ) {
+			$('.wpbf-admin-page-nav-item.premium-panel').addClass('active');
+			$('.wpbf-premium-panel').css('display', 'flex');
+		}
+
+	});
+
 })(jQuery);

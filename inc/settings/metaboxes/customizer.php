@@ -58,12 +58,10 @@ function wpbf_do_customizer_links() {
 	foreach ( $customizer_links as $link_item ) {
 		?>
 
-		<li class="list-item">
-			<div class="list-content">
-				<a href="<?php echo esc_url( $link_item['url'] ); ?>">
-					<?php echo esc_html( $link_item['text'] ); ?>
-				</a>
-			</div>
+		<li>
+			<a href="<?php echo esc_url( $link_item['url'] ); ?>">
+				<?php echo esc_html( $link_item['text'] ); ?>
+			</a>
 		</li>
 
 		<?php
@@ -71,13 +69,16 @@ function wpbf_do_customizer_links() {
 
 }
 add_action( 'wpbf_customizer_links', 'wpbf_do_customizer_links' );
+
 ?>
 
-<div class="neatbox is-smooth has-medium-gap has-bigger-heading customizer-box">
+<div class="heatbox wpbf-customizer-metabox">
+
 	<h2>
-		Links to Customizer Settings
+		<?php _e( 'Customizer Settings', 'page-builder-framework' ); ?>
 	</h2>
-	<ul class="neatbox-list customizer-list">
+
+	<ul class="wpbf-customizer-list">
 
 		<?php
 		do_action( 'wpbf_before_customizer_links' );
@@ -85,17 +86,16 @@ add_action( 'wpbf_customizer_links', 'wpbf_do_customizer_links' );
 		do_action( 'wpbf_after_customizer_links' );
 		?>
 
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title">Launch WordPress Customizer</h3>
-				<p class="description">
-					Explore all of the Page Builder Framework features.
-				</p>
-			</div>
-			<div class="list-action">
-				<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" target="_blank" class="button button-primary">Customize</a>
-			</div>
+		<li>
+			<h3>
+				<?php _e( 'Launch WordPress Customizer', 'page-builder-framework' ); ?>
+			</h3>
+			<p>
+				<?php _e( 'Explore all of the Page Builder Framework features.', 'page-builder-framework' ); ?>
+			</p>
+			<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" target="_blank" class="button button-larger button-primary"><?php _e( 'Customize', 'page-builder-framework' ); ?></a>
 		</li>
 
 	</ul>
-</div><!-- .customizer-box -->
+
+</div>

@@ -1,0 +1,274 @@
+/* Gerneral */
+#wpcontent {
+	padding-left: 0 !important;
+}
+
+.wpbf-admin-page {
+	margin: 0;
+}
+
+.wpbf-admin-page h1 {
+	font-size: 34px;
+	font-weight: 700;
+	margin: 0;
+	padding: 0;
+}
+
+/* Hide admin notices */
+.notice, .update-nag {
+	display: none !important;
+}
+
+/* Header */
+.wpbf-admin-page-header {
+	background: #fff;
+	padding: 40px 60px 0px 60px;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.wpbf-logo-container {
+	display: flex;
+	align-items: center;
+}
+
+.wpbf-logo-container div {
+	width: 50%;
+}
+
+.wpbf-logo-container img {
+	width: 180px;
+	height: auto;
+	float: right;
+}
+
+.wpbf-admin-page-navigation {
+	padding: 20px 0;
+	margin: 10px 0 0 0;
+}
+
+.wpbf-admin-page-navigation li {
+	display: inline-flex;
+	padding: 10px 30px 10px 0;
+	font-weight: 600;
+	font-size: 20px;
+}
+
+.wpbf-admin-page-navigation li a {
+	color: #23282d;
+	text-decoration: none;
+}
+
+.wpbf-admin-page-navigation li a:hover {
+	/*color: #0073aa;*/
+}
+
+.wpbf-admin-page-navigation li.active a {
+	color: #0073aa;
+}
+
+/* Metaboxes */
+.wpbf-admin-panel {
+	display: none;
+}
+
+.wpbf-admin-panel.active {
+	display: flex;
+}
+
+/* Customizer Metabox */
+.wpbf-customizer-list {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+}
+
+.wpbf-customizer-list li {
+	margin: 0;
+	flex: 0 50%;
+	border-bottom: 1px solid #eee;
+}
+
+.wpbf-customizer-list li:nth-child(odd) {
+	border-right: 1px solid #eee;
+}
+
+.wpbf-customizer-list li p {
+	font-size: 16px;
+}
+
+.wpbf-customizer-list li a {
+	text-decoration: none;
+	font-size: 16px;
+}
+
+.wpbf-customizer-list li:last-child {
+	width: 100%;
+	flex: 0 100%;
+	border: none;
+	padding: 20px;
+	background: #f9f9f9;
+}
+
+.wpbf-customizer-list li a {
+	display: inline-block;
+	padding: 20px;
+}
+
+/* Resources Metabox */
+.wpbf-resources-metabox ul {
+	margin: 0;
+}
+
+.wpbf-resources-metabox li {
+	margin-bottom: 15px;
+}
+
+.wpbf-resources-metabox a {
+	text-decoration: none;
+}
+
+/* Premium Add-On Metabox */
+.wpbf-premium-list {
+	margin: 0;
+}
+
+.wpbf-premium-list li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	margin: 0;
+	padding: 25px 20px;
+	border-bottom: 1px solid #eee;
+}
+
+.wpbf-premium-list li:last-child {
+	border: none;
+	background: #f9f9f9;
+}
+
+.wpbf-premium-list li:last-child h3 {
+	margin-bottom: 10px;
+}
+
+.wpbf-premium-list li:last-child p {
+	margin-bottom: 0;
+}
+
+.wpbf-premium-list li div {
+	flex: 0 50%;
+}
+
+.wpbf-premium-list li h3 {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: 400;
+}
+
+.wpbf-premium-list li p {
+	font-size: 16px;
+}
+
+.wpbf-premium-list .tooltip {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	color: #ccc;
+	margin-left: 8px;
+}
+
+.wpbf-premium-list .tooltip:hover {
+	color: #47d87c;
+}
+
+.wpbf-premium-list .tooltip:hover p {
+	opacity: 1;
+	z-index: 1;
+}
+
+.wpbf-premium-list .tooltip p {
+	z-index: -1;
+	opacity: 0;
+	position: absolute;
+	bottom: 15px;
+	left: -40px;
+	width: 250px;
+	background: #fff;
+	padding: 15px;
+	border: 1px solid #eee;
+	color: initial;
+	-webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.15);
+	-moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.15);
+	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.15);
+	border-radius: 4px;
+}
+
+
+.wpbf-premium-list-icon {
+	text-align: right;
+	color: #47d87c;
+	left: 0;
+	bottom: 0;
+}
+
+.wpbf-premium-list-icon i {
+	margin-right: 20px;
+	position: relative;
+}
+
+/* Recommended Metabox */
+.wpbf-recommended-list {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+}
+
+.wpbf-recommended-list li {
+	display: flex;
+	flex-direction: column;
+	flex: 0 49%;
+	margin-right: 2%;
+}
+
+.wpbf-recommended-list li:nth-child(even) {
+	margin-right: 0;
+}
+
+.wpbf-recommended-list li > a {
+	box-shadow: none;
+}
+
+.wpbf-recommended-list img {
+	max-width: 100%;
+}
+
+.wpbf-recommended-content {
+	padding: 20px;
+	flex: 1 0 auto;
+	min-height: 150px;
+}
+
+.wpbf-recommended-content p {
+	font-size: 16px;
+}
+
+.wpbf-recommended-status {
+	display: flex;
+	align-items: center;
+	padding: 20px;
+	background: #f9f9f9;
+	border-top: 1px solid #eee;
+}
+
+.wpbf-recommended-status div {
+	flex: 0 50%;
+}
+
+.wpbf-recommended-status-icon {
+	text-align: right;
+	color: #ccc;
+	display: none;
+}
+
+.wpbf-recommended-status-icon.green {
+	color: #47d87c;
+}

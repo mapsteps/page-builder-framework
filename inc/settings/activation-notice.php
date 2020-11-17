@@ -12,8 +12,8 @@ global $wpbf_activation_notice_dismissal_nonce;
 $screen = get_current_screen();
 ?>
 
-<div class="notice notice-info nice-notice wpbf-activation-notice is-dismissible">
-	<div class="notice-body has-icon">
+<div class="notice notice-info wpbf-activation-notice is-dismissible">
+	<div class="notice-body">
 		<div class="notice-icon">
 			<img src="<?php echo esc_url( WPBF_THEME_URI ); ?>/img/page-builder-framework-logo-blue.png" alt="Page Builder Framework Logo">
 		</div>
@@ -27,7 +27,7 @@ $screen = get_current_screen();
 			</p>
 
 			<?php if ( 'appearance_page_wpbf-premium' !== $screen->id ) : ?>
-			<p class="buttons">
+			<p>
 				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium' ) ); ?>" class="button button-primary">
 					<?php _e( 'Get Started', 'page-builder-framework' ); ?>
 				</a>

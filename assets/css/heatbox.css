@@ -1,0 +1,107 @@
+/* Init */
+.heatbox-wrap,
+.heatbox-wrap * {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/* Version */
+.heatbox-wrap .version {
+	font-size: 60%;
+	opacity: 0.6;
+	font-weight: 600;
+	background: #ccc;
+	border-radius: 5px;
+	padding: 5px 12px;
+	line-height: 1;
+}
+
+/* Container */
+.heatbox-container {
+	max-width: 1200px;
+	padding: 0 20px;
+}
+
+.heatbox-container-center {
+	margin: 0 auto;
+}
+
+/* 2 Column Layout - Wrapper */
+.heatbox-column-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/* 2 Column Layout - Main Content */
+.heatbox-main {
+	width: 73%;
+	margin-right: 2%;
+}
+
+/* 2 Column Layout - Sidebar */
+.heatbox-sidebar {
+	width: 25%;
+}
+
+/* 2 Column Layout - Responsiveness */
+@media screen and (max-width: 991px) {
+	.heatbox-main, .heatbox-sidebar {
+		width: 100%;
+	}
+	.heatbox-main {
+		margin-right: 0;
+	}
+}
+
+/* Heatbox */
+.heatbox {
+	background: #fff;
+	margin-bottom: 20px;
+	border: 1px solid #E6E6E6;
+}
+
+.heatbox h2 {
+	border-bottom: 1px solid #eee;
+	margin: 0;
+	padding: 20px;
+}
+
+.heatbox h3 {
+	margin: 0 0 10px 0;
+}
+
+.heatbox p {
+	margin: 0 0 20px 0;
+}
+
+.heatbox-content {
+	margin: 0;
+	padding: 20px;
+}
+
+.heatbox-content p:first-child {
+	margin-top: 0;
+}
+
+/* Margins */
+.heatbox-margin-top {
+	margin-top: 20px;
+}
+
+.heatbox-margin-bottom {
+	margin-bottom: 20px;
+}
+
+/* Paddings */
+.heatbox-margin-top {
+	margin-top: 20px;
+}
+
+.heatbox-margin-bottom {
+	margin-bottom: 20px;
+}
+
+/* Buttons */
+.heatbox-wrap .button-larger {
+	padding: 5px 20px;
+}

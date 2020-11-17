@@ -1,0 +1,39 @@
+/**
+ * --------------------
+ * Admin Notice
+ * --------------------
+ */
+.wpbf-activation-notice  {
+	padding: 25px 20px;
+}
+
+.wpbf-activation-notice .notice-body {
+	display: flex;
+}
+
+.wpbf-activation-notice .notice-icon {
+	padding-right: 25px;
+}
+
+.wpbf-activation-notice .notice-icon img {
+	max-width: 55px;
+}
+
+.wpbf-activation-notice .notice-content {
+	width: 100%;
+}
+
+.wpbf-activation-notice .notice-content h2 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-weight: 700;
+}
+
+.wpbf-activation-notice .notice-content > p {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.wpbf-activation-notice .notice-content > p:last-child {
+	margin-bottom: 0;
+}

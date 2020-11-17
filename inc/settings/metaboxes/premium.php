@@ -8,120 +8,99 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 ?>
 
-<div class="neatbox is-smooth has-medium-gap has-bigger-heading premium-box">
+<div class="heatbox wpbf-premium-metabox">
+
 	<h2>
-		Premium Add-On Features
-		<a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank" style="float: right;"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
+		<?php _e( 'Premium Add-On Features', 'page-builder-framework' ); ?>
+		<a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank" style="float: right;"><?php _e( 'Upgrade Now', 'page-builder-framework' ); ?></a>
 	</h2>
-	<ul class="neatbox-list premium-list">
 
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/transparent-headers/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Transparent Header</a></h3>
-				<p class="description">
-					Create a customizable Transparent Header with just a few clicks.
+	<ul class="wpbf-premium-list">
+
+		<?php
+
+			$premium_features = array(
+				array(
+					'title'       => __( 'Transparent Header', 'page-builder-framework' ),
+					'description' => __( 'Create a customizable Transparent Header with just a few clicks.', 'page-builder-framework' ),
+					'link'        => 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+				),
+				array(
+					'title'       => __( 'Sticky Navigation', 'page-builder-framework' ),
+					'description' => __( 'Create a beautiful & fully customizable Sticky Navigation in seconds.', 'page-builder-framework' ),
+					'link'        => 'https://wp-pagebuilderframework.com/premium/?video=stickynav&utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf#premium',
+				),
+				array(
+					'title'       => __( 'White Label Settings', 'page-builder-framework' ),
+					'description' => __( 'Your theme, your branding. Fully white label Page Builder Framework & the Premium Add-On.', 'page-builder-framework' ),
+					'link'        => 'https://wp-pagebuilderframework.com/docs/white-label/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+				),
+				array(
+					'title'       => __( 'Advanced Typography', 'page-builder-framework' ),
+					'description' => __( 'Customize fonts and add Typekit- & Custom Fonts to your website.', 'page-builder-framework' ),
+					'link'        => 'https://wp-pagebuilderframework.com/docs/advanced-typography/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+				),
+				array(
+					'title'       => __( 'Adjustable Breakpoints', 'page-builder-framework' ),
+					'description' => __( 'Set custom responsive breakpoints for tablets, desktops & mobiles for a pixel perfect design.', 'page-builder-framework' ),
+					'link'        => 'https://wp-pagebuilderframework.com/docs/custom-responsive-breakpoints/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+				),
+				array(
+					'title'       => __( 'Advanced WooCommerce Features', 'page-builder-framework' ),
+					'description' => __( 'Take full control over the design of your online store with more advanced WooCommerce features.', 'page-builder-framework' ),
+					'link'        => 'https://wp-pagebuilderframework.com/free-woocommerce-theme/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf#premium',
+				),
+				array(
+					'title'       => __( 'Mega Menu', 'page-builder-framework' ),
+					'description' => __( 'Easily create an advanced mega menu with up to 4 rows.', 'page-builder-framework' ),
+					'link'        => 'https://wp-pagebuilderframework.com/docs/mega-menu/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+				),
+				array(
+					'title'       => __( 'Call to Action Button', 'page-builder-framework' ),
+					'description' => __( 'Add a customizable Call to Action Button to your navigation with just a few clicks.', 'page-builder-framework' ),
+					'link'        => 'https://wp-pagebuilderframework.com/docs/call-to-action-button/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+				),
+			);
+
+			foreach ( $premium_features as $premium_feature ) {
+
+				?>
+
+				<li>
+					<div class="wpbf-premium-list-content">
+						<h3>
+							<?php echo esc_html( $premium_feature['title'] ); ?>
+						</h3>
+						<div class="tooltip">
+							<i class="dashicons dashicons-editor-help"></i>
+							<p><?php echo esc_html( $premium_feature['description'] ); ?></p>
+						</div>
+					</div>
+					<div class="wpbf-premium-list-icon">
+						<i class="dashicons dashicons-yes-alt"></i>
+					</div>
+				</li>
+
+				<?php
+
+			}
+
+		?>
+
+		<li>
+			<div class="wpbf-premium-list-content">
+				<h3>
+					<strong><?php _e( 'And much more!', 'page-builder-framework' ); ?></strong>
+				</h3>
+				<p>
+					<?php _e( 'Check out all the Premium Add-On features.', 'page-builder-framework' ); ?>
 				</p>
 			</div>
-			<div class="list-action">
-				<i class="dashicons dashicons-yes-alt"></i>
-			</div>
-		</li>
-
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title"><a href="https://wp-pagebuilderframework.com/premium/?video=stickynav&utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf#premium" target="_blank">Sticky Navigation</a></h3>
-				<p class="description">
-					Create a beautiful & fully customizable Sticky Navigation in seconds.
-				</p>
-			</div>
-			<div class="list-action">
-				<i class="dashicons dashicons-yes-alt"></i>
-			</div>
-		</li>
-
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/white-label/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">White Label Settings</a></h3>
-				<p class="description">
-					Your theme, your branding. Fully white label Page Builder Framework & the Premium Add-On.
-				</p>
-			</div>
-			<div class="list-action">
-				<i class="dashicons dashicons-yes-alt"></i>
-			</div>
-		</li>
-
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/advanced-typography/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Advanced Typography</a></h3>
-				<p class="description">
-					Customize fonts and add Typekit- & Custom Fonts to your website.
-				</p>
-			</div>
-			<div class="list-action">
-				<i class="dashicons dashicons-yes-alt"></i>
-			</div>
-		</li>
-
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/custom-responsive-breakpoints/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Adjustable Breakpoints</a></h3>
-				<p class="description">
-					Set custom responsive breakpoints for tablets, desktops & mobiles for a pixel perfect design.
-				</p>
-			</div>
-			<div class="list-action">
-				<i class="dashicons dashicons-yes-alt"></i>
-			</div>
-		</li>
-
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title"><a href="https://wp-pagebuilderframework.com/free-woocommerce-theme/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf#premium" target="_blank">Advanced WooCommerce Features</a></h3>
-				<p class="description">
-					Take full control over the design of your online store with more advanced WooCommerce features.
-				</p>
-			</div>
-			<div class="list-action">
-				<i class="dashicons dashicons-yes-alt"></i>
-			</div>
-		</li>
-
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/mega-menu/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Mega Menu</a></h3>
-				<p class="description">
-					Easily create an advanced mega menu with up to 4 rows.
-				</p>
-			</div>
-			<div class="list-action">
-				<i class="dashicons dashicons-yes-alt"></i>
-			</div>
-		</li>
-
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title"><a href="https://wp-pagebuilderframework.com/docs/call-to-action-button/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">Call to Action Button</a></h3>
-				<p class="description">
-					Add a customizable Call to Action Button to your navigation with just a few clicks.
-				</p>
-			</div>
-			<div class="list-action">
-				<i class="dashicons dashicons-yes-alt"></i>
-			</div>
-		</li>
-
-		<li class="list-item inline-action">
-			<div class="list-content">
-				<h3 class="title">And a lot more!</h3>
-				<p class="description">
-					Check out all the Premium Add-On features.
-				</p>
-			</div>
-			<div class="list-action">
-				<a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank" class="button button-primary button-large"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
+			<div class="wpbf-premium-list-icon">
+				<a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank" class="button button-larger button-primary"><?php _e( 'Learn More', 'page-builder-framework' ); ?></a>
 			</div>
 		</li>
 
 	</ul>
-</div><!-- .premium-box -->
+
+</div>
