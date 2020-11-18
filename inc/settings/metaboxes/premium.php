@@ -8,6 +8,10 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 ?>
 
+<a href="https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank" class="wpbf-premium-add-on-banner-link">
+	<img class="wpbf-premium-add-on-banner" src="<?php echo esc_url( WPBF_THEME_URI ); ?>/img/premium-add-on-banner.jpg" alt="Page Builder Framework Premium Add-On">
+</a>
+
 <div class="heatbox wpbf-premium-metabox">
 
 	<h2>

@@ -114,6 +114,10 @@
 	padding: 20px;
 }
 
+/* Review Metabox */
+.wpbf-review-metabox {
+}
+
 /* Resources Metabox */
 .wpbf-resources-metabox ul {
 	margin: 0;
@@ -123,11 +127,25 @@
 	margin-bottom: 15px;
 }
 
+.wpbf-resources-metabox li:last-child {
+	margin-bottom: 0;
+}
+
 .wpbf-resources-metabox a {
 	text-decoration: none;
 }
 
 /* Premium Add-On Metabox */
+.wpbf-premium-add-on-banner-link {
+	display: block;
+	margin-bottom: 20px;
+	box-shadow: none !important;
+}
+.wpbf-premium-add-on-banner {
+	max-width: 100%;
+	border: 1px solid #E6E6E6;
+}
+
 .wpbf-premium-list {
 	margin: 0;
 }
@@ -177,7 +195,7 @@
 }
 
 .wpbf-premium-list .tooltip:hover {
-	color: #47d87c;
+	color: #0073aa;
 }
 
 .wpbf-premium-list .tooltip:hover p {
@@ -266,9 +284,39 @@
 .wpbf-recommended-status-icon {
 	text-align: right;
 	color: #ccc;
-	display: none;
 }
 
 .wpbf-recommended-status-icon.green {
 	color: #47d87c;
+}
+
+.wpbf-recommended-status-icon i {
+	font-size: 22px !important;
+}
+
+/* Documentation Metabox */
+.wpbf-documentation-metabox {
+
+}
+
+.wpbf-documentation-metabox h2 a {
+	text-decoration: none;
+	box-shadow: none;
+}
+
+.wpbf-documentation-boxes {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+}
+
+.wpbf-documentation-boxes .heatbox {
+	display: flex;
+	flex-direction: column;
+	flex: 0 49%;
+	margin-right: 2%;
+}
+
+.wpbf-documentation-boxes .heatbox:nth-child(even) {
+	margin-right: 0;
 }

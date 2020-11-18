@@ -9,13 +9,13 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 ?>
 
 <div class="heatbox wpbf-community-metabox">
-	<h2>Join the Community</h2>
+	<h2><?php _e( 'Join the Community', 'page-builder-framework' ); ?></h2>
 	<div class="heatbox-content">
 		<p>
-			Join the community and meet 1400+ Page Builder Framework users in our Facebook group.
+			<?php _e( 'Join the community and meet 1500+ Page Builder Framework users in our Facebook group.', 'page-builder-framework' ); ?>
 		</p>
 		<a href="https://www.facebook.com/groups/wpagebuilderframework/" target="_blank" class="button">
-			Join the Community
+			<?php _e( 'Join the Community', 'page-builder-framework' ); ?>
 		</a>
 	</div>
 </div>

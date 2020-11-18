@@ -35,6 +35,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					<li class="wpbf-admin-page-nav-item settings-panel"><a href="#settings"><?php _e( 'Getting Started', 'page-builder-framework' ); ?></a></li>
 					<li class="wpbf-admin-page-nav-item premium-panel"><a href="#premium"><?php _e( 'Premium Add-On', 'page-builder-framework' ); ?></a></li>
 					<li class="wpbf-admin-page-nav-item recommended-panel"><a href="#recommended"><?php _e( 'Recommended Plugins', 'page-builder-framework' ); ?></a></li>
+					<li class="wpbf-admin-page-nav-item documentation-panel"><a href="#documentation"><?php _e( 'Help', 'page-builder-framework' ); ?></a></li>
 				</ul>
 			</nav>
 
@@ -55,7 +56,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 		<div class="heatbox-sidebar">
 
 			<?php
-			require __DIR__ . '/metaboxes/documentation.php';
 			require __DIR__ . '/metaboxes/community.php';
 			require __DIR__ . '/metaboxes/review.php';
 			require __DIR__ . '/metaboxes/resources.php';
@@ -78,7 +78,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 		<div class="heatbox-sidebar">
 
 			<?php
-			require __DIR__ . '/metaboxes/documentation.php';
 			require __DIR__ . '/metaboxes/community.php';
 			require __DIR__ . '/metaboxes/review.php';
 			require __DIR__ . '/metaboxes/resources.php';
@@ -101,7 +100,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 		<div class="heatbox-sidebar">
 
 			<?php
-			require __DIR__ . '/metaboxes/documentation.php';
 			require __DIR__ . '/metaboxes/community.php';
 			require __DIR__ . '/metaboxes/review.php';
 			require __DIR__ . '/metaboxes/resources.php';
@@ -109,7 +107,29 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		</div>
 
+	</div>
+
+	<div class="heatbox-container heatbox-container-center heatbox-column-container wpbf-admin-panel wpbf-documentation-panel">
+
+		<div class="heatbox-main">
+
+			<?php
+			require __DIR__ . '/metaboxes/documentation.php';
+			?>
+
+		</div>
+
+		<div class="heatbox-sidebar">
+
+			<?php
+			require __DIR__ . '/metaboxes/community.php';
+			require __DIR__ . '/metaboxes/review.php';
+			require __DIR__ . '/metaboxes/resources.php';
+			?>
+
+		</div>
 
 	</div>
+
 
 </div>

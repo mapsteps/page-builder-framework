@@ -56,6 +56,7 @@ function wpbf_do_customizer_links() {
 	);
 
 	foreach ( $customizer_links as $link_item ) {
+
 		?>
 
 		<li>
@@ -65,6 +66,7 @@ function wpbf_do_customizer_links() {
 		</li>
 
 		<?php
+
 	}
 
 }
