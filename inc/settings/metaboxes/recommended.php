@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'title'       => __( 'Premium Add-On', 'page-builder-framework' ),
 					'description' => __( 'Take your website to the next level with the Premium Add-On for Page Builder Framework.', 'page-builder-framework' ),
 					'banner'      => WPBF_THEME_URI .'/img/premium-add-on-banner-2.jpg',
-					'link'        => 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf#premium',
+					'link'        => 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
 					'repo'        => false,
 					'constant'    => 'WPBF_PREMIUM_VERSION',
 				),
