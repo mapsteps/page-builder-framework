@@ -36,7 +36,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'description' => __( 'Add beautiful WordPress video lightbox popups to your website without sacrificing performance.', 'page-builder-framework' ),
 					'banner'      => 'https://ps.w.org/responsive-youtube-vimeo-popup/assets/banner-772x250.jpg',
 					'link'        => admin_url( 'plugin-install.php?s=wp+video+popup&tab=search&type=term' ),
-					'repo'        => false,
+					'repo'        => true,
 					'constant'    => 'WP_VIDEO_POPUP_PLUGIN_VERSION',
 				),
 				array(
