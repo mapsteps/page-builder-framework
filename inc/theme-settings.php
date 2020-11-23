@@ -34,12 +34,11 @@ function wpbf_theme_settings_callback() {
  */
 function wpbf_enqueue_admin_scripts() {
 
-	wp_enqueue_style( 'wpbf-activation-notice', WPBF_THEME_URI . '/assets/css/wpbf-activation-notice.css', array(), WPBF_VERSION );
-
-	wp_enqueue_script( 'wpbf-admin', WPBF_THEME_URI . '/js/min/admin-min.js', array( 'jquery' ), WPBF_VERSION, true );
+	wp_enqueue_style( 'wpbf-activation-notice', WPBF_THEME_URI . '/assets/css/activation-notice.css', array(), WPBF_VERSION );
+	wp_enqueue_script( 'wpbf-activation-notice', WPBF_THEME_URI . '/js/min/activation-notice-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
 	wp_localize_script(
-		'wpbf-admin',
+		'wpbf-activation-notice',
 		'wpbfOpts',
 		array(
 			'activationNotice' => array(
@@ -54,6 +53,8 @@ function wpbf_enqueue_admin_scripts() {
 	if ( 'appearance_page_wpbf-premium' === $current_screen->id ) {
 		wp_enqueue_style( 'heatbox', WPBF_THEME_URI . '/assets/css/heatbox.css', array(), WPBF_VERSION );
 		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/wpbf-admin-page.css', array(), WPBF_VERSION );
+
+		wp_enqueue_script( 'wpbf-admin-page', WPBF_THEME_URI . '/js/min/admin-min.js', array( 'jquery' ), WPBF_VERSION, true );
 	}
 
 }
@@ -82,7 +83,7 @@ function wpbf_activation_notice_dismissal() {
 add_action( 'wp_ajax_wpbf_activation_notice_dismissal', 'wpbf_activation_notice_dismissal' );
 
 /**
- * Show activation notice when possible.
+ * Display activation notice.
  */
 function wpbf_show_activation_notice() {
 

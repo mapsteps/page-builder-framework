@@ -71,10 +71,6 @@
 	display: none;
 }
 
-.wpbf-admin-panel.active {
-	display: flex;
-}
-
 /* Customizer Metabox */
 .wpbf-customizer-list {
 	display: flex;
