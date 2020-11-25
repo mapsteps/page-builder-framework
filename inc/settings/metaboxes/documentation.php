@@ -1,6 +1,6 @@
 <?php
 /**
- * Metabox template for displaying documentation link.
+ * Metabox template for displaying documentation links.
  *
  * @package Page Builder Framework
  */
@@ -48,7 +48,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				<div class="heatbox">
 					<h2>
 						<a href="<?php echo esc_url( $docs_box['link'] ); ?>" target="_blank">
-							<span class="dashicons <?php echo esc_html( $docs_box['icon'] ); ?>"></span> <?php echo esc_html( $docs_box['title'] ); ?>
+							<span class="dashicons <?php echo esc_attr( $docs_box['icon'] ); ?>"></span> <?php echo esc_html( $docs_box['title'] ); ?>
 						</a>
 					</h2>
 					<div class="heatbox-content">

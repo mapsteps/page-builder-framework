@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme setting's customizer metabox template.
+ * Theme setting's template.
  *
  * @package Page Builder Framework
  */

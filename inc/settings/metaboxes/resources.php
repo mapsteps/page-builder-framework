@@ -1,6 +1,6 @@
 <?php
 /**
- * Metabox template for displaying additional links.
+ * Metabox template for displaying additional resources.
  *
  * @package Page Builder Framework
  */

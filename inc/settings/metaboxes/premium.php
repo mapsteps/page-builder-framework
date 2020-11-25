@@ -1,6 +1,6 @@
 <?php
 /**
- * Metabox template for displaying premium customizer settings.
+ * Metabox template for displaying premium features.
  *
  * @package Page Builder Framework
  */
