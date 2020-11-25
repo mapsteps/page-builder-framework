@@ -105,3 +105,118 @@
 .heatbox-wrap .button-larger {
 	padding: 5px 20px;
 }
+
+/* Settings */
+.heatbox .form-table {
+	margin: 0;
+}
+
+.heatbox .form-table th,
+.heatbox .form-table td {
+	padding: 20px;
+	vertical-align: top;
+}
+
+.heatbox .form-table th .description {
+	margin-top: 10px;
+}
+
+.heatbox .setting-fields {
+
+}
+
+.heatbox .setting-fields .setting-field {
+	margin-bottom: 7px;
+}
+
+/**
+ * Checkboxes & Radio Buttons
+ * Copied & modified from https://codepen.io/KenanYusuf/pen/PZKEKd/
+ */
+.heatbox .label {
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+}
+
+.heatbox .label input {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+}
+
+.heatbox .label .indicator {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background-color: #e6e6e6;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+.heatbox .radio-label .indicator {
+	border-radius: 50%;
+}
+
+.heatbox .label:hover input ~ .indicator,
+.heatbox .label input:focus ~ .indicator {
+	background-color: #ccc;
+}
+
+.heatbox .label input:checked ~ .indicator {
+	background-color: #007cba;
+}
+
+.heatbox .label:hover input:not([disabled]):checked ~ .indicator,
+.heatbox .label input:checked:focus ~ .indicator {
+	background-color: #00669b;
+}
+
+.heatbox .label input:disabled ~ .indicator {
+	background-color: #e6e6e6;
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.heatbox .label .indicator::after {
+	display: none;
+	position: absolute;
+	content: "";
+}
+
+.heatbox .label input:checked ~ .indicator::after {
+	display: block;
+}
+
+.heatbox .checkbox-label {
+	padding-left: 30px;
+}
+
+.heatbox .checkbox-label .indicator::after {
+	left: 8px;
+	top: 4px;
+	width: 3px;
+	height: 8px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+.heatbox .checkbox-label input:disabled ~ .indicator::after {
+	border-color: #7b7b7b;
+}
+
+.heatbox .radio-label .indicator::after {
+	left: 7px;
+	top: 7px;
+	height: 6px;
+	width: 6px;
+	border-radius: 50%;
+	background-color: #fff;
+}
+
+.heatbox .radio-label input:disabled ~ .indicator::after {
+	background-color: #7b7b7b;
+}
