@@ -7,16 +7,11 @@
 	margin: 0;
 }
 
-.wpbf-admin-page h1 {
+.wpbf-admin-page .title {
 	font-size: 34px;
 	font-weight: 700;
 	margin: 0;
 	padding: 0;
-}
-
-/* Hide admin notices */
-.notice, .update-nag {
-	display: none !important;
 }
 
 /* Header */
@@ -56,10 +51,6 @@
 .wpbf-admin-page-navigation li a {
 	color: #23282d;
 	text-decoration: none;
-}
-
-.wpbf-admin-page-navigation li a:hover {
-	/*color: #0073aa;*/
 }
 
 .wpbf-admin-page-navigation li.active a {

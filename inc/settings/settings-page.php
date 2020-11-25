@@ -18,14 +18,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 			<div class="wpbf-logo-container">
 
 				<div>
-					<h1>
+					<span class="title">
 						<?php echo esc_html( get_admin_page_title() ); ?>
 						<span class="version"><?php echo esc_html( WPBF_VERSION ); ?></span>
-					</h1>
+					</span>
 				</div>
 
 				<div>
-					<img src="<?php echo esc_url( WPBF_THEME_URI ); ?>/img/page-builder-framework-logo.png" alt="Page Builder Framework Logo">
+					<img src="<?php echo esc_url( WPBF_THEME_URI ); ?>/img/page-builder-framework-logo.png">
 				</div>
 
 			</div>
@@ -43,13 +43,27 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 	</div>
 
-	<div class="heatbox-container heatbox-container-center heatbox-column-container wpbf-admin-panel wpbf-settings-panel">
+	<div class="heatbox-container heatbox-container-center heatbox-column-container">
 
 		<div class="heatbox-main">
 
-			<?php
-			require __DIR__ . '/metaboxes/customizer.php';
-			?>
+			<div class="wpbf-admin-panel wpbf-settings-panel">
+				<!-- Faking H1 tag to place admin notices -->
+				<h1 style="display: none;"></h1>
+				<?php require __DIR__ . '/metaboxes/customizer.php'; ?>
+			</div>
+
+			<div class="wpbf-admin-panel wpbf-premium-panel">
+				<?php require __DIR__ . '/metaboxes/premium.php'; ?>
+			</div>
+
+			<div class="wpbf-admin-panel wpbf-recommended-panel">
+				<?php require __DIR__ . '/metaboxes/recommended.php'; ?>
+			</div>
+
+			<div class="wpbf-admin-panel wpbf-documentation-panel">
+				<?php require __DIR__ . '/metaboxes/documentation.php'; ?>
+			</div>
 
 		</div>
 
@@ -64,72 +78,5 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 		</div>
 
 	</div>
-
-	<div class="heatbox-container heatbox-container-center heatbox-column-container wpbf-admin-panel wpbf-premium-panel">
-
-		<div class="heatbox-main">
-
-			<?php
-			require __DIR__ . '/metaboxes/premium.php';
-			?>
-
-		</div>
-
-		<div class="heatbox-sidebar">
-
-			<?php
-			require __DIR__ . '/metaboxes/community.php';
-			require __DIR__ . '/metaboxes/review.php';
-			require __DIR__ . '/metaboxes/resources.php';
-			?>
-
-		</div>
-
-	</div>
-
-	<div class="heatbox-container heatbox-container-center heatbox-column-container wpbf-admin-panel wpbf-recommended-panel">
-
-		<div class="heatbox-main">
-
-			<?php
-			require __DIR__ . '/metaboxes/recommended.php';
-			?>
-
-		</div>
-
-		<div class="heatbox-sidebar">
-
-			<?php
-			require __DIR__ . '/metaboxes/community.php';
-			require __DIR__ . '/metaboxes/review.php';
-			require __DIR__ . '/metaboxes/resources.php';
-			?>
-
-		</div>
-
-	</div>
-
-	<div class="heatbox-container heatbox-container-center heatbox-column-container wpbf-admin-panel wpbf-documentation-panel">
-
-		<div class="heatbox-main">
-
-			<?php
-			require __DIR__ . '/metaboxes/documentation.php';
-			?>
-
-		</div>
-
-		<div class="heatbox-sidebar">
-
-			<?php
-			require __DIR__ . '/metaboxes/community.php';
-			require __DIR__ . '/metaboxes/review.php';
-			require __DIR__ . '/metaboxes/resources.php';
-			?>
-
-		</div>
-
-	</div>
-
 
 </div>

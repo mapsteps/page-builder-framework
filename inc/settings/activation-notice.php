@@ -8,6 +8,7 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 global $wpbf_activation_notice_dismissal_nonce;
+$screen = get_current_screen(); 
 ?>
 
 <div class="notice notice-info wpbf-activation-notice is-dismissible">
@@ -22,11 +23,13 @@ global $wpbf_activation_notice_dismissal_nonce;
 			<p>
 				<?php _e( 'Thank you for choosing Page Builder Framework! Please visit the theme settings page to get started.', 'page-builder-framework' ); ?>
 			</p>
+			<?php if ( 'appearance_page_wpbf-premium' !== $screen->id ) { ?> 
 			<p>
 				<a href="<?php echo esc_url( admin_url( 'themes.php?page=wpbf-premium' ) ); ?>" class="button button-primary">
 					<?php _e( 'Get Started', 'page-builder-framework' ); ?>
 				</a>
 			</p>
+			<?php } ?>
 		</div>
 	</div>
 </div>
