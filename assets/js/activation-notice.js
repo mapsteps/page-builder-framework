@@ -3,11 +3,12 @@
  * - ajaxurl
  */
 (function ($) {
+
 	var ajax = {};
 
 	function init() {
-		window.addEventListener('load', function (e) {
-			setupActivationNoticeDismissal();
+		$(window).load(function() {
+			setTimeout(setupActivationNoticeDismissal, 1000);
 		});
 	}
 
