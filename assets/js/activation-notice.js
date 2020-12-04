@@ -7,7 +7,7 @@
 	var ajax = {};
 
 	function init() {
-		$(window).load(function() {
+		window.addEventListener('load', function (e) {
 			setTimeout(setupActivationNoticeDismissal, 1000);
 		});
 	}
