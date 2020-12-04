@@ -57,13 +57,21 @@
 .heatbox {
 	background: #fff;
 	margin-bottom: 20px;
-	border: 1px solid #E6E6E6;
+	border: 1px solid #ddd;
 }
 
 .heatbox h2 {
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid #ddd;
 	margin: 0;
 	padding: 20px;
+}
+
+.heatbox.is-grouped h2 {
+	border-top: 1px solid #ddd;
+}
+
+.heatbox.is-grouped h2:first-child {
+	border-top: none;
 }
 
 .heatbox h3 {
@@ -127,6 +135,10 @@
 
 .heatbox .setting-fields .setting-field {
 	margin-bottom: 7px;
+}
+
+.heatbox .setting-fields .setting-field:last-of-type {
+	margin-bottom: 0;
 }
 
 /**
