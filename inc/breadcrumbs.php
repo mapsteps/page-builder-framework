@@ -73,7 +73,13 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 
 	// Use Yoast Breadcrumbs if enabled.
 	if ( function_exists( 'yoast_breadcrumb' ) ) {
-		return yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+
+		$yoast_titles = get_option( 'wpseo_titles', array() );
+
+		if ( isset( $yoast_titles['breadcrumbs-enable'] ) && $yoast_titles['breadcrumbs-enable'] == 1 ) {
+			return yoast_breadcrumb( '<p id="breadcrumbs">','</p>' );
+		}
+
 	}
 
 	// Use Rank Math SEO Breadcrumbs if enabled.
