@@ -179,7 +179,7 @@ function wpbf_woo_sidebar_layout( $sidebar ) {
 			$sidebar = $sidebar_position;
 		}
 
-	} elseif ( is_shop() || is_product_category() ) {
+	} elseif ( is_shop() || is_product_category() || is_product_taxonomy() ) {
 
 		$sidebar = get_theme_mod( 'woocommerce_sidebar_layout', 'none' );
 
