@@ -8,12 +8,13 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$template_parts        = wpbf_blog_layout();
-$template_parts_header = $template_parts['template_parts_header'];
-$template_parts_footer = $template_parts['template_parts_footer'];
-$style                 = $template_parts['style'];
-$post_classes          = array( 'wpbf-blog-layout-grid' );
-$post_classes[]        = 'wpbf-post-style-' . $style;
+$template_parts         = wpbf_blog_layout();
+$template_parts_header  = $template_parts['template_parts_header'];
+$template_parts_content = $template_parts['template_parts_content'];
+$template_parts_footer  = $template_parts['template_parts_footer'];
+$style                  = $template_parts['style'];
+$post_classes           = array( 'wpbf-blog-layout-grid' );
+$post_classes[]         = 'wpbf-post-style-' . $style;
 
 ?>
 
@@ -35,7 +36,15 @@ $post_classes[]        = 'wpbf-post-style-' . $style;
 
 		<section class="entry-summary article-content" itemprop="text">
 
-			<?php the_excerpt(); ?>
+			<?php
+			if ( ! empty( $template_parts_content ) && is_array( $template_parts_content ) ) {
+				if ( in_array( 'post', $template_parts_content ) ) {
+						the_content();
+				} elseif ( in_array( 'excerpt', $template_parts_content ) ) {
+						the_excerpt();
+				}
+			}
+			?>
 
 			<?php
 			wp_link_pages( array(

@@ -750,11 +750,12 @@ add_action( 'wpbf_comments_meta', 'wpbf_do_comments_meta' );
  */
 function wpbf_blog_layout() {
 
-	$template_parts_header = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
-	$template_parts_footer = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
-	$blog_layout           = get_theme_mod( 'archive_layout', 'default' );
-	$style                 = get_theme_mod( 'archive_post_style', 'plain' );
-	$stretched             = get_theme_mod( 'archive_boxed_image_streched', false );
+	$template_parts_header  = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
+	$template_parts_content = get_theme_mod( 'archive_sortable_content', array( 'excerpt' ) );
+	$template_parts_footer  = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
+	$blog_layout            = get_theme_mod( 'archive_layout', 'default' );
+	$style                  = get_theme_mod( 'archive_post_style', 'plain' );
+	$stretched              = get_theme_mod( 'archive_boxed_image_streched', false );
 
 	if ( 'beside' !== $blog_layout && 'boxed' === $style && $stretched ) {
 		$style .= ' stretched';
@@ -763,10 +764,11 @@ function wpbf_blog_layout() {
 	return apply_filters(
 		'wpbf_blog_layout',
 		array(
-			'blog_layout'           => $blog_layout,
-			'template_parts_header' => $template_parts_header,
-			'template_parts_footer' => $template_parts_footer,
-			'style'                 => $style,
+			'blog_layout'            => $blog_layout,
+			'template_parts_header'  => $template_parts_header,
+			'template_parts_content' => $template_parts_content,
+			'template_parts_footer'  => $template_parts_footer,
+			'style'                  => $style,
 		)
 	);
 

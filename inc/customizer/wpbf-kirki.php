@@ -948,6 +948,22 @@ foreach ( $archives as $archive ) {
 		'priority' => 0,
 	) );
 
+	// Header.
+	Kirki::add_field( 'wpbf', array(
+		'type'     => 'sortable',
+		'settings' => $archive . '_sortable_content',
+		'label'    => __( 'Content', 'page-builder-framework' ),
+		'section'  => 'wpbf_' . $archive . '_options',
+		'default'  => array(
+			'excerpt',
+		),
+		'choices'  => array(
+			'excerpt' => __( 'Excerpt', 'page-builder-framework' ),
+			'post'    => __( 'Full Post', 'page-builder-framework' ),
+		),
+		'priority' => 0,
+	) );
+
 	// Footer.
 	Kirki::add_field( 'wpbf', array(
 		'type'     => 'sortable',
