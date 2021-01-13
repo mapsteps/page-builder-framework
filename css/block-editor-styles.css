@@ -59,7 +59,6 @@
 
 /* Blockquotes */
 .wp-block-quote, .wp-block-quote.is-style-large {
-	margin: 0 20px;
 	padding: 0 20px;
 	border-left: 5px solid var(--base-color);
 	font-style: italic;
