@@ -40,7 +40,7 @@ get_header();
 
 				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-				<article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+				<article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> <?php wpbf_single_schema_markup(); ?>>
 
 					<div class="wpbf-article-wrapper">
 

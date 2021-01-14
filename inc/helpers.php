@@ -47,7 +47,7 @@ function wpbf_pingback_header() {
 add_action( 'wp_head', 'wpbf_pingback_header' );
 
 /**
- * Schema markup.
+ * Schema markup (body).
  */
 function wpbf_body_schema_markup() {
 
@@ -65,6 +65,22 @@ function wpbf_body_schema_markup() {
 
 	// Make result filterable.
 	$result = apply_filters( 'wpbf_body_itemtype', $itemtype );
+
+	// Output.
+	echo 'itemscope="itemscope" itemtype="https://schema.org/' . esc_html( $result ) . '"';
+
+}
+
+/**
+ * Schema markup (single).
+ */
+function wpbf_single_schema_markup() {
+
+	// Default itemtype.
+	$itemtype = 'CreativeWork';
+
+	// Make result filterable.
+	$result = apply_filters( 'wpbf_single_itemtype', $itemtype );
 
 	// Output.
 	echo 'itemscope="itemscope" itemtype="https://schema.org/' . esc_html( $result ) . '"';
