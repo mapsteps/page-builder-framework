@@ -18,7 +18,7 @@ $post_classes[]         = 'wpbf-post-style-' . $style;
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+<article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> <?php wpbf_archive_schema_markup(); ?>>
 
 	<?php if ( has_post_thumbnail() ) { ?>
 

@@ -72,6 +72,22 @@ function wpbf_body_schema_markup() {
 }
 
 /**
+ * Schema markup (archive).
+ */
+function wpbf_archive_schema_markup() {
+
+	// Default itemtype.
+	$itemtype = 'CreativeWork';
+
+	// Make result filterable.
+	$result = apply_filters( 'wpbf_archive_itemtype', $itemtype );
+
+	// Output.
+	echo 'itemscope="itemscope" itemtype="https://schema.org/' . esc_html( $result ) . '"';
+
+}
+
+/**
  * Schema markup (single).
  */
 function wpbf_single_schema_markup() {
