@@ -474,7 +474,7 @@ if ( $page_boxed ) {
 
 // ScrollTop.
 $scrolltop                = get_theme_mod( 'layout_scrolltop' );
-$scrolltop_position       = get_theme_mod( 'scrolltop_position' );
+$scrolltop_position       = get_theme_mod( 'scrolltop_position', 'right' );
 $scrolltop_bg_color       = ( $val = get_theme_mod( 'scrolltop_bg_color' ) ) === 'rgba(62,67,73,0.5)' ? false : $val;
 $scrolltop_bg_color_alt   = ( $val = get_theme_mod( 'scrolltop_bg_color_alt' ) ) === 'rgba(62,67,73,0.7)' ? false : $val;
 $scrolltop_icon_color     = ( $val = get_theme_mod( 'scrolltop_icon_color' ) ) === '#ffffff' ? false : $val;
@@ -488,6 +488,24 @@ if ( $scrolltop ) {
 		echo '.scrolltop {';
 		echo 'right: auto;';
 		echo 'left: 20px;';
+		echo '}';
+
+		echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
+		echo '.scrolltop {';
+		echo 'left: 10px;';
+		echo 'bottom: 10px;';
+		echo '}';
+		echo '}';
+
+	}
+
+	if ( 'right' === $scrolltop_position ) {
+
+		echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
+		echo '.scrolltop {';
+		echo 'right: 10px;';
+		echo 'bottom: 10px;';
+		echo '}';
 		echo '}';
 
 	}
