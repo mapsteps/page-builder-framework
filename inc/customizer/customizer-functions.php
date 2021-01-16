@@ -83,30 +83,32 @@ function wpbf_create_customizer_css_file() {
 		return;
 	}
 
-	$css = wpbf_generate_css();
-
-	require_once ABSPATH . 'wp-admin/includes/file.php';
-
 	global $wp_filesystem;
 
-	$upload_dir = wp_upload_dir();
-	$dir        = trailingslashit( $upload_dir['basedir'] ) . 'page-builder-framework/';
+	if ( ! $wp_filesystem ) {
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+	}
 
 	WP_Filesystem();
 
-	// Create wpbf-customizer-styles.css file if it doesn't exist.
-	if ( ! file_exists( $upload_dir['basedir'] . '/page-builder-framework/wpbf-customizer-styles.css' ) ) {
+	$upload_dir = wp_upload_dir();
+	$pbf_dir    = trailingslashit( $upload_dir['basedir'] ) . 'page-builder-framework/';
+	$css        = wpbf_generate_css();
 
-		$wp_filesystem->mkdir( $dir );
-		$wp_filesystem->put_contents( $dir . 'wpbf-customizer-styles.css', $css, 0644 );
+	// Create page-builder-framework folder if it doesn't exist.
+	if ( ! file_exists( $pbf_dir ) ) {
+		$wp_filesystem->mkdir( $pbf_dir );
+	}
 
+	// Create wpbf-customizer-styles.css file if it doesn't exist, otherwise attempt to update it.
+	if ( ! file_exists( $pbf_dir . 'page-builder-framework/wpbf-customizer-styles.css' ) ) {
+		$wp_filesystem->put_contents( $pbf_dir . 'wpbf-customizer-styles.css', $css, 0644 );
 	} else {
-
-		// Override the file only if changes were made to the customizer.
-		if ( $css !== $wp_filesystem->get_contents( $dir . 'wpbf-customizer-styles.css' ) ) {
-
-			$wp_filesystem->put_contents( $dir . 'wpbf-customizer-styles.css', $css, 0644 );
-
+		// Override the file only if changes were made in the customizer.
+		if ( $css !== $wp_filesystem->get_contents( $pbf_dir . 'wpbf-customizer-styles.css' ) ) {
+			$wp_filesystem->put_contents( $pbf_dir . 'wpbf-customizer-styles.css', $css, 0644 );
 		}
 	}
 

@@ -39,6 +39,9 @@ if ( ! function_exists( 'breadcrumb_trail' ) ) {
 // Helpers.
 require_once WPBF_THEME_DIR . '/inc/helpers.php';
 
+// Local Gravatars.
+require_once WPBF_THEME_DIR . '/inc/gravatar.php';
+
 // Comments.
 require_once WPBF_THEME_DIR . '/inc/comments.php';
 
