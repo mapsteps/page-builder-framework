@@ -96,7 +96,7 @@ function wpbf_theme_setup() {
 
 	}
 
-	if ( $footer_layout && 'none' !== $footer_layout ) {
+	if ( 'none' !== $footer_layout ) {
 
 		register_nav_menus(
 			array(
