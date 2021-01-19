@@ -119,7 +119,7 @@
 					qty.val( val - step );
 				}
 			}
-			
+
 			qty.val( Math.round( qty.val() * 100 ) / 100 );
 			qty.trigger("change");
 
