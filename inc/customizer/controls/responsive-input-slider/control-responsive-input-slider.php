@@ -51,9 +51,7 @@ class WPBF_Customize_Responsive_Input_Slider extends WP_Customize_Control {
 			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
 				<?php
-				$link = $this->get_link();
-				$link = str_replace( 'mobile', $device, $link );
-				$link = str_replace( '"', '', $link );
+				$link = $this->get_link($device);
 
 				$saved_value = get_theme_mod( 'menu_logo_font_size_' . $device );
 				?>

@@ -4476,41 +4476,11 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		array(
 			'label'           => __( 'Logo Width', 'page-builder-framework' ),
 			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_size_desktop',
-			'priority'        => 2,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 500,
-				'step' => 1,
-			),
-			'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? true : false;},
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_size',
-		array(
-			'label'           => __( 'Logo Width', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_size_tablet',
-			'priority'        => 2,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 500,
-				'step' => 1,
-			),
-			'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? true : false;},
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_size',
-		array(
-			'label'           => __( 'Logo Width', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_size_mobile',
+            'settings' => [
+                'desktop' => 'menu_logo_size_desktop',
+                'tablet' => 'menu_logo_size_tablet',
+                'mobile' => 'menu_logo_size_mobile'
+            ],
 			'priority'        => 2,
 			'choices'         => array(
 				'min'  => 0,
