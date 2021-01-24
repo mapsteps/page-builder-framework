@@ -4404,6 +4404,22 @@ if ( ! wpbf_is_premium() ) {
 
 }
 
+
+
+Kirki::add_field( 'wpbf', array(
+    'type'      => 'responsive_input_slider',
+    'label'           => __( 'Logo Width', 'page-builder-framework' ),
+    'section'         => 'title_tagline',
+    'settings' => 'menu_logo_size_mobile',
+    'priority'        => 2,
+    'choices'         => array(
+        'min'  => 0,
+        'max'  => 500,
+        'step' => 1,
+    ),
+    'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? true : false;}
+) );
+
 /**
  * Custom controls.
  *
@@ -4447,49 +4463,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		) );
 
 	}
-
-	// Logo size.
-	$wp_customize->add_setting( 'menu_logo_size_desktop',
-		array(
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'menu_logo_size_tablet',
-		array(
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'menu_logo_size_mobile',
-		array(
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_size',
-		array(
-			'label'           => __( 'Logo Width', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-            'settings' => [
-                'desktop' => 'menu_logo_size_desktop',
-                'tablet' => 'menu_logo_size_tablet',
-                'mobile' => 'menu_logo_size_mobile'
-            ],
-			'priority'        => 2,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 500,
-				'step' => 1,
-			),
-			'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? true : false;},
-		)
-	) );
 
 	// Site title font size.
 	$wp_customize->add_setting( 'menu_logo_font_size_desktop',
@@ -4916,6 +4889,21 @@ function wpbf_custom_controls_default( $wp_customize ) {
 		}
 
 	}
+
+
+    $wp_customize->add_setting( 'menu_logo_size_desktop',
+        array(
+            'sanitize_callback' => 'wp_filter_nohtml_kses',
+            'transport'         => 'postMessage',
+        )
+    );
+
+    $wp_customize->add_setting( 'menu_logo_size_tablet',
+        array(
+            'sanitize_callback' => 'wp_filter_nohtml_kses',
+            'transport'         => 'postMessage',
+        )
+    );
 
 }
 add_action( 'customize_register', 'wpbf_custom_controls_default' );

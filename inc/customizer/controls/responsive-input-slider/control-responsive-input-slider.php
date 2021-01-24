@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-class WPBF_Customize_Responsive_Input_Slider extends WP_Customize_Control {
+class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 
 	public $type = 'wpbf-responsive-input-slider';
 
@@ -46,12 +46,16 @@ class WPBF_Customize_Responsive_Input_Slider extends WP_Customize_Control {
 			</li>
 		</ul>
 
-		<?php foreach ( $devices as $device ) : ?>
+		<?php foreach ( $devices as $device ) : ray($this->settings) ?>
 
 			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
 				<?php
-				$link = $this->get_link($device);
+//				$link = $this->get_link($device);
+
+                $link = $this->get_link();
+                $link = str_replace( 'mobile', $device, $link );
+                $link = str_replace( '"', '', $link );
 
 				$saved_value = get_theme_mod( 'menu_logo_font_size_' . $device );
 				?>
@@ -73,3 +77,21 @@ class WPBF_Customize_Responsive_Input_Slider extends WP_Customize_Control {
 	}
 
 }
+
+/**
+ * Register input slider control with Kirki.
+ *
+ * @param array $controls The controls.
+ *
+ * @return array The updated controls.
+ */
+add_filter(
+    'kirki_control_types',
+    function ( $controls ) {
+
+        $controls['responsive_input_slider'] = 'WPBF_Customize_Responsive_Input_Slider';
+
+        return $controls;
+
+    }
+);
