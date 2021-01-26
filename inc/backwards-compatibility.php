@@ -68,3 +68,26 @@ if ( 'show' === $blog_comments ) {
 	remove_theme_mod( 'blog_comments' );
 
 }
+
+/* 3.0 - Preparing/proposing backwards compatibility for newly created & merged Kirki controls */
+$menu_logo_size_desktop = get_theme_mod( 'menu_logo_size_desktop' );
+$menu_logo_size_tablet  = get_theme_mod( 'menu_logo_size_tablet' );
+$menu_logo_size_mobile  = get_theme_mod( 'menu_logo_size_mobile' );
+
+if ( $menu_logo_size_desktop || $menu_logo_size_tablet || $menu_logo_size_mobile ) {
+
+	$theme_mod_array = array(
+		'desktop' => $menu_logo_size_desktop,
+		'tablet'  => $menu_logo_size_tablet,
+		'mobile'  => $menu_logo_size_mobile,
+	);
+
+	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+	set_theme_mod( 'menu_logo_size', $theme_mod_array );
+
+	// remove_theme_mod( 'menu_logo_size_desktop' );
+	// remove_theme_mod( 'menu_logo_size_tablet' );
+	// remove_theme_mod( 'menu_logo_size_mobile' );
+
+}
