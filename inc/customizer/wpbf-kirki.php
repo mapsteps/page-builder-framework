@@ -4410,7 +4410,7 @@ Kirki::add_field( 'wpbf', array(
     'type'      => 'responsive_input_slider',
     'label'           => __( 'Logo Width', 'page-builder-framework' ),
     'section'         => 'title_tagline',
-    'settings' => 'menu_logo_size_mobile',
+    'settings' => 'menu_logo_size',
     'priority'        => 2,
     'choices'         => array(
         'min'  => 0,

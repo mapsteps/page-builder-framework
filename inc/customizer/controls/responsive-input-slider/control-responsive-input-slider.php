@@ -14,6 +14,7 @@ class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 
 	public function enqueue() {
 
+		wp_enqueue_script( 'responsive-input-slider', WPBF_THEME_URI . '/inc/customizer/controls/responsive-input-slider/js/responsive-input-slider.js', array( 'jquery' ), WPBF_VERSION, true );
 		wp_enqueue_script( 'input-slider', WPBF_THEME_URI . '/inc/customizer/controls/input-slider/js/input-slider.js', array( 'jquery' ), WPBF_VERSION, true );
 		wp_enqueue_style( 'input-slider', WPBF_THEME_URI . '/inc/customizer/controls/input-slider/css/input-slider.css', '', WPBF_VERSION );
 
@@ -22,7 +23,10 @@ class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 	public function render_content() {
 
 		$devices = array( 'desktop', 'tablet', 'mobile' );
-		$areas   = array( 'top', 'right', 'bottom', 'left' );
+
+        $value_bucket = empty($this->value()) ? [] : json_decode($this->value(), true);
+
+		echo '<div class="wpbf-responsive-input-slider-wrap">';
 
 		?>
 
@@ -46,26 +50,16 @@ class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 			</li>
 		</ul>
 
-		<?php foreach ( $devices as $device ) : ray($this->settings) ?>
+		<?php foreach ( $devices as $device ) : $saved_value = isset($value_bucket[$device]) ? $value_bucket[$device] : '';?>
 
 			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
-
-				<?php
-//				$link = $this->get_link($device);
-
-                $link = $this->get_link();
-                $link = str_replace( 'mobile', $device, $link );
-                $link = str_replace( '"', '', $link );
-
-				$saved_value = get_theme_mod( 'menu_logo_font_size_' . $device );
-				?>
 
 				<div class="wpbf-input-slider-control">
 					<div class="slider" slider-min-value="<?php echo esc_attr( $this->choices['min'] ); ?>" slider-max-value="<?php echo esc_attr( $this->choices['max'] ); ?>" slider-step-value="<?php echo esc_attr( $this->choices['step'] ); ?>"></div>
 
 					<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="<?php echo esc_attr( $saved_value ); ?>"></span>
 
-					<input type="text" id="<?php echo esc_attr( $this->id ); ?>_<?php echo esc_attr( $device ); ?>" name="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $saved_value ); ?>" class="customize-control-slider-value" <?php echo $link; ?> />
+					<input type="text" name="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $saved_value ); ?>" class="customize-control-slider-value" data-device-type="<?php echo $device; ?>" />
 				</div>
 
 			</div>
@@ -73,6 +67,13 @@ class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 			<?php
 
 		endforeach;
+
+		printf(
+		        '<input type="hidden" class="wpbf-responsive-input-slider-db" name="%s" value="%s" %s/>',
+             esc_attr($this->id), $this->value(), $this->get_link()
+        );
+
+		echo '</div>';
 
 	}
 
