@@ -4404,21 +4404,30 @@ if ( ! wpbf_is_premium() ) {
 
 }
 
-
-
+/**
+ * Control conversion (reposition later).
+ */
 Kirki::add_field( 'wpbf', array(
-    'type'      => 'responsive_input_slider',
-    'label'           => __( 'Logo Width', 'page-builder-framework' ),
-    'section'         => 'title_tagline',
+    'type'     => 'responsive_input_slider',
+    'label'    => __( 'Logo Width', 'page-builder-framework' ),
+    'section'  => 'title_tagline',
     'settings' => 'menu_logo_size',
-    'priority'        => 2,
-    'choices'         => array(
+    'priority' => 2,
+    'choices'  => array(
         'min'  => 0,
         'max'  => 500,
         'step' => 1,
     ),
-    'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? true : false;}
+	'active_callback' => array(
+		array(
+			'setting'  => 'custom_logo',
+			'operator' => '!=',
+			'value'    => '',
+		),
+	),
 ) );
+
+// var_dump( get_theme_mod( 'menu_logo_size' ) );
 
 /**
  * Custom controls.
@@ -4891,19 +4900,19 @@ function wpbf_custom_controls_default( $wp_customize ) {
 	}
 
 
-    $wp_customize->add_setting( 'menu_logo_size_desktop',
-        array(
-            'sanitize_callback' => 'wp_filter_nohtml_kses',
-            'transport'         => 'postMessage',
-        )
-    );
+    // $wp_customize->add_setting( 'menu_logo_size_desktop',
+    //     array(
+    //         'sanitize_callback' => 'wp_filter_nohtml_kses',
+    //         'transport'         => 'postMessage',
+    //     )
+    // );
 
-    $wp_customize->add_setting( 'menu_logo_size_tablet',
-        array(
-            'sanitize_callback' => 'wp_filter_nohtml_kses',
-            'transport'         => 'postMessage',
-        )
-    );
+    // $wp_customize->add_setting( 'menu_logo_size_tablet',
+    //     array(
+    //         'sanitize_callback' => 'wp_filter_nohtml_kses',
+    //         'transport'         => 'postMessage',
+    //     )
+    // );
 
 }
 add_action( 'customize_register', 'wpbf_custom_controls_default' );

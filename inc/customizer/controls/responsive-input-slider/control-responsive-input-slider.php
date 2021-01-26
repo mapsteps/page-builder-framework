@@ -24,7 +24,7 @@ class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 
 		$devices = array( 'desktop', 'tablet', 'mobile' );
 
-        $value_bucket = empty($this->value()) ? [] : json_decode($this->value(), true);
+        $value_bucket = empty( $this->value() ) ? [] : json_decode( $this->value(), true );
 
 		echo '<div class="wpbf-responsive-input-slider-wrap">';
 
@@ -50,7 +50,7 @@ class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 			</li>
 		</ul>
 
-		<?php foreach ( $devices as $device ) : $saved_value = isset($value_bucket[$device]) ? $value_bucket[$device] : '';?>
+		<?php foreach ( $devices as $device ) : $saved_value = isset( $value_bucket[$device] ) ? $value_bucket[$device] : ''; ?>
 
 			<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
@@ -69,9 +69,9 @@ class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 		endforeach;
 
 		printf(
-		        '<input type="hidden" class="wpbf-responsive-input-slider-db" name="%s" value="%s" %s/>',
-             esc_attr($this->id), $this->value(), $this->get_link()
-        );
+			'<input type="hidden" class="wpbf-responsive-input-slider-db" name="%s" value="%s" %s/>',
+			esc_attr( $this->id ), $this->value(), $this->get_link()
+		);
 
 		echo '</div>';
 
