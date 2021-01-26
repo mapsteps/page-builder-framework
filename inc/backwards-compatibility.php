@@ -84,7 +84,7 @@ if ( $menu_logo_size_desktop || $menu_logo_size_tablet || $menu_logo_size_mobile
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	set_theme_mod( 'menu_logo_size', $theme_mod_array );
+	// set_theme_mod( 'menu_logo_size', $theme_mod_array );
 
 	// remove_theme_mod( 'menu_logo_size_desktop' );
 	// remove_theme_mod( 'menu_logo_size_tablet' );
