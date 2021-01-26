@@ -4899,21 +4899,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 
 	}
 
-
-    // $wp_customize->add_setting( 'menu_logo_size_desktop',
-    //     array(
-    //         'sanitize_callback' => 'wp_filter_nohtml_kses',
-    //         'transport'         => 'postMessage',
-    //     )
-    // );
-
-    // $wp_customize->add_setting( 'menu_logo_size_tablet',
-    //     array(
-    //         'sanitize_callback' => 'wp_filter_nohtml_kses',
-    //         'transport'         => 'postMessage',
-    //     )
-    // );
-
 }
 add_action( 'customize_register', 'wpbf_custom_controls_default' );
 
