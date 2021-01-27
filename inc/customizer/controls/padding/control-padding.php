@@ -8,13 +8,22 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-class WPBF_Customize_Padding_Control extends WP_Customize_Control {
+class WPBF_Customize_Padding_Control extends Kirki_Control_Base {
 
 	public $type = 'wpbf-padding';
 
-	public function render_content() {
+        public function enqueue() {
+
+            wp_enqueue_script('wpbf-padding', WPBF_THEME_URI . '/inc/customizer/controls/padding/js/padding.js', array('jquery'), WPBF_VERSION, true);
+        }
+
+        public function render_content() {
 
 		$areas = array( 'top', 'right', 'bottom', 'left' );
+
+        $value_bucket = empty( $this->value() ) ? [] : json_decode( $this->value(), true );
+
+        echo '<div class="wpbf-padding-wrap">';
 
 		?>
 
@@ -22,18 +31,12 @@ class WPBF_Customize_Padding_Control extends WP_Customize_Control {
 
 		<?php foreach ( $areas as $area ) { ?>
 
+            <?php $saved_value = isset( $value_bucket[$area] ) ? $value_bucket[$area] : ''; ?>
+
 		<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 
-			<?php
-
-			$link = $this->get_link();
-			$link = str_replace( 'left', $area, $link );
-			$link = str_replace( '"', '', $link );
-
-			?>
-
 			<label>
-				<input style="text-align:center;" type="number" <?php echo esc_attr( $link ); ?> value="<?php echo intval( $this->value() ); ?>">
+				<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>" class="customize-control-slider-value" data-area-type="<?php echo $area; ?>">
 				<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 			</label>
 
@@ -45,6 +48,32 @@ class WPBF_Customize_Padding_Control extends WP_Customize_Control {
 
 		<?php
 
+        printf(
+            '<input type="hidden" class="wpbf-padding-db" name="%s" value="%s" %s/>',
+            esc_attr( $this->id ), $this->value(), $this->get_link()
+        );
+
+        echo '</div>';
+
 	}
 
 }
+
+
+/**
+ * Register input slider control with Kirki.
+ *
+ * @param array $controls The controls.
+ *
+ * @return array The updated controls.
+ */
+add_filter(
+    'kirki_control_types',
+    function ( $controls ) {
+
+        $controls['padding_control'] = 'WPBF_Customize_Padding_Control';
+
+        return $controls;
+
+    }
+);

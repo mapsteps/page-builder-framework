@@ -4427,6 +4427,24 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+Kirki::add_field( 'wpbf', array(
+    'type'     => 'padding_control',
+    'label'    => __( 'Padding', 'page-builder-framework' ),
+    'section'  => 'wpbf_sub_menu_options',
+    'settings' => 'sub_menu_padding',
+    'default' => '', // set default value
+    'priority' => 2
+) );
+
+Kirki::add_field( 'wpbf', array(
+    'type'     => 'padding_control',
+    'label'    => __( 'Padding', 'page-builder-framework' ),
+    'section'  => 'wpbf_mobile_menu_options',
+    'settings' => 'mobile_menu_padding',
+    'default' => '', // set default values
+    'priority' => 8
+) );
+
 // var_dump( get_theme_mod( 'menu_logo_size' ) );
 
 /**
@@ -4617,160 +4635,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 				'step' => 1,
 			),
 			'active_callback' => function () {return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false;},
-		)
-	) );
-
-	// Sub menu padding.
-	$wp_customize->add_setting( 'sub_menu_padding_top',
-		array(
-			'default'           => '10',
-			'sanitize_callback' => 'absint',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'sub_menu_padding_right',
-		array(
-			'default'           => '20',
-			'sanitize_callback' => 'absint',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'sub_menu_padding_bottom',
-		array(
-			'default'           => '10',
-			'sanitize_callback' => 'absint',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'sub_menu_padding_left',
-		array(
-			'default'           => '20',
-			'sanitize_callback' => 'absint',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control( new WPBF_Customize_Padding_Control(
-		$wp_customize,
-		'sub_menu_padding',
-		array(
-			'label'    => __( 'Padding', 'page-builder-framework' ),
-			'section'  => 'wpbf_sub_menu_options',
-			'settings' => 'sub_menu_padding_top',
-			'priority' => 2,
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Padding_Control(
-		$wp_customize,
-		'sub_menu_padding',
-		array(
-			'label'    => __( 'Padding', 'page-builder-framework' ),
-			'section'  => 'wpbf_sub_menu_options',
-			'settings' => 'sub_menu_padding_right',
-			'priority' => 2,
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Padding_Control(
-		$wp_customize,
-		'sub_menu_padding',
-		array(
-			'label'    => __( 'Padding', 'page-builder-framework' ),
-			'section'  => 'wpbf_sub_menu_options',
-			'settings' => 'sub_menu_padding_bottom',
-			'priority' => 2,
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Padding_Control(
-		$wp_customize,
-		'sub_menu_padding',
-		array(
-			'label'    => __( 'Padding', 'page-builder-framework' ),
-			'section'  => 'wpbf_sub_menu_options',
-			'settings' => 'sub_menu_padding_left',
-			'priority' => 2,
-		)
-	) );
-
-	// Mobile menu padding.
-	$wp_customize->add_setting( 'mobile_menu_padding_top',
-		array(
-			'default'           => '10',
-			'sanitize_callback' => 'absint',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'mobile_menu_padding_right',
-		array(
-			'default'           => '20',
-			'sanitize_callback' => 'absint',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'mobile_menu_padding_bottom',
-		array(
-			'default'           => '10',
-			'sanitize_callback' => 'absint',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'mobile_menu_padding_left',
-		array(
-			'default'           => '20',
-			'sanitize_callback' => 'absint',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control( new WPBF_Customize_Padding_Control(
-		$wp_customize,
-		'mobile_menu_padding',
-		array(
-			'label'    => __( 'Padding', 'page-builder-framework' ),
-			'section'  => 'wpbf_mobile_menu_options',
-			'settings' => 'mobile_menu_padding_top',
-			'priority' => 8,
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Padding_Control(
-		$wp_customize,
-		'mobile_menu_padding',
-		array(
-			'label'    => __( 'Padding', 'page-builder-framework' ),
-			'section'  => 'wpbf_mobile_menu_options',
-			'settings' => 'mobile_menu_padding_right',
-			'priority' => 8,
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Padding_Control(
-		$wp_customize,
-		'mobile_menu_padding',
-		array(
-			'label'    => __( 'Padding', 'page-builder-framework' ),
-			'section'  => 'wpbf_mobile_menu_options',
-			'settings' => 'mobile_menu_padding_bottom',
-			'priority' => 8,
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Padding_Control(
-		$wp_customize,
-		'mobile_menu_padding',
-		array(
-			'label'    => __( 'Padding', 'page-builder-framework' ),
-			'section'  => 'wpbf_mobile_menu_options',
-			'settings' => 'mobile_menu_padding_left',
-			'priority' => 8,
 		)
 	) );
 
