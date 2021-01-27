@@ -4445,6 +4445,24 @@ Kirki::add_field( 'wpbf', array(
     'priority' => 8
 ) );
 
+Kirki::add_field( 'wpbf', array(
+    'type'     => 'responsive_padding',
+    'label'    => __( 'Padding', 'page-builder-framework' ),
+    'section'  => 'wpbf_page_options',
+    'settings' => 'page_padding',
+    'default' => '', // set default values
+    'priority' => 1
+) );
+
+Kirki::add_field( 'wpbf', array(
+    'type'     => 'responsive_padding',
+    'label'    => __( 'Widget Padding', 'page-builder-framework' ),
+    'section'  => 'wpbf_sidebar_options',
+    'settings' => 'sidebar_widget_padding',
+    'default' => '', // set default values
+    'priority' => 3
+) );
+
 // var_dump( get_theme_mod( 'menu_logo_size' ) );
 
 /**
@@ -4453,43 +4471,6 @@ Kirki::add_field( 'wpbf', array(
  * @param object $wp_customize The wp_customize object.
  */
 function wpbf_custom_controls_default( $wp_customize ) {
-
-	// Responsive layout padding.
-	$page_padding_settings = array(
-		'page_padding_top_desktop',
-		'page_padding_top_tablet',
-		'page_padding_top_mobile',
-		'page_padding_right_desktop',
-		'page_padding_right_tablet',
-		'page_padding_right_mobile',
-		'page_padding_bottom_desktop',
-		'page_padding_bottom_tablet',
-		'page_padding_bottom_mobile',
-		'page_padding_left_desktop',
-		'page_padding_left_tablet',
-		'page_padding_left_mobile',
-	);
-
-	foreach ( $page_padding_settings as $page_padding_setting ) {
-
-		$wp_customize->add_setting( $page_padding_setting,
-			array(
-				'sanitize_callback' => 'absint',
-			)
-		);
-
-		$wp_customize->add_control( new WPBF_Customize_Responsive_Padding_Control(
-			$wp_customize,
-			'page_padding',
-			array(
-				'label'    => __( 'Padding', 'page-builder-framework' ),
-				'section'  => 'wpbf_page_options',
-				'settings' => $page_padding_setting,
-				'priority' => 1,
-			)
-		) );
-
-	}
 
 	// Site title font size.
 	$wp_customize->add_setting( 'menu_logo_font_size_desktop',
@@ -4637,43 +4618,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'active_callback' => function () {return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false;},
 		)
 	) );
-
-	// Responsive sidebar widget padding.
-	$responsive_sidebar_padding_settings = array(
-		'sidebar_widget_padding_top_desktop',
-		'sidebar_widget_padding_top_tablet',
-		'sidebar_widget_padding_top_mobile',
-		'sidebar_widget_padding_right_desktop',
-		'sidebar_widget_padding_right_tablet',
-		'sidebar_widget_padding_right_mobile',
-		'sidebar_widget_padding_bottom_desktop',
-		'sidebar_widget_padding_bottom_tablet',
-		'sidebar_widget_padding_bottom_mobile',
-		'sidebar_widget_padding_left_desktop',
-		'sidebar_widget_padding_left_tablet',
-		'sidebar_widget_padding_left_mobile',
-	);
-
-	foreach ( $responsive_sidebar_padding_settings as $responsive_sidebar_padding_setting ) {
-
-		$wp_customize->add_setting( $responsive_sidebar_padding_setting,
-			array(
-				'sanitize_callback' => 'absint',
-			)
-		);
-
-		$wp_customize->add_control( new WPBF_Customize_Responsive_Padding_Control(
-			$wp_customize,
-			'sidebar_widget_padding',
-			array(
-				'label'    => __( 'Widget Padding', 'page-builder-framework' ),
-				'section'  => 'wpbf_sidebar_options',
-				'settings' => $responsive_sidebar_padding_setting,
-				'priority' => 3,
-			)
-		) );
-
-	}
 
 	// Responsive post style settings.
 	$archives = apply_filters( 'wpbf_archives', array( 'archive' ) );

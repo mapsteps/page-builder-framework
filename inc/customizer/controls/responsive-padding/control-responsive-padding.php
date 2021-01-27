@@ -8,14 +8,23 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-class WPBF_Customize_Responsive_Padding_Control extends WP_Customize_Control {
+class WPBF_Customize_Responsive_Padding_Control extends Kirki_Control_Base {
 
 	public $type = 'wpbf-responsive-padding';
+
+    public function enqueue() {
+
+        wp_enqueue_script('wpbf-responsive-padding', WPBF_THEME_URI . '/inc/customizer/controls/responsive-padding/js/responsive-padding.js', array('jquery'), WPBF_VERSION, true);
+    }
 
 	public function render_content() {
 
 		$devices = array( 'desktop', 'tablet', 'mobile' );
 		$areas   = array( 'top', 'right', 'bottom', 'left' );
+
+        $value_bucket = empty( $this->value() ) ? [] : json_decode( $this->value(), true );
+
+        echo '<div class="wpbf-responsive-padding-wrap">';
 
 		?>
 
@@ -47,17 +56,10 @@ class WPBF_Customize_Responsive_Padding_Control extends WP_Customize_Control {
 
 		<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 
-				<?php
-
-				$link = $this->get_link();
-				$link = str_replace( 'left', $area, $link );
-				$link = str_replace( 'mobile', $device, $link );
-				$link = str_replace( '"', '', $link );
-
-				?>
+				<?php $saved_value = isset( $value_bucket[$area .'_'. $device] ) ? $value_bucket[$area .'_'. $device] : ''; ?>
 
 			<label>
-				<input style="text-align:center;" type="number" <?php echo esc_attr( $link ); ?> value="<?php echo intval( $this->value() ); ?>">
+				<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>"  class="customize-control-responsive-padding-value" data-area-device-type="<?php echo $area . '_'.$device; ?>">
 				<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 			</label>
 
@@ -73,6 +75,32 @@ class WPBF_Customize_Responsive_Padding_Control extends WP_Customize_Control {
 
 		}
 
+        printf(
+            '<input type="hidden" class="wpbf-responsive-padding-db" name="%s" value="%s" %s/>',
+            esc_attr( $this->id ), $this->value(), $this->get_link()
+        );
+
+        echo '</div>';
+
 	}
 
 }
+
+
+/**
+ * Register input slider control with Kirki.
+ *
+ * @param array $controls The controls.
+ *
+ * @return array The updated controls.
+ */
+add_filter(
+    'kirki_control_types',
+    function ( $controls ) {
+
+        $controls['responsive_padding'] = 'WPBF_Customize_Responsive_Padding_Control';
+
+        return $controls;
+
+    }
+);

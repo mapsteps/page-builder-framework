@@ -36,7 +36,7 @@ class WPBF_Customize_Padding_Control extends Kirki_Control_Base {
 		<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 
 			<label>
-				<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>" class="customize-control-slider-value" data-area-type="<?php echo $area; ?>">
+				<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>" class="customize-control-padding-value" data-area-type="<?php echo $area; ?>">
 				<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 			</label>
 
@@ -58,7 +58,6 @@ class WPBF_Customize_Padding_Control extends Kirki_Control_Base {
 	}
 
 }
-
 
 /**
  * Register input slider control with Kirki.
