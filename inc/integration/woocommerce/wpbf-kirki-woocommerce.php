@@ -349,35 +349,14 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 10,
 ) );
 
-/**
- * Custom controls.
- *
- * @param object $wp_customize The wp_customize object.
- */
-function wpbf_woo_custom_controls_default( $wp_customize ) {
-
-	$wp_customize->add_setting( 'woocommerce_loop_products_per_row_desktop',
-		array(
-			'default'           => '4',
-			'sanitize_callback' => 'absint',
-		)
-	);
-
-	$wp_customize->add_setting( 'woocommerce_loop_products_per_row_tablet',
-		array(
-			'default'           => '2',
-			'sanitize_callback' => 'absint',
-		)
-	);
-
-	$wp_customize->add_setting( 'woocommerce_loop_products_per_row_mobile',
-		array(
-			'sanitize_callback' => 'absint',
-		)
-	);
-
-}
-add_action( 'customize_register', 'wpbf_woo_custom_controls_default' );
+// Products per row.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'responsive_font_size',
+	'settings' => 'woocommerce_loop_products_per_row',
+	'label'    => __( 'Products per Row', 'page-builder-framework' ),
+	'section'  => 'woocommerce_product_catalog',
+	'priority' => 15
+) );
 
 // Grid gap.
 Kirki::add_field( 'wpbf', array(
@@ -1167,13 +1146,4 @@ Kirki::add_field( 'wpbf', array(
 	'choices'  => array(
 		'alpha' => true,
 	),
-) );
-
-
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'responsive_font_size',
-	'settings' => 'woocommerce_loop_products_per_row',
-    'label'    => __( 'Products per Row', 'page-builder-framework' ),
-    'section'  => 'woocommerce_product_catalog',
-	'priority' => 15
 ) );
