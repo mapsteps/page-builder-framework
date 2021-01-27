@@ -376,39 +376,6 @@ function wpbf_woo_custom_controls_default( $wp_customize ) {
 		)
 	);
 
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
-		$wp_customize,
-		'woocommerce_loop_products_per_row',
-		array(
-			'label'    => __( 'Products per Row', 'page-builder-framework' ),
-			'section'  => 'woocommerce_product_catalog',
-			'settings' => 'woocommerce_loop_products_per_row_desktop',
-			'priority' => 15,
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
-		$wp_customize,
-		'woocommerce_loop_products_per_row',
-		array(
-			'label'    => __( 'Products per Row', 'page-builder-framework' ),
-			'section'  => 'woocommerce_product_catalog',
-			'settings' => 'woocommerce_loop_products_per_row_tablet',
-			'priority' => 15,
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Font_Size_Control(
-		$wp_customize,
-		'woocommerce_loop_products_per_row',
-		array(
-			'label'    => __( 'Products per Row', 'page-builder-framework' ),
-			'section'  => 'woocommerce_product_catalog',
-			'settings' => 'woocommerce_loop_products_per_row_mobile',
-			'priority' => 15,
-		)
-	) );
-
 }
 add_action( 'customize_register', 'wpbf_woo_custom_controls_default' );
 
@@ -1200,4 +1167,13 @@ Kirki::add_field( 'wpbf', array(
 	'choices'  => array(
 		'alpha' => true,
 	),
+) );
+
+
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'responsive_font_size',
+	'settings' => 'woocommerce_loop_products_per_row',
+    'label'    => __( 'Products per Row', 'page-builder-framework' ),
+    'section'  => 'woocommerce_product_catalog',
+	'priority' => 15
 ) );

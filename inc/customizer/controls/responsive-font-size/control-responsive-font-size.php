@@ -12,10 +12,18 @@ class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
 
 	public $type = 'wpbf-responsive-font-size';
 
-	public function render_content() {
+	public function enqueue()
+    {
+        wp_enqueue_script( 'responsive-font-size', WPBF_THEME_URI . '/inc/customizer/controls/responsive-font-size/js/responsive-font-size.js', array( 'jquery' ), WPBF_VERSION, true );
+    }
+
+    public function render_content() {
 
 		$devices = array( 'desktop', 'tablet', 'mobile' );
 
+        $value_bucket = empty( $this->value() ) ? [] : json_decode( $this->value(), true );
+
+        echo '<div class="wpbf-responsive-font-size-wrap">';
 		?>
 
 		<span class="customize-control-title"><?php echo esc_attr( $this->label ); ?></span>
@@ -40,17 +48,13 @@ class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
 
 		<?php foreach ( $devices as $device ) { ?>
 
+            <?php $saved_value = isset( $value_bucket[$device] ) ? $value_bucket[$device] : ''; ?>
+
 		<div class="wpbf-control-device wpbf-control-<?php echo esc_attr( $device ); ?>">
 
-			<?php $link = $this->get_link(); ?>
-
-			<?php $link = str_replace( 'mobile', $device, $link ); ?>
-
-			<?php $link = str_replace( '"', '', $link ); ?>
-
 			<label>
-				<input type="text" <?php echo esc_html( $link ); ?> value="<?php echo esc_textarea( $this->value() ); ?>">
-			</label>
+                <input type="text" name="<?php echo esc_attr( $this->id ); ?>" value="<?php echo esc_attr( $saved_value ); ?>" class="customize-control-slider-value" data-device-type="<?php echo $device; ?>" />
+            </label>
 
 		</div>
 
@@ -58,6 +62,31 @@ class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
 
 		}
 
+        printf(
+            '<input type="hidden" class="wpbf-responsive-font-size-db" name="%s" value="%s" %s/>',
+            esc_attr( $this->id ), $this->value(), $this->get_link()
+        );
+
+        echo '</div>';
+
 	}
 
 }
+
+/**
+ * Register input slider control with Kirki.
+ *
+ * @param array $controls The controls.
+ *
+ * @return array The updated controls.
+ */
+add_filter(
+    'kirki_control_types',
+    function ( $controls ) {
+
+        $controls['responsive_font_size'] = 'WPBF_Customize_Font_Size_Control';
+
+        return $controls;
+
+    }
+);
