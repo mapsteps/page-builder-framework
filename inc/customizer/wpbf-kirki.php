@@ -4500,6 +4500,24 @@ foreach ( $archives as $archive ) {
 
 }
 
+
+// Responsive article style settings.
+$singles = apply_filters( 'wpbf_singles', array( 'single' ) );
+
+foreach ( $singles as $single ) {
+
+    Kirki::add_field( 'wpbf', array(
+        'type'     => 'responsive_padding',
+        'label'    => __( 'Padding', 'page-builder-framework' ),
+        'section'  => 'wpbf_' . $single . '_options',
+        'settings' => $single . '_boxed_padding',
+        'default' => '', // set default values
+        'priority' => 10,
+        'active_callback' => function () use ( $single ) {return 'boxed' === get_theme_mod( $single . '_post_style' ) ? true : false;},
+    ) );
+
+}
+
 // var_dump( get_theme_mod( 'menu_logo_size' ) );
 
 /**
@@ -4655,50 +4673,6 @@ function wpbf_custom_controls_default( $wp_customize ) {
 			'active_callback' => function () {return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false;},
 		)
 	) );
-
-	// Responsive article style settings.
-	$singles = apply_filters( 'wpbf_singles', array( 'single' ) );
-
-	foreach ( $singles as $single ) {
-
-		$responsive_article_style_post_settings = array(
-			$single . '_boxed_padding_top_desktop',
-			$single . '_boxed_padding_top_tablet',
-			$single . '_boxed_padding_top_mobile',
-			$single . '_boxed_padding_right_desktop',
-			$single . '_boxed_padding_right_tablet',
-			$single . '_boxed_padding_right_mobile',
-			$single . '_boxed_padding_bottom_desktop',
-			$single . '_boxed_padding_bottom_tablet',
-			$single . '_boxed_padding_bottom_mobile',
-			$single . '_boxed_padding_left_desktop',
-			$single . '_boxed_padding_left_tablet',
-			$single . '_boxed_padding_left_mobile',
-		);
-
-		foreach ( $responsive_article_style_post_settings as $responsive_article_style_post_setting ) {
-
-			$wp_customize->add_setting( $responsive_article_style_post_setting,
-				array(
-					'sanitize_callback' => 'absint',
-				)
-			);
-
-			$wp_customize->add_control( new WPBF_Customize_Responsive_Padding_Control(
-				$wp_customize,
-				$single . '_boxed_padding',
-				array(
-					'label'           => __( 'Padding', 'page-builder-framework' ),
-					'section'         => 'wpbf_' . $single . '_options',
-					'settings'        => $responsive_article_style_post_setting,
-					'priority'        => 10,
-					'active_callback' => function () use ( $single ) {return 'boxed' === get_theme_mod( $single . '_post_style' ) ? true : false;},
-				)
-			) );
-
-		}
-
-	}
 
 }
 add_action( 'customize_register', 'wpbf_custom_controls_default' );
