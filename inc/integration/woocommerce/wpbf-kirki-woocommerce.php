@@ -355,7 +355,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings' => 'woocommerce_loop_products_per_row',
 	'label'    => __( 'Products per Row', 'page-builder-framework' ),
 	'section'  => 'woocommerce_product_catalog',
-	'priority' => 15
+	'priority' => 15,
 ) );
 
 // Grid gap.
