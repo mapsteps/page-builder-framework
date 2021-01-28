@@ -155,3 +155,18 @@ function wpbf_menu_description_html( $menu_item ) {
 }
 remove_filter( 'nav_menu_description', 'strip_tags' );
 add_filter( 'wp_setup_nav_menu_item', 'wpbf_menu_description_html' );
+
+/**
+ * Remove "Background" customizer link from Appearance menu.
+ */
+function remove_unnecessary_wordpress_menus(){
+
+	global $submenu;
+
+	foreach ( $submenu['themes.php'] as $menu_index => $theme_menu ) {
+		if ( 'Background' === $theme_menu[0] ) {
+			unset( $submenu['themes.php'][$menu_index] );
+		}
+	}
+}
+add_action( 'admin_menu', 'remove_unnecessary_wordpress_menus', 999 );
