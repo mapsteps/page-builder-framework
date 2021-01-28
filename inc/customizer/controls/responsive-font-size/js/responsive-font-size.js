@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
 
-    $('.wpbf-responsive-font-size-wrap .customize-control-slider-value').change(function () {
+    $('.wpbf-responsive-font-size-wrap .customize-control-slider-value').on('keyup', function () {
 
         var parent = $(this).parents('.wpbf-responsive-font-size-wrap'),
             dbstore_cache = $('.wpbf-responsive-font-size-db', parent),
