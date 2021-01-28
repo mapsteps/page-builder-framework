@@ -4429,6 +4429,20 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+Kirki::add_field( 'wpbf', array(
+    'type'     => 'responsive_input_slider',
+    'label'    => __( 'Font Size', 'page-builder-framework' ),
+    'section'  => 'title_tagline',
+    'settings' => 'menu_logo_font_size',
+    'priority' => 13,
+    'choices'         => array(
+        'min'  => 0,
+        'max'  => 50,
+        'step' => 1,
+    ),
+    'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? false : true;},
+) );
+
 // Name it later.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'padding_control',
@@ -4526,80 +4540,6 @@ foreach ( $singles as $single ) {
  * @param object $wp_customize The wp_customize object.
  */
 function wpbf_custom_controls_default( $wp_customize ) {
-
-	// Site title font size.
-	$wp_customize->add_setting( 'menu_logo_font_size_desktop',
-		array(
-			'default'           => '22px',
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'menu_logo_font_size_tablet',
-		array(
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'menu_logo_font_size_mobile',
-		array(
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_font_size',
-		array(
-			'label'           => __( 'Font Size', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_font_size_desktop',
-			'priority'        => 13,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 50,
-				'step' => 1,
-			),
-			'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? false : true;},
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_font_size',
-		array(
-			'label'           => __( 'Font Size', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_font_size_tablet',
-			'priority'        => 13,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 50,
-				'step' => 1,
-			),
-			'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? false : true;},
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_font_size',
-		array(
-			'label'           => __( 'Font Size', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_font_size_mobile',
-			'priority'        => 13,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 50,
-				'step' => 1,
-			),
-			'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? false : true;},
-		)
-	) );
 
 	// Tagline font size.
 	$wp_customize->add_setting( 'menu_logo_description_font_size_desktop',
