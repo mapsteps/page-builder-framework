@@ -159,7 +159,7 @@ add_filter( 'wp_setup_nav_menu_item', 'wpbf_menu_description_html' );
 /**
  * Remove "Background" customizer link from Appearance menu.
  */
-function remove_unnecessary_wordpress_menus(){
+function wpbf_remove_background_link(){
 
 	global $submenu;
 
@@ -169,4 +169,4 @@ function remove_unnecessary_wordpress_menus(){
 		}
 	}
 }
-add_action( 'admin_menu', 'remove_unnecessary_wordpress_menus', 999 );
+add_action( 'admin_menu', 'wpbf_remove_background_link', 999 );
