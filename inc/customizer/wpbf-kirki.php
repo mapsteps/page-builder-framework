@@ -4448,32 +4448,32 @@ Kirki::add_field( 'wpbf', array(
 
 // Name it later.
 Kirki::add_field( 'wpbf', array(
-    'type'     => 'padding_control',
-    'label'    => __( 'Padding', 'page-builder-framework' ),
-    'section'  => 'wpbf_mobile_menu_options',
-    'settings' => 'mobile_menu_padding',
-    'default' => '', // set default values
-    'priority' => 8
+	'type'     => 'padding_control',
+	'label'    => __( 'Padding', 'page-builder-framework' ),
+	'section'  => 'wpbf_mobile_menu_options',
+	'settings' => 'mobile_menu_padding',
+	'default'  => '', // set default values
+	'priority' => 8
 ) );
 
 // Name it later.
 Kirki::add_field( 'wpbf', array(
-    'type'     => 'responsive_padding',
-    'label'    => __( 'Padding', 'page-builder-framework' ),
-    'section'  => 'wpbf_page_options',
-    'settings' => 'page_padding',
-    'default' => '', // set default values
-    'priority' => 1
+	'type'     => 'responsive_padding',
+	'label'    => __( 'Padding', 'page-builder-framework' ),
+	'section'  => 'wpbf_page_options',
+	'settings' => 'page_padding',
+	'default'  => '', // set default values
+	'priority' => 1
 ) );
 
 // Name it later.
 Kirki::add_field( 'wpbf', array(
-    'type'     => 'responsive_padding',
-    'label'    => __( 'Widget Padding', 'page-builder-framework' ),
-    'section'  => 'wpbf_sidebar_options',
-    'settings' => 'sidebar_widget_padding',
-    'default' => '', // set default values
-    'priority' => 3
+	'type'     => 'responsive_padding',
+	'label'    => __( 'Widget Padding', 'page-builder-framework' ),
+	'section'  => 'wpbf_sidebar_options',
+	'settings' => 'sidebar_widget_padding',
+	'default'  => '', // set default values
+	'priority' => 3
 ) );
 
 // Responsive post style settings.
