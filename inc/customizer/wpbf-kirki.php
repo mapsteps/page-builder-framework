@@ -4407,6 +4407,8 @@ if ( ! wpbf_is_premium() ) {
 /**
  * Control conversion (reposition later).
  */
+
+// Name it later.
 Kirki::add_field( 'wpbf', array(
     'type'     => 'responsive_input_slider',
     'label'    => __( 'Logo Width', 'page-builder-framework' ),
@@ -4427,15 +4429,24 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Name it later.
 Kirki::add_field( 'wpbf', array(
-    'type'     => 'padding_control',
-    'label'    => __( 'Padding', 'page-builder-framework' ),
-    'section'  => 'wpbf_sub_menu_options',
-    'settings' => 'sub_menu_padding',
-    'default' => '', // set default value
-    'priority' => 2
+	'type'     => 'padding_control',
+	'label'    => __( 'Padding', 'page-builder-framework' ),
+	'section'  => 'wpbf_sub_menu_options',
+	'settings' => 'sub_menu_padding',
+	'default'  => json_encode(
+		array(
+			'top'    => '10px',
+			'right'  => '20px',
+			'bottom' => '10px',
+			'left'   => '20px',
+		),
+	),
+	'priority' => 2
 ) );
 
+// Name it later.
 Kirki::add_field( 'wpbf', array(
     'type'     => 'padding_control',
     'label'    => __( 'Padding', 'page-builder-framework' ),
@@ -4445,6 +4456,7 @@ Kirki::add_field( 'wpbf', array(
     'priority' => 8
 ) );
 
+// Name it later.
 Kirki::add_field( 'wpbf', array(
     'type'     => 'responsive_padding',
     'label'    => __( 'Padding', 'page-builder-framework' ),
@@ -4454,6 +4466,7 @@ Kirki::add_field( 'wpbf', array(
     'priority' => 1
 ) );
 
+// Name it later.
 Kirki::add_field( 'wpbf', array(
     'type'     => 'responsive_padding',
     'label'    => __( 'Widget Padding', 'page-builder-framework' ),
@@ -4462,8 +4475,6 @@ Kirki::add_field( 'wpbf', array(
     'default' => '', // set default values
     'priority' => 3
 ) );
-
-
 
 // Responsive post style settings.
 $archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
