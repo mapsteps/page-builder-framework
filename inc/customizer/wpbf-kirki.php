@@ -4435,6 +4435,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Padding', 'page-builder-framework' ),
 	'section'  => 'wpbf_sub_menu_options',
 	'settings' => 'sub_menu_padding',
+	'priority' => 2,
 	'default'  => json_encode(
 		array(
 			'top'    => '10px',
@@ -4443,7 +4444,6 @@ Kirki::add_field( 'wpbf', array(
 			'left'   => '20px',
 		),
 	),
-	'priority' => 2
 ) );
 
 // Name it later.
@@ -4452,8 +4452,15 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Padding', 'page-builder-framework' ),
 	'section'  => 'wpbf_mobile_menu_options',
 	'settings' => 'mobile_menu_padding',
-	'default'  => '', // set default values
-	'priority' => 8
+	'priority' => 8,
+	'default'  => json_encode(
+		array(
+			'top'    => '10px',
+			'right'  => '20px',
+			'bottom' => '10px',
+			'left'   => '20px',
+		),
+	),
 ) );
 
 // Name it later.
@@ -4463,7 +4470,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_page_options',
 	'settings' => 'page_padding',
 	'default'  => '', // set default values
-	'priority' => 1
+	'priority' => 1,
 ) );
 
 // Name it later.
