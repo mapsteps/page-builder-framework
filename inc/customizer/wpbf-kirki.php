@@ -4487,14 +4487,18 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 1,
 ) );
 
-// Name it later.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'responsive_padding',
-	'label'    => __( 'Widget Padding', 'page-builder-framework' ),
-	'section'  => 'wpbf_sidebar_options',
-	'settings' => 'sidebar_widget_padding',
-	'default'  => '', // set default values
-	'priority' => 3
+	'label'    => __( 'Font Size', 'page-builder-framework' ),
+	'section'  => 'title_tagline',
+	'settings' => 'menu_logo_description_font_size',
+	'priority' => 23,
+    'choices'  => array(
+        'min'  => 0,
+        'max'  => 50,
+        'step' => 1,
+    ),
+    'active_callback' => function () {return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false;},
 ) );
 
 // Responsive post style settings.
@@ -4533,89 +4537,6 @@ foreach ( $singles as $single ) {
 }
 
 // var_dump( get_theme_mod( 'menu_logo_size' ) );
-
-/**
- * Custom controls.
- *
- * @param object $wp_customize The wp_customize object.
- */
-function wpbf_custom_controls_default( $wp_customize ) {
-
-	// Tagline font size.
-	$wp_customize->add_setting( 'menu_logo_description_font_size_desktop',
-		array(
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'menu_logo_description_font_size_tablet',
-		array(
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting( 'menu_logo_description_font_size_mobile',
-		array(
-			'sanitize_callback' => 'wp_filter_nohtml_kses',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_description_font_size',
-		array(
-			'label'           => __( 'Font Size', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_description_font_size_desktop',
-			'priority'        => 23,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 50,
-				'step' => 1,
-			),
-			'active_callback' => function () {return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false;},
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_description_font_size',
-		array(
-			'label'           => __( 'Font Size', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_description_font_size_tablet',
-			'priority'        => 23,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 50,
-				'step' => 1,
-			),
-			'active_callback' => function () {return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false;},
-		)
-	) );
-
-	$wp_customize->add_control( new WPBF_Customize_Responsive_Input_Slider(
-		$wp_customize,
-		'menu_logo_description_font_size',
-		array(
-			'label'           => __( 'Font Size', 'page-builder-framework' ),
-			'section'         => 'title_tagline',
-			'settings'        => 'menu_logo_description_font_size_mobile',
-			'priority'        => 23,
-			'choices'         => array(
-				'min'  => 0,
-				'max'  => 50,
-				'step' => 1,
-			),
-			'active_callback' => function () {return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false;},
-		)
-	) );
-
-}
-add_action( 'customize_register', 'wpbf_custom_controls_default' );
 
 /**
  * Custom Kirki default fonts.
