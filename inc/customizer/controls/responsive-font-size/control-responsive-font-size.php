@@ -64,7 +64,7 @@ class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
 
         printf(
             '<input type="hidden" class="wpbf-responsive-font-size-db" name="%s" value="%s" %s/>',
-            esc_attr( $this->id ), $this->value(), $this->get_link()
+            esc_attr( $this->id ), esc_attr($this->value()), $this->get_link()
         );
 
         echo '</div>';
