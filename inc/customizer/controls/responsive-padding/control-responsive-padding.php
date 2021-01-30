@@ -77,7 +77,7 @@ class WPBF_Customize_Responsive_Padding_Control extends Kirki_Control_Base {
 
         printf(
             '<input type="hidden" class="wpbf-responsive-padding-db" name="%s" value="%s" %s/>',
-            esc_attr( $this->id ), $this->value(), $this->get_link()
+            esc_attr( $this->id ), esc_attr($this->value()), $this->get_link()
         );
 
         echo '</div>';
