@@ -356,6 +356,14 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Products per Row', 'page-builder-framework' ),
 	'section'  => 'woocommerce_product_catalog',
 	'priority' => 15,
+	'default'  => json_encode(
+		array(
+			'desktop' => '4',
+			'tablet'  => '2',
+			'mobile'  => '',
+		),
+	),
+	// sanitization: absint
 ) );
 
 // Grid gap.
