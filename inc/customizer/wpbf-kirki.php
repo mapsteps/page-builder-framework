@@ -1040,8 +1040,24 @@ foreach ( $archives as $archive ) {
 				'operator' => '!=',
 				'value'    => 'beside',
 			),
-
 		),
+	) );
+
+	// Padding.
+	Kirki::add_field( 'wpbf', array(
+		'type'            => 'responsive_padding',
+		'label'           => __( 'Padding', 'page-builder-framework' ),
+		'section'         => 'wpbf_' . $archive . '_options',
+		'settings'        => $archive . '_boxed_padding',
+		'priority'        => 25,
+		'active_callback' => array(
+			array(
+				'setting'  => $archive . '_post_style',
+				'operator' => '==',
+				'value'    => 'boxed',
+			),
+		),
+		// sanitization: absint
 	) );
 
 	// Space between.
@@ -1363,6 +1379,23 @@ foreach ( $singles as $single ) {
 	// 	),
 	// ) );
 
+	// Padding.
+	Kirki::add_field( 'wpbf', array(
+		'type'            => 'responsive_padding',
+		'label'           => __( 'Padding', 'page-builder-framework' ),
+		'section'         => 'wpbf_' . $single . '_options',
+		'settings'        => $single . '_boxed_padding',
+		'priority'        => 10,
+		'active_callback' => array(
+			array(
+				'setting'  => $single . '_post_style',
+				'operator' => '==',
+				'value'    => 'boxed',
+			),
+		),
+		// sanitization: absint
+	) );
+
 	// Background color.
 	Kirki::add_field( 'wpbf', array(
 		'type'            => 'color',
@@ -1472,6 +1505,17 @@ Kirki::add_field( 'wpbf', array(
 	'transport'   => 'postMessage',
 	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
 	'priority'    => 0,
+) );
+
+// Padding.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'responsive_padding',
+	'label'     => __( 'Padding', 'page-builder-framework' ),
+	'section'   => 'wpbf_page_options',
+	'settings'  => 'page_padding',
+	'transport' => 'postMessage',
+	'priority'  => 1,
+	// sanitization: absint
 ) );
 
 // Separator.
@@ -1957,6 +2001,16 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_sidebar_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 2,
+) );
+
+// Padding.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'responsive_padding',
+	'label'    => __( 'Widget Padding', 'page-builder-framework' ),
+	'section'  => 'wpbf_sidebar_options',
+	'settings' => 'sidebar_widget_padding',
+	'priority' => 3,
+	// sanitization: absint
 ) );
 
 // Color.
@@ -3061,6 +3115,29 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Size.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'responsive_input_slider',
+	'label'           => __( 'Logo Width', 'page-builder-framework' ),
+	'section'         => 'title_tagline',
+	'settings'        => 'menu_logo_size',
+	'priority'        => 2,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 500,
+		'step' => 1,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'custom_logo',
+			'operator' => '!=',
+			'value'    => '',
+		),
+	),
+	// sanitization: wp_filter_nohtml_kses
+) );
+
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
@@ -3108,6 +3185,36 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => '',
 		),
 	),
+) );
+
+// Font size.
+Kirki::add_field( 'wpbf', array(
+	'type'             => 'responsive_input_slider',
+	'label'            => __( 'Font Size', 'page-builder-framework' ),
+	'section'          => 'title_tagline',
+	'settings'         => 'menu_logo_font_size',
+	'priority'         => 13,
+	'transport'        => 'postMessage',
+	'default'          => json_encode(
+		array(
+			'desktop' => '22px',
+			'tablet'  => '',
+			'mobile'  => '',
+		),
+	),
+	'choices'          => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'custom_logo',
+			'operator' => '==',
+			'value'    => '',
+		),
+	),
+	// sanitization: wp_filter_nohtml_kses
 ) );
 
 // Separator.
@@ -3201,6 +3308,34 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => true,
 		),
 	),
+) );
+
+// Font size.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'responsive_padding',
+	'label'           => __( 'Font Size', 'page-builder-framework' ),
+	'section'         => 'title_tagline',
+	'settings'        => 'menu_logo_description_font_size',
+	'priority'        => 23,
+	'transport'       => 'postMessage',
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'custom_logo',
+			'operator' => '==',
+			'value'    => '',
+		),
+		array(
+			'setting'  => 'menu_logo_description',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+	// sanitization: wp_filter_nohtml_kses
 ) );
 
 // Separator.
@@ -3531,6 +3666,25 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Padding.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'padding_control',
+	'label'     => __( 'Padding', 'page-builder-framework' ),
+	'section'   => 'wpbf_sub_menu_options',
+	'settings'  => 'sub_menu_padding',
+	'priority'  => 2,
+	'transport' => 'postMessage',
+	'default'   => json_encode(
+		array(
+			'top'    => '10px',
+			'right'  => '20px',
+			'bottom' => '10px',
+			'left'   => '20px',
+		),
+	),
+	// sanitization: absint
+) );
+
 // Background color.
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'color',
@@ -3831,6 +3985,25 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_mobile_menu_options',
 	'default'  => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Menu Item Settings', 'page-builder-framework' ) . '</h3>',
 	'priority' => 6,
+) );
+
+// Padding.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'padding_control',
+	'label'     => __( 'Padding', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_menu_options',
+	'settings'  => 'mobile_menu_padding',
+	'priority'  => 8,
+	'transport' => 'postMessage',
+	'default'   => json_encode(
+		array(
+			'top'    => '10px',
+			'right'  => '20px',
+			'bottom' => '10px',
+			'left'   => '20px',
+		),
+	),
+	// sanitization: absint
 ) );
 
 // Menu item background color.
@@ -4403,150 +4576,6 @@ if ( ! wpbf_is_premium() ) {
 	) );
 
 }
-
-/**
- * Control conversion (reposition later).
- */
-
-// Name it later.
-Kirki::add_field( 'wpbf', array(
-    'type'     => 'responsive_input_slider',
-    'label'    => __( 'Logo Width', 'page-builder-framework' ),
-    'section'  => 'title_tagline',
-    'settings' => 'menu_logo_size',
-    'priority' => 2,
-    'choices'  => array(
-        'min'  => 0,
-        'max'  => 500,
-        'step' => 1,
-    ),
-	'active_callback' => array(
-		array(
-			'setting'  => 'custom_logo',
-			'operator' => '!=',
-			'value'    => '',
-		),
-	),
-) );
-
-Kirki::add_field( 'wpbf', array(
-    'type'     => 'responsive_input_slider',
-    'label'    => __( 'Font Size', 'page-builder-framework' ),
-    'section'  => 'title_tagline',
-    'settings' => 'menu_logo_font_size',
-    'priority' => 13,
-    'choices'         => array(
-        'min'  => 0,
-        'max'  => 50,
-        'step' => 1,
-    ),
-    'active_callback' => function () {return get_theme_mod( 'custom_logo' ) ? false : true;},
-) );
-
-// Name it later.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'padding_control',
-	'label'    => __( 'Padding', 'page-builder-framework' ),
-	'section'  => 'wpbf_sub_menu_options',
-	'settings' => 'sub_menu_padding',
-	'priority' => 2,
-	'default'  => json_encode(
-		array(
-			'top'    => '10px',
-			'right'  => '20px',
-			'bottom' => '10px',
-			'left'   => '20px',
-		),
-	),
-) );
-
-// Name it later.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'padding_control',
-	'label'    => __( 'Padding', 'page-builder-framework' ),
-	'section'  => 'wpbf_mobile_menu_options',
-	'settings' => 'mobile_menu_padding',
-	'priority' => 8,
-	'default'  => json_encode(
-		array(
-			'top'    => '10px',
-			'right'  => '20px',
-			'bottom' => '10px',
-			'left'   => '20px',
-		),
-	),
-) );
-
-// Name it later.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'responsive_padding',
-	'label'    => __( 'Padding', 'page-builder-framework' ),
-	'section'  => 'wpbf_page_options',
-	'settings' => 'page_padding',
-	'default'  => '', // set default values
-	'priority' => 1,
-) );
-
-// Name it later.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'responsive_padding',
-	'label'    => __( 'Widget Padding', 'page-builder-framework' ),
-	'section'  => 'wpbf_sidebar_options',
-	'settings' => 'sidebar_widget_padding',
-	'priority' => 3,
-) );
-
-// Name it later.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'responsive_padding',
-	'label'    => __( 'Font Size', 'page-builder-framework' ),
-	'section'  => 'title_tagline',
-	'settings' => 'menu_logo_description_font_size',
-	'priority' => 23,
-    'choices'  => array(
-        'min'  => 0,
-        'max'  => 50,
-        'step' => 1,
-    ),
-    'active_callback' => function () {return ! get_theme_mod( 'custom_logo' ) && get_theme_mod( 'menu_logo_description' ) ? true : false;},
-) );
-
-// Responsive post style settings.
-$archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
-
-foreach ( $archives as $archive ) {
-
-    Kirki::add_field( 'wpbf', array(
-        'type'     => 'responsive_padding',
-        'label'    => __( 'Padding', 'page-builder-framework' ),
-        'section'  => 'wpbf_' . $archive . '_options',
-        'settings' => $archive . '_boxed_padding',
-        'default' => '', // set default values
-        'priority' => 25,
-        'active_callback' => function () use ( $archive ) {return 'boxed' === get_theme_mod( $archive . '_post_style' ) ? true : false;},
-    ) );
-
-}
-
-
-// Responsive article style settings.
-$singles = apply_filters( 'wpbf_singles', array( 'single' ) );
-
-foreach ( $singles as $single ) {
-
-    Kirki::add_field( 'wpbf', array(
-        'type'     => 'responsive_padding',
-        'label'    => __( 'Padding', 'page-builder-framework' ),
-        'section'  => 'wpbf_' . $single . '_options',
-        'settings' => $single . '_boxed_padding',
-        'default' => '', // set default values
-        'priority' => 10,
-        'active_callback' => function () use ( $single ) {return 'boxed' === get_theme_mod( $single . '_post_style' ) ? true : false;},
-    ) );
-
-}
-
-// var_dump( get_theme_mod( 'menu_logo_size' ) );
 
 /**
  * Custom Kirki default fonts.

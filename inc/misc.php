@@ -159,7 +159,7 @@ add_filter( 'wp_setup_nav_menu_item', 'wpbf_menu_description_html' );
 /**
  * Remove "Background" customizer link from Appearance menu.
  */
-function wpbf_remove_background_link(){
+function wpbf_remove_background_link() {
 
 	global $submenu;
 
@@ -168,5 +168,6 @@ function wpbf_remove_background_link(){
 			unset( $submenu['themes.php'][$menu_index] );
 		}
 	}
+
 }
 add_action( 'admin_menu', 'wpbf_remove_background_link', 999 );
