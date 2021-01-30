@@ -17,6 +17,7 @@ jQuery(document).ready(function ($) {
 			change: function (e, ui) {
 				// Only executed after the sliding stopped.
 				this.parentNode.querySelector('.customize-control-slider-value').dispatchEvent(new Event('change'));
+				this.parentNode.querySelector('.customize-control-slider-value').dispatchEvent(new Event('keyup'));
 			}
 		});
 	});
