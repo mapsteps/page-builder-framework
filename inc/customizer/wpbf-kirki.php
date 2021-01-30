@@ -4487,6 +4487,16 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 1,
 ) );
 
+// Name it later.
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'responsive_padding',
+	'label'    => __( 'Widget Padding', 'page-builder-framework' ),
+	'section'  => 'wpbf_sidebar_options',
+	'settings' => 'sidebar_widget_padding',
+	'priority' => 3,
+) );
+
+// Name it later.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'responsive_padding',
 	'label'    => __( 'Font Size', 'page-builder-framework' ),
