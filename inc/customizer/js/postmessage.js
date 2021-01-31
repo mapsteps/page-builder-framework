@@ -582,22 +582,27 @@
 
 		value.bind( function( newval ) {
 
-			var obj = jQuery.parseJSON( newval );
+			var obj = $.parseJSON( newval );
+			size    = obj.desktop;
 
-			var suffix = $.isNumeric(obj.desktop) ? 'px' : '';
-			styleTag.innerHTML = '.wpbf-logo img, .wpbf-mobile-logo img {width: ' + newval + suffix + ';}';
+			var suffix = $.isNumeric(size) ? 'px' : '';
+			styleTag.innerHTML = '.wpbf-logo img, .wpbf-mobile-logo img {width: ' + size + suffix + ';}';
 		} );
 	} );
 
 	// Width tablet.
-	wp.customize( 'menu_logo_size_tablet', function( value ) {
+	wp.customize( 'menu_logo_size', function( value ) {
 		var styleTag = setupStyleTag('menu_logo_size_tablet');
 		
 		value.bind( function( newval ) {
-			var suffix = $.isNumeric(newval) ? 'px' : '';
+
+			var obj = $.parseJSON( newval );
+			size    = obj.tablet;
+
+			var suffix = $.isNumeric(size) ? 'px' : '';
 			styleTag.innerHTML = '\
 				@media (' + mediaQueries.tablet + ') {\
-					.wpbf-mobile-logo img {width: ' + newval + suffix + ';\
+					.wpbf-mobile-logo img {width: ' + size + suffix + ';\
 				}\
 			';
 		} );
@@ -608,10 +613,14 @@
 		var styleTag = setupStyleTag('menu_logo_size_mobile');
 
 		value.bind( function( newval ) {
-			var suffix = $.isNumeric(newval) ? 'px' : '';
+
+			var obj = $.parseJSON( newval );
+			size    = obj.tablet;
+
+			var suffix = $.isNumeric(size) ? 'px' : '';
 			styleTag.innerHTML = '\
 				@media (' + mediaQueries.mobile + ') {\
-					.wpbf-mobile-logo img {width: ' + newval + suffix + ';}\
+					.wpbf-mobile-logo img {width: ' + size + suffix + ';}\
 				}\
 			';
 		} );
