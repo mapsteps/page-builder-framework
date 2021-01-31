@@ -609,13 +609,13 @@
 	} );
 
 	// Width mobile.
-	wp.customize( 'menu_logo_size_mobile', function( value ) {
+	wp.customize( 'menu_logo_size', function( value ) {
 		var styleTag = setupStyleTag('menu_logo_size_mobile');
 
 		value.bind( function( newval ) {
 
 			var obj = $.parseJSON( newval );
-			size    = obj.tablet;
+			size    = obj.mobile;
 
 			var suffix = $.isNumeric(size) ? 'px' : '';
 			styleTag.innerHTML = '\
