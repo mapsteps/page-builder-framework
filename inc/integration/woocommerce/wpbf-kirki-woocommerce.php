@@ -363,7 +363,7 @@ Kirki::add_field( 'wpbf', array(
 			'mobile'  => '',
 		),
 	),
-	wpbf_kirki_sanitize_helper( 'absint' ),
+	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
 ) );
 
 // Grid gap.
