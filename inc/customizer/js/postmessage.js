@@ -577,11 +577,14 @@
 	/* Logo */
 
 	// Width desktop.
-	wp.customize( 'menu_logo_size_desktop', function( value ) {
+	wp.customize( 'menu_logo_size', function( value ) {
 		var styleTag = setupStyleTag('menu_logo_size_desktop');
 
 		value.bind( function( newval ) {
-			var suffix = $.isNumeric(newval) ? 'px' : '';
+
+			var obj = jQuery.parseJSON( newval );
+
+			var suffix = $.isNumeric(obj.desktop) ? 'px' : '';
 			styleTag.innerHTML = '.wpbf-logo img, .wpbf-mobile-logo img {width: ' + newval + suffix + ';}';
 		} );
 	} );
