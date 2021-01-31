@@ -31,7 +31,7 @@
 	// Page width.
 	wp.customize( 'page_max_width', function( value ) {
 		var styleTag = setupStyleTag('page_max_width');
-		
+
 		value.bind( function( newval ) {
 			newval = !newval ? '1200px' : newval;
 			styleTag.innerHTML = '.wpbf-container, .wpbf-boxed-layout .wpbf-page {max-width: ' + newval + ';}';
@@ -106,7 +106,7 @@
 	// ScrollTop icon color.
 	wp.customize( 'scrolltop_icon_color_alt', function( value ) {
 		var styleTag = setupStyleTag('scrolltop_icon_color_alt');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.scrolltop:hover {color: ' + newval + ';}';
 		} );
@@ -368,7 +368,7 @@
 	// Hamburger border radius (filled).
 	wp.customize( 'mobile_menu_hamburger_border_radius', function( value ) {
 		var styleTag = setupStyleTag('mobile_menu_hamburger_border_radius');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.wpbf-mobile-nav-item {border-radius: ' + newval + 'px;}';
 		} );
@@ -578,52 +578,50 @@
 
 	// Width desktop.
 	wp.customize( 'menu_logo_size', function( value ) {
-		var styleTag = setupStyleTag('menu_logo_size_desktop');
+
+		var styleTagDesktop = setupStyleTag('menu_logo_size_desktop'),
+			styleTagTablet = setupStyleTag('menu_logo_size_tablet'),
+			styleTagMobile = setupStyleTag('menu_logo_size_mobile'),
+			suffix;
 
 		value.bind( function( newval ) {
 
-			var obj = $.parseJSON( newval );
-			size    = obj.desktop;
+			if(newval !== '') {
+				var obj = JSON.parse(newval);
 
-			var suffix = $.isNumeric(size) ? 'px' : '';
-			styleTag.innerHTML = '.wpbf-logo img, .wpbf-mobile-logo img {width: ' + size + suffix + ';}';
-		} );
-	} );
+				//desktop
+				if ('desktop' in obj) {
+					size = obj.desktop;
 
-	// Width tablet.
-	wp.customize( 'menu_logo_size', function( value ) {
-		var styleTag = setupStyleTag('menu_logo_size_tablet');
-		
-		value.bind( function( newval ) {
+					suffix = $.isNumeric(size) ? 'px' : '';
+					styleTagDesktop.innerHTML = '.wpbf-logo img, .wpbf-mobile-logo img {width: ' + size + suffix + ';}';
+				}
 
-			var obj = $.parseJSON( newval );
-			size    = obj.tablet;
+				// tablet
+				if ('tablet' in obj) {
+					suffix = $.isNumeric(size) ? 'px' : '';
+					styleTagTablet.innerHTML = '\
+						@media (' + mediaQueries.tablet + ') {\
+							.wpbf-mobile-logo img {width: ' + size + suffix + ';\
+						}\
+					';
+				}
 
-			var suffix = $.isNumeric(size) ? 'px' : '';
-			styleTag.innerHTML = '\
-				@media (' + mediaQueries.tablet + ') {\
-					.wpbf-mobile-logo img {width: ' + size + suffix + ';\
-				}\
-			';
-		} );
-	} );
-
-	// Width mobile.
-	wp.customize( 'menu_logo_size', function( value ) {
-		var styleTag = setupStyleTag('menu_logo_size_mobile');
-
-		value.bind( function( newval ) {
-
-			var obj = $.parseJSON( newval );
-			size    = obj.mobile;
-
-			var suffix = $.isNumeric(size) ? 'px' : '';
-			styleTag.innerHTML = '\
+				// mobile
+				if ('mobile' in obj) {
+					suffix = $.isNumeric(size) ? 'px' : '';
+					styleTagMobile.innerHTML = '\
 				@media (' + mediaQueries.mobile + ') {\
 					.wpbf-mobile-logo img {width: ' + size + suffix + ';}\
 				}\
 			';
+				}
+
+			}
+
 		} );
+
+
 	} );
 
 	// Font size desktop.
@@ -1022,7 +1020,7 @@
 	// Border radius.
 	wp.customize( 'button_border_radius', function( value ) {
 		var styleTag = setupStyleTag('button_border_radius');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.wpbf-button, input[type="submit"] {border-radius: ' + newval + 'px;}';
 		} );
@@ -1291,7 +1289,7 @@
 	// Title font size.
 	wp.customize( 'woocommerce_loop_title_size', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_loop_title_size');
-		
+
 		value.bind( function( newval ) {
 			var suffix = $.isNumeric(newval) ? 'px' : '';
 
@@ -1485,7 +1483,7 @@
 	// Tabs background color.
 	wp.customize( 'woocommerce_single_tabs_background_color', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_single_tabs_background_color');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li {background-color: ' + newval + ';}';
 		} );
@@ -1494,7 +1492,7 @@
 	// Tabs background color hover.
 	wp.customize( 'woocommerce_single_tabs_background_color_alt', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_single_tabs_background_color_alt');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li:hover {background-color: ' + newval + '; border-bottom-color: ' + newval + ';}';
 		} );
@@ -1503,7 +1501,7 @@
 	// Tabs background color active.
 	wp.customize( 'woocommerce_single_tabs_background_color_active', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_single_tabs_background_color_active');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li.active, .woocommerce div.product .woocommerce-tabs ul.tabs li.active:hover {background-color: ' + newval + '; border-bottom-color: ' + newval + ';}';
 		} );
@@ -1512,7 +1510,7 @@
 	// Tabs font color.
 	wp.customize( 'woocommerce_single_tabs_font_color', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_single_tabs_font_color');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li:not(.active) a {color: ' + newval + ';}';
 		} );
@@ -1521,7 +1519,7 @@
 	// Tabs font color hover.
 	wp.customize( 'woocommerce_single_tabs_font_color_alt', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_single_tabs_font_color_alt');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li:not(.active) a:hover {color: ' + newval + ';}';
 		} );
@@ -1530,7 +1528,7 @@
 	// Tabs font color active.
 	wp.customize( 'woocommerce_single_tabs_font_color_active', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_single_tabs_font_color_active');
-		
+
 		value.bind( function( newval ) {
 			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {color: ' + newval + ';}';
 		} );
@@ -1539,7 +1537,7 @@
 	// Tabs font size.
 	wp.customize( 'woocommerce_single_tabs_font_size', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_single_tabs_font_size');
-		
+
 		value.bind( function( newval ) {
 			var suffix = $.isNumeric(newval) ? 'px' : '';
 			styleTag.innerHTML = '.woocommerce div.product .woocommerce-tabs ul.tabs li a {font-size: ' + newval + suffix + ';}';

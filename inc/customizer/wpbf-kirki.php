@@ -16,7 +16,7 @@ load_theme_textdomain( 'page-builder-framework' );
  *
  * @param string $callback The sanitization callback.
  *
- * @return array The sanitized json.
+ * @return mixed The sanitized json.
  */
 function wpbf_kirki_sanitize_helper( $callback ) {
 
