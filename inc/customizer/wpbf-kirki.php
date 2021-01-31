@@ -11,7 +11,13 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 // Textdomain. This is required, otherwise strings aren't translateable.
 load_theme_textdomain( 'page-builder-framework' );
 
-// Kirki sanitization helper.
+/**
+ * Kirki sanitization helper.
+ *
+ * @param string $callback The sanitization callback.
+ *
+ * @return array The sanitized json.
+ */
 function wpbf_kirki_sanitize_helper( $callback ) {
 
 	return function( $value ) use ( $callback ) {
@@ -28,7 +34,15 @@ function wpbf_kirki_sanitize_helper( $callback ) {
 
 }
 
-// Kirki global configuration.
+/**
+ * Kirki global config.
+ *
+ * Update Kirki global config to remove loader.
+ *
+ * @param array $config The configuration.
+ *
+ * @return array The updated configuration.
+ */
 function wpbf_kirki_config( $config ) {
 	return wp_parse_args( array(
 		'disable_loader' => true,
@@ -36,14 +50,24 @@ function wpbf_kirki_config( $config ) {
 }
 add_filter( 'kirki_config', 'wpbf_kirki_config' );
 
-// Default font choice.
+/**
+ * Default font choices.
+ *
+ * This exists so we can filter and extend the font choices in Kirki.
+ *
+ * @return array The default font choices.
+ */
 function wpbf_default_font_choices() {
 	return array(
 		'fonts' => apply_filters( 'wpbf_kirki_font_choices', array() ),
 	);
 }
 
-// Customizer setup.
+/**
+ * Customizer setup.
+ *
+ * @param object $wp_customize The wp customize object.
+ */
 function wpbf_customizer_setup( $wp_customize ) {
 
 	// Move sections.
