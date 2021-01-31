@@ -16,7 +16,7 @@ function wpbf_kirki_sanitize_helper( $callback ) {
 
 	return function( $value ) use ( $callback ) {
 
-		if( !empty( $value ) ) {
+		if( ! empty( $value ) ) {
 			$value = json_decode( trim( $value ), true );
 			$value = array_map( $callback, $value );
 			$value = json_encode( $value );
