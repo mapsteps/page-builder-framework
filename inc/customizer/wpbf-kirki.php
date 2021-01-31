@@ -3200,7 +3200,7 @@ Kirki::add_field( 'wpbf', array(
 			'desktop' => '22px',
 			'tablet'  => '',
 			'mobile'  => '',
-		),
+		)
 	),
 	'choices'          => array(
 		'min'  => 0,
