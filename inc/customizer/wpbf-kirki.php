@@ -11,6 +11,23 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 // Textdomain. This is required, otherwise strings aren't translateable.
 load_theme_textdomain( 'page-builder-framework' );
 
+function wpbf_kirki_sanitize_helper($callback) {
+
+    return function($value) use ($callback) {
+
+        if(!empty($value)) {
+
+            $value = json_decode(trim($value), true);
+
+            $value = array_map($callback, $value);
+
+            $value = json_encode($value);
+        }
+
+        return $value;
+    };
+}
+
 // Kirki global configuration.
 function wpbf_kirki_config( $config ) {
 	return wp_parse_args( array(
@@ -1057,7 +1074,7 @@ foreach ( $archives as $archive ) {
 				'value'    => 'boxed',
 			),
 		),
-		// sanitization: absint
+        'sanitize_callback' => wpbf_kirki_sanitize_helper('absint')
 	) );
 
 	// Space between.
@@ -1393,7 +1410,7 @@ foreach ( $singles as $single ) {
 				'value'    => 'boxed',
 			),
 		),
-		// sanitization: absint
+        'sanitize_callback' => wpbf_kirki_sanitize_helper('absint')
 	) );
 
 	// Background color.
@@ -1515,7 +1532,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'page_padding',
 	'transport' => 'postMessage',
 	'priority'  => 1,
-	// sanitization: absint
+    'sanitize_callback' => wpbf_kirki_sanitize_helper('absint')
 ) );
 
 // Separator.
@@ -2010,7 +2027,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_sidebar_options',
 	'settings' => 'sidebar_widget_padding',
 	'priority' => 3,
-	// sanitization: absint
+    'sanitize_callback' => wpbf_kirki_sanitize_helper('absint')
 ) );
 
 // Color.
@@ -3135,7 +3152,7 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => '',
 		),
 	),
-	// sanitization: wp_filter_nohtml_kses
+    'sanitize_callback' => wpbf_kirki_sanitize_helper('wp_filter_nohtml_kses')
 ) );
 
 // Separator.
@@ -3214,7 +3231,7 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => '',
 		),
 	),
-	// sanitization: wp_filter_nohtml_kses
+    'sanitize_callback' => wpbf_kirki_sanitize_helper('wp_filter_nohtml_kses')
 ) );
 
 // Separator.
@@ -3335,7 +3352,7 @@ Kirki::add_field( 'wpbf', array(
 			'value'    => true,
 		),
 	),
-	// sanitization: wp_filter_nohtml_kses
+    'sanitize_callback' => wpbf_kirki_sanitize_helper('wp_filter_nohtml_kses')
 ) );
 
 // Separator.
@@ -3680,9 +3697,9 @@ Kirki::add_field( 'wpbf', array(
 			'right'  => '20px',
 			'bottom' => '10px',
 			'left'   => '20px',
-		),
+		)
 	),
-	// sanitization: absint
+    'sanitize_callback' => wpbf_kirki_sanitize_helper('absint')
 ) );
 
 // Background color.
@@ -4001,9 +4018,9 @@ Kirki::add_field( 'wpbf', array(
 			'right'  => '20px',
 			'bottom' => '10px',
 			'left'   => '20px',
-		),
+		)
 	),
-	// sanitization: absint
+    'sanitize_callback' => wpbf_kirki_sanitize_helper('absint')
 ) );
 
 // Menu item background color.
