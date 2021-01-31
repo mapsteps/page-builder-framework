@@ -625,41 +625,48 @@
 	} );
 
 	// Font size desktop.
-	wp.customize( 'menu_logo_font_size_desktop', function( value ) {
-		var styleTag = setupStyleTag('menu_logo_font_size_desktop');
+	wp.customize( 'menu_logo_font_size', function( value ) {
+		var styleTagDesktop = setupStyleTag('menu_logo_font_size_desktop'),
+			styleTagTablet = setupStyleTag('menu_logo_font_size_tablet'),
+			styleTagMobile = setupStyleTag('menu_logo_font_size_mobile'),
+			suffix;
 
-		value.bind( function( newval ) {
-			var suffix = $.isNumeric(newval) ? 'px' : '';
-			styleTag.innerHTML = '.wpbf-logo a, .wpbf-mobile-logo a {font-size: ' + newval + suffix + ';}';
-		} );
-	} );
+		value.bind(function (newval) {
 
-	// Font size tablet.
-	wp.customize( 'menu_logo_font_size_tablet', function( value ) {
-		var styleTag = setupStyleTag('menu_logo_font_size_tablet');
+			if(newval !== '') {
 
-		value.bind( function( newval ) {
-			var suffix = $.isNumeric(newval) ? 'px' : '';
-			styleTag.innerHTML = '\
-				@media (' + mediaQueries.tablet + ') {\
-					.wpbf-mobile-logo a {font-size: ' + newval + suffix + ';\
-				}\
-			';
-		} );
-	} );
+				var obj = JSON.parse(newval);
 
-	// Font size mobile.
-	wp.customize( 'menu_logo_font_size_mobile', function( value ) {
-		var styleTag = setupStyleTag('menu_logo_font_size_mobile');
+				if ('desktop' in obj) {
+					size = obj.desktop;
 
-		value.bind( function( newval ) {
-			var suffix = $.isNumeric(newval) ? 'px' : '';
-			styleTag.innerHTML = '\
-				@media (' + mediaQueries.mobile + ') {\
-					.wpbf-mobile-logo a {font-size: ' + newval + suffix + ';}\
-				}\
-			';
-		} );
+					suffix = $.isNumeric(size) ? 'px' : '';
+					styleTagDesktop.innerHTML = '.wpbf-logo a, .wpbf-mobile-logo a {font-size: ' + newval + suffix + ';}';
+				}
+
+				if ('tablet' in obj) {
+					size = obj.tablet;
+
+					suffix = $.isNumeric(size) ? 'px' : '';
+					styleTagTablet.innerHTML = '\
+						@media (' + mediaQueries.tablet + ') {\
+							.wpbf-mobile-logo a {font-size: ' + newval + suffix + ';\
+						}\
+					';
+				}
+
+				if ('mobile' in obj) {
+					size = obj.mobile;
+
+					suffix = $.isNumeric(size) ? 'px' : '';
+					styleTagMobile.innerHTML = '\
+						@media (' + mediaQueries.mobile + ') {\
+							.wpbf-mobile-logo a {font-size: ' + newval + suffix + ';}\
+						}\
+					';
+				}
+			}
+		});
 	} );
 
 	// Color.
