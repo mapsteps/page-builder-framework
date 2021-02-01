@@ -599,6 +599,8 @@
 
 				// tablet
 				if ('tablet' in obj) {
+					size = obj.tablet;
+
 					suffix = $.isNumeric(size) ? 'px' : '';
 					styleTagTablet.innerHTML = '\
 						@media (' + mediaQueries.tablet + ') {\
@@ -609,12 +611,14 @@
 
 				// mobile
 				if ('mobile' in obj) {
+					size = obj.mobile;
+
 					suffix = $.isNumeric(size) ? 'px' : '';
 					styleTagMobile.innerHTML = '\
-				@media (' + mediaQueries.mobile + ') {\
-					.wpbf-mobile-logo img {width: ' + size + suffix + ';}\
-				}\
-			';
+						@media (' + mediaQueries.mobile + ') {\
+							.wpbf-mobile-logo img {width: ' + size + suffix + ';}\
+						}\
+					';
 				}
 
 			}
