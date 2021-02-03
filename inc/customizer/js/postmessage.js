@@ -217,7 +217,6 @@
 
 	/* Sub Menu */
 
-
 	// Padding.
 	wp.customize( 'sub_menu_padding', function( value ) {
 
@@ -264,42 +263,6 @@
 
 		} );
 
-	} );
-
-	// Padding top.
-	wp.customize( 'sub_menu_padding_top', function( value ) {
-		var styleTag = setupStyleTag('sub_menu_padding_top');
-
-		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {padding-top: ' + newval + 'px;}';
-		} );
-	} );
-
-	// Padding right.
-	wp.customize( 'sub_menu_padding_right', function( value ) {
-		var styleTag = setupStyleTag('sub_menu_padding_right');
-
-		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {padding-right: ' + newval + 'px;}';
-		} );
-	} );
-
-	// Padding bottom.
-	wp.customize( 'sub_menu_padding_bottom', function( value ) {
-		var styleTag = setupStyleTag('sub_menu_padding_bottom');
-
-		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {padding-bottom: ' + newval + 'px;}';
-		} );
-	} );
-
-	// Padding left.
-	wp.customize( 'sub_menu_padding_left', function( value ) {
-		var styleTag = setupStyleTag('sub_menu_padding_left');
-
-		value.bind( function( newval ) {
-			styleTag.innerHTML = '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {padding-left: ' + newval + 'px;}';
-		} );
 	} );
 
 	// Width.
@@ -423,60 +386,72 @@
 		} );
 	} );
 
-	// Padding top.
-	wp.customize( 'mobile_menu_padding_top', function( value ) {
-		var styleTag = setupStyleTag('mobile_menu_padding_top');
+	// Padding.
+	wp.customize( 'mobile_menu_padding', function( value ) {
+
+		var styleTagTop = setupStyleTag('mobile_menu_padding_top'),
+			styleTagRight = setupStyleTag('mobile_menu_padding_right'),
+			styleTagBottom = setupStyleTag('mobile_menu_padding_bottom'),
+			styleTagLeft = setupStyleTag('mobile_menu_padding_left');
 
 		value.bind( function( newval ) {
-			styleTag.innerHTML = '\
-				.wpbf-mobile-menu a,\
-				.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-					padding-top: ' + newval + 'px;\
-				}\
-			';
+
+			if (newval !== '') {
+
+				var obj = JSON.parse(newval);
+
+				// Top.
+				if ('top' in obj) {
+					size = obj.top;
+
+					styleTagTop.innerHTML = '\
+						.wpbf-mobile-menu a,\
+						.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
+							padding-top: ' + size + 'px;\
+						}\
+					';
+				}
+
+				// Right.
+				if ('right' in obj) {
+					size = obj.right;
+
+					styleTagRight.innerHTML = '\
+						.wpbf-mobile-menu a,\
+						.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
+							padding-right: ' + size + 'px;\
+						}\
+					';
+				}
+
+				// Bottom.
+				if ('bottom' in obj) {
+					size = obj.bottom;
+
+					styleTagBottom.innerHTML = '\
+						.wpbf-mobile-menu a,\
+						.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
+							padding-bottom: ' + size + 'px;\
+						}\
+					';
+				}
+
+				// Left.
+				if ('left' in obj) {
+					size = obj.left;
+
+					styleTagLeft.innerHTML = '\
+						.wpbf-mobile-menu a,\
+						.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
+							padding-left: ' + size + 'px;\
+						}\
+					';
+				}
+
+			}
+
 		} );
-	} );
 
-	// Padding right.
-	wp.customize( 'mobile_menu_padding_right', function( value ) {
-		var styleTag = setupStyleTag('mobile_menu_padding_right');
-
-		value.bind( function( newval ) {
-			styleTag.innerHTML = '\
-				.wpbf-mobile-menu a,\
-				.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-					padding-right: ' + newval + 'px;\
-				}\
-			';
-		} );
-	} );
-
-	// Padding bottom.
-	wp.customize( 'mobile_menu_padding_bottom', function( value ) {
-		var styleTag = setupStyleTag('mobile_menu_padding_bottom');
-
-		value.bind( function( newval ) {
-			styleTag.innerHTML = '\
-				.wpbf-mobile-menu a,\
-				.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-					padding-bottom: ' + newval + 'px;\
-				}\
-			';
-		} );
-	} );
-
-	// Padding left.
-	wp.customize( 'mobile_menu_padding_left', function( value ) {
-		var styleTag = setupStyleTag('mobile_menu_padding_left');
-
-		value.bind( function( newval ) {
-			styleTag.innerHTML = '\
-				.wpbf-mobile-menu a,\
-				.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-					padding-left: ' + newval + 'px;\
-				}\
-			';
-		} );
 	} );
 
 	// Menu item background color.
@@ -642,16 +617,16 @@
 				// Desktop.
 				if ('desktop' in obj) {
 					size = obj.desktop;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagDesktop.innerHTML = '.wpbf-logo img, .wpbf-mobile-logo img {width: ' + size + suffix + ';}';
 				}
 
 				// Tablet.
 				if ('tablet' in obj) {
 					size = obj.tablet;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagTablet.innerHTML = '\
 						@media (' + mediaQueries.tablet + ') {\
 							.wpbf-mobile-logo img {width: ' + size + suffix + ';\
@@ -662,8 +637,8 @@
 				// Mobile.
 				if ('mobile' in obj) {
 					size = obj.mobile;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagMobile.innerHTML = '\
 						@media (' + mediaQueries.mobile + ') {\
 							.wpbf-mobile-logo img {width: ' + size + suffix + ';}\
@@ -693,16 +668,16 @@
 				// Desktop.
 				if ('desktop' in obj) {
 					size = obj.desktop;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagDesktop.innerHTML = '.wpbf-logo a, .wpbf-mobile-logo a {font-size: ' + size + suffix + ';}';
 				}
 
 				// Tablet.
 				if ('tablet' in obj) {
 					size = obj.tablet;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagTablet.innerHTML = '\
 						@media (' + mediaQueries.tablet + ') {\
 							.wpbf-mobile-logo a {font-size: ' + size + suffix + ';\
@@ -713,8 +688,8 @@
 				// Mobile.
 				if ('mobile' in obj) {
 					size = obj.mobile;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagMobile.innerHTML = '\
 						@media (' + mediaQueries.mobile + ') {\
 							.wpbf-mobile-logo a {font-size: ' + size + suffix + ';}\
@@ -793,16 +768,16 @@
 				// Desktop.
 				if ('desktop' in obj) {
 					size = obj.desktop;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagDesktop.innerHTML = '.wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline {font-size: ' + size + suffix + ';}';
 				}
 
 				// Tablet.
 				if ('tablet' in obj) {
 					size = obj.tablet;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagTablet.innerHTML = '\
 						@media (' + mediaQueries.tablet + ') {\
 							.wpbf-mobile-logo .wpbf-tagline {font-size: ' + size + suffix + ';}\
@@ -813,8 +788,8 @@
 				// Mobile.
 				if ('mobile' in obj) {
 					size = obj.mobile;
-
 					suffix = $.isNumeric(size) ? 'px' : '';
+
 					styleTagMobile.innerHTML = '\
 						@media (' + mediaQueries.mobile + ') {\
 							.wpbf-mobile-logo .wpbf-tagline {font-size: ' + size + suffix + ';}\
