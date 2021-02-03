@@ -182,9 +182,6 @@ function wpbf_customizer_scripts_styles() {
 }
 add_action( 'customize_controls_print_styles', 'wpbf_customizer_scripts_styles' );
 
-// Core functionality.
-require get_template_directory() . '/inc/customizer/core.php';
-
 // Stop here if WP_Customize_Control doesn't exist.
 if ( ! class_exists( 'WP_Customize_Control' ) ) {
 	return;
