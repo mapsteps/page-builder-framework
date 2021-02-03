@@ -75,3 +75,28 @@ if ( $menu_logo_size_desktop || $menu_logo_size_tablet || $menu_logo_size_mobile
 	// remove_theme_mod( 'menu_logo_size_mobile' );
 
 }
+
+$sub_menu_padding_top    = get_theme_mod( 'sub_menu_padding_top' );
+$sub_menu_padding_right  = get_theme_mod( 'sub_menu_padding_right' );
+$sub_menu_padding_bottom = get_theme_mod( 'sub_menu_padding_bottom' );
+$sub_menu_padding_left   = get_theme_mod( 'sub_menu_padding_left' );
+
+if ( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_bottom || $sub_menu_padding_left ) {
+
+	$theme_mod_array = array(
+		'top'    => $sub_menu_padding_top,
+		'right'  => $sub_menu_padding_right,
+		'bottom' => $sub_menu_padding_bottom,
+		'left'   => $sub_menu_padding_left,
+	);
+
+	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+	// set_theme_mod( 'sub_menu_padding', $theme_mod_array );
+
+	// remove_theme_mod( 'sub_menu_padding_top' );
+	// remove_theme_mod( 'sub_menu_padding_right' );
+	// remove_theme_mod( 'sub_menu_padding_bottom' );
+	// remove_theme_mod( 'sub_menu_padding_left' );
+
+}
