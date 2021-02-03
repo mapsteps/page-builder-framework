@@ -1554,7 +1554,6 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Padding', 'page-builder-framework' ),
 	'section'   => 'wpbf_page_options',
 	'settings'  => 'page_padding',
-	'transport' => 'postMessage',
 	'priority'  => 1,
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
 ) );
