@@ -29,6 +29,7 @@ jQuery(document).ready(function ($) {
 
 		this.parentNode.querySelector('.customize-control-slider-value').value = ui.value + sliderSuffix;
 		this.parentNode.querySelector('.customize-control-slider-value').dispatchEvent(new Event('change'));
+		this.parentNode.querySelector('.customize-control-slider-value').dispatchEvent(new Event('keyup'));
 	});
 
 	// Reset slider and input field back to the default value
