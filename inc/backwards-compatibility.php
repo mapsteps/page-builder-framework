@@ -129,3 +129,26 @@ if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padd
 	// remove_theme_mod( 'mobile_menu_padding_left' );
 
 }
+
+// WooCommerce products per row.
+$woocommerce_loop_products_per_row_desktop = get_theme_mod( 'woocommerce_loop_products_per_row_desktop' );
+$woocommerce_loop_products_per_row_tablet  = get_theme_mod( 'woocommerce_loop_products_per_row_tablet' );
+$woocommerce_loop_products_per_row_mobile  = get_theme_mod( 'woocommerce_loop_products_per_row_mobile' );
+
+if ( $woocommerce_loop_products_per_row_desktop || $woocommerce_loop_products_per_row_tablet || $woocommerce_loop_products_per_row_mobile ) {
+
+	$theme_mod_array = array(
+		'desktop' => $woocommerce_loop_products_per_row_desktop,
+		'tablet'  => $woocommerce_loop_products_per_row_tablet,
+		'mobile'  => $woocommerce_loop_products_per_row_mobile,
+	);
+
+	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+	// set_theme_mod( 'woocommerce_loop_products_per_row', $theme_mod_array );
+
+	// remove_theme_mod( 'woocommerce_loop_products_per_row_desktop' );
+	// remove_theme_mod( 'woocommerce_loop_products_per_row_tablet' );
+	// remove_theme_mod( 'woocommerce_loop_products_per_row_mobile' );
+
+}
