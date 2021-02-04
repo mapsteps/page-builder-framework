@@ -557,25 +557,7 @@ p.demo_store,
 		font-weight: 700;
 
 		&.loading {
-			opacity: 0.25;
-			padding-right: 50px;
-
-			&::after {
-				font-family: "WooCommerce";
-				content: "\e01c";
-				font-weight: 400;
-				position: absolute;
-				right: 16px;
-
-				animation: spin 2s linear infinite;
-			}
-		}
-
-		&.added::after {
-			font-family: 'WooCommerce';
-			content: '\e017';
-			margin-left: $margin;
-			vertical-align: bottom;
+			opacity: 0.5;
 		}
 
 		&:hover {
@@ -624,6 +606,7 @@ p.demo_store,
 
 	a.added_to_cart {
 		display: inline-block;
+		margin: 0 10px;
 	}
 
 	/**
