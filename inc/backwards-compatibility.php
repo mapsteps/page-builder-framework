@@ -53,7 +53,9 @@ if ( 'show' === $blog_comments ) {
 
 }
 
-/* 3.0 - Preparing/proposing backwards compatibility for newly created & merged Kirki controls */
+/* Converted custom controls */
+
+// Logo size.
 $menu_logo_size_desktop = get_theme_mod( 'menu_logo_size_desktop' );
 $menu_logo_size_tablet  = get_theme_mod( 'menu_logo_size_tablet' );
 $menu_logo_size_mobile  = get_theme_mod( 'menu_logo_size_mobile' );
@@ -76,6 +78,7 @@ if ( $menu_logo_size_desktop || $menu_logo_size_tablet || $menu_logo_size_mobile
 
 }
 
+// Sub menu padding.
 $sub_menu_padding_top    = get_theme_mod( 'sub_menu_padding_top' );
 $sub_menu_padding_right  = get_theme_mod( 'sub_menu_padding_right' );
 $sub_menu_padding_bottom = get_theme_mod( 'sub_menu_padding_bottom' );
@@ -98,5 +101,31 @@ if ( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_botto
 	// remove_theme_mod( 'sub_menu_padding_right' );
 	// remove_theme_mod( 'sub_menu_padding_bottom' );
 	// remove_theme_mod( 'sub_menu_padding_left' );
+
+}
+
+// Mobile menu padding.
+$mobile_menu_padding_top    = get_theme_mod( 'mobile_menu_padding_top' );
+$mobile_menu_padding_right  = get_theme_mod( 'mobile_menu_padding_right' );
+$mobile_menu_padding_bottom = get_theme_mod( 'mobile_menu_padding_bottom' );
+$mobile_menu_padding_left   = get_theme_mod( 'mobile_menu_padding_left' );
+
+if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padding_bottom || $mobile_menu_padding_left ) {
+
+	$theme_mod_array = array(
+		'top'    => $mobile_menu_padding_top,
+		'right'  => $mobile_menu_padding_right,
+		'bottom' => $mobile_menu_padding_bottom,
+		'left'   => $mobile_menu_padding_left,
+	);
+
+	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+	// set_theme_mod( 'mobile_menu_padding', $theme_mod_array );
+
+	// remove_theme_mod( 'mobile_menu_padding_top' );
+	// remove_theme_mod( 'mobile_menu_padding_right' );
+	// remove_theme_mod( 'mobile_menu_padding_bottom' );
+	// remove_theme_mod( 'mobile_menu_padding_left' );
 
 }
