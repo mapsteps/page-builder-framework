@@ -7,10 +7,10 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$sidebar_widget_padding_top      = get_theme_mod( 'sidebar_widget_padding_top' );
-$sidebar_widget_padding_right    = get_theme_mod( 'sidebar_widget_padding_right' );
-$sidebar_widget_padding_bottom   = get_theme_mod( 'sidebar_widget_padding_bottom' );
-$sidebar_widget_padding_left     = get_theme_mod( 'sidebar_widget_padding_left' );
+$sidebar_widget_padding_top    = get_theme_mod( 'sidebar_widget_padding_top' );
+$sidebar_widget_padding_right  = get_theme_mod( 'sidebar_widget_padding_right' );
+$sidebar_widget_padding_bottom = get_theme_mod( 'sidebar_widget_padding_bottom' );
+$sidebar_widget_padding_left   = get_theme_mod( 'sidebar_widget_padding_left' );
 
 if ( $sidebar_widget_padding_top ) {
 	remove_theme_mod( 'sidebar_widget_padding_top' );
@@ -86,7 +86,7 @@ $sub_menu_padding_left   = get_theme_mod( 'sub_menu_padding_left' );
 
 if ( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_bottom || $sub_menu_padding_left ) {
 
-	$theme_mod_array = array(
+	$theme_mod_array = array( // Because on the booleon check on the output, it's okay to save "false" here if no value exists.
 		'top'    => $sub_menu_padding_top,
 		'right'  => $sub_menu_padding_right,
 		'bottom' => $sub_menu_padding_bottom,
@@ -112,7 +112,7 @@ $mobile_menu_padding_left   = get_theme_mod( 'mobile_menu_padding_left' );
 
 if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padding_bottom || $mobile_menu_padding_left ) {
 
-	$theme_mod_array = array(
+	$theme_mod_array = array( // Because on the booleon check on the output, it's okay to save "false" here if no value exists.
 		'top'    => $mobile_menu_padding_top,
 		'right'  => $mobile_menu_padding_right,
 		'bottom' => $mobile_menu_padding_bottom,
@@ -138,9 +138,9 @@ $woocommerce_loop_products_per_row_mobile  = get_theme_mod( 'woocommerce_loop_pr
 if ( $woocommerce_loop_products_per_row_desktop || $woocommerce_loop_products_per_row_tablet || $woocommerce_loop_products_per_row_mobile ) {
 
 	$theme_mod_array = array(
-		'desktop' => $woocommerce_loop_products_per_row_desktop,
-		'tablet'  => $woocommerce_loop_products_per_row_tablet,
-		'mobile'  => $woocommerce_loop_products_per_row_mobile,
+		'desktop' => $woocommerce_loop_products_per_row_desktop ? $woocommerce_loop_products_per_row_desktop : '4',
+		'tablet'  => $woocommerce_loop_products_per_row_tablet ? $woocommerce_loop_products_per_row_tablet : '2',
+		'mobile'  => $woocommerce_loop_products_per_row_mobile ? $woocommerce_loop_products_per_row_mobile : '1',
 	);
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );

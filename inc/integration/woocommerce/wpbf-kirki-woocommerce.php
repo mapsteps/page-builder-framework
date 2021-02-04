@@ -360,7 +360,7 @@ Kirki::add_field( 'wpbf', array(
 		array(
 			'desktop' => '4',
 			'tablet'  => '2',
-			'mobile'  => '',
+			'mobile'  => '1',
 		),
 	),
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
