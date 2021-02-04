@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom font size control.
+ * Custom input control.
  *
  * @package Page Builder Framework
  * @subpackage Customizer
@@ -10,11 +10,11 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
 
-	public $type = 'wpbf-responsive-font-size';
+	public $type = 'wpbf-responsive-input';
 
 	public function enqueue()
     {
-        wp_enqueue_script( 'responsive-font-size', WPBF_THEME_URI . '/inc/customizer/controls/responsive-font-size/js/responsive-font-size.js', array( 'jquery' ), WPBF_VERSION, true );
+        wp_enqueue_script( 'responsive-input', WPBF_THEME_URI . '/inc/customizer/controls/responsive-input/js/responsive-input.js', array( 'jquery' ), WPBF_VERSION, true );
     }
 
     public function render_content() {
@@ -23,7 +23,7 @@ class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
 
         $value_bucket = empty( $this->value() ) ? [] : json_decode( $this->value(), true );
 
-        echo '<div class="wpbf-responsive-font-size-wrap">';
+        echo '<div class="wpbf-responsive-input-wrap">';
 		?>
 
 		<span class="customize-control-title"><?php echo esc_attr( $this->label ); ?></span>
@@ -63,7 +63,7 @@ class WPBF_Customize_Font_Size_Control extends WP_Customize_Control {
 		}
 
         printf(
-            '<input type="hidden" class="wpbf-responsive-font-size-db" name="%s" value="%s" %s/>',
+            '<input type="hidden" class="wpbf-responsive-input-db" name="%s" value="%s" %s/>',
             esc_attr( $this->id ), esc_attr($this->value()), $this->get_link()
         );
 
@@ -84,7 +84,7 @@ add_filter(
     'kirki_control_types',
     function ( $controls ) {
 
-        $controls['responsive_font_size'] = 'WPBF_Customize_Font_Size_Control';
+        $controls['responsive_input'] = 'WPBF_Customize_Font_Size_Control';
 
         return $controls;
 

@@ -190,6 +190,6 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
 // Custom controls.
 require get_template_directory() . '/inc/customizer/controls/padding/control-padding.php';
 require get_template_directory() . '/inc/customizer/controls/input-slider/control-input-slider.php';
-require get_template_directory() . '/inc/customizer/controls/responsive-font-size/control-responsive-font-size.php';
+require get_template_directory() . '/inc/customizer/controls/responsive-input/control-responsive-input.php';
 require get_template_directory() . '/inc/customizer/controls/responsive-padding/control-responsive-padding.php';
 require get_template_directory() . '/inc/customizer/controls/responsive-input-slider/control-responsive-input-slider.php';

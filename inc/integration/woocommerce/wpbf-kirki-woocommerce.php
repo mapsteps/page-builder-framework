@@ -351,7 +351,7 @@ Kirki::add_field( 'wpbf', array(
 
 // Products per row.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'responsive_font_size',
+	'type'     => 'responsive_input',
 	'settings' => 'woocommerce_loop_products_per_row',
 	'label'    => __( 'Products per Row', 'page-builder-framework' ),
 	'section'  => 'woocommerce_product_catalog',

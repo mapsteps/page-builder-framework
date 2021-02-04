@@ -1,9 +1,9 @@
 jQuery(document).ready(function ($) {
 
-    $('.wpbf-responsive-font-size-wrap .customize-control-slider-value').on('keyup', function () {
+    $('.wpbf-responsive-input-wrap .customize-control-slider-value').on('keyup', function () {
 
-        var parent = $(this).parents('.wpbf-responsive-font-size-wrap'),
-            dbstore_cache = $('.wpbf-responsive-font-size-db', parent),
+        var parent = $(this).parents('.wpbf-responsive-input-wrap'),
+            dbstore_cache = $('.wpbf-responsive-input-db', parent),
             dbstore = dbstore_cache.val(),
             device_type = $(this).data('device-type');
 
