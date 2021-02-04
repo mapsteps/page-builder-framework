@@ -56,10 +56,10 @@ class WPBF_Customize_Responsive_Padding_Control extends Kirki_Control_Base {
 
 		<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 
-				<?php $saved_value = isset( $value_bucket[$area .'_'. $device] ) ? $value_bucket[$area .'_'. $device] : ''; ?>
+				<?php $saved_value = isset( $value_bucket[$device .'_'. $area] ) ? $value_bucket[$device .'_'. $area] : ''; ?>
 
 			<label>
-				<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>"  class="customize-control-responsive-padding-value" data-area-device-type="<?php echo $area . '_'.$device; ?>">
+				<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>"  class="customize-control-responsive-padding-value" data-area-device-type="<?php echo $device . '_'.$area; ?>">
 				<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
 			</label>
 
