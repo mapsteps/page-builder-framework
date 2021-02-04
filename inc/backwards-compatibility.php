@@ -175,3 +175,63 @@ if ( $woocommerce_loop_products_per_row_desktop || $woocommerce_loop_products_pe
 	// remove_theme_mod( 'woocommerce_loop_products_per_row_mobile' );
 
 }
+
+$archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
+
+foreach ( $archives as $archive ) {
+
+	// Archive boxed padding.
+	$boxed_padding_top_desktop    = get_theme_mod( $archive . '_boxed_padding_top_desktop' );
+	$boxed_padding_right_desktop  = get_theme_mod( $archive . '_boxed_padding_right_desktop' );
+	$boxed_padding_bottom_desktop = get_theme_mod( $archive . '_boxed_padding_bottom_desktop' );
+	$boxed_padding_left_desktop   = get_theme_mod( $archive . '_boxed_padding_left_desktop' );
+
+	$boxed_padding_top_tablet     = get_theme_mod( $archive . '_boxed_padding_top_tablet' );
+	$boxed_padding_right_tablet   = get_theme_mod( $archive . '_boxed_padding_right_tablet' );
+	$boxed_padding_bottom_tablet  = get_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
+	$boxed_padding_left_tablet    = get_theme_mod( $archive . '_boxed_padding_left_tablet' );
+
+	$boxed_padding_top_mobile     = get_theme_mod( $archive . '_boxed_padding_top_mobile' );
+	$boxed_padding_right_mobile   = get_theme_mod( $archive . '_boxed_padding_right_mobile' );
+	$boxed_padding_bottom_mobile  = get_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
+	$boxed_padding_left_mobile    = get_theme_mod( $archive . '_boxed_padding_left_mobile' );
+
+	if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop || $boxed_padding_top_tablet || $boxed_padding_right_tablet || $boxed_padding_bottom_tablet || $boxed_padding_left_tablet || $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop || $boxed_padding_top_mobile || $boxed_padding_right_mobile || $boxed_padding_bottom_mobile || $boxed_padding_left_mobile ) {
+
+		$theme_mod_array = array( // Because on the booleon check on the output, it's okay to save "false" here if no value exists.
+			'desktop_top'    => $boxed_padding_top_desktop,
+			'desktop_right'  => $boxed_padding_right_desktop,
+			'desktop_bottom' => $boxed_padding_bottom_desktop,
+			'desktop_left'   => $boxed_padding_left_desktop,
+			'tablet_top'    => $boxed_padding_top_tablet,
+			'tablet_right'  => $boxed_padding_right_tablet,
+			'tablet_bottom' => $boxed_padding_bottom_tablet,
+			'tablet_left'   => $boxed_padding_left_tablet,
+			'mobile_top'    => $boxed_padding_top_mobile,
+			'mobile_right'  => $boxed_padding_right_mobile,
+			'mobile_bottom' => $boxed_padding_bottom_mobile,
+			'mobile_left'   => $boxed_padding_left_mobile,
+		);
+
+		$theme_mod_array = json_encode( $theme_mod_array, true );
+
+		// set_theme_mod( $archive . '_boxed_padding', $theme_mod_array );
+
+		// remove_theme_mod( $archive . '_boxed_padding_top_desktop' );
+		// remove_theme_mod( $archive . '_boxed_padding_right_desktop' );
+		// remove_theme_mod( $archive . '_boxed_padding_bottom_desktop' );
+		// remove_theme_mod( $archive . '_boxed_padding_left_desktop' );
+
+		// remove_theme_mod( $archive . '_boxed_padding_top_tablet' );
+		// remove_theme_mod( $archive . '_boxed_padding_right_tablet' );
+		// remove_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
+		// remove_theme_mod( $archive . '_boxed_padding_left_tablet' );
+
+		// remove_theme_mod( $archive . '_boxed_padding_top_mobile' );
+		// remove_theme_mod( $archive . '_boxed_padding_right_mobile' );
+		// remove_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
+		// remove_theme_mod( $archive . '_boxed_padding_left_mobile' );
+
+	}
+
+}
