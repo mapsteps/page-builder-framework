@@ -1,27 +1,39 @@
 <wpml-config>
-  <custom-fields>
-    <custom-field action="copy-once">wpbf_premium_options</custom-field>
-    <custom-field action="copy-once">wpbf_options</custom-field>
-    <custom-field action="copy-once">wpbf_sidebar_position</custom-field>
-  </custom-fields>
-  <admin-texts>
-    <key name="theme_mods_page-builder-framework">
-      <key name="menu_logo_url"/>
-      <key name="menu_logo_alt"/>
-      <key name="menu_logo_title"/>
-      <key name="blog_read_more_text"/>
-      <key name="blog_categories_title"/>
-      <key name="pre_header_column_one"/>
-      <key name="pre_header_column_two"/>
-      <key name="menu_custom"/>
-      <key name="menu_stacked_wysiwyg"/>
-      <key name="footer_column_one"/>
-      <key name="footer_column_two"/>
-      <key name="404_headline"/>
-      <key name="404_text"/>
-      <key name="404_custom"/>
-      <key name="cta_button_text"/>
-      <key name="cta_button_url"/>
-    </key>
-  </admin-texts>
+	<custom-fields>
+		<custom-field action="copy-once">wpbf_premium_options</custom-field>
+		<custom-field action="copy-once">wpbf_options</custom-field>
+		<custom-field action="copy-once">wpbf_sidebar_position</custom-field>
+		<custom-field action="copy-once">_wpbf_hook_location</custom-field>
+		<custom-field action="copy-once">_wpbf_hook_action</custom-field>
+		<custom-field action="copy-once">_wpbf_hook_priority</custom-field>
+		<custom-field action="copy-once">_wpbf_display_rule_parent</custom-field>
+		<custom-field action="copy-once">_wpbf_display_rule_child</custom-field>
+		<custom-field action="copy-once">_wpbf_exclusion_display_rule_parent</custom-field>
+		<custom-field action="copy-once">_wpbf_exclusion_display_rule_child</custom-field>
+		<custom-field action="copy-once">_wpbf_restrict_access</custom-field>
+		<custom-field action="copy-once">_wpbf_restrict_logged_users</custom-field>
+		<custom-field action="copy-once">_wpbf_hide_on_desktop</custom-field>
+		<custom-field action="copy-once">_wpbf_hide_on_tablet</custom-field>
+		<custom-field action="copy-once">_wpbf_hide_on_mobile</custom-field>
+	</custom-fields>
+	<admin-texts>
+		<key name="theme_mods_page-builder-framework">
+			<key name="menu_logo_url"/>
+			<key name="menu_logo_alt"/>
+			<key name="menu_logo_title"/>
+			<key name="blog_read_more_text"/>
+			<key name="blog_categories_title"/>
+			<key name="pre_header_column_one"/>
+			<key name="pre_header_column_two"/>
+			<key name="menu_custom"/>
+			<key name="menu_stacked_wysiwyg"/>
+			<key name="footer_column_one"/>
+			<key name="footer_column_two"/>
+			<key name="404_headline"/>
+			<key name="404_text"/>
+			<key name="404_custom"/>
+			<key name="cta_button_text"/>
+			<key name="cta_button_url"/>
+		</key>
+	</admin-texts>
 </wpml-config>
