@@ -101,6 +101,29 @@ if ( $menu_logo_font_size_desktop || $menu_logo_font_size_tablet || $menu_logo_f
 
 }
 
+// Tagline font size.
+$menu_logo_description_font_size_desktop = get_theme_mod( 'menu_logo_description_font_size_desktop' );
+$menu_logo_description_font_size_tablet  = get_theme_mod( 'menu_logo_description_font_size_tablet' );
+$menu_logo_description_font_size_mobile  = get_theme_mod( 'menu_logo_description_font_size_mobile' );
+
+if ( $menu_logo_description_font_size_desktop || $menu_logo_description_font_size_tablet || $menu_logo_description_font_size_mobile ) {
+
+	$theme_mod_array = array(
+		'desktop' => $menu_logo_description_font_size_desktop,
+		'tablet'  => $menu_logo_description_font_size_tablet,
+		'mobile'  => $menu_logo_description_font_size_mobile,
+	);
+
+	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+	// set_theme_mod( 'menu_logo_description_font_size', $theme_mod_array );
+
+	// remove_theme_mod( 'menu_logo_description_font_size_desktop' );
+	// remove_theme_mod( 'menu_logo_description_font_size_tablet' );
+	// remove_theme_mod( 'menu_logo_description_font_size_mobile' );
+
+}
+
 // Sub menu padding.
 $sub_menu_padding_top    = get_theme_mod( 'sub_menu_padding_top' );
 $sub_menu_padding_right  = get_theme_mod( 'sub_menu_padding_right' );
@@ -203,14 +226,14 @@ foreach ( $archives as $archive ) {
 			'desktop_right'  => $boxed_padding_right_desktop,
 			'desktop_bottom' => $boxed_padding_bottom_desktop,
 			'desktop_left'   => $boxed_padding_left_desktop,
-			'tablet_top'    => $boxed_padding_top_tablet,
-			'tablet_right'  => $boxed_padding_right_tablet,
-			'tablet_bottom' => $boxed_padding_bottom_tablet,
-			'tablet_left'   => $boxed_padding_left_tablet,
-			'mobile_top'    => $boxed_padding_top_mobile,
-			'mobile_right'  => $boxed_padding_right_mobile,
-			'mobile_bottom' => $boxed_padding_bottom_mobile,
-			'mobile_left'   => $boxed_padding_left_mobile,
+			'tablet_top'     => $boxed_padding_top_tablet,
+			'tablet_right'   => $boxed_padding_right_tablet,
+			'tablet_bottom'  => $boxed_padding_bottom_tablet,
+			'tablet_left'    => $boxed_padding_left_tablet,
+			'mobile_top'     => $boxed_padding_top_mobile,
+			'mobile_right'   => $boxed_padding_right_mobile,
+			'mobile_bottom'  => $boxed_padding_bottom_mobile,
+			'mobile_left'    => $boxed_padding_left_mobile,
 		);
 
 		$theme_mod_array = json_encode( $theme_mod_array, true );
@@ -233,5 +256,167 @@ foreach ( $archives as $archive ) {
 		// remove_theme_mod( $archive . '_boxed_padding_left_mobile' );
 
 	}
+
+}
+
+// Single boxed padding.
+$boxed_padding_top_desktop    = get_theme_mod( 'single_boxed_padding_top_desktop' );
+$boxed_padding_right_desktop  = get_theme_mod( 'single_boxed_padding_right_desktop' );
+$boxed_padding_bottom_desktop = get_theme_mod( 'single_boxed_padding_bottom_desktop' );
+$boxed_padding_left_desktop   = get_theme_mod( 'single_boxed_padding_left_desktop' );
+
+$boxed_padding_top_tablet     = get_theme_mod( 'single_boxed_padding_top_tablet' );
+$boxed_padding_right_tablet   = get_theme_mod( 'single_boxed_padding_right_tablet' );
+$boxed_padding_bottom_tablet  = get_theme_mod( 'single_boxed_padding_bottom_tablet' );
+$boxed_padding_left_tablet    = get_theme_mod( 'single_boxed_padding_left_tablet' );
+
+$boxed_padding_top_mobile     = get_theme_mod( 'single_boxed_padding_top_mobile' );
+$boxed_padding_right_mobile   = get_theme_mod( 'single_boxed_padding_right_mobile' );
+$boxed_padding_bottom_mobile  = get_theme_mod( 'single_boxed_padding_bottom_mobile' );
+$boxed_padding_left_mobile    = get_theme_mod( 'single_boxed_padding_left_mobile' );
+
+if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop || $boxed_padding_top_tablet || $boxed_padding_right_tablet || $boxed_padding_bottom_tablet || $boxed_padding_left_tablet || $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop || $boxed_padding_top_mobile || $boxed_padding_right_mobile || $boxed_padding_bottom_mobile || $boxed_padding_left_mobile ) {
+
+	$theme_mod_array = array( // Because on the booleon check on the output, it's okay to save "false" here if no value exists.
+		'desktop_top'    => $boxed_padding_top_desktop,
+		'desktop_right'  => $boxed_padding_right_desktop,
+		'desktop_bottom' => $boxed_padding_bottom_desktop,
+		'desktop_left'   => $boxed_padding_left_desktop,
+		'tablet_top'     => $boxed_padding_top_tablet,
+		'tablet_right'   => $boxed_padding_right_tablet,
+		'tablet_bottom'  => $boxed_padding_bottom_tablet,
+		'tablet_left'    => $boxed_padding_left_tablet,
+		'mobile_top'     => $boxed_padding_top_mobile,
+		'mobile_right'   => $boxed_padding_right_mobile,
+		'mobile_bottom'  => $boxed_padding_bottom_mobile,
+		'mobile_left'    => $boxed_padding_left_mobile,
+	);
+
+	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+	// set_theme_mod( 'single_boxed_padding', $theme_mod_array );
+
+	// remove_theme_mod( 'single_boxed_padding_top_desktop' );
+	// remove_theme_mod( 'single_boxed_padding_right_desktop' );
+	// remove_theme_mod( 'single_boxed_padding_bottom_desktop' );
+	// remove_theme_mod( 'single_boxed_padding_left_desktop' );
+
+	// remove_theme_mod( 'single_boxed_padding_top_tablet' );
+	// remove_theme_mod( 'single_boxed_padding_right_tablet' );
+	// remove_theme_mod( 'single_boxed_padding_bottom_tablet' );
+	// remove_theme_mod( 'single_boxed_padding_left_tablet' );
+
+	// remove_theme_mod( 'single_boxed_padding_top_mobile' );
+	// remove_theme_mod( 'single_boxed_padding_right_mobile' );
+	// remove_theme_mod( 'single_boxed_padding_bottom_mobile' );
+	// remove_theme_mod( 'single_boxed_padding_left_mobile' );
+
+}
+
+// Page padding.
+$page_padding_top_desktop    = get_theme_mod( 'page_padding_top_desktop' );
+$page_padding_right_desktop  = get_theme_mod( 'page_padding_right_desktop' );
+$page_padding_bottom_desktop = get_theme_mod( 'page_padding_bottom_desktop' );
+$page_padding_left_desktop   = get_theme_mod( 'page_padding_left_desktop' );
+
+$page_padding_top_tablet     = get_theme_mod( 'page_padding_top_tablet' );
+$page_padding_right_tablet   = get_theme_mod( 'page_padding_right_tablet' );
+$page_padding_bottom_tablet  = get_theme_mod( 'page_padding_bottom_tablet' );
+$page_padding_left_tablet    = get_theme_mod( 'page_padding_left_tablet' );
+
+$page_padding_top_mobile     = get_theme_mod( 'page_padding_top_mobile' );
+$page_padding_right_mobile   = get_theme_mod( 'page_padding_right_mobile' );
+$page_padding_bottom_mobile  = get_theme_mod( 'page_padding_bottom_mobile' );
+$page_padding_left_mobile    = get_theme_mod( 'page_padding_left_mobile' );
+
+if ( $page_padding_top_desktop || $page_padding_right_desktop || $page_padding_bottom_desktop || $page_padding_left_desktop || $page_padding_top_tablet || $page_padding_right_tablet || $page_padding_bottom_tablet || $page_padding_left_tablet || $page_padding_top_desktop || $page_padding_right_desktop || $page_padding_bottom_desktop || $page_padding_left_desktop || $page_padding_top_mobile || $page_padding_right_mobile || $page_padding_bottom_mobile || $page_padding_left_mobile ) {
+
+	$theme_mod_array = array( // Because on the booleon check on the output, it's okay to save "false" here if no value exists.
+		'desktop_top'    => $page_padding_top_desktop,
+		'desktop_right'  => $page_padding_right_desktop,
+		'desktop_bottom' => $page_padding_bottom_desktop,
+		'desktop_left'   => $page_padding_left_desktop,
+		'tablet_top'     => $page_padding_top_tablet,
+		'tablet_right'   => $page_padding_right_tablet,
+		'tablet_bottom'  => $page_padding_bottom_tablet,
+		'tablet_left'    => $page_padding_left_tablet,
+		'mobile_top'     => $page_padding_top_mobile,
+		'mobile_right'   => $page_padding_right_mobile,
+		'mobile_bottom'  => $page_padding_bottom_mobile,
+		'mobile_left'    => $page_padding_left_mobile,
+	);
+
+	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+	// set_theme_mod( 'page_padding', $theme_mod_array );
+
+	// remove_theme_mod( 'page_padding_top_desktop' );
+	// remove_theme_mod( 'page_padding_right_desktop' );
+	// remove_theme_mod( 'page_padding_bottom_desktop' );
+	// remove_theme_mod( 'page_padding_left_desktop' );
+
+	// remove_theme_mod( 'page_padding_top_tablet' );
+	// remove_theme_mod( 'page_padding_right_tablet' );
+	// remove_theme_mod( 'page_padding_bottom_tablet' );
+	// remove_theme_mod( 'page_padding_left_tablet' );
+
+	// remove_theme_mod( 'page_padding_top_mobile' );
+	// remove_theme_mod( 'page_padding_right_mobile' );
+	// remove_theme_mod( 'page_padding_bottom_mobile' );
+	// remove_theme_mod( 'page_padding_left_mobile' );
+
+}
+
+// Sidebar widget padding.
+$sidebar_widget_padding_top_desktop    = get_theme_mod( 'sidebar_widget_padding_top_desktop' );
+$sidebar_widget_padding_right_desktop  = get_theme_mod( 'sidebar_widget_padding_right_desktop' );
+$sidebar_widget_padding_bottom_desktop = get_theme_mod( 'sidebar_widget_padding_bottom_desktop' );
+$sidebar_widget_padding_left_desktop   = get_theme_mod( 'sidebar_widget_padding_left_desktop' );
+
+$sidebar_widget_padding_top_tablet     = get_theme_mod( 'sidebar_widget_padding_top_tablet' );
+$sidebar_widget_padding_right_tablet   = get_theme_mod( 'sidebar_widget_padding_right_tablet' );
+$sidebar_widget_padding_bottom_tablet  = get_theme_mod( 'sidebar_widget_padding_bottom_tablet' );
+$sidebar_widget_padding_left_tablet    = get_theme_mod( 'sidebar_widget_padding_left_tablet' );
+
+$sidebar_widget_padding_top_mobile     = get_theme_mod( 'sidebar_widget_padding_top_mobile' );
+$sidebar_widget_padding_right_mobile   = get_theme_mod( 'sidebar_widget_padding_right_mobile' );
+$sidebar_widget_padding_bottom_mobile  = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
+$sidebar_widget_padding_left_mobile    = get_theme_mod( 'sidebar_widget_padding_left_mobile' );
+
+if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_desktop || $sidebar_widget_padding_bottom_desktop || $sidebar_widget_padding_left_desktop || $sidebar_widget_padding_top_tablet || $sidebar_widget_padding_right_tablet || $sidebar_widget_padding_bottom_tablet || $sidebar_widget_padding_left_tablet || $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_desktop || $sidebar_widget_padding_bottom_desktop || $sidebar_widget_padding_left_desktop || $sidebar_widget_padding_top_mobile || $sidebar_widget_padding_right_mobile || $sidebar_widget_padding_bottom_mobile || $sidebar_widget_padding_left_mobile ) {
+
+	$theme_mod_array = array( // Because on the booleon check on the output, it's okay to save "false" here if no value exists.
+		'desktop_top'    => $sidebar_widget_padding_top_desktop,
+		'desktop_right'  => $sidebar_widget_padding_right_desktop,
+		'desktop_bottom' => $sidebar_widget_padding_bottom_desktop,
+		'desktop_left'   => $sidebar_widget_padding_left_desktop,
+		'tablet_top'     => $sidebar_widget_padding_top_tablet,
+		'tablet_right'   => $sidebar_widget_padding_right_tablet,
+		'tablet_bottom'  => $sidebar_widget_padding_bottom_tablet,
+		'tablet_left'    => $sidebar_widget_padding_left_tablet,
+		'mobile_top'     => $sidebar_widget_padding_top_mobile,
+		'mobile_right'   => $sidebar_widget_padding_right_mobile,
+		'mobile_bottom'  => $sidebar_widget_padding_bottom_mobile,
+		'mobile_left'    => $sidebar_widget_padding_left_mobile,
+	);
+
+	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+	// set_theme_mod( 'sidebar_widget_padding', $theme_mod_array );
+
+	// remove_theme_mod( 'sidebar_widget_padding_top_desktop' );
+	// remove_theme_mod( 'sidebar_widget_padding_right_desktop' );
+	// remove_theme_mod( 'sidebar_widget_padding_bottom_desktop' );
+	// remove_theme_mod( 'sidebar_widget_padding_left_desktop' );
+
+	// remove_theme_mod( 'sidebar_widget_padding_top_tablet' );
+	// remove_theme_mod( 'sidebar_widget_padding_right_tablet' );
+	// remove_theme_mod( 'sidebar_widget_padding_bottom_tablet' );
+	// remove_theme_mod( 'sidebar_widget_padding_left_tablet' );
+
+	// remove_theme_mod( 'sidebar_widget_padding_top_mobile' );
+	// remove_theme_mod( 'sidebar_widget_padding_right_mobile' );
+	// remove_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
+	// remove_theme_mod( 'sidebar_widget_padding_left_mobile' );
 
 }

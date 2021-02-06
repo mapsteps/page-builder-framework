@@ -1550,11 +1550,11 @@ Kirki::add_field( 'wpbf', array(
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'responsive_padding',
-	'label'     => __( 'Padding', 'page-builder-framework' ),
-	'section'   => 'wpbf_page_options',
-	'settings'  => 'page_padding',
-	'priority'  => 1,
+	'type'              => 'responsive_padding',
+	'label'             => __( 'Padding', 'page-builder-framework' ),
+	'section'           => 'wpbf_page_options',
+	'settings'          => 'page_padding',
+	'priority'          => 1,
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
 ) );
 
@@ -3352,7 +3352,7 @@ Kirki::add_field( 'wpbf', array(
 
 // Font size.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'responsive_padding',
+	'type'            => 'responsive_input_slider',
 	'label'           => __( 'Font Size', 'page-builder-framework' ),
 	'section'         => 'title_tagline',
 	'settings'        => 'menu_logo_description_font_size',
