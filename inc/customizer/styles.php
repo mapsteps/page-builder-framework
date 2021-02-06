@@ -1663,7 +1663,7 @@ $menu_logo_font_size         = json_decode( get_theme_mod( 'menu_logo_font_size'
 $menu_logo_font_size_desktop = isset( $menu_logo_font_size['desktop'] ) ? $menu_logo_font_size['desktop'] : false;
 $menu_logo_font_size_desktop = '22px' === $menu_logo_font_size_desktop ? false : $menu_logo_font_size_desktop;
 $menu_logo_font_size_tablet  = isset( $menu_logo_font_size['tablet'] ) ? $menu_logo_font_size['tablet'] : false;
-$menu_logo_font_size_mobile  = isset( $menu_logo_font_size['tablet'] ) ? $menu_logo_font_size['tablet'] : false;
+$menu_logo_font_size_mobile  = isset( $menu_logo_font_size['mobile'] ) ? $menu_logo_font_size['mobile'] : false;
 $menu_logo_color             = get_theme_mod( 'menu_logo_color' );
 $menu_logo_font_family_value = get_theme_mod( 'menu_logo_font_family' );
 $menu_logo_color_alt         = get_theme_mod( 'menu_logo_color_alt' );

@@ -219,9 +219,10 @@ add_filter( 'wpbf_archive_class', 'wpbf_woo_archive_class' );
  */
 function wpbf_woo_product_loop_start() {
 
-	$mobile_breakpoint  = get_theme_mod( 'woocommerce_loop_products_per_row_mobile', 1 );
-	$tablet_breakpoint  = get_theme_mod( 'woocommerce_loop_products_per_row_tablet', 3 );
-	$desktop_breakpoint = get_theme_mod( 'woocommerce_loop_products_per_row_desktop', 4 );
+	$products_per_row   = json_decode( get_theme_mod( 'woocommerce_loop_products_per_row' ), true );
+	$desktop_breakpoint = isset( $products_per_row['desktop'] ) ? $products_per_row['desktop'] : 4;
+	$tablet_breakpoint  = isset( $products_per_row['tablet'] ) ? $products_per_row['tablet'] : 3;
+	$mobile_breakpoint  = isset( $products_per_row['mobile'] ) ? $products_per_row['mobile'] : 1;
 	$grid_gap           = get_theme_mod( 'woocommerce_loop_grid_gap', 'large' );
 
 	return '<ul class="wpbf-grid wpbf-grid-' . esc_attr( $grid_gap ) . ' wpbf-grid-1-' . esc_attr( $mobile_breakpoint ) . ' wpbf-grid-small-1-' . esc_attr( $tablet_breakpoint ) . ' wpbf-grid-large-1-' . esc_attr( $desktop_breakpoint ) . ' products">';
