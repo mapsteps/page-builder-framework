@@ -53,7 +53,12 @@ if ( 'show' === $blog_comments ) {
 
 }
 
-/* Converted custom controls */
+/**
+ * Convert custom controls.
+ *
+ * From here downwards we convert previous custom/responsive customizer controls to be saved in a single theme_mod.
+ * This and the entire backwards compatibility might be removed after 1 year.
+ */
 
 // Logo size.
 $menu_logo_size_desktop = get_theme_mod( 'menu_logo_size_desktop' );
