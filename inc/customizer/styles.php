@@ -1659,17 +1659,18 @@ if ( $mobile_menu_logo_container_width ) {
 // Logo.
 $custom_logo                 = get_theme_mod( 'custom_logo' );
 $menu_logo_font_toggle       = get_theme_mod( 'menu_logo_font_toggle' );
-$menu_logo_font_size_desktop = ( $val = get_theme_mod( 'menu_logo_font_size_desktop' ) ) === '22px' ? false : $val;
-$menu_logo_font_size_tablet  = get_theme_mod( 'menu_logo_font_size_tablet' );
-$menu_logo_font_size_mobile  = get_theme_mod( 'menu_logo_font_size_mobile' );
+$menu_logo_font_size         = json_decode( get_theme_mod( 'menu_logo_font_size' ), true );
+$menu_logo_font_size_desktop = isset( $menu_logo_font_size['desktop'] ) ? $menu_logo_font_size['desktop'] : false;
+$menu_logo_font_size_desktop = '22px' === $menu_logo_font_size_desktop ? false : $menu_logo_font_size_desktop;
+$menu_logo_font_size_tablet  = isset( $menu_logo_font_size['tablet'] ) ? $menu_logo_font_size['tablet'] : false;
+$menu_logo_font_size_mobile  = isset( $menu_logo_font_size['tablet'] ) ? $menu_logo_font_size['tablet'] : false;
 $menu_logo_color             = get_theme_mod( 'menu_logo_color' );
 $menu_logo_font_family_value = get_theme_mod( 'menu_logo_font_family' );
 $menu_logo_color_alt         = get_theme_mod( 'menu_logo_color_alt' );
-$menu_logo_size              = get_theme_mod( 'menu_logo_size' ); // Backwards compatibility.
-$menu_mobile_logo_size       = get_theme_mod( 'menu_mobile_logo_size' ); // Backwards compatibility.
-$menu_logo_size_desktop      = get_theme_mod( 'menu_logo_size_desktop' );
-$menu_logo_size_tablet       = get_theme_mod( 'menu_logo_size_tablet' );
-$menu_logo_size_mobile       = get_theme_mod( 'menu_logo_size_mobile' );
+$menu_logo_size              = json_decode( get_theme_mod( 'menu_logo_size' ), true );
+$menu_logo_size_desktop      = isset( $menu_logo_size['desktop'] ) ? $menu_logo_size['desktop'] : false;
+$menu_logo_size_tablet       = isset( $menu_logo_size['tablet'] ) ? $menu_logo_size['tablet'] : false;
+$menu_logo_size_mobile       = isset( $menu_logo_size['mobile'] ) ? $menu_logo_size['mobile'] : false;
 
 if ( ! $custom_logo ) {
 
@@ -1762,24 +1763,6 @@ if ( ! $custom_logo ) {
 
 if ( $custom_logo ) {
 
-	// Backwards compatibility.
-	if ( $menu_logo_size && ! $menu_logo_size_desktop ) {
-
-		echo '.wpbf-logo img {';
-		echo sprintf( 'height: %s;', esc_attr( $menu_logo_size ) . 'px' );
-		echo '}';
-
-	}
-
-	// Backwards compatibility.
-	if ( $menu_mobile_logo_size && ! $menu_logo_size_tablet && ! $menu_logo_size_mobile ) {
-
-		echo '.wpbf-mobile-logo img {';
-		echo sprintf( 'height: %s;', esc_attr( $menu_mobile_logo_size ) . 'px' );
-		echo '}';
-
-	}
-
 	if ( $menu_logo_size_desktop ) {
 
 		$suffix = is_numeric( $menu_logo_size_desktop ) ? 'px' : '';
@@ -1819,9 +1802,10 @@ if ( $custom_logo ) {
 // Tagline.
 $menu_logo_description                   = get_theme_mod( 'menu_logo_description' );
 $menu_logo_description_toggle            = get_theme_mod( 'menu_logo_description_toggle' );
-$menu_logo_description_font_size_desktop = get_theme_mod( 'menu_logo_description_font_size_desktop' );
-$menu_logo_description_font_size_tablet  = get_theme_mod( 'menu_logo_description_font_size_tablet' );
-$menu_logo_description_font_size_mobile  = get_theme_mod( 'menu_logo_description_font_size_mobile' );
+$menu_logo_description_font_size         = json_decode( get_theme_mod( 'menu_logo_description_font_size' ), true );
+$menu_logo_description_font_size_desktop = isset( $menu_logo_description_font_size['desktop'] ) ? $menu_logo_description_font_size['desktop'] : false;
+$menu_logo_description_font_size_tablet  = isset( $menu_logo_description_font_size['tablet'] ) ? $menu_logo_description_font_size['tablet'] : false;
+$menu_logo_description_font_size_mobile  = isset( $menu_logo_description_font_size['mobile'] ) ? $menu_logo_description_font_size['mobile'] : false;
 $menu_logo_description_color             = get_theme_mod( 'menu_logo_description_color' );
 $menu_logo_description_font_family_value = get_theme_mod( 'menu_logo_description_font_family' );
 
@@ -1996,10 +1980,15 @@ if ( $menu_font_size ) {
 $sub_menu_bg_color         = ( $val = get_theme_mod( 'sub_menu_bg_color' ) ) === '#ffffff' ? false : $val;
 $sub_menu_bg_color_alt     = get_theme_mod( 'sub_menu_bg_color_alt' );
 $sub_menu_width            = ( $val = get_theme_mod( 'sub_menu_width' ) ) === '220' ? false : $val;
-$sub_menu_padding_top      = ( $val = get_theme_mod( 'sub_menu_padding_top' ) ) === 10 ? false : $val;
-$sub_menu_padding_right    = ( $val = get_theme_mod( 'sub_menu_padding_right' ) ) === 20 ? false : $val;
-$sub_menu_padding_bottom   = ( $val = get_theme_mod( 'sub_menu_padding_bottom' ) ) === 10 ? false : $val;
-$sub_menu_padding_left     = ( $val = get_theme_mod( 'sub_menu_padding_left' ) ) === 20 ? false : $val;
+$sub_menu_padding          = json_decode( get_theme_mod( 'sub_menu_padding' ), true );
+$sub_menu_padding_top      = isset( $sub_menu_padding['top'] ) ? $sub_menu_padding['top'] : false;
+$sub_menu_padding_right    = isset( $sub_menu_padding['right'] ) ? $sub_menu_padding['right'] : false;
+$sub_menu_padding_bottom   = isset( $sub_menu_padding['bottom'] ) ? $sub_menu_padding['bottom'] : false;
+$sub_menu_padding_left     = isset( $sub_menu_padding['left'] ) ? $sub_menu_padding['left'] : false;
+$sub_menu_padding_top      = 10 === $sub_menu_padding_top ? false : $sub_menu_padding_top;
+$sub_menu_padding_right    = 20 === $sub_menu_padding_right ? false : $sub_menu_padding_right;
+$sub_menu_padding_bottom   = 10 === $sub_menu_padding_bottom ? false : $sub_menu_padding_bottom;
+$sub_menu_padding_left     = 20 === $sub_menu_padding_left ? false : $sub_menu_padding_left;
 $sub_menu_accent_color     = get_theme_mod( 'sub_menu_accent_color' );
 $sub_menu_font_size        = get_theme_mod( 'sub_menu_font_size' );
 $sub_menu_accent_color_alt = get_theme_mod( 'sub_menu_accent_color_alt' );
@@ -2099,10 +2088,15 @@ if ( $sub_menu_accent_color_alt ) {
 // Mobile navigation.
 $mobile_menu_height                  = ( $val = get_theme_mod( 'mobile_menu_height' ) ) === '20' ? false : $val;
 $mobile_menu_background_color        = get_theme_mod( 'mobile_menu_background_color' );
-$mobile_menu_padding_top             = ( $val = get_theme_mod( 'mobile_menu_padding_top' ) ) === 10 ? false : $val;
-$mobile_menu_padding_right           = ( $val = get_theme_mod( 'mobile_menu_padding_right' ) ) === 20 ? false : $val;
-$mobile_menu_padding_bottom          = ( $val = get_theme_mod( 'mobile_menu_padding_bottom' ) ) === 10 ? false : $val;
-$mobile_menu_padding_left            = ( $val = get_theme_mod( 'mobile_menu_padding_left' ) ) === 20 ? false : $val;
+$mobile_menu_padding                 = json_decode( get_theme_mod( 'mobile_menu_padding' ), true );
+$mobile_menu_padding_top             = isset( $mobile_menu_padding['top'] ) ? $mobile_menu_padding['top'] : false;
+$mobile_menu_padding_right           = isset( $mobile_menu_padding['right'] ) ? $mobile_menu_padding['right'] : false;
+$mobile_menu_padding_bottom          = isset( $mobile_menu_padding['bottom'] ) ? $mobile_menu_padding['bottom'] : false;
+$mobile_menu_padding_left            = isset( $mobile_menu_padding['left'] ) ? $mobile_menu_padding['left'] : false;
+$mobile_menu_padding_top             = 10 === $mobile_menu_padding_top ? false : $mobile_menu_padding_top;
+$mobile_menu_padding_right           = 20 === $mobile_menu_padding_right ? false : $mobile_menu_padding_right;
+$mobile_menu_padding_bottom          = 10 === $mobile_menu_padding_bottom ? false : $mobile_menu_padding_bottom;
+$mobile_menu_padding_left            = 20 === $mobile_menu_padding_left ? false : $mobile_menu_padding_left;
 $mobile_menu_font_color              = get_theme_mod( 'mobile_menu_font_color' );
 $mobile_menu_font_color_alt          = get_theme_mod( 'mobile_menu_font_color_alt' );
 $mobile_menu_border_color            = ( $val = get_theme_mod( 'mobile_menu_border_color' ) ) === '#d9d9e0' ? false : $val;
