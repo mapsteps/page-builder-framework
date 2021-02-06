@@ -20,9 +20,9 @@ load_theme_textdomain( 'page-builder-framework' );
  */
 function wpbf_kirki_sanitize_helper( $callback ) {
 
-	return function( $value ) use ( $callback ) {
+	return function ( $value ) use ( $callback ) {
 
-		if( ! empty( $value ) ) {
+		if ( ! empty( $value ) ) {
 			$value = json_decode( trim( $value ), true );
 			$value = array_map( $callback, $value );
 			$value = json_encode( $value );
@@ -1086,12 +1086,12 @@ foreach ( $archives as $archive ) {
 
 	// Padding.
 	Kirki::add_field( 'wpbf', array(
-		'type'            => 'responsive_padding',
-		'label'           => __( 'Padding', 'page-builder-framework' ),
-		'section'         => 'wpbf_' . $archive . '_options',
-		'settings'        => $archive . '_boxed_padding',
-		'priority'        => 25,
-		'active_callback' => array(
+		'type'              => 'responsive_padding',
+		'label'             => __( 'Padding', 'page-builder-framework' ),
+		'section'           => 'wpbf_' . $archive . '_options',
+		'settings'          => $archive . '_boxed_padding',
+		'priority'          => 25,
+		'active_callback'   => array(
 			array(
 				'setting'  => $archive . '_post_style',
 				'operator' => '==',
@@ -1422,12 +1422,12 @@ foreach ( $singles as $single ) {
 
 	// Padding.
 	Kirki::add_field( 'wpbf', array(
-		'type'            => 'responsive_padding',
-		'label'           => __( 'Padding', 'page-builder-framework' ),
-		'section'         => 'wpbf_' . $single . '_options',
-		'settings'        => $single . '_boxed_padding',
-		'priority'        => 10,
-		'active_callback' => array(
+		'type'              => 'responsive_padding',
+		'label'             => __( 'Padding', 'page-builder-framework' ),
+		'section'           => 'wpbf_' . $single . '_options',
+		'settings'          => $single . '_boxed_padding',
+		'priority'          => 10,
+		'active_callback'   => array(
 			array(
 				'setting'  => $single . '_post_style',
 				'operator' => '==',
@@ -2045,11 +2045,11 @@ Kirki::add_field( 'wpbf', array(
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'responsive_padding',
-	'label'    => __( 'Widget Padding', 'page-builder-framework' ),
-	'section'  => 'wpbf_sidebar_options',
-	'settings' => 'sidebar_widget_padding',
-	'priority' => 3,
+	'type'              => 'responsive_padding',
+	'label'             => __( 'Widget Padding', 'page-builder-framework' ),
+	'section'           => 'wpbf_sidebar_options',
+	'settings'          => 'sidebar_widget_padding',
+	'priority'          => 3,
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
 ) );
 
@@ -3157,18 +3157,18 @@ Kirki::add_field( 'wpbf', array(
 
 // Size.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'responsive_input_slider',
-	'label'           => __( 'Logo Width', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'settings'        => 'menu_logo_size',
-	'priority'        => 2,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+	'type'              => 'responsive_input_slider',
+	'label'             => __( 'Logo Width', 'page-builder-framework' ),
+	'section'           => 'title_tagline',
+	'settings'          => 'menu_logo_size',
+	'priority'          => 2,
+	'transport'         => 'postMessage',
+	'choices'           => array(
 		'min'  => 0,
 		'max'  => 500,
 		'step' => 1,
 	),
-	'active_callback' => array(
+	'active_callback'   => array(
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '!=',
@@ -3229,25 +3229,25 @@ Kirki::add_field( 'wpbf', array(
 
 // Font size.
 Kirki::add_field( 'wpbf', array(
-	'type'             => 'responsive_input_slider',
-	'label'            => __( 'Font Size', 'page-builder-framework' ),
-	'section'          => 'title_tagline',
-	'settings'         => 'menu_logo_font_size',
-	'priority'         => 13,
-	'transport'        => 'postMessage',
-	'default'          => json_encode(
+	'type'              => 'responsive_input_slider',
+	'label'             => __( 'Font Size', 'page-builder-framework' ),
+	'section'           => 'title_tagline',
+	'settings'          => 'menu_logo_font_size',
+	'priority'          => 13,
+	'transport'         => 'postMessage',
+	'default'           => json_encode(
 		array(
 			'desktop' => '22px',
 			'tablet'  => '',
 			'mobile'  => '',
 		)
 	),
-	'choices'          => array(
+	'choices'           => array(
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
 	),
-	'active_callback' => array(
+	'active_callback'   => array(
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '==',
@@ -3352,18 +3352,18 @@ Kirki::add_field( 'wpbf', array(
 
 // Font size.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'responsive_input_slider',
-	'label'           => __( 'Font Size', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'settings'        => 'menu_logo_description_font_size',
-	'priority'        => 23,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+	'type'              => 'responsive_input_slider',
+	'label'             => __( 'Font Size', 'page-builder-framework' ),
+	'section'           => 'title_tagline',
+	'settings'          => 'menu_logo_description_font_size',
+	'priority'          => 23,
+	'transport'         => 'postMessage',
+	'choices'           => array(
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
 	),
-	'active_callback' => array(
+	'active_callback'   => array(
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '==',
@@ -3708,13 +3708,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'padding_control',
-	'label'     => __( 'Padding', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'settings'  => 'sub_menu_padding',
-	'priority'  => 2,
-	'transport' => 'postMessage',
-	'default'   => json_encode(
+	'type'              => 'padding_control',
+	'label'             => __( 'Padding', 'page-builder-framework' ),
+	'section'           => 'wpbf_sub_menu_options',
+	'settings'          => 'sub_menu_padding',
+	'priority'          => 2,
+	'transport'         => 'postMessage',
+	'default'           => json_encode(
 		array(
 			'top'    => '10px',
 			'right'  => '20px',
@@ -4029,13 +4029,13 @@ Kirki::add_field( 'wpbf', array(
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'padding_control',
-	'label'     => __( 'Padding', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_menu_options',
-	'settings'  => 'mobile_menu_padding',
-	'priority'  => 8,
-	'transport' => 'postMessage',
-	'default'   => json_encode(
+	'type'              => 'padding_control',
+	'label'             => __( 'Padding', 'page-builder-framework' ),
+	'section'           => 'wpbf_mobile_menu_options',
+	'settings'          => 'mobile_menu_padding',
+	'priority'          => 8,
+	'transport'         => 'postMessage',
+	'default'           => json_encode(
 		array(
 			'top'    => '10px',
 			'right'  => '20px',
@@ -4163,14 +4163,14 @@ if ( ! wpbf_is_premium() ) {
 
 // Indent.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'mobile_sub_menu_indent',
-	'label'           => __( 'Indent', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_sub_menu_options',
-	'priority'        => 8,
-	'default'         => 0,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+	'type'      => 'slider',
+	'settings'  => 'mobile_sub_menu_indent',
+	'label'     => __( 'Indent', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_sub_menu_options',
+	'priority'  => 8,
+	'default'   => 0,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
