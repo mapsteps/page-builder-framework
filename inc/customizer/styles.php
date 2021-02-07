@@ -323,18 +323,19 @@ $page_boxed_shadow_vertical   = ( $val = get_theme_mod( 'page_boxed_box_shadow_v
 $page_boxed_shadow_blur       = ( $val = get_theme_mod( 'page_boxed_box_shadow_blur' ) ) ? $val . 'px' : '25px';
 $page_boxed_shadow_spread     = ( $val = get_theme_mod( 'page_boxed_box_shadow_spread' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_color      = get_theme_mod( 'page_boxed_box_shadow_color', 'rgba(0,0,0,.15)' );
-$page_padding_top_desktop     = get_theme_mod( 'page_padding_top_desktop' );
-$page_padding_right_desktop   = get_theme_mod( 'page_padding_right_desktop' );
-$page_padding_bottom_desktop  = get_theme_mod( 'page_padding_bottom_desktop' );
-$page_padding_left_desktop    = get_theme_mod( 'page_padding_left_desktop' );
-$page_padding_top_tablet      = get_theme_mod( 'page_padding_top_tablet' );
-$page_padding_right_tablet    = get_theme_mod( 'page_padding_right_tablet' );
-$page_padding_bottom_tablet   = get_theme_mod( 'page_padding_bottom_tablet' );
-$page_padding_left_tablet     = get_theme_mod( 'page_padding_left_tablet' );
-$page_padding_top_mobile      = get_theme_mod( 'page_padding_top_mobile' );
-$page_padding_right_mobile    = get_theme_mod( 'page_padding_right_mobile' );
-$page_padding_bottom_mobile   = get_theme_mod( 'page_padding_bottom_mobile' );
-$page_padding_left_mobile     = get_theme_mod( 'page_padding_left_mobile' );
+$page_padding                 = json_decode( get_theme_mod( 'page_padding' ), true );
+$page_padding_top_desktop     = isset( $page_padding['desktop_top'] ) ? $page_padding['desktop_top'] : false;
+$page_padding_right_desktop   = isset( $page_padding['desktop_right'] ) ? $page_padding['desktop_right'] : false;
+$page_padding_bottom_desktop  = isset( $page_padding['desktop_bottom'] ) ? $page_padding['desktop_bottom'] : false;
+$page_padding_left_desktop    = isset( $page_padding['desktop_left'] ) ? $page_padding['desktop_left'] : false;
+$page_padding_top_tablet      = isset( $page_padding['tablet_top'] ) ? $page_padding['tablet_top'] : false;
+$page_padding_right_tablet    = isset( $page_padding['tablet_right'] ) ? $page_padding['tablet_right'] : false;
+$page_padding_bottom_tablet   = isset( $page_padding['tablet_bottom'] ) ? $page_padding['tablet_bottom'] : false;
+$page_padding_left_tablet     = isset( $page_padding['tablet_left'] ) ? $page_padding['tablet_left'] : false;
+$page_padding_top_mobile      = isset( $page_padding['mobile_top'] ) ? $page_padding['mobile_top'] : false;
+$page_padding_right_mobile    = isset( $page_padding['mobile_right'] ) ? $page_padding['mobile_right'] : false;
+$page_padding_bottom_mobile   = isset( $page_padding['mobile_bottom'] ) ? $page_padding['mobile_bottom'] : false;
+$page_padding_left_mobile     = isset( $page_padding['mobile_left'] ) ? $page_padding['mobile_left'] : false;
 
 if ( ! is_bool( $page_padding_top_desktop ) || is_bool( $page_padding_right_desktop ) || is_bool( $page_padding_bottom_desktop ) || is_bool( $page_padding_left_desktop ) ) {
 
@@ -810,18 +811,31 @@ if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 // Sidebar.
 $sidebar_bg_color                      = ( $val = get_theme_mod( 'sidebar_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $sidebar_width                         = ( $val = get_theme_mod( 'sidebar_width' ) ) === 33.3 ? false : $val;
-$sidebar_widget_padding_top_desktop    = ( $val = get_theme_mod( 'sidebar_widget_padding_top_desktop' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_right_desktop  = ( $val = get_theme_mod( 'sidebar_widget_padding_right_desktop' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_bottom_desktop = ( $val = get_theme_mod( 'sidebar_widget_padding_bottom_desktop' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_left_desktop   = ( $val = get_theme_mod( 'sidebar_widget_padding_left_desktop' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_top_tablet     = ( $val = get_theme_mod( 'sidebar_widget_padding_top_tablet' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_right_tablet   = ( $val = get_theme_mod( 'sidebar_widget_padding_right_tablet' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_bottom_tablet  = ( $val = get_theme_mod( 'sidebar_widget_padding_bottom_tablet' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_left_tablet    = ( $val = get_theme_mod( 'sidebar_widget_padding_left_tablet' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_top_mobile     = ( $val = get_theme_mod( 'sidebar_widget_padding_top_mobile' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_right_mobile   = ( $val = get_theme_mod( 'sidebar_widget_padding_right_mobile' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_bottom_mobile  = ( $val = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' ) ) === 20 ? false : $val;
-$sidebar_widget_padding_left_mobile    = ( $val = get_theme_mod( 'sidebar_widget_padding_left_mobile' ) ) === 20 ? false : $val;
+$sidebar_widget_padding                = json_decode( get_theme_mod( 'sidebar_widget_padding' ), true );
+$sidebar_widget_padding_top_desktop    = isset( $sidebar_widget_padding['desktop_top'] ) ? $sidebar_widget_padding['desktop_top'] : false;
+$sidebar_widget_padding_right_desktop  = isset( $sidebar_widget_padding['desktop_right'] ) ? $sidebar_widget_padding['desktop_right'] : false;
+$sidebar_widget_padding_bottom_desktop = isset( $sidebar_widget_padding['desktop_bottom'] ) ? $sidebar_widget_padding['desktop_bottom'] : false;
+$sidebar_widget_padding_left_desktop   = isset( $sidebar_widget_padding['desktop_left'] ) ? $sidebar_widget_padding['desktop_left'] : false;
+$sidebar_widget_padding_top_tablet     = isset( $sidebar_widget_padding['tablet_top'] ) ? $sidebar_widget_padding['tablet_top'] : false;
+$sidebar_widget_padding_right_tablet   = isset( $sidebar_widget_padding['tablet_right'] ) ? $sidebar_widget_padding['tablet_right'] : false;
+$sidebar_widget_padding_bottom_tablet  = isset( $sidebar_widget_padding['tablet_bottom'] ) ? $sidebar_widget_padding['tablet_bottom'] : false;
+$sidebar_widget_padding_left_tablet    = isset( $sidebar_widget_padding['tablet_left'] ) ? $sidebar_widget_padding['tablet_left'] : false;
+$sidebar_widget_padding_top_mobile     = isset( $sidebar_widget_padding['mobile_top'] ) ? $sidebar_widget_padding['mobile_top'] : false;
+$sidebar_widget_padding_right_mobile   = isset( $sidebar_widget_padding['mobile_right'] ) ? $sidebar_widget_padding['mobile_right'] : false;
+$sidebar_widget_padding_bottom_mobile  = isset( $sidebar_widget_padding['mobile_bottom'] ) ? $sidebar_widget_padding['mobile_bottom'] : false;
+$sidebar_widget_padding_left_mobile    = isset( $sidebar_widget_padding['mobile_left'] ) ? $sidebar_widget_padding['mobile_left'] : false;
+$sidebar_widget_padding_top_desktop    = 20 === $sidebar_widget_padding_top_desktop ? false : $sidebar_widget_padding_top_desktop;
+$sidebar_widget_padding_right_desktop  = 20 === $sidebar_widget_padding_right_desktop ? false : $sidebar_widget_padding_right_desktop;
+$sidebar_widget_padding_bottom_desktop = 20 === $sidebar_widget_padding_bottom_desktop ? false : $sidebar_widget_padding_bottom_desktop;
+$sidebar_widget_padding_left_desktop   = 20 === $sidebar_widget_padding_left_desktop ? false : $sidebar_widget_padding_left_desktop;
+$sidebar_widget_padding_top_tablet     = 20 === $sidebar_widget_padding_top_tablet ? false : $sidebar_widget_padding_top_tablet;
+$sidebar_widget_padding_right_tablet   = 20 === $sidebar_widget_padding_right_tablet ? false : $sidebar_widget_padding_right_tablet;
+$sidebar_widget_padding_bottom_tablet  = 20 === $sidebar_widget_padding_bottom_tablet ? false : $sidebar_widget_padding_bottom_tablet;
+$sidebar_widget_padding_left_tablet    = 20 === $sidebar_widget_padding_left_tablet ? false : $sidebar_widget_padding_left_tablet;
+$sidebar_widget_padding_top_mobile     = 20 === $sidebar_widget_padding_top_mobile ? false : $sidebar_widget_padding_top_mobile;
+$sidebar_widget_padding_right_mobile   = 20 === $sidebar_widget_padding_right_mobile ? false : $sidebar_widget_padding_right_mobile;
+$sidebar_widget_padding_bottom_mobile  = 20 === $sidebar_widget_padding_bottom_mobile ? false : $sidebar_widget_padding_bottom_mobile;
+$sidebar_widget_padding_left_mobile    = 20 === $sidebar_widget_padding_left_mobile ? false : $sidebar_widget_padding_left_mobile;
 
 if ( $sidebar_bg_color ) {
 
@@ -1165,18 +1179,19 @@ foreach ( $archives as $archive ) {
 
 		}
 
-		$boxed_padding_top_desktop    = get_theme_mod( $archive . '_boxed_padding_top_desktop' );
-		$boxed_padding_right_desktop  = get_theme_mod( $archive . '_boxed_padding_right_desktop' );
-		$boxed_padding_bottom_desktop = get_theme_mod( $archive . '_boxed_padding_bottom_desktop' );
-		$boxed_padding_left_desktop   = get_theme_mod( $archive . '_boxed_padding_left_desktop' );
-		$boxed_padding_top_tablet     = get_theme_mod( $archive . '_boxed_padding_top_tablet' );
-		$boxed_padding_right_tablet   = get_theme_mod( $archive . '_boxed_padding_right_tablet' );
-		$boxed_padding_bottom_tablet  = get_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
-		$boxed_padding_left_tablet    = get_theme_mod( $archive . '_boxed_padding_left_tablet' );
-		$boxed_padding_top_mobile     = get_theme_mod( $archive . '_boxed_padding_top_mobile' );
-		$boxed_padding_right_mobile   = get_theme_mod( $archive . '_boxed_padding_right_mobile' );
-		$boxed_padding_bottom_mobile  = get_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
-		$boxed_padding_left_mobile    = get_theme_mod( $archive . '_boxed_padding_left_mobile' );
+		$boxed_padding                = json_decode( get_theme_mod( $archive . '_boxed_padding' ), true );
+		$boxed_padding_top_desktop    = isset( $boxed_padding['desktop_top'] ) ? $boxed_padding['desktop_top'] : false;
+		$boxed_padding_right_desktop  = isset( $boxed_padding['desktop_right'] ) ? $boxed_padding['desktop_right'] : false;
+		$boxed_padding_bottom_desktop = isset( $boxed_padding['desktop_bottom'] ) ? $boxed_padding['desktop_bottom'] : false;
+		$boxed_padding_left_desktop   = isset( $boxed_padding['desktop_left'] ) ? $boxed_padding['desktop_left'] : false;
+		$boxed_padding_top_tablet     = isset( $boxed_padding['tablet_top'] ) ? $boxed_padding['tablet_top'] : false;
+		$boxed_padding_right_tablet   = isset( $boxed_padding['tablet_right'] ) ? $boxed_padding['tablet_right'] : false;
+		$boxed_padding_bottom_tablet  = isset( $boxed_padding['tablet_bottom'] ) ? $boxed_padding['tablet_bottom'] : false;
+		$boxed_padding_left_tablet    = isset( $boxed_padding['tablet_left'] ) ? $boxed_padding['tablet_left'] : false;
+		$boxed_padding_top_mobile     = isset( $boxed_padding['mobile_top'] ) ? $boxed_padding['mobile_top'] : false;
+		$boxed_padding_right_mobile   = isset( $boxed_padding['mobile_right'] ) ? $boxed_padding['mobile_right'] : false;
+		$boxed_padding_bottom_mobile  = isset( $boxed_padding['mobile_bottom'] ) ? $boxed_padding['mobile_bottom'] : false;
+		$boxed_padding_left_mobile    = isset( $boxed_padding['mobile_left'] ) ? $boxed_padding['mobile_left'] : false;
 
 		if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop ) {
 

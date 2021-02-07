@@ -2050,6 +2050,22 @@ Kirki::add_field( 'wpbf', array(
 	'section'           => 'wpbf_sidebar_options',
 	'settings'          => 'sidebar_widget_padding',
 	'priority'          => 3,
+	'default'           => json_encode(
+		array(
+			'desktop_top'    => 20,
+			'desktop_right'  => 20,
+			'desktop_bottom' => 20,
+			'desktop_left'   => 20,
+			'tablet_top'     => 20,
+			'tablet_right'   => 20,
+			'tablet_bottom'  => 20,
+			'tablet_left'    => 20,
+			'mobile_top'     => 20,
+			'mobile_right'   => 20,
+			'mobile_bottom'  => 20,
+			'mobile_left'    => 20,
+		),
+	),
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
 ) );
 
