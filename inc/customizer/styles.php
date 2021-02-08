@@ -1451,18 +1451,19 @@ foreach ( $singles as $single ) {
 		}
 
 		$stretched                    = get_theme_mod( $single . '_boxed_image_stretched', false );
-		$boxed_padding_top_desktop    = get_theme_mod( $single . '_boxed_padding_top_desktop' );
-		$boxed_padding_right_desktop  = get_theme_mod( $single . '_boxed_padding_right_desktop' );
-		$boxed_padding_bottom_desktop = get_theme_mod( $single . '_boxed_padding_bottom_desktop' );
-		$boxed_padding_left_desktop   = get_theme_mod( $single . '_boxed_padding_left_desktop' );
-		$boxed_padding_top_tablet     = get_theme_mod( $single . '_boxed_padding_top_tablet' );
-		$boxed_padding_right_tablet   = get_theme_mod( $single . '_boxed_padding_right_tablet' );
-		$boxed_padding_bottom_tablet  = get_theme_mod( $single . '_boxed_padding_bottom_tablet' );
-		$boxed_padding_left_tablet    = get_theme_mod( $single . '_boxed_padding_left_tablet' );
-		$boxed_padding_top_mobile     = get_theme_mod( $single . '_boxed_padding_top_mobile' );
-		$boxed_padding_right_mobile   = get_theme_mod( $single . '_boxed_padding_right_mobile' );
-		$boxed_padding_bottom_mobile  = get_theme_mod( $single . '_boxed_padding_bottom_mobile' );
-		$boxed_padding_left_mobile    = get_theme_mod( $single . '_boxed_padding_left_mobile' );
+		$boxed_padding                = json_decode( get_theme_mod( $single . '_boxed_padding' ), true );
+		$boxed_padding_top_desktop    = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_top' );
+		$boxed_padding_right_desktop  = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_right' );
+		$boxed_padding_bottom_desktop = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_bottom' );
+		$boxed_padding_left_desktop   = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_left' );
+		$boxed_padding_top_tablet     = wpbf_get_theme_mod_value( $boxed_padding, 'tablet_top' );
+		$boxed_padding_right_tablet   = wpbf_get_theme_mod_value( $boxed_padding, 'tablet_right' );
+		$boxed_padding_bottom_tablet  = wpbf_get_theme_mod_value( $boxed_padding, 'tablet_bottom' );
+		$boxed_padding_left_tablet    = wpbf_get_theme_mod_value( $boxed_padding, 'tablet_left' );
+		$boxed_padding_top_mobile     = wpbf_get_theme_mod_value( $boxed_padding, 'mobile_top' );
+		$boxed_padding_right_mobile   = wpbf_get_theme_mod_value( $boxed_padding, 'mobile_right' );
+		$boxed_padding_bottom_mobile  = wpbf_get_theme_mod_value( $boxed_padding, 'mobile_bottom' );
+		$boxed_padding_left_mobile    = wpbf_get_theme_mod_value( $boxed_padding, 'mobile_left' );
 
 		if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop ) {
 
