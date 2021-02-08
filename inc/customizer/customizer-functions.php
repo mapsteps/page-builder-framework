@@ -193,25 +193,31 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
  * @param array $array The decoded theme_mod array.
  * @param string $key The array key.
  * @param boolean $default The default to check against.
+ * @param booleon $print_default Wether the default value should be returned.
  *
  * @return mixed The key value.
  */
-function wpbf_get_theme_mod_value( $array, $key, $default = false ) {
+function wpbf_get_theme_mod_value( $array, $key, $default = false, $print_default = false ) {
 
-	// Stop here if no theme_mod was saved and we don't have an array.
-	if ( ! $array ) {
+	// Stop here if we have no array and we don't want to print a default.
+	if ( ! $array && ! $print_default ) {
 		return false;
 	}
 
 	// Initialize value.
 	$value = false;
 
-	// Get value by key.
+	// If we want to return a default, let's adjust the value.
+	if ( $default && $print_default ) {
+		$value = $default;
+	}
+
+	// Get & set the value by key if we have one.
 	$value = isset( $array[$key] ) ? $array[$key] : $value;
 
-	// We don't want to print defaults.
-	// If saved value matches default, we set value to false.
-	if ( $default ) {
+	// If we don't want to return a default and the saved
+	// value matches default, we set value back to false.
+	if ( $default & ! $print_default ) {
 		$value = $default === $value ? false : $value;
 	}
 
