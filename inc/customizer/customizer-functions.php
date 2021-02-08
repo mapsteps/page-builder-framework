@@ -187,6 +187,38 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
 	return;
 }
 
+/**
+ * Helper function to get theme_mod array values by key.
+ *
+ * @param array $array The decoded theme_mod array.
+ * @param string $key The array key.
+ * @param boolean $default The default to check against.
+ *
+ * @return mixed The key value.
+ */
+function wpbf_get_theme_mod_value( $array, $key, $default = false ) {
+
+	// Stop here if no theme_mod was saved and we don't have an array.
+	if ( ! $array ) {
+		return false;
+	}
+
+	// Initialize value.
+	$value = false;
+
+	// Get value by key.
+	$value = isset( $array[$key] ) ? $array[$key] : $value;
+
+	// We don't want to print defaults.
+	// If saved value matches default, we set value to false.
+	if ( $default ) {
+		$value = $default === $value ? false : $value;
+	}
+
+	return $value;
+
+}
+
 // Custom controls.
 require get_template_directory() . '/inc/customizer/controls/padding/control-padding.php';
 require get_template_directory() . '/inc/customizer/controls/input-slider/control-input-slider.php';

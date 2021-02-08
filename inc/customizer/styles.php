@@ -324,18 +324,18 @@ $page_boxed_shadow_blur       = ( $val = get_theme_mod( 'page_boxed_box_shadow_b
 $page_boxed_shadow_spread     = ( $val = get_theme_mod( 'page_boxed_box_shadow_spread' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_color      = get_theme_mod( 'page_boxed_box_shadow_color', 'rgba(0,0,0,.15)' );
 $page_padding                 = json_decode( get_theme_mod( 'page_padding' ), true );
-$page_padding_top_desktop     = isset( $page_padding['desktop_top'] ) ? $page_padding['desktop_top'] : false;
-$page_padding_right_desktop   = isset( $page_padding['desktop_right'] ) ? $page_padding['desktop_right'] : false;
-$page_padding_bottom_desktop  = isset( $page_padding['desktop_bottom'] ) ? $page_padding['desktop_bottom'] : false;
-$page_padding_left_desktop    = isset( $page_padding['desktop_left'] ) ? $page_padding['desktop_left'] : false;
-$page_padding_top_tablet      = isset( $page_padding['tablet_top'] ) ? $page_padding['tablet_top'] : false;
-$page_padding_right_tablet    = isset( $page_padding['tablet_right'] ) ? $page_padding['tablet_right'] : false;
-$page_padding_bottom_tablet   = isset( $page_padding['tablet_bottom'] ) ? $page_padding['tablet_bottom'] : false;
-$page_padding_left_tablet     = isset( $page_padding['tablet_left'] ) ? $page_padding['tablet_left'] : false;
-$page_padding_top_mobile      = isset( $page_padding['mobile_top'] ) ? $page_padding['mobile_top'] : false;
-$page_padding_right_mobile    = isset( $page_padding['mobile_right'] ) ? $page_padding['mobile_right'] : false;
-$page_padding_bottom_mobile   = isset( $page_padding['mobile_bottom'] ) ? $page_padding['mobile_bottom'] : false;
-$page_padding_left_mobile     = isset( $page_padding['mobile_left'] ) ? $page_padding['mobile_left'] : false;
+$page_padding_top_desktop     = wpbf_get_theme_mod_value( $page_padding, 'desktop_top' );
+$page_padding_right_desktop   = wpbf_get_theme_mod_value( $page_padding, 'desktop_right' );
+$page_padding_bottom_desktop  = wpbf_get_theme_mod_value( $page_padding, 'desktop_bottom' );
+$page_padding_left_desktop    = wpbf_get_theme_mod_value( $page_padding, 'desktop_left' );
+$page_padding_top_tablet      = wpbf_get_theme_mod_value( $page_padding, 'tablet_top' );
+$page_padding_right_tablet    = wpbf_get_theme_mod_value( $page_padding, 'tablet_right' );
+$page_padding_bottom_tablet   = wpbf_get_theme_mod_value( $page_padding, 'tablet_bottom' );
+$page_padding_left_tablet     = wpbf_get_theme_mod_value( $page_padding, 'tablet_left' );
+$page_padding_top_mobile      = wpbf_get_theme_mod_value( $page_padding, 'mobile_top' );
+$page_padding_right_mobile    = wpbf_get_theme_mod_value( $page_padding, 'mobile_right' );
+$page_padding_bottom_mobile   = wpbf_get_theme_mod_value( $page_padding, 'mobile_bottom' );
+$page_padding_left_mobile     = wpbf_get_theme_mod_value( $page_padding, 'mobile_left' );
 
 if ( ! is_bool( $page_padding_top_desktop ) || is_bool( $page_padding_right_desktop ) || is_bool( $page_padding_bottom_desktop ) || is_bool( $page_padding_left_desktop ) ) {
 
@@ -812,30 +812,18 @@ if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 $sidebar_bg_color                      = ( $val = get_theme_mod( 'sidebar_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $sidebar_width                         = ( $val = get_theme_mod( 'sidebar_width' ) ) === 33.3 ? false : $val;
 $sidebar_widget_padding                = json_decode( get_theme_mod( 'sidebar_widget_padding' ), true );
-$sidebar_widget_padding_top_desktop    = isset( $sidebar_widget_padding['desktop_top'] ) ? $sidebar_widget_padding['desktop_top'] : false;
-$sidebar_widget_padding_right_desktop  = isset( $sidebar_widget_padding['desktop_right'] ) ? $sidebar_widget_padding['desktop_right'] : false;
-$sidebar_widget_padding_bottom_desktop = isset( $sidebar_widget_padding['desktop_bottom'] ) ? $sidebar_widget_padding['desktop_bottom'] : false;
-$sidebar_widget_padding_left_desktop   = isset( $sidebar_widget_padding['desktop_left'] ) ? $sidebar_widget_padding['desktop_left'] : false;
-$sidebar_widget_padding_top_tablet     = isset( $sidebar_widget_padding['tablet_top'] ) ? $sidebar_widget_padding['tablet_top'] : false;
-$sidebar_widget_padding_right_tablet   = isset( $sidebar_widget_padding['tablet_right'] ) ? $sidebar_widget_padding['tablet_right'] : false;
-$sidebar_widget_padding_bottom_tablet  = isset( $sidebar_widget_padding['tablet_bottom'] ) ? $sidebar_widget_padding['tablet_bottom'] : false;
-$sidebar_widget_padding_left_tablet    = isset( $sidebar_widget_padding['tablet_left'] ) ? $sidebar_widget_padding['tablet_left'] : false;
-$sidebar_widget_padding_top_mobile     = isset( $sidebar_widget_padding['mobile_top'] ) ? $sidebar_widget_padding['mobile_top'] : false;
-$sidebar_widget_padding_right_mobile   = isset( $sidebar_widget_padding['mobile_right'] ) ? $sidebar_widget_padding['mobile_right'] : false;
-$sidebar_widget_padding_bottom_mobile  = isset( $sidebar_widget_padding['mobile_bottom'] ) ? $sidebar_widget_padding['mobile_bottom'] : false;
-$sidebar_widget_padding_left_mobile    = isset( $sidebar_widget_padding['mobile_left'] ) ? $sidebar_widget_padding['mobile_left'] : false;
-$sidebar_widget_padding_top_desktop    = 20 === $sidebar_widget_padding_top_desktop ? false : $sidebar_widget_padding_top_desktop;
-$sidebar_widget_padding_right_desktop  = 20 === $sidebar_widget_padding_right_desktop ? false : $sidebar_widget_padding_right_desktop;
-$sidebar_widget_padding_bottom_desktop = 20 === $sidebar_widget_padding_bottom_desktop ? false : $sidebar_widget_padding_bottom_desktop;
-$sidebar_widget_padding_left_desktop   = 20 === $sidebar_widget_padding_left_desktop ? false : $sidebar_widget_padding_left_desktop;
-$sidebar_widget_padding_top_tablet     = 20 === $sidebar_widget_padding_top_tablet ? false : $sidebar_widget_padding_top_tablet;
-$sidebar_widget_padding_right_tablet   = 20 === $sidebar_widget_padding_right_tablet ? false : $sidebar_widget_padding_right_tablet;
-$sidebar_widget_padding_bottom_tablet  = 20 === $sidebar_widget_padding_bottom_tablet ? false : $sidebar_widget_padding_bottom_tablet;
-$sidebar_widget_padding_left_tablet    = 20 === $sidebar_widget_padding_left_tablet ? false : $sidebar_widget_padding_left_tablet;
-$sidebar_widget_padding_top_mobile     = 20 === $sidebar_widget_padding_top_mobile ? false : $sidebar_widget_padding_top_mobile;
-$sidebar_widget_padding_right_mobile   = 20 === $sidebar_widget_padding_right_mobile ? false : $sidebar_widget_padding_right_mobile;
-$sidebar_widget_padding_bottom_mobile  = 20 === $sidebar_widget_padding_bottom_mobile ? false : $sidebar_widget_padding_bottom_mobile;
-$sidebar_widget_padding_left_mobile    = 20 === $sidebar_widget_padding_left_mobile ? false : $sidebar_widget_padding_left_mobile;
+$sidebar_widget_padding_top_desktop    = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'desktop_top', 20 );
+$sidebar_widget_padding_right_desktop  = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'desktop_right', 20 );
+$sidebar_widget_padding_bottom_desktop = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'desktop_bottom', 20 );
+$sidebar_widget_padding_left_desktop   = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'desktop_left', 20 );
+$sidebar_widget_padding_top_tablet     = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'tablet_top', 20 );
+$sidebar_widget_padding_right_tablet   = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'tablet_right', 20 );
+$sidebar_widget_padding_bottom_tablet  = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'tablet_bottom', 20 );
+$sidebar_widget_padding_left_tablet    = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'tablet_left', 20 );
+$sidebar_widget_padding_top_mobile     = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'mobile_top', 20 );
+$sidebar_widget_padding_right_mobile   = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'mobile_right', 20 );
+$sidebar_widget_padding_bottom_mobile  = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'mobile_bottom', 20 );
+$sidebar_widget_padding_left_mobile    = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'mobile_left', 20 );
 
 if ( $sidebar_bg_color ) {
 
@@ -1180,18 +1168,18 @@ foreach ( $archives as $archive ) {
 		}
 
 		$boxed_padding                = json_decode( get_theme_mod( $archive . '_boxed_padding' ), true );
-		$boxed_padding_top_desktop    = isset( $boxed_padding['desktop_top'] ) ? $boxed_padding['desktop_top'] : false;
-		$boxed_padding_right_desktop  = isset( $boxed_padding['desktop_right'] ) ? $boxed_padding['desktop_right'] : false;
-		$boxed_padding_bottom_desktop = isset( $boxed_padding['desktop_bottom'] ) ? $boxed_padding['desktop_bottom'] : false;
-		$boxed_padding_left_desktop   = isset( $boxed_padding['desktop_left'] ) ? $boxed_padding['desktop_left'] : false;
-		$boxed_padding_top_tablet     = isset( $boxed_padding['tablet_top'] ) ? $boxed_padding['tablet_top'] : false;
-		$boxed_padding_right_tablet   = isset( $boxed_padding['tablet_right'] ) ? $boxed_padding['tablet_right'] : false;
-		$boxed_padding_bottom_tablet  = isset( $boxed_padding['tablet_bottom'] ) ? $boxed_padding['tablet_bottom'] : false;
-		$boxed_padding_left_tablet    = isset( $boxed_padding['tablet_left'] ) ? $boxed_padding['tablet_left'] : false;
-		$boxed_padding_top_mobile     = isset( $boxed_padding['mobile_top'] ) ? $boxed_padding['mobile_top'] : false;
-		$boxed_padding_right_mobile   = isset( $boxed_padding['mobile_right'] ) ? $boxed_padding['mobile_right'] : false;
-		$boxed_padding_bottom_mobile  = isset( $boxed_padding['mobile_bottom'] ) ? $boxed_padding['mobile_bottom'] : false;
-		$boxed_padding_left_mobile    = isset( $boxed_padding['mobile_left'] ) ? $boxed_padding['mobile_left'] : false;
+		$boxed_padding_top_desktop    = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_top' );
+		$boxed_padding_right_desktop  = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_right' );
+		$boxed_padding_bottom_desktop = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_bottom' );
+		$boxed_padding_left_desktop   = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_left' );
+		$boxed_padding_top_tablet     = wpbf_get_theme_mod_value( $boxed_padding, 'tablet_top' );
+		$boxed_padding_right_tablet   = wpbf_get_theme_mod_value( $boxed_padding, 'tablet_right' );
+		$boxed_padding_bottom_tablet  = wpbf_get_theme_mod_value( $boxed_padding, 'tablet_bottom' );
+		$boxed_padding_left_tablet    = wpbf_get_theme_mod_value( $boxed_padding, 'tablet_left' );
+		$boxed_padding_top_mobile     = wpbf_get_theme_mod_value( $boxed_padding, 'mobile_top' );
+		$boxed_padding_right_mobile   = wpbf_get_theme_mod_value( $boxed_padding, 'mobile_right' );
+		$boxed_padding_bottom_mobile  = wpbf_get_theme_mod_value( $boxed_padding, 'mobile_bottom' );
+		$boxed_padding_left_mobile    = wpbf_get_theme_mod_value( $boxed_padding, 'mobile_left' );
 
 		if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop ) {
 
@@ -1675,17 +1663,16 @@ if ( $mobile_menu_logo_container_width ) {
 $custom_logo                 = get_theme_mod( 'custom_logo' );
 $menu_logo_font_toggle       = get_theme_mod( 'menu_logo_font_toggle' );
 $menu_logo_font_size         = json_decode( get_theme_mod( 'menu_logo_font_size' ), true );
-$menu_logo_font_size_desktop = isset( $menu_logo_font_size['desktop'] ) ? $menu_logo_font_size['desktop'] : false;
-$menu_logo_font_size_desktop = '22px' === $menu_logo_font_size_desktop ? false : $menu_logo_font_size_desktop;
-$menu_logo_font_size_tablet  = isset( $menu_logo_font_size['tablet'] ) ? $menu_logo_font_size['tablet'] : false;
-$menu_logo_font_size_mobile  = isset( $menu_logo_font_size['mobile'] ) ? $menu_logo_font_size['mobile'] : false;
+$menu_logo_font_size_desktop = wpbf_get_theme_mod_value( $menu_logo_font_size, 'desktop', '22px' );
+$menu_logo_font_size_tablet  = wpbf_get_theme_mod_value( $menu_logo_font_size, 'tablet' );
+$menu_logo_font_size_mobile  = wpbf_get_theme_mod_value( $menu_logo_font_size, 'mobile' );
 $menu_logo_color             = get_theme_mod( 'menu_logo_color' );
 $menu_logo_font_family_value = get_theme_mod( 'menu_logo_font_family' );
 $menu_logo_color_alt         = get_theme_mod( 'menu_logo_color_alt' );
 $menu_logo_size              = json_decode( get_theme_mod( 'menu_logo_size' ), true );
-$menu_logo_size_desktop      = isset( $menu_logo_size['desktop'] ) ? $menu_logo_size['desktop'] : false;
-$menu_logo_size_tablet       = isset( $menu_logo_size['tablet'] ) ? $menu_logo_size['tablet'] : false;
-$menu_logo_size_mobile       = isset( $menu_logo_size['mobile'] ) ? $menu_logo_size['mobile'] : false;
+$menu_logo_size_desktop      = wpbf_get_theme_mod_value( $menu_logo_size, 'desktop' );
+$menu_logo_size_tablet       = wpbf_get_theme_mod_value( $menu_logo_size, 'tablet' );
+$menu_logo_size_mobile       = wpbf_get_theme_mod_value( $menu_logo_size, 'mobile' );
 
 if ( ! $custom_logo ) {
 
@@ -1818,9 +1805,9 @@ if ( $custom_logo ) {
 $menu_logo_description                   = get_theme_mod( 'menu_logo_description' );
 $menu_logo_description_toggle            = get_theme_mod( 'menu_logo_description_toggle' );
 $menu_logo_description_font_size         = json_decode( get_theme_mod( 'menu_logo_description_font_size' ), true );
-$menu_logo_description_font_size_desktop = isset( $menu_logo_description_font_size['desktop'] ) ? $menu_logo_description_font_size['desktop'] : false;
-$menu_logo_description_font_size_tablet  = isset( $menu_logo_description_font_size['tablet'] ) ? $menu_logo_description_font_size['tablet'] : false;
-$menu_logo_description_font_size_mobile  = isset( $menu_logo_description_font_size['mobile'] ) ? $menu_logo_description_font_size['mobile'] : false;
+$menu_logo_description_font_size_desktop = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'desktop' );
+$menu_logo_description_font_size_tablet  = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'tablet' );
+$menu_logo_description_font_size_mobile  = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'mobile' );
 $menu_logo_description_color             = get_theme_mod( 'menu_logo_description_color' );
 $menu_logo_description_font_family_value = get_theme_mod( 'menu_logo_description_font_family' );
 
@@ -1996,14 +1983,10 @@ $sub_menu_bg_color         = ( $val = get_theme_mod( 'sub_menu_bg_color' ) ) ===
 $sub_menu_bg_color_alt     = get_theme_mod( 'sub_menu_bg_color_alt' );
 $sub_menu_width            = ( $val = get_theme_mod( 'sub_menu_width' ) ) === '220' ? false : $val;
 $sub_menu_padding          = json_decode( get_theme_mod( 'sub_menu_padding' ), true );
-$sub_menu_padding_top      = isset( $sub_menu_padding['top'] ) ? $sub_menu_padding['top'] : false;
-$sub_menu_padding_right    = isset( $sub_menu_padding['right'] ) ? $sub_menu_padding['right'] : false;
-$sub_menu_padding_bottom   = isset( $sub_menu_padding['bottom'] ) ? $sub_menu_padding['bottom'] : false;
-$sub_menu_padding_left     = isset( $sub_menu_padding['left'] ) ? $sub_menu_padding['left'] : false;
-$sub_menu_padding_top      = 10 === $sub_menu_padding_top ? false : $sub_menu_padding_top;
-$sub_menu_padding_right    = 20 === $sub_menu_padding_right ? false : $sub_menu_padding_right;
-$sub_menu_padding_bottom   = 10 === $sub_menu_padding_bottom ? false : $sub_menu_padding_bottom;
-$sub_menu_padding_left     = 20 === $sub_menu_padding_left ? false : $sub_menu_padding_left;
+$sub_menu_padding_top      = wpbf_get_theme_mod_value( $sub_menu_padding, 'top', 10 );
+$sub_menu_padding_right    = wpbf_get_theme_mod_value( $sub_menu_padding, 'right', 20 );
+$sub_menu_padding_bottom   = wpbf_get_theme_mod_value( $sub_menu_padding, 'bottom', 10 );
+$sub_menu_padding_left     = wpbf_get_theme_mod_value( $sub_menu_padding, 'left', 20 );
 $sub_menu_accent_color     = get_theme_mod( 'sub_menu_accent_color' );
 $sub_menu_font_size        = get_theme_mod( 'sub_menu_font_size' );
 $sub_menu_accent_color_alt = get_theme_mod( 'sub_menu_accent_color_alt' );
@@ -2104,14 +2087,10 @@ if ( $sub_menu_accent_color_alt ) {
 $mobile_menu_height                  = ( $val = get_theme_mod( 'mobile_menu_height' ) ) === '20' ? false : $val;
 $mobile_menu_background_color        = get_theme_mod( 'mobile_menu_background_color' );
 $mobile_menu_padding                 = json_decode( get_theme_mod( 'mobile_menu_padding' ), true );
-$mobile_menu_padding_top             = isset( $mobile_menu_padding['top'] ) ? $mobile_menu_padding['top'] : false;
-$mobile_menu_padding_right           = isset( $mobile_menu_padding['right'] ) ? $mobile_menu_padding['right'] : false;
-$mobile_menu_padding_bottom          = isset( $mobile_menu_padding['bottom'] ) ? $mobile_menu_padding['bottom'] : false;
-$mobile_menu_padding_left            = isset( $mobile_menu_padding['left'] ) ? $mobile_menu_padding['left'] : false;
-$mobile_menu_padding_top             = 10 === $mobile_menu_padding_top ? false : $mobile_menu_padding_top;
-$mobile_menu_padding_right           = 20 === $mobile_menu_padding_right ? false : $mobile_menu_padding_right;
-$mobile_menu_padding_bottom          = 10 === $mobile_menu_padding_bottom ? false : $mobile_menu_padding_bottom;
-$mobile_menu_padding_left            = 20 === $mobile_menu_padding_left ? false : $mobile_menu_padding_left;
+$mobile_menu_padding_top             = wpbf_get_theme_mod_value( $sub_menu_padding, 'top', 10 );
+$mobile_menu_padding_right           = wpbf_get_theme_mod_value( $sub_menu_padding, 'right', 20 );
+$mobile_menu_padding_bottom          = wpbf_get_theme_mod_value( $sub_menu_padding, 'bottom', 10 );
+$mobile_menu_padding_left            = wpbf_get_theme_mod_value( $sub_menu_padding, 'left', 20 );
 $mobile_menu_font_color              = get_theme_mod( 'mobile_menu_font_color' );
 $mobile_menu_font_color_alt          = get_theme_mod( 'mobile_menu_font_color_alt' );
 $mobile_menu_border_color            = ( $val = get_theme_mod( 'mobile_menu_border_color' ) ) === '#d9d9e0' ? false : $val;
