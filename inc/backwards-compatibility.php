@@ -75,11 +75,11 @@ if ( $menu_logo_size_desktop || $menu_logo_size_tablet || $menu_logo_size_mobile
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'menu_logo_size', $theme_mod_array );
+	set_theme_mod( 'menu_logo_size', $theme_mod_array );
 
-	// remove_theme_mod( 'menu_logo_size_desktop' );
-	// remove_theme_mod( 'menu_logo_size_tablet' );
-	// remove_theme_mod( 'menu_logo_size_mobile' );
+	remove_theme_mod( 'menu_logo_size_desktop' );
+	remove_theme_mod( 'menu_logo_size_tablet' );
+	remove_theme_mod( 'menu_logo_size_mobile' );
 
 }
 
@@ -98,11 +98,11 @@ if ( $menu_logo_font_size_desktop || $menu_logo_font_size_tablet || $menu_logo_f
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'menu_logo_font_size', $theme_mod_array );
+	set_theme_mod( 'menu_logo_font_size', $theme_mod_array );
 
-	// remove_theme_mod( 'menu_logo_font_size_desktop' );
-	// remove_theme_mod( 'menu_logo_font_size_tablet' );
-	// remove_theme_mod( 'menu_logo_font_size_mobile' );
+	remove_theme_mod( 'menu_logo_font_size_desktop' );
+	remove_theme_mod( 'menu_logo_font_size_tablet' );
+	remove_theme_mod( 'menu_logo_font_size_mobile' );
 
 }
 
@@ -121,11 +121,11 @@ if ( $menu_logo_description_font_size_desktop || $menu_logo_description_font_siz
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'menu_logo_description_font_size', $theme_mod_array );
+	set_theme_mod( 'menu_logo_description_font_size', $theme_mod_array );
 
-	// remove_theme_mod( 'menu_logo_description_font_size_desktop' );
-	// remove_theme_mod( 'menu_logo_description_font_size_tablet' );
-	// remove_theme_mod( 'menu_logo_description_font_size_mobile' );
+	remove_theme_mod( 'menu_logo_description_font_size_desktop' );
+	remove_theme_mod( 'menu_logo_description_font_size_tablet' );
+	remove_theme_mod( 'menu_logo_description_font_size_mobile' );
 
 }
 
@@ -146,12 +146,12 @@ if ( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_botto
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'sub_menu_padding', $theme_mod_array );
+	set_theme_mod( 'sub_menu_padding', $theme_mod_array );
 
-	// remove_theme_mod( 'sub_menu_padding_top' );
-	// remove_theme_mod( 'sub_menu_padding_right' );
-	// remove_theme_mod( 'sub_menu_padding_bottom' );
-	// remove_theme_mod( 'sub_menu_padding_left' );
+	remove_theme_mod( 'sub_menu_padding_top' );
+	remove_theme_mod( 'sub_menu_padding_right' );
+	remove_theme_mod( 'sub_menu_padding_bottom' );
+	remove_theme_mod( 'sub_menu_padding_left' );
 
 }
 
@@ -172,12 +172,12 @@ if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padd
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'mobile_menu_padding', $theme_mod_array );
+	set_theme_mod( 'mobile_menu_padding', $theme_mod_array );
 
-	// remove_theme_mod( 'mobile_menu_padding_top' );
-	// remove_theme_mod( 'mobile_menu_padding_right' );
-	// remove_theme_mod( 'mobile_menu_padding_bottom' );
-	// remove_theme_mod( 'mobile_menu_padding_left' );
+	remove_theme_mod( 'mobile_menu_padding_top' );
+	remove_theme_mod( 'mobile_menu_padding_right' );
+	remove_theme_mod( 'mobile_menu_padding_bottom' );
+	remove_theme_mod( 'mobile_menu_padding_left' );
 
 }
 
@@ -196,11 +196,11 @@ if ( $woocommerce_loop_products_per_row_desktop || $woocommerce_loop_products_pe
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'woocommerce_loop_products_per_row', $theme_mod_array );
+	set_theme_mod( 'woocommerce_loop_products_per_row', $theme_mod_array );
 
-	// remove_theme_mod( 'woocommerce_loop_products_per_row_desktop' );
-	// remove_theme_mod( 'woocommerce_loop_products_per_row_tablet' );
-	// remove_theme_mod( 'woocommerce_loop_products_per_row_mobile' );
+	remove_theme_mod( 'woocommerce_loop_products_per_row_desktop' );
+	remove_theme_mod( 'woocommerce_loop_products_per_row_tablet' );
+	remove_theme_mod( 'woocommerce_loop_products_per_row_mobile' );
 
 }
 
@@ -243,22 +243,22 @@ foreach ( $archives as $archive ) {
 
 		$theme_mod_array = json_encode( $theme_mod_array, true );
 
-		// set_theme_mod( $archive . '_boxed_padding', $theme_mod_array );
+		set_theme_mod( $archive . '_boxed_padding', $theme_mod_array );
 
-		// remove_theme_mod( $archive . '_boxed_padding_top_desktop' );
-		// remove_theme_mod( $archive . '_boxed_padding_right_desktop' );
-		// remove_theme_mod( $archive . '_boxed_padding_bottom_desktop' );
-		// remove_theme_mod( $archive . '_boxed_padding_left_desktop' );
+		remove_theme_mod( $archive . '_boxed_padding_top_desktop' );
+		remove_theme_mod( $archive . '_boxed_padding_right_desktop' );
+		remove_theme_mod( $archive . '_boxed_padding_bottom_desktop' );
+		remove_theme_mod( $archive . '_boxed_padding_left_desktop' );
 
-		// remove_theme_mod( $archive . '_boxed_padding_top_tablet' );
-		// remove_theme_mod( $archive . '_boxed_padding_right_tablet' );
-		// remove_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
-		// remove_theme_mod( $archive . '_boxed_padding_left_tablet' );
+		remove_theme_mod( $archive . '_boxed_padding_top_tablet' );
+		remove_theme_mod( $archive . '_boxed_padding_right_tablet' );
+		remove_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
+		remove_theme_mod( $archive . '_boxed_padding_left_tablet' );
 
-		// remove_theme_mod( $archive . '_boxed_padding_top_mobile' );
-		// remove_theme_mod( $archive . '_boxed_padding_right_mobile' );
-		// remove_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
-		// remove_theme_mod( $archive . '_boxed_padding_left_mobile' );
+		remove_theme_mod( $archive . '_boxed_padding_top_mobile' );
+		remove_theme_mod( $archive . '_boxed_padding_right_mobile' );
+		remove_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
+		remove_theme_mod( $archive . '_boxed_padding_left_mobile' );
 
 	}
 
@@ -299,22 +299,22 @@ if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_paddin
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'single_boxed_padding', $theme_mod_array );
+	set_theme_mod( 'single_boxed_padding', $theme_mod_array );
 
-	// remove_theme_mod( 'single_boxed_padding_top_desktop' );
-	// remove_theme_mod( 'single_boxed_padding_right_desktop' );
-	// remove_theme_mod( 'single_boxed_padding_bottom_desktop' );
-	// remove_theme_mod( 'single_boxed_padding_left_desktop' );
+	remove_theme_mod( 'single_boxed_padding_top_desktop' );
+	remove_theme_mod( 'single_boxed_padding_right_desktop' );
+	remove_theme_mod( 'single_boxed_padding_bottom_desktop' );
+	remove_theme_mod( 'single_boxed_padding_left_desktop' );
 
-	// remove_theme_mod( 'single_boxed_padding_top_tablet' );
-	// remove_theme_mod( 'single_boxed_padding_right_tablet' );
-	// remove_theme_mod( 'single_boxed_padding_bottom_tablet' );
-	// remove_theme_mod( 'single_boxed_padding_left_tablet' );
+	remove_theme_mod( 'single_boxed_padding_top_tablet' );
+	remove_theme_mod( 'single_boxed_padding_right_tablet' );
+	remove_theme_mod( 'single_boxed_padding_bottom_tablet' );
+	remove_theme_mod( 'single_boxed_padding_left_tablet' );
 
-	// remove_theme_mod( 'single_boxed_padding_top_mobile' );
-	// remove_theme_mod( 'single_boxed_padding_right_mobile' );
-	// remove_theme_mod( 'single_boxed_padding_bottom_mobile' );
-	// remove_theme_mod( 'single_boxed_padding_left_mobile' );
+	remove_theme_mod( 'single_boxed_padding_top_mobile' );
+	remove_theme_mod( 'single_boxed_padding_right_mobile' );
+	remove_theme_mod( 'single_boxed_padding_bottom_mobile' );
+	remove_theme_mod( 'single_boxed_padding_left_mobile' );
 
 }
 
@@ -353,22 +353,22 @@ if ( $page_padding_top_desktop || $page_padding_right_desktop || $page_padding_b
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'page_padding', $theme_mod_array );
+	set_theme_mod( 'page_padding', $theme_mod_array );
 
-	// remove_theme_mod( 'page_padding_top_desktop' );
-	// remove_theme_mod( 'page_padding_right_desktop' );
-	// remove_theme_mod( 'page_padding_bottom_desktop' );
-	// remove_theme_mod( 'page_padding_left_desktop' );
+	remove_theme_mod( 'page_padding_top_desktop' );
+	remove_theme_mod( 'page_padding_right_desktop' );
+	remove_theme_mod( 'page_padding_bottom_desktop' );
+	remove_theme_mod( 'page_padding_left_desktop' );
 
-	// remove_theme_mod( 'page_padding_top_tablet' );
-	// remove_theme_mod( 'page_padding_right_tablet' );
-	// remove_theme_mod( 'page_padding_bottom_tablet' );
-	// remove_theme_mod( 'page_padding_left_tablet' );
+	remove_theme_mod( 'page_padding_top_tablet' );
+	remove_theme_mod( 'page_padding_right_tablet' );
+	remove_theme_mod( 'page_padding_bottom_tablet' );
+	remove_theme_mod( 'page_padding_left_tablet' );
 
-	// remove_theme_mod( 'page_padding_top_mobile' );
-	// remove_theme_mod( 'page_padding_right_mobile' );
-	// remove_theme_mod( 'page_padding_bottom_mobile' );
-	// remove_theme_mod( 'page_padding_left_mobile' );
+	remove_theme_mod( 'page_padding_top_mobile' );
+	remove_theme_mod( 'page_padding_right_mobile' );
+	remove_theme_mod( 'page_padding_bottom_mobile' );
+	remove_theme_mod( 'page_padding_left_mobile' );
 
 }
 
@@ -407,21 +407,21 @@ if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_deskto
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-	// set_theme_mod( 'sidebar_widget_padding', $theme_mod_array );
+	set_theme_mod( 'sidebar_widget_padding', $theme_mod_array );
 
-	// remove_theme_mod( 'sidebar_widget_padding_top_desktop' );
-	// remove_theme_mod( 'sidebar_widget_padding_right_desktop' );
-	// remove_theme_mod( 'sidebar_widget_padding_bottom_desktop' );
-	// remove_theme_mod( 'sidebar_widget_padding_left_desktop' );
+	remove_theme_mod( 'sidebar_widget_padding_top_desktop' );
+	remove_theme_mod( 'sidebar_widget_padding_right_desktop' );
+	remove_theme_mod( 'sidebar_widget_padding_bottom_desktop' );
+	remove_theme_mod( 'sidebar_widget_padding_left_desktop' );
 
-	// remove_theme_mod( 'sidebar_widget_padding_top_tablet' );
-	// remove_theme_mod( 'sidebar_widget_padding_right_tablet' );
-	// remove_theme_mod( 'sidebar_widget_padding_bottom_tablet' );
-	// remove_theme_mod( 'sidebar_widget_padding_left_tablet' );
+	remove_theme_mod( 'sidebar_widget_padding_top_tablet' );
+	remove_theme_mod( 'sidebar_widget_padding_right_tablet' );
+	remove_theme_mod( 'sidebar_widget_padding_bottom_tablet' );
+	remove_theme_mod( 'sidebar_widget_padding_left_tablet' );
 
-	// remove_theme_mod( 'sidebar_widget_padding_top_mobile' );
-	// remove_theme_mod( 'sidebar_widget_padding_right_mobile' );
-	// remove_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
-	// remove_theme_mod( 'sidebar_widget_padding_left_mobile' );
+	remove_theme_mod( 'sidebar_widget_padding_top_mobile' );
+	remove_theme_mod( 'sidebar_widget_padding_right_mobile' );
+	remove_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
+	remove_theme_mod( 'sidebar_widget_padding_left_mobile' );
 
 }
