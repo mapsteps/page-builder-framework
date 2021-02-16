@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
 
-    $('.wpbf-responsive-input-wrap .customize-control-slider-value').on('keyup', function () {
+    $('.wpbf-responsive-input-wrap .customize-control-input-value').on('keyup', function () {
 
         var parent = $(this).parents('.wpbf-responsive-input-wrap'),
             dbstore_cache = $('.wpbf-responsive-input-db', parent),
