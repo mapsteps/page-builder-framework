@@ -219,7 +219,7 @@ if ( ! function_exists( 'wpbf_get_theme_mod_value' ) ) {
 
 		// If we don't want to return a default and the saved
 		// value matches default, we set value back to false.
-		if ( $default & ! $print_default ) {
+		if ( $default && ! $print_default ) {
 			$value = $default === $value ? false : $value;
 		}
 
