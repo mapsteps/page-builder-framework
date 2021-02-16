@@ -32,14 +32,12 @@ class WPBF_Customize_Padding_Control extends Kirki_Control_Base {
 
 			<?php $saved_value = isset( $value_bucket[$area] ) ? $value_bucket[$area] : ''; ?>
 
-		<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
-
-			<label>
-				<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>" class="customize-control-padding-value" data-area-type="<?php echo $area; ?>">
-				<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
-			</label>
-
-		</div>
+			<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
+				<label>
+					<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>" class="customize-control-padding-value" data-area-type="<?php echo $area; ?>">
+					<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
+				</label>
+			</div>
 
 		<?php } ?>
 
@@ -65,9 +63,7 @@ class WPBF_Customize_Padding_Control extends Kirki_Control_Base {
  *
  * @return array The updated controls.
  */
-add_filter(
-	'kirki_control_types',
-	function ( $controls ) {
+add_filter( 'kirki_control_types', function ( $controls ) {
 
 		$controls['padding_control'] = 'WPBF_Customize_Padding_Control';
 
