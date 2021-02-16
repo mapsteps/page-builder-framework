@@ -11,26 +11,30 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 // Textdomain. This is required, otherwise strings aren't translateable.
 load_theme_textdomain( 'page-builder-framework' );
 
-/**
- * Kirki sanitization helper.
- *
- * @param string $callback The sanitization callback.
- *
- * @return mixed The sanitized json.
- */
-function wpbf_kirki_sanitize_helper( $callback ) {
+if ( ! function_exists( 'wpbf_kirki_sanitize_helper' ) ) {
 
-	return function ( $value ) use ( $callback ) {
+	/**
+	 * Kirki sanitization helper.
+	 *
+	 * @param string $callback The sanitization callback.
+	 *
+	 * @return mixed The sanitized json.
+	 */
+	function wpbf_kirki_sanitize_helper( $callback ) {
 
-		if ( ! empty( $value ) ) {
-			$value = json_decode( trim( $value ), true );
-			$value = array_map( $callback, $value );
-			$value = json_encode( $value );
-		}
+		return function ( $value ) use ( $callback ) {
 
-		return $value;
+			if ( ! empty( $value ) ) {
+				$value = json_decode( trim( $value ), true );
+				$value = array_map( $callback, $value );
+				$value = json_encode( $value );
+			}
 
-	};
+			return $value;
+
+		};
+
+	}
 
 }
 
