@@ -2072,7 +2072,7 @@ Kirki::add_field( 'wpbf', array(
 			'mobile_right'   => 20,
 			'mobile_bottom'  => 20,
 			'mobile_left'    => 20,
-		),
+		)
 	),
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
 ) );
@@ -4065,7 +4065,7 @@ Kirki::add_field( 'wpbf', array(
 			'right'  => '20px',
 			'bottom' => '10px',
 			'left'   => '20px',
-		),
+		)
 	),
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
 ) );
