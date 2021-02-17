@@ -7,6 +7,12 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+$menu_mobile_logo_size = get_theme_mod( 'menu_mobile_logo_size' );
+
+if ( $menu_mobile_logo_size ) {
+	remove_theme_mod( 'menu_mobile_logo_size' );
+}
+
 $sidebar_widget_padding_top    = get_theme_mod( 'sidebar_widget_padding_top' );
 $sidebar_widget_padding_right  = get_theme_mod( 'sidebar_widget_padding_right' );
 $sidebar_widget_padding_bottom = get_theme_mod( 'sidebar_widget_padding_bottom' );
@@ -63,20 +69,18 @@ if ( 'show' === $blog_comments ) {
 // This theme mod existed a long time ago and is now causing issues with the new JSON below.
 // If it exists, we will have to update & convert it first, before checking for the new, responsive settings.
 $menu_logo_size = get_theme_mod( 'menu_logo_size' );
-$menu_mobile_logo_size = get_theme_mod( 'menu_mobile_logo_size' );
 
-if ( is_numeric( $menu_logo_size ) || is_numeric( $menu_mobile_logo_size ) ) {
+if ( is_numeric( $menu_logo_size ) ) {
 
 	$theme_mod_array = array(
 		'desktop' => $menu_logo_size,
-		'tablet'  => $menu_mobile_logo_size,
+		'tablet'  => false,
 		'mobile'  => false,
 	);
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'menu_logo_size', $theme_mod_array );
-	remove_theme_mod( 'menu_mobile_logo_size' );
 
 }
 
