@@ -86,7 +86,11 @@ function wpbf_customizer_setup( $wp_customize ) {
 	$wp_customize->get_section( 'background_image' )->title = __( 'Background', 'page-builder-framework' );
 
 	// Change panel priority.
-	$wp_customize->get_panel( 'nav_menus' )->priority = 40;
+	$panel = $wp_customize->get_panel( 'nav_menus' );
+
+	if ( $panel ) {
+		$panel->priority = 40;
+	}
 
 	// Change section priority.
 	$wp_customize->get_section( 'background_image' )->priority = 200;
