@@ -27,7 +27,7 @@ class WPBF_Customize_Responsive_Padding_Control extends Kirki_Control_Base {
 
 		?>
 
-		<span class="customize-control-title"><?php echo esc_attr( $this->label ); ?></span>
+		<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
 
 		<ul class="wpbf-responsive-options">
 			<li class="desktop">
@@ -59,7 +59,7 @@ class WPBF_Customize_Responsive_Padding_Control extends Kirki_Control_Base {
 
 						<label>
 							<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>"  class="customize-control-responsive-padding-value" data-area-device-type="<?php echo $device . '_' . $area; ?>">
-							<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
+							<small><?php echo esc_html( ucfirst( $area ) ); ?></small>
 						</label>
 
 					</div>

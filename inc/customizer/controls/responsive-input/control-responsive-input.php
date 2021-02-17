@@ -26,7 +26,7 @@ class WPBF_Customize_Font_Size_Control extends Kirki_Control_Base {
 
 		?>
 
-		<span class="customize-control-title"><?php echo esc_attr( $this->label ); ?></span>
+		<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
 
 		<ul class="wpbf-responsive-options">
 			<li class="desktop">

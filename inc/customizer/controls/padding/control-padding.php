@@ -26,7 +26,7 @@ class WPBF_Customize_Padding_Control extends Kirki_Control_Base {
 
 		?>
 
-		<span class="customize-control-title"><?php echo esc_attr( $this->label ); ?></span>
+		<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
 
 		<?php foreach ( $areas as $area ) { ?>
 
@@ -35,7 +35,7 @@ class WPBF_Customize_Padding_Control extends Kirki_Control_Base {
 			<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 				<label>
 					<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>" class="customize-control-padding-value" data-area-type="<?php echo $area; ?>">
-					<small><?php echo esc_attr( ucfirst( $area ) ); ?></small>
+					<small><?php echo esc_html( ucfirst( $area ) ); ?></small>
 				</label>
 			</div>
 
