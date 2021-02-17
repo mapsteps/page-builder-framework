@@ -60,21 +60,23 @@ if ( 'show' === $blog_comments ) {
  * This and the entire backwards compatibility might be removed after 1 year.
  */
 
-// This theme mod existed a long while ago and is now causing issues with the new
-// JSON below. If it exists, we will have to update & convert it first, before checking for the new, responsive settings.
+// This theme mod existed a long time ago and is now causing issues with the new JSON below.
+// If it exists, we will have to update & convert it first, before checking for the new, responsive settings.
 $menu_logo_size = get_theme_mod( 'menu_logo_size' );
+$menu_mobile_logo_size = get_theme_mod( 'menu_mobile_logo_size' );
 
-if ( is_numeric( $menu_logo_size ) ) {
+if ( is_numeric( $menu_logo_size ) || is_numeric( $menu_mobile_logo_size ) ) {
 
 	$theme_mod_array = array(
 		'desktop' => $menu_logo_size,
-		'tablet'  => false,
+		'tablet'  => $menu_mobile_logo_size,
 		'mobile'  => false,
 	);
 
 	$theme_mod_array = json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'menu_logo_size', $theme_mod_array );
+	remove_theme_mod( 'menu_mobile_logo_size' );
 
 }
 
