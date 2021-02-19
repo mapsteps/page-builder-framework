@@ -607,10 +607,10 @@
 					width: ' + desktop + desktopsuffix + ';\
 				}\
 				@media (' + mediaQueries.tablet + ') {\
-					.wpbf-mobile-logo img {width: ' + tablet + tabletsuffix + ';\
+					.wpbf-mobile-logo img {width: ' + tablet + tabletsuffix + ';}\
 				}\
 				@media (' + mediaQueries.mobile + ') {\
-					.wpbf-mobile-logo img {width: ' + mobile + mobilesuffix + ';\
+					.wpbf-mobile-logo img {width: ' + mobile + mobilesuffix + ';}\
 				}\
 			';
 
@@ -638,10 +638,10 @@
 					font-size: ' + desktop + desktopsuffix + ';\
 				}\
 				@media (' + mediaQueries.tablet + ') {\
-					.wpbf-mobile-logo a {font-size: ' + tablet + tabletsuffix + ';\
+					.wpbf-mobile-logo a {font-size: ' + tablet + tabletsuffix + ';}\
 				}\
 				@media (' + mediaQueries.mobile + ') {\
-					.wpbf-mobile-logo a {font-size: ' + mobile + mobilesuffix + ';\
+					.wpbf-mobile-logo a {font-size: ' + mobile + mobilesuffix + ';}\
 				}\
 			';
 
@@ -717,10 +717,10 @@
 					font-size: ' + desktop + desktopsuffix + ';\
 				}\
 				@media (' + mediaQueries.tablet + ') {\
-					.wpbf-mobile-logo .wpbf-tagline {font-size: ' + tablet + tabletsuffix + ';\
+					.wpbf-mobile-logo .wpbf-tagline {font-size: ' + tablet + tabletsuffix + ';}\
 				}\
 				@media (' + mediaQueries.mobile + ') {\
-					.wpbf-mobile-logo .wpbf-tagline {font-size: ' + mobile + mobilesuffix + ';\
+					.wpbf-mobile-logo .wpbf-tagline {font-size: ' + mobile + mobilesuffix + ';}\
 				}\
 			';
 
