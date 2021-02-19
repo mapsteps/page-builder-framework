@@ -1563,6 +1563,15 @@ Kirki::add_field( 'wpbf', array(
 	'section'           => 'wpbf_page_options',
 	'settings'          => 'page_padding',
 	'priority'          => 1,
+	'transport'         => 'postMessage',
+	'default'           => json_encode(
+		array(
+			'desktop_top'    => 40,
+			'desktop_right'  => 20,
+			'desktop_bottom' => 40,
+			'desktop_left'   => 20,
+		)
+	),
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
 ) );
 

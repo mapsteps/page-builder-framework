@@ -38,6 +38,56 @@
 		} );
 	} );
 
+	// Padding.
+	wp.customize( 'page_padding', function( value ) {
+
+		var styleTag = setupStyleTag('page_padding');
+
+		value.bind( function( newval ) {
+
+			var obj = JSON.parse(newval),
+			desktop_top = obj.desktop_top,
+			desktop_right = obj.desktop_right,
+			desktop_bottom = obj.desktop_bottom,
+			desktop_left = obj.desktop_left,
+			tablet_top = obj.tablet_top,
+			tablet_right = obj.tablet_right,
+			tablet_bottom = obj.tablet_bottom,
+			tablet_left = obj.tablet_left,
+			mobile_top = obj.mobile_top,
+			mobile_right = obj.mobile_right,
+			mobile_bottom = obj.mobile_bottom,
+			mobile_left = obj.mobile_left;
+
+			styleTag.innerHTML = '\
+				#inner-content {\
+					padding-top: ' + desktop_top + 'px;\
+					padding-right: ' + desktop_right + 'px;\
+					padding-bottom: ' + desktop_bottom + 'px;\
+					padding-left: ' + desktop_left + 'px;\
+				}\
+				@media (' + mediaQueries.tablet + ') {\
+					#inner-content {\
+						padding-top: ' + tablet_top + 'px;\
+						padding-right: ' + tablet_right + 'px;\
+						padding-bottom: ' + tablet_bottom + 'px;\
+						padding-left: ' + tablet_left + 'px;\
+					}\
+				}\
+				@media (' + mediaQueries.mobile + ') {\
+					#inner-content {\
+						padding-top: ' + mobile_top + 'px;\
+						padding-right: ' + mobile_right + 'px;\
+						padding-bottom: ' + mobile_bottom + 'px;\
+						padding-left: ' + mobile_left + 'px;\
+					}\
+				}\
+			';
+
+		} );
+
+	} );
+
 	// Boxed margin.
 	wp.customize( 'page_boxed_margin', function( value ) {
 		value.bind( function( newval ) {
@@ -220,46 +270,24 @@
 	// Padding.
 	wp.customize( 'sub_menu_padding', function( value ) {
 
-		var styleTagTop = setupStyleTag('sub_menu_padding_top'),
-			styleTagRight = setupStyleTag('sub_menu_padding_right'),
-			styleTagBottom = setupStyleTag('sub_menu_padding_bottom'),
-			styleTagLeft = setupStyleTag('sub_menu_padding_left');
+		var styleTag = setupStyleTag('sub_menu_padding');
 
 		value.bind( function( newval ) {
 
-			if (newval !== '') {
+			var obj = JSON.parse(newval),
+			top = obj.top,
+			right = obj.right,
+			bottom = obj.bottom,
+			left = obj.left;
 
-				var obj = JSON.parse(newval);
-
-				// Top.
-				if ('top' in obj) {
-					size = obj.top;
-
-					styleTagTop.innerHTML = '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {padding-top: ' + size + 'px;}';
-				}
-
-				// Right.
-				if ('right' in obj) {
-					size = obj.right;
-
-					styleTagRight.innerHTML = '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {padding-right: ' + size + 'px;}';
-				}
-
-				// Bottom.
-				if ('bottom' in obj) {
-					size = obj.bottom;
-
-					styleTagBottom.innerHTML = '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {padding-bottom: ' + size + 'px;}';
-				}
-
-				// Left.
-				if ('left' in obj) {
-					size = obj.left;
-
-					styleTagLeft.innerHTML = '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {padding-left: ' + size + 'px;}';
-				}
-
-			}
+			styleTag.innerHTML = '\
+				.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {\
+					padding-top: ' + top + 'px;\
+					padding-right: ' + right + 'px;\
+					padding-bottom: ' + bottom + 'px;\
+					padding-left: ' + left + 'px;\
+				}\
+			';
 
 		} );
 
@@ -389,66 +417,25 @@
 	// Padding.
 	wp.customize( 'mobile_menu_padding', function( value ) {
 
-		var styleTagTop = setupStyleTag('mobile_menu_padding_top'),
-			styleTagRight = setupStyleTag('mobile_menu_padding_right'),
-			styleTagBottom = setupStyleTag('mobile_menu_padding_bottom'),
-			styleTagLeft = setupStyleTag('mobile_menu_padding_left');
+		var styleTag = setupStyleTag('mobile_menu_padding');
 
 		value.bind( function( newval ) {
 
-			if (newval !== '') {
+			var obj = JSON.parse(newval),
+			top = obj.top,
+			right = obj.right,
+			bottom = obj.bottom,
+			left = obj.left;
 
-				var obj = JSON.parse(newval);
-
-				// Top.
-				if ('top' in obj) {
-					size = obj.top;
-
-					styleTagTop.innerHTML = '\
-						.wpbf-mobile-menu a,\
-						.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-							padding-top: ' + size + 'px;\
-						}\
-					';
-				}
-
-				// Right.
-				if ('right' in obj) {
-					size = obj.right;
-
-					styleTagRight.innerHTML = '\
-						.wpbf-mobile-menu a,\
-						.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-							padding-right: ' + size + 'px;\
-						}\
-					';
-				}
-
-				// Bottom.
-				if ('bottom' in obj) {
-					size = obj.bottom;
-
-					styleTagBottom.innerHTML = '\
-						.wpbf-mobile-menu a,\
-						.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-							padding-bottom: ' + size + 'px;\
-						}\
-					';
-				}
-
-				// Left.
-				if ('left' in obj) {
-					size = obj.left;
-
-					styleTagLeft.innerHTML = '\
-						.wpbf-mobile-menu a,\
-						.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-							padding-left: ' + size + 'px;\
-						}\
-					';
-				}
-
-			}
+			styleTag.innerHTML = '\
+				.wpbf-mobile-menu a,\
+				.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
+					padding-top: ' + top + 'px;\
+					padding-right: ' + right + 'px;\
+					padding-bottom: ' + bottom + 'px;\
+					padding-left: ' + left + 'px;\
+				}\
+			';
 
 		} );
 
@@ -603,50 +590,29 @@
 	// Width.
 	wp.customize( 'menu_logo_size', function( value ) {
 
-		var styleTagDesktop = setupStyleTag('menu_logo_size_desktop'),
-			styleTagTablet = setupStyleTag('menu_logo_size_tablet'),
-			styleTagMobile = setupStyleTag('menu_logo_size_mobile'),
-			suffix;
+		var styleTag = setupStyleTag('menu_logo_size');
 
 		value.bind( function( newval ) {
 
-			if (newval !== '') {
+			var obj = JSON.parse(newval),
+			desktop = obj.desktop,
+			tablet = obj.tablet,
+			mobile = obj.mobile,
+			desktopsuffix = $.isNumeric(desktop) ? 'px' : '',
+			tabletsuffix = $.isNumeric(tablet) ? 'px' : '',
+			mobilesuffix = $.isNumeric(mobile) ? 'px' : '';
 
-				var obj = JSON.parse(newval);
-
-				// Desktop.
-				if ('desktop' in obj) {
-					size = obj.desktop;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagDesktop.innerHTML = '.wpbf-logo img, .wpbf-mobile-logo img {width: ' + size + suffix + ';}';
-				}
-
-				// Tablet.
-				if ('tablet' in obj) {
-					size = obj.tablet;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagTablet.innerHTML = '\
-						@media (' + mediaQueries.tablet + ') {\
-							.wpbf-mobile-logo img {width: ' + size + suffix + ';\
-						}\
-					';
-				}
-
-				// Mobile.
-				if ('mobile' in obj) {
-					size = obj.mobile;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagMobile.innerHTML = '\
-						@media (' + mediaQueries.mobile + ') {\
-							.wpbf-mobile-logo img {width: ' + size + suffix + ';}\
-						}\
-					';
-				}
-
-			}
+			styleTag.innerHTML = '\
+				.wpbf-logo img, .wpbf-mobile-logo img {\
+					width: ' + desktop + desktopsuffix + ';\
+				}\
+				@media (' + mediaQueries.tablet + ') {\
+					.wpbf-mobile-logo img {width: ' + tablet + tabletsuffix + ';\
+				}\
+				@media (' + mediaQueries.mobile + ') {\
+					.wpbf-mobile-logo img {width: ' + mobile + mobilesuffix + ';\
+				}\
+			';
 
 		} );
 
@@ -654,50 +620,30 @@
 
 	// Font size.
 	wp.customize( 'menu_logo_font_size', function( value ) {
-		var styleTagDesktop = setupStyleTag('menu_logo_font_size_desktop'),
-			styleTagTablet = setupStyleTag('menu_logo_font_size_tablet'),
-			styleTagMobile = setupStyleTag('menu_logo_font_size_mobile'),
-			suffix;
+		
+		var styleTag = setupStyleTag('menu_logo_font_size');
 
-		value.bind(function (newval) {
+		value.bind( function( newval ) {
 
-			if (newval !== '') {
+			var obj = JSON.parse(newval),
+			desktop = obj.desktop,
+			tablet = obj.tablet,
+			mobile = obj.mobile,
+			desktopsuffix = $.isNumeric(desktop) ? 'px' : '',
+			tabletsuffix = $.isNumeric(tablet) ? 'px' : '',
+			mobilesuffix = $.isNumeric(mobile) ? 'px' : '';
 
-				var obj = JSON.parse(newval);
-
-				// Desktop.
-				if ('desktop' in obj) {
-					size = obj.desktop;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagDesktop.innerHTML = '.wpbf-logo a, .wpbf-mobile-logo a {font-size: ' + size + suffix + ';}';
-				}
-
-				// Tablet.
-				if ('tablet' in obj) {
-					size = obj.tablet;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagTablet.innerHTML = '\
-						@media (' + mediaQueries.tablet + ') {\
-							.wpbf-mobile-logo a {font-size: ' + size + suffix + ';\
-						}\
-					';
-				}
-
-				// Mobile.
-				if ('mobile' in obj) {
-					size = obj.mobile;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagMobile.innerHTML = '\
-						@media (' + mediaQueries.mobile + ') {\
-							.wpbf-mobile-logo a {font-size: ' + size + suffix + ';}\
-						}\
-					';
-				}
-
-			}
+			styleTag.innerHTML = '\
+				.wpbf-logo a, .wpbf-mobile-logo a {\
+					font-size: ' + desktop + desktopsuffix + ';\
+				}\
+				@media (' + mediaQueries.tablet + ') {\
+					.wpbf-mobile-logo a {font-size: ' + tablet + tabletsuffix + ';\
+				}\
+				@media (' + mediaQueries.mobile + ') {\
+					.wpbf-mobile-logo a {font-size: ' + mobile + mobilesuffix + ';\
+				}\
+			';
 
 		} );
 
@@ -754,50 +700,29 @@
 	// Font size.
 	wp.customize( 'menu_logo_description_font_size', function( value ) {
 
-		var styleTagDesktop = setupStyleTag('menu_logo_description_font_size_desktop'),
-			styleTagTablet = setupStyleTag('menu_logo_description_font_size_tablet'),
-			styleTagMobile = setupStyleTag('menu_logo_description_font_size_mobile'),
-			suffix;
+		var styleTag = setupStyleTag('menu_logo_description_font_size');
 
 		value.bind( function( newval ) {
 
-			if (newval !== '') {
+			var obj = JSON.parse(newval),
+			desktop = obj.desktop,
+			tablet = obj.tablet,
+			mobile = obj.mobile,
+			desktopsuffix = $.isNumeric(desktop) ? 'px' : '',
+			tabletsuffix = $.isNumeric(tablet) ? 'px' : '',
+			mobilesuffix = $.isNumeric(mobile) ? 'px' : '';
 
-				var obj = JSON.parse(newval);
-
-				// Desktop.
-				if ('desktop' in obj) {
-					size = obj.desktop;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagDesktop.innerHTML = '.wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline {font-size: ' + size + suffix + ';}';
-				}
-
-				// Tablet.
-				if ('tablet' in obj) {
-					size = obj.tablet;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagTablet.innerHTML = '\
-						@media (' + mediaQueries.tablet + ') {\
-							.wpbf-mobile-logo .wpbf-tagline {font-size: ' + size + suffix + ';}\
-						}\
-					';
-				}
-
-				// Mobile.
-				if ('mobile' in obj) {
-					size = obj.mobile;
-					suffix = $.isNumeric(size) ? 'px' : '';
-
-					styleTagMobile.innerHTML = '\
-						@media (' + mediaQueries.mobile + ') {\
-							.wpbf-mobile-logo .wpbf-tagline {font-size: ' + size + suffix + ';}\
-						}\
-					';
-				}
-
-			}
+			styleTag.innerHTML = '\
+				.wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline {\
+					font-size: ' + desktop + desktopsuffix + ';\
+				}\
+				@media (' + mediaQueries.tablet + ') {\
+					.wpbf-mobile-logo .wpbf-tagline {font-size: ' + tablet + tabletsuffix + ';\
+				}\
+				@media (' + mediaQueries.mobile + ') {\
+					.wpbf-mobile-logo .wpbf-tagline {font-size: ' + mobile + mobilesuffix + ';\
+				}\
+			';
 
 		} );
 
