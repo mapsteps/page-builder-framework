@@ -55,10 +55,16 @@ class WPBF_Customize_Responsive_Padding_Control extends Kirki_Control_Base {
 
 					<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 
-						<?php $saved_value = isset( $value_bucket[$device . '_' . $area] ) ? $value_bucket[$device . '_' . $area] : ''; ?>
+						<?php
+							$saved_value = isset( $value_bucket[$device . '_' . $area] ) ? $value_bucket[$device . '_' . $area] : '';
+							// Custom sanitization.
+							// Only sanitize using intval if we actually have a value
+							// Otherwise, default to false. This allows us to save empty fields.
+							$saved_value = $saved_value ? intval( $saved_value ) : '';
+						?>
 
 						<label>
-							<input style="text-align:center;" type="number" value="<?php echo intval( $saved_value ); ?>"  class="customize-control-responsive-padding-value" data-area-device-type="<?php echo $device . '_' . $area; ?>">
+							<input type="number" value="<?php echo $saved_value; ?>"  class="customize-control-responsive-padding-value" data-area-device-type="<?php echo $device . '_' . $area; ?>">
 							<small><?php echo esc_html( ucfirst( $area ) ); ?></small>
 						</label>
 
