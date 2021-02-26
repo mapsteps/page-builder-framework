@@ -2088,10 +2088,10 @@ if ( $sub_menu_accent_color_alt ) {
 $mobile_menu_height                  = ( $val = get_theme_mod( 'mobile_menu_height' ) ) === '20' ? false : $val;
 $mobile_menu_background_color        = get_theme_mod( 'mobile_menu_background_color' );
 $mobile_menu_padding                 = json_decode( get_theme_mod( 'mobile_menu_padding' ), true );
-$mobile_menu_padding_top             = wpbf_get_theme_mod_value( $sub_menu_padding, 'top', 10 );
-$mobile_menu_padding_right           = wpbf_get_theme_mod_value( $sub_menu_padding, 'right', 20 );
-$mobile_menu_padding_bottom          = wpbf_get_theme_mod_value( $sub_menu_padding, 'bottom', 10 );
-$mobile_menu_padding_left            = wpbf_get_theme_mod_value( $sub_menu_padding, 'left', 20 );
+$mobile_menu_padding_top             = wpbf_get_theme_mod_value( $mobile_menu_padding, 'top', 10 );
+$mobile_menu_padding_right           = wpbf_get_theme_mod_value( $mobile_menu_padding, 'right', 20 );
+$mobile_menu_padding_bottom          = wpbf_get_theme_mod_value( $mobile_menu_padding, 'bottom', 10 );
+$mobile_menu_padding_left            = wpbf_get_theme_mod_value( $mobile_menu_padding, 'left', 20 );
 $mobile_menu_font_color              = get_theme_mod( 'mobile_menu_font_color' );
 $mobile_menu_font_color_alt          = get_theme_mod( 'mobile_menu_font_color_alt' );
 $mobile_menu_border_color            = ( $val = get_theme_mod( 'mobile_menu_border_color' ) ) === '#d9d9e0' ? false : $val;
