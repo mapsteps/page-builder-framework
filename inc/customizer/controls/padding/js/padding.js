@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
 
-    $('.wpbf-padding-wrap .customize-control-padding-value').on('keyup', function () {
+    $('.wpbf-padding-wrap .customize-control-padding-value').on('keyup change', function () {
 
         var parent = $(this).parents('.wpbf-padding-wrap'),
             dbstore_cache = $('.wpbf-padding-db', parent),
