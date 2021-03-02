@@ -34,8 +34,6 @@
 			quickView.addEventListener('click', waitForQuickViewReponse);
 
 			function waitForQuickViewReponse() {
-				console.log('Waiting for the Quickview request...');
-
 				if (!document.querySelector('.wpbf-woo-quick-view-modal-content .type-product')) {
 					/**
 					 * The content of the quickview is taken from ajax response.
