@@ -56,4 +56,38 @@ function wpbf_divi_default_headline_styles() {
 	wp_add_inline_style( 'et-builder-modules-style', $inline_styles );
 
 }
-add_action( 'wp_enqueue_scripts', 'wpbf_divi_default_headline_styles', 999 );
+// add_action( 'wp_enqueue_scripts', 'wpbf_divi_default_headline_styles', 999 );
+
+/**
+ * Add back theme header.
+ *
+ * @param int $layout_id The layout ID
+ * @param bool $layout_enabled If layout enabled
+ * @param int $template_id The template ID
+ */
+function wpbf_divi_theme_builder_custom_header( $layout_id, $layout_enabled, $template_id ) {
+	// Only add the custom header if there is no Theme Builder header
+	// being rendered and the header layout area is not disabled.
+	if ( 0 === $layout_id && $layout_enabled ) {
+		// Render our custom header, for example:
+		wpbf_do_header();
+	}
+}
+add_action( 'et_theme_builder_template_before_header', 'wpbf_divi_theme_builder_custom_header', 10, 3 );
+
+/**
+ * Add back theme footer.
+ *
+ * @param int $layout_id The layout ID
+ * @param bool $layout_enabled If layout enabled
+ * @param int $template_id The template ID
+ */
+function wpbf_divi_theme_builder_custom_footer( $layout_id, $layout_enabled, $template_id ) {
+	// Only add the custom footer if there is no Theme Builder footer
+	// being rendered and the footer layout area is not disabled.
+	if ( 0 === $layout_id && $layout_enabled ) {
+		// Render our custom footer, for example:
+		wpbf_do_footer();
+	}
+}
+add_action( 'et_theme_builder_template_after_footer', 'wpbf_divi_theme_builder_custom_footer', 10, 3 );
