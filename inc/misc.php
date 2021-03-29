@@ -163,6 +163,10 @@ function wpbf_remove_background_link() {
 
 	global $submenu;
 
+	if ( ! isset( $submenu['themes.php'] ) ) {
+		return;
+	}
+
 	foreach ( $submenu['themes.php'] as $menu_index => $theme_menu ) {
 		if ( 'Background' === $theme_menu[0] ) {
 			unset( $submenu['themes.php'][$menu_index] );
