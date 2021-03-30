@@ -60,38 +60,6 @@ require_once WPBF_THEME_DIR . '/inc/theme-mods.php';
 // Theme settings.
 require_once WPBF_THEME_DIR . '/inc/theme-settings.php';
 
-/**
- * Render pre header.
- */
-function wpbf_do_pre_header() {
-	get_template_part( 'inc/template-parts/pre-header' );
-}
-add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
-
-/**
- * Render header.
- */
-function wpbf_do_header() {
-	get_template_part( 'inc/template-parts/header' );
-}
-add_action( 'wpbf_header', 'wpbf_do_header' );
-
-/**
- * Render footer.
- */
-function wpbf_do_footer() {
-	get_template_part( 'inc/template-parts/footer' );
-}
-add_action( 'wpbf_footer', 'wpbf_do_footer' );
-
-/**
- * Render 404 page.
- */
-function wpbf_do_404() {
-	get_template_part( 'inc/template-parts/404' );
-}
-add_action( 'wpbf_404', 'wpbf_do_404' );
-
 /* Integration */
 
 // Header/Footer Elementor integration.
@@ -129,9 +97,9 @@ if ( ! function_exists( 'wpbf_bb_header_footer_support' ) && class_exists( 'FLTh
 }
 
 // Divi integration.
-if ( class_exists( 'ET_Builder_Plugin' ) ) {
-	require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
-}
+// if ( class_exists( 'ET_Builder_Plugin' ) ) {
+// 	require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
+// }
 
 // Easy Digital Downloads integration.
 if ( class_exists( 'Easy_Digital_Downloads' ) ) {
@@ -147,3 +115,35 @@ if ( class_exists( 'WooCommerce' ) ) {
 if ( class_exists( 'LifterLMS' ) ) {
 	require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/lifterlms.php';
 }
+
+/**
+ * Render pre header.
+ */
+function wpbf_do_pre_header() {
+	get_template_part( 'inc/template-parts/pre-header' );
+}
+add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
+
+/**
+ * Render header.
+ */
+function wpbf_do_header() {
+	get_template_part( 'inc/template-parts/header' );
+}
+add_action( 'wpbf_header', 'wpbf_do_header' );
+
+/**
+ * Render footer.
+ */
+function wpbf_do_footer() {
+	get_template_part( 'inc/template-parts/footer' );
+}
+add_action( 'wpbf_footer', 'wpbf_do_footer' );
+
+/**
+ * Render 404 page.
+ */
+function wpbf_do_404() {
+	get_template_part( 'inc/template-parts/404' );
+}
+add_action( 'wpbf_404', 'wpbf_do_404' );
