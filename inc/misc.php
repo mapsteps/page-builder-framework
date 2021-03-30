@@ -179,4 +179,4 @@ add_action( 'admin_menu', 'wpbf_remove_background_link', 999 );
 /**
  * Allow for shortcodes in nav menu items.
  */
-add_filter( 'wp_nav_menu_items', 'do_shortcode' );
+// add_filter( 'wp_nav_menu_items', 'do_shortcode' );
