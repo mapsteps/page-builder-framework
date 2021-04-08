@@ -55,6 +55,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'repo'        => true,
 					'constant'    => 'CUSTOMIZER_RESET_PLUGIN_VERSION',
 				),
+				array(
+					'title'       => 'Weglot',
+					'description' => __( 'The Weglot translation plugin gives you a reliable and easy way to take your WordPress website from local to global in minutes. No coding required and no developer time needed.', 'page-builder-framework' ),
+					'banner'      => 'https://ps.w.org/weglot/assets/banner-772x250.png',
+					'link'        => admin_url( 'plugin-install.php?s=weglot&tab=search&type=term' ),
+					'repo'        => true,
+					'constant'    => 'WEGLOT_VERSION',
+				),
 			);
 
 			foreach ( $recommended_plugins as $recommended_plugin ) {
