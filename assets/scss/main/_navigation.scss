@@ -464,6 +464,7 @@
 /* WooCommerce */
 
 // Cart menu item
+// This is here because even with the Woo styles disabled, this is present on every page.
 .wpbf-woo-menu-item {
 	.wpbf-woo-menu-item-count {
 		border-radius: 3px;
