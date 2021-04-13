@@ -643,35 +643,29 @@ $button_primary_text_color     = get_theme_mod( 'button_primary_text_color' );
 $button_primary_bg_color_alt   = get_theme_mod( 'button_primary_bg_color_alt' );
 $button_primary_text_color_alt = get_theme_mod( 'button_primary_text_color_alt' );
 
-if ( $button_primary_bg_color || $button_primary_text_color ) {
+if ( $button_primary_text_color ) {
 
-	echo '.wp-block-button__link {';
-
-	if ( $button_primary_bg_color ) {
-		echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color ) );
-	}
-
-	if ( $button_primary_text_color ) {
-		echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
-	}
-
+	echo '.wp-block-button__link:not(.has-text-color) {';
+	echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
 	echo '}';
 
-	if ( $button_primary_text_color ) {
-		// Gutenberg sets the hover color to white so we need to override thise if a custom color is set.
-		// Thank you, Gutenberg.
-		// Let's also exclude those that have custom font colors.
-		echo '.wp-block-button__link:not(.has-text-color):hover {';
-			echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
-		echo '}';
-	}
+	// Gutenberg sets the hover color to white so we need to override this if a custom color is set.
+	echo '.wp-block-button__link:not(.has-text-color):hover {';
+	echo sprintf( 'color: %s;', esc_attr( $button_primary_text_color ) );
+	echo '}';
 
-	if ( $button_primary_bg_color ) {
-		echo '.is-style-outline .wp-block-button__link:not(.has-text-color) {';
-			echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color ) );
-			echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color ) );
-		echo '}';
-	}
+}
+
+if ( $button_primary_bg_color ) {
+
+	echo '.wp-block-button__link:not(.has-background) {';
+	echo sprintf( 'background: %s;', esc_attr( $button_primary_bg_color ) );
+	echo '}';
+
+	echo '.is-style-outline .wp-block-button__link:not(.has-text-color) {';
+	echo sprintf( 'border-color: %s;', esc_attr( $button_primary_bg_color ) );
+	echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color ) );
+	echo '}';
 
 }
 
