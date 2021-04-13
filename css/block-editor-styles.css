@@ -23,11 +23,10 @@
 	max-width: 1400px;
 }
 
-/* Reset main text & title */
-#wpwrap .editor-styles-wrapper,
-.editor-post-title__block .editor-post-title__input {
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-}
+/*
+ * We're working with the #wpwrap prefix below to override Gutenbergs inline styles.
+ * This is so much harder than it should be. There's no consistency here. Thanks Gutenberg.
+ */
 
 /* Reset font color */
 #wpwrap .editor-styles-wrapper {
@@ -44,7 +43,6 @@
 #wpwrap .editor-styles-wrapper h6 {
 	color: var(--brand-color);
 	font-weight: 700;
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
 }
 
 /* Links */
@@ -94,17 +92,20 @@
 }
 
 /* Preformatted & code */
-.wp-block-code {
+
+/* Reset code styling */
+#wpwrap .wp-block-code {
 	padding: 0;
 	border: none;
-	font-size: inherit;
+	color: inherit;
 }
 
-.wp-block-code .block-editor-plain-text, .wp-block-preformatted {
+/* Apply basic styling to pre and code */
+#wpwrap .editor-styles-wrapper code,
+.wp-block-preformatted {
 	font-family: monospace, monospace;
 	background: var(--base-color-alt);
 	padding: 20px;
-	font-size: inherit;
 }
 
 /* Separator */
