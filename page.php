@@ -31,6 +31,8 @@ get_header();
 
 				<?php wpbf_title(); ?>
 
+				<?php get_template_part( 'inc/template-parts/single/single-featured' ); ?>
+
 				<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 				<div class="entry-content" itemprop="text">

@@ -16,6 +16,7 @@ if ( ! has_post_thumbnail() ) {
 }
 
 $options = get_post_meta( get_the_ID(), 'wpbf_options', true );
+$class   = "post";
 
 $remove_featured = $options ? in_array( 'remove-featured', $options ) : false;
 
@@ -24,8 +25,13 @@ if ( $remove_featured ) {
 	return;
 }
 
+// change class if we're on a page.
+if ( is_page() ) {
+	$class = "page";
+}
+
 ?>
 
-<div class="wpbf-post-image-wrapper">
-	<?php the_post_thumbnail( apply_filters( 'wpbf_single_post_thumbnail_size', 'full' ), array( 'class' => 'wpbf-post-image', 'itemprop' => 'image' ) ); ?>
+<div class="wpbf-<?php echo $class; ?>-image-wrapper">
+	<?php the_post_thumbnail( apply_filters( 'wpbf_single_post_thumbnail_size', 'full' ), array( 'class' => 'wpbf-' . $class . '-image', 'itemprop' => 'image' ) ); ?>
 </div>
