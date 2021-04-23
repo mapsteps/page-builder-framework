@@ -1892,24 +1892,25 @@ $menu_font_color     = get_theme_mod( 'menu_font_color' );
 $menu_font_color_alt = get_theme_mod( 'menu_font_color_alt' );
 $menu_font_size      = ( $val = get_theme_mod( 'menu_font_size' ) ) === '16px' ? false : $val;
 
-if ( $menu_width || $menu_height ) {
+if ( $menu_width ) {
+
+	echo '.wpbf-nav-wrapper {';
+	echo sprintf( 'max-width: %s;', esc_attr( $menu_width ) );
+	echo '}';
+
+}
+
+if ( $menu_height !== false ) {
 
 	echo '.wpbf-nav-wrapper {';
 
-	if ( $menu_width ) {
-		echo sprintf( 'max-width: %s;', esc_attr( $menu_width ) );
-	}
-
-	if ( $menu_height ) {
-
-		echo sprintf( 'padding-top: %s;', esc_attr( $menu_height ) . 'px' );
-		echo sprintf( 'padding-bottom: %s;', esc_attr( $menu_height ) . 'px' );
-
-	}
+	echo sprintf( 'padding-top: %s;', esc_attr( $menu_height ) . 'px' );
+	echo sprintf( 'padding-bottom: %s;', esc_attr( $menu_height ) . 'px' );
 
 	echo '}';
 
 }
+
 
 if ( $menu_height && 'menu-stacked' === $menu_position ) {
 
@@ -2099,7 +2100,7 @@ $mobile_menu_bg_color_alt            = get_theme_mod( 'mobile_menu_bg_color_alt'
 $mobile_menu_submenu_arrow_color     = get_theme_mod( 'mobile_menu_submenu_arrow_color' );
 $mobile_menu_font_size               = ( $val = get_theme_mod( 'mobile_menu_font_size' ) ) === '16px' ? false : $val;
 
-if ( $mobile_menu_height ) {
+if ( $mobile_menu_height !== false ) {
 
 	echo '.wpbf-mobile-nav-wrapper {';
 	echo sprintf( 'padding-top: %s;', esc_attr( $mobile_menu_height ) . 'px' );

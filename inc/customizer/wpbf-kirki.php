@@ -3587,7 +3587,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'   => 20,
 	'transport' => 'postMessage',
 	'choices'   => array(
-		'min'  => 10,
+		'min'  => 0,
 		'max'  => 80,
 		'step' => 1,
 	),
@@ -3935,7 +3935,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'   => 20,
 	'transport' => 'postMessage',
 	'choices'   => array(
-		'min'  => 5,
+		'min'  => 0,
 		'max'  => 80,
 		'step' => 1,
 	),
