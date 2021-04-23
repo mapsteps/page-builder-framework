@@ -414,22 +414,13 @@ body {
 
 .searchform {
 	position: relative;
-}
-
-.searchform:before {
-	content: "\f118";
-	right: 15px;
-	@include vertical-align($position: absolute);
-	color: $brand-color-alt;
-	font-family: 'page-builder-framework' !important;
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	.wpbff {
+		@include vertical-align($position: absolute);
+		right: 10px;
+		cursor: pointer;
+		padding: 10px;
+		color: $brand-color-alt;
+	}
 }
 
 .wpbf-no-sidebar {
