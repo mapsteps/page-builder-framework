@@ -194,6 +194,19 @@
 				margin-right: 0;
 			}
 		}
+
+		/**
+		 * Page Builder Framework
+		 */
+		form {
+			.form-row-first,
+			.form-row-last {
+				width: 100%;
+				margin-right: 0;
+				float: none;
+			}
+		}
+
 	}
 
 	.woocommerce-account {
