@@ -142,6 +142,14 @@ function wpbf_scripts() {
 	// Main JS file.
 	wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
+	wp_add_inline_script(
+		'wpbf-site',
+		'var WpbfObj = {
+			ajaxurl: "' . admin_url( 'admin-ajax.php' ) . '"
+		};',
+		'before'
+	);
+
 	// Main stylesheet.
 	wp_enqueue_style( 'wpbf-style', get_template_directory_uri() . '/style.css', '', WPBF_VERSION );
 

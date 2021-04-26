@@ -552,12 +552,35 @@ p.demo_store,
 		outline: 0;
 		cursor: pointer;
 		border: none;
-		display: inline-block;
+		display: inline-block; // For fallback.
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		color: $highlightext;
 		font-weight: 700;
 
 		&.loading {
 			opacity: 0.5;
+		}
+
+		&.is-loading {
+			color: transparent !important;
+			pointer-events: none;
+		}
+
+		&.is-loading::after {
+			content: "";
+			position: absolute;
+			width: 1em;
+			display: block;
+			height: 1em;
+			border: 2px solid #dbdbdb;
+			/* border: 2px solid #814676; */
+			border-color: transparent transparent #fff #fff !important;
+			/* border-color: transparent transparent #9B5C8F #9B5C8F !important; */
+			border-radius: 290486px;
+			-webkit-animation: loadingSpinAround 0.5s infinite linear;
+			animation: loadingSpinAround 0.5s infinite linear;
 		}
 
 		&:hover {

@@ -26,6 +26,25 @@
 	// --padding-small: var(--margin-small);
 }
 
+// Animation keyframes
+@-webkit-keyframes loadingSpinAround {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}
+
+@keyframes loadingSpinAround {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}
+
 /* Icon font */
 @font-face {
 	font-family: 'page-builder-framework';
@@ -216,6 +235,7 @@
 
 /* Buttons */
 .wpbf-button, input[type="submit"] {
+	position: relative;
 	-webkit-appearance: none;
 	text-align: center;
 	padding: 14px 16px;
@@ -223,7 +243,10 @@
 	color: $brand-color-alt;
 	outline: 0;
 	border: none;
-	display: inline-block;
+	display: inline-block; // For fallback.
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
 	@include transition(all 0.2s);
 	line-height: 1;
@@ -256,7 +279,29 @@
 }
 
 .wpbf-button-full {
+	display: block; // For fallback.
+	display: flex;
+	width: 100%;
+}
+
+.wpbf-button.is-loading {
+	color: transparent !important;
+	pointer-events: none;
+}
+
+.wpbf-button.is-loading::after {
+	content: "";
+	position: absolute;
+	width: 1em;
 	display: block;
+	height: 1em;
+	border: 2px solid #dbdbdb;
+	/* border: 2px solid $accent-color; */
+	border-color: transparent transparent #fff #fff !important;
+	/* border-color: transparent transparent $accent-color $accent-color !important; */
+	border-radius: 290486px;
+	-webkit-animation: loadingSpinAround 0.5s infinite linear;
+	animation: loadingSpinAround 0.5s infinite linear;
 }
 
 /* Form */
