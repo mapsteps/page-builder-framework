@@ -7,10 +7,10 @@
 /**
  * Imports
  */
-@import 'mixins';
-@import 'variables';
-@import 'animation';
-@import 'fonts';
+@import 'fragments/mixins';
+@import 'fragments/variables';
+@import 'fragments/animation';
+@import 'fragments/fonts';
 
 /**
  * Global styles
