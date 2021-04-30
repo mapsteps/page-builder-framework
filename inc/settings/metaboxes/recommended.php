@@ -87,7 +87,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							<a href="<?php echo admin_url( 'plugins.php' ); ?>" class="button button-primary button-larger"><?php _e( 'Installed', 'page-builder-framework' ); ?></i></a>
 						</div>
 						<div class="wpbf-recommended-status-icon green">
-							<strong><?php _e( 'Installed' ); ?></strong> <i class="dashicons dashicons-yes-alt"></i>
+							<strong><?php _e( 'Installed', 'page-builder-framework' ); ?></strong> <i class="dashicons dashicons-yes-alt"></i>
 						</div>
 						<?php } else { ?>
 						<div class="wpbf-recommended-status-action">
@@ -102,7 +102,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 							</a>
 						</div>
 						<div class="wpbf-recommended-status-icon">
-							<strong><?php _e( 'Not Installed' ); ?></strong> <i class="dashicons dashicons-dismiss"></i>
+							<strong><?php _e( 'Not Installed', 'page-builder-framework' ); ?></strong> <i class="dashicons dashicons-dismiss"></i>
 						</div>
 						<?php } ?>
 					</div>
