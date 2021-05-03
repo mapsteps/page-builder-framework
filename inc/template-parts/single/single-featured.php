@@ -31,7 +31,7 @@ if ( is_page() ) {
 }
 
 // Filter to allow us disable the featured image externally.
-if ( apply_filters( 'wpbf_featured_image', false ) ) {
+if ( apply_filters( 'wpbf_disable_featured_image', false ) ) {
 	return;
 }
 
