@@ -2,7 +2,7 @@
 /**
  * Featured image.
  *
- * Renders the featured image on posts.
+ * Renders the featured image on posts & pages.
  *
  * @package Page Builder Framework
  * @subpackage Template Parts
@@ -28,6 +28,11 @@ if ( $remove_featured ) {
 // change class if we're on a page.
 if ( is_page() ) {
 	$class = "page";
+}
+
+// Filter to allow us disable the featured image externally.
+if ( apply_filters( 'wpbf_featured_image', false ) ) {
+	return;
 }
 
 ?>
