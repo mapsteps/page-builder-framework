@@ -30,8 +30,8 @@ if ( is_page() ) {
 	$class = "page";
 }
 
-// Filter to allow us disable the featured image externally.
-if ( apply_filters( 'wpbf_disable_featured_image', false ) ) {
+// Filter to allow us remove the featured image externally.
+if ( apply_filters( 'wpbf_remove_featured_image', false ) ) {
 	return;
 }
 
