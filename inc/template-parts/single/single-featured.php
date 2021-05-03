@@ -15,9 +15,7 @@ if ( ! has_post_thumbnail() ) {
 	return;
 }
 
-$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
-$class   = "post";
-
+$options         = get_post_meta( get_the_ID(), 'wpbf_options', true );
 $remove_featured = $options ? in_array( 'remove-featured', $options ) : false;
 
 // Stop here if featured image has been disabled.
@@ -25,14 +23,16 @@ if ( $remove_featured ) {
 	return;
 }
 
-// change class if we're on a page.
-if ( is_page() ) {
-	$class = "page";
-}
-
 // Filter to allow us remove the featured image externally.
 if ( apply_filters( 'wpbf_remove_featured_image', false ) ) {
 	return;
+}
+
+$class = "post";
+
+// change class if we're on a page.
+if ( is_page() ) {
+	$class = "page";
 }
 
 ?>
