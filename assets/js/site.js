@@ -149,13 +149,17 @@ var WPBFSite = (function ($) {
 
 	}
 
-	$(window).on('click', function () {
+	window.addEventListener('click', function (e) {
 		searchClose();
 	});
 
-	$(document).keyup(function (e) {
-		if (e.keyCode === 27) {
+	document.addEventListener('keyup', function (e) {
+		if (e.key === 'Escape' || e.key === 'Esc') {
 			searchClose();
+		} else if (e.key === 'Tab') {
+			if (!e.target.classList.contains('wpbff-search')) {
+				searchClose();
+			}
 		}
 	});
 
