@@ -3,6 +3,7 @@ node_modules/
 package.json
 package-lock.json
 gulpfile.js
+**/build/*.map
 
 # ignore old files
 *.backup.*
