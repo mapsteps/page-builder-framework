@@ -1,6 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps } from '@wordpress/block-editor';
-import { TextControl } from '@wordpress/components';
+import { useBlockProps, BlockControls, InspectorControls, AlignmentToolbar, RichText } from '@wordpress/block-editor';
 
 /**
  * Describes the structure of the block in the context of the editor.
@@ -11,14 +10,26 @@ import { TextControl } from '@wordpress/components';
  * @return {WPElement} Element to render.
  */
 export default function Edit({ attributes, setAttributes }) {
+	const {type, message, contentAlignment, className, id} = attributes;
+
 	return (
-		<div {...useBlockProps()}>
-			<div class="wpbf-notice">
-				<TextControl
-					value={attributes.message}
+		<>
+			<BlockControls>
+				<AlignmentToolbar
+					value={contentAlignment}
+					onChange={(value) => setAttributes({ contentAlignment: value })}
+				/>
+			</BlockControls>
+
+			<div {...useBlockProps()}>
+				<RichText
+					tagName="div"
+					className='wpbf-block wpbf-notice-block wpbf-notice'
+					style={{ textAlign: contentAlignment }}
 					onChange={(val) => setAttributes({ message: val })}
+					value={message}
 				/>
 			</div>
-		</div>
+		</>
 	);
 }

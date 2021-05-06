@@ -4,6 +4,9 @@
 	.components-text-control__input {
 		margin: 0;
 		padding: 0;
+		font-family: $base-font;
+		font-size: $base-fontsize;
+		color: $brand-color-alt;
 		border-width: 0;
 		background-color: transparent;
 
