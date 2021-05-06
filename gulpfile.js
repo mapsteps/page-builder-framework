@@ -1,103 +1,127 @@
-var gulp = require('gulp');
-var plumber = require('gulp-plumber');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var browserSync = require('browser-sync').create();
-var reload = browserSync.reload;
-var manifest = require('./assets/manifest.json');
-var config = manifest.config;
+const { src, dest, watch, parallel, series } = require('gulp');
+const concat = require('gulp-concat');
+const plumber = require('gulp-plumber');
+const uglify = require('gulp-uglify');
+const sass = require('gulp-dart-sass');
+const autoprefixer = require('gulp-autoprefixer');
+const rename = require('gulp-rename');
+const babel = require('gulp-babel');
+const browserSync = require('browser-sync').create();
 
-// Scripts Task
-// Combine & Minify JS
-gulp.task('scripts_combine_min', function () {
+function compileStyleSCSS() {
+	return src(['assets/scss/style.scss'])
+		.pipe(sass({ outputStyle: 'compressed' }))
+		.pipe(autoprefixer())
+		.pipe(dest('./'))
+		.pipe(browserSync.stream());
+}
 
-	gulp.src(['assets/js/site.js', 'assets/js/mobile.js'])
-		.pipe(plumber())
-		.pipe(concat('site-min.js'))
-		.pipe(uglify())
-		.pipe(gulp.dest('js/min'))
-		.pipe(reload({ stream: true }))
-
-});
-
-// Minify JS
-gulp.task('scripts_min', function () {
-
-	gulp.src(['assets/js/*.js', '!assets/js/site.js', '!assets/js/mobile.js'])
-		.pipe(plumber())
-		.pipe(uglify())
-		.pipe(rename({ suffix: '-min' }))
-		.pipe(gulp.dest('js/min'))
-		.pipe(reload({ stream: true }))
-
-});
-
-// Styles Task
-
-// Compile main styles.
-gulp.task('styles', function(){
-	return gulp.src('assets/scss/style.scss')
-	.pipe(sass({outputStyle: 'compressed'}))
-	.pipe(gulp.dest(''))
-	.pipe(reload({ stream: true }))
-});
-
-// Compile partial styles.
-gulp.task('partial_styles', function(){
-	return gulp.src([
+function compilePartialSCSS() {
+	return src([
 		'assets/scss/*.scss',
 		'!assets/scss/style.scss',
 		'assets/edd/scss/*.scss',
 		'assets/lifterlms/scss/*.scss',
 		'assets/woocommerce/scss/*.scss'
 	])
-	.pipe(sass({outputStyle: 'compressed'}))
-	.pipe(rename({ suffix: '-min' }))
-	.pipe(gulp.dest('css/min'))
-	.pipe(reload({ stream: true }))
-});
+		.pipe(sass({ outputStyle: 'compressed' }))
+		.pipe(autoprefixer())
+		.pipe(rename({
+			suffix: '-min'
+		}))
+		.pipe(dest('css/min'))
+		.pipe(browserSync.stream());
+}
 
-// Browser Sync
-gulp.task('serve', function() {
-	browserSync.init( {
-		proxy: "http://" + config.url,
-		host: config.host,
-		notify: false,
+function buildSiteJS() {
+	return src([
+		'assets/js/site.js',
+		'assets/js/mobile.js'
+	])
+		.pipe(plumber())
+		.pipe(concat('site-min.js'))
+		.pipe(babel({
+			presets: ['@babel/preset-env']
+		}))
+		.pipe(uglify())
+		.pipe(dest('js/min'))
+		.pipe(browserSync.reload({ stream: true }));
+}
+
+function buildPartialJS() {
+	return src([
+		'assets/js/*.js',
+		'!assets/js/site.js',
+		'!assets/js/mobile.js'
+	])
+		.pipe(plumber())
+		.pipe(babel({
+			presets: ['@babel/preset-env']
+		}))
+		.pipe(uglify())
+		.pipe(rename({
+			suffix: '-min'
+		}))
+		.pipe(dest('js/min'))
+		.pipe(browserSync.reload({ stream: true }));
+}
+
+function serveBrowserSync(cb) {
+	browserSync.init({
+		proxy: "mapsteps.local",
+		notify: true,
 	});
-});
 
-// Watch Tasks
-gulp.task('watch', function() {
+	cb();
+}
 
-	// Styles & Scripts to be watched
-	gulp.watch(['assets/js/site.js', 'assets/js/mobile.js'], ['scripts_combine_min']);
-	gulp.watch(['assets/js/*.js', '!assets/js/site.js', '!assets/js/mobile.js'], ['scripts_min']);
+function streamAssets(cb) {
+	browserSync.stream();
+	cb();
+}
 
-	gulp.watch(['assets/scss/style.scss', 'assets/scss/**/*.scss'], ['styles']);
-	
-	gulp.watch(
-		[
-			'assets/scss/*.scss',
-			'!assets/scss/style.scss',
-			'assets/scss/**/*.scss',
-			
-			'assets/edd/scss/*.scss',
-			'assets/edd/scss/**/*.scss',
-			
-			'assets/lifterlms/scss/*.scss',
-			'assets/lifterlms/scss/**/*.scss',
-			
-			'assets/woocommerce/scss/*.scss',
-			'assets/woocommerce/scss/**/*.scss'
-		],
-		['partial_styles']
-	);
+function reloadStream(cb) {
+	browserSync.reload({ stream: true });
+	cb();
+}
 
-	// browserSync
-	gulp.watch('**/*.php').on('change', reload);
-})
+function reloadPage(cb) {
+	browserSync.reload();
+	cb();
+}
 
-// Gulp
-gulp.task('default', ['scripts_combine_min', 'scripts_min', 'styles', 'partial_styles', 'watch', 'serve']);
+function watchChanges(cb) {
+	watch(['assets/js/site.js', 'assets/js/mobile.js'], parallel(buildSiteJS));
+	watch(['assets/js/*.js', '!assets/js/site.js', '!assets/js/mobile.js'], parallel(buildPartialJS));
+
+	watch(['assets/scss/style.scss', 'assets/scss/**/*.scss'], parallel(compileStyleSCSS));
+	watch([
+		'assets/scss/*.scss',
+		'!assets/scss/style.scss',
+		'assets/scss/**/*.scss',
+
+		'assets/edd/scss/*.scss',
+		'assets/edd/scss/**/*.scss',
+
+		'assets/lifterlms/scss/*.scss',
+		'assets/lifterlms/scss/**/*.scss',
+
+		'assets/woocommerce/scss/*.scss',
+		'assets/woocommerce/scss/**/*.scss'
+	], parallel(compilePartialSCSS));
+
+	watch(['**/*.php', 'assets/img/*'], parallel(reloadPage));
+
+	cb();
+}
+
+function mainTasks(cb) {
+	buildSiteJS();
+	buildPartialJS();
+	compileStyleSCSS();
+	compilePartialSCSS();
+
+	cb();
+}
+
+exports.default = parallel(serveBrowserSync, mainTasks, watchChanges);
