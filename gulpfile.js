@@ -7,6 +7,8 @@ const autoprefixer = require('gulp-autoprefixer');
 const rename = require('gulp-rename');
 const babel = require('gulp-babel');
 const browserSync = require('browser-sync').create();
+var manifest = require('./manifest.json');
+var config = manifest.config;
 
 function compileStyleSCSS() {
 	return src(['assets/scss/style.scss'])
@@ -68,7 +70,7 @@ function buildPartialJS() {
 
 function serveBrowserSync(cb) {
 	browserSync.init({
-		proxy: "mapsteps.local",
+		proxy: config.url,
 		notify: true,
 	});
 
