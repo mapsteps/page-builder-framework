@@ -71,6 +71,9 @@ function buildPartialJS() {
 function serveBrowserSync(cb) {
 	browserSync.init({
 		proxy: config.url,
+		ui: {
+			port: 3050,
+		},
 		notify: true,
 	});
 
