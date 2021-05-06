@@ -10,7 +10,7 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
  * @return {WPElement} Element to render.
  */
 export default function save({ attributes }) {
-	const { type, message, contentAlignment, className, id } = attributes;
+	const { typeClassName, message, contentAlignment, className, id } = attributes;
 	let textAlignClassName;
 	
 	switch (contentAlignment) {
@@ -34,13 +34,11 @@ export default function save({ attributes }) {
 			break;
 	}
 
-	const defaultClassName = 'wpbf-block wpbf-notice-block wpbf-notice ' + textAlignClassName;
+	const defaultClassName = 'wpbf-block wpbf-notice-block wpbf-notice ' + typeClassName + ' ' + textAlignClassName;
 
 	return (
-		<div {...useBlockProps.save()}>
-			<div class={defaultClassName}>
-				<RichText.Content tagName="" value={message} />
-			</div>
+		<div class={defaultClassName} {...useBlockProps.save()}>
+			<RichText.Content tagName="" value={message} />
 		</div>
 	);
 }

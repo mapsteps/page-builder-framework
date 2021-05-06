@@ -8,19 +8,15 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 return array(
-	'type'             => array(
+	'typeClassName'    => array(
 		'type'    => 'string',
 		'default' => '',
 	),
 	'message'          => array(
 		'type'    => 'string',
-		'default' => __( 'Enter the notice message', 'power-blocks' ),
+		'default' => __( 'Change this notice message', 'power-blocks' ),
 	),
 	'contentAlignment' => array(
-		'type'    => 'string',
-		'default' => '',
-	),
-	'className'          => array(
 		'type'    => 'string',
 		'default' => '',
 	),
