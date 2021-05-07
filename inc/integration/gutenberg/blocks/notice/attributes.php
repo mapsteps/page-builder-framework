@@ -14,7 +14,7 @@ return array(
 	),
 	'message'          => array(
 		'type'    => 'string',
-		'default' => __( 'Change this notice message', 'power-blocks' ),
+		'default' => '',
 	),
 	'contentAlignment' => array(
 		'type'    => 'string',

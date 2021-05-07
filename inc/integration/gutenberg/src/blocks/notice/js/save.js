@@ -1,6 +1,8 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, RichText } from '@wordpress/block-editor';
 
+import classnames from 'classnames';
+
 /**
  * Defines the way in which the different attributes should be combined into the final markup,
  * which is then serialized by the block editor into `post_content`.
@@ -10,9 +12,9 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
  * @return {WPElement} Element to render.
  */
 export default function save({ attributes }) {
-	const { typeClassName, message, contentAlignment, className, id } = attributes;
-	let textAlignClassName;
-	
+	const { typeClassName, message, contentAlignment, id } = attributes;
+	let textAlignClassName = '';
+
 	switch (contentAlignment) {
 		case 'left':
 			textAlignClassName = 'wpbf-text-left';
@@ -29,16 +31,16 @@ export default function save({ attributes }) {
 		case 'justify':
 			textAlignClassName = 'wpbf-text-justify';
 			break;
-	
+
 		default:
 			break;
 	}
 
-	const defaultClassName = 'wpbf-block wpbf-notice-block wpbf-notice ' + typeClassName + ' ' + textAlignClassName;
+	const noticeClassName = 'wpbf-block wpbf-notice-block wpbf-notice ' + typeClassName + ' ' + textAlignClassName;
 
 	return (
-		<div class={defaultClassName} {...useBlockProps.save()}>
-			<RichText.Content tagName="" value={message} />
+		<div {...useBlockProps.save({ className: noticeClassName })}>
+			<RichText.Content value={message} />
 		</div>
 	);
 }

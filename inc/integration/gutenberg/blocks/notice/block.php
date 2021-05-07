@@ -19,8 +19,19 @@ function wpbf_register_notice_block() {
 			'description' => __( 'Notice block utilizing CSS Framework of Page Builder Framework.', 'page-builder-framework' ),
 			'category'    => 'wpbf',
 			'icon'        => 'info-outline',
-			'attributes'  => require __DIR__ . '/attributes.php',
 			'textdomain'  => 'page-builder-framework',
+			'styles'      => array(
+				array(
+					'name'      => '',
+					'label'     => __( 'Full width', 'page-builder-framework' ),
+					'isDefault' => true,
+				),
+				array(
+					'name'  => 'wpbf-inline-block',
+					'label' => __( 'Inline', 'page-builder-framework' ),
+				),
+			),
+			'attributes'  => require __DIR__ . '/attributes.php',
 		)
 	);
 
@@ -39,7 +50,7 @@ function wpbf_notice_block_editor_scripts() {
 	);
 
 	wp_add_inline_script(
-		'wpbf-blocks',
+		'wpbf-block-editor',
 		'wpbfBlocks.notice = ' . $opts . ';',
 		'before'
 	);

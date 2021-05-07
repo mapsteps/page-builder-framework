@@ -2,6 +2,8 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, BlockControls, InspectorControls, AlignmentToolbar, RichText } from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
 
+import classnames from 'classnames';
+
 /**
  * Describes the structure of the block in the context of the editor.
  * This represents what the editor will render when the block is used.
@@ -10,11 +12,19 @@ import { PanelBody, SelectControl } from '@wordpress/components';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit(props) {
+	const { attributes, setAttributes, className } = props;
 	const { typeClassName, message, contentAlignment, id } = attributes;
 
 	const defaultClassName = 'wpbf-block wpbf-notice-block wpbf-notice';
 	let fullClassName = defaultClassName + ' ' + typeClassName;
+
+	const blockProps = useBlockProps({
+		className: classnames(
+			className,
+			fullClassName
+		)
+	});
 
 	return (
 		<>
@@ -44,15 +54,16 @@ export default function Edit({ attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...useBlockProps()}>
-				<RichText
-					tagName="div"
-					className={fullClassName}
-					style={{ textAlign: contentAlignment }}
-					onChange={(val) => setAttributes({ message: val })}
-					value={message}
-				/>
-			</div>
+			<RichText
+				tagName="div"
+				focusOnInsert="true"
+				isSelected="true"
+				placeholder={__('Add notice message...', 'page-builder-framework')}
+				style={{ textAlign: contentAlignment }}
+				onChange={(val) => setAttributes({ message: val })}
+				value={message}
+				{...blockProps}
+			/>
 		</>
 	);
 }
