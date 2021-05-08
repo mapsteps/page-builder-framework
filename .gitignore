@@ -1,6 +1,5 @@
 # ignore build tools
 node_modules/
-package.json
 package-lock.json
 gulpfile.js
 **/build/*.map
