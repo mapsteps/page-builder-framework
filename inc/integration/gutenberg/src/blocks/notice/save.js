@@ -11,7 +11,7 @@ import classnames from 'classnames';
  *
  * @return {WPElement} Element to render.
  */
-export default function save({ attributes }) {
+function save({ attributes }) {
 	const { typeClassName, message, contentAlignment, id } = attributes;
 	let textAlignClassName = '';
 
@@ -44,3 +44,5 @@ export default function save({ attributes }) {
 		</div>
 	);
 }
+
+export default save;

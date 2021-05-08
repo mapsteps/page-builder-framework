@@ -106,6 +106,34 @@ function wpbf_gutenberg_block_editor_assets() {
 add_action( 'enqueue_block_editor_assets', 'wpbf_gutenberg_block_editor_assets' );
 
 /**
+ * Change the url of Page Builder Framework's block assets url.
+ *
+ * @see https://developer.wordpress.org/reference/functions/plugins_url/
+ *
+ * @param string $url    The complete URL to the plugins directory including scheme and path.
+ * @param string $path   Path relative to the URL to the plugins directory. Blank string
+ *                       if no path is specified.
+ * @param string $plugin The plugin file path to be relative to. Blank string if no plugin
+ *                       is specified.
+ */
+function wpbf_parse_block_assets_url( $url, $path, $plugin ) {
+
+	if (
+		false === stripos( $path, '../../build/wpbf-block-editor' ) &&
+		false === stripos( $path, '../../build/wpbf-blocks' )
+	) {
+		return $url;
+	}
+
+	$path = str_ireplace( '../../build/wpbf-', '/build/wpbf-', $path );
+	$url  = WPBF_THEME_URI . '/inc/integration/gutenberg' . $path;
+
+	return $url;
+
+}
+add_filter( 'plugins_url', 'wpbf_parse_block_assets_url', 10, 3 );
+
+/**
  * Register blocks category.
  *
  * @param array  $categories Block categories.
@@ -121,7 +149,6 @@ function wpbf_register_blocks_category( $categories, $post ) {
 			array(
 				'slug'  => 'wpbf',
 				'title' => __( 'Page Builder Framework', 'page-builder-framework' ),
-				'icon'  => 'dashicons-info-outline',
 			),
 		)
 	);
@@ -150,7 +177,7 @@ function wpbf_enqueue_block_editor_assets() {
 	);
 
 }
-add_action( 'enqueue_block_editor_assets', 'wpbf_enqueue_block_editor_assets' );
+// add_action( 'enqueue_block_editor_assets', 'wpbf_enqueue_block_editor_assets' );
 
 /**
  * Enqueue block assets for both editor and frontend.
@@ -166,7 +193,7 @@ function wpbf_enqueue_block_assets() {
 	wp_enqueue_script( 'wpbf-blocks', WPBF_THEME_URI . '/inc/integration/gutenberg/build/blocks.js', $dependencies, $version, true );
 
 }
-add_action( 'enqueue_block_assets', 'wpbf_enqueue_block_assets' );
+// add_action( 'enqueue_block_assets', 'wpbf_enqueue_block_assets' );
 
 /**
  * Register blocks.

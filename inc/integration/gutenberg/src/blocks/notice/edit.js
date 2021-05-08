@@ -12,8 +12,7 @@ import classnames from 'classnames';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit(props) {
-	const { attributes, setAttributes, className } = props;
+function edit({ attributes, setAttributes, className }) {
 	const { typeClassName, message, contentAlignment, id } = attributes;
 
 	const defaultClassName = 'wpbf-block wpbf-notice-block wpbf-notice';
@@ -55,8 +54,6 @@ export default function Edit(props) {
 			</InspectorControls>
 
 			<RichText
-				tagName="div"
-				focusOnInsert="true"
 				isSelected="true"
 				placeholder={__('Add notice message...', 'page-builder-framework')}
 				style={{ textAlign: contentAlignment }}
@@ -67,3 +64,5 @@ export default function Edit(props) {
 		</>
 	);
 }
+
+export default edit;

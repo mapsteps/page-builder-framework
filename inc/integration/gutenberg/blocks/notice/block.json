@@ -1,0 +1,44 @@
+{
+	"apiVersion": 2,
+	"name": "wpbf/notice-block",
+	"title": "Notice",
+	"category": "wpbf",
+	"icon": "info-outline",
+	"description": "Notice block utilizing CSS Framework of Page Builder Framework.",
+	"textdomain": "page-builder-framework",
+	"supports": {
+		"html": false
+	},
+	"editorStyle": "file:../../build/wpbf-block-editor.css",
+	"editorScript": "file:../../build/wpbf-block-editor.js",
+	"style": "file:../../build/wpbf-blocks.css",
+	"script": "file:../../build/wpbf-blocks.js",
+	"attributes": {
+		"typeClassName": {
+			"type": "string",
+			"default": ""
+		},
+		"message": {
+			"type": "string",
+			"default": ""
+		},
+		"contentAlignment": {
+			"type": "string",
+			"default": ""
+		},
+		"id": {
+			"type": "string"
+		}
+	},
+	"styles": [
+		{
+			"name": "",
+			"label": "Full width",
+			"isDefault": true
+		},
+		{
+			"name": "wpbf-inline-block",
+			"label": "Inline"
+		}
+	]
+}
