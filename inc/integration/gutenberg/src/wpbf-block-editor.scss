@@ -1,5 +1,11 @@
-$font-dir: '../../../../fonts';
-$img-dir: '../../../../img';
+.block-editor-block-styles {
+	.block-editor-block-preview__content {
+		.wpbf-notice {
+			display: inline-block;
 
-@import "../../../../assets/scss/config/config";
-@import "../../../../assets/scss/main/framework";
+			&.is-style-wpbf-full-width {
+				display: block;
+			}
+		}
+	}
+}

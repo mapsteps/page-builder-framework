@@ -1,7 +1,7 @@
-import { __ } from '@wordpress/i18n';
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { __ } from "@wordpress/i18n";
+import { useBlockProps, RichText } from "@wordpress/block-editor";
 
-import classnames from 'classnames';
+import classnames from "classnames";
 
 /**
  * Defines the way in which the different attributes should be combined into the final markup,
@@ -13,33 +13,41 @@ import classnames from 'classnames';
  */
 function save({ attributes }) {
 	const { typeClassName, message, contentAlignment, id } = attributes;
-	let textAlignClassName = '';
+	let textAlignClassName = "";
 
 	switch (contentAlignment) {
-		case 'left':
-			textAlignClassName = 'wpbf-text-left';
+		case "left":
+			textAlignClassName = "wpbf-text-left";
 			break;
 
-		case 'center':
-			textAlignClassName = 'wpbf-text-center';
+		case "center":
+			textAlignClassName = "wpbf-text-center";
 			break;
 
-		case 'right':
-			textAlignClassName = 'wpbf-text-right';
+		case "right":
+			textAlignClassName = "wpbf-text-right";
 			break;
 
-		case 'justify':
-			textAlignClassName = 'wpbf-text-justify';
+		case "justify":
+			textAlignClassName = "wpbf-text-justify";
 			break;
 
 		default:
 			break;
 	}
 
-	const noticeClassName = 'wpbf-block wpbf-notice-block wpbf-notice ' + typeClassName + ' ' + textAlignClassName;
+	const noticeClassName = classnames(
+		"wpbf-block wpbf-block-notice wpbf-notice",
+		typeClassName,
+		textAlignClassName
+	);
 
 	return (
-		<div {...useBlockProps.save({ className: noticeClassName })}>
+		<div
+			{...useBlockProps.save({
+				className: noticeClassName
+			})}
+		>
 			<RichText.Content value={message} />
 		</div>
 	);

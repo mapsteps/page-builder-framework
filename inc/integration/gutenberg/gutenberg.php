@@ -161,14 +161,14 @@ add_filter( 'block_categories', 'wpbf_register_blocks_category', 10, 2 );
  */
 function wpbf_enqueue_block_editor_assets() {
 
-	$enqueue_data = require __DIR__ . '/build/editor.asset.php';
+	$enqueue_data = require __DIR__ . '/build/wpbf-block-editor.asset.php';
 	$version      = $enqueue_data['version'];
 	$dependencies = $enqueue_data['dependencies'];
 
 	wp_enqueue_style( 'wpbf-css-framework', WPBF_THEME_URI . '/css/min/framework-min.css', array(), $version );
-	wp_enqueue_style( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/editor.css', array(), $version );
+	wp_enqueue_style( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.css', array(), $version );
 
-	wp_enqueue_script( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/editor.js', $dependencies, $version, true );
+	wp_enqueue_script( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.js', $dependencies, $version, true );
 
 	wp_add_inline_script(
 		'wp-block-editor',
@@ -177,28 +177,29 @@ function wpbf_enqueue_block_editor_assets() {
 	);
 
 }
-// add_action( 'enqueue_block_editor_assets', 'wpbf_enqueue_block_editor_assets' );
+add_action( 'enqueue_block_editor_assets', 'wpbf_enqueue_block_editor_assets' );
 
 /**
  * Enqueue block assets for both editor and frontend.
  */
 function wpbf_enqueue_block_assets() {
 
-	$enqueue_data = require __DIR__ . '/build/blocks.asset.php';
+	$enqueue_data = require __DIR__ . '/build/wpbf-blocks.asset.php';
 	$version      = $enqueue_data['version'];
 	$dependencies = $enqueue_data['dependencies'];
 
-	wp_enqueue_style( 'wpbf-blocks', WPBF_THEME_URI . '/inc/integration/gutenberg/build/blocks.css', array(), $version );
+	wp_enqueue_style( 'wpbf-blocks', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-blocks.css', array(), $version );
 
-	wp_enqueue_script( 'wpbf-blocks', WPBF_THEME_URI . '/inc/integration/gutenberg/build/blocks.js', $dependencies, $version, true );
+	wp_enqueue_script( 'wpbf-blocks', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-blocks.js', $dependencies, $version, true );
 
 }
-// add_action( 'enqueue_block_assets', 'wpbf_enqueue_block_assets' );
+add_action( 'enqueue_block_assets', 'wpbf_enqueue_block_assets' );
 
 /**
  * Register blocks.
  */
 function wpbf_register_blocks() {
+
 	$scan = glob( __DIR__ . '/blocks/*/block.php' );
 
 	foreach ( $scan as $path ) {
@@ -208,5 +209,6 @@ function wpbf_register_blocks() {
 
 		require_once $path;
 	}
+
 }
 add_action( 'after_setup_theme', 'wpbf_register_blocks' );

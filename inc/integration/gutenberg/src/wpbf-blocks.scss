@@ -1,3 +1,47 @@
-.is-style-wpbf-inline-block {
-	display: inline-block;
+.wpbf-block-notices {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	flex-direction: row;
+
+	> .wpbf-block-notice {
+		margin-left: 0;
+		margin-right: 0.5em;
+	}
+}
+
+.wpbf-block-notice {
+	width: fit-content;
+}
+
+///
+/// Put the base utility classes at the bottom
+/// to prevent nesting (or even deep nesting) when overriding styles.
+///
+.wpbf-is-horizontal {
+	flex-direction: row;
+}
+
+.wpbf-is-vertical {
+	flex-direction: column;
+}
+
+.is-style-wpbf-full-width {
+	width: 100%;
+}
+
+.wpbf-content-justified-left {
+	justify-content: flex-start;
+}
+
+.wpbf-content-justified-center {
+	justify-content: center;
+}
+
+.wpbf-content-justified-space-between {
+	justify-content: space-between;
+}
+
+.wpbf-content-justified-right {
+	justify-content: flex-end;
 }
