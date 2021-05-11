@@ -43,7 +43,7 @@ function NoticeEdit({ attributes, setAttributes, className }) {
 						label="Notice Type"
 						value={typeClassName}
 						options={[
-							{ label: __("Notice", "page-builder-framework"), value: "" },
+							{ label: __("Default", "page-builder-framework"), value: "" },
 							{
 								label: __("Success", "page-builder-framework"),
 								value: "wpbf-notice-success",
@@ -55,6 +55,10 @@ function NoticeEdit({ attributes, setAttributes, className }) {
 							{
 								label: __("Error", "page-builder-framework"),
 								value: "wpbf-notice-error",
+							},
+							{
+								label: __("Primary", "page-builder-framework"),
+								value: "wpbf-notice-primary",
 							},
 						]}
 						onChange={(value) => {
