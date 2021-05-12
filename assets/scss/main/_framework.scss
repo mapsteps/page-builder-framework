@@ -393,9 +393,9 @@ select {
 
 // Notice modifier (primary)
 .wpbf-notice-primary {
-	background: rgba(var(--accent-color),.1);
-	border-color: var(--accent-color);
-	color: var(--accent-color);
+	background: rgba($blue,.1);
+	border-color: $blue;
+	color: $blue;
 }
 
 /* Table */
