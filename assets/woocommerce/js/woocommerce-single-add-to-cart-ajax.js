@@ -50,7 +50,11 @@ Wpbf.singleAddToCart = (function ($) {
 	ajax.addToCart = function (e) {
 		e.preventDefault();
 
-		var product = document.querySelector('.single-product .type-product');
+		var button = this;
+		var cartForm = button.closest("form.cart");
+		if (!cartForm) return;
+
+		var product = cartForm.closest('.product.type-product');
 		if (!product) return;
 
 		var isVariable = product.classList.contains('product-type-variable');
@@ -59,10 +63,8 @@ Wpbf.singleAddToCart = (function ($) {
 		if (state.isRequesting) return;
 		state.isRequesting = true;
 
-		var button = product.querySelector('.single_add_to_cart_button');
 		loading.start(button);
 
-		var cartForm = product.querySelector('form.cart');
 		var addToCartField = cartForm.querySelector('[name="add-to-cart"]');
 		var qtyField = cartForm.querySelector('[name="quantity"]');
 
