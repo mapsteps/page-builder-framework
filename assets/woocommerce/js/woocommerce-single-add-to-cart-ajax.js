@@ -49,10 +49,8 @@ Wpbf.singleAddToCart = (function ($) {
 	 */
 	ajax.addToCart = function (e) {
 		var button = this;
-		var cartForm = button.closest("form.cart");
-		if (!cartForm) return;
 
-		var product = cartForm.closest('.product.type-product');
+		var product = button.closest('.product.type-product');
 		if (!product) return;
 
 		e.preventDefault();
@@ -65,6 +63,7 @@ Wpbf.singleAddToCart = (function ($) {
 
 		loading.start(button);
 
+		var cartForm = product.querySelector("form.cart");
 		var addToCartField = cartForm.querySelector('[name="add-to-cart"]');
 		var qtyField = cartForm.querySelector('[name="quantity"]');
 
