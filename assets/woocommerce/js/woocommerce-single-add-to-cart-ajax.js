@@ -24,11 +24,11 @@ Wpbf.singleAddToCart = (function ($) {
 	}
 
 	loading.start = function (button) {
-		if (button) button.classList.add('is-loading');
+		button.classList.add('is-loading');
 	};
 
 	loading.stop = function (button) {
-		if (button) button.classList.remove('is-loading');
+		button.classList.remove('is-loading');
 	};
 
 	/**
@@ -51,13 +51,15 @@ Wpbf.singleAddToCart = (function ($) {
 		e.preventDefault();
 
 		var product = document.querySelector('.single-product .type-product');
+		if (!product) return;
+
 		var isVariable = product.classList.contains('product-type-variable');
 		var isGrouped = product.classList.contains('product-type-grouped');
 
 		if (state.isRequesting) return;
 		state.isRequesting = true;
 
-		var button = document.querySelector('.single_add_to_cart_button');
+		var button = product.querySelector('.single_add_to_cart_button');
 		loading.start(button);
 
 		var cartForm = product.querySelector('form.cart');
