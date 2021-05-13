@@ -24,11 +24,11 @@ Wpbf.singleAddToCart = (function ($) {
 	}
 
 	loading.start = function (button) {
-		button.classList.add('is-loading');
+		if (button) button.classList.add('is-loading');
 	};
 
 	loading.stop = function (button) {
-		button.classList.remove('is-loading');
+		if (button) button.classList.remove('is-loading');
 	};
 
 	/**
