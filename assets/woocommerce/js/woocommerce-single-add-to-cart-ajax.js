@@ -48,14 +48,14 @@ Wpbf.singleAddToCart = (function ($) {
 	 * @param Event e The event object.
 	 */
 	ajax.addToCart = function (e) {
-		e.preventDefault();
-
 		var button = this;
 		var cartForm = button.closest("form.cart");
 		if (!cartForm) return;
 
 		var product = cartForm.closest('.product.type-product');
 		if (!product) return;
+
+		e.preventDefault();
 
 		var isVariable = product.classList.contains('product-type-variable');
 		var isGrouped = product.classList.contains('product-type-grouped');
