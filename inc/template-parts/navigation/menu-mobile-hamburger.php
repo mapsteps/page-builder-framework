@@ -38,7 +38,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<?php do_action( 'wpbf_before_mobile_menu' ); ?>
 
-		<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
+		<nav id="mobile-navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
 
 			<?php do_action( 'wpbf_mobile_menu_open' ); ?>
 
