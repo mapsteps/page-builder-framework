@@ -13,7 +13,7 @@ Wpbf.singleAddToCart = (function ($) {
 		isRequesting: false
 	};
 
-	var loading = {}
+	var loading = {};
 	var ajax = {};
 
 	/**
@@ -57,7 +57,7 @@ Wpbf.singleAddToCart = (function ($) {
 		if (state.isRequesting) return;
 		state.isRequesting = true;
 
-		var button = product.querySelector('.single_add_to_cart_button');
+		var button = document.querySelector('.single_add_to_cart_button');
 		loading.start(button);
 
 		var cartForm = product.querySelector('form.cart');
