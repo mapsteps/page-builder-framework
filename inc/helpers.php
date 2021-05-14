@@ -373,7 +373,7 @@ function wpbf_singular_class() {
 	} elseif ( is_404() ) {
 		$singular_class = ' wpbf-single-content wpbf-404-content';
 	} else {
-		$post_type      = get_post_type( get_the_ID() );
+		$post_type      = get_post_type();
 		$singular_class = ' wpbf-single-content wpbf-' . $post_type . '-content';
 	}
 
