@@ -139,7 +139,7 @@ function wpbf_inner_content( $echo = true ) {
 			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
 			// If current post type has been set to full-width globally, set $inner_content to false.
-			$inner_content = $fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? false : $inner_content;
+			$inner_content = $fullwidth_global && in_array( get_post_type( get_the_ID() ), $fullwidth_global ) ? false : $inner_content;
 
 		}
 
@@ -179,7 +179,7 @@ function wpbf_inner_content_close() {
 
 			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
-			$inner_content_close = $fullwidth_global && in_array( get_post_type(), $fullwidth_global ) ? false : $inner_content_close;
+			$inner_content_close = $fullwidth_global && in_array( get_post_type( get_the_ID() ), $fullwidth_global ) ? false : $inner_content_close;
 
 		}
 	} else {
@@ -209,7 +209,7 @@ function wpbf_title() {
 
 		$removetitle_global = isset( $wpbf_settings['wpbf_removetitle_global'] ) ? $wpbf_settings['wpbf_removetitle_global'] : array();
 
-		$title = $removetitle_global && in_array( get_post_type(), $removetitle_global ) ? false : $title;
+		$title = $removetitle_global && in_array( get_post_type( get_the_ID() ), $removetitle_global ) ? false : $title;
 
 	}
 
@@ -373,7 +373,7 @@ function wpbf_singular_class() {
 	} elseif ( is_404() ) {
 		$singular_class = ' wpbf-single-content wpbf-404-content';
 	} else {
-		$post_type      = get_post_type();
+		$post_type      = get_post_type( get_the_ID() );
 		$singular_class = ' wpbf-single-content wpbf-' . $post_type . '-content';
 	}
 
