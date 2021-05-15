@@ -257,6 +257,7 @@ var WPBFSite = (function ($) {
 		$(this).addClass('using-mouse');
 		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
 	});
+
 	$('body').keydown(function () {
 		$(this).removeClass('using-mouse');
 	});
@@ -271,8 +272,8 @@ var WPBFSite = (function ($) {
 
 	}
 
-	$('.wpbf-menu-container #navigation a').on('focus', wpbf_on_focus);
-	$('.wpbf-menu-container #navigation a').on('blur', wpbf_on_focus);
+	$('#navigation a').on('focus', wpbf_on_focus);
+	$('#navigation a').on('blur', wpbf_on_focus);
 
 	return {
 		breakpoints: breakpoints,
