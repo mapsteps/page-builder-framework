@@ -151,6 +151,8 @@ function wpbf_woo_output_content_wrapper_end() {
 
 	do_action( 'wpbf_sidebar_right' );
 
+	echo '</div>';
+
 	do_action( 'wpbf_inner_content_close' );
 
 	wpbf_inner_content_close();
