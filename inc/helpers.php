@@ -1068,7 +1068,7 @@ function wpbf_responsive_embed( $html, $url, $attr ) {
 	$providers = array( 'vimeo.com', 'youtube.com', 'youtu.be', 'wistia.com', 'wistia.net' );
 
 	if ( wpbf_strposa( $url, $providers ) ) {
-		$html = '<div class="wpbf-video">' . $html . '</div>';
+		$html = '<div class="wpbf-responsive-embed">' . $html . '</div>';
 	}
 
 	return $html;
