@@ -275,9 +275,6 @@ var WPBFSite = (function ($) {
 	$('#navigation a').on('focus', wpbf_on_focus);
 	$('#navigation a').on('blur', wpbf_on_focus);
 
-	$('#mobile-navigation a').on('focus', wpbf_on_focus);
-	$('#mobile-navigation a').on('blur', wpbf_on_focus);
-
 	return {
 		breakpoints: breakpoints,
 		activeBreakpoint: activeBreakpoint
