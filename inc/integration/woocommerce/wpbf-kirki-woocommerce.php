@@ -1302,6 +1302,30 @@ Kirki::add_field(
 
 /* Fields – Messages/Notices */
 
+// Store notice color.
+Kirki::add_field(
+	'wpbf',
+	array(
+		'type'            => 'color',
+		'settings'        => 'woocommerce_store_notice_color',
+		'label'           => __( 'Store Notice', 'page-builder-framework' ),
+		'section'         => 'woocommerce_store_notice',
+		'default'         => '',
+		// The woocommerce_store_notice priority is 10.
+		'priority'        => 10,
+		'choices'         => array(
+			'alpha' => true,
+		),
+		'active_callback' => array(
+			array(
+				'setting'  => 'woocommerce_demo_store',
+				'operator' => '==',
+				'value'    => true,
+			),
+		),
+	)
+);
+
 // Separator.
 Kirki::add_field(
 	'wpbf',
@@ -1311,22 +1335,6 @@ Kirki::add_field(
 		'section'  => 'woocommerce_store_notice',
 		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 		'priority' => 100,
-	)
-);
-
-// Store notice color.
-Kirki::add_field(
-	'wpbf',
-	array(
-		'type'     => 'color',
-		'settings' => 'woocommerce_store_notice_color',
-		'label'    => __( 'Store Notice', 'page-builder-framework' ),
-		'section'  => 'woocommerce_store_notice',
-		'default'  => '',
-		'priority' => 100,
-		'choices'  => array(
-			'alpha' => true,
-		),
 	)
 );
 
