@@ -1147,12 +1147,12 @@ function wpbf_get_default_theme_colors() {
 	$lines        = explode( "\n", $file_content );
 
 	$colors = array(
-		'base-color'       => '',
-		'base-color-alt'   => '',
-		'brand-color'      => '',
-		'brand-color-alt'  => '',
-		'accent-color'     => '',
-		'accent-color-alt' => '',
+		'base_color'       => '',
+		'base_color_alt'   => '',
+		'brand_color'      => '',
+		'brand_color_alt'  => '',
+		'accent_color'     => '',
+		'accent_color_alt' => '',
 	);
 
 	// Remove empty lines.
@@ -1163,8 +1163,10 @@ function wpbf_get_default_theme_colors() {
 	}
 
 	foreach ( $colors as $color_name => $color_value ) {
+		$scss_color_name = '$' . str_ireplace( '_', '-', $color_name ) . '-var';
+
 		foreach ( $lines as $line_index => $line_content ) {
-			if ( false !== stripos( $line_content, '$' . $color_name . '-val' ) ) {
+			if ( false !== stripos( $line_content, $scss_color_name ) ) {
 				$explodes    = explode( ':', $line_content );
 				$color_value = str_ireplace( ';', '', $explodes[1] );
 				$color_value = trim( $color_value );
@@ -1190,12 +1192,12 @@ function wpbf_get_theme_colors() {
 	$default_colors = wpbf_get_default_theme_colors();
 
 	$global_colors = array(
-		'base-color'       => get_theme_mod( 'base_color_global' ),
-		'base-color-alt'   => get_theme_mod( 'base_color_alt_global' ),
-		'brand-color'      => get_theme_mod( 'brand_color_global' ),
-		'brand-color-alt'  => get_theme_mod( 'brand_color_alt_global' ),
-		'accent-color'     => get_theme_mod( 'accent_color_global' ),
-		'accent-color-alt' => get_theme_mod( 'accent_color_alt_global' ),
+		'base_color'       => get_theme_mod( 'base_color_global' ),
+		'base_color_alt'   => get_theme_mod( 'base_color_alt_global' ),
+		'brand_color'      => get_theme_mod( 'brand_color_global' ),
+		'brand_color_alt'  => get_theme_mod( 'brand_color_alt_global' ),
+		'accent_color'     => get_theme_mod( 'accent_color_global' ),
+		'accent_color_alt' => get_theme_mod( 'accent_color_alt_global' ),
 	);
 
 	foreach ( $global_colors as $color_name => $color_value ) {
