@@ -320,11 +320,11 @@ function wpbf_posts_custom_column( $column_name, $post_id ) {
 
 		$sidebar_position = get_post_meta( $post_id, 'wpbf_sidebar_position', true );
 		$sidebar_position = ! empty( $sidebar_position ) ? $sidebar_position : 'global';
-
-		$custom_data_attr = apply_filters( 'wpbf_posts_quick_edit_preset_data_attr', '' );
-
+		
 		$options_nonce = wp_create_nonce( "wpbf_post_{$post_id}_options_nonce" );
 		$sidebar_nonce = wp_create_nonce( "wpbf_post_{$post_id}_sidebar_nonce" );
+
+		$custom_data_attr = apply_filters( 'wpbf_posts_quick_edit_preset_data_attr', '', $post_id );
 		?>
 
 		<span class="wpbf-quick-edit--column-value"><?php echo esc_html( $column_value ); ?></span>
@@ -337,7 +337,7 @@ function wpbf_posts_custom_column( $column_name, $post_id ) {
 			data-wpbf-sidebar-position="<?php echo esc_attr( $sidebar_position ); ?>"
 			data-wpbf-options-nonce="<?php echo esc_attr( $options_nonce ); ?>"
 			data-wpbf-sidebar-nonce="<?php echo esc_attr( $sidebar_nonce ); ?>"
-			<?php echo esc_html( $custom_data_attr ); ?>
+			<?php echo $custom_data_attr; ?>
 		>
 
 		<?php
