@@ -13,7 +13,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 function wpbf_metabox_setup() {
 
 	add_action( 'add_meta_boxes', 'wpbf_metaboxes' );
-	add_action( 'save_post', 'wpbf_save_metadata', 10, 2 );
 
 }
 add_action( 'load-post.php', 'wpbf_metabox_setup' );
@@ -45,7 +44,7 @@ function wpbf_metaboxes() {
  */
 function wpbf_options_metabox_callback( $post ) {
 
-	wp_nonce_field( basename( __FILE__ ), 'wpbf_options_nonce' );
+	wp_nonce_field( "wpbf_post_{$post->ID}_options_nonce", 'wpbf_options_nonce' );
 
 	$wpbf_stored_meta = get_post_meta( $post->ID, 'wpbf_options', true );
 	$wpbf_stored_meta = empty( $wpbf_stored_meta ) ? array() : $wpbf_stored_meta;
@@ -139,7 +138,7 @@ function wpbf_options_metabox_callback( $post ) {
  */
 function wpbf_sidebar_metabox_callback( $post ) {
 
-	wp_nonce_field( basename( __FILE__ ), 'wpbf_sidebar_nonce' );
+	wp_nonce_field( "wpbf_post_{$post->ID}_sidebar_nonce", 'wpbf_sidebar_nonce' );
 
 	$wpbf_sidebar_position = get_post_meta( $post->ID, 'wpbf_sidebar_position', true );
 	$wpbf_sidebar_position = ! empty( $wpbf_sidebar_position ) ? $wpbf_sidebar_position : 'global';
@@ -174,13 +173,15 @@ function wpbf_sidebar_metabox_callback( $post ) {
  * Save metadata.
  *
  * @param integer $post_id The post ID.
+ * @param WP_Post $post The Instance of WP_Post object.
+ * @param bool    $update Whether this is an existing post being updated.
  */
-function wpbf_save_metadata( $post_id ) {
+function wpbf_save_metadata( $post_id, $post, $update ) {
 
 	$is_autosave            = wp_is_post_autosave( $post_id );
 	$is_revision            = wp_is_post_revision( $post_id );
-	$is_valid_nonce         = ( isset( $_POST['wpbf_options_nonce'] ) && wp_verify_nonce( $_POST['wpbf_options_nonce'], basename( __FILE__ ) ) ) ? true : false;
-	$is_valid_sidebar_nonce = ( isset( $_POST['wpbf_sidebar_nonce'] ) && wp_verify_nonce( $_POST['wpbf_sidebar_nonce'], basename( __FILE__ ) ) ) ? true : false;
+	$is_valid_nonce         = ( isset( $_POST['wpbf_options_nonce'] ) && wp_verify_nonce( $_POST['wpbf_options_nonce'], "wpbf_post_{$post_id}_options_nonce" ) ) ? true : false;
+	$is_valid_sidebar_nonce = ( isset( $_POST['wpbf_sidebar_nonce'] ) && wp_verify_nonce( $_POST['wpbf_sidebar_nonce'], "wpbf_post_{$post_id}_sidebar_nonce" ) ) ? true : false;
 
 	// Stop here if autosave, revision or nonce is invalid.
 	if ( $is_autosave || $is_revision || ! $is_valid_nonce || ! $is_valid_sidebar_nonce ) {
@@ -232,5 +233,114 @@ function wpbf_save_metadata( $post_id ) {
 	$wpbf_sidebar_position = isset( $_POST['wpbf_sidebar_position'] ) ? $_POST['wpbf_sidebar_position'] : '';
 
 	update_post_meta( $post_id, 'wpbf_sidebar_position', $wpbf_sidebar_position );
+
+}
+add_action( 'save_post', 'wpbf_save_metadata', 10, 3 );
+
+/**
+ * Prepare custom column(s) setup.
+ */
+function wpbf_prepare_posts_custom_columns() {
+
+	$post_types = get_post_types( array( 'public' => true ) );
+
+	foreach ( $post_types as $post_type ) {
+
+		add_filter( "manage_{$post_type}_posts_columns", 'wpbf_posts_columns' );
+		add_filter( "manage_{$post_type}_posts_custom_column", 'wpbf_posts_custom_column', 10, 2 );
+
+	}
+
+}
+add_action( 'admin_init', 'wpbf_prepare_posts_custom_columns' );
+
+/**
+ * Manage posts columns.
+ *
+ * At least 1 custom column is needed for us to be able
+ * to add custom fields to quick edit box in post list screen.
+ *
+ * @param array $columns The existing columns.
+ * @return array The modified columns.
+ */
+function wpbf_posts_columns( $columns ) {
+
+	$columns['wpbf_layout'] = __( 'Layout', 'page-builder-framework' );
+
+	return $columns;
+
+}
+
+/**
+ * Manage posts custom column content.
+ *
+ * @param string $column_name The name of the column to display.
+ * @param int    $post_id The current post ID.
+ */
+function wpbf_posts_custom_column( $column_name, $post_id ) {
+
+	if ( 'wpbf_layout' === $column_name ) {
+		$post_options = get_post_meta( $post_id, 'wpbf_options', true );
+		$post_options = $post_options ? $post_options : array();
+		$column_value = '';
+
+		if ( in_array( 'full-width', $post_options, true ) ) {
+			$layout = 'full-width';
+
+			$column_value = __( 'Full Width', 'page-builder-framework' );
+		} elseif ( in_array( 'contained', $post_options, true ) ) {
+			$layout = 'contained';
+
+			$column_value = __( 'Contained', 'page-builder-framework' );
+		} else {
+			$layout = 'layout-global';
+
+			$column_value = __( 'Inherit Global Settings', 'page-builder-framework' );
+		}
+
+		$checked_removals = array();
+
+		if ( in_array( 'remove-title', $post_options, true ) ) {
+			array_push( $checked_removals, 'remove-title' );
+		}
+
+		if ( in_array( 'remove-featured', $post_options, true ) ) {
+			array_push( $checked_removals, 'remove-featured' );
+		}
+
+		if ( in_array( 'remove-header', $post_options, true ) ) {
+			array_push( $checked_removals, 'remove-header' );
+		}
+
+		if ( in_array( 'remove-footer', $post_options, true ) ) {
+			array_push( $checked_removals, 'remove-footer' );
+		}
+
+		$removals = implode( ',', $checked_removals );
+
+		$sidebar_position = get_post_meta( $post_id, 'wpbf_sidebar_position', true );
+		$sidebar_position = ! empty( $sidebar_position ) ? $sidebar_position : 'global';
+
+		$custom_data_attr = apply_filters( 'wpbf_posts_quick_edit_preset_data_attr', '' );
+
+		$options_nonce = wp_create_nonce( "wpbf_post_{$post_id}_options_nonce" );
+		$sidebar_nonce = wp_create_nonce( "wpbf_post_{$post_id}_sidebar_nonce" );
+		?>
+
+		<span class="wpbf-quick-edit--column-value"><?php echo esc_html( $column_value ); ?></span>
+
+		<input
+			type="hidden"
+			class="wpbf-quick-edit--preset-values"
+			data-wpbf-layout="<?php echo $layout; ?>"
+			data-wpbf-checked-removals="<?php echo esc_attr( $removals ); ?>"
+			data-wpbf-sidebar-position="<?php echo esc_attr( $sidebar_position ); ?>"
+			data-wpbf-options-nonce="<?php echo esc_attr( $options_nonce ); ?>"
+			data-wpbf-sidebar-nonce="<?php echo esc_attr( $sidebar_nonce ); ?>"
+			<?php echo esc_html( $custom_data_attr ); ?>
+		>
+
+		<?php
+	}
 
 }

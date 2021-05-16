@@ -1,0 +1,77 @@
+.submit.inline-edit-save {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	border-top: 1px solid #ddd;
+}
+
+.inline-edit-row fieldset .inline-edit-col {
+	label {
+		margin-bottom: .4em;
+	}
+}
+
+.wpbf-quick-edit,
+.wpbf-quick-edit * {
+	box-sizing: border-box;
+}
+
+.wpbf-quick-edit {
+	clear: both;
+	margin-top: .5em;
+	padding: .5em;
+
+	h4 {
+		margin-top: 12px;
+		margin-bottom: 12px;
+	}
+}
+
+.wpbf-quick-edit--row {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 10px;
+	width: 100%;
+	border-top: 1px solid #ddd;
+
+	&.has-3 {
+		.wpbf-quick-edit--col {
+			width: 33%;
+		}
+	}
+
+	&.has-4 {
+		.wpbf-quick-edit--col {
+			width: 25%;
+		}
+	}
+
+	@media screen and (max-width: 768px) {
+		&.has-3, &.has-4 {
+			width: 100%;
+		}
+	}
+}
+
+.wpbf-quick-edit--field {
+	margin-bottom: 9px;
+}
+
+.wpbf-quick-edit--radio-field, .wpbf-quick-edit--checkbox-field {
+	display: flex;
+	width: 100%;
+	align-items: center;
+
+	.wpbf-quick-edit--label {
+		display: inline-flex;
+		line-height: 1.1;
+	}
+
+	.wpbf-quick-edit--control {
+		display: inline-flex;
+		margin-right: .4rem;
+	}
+
+	input {
+		margin: 0;
+	}
+}

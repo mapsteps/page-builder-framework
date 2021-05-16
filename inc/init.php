@@ -22,6 +22,9 @@ require_once WPBF_THEME_DIR . '/inc/backwards-compatibility.php';
 // Options.
 require_once WPBF_THEME_DIR . '/inc/options.php';
 
+// Quick edit.
+require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
+
 // Kirki framework.
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
