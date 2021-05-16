@@ -1133,3 +1133,84 @@ function wpbf_array_to_js_object( $array ) {
 	return wp_json_encode( $array );
 
 }
+
+/**
+ * Get default theme colors.
+ *
+ * @return array
+ */
+function wpbf_get_default_theme_colors() {
+
+	$colors       = array();
+	$config_file  = WPBF_THEME_DIR . '/assets/scss/config/_config.scss';
+	$file_content = file_get_contents( $config_file );
+	$lines        = explode( "\n", $file_content );
+
+	$colors = array(
+		'base-color'       => '',
+		'base-color-alt'   => '',
+		'brand-color'      => '',
+		'brand-color-alt'  => '',
+		'accent-color'     => '',
+		'accent-color-alt' => '',
+	);
+
+	// Remove empty lines.
+	foreach ( $lines as $index => $line ) {
+		if ( empty( $line ) ) {
+			unset( $lines[ $index ] );
+		}
+	}
+
+	foreach ( $colors as $color_name => $color_value ) {
+		foreach ( $lines as $line_index => $line_content ) {
+			if ( false !== stripos( $line_content, '$' . $color_name . '-val' ) ) {
+				$explodes    = explode( ':', $line_content );
+				$color_value = str_ireplace( ';', '', $explodes[1] );
+				$color_value = trim( $color_value );
+
+				$colors[ $color_name ] = $color_value;
+
+				break;
+			}
+		}
+	}
+
+	return $colors;
+
+}
+
+/**
+ * Get theme colors.
+ *
+ * @return array
+ */
+function wpbf_get_theme_colors() {
+
+	$default_colors = wpbf_get_default_theme_colors();
+
+	$global_colors = array(
+		'base-color'       => get_theme_mod( 'base_color_global' ),
+		'base-color-alt'   => get_theme_mod( 'base_color_alt_global' ),
+		'brand-color'      => get_theme_mod( 'brand_color_global' ),
+		'brand-color-alt'  => get_theme_mod( 'brand_color_alt_global' ),
+		'accent-color'     => get_theme_mod( 'accent_color_global' ),
+		'accent-color-alt' => get_theme_mod( 'accent_color_alt_global' ),
+	);
+
+	$colors = wp_parse_args( $global_colors, $default_colors );
+
+	return $colors;
+
+}
+
+/**
+ * Store reusable data to prevent heavy / expensive tasks.
+ */
+function wpbf_store_reusable_data() {
+
+	\Wpbf\Vars::set( 'default_theme_colors', wpbf_get_default_theme_colors() );
+	\Wpbf\Vars::set( 'theme_colors', wpbf_get_theme_colors() );
+
+}
+add_action( 'after_theme_setup', 'wpbf_store_reusable_data' );
