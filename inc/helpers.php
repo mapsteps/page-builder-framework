@@ -1211,3 +1211,9 @@ function wpbf_get_theme_colors() {
 	return $colors;
 
 }
+
+/**
+ * Store reusable data to prevent heavy / expensive tasks.
+ */
+\Wpbf\Vars::set( 'default_theme_colors', wpbf_get_default_theme_colors() );
+\Wpbf\Vars::set( 'theme_colors', wpbf_get_theme_colors() );
