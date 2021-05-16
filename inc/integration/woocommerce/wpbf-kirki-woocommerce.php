@@ -1387,3 +1387,46 @@ Kirki::add_field(
 		),
 	)
 );
+
+Kirki::add_field(
+	'wpbf',
+	array(
+		'type'     => 'custom',
+		'settings' => 'woocommerce_general_notice_color_separator',
+		'section'  => 'woocommerce_store_notice',
+		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
+		'priority' => 100,
+	)
+);
+
+// General notice's background color.
+Kirki::add_field(
+	'wpbf',
+	array(
+		'type'     => 'color',
+		'settings' => 'woocommerce_notice_bg_color',
+		'label'    => __( 'Notice Bg Color', 'page-builder-framework' ),
+		'section'  => 'woocommerce_store_notice',
+		'default'  => $colors['base_color_alt'],
+		'priority' => 100,
+		'choices'  => array(
+			'alpha' => true,
+		),
+	)
+);
+
+// General notice's text color.
+Kirki::add_field(
+	'wpbf',
+	array(
+		'type'     => 'color',
+		'settings' => 'woocommerce_notice_text_color',
+		'label'    => __( 'Notice Text Color', 'page-builder-framework' ),
+		'section'  => 'woocommerce_store_notice',
+		'default'  => $colors['brand_color_alt'],
+		'priority' => 100,
+		'choices'  => array(
+			'alpha' => true,
+		),
+	)
+);
