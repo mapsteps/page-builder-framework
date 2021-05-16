@@ -1163,6 +1163,7 @@ function wpbf_get_default_theme_colors() {
 
 		// Individual colors.
 		'green'            => '$green', // Used by .woocommerce-message for it's border-top-color.
+		'error'            => '$error', // Used by .woocommerce-error for it's border-top-color.
 	);
 
 	$colors = array();

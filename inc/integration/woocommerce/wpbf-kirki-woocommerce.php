@@ -1302,6 +1302,8 @@ Kirki::add_field(
 
 /* Fields – Messages/Notices */
 
+$colors = \Wpbf\Vars::get( 'theme_colors' );
+
 // Store notice color.
 Kirki::add_field(
 	'wpbf',
@@ -1310,7 +1312,7 @@ Kirki::add_field(
 		'settings'        => 'woocommerce_store_notice_color',
 		'label'           => __( 'Store Notice', 'page-builder-framework' ),
 		'section'         => 'woocommerce_store_notice',
-		'default'         => '',
+		'default'         => $colors['accent_color'],
 		// The woocommerce_store_notice priority is 10.
 		'priority'        => 10,
 		'choices'         => array(
@@ -1346,7 +1348,7 @@ Kirki::add_field(
 		'settings' => 'woocommerce_info_notice_color',
 		'label'    => __( 'Info Notice', 'page-builder-framework' ),
 		'section'  => 'woocommerce_store_notice',
-		'default'  => '',
+		'default'  => $colors['accent_color'],
 		'priority' => 100,
 		'choices'  => array(
 			'alpha' => true,
@@ -1362,7 +1364,7 @@ Kirki::add_field(
 		'settings' => 'woocommerce_message_notice_color',
 		'label'    => __( 'Success Notice', 'page-builder-framework' ),
 		'section'  => 'woocommerce_store_notice',
-		'default'  => '',
+		'default'  => $colors['green'],
 		'priority' => 100,
 		'choices'  => array(
 			'alpha' => true,
@@ -1378,7 +1380,7 @@ Kirki::add_field(
 		'settings' => 'woocommerce_error_notice_color',
 		'label'    => __( 'Error Notice', 'page-builder-framework' ),
 		'section'  => 'woocommerce_store_notice',
-		'default'  => '',
+		'default'  => $colors['error'],
 		'priority' => 100,
 		'choices'  => array(
 			'alpha' => true,
