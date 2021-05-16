@@ -1135,7 +1135,7 @@ function wpbf_array_to_js_object( $array ) {
 }
 
 /**
- * Get default theme colors.
+ * Get default theme colors by parsing scss config file.
  *
  * @return array
  */
@@ -1146,15 +1146,6 @@ function wpbf_get_default_theme_colors() {
 	$file_content = file_get_contents( $config_file );
 	$lines        = explode( "\n", $file_content );
 
-	$colors = array(
-		'base_color'       => '',
-		'base_color_alt'   => '',
-		'brand_color'      => '',
-		'brand_color_alt'  => '',
-		'accent_color'     => '',
-		'accent_color_alt' => '',
-	);
-
 	// Remove empty lines.
 	foreach ( $lines as $index => $line ) {
 		if ( empty( $line ) ) {
@@ -1162,11 +1153,23 @@ function wpbf_get_default_theme_colors() {
 		}
 	}
 
-	foreach ( $colors as $color_name => $color_value ) {
-		$scss_color_name = '$' . str_ireplace( '_', '-', $color_name ) . '-var';
+	$scss_colors = array(
+		'base_color'       => '$base-color-val',
+		'base_color_alt'   => '$base-color-alt-val',
+		'brand_color'      => '$brand-color-val',
+		'brand_color_alt'  => '$brand-color-alt-val',
+		'accent_color'     => '$accent-color-val',
+		'accent_color_alt' => '$accent-color-alt-val',
 
+		// Individual colors.
+		'green'            => '$green', // Used by .woocommerce-message for it's border-top-color.
+	);
+
+	$colors = array();
+
+	foreach ( $scss_colors as $color_name => $scss_var ) {
 		foreach ( $lines as $line_index => $line_content ) {
-			if ( false !== stripos( $line_content, $scss_color_name ) ) {
+			if ( false !== stripos( $line_content, $scss_var . ':' ) ) {
 				$explodes    = explode( ':', $line_content );
 				$color_value = str_ireplace( ';', '', $explodes[1] );
 				$color_value = trim( $color_value );
