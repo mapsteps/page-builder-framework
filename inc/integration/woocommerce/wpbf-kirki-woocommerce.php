@@ -1344,13 +1344,14 @@ Kirki::add_field(
 Kirki::add_field(
 	'wpbf',
 	array(
-		'type'     => 'color',
-		'settings' => 'woocommerce_info_notice_color',
-		'label'    => __( 'Info Notice', 'page-builder-framework' ),
-		'section'  => 'woocommerce_store_notice',
-		'default'  => $colors['accent_color'],
-		'priority' => 100,
-		'choices'  => array(
+		'type'      => 'color',
+		'settings'  => 'woocommerce_info_notice_color',
+		'label'     => __( 'Info Notice', 'page-builder-framework' ),
+		'section'   => 'woocommerce_store_notice',
+		'default'   => $colors['accent_color'],
+		'priority'  => 100,
+		'transport' => 'postMessage',
+		'choices'   => array(
 			'alpha' => true,
 		),
 	)
@@ -1360,13 +1361,14 @@ Kirki::add_field(
 Kirki::add_field(
 	'wpbf',
 	array(
-		'type'     => 'color',
-		'settings' => 'woocommerce_message_notice_color',
-		'label'    => __( 'Success Notice', 'page-builder-framework' ),
-		'section'  => 'woocommerce_store_notice',
-		'default'  => $colors['green'],
-		'priority' => 100,
-		'choices'  => array(
+		'type'      => 'color',
+		'settings'  => 'woocommerce_message_notice_color',
+		'label'     => __( 'Success Notice', 'page-builder-framework' ),
+		'section'   => 'woocommerce_store_notice',
+		'default'   => $colors['green'],
+		'priority'  => 100,
+		'transport' => 'postMessage',
+		'choices'   => array(
 			'alpha' => true,
 		),
 	)
@@ -1376,13 +1378,14 @@ Kirki::add_field(
 Kirki::add_field(
 	'wpbf',
 	array(
-		'type'     => 'color',
-		'settings' => 'woocommerce_error_notice_color',
-		'label'    => __( 'Error Notice', 'page-builder-framework' ),
-		'section'  => 'woocommerce_store_notice',
-		'default'  => $colors['error'],
-		'priority' => 100,
-		'choices'  => array(
+		'type'      => 'color',
+		'settings'  => 'woocommerce_error_notice_color',
+		'label'     => __( 'Error Notice', 'page-builder-framework' ),
+		'section'   => 'woocommerce_store_notice',
+		'default'   => $colors['error'],
+		'priority'  => 100,
+		'transport' => 'postMessage',
+		'choices'   => array(
 			'alpha' => true,
 		),
 	)
