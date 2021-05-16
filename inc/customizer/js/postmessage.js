@@ -1514,6 +1514,26 @@
 		} );
 	} );
 
+	/** Woocommerce Store & Notices */
+
+	// Woocommerce notice's background color.
+	wp.customize("woocommerce_notice_bg_color", function (value) {
+		var styleTag = setupStyleTag("woocommerce_notice_bg_color");
+
+		value.bind(function (newval) {
+			styleTag.innerHTML = ".woocommerce-message {background-color: " + newval + ";}";
+		});
+	});
+
+	// Woocommerce notice's text color.
+	wp.customize("woocommerce_notice_text_color", function (value) {
+		var styleTag = setupStyleTag("woocommerce_notice_text_color");
+
+		value.bind(function (newval) {
+			styleTag.innerHTML = ".woocommerce-message {color: " + newval + ";}";
+		});
+	});
+
 	// Tabs font size.
 	wp.customize( 'woocommerce_single_tabs_font_size', function( value ) {
 		var styleTag = setupStyleTag('woocommerce_single_tabs_font_size');

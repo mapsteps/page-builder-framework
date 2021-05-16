@@ -1403,13 +1403,14 @@ Kirki::add_field(
 Kirki::add_field(
 	'wpbf',
 	array(
-		'type'     => 'color',
-		'settings' => 'woocommerce_notice_bg_color',
-		'label'    => __( 'Notice Bg Color', 'page-builder-framework' ),
-		'section'  => 'woocommerce_store_notice',
-		'default'  => $colors['base_color_alt'],
-		'priority' => 100,
-		'choices'  => array(
+		'type'      => 'color',
+		'settings'  => 'woocommerce_notice_bg_color',
+		'label'     => __( 'Notice Bg Color', 'page-builder-framework' ),
+		'section'   => 'woocommerce_store_notice',
+		'default'   => $colors['base_color_alt'],
+		'priority'  => 100,
+		'transport' => 'postMessage',
+		'choices'   => array(
 			'alpha' => true,
 		),
 	)
@@ -1419,13 +1420,14 @@ Kirki::add_field(
 Kirki::add_field(
 	'wpbf',
 	array(
-		'type'     => 'color',
-		'settings' => 'woocommerce_notice_text_color',
-		'label'    => __( 'Notice Text Color', 'page-builder-framework' ),
-		'section'  => 'woocommerce_store_notice',
-		'default'  => $colors['brand_color_alt'],
-		'priority' => 100,
-		'choices'  => array(
+		'type'      => 'color',
+		'settings'  => 'woocommerce_notice_text_color',
+		'label'     => __( 'Notice Text Color', 'page-builder-framework' ),
+		'section'   => 'woocommerce_store_notice',
+		'default'   => $colors['brand_color_alt'],
+		'priority'  => 100,
+		'transport' => 'postMessage',
+		'choices'   => array(
 			'alpha' => true,
 		),
 	)
