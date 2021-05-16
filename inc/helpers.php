@@ -1198,19 +1198,14 @@ function wpbf_get_theme_colors() {
 		'accent-color-alt' => get_theme_mod( 'accent_color_alt_global' ),
 	);
 
+	foreach ( $global_colors as $color_name => $color_value ) {
+		if ( ! $color_value ) {
+			unset( $global_colors[ $color_name ] );
+		}
+	}
+
 	$colors = wp_parse_args( $global_colors, $default_colors );
 
 	return $colors;
 
 }
-
-/**
- * Store reusable data to prevent heavy / expensive tasks.
- */
-function wpbf_store_reusable_data() {
-
-	\Wpbf\Vars::set( 'default_theme_colors', wpbf_get_default_theme_colors() );
-	\Wpbf\Vars::set( 'theme_colors', wpbf_get_theme_colors() );
-
-}
-add_action( 'after_theme_setup', 'wpbf_store_reusable_data' );

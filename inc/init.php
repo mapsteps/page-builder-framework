@@ -40,6 +40,7 @@ if ( ! function_exists( 'breadcrumb_trail' ) ) {
 }
 
 // Helpers.
+require_once WPBF_THEME_DIR . '/inc/class-vars.php';
 require_once WPBF_THEME_DIR . '/inc/helpers.php';
 
 // Local Gravatars.
