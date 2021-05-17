@@ -1160,10 +1160,6 @@ function wpbf_get_default_theme_colors() {
 		'brand_color_alt'  => '$brand-color-alt-val',
 		'accent_color'     => '$accent-color-val',
 		'accent_color_alt' => '$accent-color-alt-val',
-
-		// Individual colors.
-		'green'            => '$green', // Used by .woocommerce-message for it's border-top-color.
-		'error'            => '$error', // Used by .woocommerce-error for it's border-top-color.
 	);
 
 	$colors = array();
@@ -1219,5 +1215,5 @@ function wpbf_get_theme_colors() {
 /**
  * Store reusable data to prevent heavy / expensive tasks.
  */
-\Wpbf\Vars::set( 'default_theme_colors', wpbf_get_default_theme_colors() );
-\Wpbf\Vars::set( 'theme_colors', wpbf_get_theme_colors() );
+// \Wpbf\Vars::set( 'default_theme_colors', wpbf_get_default_theme_colors() );
+// \Wpbf\Vars::set( 'theme_colors', wpbf_get_theme_colors() );

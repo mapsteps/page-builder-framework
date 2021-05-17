@@ -1103,7 +1103,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'woocommerce_store_notice_color',
 	'label'           => __( 'Store Notice', 'page-builder-framework' ),
 	'section'         => 'woocommerce_store_notice',
-	'default'         => $colors['accent_color'],
 	// The woocommerce_store_notice priority is 10.
 	'priority'        => 10,
 	'choices'         => array(
@@ -1133,7 +1132,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'woocommerce_info_notice_color',
 	'label'     => __( 'Info Notice', 'page-builder-framework' ),
 	'section'   => 'woocommerce_store_notice',
-	'default'   => $colors['accent_color'],
 	'priority'  => 100,
 	'transport' => 'postMessage',
 	'choices'   => array(
@@ -1147,7 +1145,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'woocommerce_message_notice_color',
 	'label'     => __( 'Success Notice', 'page-builder-framework' ),
 	'section'   => 'woocommerce_store_notice',
-	'default'   => $colors['green'],
+	'default'   => '#4fe190',
 	'priority'  => 100,
 	'transport' => 'postMessage',
 	'choices'   => array(
@@ -1161,7 +1159,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'woocommerce_error_notice_color',
 	'label'     => __( 'Error Notice', 'page-builder-framework' ),
 	'section'   => 'woocommerce_store_notice',
-	'default'   => $colors['error'],
+	'default'   => '#ff6347',
 	'priority'  => 100,
 	'transport' => 'postMessage',
 	'choices'   => array(
@@ -1183,7 +1181,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'woocommerce_notice_bg_color',
 	'label'     => __( 'Notice Bg Color', 'page-builder-framework' ),
 	'section'   => 'woocommerce_store_notice',
-	'default'   => $colors['base_color_alt'],
 	'priority'  => 100,
 	'transport' => 'postMessage',
 	'choices'   => array(
@@ -1197,7 +1194,6 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'woocommerce_notice_text_color',
 	'label'     => __( 'Notice Text Color', 'page-builder-framework' ),
 	'section'   => 'woocommerce_store_notice',
-	'default'   => $colors['brand_color_alt'],
 	'priority'  => 100,
 	'transport' => 'postMessage',
 	'choices'   => array(
