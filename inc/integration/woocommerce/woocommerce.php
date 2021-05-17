@@ -39,9 +39,17 @@ function wpbf_woo_theme_setup() {
 		'single_image_width'            => 800,
 	) );
 
-	add_theme_support( 'wc-product-gallery-zoom' );
-	add_theme_support( 'wc-product-gallery-lightbox' );
-	add_theme_support( 'wc-product-gallery-slider' );
+	if ( ! get_theme_mod( 'woocommerce_single_image_disable_gallery_zoom' ) ) {
+		add_theme_support( 'wc-product-gallery-zoom' );
+	}
+
+	if ( ! get_theme_mod( 'woocommerce_single_image_disable_gallery_slider' ) ) {
+		add_theme_support( 'wc-product-gallery-slider' );
+	}
+
+	if ( ! get_theme_mod( 'woocommerce_single_image_disable_gallery_lightbox' ) ) {
+		add_theme_support( 'wc-product-gallery-lightbox' );
+	}
 
 }
 add_action( 'after_setup_theme', 'wpbf_woo_theme_setup' );
