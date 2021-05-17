@@ -247,7 +247,7 @@ function wpbf_prepare_posts_custom_columns() {
 	foreach ( $post_types as $post_type ) {
 
 		add_filter( "manage_{$post_type}_posts_columns", 'wpbf_posts_columns' );
-		add_filter( "manage_{$post_type}_posts_custom_column", 'wpbf_posts_custom_column', 10, 2 );
+		add_action( "manage_{$post_type}_posts_custom_column", 'wpbf_posts_custom_column', 10, 2 );
 
 	}
 
@@ -279,68 +279,70 @@ function wpbf_posts_columns( $columns ) {
  */
 function wpbf_posts_custom_column( $column_name, $post_id ) {
 
-	if ( 'wpbf_layout' === $column_name ) {
-		$post_options = get_post_meta( $post_id, 'wpbf_options', true );
-		$post_options = $post_options ? $post_options : array();
-		$column_value = '';
-
-		if ( in_array( 'full-width', $post_options, true ) ) {
-			$layout = 'full-width';
-
-			$column_value = __( 'Full Width', 'page-builder-framework' );
-		} elseif ( in_array( 'contained', $post_options, true ) ) {
-			$layout = 'contained';
-
-			$column_value = __( 'Contained', 'page-builder-framework' );
-		} else {
-			$layout = 'layout-global';
-
-			$column_value = __( 'Inherit Global Settings', 'page-builder-framework' );
-		}
-
-		$checked_removals = array();
-
-		if ( in_array( 'remove-title', $post_options, true ) ) {
-			array_push( $checked_removals, 'remove-title' );
-		}
-
-		if ( in_array( 'remove-featured', $post_options, true ) ) {
-			array_push( $checked_removals, 'remove-featured' );
-		}
-
-		if ( in_array( 'remove-header', $post_options, true ) ) {
-			array_push( $checked_removals, 'remove-header' );
-		}
-
-		if ( in_array( 'remove-footer', $post_options, true ) ) {
-			array_push( $checked_removals, 'remove-footer' );
-		}
-
-		$removals = implode( ',', $checked_removals );
-
-		$sidebar_position = get_post_meta( $post_id, 'wpbf_sidebar_position', true );
-		$sidebar_position = ! empty( $sidebar_position ) ? $sidebar_position : 'global';
-		
-		$options_nonce = wp_create_nonce( "wpbf_post_{$post_id}_options_nonce" );
-		$sidebar_nonce = wp_create_nonce( "wpbf_post_{$post_id}_sidebar_nonce" );
-
-		$custom_data_attr = apply_filters( 'wpbf_posts_quick_edit_preset_data_attr', '', $post_id );
-		?>
-
-		<span class="wpbf-quick-edit--column-value"><?php echo esc_html( $column_value ); ?></span>
-
-		<input
-			type="hidden"
-			class="wpbf-quick-edit--preset-values"
-			data-wpbf-layout="<?php echo $layout; ?>"
-			data-wpbf-checked-removals="<?php echo esc_attr( $removals ); ?>"
-			data-wpbf-sidebar-position="<?php echo esc_attr( $sidebar_position ); ?>"
-			data-wpbf-options-nonce="<?php echo esc_attr( $options_nonce ); ?>"
-			data-wpbf-sidebar-nonce="<?php echo esc_attr( $sidebar_nonce ); ?>"
-			<?php echo $custom_data_attr; ?>
-		>
-
-		<?php
+	if ( 'wpbf_layout' !== $column_name ) {
+		return;
 	}
+
+	$post_options = get_post_meta( $post_id, 'wpbf_options', true );
+	$post_options = $post_options ? $post_options : array();
+	$column_value = '';
+
+	if ( in_array( 'full-width', $post_options, true ) ) {
+		$layout = 'full-width';
+
+		$column_value = __( 'Full Width', 'page-builder-framework' );
+	} elseif ( in_array( 'contained', $post_options, true ) ) {
+		$layout = 'contained';
+
+		$column_value = __( 'Contained', 'page-builder-framework' );
+	} else {
+		$layout = 'layout-global';
+
+		$column_value = __( 'Inherit Global Settings', 'page-builder-framework' );
+	}
+
+	$checked_removals = array();
+
+	if ( in_array( 'remove-title', $post_options, true ) ) {
+		array_push( $checked_removals, 'remove-title' );
+	}
+
+	if ( in_array( 'remove-featured', $post_options, true ) ) {
+		array_push( $checked_removals, 'remove-featured' );
+	}
+
+	if ( in_array( 'remove-header', $post_options, true ) ) {
+		array_push( $checked_removals, 'remove-header' );
+	}
+
+	if ( in_array( 'remove-footer', $post_options, true ) ) {
+		array_push( $checked_removals, 'remove-footer' );
+	}
+
+	$removals = implode( ',', $checked_removals );
+
+	$sidebar_position = get_post_meta( $post_id, 'wpbf_sidebar_position', true );
+	$sidebar_position = ! empty( $sidebar_position ) ? $sidebar_position : 'global';
+
+	$options_nonce = wp_create_nonce( "wpbf_post_{$post_id}_options_nonce" );
+	$sidebar_nonce = wp_create_nonce( "wpbf_post_{$post_id}_sidebar_nonce" );
+
+	$custom_data_attr = apply_filters( 'wpbf_posts_quick_edit_preset_data_attr', '', $post_id );
+	?>
+
+	<span class="wpbf-quick-edit--column-value"><?php echo esc_html( $column_value ); ?></span>
+
+	<input
+		type="hidden"
+		class="wpbf-quick-edit--preset-values"
+		data-wpbf-layout="<?php echo $layout; ?>"
+		data-wpbf-checked-removals="<?php echo esc_attr( $removals ); ?>"
+		data-wpbf-sidebar-position="<?php echo esc_attr( $sidebar_position ); ?>"
+		data-wpbf-options-nonce="<?php echo esc_attr( $options_nonce ); ?>"
+		data-wpbf-sidebar-nonce="<?php echo esc_attr( $sidebar_nonce ); ?>"
+		<?php echo $custom_data_attr; ?>
+	>
+
+	<?php
 
 }
