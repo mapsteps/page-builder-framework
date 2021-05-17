@@ -1095,8 +1095,6 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields – Messages/Notices */
 
-$colors = \Wpbf\Vars::get( 'theme_colors' );
-
 // Store notice color.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
