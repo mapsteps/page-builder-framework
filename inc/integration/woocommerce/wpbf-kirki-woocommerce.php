@@ -1095,6 +1095,29 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields – Messages/Notices */
 
+$colors = \Wpbf\Vars::get( 'theme_colors' );
+
+// Store notice color.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'color',
+	'settings'        => 'woocommerce_store_notice_color',
+	'label'           => __( 'Store Notice', 'page-builder-framework' ),
+	'section'         => 'woocommerce_store_notice',
+	'default'         => $colors['accent_color'],
+	// The woocommerce_store_notice priority is 10.
+	'priority'        => 10,
+	'choices'         => array(
+		'alpha' => true,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'woocommerce_demo_store',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+) );
+
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
@@ -1104,54 +1127,80 @@ Kirki::add_field( 'wpbf', array(
 	'priority' => 100,
 ) );
 
-// Store notice color.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'woocommerce_store_notice_color',
-	'label'    => __( 'Store Notice', 'page-builder-framework' ),
-	'section'  => 'woocommerce_store_notice',
-	'default'  => '',
-	'priority' => 100,
-	'choices'  => array(
-		'alpha' => true,
-	),
-) );
-
 // Info color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'woocommerce_info_notice_color',
-	'label'    => __( 'Info Notice', 'page-builder-framework' ),
-	'section'  => 'woocommerce_store_notice',
-	'default'  => '',
-	'priority' => 100,
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'woocommerce_info_notice_color',
+	'label'     => __( 'Info Notice', 'page-builder-framework' ),
+	'section'   => 'woocommerce_store_notice',
+	'default'   => $colors['accent_color'],
+	'priority'  => 100,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
 
 // Success color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'woocommerce_message_notice_color',
-	'label'    => __( 'Success Notice', 'page-builder-framework' ),
-	'section'  => 'woocommerce_store_notice',
-	'default'  => '',
-	'priority' => 100,
-	'choices'  => array(
+	'type'      => 'color',
+	'settings'  => 'woocommerce_message_notice_color',
+	'label'     => __( 'Success Notice', 'page-builder-framework' ),
+	'section'   => 'woocommerce_store_notice',
+	'default'   => $colors['green'],
+	'priority'  => 100,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
 
 // Error color.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'woocommerce_error_notice_color',
-	'label'    => __( 'Error Notice', 'page-builder-framework' ),
+	'type'      => 'color',
+	'settings'  => 'woocommerce_error_notice_color',
+	'label'     => __( 'Error Notice', 'page-builder-framework' ),
+	'section'   => 'woocommerce_store_notice',
+	'default'   => $colors['error'],
+	'priority'  => 100,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+Kirki::add_field( 'wpbf', array(
+	'type'     => 'custom',
+	'settings' => 'woocommerce_general_notice_color_separator',
 	'section'  => 'woocommerce_store_notice',
-	'default'  => '',
+	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 100,
-	'choices'  => array(
+) );
+
+// General notice's background color.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'woocommerce_notice_bg_color',
+	'label'     => __( 'Notice Bg Color', 'page-builder-framework' ),
+	'section'   => 'woocommerce_store_notice',
+	'default'   => $colors['base_color_alt'],
+	'priority'  => 100,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'alpha' => true,
+	),
+) );
+
+// General notice's text color.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'color',
+	'settings'  => 'woocommerce_notice_text_color',
+	'label'     => __( 'Notice Text Color', 'page-builder-framework' ),
+	'section'   => 'woocommerce_store_notice',
+	'default'   => $colors['brand_color_alt'],
+	'priority'  => 100,
+	'transport' => 'postMessage',
+	'choices'   => array(
 		'alpha' => true,
 	),
 ) );
