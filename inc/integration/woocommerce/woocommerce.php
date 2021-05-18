@@ -46,28 +46,6 @@ function wpbf_woo_theme_setup() {
 }
 add_action( 'after_setup_theme', 'wpbf_woo_theme_setup' );
 
-/**
- * Disable some Woocommere theme supports.
- *
- * @return void
- */
-function wpbf_woo_disable_theme_supports() {
-
-	if ( get_theme_mod( 'woocommerce_single_image_disable_gallery_zoom' ) ) {
-		remove_theme_support( 'wc-product-gallery-zoom' );
-	}
-
-	if ( get_theme_mod( 'woocommerce_single_image_disable_gallery_slider' ) ) {
-		remove_theme_support( 'wc-product-gallery-slider' );
-	}
-
-	if ( get_theme_mod( 'woocommerce_single_image_disable_gallery_lightbox' ) ) {
-		remove_theme_support( 'wc-product-gallery-lightbox' );
-	}
-
-}
-add_action( 'wp', 'wpbf_woo_disable_theme_supports' );
-
 // Remove default WooCommerce styles.
 add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 

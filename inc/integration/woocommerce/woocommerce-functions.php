@@ -734,3 +734,23 @@ function wpbf_woo_nested_category_layout_classes( $classes ) {
 
 }
 add_filter( 'wc_nested_category_layout_loop_products_wrapper_classes', 'wpbf_woo_nested_category_layout_classes' );
+
+/**
+ * Disable WooCommere theme support.
+ */
+function wpbf_woo_disable_theme_support() {
+
+	if ( get_theme_mod( 'woocommerce_single_disable_gallery_zoom' ) ) {
+		remove_theme_support( 'wc-product-gallery-zoom' );
+	}
+
+	if ( get_theme_mod( 'woocommerce_single_disable_gallery_slider' ) ) {
+		remove_theme_support( 'wc-product-gallery-slider' );
+	}
+
+	if ( get_theme_mod( 'woocommerce_single_disable_gallery_lightbox' ) ) {
+		remove_theme_support( 'wc-product-gallery-lightbox' );
+	}
+
+}
+add_action( 'wp', 'wpbf_woo_disable_theme_support' );

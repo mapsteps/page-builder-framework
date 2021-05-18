@@ -2170,7 +2170,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Primary Background Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_button_options',
 	'priority'  => 1,
-	'transport' => 'postMessage',
+	// 'transport' => 'postMessage',
 	'choices'   => array(
 		'alpha' => true,
 	),
