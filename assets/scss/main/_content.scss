@@ -503,7 +503,8 @@ div.alignleft {
 }
 
 img.aligncenter,
-figure.aligncenter div.aligncenter {
+figure.aligncenter,
+div.aligncenter {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
