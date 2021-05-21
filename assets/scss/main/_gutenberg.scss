@@ -132,6 +132,11 @@
 // Cover
 .wp-block-cover {
 	margin-bottom: $margin;
+	// We need to set the inner container width because WordPress sets it to 100%.
+	// This is needed to keep the content of wide & full-width blocks contained.
+	.wp-block-cover__inner-container {
+		max-width: 1200px;
+	}
 }
 
 .wp-block-cover p:not(.has-text-color) {

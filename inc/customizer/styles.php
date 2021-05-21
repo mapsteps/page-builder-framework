@@ -802,6 +802,13 @@ if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 
 }
 
+if ( $page_width ) {
+	// Chang the max-width of the cover block contents.
+	echo '.wp-block-cover .wp-block-cover__inner-container {';
+	echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
+	echo '}';
+}
+
 // Sidebar.
 $sidebar_bg_color                      = ( $val = get_theme_mod( 'sidebar_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $sidebar_width                         = ( $val = get_theme_mod( 'sidebar_width' ) ) === 33.3 ? false : $val;
@@ -1397,6 +1404,11 @@ foreach ( $singles as $single ) {
 		$pt = 'single' === $single ? 'post' : $single;
 
 		echo '.single-' . $pt . ' #inner-content {';
+		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
+		echo '}';
+
+		// Chang the max-width of the cover block contents.
+		echo '.single-' . $pt . ' .wp-block-cover .wp-block-cover__inner-container {';
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
