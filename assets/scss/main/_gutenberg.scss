@@ -108,6 +108,11 @@
 	font-size: $small-fontsize;
 }
 
+// Image
+.wp-block-image {
+	margin-bottom: $margin;
+}
+
 // Buttons
 .wp-block-button,
 .wp-block-buttons {
@@ -132,6 +137,7 @@
 // Cover
 .wp-block-cover {
 	margin-bottom: $margin;
+	padding: $padding;
 	// We need to set the inner container width because WordPress sets it to 100%.
 	// This is needed to keep the content of wide & full-width blocks contained.
 	.wp-block-cover__inner-container {
@@ -146,4 +152,25 @@
 // Audio
 .wp-block-audio audio {
 	width: 100%;
+}
+
+// Group
+.wp-block-group {
+	// We need to set the inner container width because WordPress doesn't define a width at all.
+	// This is needed to keep the content of wide & full-width group blocks contained.
+	.wp-block-group__inner-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding-left: $padding;
+		padding-right: $padding;
+	}
+}
+
+// Let's apply some margin & padding if we have a background color.
+.wp-block-group.has-background {
+	.wp-block-group__inner-container {
+		margin-bottom: $margin;
+		padding-top: $padding;
+		padding-bottom: $padding;
+	}
 }

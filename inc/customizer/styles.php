@@ -803,8 +803,8 @@ if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 }
 
 if ( $page_width ) {
-	// Chang the max-width of the cover block contents.
-	echo '.wp-block-cover .wp-block-cover__inner-container {';
+	// Chang the max-width of the cover & group block contents.
+	echo '.wp-block-cover .wp-block-cover__inner-container, .wp-block-group .wp-block-group__inner-container {';
 	echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
 	echo '}';
 }
@@ -1408,7 +1408,7 @@ foreach ( $singles as $single ) {
 		echo '}';
 
 		// Chang the max-width of the cover block contents.
-		echo '.single-' . $pt . ' .wp-block-cover .wp-block-cover__inner-container {';
+		echo '.single-' . $pt . ' .wp-block-cover .wp-block-cover__inner-container, .single-' . $pt . ' .wp-block-group .wp-block-group__inner-container {';
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
