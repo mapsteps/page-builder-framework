@@ -97,6 +97,10 @@ function wpbf_generate_gutenberg_css() {
  */
 function wpbf_gutenberg_block_editor_assets() {
 
+	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+		return;
+	}
+
 	$inline_styles = wpbf_generate_gutenberg_css();
 
 	wp_enqueue_style( 'wpbf-gutenberg-style', get_template_directory_uri() . '/css/block-editor-styles.css', '', WPBF_VERSION );
@@ -117,6 +121,10 @@ add_action( 'enqueue_block_editor_assets', 'wpbf_gutenberg_block_editor_assets' 
  *                       is specified.
  */
 function wpbf_parse_block_assets_url( $url, $path, $plugin ) {
+
+	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+		return;
+	}
 
 	if (
 		false === stripos( $path, '../../build/wpbf-block-editor' ) &&
@@ -143,6 +151,10 @@ add_filter( 'plugins_url', 'wpbf_parse_block_assets_url', 10, 3 );
  */
 function wpbf_register_blocks_category( $categories, $post ) {
 
+	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+		return;
+	}
+
 	return array_merge(
 		$categories,
 		array(
@@ -160,6 +172,10 @@ add_filter( 'block_categories', 'wpbf_register_blocks_category', 10, 2 );
  * Enqueue block editor assets.
  */
 function wpbf_enqueue_block_editor_assets() {
+
+	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+		return;
+	}
 
 	$enqueue_data = require __DIR__ . '/build/wpbf-block-editor.asset.php';
 	$version      = $enqueue_data['version'];
@@ -184,6 +200,10 @@ add_action( 'enqueue_block_editor_assets', 'wpbf_enqueue_block_editor_assets' );
  */
 function wpbf_enqueue_block_assets() {
 
+	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+		return;
+	}
+
 	$enqueue_data = require __DIR__ . '/build/wpbf-blocks.asset.php';
 	$version      = $enqueue_data['version'];
 	$dependencies = $enqueue_data['dependencies'];
@@ -199,6 +219,10 @@ add_action( 'enqueue_block_assets', 'wpbf_enqueue_block_assets' );
  * Register blocks.
  */
 function wpbf_register_blocks() {
+
+	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+		return;
+	}
 
 	$scan = glob( __DIR__ . '/blocks/*/block.php' );
 
