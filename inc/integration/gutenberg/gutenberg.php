@@ -177,7 +177,7 @@ function wpbf_enqueue_block_editor_assets() {
 	$version      = $enqueue_data['version'];
 	$dependencies = $enqueue_data['dependencies'];
 
-	wp_enqueue_style( 'wpbf-css-framework', WPBF_THEME_URI . '/css/min/framework-min.css', array(), $version );
+	wp_enqueue_style( 'wpbf-css-framework', WPBF_THEME_URI . '/css/min/framework-min.css', array(), $version ); // instead of doing this, we should simply just add the notice styles to block-editor-styles.css
 	wp_enqueue_style( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.css', array(), $version );
 
 	wp_enqueue_script( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.js', $dependencies, $version, true );
