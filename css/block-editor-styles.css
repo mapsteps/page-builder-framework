@@ -93,15 +93,24 @@
 
 /* Preformatted & code */
 
-/* Reset code styling */
-#wpwrap .wp-block-code {
-	padding: 0;
+/* Code block */
+.wp-block-code {
+	font-family: monospace, monospace;
+	background: var(--base-color-alt);
+	padding: 20px;
+
 	border: none;
+	border-radius: 0;
 	color: inherit;
 }
 
-/* Apply basic styling to pre and code */
+/* Inline code */
 #wpwrap .editor-styles-wrapper code,
+#wpwrap .editor-styles-wrapper kbd {
+	background: var(--base-color-alt);
+}
+
+/* Pre block */
 .wp-block-preformatted {
 	font-family: monospace, monospace;
 	background: var(--base-color-alt);
