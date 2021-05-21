@@ -15,6 +15,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
  */
 function wpbf_register_notice_block() {
-	register_block_type_from_metadata( __DIR__ );
+	if ( function_exists( 'register_block_type_from_metadata' ) ) {
+		register_block_type_from_metadata( __DIR__ );
+	}
 }
 add_action( 'init', 'wpbf_register_notice_block' );
