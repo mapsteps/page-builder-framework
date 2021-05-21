@@ -97,10 +97,6 @@ function wpbf_generate_gutenberg_css() {
  */
 function wpbf_gutenberg_block_editor_assets() {
 
-	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
-		return;
-	}
-
 	$inline_styles = wpbf_generate_gutenberg_css();
 
 	wp_enqueue_style( 'wpbf-gutenberg-style', get_template_directory_uri() . '/css/block-editor-styles.css', '', WPBF_VERSION );
