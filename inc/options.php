@@ -240,19 +240,19 @@ add_action( 'save_post', 'wpbf_save_metadata', 10, 3 );
 /**
  * Prepare custom column(s) setup.
  */
-function wpbf_prepare_posts_custom_columns() {
+function wpbf_prepare_post_list_custom_columns() {
 
 	$post_types = get_post_types( array( 'public' => true ) );
 
 	foreach ( $post_types as $post_type ) {
 
-		add_filter( "manage_{$post_type}_posts_columns", 'wpbf_posts_columns' );
-		add_action( "manage_{$post_type}_posts_custom_column", 'wpbf_posts_custom_column', 10, 2 );
+		add_filter( "manage_{$post_type}_posts_columns", 'wpbf_post_list_columns' );
+		add_action( "manage_{$post_type}_posts_custom_column", 'wpbf_post_list_custom_column', 10, 2 );
 
 	}
 
 }
-add_action( 'admin_init', 'wpbf_prepare_posts_custom_columns' );
+add_action( 'admin_init', 'wpbf_prepare_post_list_custom_columns' );
 
 /**
  * Manage posts columns.
@@ -263,7 +263,7 @@ add_action( 'admin_init', 'wpbf_prepare_posts_custom_columns' );
  * @param array $columns The existing columns.
  * @return array The modified columns.
  */
-function wpbf_posts_columns( $columns ) {
+function wpbf_post_list_columns( $columns ) {
 
 	$columns['wpbf_layout'] = __( 'Layout', 'page-builder-framework' );
 
@@ -277,7 +277,7 @@ function wpbf_posts_columns( $columns ) {
  * @param string $column_name The name of the column to display.
  * @param int    $post_id The current post ID.
  */
-function wpbf_posts_custom_column( $column_name, $post_id ) {
+function wpbf_post_list_custom_column( $column_name, $post_id ) {
 
 	if ( 'wpbf_layout' !== $column_name ) {
 		return;
@@ -327,7 +327,7 @@ function wpbf_posts_custom_column( $column_name, $post_id ) {
 	$options_nonce = wp_create_nonce( "wpbf_post_{$post_id}_options_nonce" );
 	$sidebar_nonce = wp_create_nonce( "wpbf_post_{$post_id}_sidebar_nonce" );
 
-	$custom_data_attr = apply_filters( 'wpbf_posts_quick_edit_preset_data_attr', '', $post_id );
+	$custom_data_attr = apply_filters( 'wpbf_post_list_quick_edit_preset_data_attr', '', $post_id );
 	?>
 
 	<span class="wpbf-quick-edit--column-value"><?php echo esc_html( $column_value ); ?></span>

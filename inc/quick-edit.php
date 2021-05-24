@@ -16,9 +16,9 @@ function wpbf_enqueue_admin_posts_scripts() {
 	$current_screen = get_current_screen();
 
 	if ( in_array( $current_screen->post_type, $post_types, true ) && "edit-{$current_screen->post_type}" === $current_screen->id ) {
-		wp_enqueue_style( 'wpbf-admin-posts', WPBF_THEME_URI . '/css/min/admin-posts-min.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-post-list', WPBF_THEME_URI . '/css/min/post-list-min.css', array(), WPBF_VERSION );
 
-		wp_enqueue_script( 'wpbf-admin-posts', WPBF_THEME_URI . '/js/min/admin-posts-min.js', array( 'jquery', 'wp-polyfill' ), WPBF_VERSION, true );
+		wp_enqueue_script( 'wpbf-post-list', WPBF_THEME_URI . '/js/min/post-list-min.js', array( 'jquery', 'wp-polyfill' ), WPBF_VERSION, true );
 	}
 
 }
@@ -80,7 +80,7 @@ function wpbf_quick_edit_layout( $column_name, $post_type, $taxonomy ) {
 
 				</div>
 
-				<?php do_action( 'wpbf_posts_quick_edit_column_1', $column_name, $post_type, $taxonomy ); ?>
+				<?php do_action( 'wpbf_post_list_quick_edit_column_1', $column_name, $post_type, $taxonomy ); ?>
 			</div>
 
 			<div class="wpbf-quick-edit--col">
@@ -128,7 +128,7 @@ function wpbf_quick_edit_layout( $column_name, $post_type, $taxonomy ) {
 
 				</div>
 
-				<?php do_action( 'wpbf_posts_quick_edit_column_2', $column_name, $post_type, $taxonomy ); ?>
+				<?php do_action( 'wpbf_post_list_quick_edit_column_2', $column_name, $post_type, $taxonomy ); ?>
 			</div>
 
 			<div class="wpbf-quick-edit--col">
@@ -176,11 +176,11 @@ function wpbf_quick_edit_layout( $column_name, $post_type, $taxonomy ) {
 
 				</div>
 
-				<?php do_action( 'wpbf_posts_quick_edit_column_3', $column_name, $post_type, $taxonomy ); ?>
+				<?php do_action( 'wpbf_post_list_quick_edit_column_3', $column_name, $post_type, $taxonomy ); ?>
 			</div>
 
 			<div class="wpbf-quick-edit--col">
-				<?php do_action( 'wpbf_posts_quick_edit_column_4', $column_name, $post_type, $taxonomy ); ?>
+				<?php do_action( 'wpbf_post_list_quick_edit_column_4', $column_name, $post_type, $taxonomy ); ?>
 			</div>
 
 		</div>
@@ -188,7 +188,7 @@ function wpbf_quick_edit_layout( $column_name, $post_type, $taxonomy ) {
 		<input type="hidden" name="wpbf_options_nonce" class="wpbf-quick-edit--nonce-field">
 		<input type="hidden" name="wpbf_sidebar_nonce" class="wpbf-quick-edit--nonce-field">
 
-		<?php do_action( 'wpbf_posts_quick_edit_nonce_field' ); ?>
+		<?php do_action( 'wpbf_post_list_quick_edit_nonce_field' ); ?>
 	</div>
 
 	<?php
