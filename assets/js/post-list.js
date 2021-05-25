@@ -40,11 +40,11 @@
 			var postRow = document.querySelector("#post-" + postId);
 			if (!postRow) return;
 
-			var preset = postRow.querySelector(".wpbf-quick-edit--preset-values");
+			var preset = postRow.querySelector(".wpbf-quick-edit-preset-values");
 			if (!preset) return;
 
 			var fields = editRow.querySelectorAll(
-				".wpbf-quick-edit--use-preset"
+				".wpbf-quick-edit-use-preset"
 			);
 
 			fields.forEach(function (field) {
@@ -52,11 +52,11 @@
 				var presetName = field.dataset.wpbfPresetName;
 				var presetValue = preset.getAttribute("data-wpbf-" + presetName);
 				var fieldId =
-					"wpbf-quick-edit--post-" +
+					"wpbf-quick-edit-post-" +
 					postId +
-					"--" +
+					"-" +
 					presetName +
-					"--" +
+					"-" +
 					field.value.replace(/ /g, "-");
 
 				field.id = fieldId;
@@ -81,7 +81,7 @@
 			});
 
 			var nonceFields = editRow.querySelectorAll(
-				".wpbf-quick-edit--nonce-field"
+				".wpbf-quick-edit-nonce-field"
 			);
 
 			nonceFields.forEach(function (nonceField) {
@@ -105,11 +105,11 @@
 		var postRow = document.querySelector("#post-" + postId);
 		if (!postRow) return;
 
-		var preset = postRow.querySelector(".wpbf-quick-edit--preset-values");
+		var preset = postRow.querySelector(".wpbf-quick-edit-preset-values");
 		if (!preset) return;
 
 		var fieldsArea = $editRow[0].querySelectorAll(
-			".wpbf-quick-edit--fields-area"
+			".wpbf-quick-edit-fields-area"
 		);
 
 		fieldsArea.forEach(function (fieldArea) {
@@ -122,7 +122,7 @@
 			var values;
 
 			if ('checkbox' === presetType) {
-				fields = document.querySelectorAll(".wpbf-quick-edit--use-preset:checked");
+				fields = document.querySelectorAll(".wpbf-quick-edit-use-preset:checked");
 				values = [];
 
 				fields.forEach(function (field) {
@@ -131,7 +131,7 @@
 
 				values = values.join(',');
 			} else {
-				fields = document.querySelector(".wpbf-quick-edit--use-preset:checked");
+				fields = document.querySelector(".wpbf-quick-edit-use-preset:checked");
 				values = field ? field.value : value;
 			}
 

@@ -32,7 +32,7 @@
 	}
 }
 
-.wpbf-quick-edit--row {
+.wpbf-quick-edit-row {
 	display: flex;
 	flex-wrap: wrap;
 	margin-top: 10px;
@@ -40,13 +40,13 @@
 	border-top: 1px solid #ddd;
 
 	&.has-3 {
-		.wpbf-quick-edit--col {
+		.wpbf-quick-edit-col {
 			width: 33%;
 		}
 	}
 
 	&.has-4 {
-		.wpbf-quick-edit--col {
+		.wpbf-quick-edit-col {
 			width: 25%;
 		}
 	}
@@ -58,21 +58,21 @@
 	}
 }
 
-.wpbf-quick-edit--field {
+.wpbf-quick-edit-field {
 	margin-bottom: 9px;
 }
 
-.wpbf-quick-edit--radio-field, .wpbf-quick-edit--checkbox-field {
+.wpbf-quick-edit-radio-field, .wpbf-quick-edit-checkbox-field {
 	display: flex;
 	width: 100%;
 	align-items: center;
 
-	.wpbf-quick-edit--label {
+	.wpbf-quick-edit-label {
 		display: inline-flex;
 		line-height: 1.1;
 	}
 
-	.wpbf-quick-edit--control {
+	.wpbf-quick-edit-control {
 		display: inline-flex;
 		margin-right: .4rem;
 	}

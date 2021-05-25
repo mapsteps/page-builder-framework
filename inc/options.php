@@ -330,11 +330,11 @@ function wpbf_post_list_custom_column( $column_name, $post_id ) {
 	$custom_data_attr = apply_filters( 'wpbf_post_list_quick_edit_preset_data_attr', '', $post_id );
 	?>
 
-	<span class="wpbf-quick-edit--column-value"><?php echo esc_html( $column_value ); ?></span>
+	<span class="wpbf-quick-edit-column-value"><?php echo esc_html( $column_value ); ?></span>
 
 	<input
 		type="hidden"
-		class="wpbf-quick-edit--preset-values"
+		class="wpbf-quick-edit-preset-values"
 		data-wpbf-layout="<?php echo $layout; ?>"
 		data-wpbf-checked-removals="<?php echo esc_attr( $removals ); ?>"
 		data-wpbf-sidebar-position="<?php echo esc_attr( $sidebar_position ); ?>"
