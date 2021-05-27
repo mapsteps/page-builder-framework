@@ -16,7 +16,7 @@ if ( get_theme_mod( 'mobile_menu_overlay' ) ) {
 
 <div class="wpbf-mobile-menu-off-canvas wpbf-hidden-large">
 
-	<div class="wpbf-mobile-nav-wrapper wpbf-container">
+	<div class="wpbf-mobile-nav-wrapper wpbf-container wpbf-container-center">
 
 		<div class="wpbf-mobile-logo-container wpbf-2-3">
 
