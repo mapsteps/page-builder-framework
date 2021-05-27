@@ -840,7 +840,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'toggle',
 	'settings' => 'woocommerce_single_disable_gallery_zoom',
-	'label'    => __( 'Disable image zooming', 'page-builder-framework' ),
+	'label'    => __( 'Disable Gallery Zoom', 'page-builder-framework' ),
 	'section'  => 'wpbf_woocommerce_product_options',
 	'priority' => $product_priority++,
 	'default'  => false,
@@ -850,7 +850,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'toggle',
 	'settings' => 'woocommerce_single_disable_gallery_slider',
-	'label'    => __( 'Disable image slider', 'page-builder-framework' ),
+	'label'    => __( 'Disable Gallery Slider', 'page-builder-framework' ),
 	'section'  => 'wpbf_woocommerce_product_options',
 	'priority' => $product_priority++,
 	'default'  => false,
@@ -860,7 +860,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'toggle',
 	'settings' => 'woocommerce_single_disable_gallery_lightbox',
-	'label'    => __( 'Disable image lightbox', 'page-builder-framework' ),
+	'label'    => __( 'Disable Gallery Lightbox', 'page-builder-framework' ),
 	'section'  => 'wpbf_woocommerce_product_options',
 	'priority' => $product_priority++,
 	'default'  => false,
