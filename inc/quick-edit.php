@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 /**
  * Enqueue admin styles & scripts to posts list screen.
  */
-function wpbf_enqueue_admin_posts_scripts() {
+function wpbf_enqueue_admin_post_scripts() {
 
 	$post_types     = get_post_types( array( 'public' => true ) );
 	$current_screen = get_current_screen();
@@ -22,7 +22,7 @@ function wpbf_enqueue_admin_posts_scripts() {
 	}
 
 }
-add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_posts_scripts' );
+add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_post_scripts' );
 
 /**
  * Add layout options to quick edit box.
@@ -81,6 +81,7 @@ function wpbf_quick_edit_layout( $column_name, $post_type, $taxonomy ) {
 				</div>
 
 				<?php do_action( 'wpbf_post_list_quick_edit_column_1', $column_name, $post_type, $taxonomy ); ?>
+
 			</div>
 
 			<div class="wpbf-quick-edit-col">
@@ -129,6 +130,7 @@ function wpbf_quick_edit_layout( $column_name, $post_type, $taxonomy ) {
 				</div>
 
 				<?php do_action( 'wpbf_post_list_quick_edit_column_2', $column_name, $post_type, $taxonomy ); ?>
+
 			</div>
 
 			<div class="wpbf-quick-edit-col">
@@ -177,6 +179,7 @@ function wpbf_quick_edit_layout( $column_name, $post_type, $taxonomy ) {
 				</div>
 
 				<?php do_action( 'wpbf_post_list_quick_edit_column_3', $column_name, $post_type, $taxonomy ); ?>
+
 			</div>
 
 			<div class="wpbf-quick-edit-col">
@@ -189,6 +192,7 @@ function wpbf_quick_edit_layout( $column_name, $post_type, $taxonomy ) {
 		<input type="hidden" name="wpbf_sidebar_nonce" class="wpbf-quick-edit-nonce-field">
 
 		<?php do_action( 'wpbf_post_list_quick_edit_nonce_field' ); ?>
+
 	</div>
 
 	<?php

@@ -1,9 +1,11 @@
+// Hide layout column.
 .column-wpbf_layout {
 	width: 0;
 	font-size: 0;
 	display: none;
 }
 
+// Adjust default quick edit area styling.
 .submit.inline-edit-save {
 	padding-top: 1em;
 	padding-bottom: 1em;
@@ -16,6 +18,7 @@
 	}
 }
 
+// Style the wpbf-quick-edit section.
 .wpbf-quick-edit,
 .wpbf-quick-edit * {
 	box-sizing: border-box;
