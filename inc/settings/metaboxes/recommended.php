@@ -92,14 +92,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					<div class="wpbf-recommended-status">
 						<?php if ( defined( $recommended_plugin['constant'] ) ) { ?>
 						<div class="wpbf-recommended-status-action">
-							<a href="<?php echo admin_url( 'plugins.php' ); ?>" class="button button-primary button-larger"><?php _e( 'Installed', 'page-builder-framework' ); ?></i></a>
+							<a href="<?php echo admin_url( 'plugins.php' ); ?>" class="button button-larger disabled"><?php _e( 'Installed', 'page-builder-framework' ); ?></i></a>
 						</div>
 						<div class="wpbf-recommended-status-icon green">
 							<strong><?php _e( 'Installed', 'page-builder-framework' ); ?></strong> <i class="dashicons dashicons-yes-alt"></i>
 						</div>
 						<?php } else { ?>
 						<div class="wpbf-recommended-status-action">
-							<a href="<?php echo esc_url( $recommended_plugin['link'] ); ?>" target="_blank" class="button button-larger">
+							<a href="<?php echo esc_url( $recommended_plugin['link'] ); ?>" target="_blank" class="button button-primary button-larger">
 								<?php
 								if ( $recommended_plugin['repo'] ) {
 									_e( 'Install', 'page-builder-framework' );
