@@ -63,14 +63,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'repo'        => true,
 					'constant'    => 'WEGLOT_VERSION',
 				),
-				array(
-					'title'       => __( 'Toolset', 'page-builder-framework' ),
-					'description' => __( 'A set of plugins to help you build dynamic, advanced websites without programming.', 'page-builder-framework' ),
-					'banner'      => WPBF_THEME_URI .'/img/toolset-banner.png',
-					'link'        => 'https://toolset.com/',
-					'repo'        => false,
-					'constant'    => 'WPBF_PREMIUM_VERSION', // missing!
-				),
+				// array(
+				// 	'title'       => __( 'Toolset', 'page-builder-framework' ),
+				// 	'description' => __( 'A set of plugins to help you build dynamic, advanced websites without programming.', 'page-builder-framework' ),
+				// 	'banner'      => WPBF_THEME_URI .'/img/toolset-banner.png',
+				// 	'link'        => 'https://toolset.com/',
+				// 	'repo'        => false,
+				// 	'constant'    => 'WPBF_PREMIUM_VERSION', // missing!
+				// ),
 			);
 
 			foreach ( $recommended_plugins as $recommended_plugin ) {
