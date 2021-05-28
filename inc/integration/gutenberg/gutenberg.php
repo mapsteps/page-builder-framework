@@ -183,26 +183,6 @@ function wpbf_register_blocks_category( $categories, $post ) {
 add_filter( 'block_categories', 'wpbf_register_blocks_category', 10, 2 );
 
 /**
- * Enqueue block assets for both editor and frontend.
- */
-function wpbf_enqueue_block_assets() {
-
-	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
-		return;
-	}
-
-	$enqueue_data = require __DIR__ . '/build/wpbf-blocks.asset.php';
-	$version      = $enqueue_data['version'];
-	$dependencies = $enqueue_data['dependencies'];
-
-	wp_enqueue_style( 'wpbf-blocks', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-blocks.css', array(), $version );
-
-	wp_enqueue_script( 'wpbf-blocks', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-blocks.js', $dependencies, $version, true );
-
-}
-add_action( 'enqueue_block_assets', 'wpbf_enqueue_block_assets' );
-
-/**
  * Register blocks.
  */
 function wpbf_register_blocks() {

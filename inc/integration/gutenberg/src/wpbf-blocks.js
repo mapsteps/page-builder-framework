@@ -1,1 +1,0 @@
-import './wpbf-blocks.scss';
