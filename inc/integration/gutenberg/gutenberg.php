@@ -102,6 +102,24 @@ function wpbf_gutenberg_block_editor_assets() {
 	wp_enqueue_style( 'wpbf-gutenberg-style', get_template_directory_uri() . '/css/block-editor-styles.css', '', WPBF_VERSION );
 	wp_add_inline_style( 'wpbf-gutenberg-style', $inline_styles );
 
+	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+		return;
+	}
+
+	$enqueue_data = require __DIR__ . '/build/wpbf-block-editor.asset.php';
+	$version      = $enqueue_data['version'];
+	$dependencies = $enqueue_data['dependencies'];
+
+	wp_enqueue_style( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.css', array(), $version );
+
+	wp_enqueue_script( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.js', $dependencies, $version, true );
+
+	wp_add_inline_script(
+		'wp-block-editor',
+		'var wpbfBlocks = {};',
+		'before'
+	);
+
 }
 add_action( 'enqueue_block_editor_assets', 'wpbf_gutenberg_block_editor_assets' );
 
@@ -163,32 +181,6 @@ function wpbf_register_blocks_category( $categories, $post ) {
 
 }
 add_filter( 'block_categories', 'wpbf_register_blocks_category', 10, 2 );
-
-/**
- * Enqueue block editor assets.
- */
-function wpbf_enqueue_block_editor_assets() {
-
-	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
-		return;
-	}
-
-	$enqueue_data = require __DIR__ . '/build/wpbf-block-editor.asset.php';
-	$version      = $enqueue_data['version'];
-	$dependencies = $enqueue_data['dependencies'];
-
-	wp_enqueue_style( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.css', array(), $version );
-
-	wp_enqueue_script( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.js', $dependencies, $version, true );
-
-	wp_add_inline_script(
-		'wp-block-editor',
-		'var wpbfBlocks = {};',
-		'before'
-	);
-
-}
-add_action( 'enqueue_block_editor_assets', 'wpbf_enqueue_block_editor_assets' );
 
 /**
  * Enqueue block assets for both editor and frontend.
