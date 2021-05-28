@@ -1,3 +1,4 @@
+/* Notices */
 .wpbf-block-notices {
 	display: flex;
 	flex-wrap: wrap;
@@ -14,10 +15,6 @@
 	width: fit-content;
 }
 
-///
-/// Put the base utility classes at the bottom
-/// to prevent nesting (or even deep nesting) when overriding styles.
-///
 .wpbf-is-horizontal {
 	flex-direction: row;
 }
