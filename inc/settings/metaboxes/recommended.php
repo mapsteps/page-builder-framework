@@ -56,6 +56,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'constant'    => 'CUSTOMIZER_RESET_PLUGIN_VERSION',
 				),
 				array(
+					'title'       => __( 'Welcome Email Editor', 'page-builder-framework' ),
+					'description' => __( 'Welcome Email Editor allows you to change the default WordPress Welcome & Forgot Password emails.', 'page-builder-framework' ),
+					'banner'      => 'https://ps.w.org/welcome-email-editor/assets/banner-772x250.jpg',
+					'link'        => admin_url( 'plugin-install.php?s=welcome+email+editor&tab=search&type=term' ),
+					'repo'        => true,
+					'constant'    => 'WEED_PLUGIN_VERSION',
+				),
+				array(
 					'title'       => __( 'Toolset', 'page-builder-framework' ),
 					'description' => __( 'A set of plugins to help you build dynamic, advanced websites without programming.', 'page-builder-framework' ),
 					'banner'      => WPBF_THEME_URI .'/img/toolset-banner.png',
