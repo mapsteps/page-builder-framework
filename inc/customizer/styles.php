@@ -337,7 +337,7 @@ $page_padding_right_mobile    = wpbf_get_theme_mod_value( $page_padding, 'mobile
 $page_padding_bottom_mobile   = wpbf_get_theme_mod_value( $page_padding, 'mobile_bottom' );
 $page_padding_left_mobile     = wpbf_get_theme_mod_value( $page_padding, 'mobile_left' );
 
-if ( ! is_bool( $page_padding_top_desktop ) || is_bool( $page_padding_right_desktop ) || is_bool( $page_padding_bottom_desktop ) || is_bool( $page_padding_left_desktop ) ) {
+if ( ! is_bool( $page_padding_top_desktop ) || ! is_bool( $page_padding_right_desktop ) || ! is_bool( $page_padding_bottom_desktop ) || ! is_bool( $page_padding_left_desktop ) ) {
 
 	echo '#inner-content {';
 
