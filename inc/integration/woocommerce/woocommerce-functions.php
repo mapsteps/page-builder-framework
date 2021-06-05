@@ -511,9 +511,12 @@ add_filter( 'wpbf_woo_menu_item_classes', 'wpbf_woo_menu_item_class_current' );
 /**
  * Construct cart menu item.
  *
+ * @param string $markup The markup for the parent container.
+ * Defaults to 'li' as it lives inside the main navigation by default.
+ *
  * @return string The cart menu item.
  */
-function wpbf_woo_menu_item() {
+function wpbf_woo_menu_item( $markup = 'li' ) {
 
 	// Vars.
 	$icon        = get_theme_mod( 'woocommerce_menu_item_icon', 'cart' );
@@ -524,7 +527,7 @@ function wpbf_woo_menu_item() {
 	$cart_url    = wc_get_cart_url();
 
 	// Construct.
-	$menu_item = '<li class="' . esc_attr( $css_classes ) . '">';
+	$menu_item = '<' . $markup . ' class="' . esc_attr( $css_classes ) . '">';
 
 	$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="' . esc_attr( $title ) . '">';
 
@@ -544,7 +547,7 @@ function wpbf_woo_menu_item() {
 
 	$menu_item .= apply_filters( 'wpbf_woo_menu_item_dropdown', '' );
 
-	$menu_item .= '</li>';
+	$menu_item .= '</' . $markup . '>';
 
 	return $menu_item;
 
@@ -623,6 +626,10 @@ function wpbf_woo_fragments( $fragments ) {
 	ob_start();
 	echo wpbf_woo_menu_item();
 	$fragments['li.wpbf-woo-menu-item'] = ob_get_clean();
+
+	ob_start();
+	echo wpbf_woo_menu_item( $markup = 'div' );
+	$fragments['div.wpbf-woo-menu-item'] = ob_get_clean();
 
 	return $fragments;
 
