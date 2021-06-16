@@ -79,6 +79,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'repo'        => true,
 					'constant'    => 'WEGLOT_VERSION',
 				),
+				array(
+					'title'       => __( 'WPML', 'page-builder-framework' ),
+					'description' => __( 'WPML is a popular translation plugin that helps you create a multilingual website for your business or blog.', 'page-builder-framework' ),
+					'banner'      => WPBF_THEME_URI .'/img/banner-wpml.png',
+					'link'        => 'https://wpml.org/',
+					'repo'        => false,
+					'constant'    => 'WPML_VERSION',
+				),
 			);
 
 			foreach ( $recommended_plugins as $recommended_plugin ) {
