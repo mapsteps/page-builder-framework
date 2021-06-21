@@ -21,7 +21,7 @@ get_header();
 
 		<?php do_action( 'wpbf_inner_content_open' ); ?>
 
-		<div class="wpbf-grid wpbf-main-grid wpbf-row-reverse wpbf-grid-<?php echo esc_attr( $grid_gap ); ?>">
+		<div class="wpbf-grid wpbf-main-grid wpbf-grid-<?php echo esc_attr( $grid_gap ); ?>">
 
 			<?php do_action( 'wpbf_sidebar_left' ); ?>
 
