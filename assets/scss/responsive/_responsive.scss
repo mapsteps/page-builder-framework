@@ -738,3 +738,35 @@
 		display: none !important;
 	}
 }
+
+/* Row & column order */
+
+/* From 1025 */
+@media (min-width: $desktop-breakpoint + 1) {
+	.wpbf-row-reverse-large {
+		flex-direction: row-reverse;
+	}
+	.wpbf-column-reverse-large {
+		flex-direction: column-reverse;
+	}
+}
+
+/* Until 768 */
+@media screen and (max-width: $tablet-breakpoint) {
+	.wpbf-row-reverse-medium {
+		flex-direction: row-reverse;
+	}
+	.wpbf-column-reverse-medium {
+		flex-direction: column-reverse;
+	}
+}
+
+/* Until 480 */
+@media screen and (max-width: $mobile-breakpoint) {
+	.wpbf-row-reverse-small {
+		flex-direction: row-reverse;
+	}
+	.wpbf-column-reverse-small {
+		flex-direction: column-reverse;
+	}
+}

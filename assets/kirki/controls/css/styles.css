@@ -730,6 +730,10 @@
 .customize-control-kirki-toggle {
   position: relative;
 }
+.customize-control-kirki-toggle .screen-reader-text:focus {
+  clip-path: inset(50%);
+  -webkit-clip-path: inset(50%);
+}
 .customize-control-kirki-toggle label {
   display: flex;
   flex-wrap: wrap;
