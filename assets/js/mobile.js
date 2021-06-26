@@ -72,14 +72,6 @@ var WPBFMobile = (function ($) {
 
 			if (windowWidth > breakpoints.desktop) {
 				closeMobileMenu(menuType);
-
-				if ($('.wpbf-mobile-mega-menu').length) {
-					$('.wpbf-mobile-mega-menu').removeClass('wpbf-mobile-mega-menu').addClass('wpbf-mega-menu');
-				}
-			} else {
-				if ($('.wpbf-mega-menu').length) {
-					$('.wpbf-mega-menu').removeClass('wpbf-mega-menu').addClass('wpbf-mobile-mega-menu');
-				}
 			}
 
 		});
