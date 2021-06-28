@@ -274,6 +274,9 @@ var WPBFSite = (function ($) {
 
 	$('#navigation a').on('focus', wpbf_on_focus);
 	$('#navigation a').on('blur', wpbf_on_focus);
+	$('.wpbf-nav-wrapper .menu-item').on('hover', function (e) {
+		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+	});
 
 	return {
 		breakpoints: breakpoints,
