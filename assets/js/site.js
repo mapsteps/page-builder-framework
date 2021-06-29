@@ -9,7 +9,7 @@ var WPBFSite = (function ($) {
 	var duration = $(".wpbf-navigation").data("sub-menu-animation-duration");
 
 	/**
-	 * Init the main functions.
+	 * Init main functions.
 	 */
 	function init() {
 		setupBreakpoints();
@@ -79,17 +79,11 @@ var WPBFSite = (function ($) {
 		}
 	}
 
+	// Execute init.
 	init();
 
 	/**
-	 * add aria-haspopup="true" to all sub-menu li's
-	 */
-	$('.menu-item-has-children').each(function () {
-		$(this).attr('aria-haspopup', 'true');
-	});
-
-	/**
-	 * ScrollTop
+	 * ScrollTop.
 	 */
 	if ($('.scrolltop').length) {
 
@@ -111,7 +105,7 @@ var WPBFSite = (function ($) {
 	}
 
 	/**
-	 * Search Menu Item
+	 * Search menu item.
 	 */
 	$(document).on('click', '.wpbf-menu-item-search', function (e) {
 
@@ -134,6 +128,9 @@ var WPBFSite = (function ($) {
 
 	});
 
+	/**
+	* Function to close search.
+	*/
 	function searchClose() {
 
 		if ($('.wpbf-menu-item-search').hasClass('active')) {
@@ -149,10 +146,12 @@ var WPBFSite = (function ($) {
 
 	}
 
+	// Close search on window click.
 	window.addEventListener('click', function (e) {
 		searchClose();
 	});
 
+	// Close search on escape or tab.
 	document.addEventListener('keyup', function (e) {
 		if (e.key === 'Escape' || e.key === 'Esc') {
 			searchClose();
@@ -164,45 +163,14 @@ var WPBFSite = (function ($) {
 	});
 
 	/**
-	 * Contact Form 7 Tips
+	 * Contact Form 7 tips.
 	 */
 	$('.wpcf7-form-control-wrap').on('mouseenter', function () {
 		$('.wpcf7-not-valid-tip', this).fadeOut();
 	});
 
-	
-
 	/**
-	 * Sub Menu Animation – Second Level
-	 *
-	 * Excluding Mega Menu – this is always going to be a Fade effect
-	 */
-	$(document)
-		.on('mouseenter', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children', function () {
-			$('.sub-menu', this).first().stop().css({ display: 'block' }).animate({ opacity: '1' }, duration);
-		})
-		.on('mouseleave', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children', function () {
-			$('.sub-menu', this).first().stop().animate({ opacity: '0' }, duration, function () {
-				$(this).css({ display: 'none' });
-			});
-		});
-
-	/**
-	 * Window Load
-	 *
-	 * Firing triggers after page has been loaded
-	 */
-	$(window).on( 'load', function () {
-
-		$('.opacity').delay(200).animate({ opacity: '1' }, 200);
-		$('.display-none').show();
-		$(window).trigger('resize');
-		$(window).trigger('scroll');
-
-	});
-
-	/**
-	 * Remove Boxed Layout
+	 * Remove boxed layout on resize.
 	 */
 	var mtpagemargin = $('.wpbf-page').css('margin-top');
 
@@ -215,20 +183,6 @@ var WPBFSite = (function ($) {
 			$('.wpbf-page').css({ 'margin-top': mtpagemargin, 'margin-bottom': mtpagemargin })
 		}
 	});
-
-	/**
-	 * Centered Menu
-	 */
-	function buildCenteredMenu() {
-		if (!document.querySelector('.wpbf-menu-centered')) return;
-
-		var menu_items = $('.wpbf-navigation .wpbf-menu-centered .wpbf-menu > li > a').length;
-		var divided = menu_items / 2;
-		var divided = Math.floor(divided);
-		var divided = divided - 1;
-
-		$('.wpbf-menu-centered .logo-container').insertAfter('.wpbf-navigation .wpbf-menu-centered .wpbf-menu >li:eq(' + divided + ')').css({ 'display': 'block' });
-	}
 
 	/**
 	 * Listen to WordPress selective refresh inside customizer.
@@ -245,38 +199,74 @@ var WPBFSite = (function ($) {
 	}
 
 	/**
-	 * Sub Menu Animation – Fade
+	 * Centered menu.
+	 */
+	function buildCenteredMenu() {
+		if (!document.querySelector('.wpbf-menu-centered')) return;
+
+		var menu_items = $('.wpbf-navigation .wpbf-menu-centered .wpbf-menu > li > a').length;
+		var divided = menu_items / 2;
+		var divided = Math.floor(divided);
+		var divided = divided - 1;
+
+		$('.wpbf-menu-centered .logo-container').insertAfter('.wpbf-navigation .wpbf-menu-centered .wpbf-menu >li:eq(' + divided + ')').css({ 'display': 'block' });
+	}
+
+	/**
+	 * Sub menu animation – second level.
+	 */
+	$(document)
+		.on('mouseenter', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children', function () {
+			$('.sub-menu', this).first().stop().css({ display: 'block' }).animate({ opacity: '1' }, duration);
+		})
+		.on('mouseleave', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children', function () {
+			$('.sub-menu', this).first().stop().animate({ opacity: '0' }, duration, function () {
+				$(this).css({ display: 'none' });
+			});
+		});
+
+	/**
+	 * Sub menu animation - fade.
 	 */
 	$(document)
 		.on('mouseenter', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
 			$('.sub-menu', this).first().stop().fadeIn(duration);
+
+			// Remove visual focus if tab-navigation was used earlier.
 			document.body.classList.add('using-mouse');
 
-			/**
-			 * This is needed to fix the multiple popup issue (accessibility thing).
-			 * It's when you mix the your navigation using tab & mouseenter.
-			 */
+			// Remove .wpbf-sub-menu-focus class if tab-navigation was used earlier.
 			$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
 
-			// Remove all menu item's links focus when using mouseenter.
-			$('#navigation > ul > .menu-item > a').blur();
+			// Focus on the current menu item. This will help if tab-navigation was used earlier.
 			$(this).find('> a').focus();
 		})
 		.on('mouseleave', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
 			$('.sub-menu', this).first().stop().fadeOut(duration);
 		});
 
+	/**
+	 * Accessibility.
+	 */
+
+	// Add aria-haspopup="true" to all sub-menu li's
+	$('.menu-item-has-children').each(function () {
+		$(this).attr('aria-haspopup', 'true');
+	});
+
+	// Add using-mouse class on mousedown.
 	$('body').mousedown(function () {
 		$(this).addClass('using-mouse');
 		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
 	});
 
+	// Remove using-mouse class on keydown.
 	$('body').keydown(function () {
 		$(this).removeClass('using-mouse');
 	});
 
 	/**
-	 * This will be called when the menu item is focused using tab navigation.
+	 * onFocus function for tab navigation.
 	 */
 	function onFocus() {
 
@@ -295,7 +285,7 @@ var WPBFSite = (function ($) {
 	}
 
 	/**
-	 * This will be called when the menu item is blurred using tab navigation.
+	 * onBlur function for tab navigation.
 	 */
 	function onBlur() {
 
@@ -307,8 +297,19 @@ var WPBFSite = (function ($) {
 
 	}
 
+	// Tab navigation.
 	$('#navigation a').on('focus', onFocus);
 	$('#navigation a').on('blur', onBlur);
+
+	/**
+	 * Executing various triggers on load.
+	 */
+	$(window).on( 'load', function () {
+		$('.opacity').delay(200).animate({ opacity: '1' }, 200);
+		$('.display-none').show();
+		$(window).trigger('resize');
+		$(window).trigger('scroll');
+	});
 
 	return {
 		breakpoints: breakpoints,
