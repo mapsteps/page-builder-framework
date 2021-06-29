@@ -270,16 +270,19 @@ var WPBFSite = (function ($) {
 	 */
 	function onFocus() {
 
+		// Stop here if body has class using-mouse.
 		if ($('body').hasClass('using-mouse')) return;
+
+		// Stop here if the navigation is not supposed to have sub-menus.
 		if (!$('#navigation > ul').hasClass('wpbf-sub-menu')) return;
 
+		// Remove wpbf-sub-menu-focus everywhere.
 		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+
+		// Add wpbf-sub-menu-focus to the current parent menu item that has children.
 		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
 		
-		/**
-		 * This is needed to fix the multiple popup issue (accessibility thing).
-		 * It's when you mix the your navigation using tab & mouseenter.
-		 */
+		// FadeOut other possible sub-menu's. (what exactly does that do again?)
 		$('#navigation > ul > .menu-item-has-children.wpbf-sub-menu-focus > .sub-menu').first().stop().fadeOut(duration);
 
 	}
@@ -289,10 +292,16 @@ var WPBFSite = (function ($) {
 	 */
 	function onBlur() {
 
+		// Stop here if body has class using-mouse.
 		if ($('body').hasClass('using-mouse')) return;
+
+		// Stop here if the navigation is not supposed to have sub-menus.
 		if (!$('#navigation > ul').hasClass('wpbf-sub-menu')) return;
 
+		// Remove wpbf-sub-menu-focus everywhere.
 		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+
+		// Add wpbf-sub-menu-focus to the current parent menu item that has children.
 		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
 
 	}
