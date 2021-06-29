@@ -260,7 +260,7 @@ var WPBFSite = (function ($) {
 	 * General logic for tab/hover navigation on desktop navigations that contain sub-menu's.
 	 */
 	$(document)
-		// Don't apply the mouseenter to menu item that is currently shown because triggered by tab navigation.
+		// Apply only to sub-menu's not triggered by tab navigation.
 		.on('mouseenter', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)', function () {
 
 			// Remove visual focus if tab-navigation was used earlier.
@@ -273,7 +273,8 @@ var WPBFSite = (function ($) {
 			$(this).find('> a').focus();
 		})
 
-		// When we mouseleave the menu item that is currently shown because triggered by tab navigation.
+		// On mouseleave of tab navigation triggered sub-menu, let's remove the wpbf-sub-menu-focus class.
+		// Fixes issue where sub-menu stayed open after switching from tab to mouse navigation.
 		.on('mouseleave', '.wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus', function () {
 
 			$(this).removeClass('wpbf-sub-menu-focus');
