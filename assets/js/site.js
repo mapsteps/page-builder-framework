@@ -289,14 +289,11 @@ var WPBFSite = (function ($) {
 		// Stop here if body has class using-mouse.
 		if ($('body').hasClass('using-mouse')) return;
 
-		// Stop here if the navigation is not supposed to have sub-menus.
-		if (!$('#navigation > ul').hasClass('wpbf-sub-menu')) return;
-
 		// Remove wpbf-sub-menu-focus everywhere.
-		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+		$('.wpbf-sub-menu > .menu-item-has-children').removeClass('wpbf-sub-menu-focus');
 
 		// Hide other sub-menu's that could be open due to mouse hover interference.
-		$('#navigation > ul > .menu-item-has-children > .sub-menu').stop().hide();
+		$('.wpbf-sub-menu > .menu-item-has-children > .sub-menu').stop().hide();
 
 		// Add wpbf-sub-menu-focus to the current parent menu item that has children.
 		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
@@ -304,7 +301,7 @@ var WPBFSite = (function ($) {
 	}
 
 	// Tab navigation.
-	$(document).on('focus', '#navigation a', onFocus);
+	$(document).on('focus', '.wpbf-sub-menu a', onFocus);
 
 	/**
 	 * Executing various triggers on load.
