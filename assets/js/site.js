@@ -260,7 +260,8 @@ var WPBFSite = (function ($) {
 	 * General logic for tab/hover navigation on desktop navigations that contain sub-menu's.
 	 */
 	$(document)
-		.on('mouseenter', '.wpbf-sub-menu > .menu-item-has-children', function () {
+		// Don't apply the mouseenter to menu item that is currently shown because triggered by tab navigation.
+		.on('mouseenter', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)', function () {
 
 			// Remove visual focus if tab-navigation was used earlier.
 			document.body.classList.add('using-mouse');
@@ -270,6 +271,13 @@ var WPBFSite = (function ($) {
 
 			// Focus on the current menu item. This will help if tab-navigation was used earlier.
 			$(this).find('> a').focus();
+		})
+
+		// When we mouseleave the menu item that is currently shown because triggered by tab navigation.
+		.on('mouseleave', '.wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus', function () {
+
+			$(this).removeClass('wpbf-sub-menu-focus');
+
 		});
 
 	/**
@@ -294,28 +302,8 @@ var WPBFSite = (function ($) {
 
 	}
 
-	/**
-	 * onBlur function for tab navigation.
-	 */
-	function onBlur() {
-
-		// Stop here if body has class using-mouse.
-		if ($('body').hasClass('using-mouse')) return;
-
-		// Stop here if the navigation is not supposed to have sub-menus.
-		if (!$('#navigation > ul').hasClass('wpbf-sub-menu')) return;
-
-		// Remove wpbf-sub-menu-focus everywhere.
-		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
-
-		// Add wpbf-sub-menu-focus to the current parent menu item that has children.
-		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
-
-	}
-
 	// Tab navigation.
-	$('#navigation a').on('focus', onFocus);
-	$('#navigation a').on('blur', onBlur); // Do we even need this? Running only onFocus might be enough.
+	$(document).on('focus', '#navigation a', onFocus);
 
 	/**
 	 * Executing various triggers on load.
