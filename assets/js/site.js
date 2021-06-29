@@ -170,16 +170,7 @@ var WPBFSite = (function ($) {
 		$('.wpcf7-not-valid-tip', this).fadeOut();
 	});
 
-	/**
-	 * Sub Menu Animation – Fade
-	 */
-	$(document)
-		.on('mouseenter', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
-			$('.sub-menu', this).first().stop().fadeIn(duration);
-		})
-		.on('mouseleave', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
-			$('.sub-menu', this).first().stop().fadeOut(duration);
-		});
+	
 
 	/**
 	 * Sub Menu Animation – Second Level
@@ -253,6 +244,23 @@ var WPBFSite = (function ($) {
 		});
 	}
 
+	/**
+	 * Sub Menu Animation – Fade
+	 */
+	$(document)
+		.on('mouseenter', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
+			$('.sub-menu', this).first().stop().fadeIn(duration);
+
+			/**
+			 * This is needed to fix the multiple popup issue (accessibility thing).
+			 * It's when you mix the your navigation using tab & mouseenter.
+			 */
+			$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+		})
+		.on('mouseleave', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
+			$('.sub-menu', this).first().stop().fadeOut(duration);
+		});
+
 	$('body').mousedown(function () {
 		$(this).addClass('using-mouse');
 		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
@@ -262,7 +270,29 @@ var WPBFSite = (function ($) {
 		$(this).removeClass('using-mouse');
 	});
 
-	function wpbf_on_focus() {
+	/**
+	 * This will be called when the menu item is focused using tab navigation.
+	 */
+	function onFocus() {
+
+		if ($('body').hasClass('using-mouse')) return;
+		if (!$('#navigation > ul').hasClass('wpbf-sub-menu')) return;
+
+		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
+		
+		/**
+		 * This is needed to fix the multiple popup issue (accessibility thing).
+		 * It's when you mix the your navigation using tab & mouseenter.
+		 */
+		$('#navigation > ul > .menu-item-has-children.wpbf-sub-menu-focus > .sub-menu').first().stop().fadeOut(duration);
+
+	}
+
+	/**
+	 * This will be called when the menu item is blurred using tab navigation.
+	 */
+	function onBlur() {
 
 		if ($('body').hasClass('using-mouse')) return;
 		if (!$('#navigation > ul').hasClass('wpbf-sub-menu')) return;
@@ -272,11 +302,8 @@ var WPBFSite = (function ($) {
 
 	}
 
-	$('#navigation a').on('focus', wpbf_on_focus);
-	$('#navigation a').on('blur', wpbf_on_focus);
-	$('.wpbf-nav-wrapper .menu-item').on('hover', function (e) {
-		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
-	});
+	$('#navigation a').on('focus', onFocus);
+	$('#navigation a').on('blur', onBlur);
 
 	return {
 		breakpoints: breakpoints,
