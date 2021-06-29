@@ -231,15 +231,6 @@ var WPBFSite = (function ($) {
 	$(document)
 		.on('mouseenter', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
 			$('.sub-menu', this).first().stop().fadeIn(duration);
-
-			// Remove visual focus if tab-navigation was used earlier.
-			document.body.classList.add('using-mouse');
-
-			// Remove .wpbf-sub-menu-focus class if tab-navigation was used earlier.
-			$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
-
-			// Focus on the current menu item. This will help if tab-navigation was used earlier.
-			$(this).find('> a').focus();
 		})
 		.on('mouseleave', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
 			$('.sub-menu', this).first().stop().fadeOut(duration);
@@ -266,6 +257,22 @@ var WPBFSite = (function ($) {
 	});
 
 	/**
+	 * General logic for tab/hover navigation on desktop navigations that contain sub-menu's.
+	 */
+	$(document)
+		.on('mouseenter', '.wpbf-sub-menu > .menu-item-has-children', function () {
+
+			// Remove visual focus if tab-navigation was used earlier.
+			document.body.classList.add('using-mouse');
+
+			// Remove .wpbf-sub-menu-focus class if tab-navigation was used earlier.
+			$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+
+			// Focus on the current menu item. This will help if tab-navigation was used earlier.
+			$(this).find('> a').focus();
+		});
+
+	/**
 	 * onFocus function for tab navigation.
 	 */
 	function onFocus() {
@@ -282,8 +289,8 @@ var WPBFSite = (function ($) {
 		// Add wpbf-sub-menu-focus to the current parent menu item that has children.
 		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
 		
-		// FadeOut other possible sub-menu's. (what exactly does that do again?)
-		$('#navigation > ul > .menu-item-has-children.wpbf-sub-menu-focus > .sub-menu').first().stop().fadeOut(duration);
+		// Hide other sub-menu's that could be open due to mouse hover interference.
+		$('#navigation > ul > .menu-item-has-children > .sub-menu').first().stop().hide();
 
 	}
 
@@ -308,7 +315,7 @@ var WPBFSite = (function ($) {
 
 	// Tab navigation.
 	$('#navigation a').on('focus', onFocus);
-	$('#navigation a').on('blur', onBlur);
+	$('#navigation a').on('blur', onBlur); // Do we even need this? Running only onFocus might be enough.
 
 	/**
 	 * Executing various triggers on load.
