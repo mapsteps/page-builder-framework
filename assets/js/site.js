@@ -286,11 +286,11 @@ var WPBFSite = (function ($) {
 		// Remove wpbf-sub-menu-focus everywhere.
 		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
 
+		// Hide other sub-menu's that could be open due to mouse hover interference.
+		$('#navigation > ul > .menu-item-has-children > .sub-menu').stop().hide();
+
 		// Add wpbf-sub-menu-focus to the current parent menu item that has children.
 		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
-		
-		// Hide other sub-menu's that could be open due to mouse hover interference.
-		$('#navigation > ul > .menu-item-has-children > .sub-menu').first().stop().hide();
 
 	}
 
