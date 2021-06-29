@@ -250,12 +250,17 @@ var WPBFSite = (function ($) {
 	$(document)
 		.on('mouseenter', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
 			$('.sub-menu', this).first().stop().fadeIn(duration);
+			document.body.classList.add('using-mouse');
 
 			/**
 			 * This is needed to fix the multiple popup issue (accessibility thing).
 			 * It's when you mix the your navigation using tab & mouseenter.
 			 */
 			$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
+
+			// Remove all menu item's links focus when using mouseenter.
+			$('#navigation > ul > .menu-item > a').blur();
+			$(this).find('> a').focus();
 		})
 		.on('mouseleave', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
 			$('.sub-menu', this).first().stop().fadeOut(duration);
