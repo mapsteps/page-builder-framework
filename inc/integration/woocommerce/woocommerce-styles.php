@@ -103,27 +103,23 @@ function wpbf_do_woocommerce_customizer_css() {
 	}
 
 	if ( $woocommerce_notice_bg_color ) {
-		?>
 
-		.woocommerce-info,
-		.woocommerce-message,
-		.woocommerce-error {
-			background-color: <?php echo esc_attr( $woocommerce_notice_bg_color ); ?>;
-		}
+		echo '.woocommerce-info,';
+		echo '.woocommerce-message,';
+		echo '.woocommerce-error {';
+		echo sprintf( 'background-color: %s;', esc_attr( $woocommerce_notice_bg_color ) );
+		echo '}';
 
-		<?php
 	}
 
 	if ( $woocommerce_notice_text_color ) {
-		?>
 
-		.woocommerce-info,
-		.woocommerce-message,
-		.woocommerce-error {
-			color: <?php echo esc_attr( $woocommerce_notice_text_color ); ?>;
-		}
+		echo '.woocommerce-info,';
+		echo '.woocommerce-message,';
+		echo '.woocommerce-error {';
+		echo sprintf( 'color: %s;', esc_attr( $woocommerce_notice_text_color ) );
+		echo '}';
 
-		<?php
 	}
 
 	// Menu item desktop.
