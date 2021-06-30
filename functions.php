@@ -77,8 +77,8 @@ function wpbf_theme_setup() {
 	// Register nav menu's.
 	register_nav_menus(
 		array(
-			'main_menu'             => __( 'Main Menu', 'page-builder-framework' ),
-			'mobile_menu'           => __( 'Mobile Menu', 'page-builder-framework' ),
+			'main_menu'   => __( 'Main Menu', 'page-builder-framework' ),
+			'mobile_menu' => __( 'Mobile Menu', 'page-builder-framework' ),
 		)
 	);
 
@@ -100,8 +100,8 @@ function wpbf_theme_setup() {
 
 		register_nav_menus(
 			array(
-				'footer_menu'           => __( 'Footer Left', 'page-builder-framework' ),
-				'footer_menu_right'     => __( 'Footer Right', 'page-builder-framework' ),
+				'footer_menu'       => __( 'Footer Left', 'page-builder-framework' ),
+				'footer_menu_right' => __( 'Footer Right', 'page-builder-framework' ),
 			)
 		);
 
@@ -202,20 +202,19 @@ function wpbf_enqueue_admin_scripts() {
 
 	} elseif ( in_array( $current_screen->post_type, $post_types, true ) ) {
 
-		if ("edit-{$current_screen->post_type}" === $current_screen->id) {
+		if ( "edit-{$current_screen->post_type}" === $current_screen->id ) {
 			// Enqueue on post list page.
 
 			wp_enqueue_style( 'wpbf-post-list', WPBF_THEME_URI . '/css/min/post-list-min.css', array(), WPBF_VERSION );
 			wp_enqueue_script( 'wpbf-post-list', WPBF_THEME_URI . '/js/min/post-list-min.js', array( 'jquery', 'wp-polyfill' ), WPBF_VERSION, true );
 
-		} elseif ($current_screen->post_type === $current_screen->id) {
+		} elseif ( $current_screen->post_type === $current_screen->id ) {
 			// Enqueue on edit post page.
 
 			wp_enqueue_style( 'wpbf-edit-post', WPBF_THEME_URI . '/css/min/edit-post-min.css', array(), WPBF_VERSION );
 			wp_enqueue_script( 'wpbf-edit-post', WPBF_THEME_URI . '/js/min/edit-post-min.js', array( 'jquery', 'wp-polyfill' ), WPBF_VERSION, true );
-			
-		}
 
+		}
 	}
 
 }

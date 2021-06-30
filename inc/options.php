@@ -56,11 +56,13 @@ function wpbf_options_metabox_callback( $post ) {
 	}
 
 	if ( in_array( 'full-width', $wpbf_stored_meta, true ) ) {
-		$full_width = 'full-width';
+		$width_type = 'full-width';
 	} elseif ( in_array( 'contained', $wpbf_stored_meta, true ) ) {
-		$full_width = 'contained';
+		$width_type = 'contained';
+	} elseif ( in_array( 'custom-width', $wpbf_stored_meta, true ) ) {
+		$width_type = 'custom-width';
 	} else {
-		$full_width = 'layout-global';
+		$width_type = 'layout-global';
 	}
 
 	if ( in_array( 'remove-featured', $wpbf_stored_meta, true ) ) {
@@ -81,14 +83,14 @@ function wpbf_options_metabox_callback( $post ) {
 		$remove_footer = false;
 	}
 
-	$custom_width_value = isset($wpbf_stored_meta['custom_width_value']) ? $wpbf_stored_meta['custom_width_value'] : '';
+	$custom_width_value = isset( $wpbf_stored_meta['custom_width_value'] ) ? $wpbf_stored_meta['custom_width_value'] : '';
 
 	?>
 
 	<h4><?php _e( 'Layout', 'page-builder-framework' ); ?></h4>
 
 	<div>
-		<input id="layout-global" type="radio" name="wpbf_options[]" value="layout-global" <?php checked( $full_width, 'layout-global' ); ?> />
+		<input id="layout-global" type="radio" name="wpbf_options[]" value="layout-global" class="wpbf-layout-option" <?php checked( $width_type, 'layout-global' ); ?> />
 		<label for="layout-global"><?php _e( 'Inherit Global Settings', 'page-builder-framework' ); ?></label>
 		<?php
 		if ( ! wpbf_is_premium() ) {
@@ -98,21 +100,21 @@ function wpbf_options_metabox_callback( $post ) {
 	</div>
 
 	<div>
-		<input id="layout-full-width" type="radio" name="wpbf_options[]" value="full-width" <?php checked( $full_width, 'full-width' ); ?> />
+		<input id="layout-full-width" type="radio" name="wpbf_options[]" value="full-width" class="wpbf-layout-option" <?php checked( $width_type, 'full-width' ); ?> />
 		<label for="layout-full-width"><?php _e( 'Full Width', 'page-builder-framework' ); ?></label>
 	</div>
 
 	<div>
-		<input id="layout-contained" type="radio" name="wpbf_options[]" value="contained" <?php checked( $full_width, 'contained' ); ?> />
+		<input id="layout-contained" type="radio" name="wpbf_options[]" value="contained" class="wpbf-layout-option" <?php checked( $width_type, 'contained' ); ?> />
 		<label for="layout-contained"><?php _e( 'Contained', 'page-builder-framework' ); ?></label>
 	</div>
 
 	<div>
-		<input id="layout-custom-width" type="radio" name="wpbf_options[]" value="custom-width" <?php checked( $full_width, 'custom-width' ); ?> />
+		<input id="layout-custom-width" type="radio" name="wpbf_options[]" value="custom-width" class="wpbf-layout-option" <?php checked( $width_type, 'custom-width' ); ?> />
 		<label for="layout-custom-width"><?php _e( 'Custom Width', 'page-builder-framework' ); ?></label>
 	</div>
-	
-	<div class="wpbf-layout-custom-width-field-wrapper">
+
+	<div class="wpbf-layout-custom-width-field-wrapper<?php echo esc_attr( 'custom-width' === $width_type ? '' : ' wpbf-is-hidden' ); ?>">
 		<input id="layout-custom-width-value" name="wpbf_options[custom_width_value]" value="<?php echo esc_attr( $custom_width_value ); ?>" />
 		<label for="layout-custom-width-value" class="description"><?php _e( 'E.g: 1200px or 75%', 'page-builder-framework' ); ?></label>
 	</div>
@@ -220,6 +222,14 @@ function wpbf_save_metadata( $post_id, $post, $update ) {
 
 		if ( in_array( 'contained', $_POST['wpbf_options'], true ) ) {
 			$checked[] .= 'contained';
+		}
+
+		if ( in_array( 'custom-width', $_POST['wpbf_options'], true ) ) {
+			$checked[] .= 'custom-width';
+		}
+
+		if ( isset( $_POST['wpbf_options']['custom_width_value'] ) ) {
+			$checked['custom_width_value'] = $_POST['wpbf_options']['custom_width_value'];
 		}
 
 		if ( in_array( 'layout-global', $_POST['wpbf_options'], true ) ) {
