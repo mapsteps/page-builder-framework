@@ -128,7 +128,7 @@ function wpbf_inner_content( $echo = true ) {
 		$contained = $options ? in_array( 'contained', $options ) : false;
 
 		// Construct inner content wrapper.
-		$inner_content = $fullwidth ? false : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
+		$inner_content = $fullwidth ? '' : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
 
 		// Check if Premium Add-On is active and template is not set to contained.
 		if ( wpbf_is_premium() && ! $contained ) {
@@ -138,8 +138,8 @@ function wpbf_inner_content( $echo = true ) {
 			// Get array of post types that are set to full width under Appearance > Theme Settings > Global Templat Settings.
 			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
-			// If current post type has been set to full-width globally, set $inner_content to false.
-			$inner_content = $fullwidth_global && in_array( get_post_type( get_the_ID() ), $fullwidth_global ) ? false : $inner_content;
+			// If current post type has been set to full-width globally, set $inner_content to empty.
+			$inner_content = $fullwidth_global && in_array( get_post_type( get_the_ID() ), $fullwidth_global ) ? '' : $inner_content;
 
 		}
 
