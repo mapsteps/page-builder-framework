@@ -1987,6 +1987,7 @@ if ( $menu_font_size ) {
 }
 
 // Sub menu.
+$sub_menu_text_alignment   = get_theme_mod( 'sub_menu_text_alignment' );
 $sub_menu_bg_color         = ( $val = get_theme_mod( 'sub_menu_bg_color' ) ) === '#ffffff' ? false : $val;
 $sub_menu_bg_color_alt     = get_theme_mod( 'sub_menu_bg_color_alt' );
 $sub_menu_width            = ( $val = get_theme_mod( 'sub_menu_width' ) ) === '220' ? false : $val;
@@ -2000,6 +2001,14 @@ $sub_menu_font_size        = get_theme_mod( 'sub_menu_font_size' );
 $sub_menu_accent_color_alt = get_theme_mod( 'sub_menu_accent_color_alt' );
 $sub_menu_separator        = get_theme_mod( 'sub_menu_separator' );
 $sub_menu_separator_color  = ( $val = get_theme_mod( 'sub_menu_separator_color' ) ) === '#f5f5f7' ? false : $val;
+
+if ( $sub_menu_text_alignment ) {
+
+	echo '.wpbf-sub-menu .sub-menu {';
+	echo sprintf( 'text-align: %s;', esc_attr( $sub_menu_text_alignment ) );
+	echo '}';
+
+}
 
 if ( $sub_menu_bg_color ) {
 

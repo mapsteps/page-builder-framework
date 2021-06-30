@@ -267,6 +267,23 @@
 
 	/* Sub Menu */
 
+	// Text alignment.
+	wp.customize('sub_menu_text_alignment', function (value) {
+
+		var styleTag = setupStyleTag('sub_menu_text_alignment');
+
+		value.bind(function (newval) {
+
+			styleTag.innerHTML = '\
+				.wpbf-sub-menu .sub-menu {\
+					text-align: ' + newval + '\
+				}\
+			';
+
+		});
+
+	});
+
 	// Padding.
 	wp.customize('sub_menu_padding', function (value) {
 
