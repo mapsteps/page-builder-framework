@@ -7,6 +7,9 @@
  */
 (function ($) {
 	function init() {
+		var layoutCheckbox = document.querySelector('#wpbf_layout-hide');
+		if (layoutCheckbox) layoutCheckbox.parentNode.style.display = 'none';
+
 		insertPresetValues();
 		$(document).on("click", ".inline-edit-save .save", updatePresetValues);
 	}
