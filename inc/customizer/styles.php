@@ -311,6 +311,24 @@ if ( $page_h6_toggle && $page_h6_font_family_value ) {
 
 /* General */
 
+global $post;
+
+// Width type.
+$post_options = get_post_meta( $post->ID, 'wpbf_options', true );
+$post_options = empty( $post_options ) ? array() : $post_options;
+
+$width_type = 'layout-global';
+
+$layout_custom_width = isset( $post_options['custom_width_value'] ) ? $post_options['custom_width_value'] : '';
+
+if ( in_array( 'full-width', $post_options, true ) ) {
+	$width_type = 'full-width';
+} elseif ( in_array( 'contained', $post_options, true ) ) {
+	$width_type = 'contained';
+} elseif ( in_array( 'custom-width', $post_options, true ) ) {
+	$width_type = 'custom-width';
+}
+
 // Page settings.
 $page_width                   = ( $val = get_theme_mod( 'page_max_width' ) ) === '1200px' ? false : $val;
 $page_boxed                   = get_theme_mod( 'page_boxed' );
@@ -417,12 +435,20 @@ if ( ! is_bool( $page_padding_top_mobile ) || ! is_bool( $page_padding_right_mob
 
 }
 
-if ( $page_width ) {
+if ( 'custom-width' === $width_type && ! empty( $layout_custom_width ) ) {
 
 	echo '.wpbf-container {';
-	echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
+	echo sprintf( 'max-width: %s;', esc_attr( $layout_custom_width ) );
 	echo '}';
 
+} else {
+	if ( $page_width ) {
+
+		echo '.wpbf-container {';
+		echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
+		echo '}';
+
+	}
 }
 
 if ( $page_boxed ) {
@@ -470,7 +496,6 @@ if ( $page_boxed ) {
 		echo '}';
 
 	}
-
 }
 
 // ScrollTop.
@@ -550,7 +575,6 @@ if ( $scrolltop ) {
 		echo '}';
 
 	}
-
 }
 
 // Background (backwards compatibility).
@@ -681,7 +705,6 @@ if ( $button_border_width ) {
 		echo '}';
 
 	}
-
 }
 
 if ( $button_bg_color || $button_text_color || $button_border_radius ) {
@@ -799,7 +822,6 @@ if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 		echo sprintf( 'color: %s;', esc_attr( $button_primary_bg_color_alt ) );
 		echo '}';
 	}
-
 }
 
 if ( $page_width ) {
@@ -1063,7 +1085,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-	// Custom post type archives & taxonomies.
+		// Custom post type archives & taxonomies.
 	} elseif ( $custom_width && strpos( $archive, '-' ) ) {
 
 		$cpt = substr( $archive, 0, strpos( $archive, '-' ) );
@@ -1074,7 +1096,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-	// Other archives.
+		// Other archives.
 	} elseif ( $custom_width ) {
 
 		echo '.' . $archive . ' #inner-content {';
@@ -1230,7 +1252,6 @@ foreach ( $archives as $archive ) {
 				echo '}';
 
 			}
-
 		}
 
 		if ( $boxed_padding_top_tablet || $boxed_padding_right_tablet || $boxed_padding_bottom_tablet || $boxed_padding_left_tablet ) {
@@ -1342,7 +1363,6 @@ foreach ( $archives as $archive ) {
 			echo '}';
 
 		}
-
 	}
 
 	// Beside
@@ -1382,9 +1402,7 @@ foreach ( $archives as $archive ) {
 			echo '}';
 
 		}
-
 	}
-
 }
 
 /* Single */
@@ -1417,9 +1435,9 @@ foreach ( $singles as $single ) {
 	// General Layout Settings
 	// if( $content_alignment ) {
 
-	// 	echo '.wpbf-' . $single . '-content .wpbf-post {';
-	// 	echo sprintf( 'text-align: %s;', esc_attr( $content_alignment ) );
-	// 	echo '}';
+	// echo '.wpbf-' . $single . '-content .wpbf-post {';
+	// echo sprintf( 'text-align: %s;', esc_attr( $content_alignment ) );
+	// echo '}';
 
 	// }
 
@@ -1519,7 +1537,6 @@ foreach ( $singles as $single ) {
 				echo '}';
 
 			}
-
 		}
 
 		if ( $boxed_padding_top_tablet || $boxed_padding_right_tablet || $boxed_padding_bottom_tablet || $boxed_padding_left_tablet ) {
@@ -1631,9 +1648,7 @@ foreach ( $singles as $single ) {
 			echo '}';
 
 		}
-
 	}
-
 }
 
 /* Header */
@@ -1767,7 +1782,6 @@ if ( ! $custom_logo ) {
 		echo '}';
 
 	}
-
 }
 
 if ( $custom_logo ) {
@@ -1805,7 +1819,6 @@ if ( $custom_logo ) {
 		echo '}';
 
 	}
-
 }
 
 // Tagline.
@@ -1891,7 +1904,6 @@ if ( ! $custom_logo && $menu_logo_description ) {
 		echo '}';
 
 	}
-
 }
 
 // Navigation.
@@ -1946,7 +1958,6 @@ if ( $menu_padding ) {
 		echo '}';
 
 	}
-
 }
 
 if ( $menu_bg_color ) {
@@ -2218,7 +2229,6 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 			echo '}';
 
 		}
-
 	}
 
 	if ( $mobile_menu_hamburger_bg_color ) {
@@ -2235,7 +2245,6 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 		echo '}';
 
 	}
-
 }
 
 if ( $mobile_menu_bg_color ) {

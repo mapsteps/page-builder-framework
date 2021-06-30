@@ -127,11 +127,14 @@ function wpbf_inner_content( $echo = true ) {
 		// Check if template is set to contained.
 		$contained = $options ? in_array( 'contained', $options ) : false;
 
+		// Check if template is set to custom width.
+		$custom_width = $options ? in_array( 'custom-width', $options ) : false;
+
 		// Construct inner content wrapper.
 		$inner_content = $fullwidth ? '' : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
 
 		// Check if Premium Add-On is active and template is not set to contained.
-		if ( wpbf_is_premium() && ! $contained ) {
+		if ( wpbf_is_premium() && ! $contained && ! $custom_width ) {
 
 			$wpbf_settings = get_option( 'wpbf_settings' );
 
@@ -171,9 +174,11 @@ function wpbf_inner_content_close() {
 
 		$contained = $options ? in_array( 'contained', $options ) : false;
 
+		$custom_width = $options ? in_array( 'custom-width', $options ) : false;
+
 		$inner_content_close = $fullwidth ? '' : '</div>';
 
-		if ( wpbf_is_premium() && ! $contained ) {
+		if ( wpbf_is_premium() && ! $contained && ! $custom_width ) {
 
 			$wpbf_settings = get_option( 'wpbf_settings' );
 
