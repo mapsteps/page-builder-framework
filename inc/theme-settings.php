@@ -30,37 +30,6 @@ function wpbf_theme_settings_callback() {
 }
 
 /**
- * Enqueue admin scripts & styles.
- */
-function wpbf_enqueue_admin_scripts() {
-
-	wp_enqueue_style( 'wpbf-activation-notice', WPBF_THEME_URI . '/assets/css/activation-notice.css', array(), WPBF_VERSION );
-	wp_enqueue_script( 'wpbf-activation-notice', WPBF_THEME_URI . '/js/min/activation-notice-min.js', array( 'jquery' ), WPBF_VERSION, true );
-
-	wp_localize_script(
-		'wpbf-activation-notice',
-		'wpbfOpts',
-		array(
-			'activationNotice' => array(
-				'dismissalNonce' => wp_create_nonce( 'WPBF_Dismiss_Activation_Notice' ),
-			),
-		)
-	);
-
-	$current_screen = get_current_screen();
-
-	// Only enqueue on "Theme Settings" page.
-	if ( 'appearance_page_wpbf-premium' === $current_screen->id ) {
-		wp_enqueue_style( 'heatbox', WPBF_THEME_URI . '/assets/css/heatbox.css', array(), WPBF_VERSION );
-		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array(), WPBF_VERSION );
-
-		wp_enqueue_script( 'wpbf-admin-page', WPBF_THEME_URI . '/js/min/admin-min.js', array( 'jquery' ), WPBF_VERSION, true );
-	}
-
-}
-add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
-
-/**
  * Save activation notice dismissal.
  */
 function wpbf_activation_notice_dismissal() {

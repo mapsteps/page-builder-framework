@@ -8,23 +8,6 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Enqueue admin styles & scripts to posts list screen.
- */
-function wpbf_enqueue_admin_post_scripts() {
-
-	$post_types     = get_post_types( array( 'public' => true ) );
-	$current_screen = get_current_screen();
-
-	if ( in_array( $current_screen->post_type, $post_types, true ) && "edit-{$current_screen->post_type}" === $current_screen->id ) {
-		wp_enqueue_style( 'wpbf-post-list', WPBF_THEME_URI . '/css/min/post-list-min.css', array(), WPBF_VERSION );
-
-		wp_enqueue_script( 'wpbf-post-list', WPBF_THEME_URI . '/js/min/post-list-min.js', array( 'jquery', 'wp-polyfill' ), WPBF_VERSION, true );
-	}
-
-}
-add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_post_scripts' );
-
-/**
  * Add layout options to quick edit box.
  *
  * @see https://developer.wordpress.org/reference/hooks/quick_edit_custom_box/

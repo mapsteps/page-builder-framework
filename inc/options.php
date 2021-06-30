@@ -8,6 +8,23 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
+ * Enqueue admin styles & scripts to edit post screen.
+ */
+function wpbf_enqueue_edit_post_scripts() {
+
+	$post_types     = get_post_types( array( 'public' => true ) );
+	$current_screen = get_current_screen();
+
+	if ( in_array( $current_screen->post_type, $post_types, true ) && "edit-{$current_screen->post_type}" === $current_screen->id ) {
+		wp_enqueue_style( 'wpbf-post-list', WPBF_THEME_URI . '/css/min/post-list-min.css', array(), WPBF_VERSION );
+
+		wp_enqueue_script( 'wpbf-post-list', WPBF_THEME_URI . '/js/min/post-list-min.js', array( 'jquery', 'wp-polyfill' ), WPBF_VERSION, true );
+	}
+
+}
+add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_edit_post_scripts' );
+
+/**
  * Load metaboxes.
  */
 function wpbf_metabox_setup() {
@@ -81,6 +98,8 @@ function wpbf_options_metabox_callback( $post ) {
 		$remove_footer = false;
 	}
 
+	$custom_width_value = isset($wpbf_stored_meta['custom_width_value']) ? $wpbf_stored_meta['custom_width_value'] : '';
+
 	?>
 
 	<h4><?php _e( 'Layout', 'page-builder-framework' ); ?></h4>
@@ -103,6 +122,16 @@ function wpbf_options_metabox_callback( $post ) {
 	<div>
 		<input id="layout-contained" type="radio" name="wpbf_options[]" value="contained" <?php checked( $full_width, 'contained' ); ?> />
 		<label for="layout-contained"><?php _e( 'Contained', 'page-builder-framework' ); ?></label>
+	</div>
+
+	<div>
+		<input id="layout-custom-width" type="radio" name="wpbf_options[]" value="custom-width" <?php checked( $full_width, 'custom-width' ); ?> />
+		<label for="layout-custom-width"><?php _e( 'Custom Width', 'page-builder-framework' ); ?></label>
+	</div>
+	
+	<div class="wpbf-layout-custom-width-field-wrapper">
+		<input id="layout-custom-width-value" name="wpbf_options[custom_width_value]" value="<?php echo esc_attr( $custom_width_value ); ?>" />
+		<label for="layout-custom-width-value" class="description"><?php _e( 'E.g: 1200px or 75%', 'page-builder-framework' ); ?></label>
 	</div>
 
 	<h4><?php _e( 'Disable Elements', 'page-builder-framework' ); ?></h4>

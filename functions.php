@@ -171,5 +171,55 @@ function wpbf_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_scripts', 10 );
 
+/**
+ * Enqueue admin styles & scripts to targetted admin area.
+ */
+function wpbf_enqueue_admin_scripts() {
+
+	wp_enqueue_style( 'wpbf-activation-notice', WPBF_THEME_URI . '/assets/css/activation-notice.css', array(), WPBF_VERSION );
+	wp_enqueue_script( 'wpbf-activation-notice', WPBF_THEME_URI . '/js/min/activation-notice-min.js', array( 'jquery' ), WPBF_VERSION, true );
+
+	wp_localize_script(
+		'wpbf-activation-notice',
+		'wpbfOpts',
+		array(
+			'activationNotice' => array(
+				'dismissalNonce' => wp_create_nonce( 'WPBF_Dismiss_Activation_Notice' ),
+			),
+		)
+	);
+
+	$current_screen = get_current_screen();
+	$post_types     = get_post_types( array( 'public' => true ) );
+
+	if ( 'appearance_page_wpbf-premium' === $current_screen->id ) {
+		// Enqueue on "Theme Settings" page.
+
+		wp_enqueue_style( 'heatbox', WPBF_THEME_URI . '/assets/css/heatbox.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array(), WPBF_VERSION );
+
+		wp_enqueue_script( 'wpbf-admin-page', WPBF_THEME_URI . '/js/min/admin-min.js', array( 'jquery' ), WPBF_VERSION, true );
+
+	} elseif ( in_array( $current_screen->post_type, $post_types, true ) ) {
+
+		if ("edit-{$current_screen->post_type}" === $current_screen->id) {
+			// Enqueue on post list page.
+
+			wp_enqueue_style( 'wpbf-post-list', WPBF_THEME_URI . '/css/min/post-list-min.css', array(), WPBF_VERSION );
+			wp_enqueue_script( 'wpbf-post-list', WPBF_THEME_URI . '/js/min/post-list-min.js', array( 'jquery', 'wp-polyfill' ), WPBF_VERSION, true );
+
+		} elseif ($current_screen->post_type === $current_screen->id) {
+			// Enqueue on edit post page.
+
+			wp_enqueue_style( 'wpbf-edit-post', WPBF_THEME_URI . '/css/min/edit-post-min.css', array(), WPBF_VERSION );
+			wp_enqueue_script( 'wpbf-edit-post', WPBF_THEME_URI . '/js/min/edit-post-min.js', array( 'jquery', 'wp-polyfill' ), WPBF_VERSION, true );
+			
+		}
+
+	}
+
+}
+add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
+
 // Init.
 require_once WPBF_THEME_DIR . '/inc/init.php';
