@@ -171,7 +171,7 @@ function wpbf_inner_content_close() {
 
 		$contained = $options ? in_array( 'contained', $options ) : false;
 
-		$inner_content_close = $fullwidth ? false : '</div>';
+		$inner_content_close = $fullwidth ? '' : '</div>';
 
 		if ( wpbf_is_premium() && ! $contained ) {
 
@@ -179,7 +179,7 @@ function wpbf_inner_content_close() {
 
 			$fullwidth_global = isset( $wpbf_settings['wpbf_fullwidth_global'] ) ? $wpbf_settings['wpbf_fullwidth_global'] : array();
 
-			$inner_content_close = $fullwidth_global && in_array( get_post_type( get_the_ID() ), $fullwidth_global ) ? false : $inner_content_close;
+			$inner_content_close = $fullwidth_global && in_array( get_post_type( get_the_ID() ), $fullwidth_global ) ? '' : $inner_content_close;
 
 		}
 	} else {
