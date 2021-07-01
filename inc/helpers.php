@@ -128,10 +128,12 @@ function wpbf_inner_content( $echo = true ) {
 		$contained = $options ? in_array( 'contained', $options ) : false;
 
 		// Check if template is set to custom width.
-		$custom_width = $options ? in_array( 'custom-width', $options ) : false;
+		$custom_width       = $options ? in_array( 'custom-width', $options ) : false;
+		$custom_width_value = isset( $options['custom_width_value'] ) ? $options['custom_width_value'] : '';
+		$custom_width       = $custom_width && $custom_width_value ? ' style="max-width: ' . $custom_width_value . '"' : '';
 
 		// Construct inner content wrapper.
-		$inner_content = $fullwidth ? '' : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
+		$inner_content = $fullwidth ? '' : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium"' . $custom_width . '>' );
 
 		// Check if Premium Add-On is active and template is not set to contained.
 		if ( wpbf_is_premium() && ! $contained && ! $custom_width ) {
