@@ -3723,23 +3723,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Text alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'radio-image',
-	'settings'  => 'sub_menu_text_alignment',
-	'label'     => __( 'Sub Menu Text Alignment', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'default'   => 'left',
-	'priority'  => 1,
-	'multiple'  => 1,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
-		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
-		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-) );
-
 // Width.
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'slider',
@@ -3773,6 +3756,23 @@ Kirki::add_field( 'wpbf', array(
 		)
 	),
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
+) );
+
+// Text alignment.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'radio-image',
+	'settings'  => 'sub_menu_text_alignment',
+	'label'     => __( 'Text Alignment', 'page-builder-framework' ),
+	'section'   => 'wpbf_sub_menu_options',
+	'default'   => 'left',
+	'priority'  => 2,
+	'multiple'  => 1,
+	'transport' => 'postMessage',
+	'choices'   => array(
+		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
+		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
+		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
+	),
 ) );
 
 // Background color.
