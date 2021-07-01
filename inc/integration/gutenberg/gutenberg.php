@@ -180,7 +180,7 @@ function wpbf_register_blocks_category( $categories, $post ) {
 	);
 
 }
-add_filter( 'block_categories', 'wpbf_register_blocks_category', 10, 2 );
+add_filter( 'block_categories_all', 'wpbf_register_blocks_category', 10, 2 );
 
 /**
  * Register blocks.
