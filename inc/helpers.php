@@ -146,9 +146,9 @@ function wpbf_inner_content( $echo = true ) {
 
 		}
 
-		// On archives, we only add the wpbf_inner_content filter.
 	} else {
 
+		// On archives, we only add the wpbf_inner_content filter.
 		$inner_content = apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium">' );
 
 	}
