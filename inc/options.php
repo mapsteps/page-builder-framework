@@ -116,7 +116,6 @@ function wpbf_options_metabox_callback( $post ) {
 
 	<div class="wpbf-layout-custom-width-field-wrapper<?php echo esc_attr( 'custom-width' === $width_type ? '' : ' wpbf-is-hidden' ); ?>">
 		<input id="layout-custom-width-value" name="wpbf_options[custom_width_value]" value="<?php echo esc_attr( $custom_width_value ); ?>" />
-		<label for="layout-custom-width-value" class="description"><?php _e( 'E.g: 1200px or 75%', 'page-builder-framework' ); ?></label>
 	</div>
 
 	<h4><?php _e( 'Disable Elements', 'page-builder-framework' ); ?></h4>
