@@ -311,24 +311,6 @@ if ( $page_h6_toggle && $page_h6_font_family_value ) {
 
 /* General */
 
-global $post;
-
-// Width type.
-$post_options = get_post_meta( $post->ID, 'wpbf_options', true );
-$post_options = empty( $post_options ) ? array() : $post_options;
-
-$width_type = 'layout-global';
-
-$layout_custom_width = isset( $post_options['custom_width_value'] ) ? $post_options['custom_width_value'] : '';
-
-if ( in_array( 'full-width', $post_options, true ) ) {
-	$width_type = 'full-width';
-} elseif ( in_array( 'contained', $post_options, true ) ) {
-	$width_type = 'contained';
-} elseif ( in_array( 'custom-width', $post_options, true ) ) {
-	$width_type = 'custom-width';
-}
-
 // Page settings.
 $page_width                   = ( $val = get_theme_mod( 'page_max_width' ) ) === '1200px' ? false : $val;
 $page_boxed                   = get_theme_mod( 'page_boxed' );
@@ -435,20 +417,12 @@ if ( ! is_bool( $page_padding_top_mobile ) || ! is_bool( $page_padding_right_mob
 
 }
 
-if ( 'custom-width' === $width_type && ! empty( $layout_custom_width ) ) {
+if ( $page_width ) {
 
 	echo '.wpbf-container {';
-	echo sprintf( 'max-width: %s;', esc_attr( $layout_custom_width ) );
+	echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
 	echo '}';
 
-} else {
-	if ( $page_width ) {
-
-		echo '.wpbf-container {';
-		echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
-		echo '}';
-
-	}
 }
 
 if ( $page_boxed ) {
