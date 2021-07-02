@@ -11,10 +11,33 @@
 
 .heatbox-admin.has-header #wpcontent {
 	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 .heatbox-admin.has-header .wrap {
 	margin: 0;
+}
+
+/* Tab navigation */
+.heatbox-tab-nav {
+	padding: 20px 0;
+	margin: 10px 0 0 0;
+}
+
+.heatbox-tab-nav li {
+	display: inline-flex;
+	padding: 10px 30px 10px 0;
+	font-weight: 600;
+	font-size: 20px;
+}
+
+.heatbox-tab-nav li a {
+	color: #23282d;
+	text-decoration: none;
+}
+
+.heatbox-tab-nav li.active a {
+	color: #0073aa;
 }
 
 /* Divider */
@@ -52,6 +75,10 @@
 	border-bottom: 1px solid #ddd;
 }
 
+.heatbox-header.heatbox-has-tab-nav .logo-container {
+	margin-bottom: 0;
+}
+
 .heatbox-header .logo-container {
 	display: flex;
 	align-items: center;
@@ -60,6 +87,10 @@
 
 .heatbox-header .logo-container div {
 	width: 50%;
+}
+
+.heatbox-header.heatbox-has-tab-nav .logo-container img {
+	width: 180px;
 }
 
 .heatbox-header .logo-container img {

@@ -8,6 +8,26 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
+ * Admin body class.
+ *
+ * @param string $classes The class names.
+ */
+function wpbf_theme_settings_admin_body_class( $classes ) {
+
+	$screen = get_current_screen();
+
+	if ( $screen->id !== 'appearance_page_wpbf-premium' ) {
+		return $classes;
+	}
+
+	$classes .= ' heatbox-admin has-header';
+
+	return $classes;
+
+}
+add_action( 'admin_body_class', 'wpbf_theme_settings_admin_body_class' );
+
+/**
  * Add theme settings.
  */
 function wpbf_theme_settings_page() {

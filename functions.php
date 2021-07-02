@@ -201,7 +201,7 @@ function wpbf_enqueue_admin_scripts() {
 		wp_enqueue_style( 'heatbox', WPBF_THEME_URI . '/assets/css/heatbox.css', array(), WPBF_VERSION );
 		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array(), WPBF_VERSION );
 
-		wp_enqueue_script( 'wpbf-admin-page', WPBF_THEME_URI . '/js/min/admin-min.js', array( 'jquery' ), WPBF_VERSION, true );
+		wp_enqueue_script( 'wpbf-theme-settings', WPBF_THEME_URI . '/js/min/theme-settings-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
 	} elseif ( in_array( $current_screen->post_type, $post_types, true ) ) {
 
