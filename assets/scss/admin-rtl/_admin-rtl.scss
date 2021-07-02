@@ -1,4 +1,5 @@
 .rtl {
+	/* Theme settings */
 	.heatbox-main {
 		margin-right: 0;
 		margin-left: 2%;
@@ -28,5 +29,15 @@
 	.heatbox .label .indicator {
 		left: auto;
 		right: -30px;
+	}
+
+	/* Customizer */
+	.customize-control-kirki-slider .wrapper input[type=text] {
+		text-align: left;
+	}
+
+	.customize-control-kirki-slider .wrapper .slider-reset {
+		right: auto;
+		left: 0;
 	}
 }
