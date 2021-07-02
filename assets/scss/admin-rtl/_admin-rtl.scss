@@ -41,13 +41,21 @@
 		left: 0;
 	}
 
-	.customize-control-kirki-color .wp-color-result .color-alpha {
-		left: auto !important;
-		right: 0;
+	.customize-control-kirki-color {
+		.iris-border .iris-palette-container {
+			left: auto;
+			right: 10px;
+		}
+
+		.wp-color-result .color-alpha {
+			left: auto !important;
+			right: 0;
+		}
 	}
 
-	.iris-border .iris-palette-container {
-		left: auto;
-		right: 10px;
+	.wpbf-input-slider-control input[type=text] {
+		margin-left: 0;
+		margin-right: 15px;
+		text-align: left;
 	}
 }
