@@ -417,6 +417,62 @@ if ( ! is_bool( $page_padding_top_mobile ) || ! is_bool( $page_padding_right_mob
 
 }
 
+if ( ! is_bool( $page_padding_right_desktop ) || ! is_bool( $page_padding_left_desktop ) ) {
+
+	echo '.wpbf-container {';
+
+	if ( ! is_bool( $page_padding_right_desktop ) ) {
+		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_desktop ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_left_desktop ) ) {
+		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_desktop ) . 'px' );
+	}
+
+	echo '}';
+
+}
+
+if ( ! is_bool( $page_padding_right_tablet ) || ! is_bool( $page_padding_left_tablet ) ) {
+
+	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_desktop ) . ') {';
+
+	echo '.wpbf-container {';
+
+	if ( ! is_bool( $page_padding_right_tablet ) ) {
+		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_tablet ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_left_tablet ) ) {
+		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_tablet ) . 'px' );
+	}
+
+	echo '}';
+
+	echo '}';
+
+}
+
+if ( ! is_bool( $page_padding_right_mobile ) || ! is_bool( $page_padding_left_mobile ) ) {
+
+	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
+
+	echo '.wpbf-container {';
+
+	if ( ! is_bool( $page_padding_right_mobile ) ) {
+		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_mobile ) . 'px' );
+	}
+
+	if ( ! is_bool( $page_padding_left_mobile ) ) {
+		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_mobile ) . 'px' );
+	}
+
+	echo '}';
+
+	echo '}';
+
+}
+
 if ( $page_width ) {
 
 	echo '.wpbf-container {';
