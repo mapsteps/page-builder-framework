@@ -162,10 +162,8 @@ function wpbf_scripts() {
 	}
 
 	if ( is_rtl() ) {
-
 		// RTL.
 		wp_enqueue_style( 'wpbf-rtl', get_template_directory_uri() . '/css/min/rtl-min.css', '', WPBF_VERSION );
-
 	}
 
 }
@@ -175,6 +173,11 @@ add_action( 'wp_enqueue_scripts', 'wpbf_scripts', 10 );
  * Enqueue admin styles & scripts to targetted admin area.
  */
 function wpbf_enqueue_admin_scripts() {
+
+	if ( is_rtl() ) {
+		// RTL.
+		wp_enqueue_style( 'wpbf-rtl', get_template_directory_uri() . '/css/min/admin-rtl-min.css', '', WPBF_VERSION );
+	}
 
 	wp_enqueue_style( 'wpbf-activation-notice', WPBF_THEME_URI . '/assets/css/activation-notice.css', array(), WPBF_VERSION );
 	wp_enqueue_script( 'wpbf-activation-notice', WPBF_THEME_URI . '/js/min/activation-notice-min.js', array( 'jquery' ), WPBF_VERSION, true );
