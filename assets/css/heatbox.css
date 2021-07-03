@@ -411,3 +411,18 @@
 .heatbox-cta.primary .button:hover {
 	background: rgba(0, 45, 96, 0.6);
 }
+
+/* RTL */
+.rtl .heatbox-header .logo-container img {
+	float: left;
+}
+
+.rtl .heatbox-main {
+	margin-right: 0;
+	margin-left: 2%;
+}
+
+.rtl .heatbox .label .indicator {
+	left: auto;
+	right: -30px;
+}

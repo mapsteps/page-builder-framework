@@ -1,14 +1,5 @@
 .rtl {
 	/* Theme settings */
-	.heatbox-header .logo-container img {
-		float: left;
-	}
-
-	.heatbox-main {
-		margin-right: 0;
-		margin-left: 2%;
-	}
-
 	.wpbf-documentation-boxes .heatbox {
 		margin-right: 0;
 	}
@@ -28,11 +19,6 @@
 	.wpbf-customizer-list li:nth-child(odd) {
 		border-right-width: 0;
 		border-left: 1px solid #ddd;;
-	}
-
-	.heatbox .label .indicator {
-		left: auto;
-		right: -30px;
 	}
 
 	/* Customizer */
