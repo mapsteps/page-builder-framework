@@ -85,7 +85,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'banner'      => WPBF_THEME_URI .'/img/banner-wpml.png',
 					'link'        => 'https://wpml.org/',
 					'repo'        => false,
-					'constant'    => 'WPML_VERSION',
+					'constant'    => 'WPML_PLUGIN_BASENAME',
 				),
 			);
 
