@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					</span>
 				</div>
 
-				<div>
+				<div class="heatbox-logo-wide">
 					<img src="<?php echo esc_url( WPBF_THEME_URI ); ?>/img/page-builder-framework-logo.png">
 				</div>
 
