@@ -75,9 +75,7 @@ function wpbf_comments( $comment, $args, $depth ) {
 				<?php if ( $comment->comment_approved == '0' ) : ?>
 
 				<div class="wpbf-notice wpbf-notice-warning">
-
-					<p><?php _e( 'Your comment has yet to be approved.', 'page-builder-framework' ); ?></p>
-
+					<?php _e( 'Your comment has yet to be approved.', 'page-builder-framework' ); ?>
 				</div>
 
 				<?php endif; ?>
