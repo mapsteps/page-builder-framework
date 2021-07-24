@@ -23,6 +23,10 @@ function wpbf_theme_setup() {
 	// Textdomain.
 	load_theme_textdomain( 'page-builder-framework', WPBF_THEME_DIR . '/languages' );
 
+	// Remove theme support for widget sidebars.
+	// We attempted to add support but it's just not convenient at this point.
+	remove_theme_support( 'widgets-block-editor' );
+
 	// Custom logo.
 	add_theme_support(
 		'custom-logo',
