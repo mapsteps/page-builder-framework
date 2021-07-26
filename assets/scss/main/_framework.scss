@@ -49,9 +49,8 @@
 @font-face {
 	font-family: 'page-builder-framework';
 	src: url('fonts/page-builder-framework.woff2') format('woff2'),
-		 url('fonts/page-builder-framework.woff') format('woff'),
-		 url('fonts/page-builder-framework.ttf') format('truetype'),
-		 url('fonts/page-builder-framework.eot');
+		url('fonts/page-builder-framework.woff') format('woff'),
+		url('fonts/page-builder-framework.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -155,9 +154,6 @@
 .wpbff-info:before {
 	content: "\f11d";
 }
-.wpbff-info:before {
-  content: "\f11d";
-}
 .wpbff-rss:before {
   content: "\f11e";
 }
@@ -184,6 +180,27 @@
 }
 .wpbff-user:before {
   content: "\f126";
+}
+.wpbff-tiktok:before {
+  content: "\f127";
+}
+.wpbff-patreon:before {
+  content: "\f128";
+}
+.wpbff-dribble:before {
+  content: "\f129";
+}
+.wpbff-tumblr:before {
+  content: "\f12a";
+}
+.wpbff-user-o:before {
+  content: "\f12b";
+}
+.wpbff-phone:before {
+  content: "\f12c";
+}
+.wpbff-phone-o:before {
+  content: "\f12d";
 }
 
 /* Container */
