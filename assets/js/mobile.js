@@ -154,16 +154,50 @@ var WPBFMobile = (function ($) {
 
 	/**
 	 * Toggle mobile submenu.
+	 * 
+	 * @param {HTMLElement} toggleButton The submenu's toggle button.
 	 */
-	function toggleMobileSubmenu(menu) {
+	function toggleMobileSubmenu(toggleButton) {
 
-		if ($(menu).hasClass("active")) {
-			$('i', menu).removeClass('wpbff-arrow-up').addClass('wpbff-arrow-down');
-			$(menu).removeClass('active').attr('aria-expanded', 'false').siblings('.sub-menu').slideUp();
+		if (toggleButton.classList.contains("active")) {
+			closeMobileSubmenu(toggleButton);
 		} else {
-			$('i', menu).removeClass('wpbff-arrow-down').addClass('wpbff-arrow-up');
-			$(menu).addClass('active').attr('aria-expanded', 'true').siblings('.sub-menu').slideDown();
+			openMobileSubmenu(toggleButton);
 		}
+
+	}
+
+	/**
+	 * Open mobile submenu.
+	 *
+	 * @param {HTMLElement} toggleButton The submenu's toggle button.
+	 */
+	function openMobileSubmenu(toggleButton) {
+
+		$('i', toggleButton).removeClass('wpbff-arrow-down').addClass('wpbff-arrow-up');
+		toggleButton.classList.add('active')
+		toggleButton.setAttribute('aria-expanded', 'true');
+		$(toggleButton).siblings('.sub-menu').stop().slideDown();
+
+		var $sameLevelItems = $(toggleButton).closest('.menu-item-has-children').siblings('.menu-item-has-children');
+
+		$sameLevelItems.each(function (i, menuItem) {
+			closeMobileSubmenu(menuItem.querySelector('.wpbf-submenu-toggle'));
+		});
+
+	}
+
+	/**
+	 * Close mobile submenu.
+	 *
+	 * @param {HTMLElement} toggleButton The submenu's toggle button.
+	 */
+	function closeMobileSubmenu(toggleButton) {
+		
+		$('i', toggleButton).removeClass('wpbff-arrow-up').addClass('wpbff-arrow-down');
+		toggleButton.classList.remove('active')
+		toggleButton.setAttribute('aria-expanded', 'false');
+		$(toggleButton).siblings('.sub-menu').stop().slideUp();
 
 	}
 
