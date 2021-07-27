@@ -55,7 +55,9 @@ var WPBFMobile = (function ($) {
 				if (!hasSubmenu) {
 					toggleMobileMenu(menuType);
 				} else {
-					toggleSubmenuOnEmptyLink(this);
+					if (!$(this).closest('.wpbf-mobile-mega-menu').length) {
+						toggleSubmenuOnHashLinkClick(this);
+					}
 				}
 			}
 
@@ -79,6 +81,7 @@ var WPBFMobile = (function ($) {
 
 	/**
 	 * Toggle mobile menu.
+	 * This won't run if the menu type is 'premium'.
 	 *
 	 * @param {string} type Default menu or hamburger menu.
 	 */
@@ -155,14 +158,14 @@ var WPBFMobile = (function ($) {
 	/**
 	 * Toggle mobile submenu.
 	 * 
-	 * @param {HTMLElement} toggleButton The submenu's toggle button.
+	 * @param {HTMLElement} toggle The submenu's toggle button.
 	 */
-	function toggleMobileSubmenu(toggleButton) {
+	function toggleMobileSubmenu(toggle) {
 
-		if (toggleButton.classList.contains("active")) {
-			closeMobileSubmenu(toggleButton);
+		if (toggle.classList.contains("active")) {
+			closeMobileSubmenu(toggle);
 		} else {
-			openMobileSubmenu(toggleButton);
+			openMobileSubmenu(toggle);
 		}
 
 	}
@@ -170,16 +173,16 @@ var WPBFMobile = (function ($) {
 	/**
 	 * Open mobile submenu.
 	 *
-	 * @param {HTMLElement} toggleButton The submenu's toggle button.
+	 * @param {HTMLElement} toggle The submenu's toggle button.
 	 */
-	function openMobileSubmenu(toggleButton) {
+	function openMobileSubmenu(toggle) {
 
-		$('i', toggleButton).removeClass('wpbff-arrow-down').addClass('wpbff-arrow-up');
-		toggleButton.classList.add('active')
-		toggleButton.setAttribute('aria-expanded', 'true');
-		$(toggleButton).siblings('.sub-menu').stop().slideDown();
+		$('i', toggle).removeClass('wpbff-arrow-down').addClass('wpbff-arrow-up');
+		toggle.classList.add('active')
+		toggle.setAttribute('aria-expanded', 'true');
+		$(toggle).siblings('.sub-menu').stop().slideDown();
 
-		var $sameLevelItems = $(toggleButton).closest('.menu-item-has-children').siblings('.menu-item-has-children');
+		var $sameLevelItems = $(toggle).closest('.menu-item-has-children').siblings('.menu-item-has-children');
 
 		$sameLevelItems.each(function (i, menuItem) {
 			closeMobileSubmenu(menuItem.querySelector('.wpbf-submenu-toggle'));
@@ -190,32 +193,32 @@ var WPBFMobile = (function ($) {
 	/**
 	 * Close mobile submenu.
 	 *
-	 * @param {HTMLElement} toggleButton The submenu's toggle button.
+	 * @param {HTMLElement} toggle The submenu's toggle button.
 	 */
-	function closeMobileSubmenu(toggleButton) {
+	function closeMobileSubmenu(toggle) {
 		
-		$('i', toggleButton).removeClass('wpbff-arrow-up').addClass('wpbff-arrow-down');
-		toggleButton.classList.remove('active')
-		toggleButton.setAttribute('aria-expanded', 'false');
-		$(toggleButton).siblings('.sub-menu').stop().slideUp();
+		$('i', toggle).removeClass('wpbff-arrow-up').addClass('wpbff-arrow-down');
+		toggle.classList.remove('active')
+		toggle.setAttribute('aria-expanded', 'false');
+		$(toggle).siblings('.sub-menu').stop().slideUp();
 
 	}
 
 	/**
-	 * Toggle submenu on empty link.
+	 * Toggle submenu on hash link click.
 	 *
-	 * @param {HTMLElement} menu The menu.
+	 * @param {HTMLElement} link The anchor element of a menu item.
 	 */
-	function toggleSubmenuOnEmptyLink(menu) {
+	function toggleSubmenuOnHashLinkClick(link) {
+	
+		var toggle = $(link).siblings('.wpbf-submenu-toggle');
+		if (!toggle.length) return;
+		toggle = toggle[0];
 
-		var toggle = $(menu).siblings('.wpbf-submenu-toggle');
-
-		if (toggle.hasClass("active")) {
-			$('i', toggle).removeClass('wpbff-arrow-up').addClass('wpbff-arrow-down');
-			toggle.removeClass('active').attr('aria-expanded', 'false').siblings('.sub-menu').slideUp();
+		if (toggle.classList.contains("active")) {
+			closeMobileSubmenu(toggle);
 		} else {
-			$('i', toggle).removeClass('wpbff-arrow-down').addClass('wpbff-arrow-up');
-			toggle.addClass('active').attr('aria-expanded', 'true').siblings('.sub-menu').slideDown();
+			openMobileSubmenu(toggle);
 		}
 
 	}
