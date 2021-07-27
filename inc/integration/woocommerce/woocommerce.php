@@ -47,7 +47,7 @@ function wpbf_woo_theme_setup() {
 add_action( 'after_setup_theme', 'wpbf_woo_theme_setup' );
 
 // Remove default WooCommerce styles.
-add_filter( 'woocommerce_enqueue_styles', '__return_false' );
+add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 
 /**
  * Enqueue scripts & styles.
