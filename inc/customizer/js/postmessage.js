@@ -527,6 +527,19 @@
 
 	/* Mobile sub menu */
 
+	// Submenu auto collapse.
+	wp.customize('mobile_submenu_auto_collapse', function (value) {
+		value.bind(function (newval) {
+			if (!document.querySelector('#mobile-navigation')) return;
+			
+			if (newval) {
+				$('#mobile-navigation').closest('.wpbf-navigation').addClass('wpbf-mobile-submenu-auto-collapse');
+			} else {
+				$('#mobile-navigation').closest('.wpbf-navigation').removeClass('wpbf-mobile-submenu-auto-collapse');
+			}
+		});
+	});
+	
 	// Indent.
 	wp.customize('mobile_sub_menu_indent', function (value) {
 		var styleTag = setupStyleTag('mobile_sub_menu_indent');

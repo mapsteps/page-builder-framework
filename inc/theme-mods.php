@@ -312,3 +312,15 @@ function wpbf_mobile_logo( $logo_url ) {
 
 }
 add_filter( 'wpbf_logo_mobile', 'wpbf_mobile_logo' );
+
+/**
+ * Auto collapse mobile sub-menu navigation class.
+ *
+ * Add class to .wpbf-navigation if auto collapse sub-menu enabled.
+ */
+function wpbf_mobile_submenu_auto_collapse_class( $classes ) {
+
+	return ( get_theme_mod( 'mobile_submenu_auto_collapse' ) ? $classes . ' wpbf-mobile-submenu-auto-collapse' : $classes );
+
+}
+add_filter( 'wpbf_navigation_classes', 'wpbf_mobile_submenu_auto_collapse_class' );

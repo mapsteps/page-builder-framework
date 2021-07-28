@@ -182,6 +182,8 @@ var WPBFMobile = (function ($) {
 		toggle.setAttribute('aria-expanded', 'true');
 		$(toggle).siblings('.sub-menu').stop().slideDown();
 
+		if (! $(toggle).closest('.wpbf-navigation').hasClass('wpbf-mobile-submenu-auto-collapse')) return;
+
 		var $sameLevelItems = $(toggle).closest('.menu-item-has-children').siblings('.menu-item-has-children');
 
 		$sameLevelItems.each(function (i, menuItem) {

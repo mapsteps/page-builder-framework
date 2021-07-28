@@ -4211,6 +4211,16 @@ if ( ! wpbf_is_premium() ) {
 
 /* Fields – Mobile Sub Menu */
 
+// Auto collapse other sub-menu when a sub-menu is expanded.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'toggle',
+	'settings'  => 'mobile_submenu_auto_collapse',
+	'label'     => __( 'Auto collapse', 'page-builder-framework' ),
+	'section'   => 'wpbf_mobile_sub_menu_options',
+	'priority'  => 7,
+	'transport' => 'postMessage',
+) );
+
 // Indent.
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'slider',
