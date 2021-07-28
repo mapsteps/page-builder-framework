@@ -4087,10 +4087,10 @@ Kirki::add_field( 'wpbf', array(
 	'transport'         => 'postMessage',
 	'default'           => json_encode(
 		array(
-			'top'    => '10px',
-			'right'  => '20px',
-			'bottom' => '10px',
-			'left'   => '20px',
+			'top'    => 10,
+			'right'  => 20,
+			'bottom' => 10,
+			'left'   => 20,
 		)
 	),
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
