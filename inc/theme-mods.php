@@ -318,9 +318,9 @@ add_filter( 'wpbf_logo_mobile', 'wpbf_mobile_logo' );
  *
  * Add class to .wpbf-navigation if auto collapse sub-menu enabled.
  */
-function wpbf_mobile_submenu_auto_collapse_class( $classes ) {
+function wpbf_mobile_sub_menu_auto_collapse_class( $classes ) {
 
-	return ( get_theme_mod( 'mobile_submenu_auto_collapse' ) ? $classes . ' wpbf-mobile-submenu-auto-collapse' : $classes );
+	return ( get_theme_mod( 'mobile_sub_menu_auto_collapse' ) ? $classes . ' wpbf-mobile-sub-menu-auto-collapse' : $classes );
 
 }
-add_filter( 'wpbf_navigation_classes', 'wpbf_mobile_submenu_auto_collapse_class' );
+add_filter( 'wpbf_navigation_classes', 'wpbf_mobile_sub_menu_auto_collapse_class' );

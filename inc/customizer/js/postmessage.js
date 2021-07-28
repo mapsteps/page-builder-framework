@@ -528,14 +528,14 @@
 	/* Mobile sub menu */
 
 	// Submenu auto collapse.
-	wp.customize('mobile_submenu_auto_collapse', function (value) {
+	wp.customize('mobile_sub_menu_auto_collapse', function (value) {
 		value.bind(function (newval) {
 			if (!document.querySelector('#mobile-navigation')) return;
 			
 			if (newval) {
-				$('#mobile-navigation').closest('.wpbf-navigation').addClass('wpbf-mobile-submenu-auto-collapse');
+				$('#mobile-navigation').closest('.wpbf-navigation').addClass('wpbf-mobile-sub-menu-auto-collapse');
 			} else {
-				$('#mobile-navigation').closest('.wpbf-navigation').removeClass('wpbf-mobile-submenu-auto-collapse');
+				$('#mobile-navigation').closest('.wpbf-navigation').removeClass('wpbf-mobile-sub-menu-auto-collapse');
 			}
 		});
 	});
@@ -545,9 +545,11 @@
 		var styleTag = setupStyleTag('mobile_sub_menu_indent');
 
 		value.bind(function (newval) {
-			var paddingLeft = wp.customize('mobile_menu_padding_left').get();
-			var caluculation = parseInt(newval) + parseInt(paddingLeft);
-			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu a {padding-left: ' + caluculation + 'px;}';
+			var padding = wp.customize('mobile_menu_padding').get();
+			padding = JSON.parse(padding);
+
+			var calculation = parseInt(newval, 10) + parseInt(padding.left, 10);
+			styleTag.innerHTML = '.wpbf-mobile-menu .sub-menu a {padding-left: ' + calculation + 'px;}';
 		});
 	});
 
