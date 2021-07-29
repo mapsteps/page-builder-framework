@@ -25,12 +25,11 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 		return false;
 	}
 
-	$woo_active = ( function_exists( 'is_shop' ) && function_exists( 'is_product' ) ) ? true : false;
-	$location   = '';
+	$location = '';
 
 	if ( is_singular() || is_404() ) {
 		$location = 'single';
-	} elseif ( ( $woo_active && is_shop() ) || is_archive() || is_search() || is_tax() || is_home() ) {
+	} elseif ( is_shop() || is_archive() || is_search() || is_tax() || is_home() ) {
 		$location = 'archive';
 	}
 
