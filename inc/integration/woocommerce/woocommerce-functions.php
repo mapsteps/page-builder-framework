@@ -26,9 +26,11 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 	}
 
 	$woo_active = ( function_exists( 'is_shop' ) && function_exists( 'is_product' ) ) ? true : false;
-	$location   = 'single';
+	$location   = '';
 
-	if ( ( $woo_active && is_shop() ) || is_archive() || is_search() || is_tax() || is_home() ) {
+	if ( is_singular() || is_404() ) {
+		$location = 'single';
+	} elseif ( ( $woo_active && is_shop() ) || is_archive() || is_search() || is_tax() || is_home() ) {
 		$location = 'archive';
 	}
 
@@ -54,6 +56,7 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 			$theme_builder      = \ElementorPro\Modules\ThemeBuilder\Module::instance();
 			$location_documents = $theme_builder->get_conditions_manager()->get_documents_for_location( $location );
 
+			// Check if it's using Elementor's theme builder.
 			if ( ! empty( $location_documents ) ) {
 				return true;
 			}
