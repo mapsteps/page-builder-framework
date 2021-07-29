@@ -221,7 +221,12 @@ add_filter( 'wpbf_archive_class', 'wpbf_woo_archive_class' );
 /**
  * Construct starting product loop wrapper.
  */
-function wpbf_woo_product_loop_start() {
+function wpbf_woo_product_loop_start( $start ) {
+
+	// Bail out early if page/archive was built with Elementor.
+	if ( wpbf_is_built_with_elementor() ) {
+		return $start;
+	}
 
 	$products_per_row   = json_decode( get_theme_mod( 'woocommerce_loop_products_per_row' ), true );
 	$desktop_breakpoint = wpbf_get_theme_mod_value( $products_per_row, 'desktop', 4, true );
@@ -237,8 +242,15 @@ add_filter( 'woocommerce_product_loop_start', 'wpbf_woo_product_loop_start', 0 )
 /**
  * Construct ending product loop wrapper.
  */
-function wpbf_woo_product_loop_end() {
+function wpbf_woo_product_loop_end( $end ) {
+
+	// Bail out early if page/archive was built with Elementor.
+	if ( wpbf_is_built_with_elementor() ) {
+		return $end;
+	}
+
 	return '</ul>';
+
 }
 add_filter( 'woocommerce_product_loop_end', 'wpbf_woo_product_loop_end', 0 );
 

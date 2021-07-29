@@ -1140,3 +1140,15 @@ function wpbf_array_to_js_object( $array ) {
 	return wp_json_encode( $array );
 
 }
+
+function wpbf_is_built_with_elementor() {
+
+	global $post;
+
+	if ( class_exists( '\Elementor\Plugin' ) && \Elementor\Plugin::$instance->db->is_built_with_elementor($post->ID) ) {
+		return true;
+	}
+
+	return false;
+
+}
