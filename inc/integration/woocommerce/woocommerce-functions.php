@@ -16,10 +16,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/locations-manager.php
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/documents/theme-document.php
  *
- * @param null|WP_Post $post WP_Post instance or null. Default is null.
+ * @param int $post_id The post ID.
  * @return bool
  */
-function wpbf_woo_is_built_with_elementor( $post = null ) {
+function wpbf_woo_is_built_with_elementor( $post_id = 0 ) {
 
 	if ( ! class_exists( '\Elementor\Plugin' ) ) {
 		return false;
@@ -27,18 +27,19 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 
 	$location = '';
 
-	if ( is_product() || is_singular() ) {
+	if ( $post_id || is_product() || is_singular() ) {
 		$location = 'single';
 	} elseif ( is_shop() || is_product_category() || is_product_taxonomy() ) {
 		$location = 'archive';
 	}
 
 	if ( 'single' === $location ) {
-		if ( ! $post ) {
+		if ( ! $post_id ) {
 			global $post;
+			$post_id = $post->ID;
 		}
 
-		$built_with_elementor = \Elementor\Plugin::$instance->documents->get( $post->ID )->is_built_with_elementor();
+		$built_with_elementor = \Elementor\Plugin::$instance->documents->get( $post_id )->is_built_with_elementor();
 
 		if ( $built_with_elementor ) {
 			return true;
