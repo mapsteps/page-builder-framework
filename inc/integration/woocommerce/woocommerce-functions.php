@@ -283,7 +283,7 @@ function wpbf_woo_product_loop_start( $start ) {
 
 	// Only use this if you 100% know what you are doing.
 	// Allows us and 3rd parties to remove Page Builder Frameworks WooCommerce product loop wrappers.
-	if ( ! apply_filters( 'wpbf_woo_product_loop_start', true ) ) {
+	if ( ! apply_filters( 'wpbf_woo_product_loop_wrapper', true ) ) {
 		return $start;
 	}
 
@@ -310,7 +310,7 @@ function wpbf_woo_product_loop_end( $end ) {
 
 	// Only use this if you 100% know what you are doing.
 	// Allows us and 3rd parties to remove Page Builder Frameworks WooCommerce product loop wrappers.
-	if ( ! apply_filters( 'wpbf_woo_product_loop_end', true ) ) {
+	if ( ! apply_filters( 'wpbf_woo_product_loop_wrapper', true ) ) {
 		return $end;
 	}
 
