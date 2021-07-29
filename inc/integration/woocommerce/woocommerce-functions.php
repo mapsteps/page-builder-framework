@@ -9,46 +9,45 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Check whether current page is built with Elementor or not.
+ * Remove our wrapper on woocommerce products loop when Elementor is used.
+ *
+ * They add their own wrapper.
+ * So we don't want to add our own wrapper.
  *
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/module.php
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/conditions-manager.php
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/locations-manager.php
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/documents/theme-document.php
  *
- * @param int $post_id The post ID.
  * @return bool
  */
 function wpbf_woo_elementor_product_loop_wrapper() {
 
 	if ( ! class_exists( '\Elementor\Plugin' ) ) {
-		return false;
+		return true;
 	}
 
 	$location = '';
 
-	if ( $post_id || is_product() || is_singular() ) {
+	if ( is_product() || is_singular() ) {
 		$location = 'single';
 	} elseif ( is_shop() || is_product_category() || is_product_taxonomy() ) {
 		$location = 'archive';
 	}
 
 	if ( 'single' === $location ) {
-		if ( ! $post_id ) {
-			global $post;
-			$post_id = $post->ID;
-		}
+		global $post;
 
-		$built_with_elementor = \Elementor\Plugin::$instance->documents->get( $post_id )->is_built_with_elementor();
+		$built_with_elementor = \Elementor\Plugin::$instance->documents->get( $post->ID )->is_built_with_elementor();
 
 		if ( $built_with_elementor ) {
-			return true;
+			return false;
 		} elseif ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
 			$using_theme_builder = apply_filters( 'elementor/theme/need_override_location', 0, 'single' );
 
 			// Check if it's using Elementor's theme builder.
 			if ( $using_theme_builder ) {
-				return true;
+				return false;
 			}
 		}
 	} elseif ( 'archive' === $location ) {
@@ -58,12 +57,12 @@ function wpbf_woo_elementor_product_loop_wrapper() {
 
 			// Check if it's using Elementor's theme builder.
 			if ( ! empty( $location_documents ) ) {
-				return true;
+				return false;
 			}
 		}
 	}
 
-	return false;
+	return true;
 
 }
 add_filter( 'wpbf_woo_product_loop_wrapper', 'wpbf_woo_elementor_product_loop_wrapper' );
