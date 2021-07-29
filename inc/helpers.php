@@ -147,7 +147,6 @@ function wpbf_inner_content( $echo = true ) {
 			$inner_content = $fullwidth_global && in_array( get_post_type( get_the_ID() ), $fullwidth_global ) ? '' : $inner_content;
 
 		}
-
 	} else {
 
 		// On archives, we only add the wpbf_inner_content filter.
@@ -1141,12 +1140,56 @@ function wpbf_array_to_js_object( $array ) {
 
 }
 
-function wpbf_is_built_with_elementor() {
+/**
+ * Check whether current page is built with Elementor or not.
+ *
+ * @see wp-content/plugins/elementor-pro/modules/theme-builder/module.php
+ * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/conditions-manager.php
+ * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/locations-manager.php
+ * @see wp-content/plugins/elementor-pro/modules/theme-builder/documents/theme-document.php
+ *
+ * @param null|WP_Post $post WP_Post instance or null. Default is null.
+ * @return bool
+ */
+function wpbf_is_built_with_elementor( $post = null ) {
 
-	global $post;
+	if ( ! class_exists( '\Elementor\Plugin' ) ) {
+		return false;
+	}
 
-	if ( class_exists( '\Elementor\Plugin' ) && \Elementor\Plugin::$instance->db->is_built_with_elementor($post->ID) ) {
-		return true;
+	$woo_active = ( function_exists( 'is_shop' ) && function_exists( 'is_product' ) ) ? true : false;
+	$location   = 'single';
+
+	if ( ( $woo_active && is_shop() ) || is_archive() || is_search() || is_tax() || is_home() ) {
+		$location = 'archive';
+	}
+
+	if ( 'single' === $location ) {
+		if ( ! $post ) {
+			global $post;
+		}
+
+		$built_with_elementor = \Elementor\Plugin::$instance->documents->get( $post->ID )->is_built_with_elementor();
+
+		if ( $built_with_elementor ) {
+			return true;
+		} elseif ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			$using_theme_builder = apply_filters( 'elementor/theme/need_override_location', 0, 'single' );
+
+			// Check if it's using Elementor's theme builder.
+			if ( $using_theme_builder ) {
+				return true;
+			}
+		}
+	} elseif ( 'archive' === $location ) {
+		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+			$theme_builder      = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+			$location_documents = $theme_builder->get_conditions_manager()->get_documents_for_location( $location );
+
+			if ( ! empty( $location_documents ) ) {
+				return true;
+			}
+		}
 	}
 
 	return false;
