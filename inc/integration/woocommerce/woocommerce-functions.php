@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * @param int $post_id The post ID.
  * @return bool
  */
-function wpbf_woo_is_built_with_elementor( $post_id = 0 ) {
+function wpbf_woo_elementor_product_loop_wrapper() {
 
 	if ( ! class_exists( '\Elementor\Plugin' ) ) {
 		return false;
@@ -64,18 +64,6 @@ function wpbf_woo_is_built_with_elementor( $post_id = 0 ) {
 	}
 
 	return false;
-
-}
-
-/**
- * Remove our wrapper on woocommerce products loop when Elementor is used.
- *
- * They add their own wrapper.
- * So we don't want to add our own wrapper.
- */
-function wpbf_woo_elementor_product_loop_wrapper() {
-
-	return ( wpbf_woo_is_built_with_elementor() ? false : true );
 
 }
 add_filter( 'wpbf_woo_product_loop_wrapper', 'wpbf_woo_elementor_product_loop_wrapper' );
