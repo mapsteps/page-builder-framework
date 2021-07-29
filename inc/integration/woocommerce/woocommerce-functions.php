@@ -27,9 +27,9 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 
 	$location = '';
 
-	if ( is_singular() || is_404() ) {
+	if ( is_product() ) {
 		$location = 'single';
-	} elseif ( is_shop() || is_archive() || is_search() || is_tax() || is_home() ) {
+	} elseif ( is_shop() || is_product_category() || is_product_taxonomy() ) {
 		$location = 'archive';
 	}
 
