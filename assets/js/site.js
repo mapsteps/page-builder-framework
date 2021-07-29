@@ -1,45 +1,87 @@
-var WPBFSite = (function ($) {
+var WpbfTheme = {};
+
+/**
+ * This module is intended to handle the site wide JS functionality.
+ * Except for the desktop menu and mobile menu.
+ * 
+ * Along with the desktop-menu.js and mobile-menu.js, this file will be combined to site-min.js file.
+ * 
+ * @param {Object} $ jQuery object.
+ * @return {Object}
+ */
+WpbfTheme.site = (function ($) {
+	/**
+	 * Whether we're inside customizer or not.
+	 */
 	var isInsideCustomizer = window.wp && wp.customize ? true : false;
+
+	/**
+	 * Pre-defined breakpoints.
+	 */
 	var breakpoints = {
 		desktop: 1024,
 		tablet: 768,
 		mobile: 480
 	};
-	var activeBreakpoint = 'desktop';
-	var duration = $(".wpbf-navigation").data("sub-menu-animation-duration");
 
 	/**
-	 * Init main functions.
+	 * The current active breakpoint.
+	 */
+	var activeBreakpoint = 'desktop';
+
+	// Run the module.
+	init();
+
+	/**
+	 * Initialize the module, call the main functions.
+	 *
+	 * This function is the only function that should be called on top level scope.
+	 * Other functions are called / hooked from this function.
 	 */
 	function init() {
+
 		setupBreakpoints();
 		setupBodyClasses();
-		buildCenteredMenu();
+		setupScrollToTop();
+		wpcf7support();
+		setupBoxedLayoutSupport();
 
-		if (isInsideCustomizer) {
-			wp.customize.bind('preview-ready', function () {
-				listenPartialRefresh();
-			});
-		}
-
+		// On window resize, re-run the body class setup - so that it has the updated breakpoint class name.
 		window.addEventListener('resize', function (e) {
 			setupBodyClasses();
 		});
+
+		/**
+		 * Executing various triggers on window load.
+		 */
+		window.addEventListener('load', function () {
+			$('.opacity').delay(200).animate({ opacity: '1' }, 200);
+			$('.display-none').show();
+			$(window).trigger('resize');
+			$(window).trigger('scroll');
+		});
+
 	}
 
 	/**
 	 * Setup breakpoints for desktop, tablet, and mobile.
 	 */
 	function setupBreakpoints() {
+
 		setupBreakpoint('desktop');
 		setupBreakpoint('tablet');
 		setupBreakpoint('mobile');
+
 	}
 
 	/**
 	 * Setup body classes based on breakpoint.
+	 *
+	 * This function will add "wpbf-is-{device}" class to the body tag.
+	 * It will also set the the top level `activeBreakpoint` variable.
 	 */
 	function setupBodyClasses() {
+
 		var windowWidth = $(window).width();
 		var bodyClass = '';
 
@@ -61,259 +103,93 @@ var WPBFSite = (function ($) {
 		document.body.classList.remove('wpbf-is-mobile');
 
 		document.body.classList.add(bodyClass);
+
 	}
 
 	/**
-	 * Setup breakpoint.
-	 * Retrieve breakpoint based on body class.
+	 * Setup breakpoint by device type.
+	 *
+	 * Retrieve breakpoint based on body class,
+	 * then set it as the value of top level `breakpoints` variable.
 	 * 
-	 * @param {string} device The device class.
+	 * @param {string} device The device type. Accepts 'desktop', 'tablet', or 'mobile'.
 	 */
 	function setupBreakpoint(device) {
-		var matchRule = "wpbf-" + device + "-breakpoint-[\\w-]*\\b";
-		var breakpointClass = $('body').attr("class").match(matchRule);
 
-		if (breakpointClass != null) {
+		var matchRule = "wpbf-" + device + "-breakpoint-[\\w-]*\\b";
+		var breakpointClass = document.body.className.match(matchRule);
+
+		if (null != breakpointClass) {
 			breakpoints[device] = breakpointClass.toString().match(/\d+/);
 			breakpoints[device] = Array.isArray(breakpoints[device]) ? breakpoints[device][0] : breakpoints[device];
 		}
+
 	}
 
-	// Execute init.
-	init();
-
 	/**
-	 * ScrollTop.
+	 * Setup scroll to top functionality.
 	 */
-	if ($('.scrolltop').length) {
+	function setupScrollToTop() {
 
-		var scrollTopVal = $('.scrolltop').attr('data-scrolltop-value');
+		var scrollTop = document.querySelector('.scrolltop');
+		if (!scrollTop) return;
 
-		$(window).scroll(function () {
-			if ($(this).scrollTop() > scrollTopVal) {
-				$('.scrolltop').fadeIn();
+		var scrollTopValue = scrollTop.dataset.scrolltopValue;
+
+		// Show or hide scroll-to-top button on window scroll event.
+		window.addEventListener('scroll', function (e) {
+			if ($(this).scrollTop() > scrollTopValue) {
+				$('.scrolltop').stop().fadeIn();
 			} else {
-				$('.scrolltop').fadeOut();
+				$('.scrolltop').stop().fadeOut();
 			}
 		});
 
+		// Scroll to top functionality.
 		$(document).on('click', '.scrolltop', function () {
-			$('body').attr('tabindex', '-1').focus();
-			$(this).blur();
+			document.body.tabIndex = -1;
+			document.body.focus();
+			this.blur();
 			$('body, html').animate({ scrollTop: 0 }, 500);
 		});
+
 	}
 
 	/**
-	 * Search menu item.
+	 * Support for Contact Form 7.
 	 */
-	$(document).on('click', '.wpbf-menu-item-search', function (e) {
+	function wpcf7support() {
 
-		e.stopPropagation();
-
-		$('.wpbf-navigation .wpbf-menu > li').slice(-3).addClass('calculate-width');
-		var itemWidth = 0;
-		$('.calculate-width').each(function () {
-			itemWidth += $(this).outerWidth();
+		$('.wpcf7-form-control-wrap').on('mouseenter', function () {
+			$('.wpcf7-not-valid-tip', this).fadeOut();
 		});
-		if (itemWidth < 200) {
-			var itemWidth = 250;
-		}
-
-		if (!this.classList.contains('active')) {
-			$(this).addClass('active').attr('aria-expanded', 'true');
-			$('.wpbf-menu-search', this).stop().css({ display: 'block' }).animate({ width: itemWidth, opacity: '1' }, 200);
-			$('input[type=search]', this).val('').focus();
-		}
-
-	});
-
-	/**
-	* Function to close search.
-	*/
-	function searchClose() {
-
-		if ($('.wpbf-menu-item-search').hasClass('active')) {
-
-			$('.wpbf-menu-search').stop().animate({ opacity: '0', width: '0px' }, 250, function () {
-				$(this).css({ display: 'none' });
-			});
-
-			setTimeout(function () {
-				$('.wpbf-menu-item-search').removeClass('active').attr('aria-expanded', 'false');
-			}, 400);
-		}
 
 	}
 
-	// Close search on window click.
-	window.addEventListener('click', function (e) {
-		searchClose();
-	});
+	/**
+	 * Setup support for boxed layout mode.
+	 */
+	function setupBoxedLayoutSupport() {
 
-	// Close search on escape or tab.
-	document.addEventListener('keyup', function (e) {
-		if (e.key === 'Escape' || e.key === 'Esc') {
-			searchClose();
-		} else if (e.key === 'Tab') {
-			if (!e.target.classList.contains('wpbff-search')) {
-				searchClose();
+		var $page = $('.wpbf-page');
+		var pageMarginTop = $page.css('margin-top');
+
+		window.addEventListener('resize', function () {
+			var pageWidth = $page.width();
+
+			// If page width is >= window width, then remove margin top & margin bottom.
+			if (pageWidth >= $(window).width()) {
+				$page.css({ 'margin-top': '0', 'margin-bottom': '0' })
+			} else {
+				// Otherwise, add the margin top & margin bottom.
+				$page.css({ 'margin-top': pageMarginTop, 'margin-bottom': pageMarginTop })
 			}
-		}
-	});
-
-	/**
-	 * Contact Form 7 tips.
-	 */
-	$('.wpcf7-form-control-wrap').on('mouseenter', function () {
-		$('.wpcf7-not-valid-tip', this).fadeOut();
-	});
-
-	/**
-	 * Remove boxed layout on resize.
-	 */
-	var mtpagemargin = $('.wpbf-page').css('margin-top');
-
-	$(window).on( 'resize', function () {
-		var mtpagewidth = $('.wpbf-page').width();
-
-		if (mtpagewidth >= $(window).width()) {
-			$('.wpbf-page').css({ 'margin-top': '0', 'margin-bottom': '0' })
-		} else {
-			$('.wpbf-page').css({ 'margin-top': mtpagemargin, 'margin-bottom': mtpagemargin })
-		}
-	});
-
-	/**
-	 * Listen to WordPress selective refresh inside customizer.
-	 */
-	function listenPartialRefresh() {
-		wp.customize.selectiveRefresh.bind('partial-content-rendered', function (placement) {
-			/**
-			 * A lot of partial refresh registered to work on header area.
-			 * Better to not checking the "placement.partial.id".
-			 */
-			duration = $(".wpbf-navigation").data("sub-menu-animation-duration");
-			buildCenteredMenu();
 		});
-	}
-
-	/**
-	 * Centered menu.
-	 */
-	function buildCenteredMenu() {
-		if (!document.querySelector('.wpbf-menu-centered')) return;
-
-		var menu_items = $('.wpbf-navigation .wpbf-menu-centered .wpbf-menu > li > a').length;
-		var divided = menu_items / 2;
-		var divided = Math.floor(divided);
-		var divided = divided - 1;
-
-		$('.wpbf-menu-centered .logo-container').insertAfter('.wpbf-navigation .wpbf-menu-centered .wpbf-menu >li:eq(' + divided + ')').css({ 'display': 'block' });
-	}
-
-	/**
-	 * Sub menu animation – second level.
-	 */
-	$(document)
-		.on('mouseenter', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children', function () {
-			$('.sub-menu', this).first().stop().css({ display: 'block' }).animate({ opacity: '1' }, duration);
-		})
-		.on('mouseleave', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children', function () {
-			$('.sub-menu', this).first().stop().animate({ opacity: '0' }, duration, function () {
-				$(this).css({ display: 'none' });
-			});
-		});
-
-	/**
-	 * Sub menu animation - fade.
-	 */
-	$(document)
-		.on('mouseenter', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
-			$('.sub-menu', this).first().stop().fadeIn(duration);
-		})
-		.on('mouseleave', '.wpbf-sub-menu-animation-fade > .menu-item-has-children', function () {
-			$('.sub-menu', this).first().stop().fadeOut(duration);
-		});
-
-	/**
-	 * Accessibility.
-	 */
-
-	// Add aria-haspopup="true" to all sub-menu li's
-	$('.menu-item-has-children').each(function () {
-		$(this).attr('aria-haspopup', 'true');
-	});
-
-	// Add using-mouse class on mousedown.
-	$('body').mousedown(function () {
-		$(this).addClass('using-mouse');
-		$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
-	});
-
-	// Remove using-mouse class on keydown.
-	$('body').keydown(function () {
-		$(this).removeClass('using-mouse');
-	});
-
-	/**
-	 * General logic for tab/hover navigation on desktop navigations that contain sub-menu's.
-	 */
-	$(document)
-		// Apply only to sub-menu's not triggered by tab navigation.
-		.on('mouseenter', '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)', function () {
-
-			// Remove visual focus if tab-navigation was used earlier.
-			document.body.classList.add('using-mouse');
-
-			// Remove .wpbf-sub-menu-focus class if tab-navigation was used earlier.
-			$('.menu-item-has-children').removeClass('wpbf-sub-menu-focus');
-
-			// Focus on the current menu item. This will help if tab-navigation was used earlier.
-			$(this).find('> a').focus();
-		})
-
-		// On mouseleave of tab navigation triggered sub-menu, let's remove the wpbf-sub-menu-focus class.
-		// Fixes issue where sub-menu stayed open after switching from tab to mouse navigation.
-		.on('mouseleave', '.wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus', function () {
-
-			$(this).removeClass('wpbf-sub-menu-focus');
-
-		});
-
-	/**
-	 * onFocus function for tab navigation.
-	 */
-	function onFocus() {
-
-		// Stop here if body has class using-mouse.
-		if ($('body').hasClass('using-mouse')) return;
-
-		// Remove wpbf-sub-menu-focus everywhere.
-		$('.wpbf-sub-menu > .menu-item-has-children').removeClass('wpbf-sub-menu-focus');
-
-		// Hide other sub-menu's that could be open due to mouse hover interference.
-		$('.wpbf-sub-menu > .menu-item-has-children > .sub-menu').stop().hide();
-
-		// Add wpbf-sub-menu-focus to the current parent menu item that has children.
-		$(this).parents('.menu-item-has-children').addClass('wpbf-sub-menu-focus');
 
 	}
-
-	// Tab navigation.
-	$(document).on('focus', '.wpbf-sub-menu a', onFocus);
-
-	/**
-	 * Executing various triggers on load.
-	 */
-	$(window).on( 'load', function () {
-		$('.opacity').delay(200).animate({ opacity: '1' }, 200);
-		$('.display-none').show();
-		$(window).trigger('resize');
-		$(window).trigger('scroll');
-	});
 
 	return {
+		isInsideCustomizer: isInsideCustomizer,
 		breakpoints: breakpoints,
 		activeBreakpoint: activeBreakpoint
 	};

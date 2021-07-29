@@ -38,7 +38,8 @@ function compilePartialSCSS() {
 function buildSiteJS() {
 	return src([
 		'assets/js/site.js',
-		'assets/js/mobile.js'
+		'assets/js/desktop-menu.js',
+		'assets/js/mobile-menu.js'
 	])
 		.pipe(plumber())
 		.pipe(concat('site-min.js'))
@@ -54,7 +55,8 @@ function buildPartialJS() {
 	return src([
 		'assets/js/*.js',
 		'!assets/js/site.js',
-		'!assets/js/mobile.js'
+		'!assets/js/desktop-menu.js',
+		'!assets/js/mobile-menu.js'
 	])
 		.pipe(plumber())
 		.pipe(babel({
@@ -96,8 +98,8 @@ function reloadPage(cb) {
 }
 
 function watchChanges(cb) {
-	watch(['assets/js/site.js', 'assets/js/mobile.js'], parallel(buildSiteJS));
-	watch(['assets/js/*.js', '!assets/js/site.js', '!assets/js/mobile.js'], parallel(buildPartialJS));
+	watch(['assets/js/site.js', 'assets/js/desktop-menu.js', 'assets/js/mobile-menu.js'], parallel(buildSiteJS));
+	watch(['assets/js/*.js', '!assets/js/site.js', '!assets/js/desktop-menu.js', '!assets/js/mobile-menu.js'], parallel(buildPartialJS));
 
 	watch(['assets/scss/style.scss', 'assets/scss/**/*.scss'], parallel(compileStyleSCSS));
 	watch([
