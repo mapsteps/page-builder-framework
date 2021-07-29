@@ -27,7 +27,7 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 
 	$location = '';
 
-	if ( is_product() ) {
+	if ( is_product() || is_singular() ) {
 		$location = 'single';
 	} elseif ( is_shop() || is_product_category() || is_product_taxonomy() ) {
 		$location = 'archive';
@@ -42,7 +42,7 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 
 		if ( $built_with_elementor ) {
 			return true;
-		} elseif ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+		} elseif ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
 			$using_theme_builder = apply_filters( 'elementor/theme/need_override_location', 0, 'single' );
 
 			// Check if it's using Elementor's theme builder.
@@ -51,7 +51,7 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 			}
 		}
 	} elseif ( 'archive' === $location ) {
-		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
+		if ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
 			$theme_builder      = \ElementorPro\Modules\ThemeBuilder\Module::instance();
 			$location_documents = $theme_builder->get_conditions_manager()->get_documents_for_location( $location );
 
@@ -281,6 +281,12 @@ add_filter( 'wpbf_archive_class', 'wpbf_woo_archive_class' );
  */
 function wpbf_woo_product_loop_start( $start ) {
 
+	// Only use this if you 100% know what you are doing.
+	// Allows us and 3rd parties to remove Page Builder Frameworks WooCommerce product loop wrappers.
+	if ( ! apply_filters( 'wpbf_woo_product_loop_start', true ) ) {
+		return $start;
+	}
+
 	// Bail out early if page/archive was built with Elementor.
 	if ( wpbf_woo_is_built_with_elementor() ) {
 		return $start;
@@ -301,6 +307,12 @@ add_filter( 'woocommerce_product_loop_start', 'wpbf_woo_product_loop_start', 0 )
  * Construct ending product loop wrapper.
  */
 function wpbf_woo_product_loop_end( $end ) {
+
+	// Only use this if you 100% know what you are doing.
+	// Allows us and 3rd parties to remove Page Builder Frameworks WooCommerce product loop wrappers.
+	if ( ! apply_filters( 'wpbf_woo_product_loop_end', true ) ) {
+		return $end;
+	}
 
 	// Bail out early if page/archive was built with Elementor.
 	if ( wpbf_woo_is_built_with_elementor() ) {
