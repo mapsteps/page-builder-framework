@@ -67,6 +67,19 @@ function wpbf_woo_is_built_with_elementor( $post = null ) {
 }
 
 /**
+ * Remove our wrapper on woocommerce products loop when Elementor is used.
+ *
+ * They add their own wrapper.
+ * So we don't want to add our own wrapper.
+ */
+function wpbf_woo_elementor_product_loop_wrapper() {
+
+	return ( wpbf_woo_is_built_with_elementor() ? false : true );
+
+}
+add_filter( 'wpbf_woo_product_loop_wrapper', 'wpbf_woo_elementor_product_loop_wrapper' );
+
+/**
  * Deregister defaults.
  */
 function wpbf_woo_deregister_defaults() {
@@ -278,17 +291,16 @@ add_filter( 'wpbf_archive_class', 'wpbf_woo_archive_class' );
 
 /**
  * Construct starting product loop wrapper.
+ *
+ * @param string $start The loop start output.
  */
 function wpbf_woo_product_loop_start( $start ) {
 
-	// Only use this if you 100% know what you are doing.
-	// Allows us and 3rd parties to remove Page Builder Frameworks WooCommerce product loop wrappers.
+	/**
+	 * Only use this if you 100% know what you are doing.
+	 * Allows us and 3rd parties to remove Page Builder Frameworks WooCommerce product loop wrappers.
+	 */
 	if ( ! apply_filters( 'wpbf_woo_product_loop_wrapper', true ) ) {
-		return $start;
-	}
-
-	// Bail out early if page/archive was built with Elementor.
-	if ( wpbf_woo_is_built_with_elementor() ) {
 		return $start;
 	}
 
@@ -305,17 +317,16 @@ add_filter( 'woocommerce_product_loop_start', 'wpbf_woo_product_loop_start', 0 )
 
 /**
  * Construct ending product loop wrapper.
+ *
+ * @param string $end The loop end output.
  */
 function wpbf_woo_product_loop_end( $end ) {
 
-	// Only use this if you 100% know what you are doing.
-	// Allows us and 3rd parties to remove Page Builder Frameworks WooCommerce product loop wrappers.
+	/**
+	 * Only use this if you 100% know what you are doing.
+	 * Allows us and 3rd parties to remove Page Builder Frameworks WooCommerce product loop wrappers.
+	 */
 	if ( ! apply_filters( 'wpbf_woo_product_loop_wrapper', true ) ) {
-		return $end;
-	}
-
-	// Bail out early if page/archive was built with Elementor.
-	if ( wpbf_woo_is_built_with_elementor() ) {
 		return $end;
 	}
 
