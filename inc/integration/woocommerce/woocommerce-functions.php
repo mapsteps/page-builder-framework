@@ -9,10 +9,10 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Remove our wrapper on woocommerce products loop when Elementor is used.
+ * Remove our wrapper from woocommerce products loop when Elementor is used.
  *
- * They add their own wrapper.
- * So we don't want to add our own wrapper.
+ * Elementor adds their own rappers & handles responsiveness themselves.
+ * Let's not interfere with what they do.
  *
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/module.php
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/conditions-manager.php
@@ -29,6 +29,8 @@ function wpbf_woo_elementor_product_loop_wrapper() {
 
 	$location = '';
 
+	// is_singular() is included here as it is possible
+	// to also render a product loop on posts/pages/cpt's.
 	if ( is_product() || is_singular() ) {
 		$location = 'single';
 	} elseif ( is_shop() || is_product_category() || is_product_taxonomy() ) {
