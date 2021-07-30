@@ -10,13 +10,17 @@ WpbfTheme.desktopMenu = (function ($) {
 
 	/**
 	 * Whether we're inside customizer or not.
+	 * 
+	 * @var bool
 	 */
 	var isInsideCustomizer = WpbfTheme.isInsideCustomizer;
 
 	/**
 	 * The sub-menu animation duration.
+	 *
+	 * @var int
 	 */
-	var duration = $(".wpbf-navigation").data("sub-menu-animation-duration");
+	var duration = parseInt($(".wpbf-navigation").data("sub-menu-animation-duration"), 10);
 
 	// Run the module.
 	init();
@@ -119,7 +123,7 @@ WpbfTheme.desktopMenu = (function ($) {
 			 * A lot of partial refresh registered to work on header area.
 			 * Better to not checking the "placement.partial.id".
 			 */
-			duration = $(".wpbf-navigation").data("sub-menu-animation-duration");
+			duration = parseInt($(".wpbf-navigation").data("sub-menu-animation-duration"), 10);
 			setupCenteredMenu();
 		});
 

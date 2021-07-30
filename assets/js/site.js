@@ -10,13 +10,18 @@ var WpbfTheme = {};
  * @return {Object}
  */
 WpbfTheme.site = (function ($) {
+
 	/**
 	 * Whether we're inside customizer or not.
+	 *
+	 * @var bool
 	 */
 	var isInsideCustomizer = window.wp && wp.customize ? true : false;
 
 	/**
 	 * Pre-defined breakpoints.
+	 *
+	 * @var Object
 	 */
 	var breakpoints = {
 		desktop: 1024,
@@ -26,6 +31,8 @@ WpbfTheme.site = (function ($) {
 
 	/**
 	 * The current active breakpoint.
+	 *
+	 * @var string
 	 */
 	var activeBreakpoint = 'desktop';
 

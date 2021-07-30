@@ -10,12 +10,16 @@ WpbfTheme.mobileMenu = (function ($) {
 
 	/**
 	 * Defined breakpoints.
+	 * 
+	 * @var Object
 	 */
 	var breakpoints = WpbfTheme.site.breakpoints;
 
 	/**
 	 * The menu type.
 	 * The value could be 'hamburger', 'default', or 'premium'.
+	 * 
+	 * @var string
 	 */
 	var menuType;
 
@@ -36,11 +40,7 @@ WpbfTheme.mobileMenu = (function ($) {
 		});
 
 		setupMenuType();
-
-		/**
-		 * Mobile menu & submenu setup are done in separate functions.
-		 * It will be too much if we just code them in 1 function.
-		 */
+		setupHashLinkBehavior();
 		setupMobileMenu();
 		setupMobileSubmenu();
 
@@ -73,6 +73,60 @@ WpbfTheme.mobileMenu = (function ($) {
 	}
 
 	/**
+	 * Setup behavior when clicking links that contain a hash.
+	 */
+	function setupHashLinkBehavior() {
+
+		/**
+		 * On mobile menu item hash link click,
+		 * it will either close the mobile menu, or open the submenu if exists.
+		 */
+		$(document).on('click', '.wpbf-mobile-menu a', function () {
+			// Stop if menu type is 'premium'.
+			if ('premium' === menuType) return;
+
+			// Stop if href doesn't contain hash.
+			if (!this.href.match("#") && !this.href.match("/#")) return;
+
+			var hasSubmenu = this.parentNode.classList.contains('menu-item-has-children');
+
+			// If the link doesn't have sub-menu, then simply close the mobile menu.
+			if (!hasSubmenu) {
+				closeMobileMenu(menuType);
+			} else {
+				if ($(this).closest('.wpbf-mobile-mega-menu').length) {
+					// But the link has sub-menu, and its top level parent menu item is a mega menu, then close the mobile menu.
+					closeMobileMenu(menuType);
+				} else {
+					// And if its top level parent menu item is not a mega menu, then toggle it's sub-menu.
+					toggleMobileSubmenuOnHashLinkClick(this);
+				}
+			}
+
+		});
+
+	}
+
+	/**
+	 * Toggle submenu on hash link click.
+	 *
+	 * @param {HTMLElement} link The anchor element of the menu item.
+	 */
+	function toggleMobileSubmenuOnHashLinkClick(link) {
+
+		var toggle = $(link).siblings('.wpbf-submenu-toggle');
+		if (!toggle.length) return;
+		toggle = toggle[0];
+
+		if (toggle.classList.contains("active")) {
+			closeMobileSubmenu(toggle);
+		} else {
+			openMobileSubmenu(toggle);
+		}
+
+	}
+
+	/**
 	 * Setup mobile menu for both 'default' and 'hamburger' menu.
 	 */
 	function setupMobileMenu() {
@@ -84,31 +138,6 @@ WpbfTheme.mobileMenu = (function ($) {
 		$(document).on('click', '.wpbf-mobile-menu-toggle', function () {
 			setupMenuType();
 			toggleMobileMenu(menuType);
-		});
-
-		/**
-		 * On mobile menu item hash link click,
-		 * it will either close the mobile menu, or open the submenu if exists.
-		 */
-		$(document).on('click', '.wpbf-mobile-menu a', function () {
-			// Stop if href doesn't contain hash.
-			if (!this.href.match("#") && !this.href.match("/#")) return;
-
-			var hasSubmenu = this.parentNode.classList.contains('menu-item-has-children');
-
-			// If the link doesn't have sub-menu, then simply close the mobile menu.
-			if (!hasSubmenu) {
-				closeMobileMenu(menuType);
-			} else {
-				/**
-				 * But if the link has sub-menu, and it doesn't have top level parent menu item as a mega menu,
-				 * then toggle it's sub-menu.
-				 */
-				if (!$(this).closest('.wpbf-mobile-mega-menu').length) {
-					toggleMobileSubmenuOnHashLinkClick(this);
-				}
-			}
-
 		});
 
 		// On window resize, if the window width is wider than desktop breakpoint, then hide the mobile menu.
@@ -131,7 +160,7 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * Toggle the mobile menu to open or close.
 	 * This won't run if the menu type is 'premium'.
 	 *
-	 * @param {string} menuType Default menu or hamburger menu.
+	 * @param {string} menuType The menu type. Accepts 'default' or 'hamburger'.
 	 */
 	function toggleMobileMenu(menuType) {
 
@@ -218,7 +247,6 @@ WpbfTheme.mobileMenu = (function ($) {
 
 	/**
 	 * Setup mobile sub-menu toggle.
-	 * The sub-menu toggle here is the arrow button to expand/collapse the sub-menu.
 	 *
 	 * @param {string} menuType The menu type. Accepts 'hamburger' or 'default'.
 	 */
@@ -230,25 +258,6 @@ WpbfTheme.mobileMenu = (function ($) {
 			e.preventDefault();
 			toggleMobileSubmenu(this);
 		});
-
-	}
-
-	/**
-	 * Toggle submenu on hash link click.
-	 *
-	 * @param {HTMLElement} link The anchor element of the menu item.
-	 */
-	function toggleMobileSubmenuOnHashLinkClick(link) {
-
-		var toggle = $(link).siblings('.wpbf-submenu-toggle');
-		if (!toggle.length) return;
-		toggle = toggle[0];
-
-		if (toggle.classList.contains("active")) {
-			closeMobileSubmenu(toggle);
-		} else {
-			openMobileSubmenu(toggle);
-		}
 
 	}
 
