@@ -4213,12 +4213,13 @@ if ( ! wpbf_is_premium() ) {
 
 // Auto collapse other sub-menu when a sub-menu is expanded.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'toggle',
-	'settings'  => 'mobile_sub_menu_auto_collapse',
-	'label'     => __( 'Auto collapse', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 7,
-	'transport' => 'postMessage',
+	'type'        => 'toggle',
+	'settings'    => 'mobile_sub_menu_auto_collapse',
+	'label'       => __( 'Auto Collapse', 'page-builder-framework' ),
+	'description' => __( 'Auto collapse open sub-menu if other sub-menu is being opened.', 'page-builder-framework' ),
+	'section'     => 'wpbf_mobile_sub_menu_options',
+	'priority'    => 7,
+	'transport'   => 'postMessage',
 ) );
 
 // Indent.
