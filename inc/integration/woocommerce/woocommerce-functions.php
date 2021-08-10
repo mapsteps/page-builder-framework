@@ -45,21 +45,18 @@ function wpbf_woo_elementor_product_loop_wrapper() {
 		if ( $built_with_elementor ) {
 			return false;
 		} elseif ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
-			$using_theme_builder = apply_filters( 'elementor/theme/need_override_location', 0, 'single' );
+			$classes = get_body_class();
 
-			// Check if it's using Elementor's theme builder.
-			if ( $using_theme_builder ) {
-				return false;
+			if ( in_array( 'elementor-template-full-width', $classes ) ) {
+			    return false;
 			}
 		}
 	} elseif ( 'archive' === $location ) {
 		if ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
-			$theme_builder      = \ElementorPro\Modules\ThemeBuilder\Module::instance();
-			$location_documents = $theme_builder->get_conditions_manager()->get_documents_for_location( $location );
+			$classes = get_body_class();
 
-			// Check if it's using Elementor's theme builder.
-			if ( ! empty( $location_documents ) ) {
-				return false;
+			if ( in_array( 'elementor-template-full-width', $classes ) ) {
+			    return false;
 			}
 		}
 	}
