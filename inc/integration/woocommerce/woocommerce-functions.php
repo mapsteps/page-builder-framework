@@ -12,7 +12,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * Remove our wrapper from woocommerce products loop when Elementor is used.
  *
  * Elementor adds their own rappers & handles responsiveness themselves.
- * Let's not interfere with what they do.
+ * Let's not interfere with what they do.#
+ *
+ * Not currently executing - caused more issues than it solved.
  *
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/module.php
  * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/conditions-manager.php
@@ -64,7 +66,7 @@ function wpbf_woo_elementor_product_loop_wrapper() {
 	return true;
 
 }
-add_filter( 'wpbf_woo_product_loop_wrapper', 'wpbf_woo_elementor_product_loop_wrapper' );
+// add_filter( 'wpbf_woo_product_loop_wrapper', 'wpbf_woo_elementor_product_loop_wrapper' );
 
 /**
  * Deregister defaults.
