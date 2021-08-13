@@ -299,7 +299,7 @@ function wpbf_woo_product_loop_start( $start ) {
 	$mobile_breakpoint  = wpbf_get_theme_mod_value( $products_per_row, 'mobile', 1, true );
 	$grid_gap           = get_theme_mod( 'woocommerce_loop_grid_gap', 'large' );
 
-	return '<ul class="wpbf-grid wpbf-grid-' . esc_attr( $grid_gap ) . ' wpbf-grid-1-' . esc_attr( $mobile_breakpoint ) . ' wpbf-grid-small-1-' . esc_attr( $tablet_breakpoint ) . ' wpbf-grid-large-1-' . esc_attr( $desktop_breakpoint ) . ' products">';
+	return '<ul class="wpbf-grid wpbf-grid-' . esc_attr( $grid_gap ) . ' wpbf-grid-1-' . esc_attr( $mobile_breakpoint ) . ' wpbf-grid-small-1-' . esc_attr( $tablet_breakpoint ) . ' wpbf-grid-large-1-' . esc_attr( $desktop_breakpoint ) . ' products columns-' . esc_attr( $desktop_breakpoint ) . '">';
 
 }
 add_filter( 'woocommerce_product_loop_start', 'wpbf_woo_product_loop_start', 0 );
