@@ -293,13 +293,22 @@ function wpbf_woo_product_loop_start( $start ) {
 		return $start;
 	}
 
+	// This should help with better supporting Elementor.
+	// Since this class is only present on loops created with Elementor, this is save to add globally
+	// if Elementor is installed.
+	if ( class_exists( '\Elementor\Plugin' ) ) {
+		$elementor_support = ' elementor-grid';
+	} else {
+		$elementor_support = '';
+	}
+
 	$products_per_row   = json_decode( get_theme_mod( 'woocommerce_loop_products_per_row' ), true );
 	$desktop_breakpoint = wpbf_get_theme_mod_value( $products_per_row, 'desktop', 4, true );
 	$tablet_breakpoint  = wpbf_get_theme_mod_value( $products_per_row, 'tablet', 3, true );
 	$mobile_breakpoint  = wpbf_get_theme_mod_value( $products_per_row, 'mobile', 1, true );
 	$grid_gap           = get_theme_mod( 'woocommerce_loop_grid_gap', 'large' );
 
-	return '<ul class="wpbf-grid wpbf-grid-' . esc_attr( $grid_gap ) . ' wpbf-grid-1-' . esc_attr( $mobile_breakpoint ) . ' wpbf-grid-small-1-' . esc_attr( $tablet_breakpoint ) . ' wpbf-grid-large-1-' . esc_attr( $desktop_breakpoint ) . ' products columns-' . esc_attr( $desktop_breakpoint ) . '">';
+	return '<ul class="wpbf-grid wpbf-grid-' . esc_attr( $grid_gap ) . ' wpbf-grid-1-' . esc_attr( $mobile_breakpoint ) . ' wpbf-grid-small-1-' . esc_attr( $tablet_breakpoint ) . ' wpbf-grid-large-1-' . esc_attr( $desktop_breakpoint ) . ' products' . $elementor_support . ' columns-' . esc_attr( $desktop_breakpoint ) . '">';
 
 }
 add_filter( 'woocommerce_product_loop_start', 'wpbf_woo_product_loop_start', 0 );
