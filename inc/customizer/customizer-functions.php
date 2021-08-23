@@ -229,9 +229,19 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
 	return;
 }
 
-// Custom controls.
-require get_template_directory() . '/inc/customizer/controls/padding/control-padding.php';
-require get_template_directory() . '/inc/customizer/controls/input-slider/control-input-slider.php';
-require get_template_directory() . '/inc/customizer/controls/responsive-input/control-responsive-input.php';
-require get_template_directory() . '/inc/customizer/controls/responsive-padding/control-responsive-padding.php';
-require get_template_directory() . '/inc/customizer/controls/responsive-input-slider/control-responsive-input-slider.php';
+/**
+ * Add Kirki custom controls.
+ *
+ * @param WP_Customize_Manager $wp_customize Instance of WP_Customize_Manager.
+ */
+function wpbf_custom_controls( $wp_customize ) {
+
+	// Custom controls.
+	require get_template_directory() . '/inc/customizer/controls/padding/control-padding.php';
+	require get_template_directory() . '/inc/customizer/controls/input-slider/control-input-slider.php';
+	require get_template_directory() . '/inc/customizer/controls/responsive-input/control-responsive-input.php';
+	require get_template_directory() . '/inc/customizer/controls/responsive-padding/control-responsive-padding.php';
+	require get_template_directory() . '/inc/customizer/controls/responsive-input-slider/control-responsive-input-slider.php';
+
+}
+add_action( 'customize_register', 'wpbf_custom_controls' );
