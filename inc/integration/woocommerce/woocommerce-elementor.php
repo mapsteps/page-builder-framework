@@ -13,11 +13,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  *
  * https://github.com/elementor/elementor/issues/16057
  */
-function wpbf_woocommerce_elementor_grid_fix() {
-
-	echo '.elementor-grid {';
-	echo 'display: flex;';
-	echo '}';
-
+function wpbf_woo_elementor_grid_fix() {
+	echo '<style id="wpbf-elementor-woocommerce-product-loop-fix">.elementor-grid { display:  flex }</style>';
 }
-add_action( 'wpbf_before_customizer_css', 'wpbf_woocommerce_elementor_grid_fix', 20 );
+add_action( 'wp_head', 'wpbf_woo_elementor_grid_fix', 999 );
