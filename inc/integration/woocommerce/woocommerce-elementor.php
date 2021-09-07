@@ -1,9 +1,9 @@
 <?php
 /**
- * Elementor integration.
+ * WooCommerce/Elementor integration.
  *
  * @package Page Builder Framework
- * @subpackage Integration
+ * @subpackage Integration/WooCommerce
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
