@@ -291,7 +291,7 @@ function wpbf_scrolltop() {
 
 		$scrollTop = get_theme_mod( 'scrolltop_value', 400 );
 
-		echo '<a class="scrolltop" href="javascript:void(0)" data-scrolltop-value="' . (int) $scrollTop . '">';
+		echo '<a class="scrolltop" rel="nofollow" href="javascript:void(0)" data-scrolltop-value="' . (int) $scrollTop . '">';
 		echo '<span class="screen-reader-text">' . __( 'Scroll to Top', 'page-builder-framework' ) . '</span>';
 		echo '</a>';
 
