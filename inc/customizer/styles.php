@@ -309,6 +309,41 @@ if ( $page_h6_toggle && $page_h6_font_family_value ) {
 
 }
 
+// Footer font settings.
+$footer_font_toggle       = get_theme_mod( 'footer_font_toggle' );
+$footer_font_family_value = get_theme_mod( 'footer_font_family' );
+
+if ( $footer_font_toggle && $footer_font_family_value ) {
+
+	echo '.wpbf-page-footer {';
+
+	if ( ! empty( $footer_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $footer_font_family_value['font-family'], ' ' ) && false === strpos( $footer_font_family_value['font-family'], '"' ) && false === strpos( $footer_font_family_value['font-family'], ',' ) ) {
+			$footer_font_family_value['font-family'] = '"' . $footer_font_family_value['font-family'] . '"';
+		}
+
+		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $footer_font_family_value['font-family'] ), ENT_QUOTES ) );
+
+	}
+
+	if ( ! empty( $footer_font_family_value['variant'] ) ) {
+
+		$footer_font_family_font_weight = str_replace( 'italic', '', $footer_font_family_value['variant'] );
+		$footer_font_family_font_weight = ( in_array( $footer_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $footer_font_family_font_weight;
+
+		$footer_font_family_is_italic = ( false !== strpos( $footer_font_family_value['variant'], 'italic' ) );
+		$footer_font_family_is_style  = $footer_font_family_is_italic ? 'italic' : 'normal';
+
+		echo sprintf( 'font-weight: %s;', esc_attr( $footer_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $footer_font_family_is_style ) );
+
+	}
+
+	echo '}';
+
+}
+
 /* General */
 
 // Page settings.
