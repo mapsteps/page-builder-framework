@@ -2877,7 +2877,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_footer_font_options',
 	'default'         => array(
 		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
+		'variant'     => 'regular',
 	),
 	'choices'         => wpbf_default_font_choices(),
 	'active_callback' => array(
