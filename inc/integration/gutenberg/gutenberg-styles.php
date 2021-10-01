@@ -54,6 +54,8 @@ $single_custom_width    = get_theme_mod( 'single_custom_width' );
 $content_width          = $single_custom_width ? $single_custom_width : $page_width;
 $page_width_int         = strpos( $content_width, 'px' ) !== false ? (int) $content_width : false;
 $background_color       = get_theme_mod( 'background_color' );
+$page_boxed             = get_theme_mod( 'page_boxed' );
+$page_boxed_background  = get_theme_mod( 'page_boxed_background', '#ffffff' );
 $page_accent_color      = get_theme_mod( 'page_accent_color' );
 $page_bold_color        = get_theme_mod( 'page_bold_color' );
 $page_font_size_desktop = get_theme_mod( 'page_font_size_desktop' );
@@ -77,12 +79,18 @@ if ( $page_width_int ) {
 }
 
 // Page background color.
-if ( $background_color ) {
+if ( $page_boxed ) {
+
+	echo '.editor-styles-wrapper {';
+	echo sprintf( 'background-color: %s;', esc_attr( $page_boxed_background ) );
+	echo '}';
+
+} elseif ( $background_color ) {
 
 	echo '.editor-styles-wrapper {';
 	echo sprintf( 'background-color: %s;', '#' . esc_attr( $background_color ) );
 	echo '}';
-
+	
 }
 
 // Accent color.

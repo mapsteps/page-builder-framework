@@ -86,3 +86,11 @@ require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-function
 
 // WooCommerce customizer styles.
 require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-styles.php';
+
+/**
+ * Elementor integration.
+ */
+function wpbf_woo_elementor_integration() {
+	require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-elementor.php';
+}
+add_action( 'elementor/init', 'wpbf_woo_elementor_integration' );
