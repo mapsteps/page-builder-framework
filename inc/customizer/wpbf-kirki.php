@@ -1843,7 +1843,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'       => __( 'ScrollTop', 'page-builder-framework' ),
 	'description' => __( 'Select if you would like to display a scroll to top arrow', 'page-builder-framework' ),
 	'section'     => 'wpbf_scrolltop_options',
-	'default'     => '0',
+	'default'     => 0,
 	'priority'    => 1,
 ) );
 
