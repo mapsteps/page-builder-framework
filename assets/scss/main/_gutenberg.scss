@@ -174,3 +174,54 @@
 		padding-bottom: $padding;
 	}
 }
+
+// Sidebar
+.widget_block {
+	ol, ul {
+		padding: 0;
+	}
+	// Remove group block styles if we're in the sidebar.
+	.wp-block-group {
+		.wp-block-group__inner-container {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+}
+
+// Latest Comments
+.wp-block-latest-comments__comment {
+	margin-bottom: 0;
+	line-height: 1.7; // I mean sure, why would WordPress not want to set this to 1.1.
+}
+
+ol.wp-block-latest-comments {
+	margin-bottom: 0;
+}
+
+// Searchform
+.wp-block-search {
+	.wp-block-search__input {
+		border: 1px solid $base-color;
+	}
+	.wp-block-search__button {
+		padding: 14px 16px;
+		background: $base-color;
+		color: $brand-color-alt;
+		border: none;
+		@include transition(all 0.2s);
+		line-height: 1;
+		font-weight: 700;
+		cursor: pointer;
+	}	
+}
+
+// Searchform (Button inside)
+.wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper {
+	background: #fff;
+	border: 1px solid $base-color;
+}
+
+.wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper .wp-block-search__button {
+	padding: 14px 16px;
+}
