@@ -150,6 +150,9 @@ function wpbf_scripts() {
 		'before'
 	);
 
+	// Icon Font.
+	wp_enqueue_style( 'wpbf-icon-font', get_template_directory_uri() . '/css/min/iconfont-min.css', '', WPBF_VERSION );
+
 	// Main stylesheet.
 	wp_enqueue_style( 'wpbf-style', get_template_directory_uri() . '/style.css', '', WPBF_VERSION );
 
