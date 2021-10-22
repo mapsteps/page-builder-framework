@@ -983,6 +983,9 @@ function wpbf_mobile_sub_menu_indicators( $item_output, $item, $depth, $args ) {
 					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-hidden="true">
 						<path d="M15.35 18.544l-10.166-10.166c-0.36-0.36-0.943-0.36-1.302 0l-1.23 1.23c-0.36 0.36-0.36 0.943 0 1.302l12.698 12.698c0.36 0.36 0.943 0.36 1.302 0l12.698-12.698c0.36-0.36 0.36-0.943 0-1.302l-1.23-1.23c-0.36-0.36-0.943-0.36-1.302 0l-10.167 10.166c-0.36 0.36-0.943 0.36-1.302 0z"></path>
 					</svg>
+					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-hidden="true">
+					<path d="M16.652 13.443l10.159 10.159c0.359 0.359 0.942 0.359 1.301 0l1.229-1.229c0.359-0.359 0.359-0.942 0-1.301l-12.689-12.69c-0.359-0.359-0.942-0.359-1.301 0l-12.69 12.69c-0.359 0.359-0.359 0.942 0 1.301l1.229 1.229c0.359 0.359 0.942 0.359 1.301 0l10.159-10.159c0.359-0.359 0.942-0.359 1.301 0z"></path>
+					</svg>
 					<span class="screen-reader-text">' . __( 'Menu Toggle', 'page-builder-framework' ) . '</span>
 				</button>';
 
