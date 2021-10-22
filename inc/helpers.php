@@ -104,6 +104,19 @@ function wpbf_single_schema_markup() {
 }
 
 /**
+ * Helper function to check if SVG's are enabled.
+ */
+function wpbf_svg_enabled() {
+
+	if ( apply_filters( 'wpbf_svg', false ) ) {
+		return true;
+	}
+
+	return false;
+
+}
+
+/**
  * Add a class to our main navigation.
  */
 function wpbf_navigation_classes() {
@@ -962,7 +975,23 @@ function wpbf_mobile_sub_menu_indicators( $item_output, $item, $depth, $args ) {
 	if ( 'mobile_menu' === $args->theme_location || ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ) ) && 'main_menu' === $args->theme_location ) ) {
 
 		if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
-			$item_output .= '<button class="wpbf-submenu-toggle" aria-expanded="false"><i class="wpbff wpbff-arrow-down" aria-hidden="true"></i><span class="screen-reader-text">' . __( 'Menu Toggle', 'page-builder-framework' ) . '</span></button>';
+
+			if ( wpbf_svg_enabled() ) {
+
+				$item_output .= 
+				'<button class="wpbf-submenu-toggle wpbf-icon" aria-expanded="false">
+					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-hidden="true">
+						<path d="M15.35 18.544l-10.166-10.166c-0.36-0.36-0.943-0.36-1.302 0l-1.23 1.23c-0.36 0.36-0.36 0.943 0 1.302l12.698 12.698c0.36 0.36 0.943 0.36 1.302 0l12.698-12.698c0.36-0.36 0.36-0.943 0-1.302l-1.23-1.23c-0.36-0.36-0.943-0.36-1.302 0l-10.167 10.166c-0.36 0.36-0.943 0.36-1.302 0z"></path>
+					</svg>
+					<span class="screen-reader-text">' . __( 'Menu Toggle', 'page-builder-framework' ) . '</span>
+				</button>';
+
+			} else {
+
+				$item_output .= '<button class="wpbf-submenu-toggle" aria-expanded="false"><i class="wpbff wpbff-arrow-down" aria-hidden="true"></i><span class="screen-reader-text">' . __( 'Menu Toggle', 'page-builder-framework' ) . '</span></button>';
+
+			}
+
 		}
 	}
 

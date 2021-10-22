@@ -45,6 +45,17 @@
 	}
 }
 
+/* SVG */
+.wpbf-icon {
+	svg {
+		position: relative;
+		top: 2px;
+		fill: currentColor;
+		height: 16px;
+		width: 16px;
+	}
+}
+
 /* Container */
 .wpbf-container {
 	max-width: $large-screen-breakpoint;

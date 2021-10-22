@@ -414,9 +414,22 @@ body {
 	padding-right: 40px;
 }
 
+/* Icon Font */
 .searchform {
 	position: relative;
 	.wpbff {
+		@include vertical-align($position: absolute);
+		right: 10px;
+		cursor: pointer;
+		padding: 10px;
+		color: $brand-color-alt;
+	}
+}
+
+/* SVG */
+.searchform {
+	position: relative;
+	button {
 		@include vertical-align($position: absolute);
 		right: 10px;
 		cursor: pointer;
