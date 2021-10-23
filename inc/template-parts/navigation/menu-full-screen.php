@@ -28,13 +28,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 				<?php if ( wpbf_svg_enabled() ) { ?>
 
-					<button id="wpbf-menu-toggle" class="wpbf-nav-item wpbf-menu-toggle wpbf-icon" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
+					<button id="wpbf-menu-toggle" class="wpbf-nav-item wpbf-menu-toggle" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
 						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
-						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-hidden="true">
-						<path d="M30.939 17.785h-29.876c-0.579 0-1.048-0.469-1.048-1.048v-1.482c0-0.579 0.469-1.048 1.048-1.048h29.876c0.579 0 1.048 0.469 1.048 1.048v1.482c0 0.579-0.469 1.048-1.048 1.048z"></path>
-						<path d="M30.939 27.979h-29.876c-0.579 0-1.048-0.469-1.048-1.048v-1.482c0-0.579 0.469-1.048 1.048-1.048h29.876c0.579 0 1.048 0.469 1.048 1.048v1.482c0 0.579-0.469 1.048-1.048 1.048z"></path>
-						<path d="M30.939 7.584h-29.876c-0.579 0-1.048-0.469-1.048-1.048v-1.482c0-0.579 0.469-1.048 1.048-1.048h29.876c0.579 0 1.048 0.469 1.048 1.048v1.482c0 0.579-0.469 1.048-1.048 1.048z"></path>
-						</svg>
+						<?php echo wpbf_svg( 'hamburger' ); ?>
 					</button>
 
 				<?php } else { ?>
@@ -72,18 +68,11 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 	<?php do_action( 'wpbf_after_main_menu' ); ?>
 
 	<?php if ( wpbf_svg_enabled() ) { ?>
-
-		<span class="wpbf-icon wpbf-close">
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-hidden="true">
-			<path d="M29.094 5.43l-23.656 23.656c-0.41 0.41-1.074 0.41-1.483 0l-1.049-1.049c-0.41-0.41-0.41-1.073 0-1.483l23.656-23.656c0.41-0.41 1.073-0.41 1.483 0l1.049 1.049c0.41 0.409 0.41 1.073 0 1.483z"></path>
-			<path d="M26.562 29.086l-23.656-23.656c-0.41-0.41-0.41-1.074 0-1.483l1.049-1.049c0.409-0.41 1.073-0.41 1.483 0l23.656 23.656c0.41 0.41 0.41 1.073 0 1.483l-1.049 1.049c-0.41 0.41-1.073 0.41-1.483 0z"></path>
-			</svg>
-		</span>
-
+		<div class="wpbf-close">
+			<?php echo wpbf_svg( 'times' ); ?>
+		</div>
 	<?php } else { ?>
-
 		<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
-
 	<?php } ?>
 
 </div>

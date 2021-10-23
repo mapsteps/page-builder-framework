@@ -62,9 +62,17 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 						<?php edit_comment_link( __( 'Edit', 'page-builder-framework' ) ); ?>
 
+						<?php
+						if ( wpbf_svg_enabled() ) {
+							$date_icon = wpbf_svg( 'clock' );
+						} else {
+							$date_icon = '<i class="wpbff wpbff-clock"></i>';
+						}
+						?>
+
 						<time class="comment-time" datetime="<?php comment_time( 'c' ); ?>" itemprop="datePublished">
 
-							<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php comment_time( __( 'F d, Y', 'page-builder-framework' ) ); ?></a>
+							<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php echo $date_icon; ?> <?php comment_time( __( 'F d, Y', 'page-builder-framework' ) ); ?></a>
 
 						</time>
 

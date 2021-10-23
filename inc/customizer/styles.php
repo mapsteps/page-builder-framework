@@ -640,6 +640,7 @@ if ( $scrolltop ) {
 		echo '}';
 
 	}
+
 }
 
 // Background (backwards compatibility).

@@ -119,7 +119,6 @@
 			margin-left: 5px;
 			font-family: 'page-builder-framework';
 			content: "\f102";
-			speak: none;
 			font-style: normal;
 			font-weight: normal;
 			font-variant: normal;
@@ -166,7 +165,6 @@
 			margin-left: 20px;
 			font-family: 'page-builder-framework';
 			content: "\f103";
-			speak: none;
 			font-style: normal;
 			font-weight: normal;
 			font-variant: normal;
@@ -470,29 +468,28 @@
 		vertical-align: middle;
 		display: inline-block;
 		padding: 2px 7px;
-		margin-left: 10px;
+		margin-left: 7px;
 		text-align: center;
 		background: $accent-color;
 		color: #fff;
 		font-size: $tiny-fontsize;
 		position: relative;
 	}
-	.wpbf-woo-menu-item-count:before {
-		content: "\f10d";
-		font-family: 'page-builder-framework' !important;
-		speak: none;
-		font-style: normal;
-		font-weight: normal;
-		font-variant: normal;
-		text-transform: none;
-		line-height: 1;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		position: absolute;
-		left: -6px;
-		color: $accent-color;
-		@include vertical-align($position: absolute);
-	}
+	// .wpbf-woo-menu-item-count:before {
+	// 	content: "\f10d";
+	// 	font-family: 'page-builder-framework' !important;
+	// 	font-style: normal;
+	// 	font-weight: normal;
+	// 	font-variant: normal;
+	// 	text-transform: none;
+	// 	line-height: 1;
+	// 	-webkit-font-smoothing: antialiased;
+	// 	-moz-osx-font-smoothing: grayscale;
+	// 	position: absolute;
+	// 	left: -6px;
+	// 	color: $accent-color;
+	// 	@include vertical-align($position: absolute);
+	// }
 }
 
 // Product search widget
@@ -513,7 +510,6 @@
 	color: $brand-color-alt;
 
 	font-family: 'page-builder-framework' !important;
-	speak: none;
 	font-style: normal;
 	font-weight: normal;
 	font-variant: normal;
