@@ -98,6 +98,11 @@ img.alignleft, figure.alignleft {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.wpbf-svg .wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children > a .wpbf-icon svg {
+	transform: rotate(90deg);
+	float: left;
+}
+
 .wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children > .sub-menu {
 	left: auto;
 	right: 100%;
