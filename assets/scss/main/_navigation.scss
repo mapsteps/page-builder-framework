@@ -115,18 +115,6 @@
 	// First level sub menu container
 	> .menu-item-has-children {
 		// First level sub menu
-		> a:after {
-			margin-left: 5px;
-			font-family: 'page-builder-framework';
-			content: "\f102";
-			font-style: normal;
-			font-weight: normal;
-			font-variant: normal;
-			text-transform: none;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-			vertical-align: top;
-		}
 		> .sub-menu {
 			display: none;
 			position: absolute;
@@ -160,6 +148,29 @@
 			background: #fff;
 			@include box-shadow(0px 0px 10px 0px rgba(#000,.15));
 		}
+	}
+}
+
+// Sub menu indicators (icon font)
+.wpbf-icon-font .wpbf-sub-menu {
+	// First level sub menu container
+	> .menu-item-has-children {
+		// First level sub menu
+		> a:after {
+			margin-left: 5px;
+			font-family: 'page-builder-framework';
+			content: "\f102";
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			vertical-align: top;
+		}
+	}
+	// Second level sub menu container
+	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
 		> a:after {
 			float: right;
 			margin-left: 20px;

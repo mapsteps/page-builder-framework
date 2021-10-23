@@ -66,12 +66,12 @@ img.alignleft, figure.alignleft {
 }
 
 /* Sub Menu */
-.wpbf-sub-menu > .menu-item-has-children > a:after,
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children > a:after {
+.wpbf-icon-font .wpbf-sub-menu > .menu-item-has-children > a:after,
+.wpbf-icon-font .wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children > a:after {
 	display: none;
 }
 
-.wpbf-sub-menu > .menu-item-has-children > a:before {
+.wpbf-icon-font .wpbf-sub-menu > .menu-item-has-children > a:before {
 	font-size: 14px;
 	margin-right: 5px;
 	font-family: 'page-builder-framework';
@@ -84,7 +84,7 @@ img.alignleft, figure.alignleft {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children > a:before {
+.wpbf-icon-font .wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children > a:before {
 	float: left;
 	margin-right: 20px;
 	font-size: 14px;
@@ -98,7 +98,7 @@ img.alignleft, figure.alignleft {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children > .sub-menu {
+.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children > .sub-menu {
 	left: auto;
 	right: 100%;
 }

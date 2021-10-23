@@ -1276,6 +1276,43 @@ function wpbf_is_off_canvas_menu() {
 }
 
 /**
+ * Add sub menu indicators (SVG's) to regular menus.
+ *
+ * @param string $title The title
+ * @param object $item The menu item data object.
+ * @param object $args The arguments.
+ * @param integer $depth Depth of menu item.
+ *
+ * @return string The updated nav menu item title.
+ */
+function wpbf_sub_menu_indicators( $title, $item, $args, $depth ) {
+
+	// This is only required for SVG's.
+	if ( ! wpbf_svg_enabled() ) {
+		return $title;
+	}
+
+	// We don't want this on off-canvas menus.
+	if ( wpbf_is_off_canvas_menu() ) {
+		return $title;
+	}
+
+	// We don't want this on mobile menus, nor footer menus.
+	if ( 'mobile_menu' === $args->theme_location || 'footer_menu' === $args->theme_location || 'footer_menu_right' === $args->theme_location ) {
+		return $title;
+	}
+
+	// Finally, add SVG if menu item has children.
+	if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
+		$title .= ' ' . wpbf_svg( 'arrow-down' );
+	}
+
+	return $title;
+
+}
+add_filter( 'nav_menu_item_title', 'wpbf_sub_menu_indicators', 10, 4 );
+
+/**
  * Add sub menu indicators to mobile & off canvas menu's.
  *
  * @param string  $item_output The menu item's starting HTML output.
