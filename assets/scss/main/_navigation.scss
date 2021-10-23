@@ -186,6 +186,18 @@
 	}
 }
 
+// Sub menu indicators (SVG's)
+.wpbf-svg .wpbf-sub-menu {
+	// Second level sub menu container
+	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
+		> a .wpbf-icon svg {
+			transform: rotate(-90deg);
+			float: right;
+			top: .3em;
+		}
+	}
+}
+
 // Sub menu modifier (alignment)
 .wpbf-sub-menu-align-right > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {
 	right: 0;
@@ -486,21 +498,6 @@
 		font-size: $tiny-fontsize;
 		position: relative;
 	}
-	// .wpbf-woo-menu-item-count:before {
-	// 	content: "\f10d";
-	// 	font-family: 'page-builder-framework' !important;
-	// 	font-style: normal;
-	// 	font-weight: normal;
-	// 	font-variant: normal;
-	// 	text-transform: none;
-	// 	line-height: 1;
-	// 	-webkit-font-smoothing: antialiased;
-	// 	-moz-osx-font-smoothing: grayscale;
-	// 	position: absolute;
-	// 	left: -6px;
-	// 	color: $accent-color;
-	// 	@include vertical-align($position: absolute);
-	// }
 }
 
 // Product search widget
