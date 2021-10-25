@@ -115,19 +115,6 @@
 	// First level sub menu container
 	> .menu-item-has-children {
 		// First level sub menu
-		> a:after {
-			margin-left: 5px;
-			font-family: "page-builder-framework";
-			content: "\f102";
-			speak: none;
-			font-style: normal;
-			font-weight: normal;
-			font-variant: normal;
-			text-transform: none;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-			vertical-align: top;
-		}
 		> .sub-menu {
 			display: none;
 			position: absolute;
@@ -161,18 +148,52 @@
 			background: #fff;
 			@include box-shadow(0px 0px 10px 0px rgba(#000,.15));
 		}
+	}
+}
+
+// Sub menu indicators (icon font)
+.wpbf-icon-font .wpbf-sub-menu {
+	// First level sub menu container
+	> .menu-item-has-children {
+		// First level sub menu
 		> a:after {
-			float: right;
-			margin-left: 20px;
-			font-family: "page-builder-framework";
-			content: "\f103";
-			speak: none;
+			margin-left: 5px;
+			font-family: 'page-builder-framework';
+			content: "\f102";
 			font-style: normal;
 			font-weight: normal;
 			font-variant: normal;
 			text-transform: none;
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
+			vertical-align: top;
+		}
+	}
+	// Second level sub menu container
+	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
+		> a:after {
+			float: right;
+			margin-left: 20px;
+			font-family: 'page-builder-framework';
+			content: "\f103";
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+	}
+}
+
+// Sub menu indicators (SVG's)
+.wpbf-svg .wpbf-sub-menu {
+	// Second level sub menu container
+	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
+		> a .wpbf-icon svg {
+			transform: rotate(-90deg);
+			float: right;
+			top: .3em;
 		}
 	}
 }
@@ -470,28 +491,12 @@
 		vertical-align: middle;
 		display: inline-block;
 		padding: 2px 7px;
-		margin-left: 10px;
+		margin-left: 7px;
 		text-align: center;
 		background: $accent-color;
 		color: #fff;
 		font-size: $tiny-fontsize;
 		position: relative;
-	}
-	.wpbf-woo-menu-item-count:before {
-		content: "\f10d";
-		font-family: 'page-builder-framework' !important;
-		speak: none;
-		font-style: normal;
-		font-weight: normal;
-		font-variant: normal;
-		text-transform: none;
-		line-height: 1;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		position: absolute;
-		left: -6px;
-		color: $accent-color;
-		@include vertical-align($position: absolute);
 	}
 }
 
@@ -504,21 +509,4 @@
 	button {
 		display: none;
 	}
-}
-
-.woocommerce-product-search:before {
-	content: "\f118";
-	right: 15px;
-	@include vertical-align($position: absolute);
-	color: $brand-color-alt;
-
-	font-family: 'page-builder-framework' !important;
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }

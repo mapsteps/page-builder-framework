@@ -47,6 +47,12 @@ function wpbf_body_classes( $classes ) {
 		$classes[] = 'wpbf-woo-list-view';
 	}
 
+	if ( wpbf_svg_enabled() ) {
+		$classes[] = 'wpbf-svg';
+	} else {
+		$classes[] = 'wpbf-icon-font';
+	}
+
 	return $classes;
 
 }

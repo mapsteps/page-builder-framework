@@ -30,9 +30,20 @@ if ( get_theme_mod( 'menu_overlay' ) ) {
 
 				<?php do_action( 'wpbf_before_menu_toggle' ); ?>
 
-				<button id="wpbf-menu-toggle" class="wpbf-nav-item wpbf-menu-toggle wpbff wpbff-hamburger" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
-					<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
-				</button>
+				<?php if ( wpbf_svg_enabled() ) { ?>
+
+					<button id="wpbf-menu-toggle" class="wpbf-nav-item wpbf-menu-toggle" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
+						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
+						<?php echo wpbf_svg( 'hamburger' ); ?>
+					</button>
+
+				<?php } else { ?>
+
+					<button id="wpbf-menu-toggle" class="wpbf-nav-item wpbf-menu-toggle wpbff wpbff-hamburger" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
+						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
+					</button>
+
+				<?php } ?>
 
 				<?php do_action( 'wpbf_after_menu_toggle' ); ?>
 
@@ -60,6 +71,12 @@ if ( get_theme_mod( 'menu_overlay' ) ) {
 
 	<?php do_action( 'wpbf_after_main_menu' ); ?>
 
-	<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
+	<?php if ( wpbf_svg_enabled() ) { ?>
+		<span class="wpbf-close">
+			<?php echo wpbf_svg( 'times' ); ?>
+		</span>
+	<?php } else { ?>
+		<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
+	<?php } ?>
 
 </div>

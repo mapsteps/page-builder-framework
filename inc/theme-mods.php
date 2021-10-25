@@ -130,7 +130,13 @@ function wpbf_search_menu_item( $is_inside_main_menu = true, $is_mobile = false 
 	$search_item .= '<div class="wpbf-menu-search">';
 	$search_item .= $search_form;
 	$search_item .= '</div>';
-	$search_item .= '<i class="wpbff wpbff-search" aria-hidden="true"></i>';
+
+	if ( wpbf_svg_enabled() ) {
+		$search_item .= wpbf_svg( 'search' );
+	} else {
+		$search_item .= '<i class="wpbff wpbff-search" aria-hidden="true"></i>';
+	}
+
 	$search_item .= $is_inside_main_menu ? '</a></li>' : '</div>';
 
 	return $search_item;
