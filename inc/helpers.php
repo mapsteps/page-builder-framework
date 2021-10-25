@@ -106,13 +106,17 @@ function wpbf_single_schema_markup() {
 /**
  * Helper function to check if SVG's are enabled.
  */
-function wpbf_svg_enabled() {
+if ( ! function_exists( 'wpbf_svg_enabled' ) ) {
 
-	if ( apply_filters( 'wpbf_svg', false ) ) {
-		return true;
+	function wpbf_svg_enabled() {
+
+		if ( apply_filters( 'wpbf_svg', false ) ) {
+			return true;
+		}
+
+		return false;
+
 	}
-
-	return false;
 
 }
 
