@@ -230,7 +230,6 @@ WpbfTheme.mobileMenu = (function ($) {
 		if ('hamburger' === menuType) {
 			toggle.classList.remove('wpbff-times')
 			toggle.classList.add('wpbff-hamburger')
-			toggle.setAttribute('aria-expanded', 'false');
 		}
 
 	}
