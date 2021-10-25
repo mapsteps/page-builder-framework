@@ -322,19 +322,20 @@
 	margin: 0;
 }
 
-// SVG support
-.wpbf-mobile-menu-toggle {
-	.wpbf-icon:nth-of-type(odd) {
-		display: none;
+// SVG support (Hamburger)
+.wpbf-mobile-menu-hamburger {
+	.wpbf-mobile-menu-toggle {
+		.wpbf-icon:nth-of-type(odd) {
+			display: none;
+		}
 	}
-}
-
-.wpbf-mobile-menu-toggle.active {
-	.wpbf-icon:nth-of-type(odd) {
-		display: block;
-	}
-	.wpbf-icon:nth-of-type(even) {
-		display: none;
+	.wpbf-mobile-menu-toggle.active {
+		.wpbf-icon:nth-of-type(odd) {
+			display: block;
+		}
+		.wpbf-icon:nth-of-type(even) {
+			display: none;
+		}
 	}
 }
 
