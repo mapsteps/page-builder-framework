@@ -1316,7 +1316,7 @@ function wpbf_sub_menu_indicators( $title, $item, $args, $depth ) {
 		if ( wpbf_svg_enabled() ) {
 			$title .= ' ' . wpbf_svg( 'arrow-down' );
 		} else {
-			$title .= ' <i class="wpbff wpbff-arrow-down"></i>';
+			$title .= ' <i class="wpbff wpbff-arrow-down" aria-hidden="true"></i>';
 		}
 
 	}
