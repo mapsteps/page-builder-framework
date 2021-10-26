@@ -423,17 +423,6 @@ body {
 
 // Icon font
 .searchform {
-	.wpbff {
-		@include vertical-align($position: absolute);
-		right: 10px;
-		cursor: pointer;
-		padding: 10px;
-		color: $brand-color-alt;
-	}
-}
-
-// SVG
-.searchform {
 	button {
 		@include vertical-align($position: absolute);
 		right: 10px;
