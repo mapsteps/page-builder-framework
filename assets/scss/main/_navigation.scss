@@ -151,49 +151,25 @@
 	}
 }
 
-// Sub menu indicators (icon font)
-.wpbf-icon-font .wpbf-sub-menu {
+// Sub menu indicators (SVG's)
+.wpbf-sub-menu {
 	// First level sub menu container
 	> .menu-item-has-children {
-		// First level sub menu
-		> a:after {
-			margin-left: 5px;
-			font-family: 'page-builder-framework';
-			content: "\f102";
-			font-style: normal;
-			font-weight: normal;
-			font-variant: normal;
-			text-transform: none;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-			vertical-align: top;
+		// Icons
+		> a .wpbf-icon svg,
+		> a .wpbff {
+			display: inline-block;
 		}
 	}
 	// Second level sub menu container
-	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
-		> a:after {
-			float: right;
-			margin-left: 20px;
-			font-family: 'page-builder-framework';
-			content: "\f103";
-			font-style: normal;
-			font-weight: normal;
-			font-variant: normal;
-			text-transform: none;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-		}
-	}
-}
-
-// Sub menu indicators (SVG's)
-.wpbf-svg .wpbf-sub-menu {
-	// Second level sub menu container
-	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
-		> a .wpbf-icon svg {
+	> .menu-item-has-children .menu-item-has-children {
+		// Icons
+		> a .wpbf-icon svg,
+		> a .wpbff {
 			transform: rotate(-90deg);
 			float: right;
 			top: .3em;
+			position: relative;
 		}
 	}
 }

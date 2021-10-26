@@ -1300,11 +1300,6 @@ function wpbf_is_off_canvas_menu() {
  */
 function wpbf_sub_menu_indicators( $title, $item, $args, $depth ) {
 
-	// This is only required for SVG's.
-	if ( ! wpbf_svg_enabled() ) {
-		return $title;
-	}
-
 	// We don't want this on off-canvas menus.
 	if ( wpbf_is_off_canvas_menu() ) {
 		return $title;
@@ -1315,9 +1310,15 @@ function wpbf_sub_menu_indicators( $title, $item, $args, $depth ) {
 		return $title;
 	}
 
-	// Finally, add SVG if menu item has children.
+	// Finally, add arrow icon if menu item has children.
 	if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
-		$title .= ' ' . wpbf_svg( 'arrow-down' );
+
+		if ( wpbf_svg_enabled() ) {
+			$title .= ' ' . wpbf_svg( 'arrow-down' );
+		} else {
+			$title .= ' <i class="wpbff wpbff-arrow-down"></i>';
+		}
+
 	}
 
 	return $title;
