@@ -39,22 +39,6 @@ if ( ! function_exists( 'wpbf_kirki_sanitize_helper' ) ) {
 }
 
 /**
- * Kirki global config.
- *
- * Update Kirki global config to remove loader.
- *
- * @param array $config The configuration.
- *
- * @return array The updated configuration.
- */
-function wpbf_kirki_config( $config ) {
-	return wp_parse_args( array(
-		'disable_loader' => true,
-	), $config );
-}
-add_filter( 'kirki_config', 'wpbf_kirki_config' );
-
-/**
  * Default font choices.
  *
  * This exists so we can filter and extend the font choices in Kirki.
