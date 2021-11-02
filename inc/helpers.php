@@ -1300,17 +1300,12 @@ function wpbf_is_off_canvas_menu() {
  */
 function wpbf_sub_menu_indicators( $title, $item, $args, $depth ) {
 
-	// We don't want this on off-canvas menus.
-	if ( wpbf_is_off_canvas_menu() ) {
+	// Let's stop if menu is not meant to have sub-menu's.
+	if ( strpos( $args->menu_class, 'wpbf-sub-menu' ) === false ) {
 		return $title;
 	}
 
-	// We don't want this on mobile menus, nor footer menus.
-	if ( 'mobile_menu' === $args->theme_location || 'footer_menu' === $args->theme_location || 'footer_menu_right' === $args->theme_location ) {
-		return $title;
-	}
-
-	// Finally, add arrow icon if menu item has children.
+	// Add arrow icon if menu item has children.
 	if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
 
 		if ( wpbf_svg_enabled() ) {
