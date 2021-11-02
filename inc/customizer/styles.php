@@ -1980,7 +1980,7 @@ $menu_padding        = ( $val = get_theme_mod( 'menu_padding' ) ) === '20' ? fal
 $menu_bg_color       = ( $val = get_theme_mod( 'menu_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $menu_font_color     = get_theme_mod( 'menu_font_color' );
 $menu_font_color_alt = get_theme_mod( 'menu_font_color_alt' );
-$menu_font_size      = ( $val = get_theme_mod( 'menu_font_size' ) ) === '16px' ? false : $val;
+$menu_font_size      = get_theme_mod( 'menu_font_size' );
 
 if ( $menu_width ) {
 
