@@ -130,7 +130,13 @@ function wpbf_search_menu_item( $is_inside_main_menu = true, $is_mobile = false 
 	$search_item .= '<div class="wpbf-menu-search">';
 	$search_item .= $search_form;
 	$search_item .= '</div>';
-	$search_item .= '<i class="wpbff wpbff-search" aria-hidden="true"></i>';
+
+	if ( wpbf_svg_enabled() ) {
+		$search_item .= wpbf_svg( 'search' );
+	} else {
+		$search_item .= '<i class="wpbff wpbff-search" aria-hidden="true"></i>';
+	}
+
 	$search_item .= $is_inside_main_menu ? '</a></li>' : '</div>';
 
 	return $search_item;
@@ -324,3 +330,31 @@ function wpbf_mobile_sub_menu_auto_collapse_class( $classes ) {
 
 }
 add_filter( 'wpbf_navigation_classes', 'wpbf_mobile_sub_menu_auto_collapse_class' );
+
+/**
+ * Add theme color meta tag to head.
+ */
+function wpbf_theme_color_meta() {
+
+	$theme_color         = '#3ba9d2';
+	$accent_color_global = get_theme_mod( 'accent_color_global' );
+	$accent_color        = get_theme_mod( 'page_accent_color' );
+
+	// If a global theme color is set, let's apply.
+	if ( $accent_color_global ) {
+		$theme_color = $accent_color_global;
+	}
+
+	// If accent color is set (which is more specific), let's apply this instead.
+	if ( $accent_color ) {
+		$theme_color = $accent_color;
+	}
+
+	// Allow to filter the theme color value for max flexibility.
+	$theme_color = apply_filters( 'wpbf_theme_color', $theme_color );
+
+	// Output.
+	echo '<meta name="theme-color" content="' . $theme_color . '">';
+
+}
+add_action( 'wp_head', 'wpbf_theme_color_meta' );

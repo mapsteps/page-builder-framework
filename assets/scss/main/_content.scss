@@ -340,18 +340,6 @@ body {
 			color: $brand-color-alt;
 		}
 	}
-	.comment-time:before {
-		font-family: "page-builder-framework";
-		content: "\f107";
-		margin-right: 3px;
-		speak: none;
-		font-style: normal;
-		font-weight: normal;
-		font-variant: normal;
-		text-transform: none;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
 	.comment-reply-link {
 		display: inline-block;
 	}
@@ -410,21 +398,6 @@ body {
 	}
 }
 
-#s {
-	padding-right: 40px;
-}
-
-.searchform {
-	position: relative;
-	.wpbff {
-		@include vertical-align($position: absolute);
-		right: 10px;
-		cursor: pointer;
-		padding: 10px;
-		color: $brand-color-alt;
-	}
-}
-
 .wpbf-no-sidebar {
 	.wpbf-main.wpbf-medium-2-3 {
 		width: 100%;
@@ -436,6 +409,25 @@ body {
 			padding-left: 0;
 			padding-right: 0;
 		}
+	}
+}
+
+/* Search Form */
+#s {
+	padding-right: 40px;
+}
+
+.searchform {
+	position: relative;
+}
+
+// Icon font
+.searchform {
+	button {
+		@include vertical-align($position: absolute);
+		right: 10px;
+		cursor: pointer;
+		padding: 10px;
 	}
 }
 
@@ -456,18 +448,6 @@ body {
 	&:hover {
 		color: #fff;
 	}
-}
-
-.scrolltop:before {
-	font-family: "page-builder-framework";
-	content: "\f101";
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }
 
 .scrolltop:hover {

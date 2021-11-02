@@ -66,41 +66,13 @@ img.alignleft, figure.alignleft {
 }
 
 /* Sub Menu */
-.wpbf-sub-menu > .menu-item-has-children > a:after,
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children > a:after {
-	display: none;
-}
-
-.wpbf-sub-menu > .menu-item-has-children > a:before {
-	font-size: 14px;
-	margin-right: 5px;
-	font-family: "page-builder-framework";
-	content: "\f102";
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children > a:before {
+.wpbf-sub-menu > .menu-item-has-children .menu-item-has-children > a .wpbf-icon svg,
+.wpbf-sub-menu > .menu-item-has-children .menu-item-has-children > a .wpbff {
+	transform: rotate(90deg);
 	float: left;
-	margin-right: 20px;
-	font-size: 14px;
-	font-family: "page-builder-framework";
-	content: "\f104";
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }
 
-.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu > .menu-item-has-children > .sub-menu {
+.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children > .sub-menu {
 	left: auto;
 	right: 100%;
 }
@@ -132,6 +104,16 @@ img.alignleft, figure.alignleft {
 
 .wpbf-menu-toggle-container {
 	text-align: left;
+}
+
+/* Mobile Navigation */
+
+/* Sub Menu */
+.wpbf-mobile-menu .menu-item-has-children {
+	.wpbf-submenu-toggle {
+		right: auto;
+		left: 0;
+	}
 }
 
 /* Pre Header */
@@ -193,8 +175,24 @@ span.wpcf7-not-valid-tip {
 
 /* Searchform */
 .searchform {
-	.wpbff {
+	button {
 		right: auto;
 		left: 10px;
+	}
+}
+
+/* WóoCommerce Menu Item */
+.wpbf-woo-menu-item {
+	.wpbf-woo-menu-item-count {
+		margin-left: 0;
+		margin-right: 7px;
+	}
+}
+
+/* EDD Menu Item */
+.wpbf-edd-menu-item {
+	.wpbf-edd-menu-item-count {
+		margin-left: 0;
+		margin-right: 7px;
 	}
 }

@@ -151,9 +151,12 @@ add_filter( 'wpbf_sidebar_layout', 'wpbf_edd_sidebar_layout' );
  */
 function wpbf_edd_menu_item() {
 
-	// Vars.
-	$icon        = get_theme_mod( 'edd_menu_item_icon', 'cart' );
-	$icon        = apply_filters( 'wpbf_edd_menu_item_icon', '<i class="wpbff wpbff-' . esc_attr( $icon ) . '"></i>' );
+	if ( wpbf_svg_enabled() ) {
+		$icon = apply_filters( 'wpbf_edd_menu_item_icon', wpbf_svg( 'cart' )  );
+	} else {
+		$icon = apply_filters( 'wpbf_edd_menu_item_icon', '<i class="wpbff wpbff-' . esc_attr( get_theme_mod( 'edd_menu_item_icon', 'cart' ) ) . '"></i>' );
+	}
+
 	$css_classes = apply_filters( 'wpbf_edd_menu_item_classes', 'menu-item wpbf-edd-menu-item' );
 	$title       = apply_filters( 'wpbf_edd_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
 	$cart_count  = edd_get_cart_quantity();

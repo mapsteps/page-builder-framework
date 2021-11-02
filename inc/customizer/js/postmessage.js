@@ -1228,7 +1228,6 @@
 		value.bind(function (newval) {
 			styleTag.innerHTML = '\
 				.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count {background-color: ' + newval + ';}\
-				.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {color: ' + newval + ';}\
 			';
 		});
 	});
@@ -1240,7 +1239,6 @@
 		value.bind(function (newval) {
 			styleTag.innerHTML = '\
 				.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count {background-color: ' + newval + ';}\
-				.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count:before {color: ' + newval + ';}\
 			';
 		});
 	});
@@ -1622,7 +1620,6 @@
 		value.bind(function (newval) {
 			styleTag.innerHTML = '\
 				.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count {background-color: ' + newval + ';}\
-				.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {color: ' + newval + ';}\
 			';
 		});
 	});
@@ -1634,7 +1631,6 @@
 		value.bind(function (newval) {
 			styleTag.innerHTML = '\
 				.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count {background-color: ' + newval + ';}\
-				.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count:before {color: ' + newval + ';}\
 			';
 		});
 	});

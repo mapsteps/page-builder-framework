@@ -609,9 +609,12 @@ add_filter( 'wpbf_woo_menu_item_classes', 'wpbf_woo_menu_item_class_current' );
  */
 function wpbf_woo_menu_item( $markup = 'li' ) {
 
-	// Vars.
-	$icon        = get_theme_mod( 'woocommerce_menu_item_icon', 'cart' );
-	$icon        = apply_filters( 'wpbf_woo_menu_item_icon', '<i class="wpbff wpbff-' . esc_attr( $icon ) . '"></i>' );
+	if ( wpbf_svg_enabled() ) {
+		$icon = apply_filters( 'wpbf_woo_menu_item_icon', wpbf_svg( 'cart' )  );
+	} else {
+		$icon = apply_filters( 'wpbf_woo_menu_item_icon', '<i class="wpbff wpbff-' . esc_attr( get_theme_mod( 'woocommerce_menu_item_icon', 'cart' ) ) . '"></i>' );
+	}
+
 	$css_classes = apply_filters( 'wpbf_woo_menu_item_classes', 'menu-item wpbf-woo-menu-item' );
 	$title       = apply_filters( 'wpbf_woo_menu_item_title', __( 'Shopping Cart', 'page-builder-framework' ) );
 	$cart_count  = WC()->cart->get_cart_contents_count();
