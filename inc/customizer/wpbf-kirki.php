@@ -4728,6 +4728,8 @@ if ( ! wpbf_is_premium() ) {
  */
 function wpbf_custom_default_fonts( $standard_fonts ) {
 
+	$standard_fonts = array();
+
 	$standard_fonts['helvetica_neue'] = array(
 		'label'    => 'Helvetica Neue',
 		'variants' => array( 'regular', 'italic', '700', '700italic' ),
