@@ -144,7 +144,6 @@ function wpbf_show_bfcm_notice() {
     $start = strtotime( 'november 22nd, 2021' );
     $end   = strtotime( 'november 30th, 2021' );
     $now   = time();
-    $now   = strtotime( 'november 23rd, 2021' ); // Remove before publishing!
 
     // Stop here if we are not in the sales period.
     if ( $now < $start || $now > $end ) {
