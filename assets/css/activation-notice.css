@@ -3,37 +3,45 @@
  * Admin Notice
  * --------------------
  */
-.wpbf-activation-notice  {
+.wpbf-activation-notice,
+.wpbf-bfcm-notice  {
 	padding: 25px 20px;
 }
 
-.wpbf-activation-notice .notice-body {
+.wpbf-activation-notice .notice-body,
+.wpbf-bfcm-notice .notice-body {
 	display: flex;
 }
 
-.wpbf-activation-notice .notice-icon {
+.wpbf-activation-notice .notice-icon,
+.wpbf-bfcm-notice .notice-icon {
 	padding-right: 25px;
 }
 
-.wpbf-activation-notice .notice-icon img {
+.wpbf-activation-notice .notice-icon img,
+.wpbf-bfcm-notice .notice-icon img {
 	max-width: 55px;
 }
 
-.wpbf-activation-notice .notice-content {
+.wpbf-activation-notice .notice-content,
+.wpbf-bfcm-notice .notice-content {
 	width: 100%;
 }
 
-.wpbf-activation-notice .notice-content h2 {
+.wpbf-activation-notice .notice-content h2,
+.wpbf-bfcm-notice .notice-content h2 {
 	margin-top: 0;
 	margin-bottom: 10px;
 	font-weight: 700;
 }
 
-.wpbf-activation-notice .notice-content > p {
+.wpbf-activation-notice .notice-content > p,
+.wpbf-bfcm-notice .notice-content > p {
 	margin-top: 0;
 	margin-bottom: 10px;
 }
 
-.wpbf-activation-notice .notice-content > p:last-child {
+.wpbf-activation-notice .notice-content > p:last-child,
+.wpbf-bfcm-notice .notice-content > p:last-child {
 	margin-bottom: 0;
 }

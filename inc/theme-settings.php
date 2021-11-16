@@ -58,15 +58,15 @@ function wpbf_activation_notice_dismissal() {
 	$dismiss = isset( $_POST['dismiss'] ) ? absint( $_POST['dismiss'] ) : 0;
 
 	if ( empty( $dismiss ) ) {
-		wp_send_json_error( __( 'Invalid Request', 'page-builder-framework' ) );
+		wp_send_json_error( 'Invalid Request' );
 	}
 
 	if ( ! wp_verify_nonce( $nonce, 'WPBF_Dismiss_Activation_Notice' ) ) {
-		wp_send_json_error( __( 'Invalid Token', 'page-builder-framework' ) );
+		wp_send_json_error( 'Invalid Token' );
 	}
 
 	update_option( 'wpbf_activation_notice_dismissed', 1 );
-	wp_send_json_success( __( 'Activation notice has been dismissed', 'page-builder-framework' ) );
+	wp_send_json_success( 'Activation notice has been dismissed.' );
 
 }
 add_action( 'wp_ajax_wpbf_activation_notice_dismissal', 'wpbf_activation_notice_dismissal' );
@@ -80,15 +80,15 @@ function wpbf_bfcm_notice_dismissal() {
 	$dismiss = isset( $_POST['dismiss'] ) ? absint( $_POST['dismiss'] ) : 0;
 
 	if ( empty( $dismiss ) ) {
-		wp_send_json_error( __( 'Invalid Request', 'page-builder-framework' ) );
+		wp_send_json_error( 'Invalid Request' );
 	}
 
 	if ( ! wp_verify_nonce( $nonce, 'WPBF_Dismiss_Bfcm_Notice' ) ) {
-		wp_send_json_error( __( 'Invalid Token', 'page-builder-framework' ) );
+		wp_send_json_error( 'Invalid Token' );
 	}
 
 	update_option( 'wpbf_bfcm_notice_dismissed', 1 );
-	wp_send_json_success( __( 'Activation notice has been dismissed', 'page-builder-framework' ) );
+	wp_send_json_success( 'BFCM notice has been dismissed.' );
 
 }
 add_action( 'wp_ajax_wpbf_bfcm_notice_dismissal', 'wpbf_bfcm_notice_dismissal' );

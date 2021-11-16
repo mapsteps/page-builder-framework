@@ -1,16 +1,16 @@
 <?php
 /**
- * Theme activation notice's template.
+ * Theme BFCM notice template.
  *
  * @package Page Builder Framework
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$bfcm_url = 'https://mailoptin.io/pricing/?utm_source=wp-admin&utm_medium=admin-notice&utm_id=bf2021';
+$bfcm_url = 'https://wp-pagebuilderframework.com/pricing/?utm_source=repository&utm_medium=bfcm_banner&utm_campaign=wpbf';
 ?>
 
-<div class="notice notice-info wpbf-activation-notice is-dismissible">
+<div class="notice notice-info wpbf-bfcm-notice is-dismissible">
 	<div class="notice-body">
 		<div class="notice-icon">
 			<img src="<?php echo esc_url( WPBF_THEME_URI ); ?>/img/page-builder-framework-logo-blue.png" alt="Page Builder Framework Logo">
@@ -20,7 +20,7 @@ $bfcm_url = 'https://mailoptin.io/pricing/?utm_source=wp-admin&utm_medium=admin-
 				<?php _e( 'Huge Black Friday Sale - Up to 30% Off!*', 'page-builder-framework' ); ?>
 			</h2>
 			<p>
-				<?php _e( 'Upgrade to the <strong>Premium Add-On</strong> for Page Builder Framework today!', 'page-builder-framework' ); ?>
+				<?php _e( 'Upgrade to the <strong>Premium Add-On</strong> for Page Builder Framework, today!', 'page-builder-framework' ); ?>
 			</p>
 			<p>
 				<?php _e( 'Hurry up! The deal will expire soon!', 'page-builder-framework' ); ?><br>

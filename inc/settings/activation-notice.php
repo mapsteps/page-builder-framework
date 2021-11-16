@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme activation notice's template.
+ * Theme activation notice template.
  *
  * @package Page Builder Framework
  */
