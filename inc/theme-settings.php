@@ -72,6 +72,28 @@ function wpbf_activation_notice_dismissal() {
 add_action( 'wp_ajax_wpbf_activation_notice_dismissal', 'wpbf_activation_notice_dismissal' );
 
 /**
+ * Save BFCM notice dismissal.
+ */
+function wpbf_bfcm_notice_dismissal() {
+
+	$nonce   = isset( $_POST['nonce'] ) ? $_POST['nonce'] : 0;
+	$dismiss = isset( $_POST['dismiss'] ) ? absint( $_POST['dismiss'] ) : 0;
+
+	if ( empty( $dismiss ) ) {
+		wp_send_json_error( __( 'Invalid Request', 'page-builder-framework' ) );
+	}
+
+	if ( ! wp_verify_nonce( $nonce, 'WPBF_Dismiss_Bfcm_Notice' ) ) {
+		wp_send_json_error( __( 'Invalid Token', 'page-builder-framework' ) );
+	}
+
+	update_option( 'wpbf_bfcm_notice_dismissed', 1 );
+	wp_send_json_success( __( 'Activation notice has been dismissed', 'page-builder-framework' ) );
+
+}
+add_action( 'wp_ajax_wpbf_bfcm_notice_dismissal', 'wpbf_bfcm_notice_dismissal' );
+
+/**
  * Display activation notice.
  */
 function wpbf_show_activation_notice() {
@@ -95,3 +117,46 @@ function wpbf_show_activation_notice() {
 
 }
 add_action( 'admin_notices', 'wpbf_show_activation_notice' );
+
+/**
+ * Display BFCM notice.
+ */
+function wpbf_show_bfcm_notice() {
+
+	// Stop here if Premium Add-On is active.
+	if ( wpbf_is_premium() ) {
+		return;
+	}
+
+	// Stop here if current user is not an admin.
+	if ( ! current_user_can( 'administrator' ) ) {
+		return;
+	}
+
+    global $pagenow;
+    $screen = get_current_screen();
+
+    // Stop if we are not on the dashboard or wpbf settings page.
+	if ( $pagenow !== 'index.php' && 'appearance_page_wpbf-premium' !== $screen->id ) {
+		return;
+	}
+
+    $start = strtotime( 'november 22nd, 2021' );
+    $end   = strtotime( 'november 30th, 2021' );
+    $now   = time();
+    $now   = strtotime( 'november 23rd, 2021' ); // Remove before publishing!
+
+    // Stop here if we are not in the sales period.
+    if ( $now < $start || $now > $end ) {
+    	return;
+    }
+
+	// Stop here if notice has been dismissed.
+	if ( ! empty( get_option( 'wpbf_bfcm_notice_dismissed', 0 ) ) ) {
+		return;
+	}
+
+	require __DIR__ . '/settings/bfcm-notice.php';
+
+}
+add_action( 'admin_notices', 'wpbf_show_bfcm_notice' );
