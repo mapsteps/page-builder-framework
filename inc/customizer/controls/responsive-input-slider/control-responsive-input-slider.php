@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-class WPBF_Customize_Responsive_Input_Slider extends Kirki\Control\Base {
+class WPBF_Customize_Responsive_Input_Slider extends Kirki_Control_Base {
 
 	public $type = 'wpbf-responsive-input-slider';
 

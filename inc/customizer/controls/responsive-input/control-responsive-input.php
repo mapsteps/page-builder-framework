@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-class WPBF_Customize_Font_Size_Control extends Kirki\Control\Base {
+class WPBF_Customize_Font_Size_Control extends Kirki_Control_Base {
 
 	public $type = 'wpbf-responsive-input';
 
