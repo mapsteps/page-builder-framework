@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-class WPBF_Customize_Padding_Control extends Kirki_Control_Base {
+class WPBF_Customize_Padding_Control extends Kirki\Control\Base {
 
 	public $type = 'wpbf-padding';
 
