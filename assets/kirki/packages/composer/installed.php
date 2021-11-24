@@ -110,12 +110,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-dimension' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'v1.0.1',
+            'version' => '1.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-dimension',
             'aliases' => array(),
-            'reference' => '3e53137ccce54fb86d40eabdd07923eea2fd693f',
+            'reference' => '49a84573fa07b41a293f129317bbdb6421235990',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-editor' => array(
@@ -281,12 +281,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/field-typography' => array(
-            'pretty_version' => 'v1.0.1',
-            'version' => '1.0.1.0',
+            'pretty_version' => 'v1.0.2',
+            'version' => '1.0.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/field-typography',
             'aliases' => array(),
-            'reference' => 'ea5913b85574f291e8c244c85f6d42011779747b',
+            'reference' => '811d6402111d97f48537107b1673bd7e55e783ab',
             'dev_requirement' => false,
         ),
         'kirki-framework/googlefonts' => array(
