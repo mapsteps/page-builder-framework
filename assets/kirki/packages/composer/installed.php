@@ -182,12 +182,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-repeater' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'v1.0.1',
+            'version' => '1.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-repeater',
             'aliases' => array(),
-            'reference' => 'a07a53461ae5632d3a66f6758beea3b579f97b15',
+            'reference' => 'd2a76a952e4383d5cdf63e5a57de39d090f35d14',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-select' => array(
