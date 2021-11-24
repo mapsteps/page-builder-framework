@@ -1,14 +1,13 @@
 <?php
 /**
- * Theme activation notice's template.
+ * Theme activation notice template.
  *
  * @package Page Builder Framework
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-global $wpbf_activation_notice_dismissal_nonce;
-$screen = get_current_screen(); 
+$screen = get_current_screen();
 ?>
 
 <div class="notice notice-info wpbf-activation-notice is-dismissible">

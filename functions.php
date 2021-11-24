@@ -194,6 +194,9 @@ function wpbf_enqueue_admin_scripts() {
 			'activationNotice' => array(
 				'dismissalNonce' => wp_create_nonce( 'WPBF_Dismiss_Activation_Notice' ),
 			),
+			'bfcmNotice' => array(
+				'dismissalNonce' => wp_create_nonce( 'WPBF_Dismiss_Bfcm_Notice' ),
+			),
 		)
 	);
 
