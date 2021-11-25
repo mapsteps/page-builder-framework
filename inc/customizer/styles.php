@@ -372,23 +372,23 @@ $page_padding_right_mobile    = wpbf_get_theme_mod_value( $page_padding, 'mobile
 $page_padding_bottom_mobile   = wpbf_get_theme_mod_value( $page_padding, 'mobile_bottom' );
 $page_padding_left_mobile     = wpbf_get_theme_mod_value( $page_padding, 'mobile_left' );
 
-if ( ! is_bool( $page_padding_top_desktop ) || ! is_bool( $page_padding_right_desktop ) || ! is_bool( $page_padding_bottom_desktop ) || ! is_bool( $page_padding_left_desktop ) ) {
+if ( is_numeric( $page_padding_top_desktop ) || is_numeric( $page_padding_right_desktop ) || is_numeric( $page_padding_bottom_desktop ) || is_numeric( $page_padding_left_desktop ) ) {
 
 	echo '#inner-content {';
 
-	if ( ! is_bool( $page_padding_top_desktop ) ) {
+	if ( is_numeric( $page_padding_top_desktop ) ) {
 		echo sprintf( 'padding-top: %s;', esc_attr( $page_padding_top_desktop ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_right_desktop ) ) {
+	if ( is_numeric( $page_padding_right_desktop ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_desktop ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_bottom_desktop ) ) {
+	if ( is_numeric( $page_padding_bottom_desktop ) ) {
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $page_padding_bottom_desktop ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_left_desktop ) ) {
+	if ( is_numeric( $page_padding_left_desktop ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_desktop ) . 'px' );
 	}
 
@@ -396,25 +396,25 @@ if ( ! is_bool( $page_padding_top_desktop ) || ! is_bool( $page_padding_right_de
 
 }
 
-if ( ! is_bool( $page_padding_top_tablet ) || ! is_bool( $page_padding_right_tablet ) || ! is_bool( $page_padding_bottom_tablet ) || ! is_bool( $page_padding_left_tablet ) ) {
+if ( is_numeric( $page_padding_top_tablet ) || is_numeric( $page_padding_right_tablet ) || is_numeric( $page_padding_bottom_tablet ) || is_numeric( $page_padding_left_tablet ) ) {
 
 	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_desktop ) . ') {';
 
 	echo '#inner-content {';
 
-	if ( ! is_bool( $page_padding_top_tablet ) ) {
+	if ( is_numeric( $page_padding_top_tablet ) ) {
 		echo sprintf( 'padding-top: %s;', esc_attr( $page_padding_top_tablet ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_right_tablet ) ) {
+	if ( is_numeric( $page_padding_right_tablet ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_tablet ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_bottom_tablet ) ) {
+	if ( is_numeric( $page_padding_bottom_tablet ) ) {
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $page_padding_bottom_tablet ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_left_tablet ) ) {
+	if ( is_numeric( $page_padding_left_tablet ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_tablet ) . 'px' );
 	}
 
@@ -424,25 +424,25 @@ if ( ! is_bool( $page_padding_top_tablet ) || ! is_bool( $page_padding_right_tab
 
 }
 
-if ( ! is_bool( $page_padding_top_mobile ) || ! is_bool( $page_padding_right_mobile ) || ! is_bool( $page_padding_bottom_mobile ) || ! is_bool( $page_padding_left_mobile ) ) {
+if ( is_numeric( $page_padding_top_mobile ) || is_numeric( $page_padding_right_mobile ) || is_numeric( $page_padding_bottom_mobile ) || is_numeric( $page_padding_left_mobile ) ) {
 
 	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
 
 	echo '#inner-content {';
 
-	if ( ! is_bool( $page_padding_top_mobile ) ) {
+	if ( is_numeric( $page_padding_top_mobile ) ) {
 		echo sprintf( 'padding-top: %s;', esc_attr( $page_padding_top_mobile ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_right_mobile ) ) {
+	if ( is_numeric( $page_padding_right_mobile ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_mobile ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_bottom_mobile ) ) {
+	if ( is_numeric( $page_padding_bottom_mobile ) ) {
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $page_padding_bottom_mobile ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_left_mobile ) ) {
+	if ( is_numeric( $page_padding_left_mobile ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_mobile ) . 'px' );
 	}
 
@@ -452,15 +452,15 @@ if ( ! is_bool( $page_padding_top_mobile ) || ! is_bool( $page_padding_right_mob
 
 }
 
-if ( ! is_bool( $page_padding_right_desktop ) || ! is_bool( $page_padding_left_desktop ) ) {
+if ( is_numeric( $page_padding_right_desktop ) || is_numeric( $page_padding_left_desktop ) ) {
 
 	echo '.wpbf-container {';
 
-	if ( ! is_bool( $page_padding_right_desktop ) ) {
+	if ( is_numeric( $page_padding_right_desktop ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_desktop ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_left_desktop ) ) {
+	if ( is_numeric( $page_padding_left_desktop ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_desktop ) . 'px' );
 	}
 
@@ -468,17 +468,17 @@ if ( ! is_bool( $page_padding_right_desktop ) || ! is_bool( $page_padding_left_d
 
 }
 
-if ( ! is_bool( $page_padding_right_tablet ) || ! is_bool( $page_padding_left_tablet ) ) {
+if ( is_numeric( $page_padding_right_tablet ) || is_numeric( $page_padding_left_tablet ) ) {
 
 	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_desktop ) . ') {';
 
 	echo '.wpbf-container {';
 
-	if ( ! is_bool( $page_padding_right_tablet ) ) {
+	if ( is_numeric( $page_padding_right_tablet ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_tablet ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_left_tablet ) ) {
+	if ( is_numeric( $page_padding_left_tablet ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_tablet ) . 'px' );
 	}
 
@@ -488,17 +488,17 @@ if ( ! is_bool( $page_padding_right_tablet ) || ! is_bool( $page_padding_left_ta
 
 }
 
-if ( ! is_bool( $page_padding_right_mobile ) || ! is_bool( $page_padding_left_mobile ) ) {
+if ( is_numeric( $page_padding_right_mobile ) || is_numeric( $page_padding_left_mobile ) ) {
 
 	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
 
 	echo '.wpbf-container {';
 
-	if ( ! is_bool( $page_padding_right_mobile ) ) {
+	if ( is_numeric( $page_padding_right_mobile ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $page_padding_right_mobile ) . 'px' );
 	}
 
-	if ( ! is_bool( $page_padding_left_mobile ) ) {
+	if ( is_numeric( $page_padding_left_mobile ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $page_padding_left_mobile ) . 'px' );
 	}
 
@@ -922,23 +922,23 @@ if ( $sidebar_bg_color ) {
 
 }
 
-if ( ! is_bool( $sidebar_widget_padding_top_desktop ) || ! is_bool( $sidebar_widget_padding_right_desktop ) || ! is_bool( $sidebar_widget_padding_bottom_desktop ) || ! is_bool( $sidebar_widget_padding_left_desktop ) ) {
+if ( is_numeric( $sidebar_widget_padding_top_desktop ) || is_numeric( $sidebar_widget_padding_right_desktop ) || is_numeric( $sidebar_widget_padding_bottom_desktop ) || is_numeric( $sidebar_widget_padding_left_desktop ) ) {
 
 	echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
 
-	if ( ! is_bool( $sidebar_widget_padding_top_desktop ) ) {
+	if ( is_numeric( $sidebar_widget_padding_top_desktop ) ) {
 		echo sprintf( 'padding-top: %s;', esc_attr( $sidebar_widget_padding_top_desktop ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_right_desktop ) ) {
+	if ( is_numeric( $sidebar_widget_padding_right_desktop ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $sidebar_widget_padding_right_desktop ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_bottom_desktop ) ) {
+	if ( is_numeric( $sidebar_widget_padding_bottom_desktop ) ) {
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $sidebar_widget_padding_bottom_desktop ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_left_desktop ) ) {
+	if ( is_numeric( $sidebar_widget_padding_left_desktop ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $sidebar_widget_padding_left_desktop ) . 'px' );
 	}
 
@@ -946,25 +946,25 @@ if ( ! is_bool( $sidebar_widget_padding_top_desktop ) || ! is_bool( $sidebar_wid
 
 }
 
-if ( ! is_bool( $sidebar_widget_padding_top_tablet ) || ! is_bool( $sidebar_widget_padding_right_tablet ) || ! is_bool( $sidebar_widget_padding_bottom_tablet ) || ! is_bool( $sidebar_widget_padding_left_tablet ) ) {
+if ( is_numeric( $sidebar_widget_padding_top_tablet ) || is_numeric( $sidebar_widget_padding_right_tablet ) || is_numeric( $sidebar_widget_padding_bottom_tablet ) || is_numeric( $sidebar_widget_padding_left_tablet ) ) {
 
 	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_desktop ) . ') {';
 
 	echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
 
-	if ( ! is_bool( $sidebar_widget_padding_top_tablet ) ) {
+	if ( is_numeric( $sidebar_widget_padding_top_tablet ) ) {
 		echo sprintf( 'padding-top: %s;', esc_attr( $sidebar_widget_padding_top_tablet ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_right_tablet ) ) {
+	if ( is_numeric( $sidebar_widget_padding_right_tablet ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $sidebar_widget_padding_right_tablet ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_bottom_tablet ) ) {
+	if ( is_numeric( $sidebar_widget_padding_bottom_tablet ) ) {
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $sidebar_widget_padding_bottom_tablet ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_left_tablet ) ) {
+	if ( is_numeric( $sidebar_widget_padding_left_tablet ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $sidebar_widget_padding_left_tablet ) . 'px' );
 	}
 
@@ -974,25 +974,25 @@ if ( ! is_bool( $sidebar_widget_padding_top_tablet ) || ! is_bool( $sidebar_widg
 
 }
 
-if ( ! is_bool( $sidebar_widget_padding_top_mobile ) || ! is_bool( $sidebar_widget_padding_right_mobile ) || ! is_bool( $sidebar_widget_padding_bottom_mobile ) || ! is_bool( $sidebar_widget_padding_left_mobile ) ) {
+if ( is_numeric( $sidebar_widget_padding_top_mobile ) || is_numeric( $sidebar_widget_padding_right_mobile ) || is_numeric( $sidebar_widget_padding_bottom_mobile ) || is_numeric( $sidebar_widget_padding_left_mobile ) ) {
 
 	echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
 
 	echo '.wpbf-sidebar .widget, .elementor-widget-sidebar .widget {';
 
-	if ( ! is_bool( $sidebar_widget_padding_top_mobile ) ) {
+	if ( is_numeric( $sidebar_widget_padding_top_mobile ) ) {
 		echo sprintf( 'padding-top: %s;', esc_attr( $sidebar_widget_padding_top_mobile ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_right_mobile ) ) {
+	if ( is_numeric( $sidebar_widget_padding_right_mobile ) ) {
 		echo sprintf( 'padding-right: %s;', esc_attr( $sidebar_widget_padding_right_mobile ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_bottom_mobile ) ) {
+	if ( is_numeric( $sidebar_widget_padding_bottom_mobile ) ) {
 		echo sprintf( 'padding-bottom: %s;', esc_attr( $sidebar_widget_padding_bottom_mobile ) . 'px' );
 	}
 
-	if ( ! is_bool( $sidebar_widget_padding_left_mobile ) ) {
+	if ( is_numeric( $sidebar_widget_padding_left_mobile ) ) {
 		echo sprintf( 'padding-left: %s;', esc_attr( $sidebar_widget_padding_left_mobile ) . 'px' );
 	}
 

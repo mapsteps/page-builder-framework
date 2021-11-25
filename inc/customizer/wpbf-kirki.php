@@ -39,6 +39,19 @@ if ( ! function_exists( 'wpbf_kirki_sanitize_helper' ) ) {
 }
 
 /**
+ * Sanitization function to sanitize padding fields.
+ */
+function wpbf_is_numeric_sanitization_helper( $value ) {
+
+	if ( ! is_numeric( $value ) ) {
+		return "";
+	}
+
+	return absint( $value );
+
+}
+
+/**
  * Default font choices.
  *
  * This exists so we can filter and extend the font choices in Kirki.
@@ -1097,7 +1110,7 @@ foreach ( $archives as $archive ) {
 				'value'    => 'boxed',
 			),
 		),
-		'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
+		'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
 	) );
 
 	// Space between.
@@ -1433,7 +1446,7 @@ foreach ( $singles as $single ) {
 				'value'    => 'boxed',
 			),
 		),
-		'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
+		'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
 	) );
 
 	// Background color.
@@ -1563,7 +1576,7 @@ Kirki::add_field( 'wpbf', array(
 			'desktop_left'   => 20,
 		)
 	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
+	'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
 ) );
 
 // Separator.
@@ -2074,7 +2087,7 @@ Kirki::add_field( 'wpbf', array(
 			'mobile_left'    => 20,
 		)
 	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
+	'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
 ) );
 
 // Color.
@@ -3796,7 +3809,7 @@ Kirki::add_field( 'wpbf', array(
 			'left'   => 20,
 		)
 	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
+	'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
 ) );
 
 // Text alignment.
@@ -4134,7 +4147,7 @@ Kirki::add_field( 'wpbf', array(
 			'left'   => 20,
 		)
 	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
+	'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
 ) );
 
 // Menu item background color.
