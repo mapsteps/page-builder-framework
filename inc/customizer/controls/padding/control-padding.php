@@ -30,13 +30,7 @@ class WPBF_Customize_Padding_Control extends Kirki\Control\Base {
 
 		<?php foreach ( $areas as $area ) { ?>
 
-			<?php
-				$saved_value = isset( $value_bucket[$area] ) ? $value_bucket[$area] : '';
-				// Custom sanitization.
-				// Only sanitize using intval if we actually have a value
-				// Otherwise, default to false. This allows us to save empty fields.
-				$saved_value = $saved_value ? intval( $saved_value ) : '';
-			?>
+			<?php $saved_value = isset( $value_bucket[$area] ) ? $value_bucket[$area] : ''; ?>
 
 			<div class="wpbf-control-padding-<?php echo esc_attr( $area ); ?>">
 				<label>
