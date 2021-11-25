@@ -1110,7 +1110,7 @@ foreach ( $archives as $archive ) {
 				'value'    => 'boxed',
 			),
 		),
-		'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
+		'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 	) );
 
 	// Space between.
@@ -1446,7 +1446,7 @@ foreach ( $singles as $single ) {
 				'value'    => 'boxed',
 			),
 		),
-		'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
+		'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 	) );
 
 	// Background color.
@@ -1576,7 +1576,7 @@ Kirki::add_field( 'wpbf', array(
 			'desktop_left'   => 20,
 		)
 	),
-	'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
+	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 ) );
 
 // Separator.
@@ -2087,7 +2087,7 @@ Kirki::add_field( 'wpbf', array(
 			'mobile_left'    => 20,
 		)
 	),
-	'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
+	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 ) );
 
 // Color.
@@ -3809,7 +3809,7 @@ Kirki::add_field( 'wpbf', array(
 			'left'   => 20,
 		)
 	),
-	'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
+	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 ) );
 
 // Text alignment.
@@ -4147,7 +4147,7 @@ Kirki::add_field( 'wpbf', array(
 			'left'   => 20,
 		)
 	),
-	'sanitize_callback' => 'wpbf_is_numeric_sanitization_helper',
+	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 ) );
 
 // Menu item background color.
