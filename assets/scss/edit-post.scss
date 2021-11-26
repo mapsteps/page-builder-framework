@@ -18,3 +18,9 @@
   width: 100%;
   height: 30px;
 }
+
+// Hide "Inherit Global Settings" from Sidebar metabox on pages.
+.post-type-page #wpbf_sidebar #sidebar-global,
+.post-type-page #wpbf_sidebar #sidebar-global + label {
+  display: none;
+}
