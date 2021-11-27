@@ -449,3 +449,39 @@ if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_deskto
 	remove_theme_mod( 'sidebar_widget_padding_left_mobile' );
 
 }
+
+/**
+ * Kirki 4 backwards compatibility.
+ *
+ * Switching to Kirki 4 means is_plugin_active is no longer present in wpbf-kirki.php in the Premium Add-On.
+ * This was patched in the Premium Add-On itself. This function is here for people running older versions of the Premium Add-On (prior 2.7).
+ */
+function wpbf_kirki_is_plugin_active_fatal_error() {
+
+	// Safety first. Check if wpbf_is_premium exists.
+	if ( ! function_exists( 'wpbf_is_premium' ) ) {
+		return;
+	}
+
+	// If there is no Premium Add-On, bail out.
+	if ( ! wpbf_is_premium() ) {
+		return;
+	}
+
+	// Stop if WPBF_PREMIUM_VERSION is not defined.
+	if ( ! defined( 'WPBF_PREMIUM_VERSION' ) ) {
+		return;
+	}
+
+	// Stop if WPBF_PREMIUM_VERSION is above 2.7.6.2.
+	if ( version_compare( WPBF_PREMIUM_VERSION, '2.7.6.2', '>' ) ) {
+		return;
+	}
+
+	// Make sure plugin.php is loaded.
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		require_once ABSPATH . '/wp-admin/includes/plugin.php';
+	}
+
+}
+add_action( 'after_setup_theme', 'wpbf_kirki_is_plugin_active_fatal_error', 5 );
