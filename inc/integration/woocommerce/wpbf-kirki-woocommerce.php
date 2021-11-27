@@ -30,13 +30,6 @@ function wpbf_woo_customizer_setup( $wp_customize ) {
 }
 add_action( 'customize_register', 'wpbf_woo_customizer_setup', 20 );
 
-// Kirki configuration.
-Kirki::add_config( 'wpbf', array(
-	'capability'     => 'edit_theme_options',
-	'option_type'    => 'theme_mod',
-	'disable_output' => true,
-) );
-
 /* Sections – WooCommerce */
 
 // Menu item.
