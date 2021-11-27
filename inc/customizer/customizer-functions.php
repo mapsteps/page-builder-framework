@@ -234,7 +234,7 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
  *
  * @param WP_Customize_Manager $wp_customize Instance of WP_Customize_Manager.
  */
-function wpbf_custom_controls( $wp_customize ) {
+function wpbf_custom_controls_238290( $wp_customize ) {
 
 	// Custom controls.
 	require get_template_directory() . '/inc/customizer/controls/padding/control-padding.php';
@@ -244,4 +244,4 @@ function wpbf_custom_controls( $wp_customize ) {
 	require get_template_directory() . '/inc/customizer/controls/responsive-input-slider/control-responsive-input-slider.php';
 
 }
-add_action( 'customize_register', 'wpbf_custom_controls' );
+add_action( 'customize_register', 'wpbf_custom_controls_238290' );
