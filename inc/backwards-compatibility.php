@@ -454,7 +454,7 @@ if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_deskto
  * Kirki 4 backwards compatibility.
  *
  * Switching to Kirki 4 means is_plugin_active is no longer present in wpbf-kirki.php in the Premium Add-On.
- * This was patched in the Premium Add-On itself. This function is here for people running older versions of the Premium Add-On (prior 2.7).
+ * This was patched in the Premium Add-On itself. This function is here for people running older versions of the Premium Add-On (prior 2.7.7).
  */
 function wpbf_kirki_is_plugin_active_fatal_error() {
 
