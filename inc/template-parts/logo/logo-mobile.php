@@ -16,13 +16,29 @@ if ( has_custom_logo() ) {
 	$menu_alt_tag    = get_theme_mod( 'menu_logo_alt', get_bloginfo( 'name' ) );
 	$menu_title_tag  = get_theme_mod( 'menu_logo_title', get_bloginfo( 'name' ) );
 	$custom_logo_id  = get_theme_mod( 'custom_logo' );
-	$custom_logo_url = wp_get_attachment_image_src( $custom_logo_id, 'full' );
-	$custom_logo_url = apply_filters( 'wpbf_logo_mobile', $custom_logo_url[0] );
+	$custom_logo_data = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+	$custom_logo_url = apply_filters( 'wpbf_logo_mobile', $custom_logo_data[0] );
+
+	if ( $custom_logo_data[0] !== $custom_logo_url ) {
+
+		if ( function_exists( 'attachment_url_to_postid' ) ) {
+
+			$custom_logo_id   = attachment_url_to_postid( $custom_logo_url );
+			$custom_logo_data = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+
+		}
+
+	}
+
+	$custom_logo_width  = $custom_logo_data[1];
+	$custom_logo_height = $custom_logo_data[2];
+	$custom_logo_srcset = wp_get_attachment_image_srcset( $custom_logo_id, 'full' );
+	$custom_logo_sizes  = wp_get_attachment_image_sizes( $custom_logo_id, 'full' );
 
 	echo '<div class="wpbf-mobile-logo" itemscope="itemscope" itemtype="https://schema.org/Organization">';
 	do_action( 'wpbf_before_mobile_logo' );
 	echo '<a href="' . esc_url( $menu_logo_url ) . '" itemprop="url">';
-	echo '<img src="' . esc_url( $custom_logo_url ) . '" alt="' . esc_attr( $menu_alt_tag ) . '" title="' . esc_attr( $menu_title_tag ) . '" itemprop="logo" />';
+	echo '<img src="' . esc_url( $custom_logo_url ) . '" srcset="' . esc_attr( $custom_logo_srcset ) . '" sizes="' . esc_attr( $custom_logo_sizes ) . '" alt="' . esc_attr( $menu_alt_tag ) . '" title="' . esc_attr( $menu_title_tag ) . '" width="' . esc_attr( $custom_logo_width ) . '" height="' . esc_attr( $custom_logo_height ) . '" itemprop="logo" />';
 	echo '</a>';
 	do_action( 'wpbf_after_mobile_logo' );
 	echo '</div>';
