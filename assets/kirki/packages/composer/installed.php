@@ -200,12 +200,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-slider' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'v1.0.1',
+            'version' => '1.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-slider',
             'aliases' => array(),
-            'reference' => '39ec5f5fc043d7d98401d1d7e7f70a33c0c2a30c',
+            'reference' => '963ba880ba467cfb8bc89fa716c7c442846554f1',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-sortable' => array(
