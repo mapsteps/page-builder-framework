@@ -13,11 +13,11 @@ $menu_logo_url = is_customize_preview() ? site_url() : $menu_logo_url;
 
 if ( has_custom_logo() ) {
 
-	$menu_alt_tag       = get_theme_mod( 'menu_logo_alt', get_bloginfo( 'name' ) );
-	$menu_title_tag     = get_theme_mod( 'menu_logo_title', get_bloginfo( 'name' ) );
-	$custom_logo_id     = get_theme_mod( 'custom_logo' );
-	$custom_logo_data   = wp_get_attachment_image_src( $custom_logo_id, 'full' );
-	$custom_logo_url    = apply_filters( 'wpbf_logo', $custom_logo_data[0] );
+	$menu_alt_tag     = get_theme_mod( 'menu_logo_alt', get_bloginfo( 'name' ) );
+	$menu_title_tag   = get_theme_mod( 'menu_logo_title', get_bloginfo( 'name' ) );
+	$custom_logo_id   = get_theme_mod( 'custom_logo' );
+	$custom_logo_data = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+	$custom_logo_url  = apply_filters( 'wpbf_logo', $custom_logo_data[0] );
 
 	if ( $custom_logo_data[0] !== $custom_logo_url ) {
 
