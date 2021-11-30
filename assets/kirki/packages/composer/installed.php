@@ -164,12 +164,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-react-colorful' => array(
-            'pretty_version' => 'v1.0.3',
-            'version' => '1.0.3.0',
+            'pretty_version' => 'v1.0.4',
+            'version' => '1.0.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-react-colorful',
             'aliases' => array(),
-            'reference' => '91f3e1cb6f0e92c69ee4e88a539abf6689a87d9f',
+            'reference' => '71c875bbfb17d71415bbfdb751451c0244f89597',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-react-select' => array(
