@@ -164,12 +164,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-react-colorful' => array(
-            'pretty_version' => 'v1.0.4',
-            'version' => '1.0.4.0',
+            'pretty_version' => 'v1.0.5',
+            'version' => '1.0.5.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-react-colorful',
             'aliases' => array(),
-            'reference' => '71c875bbfb17d71415bbfdb751451c0244f89597',
+            'reference' => '79723a571f6b5a1b17d8fe8508bb2c9cd4024ec7',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-react-select' => array(
@@ -182,12 +182,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-repeater' => array(
-            'pretty_version' => 'v1.0.1',
-            'version' => '1.0.1.0',
+            'pretty_version' => 'v1.0.2',
+            'version' => '1.0.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-repeater',
             'aliases' => array(),
-            'reference' => 'd2a76a952e4383d5cdf63e5a57de39d090f35d14',
+            'reference' => '5b79c254bbbdb9d7343a11e03135eb1abf74983f',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-select' => array(
@@ -218,12 +218,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-upload' => array(
-            'pretty_version' => 'v1.0.1',
-            'version' => '1.0.1.0',
+            'pretty_version' => 'v1.0.2',
+            'version' => '1.0.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-upload',
             'aliases' => array(),
-            'reference' => '5b8f9017122f38c35aa5909875dccf5b00e70893',
+            'reference' => '17592f5f6025f4c635ab0b0501e89f81b9cd85ea',
             'dev_requirement' => false,
         ),
         'kirki-framework/data-option' => array(
