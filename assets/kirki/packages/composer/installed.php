@@ -20,12 +20,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/compatibility' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'v1.0.1',
+            'version' => '1.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/compatibility',
             'aliases' => array(),
-            'reference' => 'c1dfc2577bff91dc98ad4d359345936b3f2a044b',
+            'reference' => 'af735b6ffd791bd122023a45ced8ac3ae7b8d731',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-base' => array(
@@ -218,12 +218,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-upload' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'v1.0.1',
+            'version' => '1.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-upload',
             'aliases' => array(),
-            'reference' => '93eb0ab618025e3c6649cad4ced86d976d05c35a',
+            'reference' => '5b8f9017122f38c35aa5909875dccf5b00e70893',
             'dev_requirement' => false,
         ),
         'kirki-framework/data-option' => array(
