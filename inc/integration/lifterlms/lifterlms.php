@@ -32,7 +32,7 @@ add_action( 'wp_enqueue_scripts', 'wpbf_lifterlms_scripts', 10 );
 require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/lifterlms-helpers.php';
 
 // LifterLMS customizer settings.
-// require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/wpbf-kirki-lifterlms.php';
+// require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/lifterlms-customizer-settings.php';
 
 // LifterLMS functions.
 require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/lifterlms-functions.php';
