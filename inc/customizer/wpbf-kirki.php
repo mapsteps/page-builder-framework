@@ -2161,7 +2161,7 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'custom',
-	'settings' => 'theme_buttons_separator_1',
+	'settings' => 'theme_buttons_separator_0',
 	'section'  => 'wpbf_button_options',
 	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
 	'priority' => 1,
