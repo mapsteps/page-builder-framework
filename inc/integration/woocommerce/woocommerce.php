@@ -30,7 +30,7 @@ function wpbf_woo_change_inline_style_location( $location ) {
 add_filter( 'wpbf_add_inline_style', 'wpbf_woo_change_inline_style_location' );
 
 /**
- * Theme setup.
+ * WooCommerce theme setup.
  */
 function wpbf_woo_theme_setup() {
 
@@ -79,7 +79,7 @@ function wpbf_woo_scripts() {
 add_action( 'wp_enqueue_scripts', 'wpbf_woo_scripts', 10 );
 
 // WooCommerce customizer settings.
-require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/wpbf-kirki-woocommerce.php';
+require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-customizer-settings.php';
 
 // WooCommerce functions.
 require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-functions.php';
