@@ -9,66 +9,6 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Remove our wrapper from woocommerce products loop when Elementor is used.
- *
- * Elementor adds their own rappers & handles responsiveness themselves.
- * Let's not interfere with what they do.#
- *
- * Not currently executing - caused more issues than it solved.
- *
- * @see wp-content/plugins/elementor-pro/modules/theme-builder/module.php
- * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/conditions-manager.php
- * @see wp-content/plugins/elementor-pro/modules/theme-builder/classes/locations-manager.php
- * @see wp-content/plugins/elementor-pro/modules/theme-builder/documents/theme-document.php
- *
- * @return bool
- */
-function wpbf_woo_elementor_product_loop_wrapper() {
-
-	if ( ! class_exists( '\Elementor\Plugin' ) ) {
-		return true;
-	}
-
-	$location = '';
-
-	// is_singular() is included here as it is possible
-	// to also render a product loop on posts/pages/cpt's.
-	if ( is_product() || is_singular() ) {
-		$location = 'single';
-	} elseif ( is_shop() || is_product_category() || is_product_taxonomy() ) {
-		$location = 'archive';
-	}
-
-	if ( 'single' === $location ) {
-		global $post;
-
-		$built_with_elementor = \Elementor\Plugin::$instance->documents->get( $post->ID )->is_built_with_elementor();
-
-		if ( $built_with_elementor ) {
-			return false;
-		} elseif ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
-			$classes = get_body_class();
-
-			if ( in_array( 'elementor-template-full-width', $classes ) ) {
-			    return false;
-			}
-		}
-	} elseif ( 'archive' === $location ) {
-		if ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
-			$classes = get_body_class();
-
-			if ( in_array( 'elementor-template-full-width', $classes ) ) {
-			    return false;
-			}
-		}
-	}
-
-	return true;
-
-}
-// add_filter( 'wpbf_woo_product_loop_wrapper', 'wpbf_woo_elementor_product_loop_wrapper' );
-
-/**
  * Deregister defaults.
  */
 function wpbf_woo_deregister_defaults() {
