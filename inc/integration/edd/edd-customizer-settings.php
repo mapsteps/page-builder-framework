@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-// Textdomain. This is required, otherwise strings aren't translateable.
+// Load textdomain. This is required to make strings translatable.
 load_theme_textdomain( 'page-builder-framework' );
 
 /* Panels */
@@ -35,7 +35,7 @@ Kirki::add_section( 'wpbf_edd_sidebar_options', array(
 	'priority' => 2,
 ) );
 
-/* Fields – Sidebar */
+/* Fields - Sidebar */
 
 // Shop sidebar layout.
 Kirki::add_field( 'wpbf', array(
@@ -71,7 +71,7 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-/* Fields – Menu Item */
+/* Fields - Menu Item */
 
 // Hide from non-EDD pages.
 Kirki::add_field( 'wpbf', array(
