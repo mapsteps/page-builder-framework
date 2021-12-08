@@ -25,11 +25,11 @@ require_once WPBF_THEME_DIR . '/inc/options.php';
 // Quick edit.
 require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 
-// Kirki framework.
+// Kirki.
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
-// Kirki customizer controls.
-require_once WPBF_THEME_DIR . '/inc/customizer/wpbf-kirki.php';
+// Customizer settings.
+require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
 
 // Body classes.
 require_once WPBF_THEME_DIR . '/inc/body-classes.php';
@@ -46,14 +46,8 @@ require_once WPBF_THEME_DIR . '/inc/helpers.php';
 // Local Gravatars.
 require_once WPBF_THEME_DIR . '/inc/gravatar.php';
 
-// Comments.
-require_once WPBF_THEME_DIR . '/inc/comments.php';
-
 // Misc.
 require_once WPBF_THEME_DIR . '/inc/misc.php';
-
-// Gutenberg integration.
-require_once WPBF_THEME_DIR . '/inc/integration/gutenberg/gutenberg.php';
 
 // Customizer functions.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
@@ -65,6 +59,9 @@ require_once WPBF_THEME_DIR . '/inc/theme-mods.php';
 require_once WPBF_THEME_DIR . '/inc/theme-settings.php';
 
 /* Integration */
+
+// Gutenberg integration.
+require_once WPBF_THEME_DIR . '/inc/integration/gutenberg/gutenberg.php';
 
 // Header/Footer Elementor integration.
 if ( ! function_exists( 'wpbf_header_footer_elementor_support' ) ) {

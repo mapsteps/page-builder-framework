@@ -194,7 +194,7 @@ function wpbf_customizer_preview_css() {
 	}
 
 	echo '<style id="wpbf-customize-saved-styles">';
-	require get_template_directory() . '/inc/customizer/styles.php';
+	require WPBF_THEME_DIR . '/inc/customizer/styles.php';
 	echo '</style>';
 
 }
@@ -237,11 +237,45 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
 function wpbf_custom_controls_238290( $wp_customize ) {
 
 	// Custom controls.
-	require get_template_directory() . '/inc/customizer/controls/padding/control-padding.php';
-	require get_template_directory() . '/inc/customizer/controls/input-slider/control-input-slider.php';
-	require get_template_directory() . '/inc/customizer/controls/responsive-input/control-responsive-input.php';
-	require get_template_directory() . '/inc/customizer/controls/responsive-padding/control-responsive-padding.php';
-	require get_template_directory() . '/inc/customizer/controls/responsive-input-slider/control-responsive-input-slider.php';
+	require WPBF_THEME_DIR . '/inc/customizer/controls/padding/control-padding.php';
+	require WPBF_THEME_DIR . '/inc/customizer/controls/input-slider/control-input-slider.php';
+	require WPBF_THEME_DIR . '/inc/customizer/controls/responsive-input/control-responsive-input.php';
+	require WPBF_THEME_DIR . '/inc/customizer/controls/responsive-padding/control-responsive-padding.php';
+	require WPBF_THEME_DIR . '/inc/customizer/controls/responsive-input-slider/control-responsive-input-slider.php';
 
 }
 add_action( 'customize_register', 'wpbf_custom_controls_238290' );
+
+/**
+ * Custom Kirki default fonts.
+ *
+ * @param array $standard_fonts The standard fonts.
+ *
+ * @return array The updated standard fonts.
+ */
+function wpbf_custom_default_fonts( $standard_fonts ) {
+
+    $standard_fonts = array();
+
+    $standard_fonts['helvetica_neue'] = array(
+        'label'    => 'Helvetica Neue',
+        'variants' => array( 'regular', 'italic', '700', '700italic' ),
+        'stack'    => '"Helvetica Neue", Helvetica, Arial, sans-serif',
+    );
+
+    $standard_fonts['helvetica'] = array(
+        'label'    => 'Helvetica',
+        'variants' => array( 'regular', 'italic', '700', '700italic' ),
+        'stack'    => 'Helvetica, Arial, sans-serif',
+    );
+
+    $standard_fonts['arial'] = array(
+        'label'    => 'Arial',
+        'variants' => array( 'regular', 'italic', '700', '700italic' ),
+        'stack'    => 'Arial, Helvetica, sans-serif',
+    );
+
+    return $standard_fonts;
+
+}
+add_filter( 'kirki/fonts/standard_fonts', 'wpbf_custom_default_fonts', 0 );
