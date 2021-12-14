@@ -20,3 +20,5 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-premium.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-general.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-blog.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-typography.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-header.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-footer.php';
