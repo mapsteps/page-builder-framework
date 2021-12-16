@@ -23,6 +23,16 @@ Kirki::add_section( 'wpbf_page_options', array(
 	'title'    => __( 'Layout', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
 	'priority' => 100,
+	'tabs'     => array(
+		'general' => array(
+			'icon'  => 'dashicons dashicons-media-document',
+			'label' => __( 'General', 'page-builder-framework' ),
+		),
+		'design'  => array(
+			'icon'  => 'dashicons dashicons-media-document',
+			'label' => __( 'Design', 'page-builder-framework' ),
+		),
+	),
 ) );
 
 // Sidebar.
@@ -71,6 +81,7 @@ Kirki::add_field( 'wpbf', array(
 	'transport'   => 'postMessage',
 	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
 	'priority'    => 0,
+	'tab'         => 'general',
 ) );
 
 // Padding.
@@ -81,6 +92,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'          => 'page_padding',
 	'priority'          => 1,
 	'transport'         => 'postMessage',
+	'tab'               => 'general',
 	'default'           => json_encode(
 		array(
 			'desktop_top'    => 40,
@@ -93,13 +105,14 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'boxed_layout_separator',
-	'section'  => 'wpbf_page_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 2,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'boxed_layout_separator',
+		'section'         => 'wpbf_page_options',
+		'priority'        => 2,
+		'tab'             => 'general',
+	]
+);
 
 // Boxed.
 Kirki::add_field( 'wpbf', array(
@@ -109,6 +122,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'  => 'wpbf_page_options',
 	'default'  => 0,
 	'priority' => 2,
+	'tab'      => 'general',
 ) );
 
 // Boxed margin.
@@ -120,6 +134,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 3,
 	'default'         => 0,
 	'transport'       => 'postMessage',
+	'tab'             => 'general',
 	'choices'         => array(
 		'min'  => 0,
 		'max'  => 80,
@@ -143,6 +158,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 4,
 	'default'         => 20,
 	'transport'       => 'postMessage',
+	'tab'             => 'general',
 	'choices'         => array(
 		'min'  => 20,
 		'max'  => 100,
@@ -166,6 +182,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => '#ffffff',
 	'priority'        => 5,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -179,20 +196,21 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'custom',
-	'settings'        => 'page_boxed_box_shadow_separator',
-	'section'         => 'wpbf_page_options',
-	'default'         => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'        => 5,
-	'active_callback' => array(
-		array(
-			'setting'  => 'page_boxed',
-			'operator' => '==',
-			'value'    => 1,
-		),
-	),
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'page_boxed_box_shadow_separator',
+		'section'         => 'wpbf_page_options',
+		'priority'        => 5,
+		'tab'             => 'general',
+		'active_callback' => [
+			[
+				'setting'  => 'page_boxed',
+				'operator' => '==',
+				'value'    => 1,
+			],
+		],
+	]
+);
 
 // Box shadow.
 Kirki::add_field( 'wpbf', array(
@@ -202,6 +220,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'default'         => 0,
 	'priority'        => 6,
+	'tab'             => 'general',
 	'active_callback' => array(
 		array(
 			'setting'  => 'page_boxed',
@@ -219,6 +238,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 7,
 	'default'         => 25,
+	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => 0,
 		'max'  => 100,
@@ -246,6 +266,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 8,
 	'default'         => 0,
+	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => -100,
 		'max'  => 100,
@@ -273,6 +294,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 9,
 	'default'         => 0,
+	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => -100,
 		'max'  => 100,
@@ -300,6 +322,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 10,
 	'default'         => 0,
+	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => -100,
 		'max'  => 100,
@@ -327,6 +350,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'default'         => 'rgba(0,0,0,.15)',
 	'priority'        => 11,
+	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -405,13 +429,14 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'sidebar_widget_separator',
-	'section'  => 'wpbf_sidebar_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 2,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'sidebar_widget_separator',
+		'section'         => 'wpbf_sidebar_options',
+		'priority'        => 2,
+		'tab'             => 'general',
+	]
+);
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
@@ -757,13 +782,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'theme_buttons_separator_0',
-	'section'  => 'wpbf_button_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 1,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'theme_buttons_separator_0',
+		'section'         => 'wpbf_button_options',
+		'priority'        => 1,
+	]
+);
 
 // Primary background color.
 Kirki::add_field( 'wpbf', array(
@@ -818,13 +843,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'theme_buttons_separator_1',
-	'section'  => 'wpbf_button_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 1,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'theme_buttons_separator_1',
+		'section'         => 'wpbf_button_options',
+		'priority'        => 1,
+	]
+);
 
 // Border radius.
 Kirki::add_field( 'wpbf', array(
