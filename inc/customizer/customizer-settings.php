@@ -15,10 +15,19 @@ load_theme_textdomain( 'page-builder-framework' );
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-helpers.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-setup.php';
 
-// Load customizer settings.
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-premium.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-general.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-blog.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-typography.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-header.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-footer.php';
+/**
+ * Load customizer controls inside plugins_loaded hook.
+ */
+function wpbf_customizer_controls() {
+
+	// Load customizer settings.
+	require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-premium.php';
+	require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-general.php';
+	require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-blog.php';
+	require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-typography.php';
+	require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-header.php';
+	require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-footer.php';
+
+}
+
+add_action( 'plugins_loaded', 'wpbf_customizer_controls' );
