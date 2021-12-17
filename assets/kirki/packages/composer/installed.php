@@ -38,12 +38,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-checkbox' => array(
-            'pretty_version' => 'v1.0.0',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'v1.0.1',
+            'version' => '1.0.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-checkbox',
             'aliases' => array(),
-            'reference' => '0bf14a2136f0f55caba0fdc6b7e67a3150508c15',
+            'reference' => '769f2ce5dc0eb89e12886dc6d16cf10a1c181405',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-code' => array(

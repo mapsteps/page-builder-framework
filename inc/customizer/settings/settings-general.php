@@ -23,16 +23,16 @@ Kirki::add_section( 'wpbf_page_options', array(
 	'title'    => __( 'Layout', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
 	'priority' => 100,
-	// 'tabs'     => array(
-	// 	'general' => array(
-	// 		'icon'  => 'dashicons dashicons-media-document',
-	// 		'label' => __( 'General', 'page-builder-framework' ),
-	// 	),
-	// 	'design'  => array(
-	// 		'icon'  => 'dashicons dashicons-media-document',
-	// 		'label' => __( 'Design', 'page-builder-framework' ),
-	// 	),
-	// ),
+	'tabs'     => array(
+		'general' => array(
+			'icon'  => 'dashicons dashicons-media-document',
+			'label' => __( 'General', 'page-builder-framework' ),
+		),
+		'design'  => array(
+			'icon'  => 'dashicons dashicons-media-document',
+			'label' => __( 'Design', 'page-builder-framework' ),
+		),
+	),
 ) );
 
 // Sidebar.
