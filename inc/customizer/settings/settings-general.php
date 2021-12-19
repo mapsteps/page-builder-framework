@@ -78,6 +78,7 @@ new \Kirki\Pro\Field\Headline(
 		'settings'    => 'page_general_headline',
 		'label'       => esc_html__( 'General', 'kirki-pro' ),
 		'section'     => 'wpbf_page_options',
+		'tab'         => 'general',
 		'priority'    => 0,
 	]
 );
@@ -202,6 +203,7 @@ new \Kirki\Pro\Field\HeadlineToggle(
 		'label'       => esc_html__( 'Box Shadow', 'kirki-pro' ),
 		'section'     => 'wpbf_page_options',
 		'default'     => 0,
+		'tab'         => 'design',
 		'priority'    => 6,
 		'active_callback' => [
 			[
