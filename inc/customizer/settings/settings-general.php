@@ -123,6 +123,7 @@ new \Kirki\Pro\Field\HeadlineToggle(
 		'section'     => 'wpbf_page_options',
 		'default'     => 0,
 		'priority'    => 2,
+		'tab'         => 'general',
 	]
 );
 

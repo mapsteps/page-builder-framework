@@ -78,6 +78,5 @@ add_action( 'customize_register', 'wpbf_customizer_setup', 20 );
 Kirki::add_config( 'wpbf', array(
 	'capability'        => 'edit_theme_options',
 	'option_type'       => 'theme_mod',
-	'gutenberg_support' => true,
 	'disable_output'    => true,
 ) );
