@@ -326,12 +326,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/module-field-dependencies' => array(
-            'pretty_version' => 'v1.0.3',
-            'version' => '1.0.3.0',
+            'pretty_version' => 'v1.0.4',
+            'version' => '1.0.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/module-field-dependencies',
             'aliases' => array(),
-            'reference' => '629c3f2cf10851480da6f7d92c676171265e5d7a',
+            'reference' => '758bb2b9656cd94b8062c1cae3d718e1d35b4818',
             'dev_requirement' => false,
         ),
         'kirki-framework/module-panels' => array(
