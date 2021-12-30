@@ -1099,7 +1099,6 @@
 		var styleTag = setupStyleTag('breadcrumbs_alignment');
 
 		value.bind(function (newval) {
-			text - align
 			styleTag.innerHTML = '.wpbf-breadcrumbs-container {text-align: ' + newval + ';}';
 		});
 	});
