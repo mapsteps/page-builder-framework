@@ -23,16 +23,6 @@ Kirki::add_section( 'wpbf_page_options', array(
 	'title'    => __( 'Layout', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
 	'priority' => 100,
-	'tabs'     => array(
-		'general' => array(
-			'icon'  => 'dashicons dashicons-media-document',
-			'label' => __( 'General', 'page-builder-framework' ),
-		),
-		'design'  => array(
-			'icon'  => 'dashicons dashicons-media-document',
-			'label' => __( 'Design', 'page-builder-framework' ),
-		),
-	),
 ) );
 
 // Sidebar.
@@ -72,14 +62,13 @@ Kirki::add_section( 'wpbf_scrolltop_options', array(
 
 /* Fields - Layout */
 
-// Boxed.
+// Headline.
 new \Kirki\Pro\Field\Headline(
 	[
-		'settings'    => 'general_headline',
-		'label'       => esc_html__( 'General', 'kirki-pro' ),
-		'section'     => 'wpbf_page_options',
-		'tab'         => 'general',
-		'priority'    => 0,
+		'settings' => 'general_headline',
+		'label'    => esc_html__( 'General', 'kirki-pro' ),
+		'section'  => 'wpbf_page_options',
+		'priority' => 0,
 	]
 );
 
@@ -92,18 +81,16 @@ Kirki::add_field( 'wpbf', array(
 	'transport'   => 'postMessage',
 	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
 	'priority'    => 0,
-	'tab'         => 'general',
 ) );
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
 	'type'              => 'responsive_padding',
-	'label'             => __( 'Padding', 'page-builder-framework' ),
+	'label'             => __( 'Page Padding', 'page-builder-framework' ),
 	'section'           => 'wpbf_page_options',
 	'settings'          => 'page_padding',
 	'priority'          => 1,
 	'transport'         => 'postMessage',
-	'tab'               => 'general',
 	'default'           => json_encode(
 		array(
 			'desktop_top'    => 40,
@@ -118,12 +105,11 @@ Kirki::add_field( 'wpbf', array(
 // Boxed.
 new \Kirki\Pro\Field\HeadlineToggle(
 	[
-		'settings'    => 'page_boxed',
-		'label'       => esc_html__( 'Boxed Layout', 'kirki-pro' ),
-		'section'     => 'wpbf_page_options',
-		'default'     => 0,
-		'priority'    => 2,
-		'tab'         => 'general',
+		'settings' => 'page_boxed',
+		'label'    => esc_html__( 'Boxed Layout', 'kirki-pro' ),
+		'section'  => 'wpbf_page_options',
+		'default'  => 0,
+		'priority' => 2,
 	]
 );
 
@@ -136,7 +122,6 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 3,
 	'default'         => 0,
 	'transport'       => 'postMessage',
-	'tab'             => 'general',
 	'choices'         => array(
 		'min'  => 0,
 		'max'  => 80,
@@ -160,7 +145,6 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 4,
 	'default'         => 20,
 	'transport'       => 'postMessage',
-	'tab'             => 'general',
 	'choices'         => array(
 		'min'  => 20,
 		'max'  => 100,
@@ -184,7 +168,6 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => '#ffffff',
 	'priority'        => 5,
 	'transport'       => 'postMessage',
-	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -200,12 +183,11 @@ Kirki::add_field( 'wpbf', array(
 // Box shadow.
 new \Kirki\Pro\Field\HeadlineToggle(
 	[
-		'settings'    => 'page_boxed_box_shadow',
-		'label'       => esc_html__( 'Box Shadow', 'kirki-pro' ),
-		'section'     => 'wpbf_page_options',
-		'default'     => 0,
-		'tab'         => 'design',
-		'priority'    => 6,
+		'settings' => 'page_boxed_box_shadow',
+		'label'    => esc_html__( 'Box Shadow', 'kirki-pro' ),
+		'section'  => 'wpbf_page_options',
+		'default'  => 0,
+		'priority' => 6,
 		'active_callback' => [
 			[
 				'setting'  => 'page_boxed',
@@ -224,7 +206,6 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 7,
 	'default'         => 25,
-	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => 0,
 		'max'  => 100,
@@ -252,7 +233,6 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 8,
 	'default'         => 0,
-	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => -100,
 		'max'  => 100,
@@ -280,7 +260,6 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 9,
 	'default'         => 0,
-	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => -100,
 		'max'  => 100,
@@ -308,7 +287,6 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'priority'        => 10,
 	'default'         => 0,
-	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => -100,
 		'max'  => 100,
@@ -336,7 +314,6 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_page_options',
 	'default'         => 'rgba(0,0,0,.15)',
 	'priority'        => 11,
-	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -356,14 +333,14 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields - Sidebar */
 
-// Boxed.
+// Headline.
 new \Kirki\Pro\Field\Headline(
 	[
-		'settings'    => 'sidebar_headline',
-		'label'       => esc_html__( 'Sidebar', 'kirki-pro' ),
-		'section'     => 'wpbf_sidebar_options',
-		'default'     => 0,
-		'priority'    => 0,
+		'settings' => 'sidebar_headline',
+		'label'    => esc_html__( 'Sidebar', 'kirki-pro' ),
+		'section'  => 'wpbf_sidebar_options',
+		'default'  => 0,
+		'priority' => 0,
 	]
 );
 
@@ -371,7 +348,7 @@ new \Kirki\Pro\Field\Headline(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'select',
 	'settings' => 'sidebar_position',
-	'label'    => __( 'Sidebar', 'page-builder-framework' ),
+	'label'    => __( 'Position', 'page-builder-framework' ),
 	'section'  => 'wpbf_sidebar_options',
 	'default'  => 'right',
 	'priority' => 1,
@@ -425,30 +402,20 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Separator.
-// new \Kirki\Pro\Field\Divider(
-// 	[
-// 		'settings'        => 'sidebar_widget_separator',
-// 		'section'         => 'wpbf_sidebar_options',
-// 		'priority'        => 2,
-// 		'tab'             => 'general',
-// 	]
-// );
-
-// Boxed.
+// Headline.
 new \Kirki\Pro\Field\Headline(
 	[
-		'settings'    => 'widget_headline',
-		'label'       => esc_html__( 'Sidebar Widgets', 'kirki-pro' ),
-		'section'     => 'wpbf_sidebar_options',
-		'priority'    => 2,
+		'settings' => 'widget_headline',
+		'label'    => esc_html__( 'Sidebar Widgets', 'kirki-pro' ),
+		'section'  => 'wpbf_sidebar_options',
+		'priority' => 2,
 	]
 );
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
 	'type'              => 'responsive_padding',
-	'label'             => __( 'Widget Padding', 'page-builder-framework' ),
+	'label'             => __( 'Padding', 'page-builder-framework' ),
 	'section'           => 'wpbf_sidebar_options',
 	'settings'          => 'sidebar_widget_padding',
 	'priority'          => 3,
@@ -791,9 +758,9 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 new \Kirki\Pro\Field\Divider(
 	[
-		'settings'        => 'theme_buttons_separator_0',
-		'section'         => 'wpbf_button_options',
-		'priority'        => 1,
+		'settings' => 'theme_buttons_separator_0',
+		'section'  => 'wpbf_button_options',
+		'priority' => 1,
 	]
 );
 
@@ -852,9 +819,9 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 new \Kirki\Pro\Field\Divider(
 	[
-		'settings'        => 'theme_buttons_separator_1',
-		'section'         => 'wpbf_button_options',
-		'priority'        => 1,
+		'settings' => 'theme_buttons_separator_1',
+		'section'  => 'wpbf_button_options',
+		'priority' => 1,
 	]
 );
 
