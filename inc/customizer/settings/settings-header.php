@@ -140,6 +140,22 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'pre_header_column_two_layout_separator',
+		'section'         => 'wpbf_pre_header_options',
+		'priority'        => 2,
+		'active_callback' => [
+			[
+				'setting'  => 'pre_header_layout',
+				'operator' => '==',
+				'value'    => 'two',
+			],
+		],
+	]
+);
+
 // Column two layout.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'select',
@@ -202,20 +218,20 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'custom',
-	'settings'        => 'pre_header_separator',
-	'section'         => 'wpbf_pre_header_options',
-	'default'         => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority'        => 3,
-	'active_callback' => array(
-		array(
-			'setting'  => 'pre_header_layout',
-			'operator' => '!=',
-			'value'    => 'none',
-		),
-	),
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'pre_header_separator',
+		'section'         => 'wpbf_pre_header_options',
+		'priority'        => 3,
+		'active_callback' => [
+			[
+				'setting'  => 'pre_header_layout',
+				'operator' => '!=',
+				'value'    => 'none',
+			],
+		],
+	]
+);
 
 // Width.
 Kirki::add_field( 'wpbf', array(
@@ -413,13 +429,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'logo_image_separator',
-	'section'  => 'title_tagline',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 4,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'logo_image_separator',
+		'section'  => 'title_tagline',
+		'priority' => 4,
+	]
+);
 
 // Color.
 Kirki::add_field( 'wpbf', array(
@@ -492,13 +508,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'tagline_separator',
-	'section'  => 'title_tagline',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 14,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'tagline_separator',
+		'section'  => 'title_tagline',
+		'priority' => 14,
+	]
+);
 
 /* Fields – Tagline */
 
@@ -508,7 +524,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'menu_logo_description',
 	'label'           => __( 'Display Tagline', 'page-builder-framework' ),
 	'section'         => 'title_tagline',
-	'default'         => '0',
+	'default'         => 0,
 	'priority'        => 20,
 	'active_callback' => array(
 		array(
@@ -534,7 +550,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'menu_logo_description_mobile',
 	'label'           => __( 'Display Tagline on Mobile', 'page-builder-framework' ),
 	'section'         => 'title_tagline',
-	'default'         => '0',
+	'default'         => 0,
 	'priority'        => 20,
 	'active_callback' => array(
 		array(
@@ -613,13 +629,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'logo_settings_separator',
-	'section'  => 'title_tagline',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 24,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'logo_settings_separator',
+		'section'  => 'title_tagline',
+		'priority' => 24,
+	]
+);
 
 /* Fields – Logo Settings */
 
@@ -668,13 +684,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'logo_container_separator',
-	'section'  => 'title_tagline',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 33,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'logo_container_separator',
+		'section'  => 'title_tagline',
+		'priority' => 33,
+	]
+);
 
 /* Fields – Logo Container Width */
 
@@ -713,13 +729,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'favicon_separator',
-	'section'  => 'title_tagline',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 42,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'favicon_separator',
+		'section'  => 'title_tagline',
+		'priority' => 42,
+	]
+);
 
 /* Fields – Navigation */
 
@@ -1269,14 +1285,15 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Menu item settings.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'mobile-menu-item-settings-headline',
-	'section'  => 'wpbf_mobile_menu_options',
-	'default'  => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Menu Item Settings', 'page-builder-framework' ) . '</h3>',
-	'priority' => 6,
-) );
+// Headline.
+new \Kirki\Pro\Field\Headline(
+	[
+		'settings' => 'mobile_menu_item_settings_headline',
+		'label'    => esc_html__( 'Menu Item Settings', 'page-builder-framework' ),
+		'section'  => 'wpbf_mobile_menu_options',
+		'priority' => 6,
+	]
+);
 
 // Padding.
 Kirki::add_field( 'wpbf', array(

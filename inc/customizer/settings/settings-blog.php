@@ -148,13 +148,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'meta_excerpt_separator',
-	'section'  => 'wpbf_blog_settings',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 1,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'meta_excerpt_separator',
+		'section'  => 'wpbf_blog_settings',
+		'priority' => 1,
+	]
+);
 
 // Excerpt length.
 Kirki::add_field( 'wpbf', array(
@@ -426,13 +426,13 @@ foreach ( $archives as $archive ) {
 	) );
 
 	// Separator.
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => $archive . '_separator_1',
-		'section'  => 'wpbf_' . $archive . '_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-		'priority' => 0,
-	) );
+	new \Kirki\Pro\Field\Divider(
+		[
+			'settings' => $archive . '_separator_1',
+			'section'  => 'wpbf_' . $archive . '_options',
+			'priority' => 0,
+		]
+	);
 
 	// Header.
 	Kirki::add_field( 'wpbf', array(
@@ -488,13 +488,13 @@ foreach ( $archives as $archive ) {
 	) );
 
 	// Separator.
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => $archive . '_separator_2',
-		'section'  => 'wpbf_' . $archive . '_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-		'priority' => 0,
-	) );
+	new \Kirki\Pro\Field\Divider(
+		[
+			'settings' => $archive . '_separator_2',
+			'section'  => 'wpbf_' . $archive . '_options',
+			'priority' => 0,
+		]
+	);
 
 	// Layout.
 	Kirki::add_field( 'wpbf', array(
@@ -672,21 +672,22 @@ foreach ( $archives as $archive ) {
 
 	/* Beside */
 
-	// Beside headline.
-	Kirki::add_field( 'wpbf', array(
-		'type'            => 'custom',
-		'settings'        => $archive . '_image_beside_post_headline',
-		'section'         => 'wpbf_' . $archive . '_options',
-		'default'         => '<h3 style="padding:15px 10px; background:#fff; margin:0;">' . __( 'Image Beside Post Layout Settings', 'page-builder-framework' ) . '</h3>',
-		'priority'        => 100,
-		'active_callback' => array(
-			array(
-				'setting'  => $archive . '_layout',
-				'operator' => '==',
-				'value'    => 'beside',
-			),
-		),
-	) );
+	// Headline.
+	new \Kirki\Pro\Field\Headline(
+		[
+			'settings'        => $archive . '_image_beside_post_headline',
+			'label'           => esc_html__( 'Image Beside Post Layout Settings', 'page-builder-framework' ),
+			'section'         => 'wpbf_' . $archive . '_options',
+			'priority'        => 100,
+			'active_callback' => [
+				[
+					'setting'  => $archive . '_layout',
+					'operator' => '==',
+					'value'    => 'beside',
+				],
+			],
+		]
+	);
 
 	// Image alignment.
 	Kirki::add_field( 'wpbf', array(
@@ -766,13 +767,13 @@ foreach ( $singles as $single ) {
 	) );
 
 	// Separator.
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => $single . '_separator_1',
-		'section'  => 'wpbf_' . $single . '_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-		'priority' => 0,
-	) );
+	new \Kirki\Pro\Field\Divider(
+		[
+			'settings' => $single . '_separator_1',
+			'section'  => 'wpbf_' . $single . '_options',
+			'priority' => 0,
+		]
+	);
 
 	// Header.
 	Kirki::add_field( 'wpbf', array(
@@ -812,13 +813,13 @@ foreach ( $singles as $single ) {
 	) );
 
 	// Separator.
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => $single . '_separator_2',
-		'section'  => 'wpbf_' . $single . '_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-		'priority' => 0,
-	) );
+	new \Kirki\Pro\Field\Divider(
+		[
+			'settings' => $single . '_separator_2',
+			'section'  => 'wpbf_' . $single . '_options',
+			'priority' => 0,
+		]
+	);
 
 	// Post navigation.
 	Kirki::add_field( 'wpbf', array(

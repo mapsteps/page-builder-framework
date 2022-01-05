@@ -85,13 +85,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_search_menu_item_separator',
-	'section'  => 'wpbf_woocommerce_menu_item_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 5,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_search_menu_item_separator',
+		'section'  => 'wpbf_woocommerce_menu_item_options',
+		'priority' => 5,
+	]
+);
 
 // Menu item.
 Kirki::add_field( 'wpbf', array(
@@ -145,13 +145,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_menu_item_separator_1',
-	'section'  => 'wpbf_woocommerce_menu_item_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 12,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_menu_item_separator_1',
+		'section'  => 'wpbf_woocommerce_menu_item_options',
+		'priority' => 12,
+	]
+);
 
 // Mobile menu item.
 Kirki::add_field( 'wpbf', array(
@@ -205,13 +205,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_menu_item_separator_2',
-	'section'  => 'wpbf_woocommerce_menu_item_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 15,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_menu_item_separator_2',
+		'section'  => 'wpbf_woocommerce_menu_item_options',
+		'priority' => 15,
+	]
+);
 
 // Menu item count.
 Kirki::add_field( 'wpbf', array(
@@ -329,13 +329,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_single_quantity_separator',
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $product_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_single_quantity_separator',
+		'section'  => 'wpbf_woocommerce_product_options',
+		'priority' => $product_priority++,
+	]
+);
 
 // Increase - Decrease button.
 Kirki::add_field( 'wpbf', array(
@@ -382,13 +382,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_single_tabs_separator',
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $product_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_single_tabs_separator',
+		'section'  => 'wpbf_woocommerce_product_options',
+		'priority' => $product_priority++,
+	]
+);
 
 // Tabs layout.
 Kirki::add_field( 'wpbf', array(
@@ -527,13 +527,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_single_add_to_cart_ajax_separator',
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $product_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_single_add_to_cart_ajax_separator',
+		'section'  => 'wpbf_woocommerce_product_options',
+		'priority' => $product_priority++,
+	]
+);
 
 // Single add to cart ajax.
 Kirki::add_field( 'wpbf', array(
@@ -602,13 +602,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_store_notice_separator',
-	'section'  => 'woocommerce_store_notice',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 100,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_store_notice_separator',
+		'section'  => 'woocommerce_store_notice',
+		'priority' => 100,
+	]
+);
 
 // Info color.
 Kirki::add_field( 'wpbf', array(
@@ -651,13 +651,14 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_general_notice_color_separator',
-	'section'  => 'woocommerce_store_notice',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 100,
-) );
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_general_notice_color_separator',
+		'section'  => 'woocommerce_store_notice',
+		'priority' => 100,
+	]
+);
 
 // General notice's background color.
 Kirki::add_field( 'wpbf', array(
@@ -703,26 +704,26 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_checkout_layout_separator',
-	'section'  => 'woocommerce_checkout',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 2,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_checkout_layout_separator',
+		'section'  => 'woocommerce_checkout',
+		'priority' => 2,
+	]
+);
 
 /* Fields - Product Loop */
 
 $shop_priority = 20;
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_loop_separator_0',
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $shop_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_loop_separator_0',
+		'section'  => 'woocommerce_product_catalog',
+		'priority' => $shop_priority++,
+	]
+);
 
 // Custom width.
 Kirki::add_field( 'wpbf', array(
@@ -736,13 +737,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_loop_separator_1',
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $shop_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_loop_separator_1',
+		'section'  => 'woocommerce_product_catalog',
+		'priority' => $shop_priority++,
+	]
+);
 
 // Remove page title.
 Kirki::add_field( 'wpbf', array(
@@ -785,22 +786,22 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_loop_separator_2',
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $shop_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_loop_separator_2',
+		'section'  => 'woocommerce_product_catalog',
+		'priority' => $shop_priority++,
+	]
+);
 
 // Products per row.
 Kirki::add_field( 'wpbf', array(
-	'type'     => 'responsive_input',
-	'settings' => 'woocommerce_loop_products_per_row',
-	'label'    => __( 'Products per Row', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'priority' => $shop_priority++,
-	'default'  => json_encode(
+	'type'              => 'responsive_input',
+	'settings'          => 'woocommerce_loop_products_per_row',
+	'label'             => __( 'Products per Row', 'page-builder-framework' ),
+	'section'           => 'woocommerce_product_catalog',
+	'priority'          => $shop_priority++,
+	'default'           => json_encode(
 		array(
 			'desktop' => '4',
 			'tablet'  => '2',
@@ -932,13 +933,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_loop_sale_separator',
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $shop_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_loop_sale_separator',
+		'section'  => 'woocommerce_product_catalog',
+		'priority' => $shop_priority++,
+	]
+);
 
 // Sale position.
 Kirki::add_field( 'wpbf', array(
@@ -1067,13 +1068,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_loop_title_separator',
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $shop_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_loop_title_separator',
+		'section'  => 'woocommerce_product_catalog',
+		'priority' => $shop_priority++,
+	]
+);
 
 // Title font size.
 Kirki::add_field( 'wpbf', array(
@@ -1106,13 +1107,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_loop_price_separator',
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $shop_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_loop_price_separator',
+		'section'  => 'woocommerce_product_catalog',
+		'priority' => $shop_priority++,
+	]
+);
 
 // Price font size.
 Kirki::add_field( 'wpbf', array(
@@ -1145,13 +1146,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'woocommerce_loop_out_of_stock_separator',
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => $shop_priority++,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'woocommerce_loop_out_of_stock_separator',
+		'section'  => 'woocommerce_product_catalog',
+		'priority' => $shop_priority++,
+	]
+);
 
 // Out of stock notice.
 Kirki::add_field( 'wpbf', array(

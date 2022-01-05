@@ -85,13 +85,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'edd_menu_item_separator_1',
-	'section'  => 'wpbf_edd_menu_item_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 5,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'edd_menu_item_separator_1',
+		'section'  => 'wpbf_edd_menu_item_options',
+		'priority' => 5,
+	]
+);
 
 // Menu item.
 Kirki::add_field( 'wpbf', array(
@@ -145,13 +145,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'edd_menu_item_separator_2',
-	'section'  => 'wpbf_edd_menu_item_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 12,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'edd_menu_item_separator_2',
+		'section'  => 'wpbf_edd_menu_item_options',
+		'priority' => 12,
+	]
+);
 
 // Mobile menu item.
 Kirki::add_field( 'wpbf', array(
@@ -205,13 +205,13 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'edd_menu_item_separator_3',
-	'section'  => 'wpbf_edd_menu_item_options',
-	'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">',
-	'priority' => 15,
-) );
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'edd_menu_item_separator_3',
+		'section'  => 'wpbf_edd_menu_item_options',
+		'priority' => 15,
+	]
+);
 
 // Menu item count.
 Kirki::add_field( 'wpbf', array(

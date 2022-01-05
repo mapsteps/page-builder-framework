@@ -119,6 +119,22 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'footer_column_two_separator',
+		'section'         => 'wpbf_footer_options',
+		'priority'        => 3,
+		'active_callback' => [
+			[
+				'setting'  => 'footer_layout',
+				'operator' => '==',
+				'value'    => 'two',
+			],
+		],
+	]
+);
+
 // Column two layout.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'select',
@@ -341,10 +357,6 @@ if ( ! wpbf_is_premium() ) {
 		'default'  => $wpbf_premium_ad_link,
 		'priority' => 9999,
 	) );
-
-}
-
-if ( ! wpbf_is_premium() ) {
 
 	// Premium notice.
 	$wpbf_premium_ad_link = sprintf(
