@@ -78,7 +78,7 @@ abstract class Field {
 		}
 
 		add_action(
-			'init',
+			'wp_loaded',
 			function() {
 				do_action( 'kirki_field_init', $this->args, $this );
 			}
@@ -104,6 +104,19 @@ abstract class Field {
 		// Add default filters. Can be overriden in child classes.
 		add_filter( 'kirki_field_add_setting_args', [ $this, 'filter_setting_args' ], 10, 2 );
 		add_filter( 'kirki_field_add_control_args', [ $this, 'filter_control_args' ], 10, 2 );
+
+		// Copy $this->args to a variable to be added to Kirki::$all_fields global.
+		$field_args = $this->args;
+
+		/**
+		 * Kirki::$fields contains only fields which are not extending the new base Field.
+		 * So we collect all fields and add them to Kirki::$all_fields.
+		 *
+		 * ! This patch is used by Kirki::get_option which calls Values::get_value method.
+		 * Even though this is a patch, this is fine and still a good solution.
+		 */
+		\Kirki\Compatibility\Kirki::$all_fields[ $field_args['settings'] ] = $field_args;
+
 	}
 
 	/**

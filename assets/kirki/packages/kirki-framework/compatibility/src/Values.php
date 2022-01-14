@@ -54,10 +54,13 @@ class Values {
 
 			// We're using theme_mods so just get the value using get_theme_mod.
 			$default_value = null;
-			if ( isset( Kirki::$fields[ $field_id ] ) && isset( Kirki::$fields[ $field_id ]['default'] ) ) {
-				$default_value = Kirki::$fields[ $field_id ]['default'];
+
+			if ( isset( Kirki::$all_fields[ $field_id ] ) && isset( Kirki::$all_fields[ $field_id ]['default'] ) ) {
+				$default_value = Kirki::$all_fields[ $field_id ]['default'];
 			}
+
 			$value = get_theme_mod( $field_id, $default_value );
+
 			return apply_filters( 'kirki_values_get_value', $value, $field_id );
 		}
 
@@ -65,28 +68,32 @@ class Values {
 
 			// We're using options.
 			if ( '' !== Kirki::$config[ $config_id ]['option_name'] ) {
-
 				// Options are serialized as a single option in the db.
 				// We'll have to get the option and then get the item from the array.
 				$options = get_option( Kirki::$config[ $config_id ]['option_name'] );
 
-				if ( ! isset( Kirki::$fields[ $field_id ] ) && isset( Kirki::$fields[ Kirki::$config[ $config_id ]['option_name'] . '[' . $field_id . ']' ] ) ) {
+				if ( ! isset( Kirki::$all_fields[ $field_id ] ) && isset( Kirki::$all_fields[ Kirki::$config[ $config_id ]['option_name'] . '[' . $field_id . ']' ] ) ) {
 					$field_id = Kirki::$config[ $config_id ]['option_name'] . '[' . $field_id . ']';
 				}
+
 				$setting_modified = str_replace( ']', '', str_replace( Kirki::$config[ $config_id ]['option_name'] . '[', '', $field_id ) );
 
-				$default_value = ( isset( Kirki::$fields[ $field_id ] ) && isset( Kirki::$fields[ $field_id ]['default'] ) ) ? Kirki::$fields[ $field_id ]['default'] : '';
+				$default_value = ( isset( Kirki::$all_fields[ $field_id ] ) && isset( Kirki::$all_fields[ $field_id ]['default'] ) ) ? Kirki::$all_fields[ $field_id ]['default'] : '';
 				$value         = ( isset( $options[ $setting_modified ] ) ) ? $options[ $setting_modified ] : $default_value;
 				$value         = maybe_unserialize( $value );
+
 				return apply_filters( 'kirki_values_get_value', $value, $field_id );
 			}
 
 			// Each option separately saved in the db.
-			$value = get_option( $field_id, Kirki::$fields[ $field_id ]['default'] );
+			$value = get_option( $field_id, Kirki::$all_fields[ $field_id ]['default'] );
+
 			return apply_filters( 'kirki_values_get_value', $value, $field_id );
 
 		}
+
 		return apply_filters( 'kirki_values_get_value', $value, $field_id );
+
 	}
 
 	/**

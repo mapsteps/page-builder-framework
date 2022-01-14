@@ -247,8 +247,10 @@ class Field {
 	 */
 	public function __construct( $config_id = 'global', $args = [] ) {
 
-		// In case the user only provides 1 argument,
-		// assume that the provided argument is $args and set $config_id = 'global'.
+		/**
+		 * In case the user only provides 1 argument,
+		 * assume that the provided argument is $args and set $config_id = 'global'.
+		 */
 		if ( is_array( $config_id ) && empty( $args ) ) {
 			$args      = $config_id;
 			$config_id = isset( $args['kirki_config'] ) ? $args['kirki_config'] : 'global';
@@ -264,6 +266,7 @@ class Field {
 		$args['kirki_config'] = $config_id;
 
 		$this->kirki_config = $config_id;
+
 		if ( '' === $config_id ) {
 			/* translators: %1$s represents the field ID where the error occurs. %2$s is the URL in the documentation site. */
 			_doing_it_wrong( __METHOD__, sprintf( esc_html__( 'Config not defined for field %1$s - See %2$s for details on how to properly add fields.', 'kirki' ), esc_html( $args['settings'] ), 'https://aristath.github.io/kirki/docs/getting-started/fields.html' ), '3.0.10' );
@@ -275,10 +278,13 @@ class Field {
 
 		// Get the config arguments, and merge them with the defaults.
 		$config_defaults = ( isset( Kirki::$config['global'] ) ) ? Kirki::$config['global'] : [];
+
 		if ( 'global' !== $this->kirki_config && isset( Kirki::$config[ $this->kirki_config ] ) ) {
 			$config_defaults = Kirki::$config[ $this->kirki_config ];
 		}
+
 		$config_defaults = ( is_array( $config_defaults ) ) ? $config_defaults : [];
+
 		foreach ( $config_defaults as $key => $value ) {
 			if ( isset( $defaults[ $key ] ) && ! empty( $value ) && $value !== $defaults[ $key ] ) {
 				$defaults[ $key ] = $value;
@@ -299,6 +305,7 @@ class Field {
 
 		// Instantiate the \Kirki\Field to apply hooks.
 		new \Kirki\Field\None( $this->args );
+
 	}
 
 	/**
@@ -327,6 +334,7 @@ class Field {
 
 		// Get all arguments with their values.
 		$args = get_object_vars( $this );
+
 		foreach ( array_keys( $args ) as $key ) {
 			$args[ $key ] = $this->$key;
 		}
@@ -427,7 +435,9 @@ class Field {
 	 * @access protected
 	 */
 	protected function set_active_callback() {
+
 		if ( is_array( $this->active_callback ) ) {
+
 			if ( ! is_callable( $this->active_callback ) ) {
 
 				// Bugfix for https://github.com/aristath/kirki/issues/1961.
@@ -455,6 +465,7 @@ class Field {
 		if ( ! is_callable( $this->active_callback ) ) {
 			$this->active_callback = '__return_true';
 		}
+
 	}
 
 	/**
