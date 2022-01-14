@@ -664,7 +664,7 @@ new \Kirki\Pro\Field\Divider(
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'color',
 	'settings'  => 'woocommerce_notice_bg_color',
-	'label'     => __( 'Notice Bg Color', 'page-builder-framework' ),
+	'label'     => __( 'Notice Background Color', 'page-builder-framework' ),
 	'section'   => 'woocommerce_store_notice',
 	'priority'  => 100,
 	'transport' => 'postMessage',
@@ -677,7 +677,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'color',
 	'settings'  => 'woocommerce_notice_text_color',
-	'label'     => __( 'Notice Text Color', 'page-builder-framework' ),
+	'label'     => __( 'Notice Font Color', 'page-builder-framework' ),
 	'section'   => 'woocommerce_store_notice',
 	'priority'  => 100,
 	'transport' => 'postMessage',
