@@ -922,7 +922,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Sub Menu Alignment', 'page-builder-framework' ),
 	'section'         => 'wpbf_sub_menu_options',
 	'default'         => 'left',
-	'priority'        => 1,
+	'priority'        => 0,
 	'multiple'        => 1,
 	'choices'         => array(
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
@@ -982,7 +982,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Text Alignment', 'page-builder-framework' ),
 	'section'   => 'wpbf_sub_menu_options',
 	'default'   => 'left',
-	'priority'  => 2,
+	'priority'  => 3,
 	'multiple'  => 1,
 	'transport' => 'postMessage',
 	'choices'   => array(
@@ -1000,7 +1000,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'   => 'wpbf_sub_menu_options',
 	'default'   => '#ffffff',
 	'transport' => 'postMessage',
-	'priority'  => 2,
+	'priority'  => 4,
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1013,7 +1013,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Hover', 'page-builder-framework' ),
 	'section'   => 'wpbf_sub_menu_options',
 	'default'   => '#ffffff',
-	'priority'  => 3,
+	'priority'  => 5,
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'alpha' => true,
@@ -1027,7 +1027,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Font Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_sub_menu_options',
 	'transport' => 'postMessage',
-	'priority'  => 4,
+	'priority'  => 6,
 ) );
 
 // Accent color alt.
@@ -1036,7 +1036,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'sub_menu_accent_color_alt',
 	'label'     => __( 'Hover', 'page-builder-framework' ),
 	'section'   => 'wpbf_sub_menu_options',
-	'priority'  => 5,
+	'priority'  => 7,
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'alpha' => true,
@@ -1049,7 +1049,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Font Size', 'page-builder-framework' ),
 	'settings'  => 'sub_menu_font_size',
 	'section'   => 'wpbf_sub_menu_options',
-	'priority'  => 6,
+	'priority'  => 8,
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'min'  => 0,
@@ -1065,7 +1065,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'    => __( 'Sub Menu Separator', 'page-builder-framework' ),
 	'section'  => 'wpbf_sub_menu_options',
 	'default'  => 0,
-	'priority' => 6,
+	'priority' => 9,
 ) );
 
 // Separator color.
@@ -1075,7 +1075,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Color', 'page-builder-framework' ),
 	'section'         => 'wpbf_sub_menu_options',
 	'default'         => '#f5f5f7',
-	'priority'        => 6,
+	'priority'        => 10,
 	'transport'       => 'postMessage',
 	'choices'         => array(
 		'alpha' => true,
