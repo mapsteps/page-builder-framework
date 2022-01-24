@@ -1436,7 +1436,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'       => __( 'Auto Collapse', 'page-builder-framework' ),
 	'description' => __( 'Auto collapse open sub-menu if other sub-menu is being opened.', 'page-builder-framework' ),
 	'section'     => 'wpbf_mobile_sub_menu_options',
-	'priority'    => 7,
+	'priority'    => 1,
 	'transport'   => 'postMessage',
 ) );
 
@@ -1446,7 +1446,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'mobile_sub_menu_indent',
 	'label'     => __( 'Indent', 'page-builder-framework' ),
 	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 8,
+	'priority'  => 2,
 	'default'   => 0,
 	'transport' => 'postMessage',
 	'choices'   => array(
@@ -1462,7 +1462,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'mobile_sub_menu_bg_color',
 	'label'     => __( 'Background Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 9,
+	'priority'  => 3,
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'alpha' => true,
@@ -1475,7 +1475,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'mobile_sub_menu_bg_color_alt',
 	'label'     => __( 'Hover', 'page-builder-framework' ),
 	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 10,
+	'priority'  => 4,
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'alpha' => true,
@@ -1489,7 +1489,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Font Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_mobile_sub_menu_options',
 	'transport' => 'postMessage',
-	'priority'  => 11,
+	'priority'  => 5,
 ) );
 
 // Font color hover.
@@ -1498,7 +1498,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'mobile_sub_menu_font_color_alt',
 	'label'     => __( 'Hover', 'page-builder-framework' ),
 	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 12,
+	'priority'  => 6,
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'alpha' => true,
@@ -1511,7 +1511,7 @@ Kirki::add_field( 'wpbf', array(
 //  'settings'  => 'mobile_sub_menu_border_color',
 //  'label'     => __( 'Divider Color', 'page-builder-framework' ),
 //  'section'   => 'wpbf_mobile_sub_menu_options',
-//  'priority'  => 13,
+//  'priority'  => 7,
 //  'transport' => 'postMessage',
 //  'choices'   => array(
 //      'alpha' => true,
@@ -1524,7 +1524,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'  => 'mobile_sub_menu_arrow_color',
 	'label'     => __( 'Sub Menu Arrow Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 14,
+	'priority'  => 8,
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'alpha' => true,
@@ -1537,7 +1537,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Font Size', 'page-builder-framework' ),
 	'settings'  => 'mobile_sub_menu_font_size',
 	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 15,
+	'priority'  => 9,
 	'transport' => 'postMessage',
 	'choices'   => array(
 		'min'  => 0,
