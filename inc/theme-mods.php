@@ -336,7 +336,7 @@ add_filter( 'wpbf_navigation_classes', 'wpbf_mobile_sub_menu_auto_collapse_class
  */
 function wpbf_theme_color_meta() {
 
-	$theme_color         = '#3ba9d2';
+	$theme_color         = false;
 	$accent_color_global = get_theme_mod( 'accent_color_global' );
 	$accent_color        = get_theme_mod( 'page_accent_color' );
 
@@ -352,6 +352,11 @@ function wpbf_theme_color_meta() {
 
 	// Allow to filter the theme color value for max flexibility.
 	$theme_color = apply_filters( 'wpbf_theme_color', $theme_color );
+
+	// Stop here if we don't have a theme color.
+	if ( ! $theme_color ) {
+		return;
+	}
 
 	// Output.
 	echo '<meta name="theme-color" content="' . $theme_color . '">';
