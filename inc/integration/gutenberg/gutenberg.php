@@ -19,65 +19,6 @@ function wpbf_gutenberg_theme_setup() {
 	// Add support for wide aligned elements.
 	add_theme_support( 'align-wide' );
 
-	// Gutenberg default font sizes.
-
-	// Page font size.
-	$page_font_size_desktop = get_theme_mod( 'page_font_size_desktop' ) ? (int) get_theme_mod( 'page_font_size_desktop' ) : 16;
-
-	// Only use page font size if it's not greater then the next larger font size.
-	if ( $page_font_size_desktop >= 20 ) {
-		$page_font_size_desktop = 16;
-	}
-
-	add_theme_support(
-		'editor-font-sizes',
-		array(
-
-			array(
-				'name'      => __( 'tiny', 'page-builder-framework' ),
-				'shortName' => __( 'XS', 'page-builder-framework' ),
-				'size'      => 12,
-				'slug'      => 'tiny',
-			),
-
-			array(
-				'name'      => __( 'small', 'page-builder-framework' ),
-				'shortName' => __( 'S', 'page-builder-framework' ),
-				'size'      => 14,
-				'slug'      => 'small',
-			),
-
-			array(
-				'name'      => __( 'regular', 'page-builder-framework' ),
-				'shortName' => __( 'M', 'page-builder-framework' ),
-				'size'      => $page_font_size_desktop,
-				'slug'      => 'regular',
-			),
-
-			array(
-				'name'      => __( 'large', 'page-builder-framework' ),
-				'shortName' => __( 'L', 'page-builder-framework' ),
-				'size'      => 20,
-				'slug'      => 'large',
-			),
-
-			array(
-				'name'      => __( 'larger', 'page-builder-framework' ),
-				'shortName' => __( 'XL', 'page-builder-framework' ),
-				'size'      => 32,
-				'slug'      => 'larger',
-			),
-
-			array(
-				'name'      => __( 'extra', 'page-builder-framework' ),
-				'shortName' => __( 'XXL', 'page-builder-framework' ),
-				'size'      => 44,
-				'slug'      => 'extra',
-			),
-
-		)
-	);
-
 }
 add_action( 'after_setup_theme', 'wpbf_gutenberg_theme_setup' );
 
