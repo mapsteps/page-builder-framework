@@ -10,6 +10,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 $menu_logo_url = get_theme_mod( 'menu_logo_url', home_url() );
 $menu_logo_url = is_customize_preview() ? site_url() : $menu_logo_url;
+$menu_logo_url = apply_filters( 'wpbf_logo_url', $menu_logo_url ); // Allow users to filter the logo URL.
 
 if ( has_custom_logo() ) {
 
@@ -32,8 +33,6 @@ if ( has_custom_logo() ) {
 
 	$custom_logo_width  = $custom_logo_data[1];
 	$custom_logo_height = $custom_logo_data[2];
-	// $custom_logo_srcset = wp_get_attachment_image_srcset( $custom_logo_id, 'full' );
-	// $custom_logo_sizes  = wp_get_attachment_image_sizes( $custom_logo_id, 'full' );
 
 	echo '<div class="wpbf-logo"' . wpbf_logo_attributes() . ' itemscope="itemscope" itemtype="https://schema.org/Organization">';
 	do_action( 'wpbf_before_logo' );
