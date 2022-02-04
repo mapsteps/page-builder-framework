@@ -1,5 +1,5 @@
 {
-    "version": 0.1,
+    "version": 0.2,
 	"settings": {
 		"typography": {
 			"fontSizes": [{
@@ -27,6 +27,10 @@
 				"size": "44px",
 				"slug": "extra"
 			}]
-		}
+		},
+        "layout": {
+            "contentSize": "1000px",
+            "wideSize": "1400px"
+        }
 	}
 }
