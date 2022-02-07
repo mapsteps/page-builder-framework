@@ -2,7 +2,7 @@
 /**
  * Override field methods
  *
- * @package   kirki-framework/checkbox
+ * @package   kirki-framework/control-palette
  * @copyright Copyright (c) 2019, Ari Stathopoulos (@aristath)
  * @license   https://opensource.org/licenses/MIT
  * @since     1.0
@@ -15,7 +15,7 @@ namespace Kirki\Field;
  *
  * @since 1.0
  */
-class Checkbox_Switch extends Checkbox {
+class Palette extends Radio {
 
 	/**
 	 * The field type.
@@ -24,7 +24,7 @@ class Checkbox_Switch extends Checkbox {
 	 * @since 1.0
 	 * @var string
 	 */
-	public $type = 'kirki-switch';
+	public $type = 'kirki-palette';
 
 	/**
 	 * The control class-name.
@@ -33,7 +33,7 @@ class Checkbox_Switch extends Checkbox {
 	 * @since 0.1
 	 * @var string
 	 */
-	protected $control_class = '\Kirki\Control\Checkbox_Switch';
+	protected $control_class = '\Kirki\Control\Palette';
 
 	/**
 	 * Filter arguments before creating the control.
@@ -45,13 +45,10 @@ class Checkbox_Switch extends Checkbox {
 	 * @return array
 	 */
 	public function filter_control_args( $args, $wp_customize ) {
-
 		if ( $args['settings'] === $this->args['settings'] ) {
 			$args         = parent::filter_control_args( $args, $wp_customize );
-			$args['type'] = 'kirki-switch';
+			$args['type'] = 'kirki-palette';
 		}
-
 		return $args;
-
 	}
 }

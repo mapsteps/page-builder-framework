@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8eaa11066ff349ba2bd8ae1ba877771d",
+    "content-hash": "8b7f137e91a4769c5bc3a7e2ee05c023",
     "packages": [
         {
             "name": "kirki-framework/compatibility",
-            "version": "v1.0.8",
+            "version": "v1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/compatibility.git",
-                "reference": "2e1ee739f9339a8a9878ea7638eea4affb3bf593"
+                "reference": "1169e68f1232dfc7d659c981d440d81e8253a810"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/compatibility/zipball/2e1ee739f9339a8a9878ea7638eea4affb3bf593",
-                "reference": "2e1ee739f9339a8a9878ea7638eea4affb3bf593",
+                "url": "https://api.github.com/repos/kirki-framework/compatibility/zipball/1169e68f1232dfc7d659c981d440d81e8253a810",
+                "reference": "1169e68f1232dfc7d659c981d440d81e8253a810",
                 "shasum": ""
             },
             "require": {
@@ -48,22 +48,22 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/compatibility/issues",
-                "source": "https://github.com/kirki-framework/compatibility/tree/v1.0.8"
+                "source": "https://github.com/kirki-framework/compatibility/tree/v1.0.9"
             },
-            "time": "2022-01-10T17:10:50+00:00"
+            "time": "2022-01-21T14:32:03+00:00"
         },
         {
             "name": "kirki-framework/control-base",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-base.git",
-                "reference": "d204f596cc5b90d8945b1183ca68becfe2b7387d"
+                "reference": "040c4372afec0c275dce21db6a7256baf2dca3d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-base/zipball/d204f596cc5b90d8945b1183ca68becfe2b7387d",
-                "reference": "d204f596cc5b90d8945b1183ca68becfe2b7387d",
+                "url": "https://api.github.com/repos/kirki-framework/control-base/zipball/040c4372afec0c275dce21db6a7256baf2dca3d9",
+                "reference": "040c4372afec0c275dce21db6a7256baf2dca3d9",
                 "shasum": ""
             },
             "require": {
@@ -95,22 +95,22 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-base/issues",
-                "source": "https://github.com/kirki-framework/control-base/tree/v1.0.2"
+                "source": "https://github.com/kirki-framework/control-base/tree/v1.0.3"
             },
-            "time": "2021-12-29T13:18:01+00:00"
+            "time": "2022-01-20T00:09:55+00:00"
         },
         {
             "name": "kirki-framework/control-checkbox",
-            "version": "v1.0.2",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-checkbox.git",
-                "reference": "ea0e0b724634df9ecce4c6536b4de2135d15620d"
+                "reference": "1f581fd75cf9cae20788decbe56d5ef48d3b7bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-checkbox/zipball/ea0e0b724634df9ecce4c6536b4de2135d15620d",
-                "reference": "ea0e0b724634df9ecce4c6536b4de2135d15620d",
+                "url": "https://api.github.com/repos/kirki-framework/control-checkbox/zipball/1f581fd75cf9cae20788decbe56d5ef48d3b7bf8",
+                "reference": "1f581fd75cf9cae20788decbe56d5ef48d3b7bf8",
                 "shasum": ""
             },
             "require": {
@@ -144,9 +144,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-checkbox/issues",
-                "source": "https://github.com/kirki-framework/control-checkbox/tree/v1.0.2"
+                "source": "https://github.com/kirki-framework/control-checkbox/tree/v1.0.6"
             },
-            "time": "2021-12-29T13:19:58+00:00"
+            "time": "2022-01-24T18:06:27+00:00"
         },
         {
             "name": "kirki-framework/control-code",
@@ -246,21 +246,21 @@
         },
         {
             "name": "kirki-framework/control-color-palette",
-            "version": "v1.0.0",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-color-palette.git",
-                "reference": "b3373ce7a97c4d4d516daea3c2443ec587a25330"
+                "reference": "32715837449e9a6666253b28b538bd69d6718c67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-color-palette/zipball/b3373ce7a97c4d4d516daea3c2443ec587a25330",
-                "reference": "b3373ce7a97c4d4d516daea3c2443ec587a25330",
+                "url": "https://api.github.com/repos/kirki-framework/control-color-palette/zipball/32715837449e9a6666253b28b538bd69d6718c67",
+                "reference": "32715837449e9a6666253b28b538bd69d6718c67",
                 "shasum": ""
             },
             "require": {
                 "kirki-framework/control-base": "*",
-                "php": ">=7"
+                "php": ">=7.0"
             },
             "type": "library",
             "autoload": {
@@ -282,9 +282,9 @@
             "description": "Color palette control for the Kirki Customizer Framework",
             "support": {
                 "issues": "https://github.com/kirki-framework/control-color-palette/issues",
-                "source": "https://github.com/kirki-framework/control-color-palette/tree/v1.0.0"
+                "source": "https://github.com/kirki-framework/control-color-palette/tree/v1.0.3"
             },
-            "time": "2021-10-01T13:25:32+00:00"
+            "time": "2022-01-18T07:50:14+00:00"
         },
         {
             "name": "kirki-framework/control-cropped-image",
@@ -579,16 +579,16 @@
         },
         {
             "name": "kirki-framework/control-generic",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-generic.git",
-                "reference": "82643cbfc2cd48dc1d047ca7e32ca7ed98650611"
+                "reference": "5f87bb740ba92717b6b10b862e571919003906c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-generic/zipball/82643cbfc2cd48dc1d047ca7e32ca7ed98650611",
-                "reference": "82643cbfc2cd48dc1d047ca7e32ca7ed98650611",
+                "url": "https://api.github.com/repos/kirki-framework/control-generic/zipball/5f87bb740ba92717b6b10b862e571919003906c4",
+                "reference": "5f87bb740ba92717b6b10b862e571919003906c4",
                 "shasum": ""
             },
             "require": {
@@ -622,9 +622,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-generic/issues",
-                "source": "https://github.com/kirki-framework/control-generic/tree/v1.0.1"
+                "source": "https://github.com/kirki-framework/control-generic/tree/v1.0.2"
             },
-            "time": "2021-12-29T14:33:52+00:00"
+            "time": "2022-01-24T19:36:51+00:00"
         },
         {
             "name": "kirki-framework/control-image",
@@ -725,6 +725,55 @@
             "time": "2021-12-30T15:32:42+00:00"
         },
         {
+            "name": "kirki-framework/control-palette",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kirki-framework/control-palette.git",
+                "reference": "aca16701c2aaddab0cef3e429cdb753845e03ae0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kirki-framework/control-palette/zipball/aca16701c2aaddab0cef3e429cdb753845e03ae0",
+                "reference": "aca16701c2aaddab0cef3e429cdb753845e03ae0",
+                "shasum": ""
+            },
+            "require": {
+                "kirki-framework/control-radio": "*",
+                "kirki-framework/url-getter": "*",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kirki\\Control\\": "src/Control",
+                    "Kirki\\Field\\": "src/Field"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirki Framework",
+                    "email": "connect@mapsteps.com"
+                }
+            ],
+            "description": "Palette control for the Kirki Customizer framework.",
+            "homepage": "https://kirki.org",
+            "keywords": [
+                "customizer",
+                "framework",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/kirki-framework/control-palette/issues",
+                "source": "https://github.com/kirki-framework/control-palette/tree/v0.1.1"
+            },
+            "time": "2022-02-01T07:36:30+00:00"
+        },
+        {
             "name": "kirki-framework/control-radio",
             "version": "v1.0.2",
             "source": {
@@ -774,16 +823,16 @@
         },
         {
             "name": "kirki-framework/control-react-colorful",
-            "version": "v1.0.6",
+            "version": "v1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-react-colorful.git",
-                "reference": "c826815a402cb84fb924ddf55b1ffffd32f1be38"
+                "reference": "0597ae052958249aeb8e151f564d4e54defb80f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-react-colorful/zipball/c826815a402cb84fb924ddf55b1ffffd32f1be38",
-                "reference": "c826815a402cb84fb924ddf55b1ffffd32f1be38",
+                "url": "https://api.github.com/repos/kirki-framework/control-react-colorful/zipball/0597ae052958249aeb8e151f564d4e54defb80f4",
+                "reference": "0597ae052958249aeb8e151f564d4e54defb80f4",
                 "shasum": ""
             },
             "require": {
@@ -818,22 +867,22 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-react-colorful/issues",
-                "source": "https://github.com/kirki-framework/control-react-colorful/tree/v1.0.6"
+                "source": "https://github.com/kirki-framework/control-react-colorful/tree/v1.0.9"
             },
-            "time": "2021-12-29T14:43:45+00:00"
+            "time": "2022-02-02T02:15:16+00:00"
         },
         {
             "name": "kirki-framework/control-react-select",
-            "version": "v1.1.2",
+            "version": "v1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-react-select.git",
-                "reference": "0601c2a25ff91d8ee509ba746885b72298abdf09"
+                "reference": "5208475f2b8cccdbed64764164bb4f34c62af570"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-react-select/zipball/0601c2a25ff91d8ee509ba746885b72298abdf09",
-                "reference": "0601c2a25ff91d8ee509ba746885b72298abdf09",
+                "url": "https://api.github.com/repos/kirki-framework/control-react-select/zipball/5208475f2b8cccdbed64764164bb4f34c62af570",
+                "reference": "5208475f2b8cccdbed64764164bb4f34c62af570",
                 "shasum": ""
             },
             "require": {
@@ -867,9 +916,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-react-select/issues",
-                "source": "https://github.com/kirki-framework/control-react-select/tree/v1.1.2"
+                "source": "https://github.com/kirki-framework/control-react-select/tree/v1.1.4"
             },
-            "time": "2021-12-29T14:52:48+00:00"
+            "time": "2022-01-18T07:33:01+00:00"
         },
         {
             "name": "kirki-framework/control-repeater",
@@ -978,16 +1027,16 @@
         },
         {
             "name": "kirki-framework/control-slider",
-            "version": "v1.0.3",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-slider.git",
-                "reference": "4d0e4c7292431040beaaff03c524a033f7ae42c7"
+                "reference": "40ce473123f0cb12da745467d69210cff3ffecf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-slider/zipball/4d0e4c7292431040beaaff03c524a033f7ae42c7",
-                "reference": "4d0e4c7292431040beaaff03c524a033f7ae42c7",
+                "url": "https://api.github.com/repos/kirki-framework/control-slider/zipball/40ce473123f0cb12da745467d69210cff3ffecf5",
+                "reference": "40ce473123f0cb12da745467d69210cff3ffecf5",
                 "shasum": ""
             },
             "require": {
@@ -1015,9 +1064,9 @@
             "homepage": "https://kirki.org/",
             "support": {
                 "issues": "https://github.com/kirki-framework/control-slider/issues",
-                "source": "https://github.com/kirki-framework/control-slider/tree/v1.0.3"
+                "source": "https://github.com/kirki-framework/control-slider/tree/v1.0.5"
             },
-            "time": "2021-12-31T01:05:21+00:00"
+            "time": "2022-01-18T06:31:29+00:00"
         },
         {
             "name": "kirki-framework/control-sortable",
@@ -1164,16 +1213,16 @@
         },
         {
             "name": "kirki-framework/field",
-            "version": "v1.0.7",
+            "version": "v1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/field.git",
-                "reference": "6ffe23727a33246eb7ffc2c636b6b5af1d6ea53f"
+                "reference": "97f5bf659cc68d46e2bce62489acf2d2142b36e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/field/zipball/6ffe23727a33246eb7ffc2c636b6b5af1d6ea53f",
-                "reference": "6ffe23727a33246eb7ffc2c636b6b5af1d6ea53f",
+                "url": "https://api.github.com/repos/kirki-framework/field/zipball/97f5bf659cc68d46e2bce62489acf2d2142b36e7",
+                "reference": "97f5bf659cc68d46e2bce62489acf2d2142b36e7",
                 "shasum": ""
             },
             "require": {
@@ -1203,9 +1252,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/field/issues",
-                "source": "https://github.com/kirki-framework/field/tree/v1.0.7"
+                "source": "https://github.com/kirki-framework/field/tree/v1.0.10"
             },
-            "time": "2022-01-11T17:04:56+00:00"
+            "time": "2022-02-02T02:25:04+00:00"
         },
         {
             "name": "kirki-framework/field-background",
@@ -1259,16 +1308,16 @@
         },
         {
             "name": "kirki-framework/field-dimensions",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/field-dimensions.git",
-                "reference": "e59bfb68eb44ad09292eae0f9e99af39eb279d99"
+                "reference": "ac147cc95fb706664953471ef8f14cfb04f197fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/field-dimensions/zipball/e59bfb68eb44ad09292eae0f9e99af39eb279d99",
-                "reference": "e59bfb68eb44ad09292eae0f9e99af39eb279d99",
+                "url": "https://api.github.com/repos/kirki-framework/field-dimensions/zipball/ac147cc95fb706664953471ef8f14cfb04f197fc",
+                "reference": "ac147cc95fb706664953471ef8f14cfb04f197fc",
                 "shasum": ""
             },
             "require": {
@@ -1301,9 +1350,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/field-dimensions/issues",
-                "source": "https://github.com/kirki-framework/field-dimensions/tree/v1.0.2"
+                "source": "https://github.com/kirki-framework/field-dimensions/tree/v1.0.3"
             },
-            "time": "2021-12-29T15:32:15+00:00"
+            "time": "2022-01-20T00:21:17+00:00"
         },
         {
             "name": "kirki-framework/field-fontawesome",
@@ -1980,16 +2029,16 @@
         },
         {
             "name": "kirki-framework/module-tooltips",
-            "version": "v1.0.4",
+            "version": "v1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/module-tooltips.git",
-                "reference": "5891eccc885a56e9747f567bbd39b1834e724e87"
+                "reference": "5b4715bd236a4239356e408068bffc2f300f3cdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/module-tooltips/zipball/5891eccc885a56e9747f567bbd39b1834e724e87",
-                "reference": "5891eccc885a56e9747f567bbd39b1834e724e87",
+                "url": "https://api.github.com/repos/kirki-framework/module-tooltips/zipball/5b4715bd236a4239356e408068bffc2f300f3cdf",
+                "reference": "5b4715bd236a4239356e408068bffc2f300f3cdf",
                 "shasum": ""
             },
             "require": {
@@ -2021,9 +2070,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/module-tooltips/issues",
-                "source": "https://github.com/kirki-framework/module-tooltips/tree/v1.0.4"
+                "source": "https://github.com/kirki-framework/module-tooltips/tree/v1.0.10"
             },
-            "time": "2021-12-29T16:21:09+00:00"
+            "time": "2022-01-27T03:35:52+00:00"
         },
         {
             "name": "kirki-framework/module-webfonts",

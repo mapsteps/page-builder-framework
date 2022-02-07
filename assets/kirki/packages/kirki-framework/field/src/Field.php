@@ -70,6 +70,16 @@ abstract class Field {
 	 */
 	public function __construct( $args ) {
 
+		$control_class = property_exists( $this, 'control_class' ) && ! empty( $this->control_class ) ? $this->control_class : '';
+
+		// Allow 3rd parties to do their custom "init" work.
+		do_action( 'kirki_field_custom_init', $this, $args, $control_class );
+
+		// Allow 3rd parties to early stop the field from being registered.
+		if ( apply_filters( 'kirki_field_exclude_init', false, $this, $args ) ) {
+			return;
+		}
+
 		// Set the arguments in this object.
 		$this->args = $args;
 
@@ -83,6 +93,7 @@ abstract class Field {
 				do_action( 'kirki_field_init', $this->args, $this );
 			}
 		);
+
 		add_action(
 			'wp',
 			function() {
@@ -113,7 +124,7 @@ abstract class Field {
 		 * So we collect all fields and add them to Kirki::$all_fields.
 		 *
 		 * ! This patch is used by Kirki::get_option which calls Values::get_value method.
-		 * Even though this is a patch, this is fine and still a good solution.
+		 * Even though this is a patch, this is fine and still a good solution to handle backwards compatibility.
 		 */
 		\Kirki\Compatibility\Kirki::$all_fields[ $field_args['settings'] ] = $field_args;
 
@@ -138,9 +149,11 @@ abstract class Field {
 	 * @return void
 	 */
 	public function register_control_type( $wp_customize ) {
+
 		if ( $this->control_class ) {
 			$wp_customize->register_control_type( $this->control_class );
 		}
+
 	}
 
 	/**
@@ -217,15 +230,11 @@ abstract class Field {
 
 		$settings_class = $this->settings_class ? $this->settings_class : null;
 
-		if ( ! apply_filters( 'kirki_field_exclude_setting', false, $this->args, $args ) ) {
-			if ( $settings_class ) {
-				$customizer->add_setting( new $settings_class( $customizer, $setting_id, $args ) );
-			} else {
-				$customizer->add_setting( $setting_id, $args );
-			}
+		if ( $settings_class ) {
+			$customizer->add_setting( new $settings_class( $customizer, $setting_id, $args ) );
+		} else {
+			$customizer->add_setting( $setting_id, $args );
 		}
-
-		do_action( 'kirki_field_add_setting', $customizer, $settings_class, $this->args, $args );
 
 	}
 
@@ -256,11 +265,7 @@ abstract class Field {
 		 */
 		$args = apply_filters( 'kirki_field_add_control_args', $this->args, $wp_customize );
 
-		if ( ! apply_filters( 'kirki_field_exclude_control', false, $this->args, $args ) ) {
-			$wp_customize->add_control( new $control_class( $wp_customize, $this->args['settings'], $args ) );
-		}
-
-		do_action( 'kirki_field_add_control', $wp_customize, $control_class, $this->args, $args );
+		$wp_customize->add_control( new $control_class( $wp_customize, $this->args['settings'], $args ) );
 
 	}
 
