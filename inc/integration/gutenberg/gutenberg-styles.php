@@ -57,8 +57,10 @@ $background_color       = get_theme_mod( 'background_color' );
 $page_boxed             = get_theme_mod( 'page_boxed' );
 $page_boxed_background  = get_theme_mod( 'page_boxed_background', '#ffffff' );
 $page_accent_color      = get_theme_mod( 'page_accent_color' );
+$page_accent_color_alt  = get_theme_mod( 'page_accent_color_alt' );
 $page_bold_color        = get_theme_mod( 'page_bold_color' );
-$page_font_size_desktop = get_theme_mod( 'page_font_size_desktop' );
+$page_font_size         = json_decode( get_theme_mod( 'page_font_size' ), true );
+$page_font_size_desktop = wpbf_get_theme_mod_value( $page_font_size, 'desktop', '16px' );
 $page_font_toggle       = get_theme_mod( 'page_font_toggle' );
 $page_font_family_value = get_theme_mod( 'page_font_family', array() );
 $page_font_color        = get_theme_mod( 'page_font_color' );
@@ -98,6 +100,14 @@ if ( $page_accent_color ) {
 
 	echo '.editor-styles-wrapper a {';
 	echo sprintf( 'color: %s;', esc_attr( $page_accent_color ) );
+	echo '}';
+
+}
+
+if ( $page_accent_color_alt ) {
+
+	echo '.editor-styles-wrapper a:hover {';
+	echo sprintf( 'color: %s;', esc_attr( $page_accent_color_alt ) );
 	echo '}';
 
 }
@@ -181,7 +191,8 @@ $page_h1_font_family_value = get_theme_mod( 'page_h1_font_family', array() );
 $page_h1_line_height       = get_theme_mod( 'page_h1_line_height' );
 $page_h1_letter_spacing    = get_theme_mod( 'page_h1_letter_spacing' );
 $page_h1_text_transform    = ( $val = get_theme_mod( 'page_h1_text_transform' ) ) === 'none' ? false : $val;
-$page_h1_font_size_desktop = get_theme_mod( 'page_h1_font_size_desktop' );
+$page_h1_font_size         = json_decode( get_theme_mod( 'page_h1_font_size' ), true );
+$page_h1_font_size_desktop = wpbf_get_theme_mod_value( $page_h1_font_size, 'desktop', '32px' );
 $page_h1_font_color        = get_theme_mod( 'page_h1_font_color' );
 
 if ( $page_h1_toggle && $page_h1_font_family_value ) {
@@ -252,7 +263,8 @@ $page_h2_font_family_value = get_theme_mod( 'page_h2_font_family', array() );
 $page_h2_line_height       = get_theme_mod( 'page_h2_line_height' );
 $page_h2_letter_spacing    = get_theme_mod( 'page_h2_letter_spacing' );
 $page_h2_text_transform    = get_theme_mod( 'page_h2_text_transform', 'none' );
-$page_h2_font_size_desktop = get_theme_mod( 'page_h2_font_size_desktop' );
+$page_h2_font_size         = json_decode( get_theme_mod( 'page_h2_font_size' ), true );
+$page_h2_font_size_desktop = wpbf_get_theme_mod_value( $page_h2_font_size, 'desktop', '28px' );
 $page_h2_font_color        = get_theme_mod( 'page_h2_font_color' );
 
 if ( $page_h2_toggle && $page_h2_font_family_value ) {
@@ -331,7 +343,8 @@ $page_h3_font_family_value = get_theme_mod( 'page_h3_font_family', array() );
 $page_h3_line_height       = get_theme_mod( 'page_h3_line_height' );
 $page_h3_letter_spacing    = get_theme_mod( 'page_h3_letter_spacing' );
 $page_h3_text_transform    = get_theme_mod( 'page_h3_text_transform', 'none' );
-$page_h3_font_size_desktop = get_theme_mod( 'page_h3_font_size_desktop' );
+$page_h3_font_size         = json_decode( get_theme_mod( 'page_h3_font_size' ), true );
+$page_h3_font_size_desktop = wpbf_get_theme_mod_value( $page_h3_font_size, 'desktop', '24px' );
 $page_h3_font_color        = get_theme_mod( 'page_h3_font_color' );
 
 if ( $page_h3_toggle && $page_h3_font_family_value ) {
@@ -411,7 +424,8 @@ $page_h4_font_family_value = get_theme_mod( 'page_h4_font_family', array() );
 $page_h4_line_height       = get_theme_mod( 'page_h4_line_height' );
 $page_h4_letter_spacing    = get_theme_mod( 'page_h4_letter_spacing' );
 $page_h4_text_transform    = get_theme_mod( 'page_h4_text_transform', 'none' );
-$page_h4_font_size_desktop = get_theme_mod( 'page_h4_font_size_desktop' );
+$page_h4_font_size         = json_decode( get_theme_mod( 'page_h4_font_size' ), true );
+$page_h4_font_size_desktop = wpbf_get_theme_mod_value( $page_h4_font_size, 'desktop', '20px' );
 $page_h4_font_color        = get_theme_mod( 'page_h4_font_color' );
 
 if ( $page_h4_toggle && $page_h4_font_family_value ) {
@@ -491,7 +505,8 @@ $page_h5_font_family_value = get_theme_mod( 'page_h5_font_family', array() );
 $page_h5_line_height       = get_theme_mod( 'page_h5_line_height' );
 $page_h5_letter_spacing    = get_theme_mod( 'page_h5_letter_spacing' );
 $page_h5_text_transform    = get_theme_mod( 'page_h5_text_transform', 'none' );
-$page_h5_font_size_desktop = get_theme_mod( 'page_h5_font_size_desktop' );
+$page_h5_font_size         = json_decode( get_theme_mod( 'page_h5_font_size' ), true );
+$page_h5_font_size_desktop = wpbf_get_theme_mod_value( $page_h5_font_size, 'desktop', '16px' );
 $page_h5_font_color        = get_theme_mod( 'page_h5_font_color' );
 
 if ( $page_h5_toggle && $page_h5_font_family_value ) {
@@ -571,7 +586,8 @@ $page_h6_font_family_value = get_theme_mod( 'page_h6_font_family', array() );
 $page_h6_line_height       = get_theme_mod( 'page_h6_line_height' );
 $page_h6_letter_spacing    = get_theme_mod( 'page_h6_letter_spacing' );
 $page_h6_text_transform    = get_theme_mod( 'page_h6_text_transform' );
-$page_h6_font_size_desktop = get_theme_mod( 'page_h6_font_size_desktop' );
+$page_h6_font_size         = json_decode( get_theme_mod( 'page_h6_font_size' ), true );
+$page_h6_font_size_desktop = wpbf_get_theme_mod_value( $page_h6_font_size, 'desktop', '16px' );
 $page_h6_font_color        = get_theme_mod( 'page_h6_font_color' );
 
 if ( $page_h6_toggle && $page_h6_font_family_value ) {
