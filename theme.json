@@ -1,6 +1,9 @@
 {
-    "version": 0.2,
+	"version": 1,
 	"settings": {
+		"spacing": {
+			"blockGap": true
+		},
 		"typography": {
 			"fontSizes": [{
 				"name": "Tiny",
@@ -28,9 +31,14 @@
 				"slug": "extra"
 			}]
 		},
-        "layout": {
-            "contentSize": "1000px",
-            "wideSize": "1400px"
-        }
+		"layout": {
+			"contentSize": "1000px",
+			"wideSize": "1400px"
+		}
+	},
+	"styles": {
+		"spacing": {
+			"blockGap": "20px"
+		}
 	}
 }
