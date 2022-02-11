@@ -119,7 +119,7 @@ class CSS {
 
 		if ( ! is_array( $args['output'] ) ) {
 			/* translators: The field ID where the error occurs. */
-			_doing_it_wrong( __METHOD__, sprintf( esc_html__( '"output" invalid format in field %s. The "output" argument should be defined as an array of arrays.', 'kirki' ), esc_html( $this->settings ) ), '3.0.10' );
+			_doing_it_wrong( __METHOD__, sprintf( esc_html__( '"output" invalid format in field %s. The "output" argument should be defined as an array of arrays.', 'kirki' ), esc_html( $args['settings'] ) ), '3.0.10' );
 			$args['output'] = array(
 				array(
 					'element' => $args['output'],
@@ -130,7 +130,7 @@ class CSS {
 		// Convert to array of arrays if needed.
 		if ( isset( $args['output']['element'] ) ) {
 			/* translators: The field ID where the error occurs. */
-			_doing_it_wrong( __METHOD__, sprintf( esc_html__( '"output" invalid format in field %s. The "output" argument should be defined as an array of arrays.', 'kirki' ), esc_html( $this->settings ) ), '3.0.10' );
+			_doing_it_wrong( __METHOD__, sprintf( esc_html__( '"output" invalid format in field %s. The "output" argument should be defined as an array of arrays.', 'kirki' ), esc_html( $args['settings'] ) ), '3.0.10' );
 			$args['output'] = array( $args['output'] );
 		}
 
@@ -341,19 +341,29 @@ class CSS {
 
 					// If $field is using active_callback instead of required.
 					if ( ! isset( $field['required'] ) || empty( $field['required'] ) ) {
-						if ( isset( $field['active_callback'] ) && ! empty( $field['active_callback'] ) && is_array( $field['active_callback'] ) ) {
-							$field['required'] = $field['active_callback'];
+						if ( isset( $field['active_callback'] ) && ! empty( $field['active_callback'] ) ) {
+							// The "active_callback" or "required" accepts array or callable as the value.
+							if ( is_array( $field['active_callback'] ) || is_callable( $field['active_callback'] ) ) {
+								$field['required'] = $field['active_callback'];
+							}
 						}
 					}
 
-					foreach ( $field['required'] as $requirement ) {
-						if ( isset( $requirement['setting'] ) && isset( $requirement['value'] ) && isset( $requirement['operator'] ) && isset( self::$field_option_types[ $requirement['setting'] ] ) ) {
-							$controller_value = Values::get_value( $config_id, $requirement['setting'] );
+					// At this point, we know that the "required" is set and is not empty.
+					if ( is_array( $field['required'] ) ) {
+						foreach ( $field['required'] as $requirement ) {
+							if ( isset( $requirement['setting'] ) && isset( $requirement['value'] ) && isset( $requirement['operator'] ) && isset( self::$field_option_types[ $requirement['setting'] ] ) ) {
+								$controller_value = Values::get_value( $config_id, $requirement['setting'] );
 
-							if ( ! Helper::compare_values( $controller_value, $requirement['value'], $requirement['operator'] ) ) {
-								$valid = false;
+								if ( ! Helper::compare_values( $controller_value, $requirement['value'], $requirement['operator'] ) ) {
+									$valid = false;
+								}
 							}
 						}
+					} elseif ( is_string( $field['required'] ) ) {
+						$valid = '__return_true' === $field['required'] ? true : false;
+					} elseif ( is_callable( $field['required'] ) ) {
+						$valid = call_user_func( $field['required'] );
 					}
 
 					if ( ! $valid ) {
