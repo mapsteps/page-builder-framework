@@ -28,6 +28,20 @@ require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 // Kirki.
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
+// Kirki Pro.
+require_once WPBF_THEME_DIR . '/assets/kirki-pro/control-headline-divider/vendor/autoload.php';
+require_once WPBF_THEME_DIR . '/assets/kirki-pro/control-input-slider/vendor/autoload.php';
+require_once WPBF_THEME_DIR . '/assets/kirki-pro/control-margin-padding/vendor/autoload.php';
+require_once WPBF_THEME_DIR . '/assets/kirki-pro/control-responsive/vendor/autoload.php';
+require_once WPBF_THEME_DIR . '/assets/kirki-pro/control-tab/vendor/autoload.php';
+
+// Init Kirki Pro.
+new \Kirki\Pro\HeadlineDivider\Init();
+new \Kirki\Pro\InputSlider\Init();
+new \Kirki\Pro\MarginPadding\Init();
+new \Kirki\Pro\Responsive\Init();
+new \Kirki\Pro\Tab\Init();
+
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
 

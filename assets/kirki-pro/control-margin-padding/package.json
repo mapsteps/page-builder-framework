@@ -1,0 +1,47 @@
+{
+  "name": "control-margin-padding",
+  "version": "0.1.0",
+  "description": "Dev toolkit for Kirki PRO's control-margin-padding",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/mapsteps/kirki-pro/"
+  },
+  "keywords": [
+    "kirki-control-margin-padding"
+  ],
+  "author": "Kirki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://kirki.org/"
+  },
+  "homepage": "https://kirki.org/",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.16.7",
+    "@parcel/transformer-sass": "^2.2.1",
+    "parcel": "^2.2.1"
+  },
+  "alias": {
+    "jquery": {
+      "global": "jQuery"
+    },
+    "react": {
+      "global": "React"
+    },
+    "react-dom": {
+      "global": "ReactDOM"
+    }
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "source": [
+    "src/control.js",
+    "src/preview.js"
+  ],
+  "scripts": {
+    "build": "parcel build",
+    "dev": "parcel build --no-optimize"
+  }
+}
