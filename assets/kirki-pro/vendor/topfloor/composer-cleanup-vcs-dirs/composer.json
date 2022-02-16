@@ -1,0 +1,22 @@
+{
+  "name": "topfloor/composer-cleanup-vcs-dirs",
+  "description": "Automatically deletes .git directories in newly installed or updated dependencies.",
+  "type": "composer-plugin",
+  "license": "GPL-2.0+",
+  "require": {
+    "php": ">=5.5",
+    "composer-plugin-api": "^1 | ^2",
+    "symfony/finder": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "TopFloor\\ComposerCleanupVcsDirs\\": "src/"
+    }
+  },
+  "extra": {
+    "class": "TopFloor\\ComposerCleanupVcsDirs\\Plugin"
+  },
+  "require-dev": {
+    "composer/composer": "dev-master"
+  }
+}
