@@ -1,3 +1,12 @@
+/**
+ * Holds the block editor styles.
+ *
+ * We can't simply use the styles argument in the theme.json file as it also prints the styles on the frontend.
+ * All of this is handled already, so we have to skip the theme.json for the most part and manually implement our styles.
+ *
+ */
+
+/* Set variables */
 :root {
 	--base-color: #dedee5;
 	--base-color-alt: #f5f5f7;
@@ -7,29 +16,15 @@
 	--accent-color-alt: #79c4e0;
 }
 
-/* Set default margins */
-.editor-styles-wrapper [data-block] {
-	margin-top: 0;
-	margin-bottom: 20px;
-}
-
-/* Set default block width */
-.wp-block {
-	max-width: 1000px;
-}
-
-/* Set wide aligned image width */
-.wp-block[data-align="wide"] {
-	max-width: 1400px;
-}
-
 /*
  * We're working with the #wpwrap prefix below to override Gutenbergs inline styles.
  * This is so much harder than it should be. There's no consistency here. Thanks Gutenberg.
  */
 
-/* Reset font color */
+/* Reset font color & size */
 #wpwrap .editor-styles-wrapper {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 16px;
 	color: var(--brand-color-alt);
 }
 
@@ -94,11 +89,9 @@
 /* Preformatted & code */
 
 /* Code block */
-.wp-block-code {
+.wp-block-code code {
 	font-family: monospace, monospace;
-	background: var(--base-color-alt);
 	padding: 20px;
-
 	border: none;
 	border-radius: 0;
 	color: inherit;

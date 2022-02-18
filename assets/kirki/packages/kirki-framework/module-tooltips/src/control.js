@@ -7,55 +7,39 @@ function kirkiTooltipAdd( control ) {
 			return;
 		}
 
-		if ( control.container.find( '.tooltip-content' ).length ) {
-			return;
-		}
+		if ( control.container.find( '.tooltip-content' ).length ) return;
 
-		// The control ID. Will be used to manipulate the DOM.
-		const controlID = '#customize-control-' + tooltip.id;
+		const target = document.querySelector(
+			'#customize-control-' + tooltip.id + ' .customize-control-title'
+		);
 
-		// The trigger markup.
+		if ( ! target ) return;
+		target.classList.add( 'kirki-tooltip-wrapper' );
+
+		// Build the tooltip trigger.
 		const trigger =
-			'<span class="tooltip-trigger" data-setting="' +
-			tooltip.id +
-			'"><span class="dashicons dashicons-editor-help"></span></span>';
+			'<span class="tooltip-trigger"><span class="dashicons dashicons-editor-help"></span></span>';
 
 		// Build the tooltip content.
 		const content =
-			'<div class="tooltip-content hidden" data-setting="' +
-			tooltip.id +
-			'">' +
-			tooltip.content +
-			'</div>';
+			'<span class="tooltip-content">' + tooltip.content + '</span>';
 
-		// Add the trigger & content.
-		jQuery(
-			'<div class="kirki-tooltip-wrapper">' + trigger + content + '</div>'
-		).prependTo( controlID );
+		const $target = jQuery( target );
 
-		// Handle onclick events.
-		jQuery( '.tooltip-trigger[data-setting="' + tooltip.id + '"]' ).on(
-			'click',
-			function () {
-				jQuery(
-					'.tooltip-content[data-setting="' + tooltip.id + '"]'
-				).toggleClass( 'hidden' );
-			}
-		);
+		// Append the trigger & content next to the control's title.
+		jQuery( trigger ).appendTo( $target );
+		jQuery( content ).appendTo( $target );
 	} );
 }
 
 jQuery( document ).ready( function () {
-	// Close tooltips if we click anywhere else.
-	jQuery( document ).mouseup( function ( e ) {
-		if ( ! jQuery( '.tooltip-content' ).is( e.target ) ) {
-			if ( ! jQuery( '.tooltip-content' ).hasClass( 'hidden' ) ) {
-				jQuery( '.tooltip-content' ).addClass( 'hidden' );
-			}
-		}
-	} );
+	let sectionNames = [];
 
 	wp.customize.control.each( function ( control ) {
+		if ( ! sectionNames.includes( control.section() ) ) {
+			sectionNames.push( control.section() );
+		}
+
 		wp.customize.section( control.section(), function ( section ) {
 			if (
 				section.expanded() ||
@@ -69,6 +53,32 @@ jQuery( document ).ready( function () {
 					}
 				} );
 			}
+		} );
+	} );
+
+	jQuery( 'head' ).append(
+		jQuery( '<style class="kirki-tooltip-inline-styles"></style>' )
+	);
+
+	const $tooltipStyleEl = jQuery( '.kirki-tooltip-inline-styles' );
+	const $sidebarOverlay = jQuery( '.wp-full-overlay-sidebar-content' );
+
+	sectionNames.forEach( function ( sectionName ) {
+		wp.customize.section( sectionName, function ( section ) {
+			section.expanded.bind( function ( expanded ) {
+				if ( expanded ) {
+					if (
+						section.contentContainer[0].scrollHeight >
+						$sidebarOverlay.height()
+					) {
+						$tooltipStyleEl.html(
+							'.kirki-tooltip-wrapper span.tooltip-content {min-width: 258px;}'
+						);
+					} else {
+						$tooltipStyleEl.empty();
+					}
+				}
+			} );
 		} );
 	} );
 } );

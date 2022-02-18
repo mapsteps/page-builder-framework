@@ -37,7 +37,7 @@ class Slider extends Base {
 	 * @access public
 	 * @var string
 	 */
-	public static $control_ver = '1.0';
+	public static $control_ver = '1.0.4';
 
 	/**
 	 * Enqueue control related styles/scripts.
@@ -77,6 +77,14 @@ class Slider extends Base {
 				'step' => 1,
 			]
 		);
+
+		if ( isset( $this->json['label'] ) ) {
+			$this->json['label'] = html_entity_decode( $this->json['label'] );
+		}
+
+		if ( isset( $this->json['description'] ) ) {
+			$this->json['description'] = html_entity_decode( $this->json['description'] );
+		}
 
 		$this->json['choices']['min']  = (float) $this->json['choices']['min'];
 		$this->json['choices']['max']  = (float) $this->json['choices']['max'];

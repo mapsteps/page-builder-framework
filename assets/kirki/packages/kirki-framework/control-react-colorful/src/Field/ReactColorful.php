@@ -85,6 +85,19 @@ class ReactColorful extends Field {
 					$args['sanitize_callback'] = 'absint';
 				}
 			}
+
+			// For postMessage/preview purpose, if property is not set, then set it to 'color'.
+			if ( isset( $args['output'] ) && ! empty( $args['output'] ) && is_array( $args['output'] ) && ! isset( $args['output']['element'] ) ) {
+				foreach ( $args['output'] as $index => $output ) {
+					if ( ! isset( $output['property'] ) ) {
+						if ( empty( $args['output'][ $index ] ) ) {
+							$args['output'][ $index ] = [];
+						}
+
+						$args['output'][ $index ]['property'] = 'color';
+					}
+				}
+			}
 		}
 
 		return $args;

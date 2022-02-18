@@ -149,7 +149,7 @@ add_filter( 'wpbf_sidebar_layout', 'wpbf_edd_sidebar_layout' );
 /**
  * Construct cart menu item.
  */
-function wpbf_edd_menu_item() {
+function wpbf_edd_menu_item( $markup = 'li' ) {
 
 	if ( wpbf_svg_enabled() ) {
 		$icon = apply_filters( 'wpbf_edd_menu_item_icon', wpbf_svg( 'cart' )  );
@@ -163,7 +163,7 @@ function wpbf_edd_menu_item() {
 	$cart_url    = edd_get_checkout_uri();
 
 	// Construct.
-	$menu_item  = '<li class="' . esc_attr( $css_classes ) . '">';
+	$menu_item = '<' . $markup . ' class="' . esc_attr( $css_classes ) . '">';
 
 	$menu_item .= '<a href="' . esc_url( $cart_url ) . '" title="' . esc_attr( $title ) . '">';
 
@@ -183,7 +183,7 @@ function wpbf_edd_menu_item() {
 
 	$menu_item .= apply_filters( 'wpbf_edd_menu_item_dropdown', '' );
 
-	$menu_item .= '</li>';
+	$menu_item .= '</' . $markup . '>';
 
 	return $menu_item;
 
