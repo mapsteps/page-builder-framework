@@ -3,7 +3,7 @@
  * Plugin Name: Kirki PRO
  * Plugin URI:  https://kirki.org
  * Description: PRO extension fields for Kirki Customizer Framework.
- * Version:     0.1.0
+ * Version:     0.1.1
  * Author:      David Vongries
  * Author URI:  https://davidvongries.com/
  * License:     GPL-3.0
