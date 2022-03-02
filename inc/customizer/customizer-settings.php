@@ -15,8 +15,6 @@ load_theme_textdomain( 'page-builder-framework' );
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-helpers.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-setup.php';
 
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/example.php';
-
 // Load customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-premium.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-general.php';
