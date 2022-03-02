@@ -60,6 +60,11 @@ if ( ! function_exists( 'kirki_pro_load_controls' ) ) {
 			return;
 		}
 
+		// Stop, if Kirki PRO is already installed.
+		if ( defined( 'KIRKI_PRO_VERSION' ) ) {
+			return;
+		}
+
 		define( 'KIRKI_PRO_VERSION', '0.1.0' );
 		define( 'KIRKI_PRO_PLUGIN_FILE', __FILE__ );
 

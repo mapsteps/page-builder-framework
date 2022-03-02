@@ -30,6 +30,11 @@ class Init {
 			return;
 		}
 
+		// Stop, if Kirki PRO is already installed.
+		if ( defined( 'KIRKI_PRO_VERSION' ) ) {
+			return;
+		}
+
 		require_once __DIR__ . '/../vendor/autoload.php';
 
 		$packages = [
