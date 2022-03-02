@@ -1,7 +1,6 @@
 {
     "name": "mapsteps/kirki-pro-headline-divider",
     "description": "Packages management for kirki-pro-headline-divider",
-    "version": "0.1.0",
     "minimum-stability": "dev",
     "type": "library",
     "homepage": "https://kirki.org/docs/pro/headlines-dividers/",
