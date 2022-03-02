@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '5bc142052abe07e51f8c2f90b302d635965da814',
+        'reference' => 'cf2ff66aa9e57cb029e87476e3710dd8fd51275e',
         'name' => 'mapsteps/kirki-pro',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '5bc142052abe07e51f8c2f90b302d635965da814',
+            'reference' => 'cf2ff66aa9e57cb029e87476e3710dd8fd51275e',
             'dev_requirement' => false,
         ),
         'mapsteps/kirki-pro-headline-divider' => array(

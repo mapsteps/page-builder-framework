@@ -29,7 +29,9 @@ require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
 // Kirki PRO.
-require_once WPBF_THEME_DIR . '/assets/kirki-pro/kirki-pro.php';
+require_once WPBF_THEME_DIR . '/assets/kirki-pro/vendor/autoload.php';
+
+new \Kirki\Pro\Init();
 
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';

@@ -30,6 +30,7 @@ class ComposerStaticInitf09a32d39dd9337724e31ff1d560aace
             'Kirki\\Pro\\HeadlineDivider\\' => 26,
             'Kirki\\Pro\\Field\\' => 16,
             'Kirki\\Pro\\Control\\' => 18,
+            'Kirki\\Pro\\' => 10,
         ),
     );
 
@@ -81,6 +82,10 @@ class ComposerStaticInitf09a32d39dd9337724e31ff1d560aace
             2 => __DIR__ . '/..' . '/mapsteps/kirki-pro-margin-padding/src/Control',
             3 => __DIR__ . '/..' . '/mapsteps/kirki-pro-responsive/src/Control',
             4 => __DIR__ . '/..' . '/mapsteps/kirki-pro-tabs/src/Control',
+        ),
+        'Kirki\\Pro\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 

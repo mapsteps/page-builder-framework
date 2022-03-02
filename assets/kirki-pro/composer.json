@@ -48,7 +48,11 @@
         },
         "sort-packages": true
     },
-    "autoload": {},
+    "autoload": {
+        "psr-4": {
+            "Kirki\\Pro\\": "src/"
+        }
+    },
     "require": {
         "php": ">=7.0",
         "topfloor/composer-cleanup-vcs-dirs": "dev-master",

@@ -16,4 +16,5 @@ return array(
     'Kirki\\Pro\\HeadlineDivider\\' => array($vendorDir . '/mapsteps/kirki-pro-headline-divider/src'),
     'Kirki\\Pro\\Field\\' => array($vendorDir . '/mapsteps/kirki-pro-headline-divider/src/Field', $vendorDir . '/mapsteps/kirki-pro-input-slider/src/Field', $vendorDir . '/mapsteps/kirki-pro-margin-padding/src/Field', $vendorDir . '/mapsteps/kirki-pro-responsive/src/Field', $vendorDir . '/mapsteps/kirki-pro-tabs/src/Field'),
     'Kirki\\Pro\\Control\\' => array($vendorDir . '/mapsteps/kirki-pro-headline-divider/src/Control', $vendorDir . '/mapsteps/kirki-pro-input-slider/src/Control', $vendorDir . '/mapsteps/kirki-pro-margin-padding/src/Control', $vendorDir . '/mapsteps/kirki-pro-responsive/src/Control', $vendorDir . '/mapsteps/kirki-pro-tabs/src/Control'),
+    'Kirki\\Pro\\' => array($baseDir . '/src'),
 );
