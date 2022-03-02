@@ -1,7 +1,0 @@
-.git
-**/.git
-node_modules
-package-lock.json
-.parcel-cache
-builds
-auth.json

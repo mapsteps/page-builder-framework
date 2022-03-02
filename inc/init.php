@@ -28,10 +28,10 @@ require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 // Kirki.
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
-// Kirki PRO.
-if ( ! defined( 'KIRKI_PRO_VERSION' ) ) {
-	require_once WPBF_THEME_DIR . '/assets/kirki-pro/vendor/autoload.php';
-	new \Kirki\Pro\Init();
+// Kirki Pro.
+if ( ! class_exists( '\Kirki\Pro\HeadlineDivider\Init' ) ) {
+	require_once WPBF_THEME_DIR . '/assets/kirki-pro/kirki-pro-headline-divider/vendor/autoload.php';
+	new \Kirki\Pro\HeadlineDivider\Init();
 }
 
 // Customizer settings.
@@ -105,7 +105,7 @@ if ( ! function_exists( 'wpbf_bb_header_footer_support' ) && class_exists( 'FLTh
 
 // Divi integration.
 // if ( class_exists( 'ET_Builder_Plugin' ) ) {
-// require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
+// 	require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
 // }
 
 // Easy Digital Downloads integration.
