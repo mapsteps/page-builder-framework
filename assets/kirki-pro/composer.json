@@ -1,0 +1,61 @@
+{
+    "name": "mapsteps/kirki-pro",
+    "description": "Packages management for Kirki PRO",
+    "type": "library",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Kirki Framework",
+            "email": "connect@mapsteps.com",
+            "homepage": "https://kirki.org",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "connect@mapsteps.com",
+        "docs": "https://kirki.org/docs/pro/"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "name": "mapsteps/kirki-pro-headline-divider",
+            "url": "https://bitbucket.org/mapsteps/kirki-pro-headline-divider.git"
+        },
+        {
+            "type": "git",
+            "name": "mapsteps/kirki-pro-input-slider",
+            "url": "https://bitbucket.org/mapsteps/kirki-pro-input-slider.git"
+        },
+        {
+            "type": "git",
+            "name": "mapsteps/kirki-pro-margin-padding",
+            "url": "https://bitbucket.org/mapsteps/kirki-pro-margin-padding.git"
+        },
+        {
+            "type": "git",
+            "name": "mapsteps/kirki-pro-responsive",
+            "url": "https://bitbucket.org/mapsteps/kirki-pro-responsive.git"
+        },
+        {
+            "type": "git",
+            "name": "mapsteps/kirki-pro-tabs",
+            "url": "https://bitbucket.org/mapsteps/kirki-pro-tabs.git"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "topfloor/composer-cleanup-vcs-dirs": true
+        },
+        "sort-packages": true
+    },
+    "autoload": {},
+    "require": {
+        "php": ">=7.0",
+        "topfloor/composer-cleanup-vcs-dirs": "dev-master",
+        "mapsteps/kirki-pro-headline-divider": "dev-master",
+        "mapsteps/kirki-pro-input-slider": "dev-master",
+        "mapsteps/kirki-pro-margin-padding": "dev-master",
+        "mapsteps/kirki-pro-responsive": "dev-master",
+        "mapsteps/kirki-pro-tabs": "dev-master"
+    }
+}
