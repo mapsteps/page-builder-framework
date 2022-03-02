@@ -24,10 +24,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'constant'    => 'WPBF_PREMIUM_VERSION',
 				),
 				array(
-					'title'       => __( 'Swift Control', 'page-builder-framework' ),
+					'title'       => __( 'Better Admin Bar', 'page-builder-framework' ),
 					'description' => __( 'Quickly access all important areas of your WordPress website & provide your clients with the user experience they deserve.', 'page-builder-framework' ),
-					'banner'      => 'https://ps.w.org/swift-control/assets/banner-772x250.jpg',
-					'link'        => 'https://wpswiftcontrol.com/',
+					'banner'      => 'https://ps.w.org/better-admin-bar/assets/banner-772x250.jpg',
+					'link'        => 'https://betteradminbar.com/',
 					'repo'        => false,
 					'constant'    => 'SWIFT_CONTROL_PRO_PLUGIN_VERSION',
 				),
