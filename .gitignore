@@ -4,6 +4,9 @@ package-lock.json
 gulpfile.js
 **/build/*.map
 
+# ignore sensitive files
+auth.json
+
 # ignore old files
 *.backup.*
 
