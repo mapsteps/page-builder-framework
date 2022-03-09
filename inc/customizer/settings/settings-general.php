@@ -708,6 +708,7 @@ new \Kirki\Pro\Field\Headline(
 	[
 		'settings' => 'button_headline',
 		'label'    => esc_html__( 'Theme Buttons', 'page-builder-framework' ),
+		'tooltip'  => esc_html__( 'Applies to default buttons such as "Read more" used throughout the theme.', 'page-builder-framework' ),
 		'section'  => 'wpbf_button_options',
 		'priority' => 0,
 	]
@@ -770,6 +771,7 @@ new \Kirki\Pro\Field\Headline(
 	[
 		'settings' => 'button_primary_headline',
 		'label'    => esc_html__( 'Theme Buttons (Primary)', 'page-builder-framework' ),
+		'tooltip'  => esc_html__( 'Applies to buttons displayed in the themes accent color such as WooCommerce buttons.', 'page-builder-framework' ),
 		'section'  => 'wpbf_button_options',
 		'priority' => 1,
 	]

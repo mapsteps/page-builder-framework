@@ -34,6 +34,11 @@ if ( ! class_exists( '\Kirki\Pro\HeadlineDivider\Init' ) ) {
 	new \Kirki\Pro\HeadlineDivider\Init();
 }
 
+if ( ! class_exists( '\Kirki\Pro\Tabs\Init' ) ) {
+	require_once WPBF_THEME_DIR . '/assets/kirki-pro/kirki-pro-tabs/vendor/autoload.php';
+	new \Kirki\Pro\Tabs\Init();
+}
+
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
 
