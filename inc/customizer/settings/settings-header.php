@@ -33,11 +33,22 @@ Kirki::add_section( 'wpbf_menu_options', array(
 ) );
 
 // Sub menu.
-Kirki::add_section( 'wpbf_sub_menu_options', array(
-	'title'    => __( 'Sub Menu', 'page-builder-framework' ),
-	'panel'    => 'header_panel',
-	'priority' => 250,
-) );
+new \Kirki\Section(
+	'wpbf_sub_menu_options',
+	[
+		'title'    => __( 'Sub Menu', 'page-builder-framework' ),
+		'panel'    => 'header_panel',
+		'priority' => 250,
+		'tabs'     => [
+			'general' => [
+				'label' => esc_html__( 'General', 'kirki-pro' ),
+			],
+			'design'  => [
+				'label' => esc_html__( 'Design', 'kirki-pro' ),
+			],
+		],
+	]
+);
 
 // Mobile menu.
 Kirki::add_section( 'wpbf_mobile_menu_options', array(
@@ -915,6 +926,23 @@ if ( ! wpbf_is_premium() ) {
 
 /* Fields – Sub Menu */
 
+// Width.
+Kirki::add_field( 'wpbf', array(
+	'type'      => 'slider',
+	'settings'  => 'sub_menu_width',
+	'label'     => __( 'Sub Menu Width', 'page-builder-framework' ),
+	'section'   => 'wpbf_sub_menu_options',
+	'priority'  => 0,
+	'default'   => 220,
+	'transport' => 'postMessage',
+	'tab'       => 'general',
+	'choices'   => array(
+		'min'  => 100,
+		'max'  => 400,
+		'step' => 1,
+	),
+) );
+
 // Alignment.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'radio-image',
@@ -922,8 +950,9 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Sub Menu Alignment', 'page-builder-framework' ),
 	'section'         => 'wpbf_sub_menu_options',
 	'default'         => 'left',
-	'priority'        => 0,
+	'priority'        => 1,
 	'multiple'        => 1,
+	'tab'             => 'general',
 	'choices'         => array(
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
@@ -940,30 +969,33 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Width.
+// Text alignment.
 Kirki::add_field( 'wpbf', array(
-	'type'      => 'slider',
-	'settings'  => 'sub_menu_width',
-	'label'     => __( 'Width', 'page-builder-framework' ),
+	'type'      => 'radio-image',
+	'settings'  => 'sub_menu_text_alignment',
+	'label'     => __( 'Text Alignment', 'page-builder-framework' ),
 	'section'   => 'wpbf_sub_menu_options',
-	'priority'  => 1,
-	'default'   => 220,
+	'default'   => 'left',
+	'priority'  => 2,
+	'multiple'  => 1,
 	'transport' => 'postMessage',
+	'tab'       => 'general',
 	'choices'   => array(
-		'min'  => 100,
-		'max'  => 400,
-		'step' => 1,
+		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
+		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
+		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
 	),
 ) );
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
 	'type'              => 'padding_control',
-	'label'             => __( 'Padding', 'page-builder-framework' ),
+	'label'             => __( 'Menu Item Padding', 'page-builder-framework' ),
 	'section'           => 'wpbf_sub_menu_options',
 	'settings'          => 'sub_menu_padding',
-	'priority'          => 2,
+	'priority'          => 3,
 	'transport'         => 'postMessage',
+	'tab'               => 'general',
 	'default'           => json_encode(
 		array(
 			'top'    => 10,
@@ -975,23 +1007,6 @@ Kirki::add_field( 'wpbf', array(
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 ) );
 
-// Text alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'radio-image',
-	'settings'  => 'sub_menu_text_alignment',
-	'label'     => __( 'Text Alignment', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'default'   => 'left',
-	'priority'  => 3,
-	'multiple'  => 1,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
-		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
-		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-) );
-
 // Background color.
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'color',
@@ -1001,6 +1016,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'   => '#ffffff',
 	'transport' => 'postMessage',
 	'priority'  => 4,
+	'tab'       => 'design',
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1015,6 +1031,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'   => '#ffffff',
 	'priority'  => 5,
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1027,6 +1044,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Font Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_sub_menu_options',
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'priority'  => 6,
 ) );
 
@@ -1038,6 +1056,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'   => 'wpbf_sub_menu_options',
 	'priority'  => 7,
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1051,6 +1070,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'   => 'wpbf_sub_menu_options',
 	'priority'  => 8,
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'min'  => 0,
 		'max'  => 50,
@@ -1059,14 +1079,16 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator toggle.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'sub_menu_separator',
-	'label'    => __( 'Sub Menu Separator', 'page-builder-framework' ),
-	'section'  => 'wpbf_sub_menu_options',
-	'default'  => 0,
-	'priority' => 9,
-) );
+new \Kirki\Pro\Field\HeadlineToggle(
+	[
+		'settings' => 'sub_menu_separator',
+		'label'    => __( 'Sub Menu Separator', 'page-builder-framework' ),
+		'section'  => 'wpbf_sub_menu_options',
+		'default'  => 0,
+		'priority' => 9,
+		'tab'      => 'design',
+	]
+);
 
 // Separator color.
 Kirki::add_field( 'wpbf', array(
@@ -1077,6 +1099,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => '#f5f5f7',
 	'priority'        => 10,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1104,6 +1127,7 @@ if ( ! wpbf_is_premium() ) {
 		'section'  => 'wpbf_sub_menu_options',
 		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
 		'priority' => 9999,
+		'tab'      => 'general',
 	) );
 
 }
