@@ -66,7 +66,7 @@ Kirki::add_section( 'wpbf_scrolltop_options', array(
 new \Kirki\Pro\Field\Headline(
 	[
 		'settings' => 'general_headline',
-		'label'    => esc_html__( 'General', 'page-builder-framework' ),
+		'label'    => esc_html__( 'Site Settings', 'page-builder-framework' ),
 		'section'  => 'wpbf_page_options',
 		'priority' => 0,
 	]
