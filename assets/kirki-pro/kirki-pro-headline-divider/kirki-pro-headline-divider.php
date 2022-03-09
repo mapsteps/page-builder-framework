@@ -3,7 +3,7 @@
  * Plugin Name: Kirki PRO - Headlines & Divider Control
  * Plugin URI:  https://kirki.org
  * Description: Headlines & divider control for Kirki Customizer Framework.
- * Version:     0.1.0
+ * Version:     1.1
  * Author:      David Vongries
  * Author URI:  https://davidvongries.com/
  * License:     GPL-3.0
@@ -28,7 +28,23 @@ if ( ! function_exists( 'kirki_pro_load_headline_divider_control' ) ) {
 			return;
 		}
 
-		define( 'KIRKI_PRO_HEADLINE_DIVIDER_VERSION', '0.1.0' );
+		// Stop, if Kirki PRO (bundle) is already installed.
+		if ( defined( 'KIRKI_PRO_VERSION' ) ) {
+			return;
+		}
+
+		// Stop, if Kirki Pro Headline Divider is already installed.
+		if ( class_exists( '\Kirki\Pro\HeadlineDivider\Init' ) ) {
+			return;
+		}
+
+		if ( ! function_exists( 'get_plugin_data' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		$plugin_data = get_plugin_data( __FILE__ );
+
+		define( 'KIRKI_PRO_HEADLINE_DIVIDER_VERSION', $plugin_data['Version'] );
 		define( 'KIRKI_PRO_HEADLINE_DIVIDER_PLUGIN_FILE', __FILE__ );
 
 		require_once __DIR__ . '/vendor/autoload.php';

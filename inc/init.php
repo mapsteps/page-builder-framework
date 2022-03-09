@@ -28,10 +28,11 @@ require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 // Kirki.
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
-// Kirki PRO.
-require_once WPBF_THEME_DIR . '/assets/kirki-pro/kirki-pro-headline-divider/vendor/autoload.php';
-
-new \Kirki\Pro\HeadlineDivider\Init();
+// Kirki Pro.
+if ( ! class_exists( '\Kirki\Pro\HeadlineDivider\Init' ) ) {
+	require_once WPBF_THEME_DIR . '/assets/kirki-pro/kirki-pro-headline-divider/vendor/autoload.php';
+	new \Kirki\Pro\HeadlineDivider\Init();
+}
 
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
