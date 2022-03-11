@@ -55,7 +55,7 @@ Kirki::add_section( 'wpbf_button_options', array(
 
 // ScrollTop.
 Kirki::add_section( 'wpbf_scrolltop_options', array(
-	'title'    => __( 'Scroll to Top', 'page-builder-framework' ),
+	'title'    => __( 'Scroll to Top Button', 'page-builder-framework' ),
 	'panel'    => 'layout_panel',
 	'priority' => 700,
 ) );
@@ -327,7 +327,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'select',
 	'settings' => 'sidebar_position',
-	'label'    => __( 'Sidebar Position', 'page-builder-framework' ),
+	'label'    => __( 'Position', 'page-builder-framework' ),
 	'section'  => 'wpbf_sidebar_options',
 	'default'  => 'right',
 	'priority' => 1,
@@ -810,10 +810,9 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Headline.
-new \Kirki\Pro\Field\Headline(
+new \Kirki\Pro\Field\Divider(
 	[
 		'settings' => 'botton_border_headline',
-		'label'    => esc_html__( 'Border', 'page-builder-framework' ),
 		'section'  => 'wpbf_button_options',
 		'priority' => 1,
 	]
@@ -937,11 +936,10 @@ Kirki::add_field( 'wpbf', array(
 new \Kirki\Pro\Field\HeadlineToggle(
 	[
 		'settings'    => 'layout_scrolltop',
-		'label'       => __( 'Scroll to Top', 'page-builder-framework' ),
-		'description' => __( 'Display a "Scroll to Top" arrow at the bottom of your browser window.', 'page-builder-framework' ),
+		'label'       => __( 'Enable Scroll to Top Button', 'page-builder-framework' ),
 		'section'     => 'wpbf_scrolltop_options',
 		'default'     => 0,
-		'priority'    => 1,
+		'priority'    => 0,
 	]
 );
 
@@ -952,7 +950,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Alignment', 'page-builder-framework' ),
 	'section'         => 'wpbf_scrolltop_options',
 	'default'         => 'right',
-	'priority'        => 2,
+	'priority'        => 1,
 	'multiple'        => 1,
 	'transport'       => 'postMessage',
 	'choices'         => array(
@@ -974,7 +972,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'scrolltop_value',
 	'label'           => __( 'Show after (px)', 'page-builder-framework' ),
 	'section'         => 'wpbf_scrolltop_options',
-	'priority'        => 3,
+	'priority'        => 2,
 	'default'         => 400,
 	'choices'         => array(
 		'min'  => 50,
@@ -989,6 +987,22 @@ Kirki::add_field( 'wpbf', array(
 		),
 	),
 ) );
+
+// Divider.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'    => 'layout_scrolltop_divider',
+		'section'     => 'wpbf_scrolltop_options',
+		'priority'    => 3,
+		'active_callback' => [
+			[
+				'setting'  => 'layout_scrolltop',
+				'operator' => '==',
+				'value'    => 1,
+			],
+		],
+	]
+);
 
 // Background color.
 Kirki::add_field( 'wpbf', array(
