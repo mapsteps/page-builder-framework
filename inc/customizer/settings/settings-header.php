@@ -19,11 +19,22 @@ Kirki::add_panel( 'header_panel', array(
 /* Sections - Header */
 
 // Pre header.
-Kirki::add_section( 'wpbf_pre_header_options', array(
-	'title'    => __( 'Pre Header', 'page-builder-framework' ),
-	'panel'    => 'header_panel',
-	'priority' => 0,
-) );
+new \Kirki\Section(
+	'wpbf_pre_header_options',
+	[
+		'title'    => __( 'Pre Header', 'page-builder-framework' ),
+		'panel'    => 'header_panel',
+		'priority' => 0,
+		'tabs'     => [
+			'general' => [
+				'label' => esc_html__( 'General', 'kirki-pro' ),
+			],
+			'design'  => [
+				'label' => esc_html__( 'Design', 'kirki-pro' ),
+			],
+		],
+	]
+);
 
 // Navigation.
 Kirki::add_section( 'wpbf_menu_options', array(
@@ -74,6 +85,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => 'none',
 	'priority'        => 1,
+	'tab'             => 'general',
 	'choices'         => array(
 		'none' => __( 'None', 'page-builder-framework' ),
 		'one'  => __( 'One Column', 'page-builder-framework' ),
@@ -98,6 +110,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => 'text',
 	'priority'        => 2,
+	'tab'             => 'general',
 	'choices'         => array(
 		'none' => __( 'None', 'page-builder-framework' ),
 		'text' => __( 'Text', 'page-builder-framework' ),
@@ -129,6 +142,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => __( 'Column 1', 'page-builder-framework' ),
 	'priority'        => 2,
+	'tab'             => 'general',
 	'partial_refresh' => array(
 		'preheadercolumnonecontent' => array(
 			'selector'        => '.wpbf-inner-pre-header-left, .wpbf-inner-pre-header-content',
@@ -157,6 +171,7 @@ new \Kirki\Pro\Field\Divider(
 		'settings'        => 'pre_header_column_two_layout_separator',
 		'section'         => 'wpbf_pre_header_options',
 		'priority'        => 2,
+		'tab'             => 'general',
 		'active_callback' => [
 			[
 				'setting'  => 'pre_header_layout',
@@ -175,6 +190,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => 'text',
 	'priority'        => 2,
+	'tab'             => 'general',
 	'choices'         => array(
 		'none' => __( 'None', 'page-builder-framework' ),
 		'text' => __( 'Text', 'page-builder-framework' ),
@@ -206,6 +222,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'default'         => __( 'Column 2', 'page-builder-framework' ),
 	'priority'        => 2,
+	'tab'             => 'general',
 	'partial_refresh' => array(
 		'preheadercolumntwocontent' => array(
 			'selector'        => '.wpbf-inner-pre-header-right',
@@ -234,6 +251,7 @@ new \Kirki\Pro\Field\Divider(
 		'settings'        => 'pre_header_separator',
 		'section'         => 'wpbf_pre_header_options',
 		'priority'        => 3,
+		'tab'             => 'general',
 		'active_callback' => [
 			[
 				'setting'  => 'pre_header_layout',
@@ -253,6 +271,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'priority'        => 3,
 	'transport'       => 'postMessage',
+	'tab'             => 'general',
 	'active_callback' => array(
 		array(
 			'setting'  => 'pre_header_layout',
@@ -271,6 +290,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 3,
 	'default'         => 10,
 	'transport'       => 'postMessage',
+	'tab'             => 'general',
 	'choices'         => array(
 		'min'  => 1,
 		'max'  => 25,
@@ -294,6 +314,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => '#ffffff',
 	'priority'        => 4,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'active_callback' => array(
 		array(
 			'setting'  => 'pre_header_layout',
@@ -314,6 +335,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'priority'        => 4,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'active_callback' => array(
 		array(
 			'setting'  => 'pre_header_layout',
@@ -334,6 +356,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'priority'        => 4,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -354,6 +377,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_pre_header_options',
 	'priority'        => 4,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -375,6 +399,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 4,
 	'default'         => '14px',
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'active_callback' => array(
 		array(
 			'setting'  => 'pre_header_layout',
