@@ -62,16 +62,6 @@ Kirki::add_section( 'wpbf_scrolltop_options', array(
 
 /* Fields - Layout */
 
-// Headline.
-new \Kirki\Pro\Field\Headline(
-	[
-		'settings' => 'general_headline',
-		'label'    => esc_html__( 'Site Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_page_options',
-		'priority' => 0,
-	]
-);
-
 // Max width.
 Kirki::add_field( 'wpbf', array(
 	'type'        => 'dimension',
@@ -333,21 +323,11 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields - Sidebar */
 
-// Headline.
-new \Kirki\Pro\Field\Headline(
-	[
-		'settings' => 'sidebar_headline',
-		'label'    => esc_html__( 'Sidebar', 'page-builder-framework' ),
-		'section'  => 'wpbf_sidebar_options',
-		'priority' => 0,
-	]
-);
-
 // Postion.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'select',
 	'settings' => 'sidebar_position',
-	'label'    => __( 'Position', 'page-builder-framework' ),
+	'label'    => __( 'Sidebar Position', 'page-builder-framework' ),
 	'section'  => 'wpbf_sidebar_options',
 	'default'  => 'right',
 	'priority' => 1,
