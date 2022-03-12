@@ -327,7 +327,7 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'select',
 	'settings' => 'sidebar_position',
-	'label'    => __( 'Position', 'page-builder-framework' ),
+	'label'    => __( 'Position (Global)', 'page-builder-framework' ),
 	'section'  => 'wpbf_sidebar_options',
 	'default'  => 'right',
 	'priority' => 1,
@@ -482,7 +482,7 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - Breadcrumb Settings */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'breadcrumbs_toggle',
 		'label'    => esc_html__( 'Breadcrumbs', 'page-builder-framework' ),
@@ -594,6 +594,22 @@ Kirki::add_field( 'wpbf', array(
 		),
 	),
 ) );
+
+// Headline.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'breadcrumbs_color_divider',
+		'section'  => 'wpbf_breadcrumb_settings',
+		'priority' => 2,
+		'active_callback' => [
+			[
+				'setting'  => 'breadcrumbs_toggle',
+				'operator' => '==',
+				'value'    => 1,
+			],
+		],
+	]
+);
 
 // Background color.
 Kirki::add_field( 'wpbf', array(
@@ -809,10 +825,10 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Headline.
+// Divider.
 new \Kirki\Pro\Field\Divider(
 	[
-		'settings' => 'botton_border_headline',
+		'settings' => 'button_border_divider',
 		'section'  => 'wpbf_button_options',
 		'priority' => 1,
 	]
@@ -849,6 +865,22 @@ Kirki::add_field( 'wpbf', array(
 		'step' => 1,
 	),
 ) );
+
+// Divider.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'button_border_divider_2',
+		'section'  => 'wpbf_button_options',
+		'priority' => 1,
+		'active_callback' => [
+			[
+				'setting'  => 'button_border_width',
+				'operator' => '!=',
+				'value'    => 0,
+			],
+		],
+	]
+);
 
 // Border color.
 Kirki::add_field( 'wpbf', array(
@@ -933,10 +965,10 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - ScrollTop */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings'    => 'layout_scrolltop',
-		'label'       => __( 'Enable Scroll to Top Button', 'page-builder-framework' ),
+		'label'       => __( 'Scroll to Top Button', 'page-builder-framework' ),
 		'section'     => 'wpbf_scrolltop_options',
 		'default'     => 0,
 		'priority'    => 0,

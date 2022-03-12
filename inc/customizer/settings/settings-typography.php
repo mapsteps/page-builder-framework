@@ -200,7 +200,7 @@ if ( ! wpbf_is_premium() ) {
 /* Fields - Title & tagline */
 
 // Title font toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'menu_logo_font_toggle',
 		'label'    => esc_html__( 'Title - Font Settings', 'page-builder-framework' ),
@@ -232,8 +232,18 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Divider.
+new \Kirki\PRO\Field\Divider(
+	[
+		'settings' => 'menu_logo_tagline_divider',
+		'section'  => 'wpbf_title_tagline_options',
+		'default'  => 0,
+		'priority' => 2,
+	]
+);
+
 // Title font toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'menu_logo_description_toggle',
 		'label'    => esc_html__( 'Tagline - Font Settings', 'page-builder-framework' ),
