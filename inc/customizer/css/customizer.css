@@ -36,3 +36,20 @@
 #customize-control-theme_colors_headline {
 	margin-bottom: 30px;
 }
+
+
+/* Hide "Font Family" labels */
+#customize-control-menu_logo_font_family,
+#customize-control-menu_logo_description_font_family,
+#customize-control-menu_font_family,
+#customize-control-page_font_family,
+#customize-control-page_h1_font_family,
+#customize-control-page_h2_font_family,
+#customize-control-page_h3_font_family,
+#customize-control-page_h4_font_family,
+#customize-control-page_h5_font_family,
+#customize-control-page_h6_font_family,
+#customize-control-footer_font_family,
+#customize-control-custom_fonts .customize-control-title {
+	display: none !important;
+}

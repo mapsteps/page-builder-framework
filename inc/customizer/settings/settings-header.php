@@ -1525,6 +1525,15 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'mobile_sub_menu_separator',
+		'section'         => 'wpbf_mobile_sub_menu_options',
+		'priority'        => 2,
+	]
+);
+
 // Menu item background color.
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'color',

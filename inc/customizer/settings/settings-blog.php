@@ -198,6 +198,15 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'blog_read_more_separator',
+		'section'  => 'wpbf_blog_settings',
+		'priority' => 1,
+	]
+);
+
 // Read more button.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'select',
@@ -230,7 +239,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Read More Text', 'page-builder-framework' ),
 	'section'         => 'wpbf_blog_settings',
 	'default'         => 'Read more',
-	'priority'        => 2,
+	'priority'        => 1,
 	'partial_refresh' => array(
 		'blogreadmoretext' => array(
 			'container_inclusive' => true,
@@ -242,6 +251,15 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'blog_categories_title_separator',
+		'section'  => 'wpbf_blog_settings',
+		'priority' => 1,
+	]
+);
+
 // Categories title.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'text',
@@ -249,7 +267,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Categories Title', 'page-builder-framework' ),
 	'section'         => 'wpbf_blog_settings',
 	'default'         => 'Filed under:',
-	'priority'        => 2,
+	'priority'        => 1,
 	'partial_refresh' => array(
 		'catstitle' => array(
 			'container_inclusive' => true,

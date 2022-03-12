@@ -91,7 +91,7 @@ Kirki::add_section( 'wpbf_footer_font_options', array(
 /* Fields - Text */
 
 // Text font toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'page_font_toggle',
 		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
@@ -128,13 +128,6 @@ new \Kirki\Pro\Field\Divider(
 		'settings'        => 'page_font_toggle_separator',
 		'section'         => 'wpbf_font_options',
 		'priority'        => 1,
-		'active_callback' => [
-			[
-				'setting'  => 'page_font_toggle',
-				'operator' => '==',
-				'value'    => true,
-			],
-		],
 	]
 );
 
@@ -278,7 +271,7 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - Menu */
 
 // Menu font toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'menu_font_family_toggle',
 		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
@@ -331,7 +324,7 @@ if ( ! wpbf_is_premium() ) {
 /* Fields - H1 */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings'    => 'page_h1_toggle',
 		'label'       => esc_html__( 'Font Settings', 'page-builder-framework' ),
@@ -385,7 +378,7 @@ if ( ! wpbf_is_premium() ) {
 /* Fields - H2 */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'page_h2_toggle',
 		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
@@ -438,7 +431,7 @@ if ( ! wpbf_is_premium() ) {
 /* Fields - H3 */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'page_h3_toggle',
 		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
@@ -491,7 +484,7 @@ if ( ! wpbf_is_premium() ) {
 /* Fields - H4 */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'page_h4_toggle',
 		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
@@ -544,7 +537,7 @@ if ( ! wpbf_is_premium() ) {
 /* Fields - H5 */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'page_h5_toggle',
 		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
@@ -597,7 +590,7 @@ if ( ! wpbf_is_premium() ) {
 /* Fields - H6 */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'page_h6_toggle',
 		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
@@ -650,7 +643,7 @@ if ( ! wpbf_is_premium() ) {
 /* Fields - Footer */
 
 // Toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
+new \Kirki\Field\Toggle(
 	[
 		'settings' => 'footer_font_toggle',
 		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
