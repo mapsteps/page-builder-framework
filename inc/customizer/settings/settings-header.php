@@ -560,6 +560,13 @@ new \Kirki\Pro\Field\Divider(
 		'settings' => 'tagline_separator',
 		'section'  => 'title_tagline',
 		'priority' => 14,
+		'active_callback'   => [
+			[
+				'setting'  => 'custom_logo',
+				'operator' => '==',
+				'value'    => '',
+			],
+		],
 	]
 );
 
