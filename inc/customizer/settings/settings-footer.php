@@ -20,7 +20,7 @@ Kirki::add_panel( 'footer_panel', array(
 
 // Widget footer.
 Kirki::add_section( 'wpbf_widget_footer_options', array(
-	'title'    => __( 'Widget Areas', 'page-builder-framework' ),
+	'title'    => __( 'Widget Area', 'page-builder-framework' ),
 	'panel'    => 'footer_panel',
 	'priority' => 100,
 ) );
