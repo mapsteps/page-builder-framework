@@ -574,7 +574,7 @@ new \Kirki\Pro\Field\Divider(
 
 // Toggle.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'checkbox',
+	'type'            => 'toggle',
 	'settings'        => 'menu_logo_description',
 	'label'           => __( 'Display Tagline', 'page-builder-framework' ),
 	'section'         => 'title_tagline',
@@ -600,7 +600,7 @@ Kirki::add_field( 'wpbf', array(
 
 // Mobile toggle.
 Kirki::add_field( 'wpbf', array(
-	'type'            => 'checkbox',
+	'type'            => 'toggle',
 	'settings'        => 'menu_logo_description_mobile',
 	'label'           => __( 'Display Tagline on Mobile', 'page-builder-framework' ),
 	'section'         => 'title_tagline',

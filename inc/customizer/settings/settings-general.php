@@ -492,6 +492,22 @@ new \Kirki\Field\Toggle(
 	]
 );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'breadcrumbs_toggle_separator',
+		'section'  => 'wpbf_breadcrumb_settings',
+		'priority' => 1,
+		'active_callback' => [
+			[
+				'setting'  => 'breadcrumbs_toggle',
+				'operator' => '==',
+				'value'    => 1,
+			],
+		],
+	]
+);
+
 // Breadcrumbs.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'select',
@@ -975,6 +991,22 @@ new \Kirki\Field\Toggle(
 	]
 );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'layout_scrolltop_separator',
+		'section'  => 'wpbf_scrolltop_options',
+		'priority' => 0,
+		'active_callback' => [
+			[
+				'setting'  => 'layout_scrolltop',
+				'operator' => '==',
+				'value'    => 1,
+			],
+		],
+	]
+);
+
 // Alignment.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'radio-image',
@@ -1023,7 +1055,7 @@ Kirki::add_field( 'wpbf', array(
 // Divider.
 new \Kirki\Pro\Field\Divider(
 	[
-		'settings'    => 'layout_scrolltop_divider',
+		'settings'    => 'layout_scrolltop_separator_2',
 		'section'     => 'wpbf_scrolltop_options',
 		'priority'    => 3,
 		'active_callback' => [
