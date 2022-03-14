@@ -124,23 +124,6 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings'        => 'pre_header_layout_separator',
-		'section'         => 'wpbf_pre_header_options',
-		'priority'        => 1,
-		'tab'             => 'general',
-		'active_callback' => [
-			[
-				'setting'  => 'pre_header_layout',
-				'operator' => '!=',
-				'value'    => 'none',
-			],
-		],
-	]
-);
-
 // Column one layout.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'select',
