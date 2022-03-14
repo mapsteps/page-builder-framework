@@ -34,10 +34,10 @@ new \Kirki\Section(
 		'priority' => 200,
 		'tabs'     => [
 			'general' => [
-				'label' => esc_html__( 'General', 'kirki-pro' ),
+				'label' => esc_html__( 'General', 'page-builder-framework' ),
 			],
 			'design'  => [
-				'label' => esc_html__( 'Design', 'kirki-pro' ),
+				'label' => esc_html__( 'Design', 'page-builder-framework' ),
 			],
 		],
 	]

@@ -27,10 +27,10 @@ new \Kirki\Section(
 		'priority' => 0,
 		'tabs'     => [
 			'general' => [
-				'label' => esc_html__( 'General', 'kirki-pro' ),
+				'label' => esc_html__( 'General', 'page-builder-framework' ),
 			],
 			'design'  => [
-				'label' => esc_html__( 'Design', 'kirki-pro' ),
+				'label' => esc_html__( 'Design', 'page-builder-framework' ),
 			],
 		],
 	]
@@ -45,10 +45,10 @@ new \Kirki\Section(
 		'priority' => 200,
 		'tabs'     => [
 			'general' => [
-				'label' => esc_html__( 'General', 'kirki-pro' ),
+				'label' => esc_html__( 'General', 'page-builder-framework' ),
 			],
 			'design'  => [
-				'label' => esc_html__( 'Design', 'kirki-pro' ),
+				'label' => esc_html__( 'Design', 'page-builder-framework' ),
 			],
 		],
 	]
@@ -63,10 +63,10 @@ new \Kirki\Section(
 		'priority' => 250,
 		'tabs'     => [
 			'general' => [
-				'label' => esc_html__( 'General', 'kirki-pro' ),
+				'label' => esc_html__( 'General', 'page-builder-framework' ),
 			],
 			'design'  => [
-				'label' => esc_html__( 'Design', 'kirki-pro' ),
+				'label' => esc_html__( 'Design', 'page-builder-framework' ),
 			],
 		],
 	]
@@ -81,10 +81,10 @@ new \Kirki\Section(
 		'priority' => 300,
 		'tabs'     => [
 			'general' => [
-				'label' => esc_html__( 'General', 'kirki-pro' ),
+				'label' => esc_html__( 'General', 'page-builder-framework' ),
 			],
 			'design'  => [
-				'label' => esc_html__( 'Design', 'kirki-pro' ),
+				'label' => esc_html__( 'Design', 'page-builder-framework' ),
 			],
 		],
 	]
@@ -123,6 +123,23 @@ Kirki::add_field( 'wpbf', array(
 		),
 	),
 ) );
+
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'pre_header_layout_separator',
+		'section'         => 'wpbf_pre_header_options',
+		'priority'        => 1,
+		'tab'             => 'general',
+		'active_callback' => [
+			[
+				'setting'  => 'pre_header_layout',
+				'operator' => '!=',
+				'value'    => 'none',
+			],
+		],
+	]
+);
 
 // Column one layout.
 Kirki::add_field( 'wpbf', array(
