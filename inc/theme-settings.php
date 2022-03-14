@@ -159,3 +159,33 @@ function wpbf_show_bfcm_notice() {
 
 }
 add_action( 'admin_notices', 'wpbf_show_bfcm_notice' );
+
+/**
+ * Display compatibility notice.
+ */
+function wpbf_show_compatibility_notice() {
+
+	// Stop here if Premium Add-On is not active.
+	if ( ! wpbf_is_premium() ) {
+		return;
+	}
+
+	// Stop here if Premium Add-On version constant is not defined.
+	if ( ! defined( 'WPBF_PREMIUM_VERSION' ) ) {
+		return;
+	}
+
+	// Stop here if Premium Add-On is not below the minimum required version.
+	if ( ! version_compare( WPBF_PREMIUM_VERSION, '2.6', '<=' ) ) {
+		return;
+	}
+
+	// Stop here if current user can't manage options.
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	require __DIR__ . '/settings/compatibility-notice.php';
+
+}
+add_action( 'admin_notices', 'wpbf_show_compatibility_notice' );
