@@ -557,10 +557,10 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 new \Kirki\Pro\Field\Divider(
 	[
-		'settings' => 'tagline_separator',
-		'section'  => 'title_tagline',
-		'priority' => 14,
-		'active_callback'   => [
+		'settings'        => 'tagline_separator',
+		'section'         => 'title_tagline',
+		'priority'        => 14,
+		'active_callback' => [
 			[
 				'setting'  => 'custom_logo',
 				'operator' => '==',
@@ -820,17 +820,15 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
-// Width.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'dimension',
-	'label'       => __( 'Navigation Width', 'page-builder-framework' ),
-	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
-	'settings'    => 'menu_width',
-	'section'     => 'wpbf_menu_options',
-	'transport'   => 'postMessage',
-	'priority'    => 1,
-	'tab'         => 'general',
-) );
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'menu_position_separator',
+		'section'  => 'wpbf_menu_options',
+		'priority' => 0,
+		'tab'      => 'general',
+	]
+);
 
 // Search icon.
 Kirki::add_field( 'wpbf', array(
@@ -838,7 +836,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'menu_search_icon',
 	'label'           => __( 'Search Icon', 'page-builder-framework' ),
 	'section'         => 'wpbf_menu_options',
-	'priority'        => 2,
+	'priority'        => 1,
 	'tab'             => 'general',
 	'partial_refresh' => array(
 		'menusearchicon' => array(
@@ -849,6 +847,28 @@ Kirki::add_field( 'wpbf', array(
 			},
 		),
 	),
+) );
+
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings' => 'menu_search_icon_separator',
+		'section'  => 'wpbf_menu_options',
+		'priority' => 1,
+		'tab'      => 'general',
+	]
+);
+
+// Width.
+Kirki::add_field( 'wpbf', array(
+	'type'        => 'dimension',
+	'label'       => __( 'Navigation Width', 'page-builder-framework' ),
+	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
+	'settings'    => 'menu_width',
+	'section'     => 'wpbf_menu_options',
+	'transport'   => 'postMessage',
+	'priority'    => 2,
+	'tab'         => 'general',
 ) );
 
 // Height.
@@ -877,7 +897,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 4,
 	'default'         => 20,
 	'transport'       => 'postMessage',
-	'tab'             => 'general',
+	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => 5,
 		'max'  => 40,
@@ -1535,9 +1555,9 @@ Kirki::add_field( 'wpbf', array(
 // Separator.
 new \Kirki\Pro\Field\Divider(
 	[
-		'settings'        => 'mobile_sub_menu_separator',
-		'section'         => 'wpbf_mobile_sub_menu_options',
-		'priority'        => 2,
+		'settings' => 'mobile_sub_menu_separator',
+		'section'  => 'wpbf_mobile_sub_menu_options',
+		'priority' => 2,
 	]
 );
 
