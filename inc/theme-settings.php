@@ -175,8 +175,8 @@ function wpbf_show_compatibility_notice() {
 		return;
 	}
 
-	// Stop here if Premium Add-On is not below the minimum required version.
-	if ( ! version_compare( WPBF_PREMIUM_VERSION, '2.6', '<=' ) ) {
+	// Stop here if Premium Add-On is not below or equal the minimum required version.
+	if ( ! version_compare( WPBF_PREMIUM_VERSION, WPBF_PREMIUM_MIN_VERSION, '<=' ) ) {
 		return;
 	}
 
