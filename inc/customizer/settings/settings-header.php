@@ -73,11 +73,22 @@ new \Kirki\Section(
 );
 
 // Mobile menu.
-Kirki::add_section( 'wpbf_mobile_menu_options', array(
-	'title'    => __( 'Mobile Navigation', 'page-builder-framework' ),
-	'panel'    => 'header_panel',
-	'priority' => 300,
-) );
+new \Kirki\Section(
+	'wpbf_mobile_menu_options',
+	[
+		'title'    => __( 'Mobile Navigation', 'page-builder-framework' ),
+		'panel'    => 'header_panel',
+		'priority' => 300,
+		'tabs'     => [
+			'general' => [
+				'label' => esc_html__( 'General', 'kirki-pro' ),
+			],
+			'design'  => [
+				'label' => esc_html__( 'Design', 'kirki-pro' ),
+			],
+		],
+	]
+);
 
 // Mobile menu.
 Kirki::add_section( 'wpbf_mobile_sub_menu_options', array(
@@ -1215,6 +1226,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'         => 'menu-mobile-hamburger',
 	'priority'        => 1,
 	'multiple'        => 1,
+	'tab'             => 'general',
 	'choices'         => apply_filters( 'wpbf_mobile_menu_options', array(
 		'menu-mobile-default'   => __( 'Default', 'page-builder-framework' ),
 		'menu-mobile-hamburger' => __( 'Hamburger', 'page-builder-framework' ),
@@ -1230,6 +1242,23 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'mobile_menu_position_separator',
+		'section'         => 'wpbf_mobile_menu_options',
+		'priority'        => 1,
+		'tab'             => 'general',
+		'active_callback' => [
+			[
+				'setting'  => 'mobile_menu_options',
+				'operator' => '!==',
+				'value'    => 'menu-mobile-default',
+			],
+		],
+	]
+);
+
 // Mobile search icon.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'toggle',
@@ -1237,6 +1266,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'           => __( 'Search Icon', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
 	'priority'        => 1,
+	'tab'             => 'general',
 	'active_callback' => array(
 		array(
 			'setting'  => 'mobile_menu_options',
@@ -1255,6 +1285,23 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Separator.
+new \Kirki\Pro\Field\Divider(
+	[
+		'settings'        => 'mobile_menu_search_icon_separator',
+		'section'         => 'wpbf_mobile_menu_options',
+		'priority'        => 1,
+		'tab'             => 'general',
+		'active_callback' => [
+			[
+				'setting'  => 'mobile_menu_options',
+				'operator' => '!==',
+				'value'    => 'menu-mobile-default',
+			],
+		],
+	]
+);
+
 // Height.
 Kirki::add_field( 'wpbf', array(
 	'type'      => 'slider',
@@ -1264,6 +1311,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'  => 2,
 	'default'   => 20,
 	'transport' => 'postMessage',
+	'tab'       => 'general',
 	'choices'   => array(
 		'min'  => 0,
 		'max'  => 80,
@@ -1279,6 +1327,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_mobile_menu_options',
 	'priority'        => 3,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1299,8 +1348,33 @@ Kirki::add_field( 'wpbf', array(
 	'section'         => 'wpbf_mobile_menu_options',
 	'priority'        => 4,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
+	),
+	'active_callback' => array(
+		array(
+			'setting'  => 'mobile_menu_options',
+			'operator' => 'in',
+			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
+		),
+	),
+) );
+
+// Hamburger size.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'input_slider',
+	'settings'        => 'mobile_menu_hamburger_size',
+	'label'           => __( 'Icon Size', 'page-builder-framework' ),
+	'section'         => 'wpbf_mobile_menu_options',
+	'default'         => '16px',
+	'priority'        => 4,
+	'transport'       => 'postMessage',
+	'tab'             => 'design',
+	'choices'         => array(
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
 	),
 	'active_callback' => array(
 		array(
@@ -1315,9 +1389,11 @@ Kirki::add_field( 'wpbf', array(
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
 	'settings'        => 'mobile_menu_hamburger_bg_color',
-	'label'           => __( 'Hamburger Icon Color', 'page-builder-framework' ),
+	'label'           => __( 'Hamburger Icon Button', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
-	'priority'        => 4,
+	'tooltip'         => __( 'Define a background color & turn the hamburger icon into a button.', 'page-builder-framework' ),
+	'priority'        => 5,
+	'tab'             => 'design',
 	'choices'         => array(
 		'alpha' => true,
 	),
@@ -1336,9 +1412,10 @@ Kirki::add_field( 'wpbf', array(
 	'settings'        => 'mobile_menu_hamburger_border_radius',
 	'label'           => __( 'Border Radius', 'page-builder-framework' ),
 	'section'         => 'wpbf_mobile_menu_options',
-	'priority'        => 4,
+	'priority'        => 5,
 	'default'         => 0,
 	'transport'       => 'postMessage',
+	'tab'             => 'design',
 	'choices'         => array(
 		'min'  => 0,
 		'max'  => 50,
@@ -1354,29 +1431,6 @@ Kirki::add_field( 'wpbf', array(
 			'setting'  => 'mobile_menu_hamburger_bg_color',
 			'operator' => '!=',
 			'value'    => false,
-		),
-	),
-) );
-
-// Hamburger size.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'input_slider',
-	'settings'        => 'mobile_menu_hamburger_size',
-	'label'           => __( 'Icon Size', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => '16px',
-	'priority'        => 5,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'min'  => 0,
-		'max'  => 50,
-		'step' => 1,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'mobile_menu_options',
-			'operator' => 'in',
-			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
 	),
 ) );
@@ -1399,6 +1453,7 @@ Kirki::add_field( 'wpbf', array(
 	'settings'          => 'mobile_menu_padding',
 	'priority'          => 8,
 	'transport'         => 'postMessage',
+	'tab'               => 'general',
 	'default'           => json_encode(
 		array(
 			'top'    => 10,
@@ -1419,6 +1474,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'  => 9,
 	'default'   => '#ffffff',
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1433,6 +1489,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'  => 10,
 	'default'   => '#ffffff',
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1445,6 +1502,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'     => __( 'Font Color', 'page-builder-framework' ),
 	'section'   => 'wpbf_mobile_menu_options',
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'priority'  => 11,
 ) );
 
@@ -1456,6 +1514,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'   => 'wpbf_mobile_menu_options',
 	'priority'  => 12,
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1470,6 +1529,7 @@ Kirki::add_field( 'wpbf', array(
 	'default'   => '#d9d9e0',
 	'priority'  => 13,
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1483,6 +1543,7 @@ Kirki::add_field( 'wpbf', array(
 	'section'   => 'wpbf_mobile_menu_options',
 	'priority'  => 14,
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'alpha' => true,
 	),
@@ -1497,6 +1558,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'  => 15,
 	'default'   => '16px',
 	'transport' => 'postMessage',
+	'tab'       => 'design',
 	'choices'   => array(
 		'min'  => 0,
 		'max'  => 50,
