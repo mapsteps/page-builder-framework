@@ -2303,6 +2303,7 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 		echo sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) );
 		echo 'color: #ffffff !important;';
 		echo 'padding: 10px;';
+		echo 'line-height: 1;';
 
 		if ( $mobile_menu_hamburger_border_radius ) {
 			echo sprintf( 'border-radius: %s;', esc_attr( $mobile_menu_hamburger_border_radius ) . 'px' );
