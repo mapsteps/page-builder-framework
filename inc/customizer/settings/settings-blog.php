@@ -839,21 +839,25 @@ foreach ( $singles as $single ) {
 		]
 	);
 
-	// Post navigation.
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'select',
-		'settings' => $single . '_post_nav',
-		'label'    => __( 'Post Navigation', 'page-builder-framework' ),
-		'section'  => 'wpbf_' . $single . '_options',
-		'default'  => 'show',
-		'priority' => 0,
-		'multiple' => 1,
-		'choices'  => array(
-			'show'    => __( 'Previous/Next Post', 'page-builder-framework' ),
-			'default' => __( 'Post Title', 'page-builder-framework' ),
-			'hide'    => __( 'Hide', 'page-builder-framework' ),
-		),
-	) );
+	if ( 'single' === $single ) {
+
+		// Post navigation.
+		Kirki::add_field( 'wpbf', array(
+			'type'     => 'select',
+			'settings' => $single . '_post_nav',
+			'label'    => __( 'Post Navigation', 'page-builder-framework' ),
+			'section'  => 'wpbf_' . $single . '_options',
+			'default'  => 'show',
+			'priority' => 0,
+			'multiple' => 1,
+			'choices'  => array(
+				'show'    => __( 'Previous/Next Post', 'page-builder-framework' ),
+				'default' => __( 'Post Title', 'page-builder-framework' ),
+				'hide'    => __( 'Hide', 'page-builder-framework' ),
+			),
+		) );
+
+	}
 
 	// Style.
 	Kirki::add_field( 'wpbf', array(

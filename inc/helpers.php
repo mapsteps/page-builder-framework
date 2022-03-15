@@ -1255,6 +1255,31 @@ function wpbf_blog_layout() {
 }
 
 /**
+ * Single layout.
+ *
+ * @return array The single layout.
+ */
+function wpbf_post_layout() {
+
+	$template_parts_header	= get_theme_mod( 'single_sortable_header', array( 'title', 'meta', 'featured' ) );
+	$template_parts_footer	= get_theme_mod( 'single_sortable_footer', array( 'categories' ) );
+	$post_layout            = 'default';
+	$style                  = get_theme_mod( 'single_post_style', 'plain' );
+	$style                  .= get_theme_mod( 'single_boxed_image_stretched', false ) ? ' stretched' : '';
+
+	return apply_filters(
+		'wpbf_post_layout',
+		array(
+			'post_layout'            => $post_layout,
+			'template_parts_header'  => $template_parts_header,
+			'template_parts_footer'  => $template_parts_footer,
+			'style'                  => $style,
+		)
+	);
+
+}
+
+/**
  * Declare menu's.
  *
  * Declare wp_nav_menu based on selected menu variation.

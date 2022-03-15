@@ -37,7 +37,6 @@
 	margin-bottom: 30px;
 }
 
-
 /* Hide "Font Family" labels */
 #customize-control-menu_logo_font_family,
 #customize-control-menu_logo_description_font_family,
@@ -52,4 +51,13 @@
 #customize-control-footer_font_family,
 #customize-control-custom_fonts .customize-control-title {
 	display: none !important;
+}
+
+/* Add top margin to Post Layout settings */
+#accordion-section-wpbf_single_options {
+	margin-top: 20px;
+}
+
+#accordion-section-wpbf_single_options h3 {
+	border-top: 1px solid #dcdcde;
 }
