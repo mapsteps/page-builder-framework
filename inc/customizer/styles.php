@@ -99,6 +99,41 @@ if ( $menu_font_family_toggle && $menu_font_family_value ) {
 
 }
 
+// Sub Menu font settings.
+$sub_menu_font_family_toggle = get_theme_mod( 'sub_menu_font_family_toggle' );
+$sub_menu_font_family_value  = get_theme_mod( 'sub_menu_font_family' );
+
+if ( $sub_menu_font_family_toggle && $sub_menu_font_family_value ) {
+
+	echo '.wpbf-menu .sub-menu, .wpbf-mobile-menu .sub-menu {';
+
+	if ( ! empty( $sub_menu_font_family_value['font-family'] ) ) {
+
+		if ( false !== strpos( $sub_menu_font_family_value['font-family'], ' ' ) && false === strpos( $sub_menu_font_family_value['font-family'], '"' ) && false === strpos( $sub_menu_font_family_value['font-family'], ',' ) ) {
+			$sub_menu_font_family_value['font-family'] = '"' . $sub_menu_font_family_value['font-family'] . '"';
+		}
+
+		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $sub_menu_font_family_value['font-family'] ), ENT_QUOTES ) );
+
+	}
+
+	if ( ! empty( $sub_menu_font_family_value['variant'] ) ) {
+
+		$sub_menu_font_family_font_weight = str_replace( 'italic', '', $sub_menu_font_family_value['variant'] );
+		$sub_menu_font_family_font_weight = ( in_array( $sub_menu_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $sub_menu_font_family_font_weight;
+
+		$sub_menu_font_family_is_italic = ( false !== strpos( $sub_menu_font_family_value['variant'], 'italic' ) );
+		$sub_menu_font_family_is_style  = $sub_menu_font_family_is_italic ? 'italic' : 'normal';
+
+		echo sprintf( 'font-weight: %s;', esc_attr( $sub_menu_font_family_font_weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $sub_menu_font_family_is_style ) );
+
+	}
+
+	echo '}';
+
+}
+
 // H1 font settings.
 $page_h1_toggle            = get_theme_mod( 'page_h1_toggle' );
 $page_h1_font_family_value = get_theme_mod( 'page_h1_font_family' );

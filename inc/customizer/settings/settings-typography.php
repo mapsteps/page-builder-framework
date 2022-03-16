@@ -32,6 +32,14 @@ Kirki::add_section( 'wpbf_menu_font_options', array(
 	'priority' => 50,
 ) );
 
+// Sub Menu.
+Kirki::add_section( 'wpbf_sub_menu_font_options', array(
+	'title'    => __( 'Sub Menu', 'page-builder-framework' ),
+	'panel'    => 'typo_panel',
+	'priority' => 75,
+) );
+
+
 // Text.
 Kirki::add_section( 'wpbf_font_options', array(
 	'title'    => __( 'Text', 'page-builder-framework' ),
@@ -315,6 +323,59 @@ if ( ! wpbf_is_premium() ) {
 		'type'     => 'custom',
 		'settings' => 'wpbf_premium_ad_typography_menu',
 		'section'  => 'wpbf_menu_font_options',
+		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+		'priority' => 9999,
+	) );
+
+}
+
+/* Fields - Sub Menu */
+
+// Sub Menu font toggle.
+new \Kirki\Field\Toggle(
+	[
+		'settings' => 'sub_menu_font_family_toggle',
+		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
+		'section'  => 'wpbf_sub_menu_font_options',
+		'default'  => 0,
+		'priority' => 0,
+	]
+);
+
+// Font family.
+Kirki::add_field( 'wpbf', array(
+	'type'            => 'typography',
+	'settings'        => 'sub_menu_font_family',
+	'label'           => __( 'Font Family', 'page-builder-framework' ),
+	'section'         => 'wpbf_sub_menu_font_options',
+	'default'         => array(
+		'font-family' => 'Helvetica, Arial, sans-serif',
+		'variant'     => 'regular',
+	),
+	'choices'         => wpbf_default_font_choices(),
+	'active_callback' => array(
+		array(
+			'setting'  => 'sub_menu_font_family_toggle',
+			'operator' => '==',
+			'value'    => true,
+		),
+	),
+	'priority'        => 1,
+) );
+
+if ( ! wpbf_is_premium() ) {
+
+	// Premium notice.
+	$wpbf_premium_ad_link = sprintf(
+		'%1$s. <a href="https://wp-pagebuilderframework.com/docs-category/typography/?utm_source=repository&utm_medium=customizer_typography_panel&utm_campaign=wpbf" target="_blank">%2$s</a>',
+		__( 'Premium Features available', 'page-builder-framework' ),
+		__( 'Learn More', 'page-builder-framework' )
+	);
+
+	Kirki::add_field( 'wpbf', array(
+		'type'     => 'custom',
+		'settings' => 'wpbf_premium_ad_typography_sub_menu',
+		'section'  => 'wpbf_sub_menu_font_options',
 		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
 		'priority' => 9999,
 	) );
