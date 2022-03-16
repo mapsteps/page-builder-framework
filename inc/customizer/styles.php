@@ -1140,10 +1140,10 @@ $archives = apply_filters( 'wpbf_archives', array( 'archive' ) );
 foreach ( $archives as $archive ) {
 
 	// Custom width.
-	$custom_width = ( $val = get_theme_mod( $archive . '_custom_width' ) ) === '1200px' ? false : $val;
+	$custom_width = get_theme_mod( $archive . '_custom_width' );
 
 	// All archives.
-	if ( 'archive' === $custom_width && $archive ) {
+	if ( 'archive' === $archive && $custom_width ) {
 
 		echo '.blog #inner-content,';
 		echo '.search #inner-content,';
@@ -1151,7 +1151,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-		// Custom post type archives & taxonomies.
+	// Custom post type archives & taxonomies.
 	} elseif ( $custom_width && strpos( $archive, '-' ) ) {
 
 		$cpt = substr( $archive, 0, strpos( $archive, '-' ) );
@@ -1162,7 +1162,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-		// Other archives.
+	// Other archives.
 	} elseif ( $custom_width ) {
 
 		echo '.' . $archive . ' #inner-content {';
@@ -1477,22 +1477,33 @@ $singles = apply_filters( 'wpbf_singles', array( 'single' ) );
 
 foreach ( $singles as $single ) {
 
-	$custom_width = ( $val = get_theme_mod( $single . '_custom_width' ) ) === '1200px' ? false : $val;
+	$custom_width = get_theme_mod( $single . '_custom_width' );
 	$style        = get_theme_mod( $single . '_post_style' );
 	$title_size   = get_theme_mod( $single . '_post_title_size' );
 	$font_size    = get_theme_mod( $single . '_post_font_size' );
 	// $content_alignment = get_theme_mod( $single . '_post_content_alignment', 'left' );
 
-	if ( $custom_width ) {
+	// All post types.
+	if ( 'single' === $single && $custom_width ) {
 
-		$pt = 'single' === $single ? 'post' : $single;
-
-		echo '.single-' . $pt . ' #inner-content {';
+		echo '.single #inner-content {';
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
 		// Chang the max-width of the cover block contents.
-		echo '.single-' . $pt . ' .wp-block-cover .wp-block-cover__inner-container, .single-' . $pt . ' .wp-block-group .wp-block-group__inner-container {';
+		echo '.single .wp-block-cover .wp-block-cover__inner-container, .single .wp-block-group .wp-block-group__inner-container {';
+		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
+		echo '}';
+
+	// Individual post types.
+	} elseif ( 'single' !== $single && $custom_width ) {
+
+		echo '.single-' . $single . ' #inner-content {';
+		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
+		echo '}';
+
+		// Chang the max-width of the cover block contents.
+		echo '.single-' . $single . ' .wp-block-cover .wp-block-cover__inner-container, .single-' . $single . ' .wp-block-group .wp-block-group__inner-container {';
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 

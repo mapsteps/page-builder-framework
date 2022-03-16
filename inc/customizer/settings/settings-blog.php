@@ -539,7 +539,7 @@ foreach ( $archives as $archive ) {
 		'priority' => 20,
 		'multiple' => 1,
 		'choices'  => array(
-			'plain' => __( 'Plain', 'page-builder-framework' ),
+			'plain' => __( 'Default', 'page-builder-framework' ),
 			'boxed' => __( 'Boxed', 'page-builder-framework' ),
 		),
 	) );
@@ -839,25 +839,21 @@ foreach ( $singles as $single ) {
 		]
 	);
 
-	if ( 'single' === $single ) {
-
-		// Post navigation.
-		Kirki::add_field( 'wpbf', array(
-			'type'     => 'select',
-			'settings' => $single . '_post_nav',
-			'label'    => __( 'Post Navigation', 'page-builder-framework' ),
-			'section'  => 'wpbf_' . $single . '_options',
-			'default'  => 'show',
-			'priority' => 0,
-			'multiple' => 1,
-			'choices'  => array(
-				'show'    => __( 'Previous/Next Post', 'page-builder-framework' ),
-				'default' => __( 'Post Title', 'page-builder-framework' ),
-				'hide'    => __( 'Hide', 'page-builder-framework' ),
-			),
-		) );
-
-	}
+	// Post navigation.
+	Kirki::add_field( 'wpbf', array(
+		'type'     => 'select',
+		'settings' => $single . '_post_nav',
+		'label'    => __( 'Post Navigation', 'page-builder-framework' ),
+		'section'  => 'wpbf_' . $single . '_options',
+		'default'  => 'show',
+		'priority' => 0,
+		'multiple' => 1,
+		'choices'  => array(
+			'show'    => __( 'Previous/Next Post', 'page-builder-framework' ),
+			'default' => __( 'Post Title', 'page-builder-framework' ),
+			'hide'    => __( 'Hide', 'page-builder-framework' ),
+		),
+	) );
 
 	// Style.
 	Kirki::add_field( 'wpbf', array(
@@ -869,7 +865,7 @@ foreach ( $singles as $single ) {
 		'priority' => 0,
 		'multiple' => 1,
 		'choices'  => array(
-			'plain' => __( 'Plain', 'page-builder-framework' ),
+			'plain' => __( 'Default', 'page-builder-framework' ),
 			'boxed' => __( 'Boxed', 'page-builder-framework' ),
 		),
 	) );

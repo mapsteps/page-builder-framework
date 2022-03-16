@@ -971,7 +971,8 @@ add_filter( 'get_the_archive_title', 'wpbf_archive_title', 10 );
  */
 function wpbf_do_post_links() {
 
-	if ( 'hide' === get_theme_mod( 'single_post_nav' ) ) {
+	// Filter to allow conditional display.
+	if ( ! apply_filters( 'wpbf_display_post_links', true ) ) {
 		return;
 	}
 

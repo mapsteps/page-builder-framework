@@ -204,6 +204,28 @@ function wpbf_breadcrumbs_custom_separator( $separator ) {
 add_filter( 'wpbf_breadcrumbs_separator', 'wpbf_breadcrumbs_custom_separator' );
 
 /**
+ * Hide post navigation.
+ *
+ * Filter wpbf_display_post_links to determine if post links should be hidden.
+ *
+ * @param bool $display_post_links The display status.
+ *
+ * @return bool The updated display status.
+ */
+function wpbf_remove_post_links( $display_post_links ) {
+
+	// Hide post navigation globally.
+	// This will then be altered through the Premium Add-On or custom filters.
+	if ( 'hide' === get_theme_mod( 'single_post_nav' ) ) {
+		$display_post_links = false;
+	}
+
+	return $display_post_links;
+
+}
+add_filter( 'wpbf_display_post_links', 'wpbf_remove_post_links' );
+
+/**
  * Next post link.
  *
  * @param string $next The next post link.
