@@ -830,6 +830,29 @@ foreach ( $singles as $single ) {
 		'priority' => 0,
 	) );
 
+	if ( 'single' === $single ) {
+
+		// Separator.
+		new \Kirki\Pro\Field\Divider(
+			[
+				'settings' => $single . '_separator_comments',
+				'section'  => 'wpbf_' . $single . '_options',
+				'priority' => 0,
+			]
+		);
+
+		// Toggle.
+		Kirki::add_field( 'wpbf', array(
+			'type'     => 'toggle',
+			'label'    => __( 'Disable Comments', 'page-builder-framework' ),
+			'settings' => $single . '_disable_comments',
+			'section'  => 'wpbf_' . $single . '_options',
+			'priority' => 0,
+			'default'  => 0,
+		) );
+
+	}
+
 	// Separator.
 	new \Kirki\Pro\Field\Divider(
 		[

@@ -7,8 +7,15 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+// Filter to allow disabling comments.
+if ( ! apply_filters( 'wpbf_display_comments', true ) ) {
+	return;
+}
+
 // Don't load it if you can't comment.
-if ( post_password_required() )	return;
+if ( post_password_required() ) {
+	return;
+}
 
 ?>
 

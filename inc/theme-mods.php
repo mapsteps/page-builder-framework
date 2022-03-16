@@ -262,6 +262,24 @@ function wpbf_previous_post_link( $prev ) {
 add_filter( 'wpbf_previous_post_link', 'wpbf_previous_post_link' );
 
 /**
+ * Disable Comments.
+ *
+ * @param string $display_comments The display status.
+ *
+ * @return string The updated display status.
+ */
+function wpbf_disable_comments( $display_comments ) {
+
+	if ( is_singular( 'post' ) && get_theme_mod( 'single_disable_comments' ) ) {
+		return false;
+	}
+
+	return $display_comments;
+
+}
+add_filter( 'wpbf_display_comments', 'wpbf_disable_comments' );
+
+/**
  * Categories title.
  *
  * @param string $title The categories title.
