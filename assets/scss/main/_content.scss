@@ -295,6 +295,9 @@ body {
 	.children {
 		margin-left: $margin;
 	}
+	#cancel-comment-reply-link {
+		margin: 0 10px;
+	}
 }
 
 // Comment
