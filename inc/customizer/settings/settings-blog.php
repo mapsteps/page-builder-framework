@@ -948,7 +948,7 @@ foreach ( $singles as $single ) {
 		'type'            => 'color',
 		'settings'        => $single . '_post_background_color',
 		'label'           => __( 'Background Color', 'page-builder-framework' ),
-		'section'         => 'wpbf_single_options',
+		'section'         => 'wpbf_' . $single . '_options',
 		'default'         => '#f5f5f7',
 		'priority'        => 20,
 		'choices'         => array(
