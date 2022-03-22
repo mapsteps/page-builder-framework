@@ -153,30 +153,30 @@
         },
         {
             "name": "kirki-framework/control-code",
-            "version": "v1.0.1",
-            "version_normalized": "1.0.1.0",
+            "version": "v1.0.2",
+            "version_normalized": "1.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-code.git",
-                "reference": "29909ae3f62210b9b5937c798086ce8495e77d72"
+                "reference": "88e7b01127fc7039e2c1fc6761184b0332f9a0c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-code/zipball/29909ae3f62210b9b5937c798086ce8495e77d72",
-                "reference": "29909ae3f62210b9b5937c798086ce8495e77d72",
+                "url": "https://api.github.com/repos/kirki-framework/control-code/zipball/88e7b01127fc7039e2c1fc6761184b0332f9a0c3",
+                "reference": "88e7b01127fc7039e2c1fc6761184b0332f9a0c3",
                 "shasum": ""
             },
             "require": {
                 "kirki-framework/field": "*",
                 "php": ">=7.0"
             },
-            "time": "2021-12-29T12:56:00+00:00",
+            "time": "2022-03-11T18:37:13+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Kirki\\Control\\": "src/Control",
-                    "Kirki\\Field\\": "src/Field"
+                    "Kirki\\Field\\": "src/Field",
+                    "Kirki\\Control\\": "src/Control"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -198,7 +198,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-code/issues",
-                "source": "https://github.com/kirki-framework/control-code/tree/v1.0.1"
+                "source": "https://github.com/kirki-framework/control-code/tree/v1.0.2"
             },
             "install-path": "../kirki-framework/control-code"
         },
@@ -868,17 +868,17 @@
         },
         {
             "name": "kirki-framework/control-react-colorful",
-            "version": "v1.0.14",
-            "version_normalized": "1.0.14.0",
+            "version": "1.0.15",
+            "version_normalized": "1.0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-react-colorful.git",
-                "reference": "bcfe71b736f4b43c00b0292e9260c78815808364"
+                "reference": "fe1724a3d744aac2f80d965648775567ea8ba1f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-react-colorful/zipball/bcfe71b736f4b43c00b0292e9260c78815808364",
-                "reference": "bcfe71b736f4b43c00b0292e9260c78815808364",
+                "url": "https://api.github.com/repos/kirki-framework/control-react-colorful/zipball/fe1724a3d744aac2f80d965648775567ea8ba1f3",
+                "reference": "fe1724a3d744aac2f80d965648775567ea8ba1f3",
                 "shasum": ""
             },
             "require": {
@@ -887,7 +887,7 @@
                 "kirki-framework/url-getter": "*",
                 "php": ">=7.0"
             },
-            "time": "2022-02-11T17:28:13+00:00",
+            "time": "2022-02-18T12:12:55+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -915,7 +915,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-react-colorful/issues",
-                "source": "https://github.com/kirki-framework/control-react-colorful/tree/v1.0.14"
+                "source": "https://github.com/kirki-framework/control-react-colorful/tree/v1.0.15"
             },
             "install-path": "../kirki-framework/control-react-colorful"
         },
@@ -973,17 +973,17 @@
         },
         {
             "name": "kirki-framework/control-repeater",
-            "version": "v1.0.3",
-            "version_normalized": "1.0.3.0",
+            "version": "1.0.5",
+            "version_normalized": "1.0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-repeater.git",
-                "reference": "b24e7ae8641867616cc12038eda0a6e990399bbd"
+                "reference": "5375e65054b7a73da4e735fa7bee831c7f6c1cfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-repeater/zipball/b24e7ae8641867616cc12038eda0a6e990399bbd",
-                "reference": "b24e7ae8641867616cc12038eda0a6e990399bbd",
+                "url": "https://api.github.com/repos/kirki-framework/control-repeater/zipball/5375e65054b7a73da4e735fa7bee831c7f6c1cfc",
+                "reference": "5375e65054b7a73da4e735fa7bee831c7f6c1cfc",
                 "shasum": ""
             },
             "require": {
@@ -997,13 +997,13 @@
                 "kirki-framework/url-getter": "*",
                 "php": ">=7.0"
             },
-            "time": "2021-12-29T14:55:08+00:00",
+            "time": "2022-03-21T13:12:22+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Kirki\\Control\\": "src/Control",
                     "Kirki\\Field\\": "src/Field",
+                    "Kirki\\Control\\": "src/Control",
                     "Kirki\\Settings\\": "src/Settings"
                 }
             },
@@ -1026,7 +1026,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-repeater/issues",
-                "source": "https://github.com/kirki-framework/control-repeater/tree/v1.0.3"
+                "source": "https://github.com/kirki-framework/control-repeater/tree/v1.0.5"
             },
             "install-path": "../kirki-framework/control-repeater"
         },
@@ -1234,23 +1234,23 @@
         },
         {
             "name": "kirki-framework/data-option",
-            "version": "v1.0.2",
-            "version_normalized": "1.0.2.0",
+            "version": "v1.0.3",
+            "version_normalized": "1.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/data-option.git",
-                "reference": "af1ce8f0b890ae005566fcb4d7f44bebb2c17b0c"
+                "reference": "9a54f5c553e2f1e84f4ff620e271bfc16ee49ced"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/data-option/zipball/af1ce8f0b890ae005566fcb4d7f44bebb2c17b0c",
-                "reference": "af1ce8f0b890ae005566fcb4d7f44bebb2c17b0c",
+                "url": "https://api.github.com/repos/kirki-framework/data-option/zipball/9a54f5c553e2f1e84f4ff620e271bfc16ee49ced",
+                "reference": "9a54f5c553e2f1e84f4ff620e271bfc16ee49ced",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.0"
             },
-            "time": "2022-01-03T18:05:56+00:00",
+            "time": "2022-02-17T14:41:24+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1276,7 +1276,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/data-option/issues",
-                "source": "https://github.com/kirki-framework/data-option/tree/v1.0.2"
+                "source": "https://github.com/kirki-framework/data-option/tree/v1.0.3"
             },
             "install-path": "../kirki-framework/data-option"
         },
@@ -1696,24 +1696,24 @@
         },
         {
             "name": "kirki-framework/module-css",
-            "version": "v1.0.9",
-            "version_normalized": "1.0.9.0",
+            "version": "v1.0.11",
+            "version_normalized": "1.0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/module-css.git",
-                "reference": "96645a327b1a60e1d29fd0193e85f1346b9b268f"
+                "reference": "b53cff693b489cc7e4991ef725a66ddafa8aa84b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/module-css/zipball/96645a327b1a60e1d29fd0193e85f1346b9b268f",
-                "reference": "96645a327b1a60e1d29fd0193e85f1346b9b268f",
+                "url": "https://api.github.com/repos/kirki-framework/module-css/zipball/b53cff693b489cc7e4991ef725a66ddafa8aa84b",
+                "reference": "b53cff693b489cc7e4991ef725a66ddafa8aa84b",
                 "shasum": ""
             },
             "require": {
                 "kirki-framework/util": "*",
                 "php": ">=7.0"
             },
-            "time": "2022-02-11T16:17:00+00:00",
+            "time": "2022-03-21T14:22:54+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1740,23 +1740,23 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/module-css/issues",
-                "source": "https://github.com/kirki-framework/module-css/tree/v1.0.9"
+                "source": "https://github.com/kirki-framework/module-css/tree/v1.0.11"
             },
             "install-path": "../kirki-framework/module-css"
         },
         {
             "name": "kirki-framework/module-editor-styles",
-            "version": "v1.0.1",
-            "version_normalized": "1.0.1.0",
+            "version": "v1.0.2",
+            "version_normalized": "1.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/module-editor-styles.git",
-                "reference": "d30622f500cfcc4e0145790d4aeca541d6c73319"
+                "reference": "a86f8b66fa0a442ce092c122b997c8d5f8d20951"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/module-editor-styles/zipball/d30622f500cfcc4e0145790d4aeca541d6c73319",
-                "reference": "d30622f500cfcc4e0145790d4aeca541d6c73319",
+                "url": "https://api.github.com/repos/kirki-framework/module-editor-styles/zipball/a86f8b66fa0a442ce092c122b997c8d5f8d20951",
+                "reference": "a86f8b66fa0a442ce092c122b997c8d5f8d20951",
                 "shasum": ""
             },
             "require": {
@@ -1765,7 +1765,7 @@
                 "kirki-framework/util": "*",
                 "php": ">=7.0"
             },
-            "time": "2021-12-29T15:59:48+00:00",
+            "time": "2022-03-21T14:52:51+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1792,7 +1792,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/module-editor-styles/issues",
-                "source": "https://github.com/kirki-framework/module-editor-styles/tree/v1.0.1"
+                "source": "https://github.com/kirki-framework/module-editor-styles/tree/v1.0.2"
             },
             "install-path": "../kirki-framework/module-editor-styles"
         },
@@ -1898,17 +1898,17 @@
         },
         {
             "name": "kirki-framework/module-postmessage",
-            "version": "v1.0.5",
-            "version_normalized": "1.0.5.0",
+            "version": "v1.0.6",
+            "version_normalized": "1.0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/module-postMessage.git",
-                "reference": "e53eb3361bae51b6453e67f3f8690c61b1254707"
+                "reference": "d543c8d34e7d6fc8c2ce4805d8fc940070a54691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/module-postMessage/zipball/e53eb3361bae51b6453e67f3f8690c61b1254707",
-                "reference": "e53eb3361bae51b6453e67f3f8690c61b1254707",
+                "url": "https://api.github.com/repos/kirki-framework/module-postMessage/zipball/d543c8d34e7d6fc8c2ce4805d8fc940070a54691",
+                "reference": "d543c8d34e7d6fc8c2ce4805d8fc940070a54691",
                 "shasum": ""
             },
             "require": {
@@ -1916,7 +1916,7 @@
                 "kirki-framework/util": "*",
                 "php": ">=7.0"
             },
-            "time": "2022-02-11T16:40:54+00:00",
+            "time": "2022-02-17T12:30:43+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1943,7 +1943,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/module-postMessage/issues",
-                "source": "https://github.com/kirki-framework/module-postMessage/tree/v1.0.5"
+                "source": "https://github.com/kirki-framework/module-postMessage/tree/v1.0.6"
             },
             "install-path": "../kirki-framework/module-postmessage"
         },
