@@ -50,7 +50,7 @@
 #customize-control-page_h5_font_family,
 #customize-control-page_h6_font_family,
 #customize-control-footer_font_family,
-#customize-control-custom_fonts .customize-control-title {
+#customize-control-custom_fonts > label > .customize-control-title {
 	display: none !important;
 }
 
