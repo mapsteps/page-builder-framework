@@ -80,3 +80,9 @@ Kirki::add_config( 'wpbf', array(
 	'option_type'    => 'theme_mod',
 	'disable_output' => true,
 ) );
+
+// Kirki inline style tag id.
+function wpbf_kirki_inline_styles_id() {
+	return 'wpbf-typography-styles';
+}
+add_filter( 'kirki_inline_styles_id', 'wpbf_kirki_inline_styles_id' );
