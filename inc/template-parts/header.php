@@ -18,8 +18,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 	<?php do_action( 'wpbf_pre_header' ); ?>
 
-	<?php // wpbf_transparent_header() & wpbf_sticky_navigation() will be removed with 3.0. Instead wpbf_navigation_classes() & wpbf_navigation_attributes will be used. ?>
-	<div class="<?php wpbf_navigation_classes(); if ( function_exists( 'wpbf_transparent_header' ) ) wpbf_transparent_header(); ?>" <?php wpbf_navigation_attributes(); ?> <?php if ( function_exists( 'wpbf_sticky_navigation' ) ) wpbf_sticky_navigation(); ?>>
+	<div class="<?php wpbf_navigation_classes(); ?>" <?php wpbf_navigation_attributes(); ?>>
 
 		<?php do_action( 'wpbf_before_main_navigation' ); ?>
 
