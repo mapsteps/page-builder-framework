@@ -1545,7 +1545,7 @@ foreach ( $singles as $single ) {
 	}
 
 	// General Layout Settings
-	// if( $content_alignment ) {
+	// if ( $content_alignment ) {
 
 	// echo '.wpbf-' . $single . '-content .wpbf-post {';
 	// echo sprintf( 'text-align: %s;', esc_attr( $content_alignment ) );

@@ -29,7 +29,7 @@ get_header();
 
 				<?php do_action( 'wpbf_main_content_open' ); ?>
 
-				<?php if( have_posts() ) : ?>
+				<?php if ( have_posts() ) : ?>
 
 				<?php wpbf_archive_header(); ?>
 

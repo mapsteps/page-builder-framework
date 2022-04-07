@@ -46,22 +46,22 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 
 			switch ( $excluded_breadcrumb ) {
 				case 'archive':
-					if( is_archive() ) return;
+					if ( is_archive() ) return;
 					break;
 				case 'single':
-					if( is_single() ) return;
+					if ( is_single() ) return;
 					break;
 				case 'search':
-					if( is_search() ) return;
+					if ( is_search() ) return;
 					break;
 				case '404':
-					if( is_404() ) return;
+					if ( is_404() ) return;
 					break;
 				case 'page':
-					if( is_page() ) return;
+					if ( is_page() ) return;
 					break;
 				case 'front_page':
-					if( is_front_page() ) return;
+					if ( is_front_page() ) return;
 					break;
 				default:
 					break;
@@ -94,9 +94,9 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 
 	// Stop if we're on WooCommerce Pages as they handle breadcrumbs themselves.
 	if ( function_exists( 'is_woocommerce' ) ) {
-		if( is_woocommerce() ) return;
-		if( is_checkout() ) return;
-		if( is_cart() ) return;
+		if ( is_woocommerce() ) return;
+		if ( is_checkout() ) return;
+		if ( is_cart() ) return;
 	}
 
 	$breadcrumb = apply_filters( 'breadcrumb_trail_object', null, $args );
@@ -113,7 +113,7 @@ function wpbf_do_breadcrumbs( $args = array() ) {
  */
 function wpbf_breadcrumbs_content() {
 
-	if( 'content' === get_theme_mod( 'breadcrumbs_position', 'content' ) ) {
+	if ( 'content' === get_theme_mod( 'breadcrumbs_position', 'content' ) ) {
 
 		wpbf_do_breadcrumbs();
 
@@ -127,7 +127,7 @@ add_action( 'wpbf_inner_content_open', 'wpbf_breadcrumbs_content' );
  */
 function wpbf_breadcrumbs_header() {
 
-	if( 'header' === get_theme_mod( 'breadcrumbs_position' ) ) {
+	if ( 'header' === get_theme_mod( 'breadcrumbs_position' ) ) {
 
 		wpbf_do_breadcrumbs();
 
@@ -331,7 +331,7 @@ class WPBF_Breadcrumbs {
 		if ( false === $this->args['echo'] )
 			return $breadcrumb;
 
-		if( 'header' === get_theme_mod( 'breadcrumbs_position' ) ) {
+		if ( 'header' === get_theme_mod( 'breadcrumbs_position' ) ) {
 
 			$output  = '<div class="wpbf-breadcrumbs-container">';
 			$output .= '<div class="wpbf-container wpbf-container-center">';

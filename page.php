@@ -33,7 +33,7 @@ get_header();
 
 				<?php get_template_part( 'inc/template-parts/single/single-featured' ); ?>
 
-				<?php if( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 				<div class="entry-content" itemprop="text">
 
