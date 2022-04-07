@@ -1580,14 +1580,6 @@ function wpbf_logo_attributes() {
 
 	$attributes = '';
 
-	// This part will be removed with 3.0.
-	// With 3.0 we will pass an empty string which will then be extended by the Premium Add-On.
-	$menu_active_logo = get_theme_mod( 'menu_active_logo' );
-
-	if ( $menu_active_logo ) {
-		$attributes .= ' data-menu-active-logo="' . esc_url( $menu_active_logo ) . '"';
-	}
-
 	return apply_filters( 'wpbf_logo_attributes', $attributes );
 
 }
