@@ -19,9 +19,9 @@ $post_classes[]        = 'wpbf-post-style-' . $style;
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> <?php wpbf_single_schema_markup(); ?>>
 
-	<?php do_action( 'wpbf_article_open' ); ?>
-
 	<div class="wpbf-article-wrapper">
+
+		<?php do_action( 'wpbf_article_open' ); ?>
 
 		<header class="article-header">
 
@@ -64,9 +64,9 @@ $post_classes[]        = 'wpbf-post-style-' . $style;
 
 		</footer>
 
-	</div>
+		<?php do_action( 'wpbf_article_close' ); ?>
 
-	<?php do_action( 'wpbf_article_close' ); ?>
+	</div>
 
 	<?php do_action( 'wpbf_post_links' ); ?>
 
