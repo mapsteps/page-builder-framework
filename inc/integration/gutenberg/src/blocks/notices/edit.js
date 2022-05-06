@@ -13,6 +13,12 @@ import {
 	 *
 	 * For now, let's use AlignmentToolbar.
 	 * I let the import stays here so that we might consider to move to JustifyContentControl in the future.
+	 *
+	 * UPDATE:
+	 * We might be able to use it now.
+	 *
+	 * @link https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#justifycontentcontrol
+	 * @link https://github.com/WordPress/gutenberg/tree/trunk/packages/block-editor/src/components/justify-content-control
 	 */
 	JustifyContentControl,
 } from "@wordpress/block-editor";

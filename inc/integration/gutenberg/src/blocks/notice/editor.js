@@ -21,13 +21,18 @@ export { metadata, name };
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType("wpbf/notice", {
-	icon: 'info',
+	icon: "info",
 
 	example: {
-		attributes: {
-			typeClassName: "wpbf-notice-success",
-			message: __("Sample of success message", "page-builder-framework"),
-		},
+		innerBlocks: [
+			{
+				name: "wpbf/notice",
+				attributes: {
+					typeClassName: "wpbf-notice-success",
+					message: __("Sample of success message", "page-builder-framework"),
+				},
+			},
+		],
 	},
 
 	/**

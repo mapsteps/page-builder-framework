@@ -30,11 +30,6 @@
 	},
 	"styles": [
 		{
-			"name": "",
-			"label": "Inline",
-			"isDefault": true
-		},
-		{
 			"name": "wpbf-full-width",
 			"label": "Full width"
 		}

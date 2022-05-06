@@ -30,6 +30,14 @@ function NoticeEdit({ attributes, setAttributes, className }) {
 
 	return (
 		<>
+			<RichText
+				{...blockProps}
+				placeholder={__("Add notice message...", "page-builder-framework")}
+				style={{ textAlign: contentAlignment }}
+				onChange={(val) => setAttributes({ message: val })}
+				value={message}
+			/>
+
 			<BlockControls>
 				<AlignmentToolbar
 					value={contentAlignment}
@@ -68,14 +76,6 @@ function NoticeEdit({ attributes, setAttributes, className }) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-
-			<RichText
-				{...blockProps}
-				placeholder={__("Add notice message...", "page-builder-framework")}
-				style={{ textAlign: contentAlignment }}
-				onChange={(val) => setAttributes({ message: val })}
-				value={message}
-			/>
 		</>
 	);
 }
