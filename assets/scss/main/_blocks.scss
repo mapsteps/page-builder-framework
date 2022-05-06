@@ -1,4 +1,10 @@
 /* Notices */
+/// We provide ".wp-block" here just to get this stylesheet get enqueued in the preview iframe
+.wp-block.wpbf-block-notices {
+	/// And we put the flex here, because the empty rule won't be printed in the compiled css.
+	display: flex;
+}
+
 .wpbf-block-notices {
 	display: flex;
 	flex-wrap: wrap;
