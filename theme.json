@@ -1,8 +1,15 @@
 {
-	"version": 1,
+	"version": 2,
 	"settings": {
 		"spacing": {
 			"blockGap": true
+		},
+		"appearanceTools": true,
+		"spacing": {
+			"blockGap": true,
+			"margin": true,
+			"padding": true,
+			"units": ["%","px"]
 		},
 		"typography": {
 			"fontSizes": [{
