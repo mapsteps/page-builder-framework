@@ -5,12 +5,13 @@
   "author": "David",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "classnames": "^2.3.1",
-    "@swc/helpers": "^0.3.13"
+    "@swc/helpers": "^0.3.13",
+    "classnames": "^2.3.1"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.5.0",
-    "parcel": "^2.5.0"
+    "parcel": "^2.5.0",
+    "prettier": "npm:wp-prettier@^2.6.2-beta-1"
   },
   "alias": {
     "wp": {

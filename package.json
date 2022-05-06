@@ -19,7 +19,8 @@
 		"gulp-dart-sass": "^1.0.2",
 		"gulp-plumber": "^1.2.1",
 		"gulp-rename": "^2.0.0",
-		"gulp-uglify": "^3.0.2"
+		"gulp-uglify": "^3.0.2",
+		"prettier": "npm:wp-prettier@^2.6.2-beta-1"
 	},
 	"browserslist": [
 		"> 1%",
