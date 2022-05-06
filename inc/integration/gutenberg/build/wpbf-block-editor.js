@@ -1,1 +1,437 @@
-!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=12)}([function(e,t){e.exports=window.wp.element},function(e,t){e.exports=window.wp.i18n},function(e,t){e.exports=window.wp.blockEditor},function(e,t,n){var r;!function(){"use strict";var n={}.hasOwnProperty;function o(){for(var e=[],t=0;t<arguments.length;t++){var r=arguments[t];if(r){var a=typeof r;if("string"===a||"number"===a)e.push(r);else if(Array.isArray(r)){if(r.length){var i=o.apply(null,r);i&&e.push(i)}}else if("object"===a)if(r.toString===Object.prototype.toString)for(var c in r)n.call(r,c)&&r[c]&&e.push(c);else e.push(r.toString())}}return e.join(" ")}e.exports?(o.default=o,e.exports=o):void 0===(r=function(){return o}.apply(t,[]))||(e.exports=r)}()},function(e,t){e.exports=window.wp.blocks},function(e){e.exports=JSON.parse('{"apiVersion":2,"name":"wpbf/notices","title":"Notices","category":"wpbf","icon":"info-outline","description":"Notice block utilizing CSS Framework of Page Builder Framework.","textdomain":"page-builder-framework","supports":{"anchor":true},"attributes":{"contentJustification":{"type":"string","default":"left"},"orientation":{"type":"string","default":"horizontal"},"id":{"type":"string"}}}')},function(e,t){e.exports=function(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e},e.exports.default=e.exports,e.exports.__esModule=!0},function(e){e.exports=JSON.parse('{"apiVersion":2,"name":"wpbf/notice","title":"Notice","category":"wpbf","parent":["wpbf/notices"],"description":"Notice block utilizing CSS Framework of Page Builder Framework.","textdomain":"page-builder-framework","supports":{"html":false},"attributes":{"typeClassName":{"type":"string","default":""},"message":{"type":"string","default":""},"contentAlignment":{"type":"string","default":""},"id":{"type":"string"}},"styles":[{"name":"","label":"Inline","isDefault":true},{"name":"wpbf-full-width","label":"Full width"}]}')},function(e,t){e.exports=window.wp.components},function(e,t){e.exports=window.wp.primitives},function(e,t){function n(){return e.exports=n=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},e.exports.default=e.exports,e.exports.__esModule=!0,n.apply(this,arguments)}e.exports=n,e.exports.default=e.exports,e.exports.__esModule=!0},,function(e,t,n){"use strict";n.r(t);var r=n(1),o=n(4),a=n(0),i=n(9),c=Object(a.createElement)(i.SVG,{xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 24 24"},Object(a.createElement)(i.Path,{d:"M12 3.2c-4.8 0-8.8 3.9-8.8 8.8 0 4.8 3.9 8.8 8.8 8.8 4.8 0 8.8-3.9 8.8-8.8 0-4.8-4-8.8-8.8-8.8zm0 16c-4 0-7.2-3.3-7.2-7.2C4.8 8 8 4.8 12 4.8s7.2 3.3 7.2 7.2c0 4-3.2 7.2-7.2 7.2zM11 17h2v-6h-2v6zm0-8h2V7h-2v2z"})),l=n(5),s={from:[{type:"block",isMultiBlock:!0,blocks:["wpbf/notice"],transform:function(e){return Object(o.createBlock)(l.name,{},e.map((function(e){return Object(o.createBlock)("wpbf/notice",e)})))}},{type:"block",isMultiBlock:!0,blocks:["core/paragraph"],transform:function(e){return Object(o.createBlock)(l.name,{},e.map((function(e){return Object(o.createBlock)("wpbf/notice",{message:e.content})})))}}]},p=n(6),u=n.n(p),b=n(2),f=n(3),m=n.n(f),w=n(7),g=n(10),d=n.n(g),k=n(8),j=w.name;Object(o.registerBlockType)("wpbf/notice",{icon:c,example:{attributes:{typeClassName:"wpbf-notice-success",message:Object(r.__)("Sample of success message","page-builder-framework")}},edit:function(e){var t=e.attributes,n=e.setAttributes,o=(e.className,t.typeClassName),i=t.message,c=t.contentAlignment,l=(t.id,m()("wpbf-block wpbf-block-notice wpbf-notice",o)),s=Object(b.useBlockProps)({className:l});return Object(a.createElement)(a.Fragment,null,Object(a.createElement)(b.BlockControls,null,Object(a.createElement)(b.AlignmentToolbar,{value:c,onChange:function(e){return n({contentAlignment:e})}})),Object(a.createElement)(b.InspectorControls,null,Object(a.createElement)(k.PanelBody,{title:Object(r.__)("Notice Settings","page-builder-framework")},Object(a.createElement)(k.SelectControl,{label:"Notice Type",value:o,options:[{label:Object(r.__)("Default","page-builder-framework"),value:""},{label:Object(r.__)("Success","page-builder-framework"),value:"wpbf-notice-success"},{label:Object(r.__)("Warning","page-builder-framework"),value:"wpbf-notice-warning"},{label:Object(r.__)("Error","page-builder-framework"),value:"wpbf-notice-error"},{label:Object(r.__)("Primary","page-builder-framework"),value:"wpbf-notice-primary"}],onChange:function(e){n({typeClassName:e}),l=m()("wpbf-block wpbf-block-notice wpbf-notice",e)}}))),Object(a.createElement)(b.RichText,d()({},s,{placeholder:Object(r.__)("Add notice message...","page-builder-framework"),style:{textAlign:c},onChange:function(e){return n({message:e})},value:i})))},save:function(e){var t=e.attributes,n=t.typeClassName,r=t.message,o=t.contentAlignment,i=(t.id,"");switch(o){case"left":i="wpbf-text-left";break;case"center":i="wpbf-text-center";break;case"right":i="wpbf-text-right";break;case"justify":i="wpbf-text-justify"}var c=m()("wpbf-block wpbf-block-notice wpbf-notice",n,i);return Object(a.createElement)("div",b.useBlockProps.save({className:c}),Object(a.createElement)(b.RichText.Content,{value:r}))}});var v=[j],O=[["wpbf/notice"]],y=[{name:"notices-horizontal",isDefault:!0,title:Object(r.__)("Horizontal","page-builder-framework"),description:Object(r.__)("Notices shown in a row.","page-builder-framework"),attributes:{orientation:"horizontal"},scope:["transform"]},{name:"notices-vertical",title:Object(r.__)("Vertical","page-builder-framework"),description:Object(r.__)("Notices shown in a column.","page-builder-framework"),attributes:{orientation:"vertical"},scope:["transform"]}];l.name,Object(o.registerBlockType)("wpbf/notices",{icon:c,example:{innerBlocks:[{name:"wpbf/notice",attributes:{message:Object(r.__)("Sample of notice message","page-builder-framework")}},{name:"wpbf/notice",attributes:{message:Object(r.__)("Sample of success message","page-builder-framework"),typeClassName:"wpbf-notice-success"}},{name:"wpbf/notice",attributes:{message:Object(r.__)("Sample of warning message","page-builder-framework"),typeClassName:"wpbf-notice-warning"}},{name:"wpbf/notice",attributes:{message:Object(r.__)("Sample of error message","page-builder-framework"),typeClassName:"wpbf-notice-error"}}]},transforms:s,edit:function(e){var t,n=e.attributes,r=n.contentJustification,o=n.orientation,i=e.setAttributes,c=Object(b.useBlockProps)({className:m()("wpbf-block wpbf-block-notices",(t={},u()(t,"wpbf-content-justified-".concat(r),r),u()(t,"wpbf-is-vertical","vertical"===o),t))}),l=Object(b.__experimentalUseInnerBlocksProps)(c,{allowedBlocks:v,template:O,orientation:o,__experimentalLayout:{type:"default",alignments:[]},templateInsertUpdatesSelection:!0});return Object(a.createElement)(a.Fragment,null,Object(a.createElement)(b.BlockControls,{group:"block"},Object(a.createElement)(b.AlignmentToolbar,{value:r,onChange:function(e){return i({contentJustification:e})}})),Object(a.createElement)("div",l))},save:function(e){var t,n=e.attributes,r=n.contentJustification,o=n.orientation,i=e.className,c=m()(i,"wpbf-block wpbf-block-notices",(t={},u()(t,"wpbf-content-justified-".concat(r),r),u()(t,"wpbf-is-vertical","vertical"===o),t));return Object(a.createElement)("div",b.useBlockProps.save({className:c}),Object(a.createElement)(b.InnerBlocks.Content,null))},variations:y})}]);
+(function () {
+function $parcel$interopDefault(a) {
+  return a && a.__esModule ? a.default : a;
+}
+
+var $c005a2da7048c8dc$exports = {};
+$c005a2da7048c8dc$exports = wp.i18n;
+
+
+var $025fe6f199ddaec3$exports = {};
+$025fe6f199ddaec3$exports = wp.blocks;
+
+
+var $b56520c6448058e4$exports = {};
+$b56520c6448058e4$exports = JSON.parse("{\"apiVersion\":2,\"name\":\"wpbf/notices\",\"title\":\"Notices\",\"category\":\"wpbf\",\"icon\":\"info-outline\",\"description\":\"Notice block utilizing CSS Framework of Page Builder Framework.\",\"textdomain\":\"page-builder-framework\",\"supports\":{\"anchor\":true},\"attributes\":{\"contentJustification\":{\"type\":\"string\",\"default\":\"left\"},\"orientation\":{\"type\":\"string\",\"default\":\"horizontal\"},\"id\":{\"type\":\"string\"}}}");
+
+
+
+
+var $4ad015f3c8307374$var$transforms = {
+    from: [
+        {
+            type: "block",
+            isMultiBlock: true,
+            blocks: [
+                "wpbf/notice"
+            ],
+            transform: function(notices) {
+                return(// Creates the notices block
+                $025fe6f199ddaec3$exports.createBlock($b56520c6448058e4$exports.name, {}, // Loop the selected notices
+                notices.map(function(attributes) {
+                    return(// Create singular notice in the notices block
+                    $025fe6f199ddaec3$exports.createBlock("wpbf/notice", attributes));
+                })));
+            }
+        },
+        {
+            type: "block",
+            isMultiBlock: true,
+            blocks: [
+                "core/paragraph"
+            ],
+            transform: function(notices) {
+                return(// Creates the notices block
+                $025fe6f199ddaec3$exports.createBlock($b56520c6448058e4$exports.name, {}, // Loop the selected notices
+                notices.map(function(attributes) {
+                    // Create singular notice in the notices block
+                    return $025fe6f199ddaec3$exports.createBlock("wpbf/notice", {
+                        message: attributes.content
+                    });
+                })));
+            }
+        }, 
+    ]
+};
+var $4ad015f3c8307374$export$2e2bcd8739ae039 = $4ad015f3c8307374$var$transforms;
+
+
+function $af2a5c48ea008d99$export$2e2bcd8739ae039(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+
+
+function $55ed12119eb86ded$export$2e2bcd8739ae039(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = arguments[i] != null ? arguments[i] : {};
+        var ownKeys = Object.keys(source);
+        if (typeof Object.getOwnPropertySymbols === 'function') ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+        }));
+        ownKeys.forEach(function(key) {
+            $af2a5c48ea008d99$export$2e2bcd8739ae039(target, key, source[key]);
+        });
+    }
+    return target;
+}
+
+function $c86d260461abd2be$export$2e2bcd8739ae039(obj) {
+    return obj && obj.constructor === Symbol ? "symbol" : typeof obj;
+}
+
+
+
+
+var $e7ce011e45c0562f$exports = {};
+$e7ce011e45c0562f$exports = wp.blockEditor;
+
+
+var $f86dd0ec9fb2fff3$exports = {};
+
+/*!
+  Copyright (c) 2018 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/ /* global define */ (function() {
+    var hasOwn = {}.hasOwnProperty;
+    function classNames() {
+        var classes = [];
+        for(var i = 0; i < arguments.length; i++){
+            var arg = arguments[i];
+            if (!arg) continue;
+            var argType = typeof arg === "undefined" ? "undefined" : $c86d260461abd2be$export$2e2bcd8739ae039(arg);
+            if (argType === 'string' || argType === 'number') classes.push(arg);
+            else if (Array.isArray(arg)) {
+                if (arg.length) {
+                    var inner = classNames.apply(null, arg);
+                    if (inner) classes.push(inner);
+                }
+            } else if (argType === 'object') {
+                if (arg.toString === Object.prototype.toString) {
+                    for(var key in arg)if (hasOwn.call(arg, key) && arg[key]) classes.push(key);
+                } else classes.push(arg.toString());
+            }
+        }
+        return classes.join(' ');
+    }
+    if ($f86dd0ec9fb2fff3$exports) {
+        classNames.default = classNames;
+        $f86dd0ec9fb2fff3$exports = classNames;
+    } else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) // register as 'classnames', consistent with npm package name
+    define('classnames', [], function() {
+        return classNames;
+    });
+    else window.classNames = classNames;
+})();
+
+
+
+
+var $bb75fdb3648fa637$exports = {};
+$bb75fdb3648fa637$exports = JSON.parse("{\"apiVersion\":2,\"name\":\"wpbf/notice\",\"title\":\"Notice\",\"category\":\"wpbf\",\"parent\":[\"wpbf/notices\"],\"description\":\"Notice block utilizing CSS Framework of Page Builder Framework.\",\"textdomain\":\"page-builder-framework\",\"supports\":{\"html\":false},\"attributes\":{\"typeClassName\":{\"type\":\"string\",\"default\":\"\"},\"message\":{\"type\":\"string\",\"default\":\"\"},\"contentAlignment\":{\"type\":\"string\",\"default\":\"\"},\"id\":{\"type\":\"string\"}},\"styles\":[{\"name\":\"\",\"label\":\"Inline\",\"isDefault\":true},{\"name\":\"wpbf-full-width\",\"label\":\"Full width\"}]}");
+
+
+
+
+
+var $9a4aca5c1b6e9743$exports = {};
+$9a4aca5c1b6e9743$exports = wp.components;
+
+
+
+/**
+ * Describes the structure of the block in the context of the editor.
+ * This represents what the editor will render when the block is used.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ *
+ * @return {WPElement} Element to render.
+ */ function $b308b8bbe71c131f$var$NoticeEdit(param) {
+    var attributes = param.attributes, setAttributes = param.setAttributes, className = param.className;
+    var typeClassName = attributes.typeClassName, message = attributes.message, contentAlignment = attributes.contentAlignment, id = attributes.id;
+    var defaultClassName = "wpbf-block wpbf-block-notice wpbf-notice";
+    var fullClassName = (/*@__PURE__*/$parcel$interopDefault($f86dd0ec9fb2fff3$exports))(defaultClassName, typeClassName);
+    var blockProps = $e7ce011e45c0562f$exports.useBlockProps({
+        className: fullClassName
+    });
+    return /*#__PURE__*/ React.createElement(React.Fragment, null, /*#__PURE__*/ React.createElement($e7ce011e45c0562f$exports.BlockControls, null, /*#__PURE__*/ React.createElement($e7ce011e45c0562f$exports.AlignmentToolbar, {
+        value: contentAlignment,
+        onChange: function(value) {
+            return setAttributes({
+                contentAlignment: value
+            });
+        }
+    })), /*#__PURE__*/ React.createElement($e7ce011e45c0562f$exports.InspectorControls, null, /*#__PURE__*/ React.createElement($9a4aca5c1b6e9743$exports.PanelBody, {
+        title: $c005a2da7048c8dc$exports.__("Notice Settings", "page-builder-framework")
+    }, /*#__PURE__*/ React.createElement($9a4aca5c1b6e9743$exports.SelectControl, {
+        label: "Notice Type",
+        value: typeClassName,
+        options: [
+            {
+                label: $c005a2da7048c8dc$exports.__("Default", "page-builder-framework"),
+                value: ""
+            },
+            {
+                label: $c005a2da7048c8dc$exports.__("Success", "page-builder-framework"),
+                value: "wpbf-notice-success"
+            },
+            {
+                label: $c005a2da7048c8dc$exports.__("Warning", "page-builder-framework"),
+                value: "wpbf-notice-warning"
+            },
+            {
+                label: $c005a2da7048c8dc$exports.__("Error", "page-builder-framework"),
+                value: "wpbf-notice-error"
+            },
+            {
+                label: $c005a2da7048c8dc$exports.__("Primary", "page-builder-framework"),
+                value: "wpbf-notice-primary"
+            }, 
+        ],
+        onChange: function(value) {
+            setAttributes({
+                typeClassName: value
+            });
+            fullClassName = (/*@__PURE__*/$parcel$interopDefault($f86dd0ec9fb2fff3$exports))(defaultClassName, value);
+        }
+    }))), /*#__PURE__*/ React.createElement($e7ce011e45c0562f$exports.RichText, $55ed12119eb86ded$export$2e2bcd8739ae039({}, blockProps, {
+        placeholder: $c005a2da7048c8dc$exports.__("Add notice message...", "page-builder-framework"),
+        style: {
+            textAlign: contentAlignment
+        },
+        onChange: function(val) {
+            return setAttributes({
+                message: val
+            });
+        },
+        value: message
+    })));
+}
+var $b308b8bbe71c131f$export$2e2bcd8739ae039 = $b308b8bbe71c131f$var$NoticeEdit;
+
+
+
+
+
+/**
+ * Defines the way in which the different attributes should be combined into the final markup,
+ * which is then serialized by the block editor into `post_content`.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
+ *
+ * @return {WPElement} Element to render.
+ */ function $6cbd2c92d1015c3e$var$save(param) {
+    var attributes = param.attributes;
+    var typeClassName = attributes.typeClassName, message = attributes.message, contentAlignment = attributes.contentAlignment, id = attributes.id;
+    var textAlignClassName = "";
+    switch(contentAlignment){
+        case "left":
+            textAlignClassName = "wpbf-text-left";
+            break;
+        case "center":
+            textAlignClassName = "wpbf-text-center";
+            break;
+        case "right":
+            textAlignClassName = "wpbf-text-right";
+            break;
+        case "justify":
+            textAlignClassName = "wpbf-text-justify";
+            break;
+        default:
+            break;
+    }
+    var noticeClassName = (/*@__PURE__*/$parcel$interopDefault($f86dd0ec9fb2fff3$exports))("wpbf-block wpbf-block-notice wpbf-notice", typeClassName, textAlignClassName);
+    return /*#__PURE__*/ React.createElement("div", $e7ce011e45c0562f$exports.useBlockProps.save({
+        className: noticeClassName
+    }), /*#__PURE__*/ React.createElement($e7ce011e45c0562f$exports.RichText.Content, {
+        value: message
+    }));
+}
+var $6cbd2c92d1015c3e$export$2e2bcd8739ae039 = $6cbd2c92d1015c3e$var$save;
+
+
+var $cc3f6f01d0fdde5e$export$a8ff84c12d48cfa6 = (/*@__PURE__*/$parcel$interopDefault($bb75fdb3648fa637$exports)).name;
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
+ */ $025fe6f199ddaec3$exports.registerBlockType("wpbf/notice", {
+    icon: 'info',
+    example: {
+        attributes: {
+            typeClassName: "wpbf-notice-success",
+            message: $c005a2da7048c8dc$exports.__("Sample of success message", "page-builder-framework")
+        }
+    },
+    /**
+	 * @see ./edit.js
+	 */ edit: $b308b8bbe71c131f$export$2e2bcd8739ae039,
+    /**
+	 * @see ./save.js
+	 */ save: $6cbd2c92d1015c3e$export$2e2bcd8739ae039
+});
+
+
+var $15336f58a141421b$var$ALLOWED_BLOCKS = [
+    $cc3f6f01d0fdde5e$export$a8ff84c12d48cfa6
+];
+var $15336f58a141421b$var$NOTICES_TEMPLATE = [
+    [
+        "wpbf/notice"
+    ]
+];
+/**
+ * Describes the structure of the block in the context of the editor.
+ * This represents what the editor will render when the block is used.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ *
+ * @return {WPElement} Element to render.
+ */ function $15336f58a141421b$var$NoticesEdit(param) {
+    var _attributes = param.attributes, contentJustification = _attributes.contentJustification, orientation = _attributes.orientation, setAttributes = param.setAttributes;
+    var _obj;
+    var blockProps = $e7ce011e45c0562f$exports.useBlockProps({
+        className: (/*@__PURE__*/$parcel$interopDefault($f86dd0ec9fb2fff3$exports))("wpbf-block wpbf-block-notices", (_obj = {}, $af2a5c48ea008d99$export$2e2bcd8739ae039(_obj, "wpbf-content-justified-".concat(contentJustification), contentJustification), $af2a5c48ea008d99$export$2e2bcd8739ae039(_obj, "wpbf-is-vertical", orientation === "vertical"), _obj))
+    });
+    var innerBlocksProps = $e7ce011e45c0562f$exports.useInnerBlocksProps(blockProps, {
+        allowedBlocks: $15336f58a141421b$var$ALLOWED_BLOCKS,
+        template: $15336f58a141421b$var$NOTICES_TEMPLATE,
+        orientation: orientation,
+        __experimentalLayout: {
+            type: "default",
+            alignments: []
+        },
+        templateInsertUpdatesSelection: true
+    });
+    // This is related to JustifyContentControl (see @import section above).
+    var justifyControls = orientation === "vertical" ? [
+        "left",
+        "center",
+        "right"
+    ] : [
+        "left",
+        "center",
+        "right",
+        "space-between"
+    ];
+    return /*#__PURE__*/ React.createElement(React.Fragment, null, /*#__PURE__*/ React.createElement($e7ce011e45c0562f$exports.BlockControls, {
+        group: "block"
+    }, /*#__PURE__*/ React.createElement($e7ce011e45c0562f$exports.AlignmentToolbar, {
+        value: contentJustification,
+        onChange: function(value) {
+            return setAttributes({
+                contentJustification: value
+            });
+        }
+    })), /*#__PURE__*/ React.createElement("div", innerBlocksProps));
+}
+var $15336f58a141421b$export$2e2bcd8739ae039 = $15336f58a141421b$var$NoticesEdit;
+
+
+
+
+
+function $50afddccfd53c3ce$var$save(param) {
+    var _attributes = param.attributes, contentJustification = _attributes.contentJustification, orientation = _attributes.orientation, className = param.className;
+    var _obj;
+    var noticesClassName = (/*@__PURE__*/$parcel$interopDefault($f86dd0ec9fb2fff3$exports))(className, "wpbf-block wpbf-block-notices", (_obj = {}, $af2a5c48ea008d99$export$2e2bcd8739ae039(_obj, "wpbf-content-justified-".concat(contentJustification), contentJustification), $af2a5c48ea008d99$export$2e2bcd8739ae039(_obj, "wpbf-is-vertical", orientation === "vertical"), _obj));
+    return /*#__PURE__*/ React.createElement("div", $e7ce011e45c0562f$exports.useBlockProps.save({
+        className: noticesClassName
+    }), /*#__PURE__*/ React.createElement($e7ce011e45c0562f$exports.InnerBlocks.Content, null));
+}
+var $50afddccfd53c3ce$export$2e2bcd8739ae039 = $50afddccfd53c3ce$var$save;
+
+
+
+var $27feda30590ffc61$var$variations = [
+    {
+        name: "notices-horizontal",
+        isDefault: true,
+        title: $c005a2da7048c8dc$exports.__("Horizontal", "page-builder-framework"),
+        description: $c005a2da7048c8dc$exports.__("Notices shown in a row.", "page-builder-framework"),
+        attributes: {
+            orientation: "horizontal"
+        },
+        scope: [
+            "transform"
+        ]
+    },
+    {
+        name: "notices-vertical",
+        title: $c005a2da7048c8dc$exports.__("Vertical", "page-builder-framework"),
+        description: $c005a2da7048c8dc$exports.__("Notices shown in a column.", "page-builder-framework"),
+        attributes: {
+            orientation: "vertical"
+        },
+        scope: [
+            "transform"
+        ]
+    }, 
+];
+var $27feda30590ffc61$export$2e2bcd8739ae039 = $27feda30590ffc61$var$variations;
+
+
+var $1656f198b0030fda$export$a8ff84c12d48cfa6 = (/*@__PURE__*/$parcel$interopDefault($b56520c6448058e4$exports)).name;
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
+ */ $025fe6f199ddaec3$exports.registerBlockType("wpbf/notices", {
+    icon: 'info',
+    example: {
+        innerBlocks: [
+            {
+                name: "wpbf/notice",
+                attributes: {
+                    message: $c005a2da7048c8dc$exports.__("Sample of notice message", "page-builder-framework")
+                }
+            },
+            {
+                name: "wpbf/notice",
+                attributes: {
+                    message: $c005a2da7048c8dc$exports.__("Sample of success message", "page-builder-framework"),
+                    typeClassName: "wpbf-notice-success"
+                }
+            },
+            {
+                name: "wpbf/notice",
+                attributes: {
+                    message: $c005a2da7048c8dc$exports.__("Sample of warning message", "page-builder-framework"),
+                    typeClassName: "wpbf-notice-warning"
+                }
+            },
+            {
+                name: "wpbf/notice",
+                attributes: {
+                    message: $c005a2da7048c8dc$exports.__("Sample of error message", "page-builder-framework"),
+                    typeClassName: "wpbf-notice-error"
+                }
+            }, 
+        ]
+    },
+    /**
+	 * @see ./transforms.js
+	 */ transforms: $4ad015f3c8307374$export$2e2bcd8739ae039,
+    /**
+	 * @see ./edit.js
+	 */ edit: $15336f58a141421b$export$2e2bcd8739ae039,
+    /**
+	 * @see ./save.js
+	 */ save: $50afddccfd53c3ce$export$2e2bcd8739ae039,
+    /**
+	 * @see ./variations.js
+	 */ variations: $27feda30590ffc61$export$2e2bcd8739ae039
+});
+
+
+
+
+})();
+//# sourceMappingURL=wpbf-block-editor.js.map

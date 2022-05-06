@@ -49,13 +49,11 @@ function wpbf_gutenberg_block_editor_assets() {
 		return;
 	}
 
-	$enqueue_data = require __DIR__ . '/build/wpbf-block-editor.asset.php';
-	$version      = $enqueue_data['version'];
-	$dependencies = $enqueue_data['dependencies'];
+	$dependencies = array( 'wp-block-editor', 'wp-blocks', 'wp-components', 'wp-element', 'wp-i18n', 'wp-polyfill', 'wp-primitives' );
 
-	wp_enqueue_style( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.css', array(), $version );
+	wp_enqueue_style( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.css', array(), WPBF_VERSION );
 
-	wp_enqueue_script( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.js', $dependencies, $version, true );
+	wp_enqueue_script( 'wpbf-block-editor', WPBF_THEME_URI . '/inc/integration/gutenberg/build/wpbf-block-editor.js', $dependencies, WPBF_VERSION, true );
 
 	wp_add_inline_script(
 		'wp-block-editor',
