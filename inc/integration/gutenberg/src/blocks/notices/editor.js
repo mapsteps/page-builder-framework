@@ -3,7 +3,6 @@
  */
 import { __ } from "@wordpress/i18n";
 import { registerBlockType } from "@wordpress/blocks";
-import { info as icon } from "@wordpress/icons";
 
 /**
  * Internal dependencies.
@@ -24,7 +23,7 @@ export { metadata, name };
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType("wpbf/notices", {
-	icon,
+	icon: 'info',
 
 	example: {
 		innerBlocks: [

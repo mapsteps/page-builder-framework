@@ -2,7 +2,7 @@ import { __ } from "@wordpress/i18n";
 import {
 	BlockControls,
 	useBlockProps,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+	useInnerBlocksProps,
 	AlignmentToolbar,
 	/**
 	 * JustifyContentControl is the new cool control.

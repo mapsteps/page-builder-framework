@@ -3,6 +3,7 @@ node_modules/
 package-lock.json
 gulpfile.js
 **/build/*.map
+.parcel-cache
 
 # ignore sensitive files
 auth.json

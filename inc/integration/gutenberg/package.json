@@ -4,22 +4,47 @@
   "description": "Gutenberg blocks for Page Builder Framework",
   "author": "David",
   "license": "GPL-3.0-or-later",
-  "main": "build/editor.js",
-  "scripts": {
-    "build": "wp-scripts build src/wpbf-block-editor.js",
-    "format": "wp-scripts format",
-    "lint:css": "wp-scripts lint-style",
-    "lint:js": "wp-scripts lint-js",
-    "start": "wp-scripts start src/wpbf-block-editor.js",
-    "packages-update": "wp-scripts packages-update"
-  },
   "dependencies": {
-    "@wordpress/block-editor": "^5.3.3",
-    "@wordpress/blocks": "^8.0.3",
-    "@wordpress/i18n": "^3.20.0"
+    "classnames": "^2.3.1",
+    "@swc/helpers": "^0.3.13"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^15.0.1"
+    "@parcel/transformer-sass": "^2.5.0",
+    "parcel": "^2.5.0"
+  },
+  "alias": {
+    "wp": {
+      "global": "wp"
+    },
+    "react": {
+      "global": "React"
+    },
+    "react-dom": {
+      "global": "ReactDOM"
+    },
+    "@wordpress/blocks": {
+      "global": "wp.blocks"
+    },
+    "@wordpress/block-editor": {
+      "global": "wp.blockEditor"
+    },
+    "@wordpress/components": {
+      "global": "wp.components"
+    },
+    "@wordpress/element": {
+      "global": "wp.element"
+    },
+    "@wordpress/i18n": {
+      "global": "wp.i18n"
+    },
+    "@wordpress/icons": {
+      "global": "wp.icons"
+    }
+  },
+  "scripts": {
+    "watch": "parcel watch src/wpbf-block-editor.js --dist-dir build",
+    "dev": "parcel build src/wpbf-block-editor.js --no-optimize --dist-dir build",
+    "build": "parcel build src/wpbf-block-editor.js --dist-dir build"
   },
   "browserslist": [
     "> 1%",
