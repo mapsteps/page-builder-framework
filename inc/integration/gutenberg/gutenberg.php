@@ -9,9 +9,14 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Theme setup.
+ * Do block related stuff when they are supported in PBF.
  */
 function wpbf_gutenberg_theme_setup() {
+
+	// We only support blocks from WP version 5.9 and up.
+	if ( version_compare( get_bloginfo( 'version' ), '5.9', '<' ) ) {
+		return;
+	}
 
 	// Editor styles.
 	add_theme_support( 'editor-styles' );
@@ -19,17 +24,47 @@ function wpbf_gutenberg_theme_setup() {
 	// Add support for wide aligned elements.
 	add_theme_support( 'align-wide' );
 
+	// Register block categories.
+	add_filter( 'block_categories_all', 'wpbf_register_blocks_category', 10, 2 );
+
+	// Register PBF's blocks.
+	wpbf_register_blocks();
+
 }
 add_action( 'after_setup_theme', 'wpbf_gutenberg_theme_setup' );
 
 /**
- * Generate CSS.
+ * Register blocks category.
+ *
+ * @param array                    $categories Array of categories for block types.
+ * @param \WP_Block_Editor_Context $block_editor_context The current block editor context.
+ *
+ * @return array The modified block categories.
  */
-function wpbf_generate_gutenberg_css() {
+function wpbf_register_blocks_category( $categories, $block_editor_context ) {
 
-	ob_start();
-	include_once WPBF_THEME_DIR . '/inc/integration/gutenberg/gutenberg-styles.php';
-	return wpbf_minify_css( ob_get_clean() );
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug'  => 'wpbf',
+				'title' => __( 'Page Builder Framework', 'page-builder-framework' ),
+			),
+		)
+	);
+
+}
+
+/**
+ * Register blocks.
+ */
+function wpbf_register_blocks() {
+
+	$scan = glob( __DIR__ . '/blocks/*/block.php' );
+
+	foreach ( $scan as $path ) {
+		require_once $path;
+	}
 
 }
 
@@ -45,7 +80,8 @@ function wpbf_gutenberg_block_editor_assets() {
 		wp_add_inline_style( 'wpbf-gutenberg-style', $inline_styles );
 	}
 
-	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
+	// We only support blocks from WP version 5.9 and up.
+	if ( version_compare( get_bloginfo( 'version' ), '5.9', '<' ) ) {
 		return;
 	}
 
@@ -65,82 +101,12 @@ function wpbf_gutenberg_block_editor_assets() {
 add_action( 'enqueue_block_editor_assets', 'wpbf_gutenberg_block_editor_assets' );
 
 /**
- * Change the url of Page Builder Framework's block assets url.
- *
- * @see https://developer.wordpress.org/reference/functions/plugins_url/
- *
- * @param string $url    The complete URL to the plugins directory including scheme and path.
- * @param string $path   Path relative to the URL to the plugins directory. Blank string
- *                       if no path is specified.
- * @param string $plugin The plugin file path to be relative to. Blank string if no plugin
- *                       is specified.
+ * Generate CSS.
  */
-function wpbf_parse_block_assets_url( $url, $path, $plugin ) {
+function wpbf_generate_gutenberg_css() {
 
-	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
-		return;
-	}
-
-	if (
-		false === stripos( $path, '../../build/wpbf-block-editor' ) &&
-		false === stripos( $path, '../../build/wpbf-blocks' )
-	) {
-		return $url;
-	}
-
-	$path = str_ireplace( '../../build/wpbf-', '/build/wpbf-', $path );
-	$url  = WPBF_THEME_URI . '/inc/integration/gutenberg' . $path;
-
-	return $url;
+	ob_start();
+	include_once WPBF_THEME_DIR . '/inc/integration/gutenberg/gutenberg-styles.php';
+	return wpbf_minify_css( ob_get_clean() );
 
 }
-add_filter( 'plugins_url', 'wpbf_parse_block_assets_url', 10, 3 );
-
-/**
- * Register blocks category.
- *
- * @param array  $categories Block categories.
- * @param object $post Post object.
- *
- * @return array The modified block categories.
- */
-function wpbf_register_blocks_category( $categories, $post ) {
-
-	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
-		return;
-	}
-
-	return array_merge(
-		$categories,
-		array(
-			array(
-				'slug'  => 'wpbf',
-				'title' => __( 'Page Builder Framework', 'page-builder-framework' ),
-			),
-		)
-	);
-
-}
-add_filter( 'block_categories_all', 'wpbf_register_blocks_category', 10, 2 );
-
-/**
- * Register blocks.
- */
-function wpbf_register_blocks() {
-
-	if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
-		return;
-	}
-
-	$scan = glob( __DIR__ . '/blocks/*/block.php' );
-
-	foreach ( $scan as $path ) {
-		$explode    = explode( '/', $path );
-		$block_name = $explode[ count( $explode ) - 2 ];
-		$func_name  = str_ireplace( '-', '_', $block_name );
-
-		require_once $path;
-	}
-
-}
-add_action( 'after_setup_theme', 'wpbf_register_blocks' );

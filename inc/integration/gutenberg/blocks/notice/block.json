@@ -1,4 +1,5 @@
 {
+	"$schema": "https://raw.githubusercontent.com/WordPress/gutenberg/trunk/schemas/json/block.json",
 	"apiVersion": 2,
 	"name": "wpbf/notice",
 	"title": "Notice",

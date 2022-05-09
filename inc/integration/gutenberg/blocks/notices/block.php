@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  */
 function wpbf_register_notices_block() {
 
-	register_block_type_from_metadata( __DIR__ );
+	register_block_type( __DIR__ );
 
 }
 add_action( 'init', 'wpbf_register_notices_block' );
