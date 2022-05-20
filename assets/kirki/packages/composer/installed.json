@@ -2,23 +2,23 @@
     "packages": [
         {
             "name": "kirki-framework/compatibility",
-            "version": "v1.0.9",
-            "version_normalized": "1.0.9.0",
+            "version": "v1.0.11",
+            "version_normalized": "1.0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/compatibility.git",
-                "reference": "1169e68f1232dfc7d659c981d440d81e8253a810"
+                "reference": "551fdc67b39e7345fc49a785b2cdd0c2a9f0bc3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/compatibility/zipball/1169e68f1232dfc7d659c981d440d81e8253a810",
-                "reference": "1169e68f1232dfc7d659c981d440d81e8253a810",
+                "url": "https://api.github.com/repos/kirki-framework/compatibility/zipball/551fdc67b39e7345fc49a785b2cdd0c2a9f0bc3e",
+                "reference": "551fdc67b39e7345fc49a785b2cdd0c2a9f0bc3e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.0"
             },
-            "time": "2022-01-21T14:32:03+00:00",
+            "time": "2022-05-19T16:55:52+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -45,7 +45,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/compatibility/issues",
-                "source": "https://github.com/kirki-framework/compatibility/tree/v1.0.9"
+                "source": "https://github.com/kirki-framework/compatibility/tree/v1.0.11"
             },
             "install-path": "../kirki-framework/compatibility"
         },
@@ -868,17 +868,17 @@
         },
         {
             "name": "kirki-framework/control-react-colorful",
-            "version": "1.0.15",
-            "version_normalized": "1.0.15.0",
+            "version": "v1.0.17",
+            "version_normalized": "1.0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/control-react-colorful.git",
-                "reference": "fe1724a3d744aac2f80d965648775567ea8ba1f3"
+                "reference": "79258cdbcdd4ee8582560edc4a09c8ba45eaf219"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/control-react-colorful/zipball/fe1724a3d744aac2f80d965648775567ea8ba1f3",
-                "reference": "fe1724a3d744aac2f80d965648775567ea8ba1f3",
+                "url": "https://api.github.com/repos/kirki-framework/control-react-colorful/zipball/79258cdbcdd4ee8582560edc4a09c8ba45eaf219",
+                "reference": "79258cdbcdd4ee8582560edc4a09c8ba45eaf219",
                 "shasum": ""
             },
             "require": {
@@ -887,7 +887,7 @@
                 "kirki-framework/url-getter": "*",
                 "php": ">=7.0"
             },
-            "time": "2022-02-18T12:12:55+00:00",
+            "time": "2022-05-20T11:03:05+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -915,7 +915,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/control-react-colorful/issues",
-                "source": "https://github.com/kirki-framework/control-react-colorful/tree/v1.0.15"
+                "source": "https://github.com/kirki-framework/control-react-colorful/tree/v1.0.17"
             },
             "install-path": "../kirki-framework/control-react-colorful"
         },
@@ -1898,17 +1898,17 @@
         },
         {
             "name": "kirki-framework/module-postmessage",
-            "version": "v1.0.6",
-            "version_normalized": "1.0.6.0",
+            "version": "1.0.7",
+            "version_normalized": "1.0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/module-postMessage.git",
-                "reference": "d543c8d34e7d6fc8c2ce4805d8fc940070a54691"
+                "reference": "9b2b419027f3b95a2546041a83fc5607492f35a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/module-postMessage/zipball/d543c8d34e7d6fc8c2ce4805d8fc940070a54691",
-                "reference": "d543c8d34e7d6fc8c2ce4805d8fc940070a54691",
+                "url": "https://api.github.com/repos/kirki-framework/module-postMessage/zipball/9b2b419027f3b95a2546041a83fc5607492f35a5",
+                "reference": "9b2b419027f3b95a2546041a83fc5607492f35a5",
                 "shasum": ""
             },
             "require": {
@@ -1916,7 +1916,7 @@
                 "kirki-framework/util": "*",
                 "php": ">=7.0"
             },
-            "time": "2022-02-17T12:30:43+00:00",
+            "time": "2022-05-19T14:39:11+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1943,7 +1943,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/module-postMessage/issues",
-                "source": "https://github.com/kirki-framework/module-postMessage/tree/v1.0.6"
+                "source": "https://github.com/kirki-framework/module-postMessage/tree/v1.0.7"
             },
             "install-path": "../kirki-framework/module-postmessage"
         },
@@ -2199,24 +2199,24 @@
         },
         {
             "name": "kirki-framework/module-webfonts",
-            "version": "v1.0.4",
-            "version_normalized": "1.0.4.0",
+            "version": "v1.0.5",
+            "version_normalized": "1.0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kirki-framework/module-webfonts.git",
-                "reference": "ec12372bb67230ab5558a6b3d8b7f98300d2e2a6"
+                "reference": "6be8c298abc29bccc227e1b1dbcb029e6a072659"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kirki-framework/module-webfonts/zipball/ec12372bb67230ab5558a6b3d8b7f98300d2e2a6",
-                "reference": "ec12372bb67230ab5558a6b3d8b7f98300d2e2a6",
+                "url": "https://api.github.com/repos/kirki-framework/module-webfonts/zipball/6be8c298abc29bccc227e1b1dbcb029e6a072659",
+                "reference": "6be8c298abc29bccc227e1b1dbcb029e6a072659",
                 "shasum": ""
             },
             "require": {
                 "kirki-framework/googlefonts": "*",
                 "php": ">=7.0"
             },
-            "time": "2021-12-29T16:23:32+00:00",
+            "time": "2022-05-19T16:44:39+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2243,7 +2243,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kirki-framework/module-webfonts/issues",
-                "source": "https://github.com/kirki-framework/module-webfonts/tree/v1.0.4"
+                "source": "https://github.com/kirki-framework/module-webfonts/tree/v1.0.5"
             },
             "install-path": "../kirki-framework/module-webfonts"
         },

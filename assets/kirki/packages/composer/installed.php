@@ -11,12 +11,12 @@
     ),
     'versions' => array(
         'kirki-framework/compatibility' => array(
-            'pretty_version' => 'v1.0.9',
-            'version' => '1.0.9.0',
+            'pretty_version' => 'v1.0.11',
+            'version' => '1.0.11.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/compatibility',
             'aliases' => array(),
-            'reference' => '1169e68f1232dfc7d659c981d440d81e8253a810',
+            'reference' => '551fdc67b39e7345fc49a785b2cdd0c2a9f0bc3e',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-base' => array(
@@ -164,12 +164,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/control-react-colorful' => array(
-            'pretty_version' => '1.0.15',
-            'version' => '1.0.15.0',
+            'pretty_version' => 'v1.0.17',
+            'version' => '1.0.17.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/control-react-colorful',
             'aliases' => array(),
-            'reference' => 'fe1724a3d744aac2f80d965648775567ea8ba1f3',
+            'reference' => '79258cdbcdd4ee8582560edc4a09c8ba45eaf219',
             'dev_requirement' => false,
         ),
         'kirki-framework/control-react-select' => array(
@@ -353,12 +353,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/module-postmessage' => array(
-            'pretty_version' => 'v1.0.6',
-            'version' => '1.0.6.0',
+            'pretty_version' => '1.0.7',
+            'version' => '1.0.7.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/module-postmessage',
             'aliases' => array(),
-            'reference' => 'd543c8d34e7d6fc8c2ce4805d8fc940070a54691',
+            'reference' => '9b2b419027f3b95a2546041a83fc5607492f35a5',
             'dev_requirement' => false,
         ),
         'kirki-framework/module-preset' => array(
@@ -407,12 +407,12 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/module-webfonts' => array(
-            'pretty_version' => 'v1.0.4',
-            'version' => '1.0.4.0',
+            'pretty_version' => 'v1.0.5',
+            'version' => '1.0.5.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../kirki-framework/module-webfonts',
             'aliases' => array(),
-            'reference' => 'ec12372bb67230ab5558a6b3d8b7f98300d2e2a6',
+            'reference' => '6be8c298abc29bccc227e1b1dbcb029e6a072659',
             'dev_requirement' => false,
         ),
         'kirki-framework/url-getter' => array(

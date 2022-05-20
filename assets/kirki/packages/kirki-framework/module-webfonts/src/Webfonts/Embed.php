@@ -102,6 +102,7 @@ final class Embed {
 				'crossorigin',
 			];
 		}
+
 		return $urls;
 	}
 
