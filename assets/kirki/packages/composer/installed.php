@@ -1,7 +1,7 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '4.0.23',
-        'version' => '4.0.23.0',
+        'pretty_version' => '4.0.24',
+        'version' => '4.0.24.0',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -299,8 +299,8 @@
             'dev_requirement' => false,
         ),
         'kirki-framework/kirki' => array(
-            'pretty_version' => '4.0.23',
-            'version' => '4.0.23.0',
+            'pretty_version' => '4.0.24',
+            'version' => '4.0.24.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
