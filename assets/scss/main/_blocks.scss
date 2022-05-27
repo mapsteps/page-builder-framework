@@ -5,6 +5,8 @@
 	display: flex;
 }
 
+/// Even though the blocks have been removed from PBF,
+/// we still need to keep the styles here to keep the compatibility.
 .wpbf-block-notices {
 	display: flex;
 	flex-wrap: wrap;
