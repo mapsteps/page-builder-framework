@@ -13,16 +13,16 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  */
 function wpbf_gutenberg_theme_setup() {
 
-	// We only support blocks from WP version 5.9 and up.
-	if ( version_compare( get_bloginfo( 'version' ), '5.9', '<' ) ) {
-		return;
-	}
-
 	// Editor styles.
 	add_theme_support( 'editor-styles' );
 
 	// Add support for wide aligned elements.
 	add_theme_support( 'align-wide' );
+
+	// We only support blocks from WP version 5.9 and up.
+	if ( version_compare( get_bloginfo( 'version' ), '5.9', '<' ) ) {
+		return;
+	}
 
 	// Register block categories.
 	add_filter( 'block_categories_all', 'wpbf_register_blocks_category', 10, 2 );
