@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$menu_logo_url = get_theme_mod( 'menu_logo_url', home_url() );
+$menu_logo_url = get_theme_mod( 'menu_logo_url' ) ? get_theme_mod( 'menu_logo_url' ) : home_url();
 $menu_logo_url = is_customize_preview() ? site_url() : $menu_logo_url;
 $menu_logo_url = apply_filters( 'wpbf_logo_url', $menu_logo_url );
 
