@@ -20,11 +20,6 @@ function wpbf_local_gravatars( $avatar ) {
 		return $avatar;
 	}
 
-	// We only process gravatars.
-	if ( false === stripos( $avatar, 'gravatar.com' ) ) {
-		return $avatar;
-	}
-
 	preg_match_all( '/srcset=["\']?((?:.(?!["\']?\s+(?:\S+)=|\s*\/?[>"\']))+.)["\']?/', $avatar, $srcset );
 	if ( isset( $srcset[1] ) && isset( $srcset[1][0] ) ) {
 		$url            = explode( ' ', $srcset[1][0] )[0];
