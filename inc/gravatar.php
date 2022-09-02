@@ -20,6 +20,11 @@ function wpbf_local_gravatars( $avatar ) {
 		return $avatar;
 	}
 
+	// We only process gravatars.
+	if ( false === stripos( $avatar, 'gravatar.com' ) ) {
+		return $avatar;
+	}
+
 	preg_match_all( '/srcset=["\']?((?:.(?!["\']?\s+(?:\S+)=|\s*\/?[>"\']))+.)["\']?/', $avatar, $srcset );
 	if ( isset( $srcset[1] ) && isset( $srcset[1][0] ) ) {
 		$url            = explode( ' ', $srcset[1][0] )[0];
@@ -66,12 +71,12 @@ function wpbf_get_local_gravatar( $url ) {
 	// Create page-builder-framework folder if it doesn't exist.
 	if ( ! file_exists( $pbf_dir ) ) {
 		$wp_filesystem->mkdir( $pbf_dir );
-	} 
+	}
 
 	// Create gravatar folder if it doesn't exist.
 	if ( ! file_exists( $avatar_dir ) ) {
 		$wp_filesystem->mkdir( $avatar_dir );
-	} 
+	}
 
 	$filename  = basename( wp_parse_url( $url, PHP_URL_PATH ) );
 	$file_path = $avatar_dir . $filename;
@@ -91,7 +96,6 @@ function wpbf_get_local_gravatar( $url ) {
 				return $url;
 			}
 		}
-
 	}
 
 	return $file_url;
