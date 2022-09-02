@@ -40,6 +40,23 @@ function wpbf_local_gravatars( $avatar ) {
 add_filter( 'get_avatar', 'wpbf_local_gravatars' );
 
 /**
+ * By default, replacing all gravatars will obstruct the avatar list on the discussions pages.
+ *
+ * This fixes that.
+ *
+ * @param array $avatar_defaults The avatar defaults.
+ *
+ * @return array The original avatar defaults.
+ */
+function wpbf_remove_local_gravatars_from_discussion_settings( $avatar_defaults ) {
+
+	remove_action( 'get_avatar', 'wpbf_local_gravatars' );
+	return $avatar_defaults;
+
+}
+add_filter( 'avatar_defaults', 'wpbf_remove_local_gravatars_from_discussion_settings' );
+
+/**
  * Create & get local gravatars.
  *
  * @param string $url The gravatar url.
