@@ -211,7 +211,7 @@ function wpbf_remove_downloaded_fonts() {
 		// Delete fonts directory.
 		$file_system->rmdir( $fonts_dir, true );
 	} else {
-		wp_send_json_error( 'No local fonts were found.', 'page-builder-framework' );
+		wp_send_json_error( 'No local fonts found.', 'page-builder-framework' );
 	}
 
 	wp_send_json_success( 'Font Cache cleared.', 'page-builder-framework' );
