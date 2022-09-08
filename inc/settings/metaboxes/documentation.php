@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				array(
 					'icon'    => 'dashicons-admin-users',
 					'title'   => __( 'Community', 'page-builder-framework' ),
-					'content' => __( 'Did you know? There is a Facebook Community of Page Builder Framework users, just like you! <br><br> Join the community and meet 1500+ Page Builder Framework users.', 'page-builder-framework' ),
+					'content' => __( 'Did you know? There is a Facebook Community of Page Builder Framework users, just like you! <br><br> Join the community and meet 1700+ Page Builder Framework users.', 'page-builder-framework' ),
 					'link'    => 'https://www.facebook.com/groups/wpagebuilderframework/',
 				),
 				array(
