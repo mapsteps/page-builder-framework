@@ -137,12 +137,11 @@
 	padding: 15px;
 	border: 1px solid #ddd;
 	color: initial;
-	-webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.15);
-	-moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.15);
-	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.15);
+	-webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
 	border-radius: 4px;
 }
-
 
 .wpbf-premium-list-icon {
 	text-align: right;
@@ -219,7 +218,6 @@
 
 /* Documentation Metabox */
 .wpbf-documentation-metabox {
-
 }
 
 .wpbf-documentation-metabox h2 a {
@@ -242,4 +240,77 @@
 
 .wpbf-documentation-boxes .heatbox:nth-child(even) {
 	margin-right: 0;
+}
+
+/* Loading Button */
+
+@-webkit-keyframes loadingSpinAround {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}
+
+@keyframes loadingSpinAround {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}
+
+.wpbf-theme-settings-page .button.is-loading {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: transparent !important;
+	pointer-events: none;
+}
+
+.wpbf-theme-settings-page .button.is-loading::after {
+	content: "";
+	position: absolute;
+	width: 1em;
+	display: block;
+	height: 1em;
+	border: 2px solid #dbdbdb;
+	/* border: 2px solid $accent-color; */
+	border-color: transparent transparent #fff #fff !important;
+	/* border-color: transparent transparent $accent-color $accent-color !important; */
+	border-radius: 290486px;
+	-webkit-animation: loadingSpinAround 0.5s infinite linear;
+	animation: loadingSpinAround 0.5s infinite linear;
+}
+
+.wpbf-theme-settings-page .button.is-danger {
+	color: #fff;
+	background-color: tomato;
+}
+
+.wpbf-theme-settings-page .button.is-danger:hover,
+.wpbf-theme-settings-page .button.is-danger:active,
+.wpbf-theme-settings-page .button.is-danger:focus {
+	color: #fff;
+	background-color: #d94a30;
+}
+
+.wpbf-theme-settings-page .submission-status {
+	margin-left: 20px;
+	line-height: 30px;
+	font-style: italic;
+}
+
+.wpbf-theme-settings-page .submission-status.is-hidden {
+	display: none;
+}
+
+.wpbf-theme-settings-page .submission-status.is-success {
+	color: #0fa953;
+}
+
+.wpbf-theme-settings-page .submission-status.is-error {
+	color: tomato;
 }

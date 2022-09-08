@@ -94,6 +94,35 @@ function wpbf_bfcm_notice_dismissal() {
 add_action( 'wp_ajax_wpbf_bfcm_notice_dismissal', 'wpbf_bfcm_notice_dismissal' );
 
 /**
+ * Clear font cache directory.
+ */
+function wpbf_remove_downloaded_fonts() {
+
+	$nonce = isset( $_POST['nonce'] ) ? $_POST['nonce'] : 0;
+
+	if ( ! wp_verify_nonce( $nonce, 'WPBF_Clear_Font_Cache' ) ) {
+		wp_send_json_error( 'Invalid Token' );
+	}
+
+	include_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+	include_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+
+	$file_system = new WP_Filesystem_Direct( false );
+	$fonts_dir   = WP_CONTENT_DIR . '/fonts';
+
+	if ( is_dir( $fonts_dir ) ) {
+		// Delete fonts directory.
+		$file_system->rmdir( $fonts_dir, true );
+	} else {
+		wp_send_json_error( $fonts_dir . ' is not a directory' );
+	}
+
+	wp_send_json_success( 'The downloaded fonts are removed.', 'page-builder-framework' );
+
+}
+add_action( 'wp_ajax_wpbf_remove_downloaded_fonts', 'wpbf_remove_downloaded_fonts' );
+
+/**
  * Display activation notice.
  */
 function wpbf_show_activation_notice() {
@@ -133,22 +162,22 @@ function wpbf_show_bfcm_notice() {
 		return;
 	}
 
-    global $pagenow;
-    $screen = get_current_screen();
+	global $pagenow;
+	$screen = get_current_screen();
 
-    // Stop if we are not on the dashboard or wpbf settings page.
+	// Stop if we are not on the dashboard or wpbf settings page.
 	if ( $pagenow !== 'index.php' && 'appearance_page_wpbf-premium' !== $screen->id ) {
 		return;
 	}
 
-    $start = strtotime( 'november 22nd, 2021' );
-    $end   = strtotime( 'november 30th, 2021' );
-    $now   = time();
+	$start = strtotime( 'november 22nd, 2021' );
+	$end   = strtotime( 'november 30th, 2021' );
+	$now   = time();
 
-    // Stop here if we are not in the sales period.
-    if ( $now < $start || $now > $end ) {
-    	return;
-    }
+	// Stop here if we are not in the sales period.
+	if ( $now < $start || $now > $end ) {
+		return;
+	}
 
 	// Stop here if notice has been dismissed.
 	if ( ! empty( get_option( 'wpbf_bfcm_notice_dismissed', 0 ) ) ) {

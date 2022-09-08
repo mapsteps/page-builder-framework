@@ -50,7 +50,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 			<div class="heatbox-admin-panel wpbf-settings-panel">
 				<!-- Faking H1 tag to place admin notices -->
 				<h1 style="display: none;"></h1>
-				<?php require __DIR__ . '/metaboxes/customizer.php'; ?>
+				<?php
+				require __DIR__ . '/metaboxes/customizer.php';
+				require __DIR__ . '/metaboxes/clear-font-cache.php';
+				?>
 			</div>
 
 			<div class="heatbox-admin-panel wpbf-premium-panel">
