@@ -72,7 +72,7 @@
 				button.classList.add("is-loading");
 
 				var data = {
-					action: "wpbf_remove_downloaded_fonts",
+					action: "wpbf_clear_font_cache",
 					nonce: button.dataset.nonce,
 				};
 

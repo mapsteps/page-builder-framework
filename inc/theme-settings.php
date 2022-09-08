@@ -193,7 +193,7 @@ add_action( 'admin_notices', 'wpbf_show_compatibility_notice' );
 /**
  * Clear font cache directory.
  */
-function wpbf_remove_downloaded_fonts() {
+function wpbf_clear_font_cache() {
 
 	$nonce = isset( $_POST['nonce'] ) ? $_POST['nonce'] : 0;
 
@@ -217,4 +217,4 @@ function wpbf_remove_downloaded_fonts() {
 	wp_send_json_success( 'Font Cache cleared.', 'page-builder-framework' );
 
 }
-add_action( 'wp_ajax_wpbf_remove_downloaded_fonts', 'wpbf_remove_downloaded_fonts' );
+add_action( 'wp_ajax_wpbf_clear_font_cache', 'wpbf_clear_font_cache' );
