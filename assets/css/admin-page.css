@@ -243,7 +243,6 @@
 }
 
 /* Loading Button */
-
 @-webkit-keyframes loadingSpinAround {
 	from {
 		transform: rotate(0);
@@ -285,22 +284,9 @@
 	animation: loadingSpinAround 0.5s infinite linear;
 }
 
-.wpbf-theme-settings-page .button.is-danger {
-	color: #fff;
-	background-color: tomato;
-}
-
-.wpbf-theme-settings-page .button.is-danger:hover,
-.wpbf-theme-settings-page .button.is-danger:active,
-.wpbf-theme-settings-page .button.is-danger:focus {
-	color: #fff;
-	background-color: #d94a30;
-}
-
 .wpbf-theme-settings-page .submission-status {
-	margin-left: 20px;
-	line-height: 30px;
-	font-style: italic;
+	margin-left: 15px;
+	line-height: 39px;
 }
 
 .wpbf-theme-settings-page .submission-status.is-hidden {

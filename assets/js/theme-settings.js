@@ -92,7 +92,7 @@
 						button.classList.remove("is-loading");
 						setTimeout(function () {
 							hideNotice();
-						}, 3000);
+						}, 4000);
 					});
 			}
 
