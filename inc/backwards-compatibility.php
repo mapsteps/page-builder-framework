@@ -450,6 +450,35 @@ if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_deskto
 
 }
 
+// Page boxed padding.
+// This conversion is wrong as we need only one field per breakpoint (we are only working with left & right padding, not all around).
+// It remains here for the future.
+
+// $page_boxed_padding = get_theme_mod( 'page_boxed_padding' );
+
+// if ( is_numeric( $page_boxed_padding ) ) {
+
+// 	$theme_mod_array = array(
+// 		'desktop_top'    => $page_boxed_padding,
+// 		'desktop_right'  => $page_boxed_padding,
+// 		'desktop_bottom' => $page_boxed_padding,
+// 		'desktop_left'   => $page_boxed_padding,
+// 		'tablet_top'     => false,
+// 		'tablet_right'   => false,
+// 		'tablet_bottom'  => false,
+// 		'tablet_left'    => false,
+// 		'mobile_top'     => false,
+// 		'mobile_right'   => false,
+// 		'mobile_bottom'  => false,
+// 		'mobile_left'    => false,
+// 	);
+
+// 	$theme_mod_array = json_encode( $theme_mod_array, true );
+
+// 	set_theme_mod( 'page_boxed_padding', $theme_mod_array );
+
+// }
+
 /**
  * Kirki 4 backwards compatibility.
  *

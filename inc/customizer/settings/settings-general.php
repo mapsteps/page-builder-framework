@@ -149,6 +149,32 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+// Boxed padding.
+// Kirki::add_field( 'wpbf', array(
+// 	'type'              => 'responsive_padding',
+// 	'label'             => __( 'Padding', 'page-builder-framework' ),
+// 	'section'           => 'wpbf_page_options',
+// 	'settings'          => 'page_boxed_padding',
+// 	'priority'          => 4,
+// 	'transport'         => 'postMessage',
+// 	'default'           => json_encode(
+// 		array(
+// 			'desktop_top'    => 20,
+// 			'desktop_right'  => 20,
+// 			'desktop_bottom' => 20,
+// 			'desktop_left'   => 20,
+// 		)
+// 	),
+// 	'active_callback' => array(
+// 		array(
+// 			'setting'  => 'page_boxed',
+// 			'operator' => '==',
+// 			'value'    => 1,
+// 		),
+// 	),
+// 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
+// ) );
+
 // Background color.
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'color',
