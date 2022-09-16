@@ -425,6 +425,7 @@ p.demo_store,
 	ul.products li.product {
 		.wpbf-woo-loop-thumbnail-wrapper {
 			position: relative;
+			margin-bottom: $margin;
 		}
 
 		.wpbf-woo-loop-out-of-stock {
@@ -463,7 +464,6 @@ p.demo_store,
 		a img {
 			width: 100%;
 			display: block;
-			margin: 0 0 $margin 0;
 		}
 
 		strong {
