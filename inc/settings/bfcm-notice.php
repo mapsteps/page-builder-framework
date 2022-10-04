@@ -27,7 +27,7 @@ $bfcm_url = 'https://wp-pagebuilderframework.com/pricing/?utm_source=repository&
 				<?php _e( 'All prices are reduced. No coupon code required.', 'page-builder-framework' ); ?>
 			</p>
 			<p>
-				<a href="<?php echo esc_url( $bfcm_url ); ?>" class="button button-large button-primary">
+				<a target="_blank" href="<?php echo esc_url( $bfcm_url ); ?>" class="button button-large button-primary">
 					<?php _e( 'Learn more', 'page-builder-framework' ); ?>
 				</a>
 				<small style="margin-left: 10px;"><?php _e( '*Only Administrators will see this message.', 'page-builder-framework' ); ?></small>
