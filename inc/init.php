@@ -26,6 +26,8 @@ require_once WPBF_THEME_DIR . '/inc/options.php';
 require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 
 // Kirki.
+add_filter( 'kirki_settings_page', '__return_false' );
+
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
 // Kirki Pro.
