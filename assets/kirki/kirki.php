@@ -5,7 +5,7 @@
  * Description: The Ultimate WordPress Customizer Framework
  * Author: David Vongries
  * Author URI: https://davidvongries.com/
- * Version: 4.1.0
+ * Version: 4.1.1
  * Text Domain: kirki
  * Requires at least: 5.2
  * Requires PHP: 7.0
@@ -40,11 +40,11 @@ if ( ! defined( 'KIRKI_PLUGIN_FILE' ) ) {
 
 require_once __DIR__ . '/lib/class-aricolor.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 require_once __DIR__ . '/lib/class-kirki-color.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
-require_once __DIR__ . '/vendor/autoload.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
+require_once __DIR__ . '/kirki-composer/autoload.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 require_once __DIR__ . '/inc/bootstrap.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude
 
 if ( ! defined( 'KIRKI_VERSION' ) ) {
-	define( 'KIRKI_VERSION', '4.1.0' );
+	define( 'KIRKI_VERSION', '4.1.1' );
 }
 
 if ( ! defined( 'KIRKI_PLUGIN_DIR' ) ) {
