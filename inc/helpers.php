@@ -176,7 +176,7 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 				</footer>
 
-				<?php if ( $comment->comment_approved == '0' ) : ?>
+				<?php if ( '0' == $comment->comment_approved ) : ?>
 
 				<div class="wpbf-notice wpbf-notice-warning">
 					<?php _e( 'Your comment has yet to be approved.', 'page-builder-framework' ); ?>
