@@ -583,13 +583,13 @@ function wpbf_inner_content( $echo = true ) {
 		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
 		// Check if template is set to full width.
-		$fullwidth = $options ? in_array( 'full-width', $options ) : false;
+		$fullwidth = $options ? in_array( 'full-width', $options, true ) : false;
 
 		// Check if template is set to contained.
-		$contained = $options ? in_array( 'contained', $options ) : false;
+		$contained = $options ? in_array( 'contained', $options, true ) : false;
 
 		// Check if template is set to custom width.
-		$custom_width       = $options ? in_array( 'custom-width', $options ) : false;
+		$custom_width       = $options ? in_array( 'custom-width', $options, true ) : false;
 		$custom_width_value = isset( $options['custom_width_value'] ) ? $options['custom_width_value'] : '';
 		$custom_width       = $custom_width && $custom_width_value ? ' style="max-width: ' . $custom_width_value . '"' : '';
 
@@ -632,11 +632,11 @@ function wpbf_inner_content_close() {
 
 		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-		$fullwidth = $options ? in_array( 'full-width', $options ) : false;
+		$fullwidth = $options ? in_array( 'full-width', $options, true ) : false;
 
-		$contained = $options ? in_array( 'contained', $options ) : false;
+		$contained = $options ? in_array( 'contained', $options, true ) : false;
 
-		$custom_width = $options ? in_array( 'custom-width', $options ) : false;
+		$custom_width = $options ? in_array( 'custom-width', $options, true ) : false;
 
 		$inner_content_close = $fullwidth ? '' : '</div>';
 
@@ -666,7 +666,7 @@ function wpbf_title() {
 
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-	$removetitle = $options ? in_array( 'remove-title', $options ) : false;
+	$removetitle = $options ? in_array( 'remove-title', $options, true ) : false;
 
 	$title = $removetitle ? false : '<h1 class="entry-title" itemprop="headline">' . get_the_title() . '</h1>';
 
@@ -732,7 +732,7 @@ function wpbf_remove_footer() {
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
 	// Check if footer is disabled.
-	$remove_footer = $options ? in_array( 'remove-footer', $options ) : false;
+	$remove_footer = $options ? in_array( 'remove-footer', $options, true ) : false;
 
 	// Remove footer if disabled.
 	if ( $remove_footer ) {
@@ -1140,7 +1140,7 @@ function wpbf_sidebar_layout() {
 
 }
 
-/*
+/**
  * Article meta.
  *
  * Construct sortable article meta.
@@ -1215,7 +1215,7 @@ function wpbf_do_author_meta() {
 }
 add_action( 'wpbf_author_meta', 'wpbf_do_author_meta' );
 
-/*
+/**
  * Article meta (date).
  */
 function wpbf_do_date_meta() {
@@ -1444,7 +1444,7 @@ function wpbf_is_off_canvas_menu() {
 /**
  * Add sub menu indicators (SVG's) to regular menus.
  *
- * @param string  $title The title
+ * @param string  $title The title.
  * @param object  $item The menu item data object.
  * @param object  $args The arguments.
  * @param integer $depth Depth of menu item.
@@ -1459,7 +1459,7 @@ function wpbf_sub_menu_indicators( $title, $item, $args, $depth ) {
 	}
 
 	// Add arrow icon if menu item has children.
-	if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
+	if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes, true ) ) {
 
 		if ( wpbf_svg_enabled() ) {
 			$title .= ' ' . wpbf_svg( 'arrow-down' );
@@ -1488,7 +1488,7 @@ function wpbf_mobile_sub_menu_indicators( $item_output, $item, $depth, $args ) {
 
 	if ( 'mobile_menu' === $args->theme_location || ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ) ) && 'main_menu' === $args->theme_location ) ) {
 
-		if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes ) ) {
+		if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes, true ) ) {
 
 			if ( wpbf_svg_enabled() ) {
 
@@ -1639,7 +1639,7 @@ function wpbf_page_builder_compatibility( $id ) {
 		$mydata           = $wpbf_stored_meta['wpbf_options'];
 
 		// Stop here if auto conversion already took place.
-		if ( in_array( 'auto-convert', $mydata ) ) {
+		if ( in_array( 'auto-convert', $mydata, true ) ) {
 			return;
 		}
 
