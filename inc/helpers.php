@@ -750,7 +750,7 @@ function wpbf_scrolltop() {
 
 	if ( get_theme_mod( 'layout_scrolltop' ) ) {
 
-		$scroll_top = get_theme_mod( 'scrolltop_value', 400 );
+		$scrolltop = get_theme_mod( 'scrolltop_value', 400 );
 
 		if ( wpbf_svg_enabled() ) {
 			$icon = wpbf_svg( 'arrow-up' );
@@ -758,7 +758,7 @@ function wpbf_scrolltop() {
 			$icon = '<i class="wpbff wpbff-arrow-up"></i>';
 		}
 
-		echo '<a class="scrolltop" rel="nofollow" href="javascript:void(0)" data-scrolltop-value="' . (int) $scroll_top . '">';
+		echo '<a class="scrolltop" rel="nofollow" href="javascript:void(0)" data-scrolltop-value="' . (int) $scrolltop . '">';
 		echo '<span class="screen-reader-text">' . __( 'Scroll to Top', 'page-builder-framework' ) . '</span>';
 		echo $icon;
 		echo '</a>';
