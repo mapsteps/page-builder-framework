@@ -106,8 +106,8 @@ function wpbf_single_schema_markup() {
 /**
  * Custom comments callback.
  *
- * @param Object $comment WP_Comment.
- * @param array $args The arguments.
+ * @param Object  $comment WP_Comment.
+ * @param array   $args The arguments.
  * @param integer $depth The depth.
  */
 function wpbf_comments( $comment, $args, $depth ) {
@@ -190,13 +190,23 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 				</div>
 
-				<?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+				<?php
+				comment_reply_link(
+					array_merge(
+						$args,
+						array(
+							'depth'     => $depth,
+							'max_depth' => $args['max_depth'],
+						)
+					)
+				);
+				?>
 
 			</article>
 
-		<?php // We're not closing the li tag right here. WordPress does it for us. ?>
-
-	<?php }
+		<?php
+		// We're not closing the li tag right here. WordPress does it for us.
+	}
 
 }
 
@@ -1274,19 +1284,19 @@ function wpbf_blog_layout() {
  */
 function wpbf_post_layout() {
 
-	$template_parts_header	= get_theme_mod( 'single_sortable_header', array( 'title', 'meta', 'featured' ) );
-	$template_parts_footer	= get_theme_mod( 'single_sortable_footer', array( 'categories' ) );
-	$post_layout            = 'default';
-	$style                  = get_theme_mod( 'single_post_style', 'plain' );
-	$style                  .= get_theme_mod( 'single_boxed_image_stretched', false ) ? ' stretched' : '';
+	$template_parts_header = get_theme_mod( 'single_sortable_header', array( 'title', 'meta', 'featured' ) );
+	$template_parts_footer = get_theme_mod( 'single_sortable_footer', array( 'categories' ) );
+	$post_layout           = 'default';
+	$style                 = get_theme_mod( 'single_post_style', 'plain' );
+	$style                .= get_theme_mod( 'single_boxed_image_stretched', false ) ? ' stretched' : '';
 
 	return apply_filters(
 		'wpbf_post_layout',
 		array(
-			'post_layout'            => $post_layout,
-			'template_parts_header'  => $template_parts_header,
-			'template_parts_footer'  => $template_parts_footer,
-			'style'                  => $style,
+			'post_layout'           => $post_layout,
+			'template_parts_header' => $template_parts_header,
+			'template_parts_footer' => $template_parts_footer,
+			'style'                 => $style,
 		)
 	);
 
@@ -1434,9 +1444,9 @@ function wpbf_is_off_canvas_menu() {
 /**
  * Add sub menu indicators (SVG's) to regular menus.
  *
- * @param string $title The title
- * @param object $item The menu item data object.
- * @param object $args The arguments.
+ * @param string  $title The title
+ * @param object  $item The menu item data object.
+ * @param object  $args The arguments.
  * @param integer $depth Depth of menu item.
  *
  * @return string The updated nav menu item title.
@@ -1482,7 +1492,7 @@ function wpbf_mobile_sub_menu_indicators( $item_output, $item, $depth, $args ) {
 
 			if ( wpbf_svg_enabled() ) {
 
-				$item_output .= 
+				$item_output .=
 				'<button class="wpbf-submenu-toggle" aria-expanded="false">
 					<span class="screen-reader-text">' . __( 'Menu Toggle', 'page-builder-framework' ) . '</span>
 					' . wpbf_svg( 'arrow-down' ) . wpbf_svg( 'arrow-up' ) . '
