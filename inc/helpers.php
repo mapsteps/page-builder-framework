@@ -8,9 +8,9 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * strpos array helper function.
+ * Custom strpos array helper function.
  *
- * @param array   $haystack The haystack.
+ * @param string  $haystack The haystack.
  * @param array   $needles The needles.
  * @param integer $offset The offset.
  *
