@@ -186,7 +186,7 @@ function wpbf_comments( $comment, $args, $depth ) {
 
 				<div class="comment-content" itemprop="text">
 
-					<?php comment_text() ?>
+					<?php comment_text(); ?>
 
 				</div>
 
