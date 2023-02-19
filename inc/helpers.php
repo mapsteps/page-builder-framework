@@ -699,7 +699,7 @@ function wpbf_remove_header() {
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
 	// Check if header is disabled.
-	$remove_header = $options ? in_array( 'remove-header', $options, true ) : false;
+	$remove_header = ! empty( $options ) && is_array( $options ) ? in_array( 'remove-header', $options, true ) : false;
 
 	// Remove header if disabled.
 	if ( $remove_header ) {
