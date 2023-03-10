@@ -709,7 +709,7 @@ function wpbf_remove_header() {
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
 	// Check if header is disabled.
-	$remove_header = ! empty( $options ) && is_array( $options ) ? in_array( 'remove-header', $options, true ) : false;
+	$remove_header = $options ? in_array( 'remove-header', $options, true ) : false;
 
 	// Remove header if disabled.
 	if ( $remove_header ) {
@@ -1643,9 +1643,9 @@ function wpbf_page_builder_compatibility( $id ) {
 			return;
 		}
 
-		$mydata[] .= 'remove-title';
-		$mydata[] .= 'full-width';
-		$mydata[] .= 'auto-convert';
+		$mydata[] = 'remove-title';
+		$mydata[] = 'full-width';
+		$mydata[] = 'auto-convert';
 
 		update_post_meta( $id, 'wpbf_options', $mydata );
 
