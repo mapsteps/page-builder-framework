@@ -47,7 +47,7 @@ function wpbf_options_metabox_callback( $post ) {
 	wp_nonce_field( "wpbf_post_{$post->ID}_options_nonce", 'wpbf_options_nonce' );
 
 	$wpbf_stored_meta = get_post_meta( $post->ID, 'wpbf_options', true );
-	$wpbf_stored_meta = empty( $wpbf_stored_meta ) ? array() : $wpbf_stored_meta;
+	$wpbf_stored_meta = empty( $wpbf_stored_meta ) || ! is_array( $wpbf_stored_meta ) ? array() : $wpbf_stored_meta;
 
 	if ( in_array( 'remove-title', $wpbf_stored_meta, true ) ) {
 		$remove_title = 'remove-title';
@@ -305,7 +305,7 @@ function wpbf_post_list_custom_column( $column_name, $post_id ) {
 	}
 
 	$post_options = get_post_meta( $post_id, 'wpbf_options', true );
-	$post_options = $post_options ? $post_options : array();
+	$post_options = $post_options && is_array( $post_options ) ? $post_options : array();
 	$column_value = '';
 
 	if ( in_array( 'full-width', $post_options, true ) ) {
