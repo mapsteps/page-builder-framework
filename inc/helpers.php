@@ -581,12 +581,13 @@ function wpbf_inner_content( $echo = true ) {
 	if ( is_singular() ) {
 
 		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
+		$options = is_array( $options ) ? $options : array();
 
 		// Check if template is set to full width.
-		$fullwidth = is_array( $options ) ? in_array( 'full-width', $options, true ) : false;
+		$fullwidth = in_array( 'full-width', $options, true );
 
 		// Check if template is set to contained.
-		$contained = is_array( $options ) ? in_array( 'contained', $options, true ) : false;
+		$contained = in_array( 'contained', $options, true );
 
 		// Check if template is set to custom width.
 		$custom_width       = $options ? in_array( 'custom-width', $options, true ) : false;
@@ -631,10 +632,11 @@ function wpbf_inner_content_close() {
 	if ( is_singular() ) {
 
 		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
+		$options = is_array( $options ) ? $options : array();
 
-		$fullwidth = is_array( $options ) ? in_array( 'full-width', $options, true ) : false;
+		$fullwidth = in_array( 'full-width', $options, true );
 
-		$contained = is_array( $options ) ? in_array( 'contained', $options, true ) : false;
+		$contained = in_array( 'contained', $options, true );
 
 		$custom_width = $options ? in_array( 'custom-width', $options, true ) : false;
 
@@ -665,8 +667,9 @@ function wpbf_inner_content_close() {
 function wpbf_title() {
 
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
+	$options = is_array( $options ) ? $options : array();
 
-	$removetitle = is_array( $options ) ? in_array( 'remove-title', $options, true ) : false;
+	$removetitle = in_array( 'remove-title', $options, true );
 
 	$title = $removetitle ? false : '<h1 class="entry-title" itemprop="headline">' . get_the_title() . '</h1>';
 
@@ -707,9 +710,10 @@ function wpbf_remove_header() {
 	}
 
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
+	$options = is_array( $options ) ? $options : array();
 
 	// Check if header is disabled.
-	$remove_header = is_array( $options ) ? in_array( 'remove-header', $options, true ) : false;
+	$remove_header = in_array( 'remove-header', $options, true );
 
 	// Remove header if disabled.
 	if ( $remove_header ) {
@@ -730,9 +734,10 @@ function wpbf_remove_footer() {
 	}
 
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
+	$options = is_array( $options ) ? $options : array();
 
 	// Check if footer is disabled.
-	$remove_footer = is_array( $options ) ? in_array( 'remove-footer', $options, true ) : false;
+	$remove_footer = in_array( 'remove-footer', $options, true );
 
 	// Remove footer if disabled.
 	if ( $remove_footer ) {
@@ -1636,7 +1641,9 @@ function wpbf_page_builder_compatibility( $id ) {
 	if ( $fl_enabled || 'builder' === $elementor ) {
 
 		$wpbf_stored_meta = get_post_meta( $id );
-		$mydata           = $wpbf_stored_meta['wpbf_options'];
+
+		$mydata = $wpbf_stored_meta['wpbf_options'];
+		$mydata = is_array( $mydata ) ? $mydata : array();
 
 		// Stop here if auto conversion already took place.
 		if ( in_array( 'auto-convert', $mydata, true ) ) {

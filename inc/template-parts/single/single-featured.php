@@ -16,7 +16,8 @@ if ( ! has_post_thumbnail() ) {
 }
 
 $options         = get_post_meta( get_the_ID(), 'wpbf_options', true );
-$remove_featured = is_array( $options ) ? in_array( 'remove-featured', $options ) : false;
+$options         = is_array( $options ) ? $options : array();
+$remove_featured = in_array( 'remove-featured', $options, true );
 
 // Stop here if featured image has been disabled.
 if ( $remove_featured ) {
