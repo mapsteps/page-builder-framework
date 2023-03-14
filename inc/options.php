@@ -47,7 +47,7 @@ function wpbf_options_metabox_callback( $post ) {
 	wp_nonce_field( "wpbf_post_{$post->ID}_options_nonce", 'wpbf_options_nonce' );
 
 	$wpbf_stored_meta = get_post_meta( $post->ID, 'wpbf_options', true );
-	$wpbf_stored_meta = empty( $wpbf_stored_meta ) ? array() : $wpbf_stored_meta;
+	$wpbf_stored_meta = is_array( $wpbf_stored_meta ) ? $wpbf_stored_meta : array();
 
 	if ( in_array( 'remove-title', $wpbf_stored_meta, true ) ) {
 		$remove_title = 'remove-title';
