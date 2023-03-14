@@ -590,7 +590,7 @@ function wpbf_inner_content( $echo = true ) {
 		$contained = in_array( 'contained', $options, true );
 
 		// Check if template is set to custom width.
-		$custom_width       = $options ? in_array( 'custom-width', $options, true ) : false;
+		$custom_width       = in_array( 'custom-width', $options, true );
 		$custom_width_value = isset( $options['custom_width_value'] ) ? $options['custom_width_value'] : '';
 		$custom_width       = $custom_width && $custom_width_value ? ' style="max-width: ' . $custom_width_value . '"' : '';
 
@@ -638,7 +638,7 @@ function wpbf_inner_content_close() {
 
 		$contained = in_array( 'contained', $options, true );
 
-		$custom_width = $options ? in_array( 'custom-width', $options, true ) : false;
+		$custom_width = in_array( 'custom-width', $options, true );
 
 		$inner_content_close = $fullwidth ? '' : '</div>';
 
