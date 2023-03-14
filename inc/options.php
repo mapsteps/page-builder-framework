@@ -305,7 +305,7 @@ function wpbf_post_list_custom_column( $column_name, $post_id ) {
 	}
 
 	$post_options = get_post_meta( $post_id, 'wpbf_options', true );
-	$post_options = $post_options ? $post_options : array();
+	$post_options = is_array( $post_options ) ? $post_options : array();
 	$column_value = '';
 
 	if ( in_array( 'full-width', $post_options, true ) ) {
