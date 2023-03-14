@@ -43,7 +43,7 @@ define( 'WPBF_VERSION', wp_get_theme( 'page-builder-framework' )->get( 'Version'
 define( 'WPBF_CHILD_VERSION', '1.2' );
 
 // Minimum required Premium Add-On Version.
-define( 'WPBF_PREMIUM_MIN_VERSION', '2.6.10' );
+define( 'WPBF_PREMIUM_MIN_VERSION', '2.7' );
 
 /**
  * Theme setup.
