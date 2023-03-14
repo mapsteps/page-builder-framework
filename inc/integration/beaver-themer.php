@@ -93,7 +93,7 @@ function wpbf_bt_remove_header() {
 	}
 
 	$options       = get_post_meta( get_the_ID(), 'wpbf_options', true );
-	$remove_header = $options ? in_array( 'remove-header', $options ) : false;
+	$remove_header = is_array( $options ) ? in_array( 'remove-header', $options ) : false;
 
 	if ( $remove_header ) {
 		remove_action( 'wpbf_header', 'FLThemeBuilderLayoutRenderer::render_header' );
@@ -113,7 +113,7 @@ function wpbf_bt_remove_footer() {
 	}
 
 	$options       = get_post_meta( get_the_ID(), 'wpbf_options', true );
-	$remove_footer = $options ? in_array( 'remove-footer', $options ) : false;
+	$remove_footer = is_array( $options ) ? in_array( 'remove-footer', $options ) : false;
 
 	if ( $remove_footer ) {
 		remove_action( 'wpbf_footer', 'FLThemeBuilderLayoutRenderer::render_footer' );

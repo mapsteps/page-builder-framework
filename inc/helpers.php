@@ -583,10 +583,10 @@ function wpbf_inner_content( $echo = true ) {
 		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
 		// Check if template is set to full width.
-		$fullwidth = $options ? in_array( 'full-width', $options, true ) : false;
+		$fullwidth = is_array( $options ) ? in_array( 'full-width', $options, true ) : false;
 
 		// Check if template is set to contained.
-		$contained = $options ? in_array( 'contained', $options, true ) : false;
+		$contained = is_array( $options ) ? in_array( 'contained', $options, true ) : false;
 
 		// Check if template is set to custom width.
 		$custom_width       = $options ? in_array( 'custom-width', $options, true ) : false;
@@ -632,9 +632,9 @@ function wpbf_inner_content_close() {
 
 		$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-		$fullwidth = $options ? in_array( 'full-width', $options, true ) : false;
+		$fullwidth = is_array( $options ) ? in_array( 'full-width', $options, true ) : false;
 
-		$contained = $options ? in_array( 'contained', $options, true ) : false;
+		$contained = is_array( $options ) ? in_array( 'contained', $options, true ) : false;
 
 		$custom_width = $options ? in_array( 'custom-width', $options, true ) : false;
 
@@ -666,7 +666,7 @@ function wpbf_title() {
 
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
-	$removetitle = $options ? in_array( 'remove-title', $options, true ) : false;
+	$removetitle = is_array( $options ) ? in_array( 'remove-title', $options, true ) : false;
 
 	$title = $removetitle ? false : '<h1 class="entry-title" itemprop="headline">' . get_the_title() . '</h1>';
 
@@ -709,7 +709,7 @@ function wpbf_remove_header() {
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
 	// Check if header is disabled.
-	$remove_header = $options ? in_array( 'remove-header', $options, true ) : false;
+	$remove_header = is_array( $options ) ? in_array( 'remove-header', $options, true ) : false;
 
 	// Remove header if disabled.
 	if ( $remove_header ) {
@@ -732,7 +732,7 @@ function wpbf_remove_footer() {
 	$options = get_post_meta( get_the_ID(), 'wpbf_options', true );
 
 	// Check if footer is disabled.
-	$remove_footer = $options ? in_array( 'remove-footer', $options, true ) : false;
+	$remove_footer = is_array( $options ) ? in_array( 'remove-footer', $options, true ) : false;
 
 	// Remove footer if disabled.
 	if ( $remove_footer ) {
