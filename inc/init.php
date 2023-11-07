@@ -31,14 +31,9 @@ add_filter( 'kirki_settings_page', '__return_false' );
 require_once WPBF_THEME_DIR . '/assets/kirki/kirki.php';
 
 // Kirki Pro.
-if ( ! class_exists( '\Kirki\Pro\HeadlineDivider\Init' ) ) {
-	require_once WPBF_THEME_DIR . '/assets/kirki/pro-src/packages/kirki-pro-headline-divider/vendor/autoload.php';
-	new \Kirki\Pro\HeadlineDivider\Init();
-}
-
-if ( ! class_exists( '\Kirki\Pro\Tabs\Init' ) ) {
-	require_once WPBF_THEME_DIR . '/assets/kirki/pro-src/packages/kirki-pro-tabs/vendor/autoload.php';
-	new \Kirki\Pro\Tabs\Init();
+if ( ! class_exists( '\Kirki\Pro\Field\HeadlineToggle' ) || ! class_exists( '\Kirki\Pro\Field\Tabs' ) ) {
+	require_once WPBF_THEME_DIR . '/assets/kirki/pro-src/pro-index.php';
+	kirki_pro_load_controls();
 }
 
 // Customizer settings.
