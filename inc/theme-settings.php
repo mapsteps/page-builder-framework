@@ -87,7 +87,7 @@ function wpbf_bfcm_notice_dismissal() {
 		wp_send_json_error( 'Invalid Token' );
 	}
 
-	update_option( 'wpbf_bfcm_notice_dismissed_2022', 1 );
+	update_option( 'wpbf_bfcm_notice_dismissed_2023', 1 );
 	wp_send_json_success( 'BFCM notice has been dismissed.' );
 
 }
@@ -133,16 +133,8 @@ function wpbf_show_bfcm_notice() {
 		return;
 	}
 
-	global $pagenow;
-	$screen = get_current_screen();
-
-	// Stop if we are not on the dashboard or wpbf settings page.
-	if ( $pagenow !== 'index.php' && 'appearance_page_wpbf-premium' !== $screen->id ) {
-		return;
-	}
-
-	$start = strtotime( 'november 25th, 2022' );
-	$end   = strtotime( 'november 30th, 2022' );
+	$start = strtotime( 'november 20th, 2023' );
+	$end   = strtotime( 'november 27th, 2023' );
 	$now   = time();
 
 	// Stop here if we are not in the sales period.
@@ -151,7 +143,7 @@ function wpbf_show_bfcm_notice() {
 	}
 
 	// Stop here if notice has been dismissed.
-	if ( ! empty( get_option( 'wpbf_bfcm_notice_dismissed_2022', 0 ) ) ) {
+	if ( ! empty( get_option( 'wpbf_bfcm_notice_dismissed_2023', 0 ) ) ) {
 		return;
 	}
 

@@ -17,14 +17,14 @@ $bfcm_url = 'https://wp-pagebuilderframework.com/pricing/?utm_source=repository&
 		</div>
 		<div class="notice-content">
 			<h2>
-				<?php _e( 'Our Biggest Sale of the Year starts NOW! - Save up to 30%!', 'page-builder-framework' ); ?>
+				<?php _e( '💸 Up to 25% Off Page Builder Framework Premium - Black Friday Sale!', 'page-builder-framework' ); ?>
 			</h2>
 			<p>
-				<?php _e( 'Upgrade to the <strong>Premium Add-On</strong> for Page Builder Framework, today & get up to 30% off!', 'page-builder-framework' ); ?>
+				<?php _e( 'Upgrade to the <strong>Premium Add-On</strong> for Page Builder Framework, today & get up to 25% off!', 'page-builder-framework' ); ?>
 			</p>
 			<p>
 				<?php _e( 'But hurry up, the deal will expire soon!', 'page-builder-framework' ); ?><br>
-				<?php _e( 'All prices are reduced. No coupon code required.', 'page-builder-framework' ); ?>
+				<em><?php _e( 'All prices are reduced. No coupon code required.', 'page-builder-framework' ); ?></em>
 			</p>
 			<p>
 				<a target="_blank" href="<?php echo esc_url( $bfcm_url ); ?>" class="button button-large button-primary">

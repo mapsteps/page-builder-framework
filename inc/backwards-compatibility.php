@@ -515,9 +515,16 @@ function wpbf_kirki_is_plugin_active_fatal_error() {
 }
 add_action( 'after_setup_theme', 'wpbf_kirki_is_plugin_active_fatal_error', 5 );
 
-// BF2021 admin notice.
-$bf2021 = get_option( 'wpbf_bfcm_notice_dismissed' );
+// BFCM 2021 admin notice dismissal.
+$bfcm2021 = get_option( 'wpbf_bfcm_notice_dismissed' );
 
-if ( $bf2021 ) {
+if ( $bfcm2021 ) {
 	delete_option( 'wpbf_bfcm_notice_dismissed' );
+}
+
+// BFCM 2022 admin notice dismissal.
+$bfcm2022 = get_option( 'wpbf_bfcm_notice_dismissed_2022' );
+
+if ( $bfcm2022 ) {
+	delete_option( 'wpbf_bfcm_notice_dismissed_2022' );
 }
