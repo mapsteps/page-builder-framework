@@ -166,7 +166,8 @@
 
 /* 2 Column Layout - Responsiveness */
 @media screen and (max-width: 991px) {
-	.heatbox-main, .heatbox-sidebar {
+	.heatbox-main,
+	.heatbox-sidebar {
 		width: 100%;
 	}
 	.heatbox-main {
@@ -240,6 +241,11 @@
 	padding: 5px 20px;
 }
 
+.heatbox-wrap .button-full {
+	width: 100%;
+	text-align: center;
+}
+
 /* Settings */
 .heatbox .form-table {
 	margin: 0;
@@ -256,7 +262,6 @@
 }
 
 .heatbox .setting-fields {
-
 }
 
 .heatbox .setting-fields .setting-field {
@@ -410,6 +415,128 @@
 
 .heatbox-cta.primary .button:hover {
 	background: rgba(0, 45, 96, 0.6);
+}
+
+/* Toggle switch */
+.heatbox .toggle-switch {
+	position: relative;
+	display: inline-block;
+	width: 36px;
+	height: 20px;
+}
+
+.heatbox .toggle-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.heatbox .toggle-switch .switch-track {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.heatbox .switch-thumb {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 16px;
+	height: 16px;
+	background-color: #fff;
+	border-radius: 50%;
+	transition: transform 0.3s;
+}
+
+.heatbox .toggle-switch input:checked + .switch-track {
+	background-color: #5bcb86;
+}
+
+.heatbox .toggle-switch input:checked + .switch-track .switch-thumb {
+	transform: translateX(16px);
+}
+
+/* Tags / chips */
+.heatbox .tags-wrapper code {
+	display: inline-block;
+	margin-bottom: 5px;
+	padding: 8px 13px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #f8f8f8;
+	}
+}
+
+/* Tooltip */
+.heatbox-tooltip {
+	position: relative;
+	cursor: pointer;
+	padding: 5px;
+}
+
+.heatbox-tooltip .tooltip-content {
+	visibility: hidden;
+	opacity: 0;
+	width: 220px;
+	background-color: #fff;
+	text-align: center;
+	padding: 10px;
+	font-size: 12px;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	position: absolute;
+	left: -100px;
+	border: 1px solid #ddd;
+	bottom: 23px;
+	z-index: 1;
+}
+
+.heatbox-tooltip:hover .tooltip-content {
+	visibility: visible;
+	opacity: 1;
+	bottom: 28px;
+}
+
+.heatbox-tooltip.has-image .tooltip-content {
+	padding: 0;
+	text-align: left;
+	display: flex;
+	align-content: center;
+	align-items: center;
+	width: 370px;
+}
+
+.heatbox-tooltip.has-image .tooltip-content img {
+	width: 35%;
+	border-right: 1px solid #eee;
+}
+
+.heatbox-tooltip.has-image .tooltip-content span {
+	width: 65%;
+	padding: 20px;
+}
+
+/* Misc */
+.heatbox .row-disabled {
+	background-color: #f5f5f5;
+	opacity: 0.5;
+}
+
+.heatbox .row-disabled input[type="text"]:read-only,
+.heatbox .row-disabled input[type="number"]:read-only {
+	background-color: #e0e0e0;
+	cursor: not-allowed;
+	opacity: 0.7;
 }
 
 /* RTL */
