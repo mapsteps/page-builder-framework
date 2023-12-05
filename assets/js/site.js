@@ -73,12 +73,12 @@ WpbfTheme.site = (function ($) {
 	 * Iterates over a collection of elements and applies a function to each.
 	 *
 	 * @param {NodeList|string} target - Either a NodeList obtained from document.querySelectorAll() or a CSS selector string.
-	 * @param {function} handler - The function to be applied to each element. Accepts one parameter, which is the element.
+	 * @param {function(Element)} handler - The function to be applied to each element. Accepts one parameter, which is the element.
 	 *
 	 * @returns {void}
 	 */
 	function processElements(target, handler) {
-		if (!target instanceof NodeList && typeof target !== "string") return;
+		if (!(target instanceof NodeList) && typeof target !== "string") return;
 		if (typeof handler !== "function") return;
 
 		var elms =
