@@ -13,14 +13,14 @@ WpbfTheme.site = (function ($) {
 	/**
 	 * Whether we're inside customizer or not.
 	 *
-	 * @var bool
+	 * @type {boolean}
 	 */
 	var isInsideCustomizer = window.wp && wp.customize ? true : false;
 
 	/**
 	 * Pre-defined breakpoints.
 	 *
-	 * @var Object
+	 * @type {Object}
 	 */
 	var breakpoints = {
 		desktop: 1024,
@@ -31,7 +31,7 @@ WpbfTheme.site = (function ($) {
 	/**
 	 * The current active breakpoint.
 	 *
-	 * @var string
+	 * @type {string}
 	 */
 	var activeBreakpoint = "desktop";
 
@@ -56,9 +56,7 @@ WpbfTheme.site = (function ($) {
 			setupBodyClasses();
 		});
 
-		/**
-		 * Executing various triggers on window load.
-		 */
+		// Executing various triggers on window load.
 		window.addEventListener("load", function () {
 			$(".opacity").delay(200).animate({ opacity: "1" }, 200);
 			$(".display-none").show();
