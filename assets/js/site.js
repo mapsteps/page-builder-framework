@@ -107,7 +107,7 @@ WpbfTheme.site = (function ($) {
 				if (!e.target.matches(selector)) return;
 			}
 
-			handler(e);
+			handler.bind(e.target)(e);
 		});
 	}
 
