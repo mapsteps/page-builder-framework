@@ -201,8 +201,10 @@ WpbfTheme.site = (function ($) {
 	 * Support for Contact Form 7.
 	 */
 	function wpcf7support() {
-		$(".wpcf7-form-control-wrap").on("mouseenter", function () {
-			$(".wpcf7-not-valid-tip", this).fadeOut();
+		processElements(".wpcf7-form-control-wrap", function (el) {
+			el.addEventListener("mouseenter", function () {
+				$(".wpcf7-not-valid-tip", el).fadeOut();
+			});
 		});
 	}
 
