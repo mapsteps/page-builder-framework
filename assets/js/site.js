@@ -212,21 +212,24 @@ WpbfTheme.site = (function ($) {
 	 * Setup support for boxed layout mode.
 	 */
 	function setupBoxedLayoutSupport() {
-		var $page = $(".wpbf-page");
-		var pageMarginTop = $page.css("margin-top");
+		var page = document.querySelector(".wpbf-page");
+		if (!page) return;
+
+		/** @type {string} */
+		var pageMarginTop = window.getComputedStyle(page).marginTop;
 
 		window.addEventListener("resize", function () {
-			var pageWidth = $page.width();
+			/** @type {number} */
+			var pageWidth = page.offsetWidth;
 
 			// If page width is >= window width, then remove margin top & margin bottom.
 			if (pageWidth >= documument.documentElement.clientWidth) {
-				$page.css({ "margin-top": "0", "margin-bottom": "0" });
+				page.style.marginTop = "0";
+				page.style.marginBottom = "0";
 			} else {
 				// Otherwise, add the margin top & margin bottom.
-				$page.css({
-					"margin-top": pageMarginTop,
-					"margin-bottom": pageMarginTop,
-				});
+				page.style.marginTop = pageMarginTop;
+				page.style.marginBottom = pageMarginTop;
 			}
 		});
 	}
