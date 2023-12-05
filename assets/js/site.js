@@ -64,8 +64,8 @@ WpbfTheme.site = (function ($) {
 				el.style.display = "block";
 			});
 
-			$(window).trigger("resize");
-			$(window).trigger("scroll");
+			window.dispatchEvent(new Event("resize"));
+			window.dispatchEvent(new Event("scroll"));
 		});
 	}
 
