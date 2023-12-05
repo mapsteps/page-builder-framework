@@ -91,6 +91,27 @@ WpbfTheme.site = (function ($) {
 	}
 
 	/**
+	 * Add event handler to the document.
+	 *
+	 * @param {string} eventType - The event type.
+	 * @param {string|null} selector - The selector.
+	 * @param {function(Event)} handler - The event handler.
+	 */
+	function addEventHandler(eventType, selector, handler) {
+		if (typeof eventType !== "string") return;
+		if (typeof selector !== "function") return;
+
+		document.addEventListener(eventType, function (e) {
+			if (selector) {
+				if (!e.target || !e.target.matches) return;
+				if (!e.target.matches(selector)) return;
+			}
+
+			handler(e);
+		});
+	}
+
+	/**
 	 * Setup breakpoints for desktop, tablet, and mobile.
 	 */
 	function setupBreakpoints() {
@@ -213,5 +234,6 @@ WpbfTheme.site = (function ($) {
 		breakpoints: breakpoints,
 		activeBreakpoint: activeBreakpoint,
 		processElements: processElements,
+		addEventHandler: addEventHandler,
 	};
 })(jQuery);
