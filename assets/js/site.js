@@ -106,7 +106,7 @@ WpbfTheme.site = (function ($) {
 	 * It will also set the the top level `activeBreakpoint` variable.
 	 */
 	function setupBodyClasses() {
-		var windowWidth = $(window).width();
+		var windowWidth = document.documentElement.clientWidth;
 		var bodyClass = "";
 
 		if (windowWidth > breakpoints.desktop) {
@@ -196,7 +196,7 @@ WpbfTheme.site = (function ($) {
 			var pageWidth = $page.width();
 
 			// If page width is >= window width, then remove margin top & margin bottom.
-			if (pageWidth >= $(window).width()) {
+			if (pageWidth >= documument.documentElement.clientWidth) {
 				$page.css({ "margin-top": "0", "margin-bottom": "0" });
 			} else {
 				// Otherwise, add the margin top & margin bottom.
