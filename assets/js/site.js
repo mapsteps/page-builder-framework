@@ -66,6 +66,27 @@ WpbfTheme.site = (function ($) {
 	}
 
 	/**
+	 * Iterates over a collection of elements and applies a function to each.
+	 *
+	 * @param {NodeList|string} target - Either a NodeList obtained from document.querySelectorAll() or a CSS selector string.
+	 * @param {function} handler - The function to be applied to each element. Accepts one parameter, which is the element.
+	 *
+	 * @returns {void}
+	 */
+	function processElements(target, handler) {
+		if (!target instanceof NodeList && typeof target !== "string") return;
+		if (typeof handler !== "function") return;
+
+		var elms =
+			target instanceof NodeList ? target : document.querySelectorAll(target);
+		if (!elms.length) return;
+
+		for (var i = 0; i < elms.length; i++) {
+			handler(elms[i]);
+		}
+	}
+
+	/**
 	 * Setup breakpoints for desktop, tablet, and mobile.
 	 */
 	function setupBreakpoints() {
@@ -187,5 +208,6 @@ WpbfTheme.site = (function ($) {
 		isInsideCustomizer: isInsideCustomizer,
 		breakpoints: breakpoints,
 		activeBreakpoint: activeBreakpoint,
+		processElements: processElements,
 	};
 })(jQuery);
