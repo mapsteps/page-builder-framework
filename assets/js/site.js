@@ -189,7 +189,7 @@ WpbfTheme.site = (function ($) {
 		});
 
 		// Scroll to top functionality.
-		$(document).on("click", ".scrolltop", function () {
+		addEventHandler("click", ".scrolltop", function (e) {
 			document.body.tabIndex = -1;
 			document.body.focus();
 			this.blur();
