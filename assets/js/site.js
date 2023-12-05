@@ -59,7 +59,11 @@ WpbfTheme.site = (function ($) {
 		// Executing various triggers on window load.
 		window.addEventListener("load", function () {
 			$(".opacity").delay(200).animate({ opacity: "1" }, 200);
-			$(".display-none").show();
+
+			processElements(".display-none", function (el) {
+				el.style.display = "block";
+			});
+
 			$(window).trigger("resize");
 			$(window).trigger("scroll");
 		});
