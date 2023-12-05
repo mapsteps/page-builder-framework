@@ -181,7 +181,7 @@ WpbfTheme.site = (function ($) {
 
 		// Show or hide scroll-to-top button on window scroll event.
 		window.addEventListener("scroll", function (e) {
-			if ($(this).scrollTop() > scrollTopValue) {
+			if (window.scrollY > scrollTopValue) {
 				$(".scrolltop").fadeIn();
 			} else {
 				$(".scrolltop").fadeOut();
