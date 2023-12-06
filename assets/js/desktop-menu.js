@@ -13,7 +13,7 @@ WpbfTheme.desktopMenu = (function ($) {
 	 * 
 	 * @var bool
 	 */
-	var isInsideCustomizer = WpbfTheme.isInsideCustomizer;
+	var isInsideCustomizer = WpbfTheme.site.isInsideCustomizer;
 
 	/**
 	 * The sub-menu animation duration.
