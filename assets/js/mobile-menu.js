@@ -13,7 +13,7 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * 
 	 * @var Object
 	 */
-	var breakpoints = WpbfTheme.site.breakpoints;
+	const breakpoints = WpbfTheme.site.breakpoints;
 
 	/**
 	 * The menu type.
@@ -21,7 +21,7 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * 
 	 * @var string
 	 */
-	var menuType;
+	let menuType;
 
 	// Run the module.
 	init();
@@ -54,7 +54,7 @@ WpbfTheme.mobileMenu = (function ($) {
 	 */
 	function setupMenuType() {
 
-		var menu = document.querySelector('.wpbf-mobile-menu-hamburger');
+		let menu = document.querySelector('.wpbf-mobile-menu-hamburger');
 
 		if (menu) {
 			menuType = 'hamburger';
@@ -88,7 +88,7 @@ WpbfTheme.mobileMenu = (function ($) {
 			// Stop if href doesn't contain hash.
 			if (!this.href.match("#") && !this.href.match("/#")) return;
 
-			var hasSubmenu = this.parentNode.classList.contains('menu-item-has-children');
+			const hasSubmenu = this.parentNode.classList.contains('menu-item-has-children');
 
 			// If the link doesn't have sub-menu, then simply close the mobile menu.
 			if (!hasSubmenu) {
@@ -114,8 +114,9 @@ WpbfTheme.mobileMenu = (function ($) {
 	 */
 	function toggleMobileSubmenuOnHashLinkClick(link) {
 
-		var toggle = $(link).siblings('.wpbf-submenu-toggle');
+		let toggle = $(link).siblings('.wpbf-submenu-toggle');
 		if (!toggle.length) return;
+
 		toggle = toggle[0];
 
 		if (toggle.classList.contains("active")) {
@@ -143,9 +144,9 @@ WpbfTheme.mobileMenu = (function ($) {
 		// On window resize, if the window width is wider than desktop breakpoint, then hide the mobile menu.
 		$(window).resize(function () {
 
-			var windowHeight = $(window).height();
-			var windowWidth = $(window).width();
-			var mobileNavWrapperHeight = $('.wpbf-mobile-nav-wrapper').outerHeight();
+			const windowHeight = $(window).height();
+			const windowWidth = $(window).width();
+			const mobileNavWrapperHeight = $('.wpbf-mobile-nav-wrapper').outerHeight();
 
 			$('.wpbf-mobile-menu-container.active nav').css({ 'max-height': windowHeight - mobileNavWrapperHeight });
 
@@ -167,7 +168,7 @@ WpbfTheme.mobileMenu = (function ($) {
 		if ('premium' === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		var toggle = document.querySelector('#wpbf-mobile-menu-toggle');
+		const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
 		if (!toggle) return;
 
 		if (toggle.classList.contains("active")) {
@@ -192,7 +193,7 @@ WpbfTheme.mobileMenu = (function ($) {
 		if ('premium' === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		var toggle = document.querySelector('#wpbf-mobile-menu-toggle');
+		const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
 		if (!toggle) return;
 
 		$('.wpbf-mobile-menu-container').addClass('active').stop().slideDown();
@@ -217,7 +218,7 @@ WpbfTheme.mobileMenu = (function ($) {
 		if ('premium' === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		var toggle = document.querySelector('#wpbf-mobile-menu-toggle');
+		const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
 		if (!toggle) return;
 
 		// Because this function is also being called directly in several places, then we need this checking.
@@ -251,7 +252,7 @@ WpbfTheme.mobileMenu = (function ($) {
 	 */
 	function setupMobileSubmenuToggle(menuType) {
 
-		var menuClass = menuType === 'hamburger' ? '.wpbf-mobile-menu-hamburger .wpbf-submenu-toggle' : '.wpbf-mobile-menu-default .wpbf-submenu-toggle';
+		const menuClass = menuType === 'hamburger' ? '.wpbf-mobile-menu-hamburger .wpbf-submenu-toggle' : '.wpbf-mobile-menu-default .wpbf-submenu-toggle';
 
 		$(document).on('click', menuClass, function (e) {
 			e.preventDefault();
@@ -319,7 +320,7 @@ WpbfTheme.mobileMenu = (function ($) {
 		if (!$(toggle).closest('.wpbf-navigation').hasClass('wpbf-mobile-sub-menu-auto-collapse')) return;
 
 		// The same level menu items in the same parent element.
-		var $sameLevelItems = $(toggle).closest('.menu-item-has-children').siblings('.menu-item-has-children');
+		const $sameLevelItems = $(toggle).closest('.menu-item-has-children').siblings('.menu-item-has-children');
 
 		$sameLevelItems.each(function (i, menuItem) {
 			closeMobileSubmenu(menuItem.querySelector('.wpbf-submenu-toggle'));
