@@ -138,11 +138,12 @@ WpbfTheme.desktopMenu = (function ($) {
 			$(".wpbf-menu-search", el)
 				.stop()
 				.animate({ opacity: "0", width: "0px" }, 250, function () {
-					$(this).css({ display: "none" });
+					this.classList.style.display = "none";
 				});
 
 			setTimeout(function () {
-				$(el).removeClass("active").attr("aria-expanded", "false");
+				el.classList.remove("active");
+				el.setAttribute("aria-expanded", "false");
 			}, 400);
 		});
 	}
@@ -174,7 +175,7 @@ WpbfTheme.desktopMenu = (function ($) {
 	function setupCenteredMenu() {
 		if (!document.querySelector(".wpbf-menu-centered")) return;
 
-		const totalMenuItems = $(
+		const totalMenuItems = document.querySelectorAll(
 			".wpbf-navigation .wpbf-menu-centered .wpbf-menu > li > a"
 		).length;
 
@@ -183,64 +184,72 @@ WpbfTheme.desktopMenu = (function ($) {
 		divided = divided - 1;
 
 		// Place the logo in the center of the menu.
-		$(".wpbf-menu-centered .logo-container")
-			.insertAfter(
-				".wpbf-navigation .wpbf-menu-centered .wpbf-menu >li:eq(" +
-					divided +
-					")"
-			)
-			.css({ display: "block" });
+		WpbfTheme.site.processElements(
+			".wpbf-menu-centered .logo-container",
+			function (el) {
+				const menuItem = document.querySelector(
+					".wpbf-navigation .wpbf-menu-centered .wpbf-menu > li:nth-child(" +
+						divided +
+						")"
+				);
+
+				if (menuItem) {
+					menuItem.parentNode.insertBefore(el, menuItem.nextSibling);
+					el.style.display = "block";
+				}
+			}
+		);
 	}
 
 	/**
 	 * Setup sub-menu animation - second level.
 	 */
 	function setup2ndLevelSubmenuAnimation() {
-		$(document)
-			.on(
-				"mouseenter",
-				".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
-				function () {
-					$(".sub-menu", this)
-						.first()
-						.stop()
-						.css({ display: "block" })
-						.animate({ opacity: "1" }, duration);
-				}
-			)
-			.on(
-				"mouseleave",
-				".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
-				function () {
-					$(".sub-menu", this)
-						.first()
-						.stop()
-						.animate({ opacity: "0" }, duration, function () {
-							$(this).css({ display: "none" });
-						});
-				}
-			);
+		WpbfTheme.site.addEventHandler(
+			"mouseenter",
+			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
+			function (e) {
+				$(".sub-menu", this)
+					.first()
+					.stop()
+					.css({ display: "block" })
+					.animate({ opacity: "1" }, duration);
+			}
+		);
+
+		WpbfTheme.site.addEventHandler(
+			"mouseleave",
+			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
+			function () {
+				$(".sub-menu", this)
+					.first()
+					.stop()
+					.animate({ opacity: "0" }, duration, function () {
+						this.classList.style.display = "none";
+					});
+			}
+		);
 	}
 
 	/**
 	 * Setup sub-menu animation - fade.
 	 */
 	function setupSubmenuFadeAnimation() {
-		$(document)
-			.on(
-				"mouseenter",
-				".wpbf-sub-menu-animation-fade > .menu-item-has-children",
-				function () {
-					$(".sub-menu", this).first().stop().fadeIn(duration);
-				}
-			)
-			.on(
-				"mouseleave",
-				".wpbf-sub-menu-animation-fade > .menu-item-has-children",
-				function () {
-					$(".sub-menu", this).first().stop().fadeOut(duration);
-				}
-			);
+		WpbfTheme.site.addEventHandler(
+			"mouseenter",
+			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
+			function () {
+				$(".sub-menu", this).first().stop().fadeIn(duration);
+			}
+		);
+
+		WpbfTheme.site.addEventHandler(
+			"mouseleave",
+			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
+			function () {
+				$(".sub-menu", this).first().stop().fadeOut(duration);
+			}
+		);
 	}
 
 	/**
@@ -273,37 +282,41 @@ WpbfTheme.desktopMenu = (function ($) {
 		/**
 		 * General logic for tab/hover navigation on desktop navigations that contain sub-menus.
 		 */
-		$(document)
+		WpbfTheme.site.addEventHandler(
+			"mouseenter",
 			// Apply only to sub-menus that are not triggered by tab navigation.
-			.on(
-				"mouseenter",
-				".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)",
-				function () {
-					// Remove visual focus if tab-navigation was used earlier.
-					document.body.classList.add("using-mouse");
+			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)",
+			function () {
+				// Remove visual focus if tab-navigation was used earlier.
+				document.body.classList.add("using-mouse");
 
-					// Remove "wpbf-sub-menu-focus" class if tab-navigation was used earlier.
-					$(".menu-item-has-children").removeClass("wpbf-sub-menu-focus");
+				// Remove "wpbf-sub-menu-focus" class if tab-navigation was used earlier.
+				WpbfTheme.site.processElements(
+					".menu-item-has-children",
+					function (el) {
+						el.classList.remove("wpbf-sub-menu-focus");
+					}
+				);
 
-					// Focus on the current menu item. This will help if tab-navigation was used earlier.
-					$(this).find("> a").focus();
-				}
-			)
+				// Focus on the current menu item. This will help if tab-navigation was used earlier.
+				$(this).find("> a").focus();
+			}
+		);
 
-			/**
-			 * On mouseleave of tab navigation triggered sub-menu, let's remove the "wpbf-sub-menu-focus" class.
-			 * Fixes issue where sub-menu stayed open after switching from tab to mouse navigation.
-			 */
-			.on(
-				"mouseleave",
-				".wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus",
-				function () {
-					$(this).removeClass("wpbf-sub-menu-focus");
-				}
-			);
+		/**
+		 * On mouseleave of tab navigation triggered sub-menu, let's remove the "wpbf-sub-menu-focus" class.
+		 * Fixes issue where sub-menu stayed open after switching from tab to mouse navigation.
+		 */
+		WpbfTheme.site.addEventHandler(
+			"mouseleave",
+			".wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus",
+			function () {
+				this.classList.remove("wpbf-sub-menu-focus");
+			}
+		);
 
 		// Setup tab navigation.
-		$(document).on("focus", ".wpbf-sub-menu a", onNavLinkFocus);
+		WpbfTheme.site.addEventHandler("focus", ".wpbf-sub-menu a", onNavLinkFocus);
 	}
 
 	/**
@@ -311,17 +324,28 @@ WpbfTheme.desktopMenu = (function ($) {
 	 */
 	function onNavLinkFocus() {
 		// Stop here if body has "using-mouse" class.
-		if ($("body").hasClass("using-mouse")) return;
+		if (document.body.classList.contains("using-mouse")) return;
 
 		// Remove "wpbf-sub-menu-focus" class everywhere.
-		$(".wpbf-sub-menu > .menu-item-has-children").removeClass(
-			"wpbf-sub-menu-focus"
+		WpbfTheme.site.processElements(
+			".wpbf-sub-menu > .menu-item-has-children",
+			function (el) {
+				el.classList.remove("wpbf-sub-menu-focus");
+			}
 		);
 
 		// Hide other sub-menus that could be open due to mouse hover interference.
 		$(".wpbf-sub-menu > .menu-item-has-children > .sub-menu").stop().hide();
 
+		let menuItem = this;
+
 		// Add "wpbf-sub-menu-focus" class to the current parent menu item that has children.
-		$(this).parents(".menu-item-has-children").addClass("wpbf-sub-menu-focus");
+		while (menuItem.parentNode) {
+			if (menuItem.classList.contains("menu-item-has-children")) {
+				menuItem.classList.add("wpbf-sub-menu-focus");
+			}
+
+			menuItem = menuItem.parentNode;
+		}
 	}
 })(jQuery);
