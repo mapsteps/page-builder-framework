@@ -115,12 +115,16 @@ WpbfTheme.site = (function ($) {
 	/**
 	 * Get dataset value of an element.
 	 *
-	 * @param {HTMLElement} el - The element.
+	 * @param {HTMLElement|string} selector - The element or CSS selector.
 	 * @param {string} key - The dataset key.
 	 *
 	 * @return {string} The dataset value.
 	 */
-	function getDataset(el, key) {
+	function getDataset(selector, key) {
+		var el =
+			selector instanceof HTMLElement
+				? selector
+				: document.querySelector(selector);
 		if (!el || !el.dataset) return "";
 		if (!key) return "";
 
@@ -130,13 +134,13 @@ WpbfTheme.site = (function ($) {
 	/**
 	 * Get dataset value of an element as number.
 	 *
-	 * @param {HTMLElement} el - The element.
+	 * @param {HTMLElement|string} selector - The element or CSS selector.
 	 * @param {string} key - The dataset key.
 	 *
 	 * @return {string} The dataset value.
 	 */
-	function getDatasetAsNumber(el, key) {
-		var value = getDataset(el, key);
+	function getDatasetAsNumber(selector, key) {
+		var value = getDataset(selector, key);
 		if (!value) return 0;
 
 		return parseInt(el.dataset[key], 10);
