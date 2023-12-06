@@ -113,37 +113,37 @@ WpbfTheme.site = (function ($) {
 	}
 
 	/**
-	 * Get dataset value of an element.
+	 * Get attribute value of an element.
 	 *
 	 * @param {HTMLElement|string} selector - The element or CSS selector.
-	 * @param {string} key - The dataset key.
+	 * @param {string} key - The attribute name.
 	 *
-	 * @return {string} The dataset value.
+	 * @return {string} The attribute value.
 	 */
-	function getDataset(selector, key) {
+	function getAttr(selector, key) {
 		const el =
 			selector instanceof HTMLElement
 				? selector
 				: document.querySelector(selector);
-		if (!el || !el.dataset) return "";
+		if (!el || !el.getAttribute) return "";
 		if (!key) return "";
 
-		return el.dataset[key];
+		return el.getAttribute(key);
 	}
 
 	/**
-	 * Get dataset value of an element as number.
+	 * Get attribute value of an element as number.
 	 *
 	 * @param {HTMLElement|string} selector - The element or CSS selector.
-	 * @param {string} key - The dataset key.
+	 * @param {string} key - The attribute name.
 	 *
-	 * @return {string} The dataset value.
+	 * @return {string} The attribute value.
 	 */
-	function getDatasetAsNumber(selector, key) {
-		const value = getDataset(selector, key);
+	function getAttrAsNumber(selector, key) {
+		const value = getAttr(selector, key);
 		if (!value) return 0;
 
-		return parseInt(el.dataset[key], 10);
+		return parseInt(value, 10);
 	}
 
 	/**
@@ -275,7 +275,7 @@ WpbfTheme.site = (function ($) {
 		activeBreakpoint: activeBreakpoint,
 		processElements: processElements,
 		addEventHandler: addEventHandler,
-		getDataset: getDataset,
-		getDatasetAsNumber: getDatasetAsNumber,
+		getAttr: getAttr,
+		getAttrAsNumber: getAttrAsNumber,
 	};
 })(jQuery);
