@@ -1,5 +1,5 @@
 /**
- * @typedef {Object} SiteObject
+ * @typedef {Object} SiteModule
  * @property {boolean} isInsideCustomizer - Whether we're inside customizer or not.
  * @property {Object} breakpoints - Pre-defined breakpoints.
  * @property {string} activeBreakpoint - The current active breakpoint.
@@ -10,8 +10,16 @@
  */
 
 /**
+ * @typedef {Object} DesktopMenuModule
+ */
+
+/**
+ * @typedef {Object} MobileMenuModule
+ */
+
+/**
  * @typedef {Object} WpbfTheme
- * @property {SiteObject} site - Core module to handle the site wide JS functionality.
- * @property {Object} desktopMenu - Module to handle the desktop menu JS functionality.
- * @property {Object} mobileMenu - Module to handle the mobile menu JS functionality.
+ * @property {SiteModule} site - Core module to handle the site wide JS functionality.
+ * @property {DesktopMenuModule} desktopMenu - Module to handle the desktop menu JS functionality.
+ * @property {MobileMenuModule} mobileMenu - Module to handle the mobile menu JS functionality.
  */

@@ -1,3 +1,4 @@
+/** @type {WpbfTheme} */
 var WpbfTheme = {};
 
 /**
