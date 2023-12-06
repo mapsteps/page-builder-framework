@@ -19,7 +19,7 @@ WpbfTheme.desktopMenu = (function ($) {
 	 *
 	 * @var int
 	 */
-	const duration = WpbfTheme.site.getDatasetAsNumber(
+	let duration = WpbfTheme.site.getAttrAsNumber(
 		".wpbf-navigation",
 		"sub-menu-animation-duration"
 	);
@@ -130,19 +130,21 @@ WpbfTheme.desktopMenu = (function ($) {
 	 * Close search field functionality.
 	 */
 	function closeSearchField() {
-		if ($(".wpbf-menu-item-search").hasClass("active")) {
-			$(".wpbf-menu-search")
+		WpbfTheme.site.processElements(".wpbf-menu-item-search", function (el) {
+			if (!el.classList.contains("active")) {
+				return;
+			}
+
+			$(".wpbf-menu-search", el)
 				.stop()
 				.animate({ opacity: "0", width: "0px" }, 250, function () {
 					$(this).css({ display: "none" });
 				});
 
 			setTimeout(function () {
-				$(".wpbf-menu-item-search")
-					.removeClass("active")
-					.attr("aria-expanded", "false");
+				$(el).removeClass("active").attr("aria-expanded", "false");
 			}, 400);
-		}
+		});
 	}
 
 	/**
@@ -154,12 +156,13 @@ WpbfTheme.desktopMenu = (function ($) {
 			function (placement) {
 				/**
 				 * A lot of partial refresh registered to work on header area.
-				 * Better to not checking the "placement.partial.id".
+				 * So it's better to not checking the "placement.partial.id".
 				 */
-				duration = parseInt(
-					$(".wpbf-navigation").data("sub-menu-animation-duration"),
-					10
+				duration = WpbfTheme.site.getAttrAsNumber(
+					".wpbf-navigation",
+					"sub-menu-animation-duration"
 				);
+
 				setupCenteredMenu();
 			}
 		);
@@ -249,14 +252,17 @@ WpbfTheme.desktopMenu = (function ($) {
 	 */
 	function setupAccessibility() {
 		// Add aria-haspopup="true" to all sub-menu li's
-		$(".menu-item-has-children").each(function (i, el) {
-			$(el).attr("aria-haspopup", "true");
+		WpbfTheme.site.processElements(".menu-item-has-children", function (el) {
+			el.setAttribute("aria-haspopup", "true");
 		});
 
 		// Add using-mouse class on mousedown.
 		document.body.addEventListener("mousedown", function () {
 			this.classList.add("using-mouse");
-			$(".menu-item-has-children").removeClass("wpbf-sub-menu-focus");
+
+			WpbfTheme.site.processElements(".menu-item-has-children", function (el) {
+				el.removeClass("wpbf-sub-menu-focus");
+			});
 		});
 
 		// Remove using-mouse class on keydown.
