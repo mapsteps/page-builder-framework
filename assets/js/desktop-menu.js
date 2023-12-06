@@ -58,30 +58,7 @@ WpbfTheme.desktopMenu = (function ($) {
 			".wpbf-menu-item-search",
 			function (e) {
 				e.stopPropagation();
-
-				$(".wpbf-navigation .wpbf-menu > li")
-					.slice(-3)
-					.addClass("calculate-width");
-
-				let itemWidth = 0;
-
-				$(".calculate-width").each(function (i, el) {
-					itemWidth += $(el).outerWidth();
-				});
-
-				if (itemWidth < 200) {
-					itemWidth = 250;
-				}
-
-				if (!this.classList.contains("active")) {
-					this.classList.add("active");
-					this.setAttribute("aria-expanded", "true");
-					$(".wpbf-menu-search", this)
-						.stop()
-						.css({ display: "block" })
-						.animate({ width: itemWidth, opacity: "1" }, 200);
-					$("input[type=search]", this).val("").focus();
-				}
+				expandSearchField(this);
 			}
 		);
 
@@ -94,12 +71,59 @@ WpbfTheme.desktopMenu = (function ($) {
 		document.addEventListener("keyup", function (e) {
 			if (e.key === "Escape" || e.key === "Esc") {
 				closeSearchField();
-			} else if (e.key === "Tab") {
+				return;
+			}
+
+			if (e.key === "Tab") {
 				if (!e.target.classList.contains("wpbff-search")) {
 					closeSearchField();
 				}
 			}
 		});
+	}
+
+	/**
+	 * Expand search field functionality.
+	 *
+	 * @param {HTMLElement} menuItem The menu item.
+	 */
+	function expandSearchField(menuItem) {
+		const allMenuItems = document.querySelectorAll(
+			".wpbf-navigation .wpbf-menu > li"
+		);
+
+		const lastThreeItems = Array.from(allMenuItems).slice(-3);
+
+		lastThreeItems.forEach(function (item) {
+			item.classList.add("calculate-width");
+		});
+
+		let itemWidth = 0;
+
+		WpbfTheme.site.processElements(".calculate-width", function (el) {
+			itemWidth += el.offsetWidth;
+		});
+
+		if (itemWidth < 200) {
+			itemWidth = 250;
+		}
+
+		if (!menuItem.classList.contains("active")) {
+			menuItem.classList.add("active");
+			menuItem.setAttribute("aria-expanded", "true");
+
+			$(".wpbf-menu-search", menuItem)
+				.stop()
+				.css({ display: "block" })
+				.animate({ width: itemWidth, opacity: "1" }, 200);
+
+			const searchField = menuItem.querySelector("input[type=search]");
+
+			if (searchField) {
+				searchField.value = "";
+				searchField.focus();
+			}
+		}
 	}
 
 	/**
