@@ -23,11 +23,7 @@
 	"parcelIgnore": [
 		"img/.+"
 	],
-	"browserslist": [
-		"> 1%",
-		"last 2 versions",
-		"IE 11"
-	],
+	"browserslist": "> 0.5%, last 2 versions, not dead",
 	"scripts": {
 		"build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps --no-cache",
 		"build-site-css": "parcel build assets/scss/style.scss --dist-dir ./ --no-source-maps --no-cache",
