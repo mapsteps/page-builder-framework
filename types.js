@@ -4,7 +4,7 @@
  * @property {Object} breakpoints Pre-defined breakpoints.
  * @property {string} activeBreakpoint The current active breakpoint.
  * @property {function} processElements Method to iterates over a collection of elements and applies a function to each.
- * @property {function} addEventHandler Method to add event handler to the document.
+ * @property {function(string, string|null, function(Event))} addEventHandler Method to add event handler to the document.
  * @property {function(string|HTMLElement, string): string} getDataset Method to get dataset value of an element.
  * @property {function(string|HTMLElement, string): string} getDatasetAsNumber Method to get dataset value of an element as number.
  */

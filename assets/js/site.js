@@ -1,5 +1,5 @@
 /** @type {WpbfTheme} */
-var WpbfTheme = {};
+const WpbfTheme = {};
 
 /**
  * This module is intended to handle the site wide JS functionality.
@@ -16,14 +16,14 @@ WpbfTheme.site = (function ($) {
 	 *
 	 * @type {boolean}
 	 */
-	var isInsideCustomizer = window.wp && wp.customize ? true : false;
+	const isInsideCustomizer = window.wp && wp.customize ? true : false;
 
 	/**
 	 * Pre-defined breakpoints.
 	 *
 	 * @type {Object}
 	 */
-	var breakpoints = {
+	const breakpoints = {
 		desktop: 1024,
 		tablet: 768,
 		mobile: 480,
@@ -34,7 +34,7 @@ WpbfTheme.site = (function ($) {
 	 *
 	 * @type {string}
 	 */
-	var activeBreakpoint = "desktop";
+	let activeBreakpoint = "desktop";
 
 	// Run the module.
 	init();
@@ -82,11 +82,11 @@ WpbfTheme.site = (function ($) {
 		if (!(target instanceof NodeList) && typeof target !== "string") return;
 		if (typeof handler !== "function") return;
 
-		var elms =
+		const elms =
 			target instanceof NodeList ? target : document.querySelectorAll(target);
 		if (!elms.length) return;
 
-		for (var i = 0; i < elms.length; i++) {
+		for (let i = 0; i < elms.length; i++) {
 			handler(elms[i]);
 		}
 	}
@@ -121,7 +121,7 @@ WpbfTheme.site = (function ($) {
 	 * @return {string} The dataset value.
 	 */
 	function getDataset(selector, key) {
-		var el =
+		const el =
 			selector instanceof HTMLElement
 				? selector
 				: document.querySelector(selector);
@@ -140,7 +140,7 @@ WpbfTheme.site = (function ($) {
 	 * @return {string} The dataset value.
 	 */
 	function getDatasetAsNumber(selector, key) {
-		var value = getDataset(selector, key);
+		const value = getDataset(selector, key);
 		if (!value) return 0;
 
 		return parseInt(el.dataset[key], 10);
@@ -162,8 +162,8 @@ WpbfTheme.site = (function ($) {
 	 * It will also set the the top level `activeBreakpoint` variable.
 	 */
 	function setupBodyClasses() {
-		var windowWidth = document.documentElement.clientWidth;
-		var bodyClass = "";
+		const windowWidth = document.documentElement.clientWidth;
+		let bodyClass = "";
 
 		if (windowWidth > breakpoints.desktop) {
 			bodyClass = "wpbf-is-desktop";
@@ -194,8 +194,8 @@ WpbfTheme.site = (function ($) {
 	 * @param {string} device The device type. Accepts 'desktop', 'tablet', or 'mobile'.
 	 */
 	function setupBreakpoint(device) {
-		var matchRule = "wpbf-" + device + "-breakpoint-[\\w-]*\\b";
-		var breakpointClass = document.body.className.match(matchRule);
+		const matchRule = "wpbf-" + device + "-breakpoint-[\\w-]*\\b";
+		const breakpointClass = document.body.className.match(matchRule);
 
 		if (null != breakpointClass) {
 			breakpoints[device] = breakpointClass.toString().match(/\d+/);
@@ -209,10 +209,10 @@ WpbfTheme.site = (function ($) {
 	 * Setup scroll to top functionality.
 	 */
 	function setupScrollToTop() {
-		var scrollTop = document.querySelector(".scrolltop");
+		const scrollTop = document.querySelector(".scrolltop");
 		if (!scrollTop) return;
 
-		var scrollTopValue = scrollTop.dataset.scrolltopValue;
+		const scrollTopValue = scrollTop.dataset.scrolltopValue;
 
 		// Show or hide scroll-to-top button on window scroll event.
 		window.addEventListener("scroll", function (e) {
@@ -247,15 +247,15 @@ WpbfTheme.site = (function ($) {
 	 * Setup support for boxed layout mode.
 	 */
 	function setupBoxedLayoutSupport() {
-		var page = document.querySelector(".wpbf-page");
+		const page = document.querySelector(".wpbf-page");
 		if (!page) return;
 
 		/** @type {string} */
-		var pageMarginTop = window.getComputedStyle(page).marginTop;
+		const pageMarginTop = window.getComputedStyle(page).marginTop;
 
 		window.addEventListener("resize", function () {
 			/** @type {number} */
-			var pageWidth = page.offsetWidth;
+			const pageWidth = page.offsetWidth;
 
 			// If page width is >= window width, then remove margin top & margin bottom.
 			if (pageWidth >= documument.documentElement.clientWidth) {
