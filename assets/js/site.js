@@ -112,6 +112,36 @@ WpbfTheme.site = (function ($) {
 	}
 
 	/**
+	 * Get dataset value of an element.
+	 *
+	 * @param {HTMLElement} el - The element.
+	 * @param {string} key - The dataset key.
+	 *
+	 * @return {string} The dataset value.
+	 */
+	function getDataset(el, key) {
+		if (!el || !el.dataset) return "";
+		if (!key) return "";
+
+		return el.dataset[key];
+	}
+
+	/**
+	 * Get dataset value of an element as number.
+	 *
+	 * @param {HTMLElement} el - The element.
+	 * @param {string} key - The dataset key.
+	 *
+	 * @return {string} The dataset value.
+	 */
+	function getDatasetAsNumber(el, key) {
+		var value = getDataset(el, key);
+		if (!value) return 0;
+
+		return parseInt(el.dataset[key], 10);
+	}
+
+	/**
 	 * Setup breakpoints for desktop, tablet, and mobile.
 	 */
 	function setupBreakpoints() {
@@ -240,5 +270,7 @@ WpbfTheme.site = (function ($) {
 		activeBreakpoint: activeBreakpoint,
 		processElements: processElements,
 		addEventHandler: addEventHandler,
+		getDataset: getDataset,
+		getDatasetAsNumber: getDatasetAsNumber,
 	};
 })(jQuery);
