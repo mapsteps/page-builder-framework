@@ -2,15 +2,14 @@
  * This module is intended to handle the mobile menu JS functionality.
  *
  * Along with the site.js and desktop-menu.js, this file will be combined to site-min.js file.
- * 
+ *
  * @param {Object} $ jQuery object.
  * @return {Object}
  */
 WpbfTheme.mobileMenu = (function ($) {
-
 	/**
 	 * Defined breakpoints.
-	 * 
+	 *
 	 * @var Object
 	 */
 	const breakpoints = WpbfTheme.site.breakpoints;
@@ -18,7 +17,7 @@ WpbfTheme.mobileMenu = (function ($) {
 	/**
 	 * The menu type.
 	 * The value could be 'hamburger', 'default', or 'premium'.
-	 * 
+	 *
 	 * @var string
 	 */
 	let menuType;
@@ -33,9 +32,8 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * Other functions are called / hooked from this function.
 	 */
 	function init() {
-
 		// On window resize, get the updated breakpoints.
-		window.addEventListener('resize', function (e) {
+		window.addEventListener("resize", function (e) {
 			breakpoints = WpbfTheme.site.breakpoints;
 		});
 
@@ -43,58 +41,56 @@ WpbfTheme.mobileMenu = (function ($) {
 		setupHashLinkBehavior();
 		setupMobileMenu();
 		setupMobileSubmenu();
-
 	}
 
 	/**
 	 * Determine the menu type.
-	 * 
+	 *
 	 * This function will set the value of top level `menuType` variable.
 	 * It could be 'hamburger', 'default', or 'premium'.
 	 */
 	function setupMenuType() {
-
-		let menu = document.querySelector('.wpbf-mobile-menu-hamburger');
+		let menu = document.querySelector(".wpbf-mobile-menu-hamburger");
 
 		if (menu) {
-			menuType = 'hamburger';
+			menuType = "hamburger";
 			return;
 		}
 
-		menu = document.querySelector('.wpbf-mobile-menu-default');
+		menu = document.querySelector(".wpbf-mobile-menu-default");
 
 		if (menu) {
-			menuType = 'default';
+			menuType = "default";
 			return;
 		}
 
-		menuType = 'premium';
-
+		menuType = "premium";
 	}
 
 	/**
 	 * Setup behavior when clicking links that contain a hash.
 	 */
 	function setupHashLinkBehavior() {
-
 		/**
 		 * On mobile menu item hash link click,
 		 * it will either close the mobile menu, or open the submenu if exists.
 		 */
-		$(document).on('click', '.wpbf-mobile-menu a', function () {
+		$(document).on("click", ".wpbf-mobile-menu a", function () {
 			// Stop if menu type is 'premium'.
-			if ('premium' === menuType) return;
+			if ("premium" === menuType) return;
 
 			// Stop if href doesn't contain hash.
 			if (!this.href.match("#") && !this.href.match("/#")) return;
 
-			const hasSubmenu = this.parentNode.classList.contains('menu-item-has-children');
+			const hasSubmenu = this.parentNode.classList.contains(
+				"menu-item-has-children"
+			);
 
 			// If the link doesn't have sub-menu, then simply close the mobile menu.
 			if (!hasSubmenu) {
 				closeMobileMenu(menuType);
 			} else {
-				if ($(this).closest('.wpbf-mobile-mega-menu').length) {
+				if ($(this).closest(".wpbf-mobile-mega-menu").length) {
 					// But the link has sub-menu, and its top level parent menu item is a mega menu, then close the mobile menu.
 					closeMobileMenu(menuType);
 				} else {
@@ -102,9 +98,7 @@ WpbfTheme.mobileMenu = (function ($) {
 					toggleMobileSubmenuOnHashLinkClick(this);
 				}
 			}
-
 		});
-
 	}
 
 	/**
@@ -113,8 +107,7 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * @param {HTMLElement} link The anchor element of the menu item.
 	 */
 	function toggleMobileSubmenuOnHashLinkClick(link) {
-
-		let toggle = $(link).siblings('.wpbf-submenu-toggle');
+		let toggle = $(link).siblings(".wpbf-submenu-toggle");
 		if (!toggle.length) return;
 
 		toggle = toggle[0];
@@ -124,36 +117,36 @@ WpbfTheme.mobileMenu = (function ($) {
 		} else {
 			openMobileSubmenu(toggle);
 		}
-
 	}
 
 	/**
 	 * Setup mobile menu for both 'default' and 'hamburger' menu.
 	 */
 	function setupMobileMenu() {
-
 		/**
 		 * On mobile menu toggle click, we re-run the menu type setup and then run the toggling process.
 		 * The menu type setup need to be re-run to handle the behavior inside customizer.
 		 */
-		$(document).on('click', '.wpbf-mobile-menu-toggle', function () {
+		$(document).on("click", ".wpbf-mobile-menu-toggle", function () {
 			setupMenuType();
 			toggleMobileMenu(menuType);
 		});
 
 		// On window resize, if the window width is wider than desktop breakpoint, then hide the mobile menu.
 		$(window).resize(function () {
-
 			const windowHeight = $(window).height();
 			const windowWidth = $(window).width();
-			const mobileNavWrapperHeight = $('.wpbf-mobile-nav-wrapper').outerHeight();
+			const mobileNavWrapperHeight = $(
+				".wpbf-mobile-nav-wrapper"
+			).outerHeight();
 
-			$('.wpbf-mobile-menu-container.active nav').css({ 'max-height': windowHeight - mobileNavWrapperHeight });
+			$(".wpbf-mobile-menu-container.active nav").css({
+				"max-height": windowHeight - mobileNavWrapperHeight,
+			});
 
 			if (windowWidth > breakpoints.desktop) {
 				closeMobileMenu(menuType);
 			}
-
 		});
 	}
 
@@ -164,11 +157,10 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * @param {string} menuType The menu type. Accepts 'default' or 'hamburger'.
 	 */
 	function toggleMobileMenu(menuType) {
-
-		if ('premium' === menuType) return;
+		if ("premium" === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
+		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
 		if (!toggle) return;
 
 		if (toggle.classList.contains("active")) {
@@ -176,7 +168,6 @@ WpbfTheme.mobileMenu = (function ($) {
 		} else {
 			openMobileMenu(menuType);
 		}
-
 	}
 
 	/**
@@ -189,60 +180,54 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * @param {string} menuType The menu type. Accepts 'hamburger' or 'default'.
 	 */
 	function openMobileMenu(menuType) {
-
-		if ('premium' === menuType) return;
+		if ("premium" === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
+		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
 		if (!toggle) return;
 
-		$('.wpbf-mobile-menu-container').addClass('active').stop().slideDown();
+		$(".wpbf-mobile-menu-container").addClass("active").stop().slideDown();
 		toggle.classList.add("active");
-		toggle.setAttribute('aria-expanded', 'true');
+		toggle.setAttribute("aria-expanded", "true");
 
-		if ('hamburger' === menuType) {
-			toggle.classList.remove('wpbff-hamburger');
-			toggle.classList.add('wpbff-times');
+		if ("hamburger" === menuType) {
+			toggle.classList.remove("wpbff-hamburger");
+			toggle.classList.add("wpbff-times");
 		}
-
 	}
 
 	/**
 	 * Close mobile menu.
 	 * This function is being called in `toggleMobileMenu` function and in several direct calls.
-	 * 
+	 *
 	 * @param {string} menuType The menu type. Accepts 'hamburger' or 'default'.
 	 */
 	function closeMobileMenu(menuType) {
-
-		if ('premium' === menuType) return;
+		if ("premium" === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
+		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
 		if (!toggle) return;
 
 		// Because this function is also being called directly in several places, then we need this checking.
 		if (!toggle.classList.contains("active")) return;
 
-		$('.wpbf-mobile-menu-container').removeClass('active').stop().slideUp();
+		$(".wpbf-mobile-menu-container").removeClass("active").stop().slideUp();
 		toggle.classList.remove("active");
-		toggle.setAttribute('aria-expanded', 'false');
+		toggle.setAttribute("aria-expanded", "false");
 
-		if ('hamburger' === menuType) {
-			toggle.classList.remove('wpbff-times')
-			toggle.classList.add('wpbff-hamburger')
+		if ("hamburger" === menuType) {
+			toggle.classList.remove("wpbff-times");
+			toggle.classList.add("wpbff-hamburger");
 		}
-
 	}
 
 	/**
 	 * Setup mobile sub-menu for both default and hamburger menu.
 	 */
 	function setupMobileSubmenu() {
-
-		setupMobileSubmenuToggle('default');
-		setupMobileSubmenuToggle('hamburger');
-
+		setupMobileSubmenuToggle("default");
+		setupMobileSubmenuToggle("hamburger");
 	}
 
 	/**
@@ -251,29 +236,28 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * @param {string} menuType The menu type. Accepts 'hamburger' or 'default'.
 	 */
 	function setupMobileSubmenuToggle(menuType) {
+		const menuClass =
+			menuType === "hamburger"
+				? ".wpbf-mobile-menu-hamburger .wpbf-submenu-toggle"
+				: ".wpbf-mobile-menu-default .wpbf-submenu-toggle";
 
-		const menuClass = menuType === 'hamburger' ? '.wpbf-mobile-menu-hamburger .wpbf-submenu-toggle' : '.wpbf-mobile-menu-default .wpbf-submenu-toggle';
-
-		$(document).on('click', menuClass, function (e) {
+		$(document).on("click", menuClass, function (e) {
 			e.preventDefault();
 			toggleMobileSubmenu(this);
 		});
-
 	}
 
 	/**
 	 * Toggle mobile sub-menu to expand/collapse.
-	 * 
+	 *
 	 * @param {HTMLElement} toggle The submenu's toggle button (the expand/collapse arrow).
 	 */
 	function toggleMobileSubmenu(toggle) {
-
 		if (toggle.classList.contains("active")) {
 			closeMobileSubmenu(toggle);
 		} else {
 			openMobileSubmenu(toggle);
 		}
-
 	}
 
 	/**
@@ -282,14 +266,12 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * @param {HTMLElement} toggle The submenu's toggle button (the expand/collapse arrow).
 	 */
 	function openMobileSubmenu(toggle) {
-
-		$('i', toggle).removeClass('wpbff-arrow-down').addClass('wpbff-arrow-up');
-		toggle.classList.add('active')
-		toggle.setAttribute('aria-expanded', 'true');
-		$(toggle).siblings('.sub-menu').stop().slideDown();
+		$("i", toggle).removeClass("wpbff-arrow-down").addClass("wpbff-arrow-up");
+		toggle.classList.add("active");
+		toggle.setAttribute("aria-expanded", "true");
+		$(toggle).siblings(".sub-menu").stop().slideDown();
 
 		autoCollapseMobileSubmenus(toggle);
-
 	}
 
 	/**
@@ -298,12 +280,10 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * @param {HTMLElement} toggle The submenu's toggle button (the expand/collapse arrow).
 	 */
 	function closeMobileSubmenu(toggle) {
-
-		$('i', toggle).removeClass('wpbff-arrow-up').addClass('wpbff-arrow-down');
-		toggle.classList.remove('active')
-		toggle.setAttribute('aria-expanded', 'false');
-		$(toggle).siblings('.sub-menu').stop().slideUp();
-
+		$("i", toggle).removeClass("wpbff-arrow-up").addClass("wpbff-arrow-down");
+		toggle.classList.remove("active");
+		toggle.setAttribute("aria-expanded", "false");
+		$(toggle).siblings(".sub-menu").stop().slideUp();
 	}
 
 	/**
@@ -315,17 +295,21 @@ WpbfTheme.mobileMenu = (function ($) {
 	 * @param {HTMLElement} toggle The submenu's toggle button (the expand/collapse arrow) of the current clicked menu item.
 	 */
 	function autoCollapseMobileSubmenus(toggle) {
-
 		// If wpbf navigation doesn't have mobile submenu collapse class, then stop here.
-		if (!$(toggle).closest('.wpbf-navigation').hasClass('wpbf-mobile-sub-menu-auto-collapse')) return;
+		if (
+			!$(toggle)
+				.closest(".wpbf-navigation")
+				.hasClass("wpbf-mobile-sub-menu-auto-collapse")
+		)
+			return;
 
 		// The same level menu items in the same parent element.
-		const $sameLevelItems = $(toggle).closest('.menu-item-has-children').siblings('.menu-item-has-children');
+		const $sameLevelItems = $(toggle)
+			.closest(".menu-item-has-children")
+			.siblings(".menu-item-has-children");
 
 		$sameLevelItems.each(function (i, menuItem) {
-			closeMobileSubmenu(menuItem.querySelector('.wpbf-submenu-toggle'));
+			closeMobileSubmenu(menuItem.querySelector(".wpbf-submenu-toggle"));
 		});
-
 	}
-
 })(jQuery);
