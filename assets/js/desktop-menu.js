@@ -20,7 +20,7 @@ WpbfTheme.desktopMenu = (function ($) {
 	 *
 	 * @var int
 	 */
-	var duration = parseInt($(".wpbf-navigation").data("sub-menu-animation-duration"), 10);
+	var duration = WpbfTheme.site.getDatasetAsNumber('.wpbf-navigation', 'sub-menu-animation-duration');
 
 	// Run the module.
 	init();
