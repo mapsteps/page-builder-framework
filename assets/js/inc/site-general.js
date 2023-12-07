@@ -30,7 +30,11 @@ export default function setupSite($) {
 
 		// Executing various triggers on window load.
 		window.addEventListener("load", function () {
-			$(".opacity").delay(200).animate({ opacity: "1" }, 200);
+			window.setTimeout(function () {
+				forEachEl('.opacity', function (el) {
+					el.classList.add('is-visible');
+				});
+			}, 200);
 
 			forEachEl(".display-none", function (el) {
 				el.style.display = "block";
