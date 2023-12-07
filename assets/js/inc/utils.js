@@ -157,3 +157,18 @@ export function getActiveBreakpoint() {
 
 	return activeBreakpoint;
 }
+
+/**
+ * Hide an element after a delay.
+ *
+ * @param {HTMLElement} el The element to hide.
+ * @param {number} delay The delay in milliseconds.
+ */
+export function hideElAfterDelay(el, delay) {
+	if (!el) return;
+	if (typeof delay !== "number") return;
+
+	setTimeout(function () {
+		el.style.display = "none";
+	}, delay);
+}

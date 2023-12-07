@@ -1,4 +1,9 @@
-import { forEachEl, getBreakpoints, listenDocumentEvent } from "./utils";
+import {
+	forEachEl,
+	getBreakpoints,
+	hideElAfterDelay,
+	listenDocumentEvent,
+} from "./utils";
 
 /**
  * This module is intended to handle the site wide JS functionality.
@@ -109,10 +114,7 @@ export default function setupSite($) {
 				tooltips.forEach(function (tooltip) {
 					tooltip.classList.add("wpbf-fading");
 					tooltip.classList.add("wpbf-fade-out");
-
-					setTimeout(function () {
-						tooltip.style.display = "none";
-					}, 400);
+					hideElAfterDelay(tooltip, 400);
 				});
 			});
 		});
