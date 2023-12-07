@@ -1,31 +1,25 @@
+import {
+	forEachEl,
+	getAttrAsNumber,
+	isInsideCustomizer,
+	listenDocumentEvent,
+} from "./utils";
+
 /**
  * This module is intended to handle the desktop menu JS functionality.
  *
  * Along with the site.js and mobile-menu.js, this file will be combined to site-min.js file.
  *
- * @param {Object} $ jQuery object.
- * @return {Object}
+ * @param {jQuery} $ jQuery object.
  */
-WpbfTheme.desktopMenu = (function ($) {
-	/**
-	 * Whether we're inside customizer or not.
-	 *
-	 * @var bool
-	 */
-	const isInsideCustomizer = WpbfTheme.site.isInsideCustomizer;
-
+export default function setupDesktopMenu($) {
 	/**
 	 * The sub-menu animation duration.
-	 *
-	 * @var int
 	 */
-	let duration = WpbfTheme.site.getAttrAsNumber(
+	let duration = getAttrAsNumber(
 		".wpbf-navigation",
-		"sub-menu-animation-duration"
+		"sub-menu-animation-duration",
 	);
-
-	// Run the module.
-	init();
 
 	/**
 	 * Initialize the module, call the main functions.
@@ -41,7 +35,7 @@ WpbfTheme.desktopMenu = (function ($) {
 		setupAccessibility();
 
 		// If we're inside customizer, then listen to the customizer's partial refresh.
-		if (isInsideCustomizer) {
+		if (isInsideCustomizer()) {
 			wp.customize.bind("preview-ready", function () {
 				listenPartialRefresh();
 			});
@@ -53,14 +47,10 @@ WpbfTheme.desktopMenu = (function ($) {
 	 */
 	function setupMenuItemSearchButton() {
 		// Expand search field on click.
-		WpbfTheme.site.addEventHandler(
-			"click",
-			".wpbf-menu-item-search",
-			function (e) {
-				e.stopPropagation();
-				expandSearchField(this);
-			}
-		);
+		listenDocumentEvent("click", ".wpbf-menu-item-search", function (e) {
+			e.stopPropagation();
+			expandSearchField(this);
+		});
 
 		// Close search on window click.
 		window.addEventListener("click", function (e) {
@@ -89,7 +79,7 @@ WpbfTheme.desktopMenu = (function ($) {
 	 */
 	function expandSearchField(menuItem) {
 		const allMenuItems = document.querySelectorAll(
-			".wpbf-navigation .wpbf-menu > li"
+			".wpbf-navigation .wpbf-menu > li",
 		);
 
 		const lastThreeItems = Array.from(allMenuItems).slice(-3);
@@ -100,7 +90,7 @@ WpbfTheme.desktopMenu = (function ($) {
 
 		let itemWidth = 0;
 
-		WpbfTheme.site.processElements(".calculate-width", function (el) {
+		forEachEl(".calculate-width", function (el) {
 			itemWidth += el.offsetWidth;
 		});
 
@@ -130,7 +120,7 @@ WpbfTheme.desktopMenu = (function ($) {
 	 * Close search field functionality.
 	 */
 	function closeSearchField() {
-		WpbfTheme.site.processElements(".wpbf-menu-item-search", function (el) {
+		forEachEl(".wpbf-menu-item-search", function (el) {
 			if (!el.classList.contains("active")) {
 				return;
 			}
@@ -159,13 +149,13 @@ WpbfTheme.desktopMenu = (function ($) {
 				 * A lot of partial refresh registered to work on header area.
 				 * So it's better to not checking the "placement.partial.id".
 				 */
-				duration = WpbfTheme.site.getAttrAsNumber(
+				duration = getAttrAsNumber(
 					".wpbf-navigation",
-					"sub-menu-animation-duration"
+					"sub-menu-animation-duration",
 				);
 
 				setupCenteredMenu();
-			}
+			},
 		);
 	}
 
@@ -176,7 +166,7 @@ WpbfTheme.desktopMenu = (function ($) {
 		if (!document.querySelector(".wpbf-menu-centered")) return;
 
 		const totalMenuItems = document.querySelectorAll(
-			".wpbf-navigation .wpbf-menu-centered .wpbf-menu > li > a"
+			".wpbf-navigation .wpbf-menu-centered .wpbf-menu > li > a",
 		).length;
 
 		let divided = totalMenuItems / 2;
@@ -184,28 +174,25 @@ WpbfTheme.desktopMenu = (function ($) {
 		divided = divided - 1;
 
 		// Place the logo in the center of the menu.
-		WpbfTheme.site.processElements(
-			".wpbf-menu-centered .logo-container",
-			function (el) {
-				const menuItem = document.querySelector(
-					".wpbf-navigation .wpbf-menu-centered .wpbf-menu > li:nth-child(" +
-						divided +
-						")"
-				);
+		forEachEl(".wpbf-menu-centered .logo-container", function (el) {
+			const menuItem = document.querySelector(
+				".wpbf-navigation .wpbf-menu-centered .wpbf-menu > li:nth-child(" +
+					divided +
+					")",
+			);
 
-				if (menuItem) {
-					menuItem.parentNode.insertBefore(el, menuItem.nextSibling);
-					el.style.display = "block";
-				}
+			if (menuItem) {
+				menuItem.parentNode.insertBefore(el, menuItem.nextSibling);
+				el.style.display = "block";
 			}
-		);
+		});
 	}
 
 	/**
 	 * Setup sub-menu animation - second level.
 	 */
 	function setup2ndLevelSubmenuAnimation() {
-		WpbfTheme.site.addEventHandler(
+		listenDocumentEvent(
 			"mouseenter",
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
 			function (e) {
@@ -214,10 +201,10 @@ WpbfTheme.desktopMenu = (function ($) {
 					.stop()
 					.css({ display: "block" })
 					.animate({ opacity: "1" }, duration);
-			}
+			},
 		);
 
-		WpbfTheme.site.addEventHandler(
+		listenDocumentEvent(
 			"mouseleave",
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
 			function () {
@@ -227,7 +214,7 @@ WpbfTheme.desktopMenu = (function ($) {
 					.animate({ opacity: "0" }, duration, function () {
 						this.classList.style.display = "none";
 					});
-			}
+			},
 		);
 	}
 
@@ -235,20 +222,20 @@ WpbfTheme.desktopMenu = (function ($) {
 	 * Setup sub-menu animation - fade.
 	 */
 	function setupSubmenuFadeAnimation() {
-		WpbfTheme.site.addEventHandler(
+		listenDocumentEvent(
 			"mouseenter",
 			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
 			function () {
 				$(".sub-menu", this).first().stop().fadeIn(duration);
-			}
+			},
 		);
 
-		WpbfTheme.site.addEventHandler(
+		listenDocumentEvent(
 			"mouseleave",
 			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
 			function () {
 				$(".sub-menu", this).first().stop().fadeOut(duration);
-			}
+			},
 		);
 	}
 
@@ -261,7 +248,7 @@ WpbfTheme.desktopMenu = (function ($) {
 	 */
 	function setupAccessibility() {
 		// Add aria-haspopup="true" to all sub-menu li's
-		WpbfTheme.site.processElements(".menu-item-has-children", function (el) {
+		forEachEl(".menu-item-has-children", function (el) {
 			el.setAttribute("aria-haspopup", "true");
 		});
 
@@ -269,7 +256,7 @@ WpbfTheme.desktopMenu = (function ($) {
 		document.body.addEventListener("mousedown", function () {
 			this.classList.add("using-mouse");
 
-			WpbfTheme.site.processElements(".menu-item-has-children", function (el) {
+			forEachEl(".menu-item-has-children", function (el) {
 				el.removeClass("wpbf-sub-menu-focus");
 			});
 		});
@@ -282,7 +269,7 @@ WpbfTheme.desktopMenu = (function ($) {
 		/**
 		 * General logic for tab/hover navigation on desktop navigations that contain sub-menus.
 		 */
-		WpbfTheme.site.addEventHandler(
+		listenDocumentEvent(
 			"mouseenter",
 			// Apply only to sub-menus that are not triggered by tab navigation.
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)",
@@ -291,32 +278,29 @@ WpbfTheme.desktopMenu = (function ($) {
 				document.body.classList.add("using-mouse");
 
 				// Remove "wpbf-sub-menu-focus" class if tab-navigation was used earlier.
-				WpbfTheme.site.processElements(
-					".menu-item-has-children",
-					function (el) {
-						el.classList.remove("wpbf-sub-menu-focus");
-					}
-				);
+				forEachEl(".menu-item-has-children", function (el) {
+					el.classList.remove("wpbf-sub-menu-focus");
+				});
 
 				// Focus on the current menu item. This will help if tab-navigation was used earlier.
 				$(this).find("> a").focus();
-			}
+			},
 		);
 
 		/**
 		 * On mouseleave of tab navigation triggered sub-menu, let's remove the "wpbf-sub-menu-focus" class.
 		 * Fixes issue where sub-menu stayed open after switching from tab to mouse navigation.
 		 */
-		WpbfTheme.site.addEventHandler(
+		listenDocumentEvent(
 			"mouseleave",
 			".wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus",
 			function () {
 				this.classList.remove("wpbf-sub-menu-focus");
-			}
+			},
 		);
 
 		// Setup tab navigation.
-		WpbfTheme.site.addEventHandler("focus", ".wpbf-sub-menu a", onNavLinkFocus);
+		listenDocumentEvent("focus", ".wpbf-sub-menu a", onNavLinkFocus);
 	}
 
 	/**
@@ -327,12 +311,9 @@ WpbfTheme.desktopMenu = (function ($) {
 		if (document.body.classList.contains("using-mouse")) return;
 
 		// Remove "wpbf-sub-menu-focus" class everywhere.
-		WpbfTheme.site.processElements(
-			".wpbf-sub-menu > .menu-item-has-children",
-			function (el) {
-				el.classList.remove("wpbf-sub-menu-focus");
-			}
-		);
+		forEachEl(".wpbf-sub-menu > .menu-item-has-children", function (el) {
+			el.classList.remove("wpbf-sub-menu-focus");
+		});
 
 		// Hide other sub-menus that could be open due to mouse hover interference.
 		$(".wpbf-sub-menu > .menu-item-has-children > .sub-menu").stop().hide();
@@ -348,4 +329,7 @@ WpbfTheme.desktopMenu = (function ($) {
 			menuItem = menuItem.parentNode;
 		}
 	}
-})(jQuery);
+
+	// Run the module.
+	init();
+}

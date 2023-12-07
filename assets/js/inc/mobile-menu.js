@@ -1,29 +1,21 @@
+import { forEachEl, getBreakpoints, listenDocumentEvent } from "./utils";
+
 /**
  * This module is intended to handle the mobile menu JS functionality.
  *
  * Along with the site.js and desktop-menu.js, this file will be combined to site-min.js file.
  *
  * @param {Object} $ jQuery object.
- * @return {Object}
  */
-WpbfTheme.mobileMenu = (function ($) {
-	/**
-	 * Defined breakpoints.
-	 *
-	 * @var Object
-	 */
-	const breakpoints = WpbfTheme.site.breakpoints;
+export default function setupMobileMenu($) {
+	let breakpoints = getBreakpoints();
 
 	/**
-	 * The menu type.
-	 * The value could be 'hamburger', 'default', or 'premium'.
+	 * The menu type. Accepts: 'hamburger', 'default', or 'premium'.
 	 *
 	 * @var string
 	 */
 	let menuType;
-
-	// Run the module.
-	init();
 
 	/**
 	 * Initialize the module, call the main functions.
@@ -34,7 +26,7 @@ WpbfTheme.mobileMenu = (function ($) {
 	function init() {
 		// On window resize, get the updated breakpoints.
 		window.addEventListener("resize", function (e) {
-			breakpoints = WpbfTheme.site.breakpoints;
+			breakpoints = getBreakpoints();
 		});
 
 		setupMenuType();
@@ -75,7 +67,7 @@ WpbfTheme.mobileMenu = (function ($) {
 		 * On mobile menu item hash link click,
 		 * it will either close the mobile menu, or open the submenu if exists.
 		 */
-		WpbfTheme.site.addEventHandler("click", ".wpbf-mobile-menu a", function () {
+		listenDocumentEvent("click", ".wpbf-mobile-menu a", function () {
 			// Stop if menu type is 'premium'.
 			if ("premium" === menuType) return;
 
@@ -83,7 +75,7 @@ WpbfTheme.mobileMenu = (function ($) {
 			if (!this.href.match("#") && !this.href.match("/#")) return;
 
 			const hasSubmenu = this.parentNode.classList.contains(
-				"menu-item-has-children"
+				"menu-item-has-children",
 			);
 
 			// If the link doesn't have sub-menu, then simply close the mobile menu.
@@ -127,7 +119,7 @@ WpbfTheme.mobileMenu = (function ($) {
 		 * On mobile menu toggle click, we re-run the menu type setup and then run the toggling process.
 		 * The menu type setup need to be re-run to handle the behavior inside customizer.
 		 */
-		WpbfTheme.addEventHandler("click", ".wpbf-mobile-menu-toggle", function () {
+		listenDocumentEvent("click", ".wpbf-mobile-menu-toggle", function () {
 			setupMenuType();
 			toggleMobileMenu(menuType);
 		});
@@ -138,19 +130,16 @@ WpbfTheme.mobileMenu = (function ($) {
 			const windowWidth = document.documentElement.clientWidth;
 
 			const mobileNavWrapper = document.querySelector(
-				".wpbf-mobile-nav-wrapper"
+				".wpbf-mobile-nav-wrapper",
 			);
 
 			const mobileNavWrapperHeight = mobileNavWrapper
 				? mobileNavWrapper.offsetHeight
 				: 0;
 
-			WpbfTheme.site.processElements(
-				".wpbf-mobile-menu-container.active nav",
-				function (el) {
-					el.style.maxHeight = windowHeight - mobileNavWrapperHeight + "px";
-				}
-			);
+			forEachEl(".wpbf-mobile-menu-container.active nav", function (el) {
+				el.style.maxHeight = windowHeight - mobileNavWrapperHeight + "px";
+			});
 
 			if (windowWidth > breakpoints.desktop) {
 				closeMobileMenu(menuType);
@@ -249,7 +238,7 @@ WpbfTheme.mobileMenu = (function ($) {
 				? ".wpbf-mobile-menu-hamburger .wpbf-submenu-toggle"
 				: ".wpbf-mobile-menu-default .wpbf-submenu-toggle";
 
-		WpbfTheme.site.addEventHandler("click", menuClass, function (e) {
+		listenDocumentEvent("click", menuClass, function (e) {
 			e.preventDefault();
 			toggleMobileSubmenu(this);
 		});
@@ -332,4 +321,7 @@ WpbfTheme.mobileMenu = (function ($) {
 			closeMobileSubmenu(menuItem.querySelector(".wpbf-submenu-toggle"));
 		});
 	}
-})(jQuery);
+
+	// Run the module.
+	init();
+}

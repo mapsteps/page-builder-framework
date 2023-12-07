@@ -1,25 +1,21 @@
 /**
- * @typedef {Object} SiteModule
- * @property {boolean} isInsideCustomizer Whether we're inside customizer or not.
- * @property {Object} breakpoints Pre-defined breakpoints.
- * @property {string} activeBreakpoint The current active breakpoint.
- * @property {function(NodeList|string, function(Element))} processElements Method to iterates over a collection of elements and applies a function to each.
- * @property {function(string, string|null, function(Event))} addEventHandler Method to add event handler to the document.
- * @property {function(string|HTMLElement, string): string} getAttr Method to get attribute value of an element.
- * @property {function(string|HTMLElement, string): string} getAttrAsNumber Method to get attribute value of an element as number.
+ * Aura global object.
+ *
+ * @typedef {Object} Aura
+ * @property {function():DeviceBreakpoints} getBreakpoints Get breakpoint values for desktop, tablet, and mobile.
+ * @property {function():string} getActiveBreakpoint Get the current active breakpoint.
+ * @property {function():boolean} isInsideCustomizer Check whether we're inside customizer or not.
+ * @property {function(NodeList|string, function(Element))} forEachEl Iterates over a collection of elements and applies a function to each.
+ * @property {function(string, string|null, function(Event))} listenDocumentEvent Add document's event listener with optional selector to filter the target.
+ * @property {function(string|HTMLElement, string): string} getAttr Get attribute value of an element.
+ * @property {function(string|HTMLElement, string): string} getAttrAsNumber Get attribute value of an element as number.
  */
 
 /**
- * @typedef {Object} DesktopMenuModule
- */
-
-/**
- * @typedef {Object} MobileMenuModule
- */
-
-/**
- * @typedef {Object} WpbfTheme
- * @property {SiteModule} site Core module to handle the site wide JS functionality.
- * @property {DesktopMenuModule} desktopMenu Module to handle the desktop menu JS functionality.
- * @property {MobileMenuModule} mobileMenu Module to handle the mobile menu JS functionality.
+ * Pre-defined device breakpoints.
+ *
+ * @typedef {Object} DeviceBreakpoints
+ * @property {number} desktop
+ * @property {number} tablet
+ * @property {number} mobile
  */
