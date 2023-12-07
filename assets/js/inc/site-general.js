@@ -1,4 +1,4 @@
-import { getBreakpoints } from "./utils";
+import { forEachEl, getBreakpoints, listenDocumentEvent } from "./utils";
 
 /**
  * This module is intended to handle the site wide JS functionality.
@@ -7,7 +7,6 @@ import { getBreakpoints } from "./utils";
  * Along with the desktop-menu.js and mobile-menu.js, this file will be combined to site-min.js file.
  *
  * @param {JQuery} $ jQuery object.
- * @return {AuraSiteObject}
  */
 export default function setupSite($) {
 	const breakpoints = getBreakpoints();
@@ -33,7 +32,7 @@ export default function setupSite($) {
 		window.addEventListener("load", function () {
 			$(".opacity").delay(200).animate({ opacity: "1" }, 200);
 
-			processElements(".display-none", function (el) {
+			forEachEl(".display-none", function (el) {
 				el.style.display = "block";
 			});
 
@@ -87,7 +86,7 @@ export default function setupSite($) {
 		});
 
 		// Scroll to top functionality.
-		addEventHandler("click", ".scrolltop", function (e) {
+		listenDocumentEvent("click", ".scrolltop", function (e) {
 			document.body.tabIndex = -1;
 			document.body.focus();
 			this.blur();
@@ -99,7 +98,7 @@ export default function setupSite($) {
 	 * Support for Contact Form 7.
 	 */
 	function wpcf7support() {
-		processElements(".wpcf7-form-control-wrap", function (el) {
+		forEachEl(".wpcf7-form-control-wrap", function (el) {
 			el.addEventListener("mouseenter", function () {
 				$(".wpcf7-not-valid-tip", el).fadeOut();
 			});
@@ -121,7 +120,7 @@ export default function setupSite($) {
 			const pageWidth = page.offsetWidth;
 
 			// If page width is >= window width, then remove margin top & margin bottom.
-			if (pageWidth >= documument.documentElement.clientWidth) {
+			if (pageWidth >= document.documentElement.clientWidth) {
 				page.style.marginTop = "0";
 				page.style.marginBottom = "0";
 			} else {
