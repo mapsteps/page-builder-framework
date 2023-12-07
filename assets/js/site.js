@@ -12,10 +12,13 @@ import {
 	getBreakpoints,
 } from "./inc/utils";
 
-// Setup modules.
-setupSite(jQuery);
-setupDesktopMenu(jQuery);
-setupMobileMenu(jQuery);
+function init() {
+	setupSite(jQuery);
+	setupDesktopMenu(jQuery);
+	setupMobileMenu(jQuery);
+}
+
+init();
 
 const Aura = {
 	getBreakpoints: getBreakpoints,
@@ -25,6 +28,7 @@ const Aura = {
 	listenDocumentEvent: listenDocumentEvent,
 	getAttr: getAttr,
 	getAttrAsNumber: getAttrAsNumber,
+	reinit: init,
 };
 
 // Export Aura object to window.

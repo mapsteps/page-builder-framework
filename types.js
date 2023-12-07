@@ -9,6 +9,7 @@
  * @property {function(string, string|null, function(Event))} listenDocumentEvent Add document's event listener with optional selector to filter the target.
  * @property {function(string|HTMLElement, string): string} getAttr Get attribute value of an element.
  * @property {function(string|HTMLElement, string): string} getAttrAsNumber Get attribute value of an element as number.
+ * @property {function(): void} reinit Reinitialize the site scripts.
  */
 
 /**
