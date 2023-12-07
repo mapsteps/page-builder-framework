@@ -28,7 +28,6 @@ const Aura = {
 	listenDocumentEvent: listenDocumentEvent,
 	getAttr: getAttr,
 	getAttrAsNumber: getAttrAsNumber,
-	reinit: init,
 };
 
 // Export Aura object to window.
@@ -42,6 +41,3 @@ window.Wpbf = {
 		isInsideCustomizer: isInsideCustomizer(),
 	},
 };
-
-// Export Aura object to module.
-export default Aura;
