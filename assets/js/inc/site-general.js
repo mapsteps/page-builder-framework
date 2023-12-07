@@ -31,8 +31,8 @@ export default function setupSite($) {
 		// Executing various triggers on window load.
 		window.addEventListener("load", function () {
 			window.setTimeout(function () {
-				forEachEl('.opacity', function (el) {
-					el.classList.add('is-visible');
+				forEachEl(".opacity", function (el) {
+					el.classList.add("is-visible");
 				});
 			}, 200);
 
@@ -104,7 +104,16 @@ export default function setupSite($) {
 	function wpcf7support() {
 		forEachEl(".wpcf7-form-control-wrap", function (el) {
 			el.addEventListener("mouseenter", function () {
-				$(".wpcf7-not-valid-tip", el).fadeOut();
+				const tooltips = el.querySelectorAll(".wpcf7-not-valid-tip");
+
+				tooltips.forEach(function (tooltip) {
+					tooltip.classList.add("wpbf-fading");
+					tooltip.classList.add("wpbf-fade-out");
+
+					setTimeout(function () {
+						tooltip.style.display = "none";
+					}, 400);
+				});
 			});
 		});
 	}
