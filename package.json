@@ -8,10 +8,16 @@
 		"@parcel/optimizer-data-url": "2.6.0",
 		"@parcel/transformer-inline-string": "2.6.0",
 		"@parcel/transformer-sass": "2.6.0",
+		"@types/jquery": "^3.5.29",
 		"parcel": "^2.10.3",
 		"parcel-namer-rewrite": "2.10.3-rc.2",
 		"parcel-resolver-ignore": "^2.2.0",
-		"wp-prettier": "^3.0.3"
+		"prettier": "npm:wp-prettier@^3.0.3"
+	},
+	"alias": {
+		"jquery": {
+			"global": "jQuery"
+		}
 	},
 	"parcel-namer-rewrite": {
 		"hashing": "never",

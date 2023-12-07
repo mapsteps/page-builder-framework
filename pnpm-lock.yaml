@@ -14,6 +14,9 @@ devDependencies:
   '@parcel/transformer-sass':
     specifier: 2.6.0
     version: 2.6.0(@parcel/core@2.10.3)
+  '@types/jquery':
+    specifier: ^3.5.29
+    version: 3.5.29
   parcel:
     specifier: ^2.10.3
     version: 2.10.3
@@ -23,9 +26,9 @@ devDependencies:
   parcel-resolver-ignore:
     specifier: ^2.2.0
     version: 2.2.0(@parcel/core@2.10.3)
-  wp-prettier:
-    specifier: ^3.0.3
-    version: 3.0.3
+  prettier:
+    specifier: npm:wp-prettier@^3.0.3
+    version: /wp-prettier@3.0.3
 
 packages:
 
@@ -1282,6 +1285,16 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
+  /@types/jquery@3.5.29:
+    resolution: {integrity: sha512-oXQQC9X9MOPRrMhPHHOsXqeQDnWeCDT3PelUIg/Oy8FAbzSZtFHRjc7IpbfFVmpLtJ+UOoywpRsuO5Jxjybyeg==}
+    dependencies:
+      '@types/sizzle': 2.3.8
+    dev: true
+
+  /@types/sizzle@2.3.8:
+    resolution: {integrity: sha512-0vWLNK2D5MT9dg0iOo8GlKguPAU02QjmZitPEsXRuJXU/OGIOt9vT9Fc26wtYuavLxtO45v9PGleoL9Z0k1LHg==}
+    dev: true
+
   /abortcontroller-polyfill@1.7.5:
     resolution: {integrity: sha512-JMJ5soJWP18htbbxJjG7bG6yuI6pRhgJ0scHHTfkUjf6wjP912xZWvM+A4sJK3gqd9E8fcPbDnOefbA9Th/FIQ==}
     dev: true
@@ -1355,7 +1368,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001566
-      electron-to-chromium: 1.4.605
+      electron-to-chromium: 1.4.607
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: true
@@ -1555,8 +1568,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /electron-to-chromium@1.4.605:
-    resolution: {integrity: sha512-V52j+P5z6cdRqTjPR/bYNxx7ETCHIkm5VIGuyCy3CMrfSnbEpIlLnk5oHmZo7gYvDfh2TfHeanB6rawyQ23ktg==}
+  /electron-to-chromium@1.4.607:
+    resolution: {integrity: sha512-YUlnPwE6eYxzwBnFmawA8LiLRfm70R2aJRIUv0n03uHt/cUzzYACOogmvk8M2+hVzt/kB80KJXx7d5f5JofPvQ==}
     dev: true
 
   /entities@2.2.0:
