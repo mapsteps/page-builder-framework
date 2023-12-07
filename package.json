@@ -23,7 +23,8 @@
 		"hashing": "never",
 		"silent": true,
 		"rules": {
-			"(.*).js": "$1-min.js"
+			"(.*).js": "$1-min.js",
+			"(.*).css": "$1-min.css"
 		}
 	},
 	"parcelIgnore": [
@@ -32,7 +33,7 @@
 	"browserslist": "> 0.5%, last 2 versions, not dead",
 	"scripts": {
 		"build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps --no-cache",
-		"build-site-css": "parcel build assets/scss/style.scss --dist-dir ./ --no-source-maps --no-cache",
+		"build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min --no-source-maps --no-cache",
 		"build-site": "npm run build-site-js && npm run build-site-css",
 		"build-individual-js": "parcel build \"assets/js/!(site|desktop-menu|mobile-menu|libraries)*.js\" --dist-dir js/min --no-source-maps --no-cache",
 		"build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps --no-cache",

@@ -186,7 +186,7 @@ function wpbf_scripts() {
 	}
 
 	// Main stylesheet.
-	wp_enqueue_style( 'wpbf-style', get_template_directory_uri() . '/style.css', '', WPBF_VERSION );
+	wp_enqueue_style( 'wpbf-style', get_template_directory_uri() . '/css/min/style-min.css', '', WPBF_VERSION );
 
 	// Responsive styles.
 	wp_enqueue_style( 'wpbf-responsive', get_template_directory_uri() . '/css/min/responsive-min.css', '', WPBF_VERSION );
