@@ -165,6 +165,13 @@
 			z-index: 111;
 			background: #fff;
 			@include box-shadow(0px 0px 10px 0px rgba(#000, 0.15));
+			// The old jQuery-based code had default jQuery animate duration (400ms).
+			transition: opacity 0.4s ease-in-out;
+
+			&.is-visible {
+				display: block;
+				opacity: 1;
+			}
 		}
 	}
 }

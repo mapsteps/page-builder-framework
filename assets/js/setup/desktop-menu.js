@@ -220,11 +220,19 @@ export default function setupDesktopMenu($) {
 			"mouseenter",
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
 			function (e) {
-				$(".sub-menu", this)
-					.first()
-					.stop()
-					.css({ display: "block" })
-					.animate({ opacity: "1" }, duration);
+				const submenus = this.querySelector(".sub-menu");
+				if (!submenus.length) return;
+				const submenu = submenus[0];
+				submenu.classList.add(".is-visible");
+
+				const styleTag = generateStyleTagFromEl(
+					submenu,
+					`.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children .sub-menu.is-visible {transition-duration: ${duration}ms;}`,
+				);
+
+				setTimeout(function () {
+					styleTag.parentNode.removeChild(styleTag);
+				}, duration);
 			},
 		);
 
@@ -232,12 +240,10 @@ export default function setupDesktopMenu($) {
 			"mouseleave",
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
 			function () {
-				$(".sub-menu", this)
-					.first()
-					.stop()
-					.animate({ opacity: "0" }, duration, function () {
-						this.classList.style.display = "none";
-					});
+				const submenus = this.querySelector(".sub-menu");
+				if (!submenus.length) return;
+				const submenu = submenus[0];
+				submenu.classList.remove(".is-visible");
 			},
 		);
 	}
