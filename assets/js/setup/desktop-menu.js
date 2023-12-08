@@ -16,7 +16,7 @@ import {
  *
  * Along with the site.js and mobile-menu.js, this file will be combined to site-min.js file.
  */
-export default function setupDesktopMenu($) {
+export default function setupDesktopMenu() {
 	/**
 	 * The sub-menu animation duration.
 	 */
@@ -378,7 +378,12 @@ export default function setupDesktopMenu($) {
 		});
 
 		// Hide other sub-menus that could be open due to mouse hover interference.
-		$(".wpbf-sub-menu > .menu-item-has-children > .sub-menu").stop().hide();
+		forEachEl(
+			".wpbf-sub-menu > .menu-item-has-children > .sub-menu",
+			function (el) {
+				el.style.display = "none";
+			},
+		);
 
 		let menuItem = this;
 
