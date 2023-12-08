@@ -158,6 +158,14 @@ export function getActiveBreakpoint() {
 	return activeBreakpoint;
 }
 
+/**
+ * Direct query selector. It's like el.querySelector(':scope > selector') but supports older browsers.
+ *
+ * @param {HTMLElement} el The parent element.
+ * @param {string} selector The selector.
+ *
+ * @return {HTMLElement|null} The element or null.
+ */
 export function directQuerySelector(el, selector) {
 	let className = el.className;
 
