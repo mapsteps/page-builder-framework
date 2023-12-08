@@ -189,3 +189,31 @@ export function directQuerySelector(el, selector) {
 
 	return result;
 }
+
+/**
+ * Get siblings of an element.
+ * The "el" parameter is can be in any position (not only first child).
+ *
+ * @param {HTMLElement} el The element.
+ * @param {string} selector The selector.
+ *
+ * @return {Array<HTMLElement>} The siblings.
+ */
+export function getSiblings(el, selector) {
+	if (!el.parentNode) return [];
+
+	const siblings = [];
+	let sibling = el.parentNode.firstChild;
+
+	while (sibling) {
+		if (sibling.nodeType === 1 && sibling !== el) {
+			if (!selector || sibling.matches(selector)) {
+				siblings.push(sibling);
+			}
+		}
+
+		sibling = sibling.nextSibling;
+	}
+
+	return siblings;
+}
