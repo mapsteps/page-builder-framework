@@ -1,9 +1,9 @@
+import { hideElAfterDelay } from "../utils/anim-utils";
 import {
 	forEachEl,
 	getBreakpoints,
-	hideElAfterDelay,
 	listenDocumentEvent,
-} from "./utils";
+} from "../utils/dom-utils";
 
 /**
  * This module is intended to handle the site wide JS functionality.
@@ -88,9 +88,22 @@ export default function setupSite($) {
 		// Show or hide scroll-to-top button on window scroll event.
 		window.addEventListener("scroll", function (e) {
 			if (window.scrollY > scrollTopValue) {
-				$(".scrolltop").fadeIn();
+				forEachEl(".scrolltop", function (el) {
+					el.classList.add("wpbf-fading");
+					el.classList.add("wpbf-fade-in");
+					hideElAfterDelay(el, 400);
+					$(".scrolltop").fadeIn();
+				});
 			} else {
-				$(".scrolltop").fadeOut();
+				forEachEl(".scrolltop", function (el) {
+					if (el.classList.contains("wpbf-fade-in")) {
+						el.classList.remove("wpbf-fade-in");
+					}
+
+					el.classList.add("wpbf-fading");
+					el.classList.add("wpbf-fade-out");
+					hideElAfterDelay(el, 400);
+				});
 			}
 		});
 
