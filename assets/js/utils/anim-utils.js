@@ -97,6 +97,55 @@ export function removeInlineDisplayNotNone(el) {
 }
 
 /**
+ * Get the value of inline style's width property.
+ *
+ * @param {HTMLElement} el The element to get the inline width from.
+ * @return {string|boolean} The inline width value. Returns false if no inline width is found.
+ */
+export function getInlineWidth(el) {
+	const styleContent = el.getAttribute("style");
+	if (!styleContent) return false;
+
+	// The width value can be px or % or other units. Generate the regex regardless of the units.
+	const regex = new RegExp(`width\\s*:\\s*(\\d+\\w+)\\s*;`);
+	const match = styleContent.match(regex);
+
+	if (match) {
+		return match[1];
+	}
+
+	return false;
+}
+
+export function removeInlineWidth(el) {
+	const styleContent = el.getAttribute("style");
+
+	if (getInlineWidth(el)) {
+		el.setAttribute(
+			"style",
+			styleContent.replace(/width\s*:\s*(\d+\w+)\s*;/, ""),
+		);
+	}
+}
+
+/**
+ * Generate a style tag from an HTML element.
+ *
+ * @param {HTMLElement} el The element to generate the style tag from.
+ * @param {string} styleContent The style content.
+ * @return {HTMLStyleElement} The style tag.
+ */
+export function generateStyleTagFromEl(el, styleContent) {
+	const id = el.id ? el.id : Math.random().toString(36).substring(2, 9);
+	const styleTag = document.createElement("style");
+	styleTag.id = `aura-style-${id}`;
+	styleTag.innerHTML = styleContent;
+	document.head.appendChild(styleTag);
+
+	return styleTag;
+}
+
+/**
  * Get the animation style tag.
  *
  * @returns {HTMLElement} The animation style tag.

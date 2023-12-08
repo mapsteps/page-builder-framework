@@ -12,7 +12,7 @@
 	position: relative;
 }
 
-.wpbf-navigation {	
+.wpbf-navigation {
 	.wpbf-grid-collapse {
 		display: table;
 		width: 100%;
@@ -67,9 +67,11 @@
 /* Search menu item */
 .wpbf-menu-item-search {
 	position: relative;
+
 	&.active i {
 		opacity: 0;
 	}
+
 	.wpbf-menu-search {
 		position: absolute;
 		z-index: 3;
@@ -80,7 +82,22 @@
 		opacity: 0;
 		width: 0;
 		max-width: 350px;
-		input[type=search] {
+		// The old jQuery-based code had a 250ms transition duration when collapsing.
+		transition:
+			width 0.25s ease-in-out,
+			opacity 0.25s ease-in-out;
+
+		// The width property will be set via JS.
+		&.is-visible {
+			display: block;
+			opacity: 1;
+			// The old jQuery-based code had a 200ms transition duration when expanding.
+			transition:
+				width 0.2s ease-in-out,
+				opacity 0.2s ease-in-out;
+		}
+
+		input[type="search"] {
 			height: 50px;
 		}
 	}
@@ -89,7 +106,8 @@
 /* Menu */
 
 // Animation
-.wpbf-mobile-menu a, .wpbf-menu a {
+.wpbf-mobile-menu a,
+.wpbf-menu a {
 	@include transition(all 0.2s);
 }
 
@@ -120,7 +138,7 @@
 			position: absolute;
 			z-index: 111;
 			background: #fff;
-			@include box-shadow(0px 0px 10px 0px rgba(#000,.15));
+			@include box-shadow(0px 0px 10px 0px rgba(#000, 0.15));
 		}
 	}
 }
@@ -146,7 +164,7 @@
 			position: absolute;
 			z-index: 111;
 			background: #fff;
-			@include box-shadow(0px 0px 10px 0px rgba(#000,.15));
+			@include box-shadow(0px 0px 10px 0px rgba(#000, 0.15));
 		}
 	}
 }
@@ -168,26 +186,35 @@
 		> a .wpbff {
 			transform: rotate(-90deg);
 			float: right;
-			top: .3em;
+			top: 0.3em;
 			position: relative;
 		}
 	}
 }
 
 // Sub menu modifier (alignment)
-.wpbf-sub-menu-align-right > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {
+.wpbf-sub-menu-align-right
+	> .menu-item-has-children:not(.wpbf-mega-menu)
+	.sub-menu {
 	right: 0;
 }
-.wpbf-sub-menu-align-right > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
+.wpbf-sub-menu-align-right
+	> .menu-item-has-children:not(.wpbf-mega-menu)
+	.menu-item-has-children {
 	> a:after {
 		display: none;
 	}
 }
-.wpbf-sub-menu-align-right > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children .sub-menu {
+.wpbf-sub-menu-align-right
+	> .menu-item-has-children:not(.wpbf-mega-menu)
+	.menu-item-has-children
+	.sub-menu {
 	left: -100%;
 }
 
-.wpbf-sub-menu-align-center > .menu-item-has-children:not(.wpbf-mega-menu) > .sub-menu {
+.wpbf-sub-menu-align-center
+	> .menu-item-has-children:not(.wpbf-mega-menu)
+	> .sub-menu {
 	left: 50%;
 	-webkit-transform: translateX(-50%);
 	-ms-transform: translateX(-50%);
@@ -241,7 +268,7 @@
 	.logo-container {
 		display: none;
 		text-align: center;
-		padding:  0 $padding;
+		padding: 0 $padding;
 		a {
 			padding: 0;
 		}
@@ -420,7 +447,7 @@
 	}
 }
 
- // Right navigation
+// Right navigation
 .wpbf-pre-header {
 	.wpbf-inner-pre-header-right {
 		.wpbf-menu {
@@ -446,16 +473,16 @@
 // One column navigation
 .wpbf-page-footer {
 	.wpbf-inner-footer-content {
- 		.wpbf-menu {
-	 		@include flex();
-	 		align-items: center;
-	 		justify-content: center;
+		.wpbf-menu {
+			@include flex();
+			align-items: center;
+			justify-content: center;
 			flex-wrap: wrap;
- 		}
- 	}
- }
+		}
+	}
+}
 
- // Right navigation
+// Right navigation
 .wpbf-page-footer {
 	.wpbf-inner-footer-right {
 		.wpbf-menu {
@@ -476,9 +503,6 @@
 /* Post navigation */
 .post-links {
 	margin-bottom: $margin;
-}
-
-.previous-post-link {
 }
 
 .next-post-link {

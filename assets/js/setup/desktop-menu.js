@@ -1,4 +1,9 @@
 import {
+	generateStyleTagFromEl,
+	getInlineWidth,
+	removeInlineWidth,
+} from "../utils/anim-utils";
+import {
 	forEachEl,
 	getAttrAsNumber,
 	isInsideCustomizer,
@@ -9,8 +14,6 @@ import {
  * This module is intended to handle the desktop menu JS functionality.
  *
  * Along with the site.js and mobile-menu.js, this file will be combined to site-min.js file.
- *
- * @param {jQuery} $ jQuery object.
  */
 export default function setupDesktopMenu($) {
 	/**
@@ -49,7 +52,7 @@ export default function setupDesktopMenu($) {
 		// Expand search field on click.
 		listenDocumentEvent("click", ".wpbf-menu-item-search", function (e) {
 			e.stopPropagation();
-			expandSearchField(this);
+			openSearchField(this);
 		});
 
 		// Close search on window click.
@@ -77,7 +80,7 @@ export default function setupDesktopMenu($) {
 	 *
 	 * @param {HTMLElement} menuItem The menu item.
 	 */
-	function expandSearchField(menuItem) {
+	function openSearchField(menuItem) {
 		const allMenuItems = document.querySelectorAll(
 			".wpbf-navigation .wpbf-menu > li",
 		);
@@ -102,16 +105,24 @@ export default function setupDesktopMenu($) {
 			menuItem.classList.add("active");
 			menuItem.setAttribute("aria-expanded", "true");
 
-			$(".wpbf-menu-search", menuItem)
-				.stop()
-				.css({ display: "block" })
-				.animate({ width: itemWidth, opacity: "1" }, 200);
-
 			const searchField = menuItem.querySelector("input[type=search]");
 
 			if (searchField) {
+				// The .is-visible doesn't have the width, let's add it to the style block.
+				const styleTag = generateStyleTagFromEl(
+					searchField,
+					`.wpbf-menu-item-search .wpbf-menu-search.is-visible {width: ${itemWidth}px;}`,
+				);
+
+				searchField.classList.add("is-visible");
 				searchField.value = "";
 				searchField.focus();
+
+				setTimeout(function () {
+					// We're going to remove the styleTag, so the width will be written in the inline style.
+					searchField.style.width = `${itemWidth}px`;
+					styleTag.parentNode.removeChild(styleTag);
+				}, 200);
 			}
 		}
 	}
@@ -125,11 +136,24 @@ export default function setupDesktopMenu($) {
 				return;
 			}
 
-			$(".wpbf-menu-search", el)
-				.stop()
-				.animate({ opacity: "0", width: "0px" }, 250, function () {
-					this.classList.style.display = "none";
-				});
+			const searchField = el.querySelector(".wpbf-menu-search");
+
+			if (searchField) {
+				let inlineWidth = getInlineWidth(searchField);
+				inlineWidth = inlineWidth ? inlineWidth : "100%";
+
+				const styleTag = generateStyleTagFromEl(
+					searchField,
+					`.wpbf-menu-item-search .wpbf-menu-search.is-visible {width: ${inlineWidth};}`,
+				);
+
+				removeInlineWidth(searchField);
+				searchField.classList.remove("is-visible");
+
+				setTimeout(function () {
+					styleTag.parentNode.removeChild(styleTag);
+				}, 250);
+			}
 
 			setTimeout(function () {
 				el.classList.remove("active");
