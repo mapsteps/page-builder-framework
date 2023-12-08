@@ -1,6 +1,7 @@
 import {
 	forEachEl,
 	getBreakpoints,
+	getSiblings,
 	listenDocumentEvent,
 } from "../utils/dom-utils";
 
@@ -8,8 +9,6 @@ import {
  * This module is intended to handle the mobile menu JS functionality.
  *
  * Along with the site.js and desktop-menu.js, this file will be combined to site-min.js file.
- *
- * @param {Object} $ jQuery object.
  */
 export default function setupMobileMenu($) {
 	let breakpoints = getBreakpoints();
@@ -86,8 +85,8 @@ export default function setupMobileMenu($) {
 			if (!hasSubmenu) {
 				closeMobileMenu(menuType);
 			} else {
-				if ($(this).closest(".wpbf-mobile-mega-menu").length) {
-					// But the link has sub-menu, and its top level parent menu item is a mega menu, then close the mobile menu.
+				if (this.closest(".wpbf-mobile-mega-menu")) {
+					// But if the link has sub-menu, and its top level parent menu item is a mega menu, then close the mobile menu.
 					closeMobileMenu(menuType);
 				} else {
 					// And if its top level parent menu item is not a mega menu, then toggle it's sub-menu.
@@ -103,10 +102,10 @@ export default function setupMobileMenu($) {
 	 * @param {HTMLElement} link The anchor element of the menu item.
 	 */
 	function toggleMobileSubmenuOnHashLinkClick(link) {
-		let toggle = $(link).siblings(".wpbf-submenu-toggle");
-		if (!toggle.length) return;
+		let toggles = getSiblings(link, ".wpbf-submenu-toggle");
+		if (!toggles.length) return;
 
-		toggle = toggle[0];
+		const toggle = toggle[0];
 
 		if (toggle.classList.contains("active")) {
 			closeMobileSubmenu(toggle);
