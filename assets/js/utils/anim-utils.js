@@ -273,3 +273,26 @@ export function fadeOut(el, duration) {
 		el.classList.remove(`aura-duration-${duration}`);
 	}, duration);
 }
+
+export function animateScrollTop(targetPosition, duration) {
+	const startPosition = window.scrollY;
+	const distance = targetPosition - startPosition;
+	const startTime = performance.now();
+
+	function swing(time, start, change, duration) {
+		return (
+			start + change / 2 - (change / 2) * Math.cos((Math.PI * time) / duration)
+		);
+	}
+
+	function scrollStep(timestamp) {
+		const currentTime = timestamp - startTime;
+		window.scrollTo(0, swing(currentTime, startPosition, distance, duration));
+
+		if (currentTime < duration) {
+			requestAnimationFrame(scrollStep);
+		}
+	}
+
+	requestAnimationFrame(scrollStep);
+}

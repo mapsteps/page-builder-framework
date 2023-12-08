@@ -445,10 +445,11 @@ body {
 	background-color: rgba(#000, 0.5);
 	bottom: 20px;
 	right: 20px;
+	// Default jQuery fading duration is 400ms.
 	transition:
 		background-color 0.2s,
-		opacity 0.2s,
-		visibility 0.2s;
+		opacity 0.4s,
+		visibility 0.4s;
 	opacity: 0;
 	visibility: hidden;
 	color: #fff;

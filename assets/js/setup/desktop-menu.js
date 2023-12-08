@@ -3,7 +3,7 @@ import {
 	getAttrAsNumber,
 	isInsideCustomizer,
 	listenDocumentEvent,
-} from "./utils";
+} from "../utils/dom-utils";
 
 /**
  * This module is intended to handle the desktop menu JS functionality.

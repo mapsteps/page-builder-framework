@@ -1,4 +1,8 @@
-import { forEachEl, getBreakpoints, listenDocumentEvent } from "./utils";
+import {
+	forEachEl,
+	getBreakpoints,
+	listenDocumentEvent,
+} from "../utils/dom-utils";
 
 /**
  * This module is intended to handle the mobile menu JS functionality.

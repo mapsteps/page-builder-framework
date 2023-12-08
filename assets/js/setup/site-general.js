@@ -1,4 +1,4 @@
-import { hideElAfterDelay } from "../utils/anim-utils";
+import { animateScrollTop, hideElAfterDelay } from "../utils/anim-utils";
 import {
 	forEachEl,
 	getBreakpoints,
@@ -7,13 +7,11 @@ import {
 
 /**
  * This module is intended to handle the site wide JS functionality.
- * Except for the desktop menu and mobile menu.
+ * Except for the desktop menu and mobile menu functionality.
  *
  * Along with the desktop-menu.js and mobile-menu.js, this file will be combined to site-min.js file.
- *
- * @param {JQuery} $ jQuery object.
  */
-export default function setupSite($) {
+export default function setupSite() {
 	const breakpoints = getBreakpoints();
 
 	/**
@@ -89,20 +87,11 @@ export default function setupSite($) {
 		window.addEventListener("scroll", function (e) {
 			if (window.scrollY > scrollTopValue) {
 				forEachEl(".scrolltop", function (el) {
-					el.classList.add("wpbf-fading");
-					el.classList.add("wpbf-fade-in");
-					hideElAfterDelay(el, 400);
-					$(".scrolltop").fadeIn();
+					el.classList.add(".is-visible");
 				});
 			} else {
 				forEachEl(".scrolltop", function (el) {
-					if (el.classList.contains("wpbf-fade-in")) {
-						el.classList.remove("wpbf-fade-in");
-					}
-
-					el.classList.add("wpbf-fading");
-					el.classList.add("wpbf-fade-out");
-					hideElAfterDelay(el, 400);
+					el.classList.remove(".is-visible");
 				});
 			}
 		});
@@ -112,7 +101,7 @@ export default function setupSite($) {
 			document.body.tabIndex = -1;
 			document.body.focus();
 			this.blur();
-			$("body, html").animate({ scrollTop: 0 }, 500);
+			animateScrollTop(0, 500);
 		});
 	}
 

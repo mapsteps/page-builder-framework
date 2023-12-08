@@ -1,6 +1,6 @@
-import setupDesktopMenu from "./inc/desktop-menu";
-import setupMobileMenu from "./inc/mobile-menu";
-import setupSite from "./inc/site-general";
+import setupDesktopMenu from "./setup/desktop-menu";
+import setupMobileMenu from "./setup/mobile-menu";
+import setupSite from "./setup/site-general";
 import {
 	getBreakpoints,
 	forEachEl,
@@ -10,10 +10,10 @@ import {
 	isInsideCustomizer,
 	listenDocumentEvent,
 	getBreakpoints,
-} from "./inc/utils";
+} from "./utils/dom-utils";
 
 function init() {
-	setupSite(jQuery);
+	setupSite();
 	setupDesktopMenu(jQuery);
 	setupMobileMenu(jQuery);
 }
