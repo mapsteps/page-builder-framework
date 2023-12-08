@@ -186,7 +186,13 @@ export default function setupMobileMenu($) {
 		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
 		if (!toggle) return;
 
-		$(".wpbf-mobile-menu-container").addClass("active").stop().slideDown();
+		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
+
+		if (mobileMenu) {
+			mobileMenu.classList.add("active");
+			$(mobileMenu).stop().slideDown();
+		}
+
 		toggle.classList.add("active");
 		toggle.setAttribute("aria-expanded", "true");
 
@@ -212,7 +218,13 @@ export default function setupMobileMenu($) {
 		// Because this function is also being called directly in several places, then we need this checking.
 		if (!toggle.classList.contains("active")) return;
 
-		$(".wpbf-mobile-menu-container").removeClass("active").stop().slideUp();
+		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
+
+		if (mobileMenu) {
+			mobileMenu.classList.remove("active");
+			$(mobileMenu).stop().slideUp();
+		}
+
 		toggle.classList.remove("active");
 		toggle.setAttribute("aria-expanded", "false");
 
@@ -275,7 +287,12 @@ export default function setupMobileMenu($) {
 
 		toggle.classList.add("active");
 		toggle.setAttribute("aria-expanded", "true");
-		$(toggle).siblings(".sub-menu").stop().slideDown();
+
+		const submenus = getSiblings(toggle, ".sub-menu");
+
+		submenus.forEach(function (submenu) {
+			$(submenu).stop().slideDown();
+		});
 
 		autoCollapseMobileSubmenus(toggle);
 	}
@@ -295,7 +312,12 @@ export default function setupMobileMenu($) {
 
 		toggle.classList.remove("active");
 		toggle.setAttribute("aria-expanded", "false");
-		$(toggle).siblings(".sub-menu").stop().slideUp();
+
+		const submenus = getSiblings(toggle, ".sub-menu");
+
+		submenus.forEach(function (submenu) {
+			$(submenu).stop().slideUp();
+		});
 	}
 
 	/**
@@ -307,21 +329,28 @@ export default function setupMobileMenu($) {
 	 * @param {HTMLElement} toggle The submenu's toggle button (the expand/collapse arrow) of the current clicked menu item.
 	 */
 	function autoCollapseMobileSubmenus(toggle) {
-		// If wpbf navigation doesn't have mobile submenu collapse class, then stop here.
-		if (
-			!$(toggle)
-				.closest(".wpbf-navigation")
-				.hasClass("wpbf-mobile-sub-menu-auto-collapse")
-		)
-			return;
+		const nav = toggle.closest(".wpbf-navigation");
+
+		if (nav) {
+			// If wpbf navigation exists but doesn't have mobile submenu collapse class, then stop here.
+			if (!nav.classList.contains("wpbf-mobile-sub-menu-auto-collapse")) {
+				return;
+			}
+		}
 
 		// The same level menu items in the same parent element.
-		const $sameLevelItems = $(toggle)
-			.closest(".menu-item-has-children")
-			.siblings(".menu-item-has-children");
+		let sameLevelItems = [];
 
-		$sameLevelItems.each(function (i, menuItem) {
-			closeMobileSubmenu(menuItem.querySelector(".wpbf-submenu-toggle"));
+		const menuItem = toggle.closest(".menu-item-has-children");
+
+		if (menuItem) {
+			sameLevelItems = getSiblings(menuItem, ".menu-item-has-children");
+		}
+
+		sameLevelItems.forEach(function (item) {
+			const submenuToggle = item.querySelector(".wpbf-submenu-toggle");
+			if (!submenuToggle) return;
+			closeMobileSubmenu(submenuToggle);
 		});
 	}
 
