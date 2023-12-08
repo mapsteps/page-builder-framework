@@ -143,3 +143,18 @@ textarea {
 .wpbf-is-hidden {
 	display: none;
 }
+
+.wpbf-fading {
+	// jQuery fadeOut duration default is 400ms.
+	transition: all 0.4s ease-in-out;
+}
+
+.wpbf-fade-in {
+	opacity: 1 !important;
+	visibility: visible !important;
+}
+
+.wpbf-fade-out {
+	opacity: 0 !important;
+	visibility: hidden !important;
+}
