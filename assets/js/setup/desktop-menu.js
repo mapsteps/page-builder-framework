@@ -4,6 +4,7 @@ import {
 	removeInlineWidth,
 } from "../utils/anim-utils";
 import {
+	directQuerySelector,
 	forEachEl,
 	getAttrAsNumber,
 	isInsideCustomizer,
@@ -343,8 +344,8 @@ export default function setupDesktopMenu($) {
 					el.classList.remove("wpbf-sub-menu-focus");
 				});
 
-				// Focus on the current menu item. This will help if tab-navigation was used earlier.
-				$(this).find("> a").focus();
+				const link = directQuerySelector(this, "a");
+				if (link) link.focus();
 			},
 		);
 

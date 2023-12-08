@@ -157,3 +157,27 @@ export function getActiveBreakpoint() {
 
 	return activeBreakpoint;
 }
+
+export function directQuerySelector(el, selector) {
+	let className = el.className;
+
+	// Trim leading and trailing spaces.
+	className = className.replace(/^\s+|\s+$/g, "");
+
+	// Remove space and replace it with . (dot)
+	className = className.replace(/\s/g, ".");
+
+	const parent = this.parentNode;
+	const children = parent.querySelectorAll(`.${className} > ${selector}`);
+	if (!children.length) return null;
+
+	let result = null;
+
+	for (let i = 0; i < children.length; i++) {
+		if (children[i].parentNode != el) continue;
+		result = children[i];
+		break;
+	}
+
+	return result;
+}
