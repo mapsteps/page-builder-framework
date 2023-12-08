@@ -34,6 +34,11 @@ export function getInlineWidth(el) {
 	return false;
 }
 
+/**
+ * Remove inline style's width property.
+ *
+ * @param {HTMLElement} el The element to remove the inline width from.
+ */
 export function removeInlineWidth(el) {
 	const styleContent = el.getAttribute("style");
 
@@ -50,6 +55,7 @@ export function removeInlineWidth(el) {
  *
  * @param {HTMLElement} el The element to generate the style tag from.
  * @param {string} styleContent The style content.
+ *
  * @return {HTMLStyleElement} The style tag.
  */
 export function generateStyleTagFromEl(el, styleContent) {
@@ -62,6 +68,12 @@ export function generateStyleTagFromEl(el, styleContent) {
 	return styleTag;
 }
 
+/**
+ * Animate scroll top.
+ *
+ * @param {number} targetPosition The target position to scroll to.
+ * @param {number} duration The duration in milliseconds.
+ */
 export function animateScrollTop(targetPosition, duration) {
 	const startPosition = window.scrollY;
 	const distance = targetPosition - startPosition;
