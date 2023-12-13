@@ -73,6 +73,7 @@
 	}
 
 	.wpbf-menu-search {
+		display: none;
 		position: absolute;
 		z-index: 3;
 		top: 50%;
@@ -85,10 +86,6 @@
 		transition:
 			width 0.25s ease-in-out,
 			opacity 0.25s ease-in-out;
-
-		&.is-hidden {
-			display: none;
-		}
 
 		// The width property will be set via JS.
 		&.is-expanded {

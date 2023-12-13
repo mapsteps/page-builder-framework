@@ -1,6 +1,5 @@
 import {
 	getStyleTagByEl,
-	getInlineWidth,
 	removeInlineWidth,
 	getStyleTagIdByEl,
 } from "../utils/anim-utils";
@@ -119,10 +118,13 @@ export default function setupDesktopMenu() {
 				// The .is-expanded doesn't have the width, let's add it to the style block.
 				getStyleTagByEl(
 					searchArea,
-					`.wpbf-menu-item-search .wpbf-menu-search.is-expanded {width: ${itemWidth}px;}`,
+					`
+					.wpbf-menu-item-search .wpbf-menu-search.display-block {display: block;}
+					.wpbf-menu-item-search .wpbf-menu-search.is-expanded {width: ${itemWidth}px;}
+					`,
 				);
 
-				searchArea.classList.remove("is-hidden");
+				searchArea.classList.add("display-block");
 
 				setTimeout(function () {
 					searchArea.classList.add("is-expanded");
@@ -146,11 +148,10 @@ export default function setupDesktopMenu() {
 			const searchField = el.querySelector(".wpbf-menu-search");
 
 			if (searchField) {
-				removeInlineWidth(searchField);
 				searchField.classList.remove("is-expanded");
 
 				setTimeout(function () {
-					searchField.classList.add("is-hidden");
+					searchField.classList.remove("display-block");
 				}, 250);
 			}
 

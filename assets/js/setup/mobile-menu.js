@@ -1,4 +1,4 @@
-import { getStyleTagByEl } from "../utils/anim-utils";
+import { getStyleTagByEl, getStyleTagIdByEl } from "../utils/anim-utils";
 import {
 	forEachEl,
 	getBreakpoints,
@@ -194,12 +194,14 @@ export default function setupMobileMenu() {
 			mobileMenu.classList.add("active");
 
 			const pureHeight = getPureHeight(mobileMenu);
+			const styleTagId = getStyleTagIdByEl(mobileMenu);
+			const submenuId = styleTagId.replace("aura-style-", "");
 
 			getStyleTagByEl(
 				mobileMenu,
 				`
-				.wpbf-mobile-menu-container.aura-slide-anim {display: block; height: 0;}
-				.wpbf-mobile-menu-container.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.aura-slide-anim {display: block; height: 0;}
+				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);
 
@@ -313,11 +315,13 @@ export default function setupMobileMenu() {
 
 		submenus.forEach(function (submenu) {
 			const pureHeight = getPureHeight(submenu);
+			const styleTagId = getStyleTagIdByEl(submenu);
+			const submenuId = styleTagId.replace("aura-style-", "");
 
 			getStyleTagByEl(
 				submenu,
-				`.wpbf-mobile-menu .sub-menu.aura-slide-anim {display: block; height: 0;}`,
-				`.wpbf-mobile-menu .sub-menu.aura-slide-anim.is-expanded {height: ${pureHeight}px;}`,
+				`#${submenuId}.aura-slide-anim {display: block; height: 0;}`,
+				`#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}`,
 			);
 
 			submenu.classList.add("aura-slide-anim");
