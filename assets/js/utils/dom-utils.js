@@ -32,13 +32,28 @@ export function listenDocumentEvent(eventType, selector, handler) {
 	if (typeof eventType !== "string") return;
 	if (typeof handler !== "function") return;
 
-	document.addEventListener(eventType, function (e) {
+	let eventName = eventType;
+
+	switch (eventType) {
+		case "mouseenter":
+			eventName = "mouseover";
+			break;
+
+		case "mouseleave":
+			eventName = "mouseout";
+			break;
+	}
+
+	document.addEventListener(eventName, function (e) {
+		let target = e.target;
+
 		if (selector) {
-			if (!e.target || !e.target.matches) return;
-			if (!e.target.matches(selector)) return;
+			if (!e.target || !e.target.closest) return;
+			target = e.target.closest(selector);
+			if (!target) return;
 		}
 
-		handler.bind(e.target)(e);
+		handler.call(target, e);
 	});
 }
 
@@ -175,7 +190,7 @@ export function directQuerySelector(el, selector) {
 	// Remove space and replace it with . (dot)
 	className = className.replace(/\s/g, ".");
 
-	const parent = this.parentNode;
+	const parent = el.parentNode;
 	const children = parent.querySelectorAll(`.${className} > ${selector}`);
 	if (!children.length) return null;
 
