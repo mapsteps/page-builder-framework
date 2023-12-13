@@ -91,7 +91,7 @@
 		}
 
 		// The width property will be set via JS.
-		&.is-visible {
+		&.is-expanded {
 			opacity: 1;
 			// The old jQuery-based code had a 200ms transition duration when expanding.
 			transition:
@@ -141,11 +141,6 @@
 			z-index: 111;
 			background: #fff;
 			@include box-shadow(0px 0px 10px 0px rgba(#000, 0.15));
-
-			&.is-visible {
-				display: block;
-				opacity: 1;
-			}
 		}
 	}
 }
@@ -177,11 +172,6 @@
 			@include box-shadow(0px 0px 10px 0px rgba(#000, 0.15));
 			// The old jQuery-based code had default jQuery animate duration (400ms).
 			transition: opacity 0.4s ease-in-out;
-
-			&.is-visible {
-				display: block;
-				opacity: 1;
-			}
 		}
 	}
 }

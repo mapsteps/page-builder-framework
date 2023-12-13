@@ -53,14 +53,14 @@ export function removeInlineWidth(el) {
 }
 
 /**
- * Generate a style tag from an HTML element.
+ * Get a generated style tag from an HTML element.
  *
  * @param {HTMLElement} el - The element to generate the style tag from.
- * @param {string} styleContent - The style content.
+ * @param {string|undefined} styleContent - The style content.
  *
  * @return {HTMLStyleElement} The style tag.
  */
-export function generateStyleTagFromEl(el, styleContent) {
+export function getStyleTagByEl(el, styleContent) {
 	const id = el.id ? el.id : Math.random().toString(36).substring(2, 9);
 	if (!el.id) el.id = id;
 
@@ -68,16 +68,28 @@ export function generateStyleTagFromEl(el, styleContent) {
 	let styleTag = document.querySelector(`#${styleTagId}`);
 
 	if (styleTag) {
-		styleTag.innerHTML = styleContent;
+		if (styleContent) styleTag.innerHTML = styleContent;
 		return styleTag;
 	}
 
 	styleTag = document.createElement("style");
 	styleTag.id = `aura-style-${id}`;
-	styleTag.innerHTML = styleContent;
+	if (styleContent) styleTag.innerHTML = styleContent;
 	document.head.appendChild(styleTag);
 
 	return styleTag;
+}
+
+/**
+ * Get id of a generated style tag from an HTML element.
+ *
+ * @export
+ * @param {HTMLElement} el - The element to generate the style tag from.
+ * @return {string}
+ */
+export function getStyleTagIdByEl(el) {
+	const styleTag = getStyleTagByEl(el);
+	return styleTag.id;
 }
 
 /**

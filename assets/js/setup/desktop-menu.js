@@ -1,7 +1,8 @@
 import {
-	generateStyleTagFromEl,
+	getStyleTagByEl,
 	getInlineWidth,
 	removeInlineWidth,
+	getStyleTagIdByEl,
 } from "../utils/anim-utils";
 import {
 	directQuerySelector,
@@ -115,15 +116,16 @@ export default function setupDesktopMenu() {
 			const searchField = menuItem.querySelector("input[type=search]");
 
 			if (searchArea && searchField) {
-				// The .is-visible doesn't have the width, let's add it to the style block.
-				generateStyleTagFromEl(
+				// The .is-expanded doesn't have the width, let's add it to the style block.
+				getStyleTagByEl(
 					searchArea,
-					`.wpbf-menu-item-search .wpbf-menu-search.is-visible {width: ${itemWidth}px;}`,
+					`.wpbf-menu-item-search .wpbf-menu-search.is-expanded {width: ${itemWidth}px;}`,
 				);
 
 				searchArea.classList.remove("is-hidden");
+
 				setTimeout(function () {
-					searchArea.classList.add("is-visible");
+					searchArea.classList.add("is-expanded");
 				}, 1);
 
 				searchField.value = "";
@@ -145,7 +147,7 @@ export default function setupDesktopMenu() {
 
 			if (searchField) {
 				removeInlineWidth(searchField);
-				searchField.classList.remove("is-visible");
+				searchField.classList.remove("is-expanded");
 
 				setTimeout(function () {
 					searchField.classList.add("is-hidden");
@@ -219,16 +221,24 @@ export default function setupDesktopMenu() {
 			function (e) {
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu) return;
+				if (submenu.classList.contains("is-shown")) return;
 
-				generateStyleTagFromEl(
+				const styleTagId = getStyleTagIdByEl(submenu);
+				const submenuId = styleTagId.replace("aura-style-", "");
+
+				getStyleTagByEl(
 					submenu,
 					`
-					.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children .sub-menu {display: block; opacity: 0; transition-duration: ${duration}ms;}
+					#${submenuId}.display-block {display: block;}
+					#${submenuId}.is-shown {opacity: 1;}
+					#${submenuId} {opacity: 0; transition-duration: ${duration}ms;}
 					`,
 				);
 
+				submenu.classList.add("display-block");
+
 				setTimeout(function () {
-					submenu.classList.add("is-visible");
+					submenu.classList.add("is-shown");
 				}, 1);
 			},
 		);
@@ -239,7 +249,13 @@ export default function setupDesktopMenu() {
 			function () {
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu) return;
-				submenu.classList.remove("is-visible");
+				if (!submenu.classList.contains("is-shown")) return;
+
+				submenu.classList.remove("is-shown");
+
+				setTimeout(function () {
+					submenu.classList.remove("display-block");
+				}, duration);
 			},
 		);
 	}
@@ -254,16 +270,24 @@ export default function setupDesktopMenu() {
 			function () {
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu) return;
+				if (submenu.classList.contains("is-shown")) return;
 
-				generateStyleTagFromEl(
+				const styleTagId = getStyleTagIdByEl(submenu);
+				const submenuId = styleTagId.replace("aura-style-", "");
+
+				getStyleTagByEl(
 					submenu,
 					`
-					.wpbf-sub-menu-animation-fade > .menu-item-has-children > .sub-menu {display:block; opacity: 0; transition: opacity ${duration}ms ease-in-out;}
+					#${submenuId}.display-block {display:block;}
+					#${submenuId}.is-shown {opacity: 1;}
+					#${submenuId} {opacity: 0; transition: opacity ${duration}ms ease-in-out;}
 					`,
 				);
 
+				submenu.classList.add("display-block");
+
 				setTimeout(function () {
-					submenu.classList.add("is-visible");
+					submenu.classList.add("is-shown");
 				}, 1);
 			},
 		);
@@ -271,11 +295,18 @@ export default function setupDesktopMenu() {
 		listenDocumentEvent(
 			"mouseleave",
 			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
-			function () {
+			function (e) {
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu) return;
+				if (!submenu.classList.contains("is-shown")) return;
 
-				submenu.classList.remove("is-visible");
+				// console.log("mouse is leaving", e);
+
+				submenu.classList.remove("is-shown");
+
+				setTimeout(function () {
+					submenu.classList.remove("display-block");
+				}, duration);
 			},
 		);
 	}

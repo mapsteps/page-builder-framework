@@ -1,4 +1,4 @@
-import { generateStyleTagFromEl } from "../utils/anim-utils";
+import { getStyleTagByEl } from "../utils/anim-utils";
 import {
 	forEachEl,
 	getBreakpoints,
@@ -199,7 +199,7 @@ export default function setupMobileMenu() {
 
 			const pureHeight = getPureHeight(mobileMenu);
 
-			generateStyleTagFromEl(
+			getStyleTagByEl(
 				mobileMenu,
 				`.wpbf-mobile-menu-container.is-expanded {
 					height: ${pureHeight}px;
@@ -314,7 +314,7 @@ export default function setupMobileMenu() {
 		submenus.forEach(function (submenu) {
 			const pureHeight = getPureHeight(submenu);
 
-			generateStyleTagFromEl(
+			getStyleTagByEl(
 				submenu,
 				`.wpbf-mobile-menu .sub-menu.aura-slide-anim.is-expanded {
 					height: ${pureHeight}px;
