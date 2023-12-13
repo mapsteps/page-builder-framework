@@ -12,7 +12,7 @@ import {
  *
  * Along with the site.js and desktop-menu.js, this file will be combined to site-min.js file.
  */
-export default function setupMobileMenu($) {
+export default function setupMobileMenu() {
 	let breakpoints = getBreakpoints();
 
 	/**
@@ -120,6 +120,10 @@ export default function setupMobileMenu($) {
 	 * Setup mobile menu for both 'default' and 'hamburger' menu.
 	 */
 	function setupMobileMenu() {
+		forEachEl(".wpbf-mobile-menu-container", function (el) {
+			el.classList.add("is-hidden");
+		});
+
 		/**
 		 * On mobile menu toggle click, we re-run the menu type setup and then run the toggling process.
 		 * The menu type setup need to be re-run to handle the behavior inside customizer.
@@ -194,7 +198,8 @@ export default function setupMobileMenu($) {
 			mobileMenu.classList.add("active");
 
 			const pureHeight = getPureHeight(mobileMenu);
-			const styleTag = generateStyleTagFromEl(
+
+			generateStyleTagFromEl(
 				mobileMenu,
 				`.wpbf-mobile-menu-container.is-expanded {
 					height: ${pureHeight}px;
@@ -234,7 +239,6 @@ export default function setupMobileMenu($) {
 
 		if (mobileMenu) {
 			mobileMenu.classList.remove("active");
-
 			mobileMenu.classList.remove("is-expanded");
 
 			setTimeout(function () {
@@ -308,7 +312,18 @@ export default function setupMobileMenu($) {
 		const submenus = getSiblings(toggle, ".sub-menu");
 
 		submenus.forEach(function (submenu) {
-			$(submenu).stop().slideDown();
+			const pureHeight = getPureHeight(submenu);
+
+			generateStyleTagFromEl(
+				submenu,
+				`.wpbf-mobile-menu .sub-menu.aura-slide-anim.is-expanded {
+					height: ${pureHeight}px;
+				}`,
+			);
+
+			submenu.classList.add("aura-slide-anim");
+			submenu.classList.remove("is-hidden");
+			submenu.classList.add("is-expanded");
 		});
 
 		autoCollapseMobileSubmenus(toggle);
@@ -333,7 +348,11 @@ export default function setupMobileMenu($) {
 		const submenus = getSiblings(toggle, ".sub-menu");
 
 		submenus.forEach(function (submenu) {
-			$(submenu).stop().slideUp();
+			submenu.classList.remove("is-expanded");
+
+			setTimeout(function () {
+				submenu.classList.add("is-hidden");
+			}, 400);
 		});
 	}
 

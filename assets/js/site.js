@@ -15,7 +15,7 @@ import {
 function init() {
 	setupSite();
 	setupDesktopMenu();
-	setupMobileMenu(jQuery);
+	setupMobileMenu();
 }
 
 init();
