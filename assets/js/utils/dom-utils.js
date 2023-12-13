@@ -53,6 +53,10 @@ export function listenDocumentEvent(eventType, selector, handler) {
 			if (!target) return;
 		}
 
+		if (eventName === "mouseover") {
+			// console.log("target", target);
+		}
+
 		handler.call(target, e);
 	});
 }

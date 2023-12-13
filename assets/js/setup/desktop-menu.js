@@ -22,7 +22,7 @@ export default function setupDesktopMenu() {
 	 */
 	let duration = getAttrAsNumber(
 		".wpbf-navigation",
-		"sub-menu-animation-duration",
+		"data-sub-menu-animation-duration",
 	);
 
 	/**
@@ -172,7 +172,7 @@ export default function setupDesktopMenu() {
 				 */
 				duration = getAttrAsNumber(
 					".wpbf-navigation",
-					"sub-menu-animation-duration",
+					"data-sub-menu-animation-duration",
 				);
 
 				setupCenteredMenu();
@@ -217,20 +217,15 @@ export default function setupDesktopMenu() {
 			"mouseenter",
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
 			function (e) {
-				const submenus = this.querySelector(".sub-menu");
-				if (!submenus.length) return;
-				const submenu = submenus[0];
+				const submenu = this.querySelector(".sub-menu");
+				if (!submenu) return;
 
-				const styleTag = generateStyleTagFromEl(
+				generateStyleTagFromEl(
 					submenu,
 					`.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children .sub-menu.is-visible {transition-duration: ${duration}ms;}`,
 				);
 
 				submenu.classList.add(".is-visible");
-
-				setTimeout(function () {
-					styleTag.parentNode.removeChild(styleTag);
-				}, duration);
 			},
 		);
 
@@ -238,9 +233,8 @@ export default function setupDesktopMenu() {
 			"mouseleave",
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
 			function () {
-				const submenus = this.querySelector(".sub-menu");
-				if (!submenus.length) return;
-				const submenu = submenus[0];
+				const submenu = this.querySelector(".sub-menu");
+				if (!submenu) return;
 				submenu.classList.remove(".is-visible");
 			},
 		);
@@ -254,22 +248,19 @@ export default function setupDesktopMenu() {
 			"mouseenter",
 			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
 			function () {
-				const submenus = this.querySelector(".sub-menu");
-				if (!submenus.length) return;
-				const submenu = submenus[0];
+				const submenu = this.querySelector(".sub-menu");
+				if (!submenu) return;
 
-				const styleTag = generateStyleTagFromEl(
+				generateStyleTagFromEl(
 					submenu,
 					`
-					.wpbf-sub-menu-animation-fade > .menu-item-has-children > .sub-menu {opacity: 0; transition: opacity ${duration}ms ease-in-out;}
+					.wpbf-sub-menu-animation-fade > .menu-item-has-children > .sub-menu {display:block; opacity: 0; transition: opacity ${duration}ms ease-in-out;}
 					`,
 				);
 
-				submenu.classList.add("is-visible");
-
 				setTimeout(function () {
-					styleTag.parentNode.removeChild(styleTag);
-				}, duration);
+					submenu.classList.add("is-visible");
+				}, 1);
 			},
 		);
 
@@ -277,22 +268,10 @@ export default function setupDesktopMenu() {
 			"mouseleave",
 			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
 			function () {
-				const submenus = this.querySelector(".sub-menu");
-				if (!submenus.length) return;
-				const submenu = submenus[0];
-
-				const styleTag = generateStyleTagFromEl(
-					submenu,
-					`
-					.wpbf-sub-menu-animation-fade > .menu-item-has-children > .sub-menu {display:block; opacity: 0; transition: opacity 400ms ease-in-out;}
-					`,
-				);
+				const submenu = this.querySelector(".sub-menu");
+				if (!submenu) return;
 
 				submenu.classList.remove("is-visible");
-
-				setTimeout(function () {
-					styleTag.parentNode.removeChild(styleTag);
-				}, 400);
 			},
 		);
 	}
