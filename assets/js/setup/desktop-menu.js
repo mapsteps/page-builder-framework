@@ -319,7 +319,7 @@ export default function setupDesktopMenu() {
 			this.classList.add("using-mouse");
 
 			forEachEl(".menu-item-has-children", function (el) {
-				el.removeClass("wpbf-sub-menu-focus");
+				el.classList.remove("wpbf-sub-menu-focus");
 			});
 		});
 

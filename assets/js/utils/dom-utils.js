@@ -30,7 +30,7 @@ export function forEachEl(selector, handler) {
  */
 export function listenDocumentEvent(eventType, selector, handler) {
 	if (typeof eventType !== "string") return;
-	if (typeof selector !== "function") return;
+	if (typeof handler !== "function") return;
 
 	document.addEventListener(eventType, function (e) {
 		if (selector) {
