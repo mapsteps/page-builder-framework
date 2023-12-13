@@ -120,10 +120,6 @@ export default function setupMobileMenu() {
 	 * Setup mobile menu for both 'default' and 'hamburger' menu.
 	 */
 	function setupMobileMenu() {
-		forEachEl(".wpbf-mobile-menu-container", function (el) {
-			el.classList.add("is-hidden");
-		});
-
 		/**
 		 * On mobile menu toggle click, we re-run the menu type setup and then run the toggling process.
 		 * The menu type setup need to be re-run to handle the behavior inside customizer.
@@ -194,20 +190,24 @@ export default function setupMobileMenu() {
 
 		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
 
-		if (mobileMenu) {
+		if (mobileMenu && !mobileMenu.classList.contains("active")) {
 			mobileMenu.classList.add("active");
 
 			const pureHeight = getPureHeight(mobileMenu);
 
 			getStyleTagByEl(
 				mobileMenu,
-				`.wpbf-mobile-menu-container.is-expanded {
-					height: ${pureHeight}px;
-				}`,
+				`
+				.wpbf-mobile-menu-container.aura-slide-anim {display: block; height: 0;}
+				.wpbf-mobile-menu-container.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				`,
 			);
 
-			mobileMenu.classList.remove("is-hidden");
-			mobileMenu.classList.add("is-expanded");
+			mobileMenu.classList.add("aura-slide-anim");
+
+			setTimeout(function () {
+				mobileMenu.classList.add("is-expanded");
+			}, 1);
 		}
 
 		toggle.classList.add("active");
@@ -237,12 +237,12 @@ export default function setupMobileMenu() {
 
 		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
 
-		if (mobileMenu) {
+		if (mobileMenu && mobileMenu.classList.contains("active")) {
 			mobileMenu.classList.remove("active");
 			mobileMenu.classList.remove("is-expanded");
 
 			setTimeout(function () {
-				mobileMenu.classList.add("is-hidden");
+				mobileMenu.classList.remove("aura-slide-anim");
 			}, 400);
 		}
 
@@ -316,14 +316,15 @@ export default function setupMobileMenu() {
 
 			getStyleTagByEl(
 				submenu,
-				`.wpbf-mobile-menu .sub-menu.aura-slide-anim.is-expanded {
-					height: ${pureHeight}px;
-				}`,
+				`.wpbf-mobile-menu .sub-menu.aura-slide-anim {display: block; height: 0;}`,
+				`.wpbf-mobile-menu .sub-menu.aura-slide-anim.is-expanded {height: ${pureHeight}px;}`,
 			);
 
 			submenu.classList.add("aura-slide-anim");
-			submenu.classList.remove("is-hidden");
-			submenu.classList.add("is-expanded");
+
+			setTimeout(function () {
+				submenu.classList.add("is-expanded");
+			}, 1);
 		});
 
 		autoCollapseMobileSubmenus(toggle);
@@ -351,7 +352,7 @@ export default function setupMobileMenu() {
 			submenu.classList.remove("is-expanded");
 
 			setTimeout(function () {
-				submenu.classList.add("is-hidden");
+				submenu.classList.remove("aura-slide-anim");
 			}, 400);
 		});
 	}

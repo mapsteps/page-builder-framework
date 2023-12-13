@@ -246,6 +246,10 @@ export function getSiblings(el, selector) {
 export function getPureHeight(el) {
 	if (!el) return 0;
 
+	// Temporarily patch the element's display and opacity.
+	el.style.opacity = "0";
+	el.style.display = "block";
+
 	const style = window.getComputedStyle(el);
 
 	// Get the total height including padding and border
@@ -257,6 +261,21 @@ export function getPureHeight(el) {
 		parseFloat(style.paddingBottom) -
 		parseFloat(style.borderTopWidth) -
 		parseFloat(style.borderBottomWidth);
+
+	const inlineStyleContent = el.getAttribute("style");
+
+	// Restore the element's display and opacity.
+	if (inlineStyleContent) {
+		el.setAttribute(
+			"style",
+			inlineStyleContent.replace(/display\s*:\s*block\s*;/, ""),
+		);
+
+		el.setAttribute(
+			"style",
+			inlineStyleContent.replace(/opacity\s*:\s*0\s*;/, ""),
+		);
+	}
 
 	return pureHeight;
 }

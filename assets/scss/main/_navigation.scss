@@ -380,14 +380,10 @@
 
 /* Mobile menu */
 .wpbf-mobile-menu-container {
-	height: 0;
+	display: none;
 	background: #fff;
 	// The old jQuery-based code had default fade animation duration (400ms).
 	transition: height 0.4s ease-in-out;
-
-	&.is-hidden {
-		display: none;
-	}
 
 	nav {
 		overflow-y: auto;
@@ -419,14 +415,12 @@
 .wpbf-mobile-menu .sub-menu {
 	margin: 0;
 	padding: 0;
+	display: none;
 
 	&.aura-slide-anim {
+		display: block;
 		height: 0;
 		@include transition(height 0.4s ease-in-out);
-	}
-
-	&.is-hidden {
-		display: none;
 	}
 }
 
