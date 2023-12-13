@@ -222,10 +222,14 @@ export default function setupDesktopMenu() {
 
 				generateStyleTagFromEl(
 					submenu,
-					`.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children .sub-menu.is-visible {transition-duration: ${duration}ms;}`,
+					`
+					.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children .sub-menu {display: block; opacity: 0; transition-duration: ${duration}ms;}
+					`,
 				);
 
-				submenu.classList.add(".is-visible");
+				setTimeout(function () {
+					submenu.classList.add("is-visible");
+				}, 1);
 			},
 		);
 
@@ -235,7 +239,7 @@ export default function setupDesktopMenu() {
 			function () {
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu) return;
-				submenu.classList.remove(".is-visible");
+				submenu.classList.remove("is-visible");
 			},
 		);
 	}
