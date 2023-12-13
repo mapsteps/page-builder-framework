@@ -1,8 +1,10 @@
+import { getPureHeight } from "./dom-utils";
+
 /**
  * Hide an element after a delay.
  *
- * @param {HTMLElement} el The element to hide.
- * @param {number} delay The delay in milliseconds.
+ * @param {HTMLElement} el - The element to hide.
+ * @param {number} delay - The delay in milliseconds.
  */
 export function hideElAfterDelay(el, delay) {
 	if (!el) return;
@@ -16,7 +18,7 @@ export function hideElAfterDelay(el, delay) {
 /**
  * Get the value of inline style's width property.
  *
- * @param {HTMLElement} el The element to get the inline width from.
+ * @param {HTMLElement} el - The element to get the inline width from.
  * @return {string|boolean} The inline width value. Returns false if no inline width is found.
  */
 export function getInlineWidth(el) {
@@ -37,7 +39,7 @@ export function getInlineWidth(el) {
 /**
  * Remove inline style's width property.
  *
- * @param {HTMLElement} el The element to remove the inline width from.
+ * @param {HTMLElement} el - The element to remove the inline width from.
  */
 export function removeInlineWidth(el) {
 	const styleContent = el.getAttribute("style");
@@ -53,14 +55,24 @@ export function removeInlineWidth(el) {
 /**
  * Generate a style tag from an HTML element.
  *
- * @param {HTMLElement} el The element to generate the style tag from.
- * @param {string} styleContent The style content.
+ * @param {HTMLElement} el - The element to generate the style tag from.
+ * @param {string} styleContent - The style content.
  *
  * @return {HTMLStyleElement} The style tag.
  */
 export function generateStyleTagFromEl(el, styleContent) {
 	const id = el.id ? el.id : Math.random().toString(36).substring(2, 9);
-	const styleTag = document.createElement("style");
+	if (!el.id) el.id = id;
+
+	const styleTagId = `aura-style-${id}`;
+	let styleTag = document.querySelector(`#${styleTagId}`);
+
+	if (styleTag) {
+		styleTag.innerHTML = styleContent;
+		return styleTag;
+	}
+
+	styleTag = document.createElement("style");
 	styleTag.id = `aura-style-${id}`;
 	styleTag.innerHTML = styleContent;
 	document.head.appendChild(styleTag);
@@ -71,8 +83,8 @@ export function generateStyleTagFromEl(el, styleContent) {
 /**
  * Animate scroll top.
  *
- * @param {number} targetPosition The target position to scroll to.
- * @param {number} duration The duration in milliseconds.
+ * @param {number} targetPosition - The target position to scroll to.
+ * @param {number} duration - The duration in milliseconds.
  */
 export function animateScrollTop(targetPosition, duration) {
 	const startPosition = window.scrollY;

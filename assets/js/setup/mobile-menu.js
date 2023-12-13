@@ -1,6 +1,8 @@
+import { generateStyleTagFromEl } from "../utils/anim-utils";
 import {
 	forEachEl,
 	getBreakpoints,
+	getPureHeight,
 	getSiblings,
 	listenDocumentEvent,
 } from "../utils/dom-utils";
@@ -190,7 +192,17 @@ export default function setupMobileMenu($) {
 
 		if (mobileMenu) {
 			mobileMenu.classList.add("active");
-			$(mobileMenu).stop().slideDown();
+
+			const pureHeight = getPureHeight(mobileMenu);
+			const styleTag = generateStyleTagFromEl(
+				mobileMenu,
+				`.wpbf-mobile-menu-container.is-expanded {
+					height: ${pureHeight}px;
+				}`,
+			);
+
+			mobileMenu.classList.remove("is-hidden");
+			mobileMenu.classList.add("is-expanded");
 		}
 
 		toggle.classList.add("active");
@@ -222,7 +234,12 @@ export default function setupMobileMenu($) {
 
 		if (mobileMenu) {
 			mobileMenu.classList.remove("active");
-			$(mobileMenu).stop().slideUp();
+
+			mobileMenu.classList.remove("is-expanded");
+
+			setTimeout(function () {
+				mobileMenu.classList.add("is-hidden");
+			}, 400);
 		}
 
 		toggle.classList.remove("active");

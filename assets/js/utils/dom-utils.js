@@ -97,7 +97,7 @@ export const defaultBreakpoints = {
  * Retrieve breakpoint based on body class,
  * then set it as the value of top level `breakpoints` variable.
  *
- * @param {string} device The device type. Accepts 'desktop', 'tablet', or 'mobile'.
+ * @param {string} device - The device type. Accepts 'desktop', 'tablet', or 'mobile'.
  * @returns {number} The breakpoint value.
  */
 export function getBreakpointValue(device) {
@@ -137,7 +137,7 @@ export function getBreakpoints() {
 /**
  * Get the current active breakpoint.
  *
- * @returns {string} The active breakpoint. Accepts 'desktop', 'tablet', or 'mobile'.
+ * @returns {string} - The active breakpoint. Accepts 'desktop', 'tablet', or 'mobile'.
  */
 export function getActiveBreakpoint() {
 	const breakpoints = getBreakpoints();
@@ -161,8 +161,8 @@ export function getActiveBreakpoint() {
 /**
  * Direct query selector. It's like el.querySelector(':scope > selector') but supports older browsers.
  *
- * @param {HTMLElement} el The parent element.
- * @param {string} selector The selector.
+ * @param {HTMLElement} el - The parent element.
+ * @param {string} selector - The selector.
  *
  * @return {HTMLElement|null} The element or null.
  */
@@ -194,8 +194,8 @@ export function directQuerySelector(el, selector) {
  * Get siblings of an element.
  * The "el" parameter is can be in any position (not only first child).
  *
- * @param {HTMLElement} el The element.
- * @param {string} selector The selector.
+ * @param {HTMLElement} el - The element.
+ * @param {string} selector - The selector.
  *
  * @return {Array<HTMLElement>} The siblings.
  */
@@ -216,4 +216,28 @@ export function getSiblings(el, selector) {
 	}
 
 	return siblings;
+}
+
+/**
+ * Get element's height without padding and border.
+ *
+ * @param {HTMLElement} el - The element.
+ * @return {number} The pure height.
+ */
+export function getPureHeight(el) {
+	if (!el) return 0;
+
+	const style = window.getComputedStyle(el);
+
+	// Get the total height including padding and border
+	const totalHeight = el.offsetHeight;
+
+	const pureHeight =
+		totalHeight -
+		parseFloat(style.paddingTop) -
+		parseFloat(style.paddingBottom) -
+		parseFloat(style.borderTopWidth) -
+		parseFloat(style.borderBottomWidth);
+
+	return pureHeight;
 }

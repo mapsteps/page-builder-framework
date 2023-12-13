@@ -386,8 +386,14 @@
 
 /* Mobile menu */
 .wpbf-mobile-menu-container {
-	display: none;
+	height: 0;
 	background: #fff;
+	// The old jQuery-based code had default fade animation duration (400ms).
+	transition: height 0.4s ease-in-out;
+
+	&.is-hidden {
+		display: none;
+	}
 }
 
 // Defaults
