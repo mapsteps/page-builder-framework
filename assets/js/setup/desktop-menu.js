@@ -53,6 +53,7 @@ export default function setupDesktopMenu() {
 		// Expand search field on click.
 		listenDocumentEvent("click", ".wpbf-menu-item-search", function (e) {
 			e.stopPropagation();
+			e.preventDefault();
 			openSearchField(this);
 		});
 
@@ -106,24 +107,23 @@ export default function setupDesktopMenu() {
 			menuItem.classList.add("active");
 			menuItem.setAttribute("aria-expanded", "true");
 
+			const searchArea = menuItem.querySelector(".wpbf-menu-search");
 			const searchField = menuItem.querySelector("input[type=search]");
 
-			if (searchField) {
+			if (searchArea && searchField) {
 				// The .is-visible doesn't have the width, let's add it to the style block.
-				const styleTag = generateStyleTagFromEl(
-					searchField,
+				generateStyleTagFromEl(
+					searchArea,
 					`.wpbf-menu-item-search .wpbf-menu-search.is-visible {width: ${itemWidth}px;}`,
 				);
 
-				searchField.classList.add("is-visible");
+				searchArea.classList.remove("is-hidden");
+				setTimeout(function () {
+					searchArea.classList.add("is-visible");
+				}, 1);
+
 				searchField.value = "";
 				searchField.focus();
-
-				setTimeout(function () {
-					// We're going to remove the styleTag, so the width will be written in the inline style.
-					searchField.style.width = `${itemWidth}px`;
-					styleTag.parentNode.removeChild(styleTag);
-				}, 200);
 			}
 		}
 	}
@@ -140,19 +140,11 @@ export default function setupDesktopMenu() {
 			const searchField = el.querySelector(".wpbf-menu-search");
 
 			if (searchField) {
-				let inlineWidth = getInlineWidth(searchField);
-				inlineWidth = inlineWidth ? inlineWidth : "100%";
-
-				const styleTag = generateStyleTagFromEl(
-					searchField,
-					`.wpbf-menu-item-search .wpbf-menu-search.is-visible {width: ${inlineWidth};}`,
-				);
-
 				removeInlineWidth(searchField);
 				searchField.classList.remove("is-visible");
 
 				setTimeout(function () {
-					styleTag.parentNode.removeChild(styleTag);
+					searchField.classList.add("is-hidden");
 				}, 250);
 			}
 

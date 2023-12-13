@@ -78,7 +78,6 @@
 		top: 50%;
 		margin-top: -25px;
 		right: 0;
-		display: none;
 		opacity: 0;
 		width: 0;
 		max-width: 350px;
@@ -87,9 +86,12 @@
 			width 0.25s ease-in-out,
 			opacity 0.25s ease-in-out;
 
+		&.is-hidden {
+			display: none;
+		}
+
 		// The width property will be set via JS.
 		&.is-visible {
-			display: block;
 			opacity: 1;
 			// The old jQuery-based code had a 200ms transition duration when expanding.
 			transition:
