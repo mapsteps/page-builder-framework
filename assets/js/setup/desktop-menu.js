@@ -53,7 +53,11 @@ export default function setupDesktopMenu() {
 		// Expand search field on click.
 		listenDocumentEvent("click", ".wpbf-menu-item-search", function (e) {
 			e.stopPropagation();
-			e.preventDefault();
+
+			if (!this.classList.contains("active")) {
+				e.preventDefault();
+			}
+
 			openSearchField(this);
 		});
 
