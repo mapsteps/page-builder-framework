@@ -1,7 +1,7 @@
 import {
-	getStyleTagByEl,
+	writeElStyle,
 	removeInlineWidth,
-	getStyleTagIdByEl,
+	getElStyleId,
 } from "../utils/anim-utils";
 import {
 	directQuerySelector,
@@ -116,7 +116,7 @@ export default function setupDesktopMenu() {
 
 			if (searchArea && searchField) {
 				// The .is-expanded doesn't have the width, let's add it to the style block.
-				getStyleTagByEl(
+				writeElStyle(
 					searchArea,
 					`
 					.wpbf-menu-item-search .wpbf-menu-search.display-block {display: block;}
@@ -224,10 +224,10 @@ export default function setupDesktopMenu() {
 				if (!submenu) return;
 				if (submenu.classList.contains("is-shown")) return;
 
-				const styleTagId = getStyleTagIdByEl(submenu);
+				const styleTagId = getElStyleId(submenu);
 				const submenuId = styleTagId.replace("aura-style-", "");
 
-				getStyleTagByEl(
+				writeElStyle(
 					submenu,
 					`
 					#${submenuId}.display-block {display: block;}
@@ -273,10 +273,10 @@ export default function setupDesktopMenu() {
 				if (!submenu) return;
 				if (submenu.classList.contains("is-shown")) return;
 
-				const styleTagId = getStyleTagIdByEl(submenu);
+				const styleTagId = getElStyleId(submenu);
 				const submenuId = styleTagId.replace("aura-style-", "");
 
-				getStyleTagByEl(
+				writeElStyle(
 					submenu,
 					`
 					#${submenuId}.display-block {display:block;}

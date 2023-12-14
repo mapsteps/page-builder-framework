@@ -250,31 +250,30 @@ export function getPureHeight(el) {
 	el.style.opacity = "0";
 	el.style.display = "block";
 
-	const style = window.getComputedStyle(el);
+	const computedStyle = window.getComputedStyle(el);
 
 	// Get the total height including padding and border
 	const totalHeight = el.offsetHeight;
 
 	const pureHeight =
 		totalHeight -
-		parseFloat(style.paddingTop) -
-		parseFloat(style.paddingBottom) -
-		parseFloat(style.borderTopWidth) -
-		parseFloat(style.borderBottomWidth);
+		parseFloat(computedStyle.paddingTop) -
+		parseFloat(computedStyle.paddingBottom) -
+		parseFloat(computedStyle.borderTopWidth) -
+		parseFloat(computedStyle.borderBottomWidth);
 
-	const inlineStyleContent = el.getAttribute("style");
+	let inlineStyleContent = el.getAttribute("style");
 
 	// Restore the element's display and opacity.
 	if (inlineStyleContent) {
-		el.setAttribute(
-			"style",
-			inlineStyleContent.replace(/display\s*:\s*block\s*;/, ""),
+		inlineStyleContent = inlineStyleContent.replace(
+			/display\s*:\s*block\s*;/,
+			"",
 		);
 
-		el.setAttribute(
-			"style",
-			inlineStyleContent.replace(/opacity\s*:\s*0\s*;/, ""),
-		);
+		inlineStyleContent = inlineStyleContent.replace(/opacity\s*:\s*0\s*;/, "");
+
+		el.setAttribute("style", inlineStyleContent);
 	}
 
 	return pureHeight;

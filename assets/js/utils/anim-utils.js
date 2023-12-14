@@ -60,7 +60,7 @@ export function removeInlineWidth(el) {
  *
  * @return {HTMLStyleElement} The style tag.
  */
-export function getStyleTagByEl(el, styleContent) {
+export function writeElStyle(el, styleContent) {
 	const id = el.id ? el.id : Math.random().toString(36).substring(2, 9);
 	if (!el.id) el.id = id;
 
@@ -87,9 +87,20 @@ export function getStyleTagByEl(el, styleContent) {
  * @param {HTMLElement} el - The element to generate the style tag from.
  * @return {string}
  */
-export function getStyleTagIdByEl(el) {
-	const styleTag = getStyleTagByEl(el);
+export function getElStyleId(el) {
+	const styleTag = writeElStyle(el);
 	return styleTag.id;
+}
+
+/**
+ * Get the generated style element of an HTML element.
+ *
+ * @export
+ * @param {HTMLElement} el - The element to generate the style tag from.
+ * @return {string}
+ */
+export function getElStyleTag(el) {
+	return writeElStyle(el);
 }
 
 /**

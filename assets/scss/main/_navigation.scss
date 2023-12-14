@@ -415,8 +415,6 @@
 	display: none;
 
 	&.aura-slide-anim {
-		display: block;
-		height: 0;
 		@include transition(height 0.4s ease-in-out);
 	}
 }

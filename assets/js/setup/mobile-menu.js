@@ -1,4 +1,4 @@
-import { getStyleTagByEl, getStyleTagIdByEl } from "../utils/anim-utils";
+import { writeElStyle, getElStyleId, getElStyleTag } from "../utils/anim-utils";
 import {
 	forEachEl,
 	getBreakpoints,
@@ -194,10 +194,10 @@ export default function setupMobileMenu() {
 			mobileMenu.classList.add("active");
 
 			const pureHeight = getPureHeight(mobileMenu);
-			const styleTagId = getStyleTagIdByEl(mobileMenu);
+			const styleTagId = getElStyleId(mobileMenu);
 			const submenuId = styleTagId.replace("aura-style-", "");
 
-			getStyleTagByEl(
+			writeElStyle(
 				mobileMenu,
 				`
 				#${submenuId}.aura-slide-anim {display: block; height: 0;}
@@ -209,6 +209,13 @@ export default function setupMobileMenu() {
 
 			setTimeout(function () {
 				mobileMenu.classList.add("is-expanded");
+
+				setTimeout(function () {
+					writeElStyle(
+						mobileMenu,
+						`#${submenuId}.aura-slide-anim {display: block;}`,
+					);
+				}, 400);
 			}, 1);
 		}
 
@@ -240,12 +247,26 @@ export default function setupMobileMenu() {
 		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
 
 		if (mobileMenu && mobileMenu.classList.contains("active")) {
-			mobileMenu.classList.remove("active");
-			mobileMenu.classList.remove("is-expanded");
+			const pureHeight = getPureHeight(mobileMenu);
+			const styleTagId = getElStyleId(mobileMenu);
+			const submenuId = styleTagId.replace("aura-style-", "");
+
+			writeElStyle(
+				mobileMenu,
+				`
+				#${submenuId}.aura-slide-anim {display: block; height: 0;}
+				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				`,
+			);
 
 			setTimeout(function () {
-				mobileMenu.classList.remove("aura-slide-anim");
-			}, 400);
+				mobileMenu.classList.remove("active");
+				mobileMenu.classList.remove("is-expanded");
+
+				setTimeout(function () {
+					mobileMenu.classList.remove("aura-slide-anim");
+				}, 400);
+			}, 1);
 		}
 
 		toggle.classList.remove("active");
@@ -315,19 +336,28 @@ export default function setupMobileMenu() {
 
 		submenus.forEach(function (submenu) {
 			const pureHeight = getPureHeight(submenu);
-			const styleTagId = getStyleTagIdByEl(submenu);
+			const styleTagId = getElStyleId(submenu);
 			const submenuId = styleTagId.replace("aura-style-", "");
 
-			getStyleTagByEl(
+			writeElStyle(
 				submenu,
-				`#${submenuId}.aura-slide-anim {display: block; height: 0;}`,
-				`#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}`,
+				`
+				#${submenuId}.aura-slide-anim {display: block; height: 0;}
+				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				`,
 			);
 
 			submenu.classList.add("aura-slide-anim");
 
 			setTimeout(function () {
 				submenu.classList.add("is-expanded");
+
+				setTimeout(function () {
+					writeElStyle(
+						submenu,
+						`#${submenuId}.aura-slide-anim {display: block}`,
+					);
+				}, 400);
 			}, 1);
 		});
 
@@ -353,11 +383,25 @@ export default function setupMobileMenu() {
 		const submenus = getSiblings(toggle, ".sub-menu");
 
 		submenus.forEach(function (submenu) {
-			submenu.classList.remove("is-expanded");
+			const pureHeight = getPureHeight(submenu);
+			const styleTagId = getElStyleId(submenu);
+			const submenuId = styleTagId.replace("aura-style-", "");
+
+			writeElStyle(
+				submenu,
+				`
+				#${submenuId}.aura-slide-anim {display: block; height: 0;}
+				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				`,
+			);
 
 			setTimeout(function () {
-				submenu.classList.remove("aura-slide-anim");
-			}, 400);
+				submenu.classList.remove("is-expanded");
+
+				setTimeout(function () {
+					submenu.classList.remove("aura-slide-anim");
+				}, 400);
+			}, 1);
 		});
 	}
 
