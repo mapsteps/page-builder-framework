@@ -200,7 +200,7 @@ export default function setupMobileMenu() {
 			writeElStyle(
 				mobileMenu,
 				`
-				#${submenuId}.aura-slide-anim {display: block; height: 0;}
+				#${submenuId}.aura-slide-anim {display: block; height: 0; overflow: hidden;}
 				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);
@@ -254,7 +254,7 @@ export default function setupMobileMenu() {
 			writeElStyle(
 				mobileMenu,
 				`
-				#${submenuId}.aura-slide-anim {display: block; height: 0;}
+				#${submenuId}.aura-slide-anim {display: block; height: 0; overflow: hidden;}
 				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);
@@ -342,7 +342,7 @@ export default function setupMobileMenu() {
 			writeElStyle(
 				submenu,
 				`
-				#${submenuId}.aura-slide-anim {display: block; height: 0;}
+				#${submenuId}.aura-slide-anim {display: block; height: 0; overflow: hidden;}
 				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);
@@ -390,7 +390,7 @@ export default function setupMobileMenu() {
 			writeElStyle(
 				submenu,
 				`
-				#${submenuId}.aura-slide-anim {display: block; height: 0;}
+				#${submenuId}.aura-slide-anim {display: block; height: 0; overflow: hidden;}
 				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);

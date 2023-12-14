@@ -61,7 +61,9 @@ export function removeInlineWidth(el) {
  * @return {HTMLStyleElement} The style tag.
  */
 export function writeElStyle(el, styleContent) {
-	const id = el.id ? el.id : Math.random().toString(36).substring(2, 9);
+	const id = el.id
+		? el.id
+		: "aura-" + Math.random().toString(36).substring(2, 9);
 	if (!el.id) el.id = id;
 
 	const styleTagId = `aura-style-${id}`;
