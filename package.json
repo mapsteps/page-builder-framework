@@ -32,10 +32,11 @@
 	],
 	"browserslist": "> 0.5%, last 2 versions, not dead",
 	"scripts": {
+		"build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min --no-source-maps",
 		"build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps",
 		"build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min --no-source-maps",
 		"build-site": "npm run build-site-js && npm run build-site-css",
-		"build-individual-js": "parcel build \"assets/js/!(site|desktop-menu|mobile-menu|libraries)*.js\" --dist-dir js/min --no-source-maps",
+		"build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-source-maps",
 		"build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps",
 		"build-individual": "npm run build-individual-js && npm run build-individual-css",
 		"build": "npm run build-site && npm run build-individual"

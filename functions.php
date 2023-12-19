@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * Setting depth to 0 isn't ideal as PBF is very specific with the depth of sub-menus for various menu items.
  * Still, it seems to be the best and easiest way to temporarily address the issue.
  *
- * @param array $args The arguments
+ * @param array $args The arguments.
  *
  * @return array The updated arguments.
  */
@@ -170,7 +170,11 @@ add_action( 'widgets_init', 'wpbf_sidebars' );
 function wpbf_scripts() {
 
 	// Main JS file.
-	wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-min.js', array( 'jquery' ), WPBF_VERSION, true );
+	if ( wp_script_is( 'jquery', 'enqueued' ) ) {
+		wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-jquery-min.js', array( 'jquery' ), WPBF_VERSION, true );
+	} else {
+		wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-min.js', array(), WPBF_VERSION, true );
+	}
 
 	wp_add_inline_script(
 		'wpbf-site',
@@ -224,7 +228,7 @@ function wpbf_enqueue_admin_scripts() {
 			'activationNotice' => array(
 				'dismissalNonce' => wp_create_nonce( 'WPBF_Dismiss_Activation_Notice' ),
 			),
-			'bfcmNotice' => array(
+			'bfcmNotice'       => array(
 				'dismissalNonce' => wp_create_nonce( 'WPBF_Dismiss_Bfcm_Notice' ),
 			),
 		)

@@ -1,7 +1,26 @@
 /**
+ * Legacy WpbfTheme object.
+ *
+ * @typedef {Object} LegacyWpbfTheme
+ *
+ * @property {site} LegacyWpbfSite Legacy WpbfTheme.site object.
+ */
+
+/**
+ * Legacy WpbfTheme.site object.
+ *
+ * @typedef {Object} LegacyWpbfSite
+ *
+ * @property {DeviceBreakpoints} breakpoints Breakpoint values for desktop, tablet, and mobile.
+ * @property {string} activeBreakpoint The current active breakpoint.
+ * @property {boolean} isInsideCustomizer Whether we're inside customizer or not.
+ */
+
+/**
  * Aura global object.
  *
  * @typedef {Object} Aura
+ *
  * @property {function():DeviceBreakpoints} getBreakpoints Get breakpoint values for desktop, tablet, and mobile.
  * @property {function():string} getActiveBreakpoint Get the current active breakpoint.
  * @property {function():boolean} isInsideCustomizer Check whether we're inside customizer or not.
@@ -15,6 +34,7 @@
  * Pre-defined device breakpoints.
  *
  * @typedef {Object} DeviceBreakpoints
+ *
  * @property {number} desktop
  * @property {number} tablet
  * @property {number} mobile
