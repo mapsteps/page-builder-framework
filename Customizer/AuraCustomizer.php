@@ -111,7 +111,20 @@ final class AuraCustomizer {
 	 */
 	private function register_panels( $wp_customize_manager ) {
 
-		//
+		foreach ( self::$added_panels as $panel ) {
+
+			$wp_customize_manager->add_panel(
+				$panel->id,
+				array(
+					'title'           => $panel->title,
+					'description'     => $panel->description,
+					'capability'      => $panel->capability,
+					'priority'        => $panel->priority,
+					'active_callback' => $panel->active_callback,
+				)
+			);
+
+		}
 
 	}
 
@@ -124,7 +137,20 @@ final class AuraCustomizer {
 	 */
 	private function register_sections( $wp_customize_manager ) {
 
-		//
+		foreach ( self::$added_sections as $section ) {
+
+			$wp_customize_manager->add_section(
+				$section->id,
+				array(
+					'title'           => $section->title,
+					'description'     => $section->description,
+					'capability'      => $section->capability,
+					'priority'        => $section->priority,
+					'active_callback' => $section->active_callback,
+				)
+			);
+
+		}
 
 	}
 

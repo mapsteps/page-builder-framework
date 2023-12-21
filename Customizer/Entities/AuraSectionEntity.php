@@ -36,11 +36,28 @@ class AuraSectionEntity {
 	public $description = '';
 
 	/**
+	 * Section capability.
+	 *
+	 * @var string
+	 */
+	public $capability = '';
+
+	/**
 	 * Section priority.
 	 *
 	 * @var int
 	 */
 	public $priority = 0;
+
+	/**
+	 * Section active callback.
+	 *
+	 * Callback will be called with one parameter which is the instance of WP_Customize_Section.
+	 * It should return boolean to indicate whether the section is active or not.
+	 *
+	 * @var callable
+	 */
+	public $active_callback = '';
 
 	/**
 	 * Section panel id.

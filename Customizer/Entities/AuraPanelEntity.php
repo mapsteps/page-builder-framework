@@ -36,10 +36,27 @@ class AuraPanelEntity {
 	public $description = '';
 
 	/**
+	 * Panel capability.
+	 *
+	 * @var string
+	 */
+	public $capability = '';
+
+	/**
 	 * Panel priority.
 	 *
 	 * @var int
 	 */
 	public $priority = 0;
+
+	/**
+	 * Panel active callback.
+	 *
+	 * Callback will be called with one parameter which is the instance of WP_Customize_Panel.
+	 * It should return boolean to indicate whether the section is active or not.
+	 *
+	 * @var callable
+	 */
+	public $active_callback = '';
 
 }

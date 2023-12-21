@@ -54,6 +54,19 @@ final class AuraCustomizerSection {
 	}
 
 	/**
+	 * Set the section capability.
+	 *
+	 * @param string $capability Section capability.
+	 *
+	 * @return $this
+	 */
+	public function capability( $capability ) {
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the section priority.
 	 *
 	 * @param int $priority Section priority.
@@ -61,6 +74,22 @@ final class AuraCustomizerSection {
 	 * @return $this
 	 */
 	public function priority( $priority ) {
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the section active callback.
+	 *
+	 * Callback will be called with one parameter which is the instance of WP_Customize_Section.
+	 * It should return boolean to indicate whether the section is active or not.
+	 *
+	 * @param callable $active_callback Section active callback.
+	 *
+	 * @return $this
+	 */
+	public function activeCallback( $active_callback ) {
 
 		return $this;
 
