@@ -15,6 +15,13 @@ use Mapsteps\Aura\Customizer\Entities\AuraPanelEntity;
 final class AuraCustomizerPanel {
 
 	/**
+	 * The panel entity object.
+	 *
+	 * @var AuraPanelEntity
+	 */
+	private $panel;
+
+	/**
 	 * Set the panel id.
 	 *
 	 * @param string $id Panel id.
@@ -23,31 +30,22 @@ final class AuraCustomizerPanel {
 	 */
 	public function id( $id ) {
 
-		return $this;
-
-	}
-
-	/**
-	 * Set the panel title.
-	 *
-	 * @param string $title Panel title.
-	 *
-	 * @return $this
-	 */
-	public function title( $title ) {
+		$this->panel->id = $id;
 
 		return $this;
 
 	}
 
 	/**
-	 * Set the panel description.
+	 * Set the panel priority.
 	 *
-	 * @param string $description Panel description.
+	 * @param int $priority Panel priority.
 	 *
 	 * @return $this
 	 */
-	public function description( $description ) {
+	public function priority( $priority ) {
+
+		$this->panel->priority = $priority;
 
 		return $this;
 
@@ -62,18 +60,37 @@ final class AuraCustomizerPanel {
 	 */
 	public function capability( $capability ) {
 
+		$this->panel->capability = $capability;
+
 		return $this;
 
 	}
 
 	/**
-	 * Set the panel priority.
+	 * Set the panel title.
 	 *
-	 * @param int $priority Panel priority.
+	 * @param string $title Panel title.
 	 *
 	 * @return $this
 	 */
-	public function priority( $priority ) {
+	public function title( $title ) {
+
+		$this->panel->title = $title;
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the panel description.
+	 *
+	 * @param string $description Panel description.
+	 *
+	 * @return $this
+	 */
+	public function description( $description ) {
+
+		$this->panel->description = $description;
 
 		return $this;
 
@@ -91,18 +108,22 @@ final class AuraCustomizerPanel {
 	 */
 	public function activeCallback( $active_callback ) {
 
+		$this->panel->active_callback = $active_callback;
+
 		return $this;
 
 	}
 
 	/**
-	 * Add the panel.
+	 * Add the panel to the singleton.
 	 *
 	 * @return AuraPanelEntity
 	 */
 	public function add() {
 
-		return new AuraPanelEntity();
+		AuraCustomizer::$added_panels[] = $this->panel;
+
+		return $this->panel;
 
 	}
 
