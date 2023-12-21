@@ -10,7 +10,7 @@ namespace Mapsteps\Aura\Customizer;
 /**
  * Class to add Aura customizer control.
  */
-class AuraCustomizerControl {
+final class AuraCustomizerControl {
 
 	/**
 	 * Set the control's type.
