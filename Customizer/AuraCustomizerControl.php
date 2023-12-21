@@ -7,6 +7,8 @@
 
 namespace Mapsteps\Aura\Customizer;
 
+use Mapsteps\Aura\Customizer\Entities\AuraControlEntity;
+
 /**
  * Class to add Aura customizer control.
  */
@@ -95,11 +97,11 @@ final class AuraCustomizerControl {
 	 *
 	 * @param string $section_id Section id.
 	 *
-	 * @return void
+	 * @return AuraControlEntity
 	 */
 	public function addToSection( $section_id ) {
 
-		//
+		return new AuraControlEntity();
 
 	}
 

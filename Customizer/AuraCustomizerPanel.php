@@ -7,6 +7,8 @@
 
 namespace Mapsteps\Aura\Customizer;
 
+use Mapsteps\Aura\Customizer\Entities\AuraPanelEntity;
+
 /**
  * Class to add Aura customizer panel.
  */
@@ -67,11 +69,11 @@ final class AuraCustomizerPanel {
 	/**
 	 * Add the panel.
 	 *
-	 * @return void
+	 * @return AuraPanelEntity
 	 */
 	public function add() {
 
-		//
+		return new AuraPanelEntity();
 
 	}
 

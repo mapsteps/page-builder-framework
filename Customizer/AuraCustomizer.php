@@ -9,6 +9,9 @@ namespace Mapsteps\Aura\Customizer;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+use Mapsteps\Aura\Customizer\Entities\AuraControlEntity;
+use Mapsteps\Aura\Customizer\Entities\AuraPanelEntity;
+use Mapsteps\Aura\Customizer\Entities\AuraSectionEntity;
 use WP_Customize_Manager;
 
 /**
@@ -36,6 +39,27 @@ final class AuraCustomizer {
 	 * @var string
 	 */
 	public static $capability = 'edit_theme_options';
+
+	/**
+	 * Added panels.
+	 *
+	 * @var AuraPanelEntity[]
+	 */
+	public static $added_panels = array();
+
+	/**
+	 * Added sections.
+	 *
+	 * @var AuraSectionEntity[]
+	 */
+	public static $added_sections = array();
+
+	/**
+	 * Added controls.
+	 *
+	 * @var AuraControlEntity[]
+	 */
+	public static $added_controls = array();
 
 	/**
 	 * Get the instance of the class.

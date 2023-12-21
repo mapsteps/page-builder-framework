@@ -7,6 +7,8 @@
 
 namespace Mapsteps\Aura\Customizer;
 
+use Mapsteps\Aura\Customizer\Entities\AuraSectionEntity;
+
 /**
  * Class to add Aura customizer section.
  */
@@ -69,11 +71,11 @@ final class AuraCustomizerSection {
 	 *
 	 * @param string $panel_id Panel id.
 	 *
-	 * @return void
+	 * @return AuraSectionEntity
 	 */
 	public function addToPanel( $panel_id ) {
 
-		//
+		return new AuraSectionEntity();
 
 	}
 
