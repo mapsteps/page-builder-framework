@@ -10,44 +10,46 @@ namespace Mapsteps\Aura\Customizer\Entities;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * The properties of an Aura customizer's panel.
+ * Entity object of an Aura customizer's panel.
+ *
+ * @see https://developer.wordpress.org/reference/classes/WP_Customize_Panel/__construct/
  */
 class AuraPanelEntity {
 
 	/**
-	 * Panel id.
+	 * A specific ID for the panel.
 	 *
 	 * @var string
 	 */
 	public $id;
 
 	/**
-	 * Panel title.
+	 * Priority of the panel, defining the display order of panels and sections. Default 160.
+	 *
+	 * @var int
+	 */
+	public $priority = 160;
+
+	/**
+	 * Capability required for the panel. Default is 'edit_theme_options'.
+	 *
+	 * @var string
+	 */
+	public $capability = 'edit_theme_options';
+
+	/**
+	 * Title of the panel to show in UI.
 	 *
 	 * @var string
 	 */
 	public $title;
 
 	/**
-	 * Panel description.
+	 * Description to show in the UI.
 	 *
 	 * @var string
 	 */
 	public $description = '';
-
-	/**
-	 * Panel capability.
-	 *
-	 * @var string
-	 */
-	public $capability = '';
-
-	/**
-	 * Panel priority.
-	 *
-	 * @var int
-	 */
-	public $priority = 0;
 
 	/**
 	 * Panel active callback.

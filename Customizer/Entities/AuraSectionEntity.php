@@ -10,44 +10,54 @@ namespace Mapsteps\Aura\Customizer\Entities;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * The properties of an Aura customizer's section.
+ * Entity object of an Aura customizer's section.
+ *
+ * @see https://developer.wordpress.org/reference/classes/WP_Customize_Section/__construct/
  */
 class AuraSectionEntity {
 
 	/**
-	 * Section id.
+	 * A specific ID of the section.
 	 *
 	 * @var string
 	 */
 	public $id;
 
 	/**
-	 * Section title.
+	 * Priority of the section, defining the display order of panels and sections. Default 160.
 	 *
-	 * @var string
+	 * @var int
 	 */
-	public $title;
+	public $priority = 160;
 
 	/**
-	 * Section description.
+	 * The panel id this section belongs to (if any).
 	 *
 	 * @var string
 	 */
-	public $description = '';
+	public $panel_id = '';
 
 	/**
 	 * Section capability.
 	 *
 	 * @var string
 	 */
-	public $capability = '';
+	public $capability = 'edit_theme_options';
 
 	/**
-	 * Section priority.
+	 * Title of the section to show in UI.
 	 *
-	 * @var int
+	 * @var string
 	 */
-	public $priority = 0;
+	public $title;
+
+	/**
+	 * Description to show in the UI.
+	 *
+	 * @var string
+	 */
+	public $description = '';
+
 
 	/**
 	 * Section active callback.
@@ -59,11 +69,5 @@ class AuraSectionEntity {
 	 */
 	public $active_callback = '';
 
-	/**
-	 * Section panel id.
-	 *
-	 * @var string
-	 */
-	public $panel_id;
 
 }

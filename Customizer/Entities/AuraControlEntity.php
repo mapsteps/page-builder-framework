@@ -10,9 +10,32 @@ namespace Mapsteps\Aura\Customizer\Entities;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * The properties of an Aura customizer's control.
+ * Entity object of an Aura customizer's control.
+ *
+ * @see https://developer.wordpress.org/reference/classes/WP_Customize_Control/__construct/
  */
 class AuraControlEntity {
+
+	/**
+	 * Control ID.
+	 *
+	 * @var string
+	 */
+	public $id;
+
+	/**
+	 * All settings tied to the control. If undefined, $id will be used.
+	 *
+	 * @var array
+	 */
+	public $settings;
+
+	/**
+	 * The primary setting for the control (if there is one).
+	 *
+	 * @var string
+	 */
+	public $setting = 'default';
 
 	/**
 	 * Control type.
@@ -22,85 +45,56 @@ class AuraControlEntity {
 	public $type;
 
 	/**
-	 * Control setting.
+	 * Capability required to use this control.
 	 *
 	 * @var string
 	 */
-	public $setting;
+	public $capability = 'edit_theme_options';
 
 	/**
-	 * Control label.
+	 * Order priority to load the control. Default 10.
+	 *
+	 * @var int
+	 */
+	public $priority = 10;
+
+	/**
+	 * Section the control belongs to.
+	 *
+	 * @var string
+	 */
+	public $section_id = '';
+
+	/**
+	 * Label for the control.
 	 *
 	 * @var string
 	 */
 	public $label = '';
 
 	/**
-	 * Control description.
+	 * Description for the control.
 	 *
 	 * @var string
 	 */
 	public $description = '';
 
 	/**
-	 * Control transport. Accepts 'refresh', 'selective_refresh' or 'postMessage'.
-	 *
-	 * @var string
-	 */
-	public $transport = 'refresh';
-
-	/**
-	 * Control priority.
-	 *
-	 * @var int
-	 */
-	public $priority = 0;
-
-	/**
-	 * Control section id.
-	 *
-	 * @var string
-	 */
-	public $section_id;
-
-	/**
-	 * Control choices.
+	 * List of choices for multi-choices type controls, where values are the keys, and labels are the values.
 	 *
 	 * @var array
 	 */
 	public $choices = array();
 
 	/**
-	 * Control input_attrs.
+	 * List of custom input attributes for control output, where attribute names are the keys and values are the values.
 	 *
 	 * @var array
 	 */
 	public $input_attrs = array();
 
-
 	/**
-	 * Control active_callback.
-	 *
-	 * @var string
-	 */
-	public $active_callback = '';
-
-	/**
-	 * Control sanitize_callback.
-	 *
-	 * @var string
-	 */
-	public $sanitize_callback = '';
-
-	/**
-	 * Control sanitize_js_callback.
-	 *
-	 * @var string
-	 */
-	public $sanitize_js_callback = '';
-
-	/**
-	 * Control json.
+	 * Data to export to the client via JSON.
 	 *
 	 * @var string
 	 */
