@@ -22,6 +22,15 @@ final class AuraCustomizerPanel {
 	private $panel;
 
 	/**
+	 * Construct the class.
+	 */
+	public function __construct() {
+
+		$this->panel = new AuraPanelEntity();
+
+	}
+
+	/**
 	 * Set the panel id.
 	 *
 	 * @param string $id Panel id.
