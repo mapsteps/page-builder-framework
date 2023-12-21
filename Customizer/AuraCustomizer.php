@@ -36,23 +36,26 @@ class AuraCustomizer {
 	public static $capability = 'edit_theme_options';
 
 	/**
-	 * Initialize the class.
+	 * Get the instance of the class.
 	 *
-	 * @return void
+	 * @return self
 	 */
-	public static function init() {
+	public static function get_instance() {
 
 		if ( ! self::$instance ) {
 			self::$instance = new self();
-			self::$instance->setup();
 		}
+
+		return self::$instance;
 
 	}
 
 	/**
-	 * Setup hooks.
+	 * Initialize the class, setup hooks.
+	 *
+	 * @return void
 	 */
-	private function setup() {
+	public function init() {
 
 		//
 

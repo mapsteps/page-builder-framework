@@ -5,8 +5,6 @@
  * @package Page Builder Framework
  */
 
-use Mapsteps\Aura\Customizer\AuraCustomizer;
-
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
@@ -60,7 +58,8 @@ require_once WPBF_THEME_DIR . '/inc/gravatar.php';
 require_once WPBF_THEME_DIR . '/inc/misc.php';
 
 // Customizer functions.
-AuraCustomizer::init();
+require_once WPBF_THEME_DIR . '/Customizer/aura-customizer-functions.php';
+aura_customizer()->init();
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 
 // Theme mods.
