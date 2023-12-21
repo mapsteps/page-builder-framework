@@ -7,6 +7,8 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 /**
  * Fixes the missing 'menu-item-has-children' class in WordPress 6.1
  *
