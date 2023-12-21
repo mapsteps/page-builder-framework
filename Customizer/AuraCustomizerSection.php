@@ -10,7 +10,7 @@ namespace Mapsteps\Aura\Customizer;
 /**
  * Class to add Aura customizer section.
  */
-class AuraCustomizerSection {
+final class AuraCustomizerSection {
 
 	/**
 	 * Set the section id.

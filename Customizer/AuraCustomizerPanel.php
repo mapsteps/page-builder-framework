@@ -10,7 +10,7 @@ namespace Mapsteps\Aura\Customizer;
 /**
  * Class to add Aura customizer panel.
  */
-class AuraCustomizerPanel {
+final class AuraCustomizerPanel {
 
 	/**
 	 * Set the panel id.
