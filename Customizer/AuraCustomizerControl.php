@@ -93,6 +93,84 @@ final class AuraCustomizerControl {
 	}
 
 	/**
+	 * Set the control's choices.
+	 *
+	 * @param array $choices Control choices.
+	 *
+	 * @return $this
+	 */
+	public function choices( $choices ) {
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the control's input_attrs.
+	 *
+	 * @param array $input_attrs Control input_attrs.
+	 *
+	 * @return $this
+	 */
+	public function inputAttrs( $input_attrs ) {
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the control's active_callback.
+	 *
+	 * @param string $active_callback Control active_callback.
+	 *
+	 * @return $this
+	 */
+	public function activeCallback( $active_callback ) {
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the control's sanitize_callback.
+	 *
+	 * @param string $sanitize_callback Control sanitize_callback.
+	 *
+	 * @return $this
+	 */
+	public function sanitizeCallback( $sanitize_callback ) {
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the control's sanitize_js_callback.
+	 *
+	 * @param string $sanitize_js_callback Control sanitize_js_callback.
+	 *
+	 * @return $this
+	 */
+	public function sanitizeJsCallback( $sanitize_js_callback ) {
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the control's json.
+	 *
+	 * @param string $json Control json.
+	 *
+	 * @return $this
+	 */
+	public function json( $json ) {
+
+		return $this;
+
+	}
+
+	/**
 	 * Add control to a section.
 	 *
 	 * @param string $section_id Section id.
