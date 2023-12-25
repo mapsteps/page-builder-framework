@@ -1,8 +1,8 @@
 <?php
 /**
- * Aura customizer's global functions.
+ * Wpbf customizer's global functions.
  *
- * @package Aura
+ * @package Wpbf
  */
 
 use Mapsteps\Wpbf\Customizer\Customizer;
@@ -13,7 +13,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerSection;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Get the instance of the Aura customizer singleton class.
+ * Get the instance of the Wpbf customizer singleton class.
  *
  * @return Customizer
  */
@@ -24,7 +24,7 @@ function wpbf_customizer() {
 }
 
 /**
- * Initialize Aura customizer panel.
+ * Initialize Wpbf customizer panel.
  *
  * @return CustomizerPanel
  */
@@ -35,7 +35,7 @@ function wpbf_customizer_panel() {
 }
 
 /**
- * Initialize Aura customizer section.
+ * Initialize Wpbf customizer section.
  *
  * @return CustomizerSection
  */
@@ -46,7 +46,7 @@ function wpbf_customizer_section() {
 }
 
 /**
- * Initialize Aura customizer control.
+ * Initialize Wpbf customizer control.
  *
  * @return CustomizerControl
  */

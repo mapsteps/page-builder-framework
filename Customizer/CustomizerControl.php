@@ -1,8 +1,8 @@
 <?php
 /**
- * Aura customizer control.
+ * Wpbf customizer control.
  *
- * @package Aura
+ * @package Wpbf
  */
 
 namespace Mapsteps\Wpbf\Customizer;
@@ -10,7 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 
 /**
- * Class to add Aura customizer control.
+ * Class to add Wpbf customizer control.
  */
 final class CustomizerControl {
 

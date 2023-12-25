@@ -1,8 +1,8 @@
 <?php
 /**
- * Aura customizer section.
+ * Wpbf customizer section.
  *
- * @package Aura
+ * @package Wpbf
  */
 
 namespace Mapsteps\Wpbf\Customizer;
@@ -10,7 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSectionEntity;
 
 /**
- * Class to add Aura customizer section.
+ * Class to add Wpbf customizer section.
  */
 final class CustomizerSection {
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Aura customizer's panel entity.
+ * Wpbf customizer's panel entity.
  *
- * @package Aura
+ * @package Wpbf
  */
 
 namespace Mapsteps\Wpbf\Customizer\Entities;
@@ -10,7 +10,7 @@ namespace Mapsteps\Wpbf\Customizer\Entities;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Entity object of an Aura customizer's panel.
+ * Entity object of an Wpbf customizer's panel.
  *
  * @see https://developer.wordpress.org/reference/classes/WP_Customize_Panel/__construct/
  */

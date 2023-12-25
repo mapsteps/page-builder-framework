@@ -1,8 +1,8 @@
 <?php
 /**
- * Aura customizer panel.
+ * Wpbf customizer panel.
  *
- * @package Aura
+ * @package Wpbf
  */
 
 namespace Mapsteps\Wpbf\Customizer;
@@ -10,7 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerPanelEntity;
 
 /**
- * Class to add Aura customizer panel.
+ * Class to add Wpbf customizer panel.
  */
 final class CustomizerPanel {
 

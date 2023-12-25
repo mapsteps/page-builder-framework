@@ -1,8 +1,8 @@
 <?php
 /**
- * Aura customizer's setting entity.
+ * Wpbf customizer's setting entity.
  *
- * @package Aura
+ * @package Wpbf
  */
 
 namespace Mapsteps\Wpbf\Customizer\Entities;
@@ -10,7 +10,7 @@ namespace Mapsteps\Wpbf\Customizer\Entities;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Entity object of an Aura customizer's settings.
+ * Entity object of an Wpbf customizer's settings.
  *
  * @see https://developer.wordpress.org/reference/classes/WP_Customize_Setting/__construct/
  */

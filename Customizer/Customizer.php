@@ -1,8 +1,8 @@
 <?php
 /**
- * Aura customizer.
+ * Wpbf customizer.
  *
- * @package Aura
+ * @package Wpbf
  */
 
 namespace Mapsteps\Wpbf\Customizer;
@@ -16,7 +16,7 @@ use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
 
 /**
- * Singleton class for Aura customizer.
+ * Singleton class for Wpbf customizer.
  */
 final class Customizer {
 
