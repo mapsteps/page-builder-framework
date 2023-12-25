@@ -5,9 +5,10 @@
 	"author": "David",
 	"license": "GPL-3.0",
 	"devDependencies": {
-		"@parcel/optimizer-data-url": "2.6.0",
-		"@parcel/transformer-inline-string": "2.6.0",
-		"@parcel/transformer-sass": "2.6.0",
+		"@parcel/config-default": "^2.10.3",
+		"@parcel/optimizer-data-url": "2.10.3",
+		"@parcel/transformer-inline-string": "2.10.3",
+		"@parcel/transformer-sass": "2.10.3",
 		"@types/jquery": "^3.5.29",
 		"parcel": "^2.10.3",
 		"parcel-namer-rewrite": "2.10.3-rc.2",

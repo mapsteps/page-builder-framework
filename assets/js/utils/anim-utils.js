@@ -63,10 +63,10 @@ export function removeInlineWidth(el) {
 export function writeElStyle(el, styleContent) {
 	const id = el.id
 		? el.id
-		: "aura-" + Math.random().toString(36).substring(2, 9);
+		: "wpbf-" + Math.random().toString(36).substring(2, 9);
 	if (!el.id) el.id = id;
 
-	const styleTagId = `aura-style-${id}`;
+	const styleTagId = `wpbf-style-${id}`;
 	let styleTag = document.querySelector(`#${styleTagId}`);
 
 	if (styleTag) {
@@ -75,7 +75,7 @@ export function writeElStyle(el, styleContent) {
 	}
 
 	styleTag = document.createElement("style");
-	styleTag.id = `aura-style-${id}`;
+	styleTag.id = `wpbf-style-${id}`;
 	if (styleContent) styleTag.innerHTML = styleContent;
 	document.head.appendChild(styleTag);
 

@@ -225,7 +225,7 @@ export default function setupDesktopMenu() {
 				if (submenu.classList.contains("is-shown")) return;
 
 				const styleTagId = getElStyleId(submenu);
-				const submenuId = styleTagId.replace("aura-style-", "");
+				const submenuId = styleTagId.replace("wpbf-style-", "");
 
 				writeElStyle(
 					submenu,
@@ -274,7 +274,7 @@ export default function setupDesktopMenu() {
 				if (submenu.classList.contains("is-shown")) return;
 
 				const styleTagId = getElStyleId(submenu);
-				const submenuId = styleTagId.replace("aura-style-", "");
+				const submenuId = styleTagId.replace("wpbf-style-", "");
 
 				writeElStyle(
 					submenu,

@@ -414,7 +414,7 @@
 	padding: 0;
 	display: none;
 
-	&.aura-slide-anim {
+	&.wpbf-slide-anim {
 		@include transition(height 0.4s ease-in-out);
 	}
 }

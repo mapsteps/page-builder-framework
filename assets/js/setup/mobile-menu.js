@@ -195,17 +195,17 @@ export default function setupMobileMenu() {
 
 			const pureHeight = getPureHeight(mobileMenu);
 			const styleTagId = getElStyleId(mobileMenu);
-			const submenuId = styleTagId.replace("aura-style-", "");
+			const submenuId = styleTagId.replace("wpbf-style-", "");
 
 			writeElStyle(
 				mobileMenu,
 				`
-				#${submenuId}.aura-slide-anim {display: block; height: 0; overflow: hidden;}
-				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
+				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);
 
-			mobileMenu.classList.add("aura-slide-anim");
+			mobileMenu.classList.add("wpbf-slide-anim");
 
 			setTimeout(function () {
 				mobileMenu.classList.add("is-expanded");
@@ -213,7 +213,7 @@ export default function setupMobileMenu() {
 				setTimeout(function () {
 					writeElStyle(
 						mobileMenu,
-						`#${submenuId}.aura-slide-anim {display: block;}`,
+						`#${submenuId}.wpbf-slide-anim {display: block;}`,
 					);
 				}, 400);
 			}, 1);
@@ -249,13 +249,13 @@ export default function setupMobileMenu() {
 		if (mobileMenu && mobileMenu.classList.contains("active")) {
 			const pureHeight = getPureHeight(mobileMenu);
 			const styleTagId = getElStyleId(mobileMenu);
-			const submenuId = styleTagId.replace("aura-style-", "");
+			const submenuId = styleTagId.replace("wpbf-style-", "");
 
 			writeElStyle(
 				mobileMenu,
 				`
-				#${submenuId}.aura-slide-anim {display: block; height: 0; overflow: hidden;}
-				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
+				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);
 
@@ -264,7 +264,7 @@ export default function setupMobileMenu() {
 				mobileMenu.classList.remove("is-expanded");
 
 				setTimeout(function () {
-					mobileMenu.classList.remove("aura-slide-anim");
+					mobileMenu.classList.remove("wpbf-slide-anim");
 				}, 400);
 			}, 1);
 		}
@@ -337,17 +337,17 @@ export default function setupMobileMenu() {
 		submenus.forEach(function (submenu) {
 			const pureHeight = getPureHeight(submenu);
 			const styleTagId = getElStyleId(submenu);
-			const submenuId = styleTagId.replace("aura-style-", "");
+			const submenuId = styleTagId.replace("wpbf-style-", "");
 
 			writeElStyle(
 				submenu,
 				`
-				#${submenuId}.aura-slide-anim {display: block; height: 0; overflow: hidden;}
-				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
+				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);
 
-			submenu.classList.add("aura-slide-anim");
+			submenu.classList.add("wpbf-slide-anim");
 
 			setTimeout(function () {
 				submenu.classList.add("is-expanded");
@@ -355,7 +355,7 @@ export default function setupMobileMenu() {
 				setTimeout(function () {
 					writeElStyle(
 						submenu,
-						`#${submenuId}.aura-slide-anim {display: block}`,
+						`#${submenuId}.wpbf-slide-anim {display: block}`,
 					);
 				}, 400);
 			}, 1);
@@ -385,13 +385,13 @@ export default function setupMobileMenu() {
 		submenus.forEach(function (submenu) {
 			const pureHeight = getPureHeight(submenu);
 			const styleTagId = getElStyleId(submenu);
-			const submenuId = styleTagId.replace("aura-style-", "");
+			const submenuId = styleTagId.replace("wpbf-style-", "");
 
 			writeElStyle(
 				submenu,
 				`
-				#${submenuId}.aura-slide-anim {display: block; height: 0; overflow: hidden;}
-				#${submenuId}.aura-slide-anim.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
+				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
 				`,
 			);
 
@@ -399,7 +399,7 @@ export default function setupMobileMenu() {
 				submenu.classList.remove("is-expanded");
 
 				setTimeout(function () {
-					submenu.classList.remove("aura-slide-anim");
+					submenu.classList.remove("wpbf-slide-anim");
 				}, 400);
 			}, 1);
 		});
