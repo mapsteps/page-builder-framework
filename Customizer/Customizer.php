@@ -91,7 +91,7 @@ final class Customizer {
 	 */
 	public function init() {
 
-		add_action( 'customize_register', array( $this, 'register_aura_customizer' ) );
+		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
 
 	}
 
@@ -102,7 +102,7 @@ final class Customizer {
 	 *
 	 * @return void
 	 */
-	public function register_aura_customizer( $wp_customize_manager ) {
+	public function register_wpbf_customizer( $wp_customize_manager ) {
 
 		$this->register_panels( $wp_customize_manager );
 		$this->register_sections( $wp_customize_manager );
