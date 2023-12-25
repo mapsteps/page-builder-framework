@@ -5,7 +5,7 @@
  * @package Aura
  */
 
-namespace Mapsteps\Aura\Customizer\Entities;
+namespace Mapsteps\Wpbf\Customizer\Entities;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  *
  * @see https://developer.wordpress.org/reference/classes/WP_Customize_Setting/__construct/
  */
-class AuraSettingEntity {
+class CustomizerSettingEntity {
 
 	/**
 	 * A specific ID of the setting.

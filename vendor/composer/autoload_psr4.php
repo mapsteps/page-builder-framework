@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Mapsteps\\Aura\\' => array($baseDir . '/'),
+    'Mapsteps\\Wpbf\\' => array($baseDir . '/'),
 );

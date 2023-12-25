@@ -5,19 +5,20 @@
  * @package Aura
  */
 
-namespace Mapsteps\Aura\Customizer;
+namespace Mapsteps\Wpbf\Customizer;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-use Mapsteps\Aura\Customizer\Entities\AuraControlEntity;
-use Mapsteps\Aura\Customizer\Entities\AuraPanelEntity;
-use Mapsteps\Aura\Customizer\Entities\AuraSectionEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerPanelEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerSectionEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
 
 /**
  * Singleton class for Aura customizer.
  */
-final class AuraCustomizer {
+final class Customizer {
 
 	/**
 	 * Instance of the class.
@@ -41,23 +42,30 @@ final class AuraCustomizer {
 	public static $capability = 'edit_theme_options';
 
 	/**
+	 * Added settings.
+	 *
+	 * @var CustomizerSettingEntity[]
+	 */
+	public static $added_settings = array();
+
+	/**
 	 * Added panels.
 	 *
-	 * @var AuraPanelEntity[]
+	 * @var CustomizerPanelEntity[]
 	 */
 	public static $added_panels = array();
 
 	/**
 	 * Added sections.
 	 *
-	 * @var AuraSectionEntity[]
+	 * @var CustomizerSectionEntity[]
 	 */
 	public static $added_sections = array();
 
 	/**
 	 * Added controls.
 	 *
-	 * @var AuraControlEntity[]
+	 * @var CustomizerControlEntity[]
 	 */
 	public static $added_controls = array();
 

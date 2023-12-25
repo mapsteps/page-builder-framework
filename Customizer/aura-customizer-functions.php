@@ -5,53 +5,53 @@
  * @package Aura
  */
 
-use Mapsteps\Aura\Customizer\AuraCustomizer;
-use Mapsteps\Aura\Customizer\AuraCustomizerControl;
-use Mapsteps\Aura\Customizer\AuraCustomizerPanel;
-use Mapsteps\Aura\Customizer\AuraCustomizerSection;
+use Mapsteps\Wpbf\Customizer\Customizer;
+use Mapsteps\Wpbf\Customizer\CustomizerControl;
+use Mapsteps\Wpbf\Customizer\CustomizerPanel;
+use Mapsteps\Wpbf\Customizer\CustomizerSection;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
  * Get the instance of the Aura customizer singleton class.
  *
- * @return AuraCustomizer
+ * @return Customizer
  */
-function aura_customizer() {
+function wpbf_customizer() {
 
-	return AuraCustomizer::get_instance();
+	return Customizer::get_instance();
 
 }
 
 /**
  * Initialize Aura customizer panel.
  *
- * @return AuraCustomizerPanel
+ * @return CustomizerPanel
  */
-function aura_customizer_panel() {
+function wpbf_customizer_panel() {
 
-	return new AuraCustomizerPanel();
+	return new CustomizerPanel();
 
 }
 
 /**
  * Initialize Aura customizer section.
  *
- * @return AuraCustomizerSection
+ * @return CustomizerSection
  */
-function aura_customizer_section() {
+function wpbf_customizer_section() {
 
-	return new AuraCustomizerSection();
+	return new CustomizerSection();
 
 }
 
 /**
  * Initialize Aura customizer control.
  *
- * @return AuraCustomizerControl
+ * @return CustomizerControl
  */
-function aura_customizer_control() {
+function wpbf_customizer_control() {
 
-	return new AuraCustomizerControl();
+	return new CustomizerControl();
 
 }

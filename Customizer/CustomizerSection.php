@@ -5,19 +5,19 @@
  * @package Aura
  */
 
-namespace Mapsteps\Aura\Customizer;
+namespace Mapsteps\Wpbf\Customizer;
 
-use Mapsteps\Aura\Customizer\Entities\AuraSectionEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerSectionEntity;
 
 /**
  * Class to add Aura customizer section.
  */
-final class AuraCustomizerSection {
+final class CustomizerSection {
 
 	/**
 	 * The section entity object.
 	 *
-	 * @var AuraSectionEntity
+	 * @var CustomizerSectionEntity
 	 */
 	private $section;
 
@@ -26,7 +26,7 @@ final class AuraCustomizerSection {
 	 */
 	public function __construct() {
 
-		$this->section = new AuraSectionEntity();
+		$this->section = new CustomizerSectionEntity();
 
 	}
 
@@ -128,15 +128,15 @@ final class AuraCustomizerSection {
 	 *
 	 * @param string $panel_id Panel id.
 	 *
-	 * @return AuraSectionEntity
+	 * @return CustomizerSectionEntity
 	 */
 	public function addToPanel( $panel_id ) {
 
 		$this->section->panel_id = $panel_id;
 
-		AuraCustomizer::$added_sections[] = $this->section;
+		Customizer::$added_sections[] = $this->section;
 
-		return new AuraSectionEntity();
+		return new CustomizerSectionEntity();
 
 	}
 

@@ -5,14 +5,14 @@
  * @package Aura
  */
 
-namespace Mapsteps\Aura\Customizer;
+namespace Mapsteps\Wpbf\Customizer;
 
-use Mapsteps\Aura\Customizer\Entities\AuraControlEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 
 /**
  * Class to add Aura customizer control.
  */
-final class AuraCustomizerControl {
+final class CustomizerControl {
 
 	/**
 	 * Set the control's type.
@@ -175,11 +175,11 @@ final class AuraCustomizerControl {
 	 *
 	 * @param string $section_id Section id.
 	 *
-	 * @return AuraControlEntity
+	 * @return CustomizerControlEntity
 	 */
 	public function addToSection( $section_id ) {
 
-		return new AuraControlEntity();
+		return new CustomizerControlEntity();
 
 	}
 

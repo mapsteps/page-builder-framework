@@ -5,19 +5,19 @@
  * @package Aura
  */
 
-namespace Mapsteps\Aura\Customizer;
+namespace Mapsteps\Wpbf\Customizer;
 
-use Mapsteps\Aura\Customizer\Entities\AuraPanelEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerPanelEntity;
 
 /**
  * Class to add Aura customizer panel.
  */
-final class AuraCustomizerPanel {
+final class CustomizerPanel {
 
 	/**
 	 * The panel entity object.
 	 *
-	 * @var AuraPanelEntity
+	 * @var CustomizerPanelEntity
 	 */
 	private $panel;
 
@@ -26,7 +26,7 @@ final class AuraCustomizerPanel {
 	 */
 	public function __construct() {
 
-		$this->panel = new AuraPanelEntity();
+		$this->panel = new CustomizerPanelEntity();
 
 	}
 
@@ -126,11 +126,11 @@ final class AuraCustomizerPanel {
 	/**
 	 * Add the panel to the singleton.
 	 *
-	 * @return AuraPanelEntity
+	 * @return CustomizerPanelEntity
 	 */
 	public function add() {
 
-		AuraCustomizer::$added_panels[] = $this->panel;
+		Customizer::$added_panels[] = $this->panel;
 
 		return $this->panel;
 
