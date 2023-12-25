@@ -58,7 +58,7 @@ require_once WPBF_THEME_DIR . '/inc/gravatar.php';
 require_once WPBF_THEME_DIR . '/inc/misc.php';
 
 // Customizer functions.
-require_once WPBF_THEME_DIR . '/Customizer/aura-customizer-functions.php';
+require_once WPBF_THEME_DIR . '/Customizer/wpbf-customizer-functions.php';
 wpbf_customizer()->init();
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 
