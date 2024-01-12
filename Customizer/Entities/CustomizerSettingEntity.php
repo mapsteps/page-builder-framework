@@ -10,7 +10,7 @@ namespace Mapsteps\Wpbf\Customizer\Entities;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Entity object of an Wpbf customizer's settings.
+ * Entity object of Wpbf customizer's settings.
  *
  * @see https://developer.wordpress.org/reference/classes/WP_Customize_Setting/__construct/
  */
@@ -24,7 +24,7 @@ class CustomizerSettingEntity {
 	public $id;
 
 	/**
-	 * Setting type. Accepts 'theme_mod' or 'option'.
+	 *  Setting type. Accepts 'theme_mod' or 'option'.
 	 *
 	 * @var string
 	 */

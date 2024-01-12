@@ -15,6 +15,22 @@ use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 final class CustomizerControl {
 
 	/**
+	 * The control entity object.
+	 *
+	 * @var CustomizerControlEntity
+	 */
+	private $control;
+
+	/**
+	 * Construct the class.
+	 */
+	public function __construct() {
+
+		$this->control = new CustomizerControlEntity();
+
+	}
+
+	/**
 	 * Set the control's type.
 	 *
 	 * @param string $type Control type.
@@ -23,18 +39,52 @@ final class CustomizerControl {
 	 */
 	public function type( $type ) {
 
+		$this->control->type = $type;
+
 		return $this;
 
 	}
 
 	/**
-	 * Set the control's setting.
+	 * Set the capability required to use this control.
+	 *
+	 * @param string $capability The capability required to use this control.
+	 *
+	 * @return $this
+	 */
+	public function capability( $capability ) {
+
+		$this->control->capability = $capability;
+
+		return $this;
+
+	}
+
+	/**
+	 * Set settings tied to the control.
+	 *
+	 * @param string $settings Setting id.
+	 *
+	 * @return $this
+	 */
+	public function settings( $settings ) {
+
+		$this->control->settings = $settings;
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the primary setting for the control (if there is one).
 	 *
 	 * @param string $setting Setting id.
 	 *
 	 * @return $this
 	 */
 	public function setting( $setting ) {
+
+		$this->control->setting = $setting;
 
 		return $this;
 
@@ -49,6 +99,8 @@ final class CustomizerControl {
 	 */
 	public function label( $label ) {
 
+		$this->control->label = $label;
+
 		return $this;
 
 	}
@@ -61,6 +113,8 @@ final class CustomizerControl {
 	 * @return $this
 	 */
 	public function description( $description ) {
+
+		$this->control->description = $description;
 
 		return $this;
 
@@ -88,6 +142,8 @@ final class CustomizerControl {
 	 */
 	public function priority( $priority ) {
 
+		$this->control->priority = $priority;
+
 		return $this;
 
 	}
@@ -101,6 +157,8 @@ final class CustomizerControl {
 	 */
 	public function choices( $choices ) {
 
+		$this->control->choices = $choices;
+
 		return $this;
 
 	}
@@ -113,6 +171,8 @@ final class CustomizerControl {
 	 * @return $this
 	 */
 	public function inputAttrs( $input_attrs ) {
+
+		$this->control->input_attrs = $input_attrs;
 
 		return $this;
 
@@ -166,6 +226,8 @@ final class CustomizerControl {
 	 */
 	public function json( $json ) {
 
+		$this->control->json = $json;
+
 		return $this;
 
 	}
@@ -179,7 +241,11 @@ final class CustomizerControl {
 	 */
 	public function addToSection( $section_id ) {
 
-		return new CustomizerControlEntity();
+		$this->control->section_id = $section_id;
+
+		Customizer::addControl( $this->control );
+
+		return $this->control;
 
 	}
 

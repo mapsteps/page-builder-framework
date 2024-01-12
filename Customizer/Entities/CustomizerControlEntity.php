@@ -10,7 +10,7 @@ namespace Mapsteps\Wpbf\Customizer\Entities;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Entity object of an Wpbf customizer's control.
+ * Entity object of a Wpbf customizer's control.
  *
  * @see https://developer.wordpress.org/reference/classes/WP_Customize_Control/__construct/
  */
