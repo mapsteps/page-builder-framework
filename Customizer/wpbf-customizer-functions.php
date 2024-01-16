@@ -7,8 +7,10 @@
 
 use Mapsteps\Wpbf\Customizer\Customizer;
 use Mapsteps\Wpbf\Customizer\CustomizerControl;
+use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
+use Mapsteps\Wpbf\Customizer\CustomizerSetting;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
@@ -20,6 +22,17 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 function wpbf_customizer() {
 
 	return Customizer::get_instance();
+
+}
+
+/**
+ * Initialize Wpbf customizer setting.
+ *
+ * @return CustomizerSetting
+ */
+function wpbf_customizer_setting() {
+
+	return new CustomizerSetting();
 
 }
 
@@ -53,5 +66,16 @@ function wpbf_customizer_section() {
 function wpbf_customizer_control() {
 
 	return new CustomizerControl();
+
+}
+
+/**
+ * Initialize Wpbf customizer field.
+ *
+ * @return CustomizerField
+ */
+function wpbf_customizer_field() {
+
+	return new CustomizerField();
 
 }

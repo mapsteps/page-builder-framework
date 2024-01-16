@@ -99,4 +99,14 @@ class CustomizerControlEntity {
 	 * @var string
 	 */
 	public $json = '';
+
+	/**
+	 * Control's active callback.
+	 *
+	 * Callback will be called with one parameter which is the instance of WP_Customize_Control.
+	 * It should return boolean to indicate whether the control is active or not.
+	 *
+	 * @var callable
+	 */
+	public $active_callback = '';
 }

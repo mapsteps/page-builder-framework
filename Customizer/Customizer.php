@@ -104,9 +104,38 @@ final class Customizer {
 	 */
 	public function register_wpbf_customizer( $wp_customize_manager ) {
 
+		$this->register_settings( $wp_customize_manager );
 		$this->register_panels( $wp_customize_manager );
 		$this->register_sections( $wp_customize_manager );
 		$this->register_controls( $wp_customize_manager );
+
+	}
+
+	/**
+	 * Register the customizer settings.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Instance of WP_Customize_Manager.
+	 *
+	 * @return void
+	 */
+	private function register_settings( $wp_customize_manager ) {
+
+		foreach ( self::$added_settings as $setting ) {
+
+			$wp_customize_manager->add_setting(
+				$setting->id,
+				array(
+					'default'              => $setting->default,
+					'type'                 => $setting->type,
+					'capability'           => $setting->capability,
+					'transport'            => $setting->transport,
+					'sanitize_callback'    => $setting->sanitize_callback,
+					'sanitize_js_callback' => $setting->sanitize_js_callback,
+					'validate_callback'    => $setting->validate_callback,
+				)
+			);
+
+		}
 
 	}
 
@@ -171,7 +200,25 @@ final class Customizer {
 	 */
 	private function register_controls( $wp_customize_manager ) {
 
-		//
+		$this->register_settings( $wp_customize_manager );
+
+		foreach ( self::$added_controls as $control ) {
+
+			$wp_customize_manager->add_control(
+				$control->id,
+				array(
+					'type'            => $control->type,
+					'section'         => $control->section_id,
+					'label'           => $control->label,
+					'description'     => $control->description,
+					'priority'        => $control->priority,
+					'choices'         => $control->choices,
+					'input_attrs'     => $control->input_attrs,
+					'active_callback' => $control->active_callback,
+				)
+			);
+
+		}
 
 	}
 

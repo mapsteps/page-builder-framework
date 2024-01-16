@@ -87,7 +87,7 @@ class CustomizerSetting {
 	/**
 	 * Set the transport for this setting.
 	 *
-	 * @param string $transport The transport for this setting.
+	 * @param string $transport Options for rendering the live preview of changes in Customizer.
 	 *
 	 * @return $this
 	 */
@@ -141,6 +141,19 @@ class CustomizerSetting {
 		$this->setting->sanitize_js_callback = $callback;
 
 		return $this;
+
+	}
+
+	/**
+	 * Add the setting to the Customizer singleton.
+	 *
+	 * @return CustomizerSettingEntity
+	 */
+	public function add() {
+
+		Customizer::$added_settings[] = $this->setting;
+
+		return $this->setting;
 
 	}
 

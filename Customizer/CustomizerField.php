@@ -1,32 +1,38 @@
 <?php
 /**
- * Wpbf customizer control.
+ * Wpbf customizer field.
  *
  * @package Wpbf
  */
 
 namespace Mapsteps\Wpbf\Customizer;
 
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
-
 /**
- * Class to add Wpbf customizer control.
+ * Class to add Wpbf customizer control & setting.
  */
-final class CustomizerControl {
+final class CustomizerField {
 
 	/**
-	 * The control entity object.
+	 * WPBF customizer setting object.
 	 *
-	 * @var CustomizerControlEntity
+	 * @var CustomizerSetting
 	 */
-	private $control;
+	private $setting_instance;
+
+	/**
+	 * WPBF customizer control object.
+	 *
+	 * @var CustomizerControl
+	 */
+	private $control_instance;
 
 	/**
 	 * Construct the class.
 	 */
 	public function __construct() {
 
-		$this->control = new CustomizerControlEntity();
+		$this->setting_instance = new CustomizerSetting();
+		$this->control_instance = new CustomizerControl();
 
 	}
 
@@ -35,11 +41,12 @@ final class CustomizerControl {
 	 *
 	 * @param string $id Control id.
 	 *
-	 * @return $this
+	 * @return   $this
 	 */
 	public function id( $id ) {
 
-		$this->control->id = $id;
+		$this->setting_instance->id( $id );
+		$this->control_instance->id( $id );
 
 		return $this;
 
@@ -54,7 +61,7 @@ final class CustomizerControl {
 	 */
 	public function type( $type ) {
 
-		$this->control->type = $type;
+		$this->control_instance->type( $type );
 
 		return $this;
 
@@ -69,7 +76,8 @@ final class CustomizerControl {
 	 */
 	public function capability( $capability ) {
 
-		$this->control->capability = $capability;
+		$this->setting_instance->capability( $capability );
+		$this->control_instance->capability( $capability );
 
 		return $this;
 
@@ -84,7 +92,7 @@ final class CustomizerControl {
 	 */
 	public function settings( $settings ) {
 
-		$this->control->settings = $settings;
+		$this->control_instance->settings( $settings );
 
 		return $this;
 
@@ -99,7 +107,7 @@ final class CustomizerControl {
 	 */
 	public function setting( $setting ) {
 
-		$this->control->setting = $setting;
+		$this->control_instance->setting( $setting );
 
 		return $this;
 
@@ -114,7 +122,7 @@ final class CustomizerControl {
 	 */
 	public function label( $label ) {
 
-		$this->control->label = $label;
+		$this->control_instance->label( $label );
 
 		return $this;
 
@@ -129,7 +137,22 @@ final class CustomizerControl {
 	 */
 	public function description( $description ) {
 
-		$this->control->description = $description;
+		$this->control_instance->description( $description );
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the setting's transport.
+	 *
+	 * @param string $transport Options for rendering the live preview of changes in Customizer.
+	 *
+	 * @return $this
+	 */
+	public function transport( $transport ) {
+
+		$this->setting_instance->transport( $transport );
 
 		return $this;
 
@@ -144,7 +167,7 @@ final class CustomizerControl {
 	 */
 	public function priority( $priority ) {
 
-		$this->control->priority = $priority;
+		$this->control_instance->priority( $priority );
 
 		return $this;
 
@@ -159,7 +182,7 @@ final class CustomizerControl {
 	 */
 	public function choices( $choices ) {
 
-		$this->control->choices = $choices;
+		$this->control_instance->choices( $choices );
 
 		return $this;
 
@@ -174,7 +197,7 @@ final class CustomizerControl {
 	 */
 	public function inputAttrs( $input_attrs ) {
 
-		$this->control->input_attrs = $input_attrs;
+		$this->control_instance->inputAttrs( $input_attrs );
 
 		return $this;
 
@@ -183,42 +206,43 @@ final class CustomizerControl {
 	/**
 	 * Set the control's active_callback.
 	 *
-	 * Callback will be called with one parameter which is the instance of WP_Customize_Control.
-	 * It should return boolean to indicate whether the control is active or not.
-	 *
-	 * @param string $active_callback Control's active_callback.
+	 * @param string $active_callback Control active_callback.
 	 *
 	 * @return $this
 	 */
 	public function activeCallback( $active_callback ) {
 
-		$this->control->active_callback = $active_callback;
+		$this->control_instance->activeCallback( $active_callback );
 
 		return $this;
 
 	}
 
 	/**
-	 * Set the control's sanitize_callback.
+	 * Set the setting's sanitize_callback.
 	 *
-	 * @param string $sanitize_callback Control sanitize_callback.
+	 * @param callable $sanitize_callback Control sanitize_callback.
 	 *
 	 * @return $this
 	 */
 	public function sanitizeCallback( $sanitize_callback ) {
 
+		$this->setting_instance->sanitizeCallback( $sanitize_callback );
+
 		return $this;
 
 	}
 
 	/**
-	 * Set the control's sanitize_js_callback.
+	 * Set the setting's sanitize_js_callback.
 	 *
 	 * @param string $sanitize_js_callback Control sanitize_js_callback.
 	 *
 	 * @return $this
 	 */
 	public function sanitizeJsCallback( $sanitize_js_callback ) {
+
+		$this->setting_instance->sanitizeJsCallback( $sanitize_js_callback );
 
 		return $this;
 
@@ -233,7 +257,7 @@ final class CustomizerControl {
 	 */
 	public function json( $json ) {
 
-		$this->control->json = $json;
+		$this->control_instance->json( $json );
 
 		return $this;
 
@@ -244,15 +268,15 @@ final class CustomizerControl {
 	 *
 	 * @param string $section_id Section id.
 	 *
-	 * @return CustomizerControlEntity
+	 * @return $this
 	 */
 	public function addToSection( $section_id ) {
 
-		$this->control->section_id = $section_id;
+		$this->setting_instance->add();
 
-		Customizer::addControl( $this->control );
+		$this->control_instance->addToSection( $section_id );
 
-		return $this->control;
+		return $this;
 
 	}
 
