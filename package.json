@@ -1,67 +1,69 @@
 {
-  "name": "aura",
-  "version": "1.0.0",
-  "description": "Aura theme development tooling",
-  "author": "David",
-  "license": "GPL-3.0",
-  "devDependencies": {
-    "@parcel/config-default": "^2.11.0",
-    "@parcel/optimizer-data-url": "2.10.3",
-    "@parcel/transformer-inline-string": "2.10.3",
-    "@parcel/transformer-sass": "2.10.3",
-    "@types/jquery": "^3.5.29",
-    "@types/lodash": "^4.14.202",
-    "parcel": "^2.11.0",
-    "parcel-namer-rewrite": "2.10.3-rc.2",
-    "parcel-resolver-ignore": "^2.2.0",
-    "prettier": "npm:wp-prettier@^3.0.3",
-    "typescript": "^5.3.3",
-    "wordpress__customize-browser": "github:usefulteam/wordpress__customize-browser"
-  },
-  "dependencies": {
-    "@wordpress/components": "^25.15.0",
-    "@wordpress/core-data": "^6.26.0",
-    "@wordpress/data": "^9.19.0",
-    "@wordpress/element": "^5.26.0",
-    "@wordpress/hooks": "^3.49.0",
-    "@wordpress/url": "^3.50.0",
-    "jquery": "^3.7.1",
-    "lodash": "^4.17.21"
-  },
-  "alias": {
-    "jquery": {
-      "global": "jQuery"
-    },
-    "wp": {
-      "global": "wp"
-    },
-    "lodash": {
-      "global": "_"
-    },
-    "@wordpress/hooks": {
-      "global": "wp.hooks"
-    }
-  },
-  "parcel-namer-rewrite": {
-    "hashing": "never",
-    "silent": true,
-    "rules": {
-      "(.*).js": "$1-min.js",
-      "(.*).css": "$1-min.css"
-    }
-  },
-  "parcelIgnore": [
-    "img/.+"
-  ],
-  "browserslist": "> 0.5%, last 2 versions, not dead",
-  "scripts": {
-    "build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min --no-source-maps",
-    "build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps",
-    "build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min --no-source-maps",
-    "build-site": "npm run build-site-js && npm run build-site-css",
-    "build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-source-maps",
-    "build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps",
-    "build-individual": "npm run build-individual-js && npm run build-individual-css",
-    "build": "npm run build-site && npm run build-individual"
-  }
+	"name": "aura",
+	"version": "1.0.0",
+	"description": "Aura theme development tooling",
+	"author": "David",
+	"license": "GPL-3.0",
+	"devDependencies": {
+		"@parcel/config-default": "^2.11.0",
+		"@parcel/optimizer-data-url": "^2.11.0",
+		"@parcel/transformer-inline-string": "^2.11.0",
+		"@parcel/transformer-sass": "^2.11.0",
+		"@types/jquery": "^3.5.29",
+		"@types/lodash": "^4.14.202",
+		"parcel": "^2.11.0",
+		"parcel-namer-rewrite": "2.10.3-rc.2",
+		"parcel-resolver-ignore": "^2.2.0",
+		"prettier": "npm:wp-prettier@^3.0.3",
+		"typescript": "^5.3.3",
+		"wordpress__customize-browser": "github:usefulteam/wordpress__customize-browser"
+	},
+	"dependencies": {
+		"@wordpress/components": "^25.15.0",
+		"@wordpress/core-data": "^6.26.0",
+		"@wordpress/data": "^9.19.0",
+		"@wordpress/element": "^5.26.0",
+		"@wordpress/hooks": "^3.49.0",
+		"@wordpress/url": "^3.50.0",
+		"jquery": "^3.7.1",
+		"lodash": "^4.17.21"
+	},
+	"alias": {
+		"jquery": {
+			"global": "jQuery"
+		},
+		"wp": {
+			"global": "wp"
+		},
+		"lodash": {
+			"global": "_"
+		},
+		"@wordpress/hooks": {
+			"global": "wp.hooks"
+		}
+	},
+	"parcel-namer-rewrite": {
+		"hashing": "never",
+		"silent": true,
+		"rules": {
+			"(.*).js": "$1-min.js",
+			"(.*).css": "$1-min.css"
+		}
+	},
+	"parcelIgnore": [
+		"img/.+"
+	],
+	"browserslist": "> 0.5%, last 2 versions, not dead",
+	"scripts": {
+		"build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min --no-source-maps",
+		"build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps",
+		"build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min --no-source-maps",
+		"build-site": "npm run build-site-js && npm run build-site-css",
+		"build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-source-maps",
+		"build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps",
+		"build-individual": "npm run build-individual-js && npm run build-individual-css",
+		"build": "npm run build-site && npm run build-individual",
+		"watch-control-base": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
+		"build-control-base": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps"
+	}
 }

@@ -5,6 +5,8 @@ import _ from "lodash";
 import {Control, Control_Params} from "wordpress__customize-browser/Control";
 import {Element} from "wordpress__customize-browser/Element";
 
+import "./base-control.scss";
+
 declare var wp: {
 	customize: Customize;
 	hooks: typeof hooks;
@@ -18,7 +20,7 @@ export interface WpbfCustomizeControl extends Control {
 }
 
 /**
- * This file is taken from Kirki.
+ * This file was taken from Kirki.
  *
  * The majority of the code in this file
  * is derived from the wp-customize-posts plugin
