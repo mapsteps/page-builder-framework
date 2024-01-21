@@ -66,7 +66,7 @@ devDependencies:
     version: 5.3.3
   wordpress__customize-browser:
     specifier: github:usefulteam/wordpress__customize-browser
-    version: github.com/usefulteam/wordpress__customize-browser/cd888ad9993b0452c8ad52754c714889233447cc
+    version: github.com/usefulteam/wordpress__customize-browser/3d9ed3c4daef734b9980266b81accd1a14a53f7d
 
 packages:
 
@@ -1224,7 +1224,7 @@ packages:
       '@parcel/package-manager': 2.10.3(@parcel/core@2.11.0)
       '@parcel/source-map': 2.1.1
       '@parcel/workers': 2.10.3(@parcel/core@2.11.0)
-      utility-types: 3.10.0
+      utility-types: 3.11.0
     transitivePeerDependencies:
       - '@parcel/core'
     dev: true
@@ -1238,7 +1238,7 @@ packages:
       '@parcel/package-manager': 2.11.0(@parcel/core@2.11.0)
       '@parcel/source-map': 2.1.1
       '@parcel/workers': 2.11.0(@parcel/core@2.11.0)
-      utility-types: 3.10.0
+      utility-types: 3.11.0
     transitivePeerDependencies:
       - '@parcel/core'
     dev: true
@@ -1386,7 +1386,7 @@ packages:
       detect-libc: 1.0.3
       is-glob: 4.0.3
       micromatch: 4.0.5
-      node-addon-api: 7.0.0
+      node-addon-api: 7.1.0
     optionalDependencies:
       '@parcel/watcher-android-arm64': 2.4.0
       '@parcel/watcher-darwin-arm64': 2.4.0
@@ -2612,7 +2612,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001579
-      electron-to-chromium: 1.4.637
+      electron-to-chromium: 1.4.640
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: true
@@ -2878,8 +2878,8 @@ packages:
       '@babel/runtime': 7.23.8
     dev: false
 
-  /date-fns@3.2.0:
-    resolution: {integrity: sha512-E4KWKavANzeuusPi0jUjpuI22SURAznGkx7eZV+4i6x2A+IZxAMcajgkvuDAU1bg40+xuhW1zRdVIIM/4khuIg==}
+  /date-fns@3.3.0:
+    resolution: {integrity: sha512-xuouT0GuI2W8yXhCMn/AXbSl1Av3wu2hJXxMnnILTY3bYY0UgNK0qOwVXqdFBrobW5qbX1TuOTgMw7c2H2OuhA==}
     dev: false
 
   /debug@4.3.4:
@@ -3006,8 +3006,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /electron-to-chromium@1.4.637:
-    resolution: {integrity: sha512-G7j3UCOukFtxVO1vWrPQUoDk3kL70mtvjc/DC/k2o7lE0wAdq+Vwp1ipagOow+BH0uVztFysLWbkM/RTIrbK3w==}
+  /electron-to-chromium@1.4.640:
+    resolution: {integrity: sha512-z/6oZ/Muqk4BaE7P69bXhUhpJbUM9ZJeka43ZwxsDshKtePns4mhBlh8bU5+yrnOnz3fhG82XLzGUXazOmsWnA==}
     dev: true
 
   /emoji-regex@7.0.3:
@@ -3691,8 +3691,9 @@ packages:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
     dev: true
 
-  /node-addon-api@7.0.0:
-    resolution: {integrity: sha512-vgbBJTS4m5/KkE16t5Ly0WW9hz46swAstv0hYYwMtbG7AznRhNyfLRe8HZAiWIpcHzoO7HxhLuBQj9rJ/Ho0ZA==}
+  /node-addon-api@7.1.0:
+    resolution: {integrity: sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==}
+    engines: {node: ^16 || ^18 || >= 20}
     dev: true
 
   /node-gyp-build-optional-packages@5.0.7:
@@ -4508,7 +4509,7 @@ packages:
       react: '*'
       react-dom: '*'
     dependencies:
-      date-fns: 3.2.0
+      date-fns: 3.3.0
       react: 18.2.0
     dev: false
 
@@ -4557,8 +4558,8 @@ packages:
       which-typed-array: 1.1.13
     dev: true
 
-  /utility-types@3.10.0:
-    resolution: {integrity: sha512-O11mqxmi7wMKCo6HKFt5AhO4BwY3VV68YU07tgxfz8zJTIxr4BpsezN49Ffwy9j3ZpwwJp4fkRwjRzq3uWE6Rg==}
+  /utility-types@3.11.0:
+    resolution: {integrity: sha512-6Z7Ma2aVEWisaL6TvBCy7P8rm2LQoPv6dJ7ecIaIixHcwfbJ0x7mWdbcwlIM5IGQxPZSFYeqRCqlOOeKoJYMkw==}
     engines: {node: '>= 4'}
     dev: true
 
@@ -4727,8 +4728,8 @@ packages:
       lib0: 0.2.88
     dev: false
 
-  github.com/usefulteam/wordpress__customize-browser/cd888ad9993b0452c8ad52754c714889233447cc:
-    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/cd888ad9993b0452c8ad52754c714889233447cc}
+  github.com/usefulteam/wordpress__customize-browser/3d9ed3c4daef734b9980266b81accd1a14a53f7d:
+    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/3d9ed3c4daef734b9980266b81accd1a14a53f7d}
     name: wordpress__customize-browser
     version: 5.5.5
     dependencies:
