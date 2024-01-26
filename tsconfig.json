@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "jsx": "react",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",

@@ -1,4 +1,3 @@
-import {Customize} from "wordpress__customize-browser/Customize";
 import hooks from "@wordpress/hooks";
 import jQuery from "jquery";
 import _ from "lodash";
@@ -6,18 +5,12 @@ import {Control, Control_Params} from "wordpress__customize-browser/Control";
 import {Element} from "wordpress__customize-browser/Element";
 
 import "./base-control.scss";
+import {WpbfCustomize, WpbfCustomizeControl} from "./interfaces";
 
 declare var wp: {
-	customize: Customize;
+	customize: WpbfCustomize;
 	hooks: typeof hooks;
 };
-
-export interface WpbfCustomizeControl extends Control {
-	_setUpSettingRootLinks: () => void;
-	_setUpSettingPropertyLinks: () => void;
-	initWpbfControl: (control?: Control) => void;
-	actuallyEmbed: () => void;
-}
 
 /**
  * This file was taken from Kirki.
