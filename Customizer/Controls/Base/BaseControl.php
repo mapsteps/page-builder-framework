@@ -102,7 +102,7 @@ class BaseControl extends WP_Customize_Control {
 	protected function render() {
 
 		$id    = 'customize-control-' . str_replace( array( '[', ']' ), array( '-', '' ), $this->id );
-		$class = 'customize-control wpbf-customize-control control-' . $this->type;
+		$class = 'customize-control wpbf-customize-control wpbf-customize-control-' . $this->type;
 		$gap   = isset( $this->wrapper_opts['gap'] ) ? $this->wrapper_opts['gap'] : 'default';
 		$tag   = isset( $this->wrapper_opts['tag'] ) ? $this->wrapper_opts['tag'] : 'li';
 
