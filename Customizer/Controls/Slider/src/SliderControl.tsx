@@ -1,12 +1,11 @@
 import SliderForm from './SliderForm';
-import {Customize} from "wordpress__customize-browser/Customize";
 import {Control_Params} from "wordpress__customize-browser/Control";
 import ReactDOM from 'react-dom';
-import {WpbfCustomizeControl} from "../../Base/src/base-control";
 import React from 'react';
+import {WpbfCustomize, WpbfCustomizeControl} from "../../Base/src/interfaces";
 
 declare var wp: {
-	customize: Customize;
+	customize: WpbfCustomize;
 };
 
 const SliderControl = wp.customize.Control.extend({
@@ -20,15 +19,15 @@ const SliderControl = wp.customize.Control.extend({
 		// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 		function onRemoved(removedControl: WpbfCustomizeControl) {
 			if (control !== removedControl) return;
-
-			control.destroy();
+			if (control.destroy) control.destroy();
 			control.container.remove();
-			// @ts-ignore
-			wp.customize.control.unbind('removed', onRemoved);
+
+			// ! The unbind expect 1 parameter, so I disable this line.
+			// wp.customize.control.unbind('removed', onRemoved);
 		}
 
-		// @ts-ignore
-		wp.customize.control.bind('removed', onRemoved);
+		// ! The bind expect 1 parameter, so I disable this line.
+		// wp.customize.control.bind('removed', onRemoved);
 	},
 
 	setNotificationContainer: function setNotificationContainer(el: HTMLElement) {
@@ -68,14 +67,17 @@ const SliderControl = wp.customize.Control.extend({
 	 * React is available to be used here instead of the wp.customize.Element abstraction.
 	 */
 	ready: function ready() {
-		const control = this;
+		const control = this as WpbfCustomizeControl;
 
-		/**
-		 * Update component value's state when customizer setting's value is changed.
-		 */
-		control.setting.bind((val: string) => {
-			control.updateComponentState(val);
-		});
+		if (control.setting) {
+			/**
+			 * Update component value's state when customizer setting's value is changed.
+			 */
+			control.setting.bind((val: string) => {
+				control.updateComponentState(val);
+			});
+		}
+
 	},
 
 	/**
