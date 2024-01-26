@@ -30,6 +30,11 @@ const SliderControl = wp.customize.Control.extend({
 		// wp.customize.control.bind('removed', onRemoved);
 	},
 
+	/**
+	 * Set notification container and render.
+	 *
+	 * This will be called when the React component is mounted.
+	 */
 	setNotificationContainer: function setNotificationContainer(el: HTMLElement) {
 		const control = this as WpbfCustomizeControl;
 
@@ -50,7 +55,7 @@ const SliderControl = wp.customize.Control.extend({
 				{...control.params}
 				control={control}
 				customizerSetting={control.setting}
-				setNotificationContainer={control.setNotificationCotainer}
+				setNotificationContainer={control.setNotificationContainer}
 				value={control.params.value}
 			/>,
 			control.container[0]
@@ -73,6 +78,7 @@ const SliderControl = wp.customize.Control.extend({
 			/**
 			 * Update component value's state when customizer setting's value is changed.
 			 */
+			// @ts-ignore
 			control.setting.bind((val: string) => {
 				control.updateComponentState(val);
 			});

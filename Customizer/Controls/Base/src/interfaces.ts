@@ -8,9 +8,10 @@ export interface WpbfCustomizeControl extends Control {
 	_setUpSettingPropertyLinks: () => void;
 	initWpbfControl: (control?: Control) => void;
 	actuallyEmbed: () => void;
+	setNotificationContainer: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
 
-	[key: string]: any;
+	updateComponentState(val: string): void;
 }
 
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {

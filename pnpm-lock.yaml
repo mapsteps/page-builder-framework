@@ -93,7 +93,7 @@ devDependencies:
     version: 5.3.3
   wordpress__customize-browser:
     specifier: github:usefulteam/wordpress__customize-browser
-    version: github.com/usefulteam/wordpress__customize-browser/e11c315fd30b7b57b896abcf911d88701edfe605
+    version: github.com/usefulteam/wordpress__customize-browser/d89a02c4a0d752e8d8f7b26d7cfc4fe3f5ece8b5
 
 packages:
 
@@ -187,7 +187,7 @@ packages:
     dependencies:
       '@babel/compat-data': 7.23.5
       '@babel/helper-validator-option': 7.23.5
-      browserslist: 4.22.2
+      browserslist: 4.22.3
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -812,7 +812,7 @@ packages:
       '@parcel/workers': 2.11.0(@parcel/core@2.11.0)
       abortcontroller-polyfill: 1.7.5
       base-x: 3.0.9
-      browserslist: 4.22.2
+      browserslist: 4.22.3
       clone: 2.1.2
       dotenv: 7.0.0
       dotenv-expand: 5.1.0
@@ -905,7 +905,7 @@ packages:
       '@parcel/plugin': 2.11.0(@parcel/core@2.11.0)
       '@parcel/source-map': 2.1.1
       '@parcel/utils': 2.11.0
-      browserslist: 4.22.2
+      browserslist: 4.22.3
       lightningcss: 1.23.0
       nullthrows: 1.1.1
     transitivePeerDependencies:
@@ -1204,7 +1204,7 @@ packages:
       '@parcel/plugin': 2.11.0(@parcel/core@2.11.0)
       '@parcel/source-map': 2.1.1
       '@parcel/utils': 2.11.0
-      browserslist: 4.22.2
+      browserslist: 4.22.3
       json5: 2.2.3
       nullthrows: 1.1.1
       semver: 7.5.4
@@ -1220,7 +1220,7 @@ packages:
       '@parcel/plugin': 2.11.0(@parcel/core@2.11.0)
       '@parcel/source-map': 2.1.1
       '@parcel/utils': 2.11.0
-      browserslist: 4.22.2
+      browserslist: 4.22.3
       lightningcss: 1.23.0
       nullthrows: 1.1.1
     transitivePeerDependencies:
@@ -1280,7 +1280,7 @@ packages:
       '@parcel/utils': 2.11.0
       '@parcel/workers': 2.11.0(@parcel/core@2.11.0)
       '@swc/helpers': 0.5.3
-      browserslist: 4.22.2
+      browserslist: 4.22.3
       nullthrows: 1.1.1
       regenerator-runtime: 0.13.11
       semver: 7.5.4
@@ -2733,15 +2733,15 @@ packages:
       fill-range: 7.0.1
     dev: true
 
-  /browserslist@4.22.2:
-    resolution: {integrity: sha512-0UgcrvQmBDvZHFGdYUehrCNIazki7/lUP3kkoi/r3YB2amZbFM9J43ZRkJTXBUZK4gmx56+Sqk9+Vs9mwZx9+A==}
+  /browserslist@4.22.3:
+    resolution: {integrity: sha512-UAp55yfwNv0klWNapjs/ktHoguxuQNGnOzxYmfnXIS+8AsRDZkSDxg7R1AX3GKzn078SBI5dzwzj/Yx0Or0e3A==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001580
-      electron-to-chromium: 1.4.647
+      electron-to-chromium: 1.4.648
       node-releases: 2.0.14
-      update-browserslist-db: 1.0.13(browserslist@4.22.2)
+      update-browserslist-db: 1.0.13(browserslist@4.22.3)
 
   /buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
@@ -3137,8 +3137,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /electron-to-chromium@1.4.647:
-    resolution: {integrity: sha512-Z/fTNGwc45WrYQhPaEcz5tAJuZZ8G7S/DBnhS6Kgp4BxnS40Z/HqlJ0hHg3Z79IGVzuVartIlTcjw/cQbPLgOw==}
+  /electron-to-chromium@1.4.648:
+    resolution: {integrity: sha512-EmFMarXeqJp9cUKu/QEciEApn0S/xRcpZWuAm32U7NgoZCimjsilKXHRO9saeEW55eHZagIDg6XTUOv32w9pjg==}
 
   /emoji-regex@7.0.3:
     resolution: {integrity: sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==}
@@ -4642,13 +4642,13 @@ packages:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: false
 
-  /update-browserslist-db@1.0.13(browserslist@4.22.2):
+  /update-browserslist-db@1.0.13(browserslist@4.22.3):
     resolution: {integrity: sha512-xebP81SNcPuNpPP3uzeW1NYXxI3rxyJzF3pD6sH4jE7o/IX+WtSpwnVU+qIsDPyk0d3hmFQ7mjqc6AtV604hbg==}
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
-      browserslist: 4.22.2
+      browserslist: 4.22.3
       escalade: 3.1.1
       picocolors: 1.0.0
 
@@ -4909,8 +4909,8 @@ packages:
       lib0: 0.2.88
     dev: false
 
-  github.com/usefulteam/wordpress__customize-browser/e11c315fd30b7b57b896abcf911d88701edfe605:
-    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/e11c315fd30b7b57b896abcf911d88701edfe605}
+  github.com/usefulteam/wordpress__customize-browser/d89a02c4a0d752e8d8f7b26d7cfc4fe3f5ece8b5:
+    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/d89a02c4a0d752e8d8f7b26d7cfc4fe3f5ece8b5}
     name: wordpress__customize-browser
     version: 5.5.5
     dependencies:
