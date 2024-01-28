@@ -11,7 +11,7 @@ declare var ajaxurl: string;
 	const metabox = document.querySelector(".kirki-clear-font-cache-metabox");
 	if (!metabox) return;
 
-	var notice = metabox.querySelector(".submission-status");
+	const notice = metabox.querySelector(".submission-status");
 	if (!notice) return;
 
 	const button = metabox.querySelector(".kirki-clear-font-cache");
@@ -26,7 +26,7 @@ declare var ajaxurl: string;
 		if (doingAjax) return;
 		doingAjax = true;
 
-		const button = this as HTMLButtonElement;
+		const button = e.target as HTMLButtonElement;
 		button.classList.add("is-loading");
 
 		if (timeoutId) {
@@ -49,10 +49,10 @@ declare var ajaxurl: string;
 			.done(function (r) {
 				showNotice(r.success ? "success" : "error", r.data);
 			})
-			.fail(function (r) {
+			.fail(function (_r) {
 				showNotice("error", "Something went wrong.");
 			})
-			.always(function (r) {
+			.always(function (_r) {
 				doingAjax = false;
 				button.classList.remove("is-loading");
 

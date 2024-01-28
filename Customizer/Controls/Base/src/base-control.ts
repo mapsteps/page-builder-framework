@@ -148,15 +148,16 @@ declare var wp: {
 		ready: function () {
 			const control = this as WpbfCustomizeControl;
 
-			control._setUpSettingRootLinks();
-			control._setUpSettingPropertyLinks();
+			control._setUpSettingRootLinks?.();
+			control._setUpSettingPropertyLinks?.();
 
 			wp.customize.Control.prototype.ready.call(control);
 
 			control.deferred.embedded.done(function () {
-				control.initWpbfControl();
+				control.initWpbfControl?.();
 				wp.hooks.doAction('wpbf.dynamicControl.ready.deferred.embedded.done', control);
 			});
+
 			wp.hooks.doAction('wpbf.dynamicControl.ready.after', control);
 		},
 
@@ -177,11 +178,11 @@ declare var wp: {
 
 			wp.customize.section(sectionId, function (section) {
 				if ('wpbf-expanded' === section.params.type || section.expanded() || wp.customize.settings.autofocus.control === control.id) {
-					control.actuallyEmbed();
+					control.actuallyEmbed?.();
 				} else {
 					section.expanded.bind(function (expanded) {
 						if (expanded) {
-							control.actuallyEmbed();
+							control.actuallyEmbed?.();
 						}
 					});
 				}
@@ -212,7 +213,7 @@ declare var wp: {
 		focus: function (args: Record<string, any>) {
 			const control = this as WpbfCustomizeControl;
 
-			control.actuallyEmbed();
+			control.actuallyEmbed?.();
 			wp.customize.Control.prototype.focus.call(control, args);
 			wp.hooks.doAction('wpbf.dynamicControl.focus.after', control);
 		},

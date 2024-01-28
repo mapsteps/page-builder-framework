@@ -12,7 +12,7 @@ const SliderControl = wp.customize.Control.extend({
 	initialize: function (id: string, params: Control_Params) {
 		const control = this as WpbfCustomizeControl;
 
-		control.setNotificationContainer = control.setNotificationContainer.bind(control);
+		control.setNotificationContainer = control.setNotificationContainer?.bind(control);
 
 		wp.customize.Control.prototype.initialize.call(control, id, params);
 
@@ -22,7 +22,7 @@ const SliderControl = wp.customize.Control.extend({
 			if (control.destroy) control.destroy();
 			control.container.remove();
 
-			// ! The unbind expect 1 parameter, so I disable this line.
+			// ! The "unbind" expect 1 parameter, so I disable this line.
 			// wp.customize.control.unbind('removed', onRemoved);
 		}
 
@@ -80,7 +80,7 @@ const SliderControl = wp.customize.Control.extend({
 			 */
 			// @ts-ignore
 			control.setting.bind((val: string) => {
-				control.updateComponentState(val);
+				control.updateComponentState?.(val);
 			});
 		}
 

@@ -1,4 +1,4 @@
-import { getClosest } from "./utils";
+import {getClosest} from "./utils";
 import jQuery from "jquery";
 
 declare var ajaxurl: string;
@@ -13,7 +13,8 @@ declare var ajaxurl: string;
 	}
 
 	function dismiss(e: JQuery.ClickEvent) {
-		const notice = getClosest(this, ".kirki-discount-notice");
+		const target = e.target as HTMLElement;
+		const notice = getClosest(target, ".kirki-discount-notice");
 		if (!notice) return;
 		let nonce = notice.dataset.dismissNonce;
 		nonce = nonce ? nonce : "";

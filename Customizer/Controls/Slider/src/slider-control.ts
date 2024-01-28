@@ -1,10 +1,10 @@
 import "./slider-control.scss";
-import {Customize} from "wordpress__customize-browser/Customize";
 import SliderControl from "./SliderControl";
+import {WpbfCustomize} from "../../Base/src/interfaces";
 
 declare var wp: {
-	customize: Customize;
+	customize: WpbfCustomize;
 };
 
 // Register control type with Customizer.
-wp.customize.controlConstructor['kirki-slider'] = SliderControl;
+wp.customize.controlConstructor['wpbf-slider'] = SliderControl;

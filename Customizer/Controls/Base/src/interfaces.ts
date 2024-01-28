@@ -4,14 +4,13 @@ import {Customize} from "wordpress__customize-browser/Customize";
 
 export interface WpbfCustomizeControl extends Control {
 	prototype: WpbfCustomizeControl;
-	_setUpSettingRootLinks: () => void;
-	_setUpSettingPropertyLinks: () => void;
-	initWpbfControl: (control?: Control) => void;
-	actuallyEmbed: () => void;
-	setNotificationContainer: (el: HTMLElement) => void;
+	_setUpSettingRootLinks?: () => void;
+	_setUpSettingPropertyLinks?: () => void;
+	initWpbfControl?: (control?: Control) => void;
+	actuallyEmbed?: () => void;
+	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
-
-	updateComponentState(val: string): void;
+	updateComponentState?: (val: string) => void;
 }
 
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
