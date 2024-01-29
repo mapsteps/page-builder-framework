@@ -9,6 +9,9 @@ namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 
+/**
+ * Customizer setting class.
+ */
 class CustomizerSetting {
 
 	/**
@@ -18,6 +21,9 @@ class CustomizerSetting {
 	 */
 	private $setting;
 
+	/**
+	 * CustomizerSetting constructor.
+	 */
 	public function __construct() {
 
 		$this->setting = new CustomizerSettingEntity();

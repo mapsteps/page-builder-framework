@@ -65,7 +65,7 @@ class CustomizerSettingEntity {
 	/**
 	 * Callback to filter a Customize setting value in un-slashed form.
 	 *
-	 * @var string
+	 * @var callable
 	 */
 	public $sanitize_callback = '';
 

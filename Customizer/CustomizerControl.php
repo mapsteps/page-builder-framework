@@ -19,7 +19,7 @@ final class CustomizerControl {
 	 *
 	 * @var CustomizerControlEntity
 	 */
-	private $control;
+	public $control;
 
 	/**
 	 * Construct the class.

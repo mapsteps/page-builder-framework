@@ -27,6 +27,13 @@ final class CustomizerField {
 	private $control_instance;
 
 	/**
+	 * The setting's sanitize_callback.
+	 *
+	 * @var callable
+	 */
+	private $sanitize_callback = '';
+
+	/**
 	 * Construct the class.
 	 */
 	public function __construct() {
@@ -227,6 +234,7 @@ final class CustomizerField {
 	 */
 	public function sanitizeCallback( $sanitize_callback ) {
 
+		$this->sanitize_callback = $sanitize_callback;
 		$this->setting_instance->sanitizeCallback( $sanitize_callback );
 
 		return $this;
@@ -271,6 +279,16 @@ final class CustomizerField {
 	 * @return $this
 	 */
 	public function addToSection( $section_id ) {
+
+		if ( empty( $this->sanitize_callback ) ) {
+			$control_type = $this->control_instance->control->type;
+
+			$this->sanitize_callback = ( new CustomizerUtil() )->determineSanitizeCallback( $control_type );
+
+			if ( ! empty( $this->sanitize_callback ) ) {
+				$this->sanitizeCallback( $this->sanitize_callback );
+			}
+		}
 
 		$this->setting_instance->add();
 
