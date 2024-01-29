@@ -78,9 +78,9 @@
 		"build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps",
 		"build-individual": "npm run build-individual-js && npm run build-individual-css",
 		"build": "npm run build-site && npm run build-individual",
-		"watch-control-base": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
-		"build-control-base": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
-		"watch-control-slider": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
-		"build-control-slider": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps"
+		"watch-base-control": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
+		"build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
+		"watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
+		"build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps"
 	}
 }

@@ -26,16 +26,16 @@ class CustomizerControlEntity {
 	/**
 	 * All settings tied to the control. If undefined, $id will be used.
 	 *
-	 * @var array
+	 * @var array|string
 	 */
-	public $settings;
+	public $settings = array();
 
 	/**
 	 * The primary setting for the control (if there is one).
 	 *
 	 * @var string
 	 */
-	public $setting = 'default';
+	public $setting = '';
 
 	/**
 	 * Control type.

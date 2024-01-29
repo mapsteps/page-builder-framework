@@ -44,10 +44,10 @@ class BaseControl extends WP_Customize_Control {
 	public function enqueue() {
 
 		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-control-base', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-base-control', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control-min.css', array(), WPBF_VERSION );
 
 		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-control-base', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control.js', array( 'customize-controls' ), WPBF_VERSION, false );
+		wp_enqueue_script( 'wpbf-base-control', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
 
 	}
 
@@ -101,8 +101,10 @@ class BaseControl extends WP_Customize_Control {
 	 */
 	protected function render() {
 
+		$type_class = str_replace( 'wpbf-', '', $this->type );
+
 		$id    = 'customize-control-' . str_replace( array( '[', ']' ), array( '-', '' ), $this->id );
-		$class = 'customize-control wpbf-customize-control wpbf-customize-control-' . $this->type;
+		$class = 'customize-control wpbf-customize-control wpbf-customize-control-' . $type_class;
 		$gap   = isset( $this->wrapper_opts['gap'] ) ? $this->wrapper_opts['gap'] : 'default';
 		$tag   = isset( $this->wrapper_opts['tag'] ) ? $this->wrapper_opts['tag'] : 'li';
 

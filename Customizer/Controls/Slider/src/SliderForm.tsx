@@ -88,12 +88,12 @@ export default function SliderForm(props: {
 	}
 
 	// Preparing for the template.
-	const fieldId = `kirki-control-input-${customizerSetting.id}`;
+	const fieldId = `wpbf-control-input-${customizerSetting.id}`;
 	const value = "" !== props.value ? props.value : 0;
 
 	return (
-		<div className="kirki-control-form" tabIndex={1}>
-			<label className="kirki-control-label" htmlFor={fieldId}>
+		<div className="wpbf-control-form" tabIndex={1}>
+			<label className="wpbf-control-label" htmlFor={fieldId}>
 				<span className="customize-control-title">{props.label}</span>
 				<span
 					className="customize-control-description description"
@@ -108,14 +108,14 @@ export default function SliderForm(props: {
 
 			<button
 				type="button"
-				className="kirki-control-reset"
+				className="wpbf-control-reset"
 				onClick={handleReset}
 			>
 				<i className="dashicons dashicons-image-rotate"></i>
 			</button>
 
-			<div className="kirki-control-cols">
-				<div className="kirki-control-left-col">
+			<div className="wpbf-control-cols">
+				<div className="wpbf-control-left-col">
 					<input
 						ref={sliderRef}
 						type="range"
@@ -124,12 +124,12 @@ export default function SliderForm(props: {
 						min={choices.min}
 						max={choices.max}
 						step={choices.step}
-						className="kirki-control-slider"
+						className="wpbf-control-slider"
 						onChange={handleChange}
 					/>
 				</div>
-				<div className="kirki-control-right-col">
-					<div className="kirki-control-value" ref={valueRef}>
+				<div className="wpbf-control-right-col">
+					<div className="wpbf-control-value" ref={valueRef}>
 						{value}
 					</div>
 				</div>

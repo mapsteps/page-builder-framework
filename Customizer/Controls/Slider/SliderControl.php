@@ -42,16 +42,14 @@ class SliderControl extends BaseControl {
 		parent::enqueue();
 
 		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-control-slider', WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-slider-control', WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control-min.css', array(), WPBF_VERSION );
 
 		// Enqueue the scripts.
 		wp_enqueue_script(
-			'wpbf-control-slider',
-			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control.js',
+			'wpbf-slider-control',
+			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control-min.js',
 			array(
-				'jquery',
 				'customize-controls',
-				'customize-base',
 				'react-dom',
 			),
 			WPBF_VERSION,

@@ -6,6 +6,11 @@
  * @subpackage Customizer
  */
 
+use Kirki\Field\Toggle;
+use Kirki\Pro\Field\Divider;
+use Kirki\Pro\Field\Headline;
+use Kirki\Pro\Field\HeadlineToggle;
+
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /* Panel */
@@ -93,7 +98,7 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Boxed.
-new \Kirki\Pro\Field\HeadlineToggle(
+new HeadlineToggle(
 	[
 		'settings' => 'page_boxed',
 		'label'    => esc_html__( 'Boxed Layout', 'page-builder-framework' ),
@@ -197,7 +202,7 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Box shadow.
-new \Kirki\Pro\Field\HeadlineToggle(
+new HeadlineToggle(
 	[
 		'settings'        => 'page_boxed_box_shadow',
 		'label'           => esc_html__( 'Box Shadow', 'page-builder-framework' ),
@@ -250,7 +255,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 8,
 	'default'         => 0,
 	'choices'         => array(
-		'min'  => -100,
+		'min'  => - 100,
 		'max'  => 100,
 		'step' => 1,
 	),
@@ -277,7 +282,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 9,
 	'default'         => 0,
 	'choices'         => array(
-		'min'  => -100,
+		'min'  => - 100,
 		'max'  => 100,
 		'step' => 1,
 	),
@@ -304,7 +309,7 @@ Kirki::add_field( 'wpbf', array(
 	'priority'        => 10,
 	'default'         => 0,
 	'choices'         => array(
-		'min'  => -100,
+		'min'  => - 100,
 		'max'  => 100,
 		'step' => 1,
 	),
@@ -407,8 +412,23 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+wpbf_customizer_field()
+	->id( 'new_sidebar_width' )
+	->type( 'slider' )
+	->label( 'New Width' )
+	->description( 'New Description' )
+	->transport( 'postMessage' )
+	->priority( 2 )
+	->defaultValue( 33.3 )
+	->choices( [
+		'min'  => 20,
+		'max'  => 40,
+		'step' => .1,
+	] )
+	->addToSection( 'wpbf_sidebar_options' );
+
 // Headline.
-new \Kirki\Pro\Field\Headline(
+new Headline(
 	[
 		'settings' => 'widget_headline',
 		'label'    => esc_html__( 'Sidebar Widgets', 'page-builder-framework' ),
@@ -508,7 +528,7 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - Breadcrumb Settings */
 
 // Toggle.
-new \Kirki\Field\Toggle(
+new Toggle(
 	[
 		'settings' => 'breadcrumbs_toggle',
 		'label'    => esc_html__( 'Breadcrumbs', 'page-builder-framework' ),
@@ -519,11 +539,11 @@ new \Kirki\Field\Toggle(
 );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
+new Divider(
 	[
-		'settings' => 'breadcrumbs_toggle_separator',
-		'section'  => 'wpbf_breadcrumb_settings',
-		'priority' => 1,
+		'settings'        => 'breadcrumbs_toggle_separator',
+		'section'         => 'wpbf_breadcrumb_settings',
+		'priority'        => 1,
 		'active_callback' => [
 			[
 				'setting'  => 'breadcrumbs_toggle',
@@ -638,11 +658,11 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Headline.
-new \Kirki\Pro\Field\Divider(
+new Divider(
 	[
-		'settings' => 'breadcrumbs_color_divider',
-		'section'  => 'wpbf_breadcrumb_settings',
-		'priority' => 2,
+		'settings'        => 'breadcrumbs_color_divider',
+		'section'         => 'wpbf_breadcrumb_settings',
+		'priority'        => 2,
 		'active_callback' => [
 			[
 				'setting'  => 'breadcrumbs_toggle',
@@ -742,7 +762,7 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - Buttons */
 
 // Headline.
-new \Kirki\Pro\Field\Headline(
+new Headline(
 	[
 		'settings' => 'button_headline',
 		'label'    => esc_html__( 'Theme Buttons', 'page-builder-framework' ),
@@ -805,7 +825,7 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Headline.
-new \Kirki\Pro\Field\Headline(
+new Headline(
 	[
 		'settings' => 'button_primary_headline',
 		'label'    => esc_html__( 'Theme Buttons (Primary)', 'page-builder-framework' ),
@@ -868,7 +888,7 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Divider.
-new \Kirki\Pro\Field\Divider(
+new Divider(
 	[
 		'settings' => 'button_border_divider',
 		'section'  => 'wpbf_button_options',
@@ -909,11 +929,11 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Divider.
-new \Kirki\Pro\Field\Divider(
+new Divider(
 	[
-		'settings' => 'button_border_divider_2',
-		'section'  => 'wpbf_button_options',
-		'priority' => 1,
+		'settings'        => 'button_border_divider_2',
+		'section'         => 'wpbf_button_options',
+		'priority'        => 1,
 		'active_callback' => [
 			[
 				'setting'  => 'button_border_width',
@@ -1007,22 +1027,22 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - ScrollTop */
 
 // Toggle.
-new \Kirki\Field\Toggle(
+new Toggle(
 	[
-		'settings'    => 'layout_scrolltop',
-		'label'       => __( 'Scroll to Top Button', 'page-builder-framework' ),
-		'section'     => 'wpbf_scrolltop_options',
-		'default'     => 0,
-		'priority'    => 0,
+		'settings' => 'layout_scrolltop',
+		'label'    => __( 'Scroll to Top Button', 'page-builder-framework' ),
+		'section'  => 'wpbf_scrolltop_options',
+		'default'  => 0,
+		'priority' => 0,
 	]
 );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
+new Divider(
 	[
-		'settings' => 'layout_scrolltop_separator',
-		'section'  => 'wpbf_scrolltop_options',
-		'priority' => 0,
+		'settings'        => 'layout_scrolltop_separator',
+		'section'         => 'wpbf_scrolltop_options',
+		'priority'        => 0,
 		'active_callback' => [
 			[
 				'setting'  => 'layout_scrolltop',
@@ -1079,11 +1099,11 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Divider.
-new \Kirki\Pro\Field\Divider(
+new Divider(
 	[
-		'settings'    => 'layout_scrolltop_separator_2',
-		'section'     => 'wpbf_scrolltop_options',
-		'priority'    => 3,
+		'settings'        => 'layout_scrolltop_separator_2',
+		'section'         => 'wpbf_scrolltop_options',
+		'priority'        => 3,
 		'active_callback' => [
 			[
 				'setting'  => 'layout_scrolltop',

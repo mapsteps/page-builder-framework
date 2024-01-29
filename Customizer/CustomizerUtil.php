@@ -7,6 +7,10 @@
 
 namespace Mapsteps\Wpbf\Customizer;
 
+use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
+use WP_Customize_Manager;
+
 /**
  * Wpbf customizer's utility helper class.
  */
@@ -35,16 +39,40 @@ class CustomizerUtil {
 		}
 
 		if ( 'slider' === $type ) {
-			if ( class_exists( 'Wpbf\Customizer\Controls\Slider\SliderSetting' ) ) {
-				if ( method_exists( 'Wpbf\Customizer\Controls\Slider\SliderSetting', 'sanitizeCallback' ) ) {
-					return array( 'Wpbf\Customizer\Controls\Slider\SliderSetting', 'sanitizeCallback' );
-				}
+			$slider_field = new SliderField();
+
+			if ( method_exists( $slider_field, 'sanitizeCallback' ) ) {
+				return array( $slider_field, 'sanitizeCallback' );
 			}
 
 			return '';
 		}
 
 		return '';
+
+	}
+
+	/**
+	 * Add control to the customizer.
+	 *
+	 * @param WP_Customize_Manager    $wp_customize_manager The customizer manager object.
+	 * @param CustomizerControlEntity $control The control entity object.
+	 */
+	public function addControl( $wp_customize_manager, $control ) {
+
+		$control_type = $control->type;
+
+		if ( ! in_array( $control_type, $this->available_controls, true ) ) {
+			return;
+		}
+
+		if ( 'slider' === $control_type ) {
+			$slider_field = new SliderField();
+
+			if ( method_exists( $slider_field, 'addControl' ) ) {
+				$slider_field->addControl( $wp_customize_manager, $control );
+			}
+		}
 
 	}
 

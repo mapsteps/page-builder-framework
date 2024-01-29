@@ -202,21 +202,11 @@ final class Customizer {
 
 		$this->register_settings( $wp_customize_manager );
 
+		$customizer_util = new CustomizerUtil();
+
 		foreach ( self::$added_controls as $control ) {
 
-			$wp_customize_manager->add_control(
-				$control->id,
-				array(
-					'type'            => $control->type,
-					'section'         => $control->section_id,
-					'label'           => $control->label,
-					'description'     => $control->description,
-					'priority'        => $control->priority,
-					'choices'         => $control->choices,
-					'input_attrs'     => $control->input_attrs,
-					'active_callback' => $control->active_callback,
-				)
-			);
+			$customizer_util->addControl( $wp_customize_manager, $control );
 
 		}
 

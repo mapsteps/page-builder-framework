@@ -186,7 +186,7 @@ final class CustomizerControl {
 	 * Callback will be called with one parameter which is the instance of WP_Customize_Control.
 	 * It should return boolean to indicate whether the control is active or not.
 	 *
-	 * @param string $active_callback Control's active_callback.
+	 * @param callable $active_callback Control's active_callback.
 	 *
 	 * @return $this
 	 */
@@ -201,7 +201,7 @@ final class CustomizerControl {
 	/**
 	 * Set the control's sanitize_callback.
 	 *
-	 * @param string $sanitize_callback Control sanitize_callback.
+	 * @param callable $sanitize_callback Control sanitize_callback.
 	 *
 	 * @return $this
 	 */
@@ -214,7 +214,7 @@ final class CustomizerControl {
 	/**
 	 * Set the control's sanitize_js_callback.
 	 *
-	 * @param string $sanitize_js_callback Control sanitize_js_callback.
+	 * @param callable $sanitize_js_callback Control sanitize_js_callback.
 	 *
 	 * @return $this
 	 */
@@ -250,7 +250,7 @@ final class CustomizerControl {
 
 		$this->control->section_id = $section_id;
 
-		Customizer::addControl( $this->control );
+		Customizer::$added_controls[] = $this->control;
 
 		return $this->control;
 

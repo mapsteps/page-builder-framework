@@ -181,6 +181,21 @@ final class CustomizerField {
 	}
 
 	/**
+	 * Set the setting's default value.
+	 *
+	 * @param string $value The default value of the setting.
+	 *
+	 * @return $this
+	 */
+	public function defaultValue( $value ) {
+
+		$this->setting_instance->defaultValue( $value );
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the control's choices.
 	 *
 	 * @param array $choices Control choices.
@@ -213,7 +228,7 @@ final class CustomizerField {
 	/**
 	 * Set the control's active_callback.
 	 *
-	 * @param string $active_callback Control active_callback.
+	 * @param callable $active_callback Control active_callback.
 	 *
 	 * @return $this
 	 */
@@ -244,7 +259,7 @@ final class CustomizerField {
 	/**
 	 * Set the setting's sanitize_js_callback.
 	 *
-	 * @param string $sanitize_js_callback Control sanitize_js_callback.
+	 * @param callable $sanitize_js_callback Control sanitize_js_callback.
 	 *
 	 * @return $this
 	 */
@@ -291,6 +306,19 @@ final class CustomizerField {
 		}
 
 		$this->setting_instance->add();
+
+		$control_id       = $this->control_instance->control->id;
+		$control_settings = $this->control_instance->control->settings;
+
+		if ( empty( $control_settings ) ) {
+			if ( ! empty( $control_id ) ) {
+				$this->control_instance->settings( $control_id );
+			}
+		} elseif ( empty( $control_id ) ) {
+			if ( is_string( $control_settings ) ) {
+				$this->control_instance->id( $control_settings );
+			}
+		}
 
 		$this->control_instance->addToSection( $section_id );
 
