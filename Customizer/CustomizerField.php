@@ -234,7 +234,19 @@ final class CustomizerField {
 	 */
 	public function activeCallback( $active_callback ) {
 
-		$this->control_instance->activeCallback( $active_callback );
+		if ( is_callable( $active_callback ) ) {
+			$this->control_instance->activeCallback( $active_callback );
+
+			return $this;
+		}
+
+		if ( ! is_array( $active_callback ) ) {
+			return $this;
+		}
+
+		$control_id = $this->control_instance->control->id;
+
+		Customizer::$added_control_dependencies[ $control_id ] = $active_callback;
 
 		return $this;
 

@@ -70,6 +70,13 @@ final class Customizer {
 	public static $added_controls = array();
 
 	/**
+	 * Added field dependencies.
+	 *
+	 * @var array
+	 */
+	public static $added_control_dependencies = array();
+
+	/**
 	 * Get the instance of the class.
 	 *
 	 * @return self
@@ -108,6 +115,8 @@ final class Customizer {
 		$this->register_panels( $wp_customize_manager );
 		$this->register_sections( $wp_customize_manager );
 		$this->register_controls( $wp_customize_manager );
+
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
 
 	}
 
@@ -209,6 +218,17 @@ final class Customizer {
 			$customizer_util->addControl( $wp_customize_manager, $control );
 
 		}
+
+	}
+
+	/**
+	 * Register the customizer control dependencies.
+	 *
+	 * @return void
+	 */
+	public function register_control_dependencies() {
+
+		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerJsObj', self::$added_control_dependencies );
 
 	}
 

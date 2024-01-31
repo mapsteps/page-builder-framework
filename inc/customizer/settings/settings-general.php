@@ -420,11 +420,22 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->priority( 2 )
 	->defaultValue( 33.3 )
-	->choices( [
-		'min'  => 20,
-		'max'  => 40,
-		'step' => .1,
-	] )
+	->choices(
+		array(
+			'min'  => 20,
+			'max'  => 40,
+			'step' => .1,
+		)
+	)
+	->activeCallback(
+		array(
+			array(
+				'id'       => 'sidebar_position',
+				'operator' => '!=',
+				'value'    => 'none',
+			),
+		)
+	)
 	->addToSection( 'wpbf_sidebar_options' );
 
 // Headline.
