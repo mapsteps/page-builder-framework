@@ -31,9 +31,7 @@ export default function setupControlDependencies() {
 		}
 	}
 
-	wp.customize.bind('ready', handleCustomizeReady);
-
-	function handleCustomizeReady() {
+	wp.customize.bind('ready', function () {
 		for (const controlId in reversedControlDependencies) {
 			if (!reversedControlDependencies.hasOwnProperty(controlId)) {
 				continue;
@@ -41,12 +39,11 @@ export default function setupControlDependencies() {
 
 			listenDependencyControl(controlId);
 		}
-	}
+	});
 
 	function listenDependencyControl(dependencyControlId: string) {
 		wp.customize(dependencyControlId, function (setting) {
 			const rules = reversedControlDependencies[dependencyControlId];
-			const dependantDependencies = wpbfCustomizerControlDependencies[dependencyControlId];
 
 			setting.bind(function (newValue: string) {
 				for (const ruleSet of rules) {
@@ -55,10 +52,10 @@ export default function setupControlDependencies() {
 
 					if (!isDependencySatisfied) {
 						wp.customize.control(ruleSet.dependantControlId).deactivate();
+						continue;
 					}
 
-					console.log('dependencyControlId', dependencyControlId);
-					console.log('dependantDependencies', dependantDependencies);
+					const dependantDependencies = wpbfCustomizerControlDependencies[ruleSet.dependantControlId];
 
 					if (dependantDependencies.length === 1) {
 						wp.customize.control(ruleSet.dependantControlId).activate();
