@@ -9,8 +9,8 @@ dependencies:
     specifier: ^25.16.0
     version: 25.16.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
   '@wordpress/core-data':
-    specifier: ^6.27.1
-    version: 6.27.1(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^6.27.2
+    version: 6.27.2(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
   '@wordpress/data':
     specifier: ^9.20.0
     version: 9.20.0(react@18.2.0)
@@ -93,7 +93,7 @@ devDependencies:
     version: 5.3.3
   wordpress__customize-browser:
     specifier: github:usefulteam/wordpress__customize-browser
-    version: github.com/usefulteam/wordpress__customize-browser/d89a02c4a0d752e8d8f7b26d7cfc4fe3f5ece8b5
+    version: github.com/usefulteam/wordpress__customize-browser/cddccaf9ac3a10764131f156f473dd4a0d4fd928
 
 packages:
 
@@ -1962,8 +1962,8 @@ packages:
     resolution: {integrity: sha512-qL0hyIMNPow317QWW/63RvL1x5MVMV+Ru3NaY9f/CuEpCqrmb7WeuK2071ZY5hczOnm38qExWM2i2WtkXLSqFw==}
     dev: false
 
-  /@types/node@20.11.10:
-    resolution: {integrity: sha512-rZEfe/hJSGYmdfX9tvcPMYeYPW2sNl50nsw4jZmRcaG0HIAb0WYEpsB05GOb53vjqpyE9GUhlDQ4jLSoB5q9kg==}
+  /@types/node@20.11.14:
+    resolution: {integrity: sha512-w3yWCcwULefjP9DmDDsgUskrMoOy5Z8MiwKHr1FvqGPtx7CvJzQvxD7eKpxNtklQxLruxSXWddyeRtyud0RcXQ==}
     dependencies:
       undici-types: 5.26.5
     dev: false
@@ -1993,7 +1993,7 @@ packages:
   /@types/simple-peer@9.11.8:
     resolution: {integrity: sha512-rvqefdp2rvIA6wiomMgKWd2UZNPe6LM2EV5AuY3CPQJF+8TbdrL5TjYdMf0VAjGczzlkH4l1NjDkihwbj3Xodw==}
     dependencies:
-      '@types/node': 20.11.10
+      '@types/node': 20.11.14
     dev: false
 
   /@types/sizzle@2.3.8:
@@ -2045,8 +2045,8 @@ packages:
       '@babel/runtime': 7.23.9
     dev: false
 
-  /@wordpress/block-editor@12.18.1(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-kZPqOO0ogS3y3HcStGRowLKJk66cv9zzQtLcx7YNokYrceqnOWEYddhv+OWRz7h/qmkEBHgZfUCEgCQm2Dulnw==}
+  /@wordpress/block-editor@12.18.2(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-LDZIcp5Bl2FCyfkf07XgfM0kzY+AYhyTS4kt2U4GRSeUey79AM+GIYXb8TM2Y68B09HP/rpntBW4e/cBqjHfjw==}
     engines: {node: '>=12'}
     peerDependencies:
       react: ^18.0.0
@@ -2171,7 +2171,7 @@ packages:
       '@wordpress/keyboard-shortcuts': 4.27.0(react@18.2.0)
       '@wordpress/private-apis': 0.32.0
       classnames: 2.5.1
-      cmdk: 0.2.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
+      cmdk: 0.2.1(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       rememo: 4.0.2
@@ -2274,8 +2274,8 @@ packages:
       use-memo-one: 1.1.3(react@18.2.0)
     dev: false
 
-  /@wordpress/core-data@6.27.1(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Nbm0xkgkkyk67f2GtnlS5udxYqBQcLGoDIhWjNY2m+uguM/Fr4cv6QGIyb1tIcwEBIrZcAaAsS/eA1yro5ygHw==}
+  /@wordpress/core-data@6.27.2(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Jsy+vW/izrd/T36D/4b266ScobCezNYX2Me/clCmHGB4eRW3drXZPbMnWZLNEDagYr87sQcM1Namasb69dnDhA==}
     engines: {node: '>=12'}
     peerDependencies:
       react: ^18.0.0
@@ -2283,7 +2283,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.9
       '@wordpress/api-fetch': 6.47.0
-      '@wordpress/block-editor': 12.18.1(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
+      '@wordpress/block-editor': 12.18.2(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
       '@wordpress/blocks': 12.27.1(react@18.2.0)
       '@wordpress/compose': 6.27.0(react@18.2.0)
       '@wordpress/data': 9.20.0(react@18.2.0)
@@ -2739,7 +2739,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001581
-      electron-to-chromium: 1.4.648
+      electron-to-chromium: 1.4.652
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.3)
 
@@ -2874,14 +2874,13 @@ packages:
     engines: {node: '>=0.8'}
     dev: true
 
-  /cmdk@0.2.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-JQpKvEOb86SnvMZbYaFKYhvzFntWBeSZdyii0rZPhKJj9uwJBxu4DaVYDrRN7r3mPop56oPhRw+JYWTKs66TYw==}
+  /cmdk@0.2.1(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-U6//9lQ6JvT47+6OF6Gi8BvkxYQ8SCRRSKIJkthIMsFsLZRG0cKvTtuTaefyIKMQb8rvvXy0wGdpTNq/jPtm+g==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
       '@radix-ui/react-dialog': 1.0.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
-      command-score: 0.1.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -2909,10 +2908,6 @@ packages:
 
   /colord@2.9.3:
     resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
-    dev: false
-
-  /command-score@0.1.2:
-    resolution: {integrity: sha512-VtDvQpIJBvBatnONUsPzXYFVKQQAhuf3XTNOAsdBxCNO/QCtUUd8LSgjn0GVarBkCad6aJCZfXgrjYbl/KRr7w==}
     dev: false
 
   /commander@7.2.0:
@@ -3137,8 +3132,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /electron-to-chromium@1.4.648:
-    resolution: {integrity: sha512-EmFMarXeqJp9cUKu/QEciEApn0S/xRcpZWuAm32U7NgoZCimjsilKXHRO9saeEW55eHZagIDg6XTUOv32w9pjg==}
+  /electron-to-chromium@1.4.652:
+    resolution: {integrity: sha512-XvQaa8hVUAuEJtLw6VKQqvdOxTOfBLWfI10t2xWpezx4XXD3k8bdLweEKeItqaa0+OkJX5l0mP1W+JWobyIDrg==}
 
   /emoji-regex@7.0.3:
     resolution: {integrity: sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==}
@@ -4909,8 +4904,8 @@ packages:
       lib0: 0.2.88
     dev: false
 
-  github.com/usefulteam/wordpress__customize-browser/d89a02c4a0d752e8d8f7b26d7cfc4fe3f5ece8b5:
-    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/d89a02c4a0d752e8d8f7b26d7cfc4fe3f5ece8b5}
+  github.com/usefulteam/wordpress__customize-browser/cddccaf9ac3a10764131f156f473dd4a0d4fd928:
+    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/cddccaf9ac3a10764131f156f473dd4a0d4fd928}
     name: wordpress__customize-browser
     version: 5.5.5
     dependencies:

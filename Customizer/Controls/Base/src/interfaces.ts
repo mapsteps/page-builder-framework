@@ -21,3 +21,23 @@ export interface WpbfCustomize extends Customize {
 	Control: WpbfCustomizeControl;
 	controlConstructor: WpbfCustomizeControlConstructor;
 }
+
+export interface WpbfControlDependency {
+	id: string;
+	operator: string;
+	value: string;
+}
+
+export interface WpbfControlDependencies {
+	[controlId: string]: WpbfControlDependency[];
+}
+
+export interface WpbfReversedControlDependency {
+	dependantControlId: string;
+	operator: string;
+	value: string;
+}
+
+export interface WpbfReversedControlDependencies {
+	[dependencyControlId: string]: WpbfReversedControlDependency[];
+}

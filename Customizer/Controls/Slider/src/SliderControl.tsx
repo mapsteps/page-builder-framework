@@ -22,12 +22,10 @@ const SliderControl = wp.customize.Control.extend({
 			if (control.destroy) control.destroy();
 			control.container.remove();
 
-			// ! The "unbind" expect 1 parameter, so I disable this line.
-			// wp.customize.control.unbind('removed', onRemoved);
+			wp.customize.control.unbind('removed', onRemoved);
 		}
 
-		// ! The bind expect 1 parameter, so I disable this line.
-		// wp.customize.control.bind('removed', onRemoved);
+		wp.customize.control.bind('removed', onRemoved);
 	},
 
 	/**
