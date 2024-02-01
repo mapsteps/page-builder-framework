@@ -21,7 +21,6 @@ const SliderControl = wp.customize.Control.extend({
 			if (control !== removedControl) return;
 			if (control.destroy) control.destroy();
 			control.container.remove();
-
 			wp.customize.control.unbind('removed', onRemoved);
 		}
 

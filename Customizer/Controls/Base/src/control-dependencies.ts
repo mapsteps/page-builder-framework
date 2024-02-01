@@ -51,35 +51,36 @@ export default function setupControlDependencies() {
 					let isDependencySatisfied = isRuleSatisfied(newValue, ruleSet.operator, ruleSet.value);
 
 					if (!isDependencySatisfied) {
-						wp.customize.control(ruleSet.dependantControlId).deactivate();
+						wp.customize.control(ruleSet.dependantControlId).toggle(false);
 						continue;
 					}
 
 					const dependantDependencies = wpbfCustomizerControlDependencies[ruleSet.dependantControlId];
 
-					if (dependantDependencies.length === 1) {
-						wp.customize.control(ruleSet.dependantControlId).activate();
+					if (dependantDependencies.length < 2) {
+						wp.customize.control(ruleSet.dependantControlId).toggle(true);
+						continue;
+					}
+
+					let otherRulesSatisfied = true;
+
+					for (const dependantDependency of dependantDependencies) {
+						if (dependantDependency.id === dependencyControlId) {
+							continue;
+						}
+
+						const dependantDependencyValue = wp.customize(dependantDependency.id).get();
+
+						if (!isRuleSatisfied(dependantDependencyValue, dependantDependency.operator, dependantDependency.value)) {
+							otherRulesSatisfied = false;
+							break;
+						}
+					}
+
+					if (!otherRulesSatisfied) {
+						wp.customize.control(ruleSet.dependantControlId).toggle(false);
 					} else {
-						const otherRulesSatisfied = true;
-
-						for (const dependantDependency of dependantDependencies) {
-							if (dependantDependency.id === dependencyControlId) {
-								continue;
-							}
-
-							const dependantDependencyValue = wp.customize(dependantDependency.id).get();
-
-							if (dependantDependencyValue !== dependantDependency.value) {
-								isDependencySatisfied = false;
-								break;
-							}
-						}
-
-						if (!otherRulesSatisfied) {
-							wp.customize.control(ruleSet.dependantControlId).deactivate();
-						} else {
-							wp.customize.control(ruleSet.dependantControlId).activate();
-						}
+						wp.customize.control(ruleSet.dependantControlId).toggle(true);
 					}
 
 				}
