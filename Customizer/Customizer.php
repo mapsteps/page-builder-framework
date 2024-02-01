@@ -80,7 +80,7 @@ final class Customizer {
 	/**
 	 * Added partial refreshes.
 	 *
-	 * @var array
+	 * @var PartialRefreshEntity[]
 	 */
 	public static $added_partial_refreshes = array();
 
@@ -250,19 +250,13 @@ final class Customizer {
 	 */
 	public function register_selective_refreshes( $wp_customize_manager ) {
 
-		foreach ( self::$added_partial_refreshes as $key => $possibly_partial_refresh_entity ) {
-
-			if ( ! $possibly_partial_refresh_entity instanceof PartialRefreshEntity ) {
-				continue;
-			}
-
-			$partial_refresh = $possibly_partial_refresh_entity;
+		foreach ( self::$added_partial_refreshes as $partial_refresh ) {
 
 			$wp_customize_manager->selective_refresh->add_partial(
-				$key,
+				$partial_refresh->id,
 				array(
-					'selector'            => $partial_refresh->selector,
 					'container_inclusive' => $partial_refresh->container_inclusive,
+					'selector'            => $partial_refresh->selector,
 					'settings'            => $partial_refresh->settings,
 					'render_callback'     => $partial_refresh->render_callback,
 				)

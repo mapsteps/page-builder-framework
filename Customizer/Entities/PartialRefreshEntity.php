@@ -16,11 +16,18 @@ namespace Mapsteps\Wpbf\Customizer\Entities;
 class PartialRefreshEntity {
 
 	/**
-	 * Whether the container element itself should be replaced (true) or just its contents (false).
+	 * ID of the partial refresh. This is not the control or setting's ID.
+	 *
+	 * @var string
+	 */
+	public $id = '';
+
+	/**
+	 * Whether the container element is included in the partial, or if only the contents are rendered.
 	 *
 	 * @var bool
 	 */
-	public $container_inclusive = true;
+	public $container_inclusive = false;
 
 	/**
 	 * The jQuery selector for the container element.

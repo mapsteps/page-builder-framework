@@ -417,7 +417,6 @@ wpbf_customizer_field()
 	->type( 'slider' )
 	->label( 'Width (Ours)' )
 	->description( 'This should be hidden when sidebar is none' )
-	->transport( 'postMessage' )
 	->priority( 2 )
 	->defaultValue( 33.3 )
 	->choices(
@@ -433,6 +432,16 @@ wpbf_customizer_field()
 				'id'       => 'sidebar_position',
 				'operator' => '!=',
 				'value'    => 'none',
+			),
+		)
+	)
+	->partialRefresh(
+		array(
+			'testing_doang' => array(
+				'selector'        => '.wp-block-search__label',
+				'render_callback' => function () {
+					echo 'Search something';
+				},
 			),
 		)
 	)

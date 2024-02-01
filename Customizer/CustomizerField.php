@@ -36,6 +36,13 @@ final class CustomizerField {
 	private $sanitize_callback = '';
 
 	/**
+	 * Partial refresh entities.
+	 *
+	 * @var PartialRefreshEntity[]
+	 */
+	private $partial_refreshes = array();
+
+	/**
 	 * Construct the class.
 	 */
 	public function __construct() {
@@ -309,15 +316,32 @@ final class CustomizerField {
 	 */
 	public function partialRefresh( $args = array() ) {
 
-		foreach ( $args as $key => $partial_refresh_args ) {
+		$control_id = $this->control_instance->control->id;
+
+		foreach ( $args as $key => $arg ) {
 			$partial_refresh = new PartialRefreshEntity();
 
-			$partial_refresh->container_inclusive = $partial_refresh_args['container_inclusive'];
-			$partial_refresh->selector            = $partial_refresh_args['selector'];
-			$partial_refresh->settings            = $partial_refresh_args['settings'];
-			$partial_refresh->render_callback     = $partial_refresh_args['render_callback'];
+			$partial_refresh->id = $key;
 
-			Customizer::$added_partial_refreshes[ $key ] = $partial_refresh;
+			/**
+			 * Temporarily set the partial refresh id to the control id.
+			 * It will be overwritten later in the `addToSection` method.
+			 */
+			$partial_refresh->settings = array( $control_id );
+
+			if ( isset( $arg['container_inclusive'] ) ) {
+				$partial_refresh->container_inclusive = $arg['container_inclusive'];
+			}
+
+			if ( isset( $arg['selector'] ) ) {
+				$partial_refresh->selector = $arg['selector'];
+			}
+
+			if ( isset( $arg['render_callback'] ) ) {
+				$partial_refresh->render_callback = $arg['render_callback'];
+			}
+
+			$this->partial_refreshes[] = $partial_refresh;
 		}
 
 		return $this;
@@ -343,6 +367,10 @@ final class CustomizerField {
 			}
 		}
 
+		if ( ! empty( $this->partial_refreshes ) ) {
+			$this->setting_instance->transport( 'postMessage' );
+		}
+
 		$this->setting_instance->add();
 
 		$control_id       = $this->control_instance->control->id;
@@ -355,6 +383,24 @@ final class CustomizerField {
 		} elseif ( empty( $control_id ) ) {
 			if ( is_string( $control_settings ) ) {
 				$this->control_instance->id( $control_settings );
+			}
+		}
+
+		if ( ! empty( $this->partial_refreshes ) ) {
+			$control_settings = $this->control_instance->control->settings;
+
+			$partial_refresh_settings = array();
+
+			if ( is_array( $control_settings ) ) {
+				$partial_refresh_settings = $control_settings;
+			} elseif ( is_string( $control_settings ) ) {
+				$partial_refresh_settings = array( $control_settings );
+			}
+
+			foreach ( $this->partial_refreshes as $index => $partial_refresh ) {
+				$this->partial_refreshes[ $index ]->settings = $partial_refresh_settings;
+
+				Customizer::$added_partial_refreshes[] = $this->partial_refreshes[ $index ];
 			}
 		}
 
