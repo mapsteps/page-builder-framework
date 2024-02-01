@@ -7,6 +7,8 @@
 
 namespace Mapsteps\Wpbf\Customizer;
 
+use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
+
 /**
  * Class to add Wpbf customizer control & setting.
  */
@@ -293,6 +295,30 @@ final class CustomizerField {
 	public function json( $json ) {
 
 		$this->control_instance->json( $json );
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the control's partial_refresh.
+	 *
+	 * @param array $args The partial refresh arguments.
+	 *
+	 * @return $this
+	 */
+	public function partialRefresh( $args = array() ) {
+
+		foreach ( $args as $key => $partial_refresh_args ) {
+			$partial_refresh = new PartialRefreshEntity();
+
+			$partial_refresh->container_inclusive = $partial_refresh_args['container_inclusive'];
+			$partial_refresh->selector            = $partial_refresh_args['selector'];
+			$partial_refresh->settings            = $partial_refresh_args['settings'];
+			$partial_refresh->render_callback     = $partial_refresh_args['render_callback'];
+
+			Customizer::$added_partial_refreshes[ $key ] = $partial_refresh;
+		}
 
 		return $this;
 

@@ -13,6 +13,7 @@ use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerPanelEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSectionEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
+use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
 use WP_Customize_Manager;
 
 /**
@@ -77,6 +78,13 @@ final class Customizer {
 	public static $added_control_dependencies = array();
 
 	/**
+	 * Added partial refreshes.
+	 *
+	 * @var array
+	 */
+	public static $added_partial_refreshes = array();
+
+	/**
 	 * Get the instance of the class.
 	 *
 	 * @return self
@@ -115,6 +123,7 @@ final class Customizer {
 		$this->register_panels( $wp_customize_manager );
 		$this->register_sections( $wp_customize_manager );
 		$this->register_controls( $wp_customize_manager );
+		$this->register_selective_refreshes( $wp_customize_manager );
 
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
 
@@ -229,6 +238,37 @@ final class Customizer {
 	public function register_control_dependencies() {
 
 		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerControlDependencies', self::$added_control_dependencies );
+
+	}
+
+	/**
+	 * Register the customizer selective refreshes.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Instance of WP_Customize_Manager.
+	 *
+	 * @return void
+	 */
+	public function register_selective_refreshes( $wp_customize_manager ) {
+
+		foreach ( self::$added_partial_refreshes as $key => $possibly_partial_refresh_entity ) {
+
+			if ( ! $possibly_partial_refresh_entity instanceof PartialRefreshEntity ) {
+				continue;
+			}
+
+			$partial_refresh = $possibly_partial_refresh_entity;
+
+			$wp_customize_manager->selective_refresh->add_partial(
+				$key,
+				array(
+					'selector'            => $partial_refresh->selector,
+					'container_inclusive' => $partial_refresh->container_inclusive,
+					'settings'            => $partial_refresh->settings,
+					'render_callback'     => $partial_refresh->render_callback,
+				)
+			);
+
+		}
 
 	}
 
