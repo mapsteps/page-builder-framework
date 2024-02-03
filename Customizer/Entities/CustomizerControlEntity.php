@@ -109,4 +109,12 @@ class CustomizerControlEntity {
 	 * @var callable
 	 */
 	public $active_callback = '';
+
+	/**
+	 * Custom properties which are not provided by WP_Customize_Control by default.
+	 *
+	 * @var array
+	 */
+	public $custom_properties = array();
+
 }

@@ -349,6 +349,23 @@ final class CustomizerField {
 	}
 
 	/**
+	 * Set the control's custom properties.
+	 *
+	 * @param array $properties Control custom properties.
+	 *
+	 * @return $this
+	 */
+	public function properties( $properties = array() ) {
+		if ( empty( $properties ) ) {
+			return $this;
+		}
+
+		$this->control_instance->customProperties( $properties );
+
+		return $this;
+	}
+
+	/**
 	 * Add control to a section.
 	 *
 	 * @param string $section_id Section id.

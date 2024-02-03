@@ -1,6 +1,7 @@
 import {Control_Constructor} from "wordpress__customize-browser/Control_Constructor";
 import {Control} from "wordpress__customize-browser/Control";
 import {Customize} from "wordpress__customize-browser/Customize";
+import {WpbfCustomizeSelectControl} from "../../Select/src/interfaces";
 
 export interface WpbfCustomizeControl extends Control {
 	prototype: WpbfCustomizeControl;
@@ -15,6 +16,7 @@ export interface WpbfCustomizeControl extends Control {
 
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	'wpbf-slider': WpbfCustomizeControl;
+	'wpbf-select': WpbfCustomizeSelectControl;
 }
 
 export interface WpbfCustomize extends Customize {

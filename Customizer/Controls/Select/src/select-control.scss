@@ -1,0 +1,71 @@
+.wpbf-customize-control-select {
+	input[autocomplete="off"] {
+		box-shadow: none;
+	}
+}
+
+.wpbf-react-select__value-container {
+	> div:not(.wpbf-react-select__single-value):not(.wpbf-react-select__multi-value) {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
+
+.wpbf-react-select__control {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	min-height: 26px;
+}
+
+.wpbf-react-select__value-container {
+	.wpbf-react-select__input {
+		min-height: 24px;
+		height: 24px;
+
+		input {
+			min-height: 24px;
+			height: 24px;
+		}
+	}
+}
+
+.wpbf-react-select__single-value {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.wpbf-react-select__multi-value {
+	align-items: center;
+	position: relative;
+	height: 20px;
+
+	.wpbf-react-select__input-container {
+		//
+	}
+}
+
+.wpbf-react-select__input {
+	display: inline-flex !important;
+	align-items: center;
+	position: relative;
+	left: 2px;
+
+	input {
+		box-sizing: border-box !important;
+		height: 30px;
+	}
+}
+
+.wpbf-react-select__indicators {
+	height: 24px !important;
+}
+
+.wpbf-react-select__indicator {
+	align-items: center;
+	height: 24px;
+}
+
+.customize-control-wpbf-react-select .wpbf-react-select__menu {
+	z-index: 3;
+}

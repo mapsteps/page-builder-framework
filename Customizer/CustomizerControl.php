@@ -240,6 +240,21 @@ final class CustomizerControl {
 	}
 
 	/**
+	 * Set the control's custom_properties.
+	 *
+	 * @param array $properties Custom properties which are not provided by WP_Customize_Control by default.
+	 *
+	 * @return $this
+	 */
+	public function customProperties( $properties = array() ) {
+
+		$this->control->custom_properties = $properties;
+
+		return $this;
+
+	}
+
+	/**
 	 * Add control to a section.
 	 *
 	 * @param string $section_id Section id.

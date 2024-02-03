@@ -37,28 +37,7 @@ class SliderField extends BaseField {
 	 */
 	public function addControl( $wp_customize_manager, $control ) {
 
-		$control_args = array(
-			'type'        => 'wpbf-slider',
-			'capability'  => $control->capability,
-			'section'     => $control->section_id,
-			'label'       => $control->label,
-			'description' => $control->description,
-			'priority'    => $control->priority,
-			'choices'     => $control->choices,
-			'input_attrs' => $control->input_attrs,
-		);
-
-		if ( ! empty( $control->settings ) ) {
-			$control_args['settings'] = $control->settings;
-		}
-
-		if ( ! empty( $control->setting ) ) {
-			$control_args['setting'] = $control->setting;
-		}
-
-		if ( ! empty( $control->active_callback ) ) {
-			$control_args['active_callback'] = $control->active_callback;
-		}
+		$control_args = $this->parseControlArgs( $control );
 
 		$wp_customize_manager->add_control(
 			new SliderControl(
