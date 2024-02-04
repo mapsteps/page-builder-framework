@@ -374,22 +374,6 @@ final class CustomizerField {
 	 */
 	public function addToSection( $section_id ) {
 
-		if ( empty( $this->sanitize_callback ) ) {
-			$control_type = $this->control_instance->control->type;
-
-			$this->sanitize_callback = ( new CustomizerUtil() )->determineSanitizeCallback( $control_type );
-
-			if ( ! empty( $this->sanitize_callback ) ) {
-				$this->sanitizeCallback( $this->sanitize_callback );
-			}
-		}
-
-		if ( ! empty( $this->partial_refreshes ) ) {
-			$this->setting_instance->transport( 'postMessage' );
-		}
-
-		$this->setting_instance->add();
-
 		$control_id       = $this->control_instance->control->id;
 		$control_settings = $this->control_instance->control->settings;
 
@@ -402,6 +386,22 @@ final class CustomizerField {
 				$this->control_instance->id( $control_settings );
 			}
 		}
+
+		if ( empty( $this->sanitize_callback ) ) {
+			$this->sanitize_callback = ( new CustomizerUtil() )->determineSanitizeCallback( $this->control_instance->control );
+
+			if ( ! empty( $this->sanitize_callback ) ) {
+				$this->sanitizeCallback( $this->sanitize_callback );
+			} else {
+				$this->sanitizeCallback( 'sanitize_text_field' );
+			}
+		}
+
+		if ( ! empty( $this->partial_refreshes ) ) {
+			$this->setting_instance->transport( 'postMessage' );
+		}
+
+		$this->setting_instance->add();
 
 		if ( ! empty( $this->partial_refreshes ) ) {
 			$control_settings = $this->control_instance->control->settings;

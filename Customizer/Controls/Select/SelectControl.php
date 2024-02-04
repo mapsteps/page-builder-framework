@@ -33,7 +33,7 @@ class SelectControl extends BaseControl {
 	 *
 	 * @var int
 	 */
-	public $max_selection_number = 999;
+	public $max_selections = 999;
 
 	/**
 	 * Placeholder text.
@@ -94,11 +94,11 @@ class SelectControl extends BaseControl {
 		$this->json['placeholder'] = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'kirki' );
 
 		// Will be a custom implementation, couldn't find an official prop to set this in react-select.
-		$this->json['maxSelectionNumber'] = $this->max_selection_number;
+		$this->json['maxSelections'] = $this->max_selections;
 
 		$this->json['messages'] = array(
 			// translators: %s is the limit of selection number.
-			'maxLimitReached' => sprintf( esc_html__( 'You can only select %s items', 'kirki' ), $this->max_selection_number ),
+			'maxLimitReached' => sprintf( esc_html__( 'You can only select %s items', 'kirki' ), $this->max_selections ),
 		);
 
 	}

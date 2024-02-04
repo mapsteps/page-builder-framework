@@ -8,7 +8,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Slider;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use WP_Customize_Manager;
 
 /**
@@ -32,17 +31,16 @@ class SliderField extends BaseField {
 	/**
 	 * Add control to the customizer.
 	 *
-	 * @param WP_Customize_Manager    $wp_customize_manager The customizer manager object.
-	 * @param CustomizerControlEntity $control The control entity object.
+	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
 	 */
-	public function addControl( $wp_customize_manager, $control ) {
+	public function addControl( $wp_customize_manager ) {
 
-		$control_args = $this->parseControlArgs( $control );
+		$control_args = $this->parseControlArgs();
 
 		$wp_customize_manager->add_control(
 			new SliderControl(
 				$wp_customize_manager,
-				$control->id,
+				$this->control->id,
 				$control_args
 			)
 		);

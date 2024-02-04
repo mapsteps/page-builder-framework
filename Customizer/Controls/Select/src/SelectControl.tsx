@@ -11,9 +11,6 @@ declare var wp: {
 };
 
 const SelectControl = wp.customize.Control.extend({
-	/**
-	 * Initialize.
-	 */
 	initialize: function (id: string, params: Control_Params) {
 		const control = this as WpbfCustomizeSelectControl;
 
@@ -53,7 +50,7 @@ const SelectControl = wp.customize.Control.extend({
 	 */
 	renderContent: function renderContent() {
 		const control = this as WpbfCustomizeSelectControl;
-		let value = control.setting?.prototype.get();
+		let value = control.setting.get();
 
 		if (Array.isArray(value)) {
 			let formattedValue = [];
@@ -79,7 +76,7 @@ const SelectControl = wp.customize.Control.extend({
 				isOptionDisabled={control.isOptionDisabled}
 				control={control}
 				isMulti={control.isMulti()}
-				maxSelectionNumber={control.params.maxSelectionNumber}
+				maxSelections={control.params.maxSelections}
 			/>
 		);
 		ReactDOM.render(form, control.container[0]);
@@ -91,7 +88,7 @@ const SelectControl = wp.customize.Control.extend({
 	 * React is available to be used here instead of the wp.customize.Element abstraction.
 	 */
 	ready: function ready() {
-		const control = this;
+		const control = this as WpbfCustomizeSelectControl;
 
 		// Re-render control when setting changes.
 		control.setting.bind(() => {
@@ -100,7 +97,8 @@ const SelectControl = wp.customize.Control.extend({
 	},
 
 	isMulti: function () {
-		return this.params.isMulti;
+		const control = this as WpbfCustomizeSelectControl;
+		return control.params.isMulti;
 	},
 
 	/**
@@ -111,7 +109,7 @@ const SelectControl = wp.customize.Control.extend({
 	 * @link https://core.trac.wordpress.org/ticket/31334
 	 */
 	destroy: function destroy() {
-		const control = this;
+		const control = this as WpbfCustomizeSelectControl;
 
 		// Garbage collection: undo mounting that was done in the embed/renderContent method.
 		ReactDOM.unmountComponentAtNode(control.container[0]);
@@ -122,8 +120,10 @@ const SelectControl = wp.customize.Control.extend({
 		}
 	},
 
-	isOptionDisabled: function (option) {
-		const control = this;
+	disabledSelectOptions: [],
+
+	isOptionDisabled: function (option: any) {
+		const control = this as WpbfCustomizeSelectControl;
 
 		if (!control) return false;
 		if (!control.disabledSelectOptions) return false;
@@ -156,24 +156,25 @@ const SelectControl = wp.customize.Control.extend({
 				break;
 
 			case "selectOption":
-				control.value = arg;
+				control.setting.set(arg);
 				break;
 		}
 
 		control.renderContent();
 	},
 
-	formatOptions: function () {
-		const self = this as WpbfCustomizeSelectControl;
-		self.formattedOptions = [];
+	formattedOptions: [],
 
-		if (Array.isArray(self.params.choices)) {
-			this.formattedOptions = self.params.choices;
+	formatOptions: function () {
+		const control = this as WpbfCustomizeSelectControl;
+
+		if (Array.isArray(control.params.choices)) {
+			control.formattedOptions = control.params.choices;
 			return;
 		}
 
-		_.each(self.params.choices, function (label, value) {
-			let optGroup;
+		_.each(control.params.choices, function (label: any, value) {
+			let optGroup: any;
 
 			if ("object" === typeof label) {
 				optGroup = {
@@ -188,9 +189,9 @@ const SelectControl = wp.customize.Control.extend({
 					});
 				});
 
-				self.formattedOptions.push(optGroup);
+				control.formattedOptions.push(optGroup);
 			} else if ("string" === typeof label) {
-				self.formattedOptions.push({
+				control.formattedOptions.push({
 					label: label,
 					value: value,
 				});
@@ -199,27 +200,28 @@ const SelectControl = wp.customize.Control.extend({
 	},
 
 	getFormattedOptions: function () {
-		if (!this.formattedOptions || !this.formattedOptions.length) {
-			this.formatOptions();
+		const control = this as WpbfCustomizeSelectControl;
+
+		if (!control.formattedOptions || !control.formattedOptions.length) {
+			control.formatOptions();
 		}
-		return this.formattedOptions;
+
+		return control.formattedOptions;
 	},
 
 	getOptionProps: function (value: any) {
 		const control = this as WpbfCustomizeSelectControl;
 
 		const options = control.getFormattedOptions();
-		let i;
-		let l;
+		let i: any;
+		let l: any;
 
 		if (control.isMulti()) {
 			let values = [];
 
 			for (i = 0; i < options.length; i++) {
 				if (Array.isArray(value)) {
-					const valueArray = value;
-
-					valueArray.forEach(function (val) {
+					value.forEach(function (val) {
 						if (options[i].value === val) {
 							values.push(options[i]);
 							return;

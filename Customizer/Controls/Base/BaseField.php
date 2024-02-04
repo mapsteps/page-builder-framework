@@ -15,6 +15,24 @@ use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 class BaseField {
 
 	/**
+	 * Control entity object.
+	 *
+	 * @var CustomizerControlEntity
+	 */
+	public $control;
+
+	/**
+	 * Construct the class.
+	 *
+	 * @param CustomizerControlEntity $control The control entity object.
+	 */
+	public function __construct( $control ) {
+
+		$this->control = $control;
+
+	}
+
+	/**
 	 * Setting's sanitize callback.
 	 *
 	 * @param string $value The value to sanitize.
@@ -29,31 +47,29 @@ class BaseField {
 
 	/**
 	 * Parse control args that are provided by WP_Customize_Control by default.
-	 *
-	 * @param CustomizerControlEntity $control The control entity object.
 	 */
-	protected function parseDefaultControlArgs( $control ) {
+	protected function parseDefaultControlArgs() {
 
 		$control_args = array(
-			'capability'  => $control->capability,
-			'section'     => $control->section_id,
-			'label'       => $control->label,
-			'description' => $control->description,
-			'priority'    => $control->priority,
-			'choices'     => $control->choices,
-			'input_attrs' => $control->input_attrs,
+			'capability'  => $this->control->capability,
+			'section'     => $this->control->section_id,
+			'label'       => $this->control->label,
+			'description' => $this->control->description,
+			'priority'    => $this->control->priority,
+			'choices'     => $this->control->choices,
+			'input_attrs' => $this->control->input_attrs,
 		);
 
-		if ( ! empty( $control->settings ) ) {
-			$control_args['settings'] = $control->settings;
+		if ( ! empty( $this->control->settings ) ) {
+			$control_args['settings'] = $this->control->settings;
 		}
 
-		if ( ! empty( $control->setting ) ) {
-			$control_args['setting'] = $control->setting;
+		if ( ! empty( $this->control->setting ) ) {
+			$control_args['setting'] = $this->control->setting;
 		}
 
-		if ( ! empty( $control->active_callback ) ) {
-			$control_args['active_callback'] = $control->active_callback;
+		if ( ! empty( $this->control->active_callback ) ) {
+			$control_args['active_callback'] = $this->control->active_callback;
 		}
 
 		return $control_args;
@@ -62,12 +78,10 @@ class BaseField {
 
 	/**
 	 * Parse control args.
-	 *
-	 * @param CustomizerControlEntity $control The control entity object.
 	 */
-	protected function parseControlArgs( $control ) {
+	protected function parseControlArgs() {
 
-		$default_args = $this->parseDefaultControlArgs( $control );
+		$default_args = $this->parseDefaultControlArgs();
 		$custom_args  = array();
 
 		return array_merge( $default_args, $custom_args );

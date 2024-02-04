@@ -370,6 +370,26 @@ Kirki::add_field( 'wpbf', array(
 	),
 ) );
 
+wpbf_customizer_field()
+	->id( 'new_sidebar_position' )
+	->type( 'select' )
+	->label( 'Position (Global - Ours)' )
+	->priority( 1 )
+	->defaultValue( 'right' )
+	->choices(
+		array(
+			'right' => __( 'Right', 'page-builder-framework' ),
+			'left'  => __( 'Left', 'page-builder-framework' ),
+			'none'  => __( 'No Sidebar', 'page-builder-framework' ),
+		)
+	)
+	->properties(
+		array(
+			'multiple' => false,
+		)
+	)
+	->addToSection( 'wpbf_sidebar_options' );
+
 // Gap.
 Kirki::add_field( 'wpbf', array(
 	'type'     => 'select',
@@ -388,6 +408,29 @@ Kirki::add_field( 'wpbf', array(
 		'collapse' => __( 'Collapse', 'page-builder-framework' ),
 	),
 ) );
+
+wpbf_customizer_field()
+	->id( 'new_sidebar_gap' )
+	->type( 'select' )
+	->label( 'Gap (Ours)' )
+	->priority( 2 )
+	->defaultValue( 'medium' )
+	->choices(
+		array(
+			'divider'  => __( 'Divider', 'page-builder-framework' ),
+			'xlarge'   => __( 'xLarge', 'page-builder-framework' ),
+			'large'    => __( 'Large', 'page-builder-framework' ),
+			'medium'   => __( 'Medium', 'page-builder-framework' ),
+			'small'    => __( 'Small', 'page-builder-framework' ),
+			'collapse' => __( 'Collapse', 'page-builder-framework' ),
+		)
+	)
+	->properties(
+		array(
+			'multiple' => false,
+		)
+	)
+	->addToSection( 'wpbf_sidebar_options' );
 
 // Width.
 Kirki::add_field( 'wpbf', array(
@@ -416,7 +459,6 @@ wpbf_customizer_field()
 	->id( 'new_sidebar_width' )
 	->type( 'slider' )
 	->label( 'Width (Ours)' )
-	->description( 'This should be hidden when sidebar is none' )
 	->priority( 2 )
 	->defaultValue( 33.3 )
 	->choices(
@@ -432,16 +474,6 @@ wpbf_customizer_field()
 				'id'       => 'sidebar_position',
 				'operator' => '!=',
 				'value'    => 'none',
-			),
-		)
-	)
-	->partialRefresh(
-		array(
-			'testing_doang' => array(
-				'selector'        => '.wp-block-search__label',
-				'render_callback' => function () {
-					echo 'Search something';
-				},
 			),
 		)
 	)

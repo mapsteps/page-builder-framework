@@ -24,23 +24,26 @@ class CustomizerUtil {
 	 */
 	public $available_controls = array(
 		'slider',
+		'select',
 	);
 
 	/**
 	 * Determine the sanitize callback.
 	 *
-	 * @param string $type The control type.
+	 * @param CustomizerControlEntity $control The control entity object.
 	 *
 	 * @return callable|string
 	 */
-	public function determineSanitizeCallback( $type ) {
+	public function determineSanitizeCallback( $control ) {
 
-		if ( ! in_array( $type, $this->available_controls, true ) ) {
+		$control_type = $control->type;
+
+		if ( ! in_array( $control_type, $this->available_controls, true ) ) {
 			return '';
 		}
 
-		if ( 'slider' === $type ) {
-			$slider_field = new SliderField();
+		if ( 'slider' === $control_type ) {
+			$slider_field = new SliderField( $control );
 
 			if ( method_exists( $slider_field, 'sanitizeCallback' ) ) {
 				return array( $slider_field, 'sanitizeCallback' );
@@ -49,8 +52,8 @@ class CustomizerUtil {
 			return '';
 		}
 
-		if ( 'select' === $type ) {
-			$select_field = new SelectField();
+		if ( 'select' === $control_type ) {
+			$select_field = new SelectField( $control );
 
 			if ( method_exists( $select_field, 'sanitizeCallback' ) ) {
 				return array( $select_field, 'sanitizeCallback' );
@@ -78,20 +81,20 @@ class CustomizerUtil {
 		}
 
 		if ( 'slider' === $control_type ) {
-			$slider_field = new SliderField();
+			$slider_field = new SliderField( $control );
 
 			if ( method_exists( $slider_field, 'addControl' ) ) {
-				$slider_field->addControl( $wp_customize_manager, $control );
+				$slider_field->addControl( $wp_customize_manager );
 			}
 
 			return;
 		}
 
 		if ( 'select' === $control_type ) {
-			$select_field = new SelectField();
+			$select_field = new SelectField( $control );
 
 			if ( method_exists( $select_field, 'addControl' ) ) {
-				$select_field->addControl( $wp_customize_manager, $control );
+				$select_field->addControl( $wp_customize_manager );
 			}
 
 			return;

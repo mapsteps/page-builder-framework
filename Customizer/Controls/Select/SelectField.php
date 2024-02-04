@@ -8,7 +8,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Select;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use WP_Customize_Manager;
 
 /**
@@ -17,20 +16,49 @@ use WP_Customize_Manager;
 class SelectField extends BaseField {
 
 	/**
+	 * Setting's sanitize callback.
+	 *
+	 * @param string $value The value to sanitize.
+	 *
+	 * @return string|string[]
+	 */
+	public function sanitizeCallback( $value ) {
+
+		if ( ! is_array( $value ) ) {
+			return sanitize_text_field( $value );
+		}
+
+		$total_values   = count( $value );
+		$max_selections = 999;
+
+		if ( isset( $this->control->custom_properties['max_selections'] ) ) {
+			$max_selections = absint( $this->control->custom_properties['max_selections'] );
+		}
+
+		if ( $total_values > $max_selections ) {
+			$value = array_slice( $value, 0, $max_selections );
+		}
+
+		$values = array_map( 'sanitize_text_field', $value );
+
+		return array_values( $values );
+
+	}
+
+	/**
 	 * Add control to the customizer.
 	 *
-	 * @param WP_Customize_Manager    $wp_customize_manager The customizer manager object.
-	 * @param CustomizerControlEntity $control The control entity object.
+	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
 	 */
-	public function addControl( $wp_customize_manager, $control ) {
+	public function addControl( $wp_customize_manager ) {
 
-		$control_args = $this->parseControlArgs( $control );
+		$control_args = $this->parseControlArgs();
 
-		$custom_props = $control->custom_properties;
+		$custom_props = $this->control->custom_properties;
 
 		$select_control = new SelectControl(
 			$wp_customize_manager,
-			$control->id,
+			$this->control->id,
 			$control_args
 		);
 
@@ -38,8 +66,8 @@ class SelectField extends BaseField {
 			$select_control->multiple = $custom_props['multiple'];
 		}
 
-		if ( isset( $custom_props['max_selection_number'] ) ) {
-			$select_control->max_selection_number = $custom_props['max_selection_number'];
+		if ( isset( $custom_props['max_selections'] ) ) {
+			$select_control->max_selections = $custom_props['max_selections'];
 		}
 
 		if ( isset( $custom_props['placeholder'] ) ) {

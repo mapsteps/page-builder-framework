@@ -96,7 +96,7 @@ devDependencies:
     version: 5.3.3
   wordpress__customize-browser:
     specifier: github:usefulteam/wordpress__customize-browser
-    version: github.com/usefulteam/wordpress__customize-browser/9fb29e9378a821691044faaef2adc4aae26bf5a7
+    version: github.com/usefulteam/wordpress__customize-browser/c14a2e5cafe9a1c1306295eaf0e37861b64ebd56
 
 packages:
 
@@ -4972,8 +4972,8 @@ packages:
       lib0: 0.2.88
     dev: false
 
-  github.com/usefulteam/wordpress__customize-browser/9fb29e9378a821691044faaef2adc4aae26bf5a7:
-    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/9fb29e9378a821691044faaef2adc4aae26bf5a7}
+  github.com/usefulteam/wordpress__customize-browser/c14a2e5cafe9a1c1306295eaf0e37861b64ebd56:
+    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/c14a2e5cafe9a1c1306295eaf0e37861b64ebd56}
     name: wordpress__customize-browser
     version: 5.5.5
     dependencies:

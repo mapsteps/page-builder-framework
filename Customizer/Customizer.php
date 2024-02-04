@@ -218,8 +218,6 @@ final class Customizer {
 	 */
 	private function register_controls( $wp_customize_manager ) {
 
-		$this->register_settings( $wp_customize_manager );
-
 		$customizer_util = new CustomizerUtil();
 
 		foreach ( self::$added_controls as $control ) {

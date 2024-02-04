@@ -1,8 +1,8 @@
 import React from "react";
-import Select, {components, GroupBase, MenuProps} from "react-select";
+import Select, {components, GroupBase} from "react-select";
 import {PublicBaseSelectProps} from "react-select/dist/declarations/src/Select";
 import {StateManagerAdditionalProps} from "react-select/dist/declarations/src/useStateManager";
-import {SelectControlProps, WpbfCustomizeSelectControl} from "./interfaces";
+import {WpbfCustomizeSelectControl} from "./interfaces";
 import {WpbfCustomize} from "../../Base/src/interfaces";
 import {Setting} from "wordpress__customize-browser/Setting";
 
@@ -10,21 +10,17 @@ declare var wp: {
 	customize: WpbfCustomize;
 };
 
-interface SelectMenuProps extends MenuProps<unknown, boolean, GroupBase<unknown>> {
-	selectControlProps: SelectControlProps;
-}
-
 function SelectMenu(props: any) {
-	const {selectControlProps} = props;
+	const {selectProps} = props;
 	const optionSelectedLength = props.getValue().length || 0;
 
 	return (
 		<components.Menu {...props}>
-			{optionSelectedLength < selectControlProps.maxSelectionNumber ? (
+			{optionSelectedLength < selectProps.maxSelections ? (
 				props.children
 			) : (
 				<div style={{padding: 15}}>
-					{selectControlProps.messages.maxLimitReached}
+					{selectProps.messages.maxLimitReached}
 				</div>
 			)}
 		</components.Menu>
