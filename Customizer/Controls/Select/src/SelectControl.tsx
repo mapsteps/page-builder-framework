@@ -132,8 +132,6 @@ const SelectControl = wp.customize.Control.extend({
 		if (!control) return false;
 		if (!control.disabledSelectOptions) return false;
 		return !!control.disabledSelectOptions.indexOf(option);
-
-
 	},
 
 	doSelectAction: function (action: any, arg: any) {
@@ -221,8 +219,6 @@ const SelectControl = wp.customize.Control.extend({
 		const options = control.getFormattedOptions();
 		let i: any;
 		let l: any;
-
-		console.log(`options of ${control.setting.id} is:`, options);
 
 		if (control.isMulti()) {
 			let values = [];

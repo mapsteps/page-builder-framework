@@ -531,7 +531,7 @@
 	wp.customize('mobile_sub_menu_auto_collapse', function (value) {
 		value.bind(function (newval) {
 			if (!document.querySelector('#mobile-navigation')) return;
-			
+
 			if (newval) {
 				$('#mobile-navigation').closest('.wpbf-navigation').addClass('wpbf-mobile-sub-menu-auto-collapse');
 			} else {
@@ -539,7 +539,7 @@
 			}
 		});
 	});
-	
+
 	// Indent.
 	wp.customize('mobile_sub_menu_indent', function (value) {
 		var styleTag = setupStyleTag('mobile_sub_menu_indent');
