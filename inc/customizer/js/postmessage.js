@@ -925,9 +925,12 @@
 
 		value.bind(function (newval) {
 			var calculation = 100 - newval;
+
 			styleTag.innerHTML = '\
-				.wpbf-sidebar-wrapper {width: ' + newval + '%;}\
-				.wpbf-sidebar-left .wpbf-main, .wpbf-sidebar-right .wpbf-main {width: ' + calculation + '%;}\
+				@media (min-width: 769px) {\
+					body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {width: ' + newval + '%;}\
+					body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3 {width: ' + calculation + '%;}\
+				}\
 			';
 		});
 	});
