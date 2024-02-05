@@ -1,6 +1,10 @@
 import {WpbfCustomize, WpbfCustomizeControl} from "../../Base/src/interfaces";
 import {Control_Params} from "wordpress__customize-browser/Control";
-import {WpbfCustomizeSelectControl} from "./interfaces";
+import {
+	WpbfCustomizeSelectControl,
+	WpbfCustomizeSelectOptionGroup,
+	WpbfCustomizeSelectOptionObject
+} from "./interfaces";
 import SelectForm from "./SelectForm";
 import ReactDOM from "react-dom";
 import React from "react";
@@ -163,20 +167,24 @@ const SelectControl = wp.customize.Control.extend({
 		control.renderContent();
 	},
 
-	formattedOptions: [],
-
 	formatOptions: function () {
 		const control = this as WpbfCustomizeSelectControl;
 
 		if (Array.isArray(control.params.choices)) {
-			control.formattedOptions = control.params.choices;
-			return;
+			return control.params.choices;
 		}
 
+		const formattedOptions: WpbfCustomizeSelectOptionObject[] = [];
+		const formattedOptionGroups: WpbfCustomizeSelectOptionGroup[] = [];
+
+		let useGroups = false;
+
 		_.each(control.params.choices, function (label: any, value) {
-			let optGroup: any;
+			let optGroup: WpbfCustomizeSelectOptionGroup;
 
 			if ("object" === typeof label) {
+				useGroups = true;
+
 				optGroup = {
 					label: label[0],
 					options: [],
@@ -189,24 +197,22 @@ const SelectControl = wp.customize.Control.extend({
 					});
 				});
 
-				control.formattedOptions.push(optGroup);
+				formattedOptionGroups.push(optGroup);
 			} else if ("string" === typeof label) {
-				control.formattedOptions.push({
+				formattedOptions.push({
 					label: label,
 					value: value,
 				});
 			}
 		});
+
+		return useGroups ? formattedOptionGroups : formattedOptions;
 	},
 
 	getFormattedOptions: function () {
 		const control = this as WpbfCustomizeSelectControl;
 
-		if (!control.formattedOptions || !control.formattedOptions.length) {
-			control.formatOptions();
-		}
-
-		return control.formattedOptions;
+		return control.formatOptions();
 	},
 
 	getOptionProps: function (value: any) {
@@ -215,6 +221,8 @@ const SelectControl = wp.customize.Control.extend({
 		const options = control.getFormattedOptions();
 		let i: any;
 		let l: any;
+
+		console.log(`options of ${control.setting.id} is:`, options);
 
 		if (control.isMulti()) {
 			let values = [];

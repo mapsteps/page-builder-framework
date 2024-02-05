@@ -15,8 +15,17 @@ export interface WpbfCustomizeSelectControl extends WpbfCustomizeControl {
 	isOptionDisabled: (option: any) => boolean;
 	disabledSelectOptions: any[],
 	doSelectAction: (action: any, args: any) => void;
-	formattedOptions: any[];
-	formatOptions: () => void;
-	getFormattedOptions: () => any;
+	formatOptions: () => string[] | WpbfCustomizeSelectOptionObject[] | WpbfCustomizeSelectOptionGroup[];
+	getFormattedOptions: () => any[];
 	getOptionProps: (value: any) => any[];
+}
+
+export interface WpbfCustomizeSelectOptionGroup {
+	label: string;
+	options: WpbfCustomizeSelectOptionObject[];
+}
+
+export interface WpbfCustomizeSelectOptionObject {
+	label: string;
+	value: any;
 }
