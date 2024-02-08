@@ -7,14 +7,6 @@ import {
 	RgbaColor,
 } from "colord";
 
-export type ColorObject =
-	| RgbColor
-	| RgbaColor
-	| HslColor
-	| HslaColor
-	| HsvColor
-	| HsvaColor;
-
 export type ColorMode =
 	| "rgb"
 	| "rgba"
@@ -24,8 +16,6 @@ export type ColorMode =
 	| "hsva"
 	| "hex"
 	| "";
-
-export type ColorValue = string | ColorObject;
 
 export type RgbOrRgbaColor = RgbColor & { a?: number };
 

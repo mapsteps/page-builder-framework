@@ -1,20 +1,20 @@
 import { colord } from "colord";
-import { ColorObject } from "../interfaces";
+import { ObjectColor } from "colord/types";
 
 /**
  * Convert the value for the customizer.
  *
- * @param {string|ColorObject} value - The value to be converted.
+ * @param {string|ObjectColor} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  * @param {string} formComponent - The form component name.
  *
- * @returns {string|ColorObject} The converted value.
+ * @returns {string|ObjectColor} The converted value.
  */
 export default function convertColorForCustomizer(
-	value: string | ColorObject,
+	value: string | ObjectColor,
 	pickerComponent: string,
 	formComponent: string
-): string | ColorObject {
+): string | ObjectColor {
 	let rgba;
 	let hsv;
 	let hsva;

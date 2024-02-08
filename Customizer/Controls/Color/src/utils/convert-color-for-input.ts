@@ -1,17 +1,17 @@
 import { colord } from "colord";
-import { ColorObject } from "../interfaces";
+import { ObjectColor } from "colord/types";
 
 /**
  * Convert the value for the color input.
  *
- * @param {string|ColorObject} value - The value to be converted.
+ * @param {string|ObjectColor} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  * @param {string} formComponent - The form component name.
  *
  * @returns {string} The converted value.
  */
 export default function convertColorForInput(
-	value: string | ColorObject,
+	value: string | ObjectColor,
 	pickerComponent: string,
 	formComponent: string
 ): string {

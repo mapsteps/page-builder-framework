@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 export type ColorPickerCircleProps = {
+	pickerComponent?: any;
+	useHueMode?: boolean;
 	color?: string;
+	isPickerOpen?: boolean;
 	togglePickerHandler: () => void;
 };
 

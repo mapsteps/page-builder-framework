@@ -1,11 +1,11 @@
 import hooks from "@wordpress/hooks";
 import {
 	ColorMode,
-	ColorObject,
 	HslOrHslaColor,
 	HsvOrHsvaColor,
 	RgbOrRgbaColor,
 } from "./interfaces";
+import { ObjectColor } from "colord/types";
 
 declare var wp: {
 	hooks: typeof hooks;
@@ -31,7 +31,7 @@ declare var wp: {
 	/**
 	 * Generate value from color object.
 	 */
-	function generateStringValueFromColorObj(value: ColorObject): string {
+	function generateStringValueFromColorObj(value: ObjectColor): string {
 		let alphaEnabled = false;
 		let colorMode: ColorMode = "";
 
@@ -95,7 +95,7 @@ declare var wp: {
 	 * Function to hook into `wpbfPostMessageStylesOutput` filter.
 	 *
 	 * @param {string} styles - The styles to be filtered.
-	 * @param {string|number|ColorObject} value - The control's value.
+	 * @param {string|number|ObjectColor} value - The control's value.
 	 * @param {object} output - The control's output argument.
 	 * @param {string} controlType - The control type.
 	 *
@@ -103,7 +103,7 @@ declare var wp: {
 	 */
 	function stylesOutput(
 		styles: string,
-		value: string | number | ColorObject,
+		value: string | number | ObjectColor,
 		output: any,
 		controlType: string
 	): string {

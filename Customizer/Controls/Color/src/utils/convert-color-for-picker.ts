@@ -1,18 +1,18 @@
 import { colord } from "colord";
-import { ColorObject } from "../interfaces";
+import { ObjectColor } from "colord/types";
 
 /**
  * Convert the value for the color picker.
  *
- * @param {string|ColorObject} value - The value to be converted.
+ * @param {string|ObjectColor} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  *
- * @returns {string|ColorObject} The converted value.
+ * @returns {string|ObjectColor} The converted value.
  */
 export default function convertColorForPicker(
-	value: string | ColorObject,
+	value: string | ObjectColor,
 	pickerComponent: string
-): string | ColorObject {
+): string | ObjectColor {
 	let convertedValue;
 
 	switch (pickerComponent) {
