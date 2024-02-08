@@ -24,9 +24,9 @@ class CustomizerUtil {
 	 * @var string[] $available_control_types
 	 */
 	public $available_control_types = array(
-		'slider',
-		'select',
 		'color',
+		'select',
+		'slider',
 	);
 
 	/**
@@ -38,33 +38,9 @@ class CustomizerUtil {
 	 */
 	public function determineSanitizeCallback( $control ) {
 
-		$control_type = $control->type;
+		$field = $this->getFieldInstance( $control );
 
-		if ( ! in_array( $control_type, $this->available_control_types, true ) ) {
-			return '';
-		}
-
-		if ( 'slider' === $control_type ) {
-			$slider_field = new SliderField( $control );
-
-			if ( method_exists( $slider_field, 'sanitizeCallback' ) ) {
-				return array( $slider_field, 'sanitizeCallback' );
-			}
-
-			return '';
-		}
-
-		if ( 'select' === $control_type ) {
-			$select_field = new SelectField( $control );
-
-			if ( method_exists( $select_field, 'sanitizeCallback' ) ) {
-				return array( $select_field, 'sanitizeCallback' );
-			}
-
-			return '';
-		}
-
-		return '';
+		return ( null !== $field && method_exists( $field, 'sanitizeCallback' ) ? array( $field, 'sanitizeCallback' ) : '' );
 
 	}
 
@@ -75,15 +51,7 @@ class CustomizerUtil {
 	 */
 	public function enqueueCustomizePreviewScripts( $control ) {
 
-		$field = null;
-
-		switch ( $control->type ) {
-			case 'color':
-				$field = new ColorField( $control );
-				break;
-			default:
-				break;
-		}
+		$field = $this->getFieldInstance( $control );
 
 		if ( null !== $field ) {
 			$field->enqueueCustomizePreviewScripts();
@@ -99,31 +67,44 @@ class CustomizerUtil {
 	 */
 	public function addControl( $wp_customize_manager, $control ) {
 
-		$control_type = $control->type;
+		$field = $this->getFieldInstance( $control );
 
-		if ( ! in_array( $control_type, $this->available_control_types, true ) ) {
-			return;
+		if ( null !== $field ) {
+			$field->addControl( $wp_customize_manager );
 		}
 
-		if ( 'slider' === $control_type ) {
-			$slider_field = new SliderField( $control );
+	}
 
-			if ( method_exists( $slider_field, 'addControl' ) ) {
-				$slider_field->addControl( $wp_customize_manager );
-			}
+	/**
+	 * Get the field instance.
+	 *
+	 * @param CustomizerControlEntity $control The control entity object.
+	 *
+	 * @return ColorField|SelectField|SliderField|null
+	 */
+	private function getFieldInstance( $control ) {
 
-			return;
+		if ( ! in_array( $control->type, $this->available_control_types, true ) ) {
+			return null;
 		}
 
-		if ( 'select' === $control_type ) {
-			$select_field = new SelectField( $control );
+		$field = null;
 
-			if ( method_exists( $select_field, 'addControl' ) ) {
-				$select_field->addControl( $wp_customize_manager );
-			}
-
-			return;
+		switch ( $control->type ) {
+			case 'color':
+				$field = new ColorField( $control );
+				break;
+			case 'select':
+				$field = new SelectField( $control );
+				break;
+			case 'slider':
+				$field = new SliderField( $control );
+				break;
+			default:
+				break;
 		}
+
+		return $field;
 
 	}
 
