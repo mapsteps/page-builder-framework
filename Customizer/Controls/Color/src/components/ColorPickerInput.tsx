@@ -62,18 +62,18 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 		: "none";
 
 	return (
-		<div className="kirki-color-input-wrapper">
-			<div className="kirki-color-input-control">
+		<div className="wpbf-color-input-wrapper">
+			<div className="wpbf-color-input-control">
 				{!props.useHueMode && (
 					<div
-						className="kirki-color-preview-wrapper"
+						className="wpbf-color-preview-wrapper"
 						style={{
 							backgroundImage: previewWrapperBgImg,
 						}}
 					>
 						<button
 							type="button"
-							className="kirki-color-preview"
+							className="wpbf-color-preview"
 							style={{
 								backgroundColor: value,
 							}}
@@ -83,7 +83,7 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 				<input
 					type="text"
 					value={value}
-					className="kirki-color-input"
+					className="wpbf-color-input"
 					spellCheck="false"
 					onChange={handleChange}
 				/>

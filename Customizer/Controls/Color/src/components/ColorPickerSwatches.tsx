@@ -11,7 +11,7 @@ export default function ColorPickerSwatches(
 	const { colors, onClick } = props;
 
 	return (
-		<div className="kirki-color-swatches">
+		<div className="wpbf-color-swatches">
 			{colors.map((clr, index) => {
 				const color = typeof clr === "string" ? clr : clr.color;
 
@@ -19,8 +19,8 @@ export default function ColorPickerSwatches(
 					<button
 						key={index.toString()}
 						type="button"
-						className="kirki-color-swatch"
-						data-kirki-color={color}
+						className="wpbf-color-swatch"
+						data-wpbf-color={color}
 						style={{ backgroundColor: color }}
 						onClick={() => onClick(color)}
 					></button>

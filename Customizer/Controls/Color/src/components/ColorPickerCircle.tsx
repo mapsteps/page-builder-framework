@@ -28,17 +28,17 @@ export default function ColorPickerCircle(props: ColorPickerCircleProps) {
 		'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAAHnlligAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHJJREFUeNpi+P///4EDBxiAGMgCCCAGFB5AADGCRBgYDh48CCRZIJS9vT2QBAggFBkmBiSAogxFBiCAoHogAKIKAlBUYTELAiAmEtABEECk20G6BOmuIl0CIMBQ/IEMkO0myiSSraaaBhZcbkUOs0HuBwDplz5uFJ3Z4gAAAABJRU5ErkJggg==")';
 
 	return (
-		<div className="kirki-trigger-circle-wrapper">
+		<div className="wpbf-trigger-circle-wrapper">
 			<button
 				type="button"
-				className="kirki-trigger-circle"
+				className="wpbf-trigger-circle"
 				onClick={props.togglePickerHandler}
 				style={{
 					backgroundImage: triggerButtonBgImage,
 				}}
 			>
 				<div
-					className="kirki-color-preview"
+					className="wpbf-color-preview"
 					style={{
 						backgroundColor: value ? value : "transparent",
 					}}
