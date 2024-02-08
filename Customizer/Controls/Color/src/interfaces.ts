@@ -1,32 +1,11 @@
-export type RgbColor = {
-	r: number;
-	g: number;
-	b: number;
-};
-
-export type RgbaColor = RgbColor & {
-	a: number;
-};
-
-export type HslColor = {
-	h: number;
-	s: number;
-	l: number;
-};
-
-export type HslaColor = HslColor & {
-	a: number;
-};
-
-export type HsvColor = {
-	h: number;
-	s: number;
-	v: number;
-};
-
-export type HsvaColor = HsvColor & {
-	a: number;
-};
+import {
+	HslColor,
+	HslaColor,
+	HsvColor,
+	HsvaColor,
+	RgbColor,
+	RgbaColor,
+} from "colord";
 
 export type ColorObject =
 	| RgbColor
@@ -35,3 +14,21 @@ export type ColorObject =
 	| HslaColor
 	| HsvColor
 	| HsvaColor;
+
+export type ColorMode =
+	| "rgb"
+	| "rgba"
+	| "hsl"
+	| "hsla"
+	| "hsv"
+	| "hsva"
+	| "hex"
+	| "";
+
+export type ColorValue = string | ColorObject;
+
+export type RgbOrRgbaColor = RgbColor & { a?: number };
+
+export type HslOrHslaColor = HslColor & { a?: number };
+
+export type HsvOrHsvaColor = HsvColor & { a?: number };

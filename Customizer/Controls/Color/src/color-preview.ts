@@ -1,13 +1,11 @@
-import {
-	ColorObject,
-	HslColor,
-	HslaColor,
-	HsvColor,
-	HsvaColor,
-	RgbColor,
-	RgbaColor,
-} from "./interfaces";
 import hooks from "@wordpress/hooks";
+import {
+	ColorMode,
+	ColorObject,
+	HslOrHslaColor,
+	HsvOrHsvaColor,
+	RgbOrRgbaColor,
+} from "./interfaces";
 
 declare var wp: {
 	hooks: typeof hooks;
@@ -35,7 +33,7 @@ declare var wp: {
 	 */
 	function generateStringValueFromColorObj(value: ColorObject): string {
 		let alphaEnabled = false;
-		let colorMode = "";
+		let colorMode: ColorMode = "";
 
 		let pos1 = 0;
 		let pos2: string | number = 0;
@@ -50,32 +48,35 @@ declare var wp: {
 			colorMode = value.hasOwnProperty("a") ? "rgba" : "rgb";
 			alphaEnabled = "rgba" === colorMode ? true : alphaEnabled;
 
-			pos1 = (value as RgbColor).r;
-			pos2 = (value as RgbColor).g;
-			pos3 = (value as RgbColor).b;
-			pos4 = "rgba" === colorMode ? (value as RgbaColor).a : 1;
+			const val: RgbOrRgbaColor = value as RgbOrRgbaColor;
+
+			pos1 = val.r;
+			pos2 = val.g;
+			pos3 = val.b;
+			pos4 = "rgba" === colorMode ? val.a ?? 1 : 1;
 		} else if (value.hasOwnProperty("h") && value.hasOwnProperty("s")) {
-			pos1 = (value as HslColor | HsvColor).h;
+			const val: HslOrHslaColor | HsvOrHsvaColor = value as
+				| HslOrHslaColor
+				| HsvOrHsvaColor;
+			pos1 = val.h;
 
 			if (value.hasOwnProperty("l")) {
 				colorMode = value.hasOwnProperty("a") ? "hsla" : "hsl";
-				pos2 = isNumeric((value as HslColor).l)
-					? (value as HslColor).l + "%"
-					: (value as HslColor).l;
+				pos2 = isNumeric((val as HslOrHslaColor).l)
+					? (val as HslOrHslaColor).l + "%"
+					: (val as HslOrHslaColor).l;
 			} else if (value.hasOwnProperty("v")) {
-				colorMode = value.hasOwnProperty("a") ? "hvla" : "hvl";
-				pos2 = isNumeric((value as HsvColor | HsvaColor).v)
-					? (value as HsvColor | HsvaColor).v + "%"
-					: (value as HsvColor | HsvaColor).v;
+				colorMode = value.hasOwnProperty("a") ? "hsva" : "hsv";
+				pos2 = isNumeric((val as HsvOrHsvaColor).v)
+					? (val as HsvOrHsvaColor).v + "%"
+					: (val as HsvOrHsvaColor).v;
 			}
 
 			alphaEnabled =
 				"hsla" === colorMode || "hsva" === colorMode ? true : alphaEnabled;
 
-			pos3 = isNumeric((value as HslColor | HsvColor).s)
-				? (value as HslColor | HsvColor).s + "%"
-				: (value as HslColor | HsvColor).s;
-			pos4 = alphaEnabled ? (value as HslaColor | HsvaColor).a : 1;
+			pos3 = isNumeric(val.s) ? val.s + "%" : val.s;
+			pos4 = alphaEnabled ? val.a ?? 1 : 1;
 		}
 
 		let formattedValue = "";
