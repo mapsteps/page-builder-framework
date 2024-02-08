@@ -107,6 +107,7 @@ final class Customizer {
 	public function init() {
 
 		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
+		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 
 	}
 
@@ -126,6 +127,21 @@ final class Customizer {
 		$this->register_selective_refreshes( $wp_customize_manager );
 
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
+
+	}
+
+	/**
+	 * Enqueue customize preview scripts.
+	 *
+	 * @return void
+	 */
+	public function customize_preview_init() {
+
+		$customzier_util = new CustomizerUtil();
+
+		foreach ( self::$added_controls as $control ) {
+			$customzier_util->enqueueCustomizePreviewScripts( $control );
+		}
 
 	}
 

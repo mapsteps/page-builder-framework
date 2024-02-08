@@ -33,6 +33,11 @@ class BaseField {
 	}
 
 	/**
+	 * Enqueue styles & scripts on 'customize_preview_init' action.
+	 */
+	public function enqueueCustomizePreviewScripts() {}
+
+	/**
 	 * Setting's sanitize callback.
 	 *
 	 * @param string $value The value to sanitize.

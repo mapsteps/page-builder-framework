@@ -7,6 +7,7 @@
 
 namespace Mapsteps\Wpbf\Customizer;
 
+use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
@@ -18,13 +19,14 @@ use WP_Customize_Manager;
 class CustomizerUtil {
 
 	/**
-	 * The available controls.
+	 * The available control types.
 	 *
-	 * @var string[] $available_controls
+	 * @var string[] $available_control_types
 	 */
-	public $available_controls = array(
+	public $available_control_types = array(
 		'slider',
 		'select',
+		'color',
 	);
 
 	/**
@@ -38,7 +40,7 @@ class CustomizerUtil {
 
 		$control_type = $control->type;
 
-		if ( ! in_array( $control_type, $this->available_controls, true ) ) {
+		if ( ! in_array( $control_type, $this->available_control_types, true ) ) {
 			return '';
 		}
 
@@ -67,6 +69,29 @@ class CustomizerUtil {
 	}
 
 	/**
+	 * Enqueue customize preview scripts.
+	 *
+	 * @param CustomizerControlEntity $control The control entity object.
+	 */
+	public function enqueueCustomizePreviewScripts( $control ) {
+
+		$field = null;
+
+		switch ( $control->type ) {
+			case 'color':
+				$field = new ColorField( $control );
+				break;
+			default:
+				break;
+		}
+
+		if ( null !== $field ) {
+			$field->enqueueCustomizePreviewScripts();
+		}
+
+	}
+
+	/**
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager    $wp_customize_manager The customizer manager object.
@@ -76,7 +101,7 @@ class CustomizerUtil {
 
 		$control_type = $control->type;
 
-		if ( ! in_array( $control_type, $this->available_controls, true ) ) {
+		if ( ! in_array( $control_type, $this->available_control_types, true ) ) {
 			return;
 		}
 
