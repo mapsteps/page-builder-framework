@@ -1,4 +1,4 @@
-import "./control.scss";
+import "./color-control.scss";
 import ColorControl from './ColorControl';
 import {WpbfCustomize} from "../../Base/src/interfaces";
 
