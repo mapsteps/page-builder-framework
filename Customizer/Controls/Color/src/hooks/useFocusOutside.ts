@@ -1,21 +1,21 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 export default function useFocusOutside(ref: any, handler: any) {
-	useEffect(() => {
-		const listener = (e: any) => {
-			// Do nothing if the component hasn't been mounted.
-			if (!ref.current) return;
+  useEffect(() => {
+    const listener = (e: any) => {
+      // Do nothing if the component hasn't been mounted.
+      if (!ref.current) return;
 
-			// Do nothing if the focused element is inside the ref or the ref itself.
-			if (ref.current.contains(e.target)) return;
+      // Do nothing if the focused element is inside the ref or the ref itself.
+      if (ref.current.contains(e.target)) return;
 
-			handler();
-		};
+      handler();
+    };
 
-		document.addEventListener("focus", listener, true);
+    document.addEventListener("focus", listener, true);
 
-		return () => {
-			document.removeEventListener("focus", listener, true);
-		};
-	}, [ref, handler]);
+    return () => {
+      document.removeEventListener("focus", listener, true);
+    };
+  }, [ref, handler]);
 }

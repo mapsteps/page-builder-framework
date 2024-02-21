@@ -10,111 +10,111 @@ import {ObjectColor} from "colord/types";
  * @returns {string|ObjectColor} The converted value.
  */
 export default function convertColorForPicker(
-	value: string | ObjectColor,
-	pickerComponent: string
+  value: string | ObjectColor,
+  pickerComponent: string,
 ): string | ObjectColor {
-	let convertedValue;
+  let convertedValue;
 
-	switch (pickerComponent) {
-		case "HexColorPicker":
-			convertedValue = colord(value).toHex();
-			break;
+  switch (pickerComponent) {
+    case "HexColorPicker":
+      convertedValue = colord(value).toHex();
+      break;
 
-		case "RgbColorPicker":
-			convertedValue = colord(value).toRgb();
-			convertedValue = {
-				r: convertedValue.r,
-				g: convertedValue.g,
-				b: convertedValue.b,
-			};
-			break;
+    case "RgbColorPicker":
+      convertedValue = colord(value).toRgb();
+      convertedValue = {
+        r: convertedValue.r,
+        g: convertedValue.g,
+        b: convertedValue.b,
+      };
+      break;
 
-		case "RgbStringColorPicker":
-			convertedValue = colord(value).toRgbString();
-			break;
+    case "RgbStringColorPicker":
+      convertedValue = colord(value).toRgbString();
+      break;
 
-		case "RgbaColorPicker":
-			convertedValue = colord(value).toRgb();
-			break;
+    case "RgbaColorPicker":
+      convertedValue = colord(value).toRgb();
+      break;
 
-		case "RgbaStringColorPicker":
-			convertedValue = colord(value).toRgbString();
+    case "RgbaStringColorPicker":
+      convertedValue = colord(value).toRgbString();
 
-			// Force to set the alpha channel value.
-			if (convertedValue.includes("rgb") && !convertedValue.includes("rgba")) {
-				convertedValue = convertedValue.replace("rgb", "rgba");
-				convertedValue = convertedValue.replace(")", ", 1)");
-			}
+      // Force to set the alpha channel value.
+      if (convertedValue.includes("rgb") && !convertedValue.includes("rgba")) {
+        convertedValue = convertedValue.replace("rgb", "rgba");
+        convertedValue = convertedValue.replace(")", ", 1)");
+      }
 
-			break;
+      break;
 
-		case "HslColorPicker":
-			convertedValue = colord(value).toHsl();
-			convertedValue = {
-				h: convertedValue.h,
-				s: convertedValue.s,
-				l: convertedValue.l,
-			};
-			break;
+    case "HslColorPicker":
+      convertedValue = colord(value).toHsl();
+      convertedValue = {
+        h: convertedValue.h,
+        s: convertedValue.s,
+        l: convertedValue.l,
+      };
+      break;
 
-		case "HslStringColorPicker":
-			convertedValue = colord(value).toHslString();
-			break;
+    case "HslStringColorPicker":
+      convertedValue = colord(value).toHslString();
+      break;
 
-		case "HslaColorPicker":
-			convertedValue = colord(value).toHsl();
-			break;
+    case "HslaColorPicker":
+      convertedValue = colord(value).toHsl();
+      break;
 
-		case "HslaStringColorPicker":
-			convertedValue = colord(value).toHslString();
+    case "HslaStringColorPicker":
+      convertedValue = colord(value).toHslString();
 
-			// Force to set the alpha channel value.
-			if (convertedValue.includes("hsl") && !convertedValue.includes("hsla")) {
-				convertedValue = convertedValue.replace("hsl", "hsla");
-				convertedValue = convertedValue.replace(")", ", 1)");
-			}
+      // Force to set the alpha channel value.
+      if (convertedValue.includes("hsl") && !convertedValue.includes("hsla")) {
+        convertedValue = convertedValue.replace("hsl", "hsla");
+        convertedValue = convertedValue.replace(")", ", 1)");
+      }
 
-			break;
+      break;
 
-		case "HsvColorPicker":
-			convertedValue = colord(value).toHsv();
-			convertedValue = {
-				h: convertedValue.h,
-				s: convertedValue.s,
-				v: convertedValue.v,
-			};
-			break;
+    case "HsvColorPicker":
+      convertedValue = colord(value).toHsv();
+      convertedValue = {
+        h: convertedValue.h,
+        s: convertedValue.s,
+        v: convertedValue.v,
+      };
+      break;
 
-		case "HsvStringColorPicker":
-			const hsv = colord(value).toHsv();
-			convertedValue = "hsv(" + hsv.h + ", " + hsv.s + "%, " + hsv.v + "%)";
+    case "HsvStringColorPicker":
+      const hsv = colord(value).toHsv();
+      convertedValue = "hsv(" + hsv.h + ", " + hsv.s + "%, " + hsv.v + "%)";
 
-			break;
+      break;
 
-		case "HsvaColorPicker":
-			convertedValue = colord(value).toHsv();
-			break;
+    case "HsvaColorPicker":
+      convertedValue = colord(value).toHsv();
+      break;
 
-		case "HsvaStringColorPicker":
-			// colord library doesn't provide .toHsvString() method yet.
-			const hsva = colord(value).toHsv();
-			convertedValue =
-				"hsva(" +
-				hsva.h +
-				", " +
-				hsva.s +
-				"%, " +
-				hsva.v +
-				"%, " +
-				hsva.a +
-				")";
+    case "HsvaStringColorPicker":
+      // colord library doesn't provide .toHsvString() method yet.
+      const hsva = colord(value).toHsv();
+      convertedValue =
+        "hsva(" +
+        hsva.h +
+        ", " +
+        hsva.s +
+        "%, " +
+        hsva.v +
+        "%, " +
+        hsva.a +
+        ")";
 
-			break;
+      break;
 
-		default:
-			convertedValue = colord(value).toHex();
-			break;
-	}
+    default:
+      convertedValue = colord(value).toHex();
+      break;
+  }
 
-	return convertedValue;
+  return convertedValue;
 }
