@@ -214,28 +214,29 @@ Kirki::add_field(
 // ) );
 
 // Background color.
-Kirki::add_field(
-	'wpbf',
-	array(
-		'type'            => 'color',
-		'settings'        => 'page_boxed_background',
-		'label'           => __( 'Background Color', 'page-builder-framework' ),
-		'section'         => 'wpbf_page_options',
-		'default'         => '#ffffff',
-		'priority'        => 5,
-		'transport'       => 'postMessage',
-		'choices'         => array(
-			'alpha' => true,
-		),
-		'active_callback' => array(
-			array(
-				'setting'  => 'page_boxed',
-				'operator' => '==',
-				'value'    => 1,
-			),
-		),
+
+wpbf_customizer_field()
+	->id( 'page_boxed_background' )
+	->type( 'color' )
+	->label( 'Background Color' )
+	->defaultValue( '#ffffff' )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties(
+		array(
+			'mode' => 'alpha',
+		)
 	)
-);
+	->activeCallback(
+		array(
+			array(
+				'id'       => 'page_boxed',
+				'operator' => '==',
+				'value'    => true,
+			),
+		)
+	)
+	->addToSection( 'wpbf_page_options' );
 
 // Box shadow.
 new HeadlineToggle(
@@ -409,7 +410,7 @@ Kirki::add_field(
 wpbf_customizer_field()
 	->id( 'sidebar_position' )
 	->type( 'select' )
-	->label( 'Position (Global - Ours)' )
+	->label( 'Position (Global)' )
 	->priority( 1 )
 	->defaultValue( 'right' )
 	->choices(
@@ -424,7 +425,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'sidebar_gap' )
 	->type( 'select' )
-	->label( 'Gap (Ours)' )
+	->label( 'Gap' )
 	->priority( 2 )
 	->defaultValue( 'medium' )
 	->choices(
@@ -443,7 +444,7 @@ wpbf_customizer_field()
 	->id( 'sidebar_width' )
 	->type( 'slider' )
 	->transport( 'postMessage' )
-	->label( 'Width (Ours)' )
+	->label( 'Width' )
 	->priority( 2 )
 	->defaultValue( 33.3 )
 	->choices(
