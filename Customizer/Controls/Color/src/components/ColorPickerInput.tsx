@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 
 export type ColorPickerInputProps = {
 	onChange: (color: string) => void;
@@ -8,7 +8,7 @@ export type ColorPickerInputProps = {
 };
 
 export default function ColorPickerInput(props: ColorPickerInputProps) {
-	const { onChange, color = "" } = props;
+	const {onChange, color = ""} = props;
 	const [value, setValue] = useState(() => color);
 
 	const handleChange = useCallback(
@@ -30,7 +30,7 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 
 			// Thank you: https://regexr.com/39cgj
 			const pattern = new RegExp(
-				/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})\b|(?:rgb|hsl)a?\([^\)]*\)/
+				/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})\b|(?:rgb|hsl)a?\([^)]*\)/
 			);
 
 			if ("" === val || pattern.test(val)) {

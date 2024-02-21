@@ -1,5 +1,5 @@
-import { colord } from "colord";
-import { ObjectColor } from "colord/types";
+import {colord} from "colord";
+import {ObjectColor} from "colord/types";
 
 /**
  * Convert the value for the color picker.

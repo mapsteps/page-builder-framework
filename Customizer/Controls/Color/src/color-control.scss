@@ -40,7 +40,6 @@
 
 		input.wpbf-color-input {
 			padding-left: 8px;
-			padding-left: 8px;
 		}
 	}
 
@@ -160,10 +159,9 @@
 		background-repeat: repeat;
 		background-size: 8px;
 		border-radius: 50%;
-		border: 1px solid #ddd;
 		border: 2px solid #fff;
-		-webkit-box-shadow: 0px 0px 0px 1px #ddd;
-		box-shadow: 0px 0px 0px 1px #ddd;
+		-webkit-box-shadow: 0 0 0 1px #ddd;
+		box-shadow: 0 0 0 1px #ddd;
 		z-index: 2;
 	}
 
@@ -228,8 +226,8 @@
 		cursor: pointer;
 		transform: scale(1, 1);
 		transition: transform 0.2s;
-		-webkit-box-shadow: 0px 0px 0px 1px #ddd;
-		box-shadow: 0px 0px 0px 1px #ddd;
+		-webkit-box-shadow: 0 0 0 1px #ddd;
+		box-shadow: 0 0 0 1px #ddd;
 	}
 
 	.wpbf-color-swatch:active,

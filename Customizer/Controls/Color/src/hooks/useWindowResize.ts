@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import {useEffect} from "react";
 
 export default function useWindowResize(handler: any) {
 	useEffect(() => {
-		const listener = (e: any) => {
+		const listener = (_e: any) => {
 			handler();
 		};
 

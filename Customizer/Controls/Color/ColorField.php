@@ -20,7 +20,16 @@ class ColorField extends BaseField {
 	 */
 	public function enqueueCustomizePreviewScripts() {
 
-		wp_enqueue_script( 'wpbf-color-preview', WPBF_THEME_URI . '/Customizer/Controls/Color/dist/color-preview-min.js', array( 'wp-hooks', 'customize-preview' ), WPBF_VERSION, true );
+		wp_enqueue_script(
+			'wpbf-color-preview',
+			WPBF_THEME_URI . '/Customizer/Controls/Color/dist/color-preview-min.js',
+			array(
+				'wp-hooks',
+				'customize-preview',
+			),
+			WPBF_VERSION,
+			true
+		);
 
 	}
 
@@ -75,27 +84,25 @@ class ColorField extends BaseField {
 			$maxs = array( 360, 100, 100 );
 		}
 
-		$sanitized_color = array();
-
 		$sanitized_color = array(
 			$keys[0] => isset( $color[ $keys[0] ] ) ? absint( $color[ $keys[0] ] ) : $mins[0],
 			$keys[1] => isset( $color[ $keys[1] ] ) ? absint( $color[ $keys[1] ] ) : $mins[1],
 			$keys[2] => isset( $color[ $keys[2] ] ) ? absint( $color[ $keys[2] ] ) : $mins[2],
 		);
 
-		$sanitized_color[ $keys[0] ] = $sanitized_color[ $keys[0] ] < $mins[0] ? $mins[0] : $sanitized_color[ $keys[0] ];
-		$sanitized_color[ $keys[0] ] = $sanitized_color[ $keys[0] ] > $maxs[0] ? $maxs[0] : $sanitized_color[ $keys[0] ];
+		$sanitized_color[ $keys[0] ] = max( $sanitized_color[ $keys[0] ], $mins[0] );
+		$sanitized_color[ $keys[0] ] = min( $sanitized_color[ $keys[0] ], $maxs[0] );
 
-		$sanitized_color[ $keys[1] ] = $sanitized_color[ $keys[1] ] < $mins[1] ? $mins[1] : $sanitized_color[ $keys[1] ];
-		$sanitized_color[ $keys[1] ] = $sanitized_color[ $keys[1] ] > $maxs[1] ? $maxs[1] : $sanitized_color[ $keys[1] ];
+		$sanitized_color[ $keys[1] ] = max( $sanitized_color[ $keys[1] ], $mins[1] );
+		$sanitized_color[ $keys[1] ] = min( $sanitized_color[ $keys[1] ], $maxs[1] );
 
-		$sanitized_color[ $keys[2] ] = $sanitized_color[ $keys[2] ] < $mins[2] ? $mins[2] : $sanitized_color[ $keys[2] ];
-		$sanitized_color[ $keys[2] ] = $sanitized_color[ $keys[2] ] > $maxs[2] ? $maxs[2] : $sanitized_color[ $keys[2] ];
+		$sanitized_color[ $keys[2] ] = max( $sanitized_color[ $keys[2] ], $mins[2] );
+		$sanitized_color[ $keys[2] ] = min( $sanitized_color[ $keys[2] ], $maxs[2] );
 
 		if ( isset( $color['a'] ) ) {
-			$sanitized_color['a'] = isset( $color['a'] ) ? filter_var( $color['a'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION ) : 1;
-			$sanitized_color['a'] = $sanitized_color['a'] < 0 ? 0 : $sanitized_color['a'];
-			$sanitized_color['a'] = $sanitized_color['a'] > 1 ? 1 : $sanitized_color['a'];
+			$sanitized_color['a'] = filter_var( $color['a'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
+			$sanitized_color['a'] = max( $sanitized_color['a'], 0 );
+			$sanitized_color['a'] = min( $sanitized_color['a'], 1 );
 		}
 
 		return $sanitized_color;
@@ -141,7 +148,7 @@ class ColorField extends BaseField {
 		 * And then paste the regex `$pattern` below (without the single quote's start and end) to the regular expression box.
 		 * Set the flag to use "global" and "multiline".
 		 */
-		$pattern = '/^(\#[\da-f]{3}|\#[\da-f]{6}|\#[\da-f]{8}|rgba\(((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*,\s*){2}((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*)(,\s*(0\.\d+|1))\)|rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)|hsla\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)(,\s*(0\.\d+|1))\)|hsl\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)\)|hsva\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)(,\s*(0\.\d+|1))\)|hsv\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)\))$/';
+		$pattern = '/^(#[\da-f]{3}|#[\da-f]{6}|#[\da-f]{8}|rgba\(((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*,\s*){2}((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*)(,\s*(0\.\d+|1))\)|rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)|hsla\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)(,\s*(0\.\d+|1))\)|hsl\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)\)|hsva\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)(,\s*(0\.\d+|1))\)|hsv\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)\))$/';
 
 		preg_match( $pattern, $value, $matches );
 

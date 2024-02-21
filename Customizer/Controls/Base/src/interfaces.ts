@@ -3,6 +3,7 @@ import {Control} from "wordpress__customize-browser/Control";
 import {Customize} from "wordpress__customize-browser/Customize";
 import {WpbfCustomizeSelectControl} from "../../Select/src/interfaces";
 import {Setting} from "wordpress__customize-browser/Setting";
+import {WpbfCustomizeColorControl} from "../../Color/src/interfaces";
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {
 	get(): T;
@@ -26,10 +27,11 @@ export interface WpbfCustomizeDynamicControl extends WpbfCustomizeControl {
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	'wpbf-slider': WpbfCustomizeControl;
 	'wpbf-select': WpbfCustomizeSelectControl;
+	'wpbf-color': WpbfCustomizeColorControl;
 }
 
 export interface WpbfCustomize extends Customize {
-	Control: WpbfCustomizeControl | WpbfCustomizeDynamicControl | WpbfCustomizeSelectControl;
+	Control: WpbfCustomizeControl | WpbfCustomizeDynamicControl | WpbfCustomizeSelectControl | WpbfCustomizeColorControl;
 	controlConstructor: WpbfCustomizeControlConstructor;
 }
 

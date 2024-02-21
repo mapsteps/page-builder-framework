@@ -7,8 +7,8 @@ export type ColorPickerSwatchesProps = {
 
 export default function ColorPickerSwatches(
 	props: ColorPickerSwatchesProps
-): JSX.Element {
-	const { colors, onClick } = props;
+) {
+	const {colors, onClick} = props;
 
 	return (
 		<div className="wpbf-color-swatches">
@@ -21,7 +21,7 @@ export default function ColorPickerSwatches(
 						type="button"
 						className="wpbf-color-swatch"
 						data-wpbf-color={color}
-						style={{ backgroundColor: color }}
+						style={{backgroundColor: color}}
 						onClick={() => onClick(color)}
 					></button>
 				);

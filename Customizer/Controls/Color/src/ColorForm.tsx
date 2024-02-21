@@ -1,20 +1,20 @@
-import React, { useState, useRef } from "react";
+import React, {useRef, useState} from "react";
 import {
 	HexColorPicker,
-	RgbColorPicker,
-	RgbaColorPicker,
-	RgbStringColorPicker,
-	RgbaStringColorPicker,
-	HslColorPicker,
 	HslaColorPicker,
-	HslStringColorPicker,
 	HslaStringColorPicker,
-	HsvColorPicker,
+	HslColorPicker,
+	HslStringColorPicker,
 	HsvaColorPicker,
-	HsvStringColorPicker,
 	HsvaStringColorPicker,
+	HsvColorPicker,
+	HsvStringColorPicker,
+	RgbaColorPicker,
+	RgbaStringColorPicker,
+	RgbColorPicker,
+	RgbStringColorPicker,
 } from "react-colorful";
-import { colord } from "colord";
+import {colord, HslaColor, HslColor, HsvaColor, HsvColor, RgbaColor, RgbColor} from "colord";
 import ColorPickerSwatches from "./components/ColorPickerSwatches";
 import ColorPickerInput from "./components/ColorPickerInput";
 import convertColorForInput from "./utils/convert-color-for-input";
@@ -26,6 +26,7 @@ import useClickOutside from "./hooks/useClickOutside";
 import ColorPickerCircle from "./components/ColorPickerCircle";
 import jQuery from "jquery";
 
+// Declare global extends jQuery to have wp property.
 declare global {
 	interface JQueryStatic {
 		wp: any;
@@ -34,39 +35,33 @@ declare global {
 
 /**
  * The form component of Kirki React Colorful.
- *
- * Globals:
- * _, wp, React, ReactDOM
- *
- * @param {object} props The props for the component.
- * @returns The component element.
  */
-export function ColorPickerForm(props: any) {
-	const { control, customizerSetting, useHueMode, pickerComponent, choices } =
+export function ColorForm(props: any) {
+	const {control, customizerSetting, useHueMode, pickerComponent, choices} =
 		props;
 
 	const parseEmptyValue = () => (useHueMode ? 0 : "#000000");
 
-	const parseHueModeValue = (hueValue: any) => {
+	function parseHueModeValue(hueValue: any) {
 		hueValue = hueValue || parseEmptyValue();
 		hueValue = hueValue < 0 ? 0 : hueValue;
 
 		return hueValue > 360 ? 360 : hueValue;
-	};
+	}
 
-	const parseInputValue = (value: any) => {
+	function parseInputValue(value: any) {
 		if ("" === value) return "";
 
 		return useHueMode
 			? parseHueModeValue(value)
 			: convertColorForInput(
-					value,
-					pickerComponent,
-					choices.formComponent
-			  ).replace(";", "");
-	};
+				value,
+				pickerComponent,
+				choices.formComponent
+			).replace(";", "");
+	}
 
-	const parseCustomizerValue = (value: any) => {
+	function parseCustomizerValue(value: any) {
 		if ("" === value) return "";
 
 		return convertColorForCustomizer(
@@ -74,16 +69,16 @@ export function ColorPickerForm(props: any) {
 			pickerComponent,
 			choices.formComponent
 		);
-	};
+	}
 
-	const parsePickerValue = (value: any) => {
+	function parsePickerValue(value: any) {
 		value = value || parseEmptyValue();
 
 		// Hard coded saturation and lightness when using hue mode.
 		return useHueMode
-			? { h: value, s: 100, l: 50 }
+			? {h: value, s: 100, l: 50}
 			: convertColorForPicker(value, pickerComponent);
-	};
+	}
 
 	const [inputValue, setInputValue] = useState(() => {
 		return parseInputValue(props.value);
@@ -99,7 +94,7 @@ export function ColorPickerForm(props: any) {
 	// This function will be called when this control's customizer value is changed.
 	control.updateComponentState = (value: any) => {
 		const valueForInput = parseInputValue(value);
-		let changeInputValue = false;
+		let changeInputValue: boolean;
 
 		if (typeof valueForInput === "string" || useHueMode) {
 			changeInputValue = valueForInput !== inputValue;
@@ -111,7 +106,7 @@ export function ColorPickerForm(props: any) {
 		if (changeInputValue) setInputValue(valueForInput);
 
 		const valueForPicker = parsePickerValue(value);
-		let changePickerValue = false;
+		let changePickerValue: boolean;
 
 		if (typeof valueForPicker === "string" || useHueMode) {
 			changePickerValue = valueForPicker !== pickerValue;
@@ -180,14 +175,14 @@ export function ColorPickerForm(props: any) {
 	let controlLabel = (
 		<span
 			className="customize-control-title"
-			dangerouslySetInnerHTML={{ __html: props.label }}
+			dangerouslySetInnerHTML={{__html: props.label}}
 		/>
 	);
 
 	let controlDescription = (
 		<span
 			className="description customize-control-description"
-			dangerouslySetInnerHTML={{ __html: props.description }}
+			dangerouslySetInnerHTML={{__html: props.description}}
 		></span>
 	);
 
@@ -198,7 +193,7 @@ export function ColorPickerForm(props: any) {
 		</label>
 	);
 
-	controlLabel = props.label || props.description ? controlLabel : "";
+	controlLabel = props.label || props.description ? controlLabel : <></>;
 
 	const formRef = useRef(null); // Reference to the form div.
 	const pickerRef = useRef(null); // Reference to the picker popup.
@@ -206,12 +201,12 @@ export function ColorPickerForm(props: any) {
 
 	const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-	const usePositionFixed = "default" !== choices.labelStyle ? true : false;
+	const usePositionFixed = "default" !== choices.labelStyle;
 
 	const [pickerContainerStyle, setPickerContainerStyle] = useState({});
 
 	const getPickerContainerStyle = () => {
-		let pickerContainerStyle = {};
+		let pickerContainerStyle: Record<string, any> = {};
 
 		if (!usePositionFixed) return pickerContainerStyle;
 
@@ -260,56 +255,86 @@ export function ColorPickerForm(props: any) {
 		setTimeout(convertInputValueTo6Digits, 200);
 	};
 
-	let ColorPickerComponent;
-
-	// We can't just render `pickerComponent` directly, we need these lines so that the compiler will import them.
-	switch (pickerComponent) {
-		case "HexColorPicker":
-			ColorPickerComponent = HexColorPicker;
-			break;
-		case "RgbColorPicker":
-			ColorPickerComponent = RgbColorPicker;
-			break;
-		case "RgbStringColorPicker":
-			ColorPickerComponent = RgbStringColorPicker;
-			break;
-		case "RgbaColorPicker":
-			ColorPickerComponent = RgbaColorPicker;
-			break;
-		case "RgbaStringColorPicker":
-			ColorPickerComponent = RgbaStringColorPicker;
-			break;
-		// We treat HueColorPicker (hue mode) as HslColorPicker.
-		case "HueColorPicker":
-			ColorPickerComponent = HslColorPicker;
-			break;
-		case "HslColorPicker":
-			ColorPickerComponent = HslColorPicker;
-			break;
-		case "HslStringColorPicker":
-			ColorPickerComponent = HslStringColorPicker;
-			break;
-		case "HslaColorPicker":
-			ColorPickerComponent = HslaColorPicker;
-			break;
-		case "HslaStringColorPicker":
-			ColorPickerComponent = HslaStringColorPicker;
-			break;
-		case "HsvColorPicker":
-			ColorPickerComponent = HsvColorPicker;
-			break;
-		case "HsvStringColorPicker":
-			ColorPickerComponent = HsvStringColorPicker;
-			break;
-		case "HsvaColorPicker":
-			ColorPickerComponent = HsvaColorPicker;
-			break;
-		case "HsvaStringColorPicker":
-			ColorPickerComponent = HsvaStringColorPicker;
-			break;
-		default:
-			ColorPickerComponent = HexColorPicker;
-			break;
+	function renderColorPickerComponent() {
+		// We can't just render `pickerComponent` directly, we need these lines so that the compiler will import them.
+		switch (pickerComponent) {
+			case "HexColorPicker":
+				return (
+					<HexColorPicker color={pickerValue as string}
+					                onChange={handlePickerChange}/>
+				);
+			case "RgbColorPicker":
+				return (
+					<RgbColorPicker color={pickerValue as RgbColor}
+					                onChange={handlePickerChange}/>
+				);
+			case "RgbStringColorPicker":
+				return (
+					<RgbStringColorPicker color={pickerValue as string}
+					                      onChange={handlePickerChange}/>
+				);
+			case "RgbaColorPicker":
+				return (
+					<RgbaColorPicker color={pickerValue as RgbaColor}
+					                 onChange={handlePickerChange}/>
+				);
+			case "RgbaStringColorPicker":
+				return (
+					<RgbaStringColorPicker color={pickerValue as string}
+					                       onChange={handlePickerChange}/>
+				);
+			// We treat HueColorPicker (hue mode) as HslColorPicker.
+			case "HueColorPicker":
+				return (
+					<HslColorPicker color={pickerValue as HslColor}
+					                onChange={handlePickerChange}/>
+				);
+			case "HslColorPicker":
+				return (
+					<HslColorPicker color={pickerValue as HslColor}
+					                onChange={handlePickerChange}/>
+				);
+			case "HslStringColorPicker":
+				return (
+					<HslStringColorPicker color={pickerValue as string}
+					                      onChange={handlePickerChange}/>
+				);
+			case "HslaColorPicker":
+				return (
+					<HslaColorPicker color={pickerValue as HslaColor}
+					                 onChange={handlePickerChange}/>
+				);
+			case "HslaStringColorPicker":
+				return (
+					<HslaStringColorPicker color={pickerValue as string}
+					                       onChange={handlePickerChange}/>
+				);
+			case "HsvColorPicker":
+				return (
+					<HsvColorPicker color={pickerValue as HsvColor}
+					                onChange={handlePickerChange}/>
+				);
+			case "HsvStringColorPicker":
+				return (
+					<HsvStringColorPicker color={pickerValue as string}
+					                      onChange={handlePickerChange}/>
+				);
+			case "HsvaColorPicker":
+				return (
+					<HsvaColorPicker color={pickerValue as HsvaColor}
+					                 onChange={handlePickerChange}/>
+				);
+			case "HsvaStringColorPicker":
+				return (
+					<HsvaStringColorPicker color={pickerValue as string}
+					                       onChange={handlePickerChange}/>
+				);
+			default:
+				return (
+					<HexColorPicker color={pickerValue as string}
+					                onChange={handlePickerChange}/>
+				);
+		}
 	}
 
 	useWindowResize(handleWindowResize);
@@ -363,7 +388,7 @@ export function ColorPickerForm(props: any) {
 				ref={resetRef}
 				className="kirki-control-reset"
 				onClick={handleReset}
-				style={{ display: isPickerOpen ? "flex" : "none" }}
+				style={{display: isPickerOpen ? "flex" : "none"}}
 			>
 				<i className="dashicons dashicons-image-rotate"></i>
 			</button>
@@ -374,7 +399,7 @@ export function ColorPickerForm(props: any) {
 				color={
 					!useHueMode
 						? inputValue
-						: colord({ h: inputValue, s: 100, l: 50 }).toHex()
+						: colord({h: inputValue, s: 100, l: 50}).toHex()
 				}
 				isPickerOpen={isPickerOpen}
 				togglePickerHandler={togglePicker}
@@ -433,10 +458,7 @@ export function ColorPickerForm(props: any) {
 						/>
 					)}
 
-					<ColorPickerComponent
-						color={pickerValue}
-						onChange={handlePickerChange}
-					/>
+					{renderColorPickerComponent()}
 
 					<ColorPickerInput
 						pickerComponent={pickerComponent}

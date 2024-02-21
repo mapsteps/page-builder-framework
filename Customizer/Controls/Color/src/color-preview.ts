@@ -1,11 +1,6 @@
 import hooks from "@wordpress/hooks";
-import {
-	ColorMode,
-	HslOrHslaColor,
-	HsvOrHsvaColor,
-	RgbOrRgbaColor,
-} from "./interfaces";
-import { ObjectColor } from "colord/types";
+import {ColorMode, HslOrHslaColor, HsvOrHsvaColor, RgbOrRgbaColor,} from "./interfaces";
+import {ObjectColor} from "colord/types";
 
 declare var wp: {
 	hooks: typeof hooks;
@@ -18,7 +13,7 @@ declare var wp: {
 	 * Thanks to Dan (https://stackoverflow.com/users/17121/dan) for his answer on StackOverflow:
 	 * @see https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number#answer-175787
 	 */
-	function isNumeric(char: string | number): boolean {
+	function isNumeric(char: string | number | ObjectColor): boolean {
 		// Number is a numeric.
 		if ("number" === typeof char) return true;
 
@@ -79,7 +74,7 @@ declare var wp: {
 			pos4 = alphaEnabled ? val.a ?? 1 : 1;
 		}
 
-		let formattedValue = "";
+		let formattedValue: string;
 
 		if (alphaEnabled) {
 			formattedValue =

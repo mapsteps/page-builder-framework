@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import {useEffect} from "react";
 
 /**
  * Code was taken and then modified from https://codesandbox.io/s/opmco?file=/src/useClickOutside.js:0-1192

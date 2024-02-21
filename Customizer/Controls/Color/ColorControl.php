@@ -115,7 +115,7 @@ class ColorControl extends BaseControl {
 	/**
 	 * Get color swatches values.
 	 *
-	 * @return array The color swatches values.
+	 * @return string[] The color swatches values.
 	 */
 	public function get_color_swatches() {
 
