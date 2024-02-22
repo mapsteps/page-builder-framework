@@ -5,6 +5,7 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Divider;
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
 
 class DividerControl extends BaseControl {
+
 	/**
 	 * Control's type.
 	 *
@@ -53,4 +54,5 @@ class DividerControl extends BaseControl {
 
 		<?php
 	}
+
 }

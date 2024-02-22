@@ -91,14 +91,14 @@ class SelectControl extends BaseControl {
 		// @link https://react-select.com/props
 		$this->json['isClearable'] = $this->clearable;
 		$this->json['isMulti']     = $this->multiple;
-		$this->json['placeholder'] = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'kirki' );
+		$this->json['placeholder'] = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'page-builder-framework' );
 
 		// Will be a custom implementation, couldn't find an official prop to set this in react-select.
 		$this->json['maxSelections'] = $this->max_selections;
 
 		$this->json['messages'] = array(
 			// translators: %s is the limit of selection number.
-			'maxLimitReached' => sprintf( esc_html__( 'You can only select %s items', 'kirki' ), $this->max_selections ),
+			'maxLimitReached' => sprintf( esc_html__( 'You can only select %s items', 'page-builder-framework' ), $this->max_selections ),
 		);
 
 	}

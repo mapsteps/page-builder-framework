@@ -13,6 +13,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
  * Class to add Wpbf customizer slider control.
  */
 class SliderControl extends BaseControl {
+
 	/**
 	 * Control's type.
 	 *
@@ -97,4 +98,5 @@ class SliderControl extends BaseControl {
 		$this->json['value_number'] = $this->value_number;
 
 	}
+
 }

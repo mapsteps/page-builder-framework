@@ -1,0 +1,1 @@
+wp.customize.controlConstructor["wpbf-radio-image"]=wp.customize.wpbfDynamicControl.extend({});

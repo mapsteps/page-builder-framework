@@ -81,14 +81,16 @@
 		"build-individual-assets": "npm run build-individual-js && npm run build-individual-css",
 		"watch-base-control": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
 		"build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
-		"watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
-		"build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
-		"watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
-		"build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
 		"watch-color-control": "parcel watch Customizer/Controls/Color/src/color-control.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
 		"build-color-control": "parcel build Customizer/Controls/Color/src/color-control.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
 		"watch-color-preview": "parcel watch Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
 		"build-color-preview": "parcel build Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
-		"build-color-assets": "npm run build-color-control && npm run build-color-preview"
+		"build-color-assets": "npm run build-color-control && npm run build-color-preview",
+		"watch-radio-image-control": "parcel watch Customizer/Controls/RadioImage/src/radio-image-control.ts --dist-dir Customizer/Controls/RadioImage/dist --no-source-maps",
+		"build-radio-image-control": "parcel build Customizer/Controls/RadioImage/src/radio-image-control.ts --dist-dir Customizer/Controls/RadioImage/dist --no-source-maps",
+		"watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
+		"build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
+		"watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
+		"build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps"
 	}
 }

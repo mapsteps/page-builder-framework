@@ -602,6 +602,7 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Alignment.
+/*
 Kirki::add_field( 'wpbf', array(
 	'type'            => 'radio-image',
 	'settings'        => 'breadcrumbs_alignment',
@@ -629,6 +630,32 @@ Kirki::add_field( 'wpbf', array(
 		),
 	),
 ) );
+*/
+
+wpbf_customizer_field()
+	->id( 'breadcrumbs_alignment' )
+	->type( 'radio-image' )
+	->label( __( 'Alignment', 'page-builder-framework' ) )
+	->defaultValue( 'left' )
+	->priority( 2 )
+	->choices( array(
+		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
+		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
+		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
+	) )
+	->activeCallback( [
+		array(
+			'id'       => 'breadcrumbs_toggle',
+			'operator' => '==',
+			'value'    => true,
+		),
+		array(
+			'id'       => 'breadcrumbs_position',
+			'operator' => '==',
+			'value'    => 'header',
+		),
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Headline.
 new Divider(
