@@ -7,6 +7,7 @@
 
 namespace Mapsteps\Wpbf\Customizer;
 
+use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
@@ -25,10 +26,20 @@ class CustomizerUtil {
 	 * @var string[] $available_control_types
 	 */
 	public $available_control_types = array(
+		'base',
 		'color',
 		'divider',
 		'select',
 		'slider',
+	);
+
+	/**
+	 * The base fields.
+	 *
+	 * @var string[] $base_fields
+	 */
+	public $base_fields = array(
+		'text'
 	);
 
 	/**
@@ -89,13 +100,19 @@ class CustomizerUtil {
 	 */
 	private function getFieldInstance( $control ) {
 
-		if ( ! in_array( $control->type, $this->available_control_types, true ) ) {
+		$control_type = $control->type;
+		$control_type = in_array( $control_type, $this->base_fields, true ) ? 'base' : $control_type;
+
+		if ( ! in_array( $control_type, $this->available_control_types, true ) ) {
 			return null;
 		}
 
 		$field = null;
 
-		switch ( $control->type ) {
+		switch ( $control_type ) {
+			case 'base':
+				$field = new BaseField( $control );
+				break;
 			case 'color':
 				$field = new ColorField( $control );
 				break;

@@ -577,30 +577,29 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Separator.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'text',
-	'settings'        => 'breadcrumbs_separator',
-	'label'           => __( 'Separator', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'default'         => '/',
-	'priority'        => 2,
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'breadcrumbs_separator' )
+	->type( 'text' )
+	->label( __( 'Separator', 'page-builder-framework' ) )
+	->defaultValue( '/' )
+	->priority( 2 )
+	->activeCallback( [
 		array(
-			'setting'  => 'breadcrumbs_toggle',
+			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => 1,
 		),
-	),
-	'partial_refresh' => array(
-		'breadcrumbsseparator' => array(
+	] )
+	->partialRefresh( [
+		'breadcrumbs_separator' => array(
 			'container_inclusive' => true,
 			'selector'            => '.wpbf-breadcrumbs',
 			'render_callback'     => function () {
 				return wpbf_do_breadcrumbs();
-			},
+			}
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Alignment.
 Kirki::add_field( 'wpbf', array(
