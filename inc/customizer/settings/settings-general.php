@@ -181,25 +181,24 @@ Kirki::add_field( 'wpbf', array(
 // ) );
 
 // Background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'page_boxed_background',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'default'         => '#ffffff',
-	'priority'        => 5,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'page_boxed_background' )
+	->type( 'color' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'page_boxed',
+			'id'       => 'page_boxed',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Box shadow.
 new HeadlineToggle(
@@ -354,63 +353,55 @@ Kirki::add_field( 'wpbf', array(
 
 /* Fields - Sidebar */
 
-// Postion.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'sidebar_position',
-	'label'    => __( 'Position (Global)', 'page-builder-framework' ),
-	'section'  => 'wpbf_sidebar_options',
-	'default'  => 'right',
-	'priority' => 1,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'sidebar_position' )
+	->type( 'select' )
+	->label( __( 'Position (Global)', 'page-builder-framework' ) )
+	->priority( 1 )
+	->defaultValue( 'right' )
+	->choices( array(
 		'right' => __( 'Right', 'page-builder-framework' ),
 		'left'  => __( 'Left', 'page-builder-framework' ),
 		'none'  => __( 'No Sidebar', 'page-builder-framework' ),
-	),
-) );
+	) )
+	->addToSection( 'wpbf_sidebar_options' );
 
-// Gap.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'sidebar_gap',
-	'label'    => __( 'Gap', 'page-builder-framework' ),
-	'section'  => 'wpbf_sidebar_options',
-	'default'  => 'medium',
-	'priority' => 2,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'sidebar_gap' )
+	->type( 'select' )
+	->label( __( 'Gap', 'page-builder-framework' ) )
+	->priority( 2 )
+	->defaultValue( 'medium' )
+	->choices( array(
 		'divider'  => __( 'Divider', 'page-builder-framework' ),
 		'xlarge'   => __( 'xLarge', 'page-builder-framework' ),
 		'large'    => __( 'Large', 'page-builder-framework' ),
 		'medium'   => __( 'Medium', 'page-builder-framework' ),
 		'small'    => __( 'Small', 'page-builder-framework' ),
 		'collapse' => __( 'Collapse', 'page-builder-framework' ),
-	),
-) );
+	) )
+	->addToSection( 'wpbf_sidebar_options' );
 
-// Width.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'sidebar_width',
-	'label'           => __( 'Width', 'page-builder-framework' ),
-	'section'         => 'wpbf_sidebar_options',
-	'priority'        => 2,
-	'default'         => 33.3,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'sidebar_width' )
+	->type( 'slider' )
+	->transport( 'postMessage' )
+	->label( __( 'Width', 'page-builder-framework' ) )
+	->priority( 2 )
+	->defaultValue( 33.3 )
+	->choices( array(
 		'min'  => 20,
 		'max'  => 40,
 		'step' => .1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'sidebar_position',
+			'id'       => 'sidebar_position',
 			'operator' => '!=',
 			'value'    => 'none',
-		),
-	),
-) );
+		)
+	] )
+	->addToSection( 'wpbf_sidebar_options' );
 
 // Headline.
 new Headline(
@@ -524,6 +515,7 @@ new Toggle(
 );
 
 // Separator.
+/**
 new Divider(
 	[
 		'settings'        => 'breadcrumbs_toggle_separator',
@@ -538,54 +530,68 @@ new Divider(
 		],
 	]
 );
+*/
+
+wpbf_customizer_field()
+	->id( 'breadcrumbs_toggle_separator' )
+	->type( 'divider' )
+	->priority( 1 )
+	->activeCallback( [
+		array(
+			'id'       => 'breadcrumbs_toggle',
+			'operator' => '==',
+			'value'    => true,
+		),
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Breadcrumbs.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'breadcrumbs',
-	'label'           => __( 'Display Breadcrumbs on', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'default'         => array( 'archive', 'single' ),
-	'priority'        => 2,
-	'multiple'        => 6,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'breadcrumbs' )
+	->type( 'select' )
+	->label( __( 'Display Breadcrumbs on', 'page-builder-framework' ) )
+	->defaultValue( array( 'archive', 'single' ) )
+	->priority( 2 )
+	->choices( array(
 		'front_page' => __( 'Front Page', 'page-builder-framework' ),
 		'archive'    => __( 'Archives', 'page-builder-framework' ),
 		'single'     => __( 'Single', 'page-builder-framework' ),
 		'search'     => __( 'Search Page', 'page-builder-framework' ),
 		'404'        => __( '404 Page', 'page-builder-framework' ),
 		'page'       => __( 'Pages', 'page-builder-framework' ),
-	),
-	'active_callback' => array(
+	) )
+	->properties( array(
+		'multiple'       => true,
+		'max_selections' => 6,
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'breadcrumbs_toggle',
+			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => 1,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Position.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'breadcrumbs_position',
-	'label'           => __( 'Position', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'default'         => 'content',
-	'priority'        => 2,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'breadcrumbs_position' )
+	->type( 'select' )
+	->label( __( 'Position', 'page-builder-framework' ) )
+	->defaultValue( 'content' )
+	->priority( 2 )
+	->choices( array(
 		'content' => __( 'Before Content', 'page-builder-framework' ),
 		'header'  => __( 'Below Header', 'page-builder-framework' ),
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'breadcrumbs_toggle',
+			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => 1,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Separator.
 Kirki::add_field( 'wpbf', array(
@@ -658,31 +664,30 @@ new Divider(
 	]
 );
 
-// Background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'breadcrumbs_background_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'default'         => '#dedee5;',
-	'priority'        => 2,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'breadcrumbs_toggle',
+wpbf_customizer_field()
+	->id( 'breadcrumbs_background_color' )
+	->type( 'color' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#dedee5' )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
+		[
+			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => 1,
-		),
-		array(
-			'setting'  => 'breadcrumbs_position',
+		],
+		[
+			'id'       => 'breadcrumbs_position',
 			'operator' => '==',
 			'value'    => 'header',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
+
 
 // Font color.
 Kirki::add_field( 'wpbf', array(
