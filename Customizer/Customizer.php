@@ -137,10 +137,10 @@ final class Customizer {
 	 */
 	public function customize_preview_init() {
 
-		$customzier_util = new CustomizerUtil();
+		$customizer_util = new CustomizerUtil();
 
 		foreach ( self::$added_controls as $control ) {
-			$customzier_util->enqueueCustomizePreviewScripts( $control );
+			$customizer_util->enqueueCustomizePreviewScripts( $control );
 		}
 
 	}

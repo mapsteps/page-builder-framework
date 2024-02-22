@@ -8,6 +8,7 @@
 namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
+use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
@@ -25,6 +26,7 @@ class CustomizerUtil {
 	 */
 	public $available_control_types = array(
 		'color',
+		'divider',
 		'select',
 		'slider',
 	);
@@ -40,7 +42,10 @@ class CustomizerUtil {
 
 		$field = $this->getFieldInstance( $control );
 
-		return ( null !== $field && method_exists( $field, 'sanitizeCallback' ) ? array( $field, 'sanitizeCallback' ) : '' );
+		return ( null !== $field && method_exists( $field, 'sanitizeCallback' ) ? array(
+			$field,
+			'sanitizeCallback'
+		) : '' );
 
 	}
 
@@ -63,7 +68,7 @@ class CustomizerUtil {
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager    $wp_customize_manager The customizer manager object.
-	 * @param CustomizerControlEntity $control The control entity object.
+	 * @param CustomizerControlEntity $control              The control entity object.
 	 */
 	public function addControl( $wp_customize_manager, $control ) {
 
@@ -93,6 +98,9 @@ class CustomizerUtil {
 		switch ( $control->type ) {
 			case 'color':
 				$field = new ColorField( $control );
+				break;
+			case 'divider':
+				$field = new DividerField( $control );
 				break;
 			case 'select':
 				$field = new SelectField( $control );
