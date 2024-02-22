@@ -2,6 +2,7 @@ import {
   WpbfControlDependencies,
   WpbfCustomize,
   WpbfReversedControlDependencies,
+  WpbfReversedControlDependency,
 } from "./interfaces";
 import hooks from "@wordpress/hooks";
 
@@ -49,58 +50,68 @@ export default function setupControlDependencies() {
     wp.customize(dependencyControlId, function (setting) {
       const rules = reversedControlDependencies[dependencyControlId];
 
+      handleRulesCondition(dependencyControlId, setting.get(), rules);
+
       setting.bind(function (newValue: string) {
-        for (const ruleSet of rules) {
-          let isDependencySatisfied = isRuleSatisfied(
-            newValue,
-            ruleSet.operator,
-            ruleSet.value,
-          );
-
-          if (!isDependencySatisfied) {
-            wp.customize.control(ruleSet.dependantControlId).toggle(false);
-            continue;
-          }
-
-          const dependantDependencies =
-            wpbfCustomizerControlDependencies[ruleSet.dependantControlId];
-
-          if (dependantDependencies.length < 2) {
-            wp.customize.control(ruleSet.dependantControlId).toggle(true);
-            continue;
-          }
-
-          let otherRulesSatisfied = true;
-
-          for (const dependantDependency of dependantDependencies) {
-            if (dependantDependency.id === dependencyControlId) {
-              continue;
-            }
-
-            const dependantDependencyValue = wp
-              .customize(dependantDependency.id)
-              .get();
-
-            if (
-              !isRuleSatisfied(
-                dependantDependencyValue,
-                dependantDependency.operator,
-                dependantDependency.value,
-              )
-            ) {
-              otherRulesSatisfied = false;
-              break;
-            }
-          }
-
-          if (!otherRulesSatisfied) {
-            wp.customize.control(ruleSet.dependantControlId).toggle(false);
-          } else {
-            wp.customize.control(ruleSet.dependantControlId).toggle(true);
-          }
-        }
+        handleRulesCondition(dependencyControlId, newValue, rules);
       });
     });
+  }
+
+  function handleRulesCondition(
+    dependencyControlId: string,
+    newValue: string,
+    rules: WpbfReversedControlDependency[],
+  ) {
+    for (const ruleSet of rules) {
+      let isDependencySatisfied = isRuleSatisfied(
+        newValue,
+        ruleSet.operator,
+        ruleSet.value,
+      );
+
+      if (!isDependencySatisfied) {
+        wp.customize.control(ruleSet.dependantControlId).toggle(false);
+        continue;
+      }
+
+      const dependantDependencies =
+        wpbfCustomizerControlDependencies[ruleSet.dependantControlId];
+
+      if (dependantDependencies.length < 2) {
+        wp.customize.control(ruleSet.dependantControlId).toggle(true);
+        continue;
+      }
+
+      let otherRulesSatisfied = true;
+
+      for (const dependantDependency of dependantDependencies) {
+        if (dependantDependency.id === dependencyControlId) {
+          continue;
+        }
+
+        const dependantDependencyValue = wp
+          .customize(dependantDependency.id)
+          .get();
+
+        if (
+          !isRuleSatisfied(
+            dependantDependencyValue,
+            dependantDependency.operator,
+            dependantDependency.value,
+          )
+        ) {
+          otherRulesSatisfied = false;
+          break;
+        }
+      }
+
+      if (!otherRulesSatisfied) {
+        wp.customize.control(ruleSet.dependantControlId).toggle(false);
+      } else {
+        wp.customize.control(ruleSet.dependantControlId).toggle(true);
+      }
+    }
   }
 
   function isRuleSatisfied(
