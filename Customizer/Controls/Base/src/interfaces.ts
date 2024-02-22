@@ -25,10 +25,13 @@ export interface WpbfCustomizeDynamicControl extends WpbfCustomizeControl {
 }
 
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
+  "wpbf-checkbox": WpbfCustomizeControl;
   "wpbf-color": WpbfCustomizeColorControl;
+  "wpbf-radio": {};
   "wpbf-radio-image": {};
   "wpbf-select": WpbfCustomizeSelectControl;
   "wpbf-slider": WpbfCustomizeControl;
+  "wpbf-toggle": WpbfCustomizeControl;
 }
 
 export interface WpbfCustomize extends Customize {

@@ -78,7 +78,7 @@ class CustomizerSetting {
 	/**
 	 * Set the default value for this setting.
 	 *
-	 * @param string $value The default value for this setting.
+	 * @param string|array|bool|int|float $value The default value for this setting.
 	 *
 	 * @return $this
 	 */

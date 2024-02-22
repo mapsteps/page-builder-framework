@@ -91,6 +91,8 @@
 		"watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
 		"build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
 		"watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
-		"build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps"
+		"build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
+		"watch-toggle-control": "parcel watch Customizer/Controls/Toggle/src/toggle-control.ts --dist-dir Customizer/Controls/Toggle/dist --no-source-maps",
+		"build-toggle-control": "parcel build Customizer/Controls/Toggle/src/toggle-control.ts --dist-dir Customizer/Controls/Toggle/dist --no-source-maps"
 	}
 }

@@ -13,7 +13,9 @@ use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\RadioImage\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
+use Mapsteps\Wpbf\Customizer\Controls\Toggle\ToggleField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
 
 /**
@@ -32,17 +34,63 @@ class CustomizerUtil {
 		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Divider\DividerControl',
 		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\RadioImage\RadioImageControl',
 		'select'      => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
-		'slider'      => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl'
+		'slider'      => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
+		'toggle'      => '\Mapsteps\Wpbf\Customizer\Controls\Toggle\ToggleControl',
 	);
 
 	/**
-	 * The base fields.
+	 * Controls which utilize the content_template to render the control.
 	 *
-	 * @var string[] $basic_fields
+	 * @var string[] $basic_controls
 	 */
-	public $basic_fields = array(
+	public $controls_with_content_template = array(
+		'divider',
+		'radio-image',
+		'toggle',
+	);
+
+	/**
+	 * Basic/primitive controls.
+	 *
+	 * @var string[] $basic_controls
+	 */
+	public $basic_controls = array(
 		'text'
 	);
+
+	/**
+	 * Filter the setting entity.
+	 *
+	 * @param CustomizerSettingEntity $setting The setting entity object.
+	 *
+	 * @return CustomizerSettingEntity
+	 */
+	public function filterSettingEntity( $setting ) {
+		$control = null;
+
+		foreach ( Customizer::$added_controls as $added_control ) {
+			if ( $added_control->id === $setting->id ) {
+				$control = $added_control;
+				break;
+			}
+		}
+
+		if ( is_null( $control ) ) {
+			return $setting;
+		}
+
+		$field = $this->getFieldInstance( $control );
+
+		if ( is_null( $field ) ) {
+			return $setting;
+		}
+
+		if ( method_exists( $field, 'filterSettingEntity' ) ) {
+			$setting = $field->filterSettingEntity( $setting );
+		}
+
+		return $setting;
+	}
 
 	/**
 	 * Determine the sanitize callback.
@@ -103,7 +151,9 @@ class CustomizerUtil {
 	private function getFieldInstance( $control ) {
 
 		$control_type = $control->type;
-		$control_type = in_array( $control_type, $this->basic_fields, true ) ? 'base' : $control_type;
+		$control_type = in_array( $control_type, $this->basic_controls, true ) ? 'base' : $control_type;
+
+		error_log( 'control_type: ' . $control_type );
 
 		if ( ! array_key_exists( $control_type, $this->available_controls ) ) {
 			return null;
@@ -129,6 +179,9 @@ class CustomizerUtil {
 				break;
 			case 'slider':
 				$field = new SliderField( $control );
+				break;
+			case 'toggle':
+				$field = new ToggleField( $control );
 				break;
 			default:
 				break;

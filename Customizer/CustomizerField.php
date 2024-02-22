@@ -192,7 +192,7 @@ final class CustomizerField {
 	/**
 	 * Set the setting's default value.
 	 *
-	 * @param string|array $value The default value of the setting.
+	 * @param string|array|bool|int|float $value The default value of the setting.
 	 *
 	 * @return $this
 	 */

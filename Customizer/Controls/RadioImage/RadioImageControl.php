@@ -23,6 +23,18 @@ class RadioImageControl extends BaseControl {
 		// Enqueue the styles.
 		wp_enqueue_style( 'wpbf-radio-image-control', WPBF_THEME_URI . '/Customizer/Controls/RadioImage/dist/radio-image-control-min.css', array(), WPBF_VERSION );
 
+		// Enqueue the scripts.
+		wp_enqueue_script(
+			'wpbf-radio-image-control',
+			WPBF_THEME_URI . '/Customizer/Controls/RadioImage/dist/radio-image-control-min.js',
+			array(
+				'customize-controls',
+				'react-dom',
+			),
+			WPBF_VERSION,
+			false
+		);
+
 	}
 
 	/**

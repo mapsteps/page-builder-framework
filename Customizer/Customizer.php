@@ -147,9 +147,22 @@ final class Customizer {
 	}
 
 	public function register_control_types( $wp_customize_manager ) {
-		$available_controls = ( new CustomizerUtil() )->available_controls;
+
+		$util = new CustomizerUtil();
+
+		$available_controls = $util->available_controls;
+
+		$controls_with_content_template = $util->controls_with_content_template;
 
 		foreach ( $available_controls as $control_type => $control_class ) {
+			if ( $control_type === 'base' ) {
+				continue;
+			}
+
+			if ( ! in_array( $control_type, $controls_with_content_template, true ) ) {
+				continue;
+			}
+
 			$wp_customize_manager->register_control_type( $control_class );
 		}
 	}
@@ -163,7 +176,11 @@ final class Customizer {
 	 */
 	private function register_settings( $wp_customize_manager ) {
 
+		$util = new CustomizerUtil();
+
 		foreach ( self::$added_settings as $setting ) {
+
+			$setting = $util->filterSettingEntity( $setting );
 
 			$wp_customize_manager->add_setting(
 				$setting->id,

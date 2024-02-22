@@ -504,15 +504,13 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - Breadcrumb Settings */
 
 // Toggle.
-new Toggle(
-	[
-		'settings' => 'breadcrumbs_toggle',
-		'label'    => esc_html__( 'Breadcrumbs', 'page-builder-framework' ),
-		'section'  => 'wpbf_breadcrumb_settings',
-		'default'  => 0,
-		'priority' => 1,
-	]
-);
+wpbf_customizer_field()
+	->id( 'breadcrumbs_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Breadcrumbs', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 1 )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Separator.
 wpbf_customizer_field()
@@ -587,7 +585,7 @@ wpbf_customizer_field()
 		array(
 			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
 	] )
 	->partialRefresh( [
@@ -602,36 +600,6 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Alignment.
-/*
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'radio-image',
-	'settings'        => 'breadcrumbs_alignment',
-	'label'           => __( 'Alignment', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'default'         => 'left',
-	'priority'        => 2,
-	'multiple'        => 1,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
-		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
-		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'breadcrumbs_toggle',
-			'operator' => '==',
-			'value'    => 1,
-		),
-		array(
-			'setting'  => 'breadcrumbs_position',
-			'operator' => '==',
-			'value'    => 'header',
-		),
-	),
-) );
-*/
-
 wpbf_customizer_field()
 	->id( 'breadcrumbs_alignment' )
 	->type( 'radio-image' )
@@ -658,20 +626,18 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Headline.
-new Divider(
-	[
-		'settings'        => 'breadcrumbs_color_divider',
-		'section'         => 'wpbf_breadcrumb_settings',
-		'priority'        => 2,
-		'active_callback' => [
-			[
-				'setting'  => 'breadcrumbs_toggle',
-				'operator' => '==',
-				'value'    => 1,
-			],
+wpbf_customizer_field()
+	->id( 'breadcrumbs_color_divider' )
+	->type( 'divider' )
+	->priority( 2 )
+	->activeCallback( [
+		[
+			'id'       => 'breadcrumbs_toggle',
+			'operator' => '==',
+			'value'    => 1,
 		],
-	]
-);
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 wpbf_customizer_field()
 	->id( 'breadcrumbs_background_color' )

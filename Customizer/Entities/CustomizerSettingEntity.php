@@ -40,7 +40,7 @@ class CustomizerSettingEntity {
 	/**
 	 * Default value for the setting. Default is empty string.
 	 *
-	 * @var string
+	 * @var string|array|bool|int|float
 	 */
 	public $default = '';
 
