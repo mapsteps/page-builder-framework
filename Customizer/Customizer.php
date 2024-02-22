@@ -120,6 +120,7 @@ final class Customizer {
 	 */
 	public function register_wpbf_customizer( $wp_customize_manager ) {
 
+		$this->register_control_types( $wp_customize_manager );
 		$this->register_settings( $wp_customize_manager );
 		$this->register_panels( $wp_customize_manager );
 		$this->register_sections( $wp_customize_manager );
@@ -143,6 +144,14 @@ final class Customizer {
 			$customizer_util->enqueueCustomizePreviewScripts( $control );
 		}
 
+	}
+
+	public function register_control_types( $wp_customize_manager ) {
+		$available_controls = ( new CustomizerUtil() )->available_controls;
+
+		foreach ( $available_controls as $control_type => $control_class ) {
+			$wp_customize_manager->register_control_type( $control_class );
+		}
 	}
 
 	/**

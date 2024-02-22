@@ -10,6 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
+use Mapsteps\Wpbf\Customizer\Controls\RadioImage\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
@@ -23,22 +24,23 @@ class CustomizerUtil {
 	/**
 	 * The available control types.
 	 *
-	 * @var string[] $available_control_types
+	 * @var string[] $available_controls
 	 */
-	public $available_control_types = array(
-		'base',
-		'color',
-		'divider',
-		'select',
-		'slider',
+	public $available_controls = array(
+		'base'        => '\Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl',
+		'color'       => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
+		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Divider\DividerControl',
+		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\RadioImage\RadioImageControl',
+		'select'      => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
+		'slider'      => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl'
 	);
 
 	/**
 	 * The base fields.
 	 *
-	 * @var string[] $base_fields
+	 * @var string[] $basic_fields
 	 */
-	public $base_fields = array(
+	public $basic_fields = array(
 		'text'
 	);
 
@@ -101,9 +103,9 @@ class CustomizerUtil {
 	private function getFieldInstance( $control ) {
 
 		$control_type = $control->type;
-		$control_type = in_array( $control_type, $this->base_fields, true ) ? 'base' : $control_type;
+		$control_type = in_array( $control_type, $this->basic_fields, true ) ? 'base' : $control_type;
 
-		if ( ! in_array( $control_type, $this->available_control_types, true ) ) {
+		if ( ! array_key_exists( $control_type, $this->available_controls ) ) {
 			return null;
 		}
 
@@ -118,6 +120,9 @@ class CustomizerUtil {
 				break;
 			case 'divider':
 				$field = new DividerField( $control );
+				break;
+			case 'radio-image':
+				$field = new RadioImageField( $control );
 				break;
 			case 'select':
 				$field = new SelectField( $control );
