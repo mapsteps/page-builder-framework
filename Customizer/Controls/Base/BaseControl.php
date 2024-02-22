@@ -101,6 +101,8 @@ class BaseControl extends WP_Customize_Control {
 	 */
 	protected function render() {
 
+		error_log( print_r( $this->id, true ) );
+
 		$type_class = str_replace( 'wpbf-', '', $this->type );
 
 		$id    = 'customize-control-' . str_replace( array( '[', ']' ), array( '-', '' ), $this->id );

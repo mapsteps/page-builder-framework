@@ -37,9 +37,9 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 export interface WpbfCustomize extends Customize {
   Control:
     | WpbfCustomizeControl
+    | WpbfCustomizeColorControl
     | WpbfCustomizeDynamicControl
-    | WpbfCustomizeSelectControl
-    | WpbfCustomizeColorControl;
+    | WpbfCustomizeSelectControl;
   controlConstructor: WpbfCustomizeControlConstructor;
 }
 

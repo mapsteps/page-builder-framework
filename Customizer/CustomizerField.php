@@ -29,6 +29,13 @@ final class CustomizerField {
 	private $control_instance;
 
 	/**
+	 * The setting's id.
+	 *
+	 * @var string
+	 */
+	private $setting_id = '';
+
+	/**
 	 * The setting's sanitize_callback.
 	 *
 	 * @var callable
@@ -53,14 +60,15 @@ final class CustomizerField {
 	}
 
 	/**
-	 * Set the control id.
+	 * Set the setting id.
 	 *
-	 * @param string $id Control id.
+	 * @param string $id Setting id.
 	 *
-	 * @return   $this
+	 * @return $this
 	 */
 	public function id( $id ) {
 
+		$this->setting_id = $id;
 		$this->setting_instance->id( $id );
 		$this->control_instance->id( $id );
 
@@ -373,6 +381,12 @@ final class CustomizerField {
 	 * @return $this
 	 */
 	public function addToSection( $section_id ) {
+
+		if ( empty( $this->setting_id ) ) {
+			$this->setting_id = uniqid( 'wpbf_control_' );
+
+			$this->id( $this->setting_id );
+		}
 
 		$control_id       = $this->control_instance->control->id;
 		$control_settings = $this->control_instance->control->settings;

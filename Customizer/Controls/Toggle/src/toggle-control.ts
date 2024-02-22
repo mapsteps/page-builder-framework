@@ -14,7 +14,7 @@ let wpbfCheckboxScript = {
 };
 
 wp.customize.controlConstructor["wpbf-checkbox"] =
-  wp.customize.kirkiDynamicControl.extend(wpbfCheckboxScript);
+  wp.customize.wpbfDynamicControl.extend(wpbfCheckboxScript);
 
 wp.customize.controlConstructor["wpbf-toggle"] =
-  wp.customize.kirkiDynamicControl.extend(wpbfCheckboxScript);
+  wp.customize.wpbfDynamicControl.extend(wpbfCheckboxScript);

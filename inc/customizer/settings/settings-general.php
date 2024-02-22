@@ -634,7 +634,7 @@ wpbf_customizer_field()
 		[
 			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		],
 	] )
 	->addToSection( 'wpbf_breadcrumb_settings' );

@@ -44,7 +44,6 @@ class CustomizerUtil {
 	 * @var string[] $basic_controls
 	 */
 	public $controls_with_content_template = array(
-		'divider',
 		'radio-image',
 		'toggle',
 	);
@@ -152,8 +151,6 @@ class CustomizerUtil {
 
 		$control_type = $control->type;
 		$control_type = in_array( $control_type, $this->basic_controls, true ) ? 'base' : $control_type;
-
-		error_log( 'control_type: ' . $control_type );
 
 		if ( ! array_key_exists( $control_type, $this->available_controls ) ) {
 			return null;

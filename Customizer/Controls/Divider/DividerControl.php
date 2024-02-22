@@ -40,16 +40,19 @@ class DividerControl extends BaseControl {
 	}
 
 	/**
-	 * An Underscore (JS) template for this control's content (but not its container).
+	 * Render the control's content.
 	 *
-	 * Class variables for this control class are available in the `data` JS object;
-	 * export custom variables by overriding WP_Customize_Control::to_json().
+	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
 	 *
-	 * @see WP_Customize_Control::print_template()
+	 * Supports basic input types `text`, `checkbox`, `textarea`, `radio`, `select` and `dropdown-pages`.
+	 * Additional input types such as `email`, `url`, `number`, `hidden` and `date` are supported implicitly.
+	 *
+	 * Control content can alternately be rendered in JS. See WP_Customize_Control::print_template().
 	 */
-	protected function content_template() {
+	protected function render_content() {
 		?>
 
+		<input type="hidden" data-customize-setting-link="<?=esc_attr( $this->settings['default']->id )?>">
 		<hr style="border-top: 1px solid {{ data.borderTopColor }}; border-bottom: 1px solid {{ data.borderBottomColor }}"/>
 
 		<?php
