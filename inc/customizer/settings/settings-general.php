@@ -515,23 +515,6 @@ new Toggle(
 );
 
 // Separator.
-/**
-new Divider(
-	[
-		'settings'        => 'breadcrumbs_toggle_separator',
-		'section'         => 'wpbf_breadcrumb_settings',
-		'priority'        => 1,
-		'active_callback' => [
-			[
-				'setting'  => 'breadcrumbs_toggle',
-				'operator' => '==',
-				'value'    => 1,
-			],
-		],
-	]
-);
-*/
-
 wpbf_customizer_field()
 	->id( 'breadcrumbs_toggle_separator' )
 	->type( 'divider' )
