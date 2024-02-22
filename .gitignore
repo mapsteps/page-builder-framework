@@ -18,6 +18,7 @@ auth.json
 
 # phpcs & editor's setting related
 .vscode/
+.idea/
 .editorconfig
 phpcs.xml
 

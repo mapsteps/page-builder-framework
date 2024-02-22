@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$">
+    <content url="file://$MODULE_DIR$/../../..">
       <sourceFolder url="file://$MODULE_DIR$/" isTestSource="false" packagePrefix="Mapsteps\Wpbf\" />
       <sourceFolder url="file://$MODULE_DIR$/assets/kirki/kirki-packages/compatibility/src" isTestSource="false" packagePrefix="Kirki\Compatibility\" />
       <sourceFolder url="file://$MODULE_DIR$/assets/kirki/kirki-packages/control-base/src" isTestSource="false" packagePrefix="Kirki\" />
@@ -69,7 +69,6 @@
       <sourceFolder url="file://$MODULE_DIR$/assets/kirki/pro-src/packages/kirki-pro-tabs/src" isTestSource="false" packagePrefix="Kirki\Pro\Tabs\" />
       <sourceFolder url="file://$MODULE_DIR$/assets/kirki/pro-src/packages/kirki-pro-tabs/src/Control" isTestSource="false" packagePrefix="Kirki\Pro\Control\" />
       <sourceFolder url="file://$MODULE_DIR$/assets/kirki/pro-src/packages/kirki-pro-tabs/src/Field" isTestSource="false" packagePrefix="Kirki\Pro\Field\" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
