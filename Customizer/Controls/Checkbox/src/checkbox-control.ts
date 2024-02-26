@@ -14,8 +14,8 @@ const wpbfCheckboxScript = {
 	},
 };
 
-// wp.customize.controlConstructor["wpbf-checkbox"] =
-// 	wp.customize.wpbfDynamicControl.extend(wpbfCheckboxScript);
+wp.customize.controlConstructor["wpbf-checkbox"] =
+	wp.customize.wpbfDynamicControl.extend(wpbfCheckboxScript);
 
 wp.customize.controlConstructor["wpbf-toggle"] =
 	wp.customize.wpbfDynamicControl.extend(wpbfCheckboxScript);

@@ -1,1 +1,0 @@
-wp.customize.controlConstructor["wpbf-toggle"]=wp.customize.wpbfDynamicControl.extend({initWpbfControl:function(t){(t=t||this).container.on("change","input",function(){t.setting.set(jQuery(this).is(":checked"))})}});

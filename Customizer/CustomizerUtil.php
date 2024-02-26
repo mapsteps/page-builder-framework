@@ -8,12 +8,13 @@
 namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
+use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
+use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\RadioImage\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
-use Mapsteps\Wpbf\Customizer\Controls\Toggle\ToggleField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
@@ -30,12 +31,13 @@ class CustomizerUtil {
 	 */
 	public $available_controls = array(
 		'base'        => '\Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl',
+		'checkbox'    => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl',
+		'toggle'      => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
 		'color'       => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
 		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Divider\DividerControl',
 		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\RadioImage\RadioImageControl',
 		'select'      => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
 		'slider'      => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
-		'toggle'      => '\Mapsteps\Wpbf\Customizer\Controls\Toggle\ToggleControl',
 	);
 
 	/**
@@ -44,8 +46,9 @@ class CustomizerUtil {
 	 * @var string[] $basic_controls
 	 */
 	public $controls_with_content_template = array(
-		'radio-image',
+		'checkbox',
 		'toggle',
+		'radio-image',
 	);
 
 	/**
@@ -162,6 +165,12 @@ class CustomizerUtil {
 			case 'base':
 				$field = new BaseField( $control );
 				break;
+			case 'checkbox':
+				$field = new CheckboxField( $control );
+				break;
+			case 'toggle':
+				$field = new ToggleField( $control );
+				break;
 			case 'color':
 				$field = new ColorField( $control );
 				break;
@@ -176,9 +185,6 @@ class CustomizerUtil {
 				break;
 			case 'slider':
 				$field = new SliderField( $control );
-				break;
-			case 'toggle':
-				$field = new ToggleField( $control );
 				break;
 			default:
 				break;

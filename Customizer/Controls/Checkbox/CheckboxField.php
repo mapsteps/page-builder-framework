@@ -1,12 +1,12 @@
 <?php
 
-namespace Mapsteps\Wpbf\Customizer\Controls\Toggle;
+namespace Mapsteps\Wpbf\Customizer\Controls\Checkbox;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
 
-class ToggleField extends BaseField {
+class CheckboxField extends BaseField {
 
 	/**
 	 * Positive values which will be treated as `true`.
@@ -63,7 +63,7 @@ class ToggleField extends BaseField {
 		$control_args = $this->parseControlArgs();
 
 		$wp_customize_manager->add_control(
-			new ToggleControl(
+			new CheckboxControl(
 				$wp_customize_manager,
 				$this->control->id,
 				$control_args
