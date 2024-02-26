@@ -87,13 +87,13 @@ class RadioImageControl extends BaseControl {
 				class="image-select"
 				value="{{ key }}"
 				name="_customize-radio-{{ data.id }}"
-				id="{{ data.id }}{{ key }}"
+				id="{{ data.id }}_{{ key }}"
 				data-alt="{{ dataAlt }}"
 				{{{ data.inputAttrs }}}
 				{{{ data.link }}} <# if ( data.value === key ) { #> checked="checked"<# } #>
 			>
 
-			<label for="{{ data.id }}{{ key }}" {{{ data.labelStyle }}} class="{{{ data.id + key }}}">
+			<label for="{{ data.id }}_{{ key }}" {{{ data.labelStyle }}} class="{{{ data.id + key }}}">
 				<# if ( _.isObject( data.choices[ key ] ) ) { #>
 				<img src="{{ data.choices[ key ].src }}" alt="{{ data.choices[ key ].alt }}">
 				<span class="image-label"><span class="inner">{{ data.choices[ key ].alt }}</span></span>

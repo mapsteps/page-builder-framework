@@ -31,16 +31,16 @@ class ToggleControl extends BaseControl {
 		wp_enqueue_style( 'wpbf-toggle-control', WPBF_THEME_URI . '/Customizer/Controls/Toggle/dist/toggle-control-min.css', array(), WPBF_VERSION );
 
 		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-toggle-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Toggle/dist/toggle-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-			),
-			WPBF_VERSION,
-			false
-		);
+//		wp_enqueue_script(
+//			'wpbf-toggle-control',
+//			WPBF_THEME_URI . '/Customizer/Controls/Toggle/dist/toggle-control-min.js',
+//			array(
+//				'customize-controls',
+//				'react-dom',
+//			),
+//			WPBF_VERSION,
+//			false
+//		);
 
 	}
 

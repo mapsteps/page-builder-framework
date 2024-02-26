@@ -1,14 +1,15 @@
-import {WpbfCustomize, WpbfCustomizeControl} from "../../Base/src/interfaces";
-import {Control_Params} from "wordpress__customize-browser/Control";
+import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
+import { Control_Params } from "wordpress__customize-browser/Control";
 import {
 	WpbfCustomizeSelectControl,
 	WpbfCustomizeSelectOptionGroup,
-	WpbfCustomizeSelectOptionObject
+	WpbfCustomizeSelectOptionObject,
 } from "./interfaces";
 import SelectForm from "./SelectForm";
 import ReactDOM from "react-dom";
 import React from "react";
 import _ from "lodash";
+import { createRoot } from "react-dom/client";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -70,7 +71,9 @@ const SelectControl = wp.customize.Control.extend({
 			// value = control.params.choices;
 		}
 
-		const form = (
+		const root = createRoot(control.container[0]);
+
+		root.render(
 			<SelectForm
 				{...control.params}
 				value={value}
@@ -81,9 +84,8 @@ const SelectControl = wp.customize.Control.extend({
 				control={control}
 				isMulti={control.isMulti()}
 				maxSelections={control.params.maxSelections}
-			/>
+			/>,
 		);
-		ReactDOM.render(form, control.container[0]);
 	},
 
 	/**

@@ -1,8 +1,9 @@
-import SliderForm from './SliderForm';
-import {Control_Params} from "wordpress__customize-browser/Control";
-import ReactDOM from 'react-dom';
-import React from 'react';
-import {WpbfCustomize, WpbfCustomizeControl} from "../../Base/src/interfaces";
+import { Control_Params } from "wordpress__customize-browser/Control";
+import ReactDOM from "react-dom";
+import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
+import { createRoot } from "react-dom/client";
+import SliderForm from "./SliderForm";
+import React from "react";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -12,7 +13,8 @@ const SliderControl = wp.customize.Control.extend({
 	initialize: function (id: string, params: Control_Params) {
 		const control = this as WpbfCustomizeControl;
 
-		control.setNotificationContainer = control.setNotificationContainer?.bind(control);
+		control.setNotificationContainer =
+			control.setNotificationContainer?.bind(control);
 
 		wp.customize.Control.prototype.initialize.call(control, id, params);
 
@@ -21,10 +23,10 @@ const SliderControl = wp.customize.Control.extend({
 			if (control !== removedControl) return;
 			if (control.destroy) control.destroy();
 			control.container.remove();
-			wp.customize.control.unbind('removed', onRemoved);
+			wp.customize.control.unbind("removed", onRemoved);
 		}
 
-		wp.customize.control.bind('removed', onRemoved);
+		wp.customize.control.bind("removed", onRemoved);
 	},
 
 	/**
@@ -46,8 +48,9 @@ const SliderControl = wp.customize.Control.extend({
 	 */
 	renderContent: function renderContent() {
 		const control = this as WpbfCustomizeControl;
+		const root = createRoot(control.container[0]);
 
-		ReactDOM.render(
+		root.render(
 			<SliderForm
 				{...control.params}
 				control={control}
@@ -55,11 +58,10 @@ const SliderControl = wp.customize.Control.extend({
 				setNotificationContainer={control.setNotificationContainer}
 				value={control.params.value}
 			/>,
-			control.container[0]
 		);
 
 		if (false !== control.params.choices.allowCollapse) {
-			control.container.addClass('allowCollapse');
+			control.container.addClass("allowCollapse");
 		}
 	},
 
@@ -80,14 +82,12 @@ const SliderControl = wp.customize.Control.extend({
 				control.updateComponentState?.(val);
 			});
 		}
-
 	},
 
 	/**
-	 * This method will be overriden by the rendered component.
+	 * This method will be overridden by the rendered component.
 	 */
-	updateComponentState: (_val: string) => {
-	},
+	updateComponentState: (_val: string) => {},
 
 	/**
 	 * Handle removal/de-registration of the control.
@@ -106,7 +106,7 @@ const SliderControl = wp.customize.Control.extend({
 		if (wp.customize.Control.prototype.destroy) {
 			wp.customize.Control.prototype.destroy.call(control);
 		}
-	}
+	},
 });
 
 export default SliderControl;

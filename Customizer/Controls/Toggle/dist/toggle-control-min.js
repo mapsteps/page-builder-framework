@@ -1,1 +1,1 @@
-let t;t={initWpbfControl:function(t){t.container.on("change","input",function(){t.setting.set(jQuery(this).is(":checked"))})}},wp.customize.controlConstructor["wpbf-checkbox"]=wp.customize.wpbfDynamicControl.extend(t),wp.customize.controlConstructor["wpbf-toggle"]=wp.customize.wpbfDynamicControl.extend(t);
+wp.customize.controlConstructor["wpbf-toggle"]=wp.customize.wpbfDynamicControl.extend({initWpbfControl:function(t){(t=t||this).container.on("change","input",function(){t.setting.set(jQuery(this).is(":checked"))})}});

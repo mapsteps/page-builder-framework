@@ -42,7 +42,9 @@ class ColorControl extends BaseControl {
 	 *
 	 * The value is based on react-colorful's components. It can be one of the following:
 	 *
-	 * 'HexColorPicker', 'RgbColorPicker', 'RgbStringColorPicker', 'RgbaColorPicker', 'RgbaStringColorPicker', 'HslColorPicker', 'HslStringColorPicker', 'HslaColorPicker', 'HslaStringColorPicker', 'HsvColorPicker', 'HsvStringColorPicker', 'HsvaColorPicker', 'HsvaStringColorPicker', 'HueColorPicker', 'HueStringColorPicker'.
+	 * 'HexColorPicker', 'RgbColorPicker', 'RgbStringColorPicker', 'RgbaColorPicker', 'RgbaStringColorPicker',
+	 * 'HslColorPicker', 'HslStringColorPicker', 'HslaColorPicker', 'HslaStringColorPicker', 'HsvColorPicker',
+	 * 'HsvStringColorPicker', 'HsvaColorPicker', 'HsvaStringColorPicker', 'HueColorPicker', 'HueStringColorPicker'.
 	 *
 	 * @var string
 	 */
@@ -139,7 +141,7 @@ class ColorControl extends BaseControl {
 			$total_swatches = count( $swatches );
 
 			if ( $total_swatches < 8 ) {
-				for ( $i = $total_swatches; $i <= 8; $i++ ) {
+				for ( $i = $total_swatches; $i <= 8; $i ++ ) {
 					$swatches[] = $total_swatches[ $i ];
 				}
 			}

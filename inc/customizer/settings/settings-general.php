@@ -665,64 +665,61 @@ wpbf_customizer_field()
 
 
 // Font color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'breadcrumbs_font_color',
-	'label'           => __( 'Font Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'priority'        => 2,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'breadcrumbs_font_color' )
+	->type( 'color' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'breadcrumbs_toggle',
+			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Accent color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'breadcrumbs_accent_color',
-	'label'           => __( 'Accent Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'priority'        => 2,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'breadcrumbs_accent_color' )
+	->type( 'color' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'breadcrumbs_toggle',
+			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 // Accent color hover.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'breadcrumbs_accent_color_alt',
-	'label'           => __( 'Hover', 'page-builder-framework' ),
-	'section'         => 'wpbf_breadcrumb_settings',
-	'priority'        => 2,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'breadcrumbs_accent_color_alt' )
+	->type( 'color' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'breadcrumbs_toggle',
+			'id'       => 'breadcrumbs_toggle',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_breadcrumb_settings' );
 
 /* Fields - Buttons */
 
