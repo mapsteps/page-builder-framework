@@ -1,12 +1,12 @@
 <?php
 
-namespace Mapsteps\Wpbf\Customizer\Controls\RadioImage;
+namespace Mapsteps\Wpbf\Customizer\Controls\Radio;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Customizer;
 use WP_Customize_Manager;
 
-class RadioImageField extends BaseField {
+class RadioField extends BaseField {
 
 	/**
 	 * Setting's sanitize callback.
@@ -44,7 +44,7 @@ class RadioImageField extends BaseField {
 		$control_args = $this->parseControlArgs();
 
 		$wp_customize_manager->add_control(
-			new RadioImageControl(
+			new RadioControl(
 				$wp_customize_manager,
 				$this->control->id,
 				$control_args

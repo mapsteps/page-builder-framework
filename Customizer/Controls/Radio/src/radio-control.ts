@@ -2,8 +2,11 @@ import "./radio-image-control.scss";
 import { WpbfCustomize } from "../../Base/src/interfaces";
 
 declare var wp: {
-  customize: WpbfCustomize;
+	customize: WpbfCustomize;
 };
 
+wp.customize.controlConstructor["wpbf-radio"] =
+	wp.customize.wpbfDynamicControl.extend({});
+
 wp.customize.controlConstructor["wpbf-radio-image"] =
-  wp.customize.wpbfDynamicControl.extend({});
+	wp.customize.wpbfDynamicControl.extend({});

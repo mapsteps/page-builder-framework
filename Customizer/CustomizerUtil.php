@@ -12,7 +12,8 @@ use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
-use Mapsteps\Wpbf\Customizer\Controls\RadioImage\RadioImageField;
+use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
+use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
@@ -35,7 +36,8 @@ class CustomizerUtil {
 		'toggle'      => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
 		'color'       => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
 		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Divider\DividerControl',
-		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\RadioImage\RadioImageControl',
+		'radio'       => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
+		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
 		'select'      => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
 		'slider'      => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
 	);
@@ -48,6 +50,7 @@ class CustomizerUtil {
 	public $controls_with_content_template = array(
 		'checkbox',
 		'toggle',
+		'radio',
 		'radio-image',
 	);
 
@@ -176,6 +179,9 @@ class CustomizerUtil {
 				break;
 			case 'divider':
 				$field = new DividerField( $control );
+				break;
+			case 'radio':
+				$field = new RadioField( $control );
 				break;
 			case 'radio-image':
 				$field = new RadioImageField( $control );

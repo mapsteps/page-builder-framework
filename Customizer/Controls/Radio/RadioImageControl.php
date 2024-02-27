@@ -1,10 +1,8 @@
 <?php
 
-namespace Mapsteps\Wpbf\Customizer\Controls\RadioImage;
+namespace Mapsteps\Wpbf\Customizer\Controls\Radio;
 
-use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
-
-class RadioImageControl extends BaseControl {
+class RadioImageControl extends RadioControl {
 
 	/**
 	 * Control's type.
@@ -12,30 +10,6 @@ class RadioImageControl extends BaseControl {
 	 * @var string
 	 */
 	public $type = 'wpbf-radio-image';
-
-	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-radio-image-control', WPBF_THEME_URI . '/Customizer/Controls/RadioImage/dist/radio-image-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-radio-image-control',
-			WPBF_THEME_URI . '/Customizer/Controls/RadioImage/dist/radio-image-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-			),
-			WPBF_VERSION,
-			false
-		);
-
-	}
 
 	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
@@ -84,16 +58,16 @@ class RadioImageControl extends BaseControl {
 
 			<input
 				type="radio"
-				class="image-select"
-				value="{{ key }}"
+				id="_customize-input-{{ data.id }}_{{ key }}"
 				name="_customize-radio-{{ data.id }}"
-				id="{{ data.id }}_{{ key }}"
+				value="{{ key }}"
+				class="image-select"
 				data-alt="{{ dataAlt }}"
 				{{{ data.inputAttrs }}}
 				{{{ data.link }}} <# if ( data.value === key ) { #> checked="checked"<# } #>
 			>
 
-			<label for="{{ data.id }}_{{ key }}" {{{ data.labelStyle }}} class="{{{ data.id + key }}}">
+			<label for="_customize-input-{{ data.id }}_{{ key }}" {{{ data.labelStyle }}} class="{{{ data.id + key }}}">
 				<# if ( _.isObject( data.choices[ key ] ) ) { #>
 				<img src="{{ data.choices[ key ].src }}" alt="{{ data.choices[ key ].alt }}">
 				<span class="image-label"><span class="inner">{{ data.choices[ key ].alt }}</span></span>
