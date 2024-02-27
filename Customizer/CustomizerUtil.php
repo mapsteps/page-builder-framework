@@ -7,11 +7,11 @@
 
 namespace Mapsteps\Wpbf\Customizer;
 
-use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
+use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
@@ -31,11 +31,11 @@ class CustomizerUtil {
 	 * @var string[] $available_controls
 	 */
 	public $available_controls = array(
-		'base'        => '\Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl',
 		'checkbox'    => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl',
 		'toggle'      => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
 		'color'       => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
 		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Divider\DividerControl',
+		'generic'     => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
 		'radio'       => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
 		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
 		'select'      => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
@@ -50,17 +50,22 @@ class CustomizerUtil {
 	public $controls_with_content_template = array(
 		'checkbox',
 		'toggle',
+		'generic',
 		'radio',
 		'radio-image',
 	);
 
 	/**
-	 * Basic/primitive controls.
+	 * Generic input controls.
 	 *
-	 * @var string[] $basic_controls
+	 * @var string[] $generic_controls
 	 */
-	public $basic_controls = array(
-		'text'
+	public $generic_controls = array(
+		'email',
+		'number',
+		'text',
+		'textarea',
+		'url',
 	);
 
 	/**
@@ -156,7 +161,7 @@ class CustomizerUtil {
 	private function getFieldInstance( $control ) {
 
 		$control_type = $control->type;
-		$control_type = in_array( $control_type, $this->basic_controls, true ) ? 'base' : $control_type;
+		$control_type = in_array( $control_type, $this->generic_controls, true ) ? 'generic' : $control_type;
 
 		if ( ! array_key_exists( $control_type, $this->available_controls ) ) {
 			return null;
@@ -165,8 +170,8 @@ class CustomizerUtil {
 		$field = null;
 
 		switch ( $control_type ) {
-			case 'base':
-				$field = new BaseField( $control );
+			case 'generic':
+				$field = new GenericField( $control );
 				break;
 			case 'checkbox':
 				$field = new CheckboxField( $control );

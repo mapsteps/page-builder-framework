@@ -155,10 +155,6 @@ final class Customizer {
 		$controls_with_content_template = $util->controls_with_content_template;
 
 		foreach ( $available_controls as $control_type => $control_class ) {
-			if ( $control_type === 'base' ) {
-				continue;
-			}
-
 			if ( ! in_array( $control_type, $controls_with_content_template, true ) ) {
 				continue;
 			}

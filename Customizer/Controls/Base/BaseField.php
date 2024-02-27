@@ -7,9 +7,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
-use Mapsteps\Wpbf\Customizer\CustomizerUtil;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
-use WP_Customize_Manager;
 
 /**
  * Default settings for the field.
@@ -93,31 +91,6 @@ class BaseField {
 		$custom_args  = array();
 
 		return array_merge( $default_args, $custom_args );
-
-	}
-
-	/**
-	 * Add control to the customizer.
-	 *
-	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
-	 */
-	public function addControl( $wp_customize_manager ) {
-
-		$control_args = $this->parseControlArgs();
-
-		$base_control = new BaseControl(
-			$wp_customize_manager,
-			$this->control->id,
-			$control_args
-		);
-
-		$basic_control_types = ( new CustomizerUtil() )->basic_controls;
-
-		if ( in_array( $this->control->type, $basic_control_types, true ) ) {
-			$base_control->type = $this->control->type;
-		}
-
-		$wp_customize_manager->add_control( $base_control );
 
 	}
 
