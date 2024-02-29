@@ -988,195 +988,181 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - ScrollTop */
 
 // Toggle.
-new Toggle(
-	[
-		'settings' => 'layout_scrolltop',
-		'label'    => __( 'Scroll to Top Button', 'page-builder-framework' ),
-		'section'  => 'wpbf_scrolltop_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'layout_scrolltop' )
+	->type( 'toggle' )
+	->label( __( 'Scroll to Top Button', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_scrolltop_options' );
 
 // Separator.
-new Divider(
-	[
-		'settings'        => 'layout_scrolltop_separator',
-		'section'         => 'wpbf_scrolltop_options',
-		'priority'        => 0,
-		'active_callback' => [
-			[
-				'setting'  => 'layout_scrolltop',
-				'operator' => '==',
-				'value'    => 1,
-			],
-		],
-	]
-);
+wpbf_customizer_field()
+	->id( 'layout_scrolltop_separator' )
+	->type( 'divider' )
+	->priority( 0 )
+	->activeCallback( [
+		array(
+			'id'       => 'layout_scrolltop',
+			'operator' => '==',
+			'value'    => true,
+		),
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
 
 // Alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'radio-image',
-	'settings'        => 'scrolltop_position',
-	'label'           => __( 'Alignment', 'page-builder-framework' ),
-	'section'         => 'wpbf_scrolltop_options',
-	'default'         => 'right',
-	'priority'        => 1,
-	'multiple'        => 1,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'scrolltop_position' )
+	->type( 'radio-image' )
+	->label( __( 'Alignment', 'page-builder-framework' ) )
+	->defaultValue( 'right' )
+	->priority( 1 )
+	->transport( 'postMessage' )
+	->choices( array(
 		'left'  => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'right' => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'layout_scrolltop',
+			'id'       => 'layout_scrolltop',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
 
 // Show after.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'scrolltop_value',
-	'label'           => __( 'Show after (px)', 'page-builder-framework' ),
-	'section'         => 'wpbf_scrolltop_options',
-	'priority'        => 2,
-	'default'         => 400,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'scrolltop_value' )
+	->type( 'slider' )
+	->label( __( 'Show after (px)', 'page-builder-framework' ) )
+	->defaultValue( 400 )
+	->priority( 2 )
+	->choices( array(
 		'min'  => 50,
 		'max'  => 1000,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'layout_scrolltop',
+			'id'       => 'layout_scrolltop',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
 
 // Divider.
-new Divider(
-	[
-		'settings'        => 'layout_scrolltop_separator_2',
-		'section'         => 'wpbf_scrolltop_options',
-		'priority'        => 3,
-		'active_callback' => [
-			[
-				'setting'  => 'layout_scrolltop',
-				'operator' => '==',
-				'value'    => 1,
-			],
-		],
-	]
-);
+wpbf_customizer_field()
+	->id( 'layout_scrolltop_separator_2' )
+	->type( 'divider' )
+	->priority( 3 )
+	->activeCallback( [
+		array(
+			'id'       => 'layout_scrolltop',
+			'operator' => '==',
+			'value'    => true,
+		),
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
 
 // Background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'scrolltop_bg_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_scrolltop_options',
-	'priority'        => 4,
-	'transport'       => 'postMessage',
-	'default'         => 'rgba(62,67,73,0.5)',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'scrolltop_bg_color' )
+	->type( 'color' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( 'rgba(62,67,73,0.5)' )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'layout_scrolltop',
+			'id'       => 'layout_scrolltop',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
 
 // Background color hover.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'scrolltop_bg_color_alt',
-	'label'           => __( 'Hover', 'page-builder-framework' ),
-	'section'         => 'wpbf_scrolltop_options',
-	'priority'        => 5,
-	'default'         => 'rgba(62,67,73,0.7)',
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'scrolltop_bg_color_alt' )
+	->type( 'color' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->defaultValue( 'rgba(62,67,73,0.7)' )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'layout_scrolltop',
+			'id'       => 'layout_scrolltop',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
+
 
 // Icon color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'scrolltop_icon_color',
-	'label'           => __( 'Icon Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_scrolltop_options',
-	'priority'        => 6,
-	'transport'       => 'postMessage',
-	'default'         => '#ffffff',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'scrolltop_icon_color' )
+	->type( 'color' )
+	->label( __( 'Icon Color', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( 6 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'layout_scrolltop',
+			'id'       => 'layout_scrolltop',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
 
 // Icon color hover.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'scrolltop_icon_color_alt',
-	'label'           => __( 'Hover', 'page-builder-framework' ),
-	'section'         => 'wpbf_scrolltop_options',
-	'priority'        => 7,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'scrolltop_icon_color_alt' )
+	->type( 'color' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 7 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'layout_scrolltop',
+			'id'       => 'layout_scrolltop',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
 
 // Border radius.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'scrolltop_border_radius',
-	'label'           => __( 'Border Radius', 'page-builder-framework' ),
-	'section'         => 'wpbf_scrolltop_options',
-	'priority'        => 8,
-	'default'         => 0,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'scrolltop_border_radius' )
+	->type( 'slider' )
+	->label( __( 'Border Radius', 'page-builder-framework' ) )
+	->defaultValue( 0 )
+	->priority( 8 )
+	->choices( array(
 		'min'  => 0,
 		'max'  => 100,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'layout_scrolltop',
+			'id'       => 'layout_scrolltop',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_scrolltop_options' );
