@@ -88,6 +88,9 @@ class BaseControl extends WP_Customize_Control {
 			}
 		}
 
+		// Input id.
+		$this->json['inputId'] = '_customize-input-' . $this->id;
+
 		// The CSS-Variables.
 		$this->json['css-var'] = $this->css_vars;
 

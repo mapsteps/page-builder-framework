@@ -4,9 +4,11 @@ import { Customize } from "wordpress__customize-browser/Customize";
 import { WpbfCustomizeSelectControl } from "../../Select/src/interfaces";
 import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interfaces";
+import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {
 	get(): T;
+	notifications: any;
 }
 
 export interface WpbfCustomizeControl extends Control {
@@ -27,6 +29,7 @@ export interface WpbfCustomizeDynamicControl extends WpbfCustomizeControl {
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-checkbox": WpbfCustomizeControl;
 	"wpbf-color": WpbfCustomizeColorControl;
+	"wpbf-dimension": WpbfCustomizeDimensionControl;
 	"wpbf-generic": WpbfCustomizeControl;
 	"wpbf-radio": {};
 	"wpbf-radio-image": {};
@@ -40,6 +43,7 @@ export interface WpbfCustomize extends Customize {
 		| WpbfCustomizeControl
 		| WpbfCustomizeColorControl
 		| WpbfCustomizeDynamicControl
+		| WpbfCustomizeDimensionControl
 		| WpbfCustomizeSelectControl;
 	controlConstructor: WpbfCustomizeControlConstructor;
 }

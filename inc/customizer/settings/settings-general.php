@@ -68,15 +68,14 @@ Kirki::add_section( 'wpbf_scrolltop_options', array(
 /* Fields - Layout */
 
 // Max width.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'dimension',
-	'label'       => __( 'Page Width', 'page-builder-framework' ),
-	'settings'    => 'page_max_width',
-	'section'     => 'wpbf_page_options',
-	'transport'   => 'postMessage',
-	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
-	'priority'    => 0,
-) );
+wpbf_customizer_field()
+	->id( 'page_max_width' )
+	->type( 'dimension' )
+	->label( __( 'Page Width', 'page-builder-framework' ) )
+	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
+	->priority( 0 )
+	->transport( 'postMessage' )
+	->addToSection( 'wpbf_page_options' );
 
 // Padding.
 Kirki::add_field( 'wpbf', array(

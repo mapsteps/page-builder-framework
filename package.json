@@ -88,6 +88,8 @@
 		"watch-color-preview": "parcel watch Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
 		"build-color-preview": "parcel build Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
 		"build-color-assets": "npm run build-color-control && npm run build-color-preview",
+		"watch-dimension-control": "parcel watch Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-source-maps",
+		"build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-source-maps",
 		"watch-generic-control": "parcel watch Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-source-maps",
 		"build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-source-maps",
 		"watch-radio-control": "parcel watch Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",

@@ -1,0 +1,19 @@
+.wpbf-customize-control-dimension {
+	.has-label-bottom {
+		.wpbf-control-label {
+			margin-top: 3px;
+			text-align: center;
+			font-size: 11px;
+			color: #333;
+			font-weight: 500;
+		}
+
+		.wpbf-control-input {
+			background-color: #f7f7f7;
+
+			&:focus {
+				background-color: #fff;
+			}
+		}
+	}
+}

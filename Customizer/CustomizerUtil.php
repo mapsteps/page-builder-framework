@@ -10,6 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
+use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
@@ -34,6 +35,7 @@ class CustomizerUtil {
 		'checkbox'    => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl',
 		'toggle'      => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
 		'color'       => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
+		'dimension'   => '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl',
 		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Divider\DividerControl',
 		'generic'     => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
 		'radio'       => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
@@ -50,6 +52,7 @@ class CustomizerUtil {
 	public $controls_with_content_template = array(
 		'checkbox',
 		'toggle',
+		'dimension',
 		'generic',
 		'radio',
 		'radio-image',
@@ -184,6 +187,9 @@ class CustomizerUtil {
 				break;
 			case 'divider':
 				$field = new DividerField( $control );
+				break;
+			case 'dimension':
+				$field = new DimensionField( $control );
 				break;
 			case 'radio':
 				$field = new RadioField( $control );
