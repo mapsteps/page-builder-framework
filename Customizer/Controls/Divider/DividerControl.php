@@ -28,18 +28,6 @@ class DividerControl extends BaseControl {
 	public $border_bottom_color = '#f8f8f8';
 
 	/**
-	 * Refresh the parameters passed to the JavaScript via JSON.
-	 */
-	public function to_json() {
-
-		parent::to_json();
-
-		$this->json['borderTopColor']    = $this->border_top_color;
-		$this->json['borderBottomColor'] = $this->border_bottom_color;
-
-	}
-
-	/**
 	 * Render the control's content.
 	 *
 	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
@@ -53,7 +41,7 @@ class DividerControl extends BaseControl {
 		?>
 
 		<input type="hidden" data-customize-setting-link="<?=esc_attr( $this->settings['default']->id )?>">
-		<hr style="border-top: 1px solid {{ data.borderTopColor }}; border-bottom: 1px solid {{ data.borderBottomColor }}"/>
+		<hr style="border-top: 1px solid <?=esc_attr( $this->border_top_color )?>; border-bottom: 1px solid <?=esc_attr( $this->border_bottom_color )?>"/>
 
 		<?php
 	}
