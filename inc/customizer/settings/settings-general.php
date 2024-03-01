@@ -723,15 +723,13 @@ wpbf_customizer_field()
 /* Fields - Buttons */
 
 // Headline.
-new Headline(
-	[
-		'settings' => 'button_headline',
-		'label'    => esc_html__( 'Theme Buttons', 'page-builder-framework' ),
-		'tooltip'  => esc_html__( 'Applies to default buttons such as "Read more" used throughout the theme.', 'page-builder-framework' ),
-		'section'  => 'wpbf_button_options',
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'button_headline' )
+	->type( 'headline' )
+	->label( __( 'Theme Buttons', 'page-builder-framework' ) )
+	->tooltip( __( 'Applies to default buttons such as "Read more" used throughout the theme.', 'page-builder-framework' ) )
+	->priority( 0 )
+	->addToSection( 'wpbf_button_options' );
 
 // Background color.
 Kirki::add_field( 'wpbf', array(

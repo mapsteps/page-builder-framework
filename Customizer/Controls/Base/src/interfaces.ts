@@ -11,6 +11,8 @@ export interface WpbfCustomizeSetting<T> extends Setting<T> {
 	notifications: any;
 }
 
+export interface WpbfCustomizeContainer extends Container {}
+
 export interface WpbfCustomizeControl extends Control {
 	prototype: WpbfCustomizeControl;
 	setting: WpbfCustomizeSetting<any>;

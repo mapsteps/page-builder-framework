@@ -3,9 +3,10 @@ import _ from "lodash";
 
 import "./base-control.scss";
 
-import {WpbfCustomize} from "./interfaces";
+import { WpbfCustomize } from "./interfaces";
 import setupDynamicControl from "./dynamic-control";
 import setupControlDependencies from "./control-dependencies";
+import { setupTooltips } from "./tooltips";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -24,6 +25,7 @@ declare var wp: {
 
 setupDynamicControl();
 setupControlDependencies();
+setupTooltips();
 
 (function (api) {
 	/**
@@ -71,7 +73,6 @@ setupControlDependencies();
 	 * Get the value.
 	 */
 	api.Value.prototype.get = function () {
-
 		/**
 		 * This was brought from Kirki.
 		 * But this is too much for now.
@@ -90,4 +91,4 @@ setupControlDependencies();
 
 		return this._value;
 	};
-}(wp.customize));
+})(wp.customize);

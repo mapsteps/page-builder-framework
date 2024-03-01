@@ -1,0 +1,24 @@
+.wpbf-customize-control-headline-toggle {
+	position: relative;
+	padding: 10px 24px;
+	width: calc(100% + 48px);
+	left: -24px;
+	background-color: #fff;
+
+	&.customize-control-wpbf-switch {
+		.wpbf-toggle {
+			align-items: center;
+		}
+	}
+
+	.customize-control-title {
+		margin-bottom: 0;
+		font-size: 14px;
+	}
+
+	.wpbf-toggle {
+		.wpbf-control-form {
+			top: 2px;
+		}
+	}
+}

@@ -117,4 +117,11 @@ class CustomizerControlEntity {
 	 */
 	public $custom_properties = array();
 
+	/**
+	 * Tooltip content for the control.
+	 *
+	 * @var string
+	 */
+	public $tooltip = '';
+
 }

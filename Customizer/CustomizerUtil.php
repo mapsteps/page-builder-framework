@@ -13,6 +13,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\DividerField;
+use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
@@ -37,6 +38,7 @@ class CustomizerUtil {
 		'color'       => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
 		'dimension'   => '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl',
 		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Headline\DividerControl',
+		'headline'    => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineControl',
 		'generic'     => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
 		'radio'       => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
 		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
@@ -187,6 +189,9 @@ class CustomizerUtil {
 				break;
 			case 'divider':
 				$field = new DividerField( $control );
+				break;
+			case 'headline':
+				$field = new HeadlineField( $control );
 				break;
 			case 'dimension':
 				$field = new DimensionField( $control );

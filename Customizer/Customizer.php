@@ -108,6 +108,7 @@ final class Customizer {
 
 		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_tooltips' ) );
 
 	}
 
@@ -175,7 +176,6 @@ final class Customizer {
 		$util = new CustomizerUtil();
 
 		foreach ( self::$added_settings as $setting ) {
-
 			$setting = $util->filterSettingEntity( $setting );
 
 			$wp_customize_manager->add_setting(
@@ -190,7 +190,6 @@ final class Customizer {
 					'validate_callback'    => $setting->validate_callback,
 				)
 			);
-
 		}
 
 	}
@@ -205,7 +204,6 @@ final class Customizer {
 	private function register_panels( $wp_customize_manager ) {
 
 		foreach ( self::$added_panels as $panel ) {
-
 			$wp_customize_manager->add_panel(
 				$panel->id,
 				array(
@@ -216,7 +214,6 @@ final class Customizer {
 					'active_callback' => $panel->active_callback,
 				)
 			);
-
 		}
 
 	}
@@ -231,7 +228,6 @@ final class Customizer {
 	private function register_sections( $wp_customize_manager ) {
 
 		foreach ( self::$added_sections as $section ) {
-
 			$wp_customize_manager->add_section(
 				$section->id,
 				array(
@@ -242,8 +238,32 @@ final class Customizer {
 					'active_callback' => $section->active_callback,
 				)
 			);
-
 		}
+
+	}
+
+	/**
+	 * Register control's tooltips.
+	 *
+	 * @return void
+	 */
+	public function register_tooltips() {
+
+		/**
+		 * @var array[] $tooltips
+		 */
+		$tooltips = [];
+
+		foreach ( self::$added_controls as $control ) {
+			if ( ! empty( $control->tooltip ) ) {
+				$tooltips[] = [
+					'id'      => sanitize_key( $control->id ),
+					'content' => wp_kses_post( $control->tooltip ),
+				];
+			}
+		}
+
+		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerTooltips', $tooltips );
 
 	}
 
@@ -259,9 +279,7 @@ final class Customizer {
 		$customizer_util = new CustomizerUtil();
 
 		foreach ( self::$added_controls as $control ) {
-
 			$customizer_util->addControl( $wp_customize_manager, $control );
-
 		}
 
 	}
@@ -287,7 +305,6 @@ final class Customizer {
 	public function register_selective_refreshes( $wp_customize_manager ) {
 
 		foreach ( self::$added_partial_refreshes as $partial_refresh ) {
-
 			$wp_customize_manager->selective_refresh->add_partial(
 				$partial_refresh->id,
 				array(
@@ -297,7 +314,6 @@ final class Customizer {
 					'render_callback'     => $partial_refresh->render_callback,
 				)
 			);
-
 		}
 
 	}

@@ -357,6 +357,21 @@ final class CustomizerField {
 	}
 
 	/**
+	 * Set the control's tooltip.
+	 *
+	 * @param string $tooltip Control's tooltip content.
+	 *
+	 * @return $this
+	 */
+	public function tooltip( $tooltip = '' ) {
+
+		$this->control_instance->tooltip( $tooltip );
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the control's custom properties.
 	 *
 	 * @param array $properties Control custom properties.

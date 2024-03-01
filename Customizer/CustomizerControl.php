@@ -240,6 +240,21 @@ final class CustomizerControl {
 	}
 
 	/**
+	 * Set the control's tooltip.
+	 *
+	 * @param string $tooltip Control's tooltip content.
+	 *
+	 * @return $this
+	 */
+	public function tooltip( $tooltip = '' ) {
+
+		$this->control->tooltip = $tooltip;
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the control's custom_properties.
 	 *
 	 * @param array $properties Custom properties which are not provided by WP_Customize_Control by default.

@@ -1,0 +1,38 @@
+.wpbf-customize-control-headline {
+	position: relative;
+	left: -24px;
+	padding: 10px 24px;
+	width: calc(100% + 48px);
+	background-color: #fff;
+
+	.customize-control-title {
+		margin-top: 0;
+		margin-bottom: 0;
+		line-height: 1.2;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.customize-control-description {
+		margin-top: 0;
+		margin-bottom: 0;
+		line-height: 1.3;
+	}
+
+	.wpbf-tooltip-wrapper {
+		.tooltip-trigger {
+			top: -4px;
+			left: 2px;
+
+			&:hover {
+				+ .tooltip-content {
+					bottom: 29px;
+				}
+			}
+		}
+
+		.tooltip-content {
+			bottom: 26px;
+		}
+	}
+}
