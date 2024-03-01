@@ -1,6 +1,6 @@
 <?php
 
-namespace Mapsteps\Wpbf\Customizer\Controls\Divider;
+namespace Mapsteps\Wpbf\Customizer\Controls\Headline;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use WP_Customize_Manager;

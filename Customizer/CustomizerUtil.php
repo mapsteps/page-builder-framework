@@ -11,8 +11,8 @@ use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
-use Mapsteps\Wpbf\Customizer\Controls\Divider\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
+use Mapsteps\Wpbf\Customizer\Controls\Headline\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
@@ -36,7 +36,7 @@ class CustomizerUtil {
 		'toggle'      => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
 		'color'       => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
 		'dimension'   => '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl',
-		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Divider\DividerControl',
+		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Headline\DividerControl',
 		'generic'     => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
 		'radio'       => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
 		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',

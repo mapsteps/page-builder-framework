@@ -69,7 +69,11 @@
 	"parcelIgnore": [
 		"img/.+"
 	],
-	"browserslist": "> 0.5%, last 2 versions, not dead",
+	"browserslist": [
+		"> 0.5%",
+		"last 2 versions",
+		"not dead"
+	],
 	"scripts": {
 		"build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min --no-source-maps",
 		"build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps",
@@ -92,6 +96,8 @@
 		"build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-source-maps",
 		"watch-generic-control": "parcel watch Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-source-maps",
 		"build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-source-maps",
+		"watch-headline-control": "parcel watch Customizer/Controls/Headline/src/headline-control.scs Customizer/Controls/Headline/src/headline-toggle-control.scs --dist-dir Customizer/Controls/Headline/dist --no-source-maps",
+		"build-headline-control": "parcel build Customizer/Controls/Headline/src/headline-control.scs Customizer/Controls/Headline/src/headline-toggle-control.scs --dist-dir Customizer/Controls/Headline/dist --no-source-maps",
 		"watch-radio-control": "parcel watch Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",
 		"build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",
 		"watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
