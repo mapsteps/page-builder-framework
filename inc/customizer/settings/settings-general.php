@@ -7,7 +7,6 @@
  */
 
 use Kirki\Field\Toggle;
-use Kirki\Pro\Field\Headline;
 use Kirki\Pro\Field\HeadlineToggle;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
@@ -95,6 +94,8 @@ Kirki::add_field( 'wpbf', array(
 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 ) );
 
+// Convert commented lines above to use wpbf_customizer_field() method.
+
 // Boxed.
 new HeadlineToggle(
 	[
@@ -107,76 +108,74 @@ new HeadlineToggle(
 );
 
 // Boxed margin.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'page_boxed_margin',
-	'label'           => __( 'Margin', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 3,
-	'default'         => 0,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'page_boxed_margin' )
+	->type( 'slider' )
+	->label( __( 'Margin', 'page-builder-framework' ) )
+	->priority( 3 )
+	->defaultValue( 0 )
+	->transport( 'postMessage' )
+	->properties( array(
 		'min'  => 0,
 		'max'  => 80,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'page_boxed',
+			'id'       => 'page_boxed',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Boxed padding.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'page_boxed_padding',
-	'label'           => __( 'Padding', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 4,
-	'default'         => 20,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'page_boxed_padding' )
+	->type( 'slider' )
+	->label( __( 'Padding', 'page-builder-framework' ) )
+	->priority( 4 )
+	->defaultValue( 20 )
+	->transport( 'postMessage' )
+	->properties( array(
 		'min'  => 20,
 		'max'  => 100,
 		'step' => 1,
+	) )
+	->activeCallback( [
+		array(
+			'id'       => 'page_boxed',
+			'operator' => '==',
+			'value'    => true,
+		),
+	] )
+	->addToSection( 'wpbf_page_options' );
+
+// Boxed padding.
+Kirki::add_field( 'wpbf', array(
+	'type'              => 'responsive_padding',
+	'label'             => __( 'Padding', 'page-builder-framework' ),
+	'section'           => 'wpbf_page_options',
+	'settings'          => 'page_boxed_padding',
+	'priority'          => 4,
+	'transport'         => 'postMessage',
+	'default'           => json_encode(
+		array(
+			'desktop_top'    => 20,
+			'desktop_right'  => 20,
+			'desktop_bottom' => 20,
+			'desktop_left'   => 20,
+		)
 	),
-	'active_callback' => array(
+	'active_callback'   => array(
 		array(
 			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => 1,
 		),
 	),
+	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
 ) );
-
-// Boxed padding.
-// Kirki::add_field( 'wpbf', array(
-// 	'type'              => 'responsive_padding',
-// 	'label'             => __( 'Padding', 'page-builder-framework' ),
-// 	'section'           => 'wpbf_page_options',
-// 	'settings'          => 'page_boxed_padding',
-// 	'priority'          => 4,
-// 	'transport'         => 'postMessage',
-// 	'default'           => json_encode(
-// 		array(
-// 			'desktop_top'    => 20,
-// 			'desktop_right'  => 20,
-// 			'desktop_bottom' => 20,
-// 			'desktop_left'   => 20,
-// 		)
-// 	),
-// 	'active_callback' => array(
-// 		array(
-// 			'setting'  => 'page_boxed',
-// 			'operator' => '==',
-// 			'value'    => 1,
-// 		),
-// 	),
-// 	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
-// ) );
 
 // Background color.
 wpbf_customizer_field()
@@ -217,137 +216,133 @@ new HeadlineToggle(
 );
 
 // Box shadow blur.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'page_boxed_box_shadow_blur',
-	'label'           => __( 'Blur', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 7,
-	'default'         => 25,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'page_boxed_box_shadow_blur' )
+	->type( 'slider' )
+	->label( __( 'Blur', 'page-builder-framework' ) )
+	->priority( 7 )
+	->defaultValue( 25 )
+	->properties( array(
 		'min'  => 0,
 		'max'  => 100,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'page_boxed',
+			'id'       => 'page_boxed',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
 		array(
-			'setting'  => 'page_boxed_box_shadow',
+			'id'       => 'page_boxed_box_shadow',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Box shadow spread.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'page_boxed_box_shadow_spread',
-	'label'           => __( 'Spread', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 8,
-	'default'         => 0,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'page_boxed_box_shadow_spread' )
+	->type( 'slider' )
+	->label( __( 'Spread', 'page-builder-framework' ) )
+	->priority( 8 )
+	->defaultValue( 0 )
+	->properties( array(
 		'min'  => - 100,
 		'max'  => 100,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'page_boxed',
+			'id'       => 'page_boxed',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
 		array(
-			'setting'  => 'page_boxed_box_shadow',
+			'id'       => 'page_boxed_box_shadow',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Box shadow horizontal.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'page_boxed_box_shadow_horizontal',
-	'label'           => __( 'Horizontal', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 9,
-	'default'         => 0,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'page_boxed_box_shadow_horizontal' )
+	->type( 'slider' )
+	->label( __( 'Horizontal', 'page-builder-framework' ) )
+	->priority( 9 )
+	->defaultValue( 0 )
+	->properties( array(
 		'min'  => - 100,
 		'max'  => 100,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'page_boxed',
+			'id'       => 'page_boxed',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
 		array(
-			'setting'  => 'page_boxed_box_shadow',
+			'id'       => 'page_boxed_box_shadow',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Box shadow vertical.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'page_boxed_box_shadow_vertical',
-	'label'           => __( 'Vertical', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'priority'        => 10,
-	'default'         => 0,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'page_boxed_box_shadow_vertical' )
+	->type( 'slider' )
+	->label( __( 'Vertical', 'page-builder-framework' ) )
+	->priority( 10 )
+	->defaultValue( 0 )
+	->properties( array(
 		'min'  => - 100,
 		'max'  => 100,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'page_boxed',
+			'id'       => 'page_boxed',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
 		array(
-			'setting'  => 'page_boxed_box_shadow',
+			'id'       => 'page_boxed_box_shadow',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Box shadow color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'page_boxed_box_shadow_color',
-	'label'           => __( 'Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_page_options',
-	'default'         => 'rgba(0,0,0,.15)',
-	'priority'        => 11,
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'page_boxed_box_shadow_color' )
+	->type( 'color' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->defaultValue( 'rgba(0,0,0,.15)' )
+	->priority( 11 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
-			'setting'  => 'page_boxed',
+			'id'       => 'page_boxed',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
 		array(
-			'setting'  => 'page_boxed_box_shadow',
+			'id'       => 'page_boxed_box_shadow',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 /* Fields - Sidebar */
 
@@ -402,14 +397,12 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_sidebar_options' );
 
 // Headline.
-new Headline(
-	[
-		'settings' => 'widget_headline',
-		'label'    => esc_html__( 'Sidebar Widgets', 'page-builder-framework' ),
-		'section'  => 'wpbf_sidebar_options',
-		'priority' => 2,
-	]
-);
+wpbf_customizer_field()
+	->id( 'widget_headline' )
+	->type( 'headline' )
+	->label( __( 'Sidebar Widgets', 'page-builder-framework' ) )
+	->priority( 2 )
+	->addToSection( 'wpbf_sidebar_options' );
 
 // Padding.
 Kirki::add_field( 'wpbf', array(
@@ -438,53 +431,52 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'sidebar_bg_color',
-	'label'     => __( 'Background Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_sidebar_options',
-	'default'   => '#f5f5f7',
-	'priority'  => 4,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'sidebar_bg_color' )
+	->type( 'color' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#f5f5f7' )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( 'wpbf_sidebar_options' );
 
 /* Fields - 404 Page */
 
 // 404 title.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'text',
-	'label'     => __( 'Title', 'page-builder-framework' ),
-	'settings'  => '404_headline',
-	'section'   => 'wpbf_404_options',
-	'default'   => __( "404 - This page couldn't be found.", "page-builder-framework" ),
-	'transport' => 'postMessage',
-	'priority'  => 1,
-) );
+wpbf_customizer_field()
+	->id( '404_headline' )
+	->type( 'text' )
+	->label( __( 'Title', 'page-builder-framework' ) )
+	->defaultValue( __( "404 - This page couldn't be found.", 'page-builder-framework' ) )
+	->priority( 1 )
+	->transport( 'postMessage' )
+	->addToSection( 'wpbf_404_options' );
 
 // 404 text.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'text',
-	'label'     => __( 'Text', 'page-builder-framework' ),
-	'settings'  => '404_text',
-	'section'   => 'wpbf_404_options',
-	'default'   => __( "Oops! We're sorry, this page couldn't be found!", "page-builder-framework" ),
-	'transport' => 'postMessage',
-	'priority'  => 2,
-) );
+wpbf_customizer_field()
+	->id( '404_text' )
+	->type( 'text' )
+	->label( __( 'Text', 'page-builder-framework' ) )
+	->defaultValue( __( "Oops! We're sorry, this page couldn't be found!", "page-builder-framework" ) )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->addToSection( 'wpbf_404_options' );
 
 // Search form.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => '404_search_form',
-	'label'           => __( 'Search Form', 'page-builder-framework' ),
-	'section'         => 'wpbf_404_options',
-	'default'         => 'show',
-	'priority'        => 3,
-	'multiple'        => 1,
-	'partial_refresh' => array(
+wpbf_customizer_field()
+	->id( '404_search_form' )
+	->type( 'select' )
+	->label( __( 'Search Form', 'page-builder-framework' ) )
+	->defaultValue( 'show' )
+	->priority( 3 )
+	->choices( array(
+		'show' => __( 'Show', 'page-builder-framework' ),
+		'hide' => __( 'Hide', 'page-builder-framework' ),
+	) )
+	->partialRefresh( [
 		'404searchform' => array(
 			'container_inclusive' => true,
 			'selector'            => '.wpbf-404-content #searchform',
@@ -492,12 +484,8 @@ Kirki::add_field( 'wpbf', array(
 				return get_search_form();
 			},
 		),
-	),
-	'choices'         => array(
-		'show' => __( 'Show', 'page-builder-framework' ),
-		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_404_options' );
 
 /* Fields - Breadcrumb Settings */
 
