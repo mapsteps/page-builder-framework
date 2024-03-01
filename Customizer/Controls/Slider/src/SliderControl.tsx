@@ -52,15 +52,20 @@ const SliderControl = wp.customize.Control.extend({
 
 		root.render(
 			<SliderForm
-				{...control.params}
 				control={control}
 				customizerSetting={control.setting}
 				setNotificationContainer={control.setNotificationContainer}
+				label={control.params.label}
+				description={control.params.description}
+				default={control.params.default}
 				value={control.params.value}
+				min={control.params.min}
+				max={control.params.max}
+				step={control.params.step}
 			/>,
 		);
 
-		if (false !== control.params.choices.allowCollapse) {
+		if (false !== control.params.allowCollapse) {
 			control.container.addClass("allowCollapse");
 		}
 	},

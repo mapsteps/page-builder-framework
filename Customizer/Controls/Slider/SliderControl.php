@@ -22,18 +22,24 @@ class SliderControl extends BaseControl {
 	public $type = 'wpbf-slider';
 
 	/**
-	 * Control's value unit.
-	 *
-	 * @var string
+	 * @var int|float Minimum value.
 	 */
-	private $value_unit = '%';
+	public $min = 0;
 
 	/**
-	 * Control's value number.
-	 *
-	 * @var string
+	 * @var int|float Maximum value.
 	 */
-	private $value_number = 100;
+	public $max = 100;
+
+	/**
+	 * @var int|float Step value.
+	 */
+	public $step = 1;
+
+	/**
+	 * @var bool Whether to allow collapsing the control.
+	 */
+	public $allow_collapse = false;
 
 	/**
 	 * Enqueue control related scripts/styles.
@@ -66,15 +72,6 @@ class SliderControl extends BaseControl {
 
 		parent::to_json();
 
-		$this->json['choices'] = wp_parse_args(
-			$this->json['choices'],
-			array(
-				'min'  => 0,
-				'max'  => 100,
-				'step' => 1,
-			)
-		);
-
 		if ( isset( $this->json['label'] ) ) {
 			$this->json['label'] = html_entity_decode( $this->json['label'] );
 		}
@@ -83,19 +80,21 @@ class SliderControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		$this->json['choices']['min']  = (float) $this->json['choices']['min'];
-		$this->json['choices']['max']  = (float) $this->json['choices']['max'];
-		$this->json['choices']['step'] = (float) $this->json['choices']['step'];
+		$this->json['min']  = (float) $this->min;
+		$this->json['max']  = (float) $this->max;
+		$this->json['step'] = (float) $this->step;
 
-		$this->json['value'] = $this->json['value'] < $this->json['choices']['min'] ? $this->json['choices']['min'] : $this->json['value'];
-		$this->json['value'] = $this->json['value'] > $this->json['choices']['max'] ? $this->json['choices']['max'] : $this->json['value'];
+		$this->json['value'] = $this->json['value'] < $this->json['min'] ? $this->json['min'] : $this->json['value'];
+		$this->json['value'] = $this->json['value'] > $this->json['max'] ? $this->json['max'] : $this->json['value'];
 		$this->json['value'] = (float) $this->json['value'];
 
-		$this->value_unit   = preg_replace( '/\d+/', '', $this->value() );
-		$this->value_number = str_ireplace( $this->value_unit, '', $this->value() );
+		$value_unit   = preg_replace( '/\d+/', '', $this->value() );
+		$value_number = str_ireplace( $value_unit, '', $this->value() );
 
-		$this->json['value_unit']   = $this->value_unit;
-		$this->json['value_number'] = $this->value_number;
+		$this->json['valueUnit']   = $value_unit;
+		$this->json['valueNumber'] = $value_number;
+
+		$this->json['allowCollapse'] = $this->allow_collapse;
 
 	}
 

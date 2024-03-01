@@ -388,10 +388,10 @@ wpbf_customizer_field()
 	->label( __( 'Width', 'page-builder-framework' ) )
 	->priority( 2 )
 	->defaultValue( 33.3 )
-	->choices( array(
+	->properties( array(
 		'min'  => 20,
 		'max'  => 40,
-		'step' => .1,
+		'step' => 0.1,
 	) )
 	->activeCallback( [
 		array(
@@ -1038,7 +1038,7 @@ wpbf_customizer_field()
 	->label( __( 'Show after (px)', 'page-builder-framework' ) )
 	->defaultValue( 400 )
 	->priority( 2 )
-	->choices( array(
+	->properties( array(
 		'min'  => 50,
 		'max'  => 1000,
 		'step' => 1,
@@ -1153,7 +1153,7 @@ wpbf_customizer_field()
 	->label( __( 'Border Radius', 'page-builder-framework' ) )
 	->defaultValue( 0 )
 	->priority( 8 )
-	->choices( array(
+	->properties( array(
 		'min'  => 0,
 		'max'  => 100,
 		'step' => 1,

@@ -37,13 +37,27 @@ class SliderField extends BaseField {
 
 		$control_args = $this->parseControlArgs();
 
-		$wp_customize_manager->add_control(
-			new SliderControl(
-				$wp_customize_manager,
-				$this->control->id,
-				$control_args
-			)
+		$slider_control = new SliderControl(
+			$wp_customize_manager,
+			$this->control->id,
+			$control_args
 		);
+
+		$props = $this->control->custom_properties;
+
+		if ( isset( $props['min'] ) ) {
+			$slider_control->min = $props['min'];
+		}
+
+		if ( isset( $props['max'] ) ) {
+			$slider_control->max = $props['max'];
+		}
+
+		if ( isset( $props['step'] ) ) {
+			$slider_control->step = $props['step'];
+		}
+
+		$wp_customize_manager->add_control( $slider_control );
 
 	}
 

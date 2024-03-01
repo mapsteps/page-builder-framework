@@ -1,23 +1,28 @@
-import React, {ChangeEvent, useRef} from "react";
+import React, { ChangeEvent, useRef } from "react";
+import {
+	WpbfCustomizeControl,
+	WpbfCustomizeSetting,
+} from "../../Base/src/interfaces";
 
 export default function SliderForm(props: {
-	default?: any;
-	value?: any;
-	label?: any;
-	description?: any;
+	control: WpbfCustomizeControl;
+	customizerSetting: WpbfCustomizeSetting<any>;
 	setNotificationContainer?: any;
-	control?: any;
-	customizerSetting?: any;
-	choices?: any;
+	label?: string;
+	description?: string;
+	default?: string | number;
+	value?: string | number;
+	min: number;
+	max: number;
+	step: number;
 }) {
-	const {control, customizerSetting, choices} = props;
-
 	let trigger = "";
 
-	const sliderRef: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
+	const sliderRef: React.MutableRefObject<HTMLInputElement | null> =
+		useRef(null);
 	const valueRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
 
-	control.updateComponentState = (val: string) => {
+	props.control.updateComponentState = (val: string) => {
 		if ("slider" === trigger) {
 			if (valueRef && valueRef.current) {
 				valueRef.current.textContent = val;
@@ -37,41 +42,61 @@ export default function SliderForm(props: {
 		}
 	};
 
+	function parseValue(value: string | number | undefined) {
+		const safeValue = "undefined" === typeof value ? 0 : value;
+		const numericValue =
+			typeof safeValue === "string" ? parseFloat(safeValue) : safeValue;
+
+		if (isNaN(numericValue)) {
+			return props.min;
+		}
+
+		const parsedValue = numericValue < props.min ? props.min : numericValue;
+
+		return parsedValue > props.max ? props.max : parsedValue;
+	}
+
 	function handleChange(e: ChangeEvent) {
 		const target = e.target as HTMLInputElement;
 		trigger = "range" === target.type ? "slider" : "input";
 
-		let value = target.value;
+		const value = parseValue(target.value);
 
-		if (value < choices.min) value = choices.min;
-
-		if (value > choices.max) value = choices.max;
-
-		if ("input" === trigger) target.value = value;
-		customizerSetting.set(value);
+		if ("input" === trigger) target.value = value.toString();
+		props.customizerSetting.set(value);
 	}
 
 	function handleReset(_e: React.MouseEvent) {
-		if ("" !== props.default && "undefined" !== typeof props.default) {
+		const defaultExists =
+			"undefined" !== typeof props.default && "" !== props.default;
+
+		if (defaultExists) {
+			const defaultValue = parseValue(props.default);
+
 			if (sliderRef && sliderRef.current) {
-				sliderRef.current.value = props.default;
+				sliderRef.current.value = defaultValue.toString();
 			}
 
 			if (valueRef && valueRef.current) {
-				valueRef.current.textContent = props.default;
+				valueRef.current.textContent = defaultValue.toString();
 			}
 		} else {
-			if ("" !== props.value) {
+			const valueExists =
+				"undefined" !== typeof props.value && "" !== props.value;
+
+			if (valueExists) {
+				const value = parseValue(props.value);
+
 				if (sliderRef && sliderRef.current) {
-					sliderRef.current.value = props.value;
+					sliderRef.current.value = value.toString();
 				}
 
 				if (valueRef && valueRef.current) {
-					valueRef.current.textContent = props.value;
+					valueRef.current.textContent = value.toString();
 				}
 			} else {
 				if (sliderRef && sliderRef.current) {
-					sliderRef.current.value = choices.min;
+					sliderRef.current.value = props.min.toString();
 				}
 
 				if (valueRef && valueRef.current) {
@@ -81,15 +106,16 @@ export default function SliderForm(props: {
 		}
 
 		trigger = "reset";
+		const renderedValue = parseValue(sliderRef.current?.value);
 
 		if (sliderRef && sliderRef.current) {
-			customizerSetting.set(sliderRef.current.value);
+			props.customizerSetting.set(renderedValue);
 		}
 	}
 
 	// Preparing for the template.
-	const fieldId = `wpbf-control-input-${customizerSetting.id}`;
-	const value = "" !== props.value ? props.value : 0;
+	const fieldId = `wpbf-control-input-${props.customizerSetting.id}`;
+	const value = parseValue(props.value);
 
 	return (
 		<div className="wpbf-control-form" tabIndex={1}>
@@ -97,7 +123,7 @@ export default function SliderForm(props: {
 				<span className="customize-control-title">{props.label}</span>
 				<span
 					className="customize-control-description description"
-					dangerouslySetInnerHTML={{__html: props.description}}
+					dangerouslySetInnerHTML={{ __html: props.description ?? "" }}
 				/>
 			</label>
 
@@ -121,9 +147,9 @@ export default function SliderForm(props: {
 						type="range"
 						id={fieldId}
 						defaultValue={value}
-						min={choices.min}
-						max={choices.max}
-						step={choices.step}
+						min={props.min}
+						max={props.max}
+						step={props.step}
 						className="wpbf-control-slider"
 						onChange={handleChange}
 					/>
@@ -136,4 +162,4 @@ export default function SliderForm(props: {
 			</div>
 		</div>
 	);
-};
+}
