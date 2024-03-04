@@ -37,11 +37,6 @@ class SliderControl extends BaseControl {
 	public $step = 1;
 
 	/**
-	 * @var bool Whether to allow collapsing the control.
-	 */
-	public $allow_collapse = false;
-
-	/**
 	 * Enqueue control related scripts/styles.
 	 */
 	public function enqueue() {
@@ -93,8 +88,6 @@ class SliderControl extends BaseControl {
 
 		$this->json['valueUnit']   = $value_unit;
 		$this->json['valueNumber'] = $value_number;
-
-		$this->json['allowCollapse'] = $this->allow_collapse;
 
 	}
 

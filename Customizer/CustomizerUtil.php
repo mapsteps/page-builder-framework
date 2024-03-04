@@ -14,6 +14,8 @@ use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineField;
+use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingField;
+use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
@@ -33,17 +35,19 @@ class CustomizerUtil {
 	 * @var string[] $available_controls
 	 */
 	public $available_controls = array(
-		'checkbox'    => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl',
-		'toggle'      => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
-		'color'       => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
-		'dimension'   => '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl',
-		'divider'     => '\Mapsteps\Wpbf\Customizer\Controls\Headline\DividerControl',
-		'headline'    => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineControl',
-		'generic'     => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
-		'radio'       => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
-		'radio-image' => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
-		'select'      => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
-		'slider'      => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
+		'checkbox'                  => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl',
+		'toggle'                    => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
+		'color'                     => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
+		'dimension'                 => '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl',
+		'divider'                   => '\Mapsteps\Wpbf\Customizer\Controls\Headline\DividerControl',
+		'headline'                  => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineControl',
+		'generic'                   => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
+		'margin-padding'            => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingControl',
+		'responsive-margin-padding' => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingControl',
+		'radio'                     => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
+		'radio-image'               => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
+		'select'                    => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
+		'slider'                    => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
 	);
 
 	/**
@@ -61,17 +65,27 @@ class CustomizerUtil {
 	);
 
 	/**
-	 * Generic input controls.
+	 * Controls which are grouped into a single control.
 	 *
-	 * @var string[] $generic_controls
+	 * @var array $grouped_controls
 	 */
-	public $generic_controls = array(
-		'email',
-		'number',
-		'text',
-		'textarea',
-		'url',
-	);
+	public $grouped_controls = [
+		'generic'                   => [
+			'email',
+			'number',
+			'text',
+			'textarea',
+			'url',
+		],
+		'margin-padding'            => [
+			'margin',
+			'padding',
+		],
+		'responsive-margin-padding' => [
+			'responsive-margin',
+			'responsive-padding',
+		],
+	];
 
 	/**
 	 * Filter the setting entity.
@@ -166,7 +180,13 @@ class CustomizerUtil {
 	private function getFieldInstance( $control ) {
 
 		$control_type = $control->type;
-		$control_type = in_array( $control_type, $this->generic_controls, true ) ? 'generic' : $control_type;
+
+		foreach ( $this->grouped_controls as $control_name => $grouped_controls ) {
+			if ( in_array( $control->type, $grouped_controls ) ) {
+				$control_type = $control_name;
+				break;
+			}
+		}
 
 		if ( ! array_key_exists( $control_type, $this->available_controls ) ) {
 			return null;
@@ -190,11 +210,17 @@ class CustomizerUtil {
 			case 'divider':
 				$field = new DividerField( $control );
 				break;
+			case 'dimension':
+				$field = new DimensionField( $control );
+				break;
 			case 'headline':
 				$field = new HeadlineField( $control );
 				break;
-			case 'dimension':
-				$field = new DimensionField( $control );
+			case 'margin-padding':
+				$field = new MarginPaddingField( $control );
+				break;
+			case 'responsive-margin-padding':
+				$field = new ResponsiveMarginPaddingField( $control );
 				break;
 			case 'radio':
 				$field = new RadioField( $control );

@@ -65,7 +65,7 @@ const SliderControl = wp.customize.Control.extend({
 			/>,
 		);
 
-		if (false !== control.params.allowCollapse) {
+		if (control.params.allowCollapse) {
 			control.container.addClass("allowCollapse");
 		}
 	},

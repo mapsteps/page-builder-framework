@@ -39,6 +39,11 @@ class BaseControl extends WP_Customize_Control {
 	public $wrapper_attrs = array();
 
 	/**
+	 * @var bool Whether to allow collapsing the control.
+	 */
+	public $allow_collapse = false;
+
+	/**
 	 * Enqueue control related scripts/styles.
 	 */
 	public function enqueue() {
@@ -96,6 +101,8 @@ class BaseControl extends WP_Customize_Control {
 
 		// Wrapper Attributes.
 		$this->json['wrapper_attrs'] = $this->wrapper_attrs;
+
+		$this->json['allowCollapse'] = $this->allow_collapse;
 
 	}
 

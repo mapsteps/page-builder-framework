@@ -5,13 +5,13 @@ import { WpbfCustomizeSelectControl } from "../../Select/src/interfaces";
 import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interfaces";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
+import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {
 	get(): T;
+
 	notifications: any;
 }
-
-export interface WpbfCustomizeContainer extends Container {}
 
 export interface WpbfCustomizeControl extends Control {
 	prototype: WpbfCustomizeControl;
@@ -19,6 +19,8 @@ export interface WpbfCustomizeControl extends Control {
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
 	updateComponentState?: (val: string) => void;
+
+	extend(protoProps: object, classProps?: object): WpbfCustomizeControlItem;
 }
 
 export interface WpbfCustomizeDynamicControl extends WpbfCustomizeControl {
@@ -33,6 +35,8 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-color": WpbfCustomizeColorControl;
 	"wpbf-dimension": WpbfCustomizeDimensionControl;
 	"wpbf-generic": WpbfCustomizeControl;
+	"wpbf-margin-padding": WpbfCustomizeMarginPaddingControl;
+	"wpbf-responsive-margin-padding": WpbfCustomizeMarginPaddingControl;
 	"wpbf-radio": {};
 	"wpbf-radio-image": {};
 	"wpbf-select": WpbfCustomizeSelectControl;
@@ -40,13 +44,16 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-toggle": WpbfCustomizeControl;
 }
 
+export type WpbfCustomizeControlItem =
+	| WpbfCustomizeControl
+	| WpbfCustomizeColorControl
+	| WpbfCustomizeDynamicControl
+	| WpbfCustomizeDimensionControl
+	| WpbfCustomizeSelectControl
+	| WpbfCustomizeMarginPaddingControl;
+
 export interface WpbfCustomize extends Customize {
-	Control:
-		| WpbfCustomizeControl
-		| WpbfCustomizeColorControl
-		| WpbfCustomizeDynamicControl
-		| WpbfCustomizeDimensionControl
-		| WpbfCustomizeSelectControl;
+	Control: WpbfCustomizeControlItem;
 	controlConstructor: WpbfCustomizeControlConstructor;
 }
 

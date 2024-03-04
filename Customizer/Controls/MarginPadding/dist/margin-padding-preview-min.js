@@ -1,0 +1,1 @@
+wp.hooks.addFilter("wpbfPostMessageStylesOutput","kirki",(t,e,r,i)=>{if("wpbf-margin-padding"!==i||"string"==typeof e||"number"==typeof e||!e.top&&!e.right&&!e.bottom&&!e.left)return t;let l=i.replace("kirki-","");for(let i in t+=r.element+"{",e)if(Object.hasOwnProperty.call(e,i)){let r=e[i];""!==r&&(t+=l+"-"+i+": "+r+";")}return t+"}"});

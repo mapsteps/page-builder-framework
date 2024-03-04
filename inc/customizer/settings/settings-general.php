@@ -405,30 +405,26 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_sidebar_options' );
 
 // Padding.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'responsive_padding',
-	'label'             => __( 'Padding', 'page-builder-framework' ),
-	'section'           => 'wpbf_sidebar_options',
-	'settings'          => 'sidebar_widget_padding',
-	'priority'          => 3,
-	'default'           => json_encode(
-		array(
-			'desktop_top'    => 20,
-			'desktop_right'  => 20,
-			'desktop_bottom' => 20,
-			'desktop_left'   => 20,
-			'tablet_top'     => 20,
-			'tablet_right'   => 20,
-			'tablet_bottom'  => 20,
-			'tablet_left'    => 20,
-			'mobile_top'     => 20,
-			'mobile_right'   => 20,
-			'mobile_bottom'  => 20,
-			'mobile_left'    => 20,
-		)
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
-) );
+wpbf_customizer_field()
+	->id( 'sidebar_widget_padding' )
+	->type( 'responsive-padding' )
+	->label( __( 'Padding', 'page-builder-framework' ) )
+	->priority( 3 )
+	->defaultValue( array(
+		'desktop_top'    => 20,
+		'desktop_right'  => 20,
+		'desktop_bottom' => 20,
+		'desktop_left'   => 20,
+		'tablet_top'     => 20,
+		'tablet_right'   => 20,
+		'tablet_bottom'  => 20,
+		'tablet_left'    => 20,
+		'mobile_top'     => 20,
+		'mobile_right'   => 20,
+		'mobile_bottom'  => 20,
+		'mobile_left'    => 20,
+	) )
+	->addToSection( 'wpbf_sidebar_options' );
 
 // Color.
 wpbf_customizer_field()
