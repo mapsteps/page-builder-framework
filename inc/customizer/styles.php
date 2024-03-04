@@ -936,6 +936,7 @@ if ( $page_width ) {
 $sidebar_bg_color                      = ( $val = get_theme_mod( 'sidebar_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $sidebar_width                         = ( $val = get_theme_mod( 'sidebar_width' ) ) === 33.3 ? false : $val;
 $sidebar_widget_padding                = get_theme_mod( 'sidebar_widget_padding' );
+$sidebar_widget_padding                = is_string( $sidebar_widget_padding ) ? json_decode( $sidebar_widget_padding, true ) : $sidebar_widget_padding;
 $sidebar_widget_padding_top_desktop    = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'desktop_top', 20 );
 $sidebar_widget_padding_right_desktop  = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'desktop_right', 20 );
 $sidebar_widget_padding_bottom_desktop = wpbf_get_theme_mod_value( $sidebar_widget_padding, 'desktop_bottom', 20 );
