@@ -88,10 +88,10 @@ class MarginPaddingControl extends BaseControl {
 		parent::__construct( $wp_customize_manager, $id, $args );
 
 		if ( empty( $this->unit ) ) {
-			$this->unit = self::$defaultUnit;
+			$this->unit = static::$defaultUnit;
 		}
 
-		foreach ( self::$defaultDimensions as $dimension ) {
+		foreach ( static::$defaultDimensions as $dimension ) {
 			$this->dimensions[]                = $dimension;
 			$this->default_array[ $dimension ] = '';
 			$this->value_array[ $dimension ]   = '';

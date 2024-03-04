@@ -62,13 +62,11 @@ export default function MarginPaddingForm(props: {
 	function getValuesForInput(
 		values: MarginPaddingValues,
 	): MarginPaddingValuesWithoutUnit {
-		// We allow empty string.
 		const newValues: Record<string, number | string> = {};
 
-		for (const dimension in props.dimensions) {
-			if (props.dimensions.hasOwnProperty(dimension)) {
-				newValues[dimension] = props.dimensions[dimension];
-			}
+		for (let i = 0; i < props.dimensions.length; i++) {
+			const dimension = props.dimensions[i];
+			newValues[dimension] = props.dimensions[i];
 		}
 
 		for (const position in values) {
@@ -83,7 +81,7 @@ export default function MarginPaddingForm(props: {
 
 			if ("" !== positionValue) {
 				const singleValue = parseSingleValueAsObject(positionValue);
-				newValues[position as MarginPaddingDimension] = singleValue.number;
+				newValues[position] = singleValue.number;
 			}
 		}
 
@@ -93,13 +91,12 @@ export default function MarginPaddingForm(props: {
 	function getValuesForCustomizer(
 		values: MarginPaddingValues,
 	): MarginPaddingValuesWithUnit {
-		// We allow empty string.
-		const newValues: MarginPaddingValuesWithUnit = {
-			top: "",
-			right: "",
-			bottom: "",
-			left: "",
-		};
+		const newValues: Record<string, number | string> = {};
+
+		for (let i = 0; i < props.dimensions.length; i++) {
+			const dimension = props.dimensions[i];
+			newValues[dimension] = props.dimensions[i];
+		}
 
 		for (const position in values) {
 			if (!props.dimensions.includes(position)) {
@@ -112,12 +109,11 @@ export default function MarginPaddingForm(props: {
 
 			if ("" !== positionValue) {
 				const singleValue = parseSingleValueAsObject(positionValue);
-				newValues[position as MarginPaddingDimension] =
-					singleValue.number + props.unit;
+				newValues[position] = singleValue.number + props.unit;
 			}
 		}
 
-		return newValues;
+		return newValues as MarginPaddingValuesWithUnit;
 	}
 
 	props.control.updateComponentState = (val) => {
@@ -174,10 +170,8 @@ export default function MarginPaddingForm(props: {
 			const hasDeviceStr = position.includes(device + "_");
 			if (!hasDeviceStr) continue;
 
-			const positionWithoutDevice = position.replace(device + "_", "");
-
 			items.push({
-				position: positionWithoutDevice as MarginPaddingDimension,
+				position: position as MarginPaddingDimension,
 				value: inputValues[position as MarginPaddingDimension],
 			});
 		}
@@ -212,7 +206,7 @@ export default function MarginPaddingForm(props: {
 	}
 
 	function renderFields(
-		wrapperClassName: string,
+		device: string,
 		group: {
 			position: MarginPaddingDimension;
 			value: string | number;
@@ -223,8 +217,11 @@ export default function MarginPaddingForm(props: {
 				<div className="wpbf-control-left-col">
 					<div className="wpbf-control-fields">
 						{group.map((item) => {
-							const inputClassName = `wpbf-control-input wpbf-control-input-${item.position}`;
-							const inputId = `wpbf-control-input-${props.type}-${item.position}`;
+							const inputClassName = `wpbf-control-input wpbf-control-input${device ? `-${device}` : ""}-${item.position}`;
+							const inputId = `_customize-input-${props.control.id}${device ? `-${device}` : ""}-${item.position}`;
+							const label = device
+								? item.position.replace(device + "_", "")
+								: item.position;
 
 							return (
 								<div className="wpbf-control-field">
@@ -236,7 +233,7 @@ export default function MarginPaddingForm(props: {
 										onChange={(e) => handleChange(e, item.position)}
 									/>
 									<label className="wpbf-control-sublabel" htmlFor={inputId}>
-										{item.position}
+										{label}
 									</label>
 								</div>
 							);
@@ -253,7 +250,7 @@ export default function MarginPaddingForm(props: {
 	}
 
 	function renderFieldGroups() {
-		if (!props.isResponsive || !props.devices) {
+		if (!props.isResponsive || !props.devices || !props.devices.length) {
 			return renderFields("", makeMappable());
 		}
 
@@ -265,7 +262,7 @@ export default function MarginPaddingForm(props: {
 
 					return (
 						<div className={wrapperClassName}>
-							{renderFields("", makeMappable(device))}
+							{renderFields(device, makeMappable(device))}
 						</div>
 					);
 				})}
