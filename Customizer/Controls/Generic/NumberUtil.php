@@ -5,15 +5,15 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 class NumberUtil {
 
 	/**
-	 * Parse number based on the min and max values.
+	 * Limit number based on the min and max values.
 	 *
-	 * @param string|int|float $value The value to sanitize.
-	 * @param null|int|float   $min   The minimum value. Null if not set.
-	 * @param null|int|float   $max   The maximum value. Null if not set.
+	 * @param mixed          $value The value to sanitize.
+	 * @param null|int|float $min   The minimum value. Null if not set.
+	 * @param null|int|float $max   The maximum value. Null if not set.
 	 *
 	 * @return int|float
 	 */
-	public function parse_number( $value, $min = null, $max = null ) {
+	public function limitNumber( $value, $min = null, $max = null ) {
 		// We allow empty string.
 		if ( '' === $value ) {
 			return '';
@@ -49,20 +49,20 @@ class NumberUtil {
 	}
 
 	/**
-	 * Sanitize number with unit.
+	 * Limit number with unit based on the min and max values.
 	 *
-	 * @param string|int|float $value The value to sanitize.
-	 * @param null|int|float   $min   The minimum value. Null if not set.
-	 * @param null|int|float   $max   The maximum value. Null if not set.
+	 * @param mixed          $value The value to sanitize.
+	 * @param null|int|float $min   The minimum value. Null if not set.
+	 * @param null|int|float $max   The maximum value. Null if not set.
 	 *
 	 * @return string|int|float
 	 */
-	public function parse_number_with_unit( $value, $min = null, $max = null ) {
+	public function limitNumberWithUnit( $value, $min = null, $max = null ) {
 
-		$number_and_unit = $this->separate_number_and_unit( $value );
+		$number_and_unit = $this->separateNumberAndUnit( $value );
 
 		$number = $number_and_unit['number'];
-		$number = $this->parse_number( $number, $min, $max );
+		$number = $this->limitNumber( $number, $min, $max );
 		$unit   = $number_and_unit['unit'];
 
 		if ( ! $unit ) {
@@ -81,7 +81,7 @@ class NumberUtil {
 	 *
 	 * @return array
 	 */
-	public function separate_number_and_unit( $value ) {
+	public function separateNumberAndUnit( $value ) {
 
 		// We support empty string.
 		if ( '' === $value ) {

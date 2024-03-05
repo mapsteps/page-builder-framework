@@ -31,7 +31,7 @@ class SliderField extends BaseField {
 		$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
 		$max   = is_null( $max ) ? SliderControl::$defaultMax : $max;
 
-		return ( new NumberUtil() )->parse_number( $value, $min, $max );
+		return ( new NumberUtil() )->limitNumber( $value, $min, $max );
 
 	}
 
