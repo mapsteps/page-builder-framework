@@ -2,12 +2,17 @@ import React, { useRef, useState } from "react";
 import { WpbfCustomizeSetting } from "../../Base/src/interfaces";
 import {
 	MarginPaddingDimension,
-	MarginPaddingSingleValueObject,
-	MarginPaddingValues,
-	MarginPaddingValuesWithoutUnit,
-	MarginPaddingValuesWithUnit,
+	MarginPaddingDimensionValuePair,
+	MarginPaddingValue,
 	WpbfCustomizeMarginPaddingControl,
 } from "./interface";
+import {
+	makeJsonStrValueWithoutUnit,
+	makeObjValueWithoutUnit,
+	makeObjValueWithoutUnitFromJson,
+	makeObjValueWithUnit,
+	parseSingleValueAsObject,
+} from "./utils";
 
 export default function MarginPaddingForm(props: {
 	type: string;
@@ -17,11 +22,12 @@ export default function MarginPaddingForm(props: {
 	// setNotificationContainer: (el: HTMLElement) => void;
 	setNotificationContainer: any;
 	control: WpbfCustomizeMarginPaddingControl;
-	customizerSetting: WpbfCustomizeSetting<any>;
+	customizerSetting: WpbfCustomizeSetting<MarginPaddingValue | string>;
 	default?: any;
-	defaultArray: MarginPaddingValues;
-	valueArray: MarginPaddingValues;
+	defaultArray: MarginPaddingValue;
+	valueArray: MarginPaddingValue;
 	unit: string;
+	saveAsJson: boolean;
 	dimensions: string[];
 	devices?: string[] | undefined;
 	isResponsive: boolean;
@@ -30,149 +36,114 @@ export default function MarginPaddingForm(props: {
 		return props.valueArray;
 	});
 
-	function parseSingleValueAsObject(
-		value: string | number,
-	): MarginPaddingSingleValueObject {
-		let unit = "";
-		let number: number = 0;
-
-		if ("" !== value) {
-			value = "string" !== typeof value ? value.toString() : value;
-			value = value.trim();
-			const negativeSign = -1 < value.indexOf("-") ? "-" : "";
-			value = value.replace(negativeSign, "");
-
-			let numeric = "";
-
-			if ("" !== value) {
-				unit = value.replace(/\d+/g, "");
-				numeric = value.replace(unit, "");
-				numeric = negativeSign + numeric.trim();
-
-				number = parseFloat(numeric);
-			}
-		}
-
-		return {
-			unit: unit,
-			number: number,
-		};
-	}
-
-	function getValuesForInput(
-		values: MarginPaddingValues,
-	): MarginPaddingValuesWithoutUnit {
-		const newValues: Record<string, number | string> = {};
-
-		for (let i = 0; i < props.dimensions.length; i++) {
-			const dimension = props.dimensions[i];
-			newValues[dimension] = props.dimensions[i];
-		}
-
-		for (const position in values) {
-			if (!props.dimensions.includes(position)) {
-				continue;
-			}
-
-			if (!values.hasOwnProperty(position)) continue;
-			if (!newValues.hasOwnProperty(position)) continue;
-
-			const positionValue = values[position];
-
-			if ("" !== positionValue) {
-				const singleValue = parseSingleValueAsObject(positionValue);
-				newValues[position] = singleValue.number;
-			}
-		}
-
-		return newValues as MarginPaddingValuesWithoutUnit;
-	}
-
-	function getValuesForCustomizer(
-		values: MarginPaddingValues,
-	): MarginPaddingValuesWithUnit {
-		const newValues: Record<string, number | string> = {};
-
-		for (let i = 0; i < props.dimensions.length; i++) {
-			const dimension = props.dimensions[i];
-			newValues[dimension] = props.dimensions[i];
-		}
-
-		for (const position in values) {
-			if (!props.dimensions.includes(position)) {
-				continue;
-			}
-
-			if (!newValues.hasOwnProperty(position)) continue;
-
-			const positionValue = values[position as MarginPaddingDimension];
-
-			if ("" !== positionValue) {
-				const singleValue = parseSingleValueAsObject(positionValue);
-				newValues[position] = singleValue.number + props.unit;
-			}
-		}
-
-		return newValues as MarginPaddingValuesWithUnit;
-	}
+	const defaultDefined =
+		"" !== props.default && "undefined" !== typeof props.default;
 
 	props.control.updateComponentState = (val) => {
-		setInputValues(getValuesForInput(val));
+		const newVal =
+			typeof val === "string"
+				? makeObjValueWithoutUnitFromJson(props.dimensions, val)
+				: makeObjValueWithoutUnit(props.dimensions, val);
+
+		setInputValues(newVal);
 	};
 
-	function handleChange(e: React.ChangeEvent, position: string) {
-		if (!props.dimensions.includes(position)) {
+	function handleInputChange(
+		e: React.ChangeEvent<HTMLInputElement>,
+		dimension: string,
+	) {
+		if (!props.dimensions.includes(dimension)) {
 			return;
 		}
 
 		if (!e.target) return;
-		if (!(e.target instanceof HTMLInputElement)) return;
 
-		let values = { ...inputValues };
-		values[position as MarginPaddingDimension] = e.target.value;
+		const values = { ...inputValues };
+		if (!values.hasOwnProperty(dimension)) return;
 
-		props.customizerSetting.set(getValuesForCustomizer(values));
+		const singleValue = parseSingleValueAsObject(e.target.value);
+		values[dimension as MarginPaddingDimension] = singleValue.number;
+
+		setInputValues(values);
+		saveToCustomizerSetting(values);
 	}
 
-	function handleReset(_e: React.MouseEvent) {
-		const values =
-			"" !== props.default && "undefined" !== typeof props.default
-				? props.defaultArray
-				: props.valueArray;
+	function handleResetButtonClick(
+		_e: React.MouseEvent<HTMLButtonElement>,
+		device?: string,
+	) {
+		const defaultValues = defaultDefined
+			? props.defaultArray
+			: props.valueArray;
 
-		props.customizerSetting.set(getValuesForCustomizer(values));
+		if (!device) {
+			saveToCustomizerSetting(defaultValues);
+			return;
+		}
+
+		const existingValues = { ...inputValues };
+
+		for (const dimension in existingValues) {
+			if (!existingValues.hasOwnProperty(dimension)) {
+				continue;
+			}
+
+			const hasDeviceStr = dimension.includes(device + "_");
+			if (!hasDeviceStr) continue;
+
+			if (!defaultValues.hasOwnProperty(dimension)) {
+				continue;
+			}
+
+			existingValues[dimension as MarginPaddingDimension] =
+				defaultValues[dimension as MarginPaddingDimension];
+		}
+
+		saveToCustomizerSetting(existingValues);
 	}
 
-	// Preparing for the template.
-	const fieldId = `wpbf-control-input-${props.type}-top`;
-	const unitRef = useRef(null);
+	function saveToCustomizerSetting(val: MarginPaddingValue) {
+		/**
+		 * This "saveAsJson" option is used to support PBF's old "responsive_padding" control.
+		 * That's why the value format is a JSON encoded version of the values (without units).
+		 */
+		if (props.saveAsJson) {
+			const newVal = makeJsonStrValueWithoutUnit(props.dimensions, val);
+			props.customizerSetting.set(newVal);
+			return;
+		}
+
+		/**
+		 * This is the default behavior.
+		 * The value format is a `MarginPaddingValue` object with units.
+		 */
+		const newVal = makeObjValueWithUnit(props.dimensions, props.unit, val);
+		props.customizerSetting.set(newVal);
+	}
 
 	function makeMappable(device?: string) {
-		const items: {
-			position: MarginPaddingDimension;
-			value: string | number;
-		}[] = [];
+		const items: MarginPaddingDimensionValuePair[] = [];
 
-		for (const position in inputValues) {
-			if (!inputValues.hasOwnProperty(position)) {
+		for (const dimension in inputValues) {
+			if (!inputValues.hasOwnProperty(dimension)) {
 				continue;
 			}
 
 			if (!device) {
 				items.push({
-					position: position as MarginPaddingDimension,
-					value: inputValues[position as MarginPaddingDimension],
+					dimension: dimension as MarginPaddingDimension,
+					value: inputValues[dimension as MarginPaddingDimension],
 				});
 
 				continue;
 			}
 
-			const hasDeviceStr = position.includes(device + "_");
+			const hasDeviceStr = dimension.includes(device + "_");
 			if (!hasDeviceStr) continue;
 
 			items.push({
-				position: position as MarginPaddingDimension,
-				value: inputValues[position as MarginPaddingDimension],
+				dimension: dimension as MarginPaddingDimension,
+				value: inputValues[dimension as MarginPaddingDimension],
 			});
 		}
 
@@ -207,45 +178,52 @@ export default function MarginPaddingForm(props: {
 
 	function renderFields(
 		device: string,
-		group: {
-			position: MarginPaddingDimension;
-			value: string | number;
-		}[],
+		group: MarginPaddingDimensionValuePair[],
 	) {
 		return (
-			<div className={`wpbf-control-cols ${wrapperClassName}`}>
-				<div className="wpbf-control-left-col">
-					<div className="wpbf-control-fields">
-						{group.map((item) => {
-							const inputClassName = `wpbf-control-input wpbf-control-input${device ? `-${device}` : ""}-${item.position}`;
-							const inputId = `_customize-input-${props.control.id}${device ? `-${device}` : ""}-${item.position}`;
-							const label = device
-								? item.position.replace(device + "_", "")
-								: item.position;
+			<>
+				<button
+					type="button"
+					className="wpbf-control-reset"
+					onClick={(e) => handleResetButtonClick(e, device)}
+				>
+					<i className="dashicons dashicons-image-rotate"></i>
+				</button>
 
-							return (
-								<div className="wpbf-control-field">
-									<input
-										id={inputId}
-										type="number"
-										value={item.value || 0 === item.value ? item.value : ""}
-										className={inputClassName}
-										onChange={(e) => handleChange(e, item.position)}
-									/>
-									<label className="wpbf-control-sublabel" htmlFor={inputId}>
-										{label}
-									</label>
-								</div>
-							);
-						})}
+				<div className={`wpbf-control-cols ${wrapperClassName}`}>
+					<div className="wpbf-control-left-col">
+						<div className="wpbf-control-fields">
+							{group.map((item) => {
+								const inputClassName = `wpbf-control-input wpbf-control-input${device ? `-${device}` : ""}-${item.dimension}`;
+								const inputId = `_customize-input-${props.control.id}${device ? `-${device}` : ""}-${item.dimension}`;
+								const label = device
+									? item.dimension.replace(device + "_", "")
+									: item.dimension;
+
+								return (
+									<div className="wpbf-control-field">
+										<input
+											id={inputId}
+											type="number"
+											value={item.value || 0 === item.value ? item.value : ""}
+											className={inputClassName}
+											onChange={(e) => handleInputChange(e, item.dimension)}
+										/>
+										<label className="wpbf-control-sublabel" htmlFor={inputId}>
+											{label}
+										</label>
+									</div>
+								);
+							})}
+						</div>
+					</div>
+					<div className="wpbf-control-right-col">
+						<span ref={unitRef} className="wpbf-control-unit">
+							{props.unit}
+						</span>
 					</div>
 				</div>
-				<div className="wpbf-control-right-col">
-					<span ref={unitRef} className="wpbf-control-unit">
-						{props.unit}
-					</span>
-				</div>
-			</div>
+			</>
 		);
 	}
 
@@ -270,6 +248,8 @@ export default function MarginPaddingForm(props: {
 		);
 	}
 
+	const fieldId = `wpbf-control-input-${props.type}-top`;
+	const unitRef = useRef(null);
 	const wrapperClassName = `wpbf-control-form ${props.isResponsive ? "wpbf-responsive-padding-wrap" : ""}`;
 
 	return (
@@ -297,15 +277,6 @@ export default function MarginPaddingForm(props: {
 			)}
 
 			{renderDeviceButtons()}
-
-			<button
-				type="button"
-				className="wpbf-control-reset"
-				onClick={handleReset}
-			>
-				<i className="dashicons dashicons-image-rotate"></i>
-			</button>
-
 			{renderFieldGroups()}
 		</div>
 	);

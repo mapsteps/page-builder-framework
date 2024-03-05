@@ -83,14 +83,14 @@ class BaseField {
 	}
 
 	/**
-	 * Parse control args.
+	 * Parse the default control args with our custom properties.
 	 */
 	protected function parseControlArgs() {
 
 		$default_args = $this->parseDefaultControlArgs();
-		$custom_args  = array();
+		$props        = $this->control->custom_properties;
 
-		return array_merge( $default_args, $custom_args );
+		return wp_parse_args( $props, $default_args );
 
 	}
 

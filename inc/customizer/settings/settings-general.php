@@ -424,6 +424,9 @@ wpbf_customizer_field()
 		'mobile_bottom'  => 20,
 		'mobile_left'    => 20,
 	) )
+	->properties( [
+		'save_as_json' => true,
+	] )
 	->addToSection( 'wpbf_sidebar_options' );
 
 // Color.

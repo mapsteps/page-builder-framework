@@ -11,7 +11,7 @@ class ResponsiveMarginPaddingField extends MarginPaddingField {
 	 *
 	 * @return string[]
 	 */
-	protected function dimensions() {
+	protected function defaultDimensions() {
 
 		return ResponsiveMarginPaddingControl::$defaultDimensions;
 
@@ -22,7 +22,7 @@ class ResponsiveMarginPaddingField extends MarginPaddingField {
 	 *
 	 * @return string
 	 */
-	protected function unit() {
+	protected function defaultUnit() {
 
 		return ResponsiveMarginPaddingControl::$defaultUnit;
 

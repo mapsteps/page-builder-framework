@@ -2,12 +2,13 @@ import MarginPaddingForm from "./MarginPaddingForm";
 import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
 import { Control_Params } from "wordpress__customize-browser/Control";
 import {
-	MarginPaddingValuesWithUnit,
+	MarginPaddingValue,
 	WpbfCustomizeMarginPaddingControl,
 } from "./interface";
 import ReactDOM from "react-dom";
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { makeObjValueWithoutUnitFromJson } from "./utils";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -84,6 +85,7 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 				defaultArray={params.defaultArray}
 				valueArray={params.valueArray}
 				unit={params.unit}
+				saveAsJson={params.saveAsJson}
 				dimensions={params.dimensions}
 				devices={params.devices}
 				isResponsive={isResponsive}
@@ -112,14 +114,19 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 		 * Update component value's state when customizer setting's value is changed.
 		 */
 		control.setting.bind((val) => {
-			control.updateComponentState(val);
+			const newVal =
+				typeof val === "string"
+					? makeObjValueWithoutUnitFromJson(control.params.dimensions, val)
+					: val;
+
+			control.updateComponentState(newVal);
 		});
 	},
 
 	/**
 	 * This method will be overridden by the rendered component.
 	 */
-	updateComponentState: (_val: MarginPaddingValuesWithUnit) => {},
+	updateComponentState: (_val: MarginPaddingValue) => {},
 
 	/**
 	 * Handle removal/de-registration of the control.

@@ -6,8 +6,7 @@ import {
 
 export type MarginPaddingDimension = "top" | "right" | "bottom" | "left";
 
-// We allow empty string.
-export interface MarginPaddingValuesWithoutUnit {
+export interface MarginPaddingValue {
 	top: number | string;
 	right: number | string;
 	bottom: number | string;
@@ -16,28 +15,20 @@ export interface MarginPaddingValuesWithoutUnit {
 	[dimension: string]: number | string;
 }
 
-export interface MarginPaddingValuesWithUnit {
-	top: string;
-	right: string;
-	bottom: string;
-	left: string;
-
-	[dimension: string]: string;
-}
-
-export type MarginPaddingValues =
-	| MarginPaddingValuesWithoutUnit
-	| MarginPaddingValuesWithUnit;
-
 export interface MarginPaddingSingleValueObject {
 	unit: string;
 	number: number;
 }
 
+export interface MarginPaddingDimensionValuePair {
+	dimension: string;
+	value: string | number;
+}
+
 export interface WpbfCustomizeMarginPaddingControl extends Control {
 	prototype: WpbfCustomizeControl;
-	setting: WpbfCustomizeSetting<any>;
+	setting: WpbfCustomizeSetting<MarginPaddingValue | string>;
 	setNotificationContainer: (el: HTMLElement) => void;
 	destroy: VoidFunction;
-	updateComponentState: (val: MarginPaddingValuesWithUnit) => void;
+	updateComponentState: (val: MarginPaddingValue | string) => void;
 }

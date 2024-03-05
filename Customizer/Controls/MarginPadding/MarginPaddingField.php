@@ -12,7 +12,7 @@ class MarginPaddingField extends BaseField {
 	 *
 	 * @return string[]
 	 */
-	protected function dimensions() {
+	protected function defaultDimensions() {
 
 		return MarginPaddingControl::$defaultDimensions;
 
@@ -23,7 +23,7 @@ class MarginPaddingField extends BaseField {
 	 *
 	 * @return string
 	 */
-	protected function unit() {
+	protected function defaultUnit() {
 
 		return MarginPaddingControl::$defaultUnit;
 
@@ -32,52 +32,28 @@ class MarginPaddingField extends BaseField {
 	/**
 	 * Setting's sanitize callback.
 	 *
-	 * @param string|array $value The color value.
+	 * @param string|array $value The value to sanitize.
 	 *
 	 * @return array|string
 	 */
 	public function sanitizeCallback( $value ) {
 
-		$props = $this->control->custom_properties;
-		$unit  = ! empty( $props['unit'] ) ? $props['unit'] : $this->unit();
-
-		if ( empty( $value ) ) {
+		// The allowed value are JSON string or array.
+		if ( empty( $value ) || ( ! is_string( $value ) && ! is_array( $value ) ) ) {
 			return '';
 		}
 
-		$allowed_dimensions = ! empty( $props['dimensions'] ) ? $props['dimensions'] : $this->dimensions();
+		$props = $this->control->custom_properties;
+		$unit  = ! empty( $props['unit'] ) ? $props['unit'] : $this->defaultUnit();
 
-		if ( is_numeric( $value ) ) {
-			$parsed_value = [];
+		$save_as_json = ! empty( $props['save_as_json'] ) && is_bool( $props['save_as_json'] );
+		$dimensions   = ! empty( $props['dimensions'] ) ? $props['dimensions'] : $this->defaultDimensions();
 
-			foreach ( $allowed_dimensions as $dimension ) {
-				$parsed_value[ $dimension ] = $value . $unit;
-			}
+		$util = new MarginPaddingUtil();
 
-			return $parsed_value;
-		}
+		$array_values = $util->toArrayValues( $dimensions, ( $save_as_json ? false : $unit ), $value );
 
-		if ( is_string( $value ) ) {
-			$sanitized_value = sanitize_text_field( $value );
-
-			$value = [];
-
-			foreach ( $allowed_dimensions as $dimension ) {
-				$value[ $dimension ] = $sanitized_value;
-			}
-		}
-
-		foreach ( $value as $position => $position_value ) {
-			if ( '' !== $position_value ) {
-				if ( is_numeric( $position_value ) ) {
-					$position_value = $position_value . $unit;
-				}
-			}
-
-			$value[ $position ] = sanitize_text_field( strtolower( $position_value ) );
-		}
-
-		return $value;
+		return $save_as_json ? $util->toJsonStrWithoutUnit( $array_values ) : $array_values;
 
 	}
 
@@ -139,6 +115,10 @@ class MarginPaddingField extends BaseField {
 
 		if ( ! empty( $props['dimensions'] ) && is_array( $props['dimensions'] ) ) {
 			$control->dimensions = $props['dimensions'];
+		}
+
+		if ( ! empty( $props['save_as_json'] ) && is_bool( $props['save_as_json'] ) ) {
+			$control->save_as_json = true;
 		}
 
 		$wp_customize_manager->add_control( $control );
