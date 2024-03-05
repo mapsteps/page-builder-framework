@@ -14,6 +14,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineField;
+use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
@@ -41,6 +42,7 @@ class CustomizerUtil {
 		'dimension'                 => '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl',
 		'divider'                   => '\Mapsteps\Wpbf\Customizer\Controls\Headline\DividerControl',
 		'headline'                  => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineControl',
+		'headline-toggle'           => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleControl',
 		'generic'                   => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
 		'margin-padding'            => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingControl',
 		'responsive-margin-padding' => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingControl',
@@ -58,6 +60,7 @@ class CustomizerUtil {
 	public $controls_with_content_template = array(
 		'checkbox',
 		'toggle',
+		'headline-toggle',
 		'dimension',
 		'generic',
 		'radio',
@@ -215,6 +218,9 @@ class CustomizerUtil {
 				break;
 			case 'headline':
 				$field = new HeadlineField( $control );
+				break;
+			case 'headline-toggle':
+				$field = new HeadlineToggleField( $control );
 				break;
 			case 'margin-padding':
 				$field = new MarginPaddingField( $control );
