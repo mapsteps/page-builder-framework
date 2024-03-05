@@ -14,25 +14,25 @@ class GenericControl extends BaseControl {
 	public $type = 'wpbf-generic';
 
 	/**
-	 * Input's type.
+	 * Control's subtype.
 	 *
 	 * @var string
 	 */
-	public $input_type = 'text';
+	public $subtype = 'text';
 
 	/**
 	 * Minimum value.
 	 *
-	 * @var int|float
+	 * @var int|float|null
 	 */
-	public $min = 0;
+	public $min = null;
 
 	/**
 	 * Maximum value.
 	 *
-	 * @var int|float
+	 * @var int|float|null
 	 */
-	public $max = 100;
+	public $max = null;
 
 	/**
 	 * Enqueue control related scripts/styles.
@@ -62,10 +62,19 @@ class GenericControl extends BaseControl {
 
 		parent::to_json();
 
-		$this->json['inputType'] = $this->input_type;
-		$this->json['min']       = $this->min;
-		$this->json['max']       = $this->max;
-		$this->json['inputTag']  = $this->input_type === 'textarea' ? 'textarea' : 'input';
+		$this->json['subtype']  = $this->subtype;
+		$this->json['inputTag'] = $this->subtype === 'textarea' ? 'textarea' : 'input';
+
+		if ( 'number' === $this->subtype ) {
+			if ( ! is_null( $this->min ) ) {
+				$this->json['min'] = $this->min;
+			}
+
+			if ( ! is_null( $this->max ) ) {
+				$this->json['max'] = $this->max;
+			}
+		}
+
 
 	}
 
@@ -95,7 +104,7 @@ class GenericControl extends BaseControl {
 				id="_customize-input-{{ data.id }}">{{{ data.value }}}</textarea>
 			<# } else { #>
 			<input
-				type="{{ data.inputType }}"
+				type="{{ data.subtype }}"
 				id="_customize-input-{{ data.id }}"
 				value="{{ data.value }}"
 				{{{ data.inputAttrs }}}

@@ -23,53 +23,17 @@ class GenericField extends BaseField {
 		} elseif ( $this->control->type === 'url' ) {
 			return esc_url_raw( $value );
 		} elseif ( $this->control->type === 'number' ) {
-			return $this->sanitize_number( $value );
+			$props = $this->control->custom_properties;
+			$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
+			$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
+
+			return ( new NumberUtil() )->sanitize_number( $value, $min, $max );
 		} elseif ( $this->control->type === 'email' ) {
 			return sanitize_email( $value );
 		}
 
 		return wp_kses_post( $value );
 
-	}
-
-	/**
-	 * Sanitize number.
-	 *
-	 * @param mixed $value The value to sanitize.
-	 *
-	 * @return int|float
-	 */
-	private function sanitize_number( $value ) {
-		$value = filter_var( $value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
-		$props = $this->control->custom_properties;
-
-		if ( isset( $props['min'] ) && isset( $props['max'] ) ) {
-			// Make sure min & max are all numeric.
-			$min = filter_var( $props['min'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
-			$max = filter_var( $props['max'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
-
-			if ( $value < $min ) {
-				$value = $min;
-			} elseif ( $value > $max ) {
-				$value = $max;
-			}
-		} else {
-			if ( isset( $props['min'] ) ) {
-				$min = filter_var( $props['min'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
-
-				if ( $value < $min ) {
-					$value = $min;
-				}
-			} elseif ( isset( $props['max'] ) ) {
-				$max = filter_var( $props['max'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
-
-				if ( $value > $max ) {
-					$value = $max;
-				}
-			}
-		}
-
-		return $value;
 	}
 
 	/**
@@ -87,7 +51,19 @@ class GenericField extends BaseField {
 			$control_args
 		);
 
-		$generic_control->input_type = $this->control->type;
+		$generic_control->subtype = $this->control->type;
+
+		if ( 'number' === $this->control->type ) {
+			$props = $this->control->custom_properties;
+
+			if ( isset( $props['min'] ) && is_numeric( $props['min'] ) ) {
+				$generic_control->min = (float) $props['min'];
+			}
+
+			if ( isset( $props['max'] ) && is_numeric( $props['max'] ) ) {
+				$generic_control->max = (float) $props['max'];
+			}
+		}
 
 		$wp_customize_manager->add_control( $generic_control );
 
