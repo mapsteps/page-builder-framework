@@ -27,7 +27,7 @@ class GenericField extends BaseField {
 			$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
 			$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
 
-			return ( new NumberUtil() )->sanitize_number( $value, $min, $max );
+			return ( new NumberUtil() )->parse_number( $value, $min, $max );
 		} elseif ( $this->control->type === 'email' ) {
 			return sanitize_email( $value );
 		}

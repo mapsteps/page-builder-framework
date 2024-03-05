@@ -86,7 +86,7 @@ class GenericControl extends BaseControl {
 			if ( $this->setting instanceof WP_Customize_Setting ) {
 				$default_value = $this->setting->default;
 
-				$this->setting->default = ( new NumberUtil() )->sanitize_number( $default_value, $this->min, $this->max );
+				$this->setting->default = ( new NumberUtil() )->parse_number( $default_value, $this->min, $this->max );
 			}
 		}
 
