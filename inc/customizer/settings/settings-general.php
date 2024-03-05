@@ -76,23 +76,22 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_page_options' );
 
 // Padding.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'responsive_padding',
-	'label'             => __( 'Page Padding', 'page-builder-framework' ),
-	'section'           => 'wpbf_page_options',
-	'settings'          => 'page_padding',
-	'priority'          => 1,
-	'transport'         => 'postMessage',
-	'default'           => json_encode(
-		array(
-			'desktop_top'    => 40,
-			'desktop_right'  => 20,
-			'desktop_bottom' => 40,
-			'desktop_left'   => 20,
-		)
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
-) );
+wpbf_customizer_field()
+	->id( 'page_padding' )
+	->type( 'responsive-padding' )
+	->label( __( 'Page Padding', 'page-builder-framework' ) )
+	->priority( 1 )
+	->transport( 'postMessage' )
+	->defaultValue( array(
+		'desktop_top'    => 40,
+		'desktop_right'  => 20,
+		'desktop_bottom' => 40,
+		'desktop_left'   => 20,
+	) )
+	->properties( [
+		'save_as_json' => true,
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Convert commented lines above to use wpbf_customizer_field() method.
 
@@ -152,30 +151,26 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_page_options' );
 
 // Boxed padding.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'responsive_padding',
-	'label'             => __( 'Padding', 'page-builder-framework' ),
-	'section'           => 'wpbf_page_options',
-	'settings'          => 'page_boxed_padding',
-	'priority'          => 4,
-	'transport'         => 'postMessage',
-	'default'           => json_encode(
+wpbf_customizer_field()
+	->id( 'page_boxed_padding' )
+	->type( 'responsive-padding' )
+	->label( __( 'Padding', 'page-builder-framework' ) )
+	->priority( 4 )
+	->defaultValue( array(
+		'desktop_top'    => 20,
+		'desktop_right'  => 20,
+		'desktop_bottom' => 20,
+		'desktop_left'   => 20,
+	) )
+	->transport( 'postMessage' )
+	->activeCallback( [
 		array(
-			'desktop_top'    => 20,
-			'desktop_right'  => 20,
-			'desktop_bottom' => 20,
-			'desktop_left'   => 20,
-		)
-	),
-	'active_callback'   => array(
-		array(
-			'setting'  => 'page_boxed',
+			'id'       => 'page_boxed',
 			'operator' => '==',
-			'value'    => 1,
+			'value'    => true,
 		),
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
-) );
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Background color.
 wpbf_customizer_field()
