@@ -8,6 +8,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
 use WP_Customize_Control;
+use WP_Customize_Manager;
 
 /**
  * Class to add Wpbf customizer base control.
@@ -17,14 +18,14 @@ class BaseControl extends WP_Customize_Control {
 	/**
 	 * Used to generate css variables.
 	 *
-	 * @var string $css_vars
+	 * @var string
 	 */
 	public $css_vars = '';
 
 	/**
 	 * Used to automatically generate all CSS output.
 	 *
-	 * @var array $output
+	 * @var array
 	 */
 	public $output = array();
 
@@ -34,14 +35,41 @@ class BaseControl extends WP_Customize_Control {
 	 * The value of this property will be rendered to the wrapper element.
 	 * Can be 'class', 'id', 'data-*', and other attributes.
 	 *
-	 * @var array $wrapper_attrs
+	 * @var array
 	 */
 	public $wrapper_attrs = array();
 
 	/**
-	 * @var bool Whether to allow collapsing the control.
+	 * Whether to allow collapsing the control.
+	 *
+	 * @var bool
 	 */
 	public $allow_collapse = false;
+
+	/**
+	 * Constructor.
+	 *
+	 * Supplied `$args` override class property defaults.
+	 *
+	 * If `$args['settings']` is not defined, use the `$id` as the setting ID.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
+	 * @param string               $id                   Control ID.
+	 * @param array                $args                 Optional. Array of properties for the new Control object.
+	 *                                                   Default empty array.
+	 */
+	public function __construct( $wp_customize_manager, $id, $args = array() ) {
+
+		parent::__construct( $wp_customize_manager, $id, $args );
+
+		if ( ! empty( $args['wrapper_attrs'] ) && is_array( $args['wrapper_attrs'] ) ) {
+			$this->wrapper_attrs = $args['wrapper_attrs'];
+
+			// Prevent bloated data.
+			unset( $args['wrapper_attrs'] );
+		}
+
+	}
 
 	/**
 	 * Enqueue control related scripts/styles.
@@ -81,7 +109,7 @@ class BaseControl extends WP_Customize_Control {
 		// The ID.
 		$this->json['id'] = $this->id;
 
-		// The ajaxurl in case we need it.
+		// The ajax url in case we need it.
 		$this->json['ajaxurl'] = admin_url( 'admin-ajax.php' );
 
 		// Input attributes.
