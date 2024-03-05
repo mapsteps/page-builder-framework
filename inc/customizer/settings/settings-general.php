@@ -170,6 +170,9 @@ wpbf_customizer_field()
 			'value'    => true,
 		),
 	] )
+	->properties( [
+		'save_as_json' => true,
+	] )
 	->addToSection( 'wpbf_page_options' );
 
 // Background color.
