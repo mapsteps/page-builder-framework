@@ -8,6 +8,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Slider;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
+use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 use WP_Customize_Manager;
 
 /**
@@ -18,13 +19,19 @@ class SliderField extends BaseField {
 	/**
 	 * Setting's sanitize callback.
 	 *
-	 * @param string $value The value to sanitize.
+	 * @param string|int|float $value The value to sanitize.
 	 *
-	 * @return float
+	 * @return string|int|float
 	 */
 	public function sanitizeCallback( $value ) {
 
-		return filter_var( $value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
+		$props = $this->control->custom_properties;
+		$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
+		$min   = is_null( $min ) ? SliderControl::$defaultMin : $min;
+		$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
+		$max   = is_null( $max ) ? SliderControl::$defaultMax : $max;
+
+		return ( new NumberUtil() )->sanitize_number( $value, $min, $max );
 
 	}
 
@@ -37,27 +44,11 @@ class SliderField extends BaseField {
 
 		$control_args = $this->parseControlArgs();
 
-		$slider_control = new SliderControl(
+		$wp_customize_manager->add_control( new SliderControl(
 			$wp_customize_manager,
 			$this->control->id,
 			$control_args
-		);
-
-		$props = $this->control->custom_properties;
-
-		if ( isset( $props['min'] ) ) {
-			$slider_control->min = $props['min'];
-		}
-
-		if ( isset( $props['max'] ) ) {
-			$slider_control->max = $props['max'];
-		}
-
-		if ( isset( $props['step'] ) ) {
-			$slider_control->step = $props['step'];
-		}
-
-		$wp_customize_manager->add_control( $slider_control );
+		) );
 
 	}
 

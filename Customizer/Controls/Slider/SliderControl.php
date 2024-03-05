@@ -8,6 +8,9 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Slider;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
+use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
+use WP_Customize_Manager;
+use WP_Customize_Setting;
 
 /**
  * Class to add Wpbf customizer slider control.
@@ -22,19 +25,77 @@ class SliderControl extends BaseControl {
 	public $type = 'wpbf-slider';
 
 	/**
+	 * Default minimum value.
+	 *
+	 * @var int
+	 */
+	public static $defaultMin = 0;
+
+	/**
 	 * @var int|float Minimum value.
 	 */
-	public $min = 0;
+	public $min;
+
+	/**
+	 * Default maximum value.
+	 *
+	 * @var int
+	 */
+	public static $defaultMax = 100;
 
 	/**
 	 * @var int|float Maximum value.
 	 */
-	public $max = 100;
+	public $max;
 
 	/**
 	 * @var int|float Step value.
 	 */
 	public $step = 1;
+
+	/**
+	 * Constructor.
+	 *
+	 * Supplied `$args` override class property defaults.
+	 *
+	 * If `$args['settings']` is not defined, use the `$id` as the setting ID.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
+	 * @param string               $id                   Control ID.
+	 * @param array                $args                 Optional. Array of properties for the new Control object.
+	 *                                                   Default empty array.
+	 */
+	public function __construct( $wp_customize_manager, $id, $args = array() ) {
+
+		parent::__construct( $wp_customize_manager, $id, $args );
+
+		if ( isset( $args['min'] ) && is_numeric( $args['min'] ) ) {
+			$this->min = (float) $args['min'];
+		} else {
+			$this->min = static::$defaultMin;
+		}
+
+		if ( isset( $args['max'] ) && is_numeric( $args['max'] ) ) {
+			$this->max = (float) $args['max'];
+		} else {
+			$this->max = static::$defaultMax;
+		}
+
+		if ( $this->min > $this->max ) {
+			$this->max = $this->min;
+		}
+
+		if ( isset( $args['step'] ) && is_numeric( $args['step'] ) ) {
+			$this->step = (float) $args['step'];
+		}
+
+		if ( $this->setting instanceof WP_Customize_Setting ) {
+			$default_value = $this->setting->default;
+
+			$this->setting->default = ( new NumberUtil() )->sanitize_number( $default_value, $this->min, $this->max );
+		}
+
+	}
 
 	/**
 	 * Enqueue control related scripts/styles.
@@ -75,19 +136,10 @@ class SliderControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		$this->json['min']  = (float) $this->min;
-		$this->json['max']  = (float) $this->max;
-		$this->json['step'] = (float) $this->step;
-
-		$this->json['value'] = $this->json['value'] < $this->json['min'] ? $this->json['min'] : $this->json['value'];
-		$this->json['value'] = $this->json['value'] > $this->json['max'] ? $this->json['max'] : $this->json['value'];
-		$this->json['value'] = (float) $this->json['value'];
-
-		$value_unit   = preg_replace( '/\d+/', '', $this->value() );
-		$value_number = str_ireplace( $value_unit, '', $this->value() );
-
-		$this->json['valueUnit']   = $value_unit;
-		$this->json['valueNumber'] = $value_number;
+		$this->json['min']   = $this->min;
+		$this->json['max']   = $this->max;
+		$this->json['step']  = $this->step;
+		$this->json['value'] = ( new NumberUtil() )->sanitize_number( $this->value(), $this->min, $this->max );
 
 	}
 

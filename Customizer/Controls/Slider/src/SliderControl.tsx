@@ -48,6 +48,7 @@ const SliderControl = wp.customize.Control.extend({
 	 */
 	renderContent: function renderContent() {
 		const control = this as WpbfCustomizeControl;
+		const params = control.params;
 		const root = createRoot(control.container[0]);
 
 		root.render(
@@ -55,13 +56,13 @@ const SliderControl = wp.customize.Control.extend({
 				control={control}
 				customizerSetting={control.setting}
 				setNotificationContainer={control.setNotificationContainer}
-				label={control.params.label}
-				description={control.params.description}
-				default={control.params.default}
-				value={control.params.value}
-				min={control.params.min}
-				max={control.params.max}
-				step={control.params.step}
+				label={params.label}
+				description={params.description}
+				default={params.default}
+				value={params.value}
+				min={params.min}
+				max={params.max}
+				step={params.step}
 			/>,
 		);
 
