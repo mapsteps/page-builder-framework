@@ -231,6 +231,7 @@ final class Customizer {
 			$wp_customize_manager->add_section(
 				$section->id,
 				array(
+					'panel'           => $section->panel_id,
 					'title'           => $section->title,
 					'description'     => $section->description,
 					'capability'      => $section->capability,
