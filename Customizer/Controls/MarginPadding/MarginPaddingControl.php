@@ -121,7 +121,7 @@ class MarginPaddingControl extends BaseControl {
 
 		$util = new MarginPaddingUtil();
 
-		$real_default = $this->setting instanceof WP_Customize_Setting ? $this->setting->default : [];
+		$real_default = $this->setting instanceof WP_Customize_Setting ? $this->setting->default : ( $this->save_as_json ? '' : [] );
 
 		// Parse $real_default with $this->default_array.
 		if ( ! empty( $real_default ) ) {
