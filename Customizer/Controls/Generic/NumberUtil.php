@@ -28,7 +28,9 @@ class NumberUtil {
 		if ( ! is_null( $min ) && ! is_null( $max ) ) {
 			if ( $value < $min ) {
 				$value = $min;
-			} elseif ( $value > $max ) {
+			}
+
+			if ( $value > $max ) {
 				$value = $max;
 			}
 		} else {
