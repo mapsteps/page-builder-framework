@@ -20,6 +20,7 @@ use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingField
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
+use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
@@ -50,6 +51,7 @@ class CustomizerUtil {
 		'radio-image'               => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
 		'select'                    => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
 		'slider'                    => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
+		'input-slider'              => '\Mapsteps\Wpbf\Customizer\Controls\InputSlider\InputSliderControl',
 	);
 
 	/**
@@ -239,6 +241,9 @@ class CustomizerUtil {
 				break;
 			case 'slider':
 				$field = new SliderField( $control );
+				break;
+			case 'input-slider':
+				$field = new InputSliderField( $control );
 				break;
 			default:
 				break;
