@@ -309,6 +309,21 @@ wpbf_customizer_field()
 	] )
 	->addToSection( 'wpbf_page_options' );
 
+/* Fields - Background */
+
+// Background color.
+wpbf_customizer_field()
+	->id( 'background_color' )
+	->type( 'color' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( 100 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( 'background_image' );
+
 /* Fields - Sidebar */
 
 wpbf_customizer_field()
