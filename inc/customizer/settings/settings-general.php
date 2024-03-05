@@ -6,9 +6,6 @@
  * @subpackage Customizer
  */
 
-use Kirki\Field\Toggle;
-use Kirki\Pro\Field\HeadlineToggle;
-
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /* Panel */
@@ -94,18 +91,14 @@ wpbf_customizer_field()
 	] )
 	->addToSection( 'wpbf_page_options' );
 
-// Convert commented lines above to use wpbf_customizer_field() method.
-
 // Boxed.
-new HeadlineToggle(
-	[
-		'settings' => 'page_boxed',
-		'label'    => esc_html__( 'Boxed Layout', 'page-builder-framework' ),
-		'section'  => 'wpbf_page_options',
-		'default'  => 0,
-		'priority' => 2,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_boxed' )
+	->type( 'headline-toggle' )
+	->label( __( 'Boxed Layout', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 2 )
+	->addToSection( 'wpbf_page_options' );
 
 // Boxed margin.
 wpbf_customizer_field()
@@ -172,22 +165,20 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_page_options' );
 
 // Box shadow.
-new HeadlineToggle(
-	[
-		'settings'        => 'page_boxed_box_shadow',
-		'label'           => esc_html__( 'Box Shadow', 'page-builder-framework' ),
-		'section'         => 'wpbf_page_options',
-		'default'         => 0,
-		'priority'        => 6,
-		'active_callback' => [
-			[
-				'setting'  => 'page_boxed',
-				'operator' => '==',
-				'value'    => 1,
-			],
-		],
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_boxed_box_shadow' )
+	->type( 'headline-toggle' )
+	->label( __( 'Box Shadow', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 6 )
+	->activeCallback( [
+		array(
+			'id'       => 'page_boxed',
+			'operator' => '==',
+			'value'    => true,
+		),
+	] )
+	->addToSection( 'wpbf_page_options' );
 
 // Box shadow blur.
 wpbf_customizer_field()
