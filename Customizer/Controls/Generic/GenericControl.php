@@ -73,17 +73,22 @@ class GenericControl extends BaseControl {
 				$this->max = (float) $args['max'];
 			}
 
+			if ( ! is_null( $this->min ) && ! is_null( $this->max ) ) {
+				if ( $this->min > $this->max ) {
+					$this->max = $this->min;
+				}
+			}
+
 			if ( isset( $args['step'] ) && is_numeric( $args['step'] ) ) {
 				$this->step = (float) $args['step'];
 			}
+
+			if ( $this->setting instanceof WP_Customize_Setting ) {
+				$default_value = $this->setting->default;
+
+				$this->setting->default = ( new NumberUtil() )->sanitize_number( $default_value, $this->min, $this->max );
+			}
 		}
-
-		if ( $this->setting instanceof WP_Customize_Setting ) {
-			$default_value = $this->setting->default;
-
-			$this->setting->default = ( new NumberUtil() )->sanitize_number( $default_value, $this->min, $this->max );
-		}
-
 
 	}
 
