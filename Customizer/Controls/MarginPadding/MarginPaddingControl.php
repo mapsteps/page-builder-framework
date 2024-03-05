@@ -142,8 +142,10 @@ class MarginPaddingControl extends BaseControl {
 		$this->value_array = $this->remove_units( $this->value_array );
 
 		if ( $this->save_as_json ) {
-			// Normalize the real default, so that $this->value() will return JSON string.
-			$this->setting->default = $util->toJsonStrWithoutUnit( $this->default_array );
+			if ( $this->setting instanceof WP_Customize_Setting ) {
+				// Normalize the real default, so that $this->value() will return JSON string.
+				$this->setting->default = $util->toJsonStrWithoutUnit( $this->default_array );
+			}
 		}
 
 	}
