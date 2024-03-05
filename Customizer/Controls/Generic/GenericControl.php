@@ -3,6 +3,8 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
+use WP_Customize_Manager;
+use WP_Customize_Setting;
 
 class GenericControl extends BaseControl {
 
@@ -33,6 +35,57 @@ class GenericControl extends BaseControl {
 	 * @var int|float|null
 	 */
 	public $max = null;
+
+	/**
+	 * Step value.
+	 *
+	 * @var int|float
+	 */
+	public $step = 1;
+
+	/**
+	 * Constructor.
+	 *
+	 * Supplied `$args` override class property defaults.
+	 *
+	 * If `$args['settings']` is not defined, use the `$id` as the setting ID.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
+	 * @param string               $id                   Control ID.
+	 * @param array                $args                 Optional. Array of properties for the new Control object.
+	 *                                                   Default empty array.
+	 */
+	public function __construct( $wp_customize_manager, $id, $args = array() ) {
+
+		parent::__construct( $wp_customize_manager, $id, $args );
+
+		// Already sanitized in `addControl` method in `GenericField` class.
+		if ( ! empty( $args['subtype'] ) ) {
+			$this->subtype = $args['subtype'];
+		}
+
+		if ( 'number' === $this->subtype ) {
+			if ( isset( $args['min'] ) && is_numeric( $args['min'] ) ) {
+				$this->min = (float) $args['min'];
+			}
+
+			if ( isset( $args['max'] ) && is_numeric( $args['max'] ) ) {
+				$this->max = (float) $args['max'];
+			}
+
+			if ( isset( $args['step'] ) && is_numeric( $args['step'] ) ) {
+				$this->step = (float) $args['step'];
+			}
+		}
+
+		if ( $this->setting instanceof WP_Customize_Setting ) {
+			$default_value = $this->setting->default;
+
+			$this->setting->default = ( new NumberUtil() )->sanitize_number( $default_value, $this->min, $this->max );
+		}
+
+
+	}
 
 	/**
 	 * Enqueue control related scripts/styles.
@@ -73,6 +126,8 @@ class GenericControl extends BaseControl {
 			if ( ! is_null( $this->max ) ) {
 				$this->json['max'] = $this->max;
 			}
+
+			$this->json['step'] = $this->step;
 		}
 
 
@@ -107,8 +162,21 @@ class GenericControl extends BaseControl {
 				type="{{ data.subtype }}"
 				id="_customize-input-{{ data.id }}"
 				value="{{ data.value }}"
-				{{{ data.inputAttrs }}}
-				{{{ data.link }}}
+
+			<# if ( 'number' === data.subtype ) { #>
+			<# if ( 'undefined' !== data.min ) { #>
+			min="{{ data.min }}"
+			<# } #>
+
+			<# if ( 'undefined' !== data.max ) { #>
+			max="{{ data.max }}"
+			<# } #>
+
+			step="{{ data.step }}"
+			<# } #>
+
+			{{{ data.inputAttrs }}}
+			{{{ data.link }}}
 			>
 			<# } #>
 		</div>

@@ -45,27 +45,15 @@ class GenericField extends BaseField {
 
 		$control_args = $this->parseControlArgs();
 
-		$generic_control = new GenericControl(
+		if ( ! empty( $control_args['subtype'] ) && is_string( $control_args['subtype'] ) ) {
+			$control_args['subtype'] = esc_attr( $this->control->type );
+		}
+
+		$wp_customize_manager->add_control( new GenericControl(
 			$wp_customize_manager,
 			$this->control->id,
 			$control_args
-		);
-
-		$generic_control->subtype = $this->control->type;
-
-		if ( 'number' === $this->control->type ) {
-			$props = $this->control->custom_properties;
-
-			if ( isset( $props['min'] ) && is_numeric( $props['min'] ) ) {
-				$generic_control->min = (float) $props['min'];
-			}
-
-			if ( isset( $props['max'] ) && is_numeric( $props['max'] ) ) {
-				$generic_control->max = (float) $props['max'];
-			}
-		}
-
-		$wp_customize_manager->add_control( $generic_control );
+		) );
 
 	}
 
