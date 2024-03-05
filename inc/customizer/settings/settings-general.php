@@ -14,54 +14,55 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 /* Panel */
 
 // General.
-Kirki::add_panel( 'layout_panel', array(
-	'priority' => 2,
-	'title'    => __( 'General', 'page-builder-framework' ),
-) );
+wpbf_customizer_panel()
+	->id( 'layout_panel' )
+	->title( __( 'General', 'page-builder-framework' ) )
+	->priority( 2 )
+	->add();
 
 /* Sections */
 
 // Layout.
-Kirki::add_section( 'wpbf_page_options', array(
-	'title'    => __( 'Layout', 'page-builder-framework' ),
-	'panel'    => 'layout_panel',
-	'priority' => 100,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_page_options' )
+	->title( __( 'Layout', 'page-builder-framework' ) )
+	->priority( 100 )
+	->addToPanel( 'layout_panel' );
 
 // Sidebar.
-Kirki::add_section( 'wpbf_sidebar_options', array(
-	'title'    => __( 'Sidebar', 'page-builder-framework' ),
-	'panel'    => 'layout_panel',
-	'priority' => 300,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_sidebar_options' )
+	->title( __( 'Sidebar', 'page-builder-framework' ) )
+	->priority( 300 )
+	->addToPanel( 'layout_panel' );
 
 // 404.
-Kirki::add_section( 'wpbf_404_options', array(
-	'title'    => __( '404 Page', 'page-builder-framework' ),
-	'panel'    => 'layout_panel',
-	'priority' => 400,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_404_options' )
+	->title( __( '404 Page', 'page-builder-framework' ) )
+	->priority( 400 )
+	->addToPanel( 'layout_panel' );
 
 // Breadcrumbs.
-Kirki::add_section( 'wpbf_breadcrumb_settings', array(
-	'title'    => __( 'Breadcrumbs', 'page-builder-framework' ),
-	'panel'    => 'layout_panel',
-	'priority' => 500,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_breadcrumb_settings' )
+	->title( __( 'Breadcrumbs', 'page-builder-framework' ) )
+	->priority( 500 )
+	->addToPanel( 'layout_panel' );
 
 // Buttons.
-Kirki::add_section( 'wpbf_button_options', array(
-	'title'    => __( 'Theme Buttons', 'page-builder-framework' ),
-	'panel'    => 'layout_panel',
-	'priority' => 600,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_button_options' )
+	->title( __( 'Theme Buttons', 'page-builder-framework' ) )
+	->priority( 600 )
+	->addToPanel( 'layout_panel' );
 
 // ScrollTop.
-Kirki::add_section( 'wpbf_scrolltop_options', array(
-	'title'    => __( 'Scroll to Top Button', 'page-builder-framework' ),
-	'panel'    => 'layout_panel',
-	'priority' => 700,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_scrolltop_options' )
+	->title( __( 'Scroll to Top Button', 'page-builder-framework' ) )
+	->priority( 700 )
+	->addToPanel( 'layout_panel' );
 
 /* Fields - Layout */
 
@@ -147,31 +148,6 @@ wpbf_customizer_field()
 			'operator' => '==',
 			'value'    => true,
 		),
-	] )
-	->addToSection( 'wpbf_page_options' );
-
-// Boxed padding.
-wpbf_customizer_field()
-	->id( 'page_boxed_padding' )
-	->type( 'responsive-padding' )
-	->label( __( 'Padding', 'page-builder-framework' ) )
-	->priority( 4 )
-	->defaultValue( array(
-		'desktop_top'    => 20,
-		'desktop_right'  => 20,
-		'desktop_bottom' => 20,
-		'desktop_left'   => 20,
-	) )
-	->transport( 'postMessage' )
-	->activeCallback( [
-		array(
-			'id'       => 'page_boxed',
-			'operator' => '==',
-			'value'    => true,
-		),
-	] )
-	->properties( [
-		'save_as_json' => true,
 	] )
 	->addToSection( 'wpbf_page_options' );
 
