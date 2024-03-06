@@ -14,12 +14,12 @@ class NumberUtil {
 	 * @return int|float
 	 */
 	public function limitNumber( $value, $min = null, $max = null ) {
-		// We allow empty string.
+
 		if ( '' === $value ) {
 			return '';
 		}
 
-		if ( ! is_numeric( $value ) ) {
+		if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
 			return '';
 		}
 
@@ -46,6 +46,7 @@ class NumberUtil {
 		}
 
 		return $value;
+
 	}
 
 	/**
@@ -58,6 +59,14 @@ class NumberUtil {
 	 * @return string|int|float
 	 */
 	public function limitNumberWithUnit( $value, $min = null, $max = null ) {
+
+		if ( '' === $value ) {
+			return '';
+		}
+
+		if ( ! is_string( $value ) && ! is_numeric( $value ) ) {
+			return '';
+		}
 
 		$number_and_unit = $this->separateNumberAndUnit( $value );
 
