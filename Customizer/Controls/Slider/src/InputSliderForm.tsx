@@ -68,8 +68,11 @@ export default function InputSliderForm(props: {
 		return valueObject.number + valueObject.unit;
 	}
 
-	function makeValueForSlider(value: string | number) {
-		return getValueObject(value).number;
+	function makeValueForSlider(value: string | number): number {
+		const valueObject = getValueObject(value);
+		return "string" === typeof valueObject.number
+			? props.min
+			: valueObject.number;
 	}
 
 	props.control.updateComponentState = (val) => {
