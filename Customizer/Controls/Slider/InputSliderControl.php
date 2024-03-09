@@ -28,7 +28,7 @@ class InputSliderControl extends BaseControl {
 	 *
 	 * @var int|float
 	 */
-	public $min;
+	protected $min;
 
 	/**
 	 * Default maximum value.
@@ -42,28 +42,28 @@ class InputSliderControl extends BaseControl {
 	 *
 	 * @var int|float
 	 */
-	public $max;
+	protected $max;
 
 	/**
 	 * Step value.
 	 *
 	 * @var int|float
 	 */
-	public $step = 1;
+	protected $step = 1;
 
 	/**
 	 * Unit of the value.
 	 *
 	 * @var string
 	 */
-	public $value_unit = '';
+	protected $value_unit = '';
 
 	/**
 	 * The value without number. Empty string is allowed.
 	 *
 	 * @var int|float|string
 	 */
-	public $value_number = 0;
+	protected $value_number = 0;
 
 	/**
 	 * Constructor.
@@ -84,29 +84,19 @@ class InputSliderControl extends BaseControl {
 		$number_util = new NumberUtil();
 
 		if ( isset( $args['min'] ) ) {
-			$this->min = $number_util->makeSureValueWithOrWithoutUnit( $args['min'] );
+			$this->min = $number_util->makeSureValueIsNumber( $args['min'] );
 		} else {
 			$this->min = static::$default_min;
 		}
 
 		if ( isset( $args['max'] ) ) {
-			$this->max = $number_util->makeSureValueWithOrWithoutUnit( $args['max'] );
+			$this->max = $number_util->makeSureValueIsNumber( $args['max'] );
 		} else {
 			$this->max = static::$default_max;
 		}
 
-		$min_number_and_unit = $number_util->separateNumberAndUnit( $this->min );
-		$min_number          = $min_number_and_unit['number'];
-
-		$max_number_and_unit = $number_util->separateNumberAndUnit( $this->max );
-		$max_number          = $max_number_and_unit['number'];
-		$max_unit            = $max_number_and_unit['unit'];
-
-		if ( $min_number > $max_number ) {
-			$max_number = $min_number;
-			$new_max    = $max_unit ? $max_number . $max_unit : $max_number;
-
-			$this->max = $new_max;
+		if ( $this->min > $this->max ) {
+			$this->max = $this->min;
 		}
 
 		if ( isset( $args['step'] ) && is_numeric( $args['step'] ) ) {
@@ -116,10 +106,10 @@ class InputSliderControl extends BaseControl {
 		if ( $this->setting instanceof WP_Customize_Setting ) {
 			$default_value = $this->setting->default;
 
-			$this->setting->default = $number_util->limitNumberWithUnit( $default_value, $min_number, $max_number );
+			$this->setting->default = $number_util->limitNumberWithUnit( $default_value, $this->min, $this->max );
 		}
 
-		$value                = $number_util->limitNumberWithUnit( $this->value(), $min_number, $max_number );
+		$value                = $number_util->limitNumberWithUnit( $this->value(), $this->min, $this->max );
 		$value_numer_and_unit = $number_util->separateNumberAndUnit( $value );
 		$this->value_number   = $value_numer_and_unit['number'];
 		$this->value_unit     = $value_numer_and_unit['unit'];
@@ -167,11 +157,11 @@ class InputSliderControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		$this->json['min']  = $this->min;
-		$this->json['max']  = $this->max;
-		$this->json['step'] = $this->step;
+		$this->json['min']   = $this->min;
+		$this->json['max']   = $this->max;
+		$this->json['step']  = $this->step;
+		$this->json['value'] = ! empty( $this->value_unit ) ? $this->value_number . $this->value_unit : $this->value_number;
 
-		$this->json['value']        = ! empty( $this->value_unit ) ? $this->value_number . $this->value_unit : $this->value_number;
 		$this->json['value_number'] = $this->value_number;
 		$this->json['value_unit']   = $this->value_unit;
 
