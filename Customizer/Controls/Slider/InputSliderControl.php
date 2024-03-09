@@ -21,10 +21,12 @@ class InputSliderControl extends BaseControl {
 	 *
 	 * @var int
 	 */
-	public static $defaultMin = 0;
+	public static $default_min = 0;
 
 	/**
-	 * @var int|float Minimum value.
+	 * Minimum value.
+	 *
+	 * @var int|float
 	 */
 	public $min;
 
@@ -33,17 +35,35 @@ class InputSliderControl extends BaseControl {
 	 *
 	 * @var int
 	 */
-	public static $defaultMax = 100;
+	public static $default_max = 100;
 
 	/**
-	 * @var int|float Maximum value.
+	 * Maximum value.
+	 *
+	 * @var int|float
 	 */
 	public $max;
 
 	/**
-	 * @var int|float Step value.
+	 * Step value.
+	 *
+	 * @var int|float
 	 */
 	public $step = 1;
+
+	/**
+	 * Unit of the value.
+	 *
+	 * @var string
+	 */
+	public $value_unit = '';
+
+	/**
+	 * The value without number. Empty string is allowed.
+	 *
+	 * @var int|float|string
+	 */
+	public $value_number = 0;
 
 	/**
 	 * Constructor.
@@ -66,13 +86,13 @@ class InputSliderControl extends BaseControl {
 		if ( isset( $args['min'] ) ) {
 			$this->min = $number_util->makeSureValueWithOrWithoutUnit( $args['min'] );
 		} else {
-			$this->min = static::$defaultMin;
+			$this->min = static::$default_min;
 		}
 
 		if ( isset( $args['max'] ) ) {
 			$this->max = $number_util->makeSureValueWithOrWithoutUnit( $args['max'] );
 		} else {
-			$this->max = static::$defaultMax;
+			$this->max = static::$default_max;
 		}
 
 		$min_number_and_unit = $number_util->separateNumberAndUnit( $this->min );
@@ -98,6 +118,11 @@ class InputSliderControl extends BaseControl {
 
 			$this->setting->default = $number_util->limitNumberWithUnit( $default_value, $min_number, $max_number );
 		}
+
+		$value                = $number_util->limitNumberWithUnit( $this->value(), $min_number, $max_number );
+		$value_numer_and_unit = $number_util->separateNumberAndUnit( $value );
+		$this->value_number   = $value_numer_and_unit['number'];
+		$this->value_unit     = $value_numer_and_unit['unit'];
 
 	}
 
@@ -142,10 +167,13 @@ class InputSliderControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		$this->json['min']   = $this->min;
-		$this->json['max']   = $this->max;
-		$this->json['step']  = $this->step;
-		$this->json['value'] = ( new NumberUtil() )->limitNumber( $this->value(), $this->min, $this->max );
+		$this->json['min']  = $this->min;
+		$this->json['max']  = $this->max;
+		$this->json['step'] = $this->step;
+
+		$this->json['value']        = ! empty( $this->value_unit ) ? $this->value_number . $this->value_unit : $this->value_number;
+		$this->json['value_number'] = $this->value_number;
+		$this->json['value_unit']   = $this->value_unit;
 
 	}
 
