@@ -27,9 +27,9 @@ class SliderField extends BaseField {
 
 		$props = $this->control->custom_properties;
 		$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
-		$min   = is_null( $min ) ? SliderControl::$defaultMin : $min;
+		$min   = is_null( $min ) ? SliderControl::$default_min : $min;
 		$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
-		$max   = is_null( $max ) ? SliderControl::$defaultMax : $max;
+		$max   = is_null( $max ) ? SliderControl::$default_max : $max;
 
 		return ( new NumberUtil() )->limitNumber( $value, $min, $max );
 

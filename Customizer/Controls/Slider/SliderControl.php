@@ -29,10 +29,12 @@ class SliderControl extends BaseControl {
 	 *
 	 * @var int
 	 */
-	public static $defaultMin = 0;
+	public static $default_min = 0;
 
 	/**
-	 * @var int|float Minimum value.
+	 * Minimum value.
+	 *
+	 * @var int|float
 	 */
 	public $min;
 
@@ -41,15 +43,19 @@ class SliderControl extends BaseControl {
 	 *
 	 * @var int
 	 */
-	public static $defaultMax = 100;
+	public static $default_max = 100;
 
 	/**
-	 * @var int|float Maximum value.
+	 * Maximum value.
+	 *
+	 * @var int|float
 	 */
 	public $max;
 
 	/**
-	 * @var int|float Step value.
+	 * Step value.
+	 *
+	 * @var int|float
 	 */
 	public $step = 1;
 
@@ -72,13 +78,13 @@ class SliderControl extends BaseControl {
 		if ( isset( $args['min'] ) && is_numeric( $args['min'] ) ) {
 			$this->min = (float) $args['min'];
 		} else {
-			$this->min = static::$defaultMin;
+			$this->min = static::$default_min;
 		}
 
 		if ( isset( $args['max'] ) && is_numeric( $args['max'] ) ) {
 			$this->max = (float) $args['max'];
 		} else {
-			$this->max = static::$defaultMax;
+			$this->max = static::$default_max;
 		}
 
 		if ( $this->min > $this->max ) {
