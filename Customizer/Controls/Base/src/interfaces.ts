@@ -6,6 +6,7 @@ import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interfaces";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
+import { WpbfCustomizeInputSliderControl } from "../../Slider/src/interface";
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {
 	get(): T;
@@ -41,6 +42,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-radio-image": {};
 	"wpbf-select": WpbfCustomizeSelectControl;
 	"wpbf-slider": WpbfCustomizeControl;
+	"wpbf-input-slider": WpbfCustomizeInputSliderControl;
 	"wpbf-toggle": WpbfCustomizeControl;
 }
 
@@ -49,6 +51,7 @@ export type WpbfCustomizeControlItem =
 	| WpbfCustomizeColorControl
 	| WpbfCustomizeDynamicControl
 	| WpbfCustomizeDimensionControl
+	| WpbfCustomizeInputSliderControl
 	| WpbfCustomizeSelectControl
 	| WpbfCustomizeMarginPaddingControl;
 

@@ -372,7 +372,7 @@ wpbf_customizer_field()
 			'id'       => 'sidebar_position',
 			'operator' => '!=',
 			'value'    => 'none',
-		)
+		),
 	] )
 	->addToSection( 'wpbf_sidebar_options' );
 
@@ -439,7 +439,7 @@ wpbf_customizer_field()
 	->id( '404_text' )
 	->type( 'text' )
 	->label( __( 'Text', 'page-builder-framework' ) )
-	->defaultValue( __( "Oops! We're sorry, this page couldn't be found!", "page-builder-framework" ) )
+	->defaultValue( __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) )
 	->priority( 2 )
 	->transport( 'postMessage' )
 	->addToSection( 'wpbf_404_options' );
@@ -559,7 +559,7 @@ wpbf_customizer_field()
 			'selector'            => '.wpbf-breadcrumbs',
 			'render_callback'     => function () {
 				return wpbf_do_breadcrumbs();
-			}
+			},
 		),
 	] )
 	->addToSection( 'wpbf_breadcrumb_settings' );

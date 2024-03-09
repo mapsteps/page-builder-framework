@@ -162,9 +162,6 @@ class InputSliderControl extends BaseControl {
 		$this->json['step']  = $this->step;
 		$this->json['value'] = ! empty( $this->value_unit ) ? $this->value_number . $this->value_unit : $this->value_number;
 
-		$this->json['value_number'] = $this->value_number;
-		$this->json['value_unit']   = $this->value_unit;
-
 	}
 
 }

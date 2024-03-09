@@ -3,15 +3,23 @@ import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
 import { createRoot } from "react-dom/client";
 import React from "react";
 import ReactDOM from "react-dom";
-import SliderForm from "./SliderForm";
+import InputSliderForm from "./InputSliderForm";
+import { WpbfCustomizeInputSliderControl } from "./interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
 };
 
-const SliderControl = wp.customize.Control.extend({
+/**
+ * InputSliderControl
+ *
+ * @class
+ * @augments wp.customize.Control
+ * @augments wp.customize.Class
+ */
+const InputSliderControl = wp.customize.Control.extend({
 	initialize: function (id: string, params: Control_Params) {
-		const control = this as WpbfCustomizeControl;
+		const control = this as WpbfCustomizeInputSliderControl;
 
 		// Bind functions to this control context for passing as React props.
 		control.setNotificationContainer =
@@ -36,7 +44,7 @@ const SliderControl = wp.customize.Control.extend({
 	 * This will be called when the React component is mounted.
 	 */
 	setNotificationContainer: function setNotificationContainer(el: HTMLElement) {
-		const control = this as WpbfCustomizeControl;
+		const control = this as WpbfCustomizeInputSliderControl;
 
 		control.notifications.container = jQuery(el);
 		control.notifications.render();
@@ -48,22 +56,22 @@ const SliderControl = wp.customize.Control.extend({
 	 * This will be called from the Control#embed() method in the parent class.
 	 */
 	renderContent: function renderContent() {
-		const control = this as WpbfCustomizeControl;
+		const control = this as WpbfCustomizeInputSliderControl;
 		const params = control.params;
 		const root = createRoot(control.container[0]);
 
 		root.render(
-			<SliderForm
+			<InputSliderForm
 				control={control}
 				customizerSetting={control.setting}
 				setNotificationContainer={control.setNotificationContainer}
 				label={params.label}
 				description={params.description}
-				default={params.default}
-				value={params.value}
 				min={params.min}
 				max={params.max}
 				step={params.step}
+				default={params.default}
+				value={params.value}
 			/>,
 		);
 
@@ -78,23 +86,23 @@ const SliderControl = wp.customize.Control.extend({
 	 * React is available to be used here instead of the wp.customize.Element abstraction.
 	 */
 	ready: function ready() {
-		const control = this as WpbfCustomizeControl;
+		const control = this as WpbfCustomizeInputSliderControl;
 
 		if (control.setting) {
 			/**
 			 * Update component value's state when customizer setting's value is changed.
 			 */
 			// @ts-ignore
-			control.setting.bind((val: string) => {
+			control.setting.bind((val: string | number) => {
 				control.updateComponentState?.(val);
 			});
 		}
 	},
 
 	/**
-	 * This method will be overridden by the rendered component.
+	 * This method will be overriden by the rendered component.
 	 */
-	updateComponentState: (_val: string) => {},
+	updateComponentState: (val: string | number) => {},
 
 	/**
 	 * Handle removal/de-registration of the control.
@@ -104,7 +112,7 @@ const SliderControl = wp.customize.Control.extend({
 	 * @link https://core.trac.wordpress.org/ticket/31334
 	 */
 	destroy: function destroy() {
-		const control = this as WpbfCustomizeControl;
+		const control = this as WpbfCustomizeInputSliderControl;
 
 		// Garbage collection: undo mounting that was done in the embed/renderContent method.
 		ReactDOM.unmountComponentAtNode(control.container[0]);
@@ -116,4 +124,4 @@ const SliderControl = wp.customize.Control.extend({
 	},
 });
 
-export default SliderControl;
+export default InputSliderControl;
