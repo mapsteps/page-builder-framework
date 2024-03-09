@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef } from "react";
+import React, { ChangeEvent, MouseEvent, useRef } from "react";
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeSetting,
@@ -56,7 +56,7 @@ export default function SliderForm(props: {
 		return parsedValue > props.max ? props.max : parsedValue;
 	}
 
-	function handleChange(e: ChangeEvent) {
+	function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
 		const target = e.target as HTMLInputElement;
 		trigger = "range" === target.type ? "slider" : "input";
 
@@ -66,7 +66,7 @@ export default function SliderForm(props: {
 		props.customizerSetting.set(value);
 	}
 
-	function handleReset(_e: React.MouseEvent) {
+	function handleResetButtonClick(_e: MouseEvent) {
 		const defaultExists =
 			"undefined" !== typeof props.default && "" !== props.default;
 
@@ -135,7 +135,7 @@ export default function SliderForm(props: {
 			<button
 				type="button"
 				className="wpbf-control-reset"
-				onClick={handleReset}
+				onClick={handleResetButtonClick}
 			>
 				<i className="dashicons dashicons-image-rotate"></i>
 			</button>
@@ -151,7 +151,7 @@ export default function SliderForm(props: {
 						max={props.max}
 						step={props.step}
 						className="wpbf-control-slider"
-						onChange={handleChange}
+						onChange={handleInputChange}
 					/>
 				</div>
 				<div className="wpbf-control-right-col">
