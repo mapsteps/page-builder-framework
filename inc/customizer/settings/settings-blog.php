@@ -134,7 +134,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'setting'  => 'blog_sortable_meta',
+			'id'       => 'blog_sortable_meta',
 			'operator' => 'in',
 			'value'    => 'author',
 		),
@@ -523,7 +523,7 @@ foreach ( $archives as $archive ) {
 		->priority( 20 )
 		->activeCallback( [
 			array(
-				'setting'  => $archive . '_post_style',
+				'id'       => $archive . '_post_style',
 				'operator' => '==',
 				'value'    => 'boxed',
 			),
@@ -543,7 +543,7 @@ foreach ( $archives as $archive ) {
 		->priority( 25 )
 		->activeCallback( [
 			array(
-				'setting'  => $archive . '_post_style',
+				'id'       => $archive . '_post_style',
 				'operator' => '==',
 				'value'    => 'boxed',
 			),
@@ -592,7 +592,7 @@ foreach ( $archives as $archive ) {
 		] )
 		->activeCallback( [
 			array(
-				'setting'  => $archive . '_post_style',
+				'id'       => $archive . '_post_style',
 				'operator' => '==',
 				'value'    => 'boxed',
 			),
@@ -657,7 +657,7 @@ foreach ( $archives as $archive ) {
 		->priority( 100 )
 		->activeCallback( [
 			array(
-				'setting'  => $archive . '_layout',
+				'id'       => $archive . '_layout',
 				'operator' => '==',
 				'value'    => 'beside',
 			),
@@ -677,7 +677,7 @@ foreach ( $archives as $archive ) {
 		->priority( 110 )
 		->activeCallback( [
 			array(
-				'setting'  => $archive . '_layout',
+				'id'       => $archive . '_layout',
 				'operator' => '==',
 				'value'    => 'beside',
 			),
@@ -698,7 +698,7 @@ foreach ( $archives as $archive ) {
 		] )
 		->activeCallback( [
 			array(
-				'setting'  => $archive . '_layout',
+				'id'       => $archive . '_layout',
 				'operator' => '==',
 				'value'    => 'beside',
 			),
@@ -840,7 +840,7 @@ foreach ( $singles as $single ) {
 		->priority( 0 )
 		->activeCallback( [
 			array(
-				'setting'  => $single . '_post_style',
+				'id'       => $single . '_post_style',
 				'operator' => '==',
 				'value'    => 'boxed',
 			),
@@ -855,7 +855,7 @@ foreach ( $singles as $single ) {
 		->priority( 10 )
 		->activeCallback( [
 			array(
-				'setting'  => $single . '_post_style',
+				'id'       => $single . '_post_style',
 				'operator' => '==',
 				'value'    => 'boxed',
 			),
@@ -874,7 +874,7 @@ foreach ( $singles as $single ) {
 		] )
 		->activeCallback( [
 			array(
-				'setting'  => $single . '_post_style',
+				'id'       => $single . '_post_style',
 				'operator' => '==',
 				'value'    => 'boxed',
 			),

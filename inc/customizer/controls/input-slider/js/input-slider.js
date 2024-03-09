@@ -9,6 +9,8 @@ jQuery(document).ready(function ($) {
 		var sliderMaxValue = parseFloat(newSlider.attr('slider-max-value'));
 		var sliderStepValue = parseFloat(newSlider.attr('slider-step-value'));
 
+		if (!newSlider.slider) return;
+
 		newSlider.slider({
 			value: sliderNumber,
 			min: sliderMinValue,
