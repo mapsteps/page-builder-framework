@@ -33,15 +33,17 @@ class NumberUtil {
 			if ( $value > $max ) {
 				$value = $max;
 			}
-		} else {
-			if ( ! is_null( $min ) ) {
-				if ( $value < $min ) {
-					$value = $min;
-				}
-			} elseif ( ! is_null( $max ) ) {
-				if ( $value > $max ) {
-					$value = $max;
-				}
+
+			return $value;
+		}
+
+		if ( ! is_null( $min ) ) {
+			if ( $value < $min ) {
+				$value = $min;
+			}
+		} elseif ( ! is_null( $max ) ) {
+			if ( $value > $max ) {
+				$value = $max;
 			}
 		}
 
