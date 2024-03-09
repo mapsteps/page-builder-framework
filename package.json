@@ -1,112 +1,110 @@
 {
-	"name": "aura",
-	"version": "1.0.0",
-	"description": "Aura theme development tooling",
-	"author": "David",
-	"license": "GPL-3.0",
-	"devDependencies": {
-		"@babel/core": "^7.24.0",
-		"@babel/preset-react": "^7.23.3",
-		"@parcel/config-default": "^2.12.0",
-		"@parcel/optimizer-data-url": "^2.12.0",
-		"@parcel/transformer-inline-string": "^2.12.0",
-		"@parcel/transformer-sass": "^2.12.0",
-		"@types/jquery": "^3.5.29",
-		"@types/lodash": "^4.14.202",
-		"@types/react": "^18.2.64",
-		"@types/react-dom": "^18.2.21",
-		"parcel": "^2.12.0",
-		"parcel-namer-rewrite": "2.10.3-rc.2",
-		"parcel-resolver-ignore": "^2.2.0",
-		"prettier": "^3.2.5",
-		"typescript": "^5.4.2",
-		"wordpress__customize-browser": "github:usefulteam/wordpress__customize-browser"
-	},
-	"dependencies": {
-		"@wordpress/components": "^25.16.0",
-		"@wordpress/core-data": "^6.30.0",
-		"@wordpress/data": "^9.23.0",
-		"@wordpress/element": "^5.30.0",
-		"@wordpress/hooks": "^3.53.0",
-		"@wordpress/url": "^3.54.0",
-		"colord": "^2.9.3",
-		"jquery": "^3.7.1",
-		"lodash": "^4.17.21",
-		"react": "^18.2.0",
-		"react-colorful": "^5.6.1",
-		"react-dom": "^18.2.0",
-		"react-select": "^5.8.0",
-		"styled-jsx": "^5.1.2"
-	},
-	"alias": {
-		"react": {
-			"global": "React"
-		},
-		"react-dom": {
-			"global": "ReactDOM"
-		},
-		"jquery": {
-			"global": "jQuery"
-		},
-		"wp": {
-			"global": "wp"
-		},
-		"lodash": {
-			"global": "_"
-		},
-		"@wordpress/hooks": {
-			"global": "wp.hooks"
-		}
-	},
-	"parcel-namer-rewrite": {
-		"hashing": "never",
-		"silent": true,
-		"rules": {
-			"(.*).js": "$1-min.js",
-			"(.*).css": "$1-min.css"
-		}
-	},
-	"parcelIgnore": [
-		"img/.+"
-	],
-	"browserslist": [
-		"> 0.5%",
-		"last 2 versions",
-		"not dead"
-	],
-	"scripts": {
-		"build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min --no-source-maps",
-		"build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps",
-		"build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min --no-source-maps",
-		"build-site-assets": "npm run build-site-js && npm run build-site-css",
-		"build-site-assets-jquery": "npm run build-site-jquery && npm run build-site-css",
-		"build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-source-maps",
-		"build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps",
-		"build-individual-assets": "npm run build-individual-js && npm run build-individual-css",
-		"watch-base-control": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
-		"build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
-		"watch-checkbox-control": "parcel watch Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist --no-source-maps",
-		"build-checkbox-control": "parcel build Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist --no-source-maps",
-		"watch-color-control": "parcel watch Customizer/Controls/Color/src/color-control.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
-		"build-color-control": "parcel build Customizer/Controls/Color/src/color-control.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
-		"watch-color-preview": "parcel watch Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
-		"build-color-preview": "parcel build Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
-		"build-color-assets": "npm run build-color-control && npm run build-color-preview",
-		"watch-dimension-control": "parcel watch Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-source-maps",
-		"build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-source-maps",
-		"watch-generic-control": "parcel watch Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-source-maps",
-		"build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-source-maps",
-		"watch-headline-control": "parcel watch Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist --no-source-maps",
-		"build-headline-control": "parcel build Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist --no-source-maps",
-		"watch-margin-padding-control": "parcel watch Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist --no-source-maps",
-		"build-margin-padding-control": "parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist --no-source-maps",
-		"watch-radio-control": "parcel watch Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",
-		"build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",
-		"watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
-		"build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
-		"watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
-		"build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
-		"watch-input-slider-control": "parcel watch Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
-		"build-input-slider-control": "parcel build Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps"
-	}
+  "name": "aura",
+  "version": "1.0.0",
+  "description": "Aura theme development tooling",
+  "author": "David",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-react": "^7.23.3",
+    "@parcel/config-default": "^2.12.0",
+    "@parcel/optimizer-data-url": "^2.12.0",
+    "@parcel/transformer-inline-string": "^2.12.0",
+    "@parcel/transformer-sass": "^2.12.0",
+    "@types/jquery": "^3.5.29",
+    "@types/lodash": "^4.14.202",
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "parcel": "^2.12.0",
+    "parcel-namer-rewrite": "2.10.3-rc.2",
+    "parcel-resolver-ignore": "^2.2.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.2",
+    "wordpress__customize-browser": "github:usefulteam/wordpress__customize-browser"
+  },
+  "dependencies": {
+    "@wordpress/components": "^25.16.0",
+    "@wordpress/core-data": "^6.30.0",
+    "@wordpress/data": "^9.23.0",
+    "@wordpress/element": "^5.30.0",
+    "@wordpress/hooks": "^3.53.0",
+    "@wordpress/url": "^3.54.0",
+    "colord": "^2.9.3",
+    "jquery": "^3.7.1",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-colorful": "^5.6.1",
+    "react-dom": "^18.2.0",
+    "react-select": "^5.8.0",
+    "styled-jsx": "^5.1.2"
+  },
+  "alias": {
+    "react": {
+      "global": "React"
+    },
+    "react-dom": {
+      "global": "ReactDOM"
+    },
+    "jquery": {
+      "global": "jQuery"
+    },
+    "wp": {
+      "global": "wp"
+    },
+    "lodash": {
+      "global": "_"
+    },
+    "@wordpress/hooks": {
+      "global": "wp.hooks"
+    }
+  },
+  "parcel-namer-rewrite": {
+    "hashing": "never",
+    "silent": true,
+    "rules": {
+      "(.*).js": "$1-min.js",
+      "(.*).css": "$1-min.css"
+    }
+  },
+  "parcelIgnore": [
+    "img/.+"
+  ],
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "scripts": {
+    "build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min --no-source-maps",
+    "build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps",
+    "build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min --no-source-maps",
+    "build-site-assets": "npm run build-site-js && npm run build-site-css",
+    "build-site-assets-jquery": "npm run build-site-jquery && npm run build-site-css",
+    "build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-source-maps",
+    "build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps",
+    "build-individual-assets": "npm run build-individual-js && npm run build-individual-css",
+    "watch-base-control": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
+    "build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
+    "watch-checkbox-control": "parcel watch Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist --no-source-maps",
+    "build-checkbox-control": "parcel build Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist --no-source-maps",
+    "watch-color-control": "parcel watch Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
+    "build-color-control": "parcel build Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-source-maps",
+    "build-color-assets": "npm run build-color-control && npm run build-color-preview",
+    "watch-dimension-control": "parcel watch Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-source-maps",
+    "build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-source-maps",
+    "watch-generic-control": "parcel watch Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-source-maps",
+    "build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-source-maps",
+    "watch-headline-control": "parcel watch Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist --no-source-maps",
+    "build-headline-control": "parcel build Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist --no-source-maps",
+    "watch-margin-padding-control": "parcel watch Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist --no-source-maps",
+    "build-margin-padding-control": "parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist --no-source-maps",
+    "watch-radio-control": "parcel watch Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",
+    "build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",
+    "watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
+    "build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
+    "watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
+    "build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
+    "watch-input-slider-control": "parcel watch Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
+    "build-input-slider-control": "parcel build Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps"
+  }
 }
