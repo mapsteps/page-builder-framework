@@ -110,24 +110,22 @@ Kirki::add_field( 'wpbf',
 	) );
 
 // Separator.
-Kirki::add_field( 'wpbf',
-	array(
-		'type'            => 'text',
-		'settings'        => 'blog_meta_separator',
-		'label'           => __( 'Separator', 'page-builder-framework' ),
-		'section'         => 'wpbf_blog_settings',
-		'priority'        => 1,
-		'default'         => '|',
-		'partial_refresh' => array(
-			'metaseparator' => array(
-				'container_inclusive' => true,
-				'selector'            => '.article-meta',
-				'render_callback'     => function () {
-					return wpbf_article_meta();
-				},
-			),
+wpbf_customizer_field()
+	->id( 'blog_meta_separator' )
+	->type( 'text' )
+	->label( __( 'Separator', 'page-builder-framework' ) )
+	->defaultValue( '|' )
+	->priority( 1 )
+	->partialRefresh( [
+		'metaseparator' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-meta',
+			'render_callback'     => function () {
+				return wpbf_article_meta();
+			},
 		),
-	) );
+	] )
+	->addToSection( 'wpbf_blog_settings' );
 
 // Author avatar.
 wpbf_customizer_field()
@@ -544,22 +542,19 @@ foreach ( $archives as $archive ) {
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Padding.
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'              => 'responsive_padding',
-			'label'             => __( 'Padding', 'page-builder-framework' ),
-			'section'           => 'wpbf_' . $archive . '_options',
-			'settings'          => $archive . '_boxed_padding',
-			'priority'          => 25,
-			'active_callback'   => array(
-				array(
-					'setting'  => $archive . '_post_style',
-					'operator' => '==',
-					'value'    => 'boxed',
-				),
+	wpbf_customizer_field()
+		->id( $archive . '_boxed_padding' )
+		->type( 'responsive-padding' )
+		->label( __( 'Padding', 'page-builder-framework' ) )
+		->priority( 25 )
+		->activeCallback( [
+			array(
+				'setting'  => $archive . '_post_style',
+				'operator' => '==',
+				'value'    => 'boxed',
 			),
-			'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
-	) );
+		] )
+		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Space between.
 	wpbf_customizer_field()
