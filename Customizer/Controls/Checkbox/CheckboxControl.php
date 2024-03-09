@@ -21,11 +21,11 @@ class CheckboxControl extends BaseControl {
 		parent::enqueue();
 
 		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-toggle-control', WPBF_THEME_URI . '/Customizer/Controls/Checkbox/dist/checkbox-control-min.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-checkbox-control', WPBF_THEME_URI . '/Customizer/Controls/Checkbox/dist/checkbox-control-min.css', array(), WPBF_VERSION );
 
 		// Enqueue the scripts.
 		wp_enqueue_script(
-			'wpbf-toggle-control',
+			'wpbf-checkbox-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Checkbox/dist/checkbox-control-min.js',
 			array(
 				'customize-controls',

@@ -12,6 +12,7 @@
     "@parcel/transformer-inline-string": "^2.12.0",
     "@parcel/transformer-sass": "^2.12.0",
     "@types/jquery": "^3.5.29",
+    "@types/jqueryui": "^1.12.21",
     "@types/lodash": "^4.14.202",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
@@ -105,6 +106,8 @@
     "watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
     "build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
     "watch-input-slider-control": "parcel watch Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
-    "build-input-slider-control": "parcel build Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps"
+    "build-input-slider-control": "parcel build Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
+    "watch-sortable-control": "parcel watch Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-source-maps",
+    "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-source-maps"
   }
 }

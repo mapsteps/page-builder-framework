@@ -147,6 +147,11 @@ final class Customizer {
 
 	}
 
+	/**
+	 * Register the customizer control types.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Instance of WP_Customize_Manager.
+	 */
 	public function register_control_types( $wp_customize_manager ) {
 
 		$util = new CustomizerUtil();
@@ -251,6 +256,8 @@ final class Customizer {
 	public function register_tooltips() {
 
 		/**
+		 * Tooltips
+		 *
 		 * @var array[] $tooltips
 		 */
 		$tooltips = [];

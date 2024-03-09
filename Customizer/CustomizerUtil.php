@@ -22,6 +22,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
+use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
@@ -52,6 +53,7 @@ class CustomizerUtil {
 		'select'                    => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
 		'slider'                    => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
 		'input-slider'              => '\Mapsteps\Wpbf\Customizer\Controls\InputSlider\InputSliderControl',
+		'sortable'                  => '\Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableControl',
 	);
 
 	/**
@@ -67,6 +69,7 @@ class CustomizerUtil {
 		'generic',
 		'radio',
 		'radio-image',
+		'sortable',
 	);
 
 	/**
@@ -139,7 +142,7 @@ class CustomizerUtil {
 
 		return ( null !== $field && method_exists( $field, 'sanitizeCallback' ) ? array(
 			$field,
-			'sanitizeCallback'
+			'sanitizeCallback',
 		) : '' );
 
 	}
@@ -187,7 +190,7 @@ class CustomizerUtil {
 		$control_type = $control->type;
 
 		foreach ( $this->grouped_controls as $control_name => $grouped_controls ) {
-			if ( in_array( $control->type, $grouped_controls ) ) {
+			if ( in_array( $control->type, $grouped_controls, true ) ) {
 				$control_type = $control_name;
 				break;
 			}
@@ -245,7 +248,8 @@ class CustomizerUtil {
 			case 'input-slider':
 				$field = new InputSliderField( $control );
 				break;
-			default:
+			case 'sortable':
+				$field = new SortableField( $control );
 				break;
 		}
 

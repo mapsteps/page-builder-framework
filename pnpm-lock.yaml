@@ -70,6 +70,9 @@ devDependencies:
   '@types/jquery':
     specifier: ^3.5.29
     version: 3.5.29
+  '@types/jqueryui':
+    specifier: ^1.12.21
+    version: 1.12.21
   '@types/lodash':
     specifier: ^4.14.202
     version: 4.14.202
@@ -2002,6 +2005,12 @@ packages:
     resolution: {integrity: sha512-oXQQC9X9MOPRrMhPHHOsXqeQDnWeCDT3PelUIg/Oy8FAbzSZtFHRjc7IpbfFVmpLtJ+UOoywpRsuO5Jxjybyeg==}
     dependencies:
       '@types/sizzle': 2.3.8
+    dev: true
+
+  /@types/jqueryui@1.12.21:
+    resolution: {integrity: sha512-hsTOaWPg963smNdoHbEN2anu4vVWj9k2xuaZMIajWERPikaBRG49RmaDA/tb2HldX9/a0qHvQYKipXHSLhM3qA==}
+    dependencies:
+      '@types/jquery': 3.5.29
     dev: true
 
   /@types/lodash@4.14.202:

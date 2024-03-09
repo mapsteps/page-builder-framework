@@ -7,6 +7,7 @@ import { WpbfCustomizeColorControl } from "../../Color/src/interfaces";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
 import { WpbfCustomizeInputSliderControl } from "../../Slider/src/interface";
+import { WpbfCustomizeSortableControl } from "../../Sortable/src/interface";
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {
 	get(): T;
@@ -19,7 +20,7 @@ export interface WpbfCustomizeControl extends Control {
 	setting: WpbfCustomizeSetting<any>;
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
-	updateComponentState?: (val: string) => void;
+	updateComponentState?: (val: any) => void;
 
 	extend(protoProps: object, classProps?: object): WpbfCustomizeControlItem;
 }
@@ -30,6 +31,16 @@ export interface WpbfCustomizeDynamicControl extends WpbfCustomizeControl {
 	initWpbfControl: (control?: Control) => void;
 	actuallyEmbed: () => void;
 }
+
+export type WpbfCustomizeControlItem =
+	| WpbfCustomizeControl
+	| WpbfCustomizeColorControl
+	| WpbfCustomizeDynamicControl
+	| WpbfCustomizeDimensionControl
+	| WpbfCustomizeInputSliderControl
+	| WpbfCustomizeMarginPaddingControl
+	| WpbfCustomizeSelectControl
+	| WpbfCustomizeSortableControl;
 
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-checkbox": WpbfCustomizeControl;
@@ -43,17 +54,9 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-select": WpbfCustomizeSelectControl;
 	"wpbf-slider": WpbfCustomizeControl;
 	"wpbf-input-slider": WpbfCustomizeInputSliderControl;
+	"wpbf-sortable": WpbfCustomizeSortableControl;
 	"wpbf-toggle": WpbfCustomizeControl;
 }
-
-export type WpbfCustomizeControlItem =
-	| WpbfCustomizeControl
-	| WpbfCustomizeColorControl
-	| WpbfCustomizeDynamicControl
-	| WpbfCustomizeDimensionControl
-	| WpbfCustomizeInputSliderControl
-	| WpbfCustomizeSelectControl
-	| WpbfCustomizeMarginPaddingControl;
 
 export interface WpbfCustomize extends Customize {
 	Control: WpbfCustomizeControlItem;

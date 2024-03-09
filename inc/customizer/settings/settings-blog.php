@@ -82,32 +82,30 @@ foreach ( $singles as $single ) {
 /* Fields - General */
 
 // Meta sortable.
-Kirki::add_field( 'wpbf',
-	array(
-		'type'            => 'sortable',
-		'settings'        => 'blog_sortable_meta',
-		'label'           => __( 'Meta Data', 'page-builder-framework' ),
-		'section'         => 'wpbf_blog_settings',
-		'default'         => array(
-			'author',
-			'date',
+wpbf_customizer_field()
+	->id( 'blog_sortable_meta' )
+	->type( 'sortable' )
+	->label( __( 'Meta Data', 'page-builder-framework' ) )
+	->defaultValue( array(
+		'author',
+		'date',
+	) )
+	->choices( array(
+		'author'   => __( 'Author', 'page-builder-framework' ),
+		'date'     => __( 'Date', 'page-builder-framework' ),
+		'comments' => __( 'Comments', 'page-builder-framework' ),
+	) )
+	->priority( 1 )
+	->partialRefresh( [
+		'metasortable' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-meta',
+			'render_callback'     => function () {
+				return wpbf_article_meta();
+			},
 		),
-		'partial_refresh' => array(
-			'metasortable' => array(
-				'container_inclusive' => true,
-				'selector'            => '.article-meta',
-				'render_callback'     => function () {
-					return wpbf_article_meta();
-				},
-			),
-		),
-		'choices'         => array(
-			'author'   => __( 'Author', 'page-builder-framework' ),
-			'date'     => __( 'Date', 'page-builder-framework' ),
-			'comments' => __( 'Comments', 'page-builder-framework' ),
-		),
-		'priority'        => 1,
-	) );
+	] )
+	->addToSection( 'wpbf_blog_settings' );
 
 // Separator.
 wpbf_customizer_field()
@@ -431,60 +429,54 @@ foreach ( $archives as $archive ) {
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Header.
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'sortable',
-			'settings' => $archive . '_sortable_header',
-			'label'    => __( 'Header', 'page-builder-framework' ),
-			'section'  => 'wpbf_' . $archive . '_options',
-			'default'  => array(
-				'title',
-				'meta',
-				'featured',
-			),
-			'choices'  => array(
-				'title'    => __( 'Title', 'page-builder-framework' ),
-				'meta'     => __( 'Meta Data', 'page-builder-framework' ),
-				'featured' => __( 'Featured Image', 'page-builder-framework' ),
-			),
-			'priority' => 0,
-	) );
+	wpbf_customizer_field()
+		->id( $archive . '_sortable_header' )
+		->type( 'sortable' )
+		->label( __( 'Header', 'page-builder-framework' ) )
+		->defaultValue( array(
+			'title',
+			'meta',
+			'featured',
+		) )
+		->choices( array(
+			'title'    => __( 'Title', 'page-builder-framework' ),
+			'meta'     => __( 'Meta Data', 'page-builder-framework' ),
+			'featured' => __( 'Featured Image', 'page-builder-framework' ),
+		) )
+		->priority( 0 )
+		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Header.
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'sortable',
-			'settings' => $archive . '_sortable_content',
-			'label'    => __( 'Content', 'page-builder-framework' ),
-			'section'  => 'wpbf_' . $archive . '_options',
-			'default'  => array(
-				'excerpt',
-			),
-			'choices'  => array(
-				'excerpt' => __( 'Excerpt', 'page-builder-framework' ),
-				'post'    => __( 'Full Post', 'page-builder-framework' ),
-			),
-			'priority' => 0,
-	) );
+	wpbf_customizer_field()
+		->id( $archive . '_sortable_content' )
+		->type( 'sortable' )
+		->label( __( 'Content', 'page-builder-framework' ) )
+		->defaultValue( array(
+			'excerpt',
+		) )
+		->choices( array(
+			'excerpt' => __( 'Excerpt', 'page-builder-framework' ),
+			'post'    => __( 'Full Post', 'page-builder-framework' ),
+		) )
+		->priority( 0 )
+		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Footer.
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'sortable',
-			'settings' => $archive . '_sortable_footer',
-			'label'    => __( 'Footer', 'page-builder-framework' ),
-			'section'  => 'wpbf_' . $archive . '_options',
-			'default'  => array(
-				'readmore',
-				'categories',
-			),
-			'choices'  => array(
-				'readmore'   => __( 'Read More', 'page-builder-framework' ),
-				'categories' => __( 'Categories', 'page-builder-framework' ),
-				'tags'       => __( 'Tags', 'page-builder-framework' ),
-			),
-			'priority' => 0,
-	) );
+	wpbf_customizer_field()
+		->id( $archive . '_sortable_footer' )
+		->type( 'sortable' )
+		->label( __( 'Footer', 'page-builder-framework' ) )
+		->defaultValue( array(
+			'readmore',
+			'categories',
+		) )
+		->choices( array(
+			'readmore'   => __( 'Read More', 'page-builder-framework' ),
+			'categories' => __( 'Categories', 'page-builder-framework' ),
+			'tags'       => __( 'Tags', 'page-builder-framework' ),
+		) )
+		->priority( 0 )
+		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Separator.
 	wpbf_customizer_field()
@@ -499,11 +491,13 @@ foreach ( $archives as $archive ) {
 		->type( 'select' )
 		->label( __( 'Layout', 'page-builder-framework' ) )
 		->defaultValue( 'default' )
-		->choices( apply_filters( 'wpbf_blog_layouts',
+		->choices( apply_filters(
+			'wpbf_blog_layouts',
 			array(
 				'default' => __( 'Default', 'page-builder-framework' ),
 				'beside'  => __( 'Image Beside Post', 'page-builder-framework' ),
-		) ) )
+			)
+		) )
 		->priority( 10 )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
@@ -749,43 +743,39 @@ foreach ( $singles as $single ) {
 		->addToSection( 'wpbf_' . $single . '_options' );
 
 	// Header.
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'sortable',
-			'settings' => $single . '_sortable_header',
-			'label'    => __( 'Header', 'page-builder-framework' ),
-			'section'  => 'wpbf_' . $single . '_options',
-			'default'  => array(
-				'title',
-				'meta',
-				'featured',
-			),
-			'choices'  => array(
-				'title'    => __( 'Title', 'page-builder-framework' ),
-				'meta'     => __( 'Meta Data', 'page-builder-framework' ),
-				'featured' => __( 'Featured Image', 'page-builder-framework' ),
-			),
-			'priority' => 0,
-	) );
+	wpbf_customizer_field()
+		->id( $single . '_sortable_header' )
+		->type( 'sortable' )
+		->label( __( 'Header', 'page-builder-framework' ) )
+		->defaultValue( array(
+			'title',
+			'meta',
+			'featured',
+		) )
+		->choices( array(
+			'title'    => __( 'Title', 'page-builder-framework' ),
+			'meta'     => __( 'Meta Data', 'page-builder-framework' ),
+			'featured' => __( 'Featured Image', 'page-builder-framework' ),
+		) )
+		->priority( 0 )
+		->addToSection( 'wpbf_' . $single . '_options' );
 
 	// Footer.
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'sortable',
-			'settings' => $single . '_sortable_footer',
-			'label'    => __( 'Footer', 'page-builder-framework' ),
-			'section'  => 'wpbf_' . $single . '_options',
-			'default'  => array(
-				'readmore',
-				'categories',
-			),
-			'choices'  => array(
-				'readmore'   => __( 'Read More', 'page-builder-framework' ),
-				'categories' => __( 'Categories', 'page-builder-framework' ),
-				'tags'       => __( 'Tags', 'page-builder-framework' ),
-			),
-			'priority' => 0,
-	) );
+	wpbf_customizer_field()
+		->id( $single . '_sortable_footer' )
+		->type( 'sortable' )
+		->label( __( 'Footer', 'page-builder-framework' ) )
+		->defaultValue( array(
+			'readmore',
+			'categories',
+		) )
+		->choices( array(
+			'readmore'   => __( 'Read More', 'page-builder-framework' ),
+			'categories' => __( 'Categories', 'page-builder-framework' ),
+			'tags'       => __( 'Tags', 'page-builder-framework' ),
+		) )
+		->priority( 0 )
+		->addToSection( 'wpbf_' . $single . '_options' );
 
 	if ( 'single' === $single ) {
 

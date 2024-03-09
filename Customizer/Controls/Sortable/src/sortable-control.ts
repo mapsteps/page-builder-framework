@@ -1,0 +1,57 @@
+import "./sortable-control.scss";
+
+import { WpbfCustomize } from "../../Base/src/interfaces";
+import { WpbfCustomizeSortableControl } from "./interface";
+import _ from "lodash";
+
+declare var wp: {
+	customize: WpbfCustomize;
+};
+
+wp.customize.controlConstructor["wpbf-sortable"] = wp.customize.Control.extend({
+	ready: function () {
+		const control = this as WpbfCustomizeSortableControl;
+
+		// Init sortable.
+		jQuery(control.container.find("ul.sortable").first())
+			.sortable({
+				// Update value when we stop sorting.
+				update: function () {
+					if (control.setting) {
+						control.setting.set(control.getNewValue());
+					}
+				},
+			})
+			.disableSelection()
+			.find("li")
+			.each(function () {
+				// Enable/disable options when we click on the eye of Thundera.
+				jQuery(this)
+					.find("i.visibility")
+					.on("click", function () {
+						jQuery(this)
+							.toggleClass("dashicons-visibility-faint")
+							.parents("li:eq(0)")
+							.toggleClass("invisible");
+					});
+			})
+			.on("click", function () {
+				// Update value on click.
+				control.setting.set(control.getNewValue());
+			});
+	},
+
+	getNewValue: function () {
+		const control = this as WpbfCustomizeSortableControl;
+		const items = jQuery(control.container.find("li"));
+		const newVal: any[] = [];
+
+		_.each(items, function (item) {
+			if (!jQuery(item).hasClass("invisible")) {
+				newVal.push(jQuery(item).data("value"));
+			}
+		});
+
+		return newVal;
+	},
+}) as WpbfCustomizeSortableControl;
