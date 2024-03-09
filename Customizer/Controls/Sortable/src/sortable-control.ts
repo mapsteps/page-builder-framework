@@ -43,12 +43,12 @@ wp.customize.controlConstructor["wpbf-sortable"] = wp.customize.Control.extend({
 
 	getNewValue: function () {
 		const control = this as WpbfCustomizeSortableControl;
-		const items = jQuery(control.container.find("li"));
+		const items = control.container.find("li");
 		const newVal: any[] = [];
 
 		_.each(items, function (item) {
-			if (!jQuery(item).hasClass("invisible")) {
-				newVal.push(jQuery(item).data("value"));
+			if (!item.classList.contains("invisible")) {
+				newVal.push(item.dataset.value);
 			}
 		});
 

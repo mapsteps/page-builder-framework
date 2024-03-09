@@ -26,8 +26,8 @@ class SortableField extends BaseField {
 
 		$sanitized_value = [];
 
-		foreach ( $value as $key => $val ) {
-			$sanitized_value[ $key ] = sanitize_text_field( $val );
+		foreach ( $value as $val ) {
+			$sanitized_value[] = sanitize_text_field( $val );
 		}
 
 		return $sanitized_value;

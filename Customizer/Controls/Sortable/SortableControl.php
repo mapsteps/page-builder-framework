@@ -48,7 +48,7 @@ class SortableControl extends BaseControl {
 	protected function content_template() {
 		?>
 
-		<label class='kirki-sortable'>
+		<label class='wpbf-sortable'>
 			<span class="customize-control-title">
 				{{{ data.label }}}
 			</span>
@@ -60,7 +60,7 @@ class SortableControl extends BaseControl {
 			<ul class="sortable">
 				<# _.each( data.value, function( choiceID ) { #>
 					<# if ( data.choices[ choiceID ] ) { #>
-						<li {{{ data.inputAttrs }}} class='kirki-sortable-item' data-value='{{ choiceID }}'>
+						<li {{{ data.inputAttrs }}} class='wpbf-sortable-item' data-value='{{ choiceID }}'>
 							<i class='dashicons dashicons-menu'></i>
 							<i class="dashicons dashicons-visibility visibility"></i>
 							{{{ data.choices[ choiceID ] }}}
@@ -69,7 +69,7 @@ class SortableControl extends BaseControl {
 				<# }); #>
 				<# _.each( data.choices, function( choiceLabel, choiceID ) { #>
 					<# if ( -1 === data.value.indexOf( choiceID ) ) { #>
-						<li {{{ data.inputAttrs }}} class='kirki-sortable-item invisible' data-value='{{ choiceID }}'>
+						<li {{{ data.inputAttrs }}} class='wpbf-sortable-item invisible' data-value='{{ choiceID }}'>
 							<i class='dashicons dashicons-menu'></i>
 							<i class="dashicons dashicons-visibility visibility"></i>
 							{{{ data.choices[ choiceID ] }}}
