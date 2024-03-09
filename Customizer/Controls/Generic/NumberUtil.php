@@ -11,7 +11,7 @@ class NumberUtil {
 	 * @param null|int|float $min   The minimum value. Null if not set.
 	 * @param null|int|float $max   The maximum value. Null if not set.
 	 *
-	 * @return int|float
+	 * @return int|float|string The returned value can be either `int`, `float`, or empty string.
 	 */
 	public function limitNumber( $value, $min = null, $max = null ) {
 
@@ -58,7 +58,7 @@ class NumberUtil {
 	 * @param null|int|float $min   The minimum value. Null if not set.
 	 * @param null|int|float $max   The maximum value. Null if not set.
 	 *
-	 * @return string|int|float
+	 * @return string|int|float The returned value can be either `int`, `float`, empty string, or concatenation between value and unit.
 	 */
 	public function limitNumberWithUnit( $value, $min = null, $max = null ) {
 
@@ -90,11 +90,10 @@ class NumberUtil {
 
 	/**
 	 * Separate number and unit.
-	 * The returned value will be a pair of `unit` and `number`.
 	 *
 	 * @param mixed $value The value to separate.
 	 *
-	 * @return array
+	 * @return array The returned value will be a pair of `unit` and `number`.
 	 */
 	public function separateNumberAndUnit( $value ) {
 
@@ -135,7 +134,7 @@ class NumberUtil {
 	 *
 	 * @param mixed $value The value to parse.
 	 *
-	 * @return string|float|int
+	 * @return string|float|int The returned value can be either `int`, `float`, empty string, or concatenation between value and unit.
 	 */
 	public function makeSureValueWithOrWithoutUnit( $value ) {
 
@@ -149,6 +148,38 @@ class NumberUtil {
 		}
 
 		return $number . $unit;
+
+	}
+
+	/**
+	 * Parse a value and make sure it's without unit.
+	 *
+	 * @param mixed $value The value to parse.
+	 *
+	 * @return float|int|string The returned value can be either `int`, `float` or empty string.
+	 */
+	public function makeSureValueWithoutUnit( $value ) {
+
+		$number_and_unit = $this->separateNumberAndUnit( $value );
+
+		return $number_and_unit['number'];
+
+	}
+
+	/**
+	 * Parse a value and make sure it's a number.
+	 *
+	 * @param mixed $value The value to parse.
+	 *
+	 * @return float|int
+	 */
+	public function makeSureValueIsNumber( $value ) {
+
+		$number_and_unit = $this->separateNumberAndUnit( $value );
+
+		$number = $number_and_unit['number'];
+
+		return '' !== $number ? $number : 0;
 
 	}
 
