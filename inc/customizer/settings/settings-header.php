@@ -181,44 +181,41 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_pre_header_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings'        => 'pre_header_column_two_layout_separator',
-		'section'         => 'wpbf_pre_header_options',
-		'priority'        => 2,
-		'tab'             => 'general',
-		'active_callback' => [
-			[
-				'setting'  => 'pre_header_layout',
-				'operator' => '==',
-				'value'    => 'two',
-			],
-		],
-	]
-);
-
-// Column two layout.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'pre_header_column_two_layout',
-	'label'           => __( 'Column 2', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'default'         => 'text',
-	'priority'        => 2,
-	'tab'             => 'general',
-	'choices'         => array(
-		'none' => __( 'None', 'page-builder-framework' ),
-		'text' => __( 'Text', 'page-builder-framework' ),
-		'menu' => __( 'Menu', 'page-builder-framework' ),
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_column_two_layout_separator' )
+	->type( 'divider' )
+	->tab( 'general' )
+	->priority( 2 )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
-	),
-	'partial_refresh' => array(
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
+
+// Column two layout.
+wpbf_customizer_field()
+	->id( 'pre_header_column_two_layout' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Column 2', 'page-builder-framework' ) )
+	->defaultValue( 'text' )
+	->choices( [
+		'none' => __( 'None', 'page-builder-framework' ),
+		'text' => __( 'Text', 'page-builder-framework' ),
+		'menu' => __( 'Menu', 'page-builder-framework' ),
+	] )
+	->priority( 2 )
+	->activeCallback( [
+		array(
+			'setting'  => 'pre_header_layout',
+			'operator' => '==',
+			'value'    => 'two',
+		),
+	] )
+	->partialRefresh( [
 		'preheadercolumntwolayout' => array(
 			'container_inclusive' => true,
 			'selector'            => '#pre-header',
@@ -226,27 +223,26 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/pre-header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Column two.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'textarea',
-	'settings'        => 'pre_header_column_two',
-	'label'           => __( 'Text', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'default'         => __( 'Column 2', 'page-builder-framework' ),
-	'priority'        => 2,
-	'tab'             => 'general',
-	'partial_refresh' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_column_two' )
+	->type( 'textarea' )
+	->tab( 'general' )
+	->label( __( 'Text', 'page-builder-framework' ) )
+	->defaultValue( __( 'Column 2', 'page-builder-framework' ) )
+	->priority( 2 )
+	->partialRefresh( [
 		'preheadercolumntwocontent' => array(
 			'selector'        => '.wpbf-inner-pre-header-right',
 			'render_callback' => function () {
 				return do_shortcode( get_theme_mod( 'pre_header_column_two' ) );
 			},
 		),
-	),
-	'active_callback' => array(
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '==',
@@ -257,177 +253,168 @@ Kirki::add_field( 'wpbf', array(
 			'operator' => '==',
 			'value'    => 'text',
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings'        => 'pre_header_separator',
-		'section'         => 'wpbf_pre_header_options',
-		'priority'        => 3,
-		'tab'             => 'general',
-		'active_callback' => [
-			[
-				'setting'  => 'pre_header_layout',
-				'operator' => '!=',
-				'value'    => 'none',
-			],
-		],
-	]
-);
-
-// Width.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'dimension',
-	'label'           => __( 'Pre Header Width', 'page-builder-framework' ),
-	'description'     => __( 'Default: 1200px', 'page-builder-framework' ),
-	'settings'        => 'pre_header_width',
-	'section'         => 'wpbf_pre_header_options',
-	'priority'        => 3,
-	'transport'       => 'postMessage',
-	'tab'             => 'general',
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_separator' )
+	->type( 'divider' )
+	->tab( 'general' )
+	->priority( 3 )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
+
+// Width.
+wpbf_customizer_field()
+	->id( 'pre_header_width' )
+	->type( 'dimension' )
+	->tab( 'general' )
+	->label( __( 'Pre Header Width', 'page-builder-framework' ) )
+	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
+	->priority( 3 )
+	->transport( 'postMessage' )
+	->activeCallback( [
+		array(
+			'setting'  => 'pre_header_layout',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Height.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'pre_header_height',
-	'label'           => __( 'Height', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'priority'        => 3,
-	'default'         => 10,
-	'transport'       => 'postMessage',
-	'tab'             => 'general',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'pre_header_height' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Height', 'page-builder-framework' ) )
+	->priority( 3 )
+	->defaultValue( 10 )
+	->transport( 'postMessage' )
+	->properties( array(
 		'min'  => 1,
 		'max'  => 25,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	) )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'pre_header_bg_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'default'         => '#ffffff',
-	'priority'        => 4,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-	),
-	'choices'         => array(
-		'alpha' => true,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Font color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'pre_header_font_color',
-	'label'           => __( 'Font Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'priority'        => 4,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_font_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-	),
-	'choices'         => array(
-		'alpha' => true,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Accent color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'pre_header_accent_color',
-	'label'           => __( 'Accent Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'priority'        => 4,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_accent_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Accent color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'pre_header_accent_color_alt',
-	'label'           => __( 'Hover', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'priority'        => 4,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_accent_color_alt' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Font size.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'input_slider',
-	'label'           => __( 'Font Size', 'page-builder-framework' ),
-	'settings'        => 'pre_header_font_size',
-	'section'         => 'wpbf_pre_header_options',
-	'priority'        => 4,
-	'default'         => '14px',
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->priority( 4 )
+	->defaultValue( '14px' )
+	->transport( 'postMessage' )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-	),
-	'choices'         => array(
+	] )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 /* Fields – Logo */
 
