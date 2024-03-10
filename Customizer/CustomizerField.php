@@ -50,6 +50,13 @@ final class CustomizerField {
 	private $partial_refreshes = array();
 
 	/**
+	 * Custom properties for the control.
+	 *
+	 * @var array
+	 */
+	private $custom_properties = array();
+
+	/**
 	 * Construct the class.
 	 */
 	public function __construct() {
@@ -372,18 +379,37 @@ final class CustomizerField {
 	}
 
 	/**
-	 * Set the control's custom properties.
+	 * The section tab where the control belongs to.
 	 *
-	 * @param array $properties Control custom properties.
-	 *
-	 * @return $this
+	 * @param string $tab_key The section tab key.
 	 */
-	public function properties( $properties = array() ) {
-		if ( empty( $properties ) ) {
+	public function tab( $tab_key ) {
+
+		if ( empty( $tab_key ) ) {
 			return $this;
 		}
 
-		$this->control_instance->customProperties( $properties );
+		$this->custom_properties['tab'] = $tab_key;
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the control's custom properties.
+	 *
+	 * @param array $custom_properties Control's custom properties.
+	 *
+	 * @return $this
+	 */
+	public function properties( $custom_properties ) {
+
+		if ( empty( $custom_properties ) ) {
+			return $this;
+		}
+
+		$control_custom_props    = wp_parse_args( $custom_properties, $this->custom_properties );
+		$this->custom_properties = $control_custom_props;
 
 		return $this;
 	}
@@ -448,6 +474,10 @@ final class CustomizerField {
 
 				Customizer::$added_partial_refreshes[] = $this->partial_refreshes[ $index ];
 			}
+		}
+
+		if ( ! empty( $this->custom_properties ) ) {
+			$this->control_instance->customProperties( $this->custom_properties );
 		}
 
 		$this->control_instance->addToSection( $section_id );

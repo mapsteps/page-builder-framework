@@ -38,10 +38,12 @@ if ( ! class_exists( '\Kirki\Pro\Field\HeadlineToggle' ) || ! class_exists( '\Ki
 
 // New customizer functions.
 require_once WPBF_THEME_DIR . '/Customizer/wpbf-customizer-functions.php';
-wpbf_customizer()->init();
 
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
+
+// Init `wpbf_customizer()` function.
+wpbf_customizer()->init();
 
 // Body classes.
 require_once WPBF_THEME_DIR . '/inc/body-classes.php';

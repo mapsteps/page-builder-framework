@@ -7,6 +7,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
+use Mapsteps\Wpbf\Customizer\Customizer;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 
 /**
@@ -54,7 +55,7 @@ class BaseField {
 	/**
 	 * Parse control args that are provided by WP_Customize_Control by default.
 	 */
-	protected function parseDefaultControlArgs() {
+	private function parseDefaultControlArgs() {
 
 		$control_args = array(
 			'capability'  => $this->control->capability,
@@ -83,14 +84,52 @@ class BaseField {
 	}
 
 	/**
+	 * Parse 'tab' custom property.
+	 *
+	 * @param array $existing_properties The existing custom properties.
+	 *
+	 * @return array
+	 */
+	private function parseTabCustomProp( $existing_properties ) {
+
+		$props = $existing_properties;
+
+		if ( empty( $props['tab'] ) ) {
+			return $props;
+		}
+
+		if ( ! isset( Customizer::$added_section_tabs[ $this->control->section_id ] ) ) {
+			return $props;
+		}
+
+		$tab_wrapper_attrs = array(
+			'data-wpbf-parent-tab-id'   => $this->control->section_id,
+			'data-wpbf-parent-tab-item' => esc_attr( $props['tab'] ),
+		);
+
+		if ( isset( $props['wrapper_attrs'] ) ) {
+			$props['wrapper_attrs'] = array_merge( $props['wrapper_attrs'], $tab_wrapper_attrs );
+		} else {
+			$props['wrapper_attrs'] = $tab_wrapper_attrs;
+		}
+
+		unset( $props['tab'] );
+
+		return $props;
+
+	}
+
+	/**
 	 * Parse the default control args with our custom properties.
 	 */
 	protected function parseControlArgs() {
 
 		$default_args = $this->parseDefaultControlArgs();
-		$props        = $this->control->custom_properties;
 
-		return wp_parse_args( $props, $default_args );
+		$custom_properties = $this->control->custom_properties;
+		$custom_properties = $this->parseTabCustomProp( $custom_properties );
+
+		return wp_parse_args( $custom_properties, $default_args );
 
 	}
 

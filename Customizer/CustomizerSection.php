@@ -22,6 +22,13 @@ final class CustomizerSection {
 	private $section;
 
 	/**
+	 * Tabs for the section.
+	 *
+	 * @var array
+	 */
+	private $section_tabs = [];
+
+	/**
 	 * Construct the class.
 	 */
 	public function __construct() {
@@ -124,6 +131,23 @@ final class CustomizerSection {
 	}
 
 	/**
+	 * Define tabs for the section.
+	 *
+	 * @param array $tabs Tabs for the section.
+	 */
+	public function tabs( $tabs ) {
+
+		if ( empty( $tabs ) || ! is_array( $tabs ) ) {
+			return $this;
+		}
+
+		$this->section_tabs = $tabs;
+
+		return $this;
+
+	}
+
+	/**
 	 * Add the section to a panel.
 	 *
 	 * @param string $panel_id Panel id.
@@ -136,7 +160,11 @@ final class CustomizerSection {
 
 		Customizer::$added_sections[] = $this->section;
 
-		return new CustomizerSectionEntity();
+		if ( ! empty( $this->section_tabs ) ) {
+			Customizer::$added_section_tabs[ $this->section->id ] = $this->section_tabs;
+		}
+
+		return $this->section;
 
 	}
 

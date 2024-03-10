@@ -85,6 +85,13 @@ final class Customizer {
 	public static $added_partial_refreshes = array();
 
 	/**
+	 * Added section tabs.
+	 *
+	 * @var array
+	 */
+	public static $added_section_tabs = array();
+
+	/**
 	 * Get the instance of the class.
 	 *
 	 * @return self
@@ -106,9 +113,33 @@ final class Customizer {
 	 */
 	public function init() {
 
+		$this->add_section_tabs();
+
 		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_tooltips' ) );
+
+	}
+
+	/**
+	 * Add section tabs by adding 'section-tab' fields.
+	 *
+	 * @return void
+	 */
+	private function add_section_tabs() {
+
+		foreach ( self::$added_section_tabs as $section_id => $section_tabs ) {
+			if ( empty( $section_tabs ) ) {
+				continue;
+			}
+
+			wpbf_customizer_field()
+				->id( 'wpbf_section_tabs_' . $section_id )
+				->type( 'section-tabs' )
+				->priority( 0 )
+				->choices( $section_tabs )
+				->addToSection( $section_id );
+		}
 
 	}
 

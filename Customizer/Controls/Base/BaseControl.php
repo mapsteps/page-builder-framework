@@ -16,6 +16,13 @@ use WP_Customize_Manager;
 class BaseControl extends WP_Customize_Control {
 
 	/**
+	 * ID of section where this control belongs to.
+	 *
+	 * @var string
+	 */
+	protected $section_id = '';
+
+	/**
 	 * Used to generate css variables.
 	 *
 	 * @var string
@@ -62,6 +69,10 @@ class BaseControl extends WP_Customize_Control {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
+		if ( ! empty( $args['section'] ) ) {
+			$this->section_id = $args['section'];
+		}
+
 		if ( ! empty( $args['wrapper_attrs'] ) && is_array( $args['wrapper_attrs'] ) ) {
 			$this->wrapper_attrs = $args['wrapper_attrs'];
 
@@ -90,6 +101,9 @@ class BaseControl extends WP_Customize_Control {
 	public function to_json() {
 
 		parent::to_json();
+
+		// Section ID.
+		$this->json['sectionId'] = $this->section_id;
 
 		// Default value.
 		$this->json['default'] = $this->setting->default;
@@ -185,6 +199,7 @@ class BaseControl extends WP_Customize_Control {
 			$class = str_ireplace( '{default_class}', $class, $this->wrapper_attrs['class'] );
 		}
 
+		// phpcs:ignore
 		printf( '<' . esc_attr( $tag ) . ' id="%s" class="%s"%s>', esc_attr( $id ), esc_attr( $class ), $data_attrs );
 		$this->render_content();
 		echo '</' . esc_attr( $tag ) . '>';

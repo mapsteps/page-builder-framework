@@ -11,91 +11,80 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 /* Panel */
 
 // Header.
-Kirki::add_panel( 'header_panel', array(
-	'priority' => 4,
-	'title'    => __( 'Header', 'page-builder-framework' ),
-) );
+wpbf_customizer_panel()
+	->id( 'header_panel' )
+	->title( __( 'Header', 'page-builder-framework' ) )
+	->priority( 4 )
+	->add();
 
 /* Sections - Header */
 
 // Pre header.
-new \Kirki\Section(
-	'wpbf_pre_header_options',
-	[
-		'title'    => __( 'Pre Header', 'page-builder-framework' ),
-		'panel'    => 'header_panel',
-		'priority' => 0,
-		'tabs'     => [
-			'general' => [
-				'label' => esc_html__( 'General', 'page-builder-framework' ),
-			],
-			'design'  => [
-				'label' => esc_html__( 'Design', 'page-builder-framework' ),
-			],
+wpbf_customizer_section()
+	->id( 'wpbf_pre_header_options' )
+	->title( __( 'Pre Header', 'page-builder-framework' ) )
+	->priority( 0 )
+	->tabs( [
+		'general' => [
+			'label' => esc_html__( 'General', 'page-builder-framework' ),
 		],
-	]
-);
+		'design'  => [
+			'label' => esc_html__( 'Design', 'page-builder-framework' ),
+		],
+	] )
+	->addToPanel( 'header_panel' );
 
 // Navigation.
-new \Kirki\Section(
-	'wpbf_menu_options',
-	[
-		'title'    => __( 'Navigation', 'page-builder-framework' ),
-		'panel'    => 'header_panel',
-		'priority' => 200,
-		'tabs'     => [
-			'general' => [
-				'label' => esc_html__( 'General', 'page-builder-framework' ),
-			],
-			'design'  => [
-				'label' => esc_html__( 'Design', 'page-builder-framework' ),
-			],
+wpbf_customizer_section()
+	->id( 'wpbf_menu_options' )
+	->title( __( 'Navigation', 'page-builder-framework' ) )
+	->priority( 200 )
+	->tabs( [
+		'general' => [
+			'label' => esc_html__( 'General', 'page-builder-framework' ),
 		],
-	]
-);
+		'design'  => [
+			'label' => esc_html__( 'Design', 'page-builder-framework' ),
+		],
+	] )
+	->addToPanel( 'header_panel' );
 
 // Sub menu.
-new \Kirki\Section(
-	'wpbf_sub_menu_options',
-	[
-		'title'    => __( 'Sub Menu', 'page-builder-framework' ),
-		'panel'    => 'header_panel',
-		'priority' => 250,
-		'tabs'     => [
-			'general' => [
-				'label' => esc_html__( 'General', 'page-builder-framework' ),
-			],
-			'design'  => [
-				'label' => esc_html__( 'Design', 'page-builder-framework' ),
-			],
+wpbf_customizer_section()
+	->id( 'wpbf_sub_menu_options' )
+	->title( __( 'Sub Menu', 'page-builder-framework' ) )
+	->priority( 250 )
+	->tabs( [
+		'general' => [
+			'label' => esc_html__( 'General', 'page-builder-framework' ),
 		],
-	]
-);
+		'design'  => [
+			'label' => esc_html__( 'Design', 'page-builder-framework' ),
+		],
+	] )
+	->addToPanel( 'header_panel' );
 
 // Mobile menu.
-new \Kirki\Section(
-	'wpbf_mobile_menu_options',
-	[
-		'title'    => __( 'Mobile Navigation', 'page-builder-framework' ),
-		'panel'    => 'header_panel',
-		'priority' => 300,
-		'tabs'     => [
-			'general' => [
-				'label' => esc_html__( 'General', 'page-builder-framework' ),
-			],
-			'design'  => [
-				'label' => esc_html__( 'Design', 'page-builder-framework' ),
-			],
+wpbf_customizer_section()
+	->id( 'wpbf_mobile_menu_options' )
+	->title( __( 'Mobile Navigation', 'page-builder-framework' ) )
+	->priority( 300 )
+	->tabs( [
+		'general' => [
+			'label' => esc_html__( 'General', 'page-builder-framework' ),
 		],
-	]
-);
+		'design'  => [
+			'label' => esc_html__( 'Design', 'page-builder-framework' ),
+		],
+	] )
+	->addToPanel( 'header_panel' );
 
 // Mobile menu.
-Kirki::add_section( 'wpbf_mobile_sub_menu_options', array(
-	'title'    => __( 'Mobile Sub Menu', 'page-builder-framework' ),
-	'panel'    => 'header_panel',
-	'priority' => 350,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_mobile_sub_menu_options' )
+	->title( __( 'Mobile Sub Menu', 'page-builder-framework' ) )
+	->priority( 350 )
+	->addToPanel( 'header_panel' );
 
 /* Fields – Pre Header */
 
@@ -125,27 +114,31 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Column one layout.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'pre_header_column_one_layout',
-	'label'           => __( 'Column 1', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'default'         => 'text',
-	'priority'        => 2,
-	'tab'             => 'general',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'pre_header_column_one_layout' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Column 1', 'page-builder-framework' ) )
+	->defaultValue( 'text' )
+	->choices( [
+		'text'    => __( 'Text', 'page-builder-framework' ),
+		'button'  => __( 'Button', 'page-builder-framework' ),
+		'primary' => __( 'Button (Primary)', 'page-builder-framework' ),
+	] )
+	->priority( 2 )
+	->choices( [
 		'none' => __( 'None', 'page-builder-framework' ),
 		'text' => __( 'Text', 'page-builder-framework' ),
 		'menu' => __( 'Menu', 'page-builder-framework' ),
-	),
-	'active_callback' => array(
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-	),
-	'partial_refresh' => array(
+	] )
+	->partialRefresh( [
 		'preheadercolumnonelayout' => array(
 			'container_inclusive' => true,
 			'selector'            => '#pre-header',
@@ -153,8 +146,9 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/pre-header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
+
 
 // Column one.
 Kirki::add_field( 'wpbf', array(

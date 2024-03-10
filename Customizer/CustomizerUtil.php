@@ -23,6 +23,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
+use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
@@ -53,6 +54,7 @@ class CustomizerUtil {
 		'select'                    => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
 		'slider'                    => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
 		'input-slider'              => '\Mapsteps\Wpbf\Customizer\Controls\InputSlider\InputSliderControl',
+		'section-tabs'              => '\Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsControl',
 		'sortable'                  => '\Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableControl',
 	);
 
@@ -69,6 +71,7 @@ class CustomizerUtil {
 		'generic',
 		'radio',
 		'radio-image',
+		'section-tabs',
 		'sortable',
 	);
 
@@ -247,6 +250,9 @@ class CustomizerUtil {
 				break;
 			case 'input-slider':
 				$field = new InputSliderField( $control );
+				break;
+			case 'section-tabs':
+				$field = new SectionTabsField( $control );
 				break;
 			case 'sortable':
 				$field = new SortableField( $control );

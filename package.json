@@ -107,6 +107,8 @@
     "build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
     "watch-input-slider-control": "parcel watch Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
     "build-input-slider-control": "parcel build Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",
+    "watch-section-tabs-control": "parcel watch Customizer/Controls/Tabs/src/section-tabs-control.ts --dist-dir Customizer/Controls/Tabs/dist --no-source-maps",
+    "build-section-tabs-control": "parcel build Customizer/Controls/Tabs/src/section-tabs-control.ts --dist-dir Customizer/Controls/Tabs/dist --no-source-maps",
     "watch-sortable-control": "parcel watch Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-source-maps",
     "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-source-maps"
   }
