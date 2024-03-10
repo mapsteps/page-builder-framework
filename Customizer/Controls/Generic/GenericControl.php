@@ -23,6 +23,13 @@ class GenericControl extends BaseControl {
 	public $subtype = 'text';
 
 	/**
+	 * Number of rows for 'textarea' subtype.
+	 *
+	 * @var int
+	 */
+	protected $rows = 5;
+
+	/**
 	 * Minimum value.
 	 *
 	 * @var int|float|null
@@ -88,6 +95,10 @@ class GenericControl extends BaseControl {
 
 				$this->setting->default = ( new NumberUtil() )->limitNumber( $default_value, $this->min, $this->max );
 			}
+		} elseif ( 'textarea' === $this->subtype ) {
+			if ( isset( $args['rows'] ) && is_numeric( $args['rows'] ) ) {
+				$this->rows = absint( $args['rows'] );
+			}
 		}
 
 	}
@@ -121,7 +132,7 @@ class GenericControl extends BaseControl {
 		parent::to_json();
 
 		$this->json['subtype']  = $this->subtype;
-		$this->json['inputTag'] = $this->subtype === 'textarea' ? 'textarea' : 'input';
+		$this->json['inputTag'] = 'textarea' === $this->subtype ? 'textarea' : 'input';
 
 		if ( 'number' === $this->subtype ) {
 			if ( ! is_null( $this->min ) ) {
@@ -133,8 +144,9 @@ class GenericControl extends BaseControl {
 			}
 
 			$this->json['step'] = $this->step;
+		} elseif ( 'textarea' === $this->subtype ) {
+			$this->json['rows'] = $this->rows;
 		}
-
 
 	}
 
@@ -161,7 +173,8 @@ class GenericControl extends BaseControl {
 			<textarea
 				{{{ data.inputAttrs }}}
 				{{{ data.link }}}
-				id="_customize-input-{{ data.id }}">{{{ data.value }}}</textarea>
+				id="_customize-input-{{ data.id }}"
+				rows="{{ data.rows }}">{{{ data.value }}}</textarea>
 			<# } else { #>
 			<input
 				type="{{ data.subtype }}"

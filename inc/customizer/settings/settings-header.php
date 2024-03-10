@@ -151,23 +151,22 @@ wpbf_customizer_field()
 
 
 // Column one.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'textarea',
-	'settings'        => 'pre_header_column_one',
-	'label'           => __( 'Text', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'default'         => __( 'Column 1', 'page-builder-framework' ),
-	'priority'        => 2,
-	'tab'             => 'general',
-	'partial_refresh' => array(
+wpbf_customizer_field()
+	->id( 'pre_header_column_one' )
+	->type( 'textarea' )
+	->tab( 'general' )
+	->label( __( 'Text', 'page-builder-framework' ) )
+	->defaultValue( __( 'Column 1', 'page-builder-framework' ) )
+	->priority( 2 )
+	->partialRefresh( [
 		'preheadercolumnonecontent' => array(
 			'selector'        => '.wpbf-inner-pre-header-left, .wpbf-inner-pre-header-content',
 			'render_callback' => function () {
 				return do_shortcode( get_theme_mod( 'pre_header_column_one' ) );
 			},
 		),
-	),
-	'active_callback' => array(
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
@@ -178,8 +177,8 @@ Kirki::add_field( 'wpbf', array(
 			'operator' => '==',
 			'value'    => 'text',
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Separator.
 new \Kirki\Pro\Field\Divider(
