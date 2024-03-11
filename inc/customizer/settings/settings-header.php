@@ -467,53 +467,51 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'logo_image_separator',
-		'section'  => 'title_tagline',
-		'priority' => 4,
-	]
-);
+wpbf_customizer_field()
+	->id( 'logo_image_separator' )
+	->type( 'divider' )
+	->priority( 4 )
+	->addToSection( 'title_tagline' );
 
 // Color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'menu_logo_color',
-	'label'           => __( 'Color', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'priority'        => 11,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->priority( 11 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Hover color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'menu_logo_color_alt',
-	'label'           => __( 'Hover', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'priority'        => 12,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_color_alt' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 12 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Font size.
 Kirki::add_field( 'wpbf', array(
@@ -546,39 +544,37 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings'        => 'tagline_separator',
-		'section'         => 'title_tagline',
-		'priority'        => 14,
-		'active_callback' => [
-			[
-				'setting'  => 'custom_logo',
-				'operator' => '==',
-				'value'    => '',
-			],
-		],
-	]
-);
-
-/* Fields – Tagline */
-
-// Toggle.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'toggle',
-	'settings'        => 'menu_logo_description',
-	'label'           => __( 'Display Tagline', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'default'         => 0,
-	'priority'        => 20,
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'tagline_separator' )
+	->type( 'divider' )
+	->priority( 14 )
+	->activeCallback( [
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
-	),
-	'partial_refresh' => array(
+	] )
+	->addToSection( 'title_tagline' );
+
+/* Fields – Tagline */
+
+// Toggle.
+wpbf_customizer_field()
+	->id( 'menu_logo_description' )
+	->type( 'toggle' )
+	->tab( 'general' )
+	->label( __( 'Display Tagline', 'page-builder-framework' ) )
+	->defaultValue( 0 )
+	->priority( 20 )
+	->activeCallback( [
+		array(
+			'setting'  => 'custom_logo',
+			'operator' => '==',
+			'value'    => '',
+		),
+	] )
+	->partialRefresh( [
 		'displaytagline' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -586,18 +582,18 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Mobile toggle.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'toggle',
-	'settings'        => 'menu_logo_description_mobile',
-	'label'           => __( 'Display Tagline on Mobile', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'default'         => 0,
-	'priority'        => 20,
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_description_mobile' )
+	->type( 'toggle' )
+	->tab( 'general' )
+	->label( __( 'Display Tagline on Mobile', 'page-builder-framework' ) )
+	->defaultValue( 0 )
+	->priority( 20 )
+	->activeCallback( [
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '==',
@@ -608,8 +604,8 @@ Kirki::add_field( 'wpbf', array(
 			'operator' => '==',
 			'value'    => true,
 		),
-	),
-	'partial_refresh' => array(
+	] )
+	->partialRefresh( [
 		'displaytaglinemobile' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -617,21 +613,21 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'menu_logo_description_color',
-	'label'           => __( 'Color', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'priority'        => 22,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_description_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->priority( 22 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '==',
@@ -642,8 +638,8 @@ Kirki::add_field( 'wpbf', array(
 			'operator' => '==',
 			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Font size.
 Kirki::add_field( 'wpbf', array(
@@ -674,133 +670,124 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'logo_settings_separator',
-		'section'  => 'title_tagline',
-		'priority' => 24,
-	]
-);
+wpbf_customizer_field()
+	->id( 'logo_settings_separator' )
+	->type( 'divider' )
+	->priority( 24 )
+	->addToSection( 'title_tagline' );
 
 /* Fields – Logo Settings */
 
 // Logo URL.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'link',
-	'settings'  => 'menu_logo_url',
-	'label'     => __( 'Custom Logo URL', 'page-builder-framework' ),
-	'section'   => 'title_tagline',
-	'transport' => 'postMessage',
-	'priority'  => 30,
-) );
+wpbf_customizer_field()
+	->id( 'menu_logo_url' )
+	->type( 'url' )
+	->tab( 'general' )
+	->label( __( 'Custom Logo URL', 'page-builder-framework' ) )
+	->priority( 30 )
+	->transport( 'postMessage' )
+	->addToSection( 'title_tagline' );
 
 // Alt tag.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'text',
-	'settings'        => 'menu_logo_alt',
-	'label'           => __( 'Custom "alt" Tag', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'priority'        => 31,
-	'transport'       => 'postMessage',
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_alt' )
+	->type( 'text' )
+	->tab( 'general' )
+	->label( __( 'Custom "alt" Tag', 'page-builder-framework' ) )
+	->priority( 31 )
+	->transport( 'postMessage' )
+	->activeCallback( [
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '!==',
 			'value'    => '',
 		),
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Title tag.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'text',
-	'settings'        => 'menu_logo_title',
-	'label'           => __( 'Custom "title" Tag', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'priority'        => 32,
-	'transport'       => 'postMessage',
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_title' )
+	->type( 'text' )
+	->label( __( 'Custom "title" Tag', 'page-builder-framework' ) )
+	->priority( 32 )
+	->transport( 'postMessage' )
+	->activeCallback( [
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '!==',
 			'value'    => '',
 		),
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'logo_container_separator',
-		'section'  => 'title_tagline',
-		'priority' => 33,
-	]
-);
+wpbf_customizer_field()
+	->id( 'logo_container_separator' )
+	->type( 'divider' )
+	->priority( 33 )
+	->addToSection( 'title_tagline' );
 
 /* Fields – Logo Container Width */
 
 // Container width.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'slider',
-	'settings'    => 'menu_logo_container_width',
-	'label'       => __( 'Logo Container Width', 'page-builder-framework' ),
-	'description' => __( 'Defines the space in % the logo area takes in the navigation.', 'page-builder-framework' ),
-	'section'     => 'title_tagline',
-	'priority'    => 40,
-	'default'     => 25,
-	'transport'   => 'postMessage',
-	'choices'     => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_container_width' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Logo Container Width', 'page-builder-framework' ) )
+	->description( __( 'Defines the space in % the logo area takes in the navigation.', 'page-builder-framework' ) )
+	->defaultValue( 25 )
+	->priority( 40 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 10,
 		'max'  => 40,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Mobile container width.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'slider',
-	'settings'    => 'mobile_menu_logo_container_width',
-	'label'       => __( 'Logo Container Width (Mobile)', 'page-builder-framework' ),
-	'description' => __( 'Defines the space in % the logo area takes in the navigation.', 'page-builder-framework' ),
-	'section'     => 'title_tagline',
-	'priority'    => 41,
-	'default'     => 66,
-	'transport'   => 'postMessage',
-	'choices'     => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_logo_container_width' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Logo Container Width (Mobile)', 'page-builder-framework' ) )
+	->description( __( 'Defines the space in % the logo area takes in the navigation.', 'page-builder-framework' ) )
+	->defaultValue( 66 )
+	->priority( 41 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 10,
 		'max'  => 80,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'favicon_separator',
-		'section'  => 'title_tagline',
-		'priority' => 42,
-	]
-);
+wpbf_customizer_field()
+	->id( 'favicon_separator' )
+	->type( 'divider' )
+	->priority( 42 )
+	->addToSection( 'title_tagline' );
 
 /* Fields – Navigation */
 
 // Variations.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'menu_position',
-	'label'           => __( 'Menu', 'page-builder-framework' ),
-	'section'         => 'wpbf_menu_options',
-	'default'         => 'menu-right',
-	'priority'        => 0,
-	'multiple'        => 1,
-	'tab'             => 'general',
-	'choices'         => apply_filters( 'wpbf_menu_position', array(
+wpbf_customizer_field()
+	->id( 'menu_position' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Menu', 'page-builder-framework' ) )
+	->defaultValue( 'menu-right' )
+	->priority( 0 )
+	->choices( apply_filters( 'wpbf_menu_position', array(
 		'menu-right'    => __( 'Right (default)', 'page-builder-framework' ),
 		'menu-left'     => __( 'Left', 'page-builder-framework' ),
 		'menu-centered' => __( 'Centered', 'page-builder-framework' ),
 		'menu-stacked'  => __( 'Stacked', 'page-builder-framework' ),
-	) ),
-	'partial_refresh' => array(
+	) ) )
+	->partialRefresh( [
 		'headerlayout' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -808,28 +795,25 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_menu_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'menu_position_separator',
-		'section'  => 'wpbf_menu_options',
-		'priority' => 0,
-		'tab'      => 'general',
-	]
-);
+wpbf_customizer_field()
+	->id( 'menu_position_separator' )
+	->type( 'divider' )
+	->priority( 0 )
+	->tab( 'general' )
+	->addToSection( 'wpbf_menu_options' );
 
 // Search icon.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'toggle',
-	'settings'        => 'menu_search_icon',
-	'label'           => __( 'Search Icon', 'page-builder-framework' ),
-	'section'         => 'wpbf_menu_options',
-	'priority'        => 1,
-	'tab'             => 'general',
-	'partial_refresh' => array(
+wpbf_customizer_field()
+	->id( 'menu_search_icon' )
+	->type( 'toggle' )
+	->tab( 'general' )
+	->label( __( 'Search Icon', 'page-builder-framework' ) )
+	->priority( 1 )
+	->partialRefresh( [
 		'menusearchicon' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -837,64 +821,59 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_menu_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'menu_search_icon_separator',
-		'section'  => 'wpbf_menu_options',
-		'priority' => 1,
-		'tab'      => 'general',
-	]
-);
+wpbf_customizer_field()
+	->id( 'menu_search_icon_separator' )
+	->type( 'divider' )
+	->priority( 1 )
+	->tab( 'general' )
+	->addToSection( 'wpbf_menu_options' );
 
 // Width.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'dimension',
-	'label'       => __( 'Navigation Width', 'page-builder-framework' ),
-	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
-	'settings'    => 'menu_width',
-	'section'     => 'wpbf_menu_options',
-	'transport'   => 'postMessage',
-	'priority'    => 2,
-	'tab'         => 'general',
-) );
+wpbf_customizer_field()
+	->id( 'menu_width' )
+	->type( 'dimension' )
+	->tab( 'general' )
+	->label( __( 'Navigation Width', 'page-builder-framework' ) )
+	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->addToSection( 'wpbf_menu_options' );
 
 // Height.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'slider',
-	'label'     => __( 'Menu Height', 'page-builder-framework' ),
-	'settings'  => 'menu_height',
-	'section'   => 'wpbf_menu_options',
-	'priority'  => 3,
-	'default'   => 20,
-	'transport' => 'postMessage',
-	'tab'       => 'general',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'menu_height' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Menu Height', 'page-builder-framework' ) )
+	->defaultValue( 20 )
+	->priority( 3 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 80,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_menu_options' );
 
 // Padding.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'label'           => __( 'Menu Item Spacing', 'page-builder-framework' ),
-	'settings'        => 'menu_padding',
-	'section'         => 'wpbf_menu_options',
-	'priority'        => 4,
-	'default'         => 20,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'menu_padding' )
+	->type( 'slider' )
+	->tab( 'design' )
+	->label( __( 'Menu Item Spacing', 'page-builder-framework' ) )
+	->defaultValue( 20 )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 5,
 		'max'  => 40,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'menu_position',
 			'operator' => '!=',
@@ -905,68 +884,64 @@ Kirki::add_field( 'wpbf', array(
 			'operator' => '!=',
 			'value'    => 'menu-off-canvas-left',
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_menu_options' );
 
 // Background color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'menu_bg_color',
-	'label'     => __( 'Background Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_menu_options',
-	'default'   => '#f5f5f7',
-	'priority'  => 5,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'menu_bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#f5f5f7' )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_menu_options' );
 
 // Font color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'menu_font_color',
-	'label'     => __( 'Font Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_menu_options',
-	'priority'  => 6,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'menu_font_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 6 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_menu_options' );
 
 // Font color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'menu_font_color_alt',
-	'label'     => __( 'Hover', 'page-builder-framework' ),
-	'section'   => 'wpbf_menu_options',
-	'priority'  => 7,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'menu_font_color_alt' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 7 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_menu_options' );
 
 // Font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Font Size', 'page-builder-framework' ),
-	'settings'  => 'menu_font_size',
-	'section'   => 'wpbf_menu_options',
-	'priority'  => 7,
-	'default'   => '16px',
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'menu_font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->priority( 7 )
+	->defaultValue( '16px' )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 100,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_menu_options' );
 
 if ( ! wpbf_is_premium() ) {
 
@@ -990,38 +965,36 @@ if ( ! wpbf_is_premium() ) {
 /* Fields – Sub Menu */
 
 // Width.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'slider',
-	'settings'  => 'sub_menu_width',
-	'label'     => __( 'Sub Menu Width', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'priority'  => 0,
-	'default'   => 220,
-	'transport' => 'postMessage',
-	'tab'       => 'general',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'sub_menu_width' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Sub Menu Width', 'page-builder-framework' ) )
+	->defaultValue( 220 )
+	->priority( 0 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 100,
 		'max'  => 400,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'radio-image',
-	'settings'        => 'sub_menu_alignment',
-	'label'           => __( 'Sub Menu Alignment', 'page-builder-framework' ),
-	'section'         => 'wpbf_sub_menu_options',
-	'default'         => 'left',
-	'priority'        => 1,
-	'multiple'        => 1,
-	'tab'             => 'general',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'sub_menu_alignment' )
+	->type( 'radio-image' )
+	->tab( 'general' )
+	->label( __( 'Sub Menu Alignment', 'page-builder-framework' ) )
+	->defaultValue( 'left' )
+	->choices( [
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
 		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-	'partial_refresh' => array(
+	] )
+	->priority( 1 )
+	->transport( 'postMessage' )
+	->partialRefresh( [
 		'submenualignment' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -1029,151 +1002,144 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Text alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'radio-image',
-	'settings'  => 'sub_menu_text_alignment',
-	'label'     => __( 'Text Alignment', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'default'   => 'left',
-	'priority'  => 2,
-	'multiple'  => 1,
-	'transport' => 'postMessage',
-	'tab'       => 'general',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'sub_menu_text_alignment' )
+	->type( 'radio-image' )
+	->tab( 'general' )
+	->label( __( 'Text Alignment', 'page-builder-framework' ) )
+	->defaultValue( 'left' )
+	->choices( [
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
 		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-) );
+	] )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Padding.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'padding_control',
-	'label'             => __( 'Menu Item Padding', 'page-builder-framework' ),
-	'section'           => 'wpbf_sub_menu_options',
-	'settings'          => 'sub_menu_padding',
-	'priority'          => 3,
-	'transport'         => 'postMessage',
-	'tab'               => 'general',
-	'default'           => json_encode(
-		array(
-			'top'    => 10,
-			'right'  => 20,
-			'bottom' => 10,
-			'left'   => 20,
-		)
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
-) );
+wpbf_customizer_field()
+	->id( 'sub_menu_padding' )
+	->type( 'padding' )
+	->tab( 'general' )
+	->label( __( 'Menu Item Padding', 'page-builder-framework' ) )
+	->priority( 3 )
+	->transport( 'postMessage' )
+	->defaultValue( [
+		'top'    => 10,
+		'right'  => 20,
+		'bottom' => 10,
+		'left'   => 20,
+	] )
+	->properties( [
+		'save_as_json' => true,
+	] )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Background color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'sub_menu_bg_color',
-	'label'     => __( 'Background Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'default'   => '#ffffff',
-	'transport' => 'postMessage',
-	'priority'  => 4,
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'sub_menu_bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Background color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'sub_menu_bg_color_alt',
-	'label'     => __( 'Hover', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'default'   => '#ffffff',
-	'priority'  => 5,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'sub_menu_bg_color_alt' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_sub_menu_options' )
 
 // Accent color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'sub_menu_accent_color',
-	'label'     => __( 'Font Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'priority'  => 6,
-) );
+wpbf_customizer_field()
+	->id( 'sub_menu_accent_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 6 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Accent color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'sub_menu_accent_color_alt',
-	'label'     => __( 'Hover', 'page-builder-framework' ),
-	'section'   => 'wpbf_sub_menu_options',
-	'priority'  => 7,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'sub_menu_accent_color_alt' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 7 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_sub_menu_options' );
+
 
 // Font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Font Size', 'page-builder-framework' ),
-	'settings'  => 'sub_menu_font_size',
-	'section'   => 'wpbf_sub_menu_options',
-	'priority'  => 8,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'sub_menu_font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->priority( 8 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Separator toggle.
-new \Kirki\Pro\Field\HeadlineToggle(
-	[
-		'settings' => 'sub_menu_separator',
-		'label'    => __( 'Sub Menu Separator', 'page-builder-framework' ),
-		'section'  => 'wpbf_sub_menu_options',
-		'default'  => 0,
-		'priority' => 9,
-		'tab'      => 'design',
-	]
-);
+wpbf_customizer_field()
+	->id( 'sub_menu_separator' )
+	->type( 'headline-toggle' )
+	->tab( 'design' )
+	->label( __( 'Sub Menu Separator', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 9 )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Separator color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'sub_menu_separator_color',
-	'label'           => __( 'Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_sub_menu_options',
-	'default'         => '#f5f5f7',
-	'priority'        => 10,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'sub_menu_separator_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->defaultValue( '#f5f5f7' )
+	->priority( 10 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'sub_menu_separator',
 			'operator' => '==',
 			'value'    => true,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 if ( ! wpbf_is_premium() ) {
 
@@ -1198,20 +1164,18 @@ if ( ! wpbf_is_premium() ) {
 /* Fields – Mobile Navigation */
 
 // Variations.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'mobile_menu_options',
-	'label'           => __( 'Menu', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => 'menu-mobile-hamburger',
-	'priority'        => 1,
-	'multiple'        => 1,
-	'tab'             => 'general',
-	'choices'         => apply_filters( 'wpbf_mobile_menu_options', array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_options' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Menu', 'page-builder-framework' ) )
+	->defaultValue( 'menu-mobile-hamburger' )
+	->priority( 1 )
+	->choices( apply_filters( 'wpbf_mobile_menu_options', array(
 		'menu-mobile-default'   => __( 'Default', 'page-builder-framework' ),
 		'menu-mobile-hamburger' => __( 'Hamburger', 'page-builder-framework' ),
-	) ),
-	'partial_refresh' => array(
+	) ) )
+	->partialRefresh( [
 		'mobilemenuoptions' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -1219,42 +1183,39 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings'        => 'mobile_menu_position_separator',
-		'section'         => 'wpbf_mobile_menu_options',
-		'priority'        => 1,
-		'tab'             => 'general',
-		'active_callback' => [
-			[
-				'setting'  => 'mobile_menu_options',
-				'operator' => '!==',
-				'value'    => 'menu-mobile-default',
-			],
-		],
-	]
-);
-
-// Mobile search icon.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'toggle',
-	'settings'        => 'mobile_menu_search_icon',
-	'label'           => __( 'Search Icon', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'priority'        => 1,
-	'tab'             => 'general',
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_position_separator' )
+	->type( 'divider' )
+	->priority( 1 )
+	->tab( 'general' )
+	->activeCallback( [
 		array(
 			'setting'  => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
-	),
-	'partial_refresh' => array(
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
+
+// Mobile search icon.
+wpbf_customizer_field()
+	->id( 'mobile_menu_search_icon' )
+	->type( 'toggle' )
+	->tab( 'general' )
+	->label( __( 'Search Icon', 'page-builder-framework' ) )
+	->priority( 1 )
+	->activeCallback( [
+		array(
+			'setting'  => 'mobile_menu_options',
+			'operator' => '!==',
+			'value'    => 'menu-mobile-default',
+		),
+	] )
+	->partialRefresh( [
 		'mobilemenusearchicon' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -1262,146 +1223,140 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' )
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings'        => 'mobile_menu_search_icon_separator',
-		'section'         => 'wpbf_mobile_menu_options',
-		'priority'        => 1,
-		'tab'             => 'general',
-		'active_callback' => [
-			[
-				'setting'  => 'mobile_menu_options',
-				'operator' => '!==',
-				'value'    => 'menu-mobile-default',
-			],
-		],
-	]
-);
+wpbf_customizer_field()
+	->id( 'mobile_menu_search_icon_separator' )
+	->type( 'divider' )
+	->tab( 'general' )
+	->priority( 1 )
+	->activeCallback( [
+		array(
+			'setting'  => 'mobile_menu_options',
+			'operator' => '!==',
+			'value'    => 'menu-mobile-default',
+		),
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' )
 
 // Height.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'slider',
-	'settings'  => 'mobile_menu_height',
-	'label'     => __( 'Height', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_menu_options',
-	'priority'  => 2,
-	'default'   => 20,
-	'transport' => 'postMessage',
-	'tab'       => 'general',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_height' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Height', 'page-builder-framework' ) )
+	->defaultValue( 20 )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 80,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'mobile_menu_background_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'priority'        => 3,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_background_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->priority( 3 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'mobile_menu_options',
 			'operator' => '!=',
 			'value'    => 'menu-mobile-elementor',
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Icon color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'mobile_menu_hamburger_color',
-	'label'           => __( 'Icon Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'priority'        => 4,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_hamburger_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Icon Color', 'page-builder-framework' ) )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Hamburger size.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'input_slider',
-	'settings'        => 'mobile_menu_hamburger_size',
-	'label'           => __( 'Icon Size', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'default'         => '16px',
-	'priority'        => 4,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_hamburger_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Icon Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
+
 
 // Hamburger background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'mobile_menu_hamburger_bg_color',
-	'label'           => __( 'Hamburger Icon Button', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'tooltip'         => __( 'Define a background color & turn the hamburger icon into a button.', 'page-builder-framework' ),
-	'priority'        => 5,
-	'tab'             => 'design',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_hamburger_bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Hamburger Icon Button', 'page-builder-framework' ) )
+	->tooltip( __( 'Define a background color & turn the hamburger icon into a button.', 'page-builder-framework' ) )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Border radius.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'mobile_menu_hamburger_border_radius',
-	'label'           => __( 'Border Radius', 'page-builder-framework' ),
-	'section'         => 'wpbf_mobile_menu_options',
-	'priority'        => 5,
-	'default'         => 0,
-	'transport'       => 'postMessage',
-	'tab'             => 'design',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_hamburger_border_radius' )
+	->type( 'slider' )
+	->tab( 'design' )
+	->label( __( 'Border Radius', 'page-builder-framework' ) )
+	->defaultValue( 0 )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-	'active_callback' => array(
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
@@ -1412,139 +1367,132 @@ Kirki::add_field( 'wpbf', array(
 			'operator' => '!=',
 			'value'    => false,
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Headline.
-new \Kirki\Pro\Field\Headline(
-	[
-		'settings' => 'mobile_menu_item_settings_headline',
-		'label'    => esc_html__( 'Menu Item Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_mobile_menu_options',
-		'priority' => 6,
-	]
-);
+wpbf_customizer_field()
+	->id( 'mobile_menu_item_settings_headline' )
+	->type( 'headline' )
+	->label( esc_html__( 'Menu Item Settings', 'page-builder-framework' ) )
+	->priority( 6 )
+	->addToSection( 'wpbf_mobile_menu_options' )
 
 // Padding.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'padding_control',
-	'label'             => __( 'Padding', 'page-builder-framework' ),
-	'section'           => 'wpbf_mobile_menu_options',
-	'settings'          => 'mobile_menu_padding',
-	'priority'          => 8,
-	'transport'         => 'postMessage',
-	'tab'               => 'general',
-	'default'           => json_encode(
-		array(
-			'top'    => 10,
-			'right'  => 20,
-			'bottom' => 10,
-			'left'   => 20,
-		)
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wpbf_is_numeric_sanitization_helper' ),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_menu_padding' )
+	->type( 'padding' )
+	->tab( 'general' )
+	->label( __( 'Padding', 'page-builder-framework' ) )
+	->priority( 8 )
+	->transport( 'postMessage' )
+	->defaultValue( [
+		'top'    => 10,
+		'right'  => 20,
+		'bottom' => 10,
+		'left'   => 20,
+	] )
+	->properties( [
+		'save_as_json' => true,
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Menu item background color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_menu_bg_color',
-	'label'     => __( 'Background Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_menu_options',
-	'priority'  => 9,
-	'default'   => '#ffffff',
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_menu_bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( 9 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Menu item background color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_menu_bg_color_alt',
-	'label'     => __( 'Hover', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_menu_options',
-	'priority'  => 10,
-	'default'   => '#ffffff',
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_menu_bg_color_alt' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( 10 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Font color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_menu_font_color',
-	'label'     => __( 'Font Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_menu_options',
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'priority'  => 11,
-) );
+wpbf_customizer_field()
+	->id( 'mobile_menu_font_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 11 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Font color hover.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_menu_font_color_alt',
-	'label'     => __( 'Hover', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_menu_options',
-	'priority'  => 12,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_menu_font_color_alt' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 12 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Divider color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_menu_border_color',
-	'label'     => __( 'Divider Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_menu_options',
-	'default'   => '#d9d9e0',
-	'priority'  => 13,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_menu_border_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Divider Color', 'page-builder-framework' ) )
+	->defaultValue( '#d9d9e0' )
+	->priority( 13 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Sub menu arrow color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_menu_submenu_arrow_color',
-	'label'     => __( 'Sub Menu Arrow Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_menu_options',
-	'priority'  => 14,
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_menu_submenu_arrow_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Sub Menu Arrow Color', 'page-builder-framework' ) )
+	->priority( 14 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Font Size', 'page-builder-framework' ),
-	'settings'  => 'mobile_menu_font_size',
-	'section'   => 'wpbf_mobile_menu_options',
-	'priority'  => 15,
-	'default'   => '16px',
-	'transport' => 'postMessage',
-	'tab'       => 'design',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'mobile_menu_font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( 15 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 if ( ! wpbf_is_premium() ) {
 
@@ -1568,130 +1516,113 @@ if ( ! wpbf_is_premium() ) {
 /* Fields – Mobile Sub Menu */
 
 // Auto collapse other sub-menu when a sub-menu is expanded.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'toggle',
-	'settings'    => 'mobile_sub_menu_auto_collapse',
-	'label'       => __( 'Auto Collapse', 'page-builder-framework' ),
-	'description' => __( 'Auto collapse open sub-menu if other sub-menu is being opened.', 'page-builder-framework' ),
-	'section'     => 'wpbf_mobile_sub_menu_options',
-	'priority'    => 1,
-	'transport'   => 'postMessage',
-) );
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_auto_collapse' )
+	->type( 'toggle' )
+	->tab( 'general' )
+	->label( __( 'Auto Collapse', 'page-builder-framework' ) )
+	->description( __( 'Auto collapse open sub-menu if other sub-menu is being opened.', 'page-builder-framework' ) )
+	->priority( 1 )
+	->transport( 'postMessage' )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 // Indent.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'slider',
-	'settings'  => 'mobile_sub_menu_indent',
-	'label'     => __( 'Indent', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 2,
-	'default'   => 0,
-	'transport' => 'postMessage',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_indent' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Indent', 'page-builder-framework' ) )
+	->defaultValue( 0 )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'mobile_sub_menu_separator',
-		'section'  => 'wpbf_mobile_sub_menu_options',
-		'priority' => 2,
-	]
-);
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_separator' )
+	->type( 'divider' )
+	->priority( 2 )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 // Menu item background color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_sub_menu_bg_color',
-	'label'     => __( 'Background Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 3,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->priority( 3 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 // Menu item background color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_sub_menu_bg_color_alt',
-	'label'     => __( 'Hover', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 4,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_bg_color_alt' )
+	->type( 'color' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 // Font color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_sub_menu_font_color',
-	'label'     => __( 'Font Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_sub_menu_options',
-	'transport' => 'postMessage',
-	'priority'  => 5,
-) );
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_font_color' )
+	->type( 'color' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 // Font color hover.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_sub_menu_font_color_alt',
-	'label'     => __( 'Hover', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 6,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
-
-// Divider color.
-// Kirki::add_field( 'wpbf', array(
-//  'type'      => 'color',
-//  'settings'  => 'mobile_sub_menu_border_color',
-//  'label'     => __( 'Divider Color', 'page-builder-framework' ),
-//  'section'   => 'wpbf_mobile_sub_menu_options',
-//  'priority'  => 7,
-//  'transport' => 'postMessage',
-//  'choices'   => array(
-//      'alpha' => true,
-//  ),
-// ) );
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_font_color_alt' )
+	->type( 'color' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( 6 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 // Sub menu arrow color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'mobile_sub_menu_arrow_color',
-	'label'     => __( 'Sub Menu Arrow Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 8,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_arrow_color' )
+	->type( 'color' )
+	->label( __( 'Sub Menu Arrow Color', 'page-builder-framework' ) )
+	->priority( 8 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 // Font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Font Size', 'page-builder-framework' ),
-	'settings'  => 'mobile_sub_menu_font_size',
-	'section'   => 'wpbf_mobile_sub_menu_options',
-	'priority'  => 9,
-	'transport' => 'postMessage',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'mobile_sub_menu_font_size' )
+	->type( 'input-slider' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->priority( 9 )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 if ( ! wpbf_is_premium() ) {
 

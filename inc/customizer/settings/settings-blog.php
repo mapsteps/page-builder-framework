@@ -548,6 +548,9 @@ foreach ( $archives as $archive ) {
 				'value'    => 'boxed',
 			),
 		] )
+		->properties( [
+			'save_as_json' => true,
+		] )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Space between.
@@ -859,6 +862,9 @@ foreach ( $singles as $single ) {
 				'operator' => '==',
 				'value'    => 'boxed',
 			),
+		] )
+		->properties( [
+			'save_as_json' => true,
 		] )
 		->addToSection( 'wpbf_' . $single . '_options' );
 
