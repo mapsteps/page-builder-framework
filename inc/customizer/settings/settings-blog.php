@@ -549,7 +549,8 @@ foreach ( $archives as $archive ) {
 			),
 		] )
 		->properties( [
-			'save_as_json' => true,
+			'save_as_json'   => true,
+			'dont_save_unit' => true,
 		] )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
@@ -864,7 +865,8 @@ foreach ( $singles as $single ) {
 			),
 		] )
 		->properties( [
-			'save_as_json' => true,
+			'save_as_json'   => true,
+			'dont_save_unit' => true,
 		] )
 		->addToSection( 'wpbf_' . $single . '_options' );
 

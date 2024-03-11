@@ -7,7 +7,7 @@ import {
 	WpbfCustomizeMarginPaddingControl,
 } from "./interface";
 import {
-	makeJsonStrValueWithoutUnit,
+	encodeJsonOrDefault,
 	makeObjValueWithoutUnit,
 	makeObjValueWithoutUnitFromJson,
 	makeObjValueWithUnit,
@@ -28,6 +28,7 @@ export default function MarginPaddingForm(props: {
 	valueArray: MarginPaddingValue;
 	unit: string;
 	saveAsJson: boolean;
+	dontSaveUnit: boolean;
 	dimensions: string[];
 	devices?: string[] | undefined;
 	isResponsive: boolean;
@@ -104,20 +105,20 @@ export default function MarginPaddingForm(props: {
 
 	function saveToCustomizerSetting(val: MarginPaddingValue) {
 		/**
-		 * This "saveAsJson" option is used to support PBF's old "responsive_padding" control.
-		 * That's why the value format is a JSON encoded version of the values (without units).
+		 * The "dontSaveUnit" option is used to support PBF's old "responsive_padding" control.
+		 */
+		const newVal = props.dontSaveUnit
+			? makeObjValueWithoutUnit(props.dimensions, val)
+			: makeObjValueWithUnit(props.dimensions, props.unit, val);
+
+		/**
+		 * The "saveAsJson" option is used to support PBF's old "responsive_padding" control.
 		 */
 		if (props.saveAsJson) {
-			const newVal = makeJsonStrValueWithoutUnit(props.dimensions, val);
-			props.customizerSetting.set(newVal);
+			props.customizerSetting.set(encodeJsonOrDefault(val));
 			return;
 		}
 
-		/**
-		 * This is the default behavior.
-		 * The value format is a `MarginPaddingValue` object with units.
-		 */
-		const newVal = makeObjValueWithUnit(props.dimensions, props.unit, val);
 		props.customizerSetting.set(newVal);
 	}
 

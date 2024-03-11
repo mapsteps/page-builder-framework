@@ -86,6 +86,7 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 				valueArray={params.valueArray}
 				unit={params.unit}
 				saveAsJson={params.saveAsJson}
+				dontSaveUnit={params.dontSaveUnit}
 				dimensions={params.dimensions}
 				devices={params.devices}
 				isResponsive={isResponsive}

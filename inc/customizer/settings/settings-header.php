@@ -1036,7 +1036,8 @@ wpbf_customizer_field()
 		'left'   => 20,
 	] )
 	->properties( [
-		'save_as_json' => true,
+		'save_as_json'   => true,
+		'dont_save_unit' => true,
 	] )
 	->addToSection( 'wpbf_sub_menu_options' );
 
@@ -1066,7 +1067,7 @@ wpbf_customizer_field()
 	->properties( [
 		'mode' => 'alpha',
 	] )
-	->addToSection( 'wpbf_sub_menu_options' )
+	->addToSection( 'wpbf_sub_menu_options' );
 
 // Accent color.
 wpbf_customizer_field()
@@ -1224,7 +1225,7 @@ wpbf_customizer_field()
 			},
 		),
 	] )
-	->addToSection( 'wpbf_mobile_menu_options' )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Separator.
 wpbf_customizer_field()
@@ -1239,7 +1240,7 @@ wpbf_customizer_field()
 			'value'    => 'menu-mobile-default',
 		),
 	] )
-	->addToSection( 'wpbf_mobile_menu_options' )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Height.
 wpbf_customizer_field()
@@ -1376,7 +1377,7 @@ wpbf_customizer_field()
 	->type( 'headline' )
 	->label( esc_html__( 'Menu Item Settings', 'page-builder-framework' ) )
 	->priority( 6 )
-	->addToSection( 'wpbf_mobile_menu_options' )
+	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Padding.
 wpbf_customizer_field()
@@ -1393,7 +1394,8 @@ wpbf_customizer_field()
 		'left'   => 20,
 	] )
 	->properties( [
-		'save_as_json' => true,
+		'save_as_json'   => true,
+		'dont_save_unit' => true,
 	] )
 	->addToSection( 'wpbf_mobile_menu_options' );
 

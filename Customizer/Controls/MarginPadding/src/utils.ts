@@ -114,26 +114,6 @@ export function makeObjValueWithUnit(
 	return newValue as MarginPaddingValue;
 }
 
-/**
- * Create a JSON string of `MarginPaddingValue` without unit.
- *
- * This is to support the `saveAsJson` option.
- * Only used to support PBF's old "responsive_padding" control.
- *
- * @param {string[]} dimensions - The allowed dimensions.
- * @param {MarginPaddingValue} value - The value to parse.
- *
- * @return {string} - The JSON encoded version of the value (without unit).
- */
-export function makeJsonStrValueWithoutUnit(
-	dimensions: string[],
-	value: MarginPaddingValue,
-): string {
-	const newValue = makeObjValueWithoutUnit(dimensions, value);
-
-	return encodeJsonOrFailed(newValue);
-}
-
 export function makeObjValueWithoutUnitFromJson(
 	dimensions: string[],
 	jsonStr: string | null | undefined,
@@ -174,7 +154,13 @@ function parseJsonOrFailed(
 	}
 }
 
-function encodeJsonOrFailed(value: MarginPaddingValue): string {
+/**
+ * Encode a `MarginPaddingValue` object as JSON string or empty string if failed.
+ *
+ * @param {MarginPaddingValue} value - The value to encode.
+ * @return {string} - The JSON encoded version of the value.
+ */
+export function encodeJsonOrDefault(value: MarginPaddingValue): string {
 	try {
 		return JSON.stringify(value);
 	} catch (e) {

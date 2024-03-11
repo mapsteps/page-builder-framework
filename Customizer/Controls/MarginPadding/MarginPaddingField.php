@@ -14,7 +14,7 @@ class MarginPaddingField extends BaseField {
 	 */
 	protected function defaultDimensions() {
 
-		return MarginPaddingControl::$defaultDimensions;
+		return MarginPaddingControl::$default_dimensions;
 
 	}
 
@@ -25,7 +25,7 @@ class MarginPaddingField extends BaseField {
 	 */
 	protected function defaultUnit() {
 
-		return MarginPaddingControl::$defaultUnit;
+		return MarginPaddingControl::$default_unit;
 
 	}
 
@@ -46,14 +46,16 @@ class MarginPaddingField extends BaseField {
 		$props = $this->control->custom_properties;
 		$unit  = ! empty( $props['unit'] ) ? $props['unit'] : $this->defaultUnit();
 
-		$save_as_json = ! empty( $props['save_as_json'] ) && is_bool( $props['save_as_json'] );
-		$dimensions   = ! empty( $props['dimensions'] ) ? $props['dimensions'] : $this->defaultDimensions();
+		$dimensions = ! empty( $props['dimensions'] ) ? $props['dimensions'] : $this->defaultDimensions();
+
+		$save_as_json   = ! empty( $props['save_as_json'] ) && is_bool( $props['save_as_json'] );
+		$dont_save_unit = ! empty( $props['dont_save_unit'] ) && is_bool( $props['dont_save_unit'] );
 
 		$util = new MarginPaddingUtil();
 
-		$array_values = $util->toArrayValues( $dimensions, ( $save_as_json ? false : $unit ), $value );
+		$array_values = $util->toArrayValue( $dimensions, ( $dont_save_unit ? false : $unit ), $value );
 
-		return $save_as_json ? $util->toJsonStrWithoutUnit( $array_values ) : $array_values;
+		return $save_as_json ? wp_json_encode( $array_values ) : $array_values;
 
 	}
 
@@ -99,29 +101,13 @@ class MarginPaddingField extends BaseField {
 
 		$control_args = $this->parseControlArgs();
 
-		$control = $this->initControlInstance(
+		$control_args['subtype'] = $this->control->type;
+
+		$wp_customize_manager->add_control( $this->initControlInstance(
 			$wp_customize_manager,
 			$this->control->id,
 			$control_args
-		);
-
-		$control->subtype = $this->control->type;
-
-		$props = $this->control->custom_properties;
-
-		if ( ! empty( $props['unit'] ) && is_string( $props['unit'] ) ) {
-			$control->unit = esc_attr( strtolower( $props['unit'] ) );
-		}
-
-		if ( ! empty( $props['dimensions'] ) && is_array( $props['dimensions'] ) ) {
-			$control->dimensions = $props['dimensions'];
-		}
-
-		if ( ! empty( $props['save_as_json'] ) && is_bool( $props['save_as_json'] ) ) {
-			$control->save_as_json = true;
-		}
-
-		$wp_customize_manager->add_control( $control );
+		) );
 
 	}
 

@@ -16,7 +16,7 @@ class ResponsiveMarginPaddingControl extends MarginPaddingControl {
 	 *
 	 * @var string
 	 */
-	public $subtype = 'responsive-margin';
+	protected $subtype = 'responsive-margin';
 
 	/**
 	 * Control's allowed devices.
@@ -30,7 +30,7 @@ class ResponsiveMarginPaddingControl extends MarginPaddingControl {
 	 *
 	 * @var string[]
 	 */
-	public static $defaultDimensions = [
+	public static $default_dimensions = [
 		'desktop_top',
 		'desktop_right',
 		'desktop_bottom',

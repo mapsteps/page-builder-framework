@@ -1,5 +1,5 @@
 import hooks from "@wordpress/hooks";
-import { MarginPaddingValueProps } from "./interface";
+import { MarginPaddingValue } from "./interface";
 
 declare var wp: {
 	hooks: typeof hooks;
@@ -7,18 +7,18 @@ declare var wp: {
 
 (() => {
 	/**
-	 * Function to hook into `kirkiPostMessageStylesOutput` filter.
+	 * Function to hook into `wpbfPostMessageStylesOutput` filter.
 	 *
-	 * @param {string} styles The styles to be filtered.
-	 * @param {string|Object|int} values The control's value.
-	 * @param {Object} output The control's output argument.
-	 * @param {string} controlType The control type.
+	 * @param {string} styles - The styles to be filtered.
+	 * @param {MarginPaddingValue|string|number} values - The control's value.
+	 * @param {Object} output - The control's output argument.
+	 * @param {string} controlType - The control type.
 	 *
 	 * @return {string} The filtered styles.
 	 */
 	const stylesOutput = (
 		styles: string,
-		values: MarginPaddingValueProps | string | number,
+		values: MarginPaddingValue | string | number,
 		output: { element: string },
 		controlType: string,
 	): string => {
@@ -34,7 +34,7 @@ declare var wp: {
 			return styles;
 		}
 
-		const property = controlType.replace("kirki-", "");
+		const property = controlType.replace("wpbf-", "");
 
 		styles += output.element + "{";
 
@@ -54,5 +54,5 @@ declare var wp: {
 	};
 
 	// Hook the function to the `wpbfPostMessageStylesOutput` filter.
-	wp.hooks.addFilter("wpbfPostMessageStylesOutput", "kirki", stylesOutput);
+	wp.hooks.addFilter("wpbfPostMessageStylesOutput", "wpbf", stylesOutput);
 })();

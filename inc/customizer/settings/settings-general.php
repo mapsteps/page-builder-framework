@@ -87,7 +87,8 @@ wpbf_customizer_field()
 		'desktop_left'   => 20,
 	) )
 	->properties( [
-		'save_as_json' => true,
+		'save_as_json'   => true,
+		'dont_save_unit' => true,
 	] )
 	->addToSection( 'wpbf_page_options' );
 
@@ -405,7 +406,8 @@ wpbf_customizer_field()
 		'mobile_left'    => 20,
 	) )
 	->properties( [
-		'save_as_json' => true,
+		'save_as_json'   => true,
+		'dont_save_unit' => true,
 	] )
 	->addToSection( 'wpbf_sidebar_options' );
 

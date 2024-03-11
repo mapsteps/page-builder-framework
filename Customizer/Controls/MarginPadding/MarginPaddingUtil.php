@@ -39,7 +39,7 @@ class MarginPaddingUtil {
 	 *
 	 * @return array
 	 */
-	public function toArrayValues( $dimensions, $unit, $value ) {
+	public function toArrayValue( $dimensions, $unit, $value ) {
 
 		if ( empty( $value ) ) {
 			return [];
@@ -96,48 +96,6 @@ class MarginPaddingUtil {
 		}
 
 		return $this->makeDimensionsValue( $dimensions, $parsed_values );
-
-	}
-
-	/**
-	 * Convert value to JSON string without unit.
-	 *
-	 * This is used when `save_as_json` is set to `true`.
-	 * Used to support the old PBF's "responsive_padding" control.
-	 *
-	 * @param array $value The value to convert to JSON.
-	 *
-	 * @return string
-	 */
-	public function toJsonStrWithoutUnit( $value ) {
-
-		if ( empty( $value ) || ! is_array( $value ) ) {
-			return '';
-		}
-
-		$values_without_unit = [];
-
-		foreach ( $value as $dimension => $dimension_value ) {
-			if ( '' === $dimension_value ) {
-				$values_without_unit[ $dimension ] = '';
-				continue;
-			}
-
-			$value_unit    = preg_replace( '/\d+/', '', $dimension_value );
-			$numeric_value = $value_unit ? str_ireplace( $value_unit, '', $dimension_value ) : $dimension_value;
-
-			// We allow empty string.
-			if ( '' === $numeric_value ) {
-				$values_without_unit[ $dimension ] = '';
-				continue;
-			}
-
-			$values_without_unit[ $dimension ] = $numeric_value && is_numeric( $numeric_value ) ? (float) $numeric_value : '';
-		}
-
-		$encoded_json = json_encode( $values_without_unit );
-
-		return $encoded_json ?: '';
 
 	}
 
