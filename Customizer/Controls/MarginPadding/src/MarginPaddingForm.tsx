@@ -252,13 +252,13 @@ export default function MarginPaddingForm(props: {
 							/>
 						)}
 					</label>
-
-					<div
-						className="customize-control-notifications-container"
-						ref={props.setNotificationContainer}
-					/>
 				</>
 			)}
+
+			<div
+				className="customize-control-notifications-container"
+				ref={props.setNotificationContainer}
+			/>
 
 			{renderDeviceButtons()}
 			{renderFieldGroups()}
