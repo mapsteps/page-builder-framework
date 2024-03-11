@@ -13,6 +13,7 @@ import {
 	makeObjValueWithUnit,
 	parseSingleValueAsObject,
 } from "./utils";
+import DeviceButtons from "../../Base/src/DeviceButtons";
 
 export default function MarginPaddingForm(props: {
 	type: string;
@@ -156,25 +157,7 @@ export default function MarginPaddingForm(props: {
 			return <></>;
 		}
 
-		return (
-			<ul className="wpbf-responsive-options">
-				{props.devices.map((device, index) => {
-					const deviceClassName = `dashicons dashicons-${device === "mobile" ? "smartphone" : device}`;
-
-					return (
-						<li className={device}>
-							<button
-								type="button"
-								className={`preview-${device} ${0 === index ? "active" : ""}`}
-								data-device={device}
-							>
-								<i className={deviceClassName}></i>
-							</button>
-						</li>
-					);
-				})}
-			</ul>
-		);
+		return <DeviceButtons devices={props.devices} />;
 	}
 
 	function renderFields(
