@@ -1,0 +1,16 @@
+@import "./radio-image-control.scss";
+@import "./radio-buttonset-control.scss";
+
+.wpbf-customize-control-radio {
+  label {
+    display: list-item;
+    margin-bottom: 7px;
+  }
+
+  label .option-description {
+    display: block;
+    color: rgba(0, 0, 0, 0.35);
+    font-size: 0.9em;
+    padding-left: 25px;
+  }
+}

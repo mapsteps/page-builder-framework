@@ -17,6 +17,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingField;
+use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
@@ -51,6 +52,7 @@ class CustomizerUtil {
 		'margin-padding'            => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingControl',
 		'responsive-margin-padding' => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingControl',
 		'radio'                     => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
+		'radio-buttonset'           => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetControl',
 		'radio-image'               => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
 		'select'                    => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
 		'slider'                    => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
@@ -72,6 +74,7 @@ class CustomizerUtil {
 		'dimension',
 		'generic',
 		'radio',
+		'radio-buttonset',
 		'radio-image',
 		'section-tabs',
 		'sortable',
@@ -240,6 +243,12 @@ class CustomizerUtil {
 				break;
 			case 'radio':
 				$field = new RadioField( $control );
+				break;
+			case 'radio-buttonset':
+				$field = new RadioButtonsetField( $control );
+				break;
+			case 'radio-image':
+				$field = new RadioImageField( $control );
 				break;
 			case 'radio-image':
 				$field = new RadioImageField( $control );
