@@ -418,30 +418,28 @@ wpbf_customizer_field()
 /* Fields – Logo */
 
 // Mobile logo.
-Kirki::add_field( 'wpbf',
-	array(
-		'type'            => 'image',
-		'settings'        => 'menu_mobile_logo',
-		'label'           => __( 'Mobile Logo', 'page-builder-framework' ),
-		'section'         => 'title_tagline',
-		'priority'        => 1,
-		'partial_refresh' => array(
-			'mobilelogo' => array(
-				'container_inclusive' => true,
-				'selector'            => '.wpbf-mobile-logo',
-				'render_callback'     => function () {
-					return get_template_part( 'inc/template-parts/logo/logo-mobile' );
-				},
-			),
+wpbf_customizer_field()
+	->id( 'menu_mobile_logo' )
+	->type( 'image' )
+	->label( __( 'Mobile Logo', 'page-builder-framework' ) )
+	->priority( 1 )
+	->activeCallback( [
+		array(
+			'id'       => 'custom_logo',
+			'operator' => '!=',
+			'value'    => '',
 		),
-		'active_callback' => array(
-			array(
-				'setting'  => 'custom_logo',
-				'operator' => '!=',
-				'value'    => '',
-			),
+	] )
+	->partialRefresh( [
+		'mobilelogo' => array(
+			'container_inclusive' => true,
+			'selector'            => '.wpbf-mobile-logo',
+			'render_callback'     => function () {
+				return get_template_part( 'inc/template-parts/logo/logo-mobile' );
+			},
 		),
-	) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Size.
 wpbf_customizer_field()

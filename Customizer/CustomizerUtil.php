@@ -17,6 +17,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingField;
+use Mapsteps\Wpbf\Customizer\Controls\Media\ImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
@@ -49,6 +50,7 @@ class CustomizerUtil {
 		'headline'                  => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineControl',
 		'headline-toggle'           => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleControl',
 		'generic'                   => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
+		'image'                     => '\Mapsteps\Wpbf\Customizer\Controls\Media\ImageControl',
 		'margin-padding'            => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingControl',
 		'responsive-margin-padding' => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingControl',
 		'radio'                     => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
@@ -73,6 +75,7 @@ class CustomizerUtil {
 		'headline-toggle',
 		'dimension',
 		'generic',
+		'image',
 		'radio',
 		'radio-buttonset',
 		'radio-image',
@@ -234,6 +237,9 @@ class CustomizerUtil {
 				break;
 			case 'headline-toggle':
 				$field = new HeadlineToggleField( $control );
+				break;
+			case 'image':
+				$field = new ImageField( $control );
 				break;
 			case 'margin-padding':
 				$field = new MarginPaddingField( $control );

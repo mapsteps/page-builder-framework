@@ -48,6 +48,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-color": WpbfCustomizeColorControl;
 	"wpbf-dimension": WpbfCustomizeDimensionControl;
 	"wpbf-generic": WpbfCustomizeControl;
+	"wpbf-image": WpbfCustomizeControl;
 	"wpbf-margin-padding": WpbfCustomizeMarginPaddingControl;
 	"wpbf-responsive-margin-padding": WpbfCustomizeMarginPaddingControl;
 	"wpbf-radio": {};
