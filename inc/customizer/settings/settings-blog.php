@@ -528,7 +528,7 @@ foreach ( $archives as $archive ) {
 				'value'    => 'boxed',
 			),
 			array(
-				'setting'  => $archive . '_layout',
+				'id'       => $archive . '_layout',
 				'operator' => '!=',
 				'value'    => 'beside',
 			),

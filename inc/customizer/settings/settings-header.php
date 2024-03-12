@@ -89,20 +89,19 @@ wpbf_customizer_section()
 /* Fields – Pre Header */
 
 // Pre header layout.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'radio-buttonset',
-	'settings'        => 'pre_header_layout',
-	'label'           => __( 'Layout', 'page-builder-framework' ),
-	'section'         => 'wpbf_pre_header_options',
-	'default'         => 'none',
-	'priority'        => 1,
-	'tab'             => 'general',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'pre_header_layout' )
+	->type( 'radio-buttonset' )
+	->tab( 'general' )
+	->label( __( 'Layout', 'page-builder-framework' ) )
+	->defaultValue( 'none' )
+	->priority( 1 )
+	->choices( [
 		'none' => __( 'None', 'page-builder-framework' ),
 		'one'  => __( 'One Column', 'page-builder-framework' ),
 		'two'  => __( 'Two Columns', 'page-builder-framework' ),
-	),
-	'partial_refresh' => array(
+	] )
+	->partialRefresh( [
 		'preheaderlayout' => array(
 			'container_inclusive' => true,
 			'selector'            => '#pre-header',
@@ -110,8 +109,8 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/pre-header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_pre_header_options' );
 
 // Column one layout.
 wpbf_customizer_field()
@@ -133,7 +132,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -168,12 +167,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
 		array(
-			'setting'  => 'pre_header_column_one_layout',
+			'id'       => 'pre_header_column_one_layout',
 			'operator' => '==',
 			'value'    => 'text',
 		),
@@ -188,7 +187,7 @@ wpbf_customizer_field()
 	->priority( 2 )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
@@ -210,7 +209,7 @@ wpbf_customizer_field()
 	->priority( 2 )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
@@ -244,12 +243,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
 		array(
-			'setting'  => 'pre_header_column_two_layout',
+			'id'       => 'pre_header_column_two_layout',
 			'operator' => '==',
 			'value'    => 'text',
 		),
@@ -264,7 +263,7 @@ wpbf_customizer_field()
 	->priority( 3 )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -282,7 +281,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -305,7 +304,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -326,7 +325,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -346,7 +345,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -366,7 +365,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -386,7 +385,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -404,7 +403,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'setting'  => 'pre_header_layout',
+			'id'       => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -419,52 +418,52 @@ wpbf_customizer_field()
 /* Fields – Logo */
 
 // Mobile logo.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'image',
-	'settings'        => 'menu_mobile_logo',
-	'label'           => __( 'Mobile Logo', 'page-builder-framework' ),
-	'section'         => 'title_tagline',
-	'priority'        => 1,
-	'partial_refresh' => array(
-		'mobilelogo' => array(
-			'container_inclusive' => true,
-			'selector'            => '.wpbf-mobile-logo',
-			'render_callback'     => function () {
-				return get_template_part( 'inc/template-parts/logo/logo-mobile' );
-			},
+Kirki::add_field( 'wpbf',
+	array(
+		'type'            => 'image',
+		'settings'        => 'menu_mobile_logo',
+		'label'           => __( 'Mobile Logo', 'page-builder-framework' ),
+		'section'         => 'title_tagline',
+		'priority'        => 1,
+		'partial_refresh' => array(
+			'mobilelogo' => array(
+				'container_inclusive' => true,
+				'selector'            => '.wpbf-mobile-logo',
+				'render_callback'     => function () {
+					return get_template_part( 'inc/template-parts/logo/logo-mobile' );
+				},
+			),
 		),
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'custom_logo',
-			'operator' => '!=',
-			'value'    => '',
+		'active_callback' => array(
+			array(
+				'setting'  => 'custom_logo',
+				'operator' => '!=',
+				'value'    => '',
+			),
 		),
-	),
-) );
+	) );
 
 // Size.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'responsive_input_slider',
-	'label'             => __( 'Logo Width', 'page-builder-framework' ),
-	'section'           => 'title_tagline',
-	'settings'          => 'menu_logo_size',
-	'priority'          => 2,
-	'transport'         => 'postMessage',
-	'choices'           => array(
-		'min'  => 0,
-		'max'  => 500,
-		'step' => 1,
-	),
-	'active_callback'   => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_size' )
+	->type( 'responsive-input-slider' )
+	->label( __( 'Logo Width', 'page-builder-framework' ) )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'          => 0,
+		'max'          => 500,
+		'step'         => 1,
+		'save_as_json' => true,
+	] )
+	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '!=',
 			'value'    => '',
 		),
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wp_filter_nohtml_kses' ),
-) );
+	] )
+	->addToSection( 'title_tagline' );
 
 // Separator.
 wpbf_customizer_field()
@@ -486,7 +485,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -506,7 +505,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -514,7 +513,6 @@ wpbf_customizer_field()
 	->addToSection( 'title_tagline' );
 
 // Font size.
-// Convert the commented lines above to use wpbf_customizer_field() function.
 wpbf_customizer_field()
 	->id( 'menu_logo_font_size' )
 	->type( 'responsive-input-slider' )
@@ -528,7 +526,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -549,7 +547,7 @@ wpbf_customizer_field()
 	->priority( 14 )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -568,7 +566,7 @@ wpbf_customizer_field()
 	->priority( 20 )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -594,12 +592,12 @@ wpbf_customizer_field()
 	->priority( 20 )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'setting'  => 'menu_logo_description',
+			'id'       => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -628,12 +626,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'setting'  => 'menu_logo_description',
+			'id'       => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -641,32 +639,31 @@ wpbf_customizer_field()
 	->addToSection( 'title_tagline' );
 
 // Font size.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'responsive_input_slider',
-	'label'             => __( 'Font Size', 'page-builder-framework' ),
-	'section'           => 'title_tagline',
-	'settings'          => 'menu_logo_description_font_size',
-	'priority'          => 23,
-	'transport'         => 'postMessage',
-	'choices'           => array(
-		'min'  => 0,
-		'max'  => 50,
-		'step' => 1,
-	),
-	'active_callback'   => array(
+wpbf_customizer_field()
+	->id( 'menu_logo_description_font_size' )
+	->type( 'responsive-input-slider' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->priority( 23 )
+	->transport( 'postMessage' )
+	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'setting'  => 'menu_logo_description',
+			'id'       => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wp_filter_nohtml_kses' ),
-) );
+	] )
+	->properties( [
+		'min'          => 0,
+		'max'          => 50,
+		'step'         => 1,
+		'save_as_json' => true,
+	] )
+	->addToSection( 'title_tagline' );
 
 // Separator.
 wpbf_customizer_field()
@@ -697,7 +694,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '!==',
 			'value'    => '',
 		),
@@ -713,7 +710,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'setting'  => 'custom_logo',
+			'id'       => 'custom_logo',
 			'operator' => '!==',
 			'value'    => '',
 		),
@@ -780,12 +777,13 @@ wpbf_customizer_field()
 	->label( __( 'Menu', 'page-builder-framework' ) )
 	->defaultValue( 'menu-right' )
 	->priority( 0 )
-	->choices( apply_filters( 'wpbf_menu_position', array(
-		'menu-right'    => __( 'Right (default)', 'page-builder-framework' ),
-		'menu-left'     => __( 'Left', 'page-builder-framework' ),
-		'menu-centered' => __( 'Centered', 'page-builder-framework' ),
-		'menu-stacked'  => __( 'Stacked', 'page-builder-framework' ),
-	) ) )
+	->choices( apply_filters( 'wpbf_menu_position',
+		array(
+			'menu-right'    => __( 'Right (default)', 'page-builder-framework' ),
+			'menu-left'     => __( 'Left', 'page-builder-framework' ),
+			'menu-centered' => __( 'Centered', 'page-builder-framework' ),
+			'menu-stacked'  => __( 'Stacked', 'page-builder-framework' ),
+		) ) )
 	->partialRefresh( [
 		'headerlayout' => array(
 			'container_inclusive' => true,
@@ -874,12 +872,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'menu_position',
+			'id'       => 'menu_position',
 			'operator' => '!=',
 			'value'    => 'menu-off-canvas',
 		),
 		array(
-			'setting'  => 'menu_position',
+			'id'       => 'menu_position',
 			'operator' => '!=',
 			'value'    => 'menu-off-canvas-left',
 		),
@@ -951,13 +949,14 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_header_menu',
-		'section'  => 'wpbf_menu_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	Kirki::add_field( 'wpbf',
+		array(
+			'type'     => 'custom',
+			'settings' => 'wpbf_premium_ad_header_menu',
+			'section'  => 'wpbf_menu_options',
+			'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+			'priority' => 9999,
+		) );
 
 }
 
@@ -1134,7 +1133,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'sub_menu_separator',
+			'id'       => 'sub_menu_separator',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1150,18 +1149,24 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_header_sub_menu',
-		'section'  => 'wpbf_sub_menu_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-		'tab'      => 'general',
-	) );
+	Kirki::add_field( 'wpbf',
+		array(
+			'type'     => 'custom',
+			'settings' => 'wpbf_premium_ad_header_sub_menu',
+			'section'  => 'wpbf_sub_menu_options',
+			'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+			'priority' => 9999,
+			'tab'      => 'general',
+		) );
 
 }
 
 /* Fields – Mobile Navigation */
+
+$mobile_menu_choices = array(
+	'menu-mobile-default'   => __( 'Default', 'page-builder-framework' ),
+	'menu-mobile-hamburger' => __( 'Hamburger', 'page-builder-framework' ),
+);
 
 // Variations.
 wpbf_customizer_field()
@@ -1171,10 +1176,7 @@ wpbf_customizer_field()
 	->label( __( 'Menu', 'page-builder-framework' ) )
 	->defaultValue( 'menu-mobile-hamburger' )
 	->priority( 1 )
-	->choices( apply_filters( 'wpbf_mobile_menu_options', array(
-		'menu-mobile-default'   => __( 'Default', 'page-builder-framework' ),
-		'menu-mobile-hamburger' => __( 'Hamburger', 'page-builder-framework' ),
-	) ) )
+	->choices( apply_filters( 'wpbf_mobile_menu_options', $mobile_menu_choices ) )
 	->partialRefresh( [
 		'mobilemenuoptions' => array(
 			'container_inclusive' => true,
@@ -1194,7 +1196,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->activeCallback( [
 		array(
-			'setting'  => 'mobile_menu_options',
+			'id'       => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1210,7 +1212,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'setting'  => 'mobile_menu_options',
+			'id'       => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1234,7 +1236,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'setting'  => 'mobile_menu_options',
+			'id'       => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1270,7 +1272,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'mobile_menu_options',
+			'id'       => 'mobile_menu_options',
 			'operator' => '!=',
 			'value'    => 'menu-mobile-elementor',
 		),
@@ -1290,7 +1292,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'mobile_menu_options',
+			'id'       => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1313,7 +1315,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'mobile_menu_options',
+			'id'       => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1335,7 +1337,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'mobile_menu_options',
+			'id'       => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1358,12 +1360,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => 'mobile_menu_options',
+			'id'       => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
 		array(
-			'setting'  => 'mobile_menu_hamburger_bg_color',
+			'id'       => 'mobile_menu_hamburger_bg_color',
 			'operator' => '!=',
 			'value'    => false,
 		),
@@ -1504,13 +1506,14 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_header_mobile_menu',
-		'section'  => 'wpbf_mobile_menu_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	Kirki::add_field( 'wpbf',
+		array(
+			'type'     => 'custom',
+			'settings' => 'wpbf_premium_ad_header_mobile_menu',
+			'section'  => 'wpbf_mobile_menu_options',
+			'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+			'priority' => 9999,
+		) );
 
 }
 
@@ -1634,12 +1637,13 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_header_mobile_sub_menu',
-		'section'  => 'wpbf_mobile_sub_menu_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	Kirki::add_field( 'wpbf',
+		array(
+			'type'     => 'custom',
+			'settings' => 'wpbf_premium_ad_header_mobile_sub_menu',
+			'section'  => 'wpbf_mobile_sub_menu_options',
+			'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
+			'priority' => 9999,
+		) );
 
 }
