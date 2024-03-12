@@ -21,6 +21,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
+use Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
 use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
@@ -53,7 +54,8 @@ class CustomizerUtil {
 		'radio-image'               => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
 		'select'                    => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
 		'slider'                    => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
-		'input-slider'              => '\Mapsteps\Wpbf\Customizer\Controls\InputSlider\InputSliderControl',
+		'input-slider'              => '\Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderControl',
+		'responsive-input-slider'   => '\Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderControl',
 		'section-tabs'              => '\Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsControl',
 		'sortable'                  => '\Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableControl',
 	);
@@ -250,6 +252,9 @@ class CustomizerUtil {
 				break;
 			case 'input-slider':
 				$field = new InputSliderField( $control );
+				break;
+			case 'responsive-input-slider':
+				$field = new ResponsiveInputSliderField( $control );
 				break;
 			case 'section-tabs':
 				$field = new SectionTabsField( $control );

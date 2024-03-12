@@ -42,12 +42,12 @@ class ResponsiveInputSliderUtil {
 		foreach ( $devices as $device ) {
 			if ( ! isset( $value[ $device ] ) ) {
 				// We allow empty string.
-				$value[ $device ] = '';
+				$values[ $device ] = '';
 			} else {
 				$values[ $device ] = $value[ $device ];
 			}
 
-			$values[ $device ] = $number_util->limitNumberWithUnit( $value, $min, $max );
+			$values[ $device ] = $number_util->limitNumberWithUnit( $values[ $device ], $min, $max );
 		}
 
 		return $values;

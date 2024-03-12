@@ -68,6 +68,38 @@ class ResponsiveInputSliderControl extends InputSliderControl {
 
 		$this->setting->default = $this->save_as_json ? wp_json_encode( $default_array ) : $default_array;
 
+		$input_slider_classname = 'wpbf-customize-control-input-slider';
+
+		if ( ! empty( $this->wrapper_attrs['class'] ) ) {
+			$existing_classname = $this->wrapper_attrs['class'];
+			$existing_classname = str_ireplace( '{default_class}', '', $existing_classname );
+
+			$this->wrapper_attrs['class'] = '{default_class} ' . $existing_classname . ' ' . $input_slider_classname;
+		} else {
+			$this->wrapper_attrs['class'] = '{default_class} ' . $input_slider_classname;
+		}
+
+	}
+
+	/**
+	 * Enqueue control related scripts/styles.
+	 */
+	public function enqueue() {
+
+		parent::enqueue();
+
+		// Enqueue the scripts.
+		wp_enqueue_script(
+			'wpbf-responsive-input-slider-control',
+			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/responsive-input-slider-control-min.js',
+			array(
+				'customize-controls',
+				'react-dom',
+			),
+			WPBF_VERSION,
+			false
+		);
+
 	}
 
 	/**
@@ -77,9 +109,9 @@ class ResponsiveInputSliderControl extends InputSliderControl {
 
 		$value = $this->responsive_util->toArrayValue( $this->devices, $this->value(), $this->min, $this->max );
 
-		$this->json['value']        = $this->save_as_json ? wp_json_encode( $value ) : $value;
-		$this->json['devices']      = $this->devices;
-		$this->json['save_as_json'] = $this->save_as_json;
+		$this->json['value']      = $this->save_as_json ? wp_json_encode( $value ) : $value;
+		$this->json['devices']    = $this->devices;
+		$this->json['saveAsJson'] = $this->save_as_json;
 
 	}
 

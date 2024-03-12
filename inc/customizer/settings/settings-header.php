@@ -514,34 +514,33 @@ wpbf_customizer_field()
 	->addToSection( 'title_tagline' );
 
 // Font size.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'responsive_input_slider',
-	'label'             => __( 'Font Size', 'page-builder-framework' ),
-	'section'           => 'title_tagline',
-	'settings'          => 'menu_logo_font_size',
-	'priority'          => 13,
-	'transport'         => 'postMessage',
-	'default'           => json_encode(
-		array(
-			'desktop' => '22px',
-			'tablet'  => '',
-			'mobile'  => '',
-		)
-	),
-	'choices'           => array(
-		'min'  => 0,
-		'max'  => 50,
-		'step' => 1,
-	),
-	'active_callback'   => array(
+// Convert the commented lines above to use wpbf_customizer_field() function.
+wpbf_customizer_field()
+	->id( 'menu_logo_font_size' )
+	->type( 'responsive-input-slider' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->priority( 13 )
+	->transport( 'postMessage' )
+	->defaultValue( [
+		'desktop' => '22px',
+		'tablet'  => '',
+		'mobile'  => '',
+	] )
+	->activeCallback( [
 		array(
 			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'wp_filter_nohtml_kses' ),
-) );
+	] )
+	->properties( [
+		'min'          => 0,
+		'max'          => 50,
+		'step'         => 1,
+		'save_as_json' => true,
+	] )
+	->addToSection( 'title_tagline' );
+
 
 // Separator.
 wpbf_customizer_field()

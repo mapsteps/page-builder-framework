@@ -6,7 +6,7 @@ import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interfaces";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
-import { WpbfCustomizeInputSliderControl } from "../../Slider/src/interface";
+import { WpbfCustomizeInputSliderControl, WpbfCustomizeResponsiveInputSliderControl } from "../../Slider/src/interface";
 import { WpbfCustomizeSortableControl } from "../../Sortable/src/interface";
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {
@@ -38,6 +38,7 @@ export type WpbfCustomizeControlItem =
 	| WpbfCustomizeDynamicControl
 	| WpbfCustomizeDimensionControl
 	| WpbfCustomizeInputSliderControl
+	| WpbfCustomizeResponsiveInputSliderControl
 	| WpbfCustomizeMarginPaddingControl
 	| WpbfCustomizeSelectControl
 	| WpbfCustomizeSortableControl;
@@ -54,6 +55,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-select": WpbfCustomizeSelectControl;
 	"wpbf-slider": WpbfCustomizeControl;
 	"wpbf-input-slider": WpbfCustomizeInputSliderControl;
+	"wpbf-responsive-input-slider": WpbfCustomizeResponsiveInputSliderControl;
 	"wpbf-sortable": WpbfCustomizeSortableControl;
 	"wpbf-toggle": WpbfCustomizeControl;
 }

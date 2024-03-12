@@ -2,7 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Slider;
 
-class InputSliderField extends InputSliderField {
+class ResponsiveInputSliderField extends InputSliderField {
 
 	/**
 	 * Get control's allowed devices.
