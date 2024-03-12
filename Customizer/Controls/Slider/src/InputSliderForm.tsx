@@ -3,7 +3,13 @@ import {
 	WpbfCustomizeControl,
 	WpbfCustomizeSetting,
 } from "../../Base/src/interfaces";
-import { ValueObject } from "./interface";
+import {
+	limitValue,
+	makeNumberUnitPair,
+	makeStringValue,
+	makeValueForInput,
+	makeValueForSlider,
+} from "./util";
 
 export default function InputSliderForm(props: {
 	control: WpbfCustomizeControl;
@@ -19,67 +25,11 @@ export default function InputSliderForm(props: {
 }) {
 	let trigger = "";
 
-	function validateValue(value: number) {
-		if (value < props.min) value = props.min;
-		if (value > props.max) value = props.max;
-
-		return value;
-	}
-
-	function getValueObject(val: string | number): ValueObject {
-		const value = "string" === typeof val ? val : val.toString();
-
-		if (!value) {
-			return {
-				number: "",
-				unit: "",
-			};
-		}
-
-		const valueUnit = value.replace(/\d+/g, "");
-		const valueNumeric = valueUnit ? value.replace(valueUnit, "") : value;
-
-		if (!valueNumeric) {
-			return {
-				number: "",
-				unit: valueUnit,
-			};
-		}
-
-		const floatValue = parseFloat(valueNumeric.trim());
-
-		if (isNaN(floatValue)) {
-			return {
-				number: "",
-				unit: valueUnit,
-			};
-		}
-
-		const valueNumber = validateValue(floatValue);
-
-		return {
-			number: valueNumber,
-			unit: valueUnit,
-		};
-	}
-
-	function makeValueForInput(value: string | number) {
-		const valueObject = getValueObject(value);
-		return valueObject.number + valueObject.unit;
-	}
-
-	function makeValueForSlider(value: string | number): number {
-		const valueObject = getValueObject(value);
-		return "string" === typeof valueObject.number
-			? props.min
-			: valueObject.number;
-	}
-
 	props.control.updateComponentState = (val) => {
 		if ("slider" === trigger) {
-			setInputRefValue(makeValueForInput(val));
+			setInputRefValue(makeValueForInput(val, props.min, props.max));
 		} else if ("input" === trigger) {
-			setSliderRefValue(makeValueForSlider(val));
+			setSliderRefValue(makeValueForSlider(val, props.min, props.max));
 		} else if ("reset" === trigger) {
 			setSliderRefValue(val);
 			setInputRefValue(val);
@@ -88,7 +38,10 @@ export default function InputSliderForm(props: {
 
 	function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
 		trigger = "input";
-		props.customizerSetting.set(makeValueForInput(e.target.value));
+
+		props.customizerSetting.set(
+			makeValueForInput(e.target.value, props.min, props.max),
+		);
 	}
 
 	const sliderRef = useRef<HTMLInputElement | null>(null);
@@ -98,18 +51,19 @@ export default function InputSliderForm(props: {
 		trigger = "slider";
 
 		let value = parseFloat(e.target.value);
-		value = validateValue(value);
+		value = limitValue(value, props.min, props.max);
 
 		if (!inputRef || !inputRef.current) return;
 
-		const inputValueObj = getValueObject(inputRef.current.value); // We're going to use the unit.
-		const valueForInput = value + inputValueObj.unit;
+		// We're going to use the unit.
+		const numberValuePair = makeNumberUnitPair(
+			inputRef.current.value,
+			props.min,
+			props.max,
+		);
 
+		const valueForInput = value + numberValuePair.unit;
 		props.customizerSetting.set(valueForInput);
-	}
-
-	function makeStringValue(value: string | number) {
-		return "string" === typeof value ? value : value.toString();
 	}
 
 	function setInputRefValue(value: string | number) {
@@ -144,8 +98,8 @@ export default function InputSliderForm(props: {
 
 	// Preparing for the template.
 	const fieldId = `wpbf-control-input-${props.customizerSetting.id}`;
-	const sliderValue = makeValueForSlider(props.value);
-	const inputValue = makeValueForInput(props.value);
+	const sliderValue = makeValueForSlider(props.value, props.min, props.max);
+	const inputValue = makeValueForInput(props.value, props.min, props.max);
 
 	return (
 		<div className="wpbf-control-form" tabIndex={1}>
