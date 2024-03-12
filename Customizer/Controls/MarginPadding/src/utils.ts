@@ -118,7 +118,7 @@ export function makeObjValueWithoutUnitFromJson(
 	dimensions: string[],
 	jsonStr: string | null | undefined,
 ): MarginPaddingValue {
-	const value = parseJsonOrFailed(jsonStr);
+	const value = parseJsonOrUndefined<MarginPaddingValue>(jsonStr);
 
 	if (!value) {
 		return makeEmptyValueObj(dimensions);
@@ -140,9 +140,15 @@ export function makeEmptyValueObj(dimensions: string[]): MarginPaddingValue {
 	return value as MarginPaddingValue;
 }
 
-function parseJsonOrFailed(
+/**
+ * Parse a JSON string or return undefined if failed.
+ *
+ * @param {string | null | undefined} jsonStr - The JSON string to parse.
+ * @return {T | undefined} The parsed value or undefined if failed.
+ */
+export function parseJsonOrUndefined<T>(
 	jsonStr: string | null | undefined,
-): MarginPaddingValue | undefined {
+): T | undefined {
 	if ("" === jsonStr || !jsonStr) {
 		return undefined;
 	}
@@ -155,12 +161,12 @@ function parseJsonOrFailed(
 }
 
 /**
- * Encode a `MarginPaddingValue` object as JSON string or empty string if failed.
+ * Encode a specific type of object as JSON string or return an empty string if failed.
  *
- * @param {MarginPaddingValue} value - The value to encode.
- * @return {string} - The JSON encoded version of the value.
+ * @param {T} value - The value to encode.
+ * @return {string} The JSON encoded version of the value.
  */
-export function encodeJsonOrDefault(value: MarginPaddingValue): string {
+export function encodeJsonOrDefault<T>(value: T): string {
 	try {
 		return JSON.stringify(value);
 	} catch (e) {

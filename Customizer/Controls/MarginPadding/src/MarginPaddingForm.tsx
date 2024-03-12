@@ -116,7 +116,7 @@ export default function MarginPaddingForm(props: {
 		 * The "saveAsJson" option is used to support PBF's old "responsive_padding" control.
 		 */
 		if (props.saveAsJson) {
-			props.customizerSetting.set(encodeJsonOrDefault(val));
+			props.customizerSetting.set(encodeJsonOrDefault<MarginPaddingValue>(val));
 			return;
 		}
 
