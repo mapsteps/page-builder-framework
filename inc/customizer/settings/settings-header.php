@@ -767,6 +767,16 @@ wpbf_customizer_field()
 
 /* Fields – Navigation */
 
+$menu_position_choices = apply_filters(
+	'wpbf_menu_position',
+	array(
+		'menu-right'    => __( 'Right (default)', 'page-builder-framework' ),
+		'menu-left'     => __( 'Left', 'page-builder-framework' ),
+		'menu-centered' => __( 'Centered', 'page-builder-framework' ),
+		'menu-stacked'  => __( 'Stacked', 'page-builder-framework' ),
+	)
+);
+
 // Variations.
 wpbf_customizer_field()
 	->id( 'menu_position' )
@@ -775,13 +785,7 @@ wpbf_customizer_field()
 	->label( __( 'Menu', 'page-builder-framework' ) )
 	->defaultValue( 'menu-right' )
 	->priority( 0 )
-	->choices( apply_filters( 'wpbf_menu_position',
-		array(
-			'menu-right'    => __( 'Right (default)', 'page-builder-framework' ),
-			'menu-left'     => __( 'Left', 'page-builder-framework' ),
-			'menu-centered' => __( 'Centered', 'page-builder-framework' ),
-			'menu-stacked'  => __( 'Stacked', 'page-builder-framework' ),
-		) ) )
+	->choices( $menu_position_choices )
 	->partialRefresh( [
 		'headerlayout' => array(
 			'container_inclusive' => true,
@@ -947,14 +951,12 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'custom',
-			'settings' => 'wpbf_premium_ad_header_menu',
-			'section'  => 'wpbf_menu_options',
-			'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-			'priority' => 9999,
-		) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_header_menu' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_menu_options' );
 
 }
 
@@ -1147,15 +1149,13 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'custom',
-			'settings' => 'wpbf_premium_ad_header_sub_menu',
-			'section'  => 'wpbf_sub_menu_options',
-			'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-			'priority' => 9999,
-			'tab'      => 'general',
-		) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_header_sub_menu' )
+		->type( 'custom' )
+		->tab( 'general' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_sub_menu_options' );
 
 }
 
@@ -1504,14 +1504,12 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'custom',
-			'settings' => 'wpbf_premium_ad_header_mobile_menu',
-			'section'  => 'wpbf_mobile_menu_options',
-			'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-			'priority' => 9999,
-		) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_header_mobile_menu' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_mobile_menu_options' );
 
 }
 
@@ -1635,13 +1633,11 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf',
-		array(
-			'type'     => 'custom',
-			'settings' => 'wpbf_premium_ad_header_mobile_sub_menu',
-			'section'  => 'wpbf_mobile_sub_menu_options',
-			'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-			'priority' => 9999,
-		) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_header_mobile_sub_menu' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_mobile_sub_menu_options' );
 
 }

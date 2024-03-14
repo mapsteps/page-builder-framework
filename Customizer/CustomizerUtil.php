@@ -10,6 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
+use Mapsteps\Wpbf\Customizer\Controls\Custom\CustomField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\DividerField;
@@ -44,6 +45,7 @@ class CustomizerUtil {
 	public $available_controls = array(
 		'checkbox'                  => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl',
 		'toggle'                    => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
+		'custom'                    => '\Mapsteps\Wpbf\Customizer\Controls\Custom\CustomControl',
 		'color'                     => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
 		'dimension'                 => '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl',
 		'divider'                   => '\Mapsteps\Wpbf\Customizer\Controls\Headline\DividerControl',
@@ -72,6 +74,7 @@ class CustomizerUtil {
 	public $controls_with_content_template = array(
 		'checkbox',
 		'toggle',
+		'custom',
 		'headline-toggle',
 		'dimension',
 		'generic',
@@ -222,6 +225,9 @@ class CustomizerUtil {
 				break;
 			case 'toggle':
 				$field = new ToggleField( $control );
+				break;
+			case 'custom':
+				$field = new CustomField( $control );
 				break;
 			case 'color':
 				$field = new ColorField( $control );
