@@ -10,13 +10,13 @@ class DividerField extends BaseField {
 	/**
 	 * Setting's sanitize callback.
 	 *
-	 * @param string $value The value to sanitize.
+	 * @param mixed $value The value to sanitize.
 	 *
-	 * @return string
+	 * @return null
 	 */
 	public function sanitizeCallback( $value ) {
 
-		return '__return_null';
+		return null;
 
 	}
 
