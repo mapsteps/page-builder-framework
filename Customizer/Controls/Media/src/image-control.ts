@@ -1,13 +1,15 @@
-import _, { remove } from "lodash";
+import _, { values } from "lodash";
 import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
+import i18n from "@wordpress/i18n/build-types/default-i18n";
 
 declare var wp: {
 	customize: WpbfCustomize;
 	media: any;
+	i18n: typeof i18n;
 };
 
 wp.customize.controlConstructor["wpbf-image"] =
-	wp.customize.kirkiDynamicControl.extend({
+	wp.customize.wpbfDynamicControl.extend({
 		initWpbfControl: function (control: WpbfCustomizeControl) {
 			control = control || (this as WpbfCustomizeControl);
 			const params = control.params;
@@ -16,43 +18,48 @@ wp.customize.controlConstructor["wpbf-image"] =
 			const defaultSrc = params.defaultSrc;
 			const valueSrc = params.valueSrc;
 
-			const preview = control.container.find(".placeholder, .thumbnail");
+			const box = control.container[0].querySelector(".attachment-media-view");
+
+			const preview: HTMLElement | null =
+				box?.querySelector(".thumbnail") ?? null;
+
+			const selectButton: HTMLButtonElement | null =
+				box?.querySelector(".button-add-media") ?? null;
+
+			const changeButton: HTMLButtonElement | null =
+				box?.querySelector(".change-button") ?? null;
 
 			const removeButton: HTMLButtonElement | null =
-				control.container[0].querySelector(".image-upload-remove-button");
+				box?.querySelector(".remove-button") ?? null;
+
 			const defaultButton: HTMLButtonElement | null =
-				control.container[0].querySelector(".image-default-button");
+				box?.querySelector(".default-button") ?? null;
 
-			if (valueSrc.id) {
-				// If value is not empty, hide the "default" button.
-				if (defaultButton) defaultButton.style.display = "none";
-			} else {
-				// If value is empty, hide the "remove" button.
-				if (removeButton) removeButton.style.display = "none";
-			}
-
-			if (valueSrc.url === defaultSrc.url) {
-				// If value is default, hide the default button.
-				if (defaultButton) defaultButton.style.display = "none";
-			}
+			handleButtonsDisplay();
 
 			let previewUrl = valueSrc.url;
 
-			if (previewUrl) {
-				preview
-					.removeClass()
-					.addClass("thumbnail thumbnail-image")
-					.html('<img src="' + previewUrl + '" alt="" />');
+			if (preview && previewUrl) {
+				preview.innerHTML =
+					'<img class="attachment-thumb" src="' + previewUrl + '" alt="" />';
 			}
 
-			control.container.on("click", ".image-upload-button", function (e) {
-				e.preventDefault();
+			selectButton?.addEventListener("click", openMediaLibrary);
+			changeButton?.addEventListener("click", openMediaLibrary);
+			removeButton?.addEventListener("click", removeImage);
+			defaultButton?.addEventListener("click", useDefaultValue);
 
-				wp.media({ multiple: false })
+			function openMediaLibrary() {
+				const selectedImage = wp
+					.media({ multiple: false })
 					.open()
 					.on("select", function () {
 						// This will return the selected image from the "Media Uploader", the result is an object.
-						const uploadedImage = image.state().get("selection").first();
+						const uploadedImage = selectedImage
+							.state()
+							.get("selection")
+							.first();
+
 						const jsonImg = uploadedImage.toJSON();
 
 						valueSrc.id = jsonImg.id;
@@ -77,58 +84,77 @@ wp.customize.controlConstructor["wpbf-image"] =
 							control.setting.set(valueSrc);
 						} else if ("id" === saveAs) {
 							control.setting.set(valueSrc.id);
-						} else {
+						} else if ("url" === saveAs) {
 							control.setting.set(valueSrc.url);
 						}
 
-						if (preview.length) {
-							preview
-								.removeClass()
-								.addClass("thumbnail thumbnail-image")
-								.html('<img src="' + previewUrl + '" alt="" />');
+						if (preview) {
+							preview.innerHTML =
+								'<img class="attachment-thumb" src="' +
+								previewUrl +
+								'" alt="" />';
 						}
 
-						if (removeButton) removeButton.style.display = "inline-block";
-						if (defaultButton) defaultButton.style.display = "none";
+						handleButtonsDisplay();
 					});
-			});
+			}
 
-			control.container.on(
-				"click",
-				".image-upload-remove-button",
-				function (e) {
-					e.preventDefault();
+			function removeImage() {
+				emptyValue();
 
+				if ("array" === saveAs) {
+					control.setting.set(valueSrc);
+				} else if ("id" === saveAs) {
+					control.setting.set(0);
+				} else if ("url" === saveAs) {
 					control.setting.set("");
-
-					if (preview.length) {
-						preview
-							.removeClass()
-							.addClass("placeholder")
-							.html(wp.i18n.__("No image selected", "kirki"));
-					}
-					if (removeButton.length) {
-						removeButton.hide();
-						if (jQuery(defaultButton).hasClass("button")) {
-							defaultButton.show();
-						}
-					}
-				},
-			);
-
-			control.container.on("click", ".image-default-button", function (e) {
-				e.preventDefault();
-				control.setting.set(defaultSrc);
-
-				if (preview.length) {
-					preview
-						.removeClass()
-						.addClass("thumbnail thumbnail-image")
-						.html('<img src="' + control.params.default + '" alt="" />');
 				}
 
-				if (removeButton) removeButton.style.display = 'inline-block';
-				if (defaultButton) defaultButton.style.display = 'none';
-			});
+				if (preview) {
+					preview.innerHTML = wp.i18n.__("No image selected", "wpbf");
+				}
+
+				handleButtonsDisplay();
+			}
+
+			function useDefaultValue() {
+				control.setting.set(defaultSrc);
+
+				if (preview) {
+					preview.innerHTML =
+						'<img class="attachment-thumb" src="' +
+						control.params.default +
+						'" alt="" />';
+				}
+
+				handleButtonsDisplay();
+			}
+
+			function emptyValue() {
+				valueSrc.id = 0;
+				valueSrc.url = "";
+				valueSrc.width = 0;
+				valueSrc.height = 0;
+			}
+
+			function handleButtonsDisplay() {
+				if (valueSrc.url) {
+					if (preview) preview.classList.remove("hidden");
+					if (removeButton) removeButton.classList.remove("hidden");
+					if (selectButton) selectButton.classList.add("hidden");
+					if (changeButton) changeButton.classList.remove("hidden");
+				} else {
+					if (preview) preview.classList.add("hidden");
+					if (removeButton) removeButton.classList.add("hidden");
+					if (selectButton) selectButton.classList.remove("hidden");
+					if (changeButton) changeButton.classList.add("hidden");
+				}
+
+				if (valueSrc.id === defaultSrc.id) {
+					if (defaultButton) defaultButton.classList.add("hidden");
+				} else {
+					if (defaultButton) defaultButton.classList.remove("hidden");
+				}
+			}
 		},
 	});

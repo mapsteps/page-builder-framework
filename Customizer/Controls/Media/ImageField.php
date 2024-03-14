@@ -3,7 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Slider\ImageUtil;
+use Mapsteps\Wpbf\Customizer\Controls\Media\ImageUtil;
 use WP_Customize_Manager;
 
 class ImageField extends BaseField {

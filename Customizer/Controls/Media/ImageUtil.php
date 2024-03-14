@@ -1,6 +1,6 @@
 <?php
 
-namespace Mapsteps\Wpbf\Customizer\Controls\Slider;
+namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 class ImageUtil {
 

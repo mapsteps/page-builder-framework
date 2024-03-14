@@ -3,7 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
-use Mapsteps\Wpbf\Customizer\Controls\Slider\ImageUtil;
+use Mapsteps\Wpbf\Customizer\Controls\Media\ImageUtil;
 use WP_Customize_Setting;
 
 class ImageControl extends BaseControl {
@@ -92,12 +92,15 @@ class ImageControl extends BaseControl {
 			$default_value     = $this->setting->default;
 			$this->default_src = $this->image_util->unknownToArray( $default_value );
 
-			if ( 'array' === $this->save_as ) {
-				$this->setting->default = $this->default_src;
-			} elseif ( 'id' === $this->save_as ) {
-				$this->setting->default = $this->default_src['id'];
-			} else {
-				$this->setting->default = $this->default_src['url'];
+			// We allow empty string.
+			if ( '' !== $default_value ) {
+				if ( 'array' === $this->save_as ) {
+					$this->setting->default = $this->default_src;
+				} elseif ( 'id' === $this->save_as ) {
+					$this->setting->default = $this->default_src['id'];
+				} elseif ( 'url' === $this->save_as ) {
+					$this->setting->default = $this->default_src['url'];
+				}
 			}
 		}
 
@@ -124,9 +127,6 @@ class ImageControl extends BaseControl {
 
 		parent::enqueue();
 
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-image-control', WPBF_THEME_URI . '/Customizer/Controls/Media/dist/image-control-min.css', array(), WPBF_VERSION );
-
 		// Enqueue the scripts.
 		wp_enqueue_script(
 			'wpbf-image-control',
@@ -138,6 +138,8 @@ class ImageControl extends BaseControl {
 			WPBF_VERSION,
 			false
 		);
+
+		wp_set_script_translations( 'wpbf-control-image', 'wpbf' );
 
 	}
 
@@ -173,32 +175,32 @@ class ImageControl extends BaseControl {
 			<# } #>
 		</label>
 
-		<div class="image-wrapper attachment-media-view image-upload">
-			<# if ( data.valueSrc ) { #>
-				<div class="thumbnail thumbnail-image">
-					<img src="{{ data.valueSrc }}"/>
-				</div>
-			<# } else { #>
-				<div class="placeholder">
-					<# if ( data.labels.placeholder ) { #>
-						{{ data.labels.placeholder }}
-					<# } #>
-				</div>
-			<# } #>
+		<div class="attachment-media-view">
+			<div class="thumbnail thumbnail-image<# if ( !data.valueSrc.url ) { #> hidden <# } #>">
+				<# if ( data.valueSrc.url ) { #>
+					<img class="attachment-thumb" src="{{ data.valueSrc.url }}"/>
+				<# } #>
+			</div>
+
+			<button type="button" class="upload-button button-add-media<# if ( data.valueSrc.url ) { #> hidden <# } #>">
+				<# if ( data.labels.placeholder ) { #>
+					{{ data.labels.placeholder }}
+				<# } #>
+			</button>
 
 			<div class="actions">
-				<button type="button" class="button image-upload-remove-button<# if ( !data.valueSrc.url ) { #> hidden <# } #>">
+				<button type="button" class="button remove-button<# if ( !data.valueSrc.url ) { #> hidden <# } #>">
 					{{ data.labels.remove }}
 				</button>
 
 				<# if ( data.defaultSrc.url ) { #>
-					<button type="button" class="button image-default-button"<# if ( data.defaultSrc.url === data.valueSrc.url ) { #> style="display:none;"<# } #>>
+					<button type="button" class="button default-button<# if ( data.defaultSrc.url === data.valueSrc.url ) { #> hidden <# } #>">
 						{{ data.labels.default }}
 					</button>
 				<# } #>
 
-				<button type="button" class="button image-upload-button">
-					{{ data.labels.select }}
+				<button type="button" class="button change-button<# if ( !data.valueSrc.url ) { #> hidden <# } #>">
+					{{ data.labels.change }}
 				</button>
 			</div>
 		</div>
