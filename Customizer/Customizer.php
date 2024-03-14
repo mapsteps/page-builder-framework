@@ -136,7 +136,7 @@ final class Customizer {
 			wpbf_customizer_field()
 				->id( 'wpbf_section_tabs_' . $section_id )
 				->type( 'section-tabs' )
-				->priority( 0 )
+				->priority( -1 )
 				->choices( $section_tabs )
 				->addToSection( $section_id );
 		}
