@@ -24,7 +24,7 @@ if ( ! function_exists( 'wpbf_kirki_sanitize_helper' ) ) {
 			if ( ! empty( $value ) ) {
 				$value = json_decode( trim( $value ), true );
 				$value = array_map( $callback, $value );
-				$value = json_encode( $value );
+				$value = wp_json_encode( $value );
 			}
 
 			return $value;
@@ -37,11 +37,14 @@ if ( ! function_exists( 'wpbf_kirki_sanitize_helper' ) ) {
 
 /**
  * Helper function to sanitize padding fields.
+ *
+ * @param mixed $value The value to sanitize.
+ * @return string|int
  */
 function wpbf_is_numeric_sanitization_helper( $value ) {
 
 	if ( ! is_numeric( $value ) ) {
-		return "";
+		return '';
 	}
 
 	return absint( $value );
