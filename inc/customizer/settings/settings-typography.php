@@ -11,103 +11,101 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 /* Panel */
 
 // Typography.
-Kirki::add_panel( 'typo_panel', array(
-	'priority' => 3,
-	'title'    => __( 'Typography', 'page-builder-framework' ),
-) );
+wpbf_customizer_panel()
+	->id( 'typo_panel' )
+	->title( __( 'Typography', 'page-builder-framework' ) )
+	->priority( 3 )
+	->add();
 
 /* Sections */
 
 // Title & tagline.
-Kirki::add_section( 'wpbf_title_tagline_options', array(
-	'title'    => __( 'Site Title / Tagline', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 0,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_title_tagline_options' )
+	->title( __( 'Site Title / Tagline', 'page-builder-framework' ) )
+	->priority( 0 )
+	->addToPanel( 'typo_panel' );
 
 // Menu.
-Kirki::add_section( 'wpbf_menu_font_options', array(
-	'title'    => __( 'Navigation', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 50,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_menu_font_options' )
+	->title( __( 'Navigation', 'page-builder-framework' ) )
+	->priority( 50 )
+	->addToPanel( 'typo_panel' );
 
 // Sub Menu.
-Kirki::add_section( 'wpbf_sub_menu_font_options', array(
-	'title'    => __( 'Sub Menu', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 75,
-) );
-
+wpbf_customizer_section()
+	->id( 'wpbf_sub_menu_font_options' )
+	->title( __( 'Sub Menu', 'page-builder-framework' ) )
+	->priority( 75 )
+	->addToPanel( 'typo_panel' );
 
 // Text.
-Kirki::add_section( 'wpbf_font_options', array(
-	'title'    => __( 'Text', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 100,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_font_options' )
+	->title( __( 'Text', 'page-builder-framework' ) )
+	->priority( 100 )
+	->addToPanel( 'typo_panel' );
 
 // H1.
-Kirki::add_section( 'wpbf_h1_options', array(
-	'title'    => __( 'H1', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 200,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_h1_options' )
+	->title( __( 'H1', 'page-builder-framework' ) )
+	->priority( 200 )
+	->addToPanel( 'typo_panel' );
 
 // H2.
-Kirki::add_section( 'wpbf_h2_options', array(
-	'title'    => __( 'H2', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 300,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_h2_options' )
+	->title( __( 'H2', 'page-builder-framework' ) )
+	->priority( 300 )
+	->addToPanel( 'typo_panel' );
 
 // H3.
-Kirki::add_section( 'wpbf_h3_options', array(
-	'title'    => __( 'H3', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 400,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_h3_options' )
+	->title( __( 'H3', 'page-builder-framework' ) )
+	->priority( 400 )
+	->addToPanel( 'typo_panel' );
 
 // H4.
-Kirki::add_section( 'wpbf_h4_options', array(
-	'title'    => __( 'H4', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 500,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_h4_options' )
+	->title( __( 'H4', 'page-builder-framework' ) )
+	->priority( 500 )
+	->addToPanel( 'typo_panel' );
 
 // H5.
-Kirki::add_section( 'wpbf_h5_options', array(
-	'title'    => __( 'H5', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 600,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_h5_options' )
+	->title( __( 'H5', 'page-builder-framework' ) )
+	->priority( 600 )
+	->addToPanel( 'typo_panel' );
 
 // H6.
-Kirki::add_section( 'wpbf_h6_options', array(
-	'title'    => __( 'H6', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 700,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_h6_options' )
+	->title( __( 'H6', 'page-builder-framework' ) )
+	->priority( 700 )
+	->addToPanel( 'typo_panel' );
 
 // Footer.
-Kirki::add_section( 'wpbf_footer_font_options', array(
-	'title'    => __( 'Footer', 'page-builder-framework' ),
-	'panel'    => 'typo_panel',
-	'priority' => 800,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_footer_font_options' )
+	->title( __( 'Footer', 'page-builder-framework' ) )
+	->priority( 800 )
+	->addToPanel( 'typo_panel' );
 
 /* Fields - Text */
 
 // Text font toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'page_font_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_font_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_font_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_font_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -131,53 +129,48 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings'        => 'page_font_toggle_separator',
-		'section'         => 'wpbf_font_options',
-		'priority'        => 1,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_font_toggle_separator' )
+	->type( 'divider' )
+	->priority( 1 )
+	->addToSection( 'wpbf_font_options' );
 
 // Color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'page_font_color',
-	'label'     => __( 'Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_font_options',
-	'default'   => '#6d7680',
-	'priority'  => 2,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'page_font_color' )
+	->type( 'color' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->defaultValue( '#6d7680' )
+	->priority( 2 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_font_options' );
 
 // Accent color.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'page_accent_color',
-	'label'    => __( 'Accent Color', 'page-builder-framework' ),
-	'section'  => 'wpbf_font_options',
-	'priority' => 4,
-	'default'  => '#3ba9d2',
-	'choices'  => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'page_accent_color' )
+	->type( 'color' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->defaultValue( '#3ba9d2' )
+	->priority( 4 )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_font_options' );
 
 // Accent color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'color',
-	'settings' => 'page_accent_color_alt',
-	'label'    => __( 'Hover', 'page-builder-framework' ),
-	'section'  => 'wpbf_font_options',
-	'priority' => 4,
-	'default'  => '#79c4e0',
-	'choices'  => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'page_accent_color_alt' )
+	->type( 'color' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->defaultValue( '#79c4e0' )
+	->priority( 4 )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_font_options' );
 
 if ( ! wpbf_is_premium() ) {
 
@@ -188,28 +181,25 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_text',
-		'section'  => 'wpbf_font_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_text' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_font_options' );
 
 }
 
 /* Fields - Title & tagline */
 
 // Title font toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'menu_logo_font_toggle',
-		'label'    => esc_html__( 'Title - Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_title_tagline_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'menu_logo_font_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Title - Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_title_tagline_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -234,25 +224,20 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Divider.
-new \Kirki\PRO\Field\Divider(
-	[
-		'settings' => 'menu_logo_tagline_divider',
-		'section'  => 'wpbf_title_tagline_options',
-		'default'  => 0,
-		'priority' => 2,
-	]
-);
+wpbf_customizer_field()
+	->id( 'menu_logo_tagline_divider' )
+	->type( 'divider' )
+	->priority( 2 )
+	->addToSection( 'wpbf_title_tagline_options' );
 
 // Title font toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'menu_logo_description_toggle',
-		'label'    => esc_html__( 'Tagline - Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_title_tagline_options',
-		'default'  => 0,
-		'priority' => 3,
-	]
-);
+wpbf_customizer_field()
+	->id( 'menu_logo_description_toggle' )
+	->type( 'toggle' )
+	->label( esc_html__( 'Tagline - Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 3 )
+	->addToSection( 'wpbf_title_tagline_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -279,15 +264,13 @@ Kirki::add_field( 'wpbf', array(
 /* Fields - Menu */
 
 // Menu font toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'menu_font_family_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_menu_font_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'menu_font_family_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_menu_font_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -319,28 +302,25 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_menu',
-		'section'  => 'wpbf_menu_font_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_menu' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_menu_font_options' );
 
 }
 
 /* Fields - Sub Menu */
 
 // Sub Menu font toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'sub_menu_font_family_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_sub_menu_font_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'sub_menu_font_family_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_sub_menu_font_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -372,29 +352,26 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_sub_menu',
-		'section'  => 'wpbf_sub_menu_font_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_sub_menu' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_sub_menu_font_options' );
 
 }
 
 /* Fields - H1 */
 
 // Toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings'    => 'page_h1_toggle',
-		'label'       => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'description' => __( 'The settings below will apply to all headlines if not configured individually.', 'page-builder-framework' ),
-		'section'     => 'wpbf_h1_options',
-		'default'     => 0,
-		'priority'    => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_h1_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->description( __( 'The settings below will apply to all headlines if not configured individually.', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_h1_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -426,28 +403,25 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_h1',
-		'section'  => 'wpbf_h1_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_h1' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_h1_options' );
 
 }
 
 /* Fields - H2 */
 
 // Toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'page_h2_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_h2_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_h2_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_h2_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -479,28 +453,25 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_h2',
-		'section'  => 'wpbf_h2_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_h2' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_h2_options' );
 
 }
 
 /* Fields - H3 */
 
 // Toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'page_h3_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_h3_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_h3_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_h3_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -532,28 +503,25 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_h3',
-		'section'  => 'wpbf_h3_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_h3' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_h3_options' );
 
 }
 
 /* Fields - H4 */
 
 // Toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'page_h4_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_h4_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_h4_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_h4_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -585,28 +553,25 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_h4',
-		'section'  => 'wpbf_h4_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_h4' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_h4_options' );
 
 }
 
 /* Fields - H5 */
 
 // Toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'page_h5_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_h5_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_h5_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_h5_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -638,28 +603,25 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_h5',
-		'section'  => 'wpbf_h5_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_h5' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_h5_options' );
 
 }
 
 /* Fields - H6 */
 
 // Toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'page_h6_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_h6_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'page_h6_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_h6_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -691,28 +653,25 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_h6',
-		'section'  => 'wpbf_h6_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_h6' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_h6_options' );
 
 }
 
 /* Fields - Footer */
 
 // Toggle.
-new \Kirki\Field\Toggle(
-	[
-		'settings' => 'footer_font_toggle',
-		'label'    => esc_html__( 'Font Settings', 'page-builder-framework' ),
-		'section'  => 'wpbf_footer_font_options',
-		'default'  => 0,
-		'priority' => 0,
-	]
-);
+wpbf_customizer_field()
+	->id( 'footer_font_toggle' )
+	->type( 'toggle' )
+	->label( __( 'Font Settings', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 0 )
+	->addToSection( 'wpbf_footer_font_options' );
 
 // Font family.
 Kirki::add_field( 'wpbf', array(
@@ -744,12 +703,11 @@ if ( ! wpbf_is_premium() ) {
 		__( 'Learn More', 'page-builder-framework' )
 	);
 
-	Kirki::add_field( 'wpbf', array(
-		'type'     => 'custom',
-		'settings' => 'wpbf_premium_ad_typography_footer',
-		'section'  => 'wpbf_footer_font_options',
-		'default'  => '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link,
-		'priority' => 9999,
-	) );
+	wpbf_customizer_field()
+		->id( 'wpbf_premium_ad_typography_footer' )
+		->type( 'custom' )
+		->defaultValue( '<hr style="border-top: 1px solid #ccc; border-bottom: 1px solid #f8f8f8">' . $wpbf_premium_ad_link )
+		->priority( 9999 )
+		->addToSection( 'wpbf_footer_font_options' );
 
 }
