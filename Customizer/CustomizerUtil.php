@@ -31,6 +31,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
+use WP_Customize_Section;
 
 /**
  * Wpbf customizer's utility helper class.
@@ -158,6 +159,16 @@ class CustomizerUtil {
 			$field,
 			'sanitizeCallback',
 		) : '' );
+
+	}
+
+	/**
+	 * Get the section instance.
+	 *
+	 * @param string $section_type Type of the section.
+	 * @return WP_Customize_Section|null
+	 */
+	public function getSectionInstance( $section_type ) {
 
 	}
 

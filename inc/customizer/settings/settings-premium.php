@@ -14,22 +14,23 @@ if ( wpbf_is_premium() ) {
 }
 
 $wpbf_premium_ad_link = sprintf(
+	// translators: %1s represents the premium feature's URL.
 	__( 'Get all features with the <a href="%1s" target="_blank">Premium Add-On</a>!', 'page-builder-framework' ),
 	esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer&utm_campaign=wpbf#premium' )
 );
 
-// Panel.
-Kirki::add_section( 'wpbf_premium_addon', array(
-	'title'    => __( 'Premium Features available!', 'page-builder-framework' ),
-	'priority' => 1,
-	'type'     => 'expanded',
-) );
+// Section.
+wpbf_customizer_section()
+	->id( 'wpbf_premium_addon' )
+	->type( 'expanded' )
+	->title( __( 'Premium Features available!', 'page-builder-framework' ) )
+	->priority( 1 )
+	->add();
 
 // Field.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'custom',
-	'settings' => 'wpbf_premium_ad',
-	'section'  => 'wpbf_premium_addon',
-	'default'  => $wpbf_premium_ad_link,
-	'priority' => 1,
-) );
+wpbf_customizer_field()
+	->id( 'wpbf_premium_ad' )
+	->type( 'custom' )
+	->defaultValue( $wpbf_premium_ad_link )
+	->priority( 1 )
+	->addToSection( 'wpbf_premium_addon' );

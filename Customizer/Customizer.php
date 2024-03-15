@@ -43,6 +43,13 @@ final class Customizer {
 	public static $capability = 'edit_theme_options';
 
 	/**
+	 * Available section tabs.
+	 *
+	 * @var string[]
+	 */
+	public static $available_section_types = [ 'default', 'expanded', 'link', 'nested', 'outer' ];
+
+	/**
 	 * Added settings.
 	 *
 	 * @var CustomizerSettingEntity[]
@@ -264,17 +271,27 @@ final class Customizer {
 	private function register_sections( $wp_customize_manager ) {
 
 		foreach ( self::$added_sections as $section ) {
-			$wp_customize_manager->add_section(
-				$section->id,
-				array(
-					'panel'           => $section->panel_id,
-					'title'           => $section->title,
-					'description'     => $section->description,
-					'capability'      => $section->capability,
-					'priority'        => $section->priority,
-					'active_callback' => $section->active_callback,
-				)
+			$section_type = $section->type;
+
+			if ( empty( $section_type ) || ! in_array( $section_type, self::$available_section_types, true ) ) {
+				$section_type = 'default';
+			}
+
+			$section_args = array(
+				'panel'           => $section->panel_id,
+				'title'           => $section->title,
+				'description'     => $section->description,
+				'capability'      => $section->capability,
+				'priority'        => $section->priority,
+				'active_callback' => $section->active_callback,
 			);
+
+			if ( 'default' === $section->type ) {
+				$wp_customize_manager->add_section( $section->id, $section_args );
+				continue;
+			}
+
+			$section_class = null;
 		}
 
 	}

@@ -83,6 +83,21 @@ final class CustomizerSection {
 	}
 
 	/**
+	 * Set the section type.
+	 *
+	 * @param string $type Section type.
+	 *
+	 * @return $this
+	 */
+	public function type( $type ) {
+
+		$this->section->type = $type;
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the section title.
 	 *
 	 * @param string $title Section title.
@@ -144,6 +159,32 @@ final class CustomizerSection {
 		$this->section_tabs = $tabs;
 
 		return $this;
+
+	}
+
+	/**
+	 * Set the control's custom_properties.
+	 *
+	 * @param array $properties Custom properties which are not provided by WP_Customize_Control by default.
+	 *
+	 * @return $this
+	 */
+	public function customProperties( $properties = array() ) {
+
+		$this->section->custom_properties = $properties;
+
+		return $this;
+
+	}
+
+	/**
+	 * Add the section without a panel.
+	 *
+	 * @return CustomizerSectionEntity
+	 */
+	public function add() {
+
+		return $this->addToPanel( '' );
 
 	}
 

@@ -45,6 +45,13 @@ class CustomizerSectionEntity {
 	public $capability = 'edit_theme_options';
 
 	/**
+	 * Type of this section.
+	 *
+	 * @var string
+	 */
+	public $type = '';
+
+	/**
 	 * Title of the section to show in UI.
 	 *
 	 * @var string
@@ -68,6 +75,13 @@ class CustomizerSectionEntity {
 	 * @var callable
 	 */
 	public $active_callback = '';
+
+	/**
+	 * Custom properties which are not provided by WP_Customize_Section by default.
+	 *
+	 * @var array
+	 */
+	public $custom_properties = array();
 
 
 }
