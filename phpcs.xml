@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="MapSteps Coding Standards" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/master/phpcs.xsd">
+
+	<description>Page Builder Framework's Coding Standards.</description>
+
+	<!-- Exclude some directories. -->
+	<exclude-pattern>*/wp-admin/*</exclude-pattern>
+	<exclude-pattern>*/wp-incudes/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
+	<!-- Only check PHP files. -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Show progress, show the error codes for each message (source). -->
+	<arg value="ps"/>
+
+	<!-- Strip the filepaths down to the relevant bit. -->
+	<arg name="basepath" value="."/>
+
+	<!-- Check up to 8 files simultaneously. -->
+	<arg name="parallel" value="1000"/>
+
+
+	<!--
+	#############################################################################
+	SET UP THE RULESETS
+	#############################################################################
+	-->
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName"/>
+		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
+	</rule>
+
+
+	<rule ref="WordPress-Extra">
+		<exclude name="Universal.Operators.DisallowShortTernary.Found"/>
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
+
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/>
+		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine"/>
+		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments"/>
+
+		<exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+		<exclude name="PSR2.Methods.FunctionClosingBrace.SpacingBeforeClose"/>
+
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.ClassComment.Missing"/>
+	</rule>
+
+	<rule ref="WordPress.Arrays.MultipleStatementAlignment">
+		<properties>
+			<property name="alignMultilineItems" value="!=100"/>
+			<property name="exact" value="false" phpcs-only="true"/>
+		</properties>
+	</rule>
+
+</ruleset>

@@ -16,11 +16,9 @@ auth.json
 # DS_Store
 .DS_Store
 
-# phpcs & editor's setting related
+# editor's setting related
 .vscode/
 .idea/
-.editorconfig
-phpcs.xml
 
 # developer specific
 david-gulpfile.js
