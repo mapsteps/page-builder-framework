@@ -30,6 +30,10 @@ use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
 use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
+use Mapsteps\Wpbf\Customizer\Sections\ExpandedSection;
+use Mapsteps\Wpbf\Customizer\Sections\LinkSection;
+use Mapsteps\Wpbf\Customizer\Sections\NestedSection;
+use Mapsteps\Wpbf\Customizer\Sections\OuterSection;
 use WP_Customize_Manager;
 use WP_Customize_Section;
 
@@ -37,6 +41,13 @@ use WP_Customize_Section;
  * Wpbf customizer's utility helper class.
  */
 class CustomizerUtil {
+
+	/**
+	 * Available section tabs.
+	 *
+	 * @var string[]
+	 */
+	public $available_section_types = [ 'default', 'expanded', 'link', 'nested', 'outer' ];
 
 	/**
 	 * The available control types.
@@ -165,10 +176,31 @@ class CustomizerUtil {
 	/**
 	 * Get the section instance.
 	 *
-	 * @param string $section_type Type of the section.
-	 * @return WP_Customize_Section|null
+	 * @param string               $section_type Type of the section.
+	 * @param WP_Customize_Manager $wp_customer_manager The customizer manager object.
+	 * @param string               $id The section id.
+	 * @param array                $args The section arguments.
+	 *
+	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection
 	 */
-	public function getSectionInstance( $section_type ) {
+	public function getSectionInstance( $section_type, $wp_customer_manager, $id, $args ) {
+
+		if ( empty( $section_type ) || ! in_array( $section_type, $this->available_section_types, true ) ) {
+			$section_type = 'default';
+		}
+
+		switch ( $section_type ) {
+			case 'expanded':
+				return new ExpandedSection( $wp_customer_manager, $id, $args );
+			case 'link':
+				return new LinkSection( $wp_customer_manager, $id, $args );
+			case 'nested':
+				return new NestedSection( $wp_customer_manager, $id, $args );
+			case 'outer':
+				return new OuterSection( $wp_customer_manager, $id, $args );
+			default:
+				return new WP_Customize_Section( $wp_customer_manager, $id, $args );
+		}
 
 	}
 

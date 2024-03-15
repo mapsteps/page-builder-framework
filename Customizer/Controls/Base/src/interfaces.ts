@@ -8,6 +8,8 @@ import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
 import { WpbfCustomizeInputSliderControl, WpbfCustomizeResponsiveInputSliderControl } from "../../Slider/src/interface";
 import { WpbfCustomizeSortableControl } from "../../Sortable/src/interface";
+import { Section_Constructor } from "wordpress__customize-browser/Section_Constructor";
+import { Section, Section_Params } from "wordpress__customize-browser/Section";
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {
 	get(): T;
@@ -62,9 +64,22 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-toggle": WpbfCustomizeControl;
 }
 
+export interface WpbfCustomizeSectionConstructor extends Section_Constructor {
+	'wpbf-link': any;
+}
+
+export interface WpbfSectionParams extends Section_Params {
+	section?: WpbfCustomizeSection;
+}
+
+export interface WpbfCustomizeSection extends Section {
+	params: WpbfSectionParams;
+}
+
 export interface WpbfCustomize extends Customize {
 	Control: WpbfCustomizeControlItem;
 	controlConstructor: WpbfCustomizeControlConstructor;
+	sectionConstructor: WpbfCustomizeSectionConstructor;
 }
 
 export interface WpbfControlDependency {

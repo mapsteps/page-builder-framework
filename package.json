@@ -88,6 +88,8 @@
     "build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-source-maps",
     "build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps",
     "build-individual-assets": "npm run build-individual-js && npm run build-individual-css",
+    "watch-customize-sections": "parcel watch Customizer/Sections/src/section-types.ts --dist-dir Customizer/Sections/dist --no-source-maps",
+    "build-customize-sections": "parcel build Customizer/Sections/src/section-types.ts --dist-dir Customizer/Sections/dist --no-source-maps",
     "watch-base-control": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
     "build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-source-maps",
     "watch-checkbox-control": "parcel watch Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist --no-source-maps",

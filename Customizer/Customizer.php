@@ -43,13 +43,6 @@ final class Customizer {
 	public static $capability = 'edit_theme_options';
 
 	/**
-	 * Available section tabs.
-	 *
-	 * @var string[]
-	 */
-	public static $available_section_types = [ 'default', 'expanded', 'link', 'nested', 'outer' ];
-
-	/**
 	 * Added settings.
 	 *
 	 * @var CustomizerSettingEntity[]
@@ -166,6 +159,7 @@ final class Customizer {
 		$this->register_controls( $wp_customize_manager );
 		$this->register_selective_refreshes( $wp_customize_manager );
 
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_section_types' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
 
 	}
@@ -270,12 +264,10 @@ final class Customizer {
 	 */
 	private function register_sections( $wp_customize_manager ) {
 
+		$util = new CustomizerUtil();
+
 		foreach ( self::$added_sections as $section ) {
 			$section_type = $section->type;
-
-			if ( empty( $section_type ) || ! in_array( $section_type, self::$available_section_types, true ) ) {
-				$section_type = 'default';
-			}
 
 			$section_args = array(
 				'panel'           => $section->panel_id,
@@ -286,13 +278,31 @@ final class Customizer {
 				'active_callback' => $section->active_callback,
 			);
 
-			if ( 'default' === $section->type ) {
-				$wp_customize_manager->add_section( $section->id, $section_args );
-				continue;
-			}
+			$props = $section->custom_properties;
+			$args  = wp_parse_args( $props, $section_args );
 
-			$section_class = null;
+			$wp_customize_manager->add_section($util->getSectionInstance(
+				$section_type,
+				$wp_customize_manager,
+				$section->id,
+				$args
+			));
 		}
+
+	}
+
+	/**
+	 * Register the customizer control dependencies.
+	 *
+	 * @return void
+	 */
+	public function enqueue_custom_section_types() {
+
+		// Enqueue the styles.
+		wp_enqueue_style( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/section-types-min.css', array(), WPBF_VERSION );
+
+		// Enqueue the scripts.
+		wp_enqueue_script( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/section-types-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
 
 	}
 
