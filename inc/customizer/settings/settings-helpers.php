@@ -13,6 +13,9 @@ if ( ! function_exists( 'wpbf_kirki_sanitize_helper' ) ) {
 	/**
 	 * Kirki sanitization helper.
 	 *
+	 * @deprecated Use `wpbf_customizer_field` instead of Kirki's controls.
+	 * It comes with strong sanitization by default.
+	 *
 	 * @param string $callback The sanitization callback.
 	 *
 	 * @return mixed The sanitized json.
