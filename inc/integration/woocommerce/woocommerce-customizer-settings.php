@@ -33,81 +33,75 @@ add_action( 'customize_register', 'wpbf_woo_customizer_setup', 20 );
 /* Sections */
 
 // Menu item.
-Kirki::add_section( 'wpbf_woocommerce_menu_item_options', array(
-	'title'    => __( 'Cart Menu Item', 'page-builder-framework' ),
-	'panel'    => 'woocommerce',
-	'priority' => 25,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_woocommerce_menu_item_options' )
+	->title( __( 'Cart Menu Item', 'page-builder-framework' ) )
+	->priority( 25 )
+	->addToPanel( 'woocommerce' );
 
 // Product page.
-Kirki::add_section( 'wpbf_woocommerce_product_options', array(
-	'title'    => __( 'Product Page', 'page-builder-framework' ),
-	'panel'    => 'woocommerce',
-	'priority' => 40,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_woocommerce_product_options' )
+	->title( __( 'Product Page', 'page-builder-framework' ) )
+	->priority( 40 )
+	->addToPanel( 'woocommerce' );
 
 // Sidebar.
-Kirki::add_section( 'wpbf_woocommerce_sidebar_options', array(
-	'title'    => __( 'Sidebar', 'page-builder-framework' ),
-	'panel'    => 'woocommerce',
-	'priority' => 60,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_woocommerce_sidebar_options' )
+	->title( __( 'Sidebar', 'page-builder-framework' ) )
+	->priority( 60 )
+	->addToPanel( 'woocommerce' );
 
 // Notices.
-Kirki::add_section( 'wpbf_woocommerce_notices_options', array(
-	'title'    => __( 'Notices', 'page-builder-framework' ),
-	'panel'    => 'woocommerce',
-	'priority' => 70,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_woocommerce_notices_options' )
+	->title( __( 'Notices', 'page-builder-framework' ) )
+	->priority( 70 )
+	->addToPanel( 'woocommerce' );
 
 /* Fields - Menu Item */
 
 // Hide from non WooCommerce pages.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'toggle',
-	'settings'    => 'woocommerce_menu_item_hide_if_not_wc',
-	'label'       => __( 'Hide from non-Shop Pages', 'page-builder-framework' ),
-	'description' => __( 'Display Menu Item only on WooCommerce related pages.', 'page-builder-framework' ),
-	'section'     => 'wpbf_woocommerce_menu_item_options',
-	'default'     => 0,
-	'priority'    => 5,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_menu_item_hide_if_not_wc' )
+	->type( 'toggle' )
+	->label( __( 'Hide from non-Shop Pages', 'page-builder-framework' ) )
+	->description( __( 'Display Menu Item only on WooCommerce related pages.', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 5 )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' )
 
 // Turn search into product search.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'toggle',
-	'settings'    => 'woocommerce_search_menu_item',
-	'label'       => __( 'Product Search', 'page-builder-framework' ),
-	'description' => __( 'Turn the Search Menu Item into a Product Search.', 'page-builder-framework' ),
-	'section'     => 'wpbf_woocommerce_menu_item_options',
-	'default'     => 0,
-	'priority'    => 5,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_search_menu_item'
+	->type( 'toggle' )
+	->label( __( 'Product Search', 'page-builder-framework' ) )
+	->description( __( 'Turn the Search Menu Item into a Product Search.', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( 5 )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_search_menu_item_separator',
-		'section'  => 'wpbf_woocommerce_menu_item_options',
-		'priority' => 5,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_search_menu_item_separator' )
+	->type( 'divider' )
+	->priority( 5 )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Menu item.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'woocommerce_menu_item_desktop',
-	'label'           => __( 'Visibility (Desktop)', 'page-builder-framework' ),
-	'description'     => __( 'Add a Cart Icon to your Main Navigation.', 'page-builder-framework' ),
-	'section'         => 'wpbf_woocommerce_menu_item_options',
-	'default'         => 'show',
-	'priority'        => 10,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_menu_item_desktop' )
+	->type( 'select' )
+	->label( __( 'Visibility (Desktop)', 'page-builder-framework' ) )
+	->description( __( 'Add a Cart Icon to your Main Navigation.', 'page-builder-framework' ) )
+	->priority( 10 )
+	->defaultValue( 'show' )
+	->choices( [
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-	'partial_refresh' => array(
+	] )
+	->partialRefresh( [
 		'woocommerce_menu_item_desktop' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -115,59 +109,53 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Menu item color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_menu_item_desktop_color',
-	'label'           => __( 'Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_woocommerce_menu_item_options',
-	'default'         => '',
-	'priority'        => 11,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_menu_item_desktop_color' )
+	->type( 'color' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->priority( 11 )
+	->transport( 'postMessage' )
+	->activeCallback( [
 		array(
-			'setting'  => 'woocommerce_menu_item_desktop',
+			'id'       => 'woocommerce_menu_item_desktop',
 			'operator' => '!=',
 			'value'    => 'hide',
 		),
 		array(
-			'setting'  => 'woocommerce_menu_item_count',
+			'id'       => 'woocommerce_menu_item_count',
 			'operator' => '!=',
 			'value'    => 'hide',
 		),
-	),
-) );
+	] )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_menu_item_separator_1',
-		'section'  => 'wpbf_woocommerce_menu_item_options',
-		'priority' => 12,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_menu_item_separator_1' )
+	->type( 'divider' )
+	->priority( 12 )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Mobile menu item.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'woocommerce_menu_item_mobile',
-	'label'           => __( 'Visibility (Mobile)', 'page-builder-framework' ),
-	'description'     => __( 'Add a Cart Icon to your Mobile Navigation.', 'page-builder-framework' ),
-	'section'         => 'wpbf_woocommerce_menu_item_options',
-	'default'         => 'show',
-	'priority'        => 13,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_menu_item_mobile' )
+	->type( 'select' )
+	->label( __( 'Visibility (Mobile)', 'page-builder-framework' ) )
+	->description( __( 'Add a Cart Icon to your Mobile Navigation.', 'page-builder-framework' ) )
+	->priority( 13 )
+	->defaultValue( 'show' )
+	->choices( [
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-	'partial_refresh' => array(
+	] )
+	->partialRefresh( [
 		'woocommerce_menu_item_mobile' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -175,58 +163,52 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Menu item color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_menu_item_mobile_color',
-	'label'           => __( 'Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_woocommerce_menu_item_options',
-	'default'         => '',
-	'priority'        => 14,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_menu_item_mobile_color' )
+	->type( 'color' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->priority( 14 )
+	->transport( 'postMessage' )
+	->activeCallback( [
 		array(
-			'setting'  => 'woocommerce_menu_item_mobile',
+			'id'       => 'woocommerce_menu_item_mobile',
 			'operator' => '!=',
 			'value'    => 'hide',
 		),
 		array(
-			'setting'  => 'woocommerce_menu_item_count',
+			'id'       => 'woocommerce_menu_item_count',
 			'operator' => '!=',
 			'value'    => 'hide',
 		),
-	),
-) );
+	] )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_menu_item_separator_2',
-		'section'  => 'wpbf_woocommerce_menu_item_options',
-		'priority' => 15,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_menu_item_separator_2' )
+	->type( 'divider' )
+	->priority( 15 )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Menu item count.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'woocommerce_menu_item_count',
-	'label'           => __( 'Count', 'page-builder-framework' ),
-	'section'         => 'wpbf_woocommerce_menu_item_options',
-	'default'         => 'show',
-	'priority'        => 16,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_menu_item_count' )
+	->type( 'select' )
+	->label( __( 'Count', 'page-builder-framework' ) )
+	->priority( 16 )
+	->defaultValue( 'show' )
+	->choices( [
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-	'partial_refresh' => array(
+	] )
+	->partialRefresh( [
 		'woocommerce_menu_item_count' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -234,565 +216,507 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 /* Fields - Product Page */
 
 $product_priority = 0;
 
 // Custom width.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'dimension',
-	'label'       => __( 'Custom Content Width', 'page-builder-framework' ),
-	'settings'    => 'woocommerce_single_custom_width',
-	'section'     => 'wpbf_woocommerce_product_options',
-	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
-	'priority'    => $product_priority++,
-	'transport'   => 'postMessage',
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_custom_width' )
+	->type( 'dimension' )
+	->label( __( 'Custom Content Width', 'page-builder-framework' )
+	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'radio-image',
-	'settings'  => 'woocommerce_single_alignment',
-	'label'     => __( 'Image Alignment', 'page-builder-framework' ),
-	'section'   => 'wpbf_woocommerce_product_options',
-	'default'   => 'left',
-	'priority'  => $product_priority++,
-	'multiple'  => 1,
-	'transport' => 'postMessage',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_single_alignment' )
+	->type( 'radio-image' )
+	->label( __( 'Image Alignment', 'page-builder-framework' ) )
+	->defaultValue( 'left' )
+	->choices( [
 		'left'  => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'right' => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-) );
+	] )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Image container width.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'slider',
-	'settings'  => 'woocommerce_single_image_width',
-	'label'     => __( 'Image Width', 'page-builder-framework' ),
-	'section'   => 'wpbf_woocommerce_product_options',
-	'priority'  => $product_priority++,
-	'default'   => 50,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'min'  => '25',
-		'max'  => '75',
-		'step' => '1',
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_image_width' )
+	->type( 'slider' )
+	->label( __( 'Image Width', 'page-builder-framework' ) )
+	->priority( $product_priority++ )
+	->defaultValue( 50 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 25,
+		'max'  => 75,
+		'step' => 1,
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Disable gallery zoom.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'woocommerce_single_disable_gallery_zoom',
-	'label'    => __( 'Disable Gallery Zoom', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'priority' => $product_priority++,
-	'default'  => false,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_disable_gallery_zoom' )
+	->type( 'toggle' )
+	->label( __( 'Disable Gallery Zoom', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Disable gallery slider.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'woocommerce_single_disable_gallery_slider',
-	'label'    => __( 'Disable Gallery Slider', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'priority' => $product_priority++,
-	'default'  => false,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_disable_gallery_slider' )
+	->type( 'toggle' )
+	->label( __( 'Disable Gallery Slider', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Disable gallery lightbox.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'woocommerce_single_disable_gallery_lightbox',
-	'label'    => __( 'Disable Gallery Lightbox', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'priority' => $product_priority++,
-	'default'  => false,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_disable_gallery_lightbox' )
+	->type( 'toggle' )
+	->label( __( 'Disable Gallery Lightbox', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Summary separator.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_single_summary_separator',
-	'label'    => __( 'Summary Separator', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => 'hide',
-	'priority' => $product_priority++,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_single_summary_separator' )
+	->type( 'select' )
+	->label( __( 'Summary Separator', 'page-builder-framework' ) )
+	->defaultValue( 'hide' )
+	->choices( [
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 		'show' => __( 'Show', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_single_quantity_separator',
-		'section'  => 'wpbf_woocommerce_product_options',
-		'priority' => $product_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_single_quantity_separator' )
+	->type( 'divider' )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Increase - Decrease button.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_quantity_buttons',
-	'label'    => __( 'Price Quantity Buttons (+/-)', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => 'show',
-	'priority' => $product_priority++,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_quantity_buttons' )
+	->type( 'select' )
+	->label( __( 'Price Quantity Buttons (+/-)', 'page-builder-framework' ) )
+	->defaultValue( 'show' )
+	->choices( [
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Price color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_single_price_color',
-	'label'     => __( 'Font Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_woocommerce_product_options',
-	'transport' => 'postMessage',
-	'default'   => '#3e4349',
-	'priority'  => $product_priority++,
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_price_color' )
+	->type( 'color' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->defaultValue( '#3e4349' )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Price font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Font Size', 'page-builder-framework' ),
-	'settings'  => 'woocommerce_single_price_size',
-	'section'   => 'wpbf_woocommerce_product_options',
-	'transport' => 'postMessage',
-	'priority'  => $product_priority++,
-	'default'   => '22px',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_single_price_size' )
+	->type( 'input-slider' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '22px' )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_single_tabs_separator',
-		'section'  => 'wpbf_woocommerce_product_options',
-		'priority' => $product_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs_separator' )
+	->type( 'divider' )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Tabs layout.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_single_tabs',
-	'label'    => __( 'Tabs Layout', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'default'  => 'default',
-	'priority' => $product_priority++,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs' )
+	->type( 'select' )
+	->label( __( 'Tabs Layout', 'page-builder-framework' ) )
+	->defaultValue( 'default' )
+	->choices( [
 		'default' => __( 'Default', 'page-builder-framework' ),
 		'modern'  => __( 'Modern', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Tabs background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_single_tabs_background_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_woocommerce_product_options',
-	'default'         => '#e7e7ec',
-	'priority'        => $product_priority++,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_single_tabs',
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs_background_color' )
+	->type( 'color' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#e7e7ec' )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_single_tabs',
 			'operator' => '!=',
 			'value'    => 'modern',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Tabs background color alt.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_single_tabs_background_color_alt',
-	'label'           => __( 'Hover', 'page-builder-framework' ),
-	'section'         => 'wpbf_woocommerce_product_options',
-	'default'         => '#f5f5f7',
-	'priority'        => $product_priority++,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_single_tabs',
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs_background_color_alt' )
+	->type( 'color' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->defaultValue( '#f5f5f7' )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_single_tabs',
 			'operator' => '!=',
 			'value'    => 'modern',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Tabs background color active.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_single_tabs_background_color_active',
-	'label'           => __( 'Active', 'page-builder-framework' ),
-	'section'         => 'wpbf_woocommerce_product_options',
-	'default'         => '#ffffff',
-	'priority'        => $product_priority++,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_single_tabs',
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs_background_color_active' )
+	->type( 'color' )
+	->label( __( 'Active', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_single_tabs',
 			'operator' => '!=',
 			'value'    => 'modern',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Tabs font color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_single_tabs_font_color',
-	'label'     => __( 'Font Color', 'page-builder-framework' ),
-	'section'   => 'wpbf_woocommerce_product_options',
-	'default'   => '#3e4349',
-	'priority'  => $product_priority++,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs_font_color' )
+	->type( 'color' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->defaultValue( '#3e4349' )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Tabs hover color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_single_tabs_font_color_alt',
-	'label'     => __( 'Hover', 'page-builder-framework' ),
-	'section'   => 'wpbf_woocommerce_product_options',
-	'default'   => '',
-	'priority'  => $product_priority++,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs_font_color_alt' )
+	->type( 'color' )
+	->label( __( 'Hover', 'page-builder-framework' ) )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Tabs active color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_single_tabs_font_color_active',
-	'label'     => __( 'Active', 'page-builder-framework' ),
-	'section'   => 'wpbf_woocommerce_product_options',
-	'default'   => '',
-	'priority'  => $product_priority++,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs_font_color_active' )
+	->type( 'color' )
+	->label( __( 'Active', 'page-builder-framework' ) )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Tabs font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Font Size', 'page-builder-framework' ),
-	'settings'  => 'woocommerce_single_tabs_font_size',
-	'section'   => 'wpbf_woocommerce_product_options',
-	'transport' => 'postMessage',
-	'priority'  => $product_priority++,
-	'default'   => '16px',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_single_tabs_font_size' )
+	->type( 'input-slider' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( $product_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_single_add_to_cart_ajax_separator',
-		'section'  => 'wpbf_woocommerce_product_options',
-		'priority' => $product_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_single_add_to_cart_ajax_separator' )
+	->type( 'divider' )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 // Single add to cart ajax.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'woocommerce_single_add_to_cart_ajax',
-	'label'    => __( 'Enable AJAX add to cart button', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_product_options',
-	'priority' => $product_priority++,
-	'default'  => false,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_single_add_to_cart_ajax' )
+	->type( 'toggle' )
+	->label( __( 'Enable AJAX add to cart button', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( $product_priority++ )
+	->addToSection( 'wpbf_woocommerce_product_options' );
 
 /* Fields - Sidebar */
 
 // Shop sidebar layout.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_sidebar_layout',
-	'label'    => __( 'Shop Page Sidebar', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_sidebar_options',
-	'default'  => 'none',
-	'priority' => 0,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_sidebar_layout' )
+	->type( 'select' )
+	->label( __( 'Shop Page Sidebar', 'page-builder-framework' ) )
+	->defaultValue( 'none' )
+	->priority( 0 )
+	->choices( [
 		'right' => __( 'Right', 'page-builder-framework' ),
 		'left'  => __( 'Left', 'page-builder-framework' ),
 		'none'  => __( 'No Sidebar', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_woocommerce_sidebar_options' );
 
 // Product sidebar layout.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_single_sidebar_layout',
-	'label'    => __( 'Product Page Sidebar', 'page-builder-framework' ),
-	'section'  => 'wpbf_woocommerce_sidebar_options',
-	'default'  => 'none',
-	'priority' => 1,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_single_sidebar_layout' )
+	->type( 'select' )
+	->label( __( 'Product Page Sidebar', 'page-builder-framework' ) )
+	->defaultValue( 'none' )
+	->priority( 1 )
+	->choices( [
 		'right' => __( 'Right', 'page-builder-framework' ),
 		'left'  => __( 'Left', 'page-builder-framework' ),
 		'none'  => __( 'No Sidebar', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->addToSection( 'wpbf_woocommerce_sidebar_options' );
 
 /* Fields - Notices */
 
 // Store notice color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_store_notice_color',
-	'label'           => __( 'Store Notice', 'page-builder-framework' ),
-	'section'         => 'woocommerce_store_notice',
+wpbf_customizer_field()
+	->id( 'woocommerce_store_notice_color' )
+	->type( 'color' )
+	->label( __( 'Store Notice', 'page-builder-framework' ) )
 	// The woocommerce_store_notice priority is 10.
-	'priority'        => 10,
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_demo_store',
+	->priority( 10 )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_demo_store',
 			'operator' => '==',
 			'value'    => true,
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'wpbf_woocommerce_notices_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_store_notice_separator',
-		'section'  => 'woocommerce_store_notice',
-		'priority' => 100,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_store_notice_separator' )
+	->type( 'divider' )
+	->priority( 100 )
+	->addToSection( 'woocommerce_store_notice' );
 
 // Info color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_info_notice_color',
-	'label'     => __( 'Info Notice', 'page-builder-framework' ),
-	'section'   => 'woocommerce_store_notice',
-	'priority'  => 100,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_info_notice_color' )
+	->type( 'color' )
+	->label( __( 'Info Notice', 'page-builder-framework' ) )
+	->priority( 100 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'woocommerce_store_notice' );
 
 // Success color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_message_notice_color',
-	'label'     => __( 'Success Notice', 'page-builder-framework' ),
-	'section'   => 'woocommerce_store_notice',
-	'default'   => '#4fe190',
-	'priority'  => 100,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_message_notice_color' )
+	->type( 'color' )
+	->label( __( 'Success Notice', 'page-builder-framework' ) )
+	->defaultValue( '#4fe190' )
+	->priority( 100 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'woocommerce_store_notice' );
 
 // Error color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_error_notice_color',
-	'label'     => __( 'Error Notice', 'page-builder-framework' ),
-	'section'   => 'woocommerce_store_notice',
-	'default'   => '#ff6347',
-	'priority'  => 100,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_error_notice_color' )
+	->type( 'color' )
+	->label( __( 'Error Notice', 'page-builder-framework' ) )
+	->defaultValue( '#ff6347' )
+	->priority( 100 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'woocommerce_store_notice' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_general_notice_color_separator',
-		'section'  => 'woocommerce_store_notice',
-		'priority' => 100,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_general_notice_color_separator' )
+	->type( 'divider' )
+	->priority( 100 )
+	->addToSection( 'woocommerce_store_notice' );
 
 // General notice's background color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_notice_bg_color',
-	'label'     => __( 'Notice Background Color', 'page-builder-framework' ),
-	'section'   => 'woocommerce_store_notice',
-	'priority'  => 100,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_notice_bg_color' )
+	->type( 'color' )
+	->label( __( 'Notice Background Color', 'page-builder-framework' ) )
+	->priority( 100 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'woocommerce_store_notice' );
 
 // General notice's text color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_notice_text_color',
-	'label'     => __( 'Notice Font Color', 'page-builder-framework' ),
-	'section'   => 'woocommerce_store_notice',
-	'priority'  => 100,
-	'transport' => 'postMessage',
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_notice_text_color' )
+	->type( 'color' )
+	->label( __( 'Notice Font Color', 'page-builder-framework' ) )
+	->priority( 100 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'woocommerce_store_notice' );
 
 /* Fields - Checkout */
 
 // Alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_checkout_layout',
-	'label'    => __( 'Layout', 'page-builder-framework' ),
-	'section'  => 'woocommerce_checkout',
-	'default'  => 'default',
-	'priority' => 1,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_checkout_layout' )
+	->type( 'select' )
+	->label( __( 'Layout', 'page-builder-framework' ) )
+	->defaultValue( 'default' )
+	->priority( 1 )
+	->choices( [
 		'default' => __( 'Default', 'page-builder-framework' ),
 		'side'    => __( 'Side by Side', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->addToSection( 'woocommerce_checkout' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_checkout_layout_separator',
-		'section'  => 'woocommerce_checkout',
-		'priority' => 2,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_checkout_layout_separator' )
+	->type( 'divider' )
+	->priority( 2 )
+	->addToSection( 'woocommerce_checkout' );
 
 /* Fields - Product Loop */
 
 $shop_priority = 20;
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_loop_separator_0',
-		'section'  => 'woocommerce_product_catalog',
-		'priority' => $shop_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_separator_0' )
+	->type( 'divider' )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Custom width.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'dimension',
-	'label'       => __( 'Custom Content Width', 'page-builder-framework' ),
-	'settings'    => 'woocommerce_loop_custom_width',
-	'section'     => 'woocommerce_product_catalog',
-	'description' => __( 'Default: 1200px', 'page-builder-framework' ),
-	'priority'    => $shop_priority++,
-	'transport'   => 'postMessage',
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_custom_width' )
+	->type( 'dimension' )
+	->label( __( 'Custom Content Width', 'page-builder-framework' )
+	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_loop_separator_1',
-		'section'  => 'woocommerce_product_catalog',
-		'priority' => $shop_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_separator_1' )
+	->type( 'divider' )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Remove page title.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'woocommerce_loop_remove_page_title',
-	'label'    => __( 'Hide Page Title', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 0,
-	'priority' => $shop_priority++,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_remove_page_title' )
+	->type( 'toggle' )
+	->label( __( 'Hide Page Title', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Remove breadcrumbs.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'woocommerce_loop_remove_breadcrumbs',
-	'label'    => __( 'Hide Breadcrumbs', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 0,
-	'priority' => $shop_priority++,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_remove_breadcrumbs' )
+	->type( 'toggle' )
+	->label( __( 'Hide Breadcrumbs', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Remove result count.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'woocommerce_loop_remove_result_count',
-	'label'    => __( 'Hide Result Count', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 0,
-	'priority' => $shop_priority++,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_remove_result_count' )
+	->type( 'toggle' )
+	->label( __( 'Hide Result Count', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Remove ordering.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'toggle',
-	'settings' => 'woocommerce_loop_remove_ordering',
-	'label'    => __( 'Hide Ordering', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 0,
-	'priority' => $shop_priority++,
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_remove_ordering' )
+	->type( 'toggle' )
+	->label( __( 'Hide Ordering', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_loop_separator_2',
-		'section'  => 'woocommerce_product_catalog',
-		'priority' => $shop_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_separator_2' )
+	->type( 'divider' )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Products per row.
 Kirki::add_field( 'wpbf', array(
@@ -801,7 +725,7 @@ Kirki::add_field( 'wpbf', array(
 	'label'             => __( 'Products per Row', 'page-builder-framework' ),
 	'section'           => 'woocommerce_product_catalog',
 	'priority'          => $shop_priority++,
-	'default'           => json_encode(
+	'default'           => wp_json_encode(
 		array(
 			'desktop' => '4',
 			'tablet'  => '2',
@@ -812,424 +736,386 @@ Kirki::add_field( 'wpbf', array(
 ) );
 
 // Grid gap.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_loop_grid_gap',
-	'label'    => __( 'Grid Gap', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 'large',
-	'priority' => $shop_priority++,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_grid_gap' )
+	->type( 'select' )
+	->label( __( 'Grid Gap', 'page-builder-framework' ) )
+	->defaultValue( 'large' )
+	->priority( $shop_priority++ )
+	->choices( [
 		'small'    => __( 'Small', 'page-builder-framework' ),
 		'medium'   => __( 'Medium', 'page-builder-framework' ),
 		'large'    => __( 'Large', 'page-builder-framework' ),
 		'xlarge'   => __( 'xLarge', 'page-builder-framework' ),
 		'collapse' => __( 'Collapse', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Content alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'radio-image',
-	'settings'  => 'woocommerce_loop_content_alignment',
-	'label'     => __( 'Content Alignment', 'page-builder-framework' ),
-	'section'   => 'woocommerce_product_catalog',
-	'default'   => 'left',
-	'priority'  => $shop_priority++,
-	'multiple'  => 1,
-	'transport' => 'postMessage',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_content_alignment' )
+	->type( 'radio-image' )
+	->label( __( 'Content Alignment', 'page-builder-framework' ) )
+	->defaultValue( 'left' )
+	->priority( $shop_priority++ )
+	->choices( [
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
 		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-) );
+	] )
+	->transport( 'postMessage' )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Product structure.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'sortable',
-	'settings' => 'woocommerce_loop_sortable_content',
-	'label'    => __( 'Structure', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_sortable_content' )
+	->type( 'sortable' )
+	->label( __( 'Structure', 'page-builder-framework' ) )
+	->defaultValue( [
 		'category',
 		'title',
 		'price',
 		'add_to_cart',
-	),
-	'choices'  => array(
+	] )
+	->choices( [
 		'category'    => __( 'Category', 'page-builder-framework' ),
 		'title'       => __( 'Title', 'page-builder-framework' ),
 		'rating'      => __( 'Rating', 'page-builder-framework' ),
 		'price'       => __( 'Price', 'page-builder-framework' ),
 		'add_to_cart' => __( 'Add to Cart Button', 'page-builder-framework' ),
 		'excerpt'     => __( 'Short Description', 'page-builder-framework' ),
-	),
-	'priority' => $shop_priority++,
-) );
+	] )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Layout.
-Kirki::add_field(
-	'wpbf',
-	array(
-		'type'     => 'select',
-		'settings' => 'woocommerce_loop_layout',
-		'label'    => __( 'Layout', 'page-builder-framework' ),
-		'section'  => 'woocommerce_product_catalog',
-		'default'  => 'default',
-		'priority' => $shop_priority++,
-		'choices'  => array(
-			'default' => __( 'Default', 'page-builder-framework' ),
-			'list'    => __( 'List', 'page-builder-framework' ),
-		),
-	)
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_layout' )
+	->type( 'select' )
+	->label( __( 'Layout', 'page-builder-framework' ) )
+	->defaultValue( 'default' )
+	->priority( $shop_priority++ )
+	->choices( [
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'list'    => __( 'List', 'page-builder-framework' ),
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'radio-image',
-	'settings'        => 'woocommerce_loop_image_alignment',
-	'label'           => __( 'Image Alignment', 'page-builder-framework' ),
-	'section'         => 'woocommerce_product_catalog',
-	'default'         => 'left',
-	'priority'        => $shop_priority++,
-	'multiple'        => 1,
-	'transport'       => 'postMessage',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_image_alignment' )
+	->type( 'radio-image' )
+	->label( __( 'Image Alignment', 'page-builder-framework' ) )
+	->defaultValue( 'left' )
+	->choices( [
 		'left'  => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'right' => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_layout',
+	] )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_layout',
 			'operator' => '==',
 			'value'    => 'list',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Image container width.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'slider',
-	'settings'        => 'woocommerce_loop_image_width',
-	'label'           => __( 'Image Width', 'page-builder-framework' ),
-	'section'         => 'woocommerce_product_catalog',
-	'priority'        => $shop_priority++,
-	'default'         => 50,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'min'  => '25',
-		'max'  => '75',
-		'step' => '1',
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_layout',
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_image_width' )
+	->type( 'slider' )
+	->label( __( 'Image Width', 'page-builder-framework' ) )
+	->defaultValue( 50 )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 25,
+		'max'  => 75,
+		'step' => 1,
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_layout',
 			'operator' => '==',
 			'value'    => 'list',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_loop_sale_separator',
-		'section'  => 'woocommerce_product_catalog',
-		'priority' => $shop_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_sale_separator' )
+	->type( 'divider' )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Sale position.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_loop_sale_position',
-	'label'    => __( 'Sale Badge', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 'outside',
-	'priority' => $shop_priority++,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_sale_position' )
+	->type( 'select' )
+	->label( __( 'Sale Badge', 'page-builder-framework' ) )
+	->defaultValue( 'outside' )
+	->priority( $shop_priority++ )
+	->choices( [
 		'none'    => __( 'Hide', 'page-builder-framework' ),
 		'outside' => __( 'Outside', 'page-builder-framework' ),
 		'inside'  => __( 'Inside', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Sale layout.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'woocommerce_loop_sale_layout',
-	'label'           => __( 'Layout', 'page-builder-framework' ),
-	'section'         => 'woocommerce_product_catalog',
-	'default'         => 'round',
-	'priority'        => $shop_priority++,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_sale_layout' )
+	->type( 'select' )
+	->label( __( 'Layout', 'page-builder-framework' ) )
+	->defaultValue( 'round' )
+	->priority( $shop_priority++ )
+	->choices( [
 		'round'  => __( 'Round', 'page-builder-framework' ),
 		'square' => __( 'Square', 'page-builder-framework' ),
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_sale_position',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_sale_position',
 			'operator' => '!=',
 			'value'    => 'none',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Sale alignment.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'radio-image',
-	'settings'        => 'woocommerce_loop_sale_alignment',
-	'label'           => __( 'Alignment', 'page-builder-framework' ),
-	'section'         => 'woocommerce_product_catalog',
-	'default'         => 'left',
-	'priority'        => $shop_priority++,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_sale_alignment' )
+	->type( 'radio-image' )
+	->label( __( 'Alignment', 'page-builder-framework' ) )
+	->defaultValue( 'left' )
+	->choices( [
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
 		'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_sale_position',
+	] )
+	->priority( $shop_priority++ )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_sale_position',
 			'operator' => '!=',
 			'value'    => 'none',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Sale font size.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'input_slider',
-	'label'           => __( 'Font Size', 'page-builder-framework' ),
-	'settings'        => 'woocommerce_loop_sale_font_size',
-	'section'         => 'woocommerce_product_catalog',
-	'transport'       => 'postMessage',
-	'priority'        => $shop_priority++,
-	'default'         => '14px',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_sale_font_size' )
+	->type( 'input-slider' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '14px' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_sale_position',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_sale_position',
 			'operator' => '!=',
 			'value'    => 'none',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Sale background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_loop_sale_background_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'woocommerce_product_catalog',
-	'transport'       => 'postMessage',
-	'default'         => '#4fe190',
-	'priority'        => $shop_priority++,
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_sale_position',
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_sale_background_color' )
+	->type( 'color' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#4fe190' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_sale_position',
 			'operator' => '!=',
 			'value'    => 'none',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Sale color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_loop_sale_font_color',
-	'label'           => __( 'Font Color', 'page-builder-framework' ),
-	'section'         => 'woocommerce_product_catalog',
-	'transport'       => 'postMessage',
-	'default'         => '#fff',
-	'priority'        => $shop_priority++,
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_sale_position',
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_sale_font_color' )
+	->type( 'color' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->defaultValue( '#fff' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_sale_position',
 			'operator' => '!=',
 			'value'    => 'none',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_loop_title_separator',
-		'section'  => 'woocommerce_product_catalog',
-		'priority' => $shop_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_title_separator' )
+	->type( 'divider' )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Title font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Title Font Size', 'page-builder-framework' ),
-	'settings'  => 'woocommerce_loop_title_size',
-	'section'   => 'woocommerce_product_catalog',
-	'transport' => 'postMessage',
-	'priority'  => $shop_priority++,
-	'default'   => '16px',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_title_size' )
+	->type( 'input-slider' )
+	->label( __( 'Title Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Title color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_loop_title_color',
-	'label'     => __( 'Font Color', 'page-builder-framework' ),
-	'section'   => 'woocommerce_product_catalog',
-	'transport' => 'postMessage',
-	'default'   => '#3e4349',
-	'priority'  => $shop_priority++,
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_title_color' )
+	->type( 'color' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->defaultValue( '#3e4349' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_loop_price_separator',
-		'section'  => 'woocommerce_product_catalog',
-		'priority' => $shop_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_price_separator' )
+	->type( 'divider' )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Price font size.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'input_slider',
-	'label'     => __( 'Price Font Size', 'page-builder-framework' ),
-	'settings'  => 'woocommerce_loop_price_size',
-	'section'   => 'woocommerce_product_catalog',
-	'transport' => 'postMessage',
-	'priority'  => $shop_priority++,
-	'default'   => '16px',
-	'choices'   => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_price_size' )
+	->type( 'input-slider' )
+	->label( __( 'Price Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-) );
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Price color.
-Kirki::add_field( 'wpbf', array(
-	'type'      => 'color',
-	'settings'  => 'woocommerce_loop_price_color',
-	'label'     => __( 'Font Color', 'page-builder-framework' ),
-	'section'   => 'woocommerce_product_catalog',
-	'transport' => 'postMessage',
-	'default'   => '#3e4349',
-	'priority'  => $shop_priority++,
-	'choices'   => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_price_color' )
+	->type( 'color' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->defaultValue( '#3e4349' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'woocommerce_loop_out_of_stock_separator',
-		'section'  => 'woocommerce_product_catalog',
-		'priority' => $shop_priority++,
-	]
-);
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_out_of_stock_separator' )
+	->type( 'divider' )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Out of stock notice.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'woocommerce_loop_out_of_stock_notice',
-	'label'    => __( 'Out of Stock Notice', 'page-builder-framework' ),
-	'section'  => 'woocommerce_product_catalog',
-	'default'  => 'show',
-	'priority' => $shop_priority++,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_out_of_stock_notice' )
+	->type( 'select' )
+	->label( __( 'Out of Stock Notice', 'page-builder-framework' ) )
+	->defaultValue( 'show' )
+	->priority( $shop_priority++ )
+	->choices( [
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-) );
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Out of stock background color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_loop_out_of_stock_background_color',
-	'label'           => __( 'Background Color', 'page-builder-framework' ),
-	'section'         => 'woocommerce_product_catalog',
-	'transport'       => 'postMessage',
-	'default'         => 'rgba(0,0,0,.7)',
-	'priority'        => $shop_priority++,
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_out_of_stock_notice',
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_out_of_stock_background_color' )
+	->type( 'color' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( 'rgba(0,0,0,.7)' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_out_of_stock_notice',
 			'operator' => '!=',
 			'value'    => 'hide',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Out of stock color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'woocommerce_loop_out_of_stock_font_color',
-	'label'           => __( 'Font Color', 'page-builder-framework' ),
-	'section'         => 'woocommerce_product_catalog',
-	'transport'       => 'postMessage',
-	'default'         => '#fff',
-	'priority'        => $shop_priority++,
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_out_of_stock_notice',
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_out_of_stock_font_color' )
+	->type( 'color' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->defaultValue( '#fff' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_out_of_stock_notice',
 			'operator' => '!=',
 			'value'    => 'hide',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Out of stock font size.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'input_slider',
-	'label'           => __( 'Font Size', 'page-builder-framework' ),
-	'settings'        => 'woocommerce_loop_out_of_stock_font_size',
-	'section'         => 'woocommerce_product_catalog',
-	'transport'       => 'postMessage',
-	'priority'        => $shop_priority++,
-	'default'         => '14px',
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_out_of_stock_font_size' )
+	->type( 'input-slider' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '14px' )
+	->priority( $shop_priority++ )
+	->transport( 'postMessage' )
+	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
-	),
-	'active_callback' => array(
-		array(
-			'setting'  => 'woocommerce_loop_out_of_stock_notice',
+	] )
+	->activeCallback( [
+		[
+			'id'       => 'woocommerce_loop_out_of_stock_notice',
 			'operator' => '!=',
 			'value'    => 'hide',
-		),
-	),
-) );
+		],
+	] )
+	->addToSection( 'woocommerce_product_catalog' );
