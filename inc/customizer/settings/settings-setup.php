@@ -47,10 +47,13 @@ function wpbf_customizer_setup( $wp_customize ) {
 	$wp_customize->get_control( 'background_color' )->priority = 100;
 	$wp_customize->get_control( 'background_image' )->priority = 0;
 
-	// Partial refresh for custom logo.
-	// This is faking a partial refresh to have an edit icon displayed for the logo.
-	// A partial refresh isn't possible because the logo & mobile logo are the same by default but can be configured differently.
-	// Unfortunately we can't pass multiple arrays with add_partial - this would solve the issue.
+	/**
+	 * Partial refresh for custom logo.
+	 *
+	 * This is faking a partial refresh to have an edit icon displayed for the logo.
+	 * A partial refresh isn't possible because the logo & mobile logo are the same by default but can be configured differently.
+	 * Unfortunately we can't pass multiple arrays with add_partial - this would solve the issue.
+	 */
 	$wp_customize->selective_refresh->add_partial( 'custom_logo', array(
 		'selector' => '.wpbf-logo',
 	) );
@@ -74,15 +77,12 @@ function wpbf_customizer_setup( $wp_customize ) {
 }
 add_action( 'customize_register', 'wpbf_customizer_setup', 20 );
 
-// Kirki configuration.
-Kirki::add_config( 'wpbf', array(
-	'capability'     => 'edit_theme_options',
-	'option_type'    => 'theme_mod',
-	'disable_output' => true,
-) );
-
-// Kirki inline style tag id.
+/**
+ * Wpbf inline style tag id.
+ */
 function wpbf_kirki_inline_styles_id() {
+
 	return 'wpbf-typography-styles';
+
 }
-add_filter( 'kirki_inline_styles_id', 'wpbf_kirki_inline_styles_id' );
+add_filter( 'wpbf_inline_styles_id', 'wpbf_kirki_inline_styles_id' );
