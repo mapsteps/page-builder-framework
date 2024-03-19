@@ -528,3 +528,22 @@ $bfcm2022 = get_option( 'wpbf_bfcm_notice_dismissed_2022' );
 if ( $bfcm2022 ) {
 	delete_option( 'wpbf_bfcm_notice_dismissed_2022' );
 }
+
+/**
+ * Delete Kirki remote URL contents (hotfix).
+ *
+ * This fixes the recent issue with fonts not being downloaded by Kirki
+ * of a wrong (or no longer working) declaration of user agent in Downloader.php
+ * See line 186 & 187.
+ */
+function wpbf_delete_kirki_transient() {
+
+	if ( get_option( 'wpbf_kirki_remote_url_contents_deleted' ) ) {
+		return;
+	}
+
+	delete_transient( 'kirki_remote_url_contents' );
+	add_option( 'wpbf_kirki_remote_url_contents_deleted', 1 );
+
+}
+add_action( 'init', 'wpbf_delete_kirki_transient' );
