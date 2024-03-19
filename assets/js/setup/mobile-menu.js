@@ -18,7 +18,7 @@ export default function setupMobileMenu() {
 	/**
 	 * The menu type. Accepts: 'hamburger', 'default', or 'premium'.
 	 *
-	 * @var string
+	 * @type {string}
 	 */
 	let menuType;
 
@@ -72,30 +72,39 @@ export default function setupMobileMenu() {
 		 * On mobile menu item hash link click,
 		 * it will either close the mobile menu, or open the submenu if exists.
 		 */
-		listenDocumentEvent("click", ".wpbf-mobile-menu a", function () {
-			// Stop if menu type is 'premium'.
-			if ("premium" === menuType) return;
+		listenDocumentEvent(
+			"click",
+			".wpbf-mobile-menu a",
+			/**
+			 * @this {HTMLAnchorElement}
+			 */
+			function () {
+				// Stop if menu type is 'premium'.
+				if ("premium" === menuType) return;
 
-			// Stop if href doesn't contain hash.
-			if (!this.href.match("#") && !this.href.match("/#")) return;
+				// Stop if href doesn't contain hash.
+				if (!this.href.match("#") && !this.href.match("/#")) return;
 
-			const hasSubmenu = this.parentNode.classList.contains(
-				"menu-item-has-children",
-			);
+				const parentNode = this.parentNode;
 
-			// If the link doesn't have sub-menu, then simply close the mobile menu.
-			if (!hasSubmenu) {
-				closeMobileMenu(menuType);
-			} else {
-				if (this.closest(".wpbf-mobile-mega-menu")) {
-					// But if the link has sub-menu, and its top level parent menu item is a mega menu, then close the mobile menu.
+				const hasSubmenu =
+					parentNode instanceof HTMLElement &&
+					parentNode.classList.contains("menu-item-has-children");
+
+				// If the link doesn't have sub-menu, then simply close the mobile menu.
+				if (!hasSubmenu) {
 					closeMobileMenu(menuType);
 				} else {
-					// And if its top level parent menu item is not a mega menu, then toggle it's sub-menu.
-					toggleMobileSubmenuOnHashLinkClick(this);
+					if (this.closest(".wpbf-mobile-mega-menu")) {
+						// But if the link has sub-menu, and its top level parent menu item is a mega menu, then close the mobile menu.
+						closeMobileMenu(menuType);
+					} else {
+						// And if its top level parent menu item is not a mega menu, then toggle it's sub-menu.
+						toggleMobileSubmenuOnHashLinkClick(this);
+					}
 				}
-			}
-		});
+			},
+		);
 	}
 
 	/**
@@ -106,8 +115,7 @@ export default function setupMobileMenu() {
 	function toggleMobileSubmenuOnHashLinkClick(link) {
 		let toggles = getSiblings(link, ".wpbf-submenu-toggle");
 		if (!toggles.length) return;
-
-		const toggle = toggle[0];
+		const toggle = toggles[0];
 
 		if (toggle.classList.contains("active")) {
 			closeMobileSubmenu(toggle);
@@ -138,9 +146,10 @@ export default function setupMobileMenu() {
 				".wpbf-mobile-nav-wrapper",
 			);
 
-			const mobileNavWrapperHeight = mobileNavWrapper
-				? mobileNavWrapper.offsetHeight
-				: 0;
+			const mobileNavWrapperHeight =
+				mobileNavWrapper && mobileNavWrapper instanceof HTMLElement
+					? mobileNavWrapper.offsetHeight
+					: 0;
 
 			forEachEl(".wpbf-mobile-menu-container.active nav", function (el) {
 				el.style.maxHeight = windowHeight - mobileNavWrapperHeight + "px";
@@ -190,11 +199,16 @@ export default function setupMobileMenu() {
 
 		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
 
-		if (mobileMenu && !mobileMenu.classList.contains("active")) {
+		if (
+			mobileMenu &&
+			mobileMenu instanceof HTMLElement &&
+			!mobileMenu.classList.contains("active")
+		) {
 			mobileMenu.classList.add("active");
 
 			const pureHeight = getPureHeight(mobileMenu);
 			const styleTagId = getElStyleId(mobileMenu);
+
 			const submenuId = styleTagId.replace("wpbf-style-", "");
 
 			writeElStyle(
@@ -246,7 +260,11 @@ export default function setupMobileMenu() {
 
 		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
 
-		if (mobileMenu && mobileMenu.classList.contains("active")) {
+		if (
+			mobileMenu &&
+			mobileMenu instanceof HTMLElement &&
+			mobileMenu.classList.contains("active")
+		) {
 			const pureHeight = getPureHeight(mobileMenu);
 			const styleTagId = getElStyleId(mobileMenu);
 			const submenuId = styleTagId.replace("wpbf-style-", "");
@@ -297,10 +315,18 @@ export default function setupMobileMenu() {
 				? ".wpbf-mobile-menu-hamburger .wpbf-submenu-toggle"
 				: ".wpbf-mobile-menu-default .wpbf-submenu-toggle";
 
-		listenDocumentEvent("click", menuClass, function (e) {
-			e.preventDefault();
-			toggleMobileSubmenu(this);
-		});
+		listenDocumentEvent(
+			"click",
+			menuClass,
+			/**
+			 * @param {MouseEvent} e - The mouse event.
+			 * @this {HTMLElement}
+			 */
+			function (e) {
+				e.preventDefault();
+				toggleMobileSubmenu(this);
+			},
+		);
 	}
 
 	/**
@@ -423,18 +449,22 @@ export default function setupMobileMenu() {
 			}
 		}
 
-		// The same level menu items in the same parent element.
+		/**
+		 * The same level menu items in the same parent element.
+		 *
+		 * @type {HTMLElement[]}
+		 */
 		let sameLevelItems = [];
 
 		const menuItem = toggle.closest(".menu-item-has-children");
 
-		if (menuItem) {
+		if (menuItem && menuItem instanceof HTMLElement) {
 			sameLevelItems = getSiblings(menuItem, ".menu-item-has-children");
 		}
 
 		sameLevelItems.forEach(function (item) {
 			const submenuToggle = item.querySelector(".wpbf-submenu-toggle");
-			if (!submenuToggle) return;
+			if (!submenuToggle || !(submenuToggle instanceof HTMLElement)) return;
 			closeMobileSubmenu(submenuToggle);
 		});
 	}

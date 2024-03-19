@@ -2,7 +2,7 @@
  * Iterates over a collection of elements and applies a function to each.
  *
  * @param {NodeListOf<HTMLElement>|string} selector - Either a NodeList obtained from document.querySelectorAll() or a CSS selector string.
- * @param {function(Element): void} handler - The function to be applied to each element. Accepts one parameter, which is the element.
+ * @param {function(HTMLElement): void} handler - The function to be applied to each element. Accepts one parameter, which is the element.
  *
  * @returns {void}
  */
@@ -18,7 +18,11 @@ export function forEachEl(selector, handler) {
 	if (!elms.length) return;
 
 	for (let i = 0; i < elms.length; i++) {
-		handler(elms[i]);
+		const elm = elms[i];
+
+		if (elm instanceof HTMLElement) {
+			handler(elm);
+		}
 	}
 }
 
@@ -27,7 +31,7 @@ export function forEachEl(selector, handler) {
  *
  * @param {string} eventType - The event type.
  * @param {string|null} selector - The selector.
- * @param {function(Event): void} handler - The event handler.
+ * @param {function(any): void} handler - The event handler.
  */
 export function listenDocumentEvent(eventType, selector, handler) {
 	if (typeof eventType !== "string") return;
@@ -51,12 +55,12 @@ export function listenDocumentEvent(eventType, selector, handler) {
 		let target = e.target;
 
 		if (selector) {
-			/**
-			 * @type {HTMLElement|null}
-			 */
 			const closestTarget = e.target.closest(selector);
 			if (!closestTarget) return;
-			target = closestTarget;
+
+			if (closestTarget instanceof HTMLElement) {
+				target = closestTarget;
+			}
 		}
 
 		if (target && eventName === "mouseout") {
@@ -215,18 +219,22 @@ export function directQuerySelector(el, selector) {
 	const parent = el.parentNode;
 	if (!parent) return null;
 
-	/**
-	 * @type {NodeListOf<HTMLElement>}
-	 */
 	const children = parent.querySelectorAll(`.${className} > ${selector}`);
 	if (!children.length) return null;
 
+	/**
+	 * @type {HTMLElement|null}
+	 */
 	let result = null;
 
 	for (let i = 0; i < children.length; i++) {
 		if (children[i].parentNode != el) continue;
-		result = children[i];
-		break;
+		const child = children[i];
+
+		if (child instanceof HTMLElement) {
+			result = child;
+			break;
+		}
 	}
 
 	return result;

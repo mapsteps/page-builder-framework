@@ -306,11 +306,10 @@ export default function setupjQueryMobileMenu($) {
 			.siblings(".menu-item-has-children");
 
 		$sameLevelItems.each(function (i, menuItem) {
-			/**
-			 * @type {HTMLElement|null}
-			 */
 			const submenuToggle = menuItem.querySelector(".wpbf-submenu-toggle");
-			if (submenuToggle) closeMobileSubmenu(submenuToggle);
+			if (submenuToggle && submenuToggle instanceof HTMLElement) {
+				closeMobileSubmenu(submenuToggle);
+			}
 		});
 	}
 }

@@ -80,10 +80,10 @@
     "not dead"
   ],
   "scripts": {
-    "build-site-js": "parcel build assets/js/site.js assets/js/jquery-site.js --dist-dir js/min --no-source-maps",
+    "build-site-js": "parcel build assets/js/site.js assets/js/site-jquery.js --dist-dir js/min --no-source-maps",
     "build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min --no-source-maps",
     "build-site": "npm run build-site-js && npm run build-site-css",
-    "build-individual-js": "parcel build \"assets/js/!(site|jquery-site)*.js\" --dist-dir js/min --no-source-maps",
+    "build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-source-maps",
     "build-individual-css": "parcel build 'assets/scss/!(style)*.scss' --dist-dir css/min --no-source-maps",
     "build-individual-assets": "npm run build-individual-js && npm run build-individual-css",
     "watch-customize-sections": "parcel watch Customizer/Sections/src/section-types.ts --dist-dir Customizer/Sections/dist --no-source-maps",

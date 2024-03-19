@@ -93,11 +93,8 @@ export default function setupjQuerySite($) {
 	 * Setup scroll to top functionality.
 	 */
 	function setupScrollToTop() {
-		/**
-		 * @type {HTMLElement|null}
-		 */
 		const scrollTop = document.querySelector(".scrolltop");
-		if (!scrollTop) return;
+		if (!scrollTop || !(scrollTop instanceof HTMLElement)) return;
 
 		const dataScrolltop = scrollTop.dataset.scrolltopValue;
 		const scrollTopSetting = dataScrolltop ? parseFloat(dataScrolltop) : 0;

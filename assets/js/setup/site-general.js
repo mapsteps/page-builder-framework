@@ -79,13 +79,14 @@ export default function setupSite() {
 	 */
 	function setupScrollToTop() {
 		const scrollTop = document.querySelector(".scrolltop");
-		if (!scrollTop) return;
+		if (!scrollTop || !(scrollTop instanceof HTMLElement)) return;
 
-		const scrollTopValue = scrollTop.dataset.scrolltopValue;
+		const dataScrolltop = scrollTop.dataset.scrolltopValue;
+		const scrollTopSetting = dataScrolltop ? parseFloat(dataScrolltop) : 0;
 
 		// Show or hide scroll-to-top button on window scroll event.
 		window.addEventListener("scroll", function (e) {
-			if (window.scrollY > scrollTopValue) {
+			if (window.scrollY > scrollTopSetting) {
 				forEachEl(".scrolltop", function (el) {
 					el.classList.add(".is-visible");
 				});
@@ -97,12 +98,20 @@ export default function setupSite() {
 		});
 
 		// Scroll to top functionality.
-		listenDocumentEvent("click", ".scrolltop", function (e) {
-			document.body.tabIndex = -1;
-			document.body.focus();
-			this.blur();
-			animateScrollTop(0, 500);
-		});
+		listenDocumentEvent(
+			"click",
+			".scrolltop",
+			/**
+			 * @param {MouseEvent} e - The scroll event.
+			 * @this {HTMLElement}
+			 */
+			function (e) {
+				document.body.tabIndex = -1;
+				document.body.focus();
+				this.blur();
+				animateScrollTop(0, 500);
+			},
+		);
 	}
 
 	/**
@@ -116,7 +125,10 @@ export default function setupSite() {
 				tooltips.forEach(function (tooltip) {
 					tooltip.classList.add("wpbf-fading");
 					tooltip.classList.add("wpbf-fade-out");
-					hideElAfterDelay(tooltip, 400);
+
+					if (tooltip instanceof HTMLElement) {
+						hideElAfterDelay(tooltip, 400);
+					}
 				});
 			});
 		});
@@ -127,13 +139,11 @@ export default function setupSite() {
 	 */
 	function setupBoxedLayoutSupport() {
 		const page = document.querySelector(".wpbf-page");
-		if (!page) return;
+		if (!page || !(page instanceof HTMLElement)) return;
 
-		/** @type {string} */
 		const pageMarginTop = window.getComputedStyle(page).marginTop;
 
 		window.addEventListener("resize", function () {
-			/** @type {number} */
 			const pageWidth = page.offsetWidth;
 
 			// If page width is >= window width, then remove margin top & margin bottom.

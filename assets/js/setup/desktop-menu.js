@@ -1,8 +1,4 @@
-import {
-	writeElStyle,
-	removeInlineWidth,
-	getElStyleId,
-} from "../utils/anim-utils";
+import { writeElStyle, getElStyleId } from "../utils/anim-utils";
 import {
 	directQuerySelector,
 	forEachEl,
@@ -40,6 +36,7 @@ export default function setupDesktopMenu() {
 
 		// If we're inside customizer, then listen to the customizer's partial refresh.
 		if (isInsideCustomizer()) {
+			// @ts-ignore
 			wp.customize.bind("preview-ready", function () {
 				listenPartialRefresh();
 			});
@@ -51,15 +48,23 @@ export default function setupDesktopMenu() {
 	 */
 	function setupMenuItemSearchButton() {
 		// Expand search field on click.
-		listenDocumentEvent("click", ".wpbf-menu-item-search", function (e) {
-			e.stopPropagation();
+		listenDocumentEvent(
+			"click",
+			".wpbf-menu-item-search",
+			/**
+			 * @param {MouseEvent} e - The mouse event.
+			 * @this {HTMLElement}
+			 */
+			function (e) {
+				e.stopPropagation();
 
-			if (!this.classList.contains("active")) {
-				e.preventDefault();
-			}
+				if (!this.classList.contains("active")) {
+					e.preventDefault();
+				}
 
-			openSearchField(this);
-		});
+				openSearchField(this);
+			},
+		);
 
 		// Close search on window click.
 		window.addEventListener("click", function (e) {
@@ -74,7 +79,11 @@ export default function setupDesktopMenu() {
 			}
 
 			if (e.key === "Tab") {
-				if (!e.target.classList.contains("wpbff-search")) {
+				if (
+					e.target &&
+					e.target instanceof HTMLElement &&
+					!e.target.classList.contains("wpbff-search")
+				) {
 					closeSearchField();
 				}
 			}
@@ -114,7 +123,12 @@ export default function setupDesktopMenu() {
 			const searchArea = menuItem.querySelector(".wpbf-menu-search");
 			const searchField = menuItem.querySelector("input[type=search]");
 
-			if (searchArea && searchField) {
+			if (
+				searchArea &&
+				searchArea instanceof HTMLElement &&
+				searchField &&
+				searchField instanceof HTMLInputElement
+			) {
 				// The .is-expanded doesn't have the width, let's add it to the style block.
 				writeElStyle(
 					searchArea,
@@ -166,8 +180,12 @@ export default function setupDesktopMenu() {
 	 * Listen to WordPress selective refresh (partial refresh) inside customizer.
 	 */
 	function listenPartialRefresh() {
+		// @ts-ignore
 		wp.customize.selectiveRefresh.bind(
 			"partial-content-rendered",
+			/**
+			 * @param {unknown} placement
+			 */
 			function (placement) {
 				/**
 				 * A lot of partial refresh registered to work on header area.
@@ -205,7 +223,7 @@ export default function setupDesktopMenu() {
 					")",
 			);
 
-			if (menuItem) {
+			if (menuItem && menuItem.parentNode) {
 				menuItem.parentNode.insertBefore(el, menuItem.nextSibling);
 				el.style.display = "block";
 			}
@@ -219,9 +237,14 @@ export default function setupDesktopMenu() {
 		listenDocumentEvent(
 			"mouseenter",
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
+			/**
+			 *
+			 * @param {MouseEvent} e - The mouse event.
+			 * @this {HTMLElement}
+			 */
 			function (e) {
 				const submenu = this.querySelector(".sub-menu");
-				if (!submenu) return;
+				if (!submenu || !(submenu instanceof HTMLElement)) return;
 				if (submenu.classList.contains("is-shown")) return;
 
 				const styleTagId = getElStyleId(submenu);
@@ -247,6 +270,9 @@ export default function setupDesktopMenu() {
 		listenDocumentEvent(
 			"mouseleave",
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
+			/**
+			 * @this {HTMLElement}
+			 */
 			function () {
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu) return;
@@ -268,9 +294,12 @@ export default function setupDesktopMenu() {
 		listenDocumentEvent(
 			"mouseenter",
 			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
+			/**
+			 * @this {HTMLElement}
+			 */
 			function () {
 				const submenu = this.querySelector(".sub-menu");
-				if (!submenu) return;
+				if (!submenu || !(submenu instanceof HTMLElement)) return;
 				if (submenu.classList.contains("is-shown")) return;
 
 				const styleTagId = getElStyleId(submenu);
@@ -296,12 +325,14 @@ export default function setupDesktopMenu() {
 		listenDocumentEvent(
 			"mouseleave",
 			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
+			/**
+			 * @param {MouseEvent} e - The mouse event.
+			 * @this {HTMLElement}
+			 */
 			function (e) {
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu) return;
 				if (!submenu.classList.contains("is-shown")) return;
-
-				// console.log("mouse is leaving", e);
 
 				submenu.classList.remove("is-shown");
 
@@ -346,6 +377,9 @@ export default function setupDesktopMenu() {
 			"mouseenter",
 			// Apply only to sub-menus that are not triggered by tab navigation.
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)",
+			/**
+			 * @this {HTMLElement}
+			 */
 			function () {
 				// Remove visual focus if tab-navigation was used earlier.
 				document.body.classList.add("using-mouse");
@@ -367,6 +401,9 @@ export default function setupDesktopMenu() {
 		listenDocumentEvent(
 			"mouseleave",
 			".wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus",
+			/**
+			 * @this {HTMLElement}
+			 */
 			function () {
 				this.classList.remove("wpbf-sub-menu-focus");
 			},
@@ -378,6 +415,8 @@ export default function setupDesktopMenu() {
 
 	/**
 	 * Function to run on navigation-link focus for tab navigation.
+	 *
+	 * @this {HTMLElement}
 	 */
 	function onNavLinkFocus() {
 		// Stop here if body has "using-mouse" class.
@@ -399,7 +438,7 @@ export default function setupDesktopMenu() {
 		let menuItem = this;
 
 		// Add "wpbf-sub-menu-focus" class to the current parent menu item that has children.
-		while (menuItem.parentNode) {
+		while (menuItem.parentNode && menuItem.parentNode instanceof HTMLElement) {
 			if (menuItem.classList.contains("menu-item-has-children")) {
 				menuItem.classList.add("wpbf-sub-menu-focus");
 			}

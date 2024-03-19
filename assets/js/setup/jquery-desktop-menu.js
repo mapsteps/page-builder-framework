@@ -16,8 +16,6 @@ export default function setupjQueryDesktopMenu($) {
 
 	/**
 	 * The sub-menu animation duration.
-	 *
-	 * @type {number}
 	 */
 	let duration = parseInt(
 		$(".wpbf-navigation").data("sub-menu-animation-duration"),
