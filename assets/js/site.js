@@ -20,24 +20,22 @@ function init() {
 
 init();
 
-const Aura = {
-	getBreakpoints: getBreakpoints,
-	getActiveBreakpoint: getActiveBreakpoint,
-	isInsideCustomizer: isInsideCustomizer,
-	forEachEl: forEachEl,
-	listenDocumentEvent: listenDocumentEvent,
-	getAttr: getAttr,
-	getAttrAsNumber: getAttrAsNumber,
+// Export `Wpbf` object to `window`.
+window["Wpbf"] = {
+	site: {
+		getBreakpoints: getBreakpoints,
+		getActiveBreakpoint: getActiveBreakpoint,
+		isInsideCustomizer: isInsideCustomizer,
+		forEachEl: forEachEl,
+		listenDocumentEvent: listenDocumentEvent,
+		getAttr: getAttr,
+		getAttrAsNumber: getAttrAsNumber,
+	},
 };
 
-// Export Aura object to window.
-window.Aura = Aura;
-
-// For compatibility.
-window.Wpbf = {
-	site: {
-		breakpoints: getBreakpoints(),
-		activeBreakpoint: getActiveBreakpoint(),
-		isInsideCustomizer: isInsideCustomizer(),
-	},
+// Export `WpbfTheme` object to `window` for backwards compatibility.
+window["WpbfTheme"] = {
+	breakpoints: getBreakpoints(),
+	activeBreakpoint: getActiveBreakpoint(),
+	isInsideCustomizer: isInsideCustomizer(),
 };
