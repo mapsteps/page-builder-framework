@@ -1,7 +1,3 @@
-/**
- * Global variables used:
- * - ajaxurl
- */
 (function ($) {
 	$(".heatbox-tab-nav-item").on("click", function (event) {
 		$(".heatbox-tab-nav-item").removeClass("active");
@@ -29,7 +25,7 @@
 	});
 
 	$(window).on("load", function (event) {
-		var hash = window.location.hash;
+		let hash = window.location.hash;
 
 		if (!hash) {
 			hash = "#settings";
@@ -58,28 +54,33 @@
 		setupClearFontCache();
 
 		function setupClearFontCache() {
-			var notice = document.querySelector(
-				".wpbf-remove-downloaded-fonts-metabox .submission-status"
+			const notice = document.querySelector(
+				".wpbf-remove-downloaded-fonts-metabox .submission-status",
 			);
-			if (!notice) return;
-			var doingAjax = false;
+			if (!(notice instanceof HTMLElement)) return;
+			let doingAjax = false;
 			$(".wpbf-remove-downloaded-fonts").on("click", clearFontCache);
 
+			/**
+			 * Clear font cache.
+			 *
+			 * @param {JQuery.ClickEvent} e - The click event.
+			 * @this {HTMLElement}
+			 */
 			function clearFontCache(e) {
 				if (doingAjax) return;
 				doingAjax = true;
-				var button = this;
+				const button = this;
 				button.classList.add("is-loading");
 
-				var data = {
-					action: "wpbf_clear_font_cache",
-					nonce: button.dataset.nonce,
-				};
-
 				$.ajax({
-					url: ajaxurl,
+					// @ts-ignore
+					url: window.ajaxurl,
 					type: "POST",
-					data: data,
+					data: {
+						action: "wpbf_clear_font_cache",
+						nonce: button.dataset.nonce,
+					},
 				})
 					.done(function (r) {
 						showNotice(r.success ? "success" : "error", r.data);
@@ -96,13 +97,21 @@
 					});
 			}
 
+			/**
+			 * Show notice.
+			 *
+			 * @param {"success"|"error"} status - The status.
+			 * @param {string} textContent - The text content.
+			 */
 			function showNotice(status, textContent) {
+				if (!(notice instanceof HTMLElement)) return;
 				notice.textContent = textContent;
 				notice.classList.add(status === "success" ? "is-success" : "is-error");
 				notice.classList.remove("is-hidden");
 			}
 
 			function hideNotice() {
+				if (!(notice instanceof HTMLElement)) return;
 				notice.textContent = "";
 				notice.classList.remove("is-success");
 				notice.classList.remove("is-error");

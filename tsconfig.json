@@ -1,22 +1,19 @@
 {
-	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "checkJs": true,
-		"esModuleInterop": true,
-		"jsx": "react",
-		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "node",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "noImplicitAny": true,
-		"strict": true
-	},
+    "strict": true
+  },
   "include": [
     "Customizer/**/*.ts",
-    "assets/js/*",
+    "assets/js/*.js",
     "types.js"
-  ],
-	"exclude": [
-		"node_modules"
-	]
+  ]
 }
