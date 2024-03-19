@@ -533,7 +533,8 @@ if ( $bfcm2022 ) {
  * Delete Kirki remote URL contents (hotfix).
  *
  * This fixes the recent issue with fonts not being downloaded by Kirki
- * of a wrong (or no longer working) declaration of user agent in Downloader.php
+ * because of a wrong (or no longer working) declaration of user agent in Downloader.php
+ *
  * See line 186 & 187.
  */
 function wpbf_delete_kirki_transient() {
