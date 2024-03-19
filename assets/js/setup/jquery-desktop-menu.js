@@ -1,24 +1,25 @@
 /**
- * This module is intended to handle the desktop menu JS functionality.
+ * Set up desktop menu JS functionality.
  *
- * Along with the site.js and mobile-menu.js, this file will be combined to site-min.js file.
+ * This file will be imported from site-jquery.js file.
  *
- * @param {JQuery} $ jQuery object.
+ * @param {JQueryStatic} $ - jQuery object.
  */
-export default function setupDesktopMenu($) {
+export default function setupjQueryDesktopMenu($) {
 	/**
 	 * Whether we're inside customizer or not.
 	 *
-	 * @var bool
+	 * @type {boolean}
 	 */
-	var isInsideCustomizer = WpbfTheme.isInsideCustomizer;
+	// @ts-ignore
+	const isInsideCustomizer = window.WpbfTheme.isInsideCustomizer;
 
 	/**
 	 * The sub-menu animation duration.
 	 *
-	 * @var int
+	 * @type {number}
 	 */
-	var duration = parseInt(
+	let duration = parseInt(
 		$(".wpbf-navigation").data("sub-menu-animation-duration"),
 		10,
 	);
@@ -41,7 +42,8 @@ export default function setupDesktopMenu($) {
 
 		// If we're inside customizer, then listen to the customizer's partial refresh.
 		if (isInsideCustomizer) {
-			wp.customize.bind("preview-ready", function () {
+			// @ts-ignore
+			window.wp.customize.bind("preview-ready", function () {
 				listenPartialRefresh();
 			});
 		}
@@ -52,33 +54,7 @@ export default function setupDesktopMenu($) {
 	 */
 	function setupMenuItemSearchButton() {
 		// Expand search field on click.
-		$(document).on("click", ".wpbf-menu-item-search", function (e) {
-			e.stopPropagation();
-
-			$(".wpbf-navigation .wpbf-menu > li")
-				.slice(-3)
-				.addClass("calculate-width");
-
-			var itemWidth = 0;
-
-			$(".calculate-width").each(function (i, el) {
-				itemWidth += $(el).outerWidth();
-			});
-
-			if (itemWidth < 200) {
-				itemWidth = 250;
-			}
-
-			if (!this.classList.contains("active")) {
-				this.classList.add("active");
-				this.setAttribute("aria-expanded", "true");
-				$(".wpbf-menu-search", this)
-					.stop()
-					.css({ display: "block" })
-					.animate({ width: itemWidth, opacity: "1" }, 200);
-				$("input[type=search]", this).val("").focus();
-			}
-		});
+		$(document).on("click", ".wpbf-menu-item-search", expandSearchField);
 
 		// Close search on window click.
 		window.addEventListener("click", function (e) {
@@ -86,15 +62,62 @@ export default function setupDesktopMenu($) {
 		});
 
 		// Close search on escape or tab.
-		document.addEventListener("keyup", function (e) {
-			if (e.key === "Escape" || e.key === "Esc") {
-				closeSearchField();
-			} else if (e.key === "Tab") {
-				if (!e.target.classList.contains("wpbff-search")) {
-					closeSearchField();
-				}
-			}
+		document.addEventListener("keyup", closeSearchFieldOnEscOrTab);
+	}
+
+	/**
+	 * Expand search field when search menu item is clicked.
+	 *
+	 * @param {JQuery.ClickEvent} e - The click event.
+	 * @this {HTMLElement}
+	 */
+	function expandSearchField(e) {
+		e.stopPropagation();
+
+		$(".wpbf-navigation .wpbf-menu > li").slice(-3).addClass("calculate-width");
+
+		let itemWidth = 0;
+
+		$(".calculate-width").each(function (i, el) {
+			const outerWidth = $(el).outerWidth();
+			if (outerWidth) itemWidth += outerWidth;
 		});
+
+		if (itemWidth < 200) {
+			itemWidth = 250;
+		}
+
+		if (!this.classList.contains("active")) {
+			this.classList.add("active");
+			this.setAttribute("aria-expanded", "true");
+
+			$(".wpbf-menu-search", this)
+				.stop()
+				.css({ display: "block" })
+				.animate({ width: itemWidth, opacity: "1" }, 200);
+
+			$("input[type=search]", this).val("").focus();
+		}
+	}
+
+	/**
+	 * Close search field when esc key is pressed or focus is moved by pressing tab key.
+	 *
+	 * @param {KeyboardEvent} e - They keyup event.
+	 */
+	function closeSearchFieldOnEscOrTab(e) {
+		if (e.key === "Escape" || e.key === "Esc") {
+			closeSearchField();
+		} else if (e.key === "Tab") {
+			const target = e.target;
+
+			if (
+				target instanceof HTMLElement &&
+				!target.classList.contains("wpbff-search")
+			) {
+				closeSearchField();
+			}
+		}
 	}
 
 	/**
@@ -105,7 +128,7 @@ export default function setupDesktopMenu($) {
 			$(".wpbf-menu-search")
 				.stop()
 				.animate({ opacity: "0", width: "0px" }, 250, function () {
-					$(this).css({ display: "none" });
+					this.style.display = "none";
 				});
 
 			setTimeout(function () {
@@ -120,8 +143,12 @@ export default function setupDesktopMenu($) {
 	 * Listen to WordPress selective refresh (partial refresh) inside customizer.
 	 */
 	function listenPartialRefresh() {
-		wp.customize.selectiveRefresh.bind(
+		// @ts-ignore
+		window.wp.customize.selectiveRefresh.bind(
 			"partial-content-rendered",
+			/**
+			 * @param {unknown} placement
+			 */
 			function (placement) {
 				/**
 				 * A lot of partial refresh registered to work on header area.
@@ -142,12 +169,14 @@ export default function setupDesktopMenu($) {
 	function setupCenteredMenu() {
 		if (!document.querySelector(".wpbf-menu-centered")) return;
 
-		var totalMenuItems = $(
+		const totalMenuItems = $(
 			".wpbf-navigation .wpbf-menu-centered .wpbf-menu > li > a",
 		).length;
-		var divided = totalMenuItems / 2;
-		var divided = Math.floor(divided);
-		var divided = divided - 1;
+
+		let divided = totalMenuItems / 2;
+
+		divided = Math.floor(divided);
+		divided = divided - 1;
 
 		// Place the logo in the center of the menu.
 		$(".wpbf-menu-centered .logo-container")
@@ -183,7 +212,7 @@ export default function setupDesktopMenu($) {
 						.first()
 						.stop()
 						.animate({ opacity: "0" }, duration, function () {
-							$(this).css({ display: "none" });
+							this.style.display = "none";
 						});
 				},
 			);
@@ -234,46 +263,49 @@ export default function setupDesktopMenu($) {
 			this.classList.remove("using-mouse");
 		});
 
-		/**
-		 * General logic for tab/hover navigation on desktop navigations that contain sub-menus.
-		 */
-		$(document)
-			// Apply only to sub-menus that are not triggered by tab navigation.
-			.on(
-				"mouseenter",
-				".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)",
-				function () {
-					// Remove visual focus if tab-navigation was used earlier.
-					document.body.classList.add("using-mouse");
-
-					// Remove "wpbf-sub-menu-focus" class if tab-navigation was used earlier.
-					$(".menu-item-has-children").removeClass("wpbf-sub-menu-focus");
-
-					// Focus on the current menu item. This will help if tab-navigation was used earlier.
-					$(this).find("> a").focus();
-				},
-			)
-
-			/**
-			 * On mouseleave of tab navigation triggered sub-menu, let's remove the "wpbf-sub-menu-focus" class.
-			 * Fixes issue where sub-menu stayed open after switching from tab to mouse navigation.
-			 */
-			.on(
-				"mouseleave",
-				".wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus",
-				function () {
-					$(this).removeClass("wpbf-sub-menu-focus");
-				},
-			);
+		setupSubmenuItemNavEvents();
 
 		// Setup tab navigation.
 		$(document).on("focus", ".wpbf-sub-menu a", onNavLinkFocus);
 	}
 
 	/**
-	 * Function to run on navigation-link focus for tab navigation.
+	 * General logic for tab/hover navigation on desktop navigations that contain sub-menus.
 	 */
-	function onNavLinkFocus() {
+	function setupSubmenuItemNavEvents() {
+		// Applies only to sub-menus that are not triggered by tab navigation.
+		$(document).on(
+			"mouseenter",
+			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)",
+			function (e) {
+				// Remove visual focus if tab-navigation was used earlier.
+				document.body.classList.add("using-mouse");
+
+				// Remove "wpbf-sub-menu-focus" class if tab-navigation was used earlier.
+				$(".menu-item-has-children").removeClass("wpbf-sub-menu-focus");
+
+				// Focus on the current menu item. This will help if tab-navigation was used earlier.
+				$(this).find("> a").trigger("focus");
+			},
+		);
+
+		// Applies to sub-menu items that have children and is focused.
+		$(document).on(
+			"mouseleave",
+			".wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus",
+			function () {
+				this.classList.remove("wpbf-sub-menu-focus");
+			},
+		);
+	}
+
+	/**
+	 * Function to run on navigation-link focus for tab navigation.
+	 *
+	 * @param {JQuery.FocusEvent} e
+	 * @this {HTMLElement}
+	 */
+	function onNavLinkFocus(e) {
 		// Stop here if body has "using-mouse" class.
 		if ($("body").hasClass("using-mouse")) return;
 

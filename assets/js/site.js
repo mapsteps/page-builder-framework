@@ -20,6 +20,7 @@ function init() {
 init();
 
 // Export `Wpbf` object to `window`.
+// @ts-ignore
 window["Wpbf"] = {
 	site: {
 		getBreakpoints: getBreakpoints,
@@ -33,6 +34,7 @@ window["Wpbf"] = {
 };
 
 // Export `WpbfTheme` object to `window` for backwards compatibility.
+// @ts-ignore
 window["WpbfTheme"] = {
 	breakpoints: getBreakpoints(),
 	activeBreakpoint: getActiveBreakpoint(),

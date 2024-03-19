@@ -1,37 +1,30 @@
+import { getBreakpoints } from "../utils/dom-utils";
+
 /**
- * This module is intended to handle the site wide JS functionality.
- * Except for the desktop menu and mobile menu.
+ * Set up site wide JS functionality.
  *
- * Along with the desktop-menu.js and mobile-menu.js, this file will be combined to site-min.js file.
+ * This file will be imported from site-jquery.js file.
  *
- * @param {JQuery} $ jQuery object.
- * @return {LegacyWpbfSite} Legacy WpbfTheme.site object.
+ * @param {JQueryStatic} $ - jQuery object.
+ * @return {LegacyWpbfTheme}
  */
-export default function setupSite($) {
+export default function setupjQuerySite($) {
 	/**
 	 * Whether we're inside customizer or not.
 	 *
-	 * @var bool
+	 * @type {boolean}
 	 */
-	var isInsideCustomizer = window.wp && wp.customize ? true : false;
+	// @ts-ignore
+	const isInsideCustomizer = window.wp && window.wp.customize ? true : false;
 
-	/**
-	 * Pre-defined breakpoints.
-	 *
-	 * @var Object
-	 */
-	var breakpoints = {
-		desktop: 1024,
-		tablet: 768,
-		mobile: 480,
-	};
+	const breakpoints = getBreakpoints();
 
 	/**
 	 * The current active breakpoint.
 	 *
-	 * @var string
+	 * @type {string}
 	 */
-	var activeBreakpoint = "desktop";
+	let activeBreakpoint = "desktop";
 
 	// Run the module.
 	init();
@@ -43,7 +36,6 @@ export default function setupSite($) {
 	 * Other functions are called / hooked from this function.
 	 */
 	function init() {
-		setupBreakpoints();
 		setupBodyClasses();
 		setupScrollToTop();
 		wpcf7support();
@@ -66,34 +58,27 @@ export default function setupSite($) {
 	}
 
 	/**
-	 * Setup breakpoints for desktop, tablet, and mobile.
-	 */
-	function setupBreakpoints() {
-		setupBreakpoint("desktop");
-		setupBreakpoint("tablet");
-		setupBreakpoint("mobile");
-	}
-
-	/**
 	 * Setup body classes based on breakpoint.
 	 *
 	 * This function will add "wpbf-is-{device}" class to the body tag.
 	 * It will also set the the top level `activeBreakpoint` variable.
 	 */
 	function setupBodyClasses() {
-		var windowWidth = $(window).width();
-		var bodyClass = "";
+		const windowWidth = $(window).width();
+		let bodyClass = "";
 
-		if (windowWidth > breakpoints.desktop) {
-			bodyClass = "wpbf-is-desktop";
-			activeBreakpoint = "desktop";
-		} else {
-			if (windowWidth > breakpoints.tablet) {
-				bodyClass = "wpbf-is-tablet";
-				activeBreakpoint = "tablet";
+		if (windowWidth) {
+			if (windowWidth > breakpoints.desktop) {
+				bodyClass = "wpbf-is-desktop";
+				activeBreakpoint = "desktop";
 			} else {
-				bodyClass = "wpbf-is-mobile";
-				activeBreakpoint = "mobile";
+				if (windowWidth > breakpoints.tablet) {
+					bodyClass = "wpbf-is-tablet";
+					activeBreakpoint = "tablet";
+				} else {
+					bodyClass = "wpbf-is-mobile";
+					activeBreakpoint = "mobile";
+				}
 			}
 		}
 
@@ -105,37 +90,23 @@ export default function setupSite($) {
 	}
 
 	/**
-	 * Setup breakpoint by device type.
-	 *
-	 * Retrieve breakpoint based on body class,
-	 * then set it as the value of top level `breakpoints` variable.
-	 *
-	 * @param {string} device The device type. Accepts 'desktop', 'tablet', or 'mobile'.
-	 */
-	function setupBreakpoint(device) {
-		var matchRule = "wpbf-" + device + "-breakpoint-[\\w-]*\\b";
-		var breakpointClass = document.body.className.match(matchRule);
-
-		if (null != breakpointClass) {
-			breakpoints[device] = breakpointClass.toString().match(/\d+/);
-			breakpoints[device] = Array.isArray(breakpoints[device])
-				? breakpoints[device][0]
-				: breakpoints[device];
-		}
-	}
-
-	/**
 	 * Setup scroll to top functionality.
 	 */
 	function setupScrollToTop() {
-		var scrollTop = document.querySelector(".scrolltop");
+		/**
+		 * @type {HTMLElement|null}
+		 */
+		const scrollTop = document.querySelector(".scrolltop");
 		if (!scrollTop) return;
 
-		var scrollTopValue = scrollTop.dataset.scrolltopValue;
+		const dataScrolltop = scrollTop.dataset.scrolltopValue;
+		const scrollTopSetting = dataScrolltop ? parseFloat(dataScrolltop) : 0;
 
 		// Show or hide scroll-to-top button on window scroll event.
 		window.addEventListener("scroll", function (e) {
-			if ($(this).scrollTop() > scrollTopValue) {
+			const scrollTopValue = $(this).scrollTop();
+
+			if (scrollTopValue && scrollTopValue > scrollTopSetting) {
 				$(".scrolltop").fadeIn();
 			} else {
 				$(".scrolltop").fadeOut();
@@ -164,14 +135,15 @@ export default function setupSite($) {
 	 * Setup support for boxed layout mode.
 	 */
 	function setupBoxedLayoutSupport() {
-		var $page = $(".wpbf-page");
-		var pageMarginTop = $page.css("margin-top");
+		const $page = $(".wpbf-page");
+		const pageMarginTop = $page.css("margin-top");
 
 		window.addEventListener("resize", function () {
-			var pageWidth = $page.width();
+			const pageWidth = $page.width();
+			const windowWidth = $(window).width();
 
 			// If page width is >= window width, then remove margin top & margin bottom.
-			if (pageWidth >= $(window).width()) {
+			if (pageWidth && windowWidth && pageWidth >= windowWidth) {
 				$page.css({ "margin-top": "0", "margin-bottom": "0" });
 			} else {
 				// Otherwise, add the margin top & margin bottom.

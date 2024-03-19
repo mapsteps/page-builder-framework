@@ -1,5 +1,3 @@
-import { getPureHeight } from "./dom-utils";
-
 /**
  * Hide an element after a delay.
  *
@@ -21,7 +19,7 @@ export function hideElAfterDelay(el, delay) {
  * @param {HTMLElement} el - The element to get the inline width from.
  * @return {string|boolean} The inline width value. Returns false if no inline width is found.
  */
-export function getInlineWidth(el) {
+function getInlineWidth(el) {
 	const styleContent = el.getAttribute("style");
 	if (!styleContent) return false;
 
@@ -43,6 +41,7 @@ export function getInlineWidth(el) {
  */
 export function removeInlineWidth(el) {
 	const styleContent = el.getAttribute("style");
+	if (!styleContent) return;
 
 	if (getInlineWidth(el)) {
 		el.setAttribute(
@@ -67,42 +66,42 @@ export function writeElStyle(el, styleContent) {
 	if (!el.id) el.id = id;
 
 	const styleTagId = `wpbf-style-${id}`;
-	let styleTag = document.querySelector(`#${styleTagId}`);
 
-	if (styleTag) {
+	const styleTag = document.querySelector(`#${styleTagId}`);
+
+	if (styleTag && styleTag instanceof HTMLStyleElement) {
 		if (styleContent) styleTag.innerHTML = styleContent;
 		return styleTag;
 	}
 
-	styleTag = document.createElement("style");
-	styleTag.id = `wpbf-style-${id}`;
-	if (styleContent) styleTag.innerHTML = styleContent;
-	document.head.appendChild(styleTag);
+	const newStyleTag = document.createElement("style");
 
-	return styleTag;
+	newStyleTag.id = `wpbf-style-${id}`;
+	if (styleContent) newStyleTag.innerHTML = styleContent;
+	document.head.appendChild(newStyleTag);
+
+	return newStyleTag;
 }
 
 /**
  * Get id of a generated style tag from an HTML element.
  *
- * @export
  * @param {HTMLElement} el - The element to generate the style tag from.
  * @return {string}
  */
 export function getElStyleId(el) {
-	const styleTag = writeElStyle(el);
+	const styleTag = writeElStyle(el, undefined);
 	return styleTag.id;
 }
 
 /**
  * Get the generated style element of an HTML element.
  *
- * @export
  * @param {HTMLElement} el - The element to generate the style tag from.
- * @return {string}
+ * @return {HTMLStyleElement}
  */
 export function getElStyleTag(el) {
-	return writeElStyle(el);
+	return writeElStyle(el, undefined);
 }
 
 /**
@@ -116,12 +115,9 @@ export function animateScrollTop(targetPosition, duration) {
 	const distance = targetPosition - startPosition;
 	const startTime = performance.now();
 
-	function swing(time, start, change, duration) {
-		return (
-			start + change / 2 - (change / 2) * Math.cos((Math.PI * time) / duration)
-		);
-	}
-
+	/**
+	 * @param {number} timestamp
+	 */
 	function scrollStep(timestamp) {
 		const currentTime = timestamp - startTime;
 		window.scrollTo(0, swing(currentTime, startPosition, distance, duration));
@@ -132,4 +128,20 @@ export function animateScrollTop(targetPosition, duration) {
 	}
 
 	requestAnimationFrame(scrollStep);
+}
+
+/**
+ * Swing effect.
+ *
+ * @param {number} time
+ * @param {number} start
+ * @param {number} change
+ * @param {number} duration
+ *
+ * @return {number}
+ */
+function swing(time, start, change, duration) {
+	return (
+		start + change / 2 - (change / 2) * Math.cos((Math.PI * time) / duration)
+	);
 }

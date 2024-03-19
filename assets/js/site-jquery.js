@@ -1,9 +1,12 @@
-import setupDesktopMenu from "./setup/desktop-menu-jquery";
-import setupMobileMenu from "./setup/mobile-menu-jquery";
-import setupSite from "./setup/site-general-jquery";
+/// <reference path="../../types.js"/>
+
+import setupjQuerySite from "./setup/jquery-site-general";
+import setupjQueryDesktopMenu from "./setup/jquery-desktop-menu";
+import setupjQueryMobileMenu from "./setup/jquery-mobile-menu";
 
 // Export `WpbfTheme` object to `window` for backwards compatibility.
-window["WpbfTheme"] = setupSite(jQuery);
+// @ts-ignore
+window["WpbfTheme"] = setupjQuerySite(jQuery);
 
-setupDesktopMenu(jQuery);
-setupMobileMenu(jQuery);
+setupjQueryDesktopMenu(jQuery);
+setupjQueryMobileMenu(jQuery);

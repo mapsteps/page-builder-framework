@@ -1,4 +1,4 @@
-import { writeElStyle, getElStyleId, getElStyleTag } from "../utils/anim-utils";
+import { writeElStyle, getElStyleId } from "../utils/anim-utils";
 import {
 	forEachEl,
 	getBreakpoints,

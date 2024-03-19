@@ -1,8 +1,8 @@
 /**
  * Iterates over a collection of elements and applies a function to each.
  *
- * @param {NodeList|string} selector - Either a NodeList obtained from document.querySelectorAll() or a CSS selector string.
- * @param {function(Element)} handler - The function to be applied to each element. Accepts one parameter, which is the element.
+ * @param {NodeListOf<HTMLElement>|string} selector - Either a NodeList obtained from document.querySelectorAll() or a CSS selector string.
+ * @param {function(Element): void} handler - The function to be applied to each element. Accepts one parameter, which is the element.
  *
  * @returns {void}
  */
@@ -14,6 +14,7 @@ export function forEachEl(selector, handler) {
 		selector instanceof NodeList
 			? selector
 			: document.querySelectorAll(selector);
+
 	if (!elms.length) return;
 
 	for (let i = 0; i < elms.length; i++) {
@@ -26,7 +27,7 @@ export function forEachEl(selector, handler) {
  *
  * @param {string} eventType - The event type.
  * @param {string|null} selector - The selector.
- * @param {function(Event)} handler - The event handler.
+ * @param {function(Event): void} handler - The event handler.
  */
 export function listenDocumentEvent(eventType, selector, handler) {
 	if (typeof eventType !== "string") return;
@@ -45,16 +46,27 @@ export function listenDocumentEvent(eventType, selector, handler) {
 	}
 
 	document.addEventListener(eventName, function (e) {
+		if (!e.target) return;
+		if (!(e.target instanceof HTMLElement)) return;
 		let target = e.target;
 
 		if (selector) {
-			if (!e.target || !e.target.closest) return;
-			target = e.target.closest(selector);
-			if (!target) return;
+			/**
+			 * @type {HTMLElement|null}
+			 */
+			const closestTarget = e.target.closest(selector);
+			if (!closestTarget) return;
+			target = closestTarget;
 		}
 
-		if (eventName === "mouseout") {
-			if (target.contains(e.relatedTarget)) return;
+		if (target && eventName === "mouseout") {
+			if (
+				e instanceof MouseEvent &&
+				e.relatedTarget instanceof Node &&
+				target.contains(e.relatedTarget)
+			) {
+				return;
+			}
 		}
 
 		handler.call(target, e);
@@ -77,7 +89,9 @@ export function getAttr(selector, key) {
 	if (!el || !el.getAttribute) return "";
 	if (!key) return "";
 
-	return el.getAttribute(key);
+	const val = el.getAttribute(key);
+
+	return val ? val : "";
 }
 
 /**
@@ -101,10 +115,14 @@ export function getAttrAsNumber(selector, key) {
  * @returns {boolean} Whether we're inside customizer or not.
  */
 export function isInsideCustomizer() {
-	return window.wp && wp.customize ? true : false;
+	// @ts-ignore
+	return window.wp && window.wp.customize ? true : false;
 }
 
-export const defaultBreakpoints = {
+/**
+ * @type {WpbfBreakpoints}
+ */
+const defaultBreakpoints = {
 	desktop: 1024,
 	tablet: 768,
 	mobile: 480,
@@ -116,10 +134,10 @@ export const defaultBreakpoints = {
  * Retrieve breakpoint based on body class,
  * then set it as the value of top level `breakpoints` variable.
  *
- * @param {string} device - The device type. Accepts 'desktop', 'tablet', or 'mobile'.
+ * @param {"desktop"|"tablet"|"mobile"} device - The device type. Accepts 'desktop', 'tablet', or 'mobile'.
  * @returns {number} The breakpoint value.
  */
-export function getBreakpointValue(device) {
+function getBreakpointValue(device) {
 	let breakpoint = defaultBreakpoints[device] || 0;
 
 	const matchRule = "wpbf-" + device + "-breakpoint-[\\w-]*\\b";
@@ -132,16 +150,16 @@ export function getBreakpointValue(device) {
 	const breakpointMatch = breakpointClassMatch.toString().match(/\d+/);
 
 	const breakpointValue = Array.isArray(breakpointMatch)
-		? breakpointMatch[0]
-		: breakpointMatch;
+		? parseInt(breakpointMatch[0], 10)
+		: 0;
 
-	return parseInt(breakpointValue, 10) || 0;
+	return breakpointValue;
 }
 
 /**
  * Get breakpoint values for desktop, tablet, and mobile.
  *
- * @returns {DeviceBreakpoints} breakpoints The breakpoints object.
+ * @returns {WpbfBreakpoints} breakpoints The breakpoints object.
  */
 export function getBreakpoints() {
 	let breakpoints = defaultBreakpoints;
@@ -195,6 +213,11 @@ export function directQuerySelector(el, selector) {
 	className = className.replace(/\s/g, ".");
 
 	const parent = el.parentNode;
+	if (!parent) return null;
+
+	/**
+	 * @type {NodeListOf<HTMLElement>}
+	 */
 	const children = parent.querySelectorAll(`.${className} > ${selector}`);
 	if (!children.length) return null;
 
@@ -225,7 +248,11 @@ export function getSiblings(el, selector) {
 	let sibling = el.parentNode.firstChild;
 
 	while (sibling) {
-		if (sibling.nodeType === 1 && sibling !== el) {
+		if (
+			sibling.nodeType === 1 &&
+			sibling instanceof HTMLElement &&
+			sibling !== el
+		) {
 			if (!selector || sibling.matches(selector)) {
 				siblings.push(sibling);
 			}
