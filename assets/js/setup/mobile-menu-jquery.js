@@ -11,7 +11,7 @@ export default function setupMobileMenu($) {
 	 *
 	 * @var Object
 	 */
-	var breakpoints = WpbfTheme.site.breakpoints;
+	var breakpoints = WpbfTheme.breakpoints;
 
 	/**
 	 * The menu type.
@@ -33,7 +33,7 @@ export default function setupMobileMenu($) {
 	function init() {
 		// On window resize, get the updated breakpoints.
 		window.addEventListener("resize", function (e) {
-			breakpoints = WpbfTheme.site.breakpoints;
+			breakpoints = WpbfTheme.breakpoints;
 		});
 
 		setupMenuType();
