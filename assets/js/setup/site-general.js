@@ -1,9 +1,9 @@
-import { animateScrollTop, hideElAfterDelay } from "../utils/anim-utils";
+import { animateScrollTop, hideElAfterDelay } from "../utils/anim-util";
 import {
 	forEachEl,
 	getBreakpoints,
 	listenDocumentEvent,
-} from "../utils/dom-utils";
+} from "../utils/dom-util";
 
 /**
  * This module is intended to handle the site wide JS functionality.

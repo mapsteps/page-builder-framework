@@ -1,4 +1,4 @@
-import { getBreakpoints } from "../utils/dom-utils";
+import { getBreakpoints } from "../utils/dom-util";
 
 /**
  * Set up site wide JS functionality.

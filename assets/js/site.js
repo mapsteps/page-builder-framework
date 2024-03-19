@@ -11,7 +11,7 @@ import {
 	getAttrAsNumber,
 	isInsideCustomizer,
 	listenDocumentEvent,
-} from "./utils/dom-utils";
+} from "./utils/dom-util";
 
 function init() {
 	setupSite();

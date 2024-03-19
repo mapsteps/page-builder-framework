@@ -1,11 +1,11 @@
-import { writeElStyle, getElStyleId } from "../utils/anim-utils";
+import { writeElStyle, getElStyleId } from "../utils/anim-util";
 import {
 	forEachEl,
 	getBreakpoints,
 	getPureHeight,
 	getSiblings,
 	listenDocumentEvent,
-} from "../utils/dom-utils";
+} from "../utils/dom-util";
 
 /**
  * This module is intended to handle the mobile menu JS functionality.
