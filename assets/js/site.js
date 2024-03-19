@@ -9,7 +9,6 @@ import {
 	getAttrAsNumber,
 	isInsideCustomizer,
 	listenDocumentEvent,
-	getBreakpoints,
 } from "./utils/dom-utils";
 
 function init() {
