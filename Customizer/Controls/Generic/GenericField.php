@@ -17,12 +17,14 @@ class GenericField extends BaseField {
 	public function sanitizeCallback( $value ) {
 
 		$props = $this->control->custom_properties;
-		$type  = $this->control->type;
-		$type  = ! in_array( $type, GenericControl::$allowed_subtypes, true ) ? 'text' : $type;
-		$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
-		$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
 
-		return ( new ResponsiveGenericUtil() )->sanitizeSingleValue( $type, $value, $min, $max );
+		$subtype = $this->control->type;
+		$subtype = ! in_array( $subtype, GenericControl::$allowed_subtypes, true ) ? 'text' : $subtype;
+
+		$min = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
+		$max = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
+
+		return ( new ResponsiveGenericUtil() )->sanitizeSingleValue( $subtype, $value, $min, $max );
 
 	}
 
