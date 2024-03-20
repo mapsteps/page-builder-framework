@@ -9,7 +9,7 @@ import {
 	makeStringValue,
 	makeValueForInput,
 	makeValueForSlider,
-} from "./util";
+} from "./slider-util";
 
 export default function InputSliderForm(props: {
 	control: WpbfCustomizeControl;

@@ -1,6 +1,9 @@
 import ReactDOM from "react-dom";
-import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
-import { Control_Params } from "wordpress__customize-browser/Control";
+import {
+	WpbfCustomize,
+	WpbfCustomizeControl,
+	WpbfCustomizeControlParams,
+} from "../../Base/src/interfaces";
 import { WpbfCustomizeColorControl } from "./interfaces";
 import { ColorForm } from "./ColorForm";
 import React from "react";
@@ -14,7 +17,7 @@ const ColorControl = wp.customize.Control.extend({
 	/**
 	 * Initialize.
 	 */
-	initialize: function (id: string, params: Control_Params) {
+	initialize: function (id: string, params: WpbfCustomizeControlParams) {
 		const control = this as WpbfCustomizeColorControl;
 
 		// Bind functions to this control context for passing as React props.

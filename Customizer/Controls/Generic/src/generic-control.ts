@@ -1,4 +1,5 @@
-import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
+import { WpbfCustomize } from "../../Base/src/interfaces";
+import { WpbfCustomizeGenericControl } from "./interface";
 import {
 	limitNumber,
 	limitNumberWithUnit,
@@ -11,28 +12,34 @@ declare var wp: {
 
 wp.customize.controlConstructor["wpbf-generic"] =
 	wp.customize.wpbfDynamicControl.extend({
-		initWpbfControl: function (control: WpbfCustomizeControl) {
-			control = control || (this as WpbfCustomizeControl);
+		initWpbfControl: function (control: WpbfCustomizeGenericControl) {
+			control = control || (this as WpbfCustomizeGenericControl);
 			const params = control.params;
 
-			control.container.find("input, textarea").on("change input", function () {
-				let value: string | number = (
-					this as HTMLInputElement | HTMLTextAreaElement
-				).value;
+			if ("wpbf-generic" !== params.type) {
+				return;
+			}
 
-				if (
-					"wpbf-generic" === params.type &&
-					("number" === params.subtype || "number-unit" === params.subtype)
-				) {
-					params.max = normalizeMaxValue(params.min, params.max);
+			const inputSelector = ".wpbf-control-form input";
+			const textareaSelector = ".wpbf-control-form textarea";
 
-					value =
-						"number" === params.subtype
-							? limitNumber(value, params.min, params.max)
-							: limitNumberWithUnit(value, params.min, params.max);
-				}
+			control.container
+				.find(`${inputSelector}, ${textareaSelector}`)
+				.on("change input", function () {
+					let value: string | number = (
+						this as HTMLInputElement | HTMLTextAreaElement
+					).value;
 
-				control.setting.set(value);
-			});
+					if ("number" === params.subtype || "number-unit" === params.subtype) {
+						params.max = normalizeMaxValue(params.min, params.max);
+
+						value =
+							"number" === params.subtype
+								? limitNumber(value, params.min, params.max)
+								: limitNumberWithUnit(value, params.min, params.max);
+					}
+
+					control.setting.set(value);
+				});
 		},
 	});

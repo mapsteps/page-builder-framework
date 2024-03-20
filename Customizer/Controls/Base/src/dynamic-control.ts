@@ -1,6 +1,9 @@
 import hooks from "@wordpress/hooks";
-import { Control, Control_Params } from "wordpress__customize-browser/Control";
-import { WpbfCustomize, WpbfCustomizeDynamicControl } from "./interfaces";
+import {
+	WpbfCustomize,
+	WpbfCustomizeControlParams,
+	WpbfCustomizeDynamicControl,
+} from "./interfaces";
 import jQuery from "jquery";
 import _ from "lodash";
 import { Element } from "wordpress__customize-browser/Element";
@@ -21,8 +24,9 @@ declare var wp: {
  */
 export default function setupDynamicControl() {
 	wp.customize.wpbfDynamicControl = wp.customize.Control.extend({
-		initialize: function (id: string, params: Control_Params) {
-			const control: Control = this as WpbfCustomizeDynamicControl;
+		initialize: function (id: string, params: WpbfCustomizeControlParams) {
+			const control: WpbfCustomizeDynamicControl =
+				this as WpbfCustomizeDynamicControl;
 
 			if (!params.type) {
 				params.type = "wpbf-generic";
@@ -46,7 +50,7 @@ export default function setupDynamicControl() {
 				);
 				$content.attr("class", className);
 
-				const wrapperAttrs = params["wrapper_attrs"] ?? {};
+				const wrapperAttrs = params["wrapperAttrs"] ?? {};
 
 				_.each(wrapperAttrs, function (val: any, key: string) {
 					if ("class" === key) {
@@ -56,7 +60,7 @@ export default function setupDynamicControl() {
 					$content.attr(key, val);
 				});
 
-				// Hijack the container to add wrapper_attrs.
+				// Hijack the container to add wrapperAttrs.
 				params.content = $content.prop("outerHTML");
 			}
 
@@ -75,16 +79,17 @@ export default function setupDynamicControl() {
 			const control = this as WpbfCustomizeDynamicControl;
 			const nodes = control.container.find("[data-customize-setting-link]");
 
-			nodes.each(function () {
+			nodes.each(function (i, el) {
 				const node = jQuery(this);
+				const settingKey = this.dataset.customizeSettingLink;
+				if (!settingKey) return;
 
-				wp.customize(node.data("customizeSettingLink"), function (setting) {
-					// ! These lines are commented because it gives an error.
-					// const element = wp.customize.Element(node);
-					//
-					// control.elements.push(element);
-					// element.sync(setting);
-					// element.set(setting());
+				wp.customize(settingKey, function (setting) {
+					// @ts-ignore The `new` operator has TS error.
+					const element = new wp.customize.Element(node);
+					control.elements.push(element);
+					element.sync(setting);
+					element.set(setting());
 				});
 			});
 		},
@@ -226,7 +231,7 @@ export default function setupDynamicControl() {
 		/**
 		 * Additional actions that run on ready.
 		 */
-		initWpbfControl: function (control?: Control) {
+		initWpbfControl: function (control?: WpbfCustomizeDynamicControl) {
 			control = control ?? (this as WpbfCustomizeDynamicControl);
 
 			wp.hooks.doAction("wpbf.dynamicControl.initWpbfControl", this);

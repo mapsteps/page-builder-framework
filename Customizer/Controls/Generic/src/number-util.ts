@@ -1,4 +1,4 @@
-import { NumberUnitPair } from "./interface";
+import { NumberUnitPair } from "../../Responsive/src/interface";
 
 export function normalizeMaxValue(
 	min: number | null | undefined,
@@ -43,12 +43,7 @@ export function limitNumber(
 	let parsedValue: number =
 		typeof value === "string" ? parseFloat(value) : value;
 
-	if (
-		"undefined" !== typeof min &&
-		"undefined" !== typeof max &&
-		null !== min &&
-		null !== max
-	) {
+	if ("number" === typeof min && "number" === typeof max) {
 		if (parsedValue < min) {
 			parsedValue = min;
 		}
@@ -60,11 +55,11 @@ export function limitNumber(
 		return parsedValue;
 	}
 
-	if ("undefined" !== typeof min && null !== min) {
+	if ("number" === typeof min) {
 		if (parsedValue < min) {
 			parsedValue = min;
 		}
-	} else if ("undefined" !== typeof max && null !== max) {
+	} else if ("number" === typeof max) {
 		if (parsedValue > max) {
 			parsedValue = max;
 		}
@@ -103,7 +98,7 @@ export function separateNumberAndUnit(value: string | number): NumberUnitPair {
 
 	const unit: string = strValue.replace(/\d+/g, "");
 	const parsedUnit: string = unit ? unit : "";
-	const numeric: string | number = parsedUnit
+	let numeric: string | number = parsedUnit
 		? strValue.replace(parsedUnit, "")
 		: strValue;
 

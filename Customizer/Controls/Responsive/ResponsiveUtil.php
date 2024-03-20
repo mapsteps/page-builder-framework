@@ -7,6 +7,43 @@ use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 class ResponsiveUtil {
 
 	/**
+	 * Responsive control's default devices.
+	 *
+	 * @var string[]
+	 */
+	public $default_devices = [ 'desktop', 'tablet', 'mobile' ];
+
+	/**
+	 * Responsive control's default device icons.
+	 *
+	 * @var string[]
+	 */
+	public $default_device_icons = [
+		'desktop' => 'dashicons-desktop',
+		'tablet'  => 'dashicons-tablet',
+		'mobile'  => 'dashicons-smartphone',
+	];
+
+	/**
+	 * Enqueue responsive control's assets.
+	 */
+	public function enqueueAssets() {
+
+		// Enqueue the styles.
+		wp_enqueue_style( 'wpbf-responsive-control', WPBF_THEME_URI . '/Customizer/Controls/Responsive/dist/responsive-control-min.css', array(), WPBF_VERSION );
+
+		// Enqueue the scripts.
+		wp_enqueue_script(
+			'wpbf-responsive-control',
+			WPBF_THEME_URI . '/Customizer/Controls/Responsive/dist/responsive-control-min.js',
+			array( 'wpbf-base-control' ),
+			WPBF_VERSION,
+			false
+		);
+
+	}
+
+	/**
 	 * Make empty value based on devices.
 	 *
 	 * @param string[] $devices The allowed devices.

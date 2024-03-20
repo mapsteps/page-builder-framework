@@ -1,17 +1,15 @@
 import React, { ChangeEvent, MouseEvent, useState } from "react";
 import { WpbfCustomizeSetting } from "../../Base/src/interfaces";
-import {
-	DevicesValue,
-	WpbfCustomizeResponsiveInputSliderControl,
-} from "./interface";
+import { WpbfCustomizeResponsiveInputSliderControl } from "./interface";
 import DeviceButtons from "../../Base/src/DeviceButtons";
 import {
 	makeDevicesValue,
 	makeNumberUnitPair,
 	makeValueForInput,
 	makeValueForSlider,
-} from "./util";
-import { encodeJsonOrDefault } from "../../MarginPadding/src/utils";
+} from "./slider-util";
+import { DevicesValue } from "../../Responsive/src/interface";
+import { encodeJsonOrDefault } from "../../Generic/src/string-util";
 
 export default function ResponsiveInputSliderForm(props: {
 	control: WpbfCustomizeResponsiveInputSliderControl;

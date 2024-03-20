@@ -1,4 +1,3 @@
-import { Control } from "wordpress__customize-browser/Control";
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeSetting,
@@ -25,7 +24,8 @@ export interface MarginPaddingDimensionValuePair {
 	value: string | number;
 }
 
-export interface WpbfCustomizeMarginPaddingControl extends Control {
+export interface WpbfCustomizeMarginPaddingControl
+	extends WpbfCustomizeControl {
 	prototype: WpbfCustomizeControl;
 	setting: WpbfCustomizeSetting<MarginPaddingValue | string>;
 	setNotificationContainer: (el: HTMLElement) => void;

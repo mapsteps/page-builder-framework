@@ -142,7 +142,7 @@ class BaseControl extends WP_Customize_Control {
 		$this->json['css-var'] = $this->css_vars;
 
 		// Wrapper Attributes.
-		$this->json['wrapper_attrs'] = $this->wrapper_attrs;
+		$this->json['wrapperAttrs'] = $this->wrapper_attrs;
 
 		$this->json['allowCollapse'] = $this->allow_collapse;
 

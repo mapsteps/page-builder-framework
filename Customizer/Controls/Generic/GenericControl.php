@@ -176,7 +176,7 @@ class GenericControl extends BaseControl {
 		$this->json['inputTag'] = 'textarea' === $this->subtype || 'content' === $this->subtype ? 'textarea' : 'input';
 
 		if ( 'textarea' !== $this->subtype && 'content' !== $this->subtype ) {
-			$this->json['inputType'] = 'number-util' === $this->subtype ? 'text' : $this->subtype;
+			$this->json['inputType'] = 'number-unit' === $this->subtype ? 'text' : $this->subtype;
 		}
 
 		if ( 'number' === $this->subtype || 'number-unit' === $this->subtype ) {
@@ -196,52 +196,74 @@ class GenericControl extends BaseControl {
 	}
 
 	/**
-	 * An Underscore (JS) template for this control's content (but not its container).
+	 * Render the control's content.
 	 *
-	 * Class variables for this control class are available in the `data` JS object;
-	 * export custom variables by overriding WP_Customize_Control::to_json().
+	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
 	 *
-	 * @see WP_Customize_Control::print_template()
+	 * Supports basic input types `text`, `checkbox`, `textarea`, `radio`, `select` and `dropdown-pages`.
+	 * Additional input types such as `email`, `url`, `number`, `hidden` and `date` are supported implicitly.
+	 *
+	 * Control content can alternately be rendered in JS. See WP_Customize_Control::print_template().
 	 */
-	protected function content_template() {
+	protected function render_content() {
+
+		$input_tag  = 'textarea' === $this->subtype || 'content' === $this->subtype ? 'textarea' : 'input';
+		$input_type = 'text';
+
+		if ( 'textarea' !== $this->subtype && 'content' !== $this->subtype ) {
+			$input_type = 'number-unit' === $this->subtype ? 'text' : $this->subtype;
+		}
 		?>
 
-		<label class="customize-control-label" for="_customize-input-{{ data.id }}">
-			<span class="customize-control-title">{{{ data.label }}}</span>
-			<# if ( data.description ) { #>
-			<span class="description customize-control-description">{{{ data.description }}}</span>
-			<# } #>
-		</label>
+		<?php if ( $this->label || $this->description ) : ?>
+			<div class="customize-control-label">
+				<?php if ( $this->label ) : ?>
+					<label class="customize-control-title" for="_customize-input-<?php echo esc_attr( $this->id ); ?>">
+						<?php echo esc_html( $this->label ); ?>
+					</label>
+				<?php endif; ?>
+
+				<?php if ( $this->description ) : ?>
+					<span class="description customize-control-description">
+						<?php echo wp_kses_post( $this->description ); ?>
+					</span>
+				<?php endif; ?>
+
+			</div>
+		<?php endif; ?>
+
+		<div class="customize-control-notifications-container"></div>
 
 		<div class="wpbf-control-form">
-			<# if ( 'textarea' === data.inputTag || 'content' === data.inputTag ) { #>
+			<?php if ( 'textarea' === $input_tag ) : ?>
 				<textarea
-					{{{ data.inputAttrs }}}
-					{{{ data.link }}}
-					id="_customize-input-{{ data.id }}"
-					rows="{{ data.rows }}">{{{ data.value }}}</textarea>
-			<# } else { #>
+					<?php $this->link(); ?>
+					<?php $this->input_attrs(); ?>
+					id="_customize-input-<?php echo esc_attr( $this->id ); ?>"
+					rows="<?php echo esc_attr( $this->rows ); ?>"><?php echo esc_textarea( $this->value() ); ?></textarea>
+			<?php else : ?>
 				<input
-					type="{{ data.inputType }}"
-					id="_customize-input-{{ data.id }}"
-					value="{{ data.value }}"
+					<?php
+					$this->link();
+					$this->input_attrs();
+					?>
+					type="<?php echo esc_attr( $input_type ); ?>"
+					id="_customize-input-<?php echo esc_attr( $this->id ); ?>"
+					value="<?php echo esc_attr( $this->value() ); ?>"
+					
+					<?php if ( 'number' === $input_type ) : ?>
+						<?php if ( null !== $this->min ) : ?>
+							min="<?php echo esc_attr( $this->min ); ?>"
+						<?php endif; ?>
 
-					<# if ( 'number' === data.subtype ) { #>
-						<# if ( 'undefined' !== typeof data.min ) { #>
-						min="{{ data.min }}"
-						<# } #>
+						<?php if ( null !== $this->max ) : ?>
+							max="<?php echo esc_attr( $this->max ); ?>"
+						<?php endif; ?>
 
-						<# if ( 'undefined' !== typeof data.max ) { #>
-						max="{{ data.max }}"
-						<# } #>
-
-						step="{{ data.step }}"
-					<# } #>
-
-					{{{ data.inputAttrs }}}
-					{{{ data.link }}}
+						step="<?php echo esc_attr( $this->step ); ?>"
+					<?php endif; ?>
 				>
-			<# } #>
+			<?php endif; ?>
 		</div>
 
 		<?php

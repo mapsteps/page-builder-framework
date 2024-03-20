@@ -101,12 +101,12 @@ class ToggleControl extends CheckboxControl {
 				<label class="wpbf-toggle-switch-label" for="_customize-input-{{ data.id }}">
 					<# if ('switch' === data.checkboxType) { #>
 					<span class="toggle-on">
-							<# data.choices.on = data.choices.on || data.defaultChoices.on #>
-							{{ data.choices.on }}
+						<# data.choices.on = data.choices.on || data.defaultChoices.on #>
+						{{ data.choices.on }}
 					</span>
 					<span class="toggle-off">
-							<# data.choices.off = data.choices.off || data.defaultChoices.off #>
-							{{ data.choices.off }}
+						<# data.choices.off = data.choices.off || data.defaultChoices.off #>
+						{{ data.choices.off }}
 					</span>
 					<# } #>
 				</label>

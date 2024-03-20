@@ -8,6 +8,4 @@ export interface WpbfCustomizeSortableControl extends WpbfCustomizeControl {
 	setting: WpbfCustomizeSetting<any[]>;
 	updateComponentState?: (val: any[]) => void;
 	getNewValue: () => any[];
-
-	extend(protoProps: object, classProps?: object): WpbfCustomizeSortableControl;
 }

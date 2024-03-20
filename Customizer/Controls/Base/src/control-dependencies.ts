@@ -1,5 +1,5 @@
 import {
-	WpbfControlDependencies,
+	WpbfControlDependency,
 	WpbfCustomize,
 	WpbfReversedControlDependencies,
 	WpbfReversedControlDependency,
@@ -11,7 +11,10 @@ declare var wp: {
 	hooks: typeof hooks;
 };
 
-declare var wpbfCustomizerControlDependencies: WpbfControlDependencies;
+declare var wpbfCustomizerControlDependencies: Record<
+	string,
+	WpbfControlDependency[]
+>;
 
 export default function setupControlDependencies() {
 	const reversedControlDependencies: WpbfReversedControlDependencies = {};

@@ -28,7 +28,7 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 		 * Handles notifications.
 		 */
 		wpbfNotifications: function () {
-			let control = this;
+			let control = this as WpbfCustomizeDimensionControl;
 
 			const allowUnitless = control.params.allowUnitless;
 
@@ -55,7 +55,7 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 		},
 
 		validateCssValue: function (value: string | number) {
-			const control = this;
+			const control = this as WpbfCustomizeDimensionControl;
 			const validUnits = [
 				"fr",
 				"rem",

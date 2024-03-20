@@ -4,20 +4,16 @@
 	.wpbf-control-header {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-between;
 		align-items: center;
+		margin-bottom: 4px;
 	}
 
-	.wpbf-device-buttons,
-	.wpbf-device-button {
-		list-style: none;
-		margin: 0;
-		padding: 0;
+	.customize-control-title {
+		margin-bottom: 0;
 	}
 
 	.wpbf-device-buttons {
 		display: flex;
-		top: 3px;
 		justify-content: flex-start;
 		position: relative;
 		margin-left: 12px;
@@ -35,6 +31,7 @@
 		height: 22px;
 		background-color: #eee;
 		border-radius: 50%;
+		border-width: 0;
 		cursor: pointer;
 		transition: all 0.2s;
 
@@ -47,6 +44,14 @@
 		&.is-active,
 		&:hover {
 			background-color: #ddd;
+		}
+	}
+
+	.wpbf-control-device {
+		display: none;
+
+		&.is-active {
+			display: block;
 		}
 	}
 

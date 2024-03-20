@@ -1,6 +1,9 @@
 import MarginPaddingForm from "./MarginPaddingForm";
-import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
-import { Control_Params } from "wordpress__customize-browser/Control";
+import {
+	WpbfCustomize,
+	WpbfCustomizeControl,
+	WpbfCustomizeControlParams,
+} from "../../Base/src/interfaces";
 import {
 	MarginPaddingValue,
 	WpbfCustomizeMarginPaddingControl,
@@ -8,7 +11,7 @@ import {
 import ReactDOM from "react-dom";
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { makeObjValueWithoutUnitFromJson } from "./utils";
+import { makeObjValueWithoutUnitFromJson } from "./margin-padding-util";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -21,7 +24,7 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 	/**
 	 * Initialize.
 	 */
-	initialize: function (id: string, params: Control_Params) {
+	initialize: function (id: string, params: WpbfCustomizeControlParams) {
 		const control = this as WpbfCustomizeMarginPaddingControl;
 
 		// Bind functions to this control context for passing as React props.

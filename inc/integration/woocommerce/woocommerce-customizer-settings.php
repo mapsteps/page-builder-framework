@@ -70,11 +70,11 @@ wpbf_customizer_field()
 	->description( __( 'Display Menu Item only on WooCommerce related pages.', 'page-builder-framework' ) )
 	->defaultValue( false )
 	->priority( 5 )
-	->addToSection( 'wpbf_woocommerce_menu_item_options' )
+	->addToSection( 'wpbf_woocommerce_menu_item_options' );
 
 // Turn search into product search.
 wpbf_customizer_field()
-	->id( 'woocommerce_search_menu_item'
+	->id( 'woocommerce_search_menu_item' )
 	->type( 'toggle' )
 	->label( __( 'Product Search', 'page-builder-framework' ) )
 	->description( __( 'Turn the Search Menu Item into a Product Search.', 'page-builder-framework' ) )
@@ -227,7 +227,7 @@ $product_priority = 0;
 wpbf_customizer_field()
 	->id( 'woocommerce_single_custom_width' )
 	->type( 'dimension' )
-	->label( __( 'Custom Content Width', 'page-builder-framework' )
+	->label( __( 'Custom Content Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->priority( $product_priority++ )
 	->transport( 'postMessage' )
@@ -662,7 +662,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'woocommerce_loop_custom_width' )
 	->type( 'dimension' )
-	->label( __( 'Custom Content Width', 'page-builder-framework' )
+	->label( __( 'Custom Content Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->priority( $shop_priority++ )
 	->transport( 'postMessage' )
@@ -719,21 +719,17 @@ wpbf_customizer_field()
 	->addToSection( 'woocommerce_product_catalog' );
 
 // Products per row.
-Kirki::add_field( 'wpbf', array(
-	'type'              => 'responsive_input',
-	'settings'          => 'woocommerce_loop_products_per_row',
-	'label'             => __( 'Products per Row', 'page-builder-framework' ),
-	'section'           => 'woocommerce_product_catalog',
-	'priority'          => $shop_priority++,
-	'default'           => wp_json_encode(
-		array(
-			'desktop' => '4',
-			'tablet'  => '2',
-			'mobile'  => '1',
-		)
-	),
-	'sanitize_callback' => wpbf_kirki_sanitize_helper( 'absint' ),
-) );
+wpbf_customizer_field()
+	->id( 'woocommerce_loop_products_per_row' )
+	->type( 'responsive-number' )
+	->label( __( 'Products per Row', 'page-builder-framework' ) )
+	->defaultValue( array(
+		'desktop' => 4,
+		'tablet'  => 3,
+		'mobile'  => 1,
+	) )
+	->priority( $shop_priority++ )
+	->addToSection( 'woocommerce_product_catalog' );
 
 // Grid gap.
 wpbf_customizer_field()

@@ -13,6 +13,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Custom\CustomField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
+use Mapsteps\Wpbf\Customizer\Controls\Generic\ResponsiveGenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleField;
@@ -64,6 +65,7 @@ class CustomizerUtil {
 		'headline'                  => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineControl',
 		'headline-toggle'           => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleControl',
 		'generic'                   => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
+		'responsive-generic'        => '\Mapsteps\Wpbf\Customizer\Controls\Generic\ResponsiveGenericControl',
 		'image'                     => '\Mapsteps\Wpbf\Customizer\Controls\Media\ImageControl',
 		'margin-padding'            => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingControl',
 		'responsive-margin-padding' => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingControl',
@@ -89,7 +91,6 @@ class CustomizerUtil {
 		'custom',
 		'headline-toggle',
 		'dimension',
-		'generic',
 		'image',
 		'radio',
 		'radio-buttonset',
@@ -104,14 +105,25 @@ class CustomizerUtil {
 	 * @var array $grouped_controls
 	 */
 	public $grouped_controls = [
-		'generic'                   => [
+		'generic' => [
 			'email',
 			'number',
+			'number-unit',
 			'text',
 			'textarea',
 			'url',
+			'content',
 		],
-		'margin-padding'            => [
+		'responsive-generic' => [
+			'responsive-email',
+			'responsive-number',
+			'responsive-number-unit',
+			'responsive-text',
+			'responsive-textarea',
+			'responsive-url',
+			'responsive-content',
+		],
+		'margin-padding' => [
 			'margin',
 			'padding',
 		],
@@ -260,9 +272,6 @@ class CustomizerUtil {
 		$field = null;
 
 		switch ( $control_type ) {
-			case 'generic':
-				$field = new GenericField( $control );
-				break;
 			case 'checkbox':
 				$field = new CheckboxField( $control );
 				break;
@@ -280,6 +289,12 @@ class CustomizerUtil {
 				break;
 			case 'dimension':
 				$field = new DimensionField( $control );
+				break;
+			case 'generic':
+				$field = new GenericField( $control );
+				break;
+			case 'responsive-generic':
+				$field = new ResponsiveGenericField( $control );
 				break;
 			case 'headline':
 				$field = new HeadlineField( $control );

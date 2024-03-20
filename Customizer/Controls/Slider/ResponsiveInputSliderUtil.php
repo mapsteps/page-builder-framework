@@ -69,7 +69,7 @@ class ResponsiveInputSliderUtil {
 		$first_device = ! empty( $devices ) ? $devices[0] : null;
 		$array_value  = [];
 
-		// Assuming $raw_value is either an array or a JSON encoded string.
+		// Assuming $raw_value is not an array, not a JSON encoded string.
 		if ( ! is_array( $raw_value ) && ! is_string( $raw_value ) ) {
 			$array_value = $this->makeEmptyValue( $devices );
 
@@ -83,7 +83,7 @@ class ResponsiveInputSliderUtil {
 			if ( is_string( $raw_value ) ) {
 				$array_value = json_decode( $raw_value, true );
 
-				// If can't be decoded, of the result is not an array.
+				// If can't be decoded, then the result is not an array.
 				if ( is_null( $array_value ) || ! is_array( $array_value ) ) {
 					$array_value = $this->makeEmptyValue( $devices );
 

@@ -1,5 +1,5 @@
-import { parseJsonOrUndefined } from "../../MarginPadding/src/utils";
-import { DevicesValue, NumberUnitPair } from "./interface";
+import { DevicesValue, NumberUnitPair } from "../../Responsive/src/interface";
+import { parseJsonOrUndefined } from "../../Generic/src/string-util";
 
 /**
  * Limit a value based on a min and max value.

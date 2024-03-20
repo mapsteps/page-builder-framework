@@ -1,10 +1,14 @@
-import { Control_Params } from "wordpress__customize-browser/Control";
-import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
+import {
+	WpbfCustomize,
+	WpbfCustomizeControl,
+	WpbfCustomizeControlParams,
+} from "../../Base/src/interfaces";
 import { createRoot } from "react-dom/client";
 import React from "react";
 import ReactDOM from "react-dom";
 import ResponsiveInputSliderForm from "./ResponsiveInputSliderForm";
-import { DevicesValue, WpbfCustomizeResponsiveInputSliderControl } from "./interface";
+import { WpbfCustomizeResponsiveInputSliderControl } from "./interface";
+import { DevicesValue } from "../../Responsive/src/interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -18,7 +22,7 @@ declare var wp: {
  * @augments wp.customize.Class
  */
 const ResponsiveInputSliderControl = wp.customize.Control.extend({
-	initialize: function (id: string, params: Control_Params) {
+	initialize: function (id: string, params: WpbfCustomizeControlParams) {
 		const control = this as WpbfCustomizeResponsiveInputSliderControl;
 
 		// Bind functions to this control context for passing as React props.

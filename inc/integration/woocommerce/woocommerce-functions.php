@@ -511,7 +511,8 @@ function wpbf_woo_loop_content() {
  */
 function wpbf_loop_columns() {
 
-	$products_per_row = json_decode( get_theme_mod( 'woocommerce_loop_products_per_row' ), true );
+	// $products_per_row = json_decode( get_theme_mod( 'woocommerce_loop_products_per_row' ), true );
+	$products_per_row = get_theme_mod( 'woocommerce_loop_products_per_row' );
 	$columns          = wpbf_get_theme_mod_value( $products_per_row, 'desktop', 4, true );
 
 	return $columns;
