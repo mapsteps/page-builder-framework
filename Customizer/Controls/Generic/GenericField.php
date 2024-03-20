@@ -18,6 +18,7 @@ class GenericField extends BaseField {
 
 		$props = $this->control->custom_properties;
 		$type  = $this->control->type;
+		$type  = ! in_array( $type, GenericControl::$allowed_subtypes, true ) ? 'text' : $type;
 		$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
 		$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
 

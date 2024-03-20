@@ -29,7 +29,7 @@ class GenericControl extends BaseControl {
 	 *
 	 * @var string[]
 	 */
-	protected $allowed_subtypes = [ 'number', 'number-unit', 'text', 'textarea', 'email', 'url', 'content' ];
+	public static $allowed_subtypes = [ 'number', 'number-unit', 'text', 'textarea', 'email', 'url', 'content' ];
 
 	/**
 	 * Number of rows for 'textarea' & 'content' subtype.
@@ -97,7 +97,7 @@ class GenericControl extends BaseControl {
 			$this->subtype = $args['subtype'];
 		}
 
-		if ( ! in_array( $this->subtype, $this->allowed_subtypes, true ) ) {
+		if ( ! in_array( $this->subtype, static::$allowed_subtypes, true ) ) {
 			$this->subtype = 'text';
 		}
 
