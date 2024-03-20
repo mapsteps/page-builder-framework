@@ -3,6 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
+use Mapsteps\Wpbf\Customizer\Controls\Responsive\ResponsiveUtil;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
 
@@ -67,9 +68,9 @@ class GenericControl extends BaseControl {
 	protected $number_util;
 
 	/**
-	 * Instance of `ResponsiveGenericUtil` class.
+	 * Instance of `ResponsiveUtil` class.
 	 *
-	 * @var ResponsiveGenericUtil
+	 * @var ResponsiveUtil
 	 */
 	protected $responsive_util;
 
@@ -90,7 +91,7 @@ class GenericControl extends BaseControl {
 		parent::__construct( $wp_customize_manager, $id, $args );
 
 		$this->number_util     = new NumberUtil();
-		$this->responsive_util = new ResponsiveGenericUtil();
+		$this->responsive_util = new ResponsiveUtil();
 
 		// Already sanitized in `addControl` method in `GenericField` class.
 		if ( ! empty( $args['subtype'] ) ) {

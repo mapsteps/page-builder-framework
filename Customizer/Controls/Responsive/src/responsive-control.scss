@@ -1,0 +1,112 @@
+.wpbf-customize-control-responsive {
+	position: relative;
+
+	.wpbf-control-header {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.wpbf-device-buttons,
+	.wpbf-device-button {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.wpbf-device-buttons {
+		display: flex;
+		top: 3px;
+		justify-content: flex-start;
+		position: relative;
+		margin-left: 12px;
+		font-weight: 600;
+		font-size: 14px;
+	}
+
+	.wpbf-device-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		margin-right: 3px;
+		width: 22px;
+		height: 22px;
+		background-color: #eee;
+		border-radius: 50%;
+		cursor: pointer;
+		transition: all 0.2s;
+
+		i {
+			width: 11px;
+			height: 11px;
+			font-size: 11px;
+		}
+
+		&.is-active,
+		&:hover {
+			background-color: #ddd;
+		}
+	}
+
+	&.wpbf-customize-control-switch {
+		top: -5px;
+
+		.wpbf-switch {
+			.wpbf-toggle-switch-label {
+				padding-top: 0;
+			}
+
+			.toggle-on,
+			.toggle-off {
+				bottom: -5px;
+			}
+		}
+	}
+}
+
+.wpbf-customize-control-responsive-horizontal {
+	margin-bottom: -35px;
+
+	&.wpbf-customize-control-color {
+		margin-bottom: -30px;
+
+		.wpbf-trigger-circle-wrapper {
+			z-index: 2; // Make it above the responsive devices.
+		}
+	}
+
+	&.wpbf-customize-control-checkbox {
+		display: flex;
+		justify-content: flex-end;
+		top: 9px;
+
+		[data-customize-setting-link] {
+			z-index: 2;
+		}
+	}
+
+	&.wpbf-customize-control-toggle {
+		top: 14px;
+
+		.wpbf-toggle {
+			display: flex;
+			justify-content: flex-end;
+
+			.wpbf-control-form {
+				display: inline-block;
+				display: inline-flex;
+			}
+		}
+
+		.wpbf-control-form {
+			z-index: 2; // Make it above the responsive devices.
+		}
+	}
+
+	.customize-control-title,
+	.customize-control-description {
+		padding-right: 25px;
+	}
+}

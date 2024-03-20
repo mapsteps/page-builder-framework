@@ -108,6 +108,8 @@
     "build-margin-padding-control": "parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist --no-source-maps",
     "watch-radio-control": "parcel watch Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",
     "build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-source-maps",
+    "watch-responsive-control": "parcel watch Customizer/Controls/Responsive/src/responsive-control.scss --dist-dir Customizer/Controls/Responsive/dist --no-source-maps",
+    "build-responsive-control": "parcel build Customizer/Controls/Responsive/src/responsive-control.scss --dist-dir Customizer/Controls/Responsive/dist --no-source-maps",
     "watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
     "build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-source-maps",
     "watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-source-maps",

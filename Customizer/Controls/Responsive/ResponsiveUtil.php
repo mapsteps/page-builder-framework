@@ -1,10 +1,10 @@
 <?php
 
-namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
+namespace Mapsteps\Wpbf\Customizer\Controls\Responsive;
 
 use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 
-class ResponsiveGenericUtil {
+class ResponsiveUtil {
 
 	/**
 	 * Make empty value based on devices.

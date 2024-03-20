@@ -12,11 +12,40 @@ class ToggleControl extends CheckboxControl {
 	public $type = 'wpbf-toggle';
 
 	/**
-	 * The checkbox type.
+	 * The checkbox type. Accepts 'toggle' or 'switch'.
 	 *
-	 * @var string $checkboxType Accepts 'toggle' or 'switch'.
+	 * @var string
 	 */
-	public $checkboxType = 'toggle';
+	protected $checkbox_type = 'toggle';
+
+	/**
+	 * Allowed checkbox types.
+	 *
+	 * @var string[]
+	 */
+	protected $allowed_checkbox_types = [ 'toggle', 'switch' ];
+
+	/**
+	 * Constructor.
+	 *
+	 * Supplied `$args` override class property defaults.
+	 *
+	 * If `$args['settings']` is not defined, use the `$id` as the setting ID.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
+	 * @param string               $id                   Control ID.
+	 * @param array                $args                 Optional. Array of properties for the new Control object.
+	 *                                                   Default empty array.
+	 */
+	public function __construct( $wp_customize_manager, $id, $args = array() ) {
+
+		parent::__construct( $wp_customize_manager, $id, $args );
+
+		if ( ! empty( $args['checkbox_type'] ) && in_array( $args['checkbox_type'], $this->allowed_checkbox_types, true ) ) {
+			$this->checkbox_type = $args['checkbox_type'];
+		}
+
+	}
 
 	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
@@ -25,7 +54,7 @@ class ToggleControl extends CheckboxControl {
 
 		parent::to_json();
 
-		$this->json['checkboxType'] = $this->checkboxType;
+		$this->json['checkboxType'] = $this->checkbox_type;
 
 		$this->json['defaultChoices'] = [
 			'on'  => __( 'On', 'page-builder-framework' ),
