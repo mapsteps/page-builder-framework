@@ -16,23 +16,12 @@ class GenericField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		if ( 'text' === $this->control->type ) {
-			return sanitize_text_field( $value );
-		} elseif ( 'textarea' === $this->control->type ) {
-			return sanitize_textarea_field( $value );
-		} elseif ( 'url' === $this->control->type ) {
-			return esc_url_raw( $value );
-		} elseif ( 'number' === $this->control->type ) {
-			$props = $this->control->custom_properties;
-			$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
-			$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
+		$props = $this->control->custom_properties;
+		$type  = $this->control->type;
+		$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
+		$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
 
-			return ( new NumberUtil() )->limitNumber( $value, $min, $max );
-		} elseif ( 'email' === $this->control->type ) {
-			return sanitize_email( $value );
-		}
-
-		return wp_kses_post( $value );
+		return ( new ResponsiveGenericUtil() )->sanitizeSingleValue( $type, $value, $min, $max );
 
 	}
 
@@ -45,7 +34,7 @@ class GenericField extends BaseField {
 
 		$control_args = $this->parseControlArgs();
 
-		$control_args['subtype'] = esc_attr( $this->control->type );
+		$control_args['subtype'] = $this->control->type;
 
 		$wp_customize_manager->add_control( new GenericControl(
 			$wp_customize_manager,

@@ -1,4 +1,9 @@
 import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
+import {
+	limitNumber,
+	limitNumberWithUnit,
+	normalizeMaxValue,
+} from "./number-util";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -11,40 +16,20 @@ wp.customize.controlConstructor["wpbf-generic"] =
 			const params = control.params;
 
 			control.container.find("input, textarea").on("change input", function () {
-				let value = jQuery(this).val();
+				let value: string | number = (
+					this as HTMLInputElement | HTMLTextAreaElement
+				).value;
 
 				if (
 					"wpbf-generic" === params.type &&
-					params.inputType &&
-					"number" === params.inputType
+					("number" === params.subtype || "number-unit" === params.subtype)
 				) {
-					if (
-						typeof params.min !== "undefined" &&
-						typeof params.max !== "undefined"
-					) {
-						params.min = parseFloat(params.min);
-						params.max = parseFloat(params.max);
+					params.max = normalizeMaxValue(params.min, params.max);
 
-						if (value && value < params.min) {
-							value = params.min;
-						} else if (value && value > params.max) {
-							value = params.max;
-						}
-					} else {
-						if (typeof params.min !== "undefined") {
-							params.min = parseFloat(params.min);
-
-							if (value && value < params.min) {
-								value = params.min;
-							}
-						} else if (typeof params.max !== "undefined") {
-							params.max = parseFloat(params.max);
-
-							if (value && value > params.max) {
-								value = params.max;
-							}
-						}
-					}
+					value =
+						"number" === params.subtype
+							? limitNumber(value, params.min, params.max)
+							: limitNumberWithUnit(value, params.min, params.max);
 				}
 
 				control.setting.set(value);

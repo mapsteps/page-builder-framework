@@ -18,37 +18,60 @@ class GenericControl extends BaseControl {
 	/**
 	 * Control's subtype.
 	 *
+	 * Accepts one of this values: "number", "number-unit", "text", "textarea", "email", "url", and "content".
+	 *
 	 * @var string
 	 */
-	public $subtype = 'text';
+	protected $subtype = 'text';
 
 	/**
-	 * Number of rows for 'textarea' subtype.
+	 * The allowed 'subtype' property.
+	 *
+	 * @var string[]
+	 */
+	protected $allowed_subtypes = [ 'number', 'number-unit', 'text', 'textarea', 'email', 'url', 'content' ];
+
+	/**
+	 * Number of rows for 'textarea' & 'content' subtype.
 	 *
 	 * @var int
 	 */
 	protected $rows = 5;
 
 	/**
-	 * Minimum value.
+	 * Minimum value for 'number' and 'number-unit' subtype.
 	 *
 	 * @var int|float|null
 	 */
 	public $min = null;
 
 	/**
-	 * Maximum value.
+	 * Maximum value for 'number' and 'number-unit' subtype.
 	 *
 	 * @var int|float|null
 	 */
 	public $max = null;
 
 	/**
-	 * Step value.
+	 * Increase/decrease step value for 'number' and 'number-unit' subtype.
 	 *
 	 * @var int|float
 	 */
 	public $step = 1;
+
+	/**
+	 * Instance of `NumberUtil` class.
+	 *
+	 * @var NumberUtil
+	 */
+	protected $number_util;
+
+	/**
+	 * Instance of `ResponsiveGenericUtil` class.
+	 *
+	 * @var ResponsiveGenericUtil
+	 */
+	protected $responsive_util;
 
 	/**
 	 * Constructor.
@@ -66,12 +89,19 @@ class GenericControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
+		$this->number_util     = new NumberUtil();
+		$this->responsive_util = new ResponsiveGenericUtil();
+
 		// Already sanitized in `addControl` method in `GenericField` class.
 		if ( ! empty( $args['subtype'] ) ) {
 			$this->subtype = $args['subtype'];
 		}
 
-		if ( 'number' === $this->subtype ) {
+		if ( ! in_array( $this->subtype, $this->allowed_subtypes, true ) ) {
+			$this->subtype = 'text';
+		}
+
+		if ( 'number' === $this->subtype || 'number-unit' === $this->subtype ) {
 			if ( isset( $args['min'] ) && is_numeric( $args['min'] ) ) {
 				$this->min = (float) $args['min'];
 			}
@@ -80,25 +110,35 @@ class GenericControl extends BaseControl {
 				$this->max = (float) $args['max'];
 			}
 
-			if ( ! is_null( $this->min ) && ! is_null( $this->max ) ) {
-				if ( $this->min > $this->max ) {
-					$this->max = $this->min;
-				}
-			}
+			$this->max = $this->number_util->normalizeMaxValue( $this->min, $this->max );
 
 			if ( isset( $args['step'] ) && is_numeric( $args['step'] ) ) {
 				$this->step = (float) $args['step'];
 			}
-
-			if ( $this->setting instanceof WP_Customize_Setting ) {
-				$default_value = $this->setting->default;
-
-				$this->setting->default = ( new NumberUtil() )->limitNumber( $default_value, $this->min, $this->max );
-			}
-		} elseif ( 'textarea' === $this->subtype ) {
+		} elseif ( 'textarea' === $this->subtype || 'content' === $this->subtype ) {
 			if ( isset( $args['rows'] ) && is_numeric( $args['rows'] ) ) {
 				$this->rows = absint( $args['rows'] );
 			}
+		}
+
+		$this->customConstructor( $args );
+
+	}
+
+	/**
+	 * Custom constructor that could be different with other controls that extend this control.
+	 *
+	 * @param array $args The control arguments.
+	 */
+	protected function customConstructor( $args ) {
+
+		if ( $this->setting instanceof WP_Customize_Setting ) {
+			$this->setting->default = $this->responsive_util->sanitizeSingleValue(
+				$this->subtype,
+				$this->setting->default,
+				$this->min,
+				$this->max
+			);
 		}
 
 	}
@@ -132,9 +172,13 @@ class GenericControl extends BaseControl {
 		parent::to_json();
 
 		$this->json['subtype']  = $this->subtype;
-		$this->json['inputTag'] = 'textarea' === $this->subtype ? 'textarea' : 'input';
+		$this->json['inputTag'] = 'textarea' === $this->subtype || 'content' === $this->subtype ? 'textarea' : 'input';
 
-		if ( 'number' === $this->subtype ) {
+		if ( 'textarea' !== $this->subtype && 'content' !== $this->subtype ) {
+			$this->json['inputType'] = 'number-util' === $this->subtype ? 'text' : $this->subtype;
+		}
+
+		if ( 'number' === $this->subtype || 'number-unit' === $this->subtype ) {
 			if ( ! is_null( $this->min ) ) {
 				$this->json['min'] = $this->min;
 			}
@@ -144,7 +188,7 @@ class GenericControl extends BaseControl {
 			}
 
 			$this->json['step'] = $this->step;
-		} elseif ( 'textarea' === $this->subtype ) {
+		} elseif ( 'textarea' === $this->subtype || 'content' === $this->subtype ) {
 			$this->json['rows'] = $this->rows;
 		}
 
@@ -169,33 +213,33 @@ class GenericControl extends BaseControl {
 		</label>
 
 		<div class="wpbf-control-form">
-			<# if ( 'textarea' === data.inputTag ) { #>
-			<textarea
-				{{{ data.inputAttrs }}}
-				{{{ data.link }}}
-				id="_customize-input-{{ data.id }}"
-				rows="{{ data.rows }}">{{{ data.value }}}</textarea>
+			<# if ( 'textarea' === data.inputTag || 'content' === data.inputTag ) { #>
+				<textarea
+					{{{ data.inputAttrs }}}
+					{{{ data.link }}}
+					id="_customize-input-{{ data.id }}"
+					rows="{{ data.rows }}">{{{ data.value }}}</textarea>
 			<# } else { #>
-			<input
-				type="{{ data.subtype }}"
-				id="_customize-input-{{ data.id }}"
-				value="{{ data.value }}"
+				<input
+					type="{{ data.inputType }}"
+					id="_customize-input-{{ data.id }}"
+					value="{{ data.value }}"
 
-			<# if ( 'number' === data.subtype ) { #>
-			<# if ( 'undefined' !== data.min ) { #>
-			min="{{ data.min }}"
-			<# } #>
+					<# if ( 'number' === data.subtype ) { #>
+						<# if ( 'undefined' !== typeof data.min ) { #>
+						min="{{ data.min }}"
+						<# } #>
 
-			<# if ( 'undefined' !== data.max ) { #>
-			max="{{ data.max }}"
-			<# } #>
+						<# if ( 'undefined' !== typeof data.max ) { #>
+						max="{{ data.max }}"
+						<# } #>
 
-			step="{{ data.step }}"
-			<# } #>
+						step="{{ data.step }}"
+					<# } #>
 
-			{{{ data.inputAttrs }}}
-			{{{ data.link }}}
-			>
+					{{{ data.inputAttrs }}}
+					{{{ data.link }}}
+				>
 			<# } #>
 		</div>
 
