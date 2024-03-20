@@ -5,6 +5,28 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 class NumberUtil {
 
 	/**
+	 * Normalize max value
+	 *
+	 * @param int|float|null $min Minimum value.
+	 * @param int|float|null $max Maximum value.
+	 *
+	 * @return int|float|null
+	 */
+	public function normalizeMaxValue( $min, $max ) {
+
+		if ( is_null( $min ) || is_null( $max ) ) {
+			return $max;
+		}
+
+		if ( $min > $max ) {
+			return $min;
+		}
+
+		return $max;
+
+	}
+
+	/**
 	 * Limit number based on the min and max values.
 	 *
 	 * @param mixed          $value The value to parse.
@@ -73,12 +95,13 @@ class NumberUtil {
 		$number_and_unit = $this->separateNumberAndUnit( $value );
 
 		$number = $number_and_unit['number'];
-		$number = $this->limitNumber( $number, $min, $max );
 		$unit   = $number_and_unit['unit'];
 
 		if ( '' === $number ) {
 			return '';
 		}
+
+		$number = $this->limitNumber( $number, $min, $max );
 
 		if ( ! $unit ) {
 			return $number;
@@ -143,7 +166,7 @@ class NumberUtil {
 		$number = $number_and_unit['number'];
 		$unit   = $number_and_unit['unit'];
 
-		if ( ! $unit ) {
+		if ( ! $unit || '' === $number ) {
 			return $number;
 		}
 
