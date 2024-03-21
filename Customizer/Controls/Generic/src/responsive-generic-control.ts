@@ -26,13 +26,6 @@ wp.customize.controlConstructor["wpbf-responsive-generic"] =
 					return;
 				}
 
-				/**
-				 * Update component value's state when customizer setting's value is changed.
-				 */
-				control.setting.bind((val) => {
-					control.updateComponentState!(val);
-				});
-
 				const inputSelector = ".wpbf-control-form input";
 				const textareaSelector = ".wpbf-control-form textarea";
 
