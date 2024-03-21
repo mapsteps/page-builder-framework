@@ -1,4 +1,8 @@
-import { WpbfCustomize, WpbfCustomizeControl } from "./interface";
+import {
+	WpbfCustomize,
+	WpbfCustomizeControl,
+	WpbfCustomizeControlParams,
+} from "./interface";
 import _ from "lodash";
 
 declare var wp: {
@@ -17,7 +21,9 @@ export function setupTooltips() {
 function wpbfSetupTooltips() {
 	let sectionNames: string[] = [];
 
-	wp.customize.control.each(function (control: WpbfCustomizeControl) {
+	wp.customize.control.each(function (
+		control: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+	) {
 		if (!sectionNames.includes(control.section())) {
 			sectionNames.push(control.section());
 		}
@@ -68,7 +74,9 @@ function wpbfSetupTooltips() {
 	});
 }
 
-function wpbfInjectTooltip(control: WpbfCustomizeControl) {
+function wpbfInjectTooltip(
+	control: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+) {
 	_.each(wpbfCustomizerTooltips, function (tooltip) {
 		if (tooltip.id !== control.id) {
 			return;
