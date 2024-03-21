@@ -170,6 +170,9 @@ export interface WpbfCustomizeControl<SV, CP> {
 	actuallyEmbed?: () => void;
 }
 
+export interface AnyWpbfCustomizeControl
+	extends WpbfCustomizeControl<any, any> {}
+
 export interface WpbfCustomizeControlParams<SV> {
 	label: string;
 	description: string;

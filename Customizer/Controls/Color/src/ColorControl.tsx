@@ -1,10 +1,13 @@
 import ReactDOM from "react-dom";
 import {
+	AnyWpbfCustomizeControl,
 	WpbfCustomize,
-	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
-import { WpbfCustomizeColorControl } from "./interfaces";
+import {
+	WpbfCustomizeColorControl,
+	WpbfCustomizeColorControlValue,
+} from "./interfaces";
 import { ColorForm } from "./ColorForm";
 import React from "react";
 import { createRoot } from "react-dom/client";
@@ -13,12 +16,16 @@ declare var wp: {
 	customize: WpbfCustomize;
 };
 
-const ColorControl = wp.customize.Control.extend({
+const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 	/**
 	 * Initialize.
 	 */
-	initialize: function (id: string, params: WpbfCustomizeControlParams) {
-		const control = this as WpbfCustomizeColorControl;
+	initialize: function (
+		this: WpbfCustomizeColorControl,
+		id: string,
+		params: WpbfCustomizeControlParams<WpbfCustomizeColorControlValue>,
+	) {
+		const control = this;
 
 		// Bind functions to this control context for passing as React props.
 		control.setNotificationContainer =
@@ -27,7 +34,7 @@ const ColorControl = wp.customize.Control.extend({
 		wp.customize.Control.prototype.initialize.call(control, id, params);
 
 		// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
-		function onRemoved(removedControl: WpbfCustomizeControl) {
+		function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 			if (control === removedControl) {
 				if (control.destroy) control.destroy();
 				control.container.remove();

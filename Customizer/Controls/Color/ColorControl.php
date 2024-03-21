@@ -141,7 +141,7 @@ class ColorControl extends BaseControl {
 			$total_swatches = count( $swatches );
 
 			if ( $total_swatches < 8 ) {
-				for ( $i = $total_swatches; $i <= 8; $i ++ ) {
+				for ( $i = $total_swatches; $i <= 8; $i++ ) {
 					$swatches[] = $total_swatches[ $i ];
 				}
 			}
