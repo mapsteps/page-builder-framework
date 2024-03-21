@@ -1,6 +1,7 @@
-import _, { values } from "lodash";
-import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interface";
+import _ from "lodash";
+import { WpbfCustomize } from "../../Base/src/interface";
 import i18n from "@wordpress/i18n/build-types/default-i18n";
+import { WpbfCustomizeImageControl } from "./image-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -10,8 +11,11 @@ declare var wp: {
 
 wp.customize.controlConstructor["wpbf-image"] =
 	wp.customize.wpbfDynamicControl.extend({
-		initWpbfControl: function (control: WpbfCustomizeControl) {
-			control = control || (this as WpbfCustomizeControl);
+		initWpbfControl: function (
+			this: WpbfCustomizeImageControl,
+			ctrl?: WpbfCustomizeImageControl,
+		) {
+			const control = ctrl || this;
 			const params = control.params;
 
 			const saveAs = params.saveAs;
