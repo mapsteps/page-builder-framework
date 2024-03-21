@@ -67,6 +67,7 @@ export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	settings: any;
 	l10n: Record<string, string>;
 	previewer: Previewer<string>;
+	previewedDevice: Value<string>;
 	Control: WpbfCustomizeControl<any, any>;
 
 	// ! There's a mistake missing part in this type definition.
