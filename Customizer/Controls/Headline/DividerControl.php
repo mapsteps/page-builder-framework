@@ -40,8 +40,8 @@ class DividerControl extends BaseControl {
 	protected function render_content() {
 		?>
 
-		<input type="hidden" data-customize-setting-link="<?=esc_attr( $this->settings['default']->id )?>">
-		<hr style="border-top: 1px solid <?=esc_attr( $this->border_top_color )?>; border-bottom: 1px solid <?=esc_attr( $this->border_bottom_color )?>"/>
+		<input type="hidden" data-customize-setting-link="<?php echo esc_attr( $this->settings['default']->id ); ?>">
+		<hr style="border-top: 1px solid <?php echo esc_attr( $this->border_top_color ); ?>; border-bottom: 1px solid <?php echo esc_attr( $this->border_bottom_color ); ?>"/>
 
 		<?php
 	}

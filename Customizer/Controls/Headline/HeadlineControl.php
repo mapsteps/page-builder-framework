@@ -38,17 +38,17 @@ class HeadlineControl extends BaseControl {
 	protected function render_content() {
 		?>
 
-		<input type="hidden" data-customize-setting-link="<?=esc_attr( $this->settings['default']->id )?>">
+		<input type="hidden" data-customize-setting-link="<?php echo esc_attr( $this->settings['default']->id ); ?>">
 		<div class="wpbf-control-label">
 			<?php if ( $this->label ) : ?>
 				<h4 class="customize-control-title">
-					<?=esc_html( $this->label )?>
+					<?php echo esc_html( $this->label ); ?>
 				</h4>
 			<?php endif; ?>
 
 			<?php if ( $this->description ) : ?>
 				<p class="customize-control-description">
-					<?=esc_html( $this->description )?>
+					<?php echo esc_html( $this->description ); ?>
 				</p>
 			<?php endif; ?>
 		</div>
