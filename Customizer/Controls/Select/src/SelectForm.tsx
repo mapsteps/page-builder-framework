@@ -3,7 +3,7 @@ import Select, { components, GroupBase } from "react-select";
 import { PublicBaseSelectProps } from "react-select/dist/declarations/src/Select";
 import { StateManagerAdditionalProps } from "react-select/dist/declarations/src/useStateManager";
 import { WpbfCustomizeSelectControl } from "./interfaces";
-import { WpbfCustomize } from "../../Base/src/interfaces";
+import { WpbfCustomize } from "../../Base/src/interface";
 import { Setting } from "wordpress__customize-browser/Setting";
 
 declare var wp: {

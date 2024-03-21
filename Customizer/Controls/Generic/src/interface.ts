@@ -1,12 +1,17 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-	WpbfCustomizeSetting,
-} from "../../Base/src/interfaces";
+} from "../../Base/src/interface";
 import { DevicesValue } from "../../Responsive/src/interface";
 
+export interface WpbfCustomizeGenericControl
+	extends WpbfCustomizeControl<
+		string | number,
+		WpbfCustomizeGenericControlParams
+	> {}
+
 export interface WpbfCustomizeGenericControlParams
-	extends WpbfCustomizeControlParams {
+	extends WpbfCustomizeControlParams<string | number> {
 	subtype: string;
 	inputTag: string;
 	inputType?: string;
@@ -16,11 +21,11 @@ export interface WpbfCustomizeGenericControlParams
 	rows?: number;
 }
 
-export interface WpbfCustomizeGenericControl extends WpbfCustomizeControl {
-	setting: WpbfCustomizeSetting<string | number>;
-	params: WpbfCustomizeGenericControlParams;
-	updateComponentState?: (val: string | number) => void;
-}
+export interface WpbfCustomizeResponsiveGenericControl
+	extends WpbfCustomizeControl<
+		DevicesValue | string,
+		WpbfCustomizeResponsiveGenericControlParams
+	> {}
 
 export interface WpbfCustomizeResponsiveGenericControlParams
 	extends WpbfCustomizeGenericControlParams {
@@ -29,11 +34,4 @@ export interface WpbfCustomizeResponsiveGenericControlParams
 	devices: string[];
 	deviceIcons: Record<string, string>;
 	saveAsJson: boolean;
-}
-
-export interface WpbfCustomizeResponsiveGenericControl
-	extends WpbfCustomizeControl {
-	setting: WpbfCustomizeSetting<DevicesValue | string>;
-	params: WpbfCustomizeResponsiveGenericControlParams;
-	updateComponentState?: (val: DevicesValue | string) => void;
 }

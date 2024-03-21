@@ -43,7 +43,7 @@
 /**
  * WpbfCustomize object.
  *
- * @typedef {import("./Customizer/Controls/Base/src/interfaces").WpbfCustomize} WpbfCustomize
+ * @typedef {import("./Customizer/Controls/Base/src/interface").WpbfCustomize} WpbfCustomize
  */
 
 /**

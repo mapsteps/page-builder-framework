@@ -2,7 +2,7 @@ import React, { ChangeEvent, MouseEvent, useRef } from "react";
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeSetting,
-} from "../../Base/src/interfaces";
+} from "../../Base/src/interface";
 
 export default function SliderForm(props: {
 	control: WpbfCustomizeControl;

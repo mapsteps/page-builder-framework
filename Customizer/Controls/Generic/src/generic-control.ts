@@ -1,4 +1,4 @@
-import { WpbfCustomize } from "../../Base/src/interfaces";
+import { WpbfCustomize } from "../../Base/src/interface";
 import { WpbfCustomizeGenericControl } from "./interface";
 import {
 	limitNumber,
@@ -11,9 +11,12 @@ declare var wp: {
 };
 
 wp.customize.controlConstructor["wpbf-generic"] =
-	wp.customize.wpbfDynamicControl.extend({
-		initWpbfControl: function (control: WpbfCustomizeGenericControl) {
-			control = control || (this as WpbfCustomizeGenericControl);
+	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeGenericControl>({
+		initWpbfControl: function (
+			this: WpbfCustomizeGenericControl,
+			control?: WpbfCustomizeGenericControl,
+		) {
+			control = control || this;
 			const params = control.params;
 
 			if ("wpbf-generic" !== params.type) {
@@ -25,21 +28,23 @@ wp.customize.controlConstructor["wpbf-generic"] =
 
 			control.container
 				.find(`${inputSelector}, ${textareaSelector}`)
-				.on("change input", function () {
-					let value: string | number = (
-						this as HTMLInputElement | HTMLTextAreaElement
-					).value;
+				.on("input", function () {
+					let fieldValue: string | number =
+						this instanceof HTMLInputElement ||
+						this instanceof HTMLTextAreaElement
+							? this.value
+							: "";
 
 					if ("number" === params.subtype || "number-unit" === params.subtype) {
 						params.max = normalizeMaxValue(params.min, params.max);
 
-						value =
+						fieldValue =
 							"number" === params.subtype
-								? limitNumber(value, params.min, params.max)
-								: limitNumberWithUnit(value, params.min, params.max);
+								? limitNumber(fieldValue, params.min, params.max)
+								: limitNumberWithUnit(fieldValue, params.min, params.max);
 					}
 
-					control.setting.set(value);
+					control.setting.set(fieldValue);
 				});
 		},
 	});

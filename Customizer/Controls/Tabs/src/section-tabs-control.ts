@@ -1,6 +1,6 @@
 import "./section-tabs-control.scss";
 
-import { WpbfCustomize } from "../../Base/src/interfaces";
+import { WpbfCustomize } from "../../Base/src/interface";
 
 declare var wp: {
 	customize: WpbfCustomize;

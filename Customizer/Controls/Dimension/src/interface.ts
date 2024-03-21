@@ -1,4 +1,4 @@
-import { WpbfCustomizeControl } from "../../Base/src/interfaces";
+import { WpbfCustomizeControl } from "../../Base/src/interface";
 
 export interface WpbfCustomizeDimensionControl extends WpbfCustomizeControl {
 	wpbfNotifications: VoidFunction;

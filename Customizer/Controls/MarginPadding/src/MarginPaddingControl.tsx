@@ -3,7 +3,7 @@ import {
 	WpbfCustomize,
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/interfaces";
+} from "../../Base/src/interface";
 import {
 	MarginPaddingValue,
 	WpbfCustomizeMarginPaddingControl,

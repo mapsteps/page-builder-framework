@@ -729,6 +729,9 @@ wpbf_customizer_field()
 		'mobile'  => 1,
 	) )
 	->priority( $shop_priority++ )
+	->properties( [
+		'save_as_json' => true,
+	] )
 	->addToSection( 'woocommerce_product_catalog' );
 
 // Grid gap.

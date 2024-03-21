@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "Customizer/Controls/**/dist",
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "checkJs": true,
@@ -15,5 +16,11 @@
     "Customizer/**/*.ts",
     "assets/js/*.js",
     "types.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "vendor"
   ]
 }

@@ -1,7 +1,7 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeSetting,
-} from "../../Base/src/interfaces";
+} from "../../Base/src/interface";
 import { DevicesValue } from "../../Responsive/src/interface";
 
 export interface WpbfCustomizeInputSliderControl extends WpbfCustomizeControl {

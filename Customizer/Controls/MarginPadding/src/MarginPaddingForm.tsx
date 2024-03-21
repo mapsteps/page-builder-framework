@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { WpbfCustomizeSetting } from "../../Base/src/interfaces";
+import { WpbfCustomizeSetting } from "../../Base/src/interface";
 import {
 	MarginPaddingDimension,
 	MarginPaddingDimensionValuePair,

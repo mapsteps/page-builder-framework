@@ -209,6 +209,7 @@ class ResponsiveGenericControl extends GenericControl {
 						<textarea
 							<?php $this->input_attrs(); ?>
 							id="_customize-input-<?php echo esc_attr( $id ); ?>"
+							data-customize-setting-property-link="<?php echo esc_attr( $device ); ?>"
 							rows="<?php echo esc_attr( $this->rows ); ?>"><?php echo esc_textarea( $value ); ?></textarea>
 					<?php else : ?>
 						<input
@@ -218,6 +219,7 @@ class ResponsiveGenericControl extends GenericControl {
 							type="<?php echo esc_attr( $input_type ); ?>"
 							id="_customize-input-<?php echo esc_attr( $id ); ?>"
 							value="<?php echo esc_attr( $value ); ?>"
+							data-customize-setting-property-link="<?php echo esc_attr( $device ); ?>"
 							
 							<?php if ( 'number' === $input_type ) : ?>
 								<?php if ( null !== $this->min ) : ?>

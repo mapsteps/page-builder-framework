@@ -1,5 +1,5 @@
 import "./dimension-control.scss";
-import { WpbfCustomize, WpbfCustomizeSetting } from "../../Base/src/interfaces";
+import { WpbfCustomize, WpbfCustomizeSetting } from "../../Base/src/interface";
 import { WpbfCustomizeDimensionControl } from "./interface";
 
 declare var wp: {

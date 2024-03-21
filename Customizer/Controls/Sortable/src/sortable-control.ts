@@ -1,6 +1,6 @@
 import "./sortable-control.scss";
 
-import { WpbfCustomize } from "../../Base/src/interfaces";
+import { WpbfCustomize } from "../../Base/src/interface";
 import { WpbfCustomizeSortableControl } from "./interface";
 import _ from "lodash";
 

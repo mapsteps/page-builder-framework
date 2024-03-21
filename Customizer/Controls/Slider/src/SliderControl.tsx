@@ -2,7 +2,7 @@ import {
 	WpbfCustomize,
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/interfaces";
+} from "../../Base/src/interface";
 import { createRoot } from "react-dom/client";
 import React from "react";
 import ReactDOM from "react-dom";

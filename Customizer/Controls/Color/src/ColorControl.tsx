@@ -3,7 +3,7 @@ import {
 	WpbfCustomize,
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/interfaces";
+} from "../../Base/src/interface";
 import { WpbfCustomizeColorControl } from "./interfaces";
 import { ColorForm } from "./ColorForm";
 import React from "react";

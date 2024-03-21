@@ -2,7 +2,7 @@ import { HslColor, HsvColor, RgbColor } from "colord";
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/interfaces";
+} from "../../Base/src/interface";
 import {
 	WpbfCustomizeSelectOptionGroup,
 	WpbfCustomizeSelectOptionObject,

@@ -1,4 +1,4 @@
-import { WpbfCustomize, WpbfCustomizeControl } from "./interfaces";
+import { WpbfCustomize, WpbfCustomizeControl } from "./interface";
 import _ from "lodash";
 
 declare var wp: {

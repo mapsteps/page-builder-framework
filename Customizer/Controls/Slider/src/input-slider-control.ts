@@ -1,6 +1,6 @@
 import "./input-slider-control.scss";
 import InputSliderControl from "./InputSliderControl";
-import { WpbfCustomize } from "../../Base/src/interfaces";
+import { WpbfCustomize } from "../../Base/src/interface";
 import { WpbfCustomizeInputSliderControl } from "./interface";
 
 declare var wp: {

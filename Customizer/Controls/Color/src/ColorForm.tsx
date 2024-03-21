@@ -34,7 +34,7 @@ import useClickOutside from "./hooks/useClickOutside";
 import ColorPickerCircle from "./components/ColorPickerCircle";
 import jQuery from "jquery";
 import { WpbfCustomizeColorControl } from "./interfaces";
-import { WpbfCustomizeSetting } from "../../Base/src/interfaces";
+import { WpbfCustomizeSetting } from "../../Base/src/interface";
 import { ObjectColor } from "colord/types";
 
 // Declare global extends jQuery to have wp property.

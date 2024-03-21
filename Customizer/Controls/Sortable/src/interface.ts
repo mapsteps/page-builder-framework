@@ -1,7 +1,7 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeSetting,
-} from "../../Base/src/interfaces";
+} from "../../Base/src/interface";
 
 export interface WpbfCustomizeSortableControl extends WpbfCustomizeControl {
 	prototype: WpbfCustomizeSortableControl;

@@ -1,6 +1,6 @@
 import "./margin-padding-control.scss";
 import MarginPaddingControl from "./MarginPaddingControl";
-import { WpbfCustomize } from "../../Base/src/interfaces";
+import { WpbfCustomize } from "../../Base/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "./interface";
 
 declare var wp: {

@@ -1,5 +1,5 @@
 import "./select-control.scss";
-import {WpbfCustomize} from "../../Base/src/interfaces";
+import {WpbfCustomize} from "../../Base/src/interface";
 import SelectControl from "./SelectControl";
 import {WpbfCustomizeSelectControl} from "./interfaces";
 

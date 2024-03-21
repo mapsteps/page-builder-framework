@@ -3,7 +3,7 @@ import {
 	WpbfCustomize,
 	WpbfReversedControlDependencies,
 	WpbfReversedControlDependency,
-} from "./interfaces";
+} from "./interface";
 import hooks from "@wordpress/hooks";
 
 declare var wp: {

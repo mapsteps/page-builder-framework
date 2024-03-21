@@ -1,5 +1,5 @@
 import _, { values } from "lodash";
-import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interfaces";
+import { WpbfCustomize, WpbfCustomizeControl } from "../../Base/src/interface";
 import i18n from "@wordpress/i18n/build-types/default-i18n";
 
 declare var wp: {

@@ -11,7 +11,7 @@ class ResponsiveGenericField extends GenericField {
 	 *
 	 * @param array|string $value The value to sanitize.
 	 *
-	 * @return array
+	 * @return array|string
 	 */
 	public function sanitizeCallback( $value ) {
 

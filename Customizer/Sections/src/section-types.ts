@@ -1,7 +1,7 @@
 import {
 	WpbfCustomize,
 	WpbfCustomizeSection,
-} from "../../Controls/Base/src/interfaces";
+} from "../../Controls/Base/src/interface";
 import "./section-types.scss";
 import _ from "lodash";
 

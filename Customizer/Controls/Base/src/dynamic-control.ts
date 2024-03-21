@@ -1,12 +1,12 @@
 import hooks from "@wordpress/hooks";
 import {
 	WpbfCustomize,
+	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-	WpbfCustomizeDynamicControl,
-} from "./interfaces";
+	WpbfCustomizeElement,
+} from "./interface";
 import jQuery from "jquery";
 import _ from "lodash";
-import { Element } from "wordpress__customize-browser/Element";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -23,10 +23,15 @@ declare var wp: {
  * @see https://github.com/xwp/wp-customize-posts
  */
 export default function setupDynamicControl() {
-	wp.customize.wpbfDynamicControl = wp.customize.Control.extend({
-		initialize: function (id: string, params: WpbfCustomizeControlParams) {
-			const control: WpbfCustomizeDynamicControl =
-				this as WpbfCustomizeDynamicControl;
+	wp.customize.wpbfDynamicControl = wp.customize.Control.extend<
+		WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>
+	>({
+		initialize: function (
+			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+			id: string,
+			params: WpbfCustomizeControlParams<any>,
+		) {
+			const control = this;
 
 			if (!params.type) {
 				params.type = "wpbf-generic";
@@ -75,8 +80,10 @@ export default function setupDynamicControl() {
 		 * This is copied from wp.customize.Control.prototype.initialize(). It
 		 * should be changed in Core to be applied once the control is embedded.
 		 */
-		_setUpSettingRootLinks: function () {
-			const control = this as WpbfCustomizeDynamicControl;
+		_setUpSettingRootLinks: function (
+			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+		) {
+			const control = this;
 			const nodes = control.container.find("[data-customize-setting-link]");
 
 			nodes.each(function (i, el) {
@@ -85,7 +92,7 @@ export default function setupDynamicControl() {
 				if (!settingKey) return;
 
 				wp.customize(settingKey, function (setting) {
-					// @ts-ignore The `new` operator has TS error.
+					// @ts-ignore The `new` operator has TS error (not runtime error).
 					const element = new wp.customize.Element(node);
 					control.elements.push(element);
 					element.sync(setting);
@@ -97,8 +104,10 @@ export default function setupDynamicControl() {
 		/**
 		 * Add bidirectional data binding links between inputs and the setting properties.
 		 */
-		_setUpSettingPropertyLinks: function () {
-			const control = this as WpbfCustomizeDynamicControl;
+		_setUpSettingPropertyLinks: function (
+			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+		) {
+			const control = this;
 			let nodes;
 
 			if (!control.setting) {
@@ -109,10 +118,11 @@ export default function setupDynamicControl() {
 
 			nodes.each(function () {
 				const node = jQuery(this);
-				let element: Element;
+				let element: WpbfCustomizeElement;
 				let propertyName = node.data("customizeSettingPropertyLink");
 
-				element = wp.customize.Element(node);
+				// @ts-ignore The `new` operator has TS error (not runtime error).
+				element = new wp.customize.Element(node);
 				control.propertyElements.push(element);
 
 				if (!control.setting || typeof control.setting !== "function") {
@@ -148,8 +158,10 @@ export default function setupDynamicControl() {
 		/**
 		 * @inheritdoc
 		 */
-		ready: function () {
-			const control = this as WpbfCustomizeDynamicControl;
+		ready: function (
+			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+		) {
+			const control = this;
 
 			control._setUpSettingRootLinks?.();
 			control._setUpSettingPropertyLinks?.();
@@ -174,8 +186,10 @@ export default function setupDynamicControl() {
 		 * so that the control isn't embedded on load,
 		 * unless the containing section is already expanded.
 		 */
-		embed: function () {
-			const control = this as WpbfCustomizeDynamicControl;
+		embed: function (
+			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+		) {
+			const control = this;
 			let sectionId = control.section();
 
 			if (!sectionId) {
@@ -206,8 +220,10 @@ export default function setupDynamicControl() {
 		 * This function is called in Section.onChangeExpanded() so the control
 		 * will only get embedded when the Section is first expanded.
 		 */
-		actuallyEmbed: function () {
-			const control = this as WpbfCustomizeDynamicControl;
+		actuallyEmbed: function (
+			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+		) {
+			const control = this;
 
 			if ("resolved" === control.deferred.embedded.state()) {
 				return;
@@ -220,8 +236,11 @@ export default function setupDynamicControl() {
 		/**
 		 * This is not working with autofocus.
 		 */
-		focus: function (args: Record<string, any>) {
-			const control = this as WpbfCustomizeDynamicControl;
+		focus: function (
+			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+			args: Record<string, any>,
+		) {
+			const control = this;
 
 			control.actuallyEmbed?.();
 			wp.customize.Control.prototype.focus.call(control, args);
@@ -231,8 +250,11 @@ export default function setupDynamicControl() {
 		/**
 		 * Additional actions that run on ready.
 		 */
-		initWpbfControl: function (control?: WpbfCustomizeDynamicControl) {
-			control = control ?? (this as WpbfCustomizeDynamicControl);
+		initWpbfControl: function (
+			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+			control?: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
+		) {
+			control = control || this;
 
 			wp.hooks.doAction("wpbf.dynamicControl.initWpbfControl", this);
 

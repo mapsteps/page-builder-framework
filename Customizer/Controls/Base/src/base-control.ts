@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import "./base-control.scss";
 
-import { WpbfCustomize } from "./interfaces";
+import { WpbfCustomize } from "./interface";
 import setupDynamicControl from "./dynamic-control";
 import setupControlDependencies from "./control-dependencies";
 import { setupTooltips } from "./tooltips";
