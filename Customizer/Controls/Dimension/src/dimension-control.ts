@@ -15,7 +15,7 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 			control = control || this;
 
 			// Notifications.
-			control.wpbfNotifications();
+			control.wpbfNotifications!();
 
 			// Save the value
 			control.container.on("change keyup paste", "input", function () {
@@ -27,8 +27,8 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 		/**
 		 * Handles notifications.
 		 */
-		wpbfNotifications: function () {
-			let control = this as WpbfCustomizeDimensionControl;
+		wpbfNotifications: function (this: WpbfCustomizeDimensionControl) {
+			let control = this;
 
 			const allowUnitless = control.params.allowUnitless;
 
@@ -37,11 +37,12 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 					const code = "long_title";
 
 					if (
-						!control.validateCssValue(value) &&
+						!control.validateCssValue!(value) &&
 						(!allowUnitless || isNaN(value))
 					) {
-						(setting as WpbfCustomizeSetting<any>).notifications.add(
+						setting.notifications.add(
 							code,
+							// @ts-ignore - There's mistake in the type definition.
 							new wp.customize.Notification(code, {
 								type: "warning",
 								message: wpbfDimensionControlL10n["invalid-value"],
@@ -110,7 +111,7 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 
 			if (2 <= multiples.length) {
 				multiples.forEach(function (item) {
-					if (item && !control.validateCssValue(item)) {
+					if (item && !control.validateCssValue!(item)) {
 						multiplesValid = false;
 					}
 				});

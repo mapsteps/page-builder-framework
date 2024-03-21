@@ -34,8 +34,9 @@ import { Panel } from "wordpress__customize-browser/Panel";
 import { ThemesPanel } from "wordpress__customize-browser/ThemesPanel";
 import { Previewer } from "wordpress__customize-browser/Previewer";
 import { Element_Synchronizer } from "wordpress__customize-browser/Element";
+import { Notification } from "wordpress__customize-browser/Notification";
 
-export interface WpbfCustomize extends Values<Setting<any>> {
+export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
 	_lastSavedRevision: number;
 	_latestSettingRevision: Record<string, number>;
@@ -47,7 +48,7 @@ export interface WpbfCustomize extends Values<Setting<any>> {
 		args?: RequestChangesetUpdateOptions,
 	): JQuery.Promise<any>;
 	get(): Record<string, any>;
-	defaultConstructor: Setting<Class>;
+	defaultConstructor: WpbfCustomizeSetting<Class>;
 	control: Values<WpbfCustomizeControl<any, any>>;
 	section: Values<Section>;
 	panel: Values<Panel>;
@@ -67,11 +68,23 @@ export interface WpbfCustomize extends Values<Setting<any>> {
 	l10n: Record<string, string>;
 	previewer: Previewer<string>;
 	Control: WpbfCustomizeControl<any, any>;
+
+	// ! There's a mistake missing part in this type definition.
 	Element: WpbfCustomizeElement;
+
 	Value: Value<any>;
+
+	// ! There's a mistake missing part in this type definition.
+	Notification(arg0?: any, arg1?: any): Notification;
 
 	// Specific to PBF.
 	wpbfDynamicControl: WpbfCustomizeControl<any, any>;
+}
+
+export interface WpbfCustomizeSetting<T> extends Setting<T> {
+	get(): T;
+
+	notifications: any;
 }
 
 export interface WpbfCustomizeElement
@@ -106,17 +119,11 @@ export interface WpbfCustomizeSection extends Section {
 	params: WpbfCustomizeSectionParams;
 }
 
-export interface WpbfCustomizeSetting<T> extends Setting<T> {
-	get(): T;
-
-	notifications: any;
-}
-
 export type WpbfCustomizeControlSettings = (
-	| Record<string, Setting<any> | Value<any>>
-	| Array<Setting<any> | Value<any>>
+	| Record<string, WpbfCustomizeSetting<any> | Value<any>>
+	| Array<WpbfCustomizeSetting<any> | Value<any>>
 ) & {
-	default?: string | Setting<any> | undefined;
+	default?: string | WpbfCustomizeSetting<any> | undefined;
 };
 
 export interface WpbfCustomizeControl<SV, CP> {
@@ -162,6 +169,8 @@ export interface WpbfCustomizeControl<SV, CP> {
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
 	updateComponentState?: (val: SV) => void;
+	validateCssValue?: (value: string | number) => boolean;
+	wpbfNotifications?: VoidFunction;
 
 	// Specific to PBF's dynamic control.
 	_setUpSettingRootLinks?: () => void;

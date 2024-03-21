@@ -101,7 +101,7 @@ class DimensionControl extends BaseControl {
 			<div class="wpbf-input-control">
 				<# var val = ( data.value && _.isString( data.value ) ) ? data.value.replace( '%%', '%' ) : ''; #>
 				<input id="{{ data.inputId }}" {{{ data.inputAttrs }}} type="text" value="{{ val }}"
-					   class="{{ data.inputClass }}"/>
+						class="{{ data.inputClass }}"/>
 			</div>
 
 			<# if ( 'bottom' === data.labelPosition ) { #>
