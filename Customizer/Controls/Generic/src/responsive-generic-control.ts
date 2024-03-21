@@ -1,15 +1,11 @@
 import { WpbfCustomize } from "../../Base/src/interface";
 import { encodeJsonOrDefault } from "./string-util";
-import {
-	WpbfCustomizeResponsiveGenericControl,
-	WpbfCustomizeResponsiveGenericControlParams,
-} from "./interface";
+import { WpbfCustomizeResponsiveGenericControl } from "./interface";
 import {
 	limitNumber,
 	limitNumberWithUnit,
 	normalizeMaxValue,
 } from "./number-util";
-import { DevicesValue } from "../../Responsive/src/interface";
 import { makeDevicesValue } from "../../Responsive/src/responsive-util";
 
 declare var wp: {
@@ -34,7 +30,6 @@ wp.customize.controlConstructor["wpbf-responsive-generic"] =
 				 * Update component value's state when customizer setting's value is changed.
 				 */
 				control.setting.bind((val) => {
-					console.log("setting.bind", val);
 					control.updateComponentState!(val);
 				});
 
@@ -93,23 +88,6 @@ wp.customize.controlConstructor["wpbf-responsive-generic"] =
 
 						control.setting.set(customizerValue);
 					});
-			},
-
-			updateComponentState: function (
-				this: WpbfCustomizeResponsiveGenericControl,
-				val: string | DevicesValue,
-			) {
-				const control = this;
-				const params = control.params;
-
-				const valueRecord =
-					"string" === typeof val
-						? makeDevicesValue(params.devices, val, params.min, params.max)
-						: val;
-
-				console.log("updateComponentState", valueRecord);
-
-				// TODO: Update the DOM.
 			},
 		},
 	);
