@@ -106,10 +106,12 @@
 		cursor: pointer;
 		border: 1px solid #999;
 		box-shadow: none;
-		-webkit-transition: background-color 0.15s ease-in-out,
-		box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-		transition: background-color 0.15s ease-in-out,
-		box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+		-webkit-transition:
+			background-color 0.15s ease-in-out,
+			box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+		transition:
+			background-color 0.15s ease-in-out,
+			box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 	}
 
 	.wpbf-control-slider::-webkit-slider-thumb:hover,
@@ -130,10 +132,12 @@
 		cursor: pointer;
 		border: 1px solid #999;
 		box-shadow: none;
-		-moz-transition: background-color 0.15s ease-in-out,
-		box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-		transition: background-color 0.15s ease-in-out,
-		box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+		-moz-transition:
+			background-color 0.15s ease-in-out,
+			box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+		transition:
+			background-color 0.15s ease-in-out,
+			box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 	}
 
 	.wpbf-control-slider::-moz-range-thumb:hover,

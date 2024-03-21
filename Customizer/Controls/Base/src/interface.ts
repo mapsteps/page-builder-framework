@@ -35,6 +35,7 @@ import { ThemesPanel } from "wordpress__customize-browser/ThemesPanel";
 import { Previewer } from "wordpress__customize-browser/Previewer";
 import { Element_Synchronizer } from "wordpress__customize-browser/Element";
 import { Notification } from "wordpress__customize-browser/Notification";
+import { PartialObject } from "lodash";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -147,7 +148,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	settings: WpbfCustomizeControlSettings;
 	setting: WpbfCustomizeSetting<SV>;
 	propertyElements: Array<WpbfCustomizeElement>;
-	extend<CT>(this: CT, protoProps: object, classProps?: object): CT;
+	extend<CT>(this: CT, protoProps: PartialObject<CT>, classProps?: object): CT;
 	initialize(id?: string, options?: CP): void;
 	linkElements(): void;
 	embed(): void;

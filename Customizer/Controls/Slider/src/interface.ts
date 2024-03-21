@@ -1,16 +1,32 @@
 import {
 	WpbfCustomizeControl,
-	WpbfCustomizeSetting,
+	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
 import { DevicesValue } from "../../Responsive/src/interface";
 
-export interface WpbfCustomizeInputSliderControl extends WpbfCustomizeControl {
-	setting: WpbfCustomizeSetting<string | number>;
-	updateComponentState?: (val: string | number) => void;
-}
+export interface WpbfCustomizeSliderControlParams
+	extends WpbfCustomizeControlParams<number | string> {}
+
+export interface WpbfCustomizeSliderControl
+	extends WpbfCustomizeControl<
+		number | string,
+		WpbfCustomizeSliderControlParams
+	> {}
+
+export interface WpbfCustomizeInputSliderControlParams
+	extends WpbfCustomizeControlParams<string | number> {}
+
+export interface WpbfCustomizeInputSliderControl
+	extends WpbfCustomizeControl<
+		string | number,
+		WpbfCustomizeInputSliderControlParams
+	> {}
 
 export interface WpbfCustomizeResponsiveInputSliderControl
-	extends WpbfCustomizeControl {
-	setting: WpbfCustomizeSetting<string | DevicesValue>;
-	updateComponentState?: (val: string | DevicesValue) => void;
-}
+	extends WpbfCustomizeControl<
+		string | DevicesValue,
+		WpbfCustomizeResponsiveInputSliderControlParams
+	> {}
+
+export interface WpbfCustomizeResponsiveInputSliderControlParams
+	extends WpbfCustomizeControlParams<string | DevicesValue> {}

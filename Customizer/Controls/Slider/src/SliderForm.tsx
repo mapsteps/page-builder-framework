@@ -1,12 +1,10 @@
 import React, { ChangeEvent, MouseEvent, useRef } from "react";
-import {
-	WpbfCustomizeControl,
-	WpbfCustomizeSetting,
-} from "../../Base/src/interface";
+import { WpbfCustomizeSetting } from "../../Base/src/interface";
+import { WpbfCustomizeSliderControl } from "./interface";
 
 export default function SliderForm(props: {
-	control: WpbfCustomizeControl;
-	customizerSetting: WpbfCustomizeSetting<any>;
+	control: WpbfCustomizeSliderControl;
+	customizerSetting: WpbfCustomizeSetting<string | number>;
 	setNotificationContainer?: any;
 	label?: string;
 	description?: string;
@@ -22,7 +20,9 @@ export default function SliderForm(props: {
 		useRef(null);
 	const valueRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
 
-	props.control.updateComponentState = (val: string) => {
+	props.control.updateComponentState = (value) => {
+		const val = String(value);
+
 		if ("slider" === trigger) {
 			if (valueRef && valueRef.current) {
 				valueRef.current.textContent = val;
@@ -57,7 +57,7 @@ export default function SliderForm(props: {
 	}
 
 	function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-		const target = e.target as HTMLInputElement;
+		const target = e.target;
 		trigger = "range" === target.type ? "slider" : "input";
 
 		const value = parseValue(target.value);

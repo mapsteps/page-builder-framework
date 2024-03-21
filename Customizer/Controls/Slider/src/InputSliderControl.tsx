@@ -1,13 +1,16 @@
 import {
+	AnyWpbfCustomizeControl,
 	WpbfCustomize,
 	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
 import { createRoot } from "react-dom/client";
 import React from "react";
 import ReactDOM from "react-dom";
 import InputSliderForm from "./InputSliderForm";
-import { WpbfCustomizeInputSliderControl } from "./interface";
+import {
+	WpbfCustomizeInputSliderControl,
+	WpbfCustomizeInputSliderControlParams,
+} from "./interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -21,8 +24,12 @@ declare var wp: {
  * @augments wp.customize.Class
  */
 const InputSliderControl = wp.customize.Control.extend({
-	initialize: function (id: string, params: WpbfCustomizeControlParams) {
-		const control = this as WpbfCustomizeInputSliderControl;
+	initialize: function (
+		this: WpbfCustomizeInputSliderControl,
+		id: string,
+		params: WpbfCustomizeInputSliderControlParams,
+	) {
+		const control = this;
 
 		// Bind functions to this control context for passing as React props.
 		control.setNotificationContainer =
@@ -31,7 +38,7 @@ const InputSliderControl = wp.customize.Control.extend({
 		wp.customize.Control.prototype.initialize.call(control, id, params);
 
 		// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
-		function onRemoved(removedControl: WpbfCustomizeControl) {
+		function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 			if (control !== removedControl) return;
 			if (control.destroy) control.destroy();
 			control.container.remove();
@@ -46,8 +53,11 @@ const InputSliderControl = wp.customize.Control.extend({
 	 *
 	 * This will be called when the React component is mounted.
 	 */
-	setNotificationContainer: function setNotificationContainer(el: HTMLElement) {
-		const control = this as WpbfCustomizeInputSliderControl;
+	setNotificationContainer: function setNotificationContainer(
+		this: WpbfCustomizeInputSliderControl,
+		el: HTMLElement,
+	) {
+		const control = this;
 
 		control.notifications.container = jQuery(el);
 		control.notifications.render();
@@ -58,8 +68,8 @@ const InputSliderControl = wp.customize.Control.extend({
 	 *
 	 * This will be called from the Control#embed() method in the parent class.
 	 */
-	renderContent: function renderContent() {
-		const control = this as WpbfCustomizeInputSliderControl;
+	renderContent: function renderContent(this: WpbfCustomizeInputSliderControl) {
+		const control = this;
 		const params = control.params;
 		const root = createRoot(control.container[0]);
 
@@ -88,8 +98,8 @@ const InputSliderControl = wp.customize.Control.extend({
 	 *
 	 * React is available to be used here instead of the wp.customize.Element abstraction.
 	 */
-	ready: function ready() {
-		const control = this as WpbfCustomizeInputSliderControl;
+	ready: function ready(this: WpbfCustomizeInputSliderControl) {
+		const control = this;
 
 		if (control.setting) {
 			/**
@@ -114,8 +124,8 @@ const InputSliderControl = wp.customize.Control.extend({
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/31334
 	 */
-	destroy: function destroy() {
-		const control = this as WpbfCustomizeInputSliderControl;
+	destroy: function destroy(this: WpbfCustomizeInputSliderControl) {
+		const control = this;
 
 		// Garbage collection: undo mounting that was done in the embed/renderContent method.
 		ReactDOM.unmountComponentAtNode(control.container[0]);

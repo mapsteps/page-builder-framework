@@ -1,8 +1,5 @@
 import React, { ChangeEvent, MouseEvent, useRef } from "react";
-import {
-	WpbfCustomizeControl,
-	WpbfCustomizeSetting,
-} from "../../Base/src/interface";
+import { WpbfCustomizeSetting } from "../../Base/src/interface";
 import {
 	limitValue,
 	makeNumberUnitPair,
@@ -10,9 +7,10 @@ import {
 	makeValueForInput,
 	makeValueForSlider,
 } from "./slider-util";
+import { WpbfCustomizeInputSliderControl } from "./interface";
 
 export default function InputSliderForm(props: {
-	control: WpbfCustomizeControl;
+	control: WpbfCustomizeInputSliderControl;
 	customizerSetting: WpbfCustomizeSetting<string | number>;
 	setNotificationContainer: any;
 	label: string | undefined;
