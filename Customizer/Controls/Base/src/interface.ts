@@ -71,12 +71,12 @@ export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	previewedDevice: Value<string>;
 	Control: WpbfCustomizeControl<any, any>;
 
-	// ! There's a mistake missing part in this type definition.
+	// ! There's a mistake or missing part in this type definition.
 	Element: WpbfCustomizeElement;
 
 	Value: Value<any>;
 
-	// ! There's a mistake missing part in this type definition.
+	// ! There's a mistake or missing part in this type definition.
 	Notification(arg0?: any, arg1?: any): Notification;
 
 	// Specific to PBF.

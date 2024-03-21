@@ -1,8 +1,6 @@
 import {
 	AnyWpbfCustomizeControl,
 	WpbfCustomize,
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
 import { createRoot } from "react-dom/client";
 import React from "react";
