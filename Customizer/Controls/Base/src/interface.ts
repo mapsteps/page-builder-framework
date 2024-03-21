@@ -179,6 +179,9 @@ export interface WpbfCustomizeControl<SV, CP> {
 	_setUpSettingPropertyLinks?: () => void;
 	initWpbfControl?: (control?: WpbfCustomizeControl<SV, CP>) => void;
 	actuallyEmbed?: () => void;
+
+	// Specific to PBF's sortable control.
+	getNewValues?: () => any[];
 }
 
 export interface AnyWpbfCustomizeControl

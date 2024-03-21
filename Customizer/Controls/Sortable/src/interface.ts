@@ -1,11 +1,11 @@
 import {
 	WpbfCustomizeControl,
-	WpbfCustomizeSetting,
+	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
 
-export interface WpbfCustomizeSortableControl extends WpbfCustomizeControl {
-	prototype: WpbfCustomizeSortableControl;
-	setting: WpbfCustomizeSetting<any[]>;
-	updateComponentState?: (val: any[]) => void;
-	getNewValue: () => any[];
+export interface WpbfCustomizeSortableControlParams
+	extends WpbfCustomizeControlParams<any[]> {}
+
+export interface WpbfCustomizeSortableControl
+	extends WpbfCustomizeControl<any[], WpbfCustomizeSortableControlParams> {
 }
