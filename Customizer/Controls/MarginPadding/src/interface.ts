@@ -1,5 +1,6 @@
 import {
 	WpbfCustomizeControl,
+	WpbfCustomizeControlParams,
 	WpbfCustomizeSetting,
 } from "../../Base/src/interface";
 
@@ -24,11 +25,11 @@ export interface MarginPaddingDimensionValuePair {
 	value: string | number;
 }
 
+export interface WpbfCustomizeMarginPaddingControlParams
+	extends WpbfCustomizeControlParams<MarginPaddingValue | string> {}
+
 export interface WpbfCustomizeMarginPaddingControl
-	extends WpbfCustomizeControl {
-	prototype: WpbfCustomizeControl;
-	setting: WpbfCustomizeSetting<MarginPaddingValue | string>;
-	setNotificationContainer: (el: HTMLElement) => void;
-	destroy: VoidFunction;
-	updateComponentState: (val: MarginPaddingValue | string) => void;
-}
+	extends WpbfCustomizeControl<
+		MarginPaddingValue | string,
+		WpbfCustomizeMarginPaddingControlParams
+	> {}

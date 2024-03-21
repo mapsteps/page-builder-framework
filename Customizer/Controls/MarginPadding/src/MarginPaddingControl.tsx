@@ -1,12 +1,13 @@
 import MarginPaddingForm from "./MarginPaddingForm";
 import {
+	AnyWpbfCustomizeControl,
 	WpbfCustomize,
 	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
 import {
 	MarginPaddingValue,
 	WpbfCustomizeMarginPaddingControl,
+	WpbfCustomizeMarginPaddingControlParams,
 } from "./interface";
 import ReactDOM from "react-dom";
 import React from "react";
@@ -24,21 +25,23 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 	/**
 	 * Initialize.
 	 */
-	initialize: function (id: string, params: WpbfCustomizeControlParams) {
-		const control = this as WpbfCustomizeMarginPaddingControl;
+	initialize: function (
+		this: WpbfCustomizeMarginPaddingControl,
+		id: string,
+		params: WpbfCustomizeMarginPaddingControlParams,
+	) {
+		const control = this;
 
 		// Bind functions to this control context for passing as React props.
 		control.setNotificationContainer =
-			control.setNotificationContainer.bind(control);
+			control.setNotificationContainer!.bind(control);
 
 		wp.customize.Control.prototype.initialize.call(control, id, params);
 
 		// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
-		function onRemoved(
-			removedControl: WpbfCustomizeControl | WpbfCustomizeMarginPaddingControl,
-		) {
+		function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 			if (control === removedControl) {
-				control.destroy();
+				control.destroy!();
 				control.container.remove();
 				wp.customize.control.unbind("removed", onRemoved);
 			}
@@ -53,9 +56,10 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 	 * This is called when the React component is mounted.
 	 */
 	setNotificationContainer: function setNotificationContainer(
+		this: WpbfCustomizeMarginPaddingControl,
 		element: HTMLElement,
 	) {
-		const control = this as WpbfCustomizeMarginPaddingControl;
+		const control = this;
 
 		control.notifications.container = jQuery(element);
 		control.notifications.render();
@@ -66,8 +70,10 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 	 *
 	 * This is called from the Control#embed() method in the parent class.
 	 */
-	renderContent: function renderContent() {
-		const control = this as WpbfCustomizeMarginPaddingControl;
+	renderContent: function renderContent(
+		this: WpbfCustomizeMarginPaddingControl,
+	) {
+		const control = this;
 		const root = createRoot(control.container[0]);
 		const params = control.params;
 
@@ -111,8 +117,8 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 	 *
 	 * React is available to be used here instead of the wp.customize.Element abstraction.
 	 */
-	ready: function ready() {
-		const control = this as WpbfCustomizeMarginPaddingControl;
+	ready: function ready(this: WpbfCustomizeMarginPaddingControl) {
+		const control = this;
 
 		/**
 		 * Update component value's state when customizer setting's value is changed.
@@ -123,7 +129,7 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 					? makeObjValueWithoutUnitFromJson(control.params.dimensions, val)
 					: val;
 
-			control.updateComponentState(newVal);
+			control.updateComponentState!(newVal);
 		});
 	},
 
@@ -139,8 +145,8 @@ const KirkiMarginPaddingControl = wp.customize.Control.extend({
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/31334
 	 */
-	destroy: function destroy() {
-		const control = this as WpbfCustomizeMarginPaddingControl;
+	destroy: function destroy(this: WpbfCustomizeMarginPaddingControl) {
+		const control = this;
 
 		// Garbage collection: undo mounting that was done in the embed/renderContent method.
 		ReactDOM.unmountComponentAtNode(control.container[0]);
