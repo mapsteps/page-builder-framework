@@ -68,6 +68,7 @@ export interface WpbfCustomize extends Values<Setting<any>> {
 	previewer: Previewer<string>;
 	Control: WpbfCustomizeControl<any, any>;
 	Element: WpbfCustomizeElement;
+	Value: Value<any>;
 
 	// Specific to PBF.
 	wpbfDynamicControl: WpbfCustomizeControl<any, any>;
