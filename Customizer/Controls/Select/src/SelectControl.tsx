@@ -1,10 +1,10 @@
 import {
+	AnyWpbfCustomizeControl,
 	WpbfCustomize,
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
 import {
 	WpbfCustomizeSelectControl,
+	WpbfCustomizeSelectControlParams,
 	WpbfCustomizeSelectOptionGroup,
 	WpbfCustomizeSelectOptionObject,
 } from "./interfaces";
@@ -19,8 +19,12 @@ declare var wp: {
 };
 
 const SelectControl = wp.customize.Control.extend({
-	initialize: function (id: string, params: WpbfCustomizeControlParams) {
-		const control = this as WpbfCustomizeSelectControl;
+	initialize: function (
+		this: WpbfCustomizeSelectControl,
+		id: string,
+		params: WpbfCustomizeSelectControlParams,
+	) {
+		const control = this;
 
 		// Bind functions to this control context for passing as React props
 		control.setNotificationContainer =
@@ -29,7 +33,7 @@ const SelectControl = wp.customize.Control.extend({
 		wp.customize.Control.prototype.initialize.call(control, id, params);
 
 		// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
-		function onRemoved(removedControl: WpbfCustomizeControl) {
+		function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 			if (control === removedControl) {
 				if (control.destroy) control.destroy();
 				control.container.remove();
@@ -45,8 +49,11 @@ const SelectControl = wp.customize.Control.extend({
 	 *
 	 * This is called when the React component is mounted.
 	 */
-	setNotificationContainer: function setNotificationContainer(el: HTMLElement) {
-		const control = this as WpbfCustomizeSelectControl;
+	setNotificationContainer: function setNotificationContainer(
+		this: WpbfCustomizeSelectControl,
+		el: HTMLElement,
+	) {
+		const control = this;
 		control.notifications.container = jQuery(el);
 		control.notifications.render();
 	},
@@ -56,8 +63,8 @@ const SelectControl = wp.customize.Control.extend({
 	 *
 	 * This is called from the Control#embed() method in the parent class.
 	 */
-	renderContent: function renderContent() {
-		const control = this as WpbfCustomizeSelectControl;
+	renderContent: function renderContent(this: WpbfCustomizeSelectControl) {
+		const control = this;
 		let value = control.setting.get();
 
 		if (Array.isArray(value)) {
@@ -96,8 +103,8 @@ const SelectControl = wp.customize.Control.extend({
 	 *
 	 * React is available to be used here instead of the wp.customize.Element abstraction.
 	 */
-	ready: function ready() {
-		const control = this as WpbfCustomizeSelectControl;
+	ready: function ready(this: WpbfCustomizeSelectControl) {
+		const control = this;
 
 		// Re-render control when setting changes.
 		control.setting.bind(() => {
@@ -105,8 +112,8 @@ const SelectControl = wp.customize.Control.extend({
 		});
 	},
 
-	isMulti: function () {
-		const control = this as WpbfCustomizeSelectControl;
+	isMulti: function (this: WpbfCustomizeSelectControl) {
+		const control = this;
 		return control.params.isMulti;
 	},
 
@@ -117,8 +124,8 @@ const SelectControl = wp.customize.Control.extend({
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/31334
 	 */
-	destroy: function destroy() {
-		const control = this as WpbfCustomizeSelectControl;
+	destroy: function destroy(this: WpbfCustomizeSelectControl) {
+		const control = this;
 
 		// Garbage collection: undo mounting that was done in the embed/renderContent method.
 		ReactDOM.unmountComponentAtNode(control.container[0]);
@@ -131,16 +138,20 @@ const SelectControl = wp.customize.Control.extend({
 
 	disabledSelectOptions: [],
 
-	isOptionDisabled: function (option: any) {
-		const control = this as WpbfCustomizeSelectControl;
+	isOptionDisabled: function (this: WpbfCustomizeSelectControl, option: any) {
+		const control = this;
 
 		if (!control) return false;
 		if (!control.disabledSelectOptions) return false;
 		return !!control.disabledSelectOptions.indexOf(option);
 	},
 
-	doSelectAction: function (action: any, arg: any) {
-		const control = this as WpbfCustomizeSelectControl;
+	doSelectAction: function (
+		this: WpbfCustomizeSelectControl,
+		action: any,
+		arg: any,
+	) {
+		const control = this;
 		let i;
 
 		switch (action) {
@@ -170,8 +181,8 @@ const SelectControl = wp.customize.Control.extend({
 		control.renderContent();
 	},
 
-	formatOptions: function () {
-		const control = this as WpbfCustomizeSelectControl;
+	formatOptions: function (this: WpbfCustomizeSelectControl) {
+		const control = this;
 
 		if (Array.isArray(control.params.choices)) {
 			return control.params.choices;
@@ -212,14 +223,14 @@ const SelectControl = wp.customize.Control.extend({
 		return useGroups ? formattedOptionGroups : formattedOptions;
 	},
 
-	getFormattedOptions: function () {
-		const control = this as WpbfCustomizeSelectControl;
+	getFormattedOptions: function (this: WpbfCustomizeSelectControl) {
+		const control = this;
 
 		return control.formatOptions();
 	},
 
-	getOptionProps: function (value: any) {
-		const control = this as WpbfCustomizeSelectControl;
+	getOptionProps: function (this: WpbfCustomizeSelectControl, value: any) {
+		const control = this;
 
 		const options = control.getFormattedOptions();
 		let i: any;
