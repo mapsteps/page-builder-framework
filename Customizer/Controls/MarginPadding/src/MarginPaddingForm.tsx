@@ -12,7 +12,7 @@ import {
 	makeObjValueWithUnit,
 	parseSingleValueAsObject,
 } from "./margin-padding-util";
-import DeviceButtons from "../../Base/src/DeviceButtons";
+import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import { encodeJsonOrDefault } from "../../Generic/src/string-util";
 
 export default function MarginPaddingForm(props: {

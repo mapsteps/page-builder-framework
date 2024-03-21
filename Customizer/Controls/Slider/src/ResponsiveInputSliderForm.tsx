@@ -1,7 +1,7 @@
 import React, { ChangeEvent, MouseEvent, useState } from "react";
 import { WpbfCustomizeSetting } from "../../Base/src/interface";
 import { WpbfCustomizeResponsiveInputSliderControl } from "./interface";
-import DeviceButtons from "../../Base/src/DeviceButtons";
+import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import {
 	makeDevicesValue,
 	makeNumberUnitPair,
