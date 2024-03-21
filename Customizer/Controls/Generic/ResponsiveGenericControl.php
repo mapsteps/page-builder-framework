@@ -194,6 +194,21 @@ class ResponsiveGenericControl extends GenericControl {
 		<div class="customize-control-notifications-container"></div>
 
 		<div class="wpbf-control-form">
+			<?php if ( $this->save_as_json ) : ?>
+				<?php if ( 'textarea' === $input_tag ) : ?>
+					<textarea
+						data-customize-setting-link="<?php echo esc_attr( $this->id ); ?>"
+						style="position: fixed; opacity: 0; visibility: hidden; height: 0; width: 0; z-index: -1;"
+					><?php echo esc_textarea( wp_json_encode( $this->value_array ) ); ?></textarea>
+				<?php else : ?>
+					<input
+						type="hidden"
+						data-customize-setting-link="<?php echo esc_attr( $this->id ); ?>"
+						value="<?php echo esc_attr( wp_json_encode( $this->value_array ) ); ?>"
+					>
+				<?php endif; ?>
+			<?php endif; ?>
+
 			<?php foreach ( $this->devices as $loop_index => $device ) : ?>
 				<?php
 				// The value here is already sanitized from `customConstructor` call process.
@@ -209,7 +224,11 @@ class ResponsiveGenericControl extends GenericControl {
 						<textarea
 							<?php $this->input_attrs(); ?>
 							id="_customize-input-<?php echo esc_attr( $id ); ?>"
-							data-customize-setting-property-link="<?php echo esc_attr( $device ); ?>"
+							
+							<?php if ( ! $this->save_as_json ) : ?>
+								data-customize-setting-property-link="<?php echo esc_attr( $device ); ?>"
+							<?php endif; ?>
+							
 							rows="<?php echo esc_attr( $this->rows ); ?>"><?php echo esc_textarea( $value ); ?></textarea>
 					<?php else : ?>
 						<input
@@ -219,7 +238,10 @@ class ResponsiveGenericControl extends GenericControl {
 							type="<?php echo esc_attr( $input_type ); ?>"
 							id="_customize-input-<?php echo esc_attr( $id ); ?>"
 							value="<?php echo esc_attr( $value ); ?>"
-							data-customize-setting-property-link="<?php echo esc_attr( $device ); ?>"
+
+							<?php if ( ! $this->save_as_json ) : ?>
+								data-customize-setting-property-link="<?php echo esc_attr( $device ); ?>"
+							<?php endif; ?>
 							
 							<?php if ( 'number' === $input_type ) : ?>
 								<?php if ( null !== $this->min ) : ?>
