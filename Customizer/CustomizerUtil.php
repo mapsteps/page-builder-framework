@@ -20,6 +20,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\Media\ImageField;
+use Mapsteps\Wpbf\Customizer\Controls\Media\UploadField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
@@ -78,6 +79,7 @@ class CustomizerUtil {
 		'responsive-input-slider'   => '\Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderControl',
 		'section-tabs'              => '\Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsControl',
 		'sortable'                  => '\Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableControl',
+		'upload'                    => '\Mapsteps\Wpbf\Customizer\Controls\Media\UploadControl',
 	);
 
 	/**
@@ -97,6 +99,7 @@ class CustomizerUtil {
 		'radio-image',
 		'section-tabs',
 		'sortable',
+		'upload',
 	);
 
 	/**
@@ -340,6 +343,9 @@ class CustomizerUtil {
 				break;
 			case 'sortable':
 				$field = new SortableField( $control );
+				break;
+			case 'upload':
+				$field = new UploadField( $control );
 				break;
 		}
 
