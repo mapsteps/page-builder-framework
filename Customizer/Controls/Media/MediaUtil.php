@@ -2,15 +2,29 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
-class ImageUtil {
+class MediaUtil {
 
 	/**
-	 * Make sure the array is properly formatted.
+	 * Allowed save_as value.
+	 *
+	 * @var string[]
+	 */
+	public $allowed_save_as = [ 'url', 'id', 'array' ];
+
+	/**
+	 * Default of the 'save_as' property.
+	 *
+	 * @var string
+	 */
+	public $default_save_as = 'url';
+
+	/**
+	 * Make sure the image source array is properly formatted.
 	 *
 	 * @param array $image_src The image source.
 	 * @return array
 	 */
-	public function properlyFormatArray( $image_src ) {
+	public function properlyFormatImageSrcArray( $image_src ) {
 
 		return [
 			'id'     => isset( $image_src['id'] ) ? absint( $image_src ['id'] ) : 0,
@@ -27,19 +41,19 @@ class ImageUtil {
 	 * @param string $image_url URL of the image.
 	 * @return array
 	 */
-	public function urlToArray( $image_url ) {
+	public function imageUrlToSrcArray( $image_url ) {
 
 		if ( ! is_string( $image_url ) ) {
-			return $this->makeEmptySrcArray();
+			return $this->makeEmptyImageSrcArray();
 		}
 
 		$image_id = attachment_url_to_postid( $image_url );
 
 		if ( ! $image_id ) {
-			return $this->makeEmptySrcArray();
+			return $this->makeEmptyImageSrcArray();
 		}
 
-		return $this->idToArray( $image_id );
+		return $this->imageIdToSrcArray( $image_id );
 
 	}
 
@@ -49,43 +63,44 @@ class ImageUtil {
 	 * @param int|string $image_id ID of the image.
 	 * @return array
 	 */
-	public function idToArray( $image_id ) {
+	public function imageIdToSrcArray( $image_id ) {
 
 		if ( ! is_numeric( $image_id ) ) {
-			return $this->makeEmptySrcArray();
+			return $this->makeEmptyImageSrcArray();
 		}
 
-		$image_src = wp_get_attachment_image_src( absint( $image_id ), 'full' );
+		$image_id  = absint( $image_id );
+		$image_src = wp_get_attachment_image_src( $image_id, 'full' );
 
 		if ( ! $image_src ) {
-			return $this->makeEmptySrcArray();
+			return $this->makeEmptyImageSrcArray();
 		}
 
 		return [
 			'id'     => $image_id,
-			'url'    => isset( $image_src[0] ) ? $image_src[0] : '',
-			'width'  => isset( $image_src[1] ) ? $image_src[1] : 0,
-			'height' => isset( $image_src[2] ) ? $image_src[2] : 0,
+			'url'    => isset( $image_src[0] ) ? esc_url_raw( $image_src[0] ) : '',
+			'width'  => isset( $image_src[1] ) ? absint( $image_src[1] ) : 0,
+			'height' => isset( $image_src[2] ) ? absint( $image_src[2] ) : 0,
 		];
 
 	}
 
 	/**
-	 * Convert an unknown-type value to image src.
+	 * Convert an unknown-type value to image source array.
 	 *
 	 * @param mixed $value The value to convert.
 	 * @return array
 	 */
-	public function unknownToArray( $value ) {
+	public function unknownToImageSrcArray( $value ) {
 
-		$image_src = $this->makeEmptySrcArray();
+		$image_src = $this->makeEmptyImageSrcArray();
 
 		if ( is_string( $value ) ) {
-			$image_src = $this->urlToArray( $value );
+			$image_src = $this->imageUrlToSrcArray( $value );
 		} elseif ( is_numeric( $value ) ) {
-			$image_src = $this->idToArray( $value );
+			$image_src = $this->imageIdToSrcArray( $value );
 		} elseif ( is_array( $value ) ) {
-			$image_src = $this->properlyFormatArray( $value );
+			$image_src = $this->properlyFormatImageSrcArray( $value );
 		}
 
 		return $image_src;
@@ -95,7 +110,7 @@ class ImageUtil {
 	/**
 	 * Make empty image source array.
 	 */
-	public function makeEmptySrcArray() {
+	public function makeEmptyImageSrcArray() {
 
 		return [
 			'id'     => 0,

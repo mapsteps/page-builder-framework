@@ -3,7 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Media\ImageUtil;
+use Mapsteps\Wpbf\Customizer\Controls\Media\MediaUtil;
 use WP_Customize_Manager;
 
 class ImageField extends BaseField {
@@ -17,22 +17,15 @@ class ImageField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
+		$media_util = new MediaUtil();
 		$props      = $this->control->custom_properties;
-		$save_as    = ImageControl::$default_save_as;
-		$image_util = new ImageUtil();
+		$save_as    = $media_util->default_save_as;
 
-		$image_src = $image_util->makeEmptySrcArray();
-
-		if ( is_string( $value ) ) {
-			$image_src = $image_util->urlToArray( $value );
-		} elseif ( is_numeric( $value ) ) {
-			$image_src = $image_util->idToArray( $value );
-		} elseif ( is_array( $value ) ) {
-			$image_src = $image_util->properlyFormatArray( $value );
-		}
+		// The properties of $image_src here is already sanitized.
+		$image_src = $media_util->unknownToImageSrcArray( $value );
 
 		if ( ! empty( $props['save_as'] ) && is_string( $props['save_as'] ) ) {
-			if ( in_array( $props['save_as'], ImageControl::$allowed_save_as, true ) ) {
+			if ( in_array( $props['save_as'], $media_util->allowed_save_as, true ) ) {
 				$save_as = $props['save_as'];
 			}
 		}

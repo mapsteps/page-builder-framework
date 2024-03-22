@@ -3,7 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
-use Mapsteps\Wpbf\Customizer\Controls\Media\ImageUtil;
+use Mapsteps\Wpbf\Customizer\Controls\Media\MediaUtil;
 use WP_Customize_Setting;
 
 class ImageControl extends BaseControl {
@@ -14,20 +14,6 @@ class ImageControl extends BaseControl {
 	 * @var string
 	 */
 	public $type = 'wpbf-image';
-
-	/**
-	 * Allowed save_as value.
-	 *
-	 * @var string[]
-	 */
-	public static $allowed_save_as = [ 'url', 'id', 'array' ];
-
-	/**
-	 * Default of the 'save_as' property.
-	 *
-	 * @var string
-	 */
-	public static $default_save_as = 'url';
 
 	/**
 	 * The 'array' format of the default value.
@@ -53,9 +39,9 @@ class ImageControl extends BaseControl {
 	/**
 	 * The image utility.
 	 *
-	 * @var ImageUtil
+	 * @var MediaUtil
 	 */
-	protected $image_util;
+	protected $media_util;
 
 	/**
 	 * Constructor.
@@ -73,24 +59,24 @@ class ImageControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		$this->image_util = new ImageUtil();
+		$this->media_util = new MediaUtil();
 
 		if ( ! empty( $args['save_as'] ) && is_string( $args['save_as'] ) ) {
 			$args['save_as'] = strtolower( $args['save_as'] );
 
-			if ( in_array( $args['save_as'], static::$allowed_save_as, true ) ) {
+			if ( in_array( $args['save_as'], $this->media_util->allowed_save_as, true ) ) {
 				$this->save_as = $args['save_as'];
 			}
 		} else {
-			$this->save_as = static::$default_save_as;
+			$this->save_as = $this->media_util->default_save_as;
 		}
 
-		$this->default_src = $this->image_util->makeEmptySrcArray();
+		$this->default_src = $this->media_util->makeEmptyImageSrcArray();
 
 		// Normalize the default value.
 		if ( $this->setting instanceof WP_Customize_Setting ) {
 			$default_value     = $this->setting->default;
-			$this->default_src = $this->image_util->unknownToArray( $default_value );
+			$this->default_src = $this->media_util->unknownToImageSrcArray( $default_value );
 
 			// We allow empty string.
 			if ( '' !== $default_value ) {
@@ -153,7 +139,7 @@ class ImageControl extends BaseControl {
 		$this->json['labels']     = $this->labels;
 		$this->json['saveAs']     = $this->save_as;
 		$this->json['defaultSrc'] = $this->default_src;
-		$this->json['valueSrc']   = $this->image_util->unknownToArray( $this->value() );
+		$this->json['valueSrc']   = $this->media_util->unknownToImageSrcArray( $this->value() );
 
 	}
 
