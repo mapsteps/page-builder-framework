@@ -9,102 +9,12 @@ namespace Mapsteps\Wpbf\Customizer;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerPanelEntity;
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerSectionEntity;
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
-use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
 use WP_Customize_Manager;
 
 /**
  * Singleton class for Wpbf customizer.
  */
 final class Customizer {
-
-	/**
-	 * Instance of the class.
-	 *
-	 * @var self
-	 */
-	public static $instance;
-
-	/**
-	 * Option type.
-	 *
-	 * @var string
-	 */
-	public static $option_type = 'theme_mod';
-
-	/**
-	 * Capability.
-	 *
-	 * @var string
-	 */
-	public static $capability = 'edit_theme_options';
-
-	/**
-	 * Added settings.
-	 *
-	 * @var CustomizerSettingEntity[]
-	 */
-	public static $added_settings = array();
-
-	/**
-	 * Added panels.
-	 *
-	 * @var CustomizerPanelEntity[]
-	 */
-	public static $added_panels = array();
-
-	/**
-	 * Added sections.
-	 *
-	 * @var CustomizerSectionEntity[]
-	 */
-	public static $added_sections = array();
-
-	/**
-	 * Added controls.
-	 *
-	 * @var CustomizerControlEntity[]
-	 */
-	public static $added_controls = array();
-
-	/**
-	 * Added field dependencies.
-	 *
-	 * @var array
-	 */
-	public static $added_control_dependencies = array();
-
-	/**
-	 * Added partial refreshes.
-	 *
-	 * @var PartialRefreshEntity[]
-	 */
-	public static $added_partial_refreshes = array();
-
-	/**
-	 * Added section tabs.
-	 *
-	 * @var array
-	 */
-	public static $added_section_tabs = array();
-
-	/**
-	 * Get the instance of the class.
-	 *
-	 * @return self
-	 */
-	public static function get_instance() {
-
-		if ( ! self::$instance ) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-
-	}
 
 	/**
 	 * Initialize the class, setup hooks.
@@ -128,7 +38,7 @@ final class Customizer {
 	 */
 	private function add_section_tabs() {
 
-		foreach ( self::$added_section_tabs as $section_id => $section_tabs ) {
+		foreach ( CustomizerStore::$added_section_tabs as $section_id => $section_tabs ) {
 			if ( empty( $section_tabs ) ) {
 				continue;
 			}
@@ -173,7 +83,7 @@ final class Customizer {
 
 		$customizer_util = new CustomizerUtil();
 
-		foreach ( self::$added_controls as $control ) {
+		foreach ( CustomizerStore::$added_controls as $control ) {
 			$customizer_util->enqueueCustomizePreviewScripts( $control );
 		}
 
@@ -216,7 +126,7 @@ final class Customizer {
 
 		$util = new CustomizerUtil();
 
-		foreach ( self::$added_settings as $setting ) {
+		foreach ( CustomizerStore::$added_settings as $setting ) {
 			$setting = $util->filterSettingEntity( $setting );
 
 			$wp_customize_manager->add_setting(
@@ -244,7 +154,7 @@ final class Customizer {
 	 */
 	private function register_panels( $wp_customize_manager ) {
 
-		foreach ( self::$added_panels as $panel ) {
+		foreach ( CustomizerStore::$added_panels as $panel ) {
 			$wp_customize_manager->add_panel(
 				$panel->id,
 				array(
@@ -270,7 +180,7 @@ final class Customizer {
 
 		$util = new CustomizerUtil();
 
-		foreach ( self::$added_sections as $section ) {
+		foreach ( CustomizerStore::$added_sections as $section ) {
 			$section_type = $section->type;
 
 			$section_args = array(
@@ -324,7 +234,7 @@ final class Customizer {
 		 */
 		$tooltips = [];
 
-		foreach ( self::$added_controls as $control ) {
+		foreach ( CustomizerStore::$added_controls as $control ) {
 			if ( ! empty( $control->tooltip ) ) {
 				$tooltips[] = [
 					'id'      => sanitize_key( $control->id ),
@@ -348,7 +258,7 @@ final class Customizer {
 
 		$customizer_util = new CustomizerUtil();
 
-		foreach ( self::$added_controls as $control ) {
+		foreach ( CustomizerStore::$added_controls as $control ) {
 			$customizer_util->addControl( $wp_customize_manager, $control );
 		}
 
@@ -361,7 +271,7 @@ final class Customizer {
 	 */
 	public function register_control_dependencies() {
 
-		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerControlDependencies', self::$added_control_dependencies );
+		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerControlDependencies', CustomizerStore::$added_control_dependencies );
 
 	}
 
@@ -374,7 +284,7 @@ final class Customizer {
 	 */
 	public function register_selective_refreshes( $wp_customize_manager ) {
 
-		foreach ( self::$added_partial_refreshes as $partial_refresh ) {
+		foreach ( CustomizerStore::$added_partial_refreshes as $partial_refresh ) {
 			$wp_customize_manager->selective_refresh->add_partial(
 				$partial_refresh->id,
 				array(

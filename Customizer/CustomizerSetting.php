@@ -157,7 +157,7 @@ class CustomizerSetting {
 	 */
 	public function add() {
 
-		Customizer::$added_settings[] = $this->setting;
+		CustomizerStore::$added_settings[] = $this->setting;
 
 		return $this->setting;
 

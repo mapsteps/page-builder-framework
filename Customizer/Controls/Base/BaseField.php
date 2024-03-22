@@ -7,7 +7,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
-use Mapsteps\Wpbf\Customizer\Customizer;
+use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 
 /**
@@ -98,7 +98,7 @@ class BaseField {
 			return $props;
 		}
 
-		if ( ! isset( Customizer::$added_section_tabs[ $this->control->section_id ] ) ) {
+		if ( ! isset( CustomizerStore::$added_section_tabs[ $this->control->section_id ] ) ) {
 			return $props;
 		}
 
@@ -112,8 +112,6 @@ class BaseField {
 		} else {
 			$props['wrapper_attrs'] = $tab_wrapper_attrs;
 		}
-
-		unset( $props['tab'] );
 
 		return $props;
 

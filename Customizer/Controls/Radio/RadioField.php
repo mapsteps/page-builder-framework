@@ -3,7 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Radio;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Customizer;
+use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use WP_Customize_Manager;
 
 class RadioField extends BaseField {
@@ -18,14 +18,7 @@ class RadioField extends BaseField {
 	public function sanitizeCallback( $value ) {
 
 		if ( ! isset( $this->control->choices[ $value ] ) ) {
-			$setting_entity = null;
-
-			foreach ( Customizer::$added_settings as $added_setting ) {
-				if ( $added_setting->id === $this->control->id ) {
-					$setting_entity = $added_setting;
-					break;
-				}
-			}
+			$setting_entity = CustomizerStore::findSettingByControlId( $this->control->id );
 
 			return $setting_entity ? $setting_entity->default : '';
 		}

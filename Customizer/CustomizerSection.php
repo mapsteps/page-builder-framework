@@ -199,10 +199,10 @@ final class CustomizerSection {
 
 		$this->section->panel_id = $panel_id;
 
-		Customizer::$added_sections[] = $this->section;
+		CustomizerStore::$added_sections[] = $this->section;
 
 		if ( ! empty( $this->section_tabs ) ) {
-			Customizer::$added_section_tabs[ $this->section->id ] = $this->section_tabs;
+			CustomizerStore::$added_section_tabs[ $this->section->id ] = $this->section_tabs;
 		}
 
 		return $this->section;

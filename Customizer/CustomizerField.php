@@ -183,6 +183,10 @@ final class CustomizerField {
 	 */
 	public function transport( $transport ) {
 
+		if ( empty( $transport ) ) {
+			return $this;
+		}
+
 		$this->setting_instance->transport( $transport );
 
 		return $this;
@@ -270,7 +274,7 @@ final class CustomizerField {
 
 		$control_id = $this->control_instance->control->id;
 
-		Customizer::$added_control_dependencies[ $control_id ] = $active_callback;
+		CustomizerStore::$added_control_dependencies[ $control_id ] = $active_callback;
 
 		return $this;
 
@@ -472,7 +476,7 @@ final class CustomizerField {
 			foreach ( $this->partial_refreshes as $index => $partial_refresh ) {
 				$this->partial_refreshes[ $index ]->settings = $partial_refresh_settings;
 
-				Customizer::$added_partial_refreshes[] = $this->partial_refreshes[ $index ];
+				CustomizerStore::$added_partial_refreshes[] = $this->partial_refreshes[ $index ];
 			}
 		}
 

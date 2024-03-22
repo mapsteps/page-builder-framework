@@ -280,7 +280,7 @@ final class CustomizerControl {
 
 		$this->control->section_id = $section_id;
 
-		Customizer::$added_controls[] = $this->control;
+		CustomizerStore::$added_controls[] = $this->control;
 
 		return $this->control;
 

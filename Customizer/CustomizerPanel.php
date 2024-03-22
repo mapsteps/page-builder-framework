@@ -130,7 +130,7 @@ final class CustomizerPanel {
 	 */
 	public function add() {
 
-		Customizer::$added_panels[] = $this->panel;
+		CustomizerStore::$added_panels[] = $this->panel;
 
 		return $this->panel;
 

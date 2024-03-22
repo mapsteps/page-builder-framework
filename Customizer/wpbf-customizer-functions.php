@@ -15,13 +15,11 @@ use Mapsteps\Wpbf\Customizer\CustomizerSetting;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
- * Get the instance of the Wpbf customizer singleton class.
- *
- * @return Customizer
+ * Initialize Wpbf customizer.
  */
-function wpbf_customizer() {
+function wpbf_customizer_init() {
 
-	return Customizer::get_instance();
+	( new Customizer() )->init();
 
 }
 

@@ -119,6 +119,7 @@ class CustomizerUtil {
 			'text',
 			'textarea',
 			'url',
+			'hidden',
 			'content',
 		],
 		'responsive-generic' => [
@@ -128,6 +129,7 @@ class CustomizerUtil {
 			'responsive-text',
 			'responsive-textarea',
 			'responsive-url',
+			'responsive-hidden',
 			'responsive-content',
 		],
 		'margin-padding' => [
@@ -150,7 +152,7 @@ class CustomizerUtil {
 	public function filterSettingEntity( $setting ) {
 		$control = null;
 
-		foreach ( Customizer::$added_controls as $added_control ) {
+		foreach ( CustomizerStore::$added_controls as $added_control ) {
 			if ( $added_control->id === $setting->id ) {
 				$control = $added_control;
 				break;

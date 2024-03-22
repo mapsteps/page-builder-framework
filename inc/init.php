@@ -42,8 +42,8 @@ require_once WPBF_THEME_DIR . '/Customizer/wpbf-customizer-functions.php';
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
 
-// Init `wpbf_customizer()` function.
-wpbf_customizer()->init();
+// Init customizer.
+wpbf_customizer_init();
 
 // Body classes.
 require_once WPBF_THEME_DIR . '/inc/body-classes.php';
@@ -114,7 +114,7 @@ if ( ! function_exists( 'wpbf_bb_header_footer_support' ) && class_exists( 'FLTh
 
 // Divi integration.
 // if ( class_exists( 'ET_Builder_Plugin' ) ) {
-// 	require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
+// require_once WPBF_THEME_DIR . '/inc/integration/divi.php';
 // }
 
 // Easy Digital Downloads integration.
