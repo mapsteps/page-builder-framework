@@ -6,7 +6,6 @@ use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
-use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
 use WP_Customize_Manager;
 
 class TypographyField extends BaseField {
