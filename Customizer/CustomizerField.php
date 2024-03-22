@@ -342,6 +342,8 @@ final class CustomizerField {
 
 			$partial_refresh->id = $key;
 
+			$partial_refresh->control_id = $control_id;
+
 			/**
 			 * Temporarily set the partial refresh id to the control id.
 			 * It will be overwritten later in the `addToSection` method.

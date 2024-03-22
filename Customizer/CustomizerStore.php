@@ -97,4 +97,25 @@ final class CustomizerStore {
 
 	}
 
+	/**
+	 * Find added partial refresh entities by control id.
+	 *
+	 * @param string $control_id Control id.
+	 *
+	 * @return PartialRefreshEntity[]
+	 */
+	public static function findPartialRefreshesByControlId( $control_id ) {
+
+		$partial_refreshes = array();
+
+		foreach ( self::$added_partial_refreshes as $partial_refresh ) {
+			if ( $partial_refresh->control_id === $control_id ) {
+				$partial_refreshes[] = $partial_refresh;
+			}
+		}
+
+		return $partial_refreshes;
+
+	}
+
 }

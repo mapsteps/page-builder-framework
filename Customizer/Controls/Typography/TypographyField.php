@@ -6,6 +6,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
+use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
 use WP_Customize_Manager;
 
 class TypographyField extends BaseField {
@@ -18,6 +19,20 @@ class TypographyField extends BaseField {
 	protected $setting_entity = null;
 
 	/**
+	 * The tab.
+	 *
+	 * @var string
+	 */
+	protected $tab = '';
+
+	/**
+	 * The default value.
+	 *
+	 * @var array
+	 */
+	protected $default_value = [];
+
+	/**
 	 * The transport type.
 	 *
 	 * @var string
@@ -25,11 +40,11 @@ class TypographyField extends BaseField {
 	protected $transport = '';
 
 	/**
-	 * The tab.
+	 * The raw partial refresh array (as when adding it via `wpbf_customizer_field`).
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $tab = '';
+	protected $partial_refresh = [];
 
 	/**
 	 * Add sub controls based on the control arguments.
@@ -40,23 +55,7 @@ class TypographyField extends BaseField {
 
 		$this->tab = isset( $args['tab'] ) ? $args['tab'] : '';
 
-		// Add the label & description as custom control.
-		wpbf_customizer_field()
-			->id( $this->control->id . '_label' )
-			->type( 'custom' )
-			->tab( $this->tab )
-			->capability( $this->control->capability )
-			->label( $this->control->label )
-			->description( $this->control->description )
-			->priority( $this->control->priority )
-			->activeCallback( $this->control->active_callback )
-			->tooltip( $this->control->tooltip )
-			->properties( [
-				'wrapper_attrs' => [
-					'gap' => 'small',
-				],
-			] )
-			->addToSection( $this->control->section_id );
+		$this->addLabelAndDescription();
 
 		$this->setting_entity = CustomizerStore::findSettingByControlId( $this->control->id );
 
@@ -67,6 +66,49 @@ class TypographyField extends BaseField {
 		$this->transport = $this->setting_entity->transport;
 		$this->transport = 'auto' === $this->transport ? 'postMessage' : $this->transport;
 
+		$this->default_value = $this->setting_entity->default;
+		$this->default_value = is_array( $this->default_value ) ? $this->default_value : [];
+
+		$partial_refresh_entities = CustomizerStore::findPartialRefreshesByControlId( $this->control->id );
+
+		foreach ( $partial_refresh_entities as $partial_refresh_entity ) {
+			$partial_refresh_id = $partial_refresh_entity->id;
+
+			$this->partial_refresh[ $partial_refresh_id ] = [
+				'container_inclusive' => $partial_refresh_entity->container_inclusive,
+				'selector'            => $partial_refresh_entity->selector,
+				'render_callback'     => $partial_refresh_entity->render_callback,
+			];
+		}
+
+		if ( isset( $this->default_value['font-family'] ) ) {
+			$this->addFontFamilyControl();
+		}
+
+	}
+
+	/**
+	 * Add the label and description using 'custom' control.
+	 */
+	private function addLabelAndDescription() {
+
+		wpbf_customizer_field()
+			->id( $this->control->id . '_label' )
+			->type( 'custom' )
+			->tab( $this->tab )
+			->label( $this->control->label )
+			->description( $this->control->description )
+			->capability( $this->control->capability )
+			->priority( $this->control->priority )
+			->activeCallback( $this->control->active_callback )
+			->tooltip( $this->control->tooltip )
+			->properties( [
+				'wrapper_attrs' => [
+					'gap' => 'small',
+				],
+			] )
+			->addToSection( $this->control->section_id );
+
 	}
 
 	/**
@@ -74,7 +116,32 @@ class TypographyField extends BaseField {
 	 */
 	private function addFontFamilyControl() {
 
-		// Add the font family control.
+		if ( is_null( $this->setting_entity ) ) {
+			return;
+		}
+
+		wpbf_customizer_field()
+			->id( $this->control->id . '[font-family]' )
+			->type( 'select' )
+			->label( __( 'Font Family', 'page-builder-framework' ) )
+			->settings( $this->control->settings )
+			->setting( $this->control->setting )
+			->tab( $this->tab )
+			->capability( $this->control->capability )
+			->choices( [] )
+			->priority( $this->control->priority )
+			->transport( $this->transport )
+			->inputAttrs( $this->control->input_attrs )
+			->sanitizeCallback( $this->setting_entity->sanitize_callback )
+			->activeCallback( $this->control->active_callback )
+			->partialRefresh( $this->partial_refresh )
+			->properties( [
+				'wrapper_attrs' => [
+					'gap' => 'small',
+				],
+			] )
+			->addToSection( $this->control->section_id );
+
 	}
 
 	/**

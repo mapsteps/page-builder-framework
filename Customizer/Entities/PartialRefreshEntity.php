@@ -23,6 +23,13 @@ class PartialRefreshEntity {
 	public $id = '';
 
 	/**
+	 * The control ID that the partial refresh is associated with.
+	 *
+	 * @var string
+	 */
+	public $control_id = '';
+
+	/**
 	 * Whether the container element is included in the partial, or if only the contents are rendered.
 	 *
 	 * @var bool
