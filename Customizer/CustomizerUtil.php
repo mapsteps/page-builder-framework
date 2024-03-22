@@ -20,6 +20,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\Media\ImageField;
+use Mapsteps\Wpbf\Customizer\Controls\Media\TypographyField;
 use Mapsteps\Wpbf\Customizer\Controls\Media\UploadField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
@@ -346,6 +347,9 @@ class CustomizerUtil {
 				break;
 			case 'sortable':
 				$field = new SortableField( $control );
+				break;
+			case 'typography':
+				$field = new TypographyField( $control );
 				break;
 			case 'upload':
 				$field = new UploadField( $control );
