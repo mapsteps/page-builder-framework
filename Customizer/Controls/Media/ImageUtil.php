@@ -2,7 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
-class MediaUtil {
+class ImageUtil {
 
 	/**
 	 * Allowed save_as value.

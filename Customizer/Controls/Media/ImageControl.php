@@ -3,7 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
-use Mapsteps\Wpbf\Customizer\Controls\Media\MediaUtil;
+use Mapsteps\Wpbf\Customizer\Controls\Media\ImageUtil;
 use WP_Customize_Setting;
 
 class ImageControl extends BaseControl {
@@ -39,9 +39,9 @@ class ImageControl extends BaseControl {
 	/**
 	 * The image utility.
 	 *
-	 * @var MediaUtil
+	 * @var ImageUtil
 	 */
-	protected $media_util;
+	protected $image_util;
 
 	/**
 	 * Constructor.
@@ -59,24 +59,24 @@ class ImageControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		$this->media_util = new MediaUtil();
+		$this->image_util = new ImageUtil();
 
 		if ( ! empty( $args['save_as'] ) && is_string( $args['save_as'] ) ) {
 			$args['save_as'] = strtolower( $args['save_as'] );
 
-			if ( in_array( $args['save_as'], $this->media_util->allowed_save_as, true ) ) {
+			if ( in_array( $args['save_as'], $this->image_util->allowed_save_as, true ) ) {
 				$this->save_as = $args['save_as'];
 			}
 		} else {
-			$this->save_as = $this->media_util->default_save_as;
+			$this->save_as = $this->image_util->default_save_as;
 		}
 
-		$this->default_src = $this->media_util->makeEmptyImageSrcArray();
+		$this->default_src = $this->image_util->makeEmptyImageSrcArray();
 
 		// Normalize the default value.
 		if ( $this->setting instanceof WP_Customize_Setting ) {
 			$default_value     = $this->setting->default;
-			$this->default_src = $this->media_util->unknownToImageSrcArray( $default_value );
+			$this->default_src = $this->image_util->unknownToImageSrcArray( $default_value );
 
 			// We allow empty string.
 			if ( '' !== $default_value ) {
@@ -139,7 +139,7 @@ class ImageControl extends BaseControl {
 		$this->json['labels']     = $this->labels;
 		$this->json['saveAs']     = $this->save_as;
 		$this->json['defaultSrc'] = $this->default_src;
-		$this->json['valueSrc']   = $this->media_util->unknownToImageSrcArray( $this->value() );
+		$this->json['valueSrc']   = $this->image_util->unknownToImageSrcArray( $this->value() );
 
 	}
 

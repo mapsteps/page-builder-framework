@@ -3,7 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Media\MediaUtil;
+use Mapsteps\Wpbf\Customizer\Controls\Media\ImageUtil;
 use WP_Customize_Manager;
 
 class ImageField extends BaseField {
@@ -17,7 +17,7 @@ class ImageField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		$media_util = new MediaUtil();
+		$media_util = new ImageUtil();
 		$props      = $this->control->custom_properties;
 		$save_as    = $media_util->default_save_as;
 
