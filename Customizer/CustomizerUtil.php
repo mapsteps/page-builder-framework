@@ -52,11 +52,13 @@ class CustomizerUtil {
 	public $available_section_types = [ 'default', 'expanded', 'link', 'nested', 'outer' ];
 
 	/**
-	 * The available control types.
+	 * The available fields.
 	 *
-	 * @var string[] $available_controls
+	 * Array of field/control types and their control class path.
+	 *
+	 * @var array $available_fields
 	 */
-	public $available_controls = array(
+	public $available_fields = array(
 		'checkbox'                  => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl',
 		'toggle'                    => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
 		'custom'                    => '\Mapsteps\Wpbf\Customizer\Controls\Custom\CustomControl',
@@ -79,6 +81,7 @@ class CustomizerUtil {
 		'responsive-input-slider'   => '\Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderControl',
 		'section-tabs'              => '\Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsControl',
 		'sortable'                  => '\Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableControl',
+		'typography'                => null,
 		'upload'                    => '\Mapsteps\Wpbf\Customizer\Controls\Media\UploadControl',
 	);
 
@@ -268,7 +271,7 @@ class CustomizerUtil {
 			}
 		}
 
-		if ( ! array_key_exists( $control_type, $this->available_controls ) ) {
+		if ( ! array_key_exists( $control_type, $this->available_fields ) ) {
 			return null;
 		}
 

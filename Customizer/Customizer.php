@@ -188,11 +188,15 @@ final class Customizer {
 
 		$util = new CustomizerUtil();
 
-		$available_controls = $util->available_controls;
+		$available_fields = $util->available_fields;
 
 		$controls_with_content_template = $util->controls_with_content_template;
 
-		foreach ( $available_controls as $control_type => $control_class ) {
+		foreach ( $available_fields as $control_type => $control_class ) {
+			if ( is_null( $control_class ) ) {
+				continue;
+			}
+
 			if ( ! in_array( $control_type, $controls_with_content_template, true ) ) {
 				continue;
 			}
