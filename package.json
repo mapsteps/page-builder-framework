@@ -33,6 +33,7 @@
     "@wordpress/url": "^3.54.0",
     "colord": "^2.9.3",
     "jquery": "^3.7.1",
+    "ky": "^1.2.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-colorful": "^5.6.1",
@@ -80,6 +81,7 @@
     "not dead"
   ],
   "scripts": {
+    "collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
     "build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min --no-source-maps",
     "build-site-js": "parcel build assets/js/site.js --dist-dir js/min --no-source-maps",
     "build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min --no-source-maps",
