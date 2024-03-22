@@ -2,43 +2,18 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
-use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Media\ImageUtil;
 use WP_Customize_Manager;
 
-class ImageField extends BaseField {
+class ImageField extends UploadField {
 
 	/**
-	 * Setting's sanitize callback.
+	 * Get utility instance.
 	 *
-	 * @param string $value The value to sanitize.
-	 *
-	 * @return string
+	 * @return ImageUtil
 	 */
-	public function sanitizeCallback( $value ) {
+	protected function getUtilInstance() {
 
-		$media_util = new ImageUtil();
-		$props      = $this->control->custom_properties;
-		$save_as    = $media_util->default_save_as;
-
-		// The properties of $image_src here is already sanitized.
-		$image_src = $media_util->unknownToImageSrcArray( $value );
-
-		if ( ! empty( $props['save_as'] ) && is_string( $props['save_as'] ) ) {
-			if ( in_array( $props['save_as'], $media_util->allowed_save_as, true ) ) {
-				$save_as = $props['save_as'];
-			}
-		}
-
-		if ( 'array' === $save_as ) {
-			return $image_src;
-		}
-
-		if ( 'id' === $save_as ) {
-			return $image_src['id'];
-		}
-
-		return $image_src['url'];
+		return new ImageUtil();
 
 	}
 

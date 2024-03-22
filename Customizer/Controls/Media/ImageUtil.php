@@ -2,115 +2,59 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
-class ImageUtil {
-
-	/**
-	 * Allowed save_as value.
-	 *
-	 * @var string[]
-	 */
-	public $allowed_save_as = [ 'url', 'id', 'array' ];
-
-	/**
-	 * Default of the 'save_as' property.
-	 *
-	 * @var string
-	 */
-	public $default_save_as = 'url';
+class ImageUtil extends UploadUtil {
 
 	/**
 	 * Make sure the image source array is properly formatted.
 	 *
-	 * @param array $image_src The image source.
+	 * @param array $src The image source data.
 	 * @return array
 	 */
-	public function properlyFormatImageSrcArray( $image_src ) {
+	public function properlyFormatSrcArray( $src ) {
 
 		return [
-			'id'     => isset( $image_src['id'] ) ? absint( $image_src ['id'] ) : 0,
-			'url'    => isset( $image_src['url'] ) && is_string( $image_src['url'] ) ? esc_url_raw( $image_src ['url'] ) : '',
-			'width'  => isset( $image_src['width'] ) && is_numeric( $image_src['width'] ) ? absint( $image_src['width'] ) : 0,
-			'height' => isset( $image_src['height'] ) && is_numeric( $image_src['height'] ) ? absint( $image_src['height'] ) : 0,
+			'id'     => isset( $src['id'] ) ? absint( $src ['id'] ) : 0,
+			'url'    => isset( $src['url'] ) && is_string( $src['url'] ) ? esc_url_raw( $src ['url'] ) : '',
+			'width'  => isset( $src['width'] ) && is_numeric( $src['width'] ) ? absint( $src['width'] ) : 0,
+			'height' => isset( $src['height'] ) && is_numeric( $src['height'] ) ? absint( $src['height'] ) : 0,
 		];
 
 	}
 
 	/**
-	 * Convert image URL to image source array.
+	 * Convert image id to source array.
 	 *
-	 * @param string $image_url URL of the image.
+	 * @param int|string  $id ID of the image.
+	 * @param string|null $url URL of the image.
+	 *
 	 * @return array
 	 */
-	public function imageUrlToSrcArray( $image_url ) {
+	public function idToSrcArray( $id, $url = null ) {
 
-		if ( ! is_string( $image_url ) ) {
-			return $this->makeEmptyImageSrcArray();
+		if ( ! is_numeric( $id ) ) {
+			return $this->makeEmptySrcArray();
 		}
 
-		$image_id = attachment_url_to_postid( $image_url );
+		$id  = absint( $id );
+		$src = wp_get_attachment_image_src( $id, 'full' );
 
-		if ( ! $image_id ) {
-			return $this->makeEmptyImageSrcArray();
-		}
-
-		return $this->imageIdToSrcArray( $image_id );
-
-	}
-
-	/**
-	 * Convert image id to image source array.
-	 *
-	 * @param int|string $image_id ID of the image.
-	 * @return array
-	 */
-	public function imageIdToSrcArray( $image_id ) {
-
-		if ( ! is_numeric( $image_id ) ) {
-			return $this->makeEmptyImageSrcArray();
-		}
-
-		$image_id  = absint( $image_id );
-		$image_src = wp_get_attachment_image_src( $image_id, 'full' );
-
-		if ( ! $image_src ) {
-			return $this->makeEmptyImageSrcArray();
+		if ( ! $src ) {
+			return $this->makeEmptySrcArray();
 		}
 
 		return [
-			'id'     => $image_id,
-			'url'    => isset( $image_src[0] ) ? esc_url_raw( $image_src[0] ) : '',
-			'width'  => isset( $image_src[1] ) ? absint( $image_src[1] ) : 0,
-			'height' => isset( $image_src[2] ) ? absint( $image_src[2] ) : 0,
+			'id'     => $id,
+			'url'    => isset( $src[0] ) ? esc_url_raw( $src[0] ) : '',
+			'width'  => isset( $src[1] ) ? absint( $src[1] ) : 0,
+			'height' => isset( $src[2] ) ? absint( $src[2] ) : 0,
 		];
-
-	}
-
-	/**
-	 * Convert an unknown-type value to image source array.
-	 *
-	 * @param mixed $value The value to convert.
-	 * @return array
-	 */
-	public function unknownToImageSrcArray( $value ) {
-
-		$image_src = $this->makeEmptyImageSrcArray();
-
-		if ( is_string( $value ) ) {
-			$image_src = $this->imageUrlToSrcArray( $value );
-		} elseif ( is_numeric( $value ) ) {
-			$image_src = $this->imageIdToSrcArray( $value );
-		} elseif ( is_array( $value ) ) {
-			$image_src = $this->properlyFormatImageSrcArray( $value );
-		}
-
-		return $image_src;
 
 	}
 
 	/**
 	 * Make empty image source array.
 	 */
-	public function makeEmptyImageSrcArray() {
+	public function makeEmptySrcArray() {
 
 		return [
 			'id'     => 0,

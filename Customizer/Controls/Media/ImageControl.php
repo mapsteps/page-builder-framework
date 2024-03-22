@@ -3,7 +3,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
-use Mapsteps\Wpbf\Customizer\Controls\Media\ImageUtil;
 use WP_Customize_Setting;
 
 class ImageControl extends BaseControl {
@@ -71,12 +70,12 @@ class ImageControl extends BaseControl {
 			$this->save_as = $this->image_util->default_save_as;
 		}
 
-		$this->default_src = $this->image_util->makeEmptyImageSrcArray();
+		$this->default_src = $this->image_util->makeEmptySrcArray();
 
 		// Normalize the default value.
 		if ( $this->setting instanceof WP_Customize_Setting ) {
 			$default_value     = $this->setting->default;
-			$this->default_src = $this->image_util->unknownToImageSrcArray( $default_value );
+			$this->default_src = $this->image_util->unknownToSrcArray( $default_value );
 
 			// We allow empty string.
 			if ( '' !== $default_value ) {
@@ -139,7 +138,7 @@ class ImageControl extends BaseControl {
 		$this->json['labels']     = $this->labels;
 		$this->json['saveAs']     = $this->save_as;
 		$this->json['defaultSrc'] = $this->default_src;
-		$this->json['valueSrc']   = $this->image_util->unknownToImageSrcArray( $this->value() );
+		$this->json['valueSrc']   = $this->image_util->unknownToSrcArray( $this->value() );
 
 	}
 
