@@ -9,7 +9,7 @@ class TypographyStore {
 	 *
 	 * @var bool
 	 */
-	private static $initialized = false;
+	protected static $initialized = false;
 
 	/**
 	 * Standard font variants.
