@@ -2,14 +2,16 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
-class TypographyStore {
+use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontEntity;
+
+final class TypographyStore {
 
 	/**
 	 * Whether the data has been initialized.
 	 *
 	 * @var bool
 	 */
-	protected static $initialized = false;
+	private static $initialized = false;
 
 	/**
 	 * Standard font variants.
@@ -19,6 +21,15 @@ class TypographyStore {
 	public static $standard_font_variants = [];
 
 	/**
+	 * Array of value & label pairs from standard font variants.
+	 *
+	 * Can be used for select fields.
+	 *
+	 * @var array
+	 */
+	public static $standard_font_variant_options = [];
+
+	/**
 	 * Complete font variants.
 	 *
 	 * @var array
@@ -26,11 +37,51 @@ class TypographyStore {
 	public static $complete_font_variants = [];
 
 	/**
-	 * Complete font variant labels.
+	 * Array of value & label pairs from complete font variants.
+	 *
+	 * Can be used for select fields.
 	 *
 	 * @var array
 	 */
-	public static $complete_font_variant_labels = [];
+	public static $complete_font_variant_options = [];
+
+	/**
+	 * An assoc array with font family as the key and `GoogleFontEntity` instance as the value.
+	 *
+	 * @var GoogleFontEntity[]
+	 */
+	public static $google_fonts;
+
+	/**
+	 * An array of all Google Font names.
+	 *
+	 * @var array
+	 */
+	public static $google_font_names;
+
+	/**
+	 * An array of all Google Font subsets.
+	 *
+	 * @var array
+	 */
+	public static $google_font_subsets = array(
+		'cyrillic'     => 'Cyrillic',
+		'cyrillic-ext' => 'Cyrillic Extended',
+		'devanagari'   => 'Devanagari',
+		'greek'        => 'Greek',
+		'greek-ext'    => 'Greek Extended',
+		'khmer'        => 'Khmer',
+		'latin'        => 'Latin',
+		'latin-ext'    => 'Latin Extended',
+		'vietnamese'   => 'Vietnamese',
+		'hebrew'       => 'Hebrew',
+		'arabic'       => 'Arabic',
+		'bengali'      => 'Bengali',
+		'gujarati'     => 'Gujarati',
+		'tamil'        => 'Tamil',
+		'telugu'       => 'Telugu',
+		'thai'         => 'Thai',
+	);
 
 	/**
 	 * Check if the data has been initialized.
@@ -39,7 +90,7 @@ class TypographyStore {
 	 */
 	public static function initialized() {
 
-		return static::$initialized;
+		return self::$initialized;
 
 	}
 
@@ -48,109 +99,55 @@ class TypographyStore {
 	 */
 	public static function init() {
 
-		if ( static::$initialized ) {
+		if ( self::$initialized ) {
 			return;
 		}
 
-		static::$standard_font_variants = array(
-			[
-				'value' => 'regular',
-				'label' => __( 'Regular', 'page-builder-framework' ),
-			],
-			[
-				'value' => 'italic',
-				'label' => __( 'Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '700',
-				'label' => __( '700', 'page-builder-framework' ),
-			],
-			[
-				'value' => '700italic',
-				'label' => __( '700 Italic', 'page-builder-framework' ),
-			],
+		self::$standard_font_variants = array(
+			'regular'   => __( 'Regular', 'page-builder-framework' ),
+			'italic'    => __( 'Italic', 'page-builder-framework' ),
+			'700'       => __( '700', 'page-builder-framework' ),
+			'700italic' => __( '700 Italic', 'page-builder-framework' ),
 		);
 
-		static::$complete_font_variants = array(
-			[
-				'value' => 'regular',
-				'label' => __( 'Regular', 'page-builder-framework' ),
-			],
-			[
-				'value' => 'italic',
-				'label' => __( 'Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '100',
-				'label' => __( '100', 'page-builder-framework' ),
-			],
-			[
-				'value' => '100italic',
-				'label' => __( '100 Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '200',
-				'label' => __( '200', 'page-builder-framework' ),
-			],
-			[
-				'value' => '200italic',
-				'label' => __( '200 Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '300',
-				'label' => __( '300', 'page-builder-framework' ),
-			],
-			[
-				'value' => '300italic',
-				'label' => __( '300 Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '500',
-				'label' => __( '500', 'page-builder-framework' ),
-			],
-			[
-				'value' => '500italic',
-				'label' => __( '500 Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '600',
-				'label' => __( '600', 'page-builder-framework' ),
-			],
-			[
-				'value' => '600italic',
-				'label' => __( '600 Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '700',
-				'label' => __( '700', 'page-builder-framework' ),
-			],
-			[
-				'value' => '700italic',
-				'label' => __( '700 Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '800',
-				'label' => __( '800', 'page-builder-framework' ),
-			],
-			[
-				'value' => '800italic',
-				'label' => __( '800 Italic', 'page-builder-framework' ),
-			],
-			[
-				'value' => '900',
-				'label' => __( '900', 'page-builder-framework' ),
-			],
-			[
-				'value' => '900italic',
-				'label' => __( '900 Italic', 'page-builder-framework' ),
-			],
-		);
-
-		foreach ( static::$complete_font_variants as $font_variants ) {
-			static::$complete_font_variant_labels[ $font_variants['value'] ] = $font_variants['label'];
+		foreach ( self::$standard_font_variants as $variant_key => $variant_label ) {
+			self::$standard_font_variant_options[] = [
+				'value' => $variant_key,
+				'label' => $variant_label,
+			];
 		}
 
-		static::$initialized = true;
+		self::$complete_font_variants = array(
+			'regular'   => __( 'Regular', 'page-builder-framework' ),
+			'italic'    => __( 'Italic', 'page-builder-framework' ),
+			'100'       => __( '100', 'page-builder-framework' ),
+			'100italic' => __( '100 Italic', 'page-builder-framework' ),
+			'200'       => __( '200', 'page-builder-framework' ),
+			'200italic' => __( '200 Italic', 'page-builder-framework' ),
+			'300'       => __( '300', 'page-builder-framework' ),
+			'300italic' => __( '300 Italic', 'page-builder-framework' ),
+			'500'       => __( '500', 'page-builder-framework' ),
+			'500italic' => __( '500 Italic', 'page-builder-framework' ),
+			'600'       => __( '600', 'page-builder-framework' ),
+			'600italic' => __( '600 Italic', 'page-builder-framework' ),
+			'700'       => __( '700', 'page-builder-framework' ),
+			'700italic' => __( '700 Italic', 'page-builder-framework' ),
+			'800'       => __( '800', 'page-builder-framework' ),
+			'800italic' => __( '800 Italic', 'page-builder-framework' ),
+			'900'       => __( '900', 'page-builder-framework' ),
+			'900italic' => __( '900 Italic', 'page-builder-framework' ),
+		);
+
+		foreach ( self::$complete_font_variants as $variant_key => $variant_label ) {
+			self::$complete_font_variant_options[] = [
+				'value' => $variant_key,
+				'label' => $variant_label,
+			];
+		}
+
+		( new GoogleFontsUtil() )->initCaches();
+
+		self::$initialized = true;
 
 	}
 
