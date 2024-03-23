@@ -95,7 +95,12 @@ final class TypographyStore {
 	}
 
 	/**
-	 * Initialize the data.
+	 * Initialize the store data.
+	 *
+	 * For performance reason, this should only be executed once per application runtime.
+	 *
+	 * If you need to add some filters related to wpbf fonts or google fonts,
+	 * please add it outside of (before) `customize_register` hook.
 	 */
 	public static function init() {
 
