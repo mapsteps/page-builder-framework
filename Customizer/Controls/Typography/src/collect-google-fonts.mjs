@@ -19,6 +19,21 @@ async function readJsonFile(filePath) {
 }
 
 /**
+ * Function to delete JSON file asynchronously.
+ *
+ * @param {string} filePath - The path to the file to delete.
+ */
+async function deleteJsonFile(filePath) {
+	try {
+		await fs.unlink(filePath);
+		console.log(`Deleted JSON file: ${filePath}`);
+	} catch (error) {
+		console.error("Failed to delete JSON file:", error);
+		throw error;
+	}
+}
+
+/**
  * Processes Google Fonts data.
  *
  * @returns {Promise<void>}
@@ -91,6 +106,10 @@ async function processGoogleFonts() {
  */
 async function run() {
 	try {
+		await deleteJsonFile(`${distDir}/webfonts.json`);
+		await deleteJsonFile(`${distDir}/webfont-names.json`);
+		await deleteJsonFile(`${distDir}/webfont-files.json`);
+
 		const sortByOptions = ["alpha", "popularity", "trending"];
 
 		for (const sortBy of sortByOptions) {
@@ -98,6 +117,11 @@ async function run() {
 		}
 
 		await processGoogleFonts();
+
+		// Delete the un-used JSON files.
+		for (const sortBy of sortByOptions) {
+			await deleteJsonFile(`${distDir}/webfonts-${sortBy}.json`);
+		}
 	} catch (error) {
 		console.error("Error:", error);
 		process.exit(1);
