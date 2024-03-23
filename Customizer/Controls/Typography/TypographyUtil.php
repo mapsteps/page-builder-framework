@@ -10,7 +10,11 @@ class TypographyUtil {
 	 * @param array $fonts_arg The fonts arguments.
 	 * @return array
 	 */
-	public function makeFontFamilyChoices( $fonts_arg = array() ) {
+	public function makeFontFamilyChoices( $fonts_arg ) {
+
+		if ( empty( $fonts_arg ) || ! is_array( $fonts_arg ) ) {
+			return [];
+		}
 
 		$google_fonts_util = new GoogleFontsUtil();
 		$fonts_util        = new FontsUtil();
@@ -36,7 +40,7 @@ class TypographyUtil {
 
 		if ( ! empty( $google_fonts_arg ) ) {
 			// If the argument is formatted like `'google' => [ 'popularity', 30 ],`.
-			if ( in_array( $google_fonts_arg[0], $google_fonts_util->available_sorting_modes, true ) ) {
+			if ( in_array( $google_fonts_arg[0], $google_fonts_util->available_sortby_modes, true ) ) {
 				$sort_by = $google_fonts_arg[0];
 
 				if ( isset( $google_fonts_arg[1] ) && is_int( $fonts_arg['google'][1] ) ) {
@@ -49,7 +53,7 @@ class TypographyUtil {
 				$google_font_names = $fonts_arg['google'];
 			}
 		} else {
-			$google_font_names = TypographyStore::$google_font_names;
+			$google_font_names = FontsStore::$google_font_names;
 		}
 
 		$standard_fonts = [];

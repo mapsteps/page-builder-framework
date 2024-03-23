@@ -3,7 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
+use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsStore;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyUtil;
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
@@ -55,6 +55,13 @@ class TypographyField extends BaseField {
 	protected $partial_refresh = [];
 
 	/**
+	 * The fonts argument.
+	 *
+	 * @var array
+	 */
+	protected $fonts_arg = [];
+
+	/**
 	 * Construct the class.
 	 *
 	 * @param CustomizerControlEntity $control The control entity object.
@@ -97,7 +104,9 @@ class TypographyField extends BaseField {
 	 */
 	private function addSubControls( $args ) {
 
-		$this->tab = isset( $args['tab'] ) ? $args['tab'] : '';
+		$this->tab = ! empty( $args['tab'] ) && is_string( $args['tab'] ) ? $args['tab'] : '';
+
+		$this->fonts_arg = ! empty( $args['fonts'] ) && is_array( $args['fonts'] ) ? $args['fonts'] : [];
 
 		$this->addLabelAndDescription();
 
@@ -148,7 +157,7 @@ class TypographyField extends BaseField {
 			->setting( $this->control->setting )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
-			->choices( $this->typography_util->makeFontFamilyChoices() )
+			->choices( $this->typography_util->makeFontFamilyChoices( $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
@@ -170,8 +179,8 @@ class TypographyField extends BaseField {
 			return;
 		}
 
-		if ( ! TypographyStore::initialized() ) {
-			TypographyStore::init();
+		if ( ! FontsStore::initialized() ) {
+			FontsStore::init();
 		}
 
 		$control_args = $this->parseControlArgs();

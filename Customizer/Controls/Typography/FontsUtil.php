@@ -37,11 +37,11 @@ final class FontsUtil {
 	 */
 	public function getGoogleFonts() {
 
-		if ( ! empty( TypographyStore::$google_fonts ) ) {
-			return TypographyStore::$google_fonts;
+		if ( ! empty( FontsStore::$google_fonts ) ) {
+			return FontsStore::$google_fonts;
 		}
 
-		return TypographyStore::$google_fonts;
+		return FontsStore::$google_fonts;
 
 	}
 
@@ -70,7 +70,7 @@ final class FontsUtil {
 			return false;
 		}
 
-		return isset( TypographyStore::$google_fonts[ $font_family ] );
+		return isset( FontsStore::$google_fonts[ $font_family ] );
 
 	}
 
@@ -81,7 +81,7 @@ final class FontsUtil {
 	 */
 	public function getStandardVariants() {
 
-		return TypographyStore::$standard_font_variants;
+		return FontsStore::$standard_font_variants;
 
 	}
 
@@ -94,7 +94,7 @@ final class FontsUtil {
 	 */
 	public function getStandardVariantOptions() {
 
-		return TypographyStore::$standard_font_variant_options;
+		return FontsStore::$standard_font_variant_options;
 
 	}
 
@@ -105,7 +105,7 @@ final class FontsUtil {
 	 */
 	public function getCompleteVariants() {
 
-		return TypographyStore::$complete_font_variants;
+		return FontsStore::$complete_font_variants;
 
 	}
 
@@ -118,7 +118,7 @@ final class FontsUtil {
 	 */
 	public function getCompleteVariantOptions() {
 
-		return TypographyStore::$complete_font_variant_options;
+		return FontsStore::$complete_font_variant_options;
 
 	}
 

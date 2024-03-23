@@ -4,7 +4,7 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
 use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontEntity;
 
-final class TypographyStore {
+final class FontsStore {
 
 	/**
 	 * Whether the data has been initialized.
@@ -58,30 +58,6 @@ final class TypographyStore {
 	 * @var array
 	 */
 	public static $google_font_names;
-
-	/**
-	 * An array of all Google Font subsets.
-	 *
-	 * @var array
-	 */
-	public static $google_font_subsets = array(
-		'cyrillic'     => 'Cyrillic',
-		'cyrillic-ext' => 'Cyrillic Extended',
-		'devanagari'   => 'Devanagari',
-		'greek'        => 'Greek',
-		'greek-ext'    => 'Greek Extended',
-		'khmer'        => 'Khmer',
-		'latin'        => 'Latin',
-		'latin-ext'    => 'Latin Extended',
-		'vietnamese'   => 'Vietnamese',
-		'hebrew'       => 'Hebrew',
-		'arabic'       => 'Arabic',
-		'bengali'      => 'Bengali',
-		'gujarati'     => 'Gujarati',
-		'tamil'        => 'Tamil',
-		'telugu'       => 'Telugu',
-		'thai'         => 'Thai',
-	);
 
 	/**
 	 * Check if the data has been initialized.
@@ -150,7 +126,7 @@ final class TypographyStore {
 			];
 		}
 
-		( new GoogleFontsUtil() )->initCaches();
+		( new GoogleFontsCache() )->initCaches();
 
 		self::$initialized = true;
 

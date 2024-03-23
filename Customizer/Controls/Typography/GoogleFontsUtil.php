@@ -11,130 +11,14 @@ final class GoogleFontsUtil {
 	 *
 	 * @var string[]
 	 */
-	public $available_sorting_modes = [ 'alpha', 'popularity', 'trending' ];
+	public $available_sortby_modes = [ 'alpha', 'popularity', 'trending' ];
 
 	/**
 	 * The default sorting mode.
 	 *
 	 * @var string
 	 */
-	public $default_sorting_mode = 'alpha';
-
-	/**
-	 * The path to the 'webfonts.json' file.
-	 *
-	 * @var string
-	 */
-	private $webfonts_json_filepath;
-
-	/**
-	 * The path to the 'webfont-names.json' file.
-	 *
-	 * @var string
-	 */
-	private $webfont_names_json_filepath;
-
-	/**
-	 * The path to the 'webfont-files.json' file.
-	 *
-	 * @var string
-	 */
-	private $webfont_files_json_filepath;
-
-	/**
-	 * `GoogleFontsUtil` constructor.
-	 */
-	public function __construct() {
-
-		$this->webfonts_json_filepath = __DIR__ . '/dist/webfonts.json';
-
-		$this->webfont_names_json_filepath = __DIR__ . '/dist/webfont-names.json';
-
-		$this->webfont_files_json_filepath = __DIR__ . '/dist/webfont-files.json';
-
-	}
-
-	/**
-	 * Decode the JSON file content and return as array.
-	 *
-	 * @param string $json_filepath The path of the JSON file to read.
-	 * @return array
-	 */
-	private function readFromJson( $json_filepath ) {
-
-		$fonts = [];
-
-		if ( file_exists( $json_filepath ) ) {
-			$json = file_get_contents( $json_filepath );
-
-			if ( ! $json ) {
-				return $fonts;
-			}
-
-			$decoded = json_decode( $json, true );
-
-			if ( ! $decoded || ! is_array( $decoded ) ) {
-				return $fonts;
-			}
-
-			$fonts = $decoded;
-		}
-
-		return $fonts;
-
-	}
-
-	/**
-	 * Get the caching duration.
-	 *
-	 * @return int
-	 */
-	private function cacheDuration() {
-
-		return apply_filters( 'wpbf_googlefonts_transient_time', HOUR_IN_SECONDS );
-
-	}
-
-	/**
-	 * Init Google Fonts related caches.
-	 *
-	 * For performance reason, this should only be executed once per application runtime.
-	 */
-	public function initCaches() {
-
-		$cached_google_fonts_array = get_site_transient( 'wpbf_googlefonts_cache' );
-
-		if ( ! empty( $cached_google_fonts_array ) ) {
-			TypographyStore::$google_fonts = $this->makeFontsCollection( $cached_google_fonts_array, true );
-		} else {
-			$this->cacheFonts();
-		}
-
-		$cached_google_font_names = get_site_transient( 'wpbf_googlefont_names_cache' );
-
-		if ( ! empty( $cached_google_font_names ) ) {
-			TypographyStore::$google_font_names = $cached_google_font_names;
-		} else {
-			$this->cacheFontNames();
-		}
-
-	}
-
-	/**
-	 * Cache Google Font families.
-	 */
-	public function cacheFonts() {
-
-		$raw_array = $this->readFromJson( $this->webfonts_json_filepath );
-		$raw_items = $raw_array['items'];
-
-		// Save the array in cache.
-		set_site_transient( 'wpbf_googlefonts_cache', $raw_items, $this->cacheDuration() );
-
-		// Set the Google Fonts collection store.
-		TypographyStore::$google_fonts = $this->makeFontsCollection( $raw_items, true );
-
-	}
+	public $default_sortby_mode = 'alpha';
 
 	/**
 	 * Create Google Fonts collection.
@@ -166,28 +50,6 @@ final class GoogleFontsUtil {
 	}
 
 	/**
-	 * Cache all Google Font's font-family names.
-	 */
-	public function cacheFontNames() {
-
-		$font_names = $this->readFromJson( $this->webfont_names_json_filepath );
-
-		if ( ! is_array( $font_names ) || empty( $font_names ) ) {
-			return;
-		}
-
-		// Apply the 'wpbf_fonts_google_font_names' filter.
-		$font_names = apply_filters( 'wpbf_fonts_google_font_names', $font_names );
-
-		// Save the array in cache.
-		set_site_transient( 'wpbf_googlefont_names_cache', $font_names, $this->cacheDuration() );
-
-		// Set the Google Font's font-family names store.
-		TypographyStore::$google_font_names = $font_names;
-
-	}
-
-	/**
 	 * Get font family names filtered by order by and count.
 	 *
 	 * @param string|null $sort_by Accepts 'alpha', 'popularity', or 'trending' as the value.
@@ -197,8 +59,8 @@ final class GoogleFontsUtil {
 	 */
 	public function getFilteredFontNames( $sort_by = null, $count = null ) {
 
-		$sort_by = ! is_string( $sort_by ) || empty( $sort_by ) ? $this->default_sorting_mode : $sort_by;
-		$sort_by = ! in_array( $sort_by, $this->available_sorting_modes, true ) ? $this->default_sorting_mode : $sort_by;
+		$sort_by = ! is_string( $sort_by ) || empty( $sort_by ) ? $this->default_sortby_mode : $sort_by;
+		$sort_by = ! in_array( $sort_by, $this->available_sortby_modes, true ) ? $this->default_sortby_mode : $sort_by;
 
 		$count = ! is_int( $count ) || empty( $count ) || $count < 1 ? null : $count;
 
@@ -214,13 +76,15 @@ final class GoogleFontsUtil {
 
 		$cache_name .= '_cache';
 
-		$cached_result = get_site_transient( $cache_name );
+		$cached_font_names = get_site_transient( $cache_name );
 
-		if ( $cached_result && is_array( $cached_result ) ) {
-			return $cached_result;
+		if ( $cached_font_names && is_array( $cached_font_names ) ) {
+			return $cached_font_names;
 		}
 
-		$data = $this->readFromJson( $this->webfonts_json_filepath );
+		$cache_util = new GoogleFontsCache();
+
+		$data = $cache_util->readFromJson( $cache_util->webfonts_json_filepath );
 
 		/**
 		 * The ordered Google Font's font family names.
@@ -233,11 +97,11 @@ final class GoogleFontsUtil {
 
 		if ( ! is_null( $count ) ) {
 			$ordered_font_names = array_slice( $ordered_font_names, 0, $count );
-			set_site_transient( $cache_name, $ordered_font_names, $this->cacheDuration() );
+			set_site_transient( $cache_name, $ordered_font_names, $cache_util->cacheDuration() );
 			return $ordered_font_names;
 		}
 
-		set_site_transient( $cache_name, $ordered_font_names, $this->cacheDuration() );
+		set_site_transient( $cache_name, $ordered_font_names, $cache_util->cacheDuration() );
 		return $ordered_font_names;
 
 	}
