@@ -6,6 +6,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyUtil;
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
 
@@ -14,9 +15,9 @@ class TypographyField extends BaseField {
 	/**
 	 * A `TypographyUtil` instance.
 	 *
-	 * @var TypographyUtil|null
+	 * @var TypographyUtil
 	 */
-	protected $typography_util = null;
+	protected $typography_util;
 
 	/**
 	 * The setting entity.
@@ -54,17 +55,16 @@ class TypographyField extends BaseField {
 	protected $partial_refresh = [];
 
 	/**
-	 * Add sub controls based on the control arguments.
+	 * Construct the class.
 	 *
-	 * @param array $args The arguments for the control.
+	 * @param CustomizerControlEntity $control The control entity object.
 	 */
-	private function addSubControls( $args ) {
+	public function __construct( $control ) {
 
-		$this->tab = isset( $args['tab'] ) ? $args['tab'] : '';
+		parent::__construct( $control );
 
-		$this->addLabelAndDescription();
-
-		$this->setting_entity = CustomizerStore::findSettingByControlId( $this->control->id );
+		$this->typography_util = new TypographyUtil();
+		$this->setting_entity  = CustomizerStore::findSettingByControlId( $this->control->id );
 
 		if ( ! $this->setting_entity ) {
 			return;
@@ -87,6 +87,19 @@ class TypographyField extends BaseField {
 				'render_callback'     => $partial_refresh_entity->render_callback,
 			];
 		}
+
+	}
+
+	/**
+	 * Add sub controls based on the control arguments.
+	 *
+	 * @param array $args The arguments for the control.
+	 */
+	private function addSubControls( $args ) {
+
+		$this->tab = isset( $args['tab'] ) ? $args['tab'] : '';
+
+		$this->addLabelAndDescription();
 
 		if ( isset( $this->default_value['font-family'] ) ) {
 			$this->addFontFamilyControl();
@@ -135,7 +148,7 @@ class TypographyField extends BaseField {
 			->setting( $this->control->setting )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
-			->choices( ! is_null( $this->typography_util ) ? $this->typography_util->makeFontFamilyChoices() : [] )
+			->choices( $this->typography_util->makeFontFamilyChoices() )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
@@ -153,11 +166,13 @@ class TypographyField extends BaseField {
 	 */
 	public function addControl( $wp_customize_manager ) {
 
+		if ( ! $this->setting_entity ) {
+			return;
+		}
+
 		if ( ! TypographyStore::initialized() ) {
 			TypographyStore::init();
 		}
-
-		$this->typography_util = new TypographyUtil();
 
 		$control_args = $this->parseControlArgs();
 
