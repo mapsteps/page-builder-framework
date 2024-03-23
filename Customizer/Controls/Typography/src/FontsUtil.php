@@ -14,7 +14,7 @@ final class FontsUtil {
 		$standard_fonts = [
 			'serif'      => [
 				'label' => 'Serif',
-				'stack' => 'Georgia,Times,"Times New Roman",serif',
+				'stack' => 'Georgia, Times, "Times New Roman", serif',
 			],
 			'sans-serif' => [
 				'label' => 'Sans Serif',
@@ -22,7 +22,7 @@ final class FontsUtil {
 			],
 			'monospace'  => [
 				'label' => 'Monospace',
-				'stack' => 'Monaco,"Lucida Sans Typewriter","Lucida Typewriter","Courier New",Courier,monospace',
+				'stack' => 'Monaco, "Lucida Sans Typewriter", "Lucida Typewriter", "Courier New", Courier, monospace',
 			],
 		];
 

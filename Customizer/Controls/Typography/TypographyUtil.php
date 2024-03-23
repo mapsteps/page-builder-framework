@@ -12,46 +12,61 @@ class TypographyUtil {
 	 */
 	public function makeFontFamilyChoices( $fonts_arg = array() ) {
 
-		$google_fonts_arg = ! empty( $fonts_arg['google'] ) ? $fonts_arg['google'] : [];
+		$google_fonts_util = new GoogleFontsUtil();
+		$fonts_util        = new FontsUtil();
 
-		$sorting   = 'alpha';
-		$max_fonts = 9999;
+		$google_fonts_arg   = ! empty( $fonts_arg['google'] ) ? $fonts_arg['google'] : [];
+		$standard_fonts_arg = ! empty( $fonts_arg['standard'] ) ? $fonts_arg['standard'] : [];
+
+		/**
+		 * The sorting mode.
+		 *
+		 * @var string|null $sort_by
+		 */
+		$sort_by = null;
+
+		/**
+		 * Maximum amount of fonts to get.
+		 *
+		 * @var int|null $max_fonts
+		 */
+		$max_fonts = null;
+
+		$google_font_names = [];
 
 		if ( ! empty( $google_fonts_arg ) ) {
-			if ( in_array( $fonts_arg['google'][0], [ 'alpha', 'popularity', 'trending' ], true ) ) {
-				$sorting = $fonts_arg['google'][0];
+			// If the argument is formatted like `'google' => [ 'popularity', 30 ],`.
+			if ( in_array( $google_fonts_arg[0], $google_fonts_util->available_sorting_modes, true ) ) {
+				$sort_by = $google_fonts_arg[0];
 
-				if ( isset( $fonts_arg['google'][1] ) && is_int( $fonts_arg['google'][1] ) ) {
+				if ( isset( $google_fonts_arg[1] ) && is_int( $fonts_arg['google'][1] ) ) {
 					$max_fonts = absint( $fonts_arg['google'][1] );
 				}
 
-				$raw_google_fonts = ( new GoogleFontsUtil() )->getFilteredFontNames( [
-					'sort'  => $sorting,
-					'count' => $max_fonts,
-				] );
+				$google_font_names = $google_fonts_util->getFilteredFontNames( $sort_by, $max_fonts );
 			} else {
-				$raw_google_fonts = $fonts_arg['google'];
+				// Otherwise, we assume the argument is formatted like `'google' => [ 'Roboto', 'Open Sans', 'Lato' ]`.
+				$google_font_names = $fonts_arg['google'];
 			}
 		} else {
-			$raw_google_fonts = ( new GoogleFontsUtil() )->getFilteredFontNames( [
-				'sort'  => $sorting,
-				'count' => $max_fonts,
-			] );
+			$google_font_names = TypographyStore::$google_font_names;
 		}
 
-		$std_fonts = [];
+		$standard_fonts = [];
 
-		if ( ! isset( $fonts_arg['standard'] ) ) {
-			$standard_fonts = ( new FontsUtil() )->getStandardFonts();
+		if ( is_array( $standard_fonts_arg ) && ! empty( $standard_fonts_arg ) ) {
+			foreach ( $standard_fonts_arg as $maybe_index_or_font_name => $font_name_or_stack ) {
+				$key = is_int( $maybe_index_or_font_name ) ? $font_name_or_stack : $maybe_index_or_font_name;
 
-			foreach ( $standard_fonts as $font ) {
-				$std_fonts[ $font['stack'] ] = $font['label'];
+				$standard_fonts[ $key ] = $font_name_or_stack;
 			}
-		} elseif ( is_array( $fonts_arg['standard'] ) ) {
-			foreach ( $fonts_arg['standard'] as $key => $val ) {
-				$key = ( is_int( $key ) ) ? $val : $key;
+		} else {
+			foreach ( $fonts_util->getStandardFonts() as $font_family_type => $font_data ) {
+				if ( empty( $font_data['stack'] ) || empty( $font_data['label'] ) ) {
+					continue;
+				}
 
-				$std_fonts[ $key ] = $val;
+				$standard_fonts[ $font_data['stack'] ] = $font_data['label'];
 			}
 		}
 
@@ -84,20 +99,26 @@ class TypographyUtil {
 			}
 		}
 
-		$choices['standard'] = [
-			esc_html__( 'Standard Fonts', 'page-builder-framework' ),
-			$std_fonts,
-		];
+		$choices = [];
 
-		$choices['google'] = [
-			esc_html__( 'Google Fonts', 'page-builder-framework' ),
-			array_combine( array_values( $raw_google_fonts ), array_values( $raw_google_fonts ) ),
-		];
+		if ( ! empty( $standard_fonts ) && ! empty( $google_font_names ) ) {
+			if ( ! empty( $standard_fonts ) ) {
+				$choices['standard'] = [
+					__( 'Standard Fonts', 'page-builder-framework' ),
+					$standard_fonts,
+				];
+			}
 
-		if ( empty( $choices['standard'][1] ) ) {
-			$choices = array_combine( array_values( $raw_google_fonts ), array_values( $raw_google_fonts ) );
-		} elseif ( empty( $choices['google'][1] ) ) {
-			$choices = $std_fonts;
+			if ( ! empty( $google_font_names ) ) {
+				$choices['google'] = [
+					__( 'Google Fonts', 'page-builder-framework' ),
+					$google_font_names,
+				];
+			}
+		} elseif ( empty( $standard_fonts ) ) {
+			$choices = $google_font_names;
+		} else {
+			$choices = $standard_fonts;
 		}
 
 		return $choices;

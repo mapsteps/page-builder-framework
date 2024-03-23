@@ -11,14 +11,14 @@ final class GoogleFontsUtil {
 	 *
 	 * @var string[]
 	 */
-	private $available_sorting_modes = [ 'alpha', 'popularity', 'trending' ];
+	public $available_sorting_modes = [ 'alpha', 'popularity', 'trending' ];
 
 	/**
 	 * The default sorting mode.
 	 *
 	 * @var string
 	 */
-	private $default_sorting_mode = 'alpha';
+	public $default_sorting_mode = 'alpha';
 
 	/**
 	 * The path to the 'webfonts.json' file.
@@ -97,6 +97,8 @@ final class GoogleFontsUtil {
 
 	/**
 	 * Init Google Fonts related caches.
+	 *
+	 * For performance reason, this should only be executed once per application runtime.
 	 */
 	public function initCaches() {
 
@@ -168,7 +170,7 @@ final class GoogleFontsUtil {
 	 */
 	public function cacheFontNames() {
 
-		$font_names = $this->readFromJson( $this->webfonts_json_filepath );
+		$font_names = $this->readFromJson( $this->webfont_names_json_filepath );
 
 		if ( ! is_array( $font_names ) || empty( $font_names ) ) {
 			return;

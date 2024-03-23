@@ -4,11 +4,19 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Media;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
+use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyUtil;
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
 
 class TypographyField extends BaseField {
+
+	/**
+	 * A `TypographyUtil` instance.
+	 *
+	 * @var TypographyUtil|null
+	 */
+	protected $typography_util = null;
 
 	/**
 	 * The setting entity.
@@ -127,18 +135,13 @@ class TypographyField extends BaseField {
 			->setting( $this->control->setting )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
-			->choices( [] )
+			->choices( ! is_null( $this->typography_util ) ? $this->typography_util->makeFontFamilyChoices() : [] )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
 			->sanitizeCallback( $this->setting_entity->sanitize_callback )
 			->activeCallback( $this->control->active_callback )
 			->partialRefresh( $this->partial_refresh )
-			->properties( [
-				'wrapper_attrs' => [
-					'gap' => 'small',
-				],
-			] )
 			->addToSection( $this->control->section_id );
 
 	}
@@ -153,6 +156,8 @@ class TypographyField extends BaseField {
 		if ( ! TypographyStore::initialized() ) {
 			TypographyStore::init();
 		}
+
+		$this->typography_util = new TypographyUtil();
 
 		$control_args = $this->parseControlArgs();
 
