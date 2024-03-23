@@ -3,7 +3,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
 use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontEntity;
-use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontsData;
 
 final class GoogleFontsUtil {
 
@@ -187,49 +186,57 @@ final class GoogleFontsUtil {
 	}
 
 	/**
-	 * Get font family names by arguments.
+	 * Get font family names filtered by order by and count.
 	 *
-	 * @param array $args The arguments.
+	 * @param string|null $sort_by Accepts 'alpha', 'popularity', or 'trending' as the value.
+	 * @param int|null    $count Total result to return.
+	 *
 	 * @return string[]
 	 */
-	public function getFontNamesByArgs( $args = [] ) {
+	public function getFilteredFontNames( $sort_by = null, $count = null ) {
 
-		$cache_name    = 'wpbf_googlefonts_' . md5( wp_json_encode( $args ) );
+		$sort_by = ! is_string( $sort_by ) || empty( $sort_by ) ? $this->default_sorting_mode : $sort_by;
+		$sort_by = ! in_array( $sort_by, $this->available_sorting_modes, true ) ? $this->default_sorting_mode : $sort_by;
+
+		$count = ! is_int( $count ) || empty( $count ) || $count < 1 ? null : $count;
+
+		$cache_name = 'wpbf_googlefonts';
+
+		if ( ! is_null( $sort_by ) ) {
+			$cache_name .= '_sort_by_' . $sort_by;
+		}
+
+		if ( ! is_null( $count ) ) {
+			$cache_name .= '_count_' . $count;
+		}
+
+		$cache_name .= '_cache';
+
 		$cached_result = get_site_transient( $cache_name );
 
 		if ( $cached_result && is_array( $cached_result ) ) {
-			return $this->makeFontsCollection( $cached_result );
+			return $cached_result;
 		}
 
-		$sort_by = ! empty( $args['sort'] ) && is_string( $args['sort'] ) ? $args['sort'] : $this->default_sorting_mode;
-		$sort_by = ! in_array( $sort_by, $this->available_sorting_modes, true ) ? $this->default_sorting_mode : $sort_by;
-
-		$count = ! empty( $args['count'] ) && is_int( $args['count'] ) ? $args['count'] : null;
-		$count = is_null( $count ) || $count < 1 ? null : absint( $count );
-
-		if ( ! isset( $args['sort'] ) ) {
-			$args['sort'] = 'alpha';
-		}
-
-		$data = GoogleFontsData::fromArray(
-			$this->readFromJson( $this->webfonts_json_filepath )
-		);
+		$data = $this->readFromJson( $this->webfonts_json_filepath );
 
 		/**
-		 * The ordered font families.
+		 * The ordered Google Font's font family names.
 		 *
-		 * @var string[] $ordered_font_families
+		 * @var string[] $ordered_font_names
 		 */
-		$ordered_font_families = property_exists( $data, $sort_by ) ? $data->{$sort_by} : [];
+		$ordered_font_names = isset( $data['order'] ) && isset( $data['order'][ $sort_by ] ) && is_array( $data['order'][ $sort_by ] )
+			? $data['order'][ $sort_by ]
+			: [];
 
 		if ( ! is_null( $count ) ) {
-			$ordered_font_families = array_slice( $ordered_font_families, 0, $count );
-			set_site_transient( $cache_name, $ordered_font_families, $this->cacheDuration() );
-			return $ordered_font_families;
+			$ordered_font_names = array_slice( $ordered_font_names, 0, $count );
+			set_site_transient( $cache_name, $ordered_font_names, $this->cacheDuration() );
+			return $ordered_font_names;
 		}
 
-		set_site_transient( $cache_name, $ordered_font_families, $this->cacheDuration() );
-		return $ordered_font_families;
+		set_site_transient( $cache_name, $ordered_font_names, $this->cacheDuration() );
+		return $ordered_font_names;
 
 	}
 

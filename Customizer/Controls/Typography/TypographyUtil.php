@@ -25,7 +25,7 @@ class TypographyUtil {
 					$max_fonts = absint( $fonts_arg['google'][1] );
 				}
 
-				$raw_google_fonts = ( new GoogleFontsUtil() )->getFontNamesByArgs( [
+				$raw_google_fonts = ( new GoogleFontsUtil() )->getFilteredFontNames( [
 					'sort'  => $sorting,
 					'count' => $max_fonts,
 				] );
@@ -33,7 +33,7 @@ class TypographyUtil {
 				$raw_google_fonts = $fonts_arg['google'];
 			}
 		} else {
-			$raw_google_fonts = ( new GoogleFontsUtil() )->getFontNamesByArgs( [
+			$raw_google_fonts = ( new GoogleFontsUtil() )->getFilteredFontNames( [
 				'sort'  => $sorting,
 				'count' => $max_fonts,
 			] );
