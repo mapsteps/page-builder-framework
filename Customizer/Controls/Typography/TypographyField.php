@@ -104,6 +104,10 @@ class TypographyField extends BaseField {
 	 */
 	private function addSubControls( $args ) {
 
+		if ( ! is_array( $args ) || ! $this->setting_entity ) {
+			return;
+		}
+
 		$this->tab = ! empty( $args['tab'] ) && is_string( $args['tab'] ) ? $args['tab'] : '';
 
 		$this->fonts_arg = ! empty( $args['fonts'] ) && is_array( $args['fonts'] ) ? $args['fonts'] : [];
@@ -112,6 +116,7 @@ class TypographyField extends BaseField {
 
 		if ( isset( $this->default_value['font-family'] ) ) {
 			$this->addFontFamilyControl();
+			$this->addFontVariantControl();
 		}
 
 	}
@@ -145,25 +150,68 @@ class TypographyField extends BaseField {
 	 */
 	private function addFontFamilyControl() {
 
-		if ( is_null( $this->setting_entity ) ) {
-			return;
-		}
+		$defaults    = $this->setting_entity->default;
+		$font_family = ! empty( $defaults['font-family'] ) && is_string( $defaults['font-family'] ) ? $defaults['font-family'] : '';
 
 		wpbf_customizer_field()
 			->id( $this->control->id . '[font-family]' )
 			->type( 'select' )
 			->label( __( 'Font Family', 'page-builder-framework' ) )
-			->settings( $this->control->settings )
-			->setting( $this->control->setting )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
-			->choices( $this->typography_util->makeFontFamilyChoices( $this->fonts_arg ) )
+			->defaultValue( $font_family )
+			->choices( $this->typography_util->makeFontFamilyChoices( $font_family, $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
 			->sanitizeCallback( $this->setting_entity->sanitize_callback )
 			->activeCallback( $this->control->active_callback )
 			->partialRefresh( $this->partial_refresh )
+			->properties( [
+				'wrapper_attrs' => [
+					'wpbf-typography-type' => 'font-family',
+				],
+			] )
+			->addToSection( $this->control->section_id );
+
+	}
+
+	/**
+	 * Add the font variant control.
+	 */
+	private function addFontVariantControl() {
+
+		$defaults = $this->setting_entity->default;
+
+		$font_variant = ! empty( $defaults['variant'] ) && is_string( $defaults['variant'] ) ? $defaults['variant'] : '';
+		$font_weight  = ! empty( $defaults['font-weight'] ) && ( is_string( $defaults['font-weight'] ) || is_numeric( $defaults['font-weight'] ) ) ? $defaults['font-weight'] : '';
+		$font_weight  = is_numeric( $font_weight ) ? (string) $font_weight : $font_weight;
+
+		if ( ! empty( $font_weight ) ) {
+			$font_variant = '400' === $font_weight ? 'regular' : $font_variant;
+		}
+
+		$control_id = $this->control->id . '[variant]';
+
+		wpbf_customizer_field()
+			->id( $control_id )
+			->type( 'select' )
+			->label( __( 'Font Variant', 'page-builder-framework' ) )
+			->tab( $this->tab )
+			->capability( $this->control->capability )
+			->defaultValue( $font_variant )
+			->choices( $this->typography_util->makeFontVariantChoices( $this->fonts_arg ) )
+			->priority( $this->control->priority )
+			->transport( $this->transport )
+			->inputAttrs( $this->control->input_attrs )
+			->sanitizeCallback( $this->setting_entity->sanitize_callback )
+			->activeCallback( $this->control->active_callback )
+			->partialRefresh( $this->partial_refresh )
+			->properties( [
+				'wrapper_attrs' => [
+					'wpbf-typography-type' => 'variant',
+				],
+			] )
 			->addToSection( $this->control->section_id );
 
 	}

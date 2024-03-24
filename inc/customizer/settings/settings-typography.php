@@ -108,25 +108,24 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_font_options' );
 
 // Font family.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'typography',
-	'settings'        => 'page_font_family',
-	'label'           => __( 'Font Family', 'page-builder-framework' ),
-	'section'         => 'wpbf_font_options',
-	'default'         => array(
+wpbf_customizer_field()
+	->id( 'page_font_family' )
+	->type( 'typography' )
+	->label( __( 'Font Family', 'page-builder-framework' ) )
+	->defaultValue( array(
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => 'regular',
-	),
-	'choices'         => wpbf_default_font_choices(),
-	'active_callback' => array(
+	) )
+	->priority( 1 )
+	->activeCallback( array(
 		array(
 			'setting'  => 'page_font_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
-	),
-	'priority'        => 1,
-) );
+	) )
+	->properties( wpbf_default_font_choices() )
+	->addToSection( 'wpbf_font_options' );
 
 // Separator.
 wpbf_customizer_field()
