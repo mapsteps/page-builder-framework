@@ -18,7 +18,7 @@ declare var wp: {
 	customize: WpbfCustomize;
 };
 
-const SelectControl = wp.customize.Control.extend({
+const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 	initialize: function (
 		this: WpbfCustomizeSelectControl,
 		id: string,
@@ -92,7 +92,7 @@ const SelectControl = wp.customize.Control.extend({
 				customizerSetting={control.setting}
 				isOptionDisabled={control.isOptionDisabled}
 				control={control}
-				isMulti={control.isMulti()}
+				isMulti={control.isMulti?.() ?? false}
 				maxSelections={control.params.maxSelections}
 			/>,
 		);
@@ -160,7 +160,7 @@ const SelectControl = wp.customize.Control.extend({
 					"undefined" === typeof control.disabledSelectOptions
 						? []
 						: control.disabledSelectOptions;
-				control.disabledSelectOptions.push(control.getOptionProps(arg));
+				control.disabledSelectOptions.push(control.getOptionProps!(arg));
 				break;
 
 			case "enableOption":
@@ -226,17 +226,17 @@ const SelectControl = wp.customize.Control.extend({
 	getFormattedOptions: function (this: WpbfCustomizeSelectControl) {
 		const control = this;
 
-		return control.formatOptions();
+		return control.formatOptions!();
 	},
 
 	getOptionProps: function (this: WpbfCustomizeSelectControl, value: any) {
 		const control = this;
 
-		const options = control.getFormattedOptions();
+		const options = control.getFormattedOptions!();
 		let i: any;
 		let l: any;
 
-		if (control.isMulti()) {
+		if (control.isMulti?.()) {
 			let values = [];
 
 			for (i = 0; i < options.length; i++) {

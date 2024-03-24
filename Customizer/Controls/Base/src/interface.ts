@@ -4,7 +4,11 @@ import {
 	HandleSettingValiditiesArgs,
 	RequestChangesetUpdateOptions,
 } from "wordpress__customize-browser/Customize";
-import { WpbfCustomizeSelectControl } from "../../Select/src/interfaces";
+import {
+	WpbfCustomizeSelectControl,
+	WpbfCustomizeSelectOptionGroup,
+	WpbfCustomizeSelectOptionObject,
+} from "../../Select/src/interfaces";
 import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interfaces";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
@@ -179,6 +183,18 @@ export interface WpbfCustomizeControl<SV, CP> {
 	_setUpSettingPropertyLinks?: () => void;
 	initWpbfControl?: (control?: WpbfCustomizeControl<SV, CP>) => void;
 	actuallyEmbed?: () => void;
+
+	// Specific to PBF's select control.
+	isMulti?: () => boolean;
+	isOptionDisabled?: (option: any) => boolean;
+	disabledSelectOptions?: any[];
+	doSelectAction?: (action: any, args: any) => void;
+	formatOptions?: () =>
+		| string[]
+		| WpbfCustomizeSelectOptionObject[]
+		| WpbfCustomizeSelectOptionGroup[];
+	getFormattedOptions?: () => any[];
+	getOptionProps?: (value: any) => any[];
 
 	// Specific to PBF's sortable control.
 	getNewValues?: () => any[];
