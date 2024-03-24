@@ -1,6 +1,6 @@
 <?php
 
-namespace Mapsteps\Wpbf\Customizer\Controls\Media;
+namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsStore;
