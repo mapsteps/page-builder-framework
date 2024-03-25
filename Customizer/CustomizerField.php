@@ -43,11 +43,18 @@ final class CustomizerField {
 	private $sanitize_callback = '';
 
 	/**
-	 * Partial refresh entities.
+	 * Field's dependencies.
 	 *
-	 * @var PartialRefreshEntity[]
+	 * @var array
 	 */
-	private $partial_refreshes = array();
+	private $field_dependencies = [];
+
+	/**
+	 * Field's raw partial refresh arguments.
+	 *
+	 * @var array
+	 */
+	private $partial_refresh_args = array();
 
 	/**
 	 * Custom properties for the control.
@@ -256,7 +263,7 @@ final class CustomizerField {
 	/**
 	 * Set the control's active_callback.
 	 *
-	 * @param callable $active_callback Control active_callback.
+	 * @param callable|array $active_callback Control's active callback.
 	 *
 	 * @return $this
 	 */
@@ -264,7 +271,6 @@ final class CustomizerField {
 
 		if ( is_callable( $active_callback ) ) {
 			$this->control_instance->activeCallback( $active_callback );
-
 			return $this;
 		}
 
@@ -272,9 +278,7 @@ final class CustomizerField {
 			return $this;
 		}
 
-		$control_id = $this->control_instance->control->id;
-
-		CustomizerStore::$added_control_dependencies[ $control_id ] = $active_callback;
+		$this->field_dependencies = $active_callback;
 
 		return $this;
 
@@ -335,35 +339,11 @@ final class CustomizerField {
 	 */
 	public function partialRefresh( $args = array() ) {
 
-		$control_id = $this->control_instance->control->id;
-
-		foreach ( $args as $key => $arg ) {
-			$partial_refresh = new PartialRefreshEntity();
-
-			$partial_refresh->id = $key;
-
-			$partial_refresh->control_id = $control_id;
-
-			/**
-			 * Temporarily set the partial refresh id to the control id.
-			 * It will be overwritten later in the `addToSection` method.
-			 */
-			$partial_refresh->settings = array( $control_id );
-
-			if ( isset( $arg['container_inclusive'] ) ) {
-				$partial_refresh->container_inclusive = $arg['container_inclusive'];
-			}
-
-			if ( isset( $arg['selector'] ) ) {
-				$partial_refresh->selector = $arg['selector'];
-			}
-
-			if ( isset( $arg['render_callback'] ) ) {
-				$partial_refresh->render_callback = $arg['render_callback'];
-			}
-
-			$this->partial_refreshes[] = $partial_refresh;
+		if ( empty( $args ) || ! is_array( $args ) ) {
+			return $this;
 		}
+
+		$this->partial_refresh_args = $args;
 
 		return $this;
 
@@ -435,14 +415,9 @@ final class CustomizerField {
 			return;
 		}
 
-		if ( $field->is_wrapper_field ) {
-			$field->addSubFields();
-			return;
-		}
-
-		$control_type = $this->control_instance->control->type;
-
 		if ( $field->use_content_template ) {
+			$control_type = $this->control_instance->control->type;
+
 			if ( ! isset( CustomizerStore::$controls_using_content_template[ $control_type ] ) ) {
 				CustomizerStore::$controls_using_content_template[ $control_type ] = $field->control_class_path;
 			}
@@ -467,48 +442,94 @@ final class CustomizerField {
 			}
 		}
 
+		// Update the `$control_id` var.
+		$control_id = $this->control_instance->control->id;
+
 		if ( empty( $this->sanitize_callback ) ) {
 			$this->sanitizeCallback( [ $field, 'sanitizeCallback' ] );
 		}
 
-		if ( ! empty( $this->partial_refreshes ) ) {
+		if ( ! empty( $this->partial_refresh_args ) ) {
 			$this->setting_instance->transport( 'postMessage' );
-		}
-
-		// Update `$field` variable to have the updated setting entity.
-		$field = ( new CustomizerUtil() )->getField( $this->control_instance->control );
-
-		if ( is_null( $field ) ) {
-			return;
 		}
 
 		$this->setting_instance->setting = $field->filterSettingEntity( $this->setting_instance->setting );
 
+		if ( $field->is_wrapper_field ) {
+			$this->control_instance->control->section_id = $section_id;
+
+			// Update `$field` variable to have the updated setting entity.
+			$field = ( new CustomizerUtil() )->getField( $this->control_instance->control );
+
+			if ( is_null( $field ) ) {
+				return;
+			}
+
+			$callable_active_callback  = $this->control_instance->control->active_callback;
+			$subfields_active_callback = ! empty( $callable_active_callback ) && is_callable( $callable_active_callback ) ? $callable_active_callback : $this->field_dependencies;
+
+			$field->addSubFields( $this->setting_instance->setting, $subfields_active_callback, $this->partial_refresh_args );
+
+			// Stop here if this field is a wrapper that will render other fields.
+			return;
+		}
+
 		$this->setting_instance->add();
 
-		if ( ! empty( $this->partial_refreshes ) ) {
-			$control_settings = $this->control_instance->control->settings;
-
-			$partial_refresh_settings = array();
-
-			if ( is_array( $control_settings ) ) {
-				$partial_refresh_settings = $control_settings;
-			} elseif ( is_string( $control_settings ) ) {
-				$partial_refresh_settings = array( $control_settings );
-			}
-
-			foreach ( $this->partial_refreshes as $index => $partial_refresh ) {
-				$this->partial_refreshes[ $index ]->settings = $partial_refresh_settings;
-
-				CustomizerStore::$added_partial_refreshes[] = $this->partial_refreshes[ $index ];
-			}
+		if ( ! empty( $this->field_dependencies ) ) {
+			CustomizerStore::$added_control_dependencies[ $control_id ] = $this->field_dependencies;
 		}
+
+		$this->parsePartialRefreshArgs();
 
 		if ( ! empty( $this->custom_properties ) ) {
 			$this->control_instance->customProperties( $this->custom_properties );
 		}
 
 		$this->control_instance->addToSection( $section_id );
+
+	}
+
+	/**
+	 * Parse the raw partial refresh arguments.
+	 */
+	private function parsePartialRefreshArgs() {
+
+		if ( empty( $this->partial_refresh_args ) || ! is_array( $this->partial_refresh_args ) ) {
+			return;
+		}
+
+		$control_settings = $this->control_instance->control->settings;
+
+		$partial_refresh_settings = array();
+
+		if ( is_array( $control_settings ) ) {
+			$partial_refresh_settings = $control_settings;
+		} elseif ( is_string( $control_settings ) ) {
+			$partial_refresh_settings = array( $control_settings );
+		}
+
+		foreach ( $this->partial_refresh_args as $partial_refresh_key => $partial_refresh_arg ) {
+			$partial_refresh_entity = new PartialRefreshEntity();
+
+			$partial_refresh_entity->id         = $partial_refresh_key;
+			$partial_refresh_entity->control_id = $this->control_instance->control->id;
+			$partial_refresh_entity->settings   = $partial_refresh_settings;
+
+			if ( isset( $partial_refresh_arg['container_inclusive'] ) ) {
+				$partial_refresh_entity->container_inclusive = $partial_refresh_arg['container_inclusive'];
+			}
+
+			if ( isset( $partial_refresh_arg['selector'] ) ) {
+				$partial_refresh_entity->selector = $partial_refresh_arg['selector'];
+			}
+
+			if ( isset( $partial_refresh_arg['render_callback'] ) ) {
+				$partial_refresh_entity->render_callback = $partial_refresh_arg['render_callback'];
+			}
+
+			CustomizerStore::$added_partial_refreshes[] = $partial_refresh_entity;
+		}
 
 	}
 

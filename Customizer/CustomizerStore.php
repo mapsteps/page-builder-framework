@@ -58,7 +58,7 @@ final class CustomizerStore {
 	public static $added_controls = array();
 
 	/**
-	 * Added field dependencies.
+	 * Added control dependencies.
 	 *
 	 * @var array
 	 */

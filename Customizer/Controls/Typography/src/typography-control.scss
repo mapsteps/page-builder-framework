@@ -1,0 +1,23 @@
+.customize-control[data-wpbf-typography-type] {
+	margin-bottom: 10px;
+
+	.customize-control-title {
+		margin-bottom: 0;
+		font-weight: 500;
+		font-size: 12px;
+	}
+}
+
+.customize-control[data-wpbf-typography-css-prop="text-decoration"] {
+	margin-bottom: 15px;
+}
+
+.wpbf-typography-end {
+	margin-top: 8px;
+	margin-bottom: 8px;
+
+	hr {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}

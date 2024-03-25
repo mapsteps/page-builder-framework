@@ -1,6 +1,6 @@
 /* Image Select */
 .customize-control-kirki-radio-image input:hover + label img {
-	opacity: .7 !important;
+	opacity: 0.7 !important;
 }
 
 .customize-control-kirki-radio-image input:checked + label img {
@@ -21,11 +21,11 @@
 
 /* Tooltips  */
 .tooltip-trigger {
-	color:  #999;
+	color: #999;
 }
 
 .tooltip-trigger:hover {
-	color:  #50575e;
+	color: #50575e;
 }
 
 .tooltip-content {
@@ -38,6 +38,7 @@
 }
 
 /* Hide "Font Family" labels */
+.wpbf-typography-label-description,
 #customize-control-menu_logo_font_family,
 #customize-control-menu_logo_description_font_family,
 #customize-control-menu_font_family,

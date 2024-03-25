@@ -4,6 +4,7 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
+use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
 
 /**
@@ -74,7 +75,7 @@ abstract class BaseField {
 	/**
 	 * Enqueue styles & scripts on 'customize_preview_init' action.
 	 */
-	public function enqueueCustomizePreviewScripts() {
+	public function enqueuePreviewScripts() {
 	}
 
 	/**
@@ -188,8 +189,25 @@ abstract class BaseField {
 	 * Add sub fields when the `$is_wrapper_field` is set to `true`.
 	 *
 	 * The implementation will be in the child class.
+	 *
+	 * @param CustomizerSettingEntity $setting_entity The setting entity object.
+	 * @param callable|array          $active_callback_args Raw active callback arguments.
+	 * @param array                   $partial_refresh_args Raw partial refresh arguments.
 	 */
-	public function addSubFields() {
+	public function addSubFields( $setting_entity, $active_callback_args, $partial_refresh_args ) {
+
+		if ( ! ( $setting_entity instanceof CustomizerSettingEntity ) ) {
+			return;
+		}
+
+		if ( ! is_array( $active_callback_args ) && is_callable( $active_callback_args ) ) {
+			return;
+		}
+
+		if ( ! is_array( $partial_refresh_args ) ) {
+			return;
+		}
+
 	}
 
 }

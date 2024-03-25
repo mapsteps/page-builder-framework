@@ -18,7 +18,7 @@ class ColorField extends BaseField {
 	/**
 	 * Enqueue styles & scripts on 'customize_preview_init' action.
 	 */
-	public function enqueueCustomizePreviewScripts() {
+	public function enqueuePreviewScripts() {
 
 		wp_enqueue_script(
 			'wpbf-color-preview',

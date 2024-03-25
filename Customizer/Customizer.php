@@ -84,7 +84,7 @@ final class Customizer {
 		$customizer_util = new CustomizerUtil();
 
 		foreach ( CustomizerStore::$added_controls as $control ) {
-			$customizer_util->enqueueCustomizePreviewScripts( $control );
+			$customizer_util->enqueuePreviewScripts( $control );
 		}
 
 	}

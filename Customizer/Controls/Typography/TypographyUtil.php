@@ -16,10 +16,7 @@ class TypographyUtil {
 
 		$default_value = empty( $default_value ) || is_string( $default_value ) ? $default_value : '';
 		$default_label = __( 'Default', 'page-builder-framework' );
-
-		if ( empty( $fonts_arg ) || ! is_array( $fonts_arg ) ) {
-			return [];
-		}
+		$fonts_arg     = empty( $fonts_arg ) || ! is_array( $fonts_arg ) ? [] : $fonts_arg;
 
 		$fonts_util = new FontsUtil();
 
@@ -128,7 +125,7 @@ class TypographyUtil {
 
 		$choices['default'] = [
 			$default_label,
-			[ $default_value => $default_label ],
+			[ $default_value => $default_value ],
 		];
 
 		if ( ! empty( $standard_font_options ) ) {
@@ -161,10 +158,7 @@ class TypographyUtil {
 	 */
 	public function makeFontVariantChoices( $fonts_arg ) {
 
-		if ( empty( $fonts_arg ) || ! is_array( $fonts_arg ) ) {
-			return [];
-		}
-
+		$fonts_arg  = empty( $fonts_arg ) || ! is_array( $fonts_arg ) ? [] : $fonts_arg;
 		$fonts_util = new FontsUtil();
 
 		$variants_arg = ! empty( $fonts_arg['variants'] ) && is_array( $fonts_arg['variants'] ) ? $fonts_arg['variants'] : [];

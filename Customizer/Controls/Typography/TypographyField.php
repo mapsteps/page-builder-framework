@@ -3,12 +3,9 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsStore;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyUtil;
-use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
-use WP_Customize_Manager;
 
 class TypographyField extends BaseField {
 
@@ -55,11 +52,22 @@ class TypographyField extends BaseField {
 	protected $transport = '';
 
 	/**
-	 * The raw partial refresh array (as when adding it via `wpbf_customizer_field`).
+	 * Raw active callback arguments.
+	 *
+	 * The array format is the same as when calling `activeCallback` method in `wpbf_customizer_field`.
 	 *
 	 * @var array
 	 */
-	protected $partial_refresh = [];
+	protected $active_callback_args = [];
+
+	/**
+	 * Raw partial refresh arguments.
+	 *
+	 * The array format is the same as when calling `partialRefresh` method in `wpbf_customizer_field`.
+	 *
+	 * @var array
+	 */
+	protected $partial_refresh_args = [];
 
 	/**
 	 * The fonts argument.
@@ -78,53 +86,61 @@ class TypographyField extends BaseField {
 		parent::__construct( $control );
 
 		$this->typography_util = new TypographyUtil();
-		$this->setting_entity  = CustomizerStore::findSettingByControlId( $this->control->id );
-
-		if ( ! $this->setting_entity ) {
-			return;
-		}
-
-		$this->transport = $this->setting_entity->transport;
-		$this->transport = 'auto' === $this->transport ? 'postMessage' : $this->transport;
-
-		$this->default_value = $this->setting_entity->default;
-		$this->default_value = is_array( $this->default_value ) ? $this->default_value : [];
-
-		$partial_refresh_entities = CustomizerStore::findPartialRefreshesByControlId( $this->control->id );
-
-		foreach ( $partial_refresh_entities as $partial_refresh_entity ) {
-			$partial_refresh_id = $partial_refresh_entity->id;
-
-			$this->partial_refresh[ $partial_refresh_id ] = [
-				'container_inclusive' => $partial_refresh_entity->container_inclusive,
-				'selector'            => $partial_refresh_entity->selector,
-				'render_callback'     => $partial_refresh_entity->render_callback,
-			];
-		}
 
 	}
 
 	/**
-	 * Add sub controls based on the control arguments.
-	 *
-	 * @param array $args The arguments for the control.
+	 * Enqueue styles & scripts on 'customize_controls_enqueue_scripts' action.
 	 */
-	private function addSubControls( $args ) {
+	public function enqueueControlScripts() {
 
-		if ( ! is_array( $args ) || ! $this->setting_entity ) {
-			return;
+		// Enqueue the styles.
+		wp_enqueue_style( 'wpbf-typography-control', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-control-min.css', array(), WPBF_VERSION );
+
+		// Enqueue the scripts.
+		wp_enqueue_script( 'wpbf-typography-control', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-control-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
+
+	}
+
+	/**
+	 * Add sub fields when the `$is_wrapper_field` is set to `true`.
+	 *
+	 * @param CustomizerSettingEntity $setting_entity The setting entity object.
+	 * @param callable|array          $active_callback_args Raw active callback arguments.
+	 * @param array                   $partial_refresh_args Raw partial refresh arguments.
+	 */
+	public function addSubFields( $setting_entity, $active_callback_args, $partial_refresh_args ) {
+
+		if ( ! FontsStore::initialized() ) {
+			FontsStore::init();
 		}
 
-		$this->tab = ! empty( $args['tab'] ) && is_string( $args['tab'] ) ? $args['tab'] : '';
+		$this->setting_entity       = $setting_entity;
+		$this->active_callback_args = $active_callback_args;
+		$this->partial_refresh_args = $partial_refresh_args;
 
-		$this->fonts_arg = ! empty( $args['fonts'] ) && is_array( $args['fonts'] ) ? $args['fonts'] : [];
+		$this->transport = $setting_entity->transport;
+		$this->transport = 'auto' === $this->transport ? 'postMessage' : $this->transport;
+
+		$this->default_value = $setting_entity->default;
+		$this->default_value = is_array( $this->default_value ) ? $this->default_value : [];
+
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueueControlScripts' ) );
+
+		$props = $this->control->custom_properties;
+
+		$this->tab = ! empty( $props['tab'] ) && is_string( $props['tab'] ) ? $props['tab'] : '';
+
+		$this->fonts_arg = ! empty( $props['fonts'] ) && is_array( $props['fonts'] ) ? $props['fonts'] : [];
 
 		$this->addLabelAndDescription();
 
 		if ( isset( $this->default_value['font-family'] ) ) {
-			$this->addFontFamilyControl();
-			$this->addFontVariantControl();
+			$this->addFontFamilyField();
+			$this->addFontVariantField();
 		}
+
+		$this->addDivider();
 
 	}
 
@@ -134,18 +150,19 @@ class TypographyField extends BaseField {
 	private function addLabelAndDescription() {
 
 		wpbf_customizer_field()
-			->id( $this->control->id . '_label' )
+			->id( $this->control->id )
 			->type( 'custom' )
 			->tab( $this->tab )
 			->label( $this->control->label )
 			->description( $this->control->description )
 			->capability( $this->control->capability )
 			->priority( $this->control->priority )
-			->activeCallback( $this->control->active_callback )
+			->activeCallback( $this->active_callback_args )
 			->tooltip( $this->control->tooltip )
 			->properties( [
 				'wrapper_attrs' => [
-					'gap' => 'small',
+					'gap'   => 'small',
+					'class' => 'wpbf-typography-label-description',
 				],
 			] )
 			->addToSection( $this->control->section_id );
@@ -153,11 +170,16 @@ class TypographyField extends BaseField {
 	}
 
 	/**
-	 * Add the font family control.
+	 * Add the font family field.
 	 */
-	private function addFontFamilyControl() {
+	private function addFontFamilyField() {
 
-		$defaults    = $this->setting_entity->default;
+		if ( is_null( $this->setting_entity ) ) {
+			return;
+		}
+
+		$defaults = $this->default_value;
+
 		$font_family = ! empty( $defaults['font-family'] ) && is_string( $defaults['font-family'] ) ? $defaults['font-family'] : '';
 
 		wpbf_customizer_field()
@@ -172,11 +194,11 @@ class TypographyField extends BaseField {
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
 			->sanitizeCallback( $this->setting_entity->sanitize_callback )
-			->activeCallback( $this->control->active_callback )
-			->partialRefresh( $this->partial_refresh )
+			->activeCallback( $this->active_callback_args )
+			->partialRefresh( $this->partial_refresh_args )
 			->properties( [
 				'wrapper_attrs' => [
-					'wpbf-typography-type' => 'font-family',
+					'data-wpbf-typography-type' => 'font-family',
 				],
 			] )
 			->addToSection( $this->control->section_id );
@@ -184,11 +206,15 @@ class TypographyField extends BaseField {
 	}
 
 	/**
-	 * Add the font variant control.
+	 * Add the font variant field.
 	 */
-	private function addFontVariantControl() {
+	private function addFontVariantField() {
 
-		$defaults = $this->setting_entity->default;
+		if ( is_null( $this->setting_entity ) ) {
+			return;
+		}
+
+		$defaults = $this->default_value;
 
 		$font_variant = ! empty( $defaults['variant'] ) && is_string( $defaults['variant'] ) ? $defaults['variant'] : '';
 		$font_weight  = ! empty( $defaults['font-weight'] ) && ( is_string( $defaults['font-weight'] ) || is_numeric( $defaults['font-weight'] ) ) ? $defaults['font-weight'] : '';
@@ -212,11 +238,11 @@ class TypographyField extends BaseField {
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
 			->sanitizeCallback( $this->setting_entity->sanitize_callback )
-			->activeCallback( $this->control->active_callback )
-			->partialRefresh( $this->partial_refresh )
+			->activeCallback( $this->active_callback_args )
+			->partialRefresh( $this->partial_refresh_args )
 			->properties( [
 				'wrapper_attrs' => [
-					'wpbf-typography-type' => 'variant',
+					'data-wpbf-typography-type' => 'variant',
 				],
 			] )
 			->addToSection( $this->control->section_id );
@@ -224,23 +250,20 @@ class TypographyField extends BaseField {
 	}
 
 	/**
-	 * Add control to the customizer.
-	 *
-	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
+	 * Add the divider as the last field.
 	 */
-	public function addControl( $wp_customize_manager ) {
+	private function addDivider() {
 
-		if ( ! $this->setting_entity ) {
-			return;
-		}
-
-		if ( ! FontsStore::initialized() ) {
-			FontsStore::init();
-		}
-
-		$control_args = $this->parseControlArgs();
-
-		$this->addSubControls( $control_args );
+		wpbf_customizer_field()
+			->id( 'meta_excerpt_separator' )
+			->type( 'divider' )
+			->priority( 1 )
+			->properties( [
+				'wrapper_attrs' => [
+					'gap' => 'small',
+				],
+			] )
+			->addToSection( 'wpbf_blog_settings' );
 
 	}
 

@@ -158,12 +158,12 @@ class CustomizerUtil {
 	 *
 	 * @param CustomizerControlEntity $control The control entity object.
 	 */
-	public function enqueueCustomizePreviewScripts( $control ) {
+	public function enqueuePreviewScripts( $control ) {
 
 		$field = $this->getField( $control );
 
 		if ( null !== $field ) {
-			$field->enqueueCustomizePreviewScripts();
+			$field->enqueuePreviewScripts();
 		}
 
 	}

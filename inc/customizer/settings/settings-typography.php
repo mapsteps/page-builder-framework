@@ -111,7 +111,6 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'page_font_family' )
 	->type( 'typography' )
-	->label( __( 'Font Family', 'page-builder-framework' ) )
 	->defaultValue( array(
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => 'regular',
