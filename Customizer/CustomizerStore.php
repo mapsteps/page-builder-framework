@@ -72,6 +72,14 @@ final class CustomizerStore {
 	public static $added_partial_refreshes = array();
 
 	/**
+	 * Array of 'control-type' => 'ControlClassPath' of controls that render their content
+	 * using Underscore.js template inside of `content_template` method.
+	 *
+	 * @var array
+	 */
+	public static $controls_using_content_template = array();
+
+	/**
 	 * Added section tabs.
 	 *
 	 * @var array

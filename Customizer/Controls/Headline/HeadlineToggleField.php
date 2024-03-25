@@ -8,6 +8,13 @@ use WP_Customize_Manager;
 class HeadlineToggleField extends ToggleField {
 
 	/**
+	 * Path of the control class for this field.
+	 *
+	 * @var string
+	 */
+	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleControl';
+
+	/**
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.

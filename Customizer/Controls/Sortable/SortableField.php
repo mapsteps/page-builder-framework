@@ -8,6 +8,21 @@ use WP_Customize_Manager;
 class SortableField extends BaseField {
 
 	/**
+	 * Whether the control of this field renders its content
+	 * using Underscore.js template inside of `content_template` method.
+	 *
+	 * @var bool
+	 */
+	public $use_content_template = true;
+
+	/**
+	 * Path of the control class for this field.
+	 *
+	 * @var string
+	 */
+	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableControl';
+
+	/**
 	 * Setting's sanitize callback.
 	 *
 	 * @param array $value The value to sanitize.

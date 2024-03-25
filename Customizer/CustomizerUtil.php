@@ -7,6 +7,7 @@
 
 namespace Mapsteps\Wpbf\Customizer;
 
+use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
@@ -32,7 +33,6 @@ use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
 use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use Mapsteps\Wpbf\Customizer\Sections\ExpandedSection;
 use Mapsteps\Wpbf\Customizer\Sections\LinkSection;
 use Mapsteps\Wpbf\Customizer\Sections\NestedSection;
@@ -60,49 +60,29 @@ class CustomizerUtil {
 	 * @var array $available_fields
 	 */
 	public $available_fields = array(
-		'checkbox'                  => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl',
-		'toggle'                    => '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl',
-		'custom'                    => '\Mapsteps\Wpbf\Customizer\Controls\Custom\CustomControl',
-		'color'                     => '\Mapsteps\Wpbf\Customizer\Controls\Color\ColorControl',
-		'dimension'                 => '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl',
-		'divider'                   => '\Mapsteps\Wpbf\Customizer\Controls\Headline\DividerControl',
-		'headline'                  => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineControl',
-		'headline-toggle'           => '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleControl',
-		'generic'                   => '\Mapsteps\Wpbf\Customizer\Controls\Generic\GenericControl',
-		'responsive-generic'        => '\Mapsteps\Wpbf\Customizer\Controls\Generic\ResponsiveGenericControl',
-		'image'                     => '\Mapsteps\Wpbf\Customizer\Controls\Media\ImageControl',
-		'margin-padding'            => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingControl',
-		'responsive-margin-padding' => '\Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingControl',
-		'radio'                     => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioControl',
-		'radio-buttonset'           => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetControl',
-		'radio-image'               => '\Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageControl',
-		'select'                    => '\Mapsteps\Wpbf\Customizer\Controls\Select\SelectControl',
-		'slider'                    => '\Mapsteps\Wpbf\Customizer\Controls\Slider\SliderControl',
-		'input-slider'              => '\Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderControl',
-		'responsive-input-slider'   => '\Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderControl',
-		'section-tabs'              => '\Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsControl',
-		'sortable'                  => '\Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableControl',
-		'typography'                => null,
-		'upload'                    => '\Mapsteps\Wpbf\Customizer\Controls\Media\UploadControl',
-	);
-
-	/**
-	 * Controls which utilize the content_template to render the control.
-	 *
-	 * @var string[] $basic_controls
-	 */
-	public $controls_with_content_template = array(
 		'checkbox',
 		'toggle',
 		'custom',
-		'headline-toggle',
+		'color',
 		'dimension',
+		'divider',
+		'headline',
+		'headline-toggle',
+		'generic',
+		'responsive-generic',
 		'image',
+		'margin-padding',
+		'responsive-margin-padding',
 		'radio',
 		'radio-buttonset',
 		'radio-image',
+		'select',
+		'slider',
+		'input-slider',
+		'responsive-input-slider',
 		'section-tabs',
 		'sortable',
+		'typography',
 		'upload',
 	);
 
@@ -111,7 +91,7 @@ class CustomizerUtil {
 	 *
 	 * @var array $grouped_controls
 	 */
-	public $grouped_controls = [
+	private $grouped_controls = [
 		'generic' => [
 			'email',
 			'number',
@@ -141,58 +121,6 @@ class CustomizerUtil {
 			'responsive-padding',
 		],
 	];
-
-	/**
-	 * Filter the setting entity.
-	 *
-	 * @param CustomizerSettingEntity $setting The setting entity object.
-	 *
-	 * @return CustomizerSettingEntity
-	 */
-	public function filterSettingEntity( $setting ) {
-		$control = null;
-
-		foreach ( CustomizerStore::$added_controls as $added_control ) {
-			if ( $added_control->id === $setting->id ) {
-				$control = $added_control;
-				break;
-			}
-		}
-
-		if ( is_null( $control ) ) {
-			return $setting;
-		}
-
-		$field = $this->getFieldInstance( $control );
-
-		if ( is_null( $field ) ) {
-			return $setting;
-		}
-
-		if ( method_exists( $field, 'filterSettingEntity' ) ) {
-			$setting = $field->filterSettingEntity( $setting );
-		}
-
-		return $setting;
-	}
-
-	/**
-	 * Determine the sanitize callback.
-	 *
-	 * @param CustomizerControlEntity $control The control entity object.
-	 *
-	 * @return callable|string
-	 */
-	public function determineSanitizeCallback( $control ) {
-
-		$field = $this->getFieldInstance( $control );
-
-		return ( null !== $field && method_exists( $field, 'sanitizeCallback' ) ? array(
-			$field,
-			'sanitizeCallback',
-		) : '' );
-
-	}
 
 	/**
 	 * Get the section instance.
@@ -232,7 +160,7 @@ class CustomizerUtil {
 	 */
 	public function enqueueCustomizePreviewScripts( $control ) {
 
-		$field = $this->getFieldInstance( $control );
+		$field = $this->getField( $control );
 
 		if ( null !== $field ) {
 			$field->enqueueCustomizePreviewScripts();
@@ -248,7 +176,7 @@ class CustomizerUtil {
 	 */
 	public function addControl( $wp_customize_manager, $control ) {
 
-		$field = $this->getFieldInstance( $control );
+		$field = $this->getField( $control );
 
 		if ( null !== $field ) {
 			$field->addControl( $wp_customize_manager );
@@ -259,22 +187,22 @@ class CustomizerUtil {
 	/**
 	 * Get the field instance.
 	 *
-	 * @param CustomizerControlEntity $control The control entity object.
+	 * @param CustomizerControlEntity $control_entity The control entity object.
 	 *
-	 * @return ColorField|SelectField|SliderField|null
+	 * @return BaseField|null
 	 */
-	private function getFieldInstance( $control ) {
+	public function getField( $control_entity ) {
 
-		$control_type = $control->type;
+		$control_type = $control_entity->type;
 
 		foreach ( $this->grouped_controls as $control_name => $grouped_controls ) {
-			if ( in_array( $control->type, $grouped_controls, true ) ) {
+			if ( in_array( $control_type, $grouped_controls, true ) ) {
 				$control_type = $control_name;
 				break;
 			}
 		}
 
-		if ( ! array_key_exists( $control_type, $this->available_fields ) ) {
+		if ( ! in_array( $control_type, $this->available_fields, true ) ) {
 			return null;
 		}
 
@@ -282,79 +210,79 @@ class CustomizerUtil {
 
 		switch ( $control_type ) {
 			case 'checkbox':
-				$field = new CheckboxField( $control );
+				$field = new CheckboxField( $control_entity );
 				break;
 			case 'toggle':
-				$field = new ToggleField( $control );
+				$field = new ToggleField( $control_entity );
 				break;
 			case 'custom':
-				$field = new CustomField( $control );
+				$field = new CustomField( $control_entity );
 				break;
 			case 'color':
-				$field = new ColorField( $control );
+				$field = new ColorField( $control_entity );
 				break;
 			case 'divider':
-				$field = new DividerField( $control );
+				$field = new DividerField( $control_entity );
 				break;
 			case 'dimension':
-				$field = new DimensionField( $control );
+				$field = new DimensionField( $control_entity );
 				break;
 			case 'generic':
-				$field = new GenericField( $control );
+				$field = new GenericField( $control_entity );
 				break;
 			case 'responsive-generic':
-				$field = new ResponsiveGenericField( $control );
+				$field = new ResponsiveGenericField( $control_entity );
 				break;
 			case 'headline':
-				$field = new HeadlineField( $control );
+				$field = new HeadlineField( $control_entity );
 				break;
 			case 'headline-toggle':
-				$field = new HeadlineToggleField( $control );
+				$field = new HeadlineToggleField( $control_entity );
 				break;
 			case 'image':
-				$field = new ImageField( $control );
+				$field = new ImageField( $control_entity );
 				break;
 			case 'margin-padding':
-				$field = new MarginPaddingField( $control );
+				$field = new MarginPaddingField( $control_entity );
 				break;
 			case 'responsive-margin-padding':
-				$field = new ResponsiveMarginPaddingField( $control );
+				$field = new ResponsiveMarginPaddingField( $control_entity );
 				break;
 			case 'radio':
-				$field = new RadioField( $control );
+				$field = new RadioField( $control_entity );
 				break;
 			case 'radio-buttonset':
-				$field = new RadioButtonsetField( $control );
+				$field = new RadioButtonsetField( $control_entity );
 				break;
 			case 'radio-image':
-				$field = new RadioImageField( $control );
+				$field = new RadioImageField( $control_entity );
 				break;
 			case 'radio-image':
-				$field = new RadioImageField( $control );
+				$field = new RadioImageField( $control_entity );
 				break;
 			case 'select':
-				$field = new SelectField( $control );
+				$field = new SelectField( $control_entity );
 				break;
 			case 'slider':
-				$field = new SliderField( $control );
+				$field = new SliderField( $control_entity );
 				break;
 			case 'input-slider':
-				$field = new InputSliderField( $control );
+				$field = new InputSliderField( $control_entity );
 				break;
 			case 'responsive-input-slider':
-				$field = new ResponsiveInputSliderField( $control );
+				$field = new ResponsiveInputSliderField( $control_entity );
 				break;
 			case 'section-tabs':
-				$field = new SectionTabsField( $control );
+				$field = new SectionTabsField( $control_entity );
 				break;
 			case 'sortable':
-				$field = new SortableField( $control );
+				$field = new SortableField( $control_entity );
 				break;
 			case 'typography':
-				$field = new TypographyField( $control );
+				$field = new TypographyField( $control_entity );
 				break;
 			case 'upload':
-				$field = new UploadField( $control );
+				$field = new UploadField( $control_entity );
 				break;
 		}
 

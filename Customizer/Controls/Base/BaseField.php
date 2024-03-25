@@ -1,19 +1,15 @@
 <?php
-/**
- * Field's default settings.
- *
- * @package Wpbf
- */
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
+use WP_Customize_Manager;
 
 /**
  * Default settings for the field.
  */
-class BaseField {
+abstract class BaseField {
 
 	/**
 	 * Control entity object.
@@ -21,6 +17,33 @@ class BaseField {
 	 * @var CustomizerControlEntity
 	 */
 	public $control;
+
+	/**
+	 * Whether the field is a wrapper that will render other fields.
+	 *
+	 * When set to false, `addControl` method will be called to add the control.
+	 * When set to true, `addSubFields` method will be called to add sub fields.
+	 *
+	 * @var bool
+	 */
+	public $is_wrapper_field = false;
+
+	/**
+	 * Whether the control that belongs to the field renders its content
+	 * using Underscore.js template inside of `content_template` method.
+	 *
+	 * @var bool
+	 */
+	public $use_content_template = false;
+
+	/**
+	 * Path of the control class for the field.
+	 *
+	 * This property will be used when the `use_content_template` property is set to `true`.
+	 *
+	 * @var string
+	 */
+	public $control_class_path = '';
 
 	/**
 	 * Construct the class.
@@ -34,6 +57,21 @@ class BaseField {
 	}
 
 	/**
+	 * Filter the setting entity.
+	 *
+	 * This will allow fields to modify their setting entity before it is added to the customizer.
+	 *
+	 * @param CustomizerSettingEntity $setting The setting entity.
+	 *
+	 * @return CustomizerSettingEntity
+	 */
+	public function filterSettingEntity( $setting ) {
+
+		return $setting;
+
+	}
+
+	/**
 	 * Enqueue styles & scripts on 'customize_preview_init' action.
 	 */
 	public function enqueueCustomizePreviewScripts() {
@@ -42,7 +80,7 @@ class BaseField {
 	/**
 	 * Setting's sanitize callback.
 	 *
-	 * @param string $value The value to sanitize.
+	 * @param mixed $value The value to sanitize.
 	 *
 	 * @return string|float|int|array
 	 */
@@ -129,6 +167,29 @@ class BaseField {
 
 		return wp_parse_args( $custom_properties, $default_args );
 
+	}
+
+	/**
+	 * Add control to the customizer when the `$is_wrapper_field` value is `false`.
+	 *
+	 * The implementation will be in the child class.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
+	 */
+	public function addControl( $wp_customize_manager ) {
+
+		if ( ! ( $wp_customize_manager instanceof WP_Customize_Manager ) ) {
+			return;
+		}
+
+	}
+
+	/**
+	 * Add sub fields when the `$is_wrapper_field` is set to `true`.
+	 *
+	 * The implementation will be in the child class.
+	 */
+	public function addSubFields() {
 	}
 
 }

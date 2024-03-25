@@ -96,23 +96,18 @@ final class Customizer {
 	 */
 	public function register_control_types( $wp_customize_manager ) {
 
-		$util = new CustomizerUtil();
-
-		$available_fields = $util->available_fields;
-
-		$controls_with_content_template = $util->controls_with_content_template;
-
-		foreach ( $available_fields as $control_type => $control_class ) {
-			if ( is_null( $control_class ) ) {
-				continue;
-			}
-
-			if ( ! in_array( $control_type, $controls_with_content_template, true ) ) {
-				continue;
-			}
-
-			$wp_customize_manager->register_control_type( $control_class );
+		if ( empty( CustomizerStore::$controls_using_content_template ) || ! is_array( CustomizerStore::$controls_using_content_template ) ) {
+			return;
 		}
+
+		foreach ( CustomizerStore::$controls_using_content_template as $control_type => $class_path ) {
+			if ( ! class_exists( $class_path ) ) {
+				continue;
+			}
+
+			$wp_customize_manager->register_control_type( $class_path );
+		}
+
 	}
 
 	/**
@@ -124,11 +119,7 @@ final class Customizer {
 	 */
 	private function register_settings( $wp_customize_manager ) {
 
-		$util = new CustomizerUtil();
-
 		foreach ( CustomizerStore::$added_settings as $setting ) {
-			$setting = $util->filterSettingEntity( $setting );
-
 			$wp_customize_manager->add_setting(
 				$setting->id,
 				array(

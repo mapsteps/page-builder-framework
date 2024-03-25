@@ -19,7 +19,7 @@ class CustomizerSetting {
 	 *
 	 * @var CustomizerSettingEntity
 	 */
-	private $setting;
+	public $setting;
 
 	/**
 	 * CustomizerSetting constructor.

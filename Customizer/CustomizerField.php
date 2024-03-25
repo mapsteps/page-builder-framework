@@ -429,6 +429,25 @@ final class CustomizerField {
 	 */
 	public function addToSection( $section_id ) {
 
+		$field = ( new CustomizerUtil() )->getField( $this->control_instance->control );
+
+		if ( is_null( $field ) ) {
+			return;
+		}
+
+		if ( $field->is_wrapper_field ) {
+			$field->addSubFields();
+			return;
+		}
+
+		$control_type = $this->control_instance->control->type;
+
+		if ( $field->use_content_template ) {
+			if ( ! isset( CustomizerStore::$controls_using_content_template[ $control_type ] ) ) {
+				CustomizerStore::$controls_using_content_template[ $control_type ] = $field->control_class_path;
+			}
+		}
+
 		if ( empty( $this->setting_id ) ) {
 			$this->setting_id = uniqid( 'wpbf_control_' );
 
@@ -449,18 +468,21 @@ final class CustomizerField {
 		}
 
 		if ( empty( $this->sanitize_callback ) ) {
-			$this->sanitize_callback = ( new CustomizerUtil() )->determineSanitizeCallback( $this->control_instance->control );
-
-			if ( ! empty( $this->sanitize_callback ) ) {
-				$this->sanitizeCallback( $this->sanitize_callback );
-			} else {
-				$this->sanitizeCallback( 'sanitize_text_field' );
-			}
+			$this->sanitizeCallback( [ $field, 'sanitizeCallback' ] );
 		}
 
 		if ( ! empty( $this->partial_refreshes ) ) {
 			$this->setting_instance->transport( 'postMessage' );
 		}
+
+		// Update `$field` variable to have the updated setting entity.
+		$field = ( new CustomizerUtil() )->getField( $this->control_instance->control );
+
+		if ( is_null( $field ) ) {
+			return;
+		}
+
+		$this->setting_instance->setting = $field->filterSettingEntity( $this->setting_instance->setting );
 
 		$this->setting_instance->add();
 
@@ -487,8 +509,6 @@ final class CustomizerField {
 		}
 
 		$this->control_instance->addToSection( $section_id );
-
-		return $this;
 
 	}
 

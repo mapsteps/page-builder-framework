@@ -8,6 +8,21 @@ use WP_Customize_Manager;
 class DimensionField extends BaseField {
 
 	/**
+	 * Whether the control of this field renders its content
+	 * using Underscore.js template inside of `content_template` method.
+	 *
+	 * @var bool
+	 */
+	public $use_content_template = true;
+
+	/**
+	 * Path of the control class for this field.
+	 *
+	 * @var string
+	 */
+	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl';
+
+	/**
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.

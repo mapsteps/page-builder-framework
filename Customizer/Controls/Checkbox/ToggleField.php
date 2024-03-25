@@ -7,6 +7,13 @@ use WP_Customize_Manager;
 class ToggleField extends CheckboxField {
 
 	/**
+	 * Path of the control class for this field.
+	 *
+	 * @var string
+	 */
+	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl';
+
+	/**
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.

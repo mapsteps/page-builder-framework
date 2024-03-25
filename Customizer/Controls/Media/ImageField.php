@@ -7,6 +7,13 @@ use WP_Customize_Manager;
 class ImageField extends UploadField {
 
 	/**
+	 * Path of the control class for this field.
+	 *
+	 * @var string
+	 */
+	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Media\ImageControl';
+
+	/**
 	 * Get utility instance.
 	 *
 	 * @return ImageUtil

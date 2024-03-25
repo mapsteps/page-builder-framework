@@ -13,6 +13,13 @@ use WP_Customize_Manager;
 class TypographyField extends BaseField {
 
 	/**
+	 * Whether the field is a wrapper that will render other fields.
+	 *
+	 * @var bool
+	 */
+	public $is_wrapper_field = true;
+
+	/**
 	 * A `TypographyUtil` instance.
 	 *
 	 * @var TypographyUtil
