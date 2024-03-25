@@ -118,7 +118,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'setting'  => 'page_font_toggle',
+			'id'       => 'page_font_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
