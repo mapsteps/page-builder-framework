@@ -10,7 +10,7 @@ import {
 	WpbfCustomizeSelectOptionObject,
 } from "../../Select/src/interfaces";
 import { Setting } from "wordpress__customize-browser/Setting";
-import { WpbfCustomizeColorControl } from "../../Color/src/interfaces";
+import { WpbfCustomizeColorControl } from "../../Color/src/interface";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
 import {

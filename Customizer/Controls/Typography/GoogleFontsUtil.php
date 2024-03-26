@@ -2,7 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
-use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontEntity;
+use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontsCollection;
 
 final class GoogleFontsUtil {
 
@@ -21,31 +21,16 @@ final class GoogleFontsUtil {
 	public $default_sortby_mode = 'alpha';
 
 	/**
-	 * Create Google Fonts collection.
+	 * Get `GoogleFontsCollection` instance based on 'webfonts.json' file.
 	 *
-	 * @param array $raw_items Array of Google Fonts data. Each data is an associative array with the following keys: 'family', 'category', and 'variants'.
-	 * @param bool  $apply_filters Whether to apply the 'wpbf_fonts_google_fonts' filter.
-	 *
-	 * @return array An assoc array with font family as the key and `GoogleFontEntity` instance as the value.
+	 * @return GoogleFontsCollection
 	 */
-	public function makeFontsCollection( $raw_items, $apply_filters = false ) {
+	public function getCollections() {
 
-		if ( ! is_array( $raw_items ) ) {
-			return;
-		}
+		$raw_array = ( new GoogleFontsCache() )->readFromJson( GoogleFontsCache::$webfont_files_json_filepath );
+		$raw_array = ! empty( $raw_array ) && is_array( $raw_array ) ? $raw_array : [];
 
-		if ( $apply_filters ) {
-			// Apply the 'wpbf_fonts_google_fonts' filter.
-			$raw_items = apply_filters( 'wpbf_fonts_google_fonts', $raw_items );
-		}
-
-		$google_fonts = [];
-
-		foreach ( $raw_items as $font_family => $font_data ) {
-			$google_fonts[ $font_family ] = GoogleFontEntity::fromArray( $font_data );
-		}
-
-		return $google_fonts;
+		return GoogleFontsCollection::fromArray( $raw_array );
 
 	}
 

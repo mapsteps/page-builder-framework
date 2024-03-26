@@ -127,6 +127,8 @@
     "watch-sortable-control": "parcel watch Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-source-maps",
     "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-source-maps",
     "watch-typography-control": "parcel watch Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist --no-source-maps",
-    "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist --no-source-maps"
+    "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist --no-source-maps",
+    "watch-typography-preview": "parcel watch Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist --no-source-maps",
+    "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist --no-source-maps"
   }
 }

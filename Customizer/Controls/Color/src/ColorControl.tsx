@@ -7,7 +7,7 @@ import {
 import {
 	WpbfCustomizeColorControl,
 	WpbfCustomizeColorControlValue,
-} from "./interfaces";
+} from "./interface";
 import { ColorForm } from "./ColorForm";
 import React from "react";
 import { createRoot } from "react-dom/client";

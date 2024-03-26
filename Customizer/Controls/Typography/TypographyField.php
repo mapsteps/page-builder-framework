@@ -100,6 +100,72 @@ class TypographyField extends BaseField {
 		// Enqueue the scripts.
 		wp_enqueue_script( 'wpbf-typography-control', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-control-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
 
+		// JS object inside this block will only be printed once.
+		if ( ! TypographyStore::$control_vars_printed ) {
+			wp_localize_script( 'wpbf-typography-control', 'wpbfFontVariants', [
+				'standard' => FontsStore::$standard_font_variant_options,
+				'complete' => FontsStore::$complete_font_variant_options,
+			] );
+
+			wp_localize_script( 'wpbf-typography-control', 'wpbfGoogleFonts', ( new GoogleFontsUtil() )->getCollections() );
+			wp_add_inline_script( 'wpbf-typography-control', 'const wpbfFieldsFontVariants = {};', 'before' );
+
+			TypographyStore::$control_vars_printed = true;
+		}
+
+		$field_variant_key = str_ireplace( ']', '', $this->control->id );
+		$field_variant_key = str_ireplace( '[', '_', $field_variant_key );
+
+		$field_variant_values = $this->prepare_php_array_for_js(
+			( new TypographyUtil() )->makeFieldCustomFontVariants( $this->fonts_arg )
+		);
+
+		// JS object here will be printed for each field.
+		wp_add_inline_script(
+			'wpbf-typography-control',
+			'wpbfFieldsFontVariants.' . $field_variant_key . ' = ' . wp_json_encode( $field_variant_values ) . ';',
+			'before'
+		);
+
+	}
+
+	/**
+	 * Enqueue styles & scripts on 'customize_preview_init' action.
+	 */
+	public function enqueuePreviewScripts() {
+
+		// Enqueue the scripts.
+		wp_enqueue_script( 'wpbf-typography-preview', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-preview-min.js', array( 'customize-preview' ), WPBF_VERSION, false );
+
+		// JS object inside this block will only be printed once.
+		if ( ! TypographyStore::$preview_vars_printed ) {
+			wp_localize_script( 'wpbf-typography-preview', 'wpbfGoogleFontNames', FontsStore::$google_font_names );
+
+			TypographyStore::$preview_vars_printed = true;
+		}
+
+	}
+
+	/**
+	 * Prepare PHP array to be used as JS object.
+	 *
+	 * @see See https://developer.wordpress.org/reference/classes/wp_scripts/localize/
+	 *
+	 * @param array $values The data which can be either a single or multi-dimensional array.
+	 * @return array
+	 */
+	private function prepare_php_array_for_js( $values ) {
+
+		foreach ( $values as $key => $value ) {
+			if ( ! is_scalar( $value ) ) {
+				continue;
+			}
+
+			$values[ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
+		}
+
+		return $values;
+
 	}
 
 	/**
@@ -127,6 +193,10 @@ class TypographyField extends BaseField {
 
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueueControlScripts' ) );
 
+		if ( ! in_array( $this->control->id, TypographyStore::$added_control_ids, true ) ) {
+			TypographyStore::$added_control_ids[] = $this->control->id;
+		}
+
 		$props = $this->control->custom_properties;
 
 		$this->tab = ! empty( $props['tab'] ) && is_string( $props['tab'] ) ? $props['tab'] : '';
@@ -145,13 +215,13 @@ class TypographyField extends BaseField {
 	}
 
 	/**
-	 * Add the label and description using 'custom' control.
+	 * Add the label and description using 'hidden' (generic) control.
 	 */
 	private function addLabelAndDescription() {
 
 		wpbf_customizer_field()
 			->id( $this->control->id )
-			->type( 'custom' )
+			->type( 'hidden' )
 			->tab( $this->tab )
 			->label( $this->control->label )
 			->description( $this->control->description )
@@ -233,7 +303,9 @@ class TypographyField extends BaseField {
 			->tab( $this->tab )
 			->capability( $this->control->capability )
 			->defaultValue( $font_variant )
-			->choices( $this->typography_util->makeFontVariantChoices( $this->fonts_arg ) )
+			->choices(
+				$this->typography_util->makeFontVariantChoices( $this->fonts_arg )
+			)
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )

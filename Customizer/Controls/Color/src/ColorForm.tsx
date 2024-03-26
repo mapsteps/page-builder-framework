@@ -33,7 +33,7 @@ import useFocusOutside from "./hooks/useFocusOutside";
 import useClickOutside from "./hooks/useClickOutside";
 import ColorPickerCircle from "./components/ColorPickerCircle";
 import jQuery from "jquery";
-import { WpbfCustomizeColorControl } from "./interfaces";
+import { WpbfCustomizeColorControl } from "./interface";
 import { WpbfCustomizeSetting } from "../../Base/src/interface";
 import { ObjectColor } from "colord/types";
 

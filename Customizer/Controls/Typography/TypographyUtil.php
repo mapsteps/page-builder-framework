@@ -210,7 +210,125 @@ class TypographyUtil {
 					);
 				}
 			}
-		endforeach;
+			endforeach;
+
+		return $choices;
+
+	}
+
+	/**
+	 * Generate custom font variants collection for a typography field.
+	 *
+	 * It will be printed as a property's value of global `wpbfFieldsFontVariants` JS object.
+	 *
+	 * @param array $fonts_arg The fonts arguments.
+	 * @return array
+	 */
+	public function makeFieldCustomFontVariants( $fonts_arg ) {
+
+		$fonts_util = new FontsUtil();
+
+		$standard_fonts_arg = ! empty( $fonts_arg['standard'] ) ? $fonts_arg['standard'] : [];
+
+		$standard_font_variants = [];
+
+		if ( is_array( $standard_fonts_arg ) && ! empty( $standard_fonts_arg ) ) {
+			foreach ( $standard_fonts_arg as $maybe_index_or_font_name => $font_name_or_stack_or_data ) {
+				if ( is_int( $maybe_index_or_font_name ) || ! is_array( $font_name_or_stack_or_data ) ) {
+					continue;
+				}
+
+				if ( ! isset( $font_name_or_stack_or_data['variants'] ) ) {
+					continue;
+				}
+
+				$font_name = $maybe_index_or_font_name;
+
+				if ( ! isset( $standard_font_variants[ $font_name ] ) ) {
+					$standard_font_variants[ $font_name ] = [];
+				}
+
+				foreach ( $font_name_or_stack_or_data['variants'] as $font_variant ) {
+					if ( ! isset( FontsStore::$standard_font_variants[ $font_variant ] ) ) {
+						continue;
+					}
+
+					$standard_font_variants[ $font_name ][] = [
+						'value' => $font_variant,
+						'label' => FontsStore::$standard_font_variants[ $font_variant ],
+					];
+				}
+			}
+		} else {
+			foreach ( $fonts_util->getStandardFonts() as $font_family_type => $font_data ) {
+				if ( empty( $font_data['variants'] ) || ! is_array( $font_data['variants'] ) ) {
+					continue;
+				}
+
+				if ( empty( $font_data['stack'] ) || empty( $font_data['label'] ) ) {
+					continue;
+				}
+
+				if ( ! isset( $standard_font_variants[ $font_data['stack'] ] ) ) {
+					$standard_font_variants[ $font_data['stack'] ] = [];
+				}
+
+				foreach ( $font_data['variants'] as $standard_variant ) {
+					if ( ! isset( FontsStore::$standard_font_variants[ $standard_variant ] ) ) {
+						continue;
+					}
+
+					$standard_font_variants[ $font_data['stack'] ][] = [
+						'value' => $standard_variant,
+						'label' => FontsStore::$standard_font_variants[ $standard_variant ],
+					];
+				}
+			}
+		}
+
+		$families_arg = isset( $fonts_arg['families'] ) && is_array( $fonts_arg['families'] ) ? $fonts_arg['families'] : [];
+
+		$custom_font_variants = [];
+
+		if ( ! empty( $families_arg ) && isset( $fonts_arg['variants'] ) && is_array( $fonts_arg['variants'] ) ) {
+			// Implementing the custom font families.
+			foreach ( $families_arg as $font_family_key => $font_family_value ) {
+				if ( empty( $font_family_value['children'] ) || ! is_array( $font_family_value['children'] ) ) {
+					continue;
+				}
+
+				foreach ( $font_family_value['children'] as $font_family ) {
+					if ( empty( $font_family ) || ! is_array( $font_family ) ) {
+						continue;
+					}
+
+					if ( empty( $font_family['id'] ) || ! is_string( $font_family['id'] ) ) {
+						continue;
+					}
+
+					if ( ! isset( $fonts_arg['variants'][ $font_family['id'] ] ) ) {
+						continue;
+					}
+
+					if ( ! isset( $custom_font_variants[ $font_family['id'] ] ) ) {
+						$custom_font_variants[ $font_family['id'] ] = [];
+					}
+
+					foreach ( $fonts_arg['variants'][ $font_family['id'] ] as $custom_variant ) {
+						if ( ! isset( FontsStore::$standard_font_variants[ $custom_variant ] ) ) {
+							continue;
+						}
+
+						$custom_font_variants[ $font_family['id'] ][] = [
+							'value' => $custom_variant,
+							'label' => FontsStore::$standard_font_variants[ $custom_variant ],
+						];
+					}
+				}
+			}
+		}
+
+		return array_merge( $standard_font_variants, $custom_font_variants );
 
 	}
 

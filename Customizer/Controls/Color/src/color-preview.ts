@@ -4,7 +4,7 @@ import {
   HslOrHslaColor,
   HsvOrHsvaColor,
   RgbOrRgbaColor,
-} from "./interfaces";
+} from "./interface";
 import { ObjectColor } from "colord/types";
 
 declare var wp: {

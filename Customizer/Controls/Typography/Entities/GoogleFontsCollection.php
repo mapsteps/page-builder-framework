@@ -2,7 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography\Entities;
 
-final class GoogleFontsData {
+final class GoogleFontsCollection {
 
 	/**
 	 * List of `GoogleFontItemEntity` instances.
@@ -28,7 +28,7 @@ final class GoogleFontsData {
 
 		$items = [];
 
-		foreach ( $arr['items'] as $item ) {
+		foreach ( $arr['items'] as $font_family => $item ) {
 			if ( ! is_array( $item ) || empty( $item ) ) {
 				continue;
 			}

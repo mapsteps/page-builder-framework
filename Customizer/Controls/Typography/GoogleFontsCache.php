@@ -2,6 +2,8 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
+use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontEntity;
+
 final class GoogleFontsCache {
 
 	/**
@@ -26,7 +28,7 @@ final class GoogleFontsCache {
 	public $webfont_files_json_filepath;
 
 	/**
-	 * `GoogleFontsUtil` constructor.
+	 * `GoogleFontsCache` constructor.
 	 */
 	public function __construct() {
 
@@ -89,7 +91,7 @@ final class GoogleFontsCache {
 		$cached_google_fonts_array = get_site_transient( 'wpbf_googlefonts_cache' );
 
 		if ( ! empty( $cached_google_fonts_array ) ) {
-			FontsStore::$google_fonts = ( new GoogleFontsUtil() )->makeFontsCollection( $cached_google_fonts_array, true );
+			FontsStore::$google_fonts = $this->makeEntities( $cached_google_fonts_array, true );
 		} else {
 			$this->cacheFonts();
 		}
@@ -116,7 +118,7 @@ final class GoogleFontsCache {
 		set_site_transient( 'wpbf_googlefonts_cache', $raw_items, $this->cacheDuration() );
 
 		// Set the Google Fonts collection store.
-		FontsStore::$google_fonts = ( new GoogleFontsUtil() )->makeFontsCollection( $raw_items, true );
+		FontsStore::$google_fonts = $this->makeEntities( $raw_items, true );
 
 	}
 
@@ -139,6 +141,35 @@ final class GoogleFontsCache {
 
 		// Set the Google Font's font-family names store.
 		FontsStore::$google_font_names = $font_names;
+
+	}
+
+	/**
+	 * Create array of 'font family' => `GoogleFontEntity` pairs.
+	 *
+	 * @param array $raw_items Array of Google Fonts data. Each data is an associative array with the following keys: 'family', 'category', and 'variants'.
+	 * @param bool  $apply_filters Whether to apply the 'wpbf_fonts_google_fonts' filter.
+	 *
+	 * @return array An assoc array with font family as the key and `GoogleFontEntity` instance as the value.
+	 */
+	private function makeEntities( $raw_items, $apply_filters = false ) {
+
+		if ( ! is_array( $raw_items ) ) {
+			return;
+		}
+
+		if ( $apply_filters ) {
+			// Apply the 'wpbf_fonts_google_fonts' filter.
+			$raw_items = apply_filters( 'wpbf_fonts_google_fonts', $raw_items );
+		}
+
+		$google_fonts = [];
+
+		foreach ( $raw_items as $font_family => $font_data ) {
+			$google_fonts[ $font_family ] = GoogleFontEntity::fromArray( $font_data );
+		}
+
+		return $google_fonts;
 
 	}
 
