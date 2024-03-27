@@ -117,7 +117,7 @@ class TypographyField extends BaseField {
 		$field_variant_key = str_ireplace( '[', '_', $field_variant_key );
 
 		$field_variant_values = $this->prepare_php_array_for_js(
-			( new TypographyUtil() )->makeFieldCustomFontVariants( $this->fonts_arg )
+			( new TypographyUtil() )->makeCustomFontVariantOptions( $this->fonts_arg )
 		);
 
 		// JS object here will be printed for each field.
@@ -294,18 +294,14 @@ class TypographyField extends BaseField {
 			$font_variant = '400' === $font_weight ? 'regular' : $font_variant;
 		}
 
-		$control_id = $this->control->id . '[variant]';
-
 		wpbf_customizer_field()
-			->id( $control_id )
+			->id( $this->control->id . '[variant]' )
 			->type( 'select' )
 			->label( __( 'Font Variant', 'page-builder-framework' ) )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
 			->defaultValue( $font_variant )
-			->choices(
-				$this->typography_util->makeFontVariantChoices( $this->fonts_arg )
-			)
+			->choices( $this->typography_util->makeFontVariantChoices( $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
@@ -327,7 +323,7 @@ class TypographyField extends BaseField {
 	private function addDivider() {
 
 		wpbf_customizer_field()
-			->id( 'meta_excerpt_separator' )
+			->id( $this->control->id . '_separator' )
 			->type( 'divider' )
 			->priority( 1 )
 			->properties( [

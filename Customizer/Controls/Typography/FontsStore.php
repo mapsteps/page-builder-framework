@@ -2,8 +2,6 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
-use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontEntity;
-
 final class FontsStore {
 
 	/**
@@ -46,9 +44,9 @@ final class FontsStore {
 	public static $complete_font_variant_options = [];
 
 	/**
-	 * An assoc array with font family as the key and `GoogleFontEntity` instance as the value.
+	 * An assoc array with font-family as the key and `GoogleFontEntity` instance as the value.
 	 *
-	 * @var GoogleFontEntity[]
+	 * @var array
 	 */
 	public static $google_fonts;
 

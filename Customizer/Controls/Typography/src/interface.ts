@@ -11,23 +11,25 @@ export type GoogleFontsOrderEntity = {
 };
 
 export type GoogleFontsCollection = {
-	items: GoogleFontEntity[];
+	items: Record<string, GoogleFontEntity>;
 	order: GoogleFontsOrderEntity;
 };
 
-export type ValueLabelPair = {
-	value: string;
+export type LabelValuePair = {
 	label: string;
+	value: string;
 };
 
 export type FontVariantsCollection = {
-	standard: ValueLabelPair[];
-	complete: ValueLabelPair[];
+	standard: LabelValuePair[];
+	complete: LabelValuePair[];
 };
 
 export type WpbfCustomizeTypographyControlValue = {
 	"font-family"?: string;
 	variant?: string;
+	"font-style"?: string;
+	"font-weight"?: string | number;
 	"font-size"?: string | number;
 	"line-height"?: string;
 	"letter-spacing"?: string;

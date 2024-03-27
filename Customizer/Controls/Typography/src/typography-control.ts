@@ -1,22 +1,24 @@
 import _ from "lodash";
+import hooks from "@wordpress/hooks";
 import { WpbfCustomize } from "../../Base/src/interface";
 import "./typography-control.scss";
 import {
 	FontVariantsCollection,
 	GoogleFontEntity,
 	GoogleFontsCollection,
-	ValueLabelPair,
+	LabelValuePair,
 	WpbfCustomizeTypographyControlValue,
 } from "./interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
+	hooks: typeof hooks;
 };
 
 declare var wpbfTypographyControlIds: string[];
 declare var wpbfGoogleFonts: GoogleFontsCollection;
 declare var wpbfFontVariants: FontVariantsCollection;
-declare var wpbfFieldsFontVariants: Record<string, ValueLabelPair[]>;
+declare var wpbfFieldsFontVariants: Record<string, LabelValuePair[]>;
 
 wp.customize.bind("ready", function () {
 	_.each(wpbfTypographyControlIds, function (id) {
@@ -31,7 +33,14 @@ wp.customize.bind("ready", function () {
 });
 
 function findGoogleFont(fontFamily: string): GoogleFontEntity | undefined {
-	return wpbfGoogleFonts.items.find((font) => font.family === fontFamily);
+	if (
+		wpbfGoogleFonts.items.hasOwnProperty(fontFamily) &&
+		wpbfGoogleFonts.items[fontFamily]
+	) {
+		return wpbfGoogleFonts.items[fontFamily];
+	}
+
+	return undefined;
 }
 
 function sortVariants(a: string | number, b: string | number): number {
@@ -39,6 +48,12 @@ function sortVariants(a: string | number, b: string | number): number {
 	if (a > b) return 1;
 
 	return 0;
+}
+
+function variantValueMatches(value: string, variants: LabelValuePair[]) {
+	return variants.some((val, i) => {
+		return val.value === value;
+	});
 }
 
 function compositeControlFontProperties(
@@ -59,7 +74,7 @@ function compositeControlFontProperties(
 
 	const variantControl = wp.customize.control(id + "[variant]");
 
-	let variants = [];
+	let variants: LabelValuePair[] = [];
 
 	if (googleFont) {
 		let googleFontVariants = googleFont.variants;
@@ -81,13 +96,7 @@ function compositeControlFontProperties(
 			? wpbfFieldsFontVariants[fieldVariantKey]
 			: undefined;
 
-		if (fieldVariants) {
-			if (fieldVariants.value["font-family"]]) {
-				variants = kirkiCustomVariants[fieldVariantKey][value["font-family"]];
-			} else {
-				variants = kirkiFontVariants.standard;
-			}
-		}
+		variants = fieldVariants ?? wpbfFontVariants.standard;
 	}
 
 	// Set the font-style value.
@@ -113,20 +122,21 @@ function compositeControlFontProperties(
 		}
 
 		variantControl.params.choices = variants;
-		variantControl.formattedOptions = [];
-		variantControl.destroy();
+		variantControl.ungroupedOptions = [];
+		variantControl.groupedOptions = [];
+		variantControl.destroy?.();
 
-		if (!variants.includes(variantValue)) {
-			// If the selected font-family doesn't support the currently selected variant, switch to "regular".
-			variantControl.doSelectAction("selectOption", "regular");
+		if (variantValueMatches(variantValue, variants)) {
+			variantControl.doSelectAction?.("selectOption", variantValue);
 		} else {
-			variantControl.doSelectAction("selectOption", variantValue);
+			// If the selected font-family doesn't support the currently selected variant, switch to "regular".
+			variantControl.doSelectAction?.("selectOption", "regular");
 		}
 	}
 
 	wp.hooks.addAction(
-		"kirki.dynamicControl.initKirkiControl",
-		"kirki",
+		"wpbf.dynamicControl.initKirkiControl",
+		"wpbf",
 		function (controlInit) {
 			if (variantControl && id + "[variant]" === controlInit.id) {
 			}

@@ -201,13 +201,7 @@ class TypographyUtil {
 						continue;
 					}
 
-					array_push(
-						$choices,
-						[
-							'value' => $custom_variant,
-							'label' => FontsStore::$complete_font_variants[ $custom_variant ],
-						]
-					);
+					$choices[ $custom_variant ] = FontsStore::$complete_font_variants[ $custom_variant ];
 				}
 			}
 			endforeach;
@@ -217,14 +211,14 @@ class TypographyUtil {
 	}
 
 	/**
-	 * Generate custom font variants collection for a typography field.
+	 * Generate custom font variant options for a typography field.
 	 *
 	 * It will be printed as a property's value of global `wpbfFieldsFontVariants` JS object.
 	 *
 	 * @param array $fonts_arg The fonts arguments.
-	 * @return array
+	 * @return array Array of 'label' and 'value' pairs.
 	 */
-	public function makeFieldCustomFontVariants( $fonts_arg ) {
+	public function makeCustomFontVariantOptions( $fonts_arg ) {
 
 		$fonts_util = new FontsUtil();
 

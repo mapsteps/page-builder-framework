@@ -4,14 +4,13 @@ import {
 } from "../../Base/src/interface";
 import {
 	WpbfCustomizeSelectControl,
-	WpbfCustomizeSelectControlParams,
-	WpbfCustomizeSelectOptionGroup,
-	WpbfCustomizeSelectOptionObject,
-} from "./interfaces";
+	SelectControlParams,
+	LabelValuePair,
+	SelectGroupedOptions,
+} from "./interface";
 import SelectForm from "./SelectForm";
 import ReactDOM from "react-dom";
 import React from "react";
-import _ from "lodash";
 import { createRoot } from "react-dom/client";
 
 declare var wp: {
@@ -22,7 +21,7 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 	initialize: function (
 		this: WpbfCustomizeSelectControl,
 		id: string,
-		params: WpbfCustomizeSelectControlParams,
+		params: SelectControlParams,
 	) {
 		const control = this;
 
@@ -65,22 +64,10 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 	 */
 	renderContent: function renderContent(this: WpbfCustomizeSelectControl) {
 		const control = this;
+		const params = control.params;
 		let value = control.setting.get();
 
-		if (Array.isArray(value)) {
-			let formattedValue = [];
-
-			for (const key in control.params.choices) {
-				if (control.params.choices.hasOwnProperty(key)) {
-					if (value.includes(key)) {
-						// formattedValue.push();
-					}
-				}
-			}
-
-			// value = control.params.choices;
-		}
-
+		control.parseSelectChoices?.();
 		const root = createRoot(control.container[0]);
 
 		root.render(
@@ -90,10 +77,12 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 				setNotificationContainer={control.setNotificationContainer}
 				isClearable={control.params.isClearable}
 				customizerSetting={control.setting}
+				formattedOptions={control.mergeOptions?.() ?? []}
 				isOptionDisabled={control.isOptionDisabled}
 				control={control}
 				isMulti={control.isMulti?.() ?? false}
 				maxSelections={control.params.maxSelections}
+				messages={params.messages}
 			/>,
 		);
 	},
@@ -141,15 +130,15 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 	isOptionDisabled: function (this: WpbfCustomizeSelectControl, option: any) {
 		const control = this;
 
-		if (!control) return false;
 		if (!control.disabledSelectOptions) return false;
+		if (!control.disabledSelectOptions.length) return false;
 		return !!control.disabledSelectOptions.indexOf(option);
 	},
 
 	doSelectAction: function (
 		this: WpbfCustomizeSelectControl,
-		action: any,
-		arg: any,
+		action: string,
+		value: any,
 	) {
 		const control = this;
 		let i;
@@ -160,13 +149,27 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 					"undefined" === typeof control.disabledSelectOptions
 						? []
 						: control.disabledSelectOptions;
-				control.disabledSelectOptions.push(control.getOptionProps!(arg));
+
+				if (control.makeReactSelectValue) {
+					const formattedValue = control.makeReactSelectValue(value);
+
+					if (Array.isArray(formattedValue)) {
+						formattedValue.forEach((val) => {
+							control.disabledSelectOptions?.push(val);
+						});
+					} else {
+						if (formattedValue) {
+							control.disabledSelectOptions.push(formattedValue);
+						}
+					}
+				}
+
 				break;
 
 			case "enableOption":
 				if (control.disabledSelectOptions) {
 					for (i = 0; i < control.disabledSelectOptions.length; i++) {
-						if (control.disabledSelectOptions[i].value === arg) {
+						if (control.disabledSelectOptions[i].value === value) {
 							control.disabledSelectOptions.splice(i, 1);
 						}
 					}
@@ -174,119 +177,187 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 				break;
 
 			case "selectOption":
-				control.setting.set(arg);
+				control.setting.set(value);
 				break;
 		}
 
 		control.renderContent();
 	},
 
-	formatOptions: function (this: WpbfCustomizeSelectControl) {
+	ungroupedOptions: [],
+
+	groupedOptions: [],
+
+	parseSelectChoices: function (this: WpbfCustomizeSelectControl) {
 		const control = this;
 
-		if (Array.isArray(control.params.choices)) {
-			return control.params.choices;
-		}
+		control.ungroupedOptions = [];
+		control.groupedOptions = [];
 
-		const formattedOptions: WpbfCustomizeSelectOptionObject[] = [];
-		const formattedOptionGroups: WpbfCustomizeSelectOptionGroup[] = [];
+		for (const key in control.params.choices) {
+			if (!control.params.choices.hasOwnProperty(key)) {
+				continue;
+			}
 
-		let useGroups = false;
+			const value = control.params.choices[key];
+			if (!value) continue;
 
-		_.each(control.params.choices, function (label: any, value) {
-			let optGroup: WpbfCustomizeSelectOptionGroup;
-
-			if ("object" === typeof label) {
-				useGroups = true;
-
-				optGroup = {
-					label: label[0],
-					options: [],
-				};
-
-				_.each(label[1], function (optionVal, optionKey) {
-					optGroup.options.push({
-						label: optionVal,
-						value: optionKey,
-					});
+			if ("string" === typeof value) {
+				control.ungroupedOptions?.push({
+					label: value,
+					value: key,
 				});
 
-				formattedOptionGroups.push(optGroup);
-			} else if ("string" === typeof label) {
-				formattedOptions.push({
-					label: label,
-					value: value,
+				continue;
+			}
+
+			if (!Array.isArray(value)) continue;
+			if (!value.length) continue;
+			if (!value[0] || !value[1]) continue;
+			if ("string" !== typeof value[0]) continue;
+			if ("string" === typeof value[1]) continue;
+
+			const groupLabel = value[0];
+			const choiceOptions = value[1];
+			const groupOptions: LabelValuePair[] = [];
+
+			for (const choiceKey in choiceOptions) {
+				if (!choiceOptions.hasOwnProperty(choiceKey)) {
+					continue;
+				}
+
+				const choiceValue = choiceOptions[choiceKey];
+				if (!choiceValue) continue;
+
+				groupOptions.push({
+					label: choiceValue,
+					value: choiceKey,
 				});
 			}
-		});
 
-		return useGroups ? formattedOptionGroups : formattedOptions;
-	},
-
-	getFormattedOptions: function (this: WpbfCustomizeSelectControl) {
-		const control = this;
-
-		return control.formatOptions!();
-	},
-
-	getOptionProps: function (this: WpbfCustomizeSelectControl, value: any) {
-		const control = this;
-
-		const options = control.getFormattedOptions!();
-		let i: any;
-		let l: any;
-
-		if (control.isMulti?.()) {
-			let values = [];
-
-			for (i = 0; i < options.length; i++) {
-				if (Array.isArray(value)) {
-					value.forEach(function (val) {
-						if (options[i].value === val) {
-							values.push(options[i]);
-							return;
-						}
-
-						if (options[i].options) {
-							for (l = 0; l < options[i].options.length; l++) {
-								if (options[i].options[l].value === val) {
-									values.push(options[i].options[l]);
-								}
-							}
-						}
-					});
-				} else {
-					if (options[i].value === value) {
-						values.push(options[i]);
-					}
-
-					if (options[i].options) {
-						for (l = 0; l < options[i].options.length; l++) {
-							if (options[i].options[l].value === value) {
-								values.push(options[i].options[l]);
-							}
-						}
-					}
-				}
-			}
-
-			return values;
-		} else {
-			for (i = 0; i < options.length; i++) {
-				if (options[i].value === value) {
-					return options[i];
-				}
-
-				if (options[i].options) {
-					for (l = 0; l < options[i].options.length; l++) {
-						if (options[i].options[l].value === value) {
-							return options[i].options[l];
-						}
-					}
-				}
-			}
+			control.groupedOptions?.push({
+				label: groupLabel,
+				options: groupOptions,
+			});
 		}
+	},
+
+	mergeOptions: function (this: WpbfCustomizeSelectControl) {
+		const control = this;
+		let options: LabelValuePair[] & SelectGroupedOptions[] = [];
+
+		if (control.ungroupedOptions && control.ungroupedOptions.length) {
+			options.push(...control.ungroupedOptions);
+		}
+
+		if (control.groupedOptions && control.groupedOptions.length) {
+			options.push(...control.groupedOptions);
+		}
+
+		return options;
+	},
+
+	makeReactSelectValue: function (
+		this: WpbfCustomizeSelectControl,
+		rawValue: string | string[],
+	): LabelValuePair | LabelValuePair[] | undefined {
+		const control = this;
+
+		let options: LabelValuePair[] & SelectGroupedOptions[] =
+			control.mergeOptions?.() ?? [];
+
+		if (!options.length) {
+			return control.isMulti ? [] : undefined;
+		}
+
+		if (!control.isMulti) {
+			return findMatchedOptionFromValue(options, rawValue);
+		}
+
+		return findMatchedOptionsFromValue(options, rawValue);
 	},
 });
+
+function findMatchedOptionFromValue(
+	options: LabelValuePair[] & SelectGroupedOptions[],
+	value: string | string[],
+): LabelValuePair | undefined {
+	for (let i = 0; i < options.length; i++) {
+		const optionItem = options[i];
+
+		if (optionItem.options && optionItem.options.length) {
+			const suboptions = optionItem.options;
+
+			for (let l = 0; l < suboptions.length; l++) {
+				if (valueMatches(suboptions[l].value, value)) {
+					return suboptions[l];
+				}
+			}
+
+			continue;
+		}
+
+		if (!optionItem.value) continue;
+
+		if (valueMatches(optionItem.value, value)) {
+			return {
+				label: optionItem.label,
+				value: optionItem.value,
+			};
+		}
+	}
+
+	return undefined;
+}
+
+function findMatchedOptionsFromValue(
+	options: LabelValuePair[] & SelectGroupedOptions[],
+	value: string | string[],
+): LabelValuePair[] {
+	let matchedOptions: LabelValuePair[] = [];
+
+	for (let i = 0; i < options.length; i++) {
+		const optionItem = options[i];
+
+		if (optionItem.options && optionItem.options.length) {
+			const suboptions = optionItem.options;
+
+			for (let l = 0; l < suboptions.length; l++) {
+				if (valueMatches(suboptions[l].value, value)) {
+					// We don't call `break` statement here.
+					matchedOptions.push(suboptions[l]);
+				}
+			}
+
+			// Lets keep this `continue` statement for clarity.
+			continue;
+		}
+
+		if (!optionItem.value) continue;
+
+		if (valueMatches(optionItem.value, value)) {
+			matchedOptions.push({
+				label: optionItem.label,
+				value: optionItem.value,
+			});
+		}
+	}
+
+	return matchedOptions;
+}
+
+function valueMatches(val: string, values: string | string[]): boolean {
+	if (typeof values === "string") {
+		return val === values;
+	}
+
+	if (Array.isArray(values)) {
+		return values.some(function (value) {
+			return val === value;
+		});
+	}
+
+	return false;
+}
 
 export default SelectControl;

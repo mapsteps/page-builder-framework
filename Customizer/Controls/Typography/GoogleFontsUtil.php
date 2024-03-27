@@ -2,8 +2,6 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
-use Mapsteps\Wpbf\Customizer\Controls\Typography\Entities\GoogleFontsCollection;
-
 final class GoogleFontsUtil {
 
 	/**
@@ -21,16 +19,18 @@ final class GoogleFontsUtil {
 	public $default_sortby_mode = 'alpha';
 
 	/**
-	 * Get `GoogleFontsCollection` instance based on 'webfonts.json' file.
+	 * Get google fonts collection from 'webfonts.json' file.
 	 *
-	 * @return GoogleFontsCollection
+	 * @return array
 	 */
 	public function getCollections() {
 
-		$raw_array = ( new GoogleFontsCache() )->readFromJson( GoogleFontsCache::$webfont_files_json_filepath );
-		$raw_array = ! empty( $raw_array ) && is_array( $raw_array ) ? $raw_array : [];
+		$cache_util = new GoogleFontsCache();
 
-		return GoogleFontsCollection::fromArray( $raw_array );
+		$arr = $cache_util->readFromJson( $cache_util->webfonts_json_filepath );
+		$arr = ! empty( $arr ) && is_array( $arr ) ? $arr : [];
+
+		return $arr;
 
 	}
 

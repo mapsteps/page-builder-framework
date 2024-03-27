@@ -1,6 +1,7 @@
 import React from "react";
 import Select, { components } from "react-select";
 import { WpbfCustomize } from "../../Base/src/interface";
+import { SelectControlProps } from "./interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -23,7 +24,7 @@ function SelectMenu(props: any) {
 	);
 }
 
-export default function SelectForm(props: any) {
+export default function SelectForm(props: SelectControlProps) {
 	/**
 	 * Pass-on the value to the customizer object to save.
 	 */
@@ -113,12 +114,12 @@ export default function SelectForm(props: any) {
 				inputId={inputId}
 				className="wpbf-react-select-container"
 				classNamePrefix="wpbf-react-select"
-				inputClassName="wpbf-react-select-input"
-				openMenuOnFocus={props.openMenuOnFocus} // @see https://github.com/JedWatson/react-select/issues/888#issuecomment-209376601
+				// @see https://github.com/JedWatson/react-select/issues/888#issuecomment-209376601
+				openMenuOnFocus={props.openMenuOnFocus}
 				formatOptionLabel={getLabel}
-				options={props.control.getFormattedOptions()}
+				options={props.formattedOptions}
 				onChange={handleChangeComplete}
-				value={props.control.getOptionProps(props.value)}
+				value={props.control.makeReactSelectValue?.(props.value)}
 				isOptionDisabled={props.isOptionDisabled}
 				components={{ IndicatorSeparator: () => null, Menu: SelectMenu }}
 				theme={theme}

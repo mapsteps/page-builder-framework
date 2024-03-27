@@ -6,9 +6,9 @@ import {
 } from "wordpress__customize-browser/Customize";
 import {
 	WpbfCustomizeSelectControl,
-	WpbfCustomizeSelectOptionGroup,
-	WpbfCustomizeSelectOptionObject,
-} from "../../Select/src/interfaces";
+	LabelValuePair,
+	SelectGroupedOptions,
+} from "../../Select/src/interface";
 import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interface";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
@@ -187,14 +187,15 @@ export interface WpbfCustomizeControl<SV, CP> {
 	// Specific to PBF's select control.
 	isMulti?: () => boolean;
 	isOptionDisabled?: (option: any) => boolean;
-	disabledSelectOptions?: any[];
-	doSelectAction?: (action: any, args: any) => void;
-	formatOptions?: () =>
-		| string[]
-		| WpbfCustomizeSelectOptionObject[]
-		| WpbfCustomizeSelectOptionGroup[];
-	getFormattedOptions?: () => any[];
-	getOptionProps?: (value: any) => any[];
+	disabledSelectOptions?: LabelValuePair[];
+	doSelectAction?: (action: string, value: any) => void;
+	ungroupedOptions?: LabelValuePair[];
+	groupedOptions?: SelectGroupedOptions[];
+	mergeOptions?: () => LabelValuePair[] & SelectGroupedOptions[];
+	parseSelectChoices?: VoidFunction;
+	makeReactSelectValue?: (
+		value: any,
+	) => LabelValuePair | LabelValuePair[] | undefined;
 
 	// Specific to PBF's sortable control.
 	getNewValues?: () => any[];
@@ -221,7 +222,7 @@ export interface WpbfCustomizeControlParams<SV> {
 	sectionId: string;
 	default: SV;
 	value: SV;
-	choices: any[];
+	choices: Record<string, any> | any[];
 	link: string;
 	id: string;
 	ajaxurl: string;
