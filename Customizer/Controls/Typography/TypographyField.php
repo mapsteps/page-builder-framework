@@ -103,8 +103,8 @@ class TypographyField extends BaseField {
 		// JS object inside this block will only be printed once.
 		if ( ! TypographyStore::$control_vars_printed ) {
 			wp_localize_script( 'wpbf-typography-control', 'wpbfFontVariants', [
-				'standard' => FontsStore::$standard_font_variant_options,
-				'complete' => FontsStore::$complete_font_variant_options,
+				'standard' => FontsStore::$standard_font_variants,
+				'complete' => FontsStore::$complete_font_variants,
 			] );
 
 			wp_localize_script( 'wpbf-typography-control', 'wpbfGoogleFonts', ( new GoogleFontsUtil() )->getCollections() );
@@ -228,6 +228,7 @@ class TypographyField extends BaseField {
 			->capability( $this->control->capability )
 			->priority( $this->control->priority )
 			->activeCallback( $this->active_callback_args )
+			->sanitizeCallback( [ new TypographySanitation(), 'sanitize' ] )
 			->tooltip( $this->control->tooltip )
 			->properties( [
 				'wrapper_attrs' => [

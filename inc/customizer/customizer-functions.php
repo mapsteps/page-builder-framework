@@ -181,7 +181,6 @@ function wpbf_customizer_frontend_scripts() {
 		if ( file_exists( $file_path ) ) {
 			wp_enqueue_style( 'wpbf-customizer', $file_url, '', filemtime( $file_path ) );
 		}
-
 	}
 
 }
@@ -296,4 +295,4 @@ function wpbf_custom_default_fonts( $standard_fonts ) {
 
 }
 
-add_filter( 'kirki/fonts/standard_fonts', 'wpbf_custom_default_fonts', 0 );
+add_filter( 'wpbf_fonts_standard_fonts', 'wpbf_custom_default_fonts', 0 );

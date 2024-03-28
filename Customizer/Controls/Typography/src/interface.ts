@@ -21,8 +21,8 @@ export type LabelValuePair = {
 };
 
 export type FontVariantsCollection = {
-	standard: LabelValuePair[];
-	complete: LabelValuePair[];
+	standard: Record<string, string>;
+	complete: Record<string, string>;
 };
 
 export type WpbfCustomizeTypographyControlValue = {
