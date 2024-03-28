@@ -3,7 +3,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Responsive\ResponsiveUtil;
 use WP_Customize_Manager;
 
 class GenericField extends BaseField {
@@ -25,7 +24,7 @@ class GenericField extends BaseField {
 		$min = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
 		$max = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
 
-		return ( new ResponsiveUtil() )->sanitizeSingleValue( $subtype, $value, $min, $max );
+		return ( new GenericSanitation() )->sanitize( $subtype, $value, $min, $max );
 
 	}
 

@@ -2,6 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 
+use Mapsteps\Wpbf\Customizer\Controls\Responsive\ResponsiveUtil;
 use WP_Customize_Setting;
 
 class ResponsiveGenericControl extends GenericControl {
@@ -55,16 +56,18 @@ class ResponsiveGenericControl extends GenericControl {
 	 */
 	protected function customConstructor( $args ) {
 
+		$responsive_util = new ResponsiveUtil();
+
 		if ( ! empty( $args['devices'] ) && is_array( $args['devices'] ) ) {
 			$this->devices = $args['devices'];
 		} else {
-			$this->devices = $this->responsive_util->default_devices;
+			$this->devices = $responsive_util->default_devices;
 		}
 
 		if ( ! empty( $args['device_icons'] ) && is_array( $args['device_icons'] ) ) {
 			$this->device_icons = $args['device_icons'];
 		} else {
-			$this->device_icons = $this->responsive_util->default_device_icons;
+			$this->device_icons = $responsive_util->default_device_icons;
 		}
 
 		if ( ! empty( $args['save_as_json'] ) && is_bool( $args['save_as_json'] ) ) {
@@ -77,7 +80,7 @@ class ResponsiveGenericControl extends GenericControl {
 
 		$has_actual_value = $this->value() ? true : false;
 
-		$this->default_array = $this->responsive_util->toArrayValue( $this->devices, $this->subtype, $this->setting->default, $this->min, $this->max );
+		$this->default_array = $responsive_util->toArrayValue( $this->devices, $this->subtype, $this->setting->default, $this->min, $this->max );
 
 		$this->setting->default = $this->save_as_json ? wp_json_encode( $this->default_array ) : $this->default_array;
 
@@ -93,7 +96,7 @@ class ResponsiveGenericControl extends GenericControl {
 		}
 
 		if ( $has_actual_value ) {
-			$this->value_array = $this->responsive_util->toArrayValue( $this->devices, $this->subtype, $this->value(), $this->min, $this->max );
+			$this->value_array = $responsive_util->toArrayValue( $this->devices, $this->subtype, $this->value(), $this->min, $this->max );
 		} else {
 			$this->value_array = $this->default_array;
 		}
@@ -107,7 +110,7 @@ class ResponsiveGenericControl extends GenericControl {
 
 		parent::enqueue();
 
-		$this->responsive_util->enqueueAssets();
+		( new ResponsiveUtil() )->enqueueAssets();
 
 		// Enqueue the scripts.
 		wp_enqueue_script(

@@ -233,7 +233,7 @@ class TypographyField extends BaseField {
 			->properties( [
 				'wrapper_attrs' => [
 					'gap'   => 'small',
-					'class' => 'wpbf-typography-label-description',
+					'class' => '{default_class} wpbf-typography-label-description',
 				],
 			] )
 			->addToSection( $this->control->section_id );
@@ -264,7 +264,6 @@ class TypographyField extends BaseField {
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
-			->sanitizeCallback( $this->setting_entity->sanitize_callback )
 			->activeCallback( $this->active_callback_args )
 			->partialRefresh( $this->partial_refresh_args )
 			->properties( [
@@ -306,7 +305,6 @@ class TypographyField extends BaseField {
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
-			->sanitizeCallback( $this->setting_entity->sanitize_callback )
 			->activeCallback( $this->active_callback_args )
 			->partialRefresh( $this->partial_refresh_args )
 			->properties( [

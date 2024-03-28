@@ -2,6 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Responsive;
 
+use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericSanitation;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 
 class ResponsiveUtil {
@@ -76,7 +77,7 @@ class ResponsiveUtil {
 
 		$values = [];
 
-		$number_util = new NumberUtil();
+		$generic_sanitizer = new GenericSanitation();
 
 		foreach ( $devices as $device ) {
 			if ( ! isset( $value[ $device ] ) ) {
@@ -86,47 +87,10 @@ class ResponsiveUtil {
 				$values[ $device ] = $value[ $device ];
 			}
 
-			$values[ $device ] = $this->sanitizeSingleValue( $type, $values[ $device ], $min, $max );
+			$values[ $device ] = $generic_sanitizer->sanitize( $type, $values[ $device ], $min, $max );
 		}
 
 		return $values;
-
-	}
-
-	/**
-	 * Sanitize a single value based on the 'type' parameter.
-	 *
-	 * @param string         $type The data type. Accepts one of this values:
-	 *                             "number", "number-unit", "text", "textarea", "email", "url", and "content".
-	 * @param mixed          $value The value to sanitize.
-	 * @param int|float|null $min The minimum value. Used by "number" and "number-unit" data type.
-	 * @param int|float|null $max The maximum value. Used by "number" and "number-unit" data type.
-	 *
-	 * @return string|int|float
-	 */
-	public function sanitizeSingleValue( $type, $value, $min, $max ) {
-
-		if ( 'text' === $type ) {
-			return sanitize_text_field( $value );
-		} elseif ( 'textarea' === $type ) {
-			return sanitize_textarea_field( $value );
-		} elseif ( 'url' === $type ) {
-			return esc_url_raw( $value );
-		} elseif ( 'number' === $type || 'number-unit' === $type ) {
-			$number_util = new NumberUtil();
-
-			$max = $number_util->normalizeMaxValue( $min, $max );
-
-			if ( 'number' === $type ) {
-				return $number_util->limitNumber( $value, $min, $max );
-			}
-
-			return $number_util->limitNumberWithUnit( $value, $min, $max );
-		} elseif ( 'email' === $type ) {
-			return sanitize_email( $value );
-		}
-
-		return wp_kses_post( $value );
 
 	}
 
