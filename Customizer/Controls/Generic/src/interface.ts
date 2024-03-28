@@ -35,3 +35,11 @@ export interface WpbfCustomizeResponsiveGenericControlParams
 	deviceIcons: Record<string, string>;
 	saveAsJson: boolean;
 }
+
+export type ArrayControlValue = any[] | Record<string, any>;
+
+export interface ArrayControlParams
+	extends WpbfCustomizeControlParams<ArrayControlValue> {}
+
+export interface WpbfCustomizeArrayControl
+	extends WpbfCustomizeControl<ArrayControlValue, ArrayControlParams> {}

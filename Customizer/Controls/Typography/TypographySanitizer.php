@@ -4,7 +4,7 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorSanitation;
 
-class TypographySanitation {
+class TypographySanitizer {
 
 	/**
 	 * Sanitize the typography value.

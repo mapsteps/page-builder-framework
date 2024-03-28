@@ -2,7 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Responsive;
 
-use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericSanitation;
+use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericSanitizer;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 
 class ResponsiveUtil {
@@ -77,7 +77,7 @@ class ResponsiveUtil {
 
 		$values = [];
 
-		$generic_sanitizer = new GenericSanitation();
+		$generic_sanitizer = new GenericSanitizer();
 
 		foreach ( $devices as $device ) {
 			if ( ! isset( $value[ $device ] ) ) {

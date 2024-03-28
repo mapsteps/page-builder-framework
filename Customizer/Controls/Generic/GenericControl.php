@@ -125,7 +125,7 @@ class GenericControl extends BaseControl {
 	protected function customConstructor( $args ) {
 
 		if ( $this->setting instanceof WP_Customize_Setting ) {
-			$this->setting->default = ( new GenericSanitation() )->sanitize(
+			$this->setting->default = ( new GenericSanitizer() )->sanitize(
 				$this->subtype,
 				$this->setting->default,
 				$this->min,

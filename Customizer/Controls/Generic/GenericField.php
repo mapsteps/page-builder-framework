@@ -24,7 +24,7 @@ class GenericField extends BaseField {
 		$min = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
 		$max = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
 
-		return ( new GenericSanitation() )->sanitize( $subtype, $value, $min, $max );
+		return ( new GenericSanitizer() )->sanitize( $subtype, $value, $min, $max );
 
 	}
 

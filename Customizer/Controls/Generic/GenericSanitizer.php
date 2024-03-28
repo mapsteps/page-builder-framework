@@ -2,7 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 
-class GenericSanitation {
+class GenericSanitizer {
 
 	/**
 	 * Sanitize a single value based on the 'type' parameter.

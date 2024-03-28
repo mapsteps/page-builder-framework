@@ -219,16 +219,18 @@ class TypographyField extends BaseField {
 	 */
 	private function addLabelAndDescription() {
 
+		$sanitizer = new TypographySanitizer();
+
 		wpbf_customizer_field()
 			->id( $this->control->id )
-			->type( 'hidden' )
+			->type( 'array' )
 			->tab( $this->tab )
 			->label( $this->control->label )
 			->description( $this->control->description )
 			->capability( $this->control->capability )
 			->priority( $this->control->priority )
 			->activeCallback( $this->active_callback_args )
-			->sanitizeCallback( [ new TypographySanitation(), 'sanitize' ] )
+			->sanitizeCallback( [ $sanitizer, 'sanitize' ] )
 			->tooltip( $this->control->tooltip )
 			->properties( [
 				'wrapper_attrs' => [
@@ -268,7 +270,8 @@ class TypographyField extends BaseField {
 			->partialRefresh( $this->partial_refresh_args )
 			->properties( [
 				'wrapper_attrs' => [
-					'data-wpbf-typography-type' => 'font-family',
+					'data-wpbf-typography-control' => $this->control->id,
+					'data-wpbf-typography-type'    => 'font-family',
 				],
 			] )
 			->addToSection( $this->control->section_id );
@@ -309,7 +312,8 @@ class TypographyField extends BaseField {
 			->partialRefresh( $this->partial_refresh_args )
 			->properties( [
 				'wrapper_attrs' => [
-					'data-wpbf-typography-type' => 'variant',
+					'data-wpbf-typography-control' => $this->control->id,
+					'data-wpbf-typography-type'    => 'variant',
 				],
 			] )
 			->addToSection( $this->control->section_id );
