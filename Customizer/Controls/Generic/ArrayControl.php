@@ -58,7 +58,7 @@ class ArrayControl extends BaseControl {
 
 		// Enqueue the scripts.
 		wp_enqueue_script(
-			'wpbf-generic-control',
+			'wpbf-array-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/array-control-min.js',
 			array( 'wpbf-base-control' ),
 			WPBF_VERSION,

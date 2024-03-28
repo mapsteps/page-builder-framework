@@ -1,3 +1,24 @@
+export type FontProperties = [
+	"font-family",
+	"variant",
+	"font-size",
+	"line-height",
+	"letter-spacing",
+	"color",
+	"text-alignment",
+	"text-transform",
+];
+
+export type FontProperty =
+	| "font-family"
+	| "variant"
+	| "font-size"
+	| "line-height"
+	| "letter-spacing"
+	| "color"
+	| "text-alignment"
+	| "text-transform";
+
 export type GoogleFontEntity = {
 	family: string;
 	category: string;

@@ -2,6 +2,7 @@ import hooks from "@wordpress/hooks";
 import { WpbfCustomize } from "../../Base/src/interface";
 import "./typography-control.scss";
 import {
+	FontProperties,
 	FontVariantsCollection,
 	GoogleFontEntity,
 	GoogleFontsCollection,
@@ -14,30 +15,58 @@ declare var wp: {
 	hooks: typeof hooks;
 };
 
+declare var wpbfFontProperties: FontProperties;
 declare var wpbfTypographyControlIds: string[];
 declare var wpbfGoogleFonts: GoogleFontsCollection;
 declare var wpbfFontVariants: FontVariantsCollection;
 declare var wpbfFieldsFontVariants: Record<string, LabelValuePair[]>;
 
 wp.customize.bind("ready", function () {
+	setupTypographyFields();
+});
+
+function setupTypographyFields() {
 	if (!wpbfTypographyControlIds || !wpbfTypographyControlIds.length) {
 		return;
 	}
 
 	wpbfTypographyControlIds.forEach((id) => {
-		compositeControlFontProperties(id);
+		if (!wp.customize.control(id)) return;
+		composeFontProperties(id);
 
 		wp.customize(id, function (setting) {
-			console.log(`"${id}" control initial value is: `, setting.get());
-
 			setting.bind(function (newval) {
-				console.log(`"${id}" control updated value is: `, newval);
+				composeFontProperties(id, newval);
+			});
+		});
 
-				compositeControlFontProperties(id, newval);
+		listenFontPropertyFieldsChange(id);
+	});
+}
+
+function listenFontPropertyFieldsChange(typographyControlId: string) {
+	if (!wpbfFontProperties || !wpbfFontProperties.length) return;
+
+	wpbfFontProperties.forEach((property) => {
+		const propertyControlId = `${typographyControlId}[${property}]`;
+		if (!wp.customize.control(propertyControlId)) return;
+
+		wp.customize(propertyControlId, function (setting) {
+			setting.bind(function (newval) {
+				const typographyValue = wp.customize(typographyControlId).get() || {};
+				typographyValue[property] = newval;
+
+				console.log(
+					`"${propertyControlId}" control is updated. Now the "${typographyControlId}" typography control value should be: `,
+					typographyValue,
+				);
+
+				// Copy typographyValue to a new object to trigger the change event.
+				wp.customize(typographyControlId).set({ ...typographyValue });
 			});
 		});
 	});
-});
+}
 
 function findGoogleFont(fontFamily: string): GoogleFontEntity | undefined {
 	if (
@@ -57,16 +86,15 @@ function sortVariants(a: string | number, b: string | number): number {
 	return 0;
 }
 
-function compositeControlFontProperties(
+function composeFontProperties(
 	id: string,
 	value?: WpbfCustomizeTypographyControlValue,
 ) {
 	const control = wp.customize.control(id);
+	console.log(`Trying to compose font properties for control: "${control.id}"`);
 	if ("undefined" === typeof control) return;
 
 	value = value || control.setting.get();
-
-	console.log("value from compositeControlFontProperties", value);
 
 	if ("undefined" === typeof value) return;
 	if ("string" !== typeof value["font-family"]) return;
@@ -143,6 +171,11 @@ function compositeControlFontProperties(
 			// If the selected font-family doesn't support the currently selected variant, switch to "regular".
 			variantControl.doSelectAction?.("selectOption", "regular");
 		}
+
+		console.log(
+			"Done composing font properties. Now the typography value is:",
+			value,
+		);
 	}
 
 	wp.hooks.addAction(

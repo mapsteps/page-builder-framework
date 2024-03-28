@@ -17,6 +17,13 @@ class TypographyField extends BaseField {
 	public $is_wrapper_field = true;
 
 	/**
+	 * The font properties.
+	 *
+	 * @var array
+	 */
+	protected $font_properties = [ 'font-family', 'variant', 'font-size', 'line-height', 'letter-spacing', 'color', 'text-alignment', 'text-transform' ];
+
+	/**
 	 * A `TypographyUtil` instance.
 	 *
 	 * @var TypographyUtil
@@ -107,6 +114,7 @@ class TypographyField extends BaseField {
 				'complete' => FontsStore::$complete_font_variants,
 			] );
 
+			wp_localize_script( 'wpbf-typography-control', 'wpbfFontProperties', $this->font_properties );
 			wp_localize_script( 'wpbf-typography-control', 'wpbfGoogleFonts', ( new GoogleFontsUtil() )->getCollections() );
 			wp_add_inline_script( 'wpbf-typography-control', 'const wpbfFieldsFontVariants = {};', 'before' );
 
