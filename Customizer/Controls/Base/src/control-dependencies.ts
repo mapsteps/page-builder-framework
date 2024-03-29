@@ -74,7 +74,7 @@ export default function setupControlDependencies() {
 			);
 
 			if (!isDependencySatisfied) {
-				wp.customize.control(ruleSet.dependantControlId).toggle(false);
+				wp.customize.control(ruleSet.dependantControlId)?.toggle(false);
 				continue;
 			}
 
@@ -82,7 +82,7 @@ export default function setupControlDependencies() {
 				wpbfCustomizerControlDependencies[ruleSet.dependantControlId];
 
 			if (dependantDependencies.length < 2) {
-				wp.customize.control(ruleSet.dependantControlId).toggle(true);
+				wp.customize.control(ruleSet.dependantControlId)?.toggle(true);
 				continue;
 			}
 
@@ -110,9 +110,9 @@ export default function setupControlDependencies() {
 			}
 
 			if (!otherRulesSatisfied) {
-				wp.customize.control(ruleSet.dependantControlId).toggle(false);
+				wp.customize.control(ruleSet.dependantControlId)?.toggle(false);
 			} else {
-				wp.customize.control(ruleSet.dependantControlId).toggle(true);
+				wp.customize.control(ruleSet.dependantControlId)?.toggle(true);
 			}
 		}
 	}

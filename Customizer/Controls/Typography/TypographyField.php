@@ -109,9 +109,9 @@ class TypographyField extends BaseField {
 
 		// JS object inside this block will only be printed once.
 		if ( ! TypographyStore::$control_vars_printed ) {
-			wp_localize_script( 'wpbf-typography-control', 'wpbfFontVariants', [
-				'standard' => FontsStore::$standard_font_variants,
-				'complete' => FontsStore::$complete_font_variants,
+			wp_localize_script( 'wpbf-typography-control', 'wpbfFontVariantOptions', [
+				'standard' => FontsStore::$standard_font_variant_options,
+				'complete' => FontsStore::$complete_font_variant_options,
 			] );
 
 			wp_localize_script( 'wpbf-typography-control', 'wpbfFontProperties', $this->font_properties );
@@ -235,6 +235,7 @@ class TypographyField extends BaseField {
 			->tab( $this->tab )
 			->label( $this->control->label )
 			->description( $this->control->description )
+			->defaultValue( $this->default_value )
 			->capability( $this->control->capability )
 			->priority( $this->control->priority )
 			->activeCallback( $this->active_callback_args )

@@ -9,6 +9,7 @@ import {
 	LabelValuePair,
 	WpbfCustomizeTypographyControlValue,
 } from "./interface";
+import { WpbfCustomizeSelectControl } from "../../Select/src/interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -18,7 +19,7 @@ declare var wp: {
 declare var wpbfFontProperties: FontProperties;
 declare var wpbfTypographyControlIds: string[];
 declare var wpbfGoogleFonts: GoogleFontsCollection;
-declare var wpbfFontVariants: FontVariantsCollection;
+declare var wpbfFontVariantOptions: FontVariantsCollection;
 declare var wpbfFieldsFontVariants: Record<string, LabelValuePair[]>;
 
 wp.customize.bind("ready", function () {
@@ -33,13 +34,6 @@ function setupTypographyFields() {
 	wpbfTypographyControlIds.forEach((id) => {
 		if (!wp.customize.control(id)) return;
 		composeFontProperties(id);
-
-		wp.customize(id, function (setting) {
-			setting.bind(function (newval) {
-				composeFontProperties(id, newval);
-			});
-		});
-
 		listenFontPropertyFieldsChange(id);
 	});
 }
@@ -56,13 +50,7 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 				const typographyValue = wp.customize(typographyControlId).get() || {};
 				typographyValue[property] = newval;
 
-				console.log(
-					`"${propertyControlId}" control is updated. Now the "${typographyControlId}" typography control value should be: `,
-					typographyValue,
-				);
-
-				// Copy typographyValue to a new object to trigger the change event.
-				wp.customize(typographyControlId).set({ ...typographyValue });
+				composeFontProperties(typographyControlId, typographyValue);
 			});
 		});
 	});
@@ -79,6 +67,13 @@ function findGoogleFont(fontFamily: string): GoogleFontEntity | undefined {
 	return undefined;
 }
 
+function variantExists(
+	variantValue: string,
+	variants: LabelValuePair[],
+): boolean {
+	return variants.some((variant) => variant.value === variantValue);
+}
+
 function sortVariants(a: string | number, b: string | number): number {
 	if (a < b) return -1;
 	if (a > b) return 1;
@@ -91,7 +86,6 @@ function composeFontProperties(
 	value?: WpbfCustomizeTypographyControlValue,
 ) {
 	const control = wp.customize.control(id);
-	console.log(`Trying to compose font properties for control: "${control.id}"`);
 	if ("undefined" === typeof control) return;
 
 	value = value || control.setting.get();
@@ -104,23 +98,27 @@ function composeFontProperties(
 	const variantValue =
 		"undefined" === typeof value.variant ? "regular" : value.variant;
 
-	const variantControl = wp.customize.control(id + "[variant]");
+	const maybeVariantControl = wp.customize.control(id + "[variant]");
 
-	let variantChoices: Record<string, string> = {};
+	const variantControl =
+		maybeVariantControl && "wpbf-select" === maybeVariantControl.params.type
+			? (maybeVariantControl as WpbfCustomizeSelectControl)
+			: undefined;
+
+	let variantChoices: LabelValuePair[] = [];
 
 	if (googleFont) {
 		let googleFontVariants = googleFont.variants;
 		googleFontVariants.sort(sortVariants);
 
-		for (const variant in wpbfFontVariants.complete) {
-			if (!wpbfFontVariants.complete.hasOwnProperty(variant)) {
-				continue;
+		wpbfFontVariantOptions.complete.forEach((variantOption) => {
+			if (googleFontVariants.includes(variantOption.value)) {
+				variantChoices.push({
+					value: variantOption.value,
+					label: variantOption.label,
+				});
 			}
-
-			if (googleFontVariants.includes(variant)) {
-				variantChoices[variant] = wpbfFontVariants.complete[variant];
-			}
-		}
+		});
 	} else {
 		let fieldVariantKey = id.replace(/]/g, "");
 		fieldVariantKey = fieldVariantKey.replace(/\[/g, "_");
@@ -131,10 +129,13 @@ function composeFontProperties(
 
 		if (fieldVariants && fieldVariants.length) {
 			fieldVariants.forEach((fieldVariant) => {
-				variantChoices[fieldVariant.value] = fieldVariant.label;
+				variantChoices.push({
+					value: fieldVariant.value,
+					label: fieldVariant.label,
+				});
 			});
 		} else {
-			variantChoices = wpbfFontVariants.standard;
+			variantChoices = wpbfFontVariantOptions.standard;
 		}
 	}
 
@@ -161,22 +162,23 @@ function composeFontProperties(
 		}
 
 		variantControl.params.choices = variantChoices;
-		variantControl.ungroupedOptions = [];
-		variantControl.groupedOptions = [];
+		variantControl.formattedOptions = [];
 		variantControl.destroy?.();
 
-		if (variantChoices[variantValue]) {
+		if (variantExists(variantValue, variantChoices)) {
 			variantControl.doSelectAction?.("selectOption", variantValue);
 		} else {
 			// If the selected font-family doesn't support the currently selected variant, switch to "regular".
 			variantControl.doSelectAction?.("selectOption", "regular");
 		}
-
-		console.log(
-			"Done composing font properties. Now the typography value is:",
-			value,
-		);
 	}
+
+	wp.customize(id).set(value);
+
+	console.log(
+		"Done composing font properties. Now the typography value is:",
+		value,
+	);
 
 	wp.hooks.addAction(
 		"wpbf.dynamicControl.initKirkiControl",

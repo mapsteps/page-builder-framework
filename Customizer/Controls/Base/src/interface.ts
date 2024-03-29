@@ -55,7 +55,7 @@ export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	): JQuery.Promise<any>;
 	get(): Record<string, any>;
 	defaultConstructor: WpbfCustomizeSetting<Class>;
-	control: Values<WpbfCustomizeControl<any, any>>;
+	control: Values<WpbfCustomizeControl<any, any> | undefined>;
 	section: Values<Section>;
 	panel: Values<Panel>;
 	notifications: Notifications;
@@ -186,14 +186,11 @@ export interface WpbfCustomizeControl<SV, CP> {
 	actuallyEmbed?: () => void;
 
 	// Specific to PBF's select control.
-	isMulti?: () => boolean;
+	formattedOptions?: LabelValuePair[] & SelectGroupedOptions[];
+	parseSelectChoices?: VoidFunction;
 	isOptionDisabled?: (option: any) => boolean;
 	disabledSelectOptions?: LabelValuePair[];
 	doSelectAction?: (action: string, value: any) => void;
-	ungroupedOptions?: LabelValuePair[];
-	groupedOptions?: SelectGroupedOptions[];
-	mergeOptions?: () => LabelValuePair[] & SelectGroupedOptions[];
-	parseSelectChoices?: VoidFunction;
 	makeReactSelectValue?: (
 		value: any,
 	) => LabelValuePair | LabelValuePair[] | undefined;

@@ -39,6 +39,9 @@ if ( ! class_exists( '\Kirki\Pro\Field\HeadlineToggle' ) || ! class_exists( '\Ki
 // New customizer functions.
 require_once WPBF_THEME_DIR . '/Customizer/wpbf-customizer-functions.php';
 
+// Customizer functions.
+require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
+
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
 
@@ -62,9 +65,6 @@ require_once WPBF_THEME_DIR . '/inc/gravatar.php';
 
 // Misc.
 require_once WPBF_THEME_DIR . '/inc/misc.php';
-
-// Customizer functions.
-require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 
 // Theme mods.
 require_once WPBF_THEME_DIR . '/inc/theme-mods.php';

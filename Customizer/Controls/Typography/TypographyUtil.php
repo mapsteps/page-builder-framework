@@ -5,7 +5,7 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 class TypographyUtil {
 
 	/**
-	 * Generate font family choices for the typography field.
+	 * Generate font family 'choices' args for the typography field.
 	 *
 	 * @param string $default_value The default font-family value.
 	 * @param array  $fonts_arg The fonts arguments.
@@ -15,7 +15,6 @@ class TypographyUtil {
 	public function makeFontFamilyChoices( $default_value, $fonts_arg ) {
 
 		$default_value = empty( $default_value ) || is_string( $default_value ) ? $default_value : '';
-		$default_label = __( 'Default', 'page-builder-framework' );
 		$fonts_arg     = empty( $fonts_arg ) || ! is_array( $fonts_arg ) ? [] : $fonts_arg;
 
 		$fonts_util = new FontsUtil();
@@ -27,7 +26,10 @@ class TypographyUtil {
 			foreach ( $standard_fonts_arg as $maybe_index_or_font_name => $font_name_or_stack ) {
 				$key = is_int( $maybe_index_or_font_name ) ? $font_name_or_stack : $maybe_index_or_font_name;
 
-				$standard_font_options[ $key ] = $font_name_or_stack;
+				$standard_font_options[] = array(
+					'value' => $key,
+					'label' => $font_name_or_stack,
+				);
 			}
 		} else {
 			foreach ( $fonts_util->getStandardFonts() as $font_family_type => $font_data ) {
@@ -35,7 +37,10 @@ class TypographyUtil {
 					continue;
 				}
 
-				$standard_font_options[ $font_data['stack'] ] = $font_data['label'];
+				$standard_font_options[] = array(
+					'value' => $font_data['stack'],
+					'label' => $font_data['label'],
+				);
 			}
 		}
 
@@ -81,7 +86,10 @@ class TypographyUtil {
 		$google_font_options = [];
 
 		foreach ( $google_font_names as $font_family ) {
-			$google_font_options[ $font_family ] = $font_family;
+			$google_font_options[] = array(
+				'value' => $font_family,
+				'label' => $font_family,
+			);
 		}
 
 		$families_arg        = isset( $fonts_arg['families'] ) && is_array( $fonts_arg['families'] ) ? $fonts_arg['families'] : [];
@@ -89,8 +97,8 @@ class TypographyUtil {
 
 		if ( ! empty( $families_arg ) ) {
 			// Implementing the custom font families.
-			foreach ( $families_arg as $font_family_key => $font_family_value ) {
-				if ( empty( $font_family_value['children'] ) || ! is_array( $font_family_value['children'] ) ) {
+			foreach ( $families_arg as $font_family_key => $font_family_data ) {
+				if ( empty( $font_family_data['children'] ) || ! is_array( $font_family_data['children'] ) ) {
 					continue;
 				}
 
@@ -100,11 +108,9 @@ class TypographyUtil {
 
 				$font_family_key = esc_attr( $font_family_key );
 
-				if ( ! isset( $custom_font_options[ $font_family_key ] ) ) {
-					$custom_font_options[ $font_family_key ] = [];
-				}
+				$options = [];
 
-				foreach ( $font_family_value['children'] as $font_family ) {
+				foreach ( $font_family_data['children'] as $font_family ) {
 					if ( empty( $font_family['id'] ) || empty( $font_family['text'] ) ) {
 						continue;
 					}
@@ -113,25 +119,41 @@ class TypographyUtil {
 						continue;
 					}
 
-					$font_family_id   = esc_attr( $font_family['id'] );
-					$font_family_text = esc_attr( $font_family['text'] );
+					$font_family_value = ! empty( $font_family['value'] ) ? $font_family['value'] : '';
+					$font_family_value = empty( $font_family_value ) && isset( $font_family['id'] ) ? $font_family['id'] : '';
+					$font_family_value = esc_attr( $font_family_value );
 
-					$custom_font_options[ $font_family_key ][ $font_family_id ] = $font_family_text;
+					$font_family_label = ! empty( $font_family['label'] ) ? $font_family['label'] : '';
+					$font_family_label = empty( $font_family_label ) && isset( $font_family['text'] ) ? $font_family['text'] : '';
+					$font_family_label = esc_attr( $font_family_label );
+
+					$options[] = [
+						'value' => $font_family_value,
+						'label' => $font_family_label,
+					];
 				}
+
+				$custom_font_options[] = [
+					'label'   => $font_family_key,
+					'options' => [],
+				];
 			}
 		}
 
-		$choices = [];
+		$choices = array();
 
-		$choices['default'] = [
-			$default_label,
-			[ $default_value => $default_value ],
+		$choices[] = [
+			'label'   => __( 'Default', 'page-builder-framework' ),
+			'options' => [
+				'value' => $default_value,
+				'label' => $default_value,
+			],
 		];
 
 		if ( ! empty( $standard_font_options ) ) {
-			$choices['standard'] = [
-				__( 'Standard Fonts', 'page-builder-framework' ),
-				$standard_font_options,
+			$choices[] = [
+				'label'   => __( 'Standard Fonts', 'page-builder-framework' ),
+				'options' => $standard_font_options,
 			];
 		}
 
@@ -140,9 +162,9 @@ class TypographyUtil {
 		}
 
 		if ( ! empty( $google_font_options ) ) {
-			$choices['google'] = [
-				__( 'Google Fonts', 'page-builder-framework' ),
-				$google_font_options,
+			$choices[] = [
+				'label'   => __( 'Google Fonts', 'page-builder-framework' ),
+				'options' => $google_font_options,
 			];
 		}
 
@@ -151,7 +173,7 @@ class TypographyUtil {
 	}
 
 	/**
-	 * Generate font variant choices for the typography field.
+	 * Generate font variant 'choices' args for the typography field.
 	 *
 	 * @param array $fonts_arg The fonts arguments.
 	 * @return array
@@ -170,12 +192,12 @@ class TypographyUtil {
 
 		$choices = [];
 
-		foreach ( $families_arg as $font_family_key => $font_family_value ) :
-			if ( empty( $font_family_value['children'] ) || ! is_array( $font_family_value['children'] ) ) {
+		foreach ( $families_arg as $font_family_key => $font_family_data ) :
+			if ( empty( $font_family_data['children'] ) || ! is_array( $font_family_data['children'] ) ) {
 				continue;
 			}
 
-			foreach ( $font_family_value['children'] as $font_family ) {
+			foreach ( $font_family_data['children'] as $font_family ) {
 				if ( empty( $font_family ) || ! is_array( $font_family ) ) {
 					continue;
 				}
@@ -184,14 +206,16 @@ class TypographyUtil {
 					continue;
 				}
 
-				$font_family_id = esc_attr( $font_family['id'] );
+				$font_family_value = ! empty( $font_family['value'] ) ? $font_family['value'] : '';
+				$font_family_value = empty( $font_family_value ) && isset( $font_family['id'] ) ? $font_family['id'] : '';
+				$font_family_value = esc_attr( $font_family_value );
 
-				if ( ! isset( $variants_arg[ $font_family_id ] ) ) {
+				if ( ! isset( $variants_arg[ $font_family_value ] ) ) {
 					continue;
 				}
 
 				// The $custom_variant here can be something like "400italic" or "italic".
-				foreach ( $variants_arg[ $font_family_id ] as $custom_variant ) {
+				foreach ( $variants_arg[ $font_family_value ] as $custom_variant ) {
 					if ( empty( $custom_variant ) || ! is_string( $custom_variant ) ) {
 						continue;
 					}
@@ -201,7 +225,10 @@ class TypographyUtil {
 						continue;
 					}
 
-					$choices[ $custom_variant ] = FontsStore::$complete_font_variants[ $custom_variant ];
+					$choices[] = [
+						'value' => $custom_variant,
+						'label' => FontsStore::$complete_font_variants[ $custom_variant ],
+					];
 				}
 			}
 			endforeach;
@@ -286,12 +313,12 @@ class TypographyUtil {
 
 		if ( ! empty( $families_arg ) && isset( $fonts_arg['variants'] ) && is_array( $fonts_arg['variants'] ) ) {
 			// Implementing the custom font families.
-			foreach ( $families_arg as $font_family_key => $font_family_value ) {
-				if ( empty( $font_family_value['children'] ) || ! is_array( $font_family_value['children'] ) ) {
+			foreach ( $families_arg as $font_family_key => $font_family_data ) {
+				if ( empty( $font_family_data['children'] ) || ! is_array( $font_family_data['children'] ) ) {
 					continue;
 				}
 
-				foreach ( $font_family_value['children'] as $font_family ) {
+				foreach ( $font_family_data['children'] as $font_family ) {
 					if ( empty( $font_family ) || ! is_array( $font_family ) ) {
 						continue;
 					}

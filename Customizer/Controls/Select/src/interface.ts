@@ -8,15 +8,15 @@ export interface SelectControlProps {
 	control: WpbfCustomizeSelectControl;
 	customizerSetting: WpbfCustomizeSetting<SelectControlValue>;
 	setNotificationContainer: any;
-	value: SelectControlValue;
+	value: LabelValuePair | LabelValuePair[] | undefined;
 	inputId?: string;
 	label?: string;
 	description?: string;
 	isMulti: boolean;
-	formattedOptions: LabelValuePair[] | SelectGroupedOptions[];
+	options: LabelValuePair[] & SelectGroupedOptions[];
 	isOptionDisabled?: (option: any) => boolean;
 	maxSelections: number;
-	placeholder: string;
+	placeholder?: string;
 	isClearable: boolean;
 	openMenuOnFocus?: boolean;
 	messages: {
@@ -34,15 +34,11 @@ export type SelectGroupedOptions = {
 	options: LabelValuePair[];
 };
 
-/**
- * The `SelectOptions` type are built based on:
- * - Kirki docs: https://docs.themeum.com/kirki/controls/select/
- * - And Ari's comment (for options group): https://github.com/themeum/kirki/issues/1120#issuecomment-304480821
- */
-export type SelectOptions = Record<
-	string,
-	string | Array<string | Record<string, string>>
->;
+export type SelectOptions = {
+	label: string;
+	value?: string;
+	options?: LabelValuePair[];
+}[];
 
 export type SelectControlValue = string | string[];
 

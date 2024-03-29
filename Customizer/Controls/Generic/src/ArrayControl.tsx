@@ -54,11 +54,6 @@ const ArrayControl = wp.customize.Control.extend<WpbfCustomizeArrayControl>({
 	 */
 	ready: function ready(this: WpbfCustomizeArrayControl) {
 		const control = this;
-		console.log(
-			`"${control.id}" array control is ready and its value is:`,
-			control.setting.get(),
-		);
-		if (!control.setting) return;
 
 		/**
 		 * Update component value's state when customizer setting's value is changed.

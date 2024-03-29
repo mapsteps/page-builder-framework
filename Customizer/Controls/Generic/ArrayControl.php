@@ -103,7 +103,6 @@ class ArrayControl extends BaseControl {
 			<input
 				type="hidden"
 				id="_customize-input-<?php echo esc_attr( $this->id ); ?>"
-				value="<?php echo esc_attr( wp_json_encode( $this->value() ) ); ?>"
 			>
 		</div>
 

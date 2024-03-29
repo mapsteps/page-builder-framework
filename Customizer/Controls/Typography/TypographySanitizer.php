@@ -14,7 +14,7 @@ class TypographySanitizer {
 	 */
 	public function sanitize( $value ) {
 
-		error_log( "Typography value is:\n", print_r( $value, true ) );
+		error_log( "Typography value is:\n" . print_r( $value, true ) );
 
 		if ( ! is_array( $value ) ) {
 			return [];

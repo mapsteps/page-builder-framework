@@ -113,13 +113,14 @@ export default function SelectForm(props: SelectControlProps) {
 				{...props}
 				inputId={inputId}
 				className="wpbf-react-select-container"
+				isMulti={props.isMulti}
 				classNamePrefix="wpbf-react-select"
 				// @see https://github.com/JedWatson/react-select/issues/888#issuecomment-209376601
 				openMenuOnFocus={props.openMenuOnFocus}
 				formatOptionLabel={getLabel}
-				options={props.formattedOptions}
+				options={props.options}
 				onChange={handleChangeComplete}
-				value={props.control.makeReactSelectValue?.(props.value)}
+				value={props.value}
 				isOptionDisabled={props.isOptionDisabled}
 				components={{ IndicatorSeparator: () => null, Menu: SelectMenu }}
 				theme={theme}
