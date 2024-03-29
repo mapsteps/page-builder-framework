@@ -93,8 +93,6 @@ function composeFontProperties(
 	if ("undefined" === typeof value) return;
 	if ("string" !== typeof value["font-family"]) return;
 
-	const googleFont = findGoogleFont(value["font-family"]);
-
 	const variantValue =
 		"undefined" === typeof value.variant ? "regular" : value.variant;
 
@@ -104,6 +102,8 @@ function composeFontProperties(
 		maybeVariantControl && "wpbf-select" === maybeVariantControl.params.type
 			? (maybeVariantControl as WpbfCustomizeSelectControl)
 			: undefined;
+
+	const googleFont = findGoogleFont(value["font-family"]);
 
 	let variantChoices: LabelValuePair[] = [];
 

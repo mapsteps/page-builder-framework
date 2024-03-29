@@ -91,7 +91,7 @@ final class FontsStore {
 
 		foreach ( self::$standard_font_variants as $variant_key => $variant_label ) {
 			self::$standard_font_variant_options[] = [
-				'value' => $variant_key,
+				'value' => (string) $variant_key,
 				'label' => $variant_label,
 			];
 		}
@@ -119,7 +119,7 @@ final class FontsStore {
 
 		foreach ( self::$complete_font_variants as $variant_key => $variant_label ) {
 			self::$complete_font_variant_options[] = [
-				'value' => $variant_key,
+				'value' => (string) $variant_key,
 				'label' => $variant_label,
 			];
 		}
