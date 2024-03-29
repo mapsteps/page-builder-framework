@@ -70,13 +70,6 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 		control.parseSelectChoices?.();
 		const root = createRoot(control.container[0]);
 
-		if (control.id === "page_font_family[variant]") {
-			console.log(
-				`"${control.id}" formattedOptions is:`,
-				control.formattedOptions,
-			);
-		}
-
 		root.render(
 			<SelectForm
 				control={control}
@@ -195,7 +188,7 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 
 		control.params.choices.forEach((choice) => {
 			if ("undefined" === typeof choice.value) {
-				if (Array.isArray(choice.options)) {
+				if (Array.isArray(choice.options) && choice.options.length) {
 					control.formattedOptions?.push({
 						label: choice.label,
 						options: choice.options,

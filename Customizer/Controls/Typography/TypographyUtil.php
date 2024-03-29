@@ -26,6 +26,11 @@ class TypographyUtil {
 			foreach ( $standard_fonts_arg as $maybe_index_or_font_name => $font_name_or_stack ) {
 				$key = is_int( $maybe_index_or_font_name ) ? $font_name_or_stack : $maybe_index_or_font_name;
 
+				// Exclude default value from standard fonts.
+				if ( ! empty( $default_value ) && $key === $default_value ) {
+					continue;
+				}
+
 				$standard_font_options[] = array(
 					'value' => $key,
 					'label' => $font_name_or_stack,
@@ -34,6 +39,11 @@ class TypographyUtil {
 		} else {
 			foreach ( $fonts_util->getStandardFonts() as $font_family_type => $font_data ) {
 				if ( empty( $font_data['stack'] ) || empty( $font_data['label'] ) ) {
+					continue;
+				}
+
+				// Exclude default value from standard fonts.
+				if ( ! empty( $default_value ) && $font_data['stack'] === $default_value ) {
 					continue;
 				}
 
@@ -86,6 +96,11 @@ class TypographyUtil {
 		$google_font_options = [];
 
 		foreach ( $google_font_names as $font_family ) {
+			// Exclude default value from Google Fonts.
+			if ( ! empty( $default_value ) && $font_family === $default_value ) {
+				continue;
+			}
+
 			$google_font_options[] = array(
 				'value' => $font_family,
 				'label' => $font_family,
@@ -123,6 +138,11 @@ class TypographyUtil {
 					$font_family_value = empty( $font_family_value ) && isset( $font_family['id'] ) ? $font_family['id'] : '';
 					$font_family_value = esc_attr( $font_family_value );
 
+					// Exclude default value from custom fonts.
+					if ( ! empty( $default_value ) && $font_family_value === $default_value ) {
+						continue;
+					}
+
 					$font_family_label = ! empty( $font_family['label'] ) ? $font_family['label'] : '';
 					$font_family_label = empty( $font_family_label ) && isset( $font_family['text'] ) ? $font_family['text'] : '';
 					$font_family_label = esc_attr( $font_family_label );
@@ -145,8 +165,10 @@ class TypographyUtil {
 		$choices[] = [
 			'label'   => __( 'Default', 'page-builder-framework' ),
 			'options' => [
-				'value' => $default_value,
-				'label' => $default_value,
+				array(
+					'value' => $default_value,
+					'label' => $default_value,
+				),
 			],
 		];
 
