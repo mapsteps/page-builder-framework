@@ -26,3 +26,6 @@ david-package.json
 bagus-gulpfile.js
 bagus-package.json
 manifest.json
+
+# project specific
+*.map
