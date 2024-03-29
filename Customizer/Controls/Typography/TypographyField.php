@@ -223,7 +223,7 @@ class TypographyField extends BaseField {
 	}
 
 	/**
-	 * Add the label and description using 'hidden' (generic) control.
+	 * Add the label and description using 'array' control.
 	 */
 	private function addLabelAndDescription() {
 
