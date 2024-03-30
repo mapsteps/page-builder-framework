@@ -50,66 +50,6 @@ class SelectControl extends BaseControl {
 	public $clearable = false;
 
 	/**
-	 * Constructor.
-	 *
-	 * Supplied `$args` override class property defaults.
-	 *
-	 * If `$args['settings']` is not defined, use the `$id` as the setting ID.
-	 *
-	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
-	 * @param string               $id                   Control ID.
-	 * @param array                $args                 Optional. Array of properties for the new Control object.
-	 *                                                   Default empty array.
-	 */
-	public function __construct( $wp_customize_manager, $id, $args = array() ) {
-
-		parent::__construct( $wp_customize_manager, $id, $args );
-
-		$options = [];
-
-		foreach ( $this->choices as $key => $choice ) {
-			if ( is_int( $key ) ) {
-				if ( is_array( $choice ) && isset( $choice['label'] ) ) {
-					$options[] = $choice;
-					continue;
-				}
-
-				$key = (string) $key;
-			}
-
-			$option = array(
-				'label' => $key,
-			);
-
-			if ( ! is_array( $choice ) ) {
-				$option['value'] = $choice;
-
-				$options[] = $option;
-				continue;
-			}
-
-			$label = isset( $choice[0] ) ? $choice[0] : $key;
-
-			$option['label']   = $label;
-			$option['options'] = [];
-
-			$subvalues = isset( $choice[1] ) ? $choice[1] : $key;
-
-			foreach ( $subvalues as $subkey => $subvalue ) {
-				$option['options'][] = array(
-					'label' => $subkey,
-					'value' => $subvalue,
-				);
-			}
-
-			$options[] = $option;
-		}
-
-		$this->choices = $options;
-
-	}
-
-	/**
 	 * Enqueue control related scripts/styles.
 	 */
 	public function enqueue() {

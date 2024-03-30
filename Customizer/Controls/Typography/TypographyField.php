@@ -3,7 +3,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyUtil;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 
@@ -24,11 +23,11 @@ class TypographyField extends BaseField {
 	protected $font_properties = [ 'font-family', 'variant', 'font-size', 'line-height', 'letter-spacing', 'color', 'text-alignment', 'text-transform' ];
 
 	/**
-	 * A `TypographyUtil` instance.
+	 * A `TypographyChoices` instance.
 	 *
-	 * @var TypographyUtil
+	 * @var TypographyChoices
 	 */
-	protected $typography_util;
+	protected $typography_choices;
 
 	/**
 	 * The setting entity.
@@ -92,7 +91,7 @@ class TypographyField extends BaseField {
 
 		parent::__construct( $control );
 
-		$this->typography_util = new TypographyUtil();
+		$this->typography_choices = new TypographyChoices();
 
 	}
 
@@ -109,9 +108,9 @@ class TypographyField extends BaseField {
 
 		// JS object inside this block will only be printed once.
 		if ( ! TypographyStore::$control_vars_printed ) {
-			wp_localize_script( 'wpbf-typography-control', 'wpbfFontVariantOptions', [
-				'standard' => FontsStore::$standard_font_variant_options,
-				'complete' => FontsStore::$complete_font_variant_options,
+			wp_localize_script( 'wpbf-typography-control', 'wpbfFontVariants', [
+				'standard' => FontsStore::$standard_font_variants,
+				'complete' => FontsStore::$complete_font_variants,
 			] );
 
 			wp_localize_script( 'wpbf-typography-control', 'wpbfFontProperties', $this->font_properties );
@@ -125,7 +124,7 @@ class TypographyField extends BaseField {
 		$field_variant_key = str_ireplace( '[', '_', $field_variant_key );
 
 		$field_variant_values = $this->prepare_php_array_for_js(
-			( new TypographyUtil() )->makeCustomFontVariantOptions( $this->fonts_arg )
+			$this->typography_choices->makeCustomFontVariantOptions( $this->fonts_arg )
 		);
 
 		// JS object here will be printed for each field.
@@ -271,7 +270,7 @@ class TypographyField extends BaseField {
 			->tab( $this->tab )
 			->capability( $this->control->capability )
 			->defaultValue( $font_family )
-			->choices( $this->typography_util->makeFontFamilyChoices( $font_family, $this->fonts_arg ) )
+			->choices( $this->typography_choices->makeFontFamilyChoices( $font_family, $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
@@ -313,7 +312,7 @@ class TypographyField extends BaseField {
 			->tab( $this->tab )
 			->capability( $this->control->capability )
 			->defaultValue( $font_variant )
-			->choices( $this->typography_util->makeFontVariantChoices( $this->fonts_arg ) )
+			->choices( $this->typography_choices->makeFontVariantChoices( $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )

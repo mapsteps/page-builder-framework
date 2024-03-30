@@ -40,11 +40,16 @@ export type SelectOptions = {
 	options?: LabelValuePair[];
 }[];
 
+export type SelectChoices = Record<
+	string,
+	string | Array<string | Record<string, string>>
+>;
+
 export type SelectControlValue = string | string[];
 
 export interface SelectControlParams
 	extends WpbfCustomizeControlParams<SelectControlValue> {
-	choices: SelectOptions;
+	choices: SelectChoices;
 	isClearable: boolean;
 	isMulti: boolean;
 	placeholder: string;

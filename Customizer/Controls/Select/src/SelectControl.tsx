@@ -184,29 +184,72 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 
 	parseSelectChoices: function (this: WpbfCustomizeSelectControl) {
 		const control = this;
+		const choices = control.params.choices;
+
 		control.formattedOptions = [];
 
-		control.params.choices.forEach((choice) => {
-			if ("undefined" === typeof choice.value) {
-				if (Array.isArray(choice.options) && choice.options.length) {
-					control.formattedOptions?.push({
-						label: choice.label,
-						options: choice.options,
-					});
+		if (control.id === "page_font_family[font-family]") {
+			console.log("choices from parseSelectChoices is:", choices);
+		}
 
-					return;
+		for (const choiceKey in choices) {
+			if (!choices.hasOwnProperty(choiceKey)) {
+				continue;
+			}
+
+			const choiceValue = choices[choiceKey];
+
+			if (Array.isArray(choiceValue) && choiceValue.length) {
+				const label =
+					choiceValue[0] && "string" === typeof choiceValue[0]
+						? choiceValue[0]
+						: undefined;
+
+				if (!label) continue;
+
+				const nestedChoices =
+					"object" === typeof choiceValue[1] &&
+					Object.keys(choiceValue[1]).length
+						? choiceValue[1]
+						: undefined;
+
+				if (!nestedChoices) continue;
+
+				const options: LabelValuePair[] = [];
+
+				for (const nestedChoiceKey in nestedChoices) {
+					if (!nestedChoices.hasOwnProperty(nestedChoiceKey)) {
+						continue;
+					}
+
+					options.push({
+						label: nestedChoices[nestedChoiceKey],
+						value: nestedChoiceKey,
+					});
 				}
 
-				return;
+				control.formattedOptions?.push({
+					label: label,
+					options: options,
+				});
+
+				continue;
 			}
 
-			if ("undefined" !== typeof choice.value) {
+			if ("string" === typeof choiceValue) {
 				control.formattedOptions?.push({
-					label: choice.label,
-					value: choice.value,
+					label: choiceValue,
+					value: choiceKey,
 				});
 			}
-		});
+		}
+
+		if (control.id === "page_font_family[font-family]") {
+			console.log(
+				"formattedOptions from parseSelectChoices is:",
+				control.formattedOptions,
+			);
+		}
 	},
 
 	makeReactSelectValue: function (

@@ -19,7 +19,7 @@ declare var wp: {
 declare var wpbfFontProperties: FontProperties;
 declare var wpbfTypographyControlIds: string[];
 declare var wpbfGoogleFonts: GoogleFontsCollection;
-declare var wpbfFontVariantOptions: FontVariantsCollection;
+declare var wpbfFontVariants: FontVariantsCollection;
 declare var wpbfFieldsFontVariants: Record<string, LabelValuePair[]>;
 
 wp.customize.bind("ready", function () {
@@ -67,13 +67,6 @@ function findGoogleFont(fontFamily: string): GoogleFontEntity | undefined {
 	return undefined;
 }
 
-function variantExists(
-	variantValue: string,
-	variants: LabelValuePair[],
-): boolean {
-	return variants.some((variant) => variant.value === variantValue);
-}
-
 function sortVariants(a: string | number, b: string | number): number {
 	if (a < b) return -1;
 	if (a > b) return 1;
@@ -105,20 +98,22 @@ function composeFontProperties(
 
 	const googleFont = findGoogleFont(value["font-family"]);
 
-	let variantChoices: LabelValuePair[] = [];
+	let variants: Record<string, string> = {};
 
 	if (googleFont) {
 		let googleFontVariants = googleFont.variants;
 		googleFontVariants.sort(sortVariants);
 
-		wpbfFontVariantOptions.complete.forEach((variantOption) => {
-			if (googleFontVariants.includes(variantOption.value)) {
-				variantChoices.push({
-					value: variantOption.value,
-					label: variantOption.label,
-				});
+		for (const variantValue in wpbfFontVariants.complete) {
+			if (
+				!wpbfFontVariants.complete.hasOwnProperty(variantValue) ||
+				!wpbfFontVariants.complete[variantValue]
+			) {
+				continue;
 			}
-		});
+
+			variants[variantValue] = wpbfFontVariants.complete[variantValue];
+		}
 	} else {
 		let fieldVariantKey = id.replace(/]/g, "");
 		fieldVariantKey = fieldVariantKey.replace(/\[/g, "_");
@@ -129,13 +124,10 @@ function composeFontProperties(
 
 		if (fieldVariants && fieldVariants.length) {
 			fieldVariants.forEach((fieldVariant) => {
-				variantChoices.push({
-					value: fieldVariant.value,
-					label: fieldVariant.label,
-				});
+				variants[fieldVariant.value] = fieldVariant.label;
 			});
 		} else {
-			variantChoices = wpbfFontVariantOptions.standard;
+			variants = wpbfFontVariants.standard;
 		}
 	}
 
@@ -154,18 +146,18 @@ function composeFontProperties(
 
 	if (variantControl) {
 		// Hide/show variant options depending on which are available for this font-family.
-		if (1 < Object.keys(variantChoices).length && control.active()) {
+		if (1 < Object.keys(variants).length && control.active()) {
 			variantControl.activate();
 		} else {
 			// If there's only 1 variant to choose from, we can hide the control.
 			variantControl.deactivate();
 		}
 
-		variantControl.params.choices = variantChoices;
+		variantControl.params.choices = variants;
 		variantControl.formattedOptions = [];
 		variantControl.destroy?.();
 
-		if (variantExists(variantValue, variantChoices)) {
+		if (variants.hasOwnProperty(variantValue) && variants[variantValue]) {
 			variantControl.doSelectAction?.("selectOption", variantValue);
 		} else {
 			// If the selected font-family doesn't support the currently selected variant, switch to "regular".
