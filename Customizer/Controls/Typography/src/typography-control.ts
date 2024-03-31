@@ -19,20 +19,24 @@ declare var wp: {
 	hooks: typeof hooks;
 };
 
-declare var wpbfFontProperties: FontProperties;
-declare var wpbfTypographyControlIds: string[];
-declare var wpbfGoogleFonts: GoogleFontsCollection;
-declare var wpbfFontVariantOptions: FontVariantsCollection;
-declare var wpbfFieldsFontVariants: Record<string, LabelValuePair[]>;
+/**
+ * These var declarations are for the global variables that are set in the PHP file.
+ * That means, the `undefined` union has to be added to the declaration to be safer.
+ */
+declare var wpbfFontProperties: FontProperties | undefined;
+declare var wpbfTypographyControlIds: string[] | undefined;
+declare var wpbfGoogleFonts: GoogleFontsCollection | undefined;
+declare var wpbfFontVariantOptions: FontVariantsCollection | undefined;
+declare var wpbfFieldsFontVariants:
+	| Record<string, LabelValuePair[]>
+	| undefined;
 
 wp.customize.bind("ready", function () {
 	setupTypographyFields();
 });
 
 function setupTypographyFields() {
-	if (!wpbfTypographyControlIds || !wpbfTypographyControlIds.length) {
-		return;
-	}
+	if (!Array.isArray(wpbfTypographyControlIds)) return;
 
 	wpbfTypographyControlIds.forEach((id) => {
 		if (!wp.customize.control(id)) return;
@@ -42,7 +46,7 @@ function setupTypographyFields() {
 }
 
 function listenFontPropertyFieldsChange(typographyControlId: string) {
-	if (!wpbfFontProperties || !wpbfFontProperties.length) return;
+	if (!Array.isArray(wpbfFontProperties)) return;
 
 	wpbfFontProperties.forEach((property) => {
 		const propertyControlId = `${typographyControlId}[${property}]`;
@@ -60,10 +64,8 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 }
 
 function findGoogleFont(fontFamily: string): GoogleFontEntity | undefined {
-	if (
-		wpbfGoogleFonts.items.hasOwnProperty(fontFamily) &&
-		wpbfGoogleFonts.items[fontFamily]
-	) {
+	if (!wpbfGoogleFonts) return undefined;
+	if (wpbfGoogleFonts.items[fontFamily]) {
 		return wpbfGoogleFonts.items[fontFamily];
 	}
 
@@ -101,6 +103,7 @@ function composeFontProperties(
 	const variantChoices: SelectChoices = [];
 
 	if (googleFont) {
+		if (!wpbfFontVariantOptions) return variantChoices;
 		let googleFontVariants = googleFont.variants;
 
 		let i = 0;
@@ -121,9 +124,10 @@ function composeFontProperties(
 		let fieldVariantKey = id.replace(/]/g, "");
 		fieldVariantKey = fieldVariantKey.replace(/\[/g, "_");
 
-		const fieldVariants = wpbfFieldsFontVariants.hasOwnProperty(fieldVariantKey)
-			? wpbfFieldsFontVariants[fieldVariantKey]
-			: undefined;
+		const fieldVariants =
+			wpbfFieldsFontVariants && wpbfFieldsFontVariants[fieldVariantKey]
+				? wpbfFieldsFontVariants[fieldVariantKey]
+				: undefined;
 
 		if (fieldVariants && fieldVariants.length) {
 			let i = 0;
@@ -136,6 +140,7 @@ function composeFontProperties(
 			}
 		} else {
 			variantChoices.length = 0;
+			if (!wpbfFontVariantOptions) return variantChoices;
 
 			let i = 0;
 
