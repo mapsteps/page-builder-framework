@@ -9,6 +9,7 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
 use WP_Customize_Control;
 use WP_Customize_Manager;
+use WP_Customize_Setting;
 
 /**
  * Class to add Wpbf customizer base control.
@@ -105,8 +106,10 @@ class BaseControl extends WP_Customize_Control {
 		// Section ID.
 		$this->json['sectionId'] = $this->section_id;
 
-		// Default value.
-		$this->json['default'] = $this->setting->default;
+		if ( $this->setting instanceof WP_Customize_Setting ) {
+			// Default value.
+			$this->json['default'] = $this->setting->default;
+		}
 
 		// CSS Output.
 		$this->json['output'] = $this->output;

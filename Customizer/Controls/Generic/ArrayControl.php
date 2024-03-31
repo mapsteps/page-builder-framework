@@ -88,7 +88,7 @@ class ArrayControl extends BaseControl {
 						type="hidden"
 						id="_customize-input-<?php echo esc_attr( $this->id ); ?>_<?php echo esc_attr( $key ); ?>"
 						value="<?php echo esc_attr( $value ); ?>"
-						<?php $this->link( $key ); ?>
+						data-customize-setting-link="<?php echo esc_attr( $this->id . "[$key]" ); ?>"
 					>
 				<?php endforeach; ?>
 			<?php endif; ?>
