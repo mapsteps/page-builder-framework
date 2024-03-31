@@ -19,7 +19,9 @@ class TypographyChoices {
 	public function makeFontFamilyChoices( $default_value, $fonts_arg ) {
 
 		$default_value = empty( $default_value ) || is_string( $default_value ) ? $default_value : '';
-		$fonts_arg     = empty( $fonts_arg ) || ! is_array( $fonts_arg ) ? [] : $fonts_arg;
+		$default_label = empty( $default_value ) ? __( 'Default', 'page-builder-framework' ) : $default_value;
+
+		$fonts_arg = empty( $fonts_arg ) || ! is_array( $fonts_arg ) ? [] : $fonts_arg;
 
 		$fonts_util = new FontsUtil();
 
@@ -32,6 +34,7 @@ class TypographyChoices {
 
 				// Exclude default value from standard fonts.
 				if ( ! empty( $default_value ) && $font_family_value === $default_value ) {
+					$default_label = $font_name_or_stack;
 					continue;
 				}
 
@@ -45,6 +48,7 @@ class TypographyChoices {
 
 				// Exclude default value from standard fonts.
 				if ( ! empty( $default_value ) && $font_data['stack'] === $default_value ) {
+					$default_label = $font_data['label'];
 					continue;
 				}
 
@@ -129,16 +133,17 @@ class TypographyChoices {
 						continue;
 					}
 
-					// Exclude default value from custom fonts.
-					if ( ! empty( $default_value ) && $font_family_value === $default_value ) {
-						continue;
-					}
-
 					$font_family_label = ! empty( $font_family['label'] ) ? $font_family['label'] : '';
 					$font_family_label = empty( $font_family_label ) && isset( $font_family['text'] ) ? $font_family['text'] : '';
 					$font_family_label = esc_attr( $font_family_label );
 
 					if ( empty( $font_family_label ) ) {
+						continue;
+					}
+
+					// Exclude default value from custom fonts.
+					if ( ! empty( $default_value ) && $font_family_value === $default_value ) {
+						$default_label = $font_family_label;
 						continue;
 					}
 
@@ -157,7 +162,7 @@ class TypographyChoices {
 		$choices['default'] = array(
 			__( 'Default', 'page-builder-framework' ),
 			array(
-				$default_value => $default_value,
+				$default_value => $default_label,
 			),
 		);
 

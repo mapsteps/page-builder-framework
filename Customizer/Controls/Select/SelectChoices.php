@@ -72,8 +72,8 @@ class SelectChoices {
 
 			if ( ! is_array( $choice ) ) {
 				$options[] = [
-					'l' => $key,
-					'v' => $choice,
+					'l' => $choice,
+					'v' => $key,
 				];
 
 				continue;
@@ -86,9 +86,9 @@ class SelectChoices {
 
 			$subvalues = ! empty( $choice[1] ) && is_array( $choice[1] ) ? $choice[1] : [];
 
-			foreach ( $subvalues as $subkey => $subvalue ) {
+			foreach ( $subvalues as $subvalue => $sublabel ) {
 				$option['o'][] = array(
-					'l' => $subkey,
+					'l' => $sublabel,
 					'v' => $subvalue,
 				);
 			}

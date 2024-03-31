@@ -39,11 +39,13 @@ export type SelectGroupedOptions = {
 	options: LabelValuePair[];
 };
 
-export type SelectChoices = {
+export type SelectChoice = {
 	l: string;
 	v?: string;
 	o?: LVPair[];
-}[];
+};
+
+export type SelectChoices = SelectChoice[];
 
 export type SelectControlValue = string | string[];
 

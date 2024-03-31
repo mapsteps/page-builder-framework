@@ -174,6 +174,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	addNewPage(): void;
 
 	// Specific to PBF.
+	initialized?: boolean;
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
 	updateComponentState?: (val: SV) => void;

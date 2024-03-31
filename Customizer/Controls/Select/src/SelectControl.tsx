@@ -68,6 +68,11 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 		const params = control.params;
 		let value = control.setting.get();
 
+		if (!control.initialized) {
+			control.parseSelectChoices?.(control.params.choices);
+			control.initialized = true;
+		}
+
 		const root = createRoot(control.container[0]);
 
 		root.render(
@@ -95,8 +100,6 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 	 */
 	ready: function ready(this: WpbfCustomizeSelectControl) {
 		const control = this;
-
-		control.parseSelectChoices?.(control.params.choices);
 
 		// Re-render control when setting changes.
 		control.setting.bind(() => {
@@ -217,7 +220,7 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 			}
 
 			if ("string" === typeof choice.v) {
-				control.formattedOptions?.push({
+				control.formattedOptions.push({
 					label: choice.l,
 					value: choice.v,
 				});
