@@ -8,6 +8,7 @@ import {
 	WpbfCustomizeSelectControl,
 	LabelValuePair,
 	SelectGroupedOptions,
+	SelectChoices,
 } from "../../Select/src/interface";
 import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interface";
@@ -187,7 +188,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 
 	// Specific to PBF's select control.
 	formattedOptions?: LabelValuePair[] & SelectGroupedOptions[];
-	parseSelectChoices?: VoidFunction;
+	parseSelectChoices?: (choices: SelectChoices) => void;
 	isOptionDisabled?: (option: any) => boolean;
 	disabledSelectOptions?: LabelValuePair[];
 	doSelectAction?: (action: string, value: any) => void;

@@ -50,6 +50,26 @@ class SelectControl extends BaseControl {
 	public $clearable = false;
 
 	/**
+	 * Constructor.
+	 *
+	 * Supplied `$args` override class property defaults.
+	 *
+	 * If `$args['settings']` is not defined, use the `$id` as the setting ID.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
+	 * @param string               $id                   Control ID.
+	 * @param array                $args                 Optional. Array of properties for the new Control object.
+	 *                                                   Default empty array.
+	 */
+	public function __construct( $wp_customize_manager, $id, $args = array() ) {
+
+		parent::__construct( $wp_customize_manager, $id, $args );
+
+		$this->choices = ( new SelectChoices() )->format( $this->choices );
+
+	}
+
+	/**
 	 * Enqueue control related scripts/styles.
 	 */
 	public function enqueue() {

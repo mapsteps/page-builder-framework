@@ -7,6 +7,7 @@ import {
 	SelectControlParams,
 	LabelValuePair,
 	SelectGroupedOptions,
+	SelectChoices,
 } from "./interface";
 import SelectForm from "./SelectForm";
 import ReactDOM from "react-dom";
@@ -67,7 +68,6 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 		const params = control.params;
 		let value = control.setting.get();
 
-		control.parseSelectChoices?.();
 		const root = createRoot(control.container[0]);
 
 		root.render(
@@ -95,6 +95,8 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 	 */
 	ready: function ready(this: WpbfCustomizeSelectControl) {
 		const control = this;
+
+		control.parseSelectChoices?.(control.params.choices);
 
 		// Re-render control when setting changes.
 		control.setting.bind(() => {
@@ -182,73 +184,44 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 
 	formattedOptions: [],
 
-	parseSelectChoices: function (this: WpbfCustomizeSelectControl) {
+	parseSelectChoices: function (
+		this: WpbfCustomizeSelectControl,
+		choices: SelectChoices,
+	) {
 		const control = this;
-		const choices = control.params.choices;
-
 		control.formattedOptions = [];
 
-		if (control.id === "page_font_family[font-family]") {
-			console.log("choices from parseSelectChoices is:", choices);
-		}
+		let i = 0;
 
-		for (const choiceKey in choices) {
-			if (!choices.hasOwnProperty(choiceKey)) {
-				continue;
-			}
+		for (; i < choices.length; ++i) {
+			const choice = choices[i];
 
-			const choiceValue = choices[choiceKey];
-
-			if (Array.isArray(choiceValue) && choiceValue.length) {
-				const label =
-					choiceValue[0] && "string" === typeof choiceValue[0]
-						? choiceValue[0]
-						: undefined;
-
-				if (!label) continue;
-
-				const nestedChoices =
-					"object" === typeof choiceValue[1] &&
-					Object.keys(choiceValue[1]).length
-						? choiceValue[1]
-						: undefined;
-
-				if (!nestedChoices) continue;
-
+			if (choice.o && Array.isArray(choice.o) && choice.o.length) {
 				const options: LabelValuePair[] = [];
 
-				for (const nestedChoiceKey in nestedChoices) {
-					if (!nestedChoices.hasOwnProperty(nestedChoiceKey)) {
-						continue;
-					}
+				let i2 = 0;
 
+				for (; i2 < choice.o.length; ++i2) {
 					options.push({
-						label: nestedChoices[nestedChoiceKey],
-						value: nestedChoiceKey,
+						label: choice.o[i2].l,
+						value: choice.o[i2].v,
 					});
 				}
 
-				control.formattedOptions?.push({
-					label: label,
+				control.formattedOptions.push({
+					label: choice.l,
 					options: options,
 				});
 
 				continue;
 			}
 
-			if ("string" === typeof choiceValue) {
+			if ("string" === typeof choice.v) {
 				control.formattedOptions?.push({
-					label: choiceValue,
-					value: choiceKey,
+					label: choice.l,
+					value: choice.v,
 				});
 			}
-		}
-
-		if (control.id === "page_font_family[font-family]") {
-			console.log(
-				"formattedOptions from parseSelectChoices is:",
-				control.formattedOptions,
-			);
 		}
 	},
 

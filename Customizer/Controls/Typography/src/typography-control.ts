@@ -9,7 +9,10 @@ import {
 	LabelValuePair,
 	WpbfCustomizeTypographyControlValue,
 } from "./interface";
-import { WpbfCustomizeSelectControl } from "../../Select/src/interface";
+import {
+	SelectChoices,
+	WpbfCustomizeSelectControl,
+} from "../../Select/src/interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -19,7 +22,7 @@ declare var wp: {
 declare var wpbfFontProperties: FontProperties;
 declare var wpbfTypographyControlIds: string[];
 declare var wpbfGoogleFonts: GoogleFontsCollection;
-declare var wpbfFontVariants: FontVariantsCollection;
+declare var wpbfFontVariantOptions: FontVariantsCollection;
 declare var wpbfFieldsFontVariants: Record<string, LabelValuePair[]>;
 
 wp.customize.bind("ready", function () {
@@ -67,11 +70,8 @@ function findGoogleFont(fontFamily: string): GoogleFontEntity | undefined {
 	return undefined;
 }
 
-function sortVariants(a: string | number, b: string | number): number {
-	if (a < b) return -1;
-	if (a > b) return 1;
-
-	return 0;
+function variantFoundInChoices(variantValue: string, variants: SelectChoices) {
+	return variants.some((variant) => variant.v === variantValue);
 }
 
 function composeFontProperties(
@@ -98,21 +98,24 @@ function composeFontProperties(
 
 	const googleFont = findGoogleFont(value["font-family"]);
 
-	let variants: Record<string, string> = {};
+	const variants: SelectChoices = [];
 
 	if (googleFont) {
 		let googleFontVariants = googleFont.variants;
-		googleFontVariants.sort(sortVariants);
 
-		for (const variantValue in wpbfFontVariants.complete) {
+		let i = 0;
+
+		for (; i < wpbfFontVariantOptions.complete.length; ++i) {
 			if (
-				!wpbfFontVariants.complete.hasOwnProperty(variantValue) ||
-				!wpbfFontVariants.complete[variantValue]
+				googleFontVariants.includes(wpbfFontVariantOptions.complete[i].value)
 			) {
-				continue;
-			}
+				variants.push({
+					l: wpbfFontVariantOptions.complete[i].label,
+					v: wpbfFontVariantOptions.complete[i].value,
+				});
 
-			variants[variantValue] = wpbfFontVariants.complete[variantValue];
+				break;
+			}
 		}
 	} else {
 		let fieldVariantKey = id.replace(/]/g, "");
@@ -123,13 +126,29 @@ function composeFontProperties(
 			: undefined;
 
 		if (fieldVariants && fieldVariants.length) {
-			fieldVariants.forEach((fieldVariant) => {
-				variants[fieldVariant.value] = fieldVariant.label;
-			});
+			let i = 0;
+
+			for (; i < fieldVariants.length; ++i) {
+				variants.push({
+					l: fieldVariants[i].label,
+					v: fieldVariants[i].value,
+				});
+			}
 		} else {
-			variants = wpbfFontVariants.standard;
+			variants.length = 0;
+
+			let i = 0;
+
+			for (; i < wpbfFontVariantOptions.standard.length; ++i) {
+				variants.push({
+					l: wpbfFontVariantOptions.standard[i].label,
+					v: wpbfFontVariantOptions.standard[i].value,
+				});
+			}
 		}
 	}
+
+	console.log(`variants after formatted properly:`, variants);
 
 	// Set the font-style value.
 	if (-1 !== variantValue.indexOf("i")) {
@@ -146,18 +165,17 @@ function composeFontProperties(
 
 	if (variantControl) {
 		// Hide/show variant options depending on which are available for this font-family.
-		if (1 < Object.keys(variants).length && control.active()) {
+		if (variants.length > 1 && control.active()) {
 			variantControl.activate();
 		} else {
 			// If there's only 1 variant to choose from, we can hide the control.
 			variantControl.deactivate();
 		}
 
-		variantControl.params.choices = variants;
-		variantControl.formattedOptions = [];
+		variantControl.parseSelectChoices?.(variants);
 		variantControl.destroy?.();
 
-		if (variants.hasOwnProperty(variantValue) && variants[variantValue]) {
+		if (variantFoundInChoices(variantValue, variants)) {
 			variantControl.doSelectAction?.("selectOption", variantValue);
 		} else {
 			// If the selected font-family doesn't support the currently selected variant, switch to "regular".

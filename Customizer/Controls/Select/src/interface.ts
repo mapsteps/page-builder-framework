@@ -24,26 +24,26 @@ export interface SelectControlProps {
 	};
 }
 
-export interface LabelValuePair {
+export type LabelValuePair = {
 	label: string;
 	value: string;
-}
+};
+
+export type LVPair = {
+	l: string;
+	v: string;
+};
 
 export type SelectGroupedOptions = {
 	label: string;
 	options: LabelValuePair[];
 };
 
-export type SelectOptions = {
-	label: string;
-	value?: string;
-	options?: LabelValuePair[];
+export type SelectChoices = {
+	l: string;
+	v?: string;
+	o?: LVPair[];
 }[];
-
-export type SelectChoices = Record<
-	string,
-	string | Array<string | Record<string, string>>
->;
 
 export type SelectControlValue = string | string[];
 

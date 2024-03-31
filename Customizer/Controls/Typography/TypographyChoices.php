@@ -255,7 +255,7 @@ class TypographyChoices {
 	 * It will be printed as a property's value of global `wpbfFieldsFontVariants` JS object.
 	 *
 	 * @param array $fonts_arg The fonts arguments.
-	 * @return array
+	 * @return array Array of 'label' and 'value' pairs.
 	 */
 	public function makeCustomFontVariantOptions( $fonts_arg ) {
 
@@ -287,7 +287,8 @@ class TypographyChoices {
 					}
 
 					$standard_font_variants[ $font_name ][] = [
-						$font_variant => FontsStore::$standard_font_variants[ $font_variant ],
+						'value' => $font_variant,
+						'label' => FontsStore::$standard_font_variants[ $font_variant ],
 					];
 				}
 			}
@@ -311,7 +312,8 @@ class TypographyChoices {
 					}
 
 					$standard_font_variants[ $font_data['stack'] ][] = [
-						$standard_variant => FontsStore::$standard_font_variants[ $standard_variant ],
+						'value' => $standard_variant,
+						'label' => FontsStore::$standard_font_variants[ $standard_variant ],
 					];
 				}
 			}
@@ -333,29 +335,26 @@ class TypographyChoices {
 						continue;
 					}
 
-					$font_family_value = ! empty( $font_family['value'] ) ? $font_family['value'] : '';
-					$font_family_value = empty( $font_family_value ) && isset( $font_family['id'] ) ? $font_family['id'] : '';
-					$font_family_value = esc_attr( $font_family_value );
-
-					if ( empty( $font_family_value ) ) {
+					if ( empty( $font_family['id'] ) || ! is_string( $font_family['id'] ) ) {
 						continue;
 					}
 
-					if ( ! isset( $fonts_arg['variants'][ $font_family_value ] ) ) {
+					if ( ! isset( $fonts_arg['variants'][ $font_family['id'] ] ) ) {
 						continue;
 					}
 
-					if ( ! isset( $custom_font_variants[ $font_family_value ] ) ) {
-						$custom_font_variants[ $font_family_value ] = [];
+					if ( ! isset( $custom_font_variants[ $font_family['id'] ] ) ) {
+						$custom_font_variants[ $font_family['id'] ] = [];
 					}
 
-					foreach ( $fonts_arg['variants'][ $font_family_value ] as $custom_variant ) {
+					foreach ( $fonts_arg['variants'][ $font_family['id'] ] as $custom_variant ) {
 						if ( ! isset( FontsStore::$standard_font_variants[ $custom_variant ] ) ) {
 							continue;
 						}
 
-						$custom_font_variants[ $font_family_value ][] = [
-							$custom_variant => FontsStore::$standard_font_variants[ $custom_variant ],
+						$custom_font_variants[ $font_family['id'] ][] = [
+							'value' => $custom_variant,
+							'label' => FontsStore::$standard_font_variants[ $custom_variant ],
 						];
 					}
 				}
