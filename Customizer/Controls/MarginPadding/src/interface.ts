@@ -1,7 +1,6 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-	WpbfCustomizeSetting,
 } from "../../Base/src/interface";
 
 export type MarginPaddingDimension = "top" | "right" | "bottom" | "left";

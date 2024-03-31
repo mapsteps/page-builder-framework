@@ -1,4 +1,9 @@
+<pre>
+<?php var_dump( get_theme_mod( 'page_font_family' ) ); ?>
+</pre>
+
 <?php
+exit;
 /**
  * Index.
  *
@@ -31,21 +36,24 @@ get_header();
 
 				<?php if ( have_posts() ) : ?>
 
-				<?php wpbf_archive_header(); ?>
+					<?php wpbf_archive_header(); ?>
 
-				<?php do_action( 'wpbf_before_loop' ); ?>
+					<?php do_action( 'wpbf_before_loop' ); ?>
 
-				<?php while ( have_posts() ) : the_post(); ?>
+					<?php
+					while ( have_posts() ) :
+						the_post();
+						?>
 
-				<?php get_template_part( 'inc/template-parts/article' ); ?>
+						<?php get_template_part( 'inc/template-parts/article' ); ?>
 
 				<?php endwhile; ?>
 
-				<?php do_action( 'wpbf_after_loop' ); ?>
+					<?php do_action( 'wpbf_after_loop' ); ?>
 
 				<?php else : ?>
 
-				<?php get_template_part( 'inc/template-parts/article-none' ); ?>
+					<?php get_template_part( 'inc/template-parts/article-none' ); ?>
 
 				<?php endif; ?>
 

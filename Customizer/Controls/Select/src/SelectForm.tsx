@@ -41,6 +41,7 @@ export default function SelectForm(props: SelectControlProps) {
 			}
 		}
 
+		if (!props.customizerSetting) return;
 		wp.customize(props.customizerSetting.id).set(newValue);
 	};
 
@@ -82,7 +83,7 @@ export default function SelectForm(props: SelectControlProps) {
 
 	const inputId = props.inputId
 		? props.inputId
-		: "wpbf-react-select-input--" + props.customizerSetting.id;
+		: `wpbf-react-select-input--${props.customizerSetting?.id}`;
 	const label = props.label ? (
 		<label
 			className="customize-control-title"

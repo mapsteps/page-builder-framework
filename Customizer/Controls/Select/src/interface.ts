@@ -6,7 +6,7 @@ import {
 
 export interface SelectControlProps {
 	control: WpbfCustomizeSelectControl;
-	customizerSetting: WpbfCustomizeSetting<SelectControlValue>;
+	customizerSetting: WpbfCustomizeSetting<SelectControlValue>|null;
 	setNotificationContainer: any;
 	value: LabelValuePair | LabelValuePair[] | undefined;
 	inputId?: string;

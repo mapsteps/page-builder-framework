@@ -177,7 +177,7 @@ export default function MarginPaddingForm(props: {
 				<div className={`wpbf-control-cols ${wrapperClassName}`}>
 					<div className="wpbf-control-left-col">
 						<div className="wpbf-control-fields">
-							{group.map((item) => {
+							{group.map((item, i) => {
 								const inputClassName = `wpbf-control-input wpbf-control-input${device ? `-${device}` : ""}-${item.dimension}`;
 								const inputId = `_customize-input-${props.control.id}${device ? `-${device}` : ""}-${item.dimension}`;
 								const label = device
@@ -185,7 +185,7 @@ export default function MarginPaddingForm(props: {
 									: item.dimension;
 
 								return (
-									<div className="wpbf-control-field">
+									<div className="wpbf-control-field" key={i}>
 										<input
 											id={inputId}
 											type="number"
@@ -223,7 +223,7 @@ export default function MarginPaddingForm(props: {
 					const wrapperClassName = `wpbf-control-device wpbf-control-${device} ${isActive ? "active" : ""}`;
 
 					return (
-						<div className={wrapperClassName}>
+						<div className={wrapperClassName} key={index}>
 							{renderFields(device, makeMappable(device))}
 						</div>
 					);

@@ -23,7 +23,7 @@ class TypographySanitizer {
 		foreach ( $value as $key => $val ) {
 			switch ( $key ) {
 				case 'font-family':
-					$value['font-family'] = sanitize_text_field( $val );
+					$value['font-family'] = sanitize_text_field( html_entity_decode( $val ) );
 					break;
 
 				case 'variant':

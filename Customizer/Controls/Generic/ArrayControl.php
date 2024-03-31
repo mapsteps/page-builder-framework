@@ -50,24 +50,6 @@ class ArrayControl extends BaseControl {
 	}
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-array-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/array-control-min.js',
-			array( 'wpbf-base-control' ),
-			WPBF_VERSION,
-			false
-		);
-
-	}
-
-	/**
 	 * Render the control's content.
 	 *
 	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
@@ -100,10 +82,16 @@ class ArrayControl extends BaseControl {
 		<div class="customize-control-notifications-container"></div>
 
 		<div class="wpbf-control-form">
-			<input
-				type="hidden"
-				id="_customize-input-<?php echo esc_attr( $this->id ); ?>"
-			>
+			<?php if ( is_array( $this->value() ) ) : ?>
+				<?php foreach ( $this->value() as $key => $value ) : ?>
+					<input
+						type="hidden"
+						id="_customize-input-<?php echo esc_attr( $this->id ); ?>_<?php echo esc_attr( $key ); ?>"
+						value="<?php echo esc_attr( $value ); ?>"
+						<?php $this->link( $key ); ?>
+					>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</div>
 
 		<?php

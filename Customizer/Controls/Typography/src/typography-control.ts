@@ -42,6 +42,12 @@ function setupTypographyFields() {
 		if (!wp.customize.control(id)) return;
 		composeFontProperties(id);
 		listenFontPropertyFieldsChange(id);
+
+		wp.customize(id, function (setting) {
+			setting.bind(function (value) {
+				composeFontProperties(id, value);
+			});
+		});
 	});
 }
 
@@ -49,6 +55,8 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 	if (!Array.isArray(wpbfFontProperties)) return;
 
 	wpbfFontProperties.forEach((property) => {
+		// Only listen to changes on the `font-family` and `variant` properties.
+		if ("font-family" !== property && "variant" !== property) return;
 		const propertyControlId = `${typographyControlId}[${property}]`;
 		if (!wp.customize.control(propertyControlId)) return;
 
@@ -57,7 +65,15 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 				const typographyValue = wp.customize(typographyControlId).get() || {};
 				typographyValue[property] = newval;
 
-				composeFontProperties(typographyControlId, typographyValue);
+				// Unfortunately, this doesn't trigger change event to the control with typographyControlId.
+				wp.customize
+					.control(typographyControlId)
+					?.setting?.set(typographyValue);
+
+				console.log(
+					`"${property}" new value is: ${newval}, and "${typographyControlId}" new value is:`,
+					wp.customize(typographyControlId).get(),
+				);
 			});
 		});
 	});
@@ -81,7 +97,7 @@ function composeFontProperties(
 	value?: WpbfCustomizeTypographyControlValue,
 ) {
 	const control = wp.customize.control(id);
-	if ("undefined" === typeof control) return;
+	if (!control || !control.setting) return;
 
 	value = value || control.setting.get();
 

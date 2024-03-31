@@ -42,6 +42,7 @@ import { Previewer } from "wordpress__customize-browser/Previewer";
 import { Element_Synchronizer } from "wordpress__customize-browser/Element";
 import { Notification } from "wordpress__customize-browser/Notification";
 import { PartialObject } from "lodash";
+import { Root } from "react-dom/client";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -152,7 +153,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	notifications: Notifications;
 	elements: WpbfCustomizeElement[];
 	settings: WpbfCustomizeControlSettings;
-	setting: WpbfCustomizeSetting<SV>;
+	setting: WpbfCustomizeSetting<SV> | null;
 	propertyElements: Array<WpbfCustomizeElement>;
 	extend<CT>(this: CT, protoProps: PartialObject<CT>, classProps?: object): CT;
 	initialize(id?: string, options?: CP): void;
@@ -174,6 +175,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	addNewPage(): void;
 
 	// Specific to PBF.
+	root?: Root;
 	initialized?: boolean;
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;

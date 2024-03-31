@@ -124,7 +124,7 @@ final class CustomizerField {
 	/**
 	 * Set settings tied to the control.
 	 *
-	 * @param string $settings Setting id.
+	 * @param array|string $settings Setting id.
 	 *
 	 * @return $this
 	 */

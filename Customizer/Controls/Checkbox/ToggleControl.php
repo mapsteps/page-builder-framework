@@ -78,7 +78,7 @@ class ToggleControl extends CheckboxControl {
 			<# if ( data.label || data.description ) { #>
 			<div class="wpbf-control-label">
 				<# if ( data.label ) { #>
-				<label class="customize-control-title" for="wpbf_{{ data.checkboxType }}_{{ data.id }}">
+				<label class="customize-control-title" for="_customize-input-{{ data.id }}">
 					{{{ data.label }}}
 				</label>
 				<# } #>

@@ -7,7 +7,7 @@ export default function DeviceButtons(props: { devices: string[] }) {
 				const deviceClassName = `dashicons dashicons-${device === "mobile" ? "smartphone" : device}`;
 
 				return (
-					<li className={device}>
+					<li className={device} key={index}>
 						<button
 							type="button"
 							className={`preview-${device} ${0 === index ? "active" : ""}`}

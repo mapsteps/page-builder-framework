@@ -57,4 +57,5 @@ export type WpbfCustomizeTypographyControlValue = {
 	color?: string;
 	"text-align"?: string;
 	"text-transform"?: string;
+	random?: number|string;
 };

@@ -16,9 +16,7 @@ class ArrayField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		error_log( "ArrayField::sanitizeCallback value is:\n" . print_r( $this->sanitize( $value ), true ) );
-
-		return $this->sanitize( $value );
+		return static::sanitize( $value );
 
 	}
 

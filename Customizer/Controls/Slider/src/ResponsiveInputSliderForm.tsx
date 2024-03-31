@@ -160,6 +160,7 @@ export default function ResponsiveInputSliderForm(props: {
 				return (
 					<div
 						className={`wpbf-control-device wpbf-control-${device} ${isActive ? "active" : ""}`}
+						key={deviceIndex}
 					>
 						{actualValue.hasOwnProperty(device) && (
 							<>
