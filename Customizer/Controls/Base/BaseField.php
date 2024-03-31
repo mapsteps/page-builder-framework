@@ -97,13 +97,16 @@ abstract class BaseField {
 	private function parseDefaultControlArgs() {
 
 		$control_args = array(
-			'capability'  => $this->control->capability,
-			'section'     => $this->control->section_id,
-			'label'       => $this->control->label,
-			'description' => $this->control->description,
-			'priority'    => $this->control->priority,
-			'choices'     => $this->control->choices,
-			'input_attrs' => $this->control->input_attrs,
+			'settings'        => $this->control->settings,
+			'setting'         => $this->control->setting,
+			'capability'      => $this->control->capability,
+			'priority'        => $this->control->priority,
+			'section'         => $this->control->section_id,
+			'label'           => $this->control->label,
+			'description'     => $this->control->description,
+			'choices'         => $this->control->choices,
+			'input_attrs'     => $this->control->input_attrs,
+			'active_callback' => $this->control->active_callback,
 		);
 
 		if ( ! empty( $this->control->settings ) ) {
