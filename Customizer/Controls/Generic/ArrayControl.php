@@ -31,6 +31,10 @@ class ArrayControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
+		if ( str_contains( $this->id, 'page_font_family' ) ) {
+			error_log( "$this->id args is:\n" . print_r( $args, true ) );
+		}
+
 		if ( ! ( $this->setting instanceof WP_Customize_Setting ) ) {
 			return;
 		}

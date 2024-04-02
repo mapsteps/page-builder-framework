@@ -75,7 +75,7 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 					wp.customize
 						.control(typographyControlId)
 						?.setting?.set({ ...typographyValue });
-				}, 75);
+				}, 250);
 			});
 		});
 	});

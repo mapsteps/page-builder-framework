@@ -230,6 +230,10 @@ class TypographyField extends BaseField {
 
 		wpbf_customizer_field()
 			->id( $this->control->id )
+			->settings( [
+				'font-family' => $this->control->id . '[font-family]',
+				'variant'     => $this->control->id . '[variant]',
+			] )
 			->type( 'array' )
 			->tab( $this->tab )
 			->label( $this->control->label )
