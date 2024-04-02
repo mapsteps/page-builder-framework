@@ -43,10 +43,6 @@ function setupTypographyFields() {
 
 		wp.customize(id, function (setting) {
 			setting.bind(function (value) {
-				console.log(
-					`"${id}" typography control is changed and the value is:`,
-					value,
-				);
 				composeFontProperties(id, value);
 			});
 		});
@@ -60,8 +56,6 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 	if (!Array.isArray(wpbfFontProperties)) return;
 
 	wpbfFontProperties.forEach((property) => {
-		// Only listen to changes on the `font-family` and `variant` properties.
-		if ("font-family" !== property && "variant" !== property) return;
 		const propertyControlId = `${typographyControlId}[${property}]`;
 		if (!wp.customize.control(propertyControlId)) return;
 
@@ -69,13 +63,12 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 			setting.bind(function (value) {
 				const typographyValue = wp.customize(typographyControlId).get() || {};
 				typographyValue[property] = value;
-				typographyValue.random = String(Math.random);
 
-				window.setTimeout(() => {
-					wp.customize
-						.control(typographyControlId)
-						?.setting?.set({ ...typographyValue });
-				}, 250);
+				wp.customize.control(typographyControlId)?.setting?.set({
+					...typographyValue,
+					// This is a workaround to trigger the change event of the main control.
+					random: String(Math.random()),
+				});
 			});
 		});
 	});

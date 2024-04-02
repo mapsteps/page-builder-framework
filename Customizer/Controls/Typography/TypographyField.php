@@ -222,7 +222,7 @@ class TypographyField extends BaseField {
 	}
 
 	/**
-	 * Add the label and description using 'array' control.
+	 * Add the label and description using 'assoc-array' control.
 	 */
 	private function addLabelAndDescription() {
 
@@ -230,11 +230,7 @@ class TypographyField extends BaseField {
 
 		wpbf_customizer_field()
 			->id( $this->control->id )
-			->settings( [
-				'font-family' => $this->control->id . '[font-family]',
-				'variant'     => $this->control->id . '[variant]',
-			] )
-			->type( 'array' )
+			->type( 'assoc-array' )
 			->tab( $this->tab )
 			->label( $this->control->label )
 			->description( $this->control->description )

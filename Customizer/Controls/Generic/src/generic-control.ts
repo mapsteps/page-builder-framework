@@ -44,7 +44,7 @@ wp.customize.controlConstructor["wpbf-generic"] =
 								: limitNumberWithUnit(fieldValue, params.min, params.max);
 					}
 
-					control.setting.set(fieldValue);
+					control.setting?.set(fieldValue);
 				});
 		},
 	});

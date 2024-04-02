@@ -36,10 +36,8 @@ export interface WpbfCustomizeResponsiveGenericControlParams
 	saveAsJson: boolean;
 }
 
-export type ArrayControlValue = any[] | Record<string, any>;
+export interface AssocArrayControlParams
+	extends WpbfCustomizeControlParams<Record<string, any>> {}
 
-export interface ArrayControlParams
-	extends WpbfCustomizeControlParams<ArrayControlValue> {}
-
-export interface WpbfCustomizeArrayControl
-	extends WpbfCustomizeControl<ArrayControlValue, ArrayControlParams> {}
+export interface WpbfCustomizeAssocArrayControl
+	extends WpbfCustomizeControl<Record<string, any>, AssocArrayControlParams> {}

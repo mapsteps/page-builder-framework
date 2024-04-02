@@ -10,7 +10,6 @@ import {
 	SelectChoices,
 } from "./interface";
 import SelectForm from "./SelectForm";
-import ReactDOM from "react-dom";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
@@ -73,6 +72,9 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 		if (!control.initialized) {
 			control.parseSelectChoices?.(control.params.choices);
 			control.initialized = true;
+		}
+
+		if (!control.root) {
 			control.root = createRoot(control.container[0]);
 		}
 
@@ -119,7 +121,8 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 		const control = this;
 
 		// Garbage collection: undo mounting that was done in the embed/renderContent method.
-		ReactDOM.unmountComponentAtNode(control.container[0]);
+		control.root?.unmount();
+		control.root = undefined;
 
 		// Call destroy method in parent if it exists (as of #31334).
 		if (wp.customize.Control.prototype.destroy) {

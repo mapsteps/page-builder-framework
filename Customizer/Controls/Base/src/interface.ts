@@ -22,7 +22,7 @@ import { WpbfCustomizeSortableControl } from "../../Sortable/src/interface";
 import { Section_Constructor } from "wordpress__customize-browser/Section_Constructor";
 import { Section } from "wordpress__customize-browser/Section";
 import {
-	WpbfCustomizeArrayControl,
+	WpbfCustomizeAssocArrayControl,
 	WpbfCustomizeGenericControl,
 	WpbfCustomizeResponsiveGenericControl,
 } from "../../Generic/src/interface";
@@ -244,7 +244,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-dimension": WpbfCustomizeDimensionControl;
 	"wpbf-generic": WpbfCustomizeGenericControl;
 	"wpbf-responsive-generic": WpbfCustomizeResponsiveGenericControl;
-	"wpbf-array": WpbfCustomizeArrayControl;
+	"wpbf-assoc-array": WpbfCustomizeAssocArrayControl;
 	"wpbf-image": WpbfCustomizeControl<
 		number | string | object,
 		WpbfCustomizeControlParams<number | string | object>

@@ -5,7 +5,7 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use WP_Customize_Manager;
 
-class ArrayField extends BaseField {
+class AssocArrayField extends BaseField {
 
 	/**
 	 * Setting's sanitize callback.
@@ -62,7 +62,7 @@ class ArrayField extends BaseField {
 
 		$control_args = $this->parseControlArgs();
 
-		$wp_customize_manager->add_control( new ArrayControl(
+		$wp_customize_manager->add_control( new AssocArrayControl(
 			$wp_customize_manager,
 			$this->control->id,
 			$control_args

@@ -104,6 +104,8 @@
     "build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
     "watch-responsive-generic-control": "parcel watch Customizer/Controls/Generic/src/responsive-generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
     "build-responsive-generic-control": "parcel build Customizer/Controls/Generic/src/responsive-generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
+    "watch-assoc-array-control": "parcel watch Customizer/Controls/Generic/src/assoc-array-control.ts --dist-dir Customizer/Controls/Generic/dist",
+    "build-assoc-array-control": "parcel build Customizer/Controls/Generic/src/assoc-array-control.ts --dist-dir Customizer/Controls/Generic/dist",
     "watch-headline-control": "parcel watch Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist",
     "build-headline-control": "parcel build Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist",
     "watch-image-control": "parcel watch Customizer/Controls/Media/src/image-control.ts --dist-dir Customizer/Controls/Media/dist",

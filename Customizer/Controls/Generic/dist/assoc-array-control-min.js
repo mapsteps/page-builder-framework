@@ -1,0 +1,2 @@
+!function(){wp.customize.controlConstructor["wpbf-assoc-array"]=wp.customize.wpbfDynamicControl.extend({initWpbfControl:function(t){"wpbf-assoc-array"===(t=t||this).params.type&&t.setting?.bind(n=>{t.updateComponentState?.(n)})},updateComponentState:function(n){let e=this.container[0].querySelectorAll(t);e.length&&e.forEach(t=>{if(!(t instanceof HTMLInputElement))return;let e=t.dataset.settingProp;e&&n[e]&&(t.value=n[e])})}});let t=".wpbf-control-form input[data-setting-prop]"}();
+//# sourceMappingURL=assoc-array-control-min.js.map

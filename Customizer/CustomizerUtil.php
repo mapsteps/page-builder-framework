@@ -13,7 +13,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Custom\CustomField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
-use Mapsteps\Wpbf\Customizer\Controls\Generic\ArrayField;
+use Mapsteps\Wpbf\Customizer\Controls\Generic\AssocArrayField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\ResponsiveGenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\DividerField;
@@ -71,7 +71,7 @@ class CustomizerUtil {
 		'headline-toggle',
 		'generic',
 		'responsive-generic',
-		'array',
+		'assoc-array',
 		'image',
 		'margin-padding',
 		'responsive-margin-padding',
@@ -235,8 +235,8 @@ class CustomizerUtil {
 			case 'responsive-generic':
 				$field = new ResponsiveGenericField( $control_entity );
 				break;
-			case 'array':
-				$field = new ArrayField( $control_entity );
+			case 'assoc-array':
+				$field = new AssocArrayField( $control_entity );
 				break;
 			case 'headline':
 				$field = new HeadlineField( $control_entity );
