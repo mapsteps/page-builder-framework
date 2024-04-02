@@ -1,9 +1,4 @@
-<pre>
-<?php var_dump( get_theme_mod( 'page_font_family' ) ); ?>
-</pre>
-
 <?php
-exit;
 /**
  * Index.
  *
