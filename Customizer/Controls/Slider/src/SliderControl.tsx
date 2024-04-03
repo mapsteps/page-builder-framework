@@ -68,7 +68,7 @@ const SliderControl = wp.customize.Control.extend<WpbfCustomizeSliderControl>({
 		root.render(
 			<SliderForm
 				control={control}
-				customizerSetting={control.setting}
+				customizerSetting={control.setting ?? undefined}
 				setNotificationContainer={control.setNotificationContainer}
 				label={params.label}
 				description={params.description}

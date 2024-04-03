@@ -85,11 +85,11 @@ wp.customize.controlConstructor["wpbf-image"] =
 						}
 
 						if ("array" === saveAs) {
-							control.setting.set(valueSrc);
+							control.setting?.set(valueSrc);
 						} else if ("id" === saveAs) {
-							control.setting.set(valueSrc.id);
+							control.setting?.set(valueSrc.id);
 						} else if ("url" === saveAs) {
-							control.setting.set(valueSrc.url);
+							control.setting?.set(valueSrc.url);
 						}
 
 						if (preview) {
@@ -107,11 +107,11 @@ wp.customize.controlConstructor["wpbf-image"] =
 				emptyValue();
 
 				if ("array" === saveAs) {
-					control.setting.set(valueSrc);
+					control.setting?.set(valueSrc);
 				} else if ("id" === saveAs) {
-					control.setting.set(0);
+					control.setting?.set(0);
 				} else if ("url" === saveAs) {
-					control.setting.set("");
+					control.setting?.set("");
 				}
 
 				if (preview) {
@@ -122,7 +122,7 @@ wp.customize.controlConstructor["wpbf-image"] =
 			}
 
 			function useDefaultValue() {
-				control.setting.set(defaultSrc);
+				control.setting?.set(defaultSrc);
 
 				if (preview) {
 					preview.innerHTML =

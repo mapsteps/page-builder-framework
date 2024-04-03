@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import {
 	AnyWpbfCustomizeControl,
 	WpbfCustomize,
@@ -17,13 +16,15 @@ declare var wp: {
 };
 
 const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
+	root: undefined,
+
 	/**
 	 * Initialize.
 	 */
 	initialize: function (
 		this: WpbfCustomizeColorControl,
 		id: string,
-		params: WpbfCustomizeControlParams<WpbfCustomizeColorControlValue>,
+		params?: WpbfCustomizeControlParams<WpbfCustomizeColorControlValue>,
 	) {
 		const control = this;
 
@@ -80,14 +81,17 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 		}
 
 		pickerComponent = useHueMode ? "HueColorPicker" : pickerComponent;
-		const root = createRoot(control.container[0]);
 
-		root.render(
+		if (!control.root) {
+			control.root = createRoot(control.container[0]);
+		}
+
+		control.root.render(
 			<ColorForm
 				control={control}
 				label={params.label}
 				description={params.description}
-				customizerSetting={control.setting}
+				customizerSetting={control.setting ?? undefined}
 				useHueMode={useHueMode}
 				formComponent={formComponent}
 				pickerComponent={pickerComponent}
@@ -129,7 +133,7 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 		 *
 		 * The result: Even though the "x" color picker becomes very slow, it's still usable and responsive enough.
 		 */
-		control.setting.bind((val: any) => {
+		control.setting?.bind((val: any) => {
 			if (control.updateComponentState) control.updateComponentState(val);
 		});
 	},
@@ -145,7 +149,8 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 		const control = this as WpbfCustomizeColorControl;
 
 		// Garbage collection: undo mounting that was done in the embed/renderContent method.
-		ReactDOM.unmountComponentAtNode(control.container[0]);
+		control.root?.unmount();
+		control.root = undefined;
 
 		// Call destroy method in parent if it exists (as of #31334).
 		if (wp.customize.Control.prototype.destroy) {

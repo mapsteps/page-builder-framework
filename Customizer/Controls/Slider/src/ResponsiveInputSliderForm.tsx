@@ -13,7 +13,7 @@ import { encodeJsonOrDefault } from "../../Generic/src/string-util";
 
 export default function ResponsiveInputSliderForm(props: {
 	control: WpbfCustomizeResponsiveInputSliderControl;
-	customizerSetting: WpbfCustomizeSetting<string | DevicesValue>;
+	customizerSetting?: WpbfCustomizeSetting<string | DevicesValue>;
 	setNotificationContainer: any;
 	saveAsJson: boolean;
 	devices: string[];
@@ -54,7 +54,7 @@ export default function ResponsiveInputSliderForm(props: {
 	};
 
 	function saveToCustomizerSetting(val: DevicesValue) {
-		props.customizerSetting.set(
+		props.customizerSetting?.set(
 			props.saveAsJson ? encodeJsonOrDefault<DevicesValue>(val) : val,
 		);
 	}
@@ -132,7 +132,7 @@ export default function ResponsiveInputSliderForm(props: {
 			{props.label || props.description ? (
 				<label
 					className="wpbf-control-label"
-					htmlFor={`wpbf-control-input-${props.customizerSetting.id}`}
+					htmlFor={`wpbf-control-input-${props.customizerSetting?.id}`}
 				>
 					{props.label && (
 						<span className="customize-control-title">{props.label}</span>
@@ -176,7 +176,7 @@ export default function ResponsiveInputSliderForm(props: {
 									<div className="wpbf-control-left-col">
 										<input
 											type="range"
-											id={`wpbf-control-input-${props.customizerSetting.id}-${device}`}
+											id={`wpbf-control-input-${props.customizerSetting?.id}-${device}`}
 											value={makeValueForSlider(
 												actualValue[device],
 												props.min,

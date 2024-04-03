@@ -38,7 +38,7 @@ wp.customize.controlConstructor["wpbf-sortable"] =
 				})
 				.on("click", function () {
 					// Update value on click.
-					control.setting.set(control.getNewValues!());
+					control.setting?.set(control.getNewValues!());
 				});
 		},
 

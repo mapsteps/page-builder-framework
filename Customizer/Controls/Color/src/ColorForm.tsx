@@ -51,7 +51,7 @@ export function ColorForm(props: {
 	control: WpbfCustomizeColorControl;
 	label: string;
 	description: string;
-	customizerSetting: WpbfCustomizeSetting<any>;
+	customizerSetting?: WpbfCustomizeSetting<any>;
 	useHueMode: boolean;
 	pickerComponent: string;
 	labelStyle: string;
@@ -161,7 +161,7 @@ export function ColorForm(props: {
 			value = parseCustomizerValue(value);
 		}
 
-		customizerSetting.set(value);
+		customizerSetting?.set(value);
 	};
 
 	const initialColor =

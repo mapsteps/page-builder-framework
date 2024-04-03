@@ -23,7 +23,7 @@ export default function MarginPaddingForm(props: {
 	// setNotificationContainer: (el: HTMLElement) => void;
 	setNotificationContainer: any;
 	control: WpbfCustomizeMarginPaddingControl;
-	customizerSetting: WpbfCustomizeSetting<MarginPaddingValue | string>;
+	customizerSetting?: WpbfCustomizeSetting<MarginPaddingValue | string>;
 	default?: any;
 	defaultArray: MarginPaddingValue;
 	valueArray: MarginPaddingValue;
@@ -116,11 +116,13 @@ export default function MarginPaddingForm(props: {
 		 * The "saveAsJson" option is used to support PBF's old "responsive_padding" control.
 		 */
 		if (props.saveAsJson) {
-			props.customizerSetting.set(encodeJsonOrDefault<MarginPaddingValue>(val));
+			props.customizerSetting?.set(
+				encodeJsonOrDefault<MarginPaddingValue>(val),
+			);
 			return;
 		}
 
-		props.customizerSetting.set(newVal);
+		props.customizerSetting?.set(newVal);
 	}
 
 	function makeMappable(device?: string) {

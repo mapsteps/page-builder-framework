@@ -4,7 +4,7 @@ import { WpbfCustomizeSliderControl } from "./interface";
 
 export default function SliderForm(props: {
 	control: WpbfCustomizeSliderControl;
-	customizerSetting: WpbfCustomizeSetting<string | number>;
+	customizerSetting?: WpbfCustomizeSetting<string | number>;
 	setNotificationContainer?: any;
 	label?: string;
 	description?: string;
@@ -63,7 +63,7 @@ export default function SliderForm(props: {
 		const value = parseValue(target.value);
 
 		if ("input" === trigger) target.value = value.toString();
-		props.customizerSetting.set(value);
+		props.customizerSetting?.set(value);
 	}
 
 	function handleResetButtonClick(_e: MouseEvent) {
@@ -109,12 +109,12 @@ export default function SliderForm(props: {
 		const renderedValue = parseValue(sliderRef.current?.value);
 
 		if (sliderRef && sliderRef.current) {
-			props.customizerSetting.set(renderedValue);
+			props.customizerSetting?.set(renderedValue);
 		}
 	}
 
 	// Preparing for the template.
-	const fieldId = `wpbf-control-input-${props.customizerSetting.id}`;
+	const fieldId = `wpbf-control-input-${props.customizerSetting?.id}`;
 	const value = parseValue(props.value);
 
 	return (

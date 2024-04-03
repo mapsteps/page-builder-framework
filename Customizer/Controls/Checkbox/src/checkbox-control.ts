@@ -1,44 +1,35 @@
 import "./toggle-control.scss";
-import {
-	WpbfCustomize,
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+import { WpbfCustomize } from "../../Base/src/interface";
+import { WpbfCustomizeCheckboxControl } from "./interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
 };
 
 wp.customize.controlConstructor["wpbf-checkbox"] =
-	wp.customize.wpbfDynamicControl.extend<
-		WpbfCustomizeControl<boolean, WpbfCustomizeControlParams<boolean>>
-	>({
+	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeCheckboxControl>({
 		initWpbfControl: function (
-			control: WpbfCustomizeControl<
-				boolean,
-				WpbfCustomizeControlParams<boolean>
-			>,
+			this: WpbfCustomizeCheckboxControl,
+			ctrl?: WpbfCustomizeCheckboxControl,
 		) {
-			control = control || this;
+			const control = ctrl || this;
+
 			control.container.on("change", "input", function () {
-				control.setting.set(jQuery(this).is(":checked"));
+				control.setting?.set(jQuery(this).is(":checked"));
 			});
 		},
 	});
 
 wp.customize.controlConstructor["wpbf-toggle"] =
-	wp.customize.wpbfDynamicControl.extend<
-		WpbfCustomizeControl<boolean, WpbfCustomizeControlParams<boolean>>
-	>({
+	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeCheckboxControl>({
 		initWpbfControl: function (
-			control: WpbfCustomizeControl<
-				boolean,
-				WpbfCustomizeControlParams<boolean>
-			>,
+			this: WpbfCustomizeCheckboxControl,
+			ctrl?: WpbfCustomizeCheckboxControl,
 		) {
-			control = control || this;
+			const control = ctrl || this;
+
 			control.container.on("change", "input", function () {
-				control.setting.set(jQuery(this).is(":checked"));
+				control.setting?.set(jQuery(this).is(":checked"));
 			});
 		},
 	});

@@ -79,7 +79,7 @@ const ResponsiveInputSliderControl =
 			root.render(
 				<ResponsiveInputSliderForm
 					control={control}
-					customizerSetting={control.setting}
+					customizerSetting={control.setting ?? undefined}
 					setNotificationContainer={control.setNotificationContainer}
 					devices={params.devices}
 					saveAsJson={params.saveAsJson}

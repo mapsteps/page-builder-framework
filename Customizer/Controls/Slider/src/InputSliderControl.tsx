@@ -78,7 +78,7 @@ const InputSliderControl =
 			root.render(
 				<InputSliderForm
 					control={control}
-					customizerSetting={control.setting}
+					customizerSetting={control.setting ?? undefined}
 					setNotificationContainer={control.setNotificationContainer}
 					label={params.label}
 					description={params.description}

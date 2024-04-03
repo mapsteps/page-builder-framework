@@ -9,10 +9,13 @@ declare var wp: {
 declare var wpbfDimensionControlL10n: Record<string, string>;
 
 wp.customize.controlConstructor["wpbf-dimension"] =
-	wp.customize.wpbfDynamicControl.extend({
-		initWpbfControl: function (control: WpbfCustomizeDimensionControl) {
-			let value;
+	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeDimensionControl>({
+		initWpbfControl: function (
+			this: WpbfCustomizeDimensionControl,
+			control?: WpbfCustomizeDimensionControl,
+		) {
 			control = control || this;
+			let value;
 
 			// Notifications.
 			control.wpbfNotifications!();
@@ -20,7 +23,7 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 			// Save the value
 			control.container.on("change keyup paste", "input", function () {
 				value = jQuery(this).val();
-				control.setting.set(value);
+				control.setting?.set(value);
 			});
 		},
 

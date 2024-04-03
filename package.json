@@ -97,7 +97,6 @@
     "build-checkbox-control": "parcel build Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist",
     "watch-color-control": "parcel watch Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist",
     "build-color-control": "parcel build Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist",
-    "build-color-assets": "pnpm build-color-control && pnpm build-color-preview",
     "watch-dimension-control": "parcel watch Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist",
     "build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist",
     "watch-generic-control": "parcel watch Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist",

@@ -32,7 +32,7 @@ wp.customize.controlConstructor["wpbf-responsive-generic"] =
 				control.container
 					.find(`${inputSelector}, ${textareaSelector}`)
 					.on("input", function (e) {
-						const existingValue = control.setting.get();
+						const existingValue = control.setting?.get();
 
 						const valueRecord =
 							"string" === typeof existingValue
@@ -51,7 +51,11 @@ wp.customize.controlConstructor["wpbf-responsive-generic"] =
 								? parent.dataset.wpbfDevice
 								: undefined;
 
-						if (!device || !valueRecord.hasOwnProperty(device)) {
+						if (
+							!device ||
+							!valueRecord ||
+							!valueRecord.hasOwnProperty(device)
+						) {
 							return;
 						}
 
@@ -79,7 +83,7 @@ wp.customize.controlConstructor["wpbf-responsive-generic"] =
 							? encodeJsonOrDefault(valueRecord)
 							: valueRecord;
 
-						control.setting.set(customizerValue);
+						control.setting?.set(customizerValue);
 					});
 			},
 		},

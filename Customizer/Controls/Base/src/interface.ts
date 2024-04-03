@@ -43,6 +43,7 @@ import { Element_Synchronizer } from "wordpress__customize-browser/Element";
 import { Notification } from "wordpress__customize-browser/Notification";
 import { PartialObject } from "lodash";
 import { Root } from "react-dom/client";
+import { WpbfCustomizeCheckboxControl } from "../../Checkbox/src/interface";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -236,10 +237,7 @@ export interface WpbfCustomizeControlParams<SV> {
 }
 
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
-	"wpbf-checkbox": WpbfCustomizeControl<
-		boolean,
-		WpbfCustomizeControlParams<boolean>
-	>;
+	"wpbf-checkbox": WpbfCustomizeCheckboxControl;
 	"wpbf-color": WpbfCustomizeColorControl;
 	"wpbf-dimension": WpbfCustomizeDimensionControl;
 	"wpbf-generic": WpbfCustomizeGenericControl;
@@ -262,10 +260,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-input-slider": WpbfCustomizeInputSliderControl;
 	"wpbf-responsive-input-slider": WpbfCustomizeResponsiveInputSliderControl;
 	"wpbf-sortable": WpbfCustomizeSortableControl;
-	"wpbf-toggle": WpbfCustomizeControl<
-		boolean,
-		WpbfCustomizeControlParams<boolean>
-	>;
+	"wpbf-toggle": WpbfCustomizeCheckboxControl;
 }
 
 export interface WpbfControlDependency {

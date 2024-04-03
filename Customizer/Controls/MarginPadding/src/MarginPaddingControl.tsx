@@ -89,7 +89,7 @@ const KirkiMarginPaddingControl =
 					description={params.description}
 					setNotificationContainer={control.setNotificationContainer}
 					control={control}
-					customizerSetting={control.setting}
+					customizerSetting={control.setting ?? undefined}
 					default={params.default}
 					defaultArray={params.defaultArray}
 					valueArray={params.valueArray}
@@ -123,7 +123,7 @@ const KirkiMarginPaddingControl =
 			/**
 			 * Update component value's state when customizer setting's value is changed.
 			 */
-			control.setting.bind((val) => {
+			control.setting?.bind((val) => {
 				const newVal =
 					typeof val === "string"
 						? makeObjValueWithoutUnitFromJson(control.params.dimensions, val)

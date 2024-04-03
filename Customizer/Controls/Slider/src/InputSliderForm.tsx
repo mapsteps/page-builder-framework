@@ -11,7 +11,7 @@ import { WpbfCustomizeInputSliderControl } from "./interface";
 
 export default function InputSliderForm(props: {
 	control: WpbfCustomizeInputSliderControl;
-	customizerSetting: WpbfCustomizeSetting<string | number>;
+	customizerSetting?: WpbfCustomizeSetting<string | number>;
 	setNotificationContainer: any;
 	label: string | undefined;
 	description: string | undefined;
@@ -37,7 +37,7 @@ export default function InputSliderForm(props: {
 	function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
 		trigger = "input";
 
-		props.customizerSetting.set(
+		props.customizerSetting?.set(
 			makeValueForInput(e.target.value, props.min, props.max),
 		);
 	}
@@ -61,7 +61,7 @@ export default function InputSliderForm(props: {
 		);
 
 		const valueForInput = value + numberValuePair.unit;
-		props.customizerSetting.set(valueForInput);
+		props.customizerSetting?.set(valueForInput);
 	}
 
 	function setInputRefValue(value: string | number) {
@@ -91,11 +91,11 @@ export default function InputSliderForm(props: {
 		trigger = "reset";
 
 		if (!sliderRef || !sliderRef.current) return;
-		props.customizerSetting.set(sliderRef.current.value);
+		props.customizerSetting?.set(sliderRef.current.value);
 	}
 
 	// Preparing for the template.
-	const fieldId = `wpbf-control-input-${props.customizerSetting.id}`;
+	const fieldId = `wpbf-control-input-${props.customizerSetting?.id}`;
 	const sliderValue = makeValueForSlider(props.value, props.min, props.max);
 	const inputValue = makeValueForInput(props.value, props.min, props.max);
 
