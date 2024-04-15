@@ -24,6 +24,15 @@ function wpbf_customizer_init() {
 }
 
 /**
+ * Output the customizer.
+ */
+function wpbf_customizer_output() {
+
+	( new Customizer() )->output();
+
+}
+
+/**
  * Initialize Wpbf customizer setting.
  *
  * @return CustomizerSetting

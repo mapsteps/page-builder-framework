@@ -10,6 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
+use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
 use WP_Customize_Manager;
 
 /**
@@ -30,6 +31,17 @@ final class Customizer {
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_tooltips' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'add_typography_js_vars' ) );
+
+	}
+
+	/**
+	 * Output the customizer.
+	 *
+	 * @return void
+	 */
+	public function output() {
+
+		( new FontsOutput() )->init();
 
 	}
 

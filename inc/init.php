@@ -36,7 +36,7 @@ if ( ! class_exists( '\Kirki\Pro\Field\HeadlineToggle' ) || ! class_exists( '\Ki
 	kirki_pro_load_controls();
 }
 
-// New customizer functions.
+// Customizer core functions.
 require_once WPBF_THEME_DIR . '/Customizer/wpbf-customizer-functions.php';
 
 // Customizer functions.
@@ -47,6 +47,9 @@ require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
 
 // Init customizer.
 wpbf_customizer_init();
+
+// Output the customizer.
+wpbf_customizer_output();
 
 // Body classes.
 require_once WPBF_THEME_DIR . '/inc/body-classes.php';
