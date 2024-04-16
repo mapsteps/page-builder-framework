@@ -24,6 +24,8 @@ class FontsOutput {
 
 		$google_fonts_to_download = $this->googleFontsToDownload();
 
+		error_log( "google fonts to download\n" . print_r( $google_fonts_to_download, true ) );
+
 		if ( ! empty( $google_fonts_to_download ) ) {
 			( new GoogleFontsDownload() )->download( $google_fonts_to_download );
 		}
@@ -91,7 +93,7 @@ class FontsOutput {
 				$google_fonts_to_download[ $google_font_family ] = [];
 			}
 
-			$font_variant = isset( $value['variant'] ) ? $value['variant'] : null;
+			$font_variant = isset( $value['variant'] ) ? (string) $value['variant'] : null;
 
 			if ( ! $font_variant ) {
 				continue;
@@ -102,7 +104,7 @@ class FontsOutput {
 			}
 
 			if ( ! in_array( $font_variant, $google_fonts_to_download[ $google_font_family ], true ) ) {
-				$google_fonts_to_download[ $google_font_family ][] = $font_variant;
+				$google_fonts_to_download[ $google_font_family ][] = (string) $font_variant;
 			}
 		}
 

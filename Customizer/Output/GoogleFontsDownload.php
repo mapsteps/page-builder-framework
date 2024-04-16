@@ -318,7 +318,9 @@ class GoogleFontsDownload {
 			$font_variant = '';
 
 			if ( ! empty( $font_weight ) && ! empty( $font_style ) ) {
-				$font_variant = $font_weight . $font_style;
+				$font_variant = 'normal' === $font_style ? $font_weight : $font_weight . $font_style;
+				$font_variant = '400' === $font_variant ? 'regular' : $font_variant;
+				$font_variant = '400italic' === $font_variant ? 'italic' : $font_variant;
 			}
 
 			if ( empty( $font_url ) || empty( $font_variant ) ) {
