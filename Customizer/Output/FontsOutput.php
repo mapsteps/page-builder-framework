@@ -24,8 +24,6 @@ class FontsOutput {
 
 		$google_fonts_to_download = $this->googleFontsToDownload();
 
-		error_log( "google fonts to download\n" . print_r( $google_fonts_to_download, true ) );
-
 		if ( ! empty( $google_fonts_to_download ) ) {
 			( new GoogleFontsDownload() )->download( $google_fonts_to_download );
 		}
