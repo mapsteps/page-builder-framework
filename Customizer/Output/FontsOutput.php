@@ -91,7 +91,7 @@ class FontsOutput {
 				$google_fonts_to_download[ $google_font_family ] = [];
 			}
 
-			$font_variant = isset( $value['font-variant'] ) ? $value['font-variant'] : null;
+			$font_variant = isset( $value['variant'] ) ? $value['variant'] : null;
 
 			if ( ! $font_variant ) {
 				continue;

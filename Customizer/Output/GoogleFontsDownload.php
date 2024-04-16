@@ -12,6 +12,23 @@ class GoogleFontsDownload {
 	private $api_url = 'https://fonts.googleapis.com/css2';
 
 	/**
+	 * The user-agent to download woff fonts.
+	 *
+	 * The default user-agent is the only one compatible with woff (not woff2)
+	 * which also supports unicode ranges.
+	 *
+	 * @var string
+	 */
+	private $woff_user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8';
+
+	/**
+	 * The user-agent to download woff2 fonts.
+	 *
+	 * @var string
+	 */
+	private $woff2_user_agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0';
+
+	/**
 	 * Download Google Fonts and save it locally.
 	 *
 	 * @param array $font_families Associative array of font families with "font family" as the key and "array of variants" as the value.
@@ -44,7 +61,7 @@ class GoogleFontsDownload {
 			require_once wp_normalize_path( ABSPATH . '/wp-admin/includes/file.php' );
 		}
 
-		$existing_downloaded_fonts = get_options( 'wpbf_downloaded_google_fonts' );
+		$existing_downloaded_fonts = get_option( 'wpbf_downloaded_google_fonts' );
 		$existing_downloaded_fonts = ! empty( $existing_downloaded_fonts ) && is_array( $existing_downloaded_fonts ) ? $existing_downloaded_fonts : [];
 
 		foreach ( $fonts_to_download as $font_family => $variant_and_url_array ) {
@@ -62,7 +79,7 @@ class GoogleFontsDownload {
 				$font_variant = $variant_and_url['variant'];
 				$font_url     = $variant_and_url['url'];
 
-				$local_file_path = $this->downloadFontFile( $font_family, $font_url );
+				$local_file_path = $this->downloadFontFile( $font_family_dir, $font_url );
 
 				if ( ! $local_file_path ) {
 					continue;
@@ -146,12 +163,14 @@ class GoogleFontsDownload {
 			sort( $italic_font_weights );
 
 			foreach ( $regular_font_weights as $font_variant ) {
-				$stylesheet_url .= "0,$font_variant;";
+				$stylesheet_url .= $has_any_italic_style ? "0,$font_variant;" : "$font_variant;";
 			}
 
 			foreach ( $italic_font_weights as $font_variant ) {
 				$stylesheet_url .= "1,$font_variant;";
 			}
+
+			$stylesheet_url = rtrim( $stylesheet_url, ';' );
 
 			++$loop_index;
 		}
@@ -173,7 +192,7 @@ class GoogleFontsDownload {
 	private function downloadStylesheet( $stylesheet_url = '' ) {
 
 		// Use wp_remote_get to get the stylesheet.
-		$response = wp_remote_get( $stylesheet_url );
+		$response = wp_remote_get( $stylesheet_url, array( 'user-agent' => $this->woff2_user_agent ) );
 
 		// Early exit if there was an error.
 		if ( is_wp_error( $response ) ) {
@@ -341,23 +360,23 @@ class GoogleFontsDownload {
 	 * Download the font files.
 	 *
 	 * @param string $dir Directory to download the font file.
-	 * @param string $font_file_url The font-file url.
+	 * @param string $font_url The font-file url.
 	 *
 	 * @return string The local path of the downloaded font file.
 	 */
-	private function downloadFontFile( $dir, $font_file_url ) {
+	private function downloadFontFile( $dir, $font_url ) {
 
-		if ( empty( $dir ) || empty( $font_file_urls ) ) {
+		if ( empty( $dir ) || empty( $font_url ) ) {
 			return '';
 		}
 
-		$tmp_path = download_url( $font_file_url );
+		$tmp_path = download_url( $font_url );
 
 		if ( is_wp_error( $tmp_path ) ) {
 			return '';
 		}
 
-		$font_file_name = basename( wp_parse_url( $font_file_url, PHP_URL_PATH ) );
+		$font_file_name = basename( wp_parse_url( $font_url, PHP_URL_PATH ) );
 		$font_file_path = $dir . '/' . $font_file_name;
 
 		$success = $this->getFilesystem()->move( $tmp_path, $font_file_path, true );
