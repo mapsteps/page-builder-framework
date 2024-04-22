@@ -69,7 +69,9 @@ final class CustomizerControl {
 	 */
 	public function capability( $capability ) {
 
-		$this->control->capability = $capability;
+		if ( ! empty( $capability ) && is_string( $capability ) ) {
+			$this->control->capability = $capability;
+		}
 
 		return $this;
 

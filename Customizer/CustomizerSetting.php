@@ -54,7 +54,9 @@ class CustomizerSetting {
 	 */
 	public function type( $type ) {
 
-		$this->setting->type = $type;
+		if ( ! empty( $type ) && is_string( $type ) ) {
+			$this->setting->type = $type;
+		}
 
 		return $this;
 
@@ -69,7 +71,9 @@ class CustomizerSetting {
 	 */
 	public function capability( $capability ) {
 
-		$this->setting->capability = $capability;
+		if ( ! empty( $capability ) && is_string( $capability ) ) {
+			$this->setting->capability = $capability;
+		}
 
 		return $this;
 

@@ -106,6 +106,40 @@ final class CustomizerField {
 	}
 
 	/**
+	 * Set the setting's option type.
+	 *
+	 * @param string $option_type Setting's option type. Accepts 'theme_mod' or 'option'.
+	 *
+	 * @return $this
+	 */
+	public function optionType( $option_type ) {
+
+		if ( ! empty( $option_type ) && ( 'theme_mod' === $option_type || 'option' === $option_type ) ) {
+			$this->setting_instance->type( $option_type );
+		}
+
+		return $this;
+
+	}
+
+	/**
+	 * Set the setting's option name. Only used when the option type is 'option'.
+	 *
+	 * @param string $option_name Setting's option nmame.
+	 *
+	 * @return $this
+	 */
+	public function optionName( $option_name ) {
+
+		if ( ! empty( $option_name ) && is_string( $option_name ) ) {
+			$this->setting_instance->optionName( $option_name );
+		}
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the capability required to use this control.
 	 *
 	 * @param string $capability The capability required to use this control.

@@ -39,6 +39,9 @@ if ( ! class_exists( '\Kirki\Pro\Field\HeadlineToggle' ) || ! class_exists( '\Ki
 // Customizer core functions.
 require_once WPBF_THEME_DIR . '/Customizer/wpbf-customizer-functions.php';
 
+// Kirki compatiblity.
+require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-compatibility.php';
+
 // Customizer functions.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 
