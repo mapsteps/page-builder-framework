@@ -71,12 +71,14 @@ class Kirki {
 		$priority    = isset( $section_args['priority'] ) ? $section_args['priority'] : 10;
 		$title       = isset( $section_args['title'] ) ? $section_args['title'] : '';
 		$description = isset( $section_args['description'] ) ? $section_args['description'] : '';
+		$tabs        = isset( $section_args['tabs'] ) ? $section_args['tabs'] : [];
 
 		wpbf_customizer_section()
 			->id( $section_id )
 			->title( $title )
 			->description( $description )
 			->priority( $priority )
+			->tabs( $tabs )
 			->addToPanel( $panel_id );
 
 	}
@@ -125,12 +127,13 @@ class Kirki {
 		$step              = ! empty( $field_args['step'] ) ? $field_args['step'] : null;
 		$alpha_mode        = ! empty( $field_args['alpha'] ) ? $field_args['alpha'] : false;
 		$save_as           = ! empty( $field_args['save_as'] ) ? $field_args['save_as'] : '';
+		$tab               = ! empty( $field_args['tab'] ) ? $field_args['tab'] : '';
 		$wrapper_attrs     = ! empty( $field_args['wrapper_opts'] ) && is_array( $field_args['wrapper_opts'] ) ? $field_args['wrapper_opts'] : [];
 		$input_attrs       = ! empty( $field_args['input_attrs'] ) && is_array( $field_args['input_attrs'] ) ? $field_args['input_attrs'] : [];
 
 		$custom_props = [];
 
-		if ( ! is_null( $min ) || ! is_null( $max ) || ! is_null( $step ) || $alpha_mode || ! empty( $wrapper_attrs ) || ! empty( $input_attrs ) || $is_multi ) {
+		if ( ! is_null( $min ) || ! is_null( $max ) || ! is_null( $step ) || $alpha_mode || ! empty( $tab ) || ! empty( $wrapper_attrs ) || ! empty( $input_attrs ) || $is_multi ) {
 			if ( ! is_null( $min ) ) {
 				$custom_props['min'] = $min;
 			}
@@ -154,6 +157,10 @@ class Kirki {
 
 			if ( ! empty( $save_as ) ) {
 				$custom_props['save_as'] = $save_as;
+			}
+
+			if ( ! empty( $tab ) ) {
+				$custom_props['tab'] = $tab;
 			}
 
 			if ( ! empty( $wrapper_attrs ) ) {
