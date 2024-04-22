@@ -40,6 +40,48 @@ class Kirki {
 	}
 
 	/**
+	 * Add a panel.
+	 *
+	 * @param string $panel_id The panel id.
+	 * @param array  $panel_args The panel arguments.
+	 */
+	public static function add_panel( $panel_id = '', $panel_args = [] ) {
+
+		$priority    = isset( $panel_args['priority'] ) ? $panel_args['priority'] : 10;
+		$title       = isset( $panel_args['title'] ) ? $panel_args['title'] : '';
+		$description = isset( $panel_args['description'] ) ? $panel_args['description'] : '';
+
+		wpbf_customizer_panel()
+			->id( $panel_id )
+			->title( $title )
+			->description( $description )
+			->priority( $priority )
+			->add();
+	}
+
+	/**
+	 * Add a section.
+	 *
+	 * @param string $section_id The section id.
+	 * @param array  $section_args The section arguments.
+	 */
+	public static function add_section( $section_id = '', $section_args = [] ) {
+
+		$panel_id    = isset( $section_args['panel'] ) ? $section_args['panel'] : '';
+		$priority    = isset( $section_args['priority'] ) ? $section_args['priority'] : 10;
+		$title       = isset( $section_args['title'] ) ? $section_args['title'] : '';
+		$description = isset( $section_args['description'] ) ? $section_args['description'] : '';
+
+		wpbf_customizer_section()
+			->id( $section_id )
+			->title( $title )
+			->description( $description )
+			->priority( $priority )
+			->addToPanel( $panel_id );
+
+	}
+
+	/**
 	 * Add a field.
 	 *
 	 * @param string $config_key The config key.
