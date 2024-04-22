@@ -206,6 +206,7 @@ class Kirki {
 		wpbf_customizer_field()
 			->id( $settings )
 			->type( $type )
+			->tab( $tab )
 			->label( $label )
 			->description( $description )
 			->defaultValue( $default )
