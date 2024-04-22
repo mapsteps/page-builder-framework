@@ -91,10 +91,12 @@ class Kirki {
 	 */
 	public static function add_field( $config_key = '', $field_args = array() ) {
 
-		$config      = self::get_config( $config_key );
+		$config = self::get_config( $config_key );
+
 		$option_type = isset( $field_args['option_type'] ) ? $field_args['option_type'] : '';
 		$option_type = 'options' === $option_type ? 'option' : $option_type;
 		$option_name = isset( $field_args['option_name'] ) ? $field_args['option_name'] : '';
+		$capability  = isset( $field_args['capability'] ) ? $field_args['capability'] : '';
 
 		if ( empty( $option_type ) ) {
 			$option_type = $config && ! empty( $config['option_type'] ) ? $config['option_type'] : '';
@@ -106,6 +108,10 @@ class Kirki {
 			}
 		} else {
 			$option_name = '';
+		}
+
+		if ( empty( $capability ) ) {
+			$capability = $config && ! empty( $config['capability'] ) ? $config['capability'] : '';
 		}
 
 		$type              = ! empty( $field_args['type'] ) ? $field_args['type'] : '';
@@ -217,6 +223,7 @@ class Kirki {
 			->partialRefresh( $partial_refresh )
 			->transport( $transport )
 			->properties( $custom_props )
+			->capability( $capability )
 			->addToSection( $section );
 
 	}

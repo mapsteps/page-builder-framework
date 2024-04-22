@@ -123,23 +123,6 @@ final class CustomizerField {
 	}
 
 	/**
-	 * Set the setting's option name. Only used when the option type is 'option'.
-	 *
-	 * @param string $option_name Setting's option nmame.
-	 *
-	 * @return $this
-	 */
-	public function optionName( $option_name ) {
-
-		if ( ! empty( $option_name ) && is_string( $option_name ) ) {
-			$this->setting_instance->optionName( $option_name );
-		}
-
-		return $this;
-
-	}
-
-	/**
 	 * Set the capability required to use this control.
 	 *
 	 * @param string $capability The capability required to use this control.
