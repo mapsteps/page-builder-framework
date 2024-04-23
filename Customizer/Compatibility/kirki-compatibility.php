@@ -116,66 +116,69 @@ class Kirki {
 
 		$type              = ! empty( $field_args['type'] ) ? $field_args['type'] : '';
 		$settings          = ! empty( $field_args['settings'] ) ? $field_args['settings'] : '';
+		$tab               = ! empty( $field_args['tab'] ) ? $field_args['tab'] : '';
 		$section           = ! empty( $field_args['section'] ) ? $field_args['section'] : '';
 		$label             = ! empty( $field_args['label'] ) ? $field_args['label'] : '';
 		$description       = ! empty( $field_args['description'] ) ? $field_args['description'] : '';
 		$priority          = ! empty( $field_args['priority'] ) ? $field_args['priority'] : 10;
 		$default           = ! empty( $field_args['default'] ) ? $field_args['default'] : '';
-		$choices           = ! empty( $field_args['choices'] ) ? $field_args['choices'] : array();
+		$choices           = ! empty( $field_args['choices'] ) && is_array( $field_args['choices'] ) ? $field_args['choices'] : array();
 		$is_multi          = ! empty( $field_args['multiple'] ) && 1 < $field_args['multiple'];
 		$max_selections    = $is_multi ? absint( $field_args['multiple'] ) : 1;
 		$active_callback   = ! empty( $field_args['active_callback'] ) && is_array( $field_args['active_callback'] ) ? $field_args['active_callback'] : [];
 		$sanitize_callback = ! empty( $field_args['sanitize_callback'] ) ? $field_args['sanitize_callback'] : '';
 		$partial_refresh   = ! empty( $field_args['partial_refresh'] ) ? $field_args['partial_refresh'] : array();
 		$transport         = ! empty( $field_args['transport'] ) ? $field_args['transport'] : '';
-		$min               = ! empty( $field_args['min'] ) ? $field_args['min'] : null;
-		$max               = ! empty( $field_args['max'] ) ? $field_args['max'] : null;
-		$step              = ! empty( $field_args['step'] ) ? $field_args['step'] : null;
-		$alpha_mode        = ! empty( $field_args['alpha'] ) ? $field_args['alpha'] : false;
-		$save_as           = ! empty( $field_args['save_as'] ) ? $field_args['save_as'] : '';
-		$tab               = ! empty( $field_args['tab'] ) ? $field_args['tab'] : '';
-		$wrapper_attrs     = ! empty( $field_args['wrapper_opts'] ) && is_array( $field_args['wrapper_opts'] ) ? $field_args['wrapper_opts'] : [];
 		$input_attrs       = ! empty( $field_args['input_attrs'] ) && is_array( $field_args['input_attrs'] ) ? $field_args['input_attrs'] : [];
+		$wrapper_attrs     = ! empty( $field_args['wrapper_opts'] ) && is_array( $field_args['wrapper_opts'] ) ? $field_args['wrapper_opts'] : [];
+
+		if ( ! empty( $field_args['wrapper_attrs'] ) && is_array( $field_args['wrapper_attrs'] ) ) {
+			$wrapper_attrs = array_merge( $wrapper_attrs, $field_args['wrapper_attrs'] );
+		}
+
+		$min        = ! empty( $choices['min'] ) ? $choices['min'] : null;
+		$max        = ! empty( $choices['max'] ) ? $choices['max'] : null;
+		$step       = ! empty( $choices['step'] ) ? $choices['step'] : null;
+		$alpha_mode = ! empty( $choices['alpha'] ) ? true : false;
+		$save_as    = ! empty( $choices['save_as'] ) ? $choices['save_as'] : '';
 
 		$custom_props = [];
 
-		if ( ! is_null( $min ) || ! is_null( $max ) || ! is_null( $step ) || $alpha_mode || ! empty( $tab ) || ! empty( $wrapper_attrs ) || ! empty( $input_attrs ) || $is_multi ) {
-			if ( ! is_null( $min ) ) {
-				$custom_props['min'] = $min;
-			}
+		if ( ! is_null( $min ) ) {
+			$custom_props['min'] = $min;
+		}
 
-			if ( ! is_null( $max ) ) {
-				$custom_props['max'] = $max;
-			}
+		if ( ! is_null( $max ) ) {
+			$custom_props['max'] = $max;
+		}
 
-			if ( ! is_null( $step ) ) {
-				$custom_props['step'] = $step;
-			}
+		if ( ! is_null( $step ) ) {
+			$custom_props['step'] = $step;
+		}
 
-			if ( $alpha_mode ) {
-				$custom_props['mode'] = 'alpha';
-			}
+		if ( $alpha_mode ) {
+			$custom_props['mode'] = 'alpha';
+		}
 
-			if ( $is_multi ) {
-				$custom_props['is_multi']       = true;
-				$custom_props['max_selections'] = $max_selections;
-			}
+		if ( $is_multi ) {
+			$custom_props['is_multi']       = true;
+			$custom_props['max_selections'] = $max_selections;
+		}
 
-			if ( ! empty( $save_as ) ) {
-				$custom_props['save_as'] = $save_as;
-			}
+		if ( ! empty( $save_as ) ) {
+			$custom_props['save_as'] = $save_as;
+		}
 
-			if ( ! empty( $tab ) ) {
-				$custom_props['tab'] = $tab;
-			}
+		if ( ! empty( $tab ) ) {
+			$custom_props['tab'] = $tab;
+		}
 
-			if ( ! empty( $wrapper_attrs ) ) {
-				$custom_props['wrapper_attrs'] = $wrapper_attrs;
-			}
+		if ( ! empty( $wrapper_attrs ) ) {
+			$custom_props['wrapper_attrs'] = $wrapper_attrs;
+		}
 
-			if ( ! empty( $input_attrs ) ) {
-				$custom_props['input_attrs'] = $input_attrs;
-			}
+		if ( ! empty( $input_attrs ) ) {
+			$custom_props['input_attrs'] = $input_attrs;
 		}
 
 		if ( 'option' === $option_type && ! empty( $option_name ) ) {
@@ -209,9 +212,7 @@ class Kirki {
 			}, $active_callback );
 		}
 
-		// A 'responsive_padding' type a custom field by PBF.
-		if ( 'responsive_padding' === $type ) {
-			$type    = 'responsive-padding';
+		if ( 'responsive_padding' === $type || 'responsive_input_slider' === $type ) {
 			$default = [];
 
 			if ( ! empty( $field_args['default'] ) && is_string( $field_args['default'] ) ) {
@@ -219,11 +220,22 @@ class Kirki {
 				$default = ! $default || ! is_array( $default ) ? [] : $default;
 			}
 
-			// Let's just use our new 'responsive-padding' default sanitize callback.
+			// Let's just use our new default sanitize callback.
 			$sanitize_callback = '';
 
-			$custom_props['save_as_json']   = true;
-			$custom_props['dont_save_unit'] = true;
+			$custom_props['save_as_json'] = true;
+
+			// A 'responsive_padding' type a custom field by PBF.
+			if ( 'responsive_padding' === $type ) {
+				$type = 'responsive-padding';
+
+				$custom_props['dont_save_unit'] = true;
+			}
+
+			// A 'responsive_input_slider' type a custom field by PBF.
+			if ( 'responsive_input_slider' === $type ) {
+				$type = 'responsive-input-slider';
+			}
 		}
 
 		wpbf_customizer_field()
