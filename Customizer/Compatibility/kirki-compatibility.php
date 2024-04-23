@@ -212,7 +212,8 @@ class Kirki {
 			}, $active_callback );
 		}
 
-		if ( 'responsive_padding' === $type || 'responsive_input_slider' === $type ) {
+		// Page Builder Framework's custom controls.
+		if ( 'responsive_padding' === $type || 'responsive_input_slider' === $type || 'responsive_input' === $type ) {
 			$default = [];
 
 			if ( ! empty( $field_args['default'] ) && is_string( $field_args['default'] ) ) {
@@ -225,16 +226,33 @@ class Kirki {
 
 			$custom_props['save_as_json'] = true;
 
-			// A 'responsive_padding' type a custom field by PBF.
 			if ( 'responsive_padding' === $type ) {
 				$type = 'responsive-padding';
 
 				$custom_props['dont_save_unit'] = true;
 			}
 
-			// A 'responsive_input_slider' type a custom field by PBF.
 			if ( 'responsive_input_slider' === $type ) {
 				$type = 'responsive-input-slider';
+			}
+
+			if ( 'responsive_input' === $type ) {
+				$is_number_field = false;
+
+				if ( ! empty( $default ) ) {
+					foreach ( $default as $key => $value ) {
+						if ( is_numeric( $value ) ) {
+							$is_number_field = true;
+							break;
+						}
+					}
+				}
+
+				if ( $is_number_field ) {
+					$type = 'responsive-number';
+				} else {
+					$type = 'responsive-text';
+				}
 			}
 		}
 
