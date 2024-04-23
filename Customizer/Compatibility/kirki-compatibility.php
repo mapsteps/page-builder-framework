@@ -226,10 +226,14 @@ class Kirki {
 
 			$custom_props['save_as_json'] = true;
 
-			if ( 'responsive_padding' === $type ) {
-				$type = 'responsive-padding';
-
+			if ( 'padding_control' === $type || 'responsive_padding' === $type ) {
 				$custom_props['dont_save_unit'] = true;
+
+				if ( 'padding_control' === $type ) {
+					$type = 'padding';
+				} else {
+					$type = 'responsive-padding';
+				}
 			}
 
 			if ( 'responsive_input_slider' === $type ) {
@@ -237,18 +241,22 @@ class Kirki {
 			}
 
 			if ( 'responsive_input' === $type ) {
-				$is_number_field = false;
+				$is_number_field = true;
 
 				if ( ! empty( $default ) ) {
 					foreach ( $default as $key => $value ) {
-						if ( is_numeric( $value ) ) {
-							$is_number_field = true;
+						if ( ! is_numeric( $value ) ) {
+							$is_number_field = false;
 							break;
 						}
 					}
 				}
 
 				if ( $is_number_field ) {
+					$default = array_map( function ( $value ) {
+						return (float) $value;
+					}, $default );
+
 					$type = 'responsive-number';
 				} else {
 					$type = 'responsive-text';
