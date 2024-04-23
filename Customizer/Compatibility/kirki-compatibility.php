@@ -209,6 +209,23 @@ class Kirki {
 			}, $active_callback );
 		}
 
+		// A 'responsive_padding' type a custom field by PBF.
+		if ( 'responsive_padding' === $type ) {
+			$type    = 'responsive-padding';
+			$default = [];
+
+			if ( ! empty( $field_args['default'] ) && is_string( $field_args['default'] ) ) {
+				$default = json_decode( $field_args['default'], true );
+				$default = ! $default || ! is_array( $default ) ? [] : $default;
+			}
+
+			// Let's just use our new 'responsive-padding' default sanitize callback.
+			$sanitize_callback = '';
+
+			$custom_props['save_as_json']   = true;
+			$custom_props['dont_save_unit'] = true;
+		}
+
 		wpbf_customizer_field()
 			->id( $settings )
 			->type( $type )
