@@ -39,7 +39,9 @@ final class CustomizerControl {
 	 */
 	public function id( $id ) {
 
-		$this->control->id = $id;
+		if ( ! empty( $id ) && is_string( $id ) ) {
+			$this->control->id = $id;
+		}
 
 		return $this;
 
@@ -54,7 +56,9 @@ final class CustomizerControl {
 	 */
 	public function type( $type ) {
 
-		$this->control->type = $type;
+		if ( ! empty( $type ) && is_string( $type ) ) {
+			$this->control->type = $type;
+		}
 
 		return $this;
 
@@ -86,7 +90,9 @@ final class CustomizerControl {
 	 */
 	public function settings( $settings ) {
 
-		$this->control->settings = $settings;
+		if ( ! empty( $settings ) && ( is_string( $settings ) || is_array( $settings ) ) ) {
+			$this->control->settings = $settings;
+		}
 
 		return $this;
 
@@ -101,7 +107,9 @@ final class CustomizerControl {
 	 */
 	public function setting( $setting ) {
 
-		$this->control->setting = $setting;
+		if ( ! empty( $setting ) && is_string( $setting ) ) {
+			$this->control->setting = $setting;
+		}
 
 		return $this;
 
@@ -116,7 +124,9 @@ final class CustomizerControl {
 	 */
 	public function label( $label ) {
 
-		$this->control->label = $label;
+		if ( ! empty( $label ) && is_string( $label ) ) {
+			$this->control->label = $label;
+		}
 
 		return $this;
 
@@ -131,7 +141,9 @@ final class CustomizerControl {
 	 */
 	public function description( $description ) {
 
-		$this->control->description = $description;
+		if ( ! empty( $description ) && is_string( $description ) ) {
+			$this->control->description = $description;
+		}
 
 		return $this;
 
@@ -146,7 +158,9 @@ final class CustomizerControl {
 	 */
 	public function priority( $priority ) {
 
-		$this->control->priority = $priority;
+		if ( ! empty( $priority ) && is_int( $priority ) ) {
+			$this->control->priority = $priority;
+		}
 
 		return $this;
 
@@ -161,7 +175,9 @@ final class CustomizerControl {
 	 */
 	public function choices( $choices ) {
 
-		$this->control->choices = $choices;
+		if ( ! empty( $choices ) && is_array( $choices ) ) {
+			$this->control->choices = $choices;
+		}
 
 		return $this;
 
@@ -176,7 +192,9 @@ final class CustomizerControl {
 	 */
 	public function inputAttrs( $input_attrs ) {
 
-		$this->control->input_attrs = $input_attrs;
+		if ( ! empty( $input_attrs ) && is_array( $input_attrs ) ) {
+			$this->control->input_attrs = $input_attrs;
+		}
 
 		return $this;
 
@@ -194,7 +212,9 @@ final class CustomizerControl {
 	 */
 	public function activeCallback( $active_callback ) {
 
-		$this->control->active_callback = $active_callback;
+		if ( ! empty( $active_callback ) && is_callable( $active_callback ) ) {
+			$this->control->active_callback = $active_callback;
+		}
 
 		return $this;
 
@@ -235,7 +255,9 @@ final class CustomizerControl {
 	 */
 	public function json( $json ) {
 
-		$this->control->json = $json;
+		if ( ! empty( $json ) && is_string( $json ) ) {
+			$this->control->json = $json;
+		}
 
 		return $this;
 
@@ -250,7 +272,9 @@ final class CustomizerControl {
 	 */
 	public function tooltip( $tooltip = '' ) {
 
-		$this->control->tooltip = $tooltip;
+		if ( ! empty( $tooltip ) && is_string( $tooltip ) ) {
+			$this->control->tooltip = $tooltip;
+		}
 
 		return $this;
 
@@ -265,7 +289,9 @@ final class CustomizerControl {
 	 */
 	public function customProperties( $properties = array() ) {
 
-		$this->control->custom_properties = $properties;
+		if ( ! empty( $properties ) && is_array( $properties ) ) {
+			$this->control->custom_properties = $properties;
+		}
 
 		return $this;
 
