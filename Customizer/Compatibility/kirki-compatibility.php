@@ -257,6 +257,13 @@ class Kirki {
 			}, $active_callback );
 		}
 
+		// Kirki's field types compatibility.
+		if ( 'switch' === $type ) {
+			$type = 'toggle';
+
+			$custom_props['checkbox_type'] = 'switch';
+		}
+
 		// Page Builder Framework's custom controls.
 		if ( 'padding_control' === $type || 'responsive_padding' === $type || 'responsive_input_slider' === $type || 'responsive_input' === $type ) {
 			$default = [];
@@ -309,10 +316,9 @@ class Kirki {
 			}
 		}
 
-		if ( 'switch' === $type ) {
-			$type = 'toggle';
-
-			$custom_props['checkbox_type'] = 'switch';
+		// Other PBF's field types compatibility.
+		if ( 'input_slider' === $type ) {
+			$type = 'input-slider';
 		}
 
 		wpbf_customizer_field()
