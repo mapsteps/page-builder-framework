@@ -30,52 +30,52 @@ wpbf_customizer_section()
 	->addToPanel( 'lifterlms_panel' );
 
 // Sidebar.
-// wpbf_customizer_section()
-// 	->id( 'wpbf_lifterlms_sidebar_options' )
-// 	->title( __( 'Sidebar', 'page-builder-framework' ) )
-// 	->priority( 2 )
-// 	->addToPanel( 'lifterlms_panel' );
+
+/*
+wpbf_customizer_section()
+	->id( 'wpbf_lifterlms_sidebar_options' )
+	->title( __( 'Sidebar', 'page-builder-framework' ) )
+	->priority( 2 )
+	->addToPanel( 'lifterlms_panel' );
+*/
 
 /* Fields - Colors */
 
 // Primary color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'lifterlms_primary_color',
-	'label'           => __( 'Primary Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_lifterlms_color_options',
-	'default'         => '#2295ff',
-	'priority'        => 1,
-	// 'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'lifterlms_primary_color' )
+	->type( 'color' )
+	->label( __( 'Primary Color', 'page-builder-framework' ) )
+	->defaultValue( '#2295ff' )
+	->priority( 1 )
+	// ->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( 'wpbf_lifterlms_color_options' );
 
 // Action color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'lifterlms_action_color',
-	'label'           => __( 'Action Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_lifterlms_color_options',
-	'default'         => '#f8954f',
-	'priority'        => 1,
-	// 'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'lifterlms_action_color' )
+	->type( 'color' )
+	->label( __( 'Action Color', 'page-builder-framework' ) )
+	->defaultValue( '#f8954f' )
+	->priority( 1 )
+	// ->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( 'wpbf_lifterlms_color_options' );
 
 // Accent color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'lifterlms_accent_color',
-	'label'           => __( 'Accent Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_lifterlms_color_options',
-	'default'         => '#ef476f',
-	'priority'        => 1,
-	// 'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-) );
+wpbf_customizer_field()
+	->id( 'lifterlms_accent_color' )
+	->type( 'color' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->defaultValue( '#ef476f' )
+	->priority( 1 )
+	// ->transport( 'postMessage' )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( 'wpbf_lifterlms_color_options' );
