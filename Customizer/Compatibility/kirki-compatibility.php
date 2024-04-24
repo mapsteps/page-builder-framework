@@ -272,6 +272,12 @@ class Kirki {
 			}
 		}
 
+		if ( 'switch' === $type ) {
+			$type = 'toggle';
+
+			$custom_props['checkbox_type'] = 'switch';
+		}
+
 		wpbf_customizer_field()
 			->id( $settings )
 			->type( $type )

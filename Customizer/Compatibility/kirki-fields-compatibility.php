@@ -15,6 +15,7 @@
  * - Multicheck
  * - Multicolor
  * - Palette
+ * - Repeater
  *
  * @package Page Builder Framework
  */
@@ -35,7 +36,7 @@ if ( ! class_exists( ( '\Kirki\Field\Checkbox' ) ) ) {
 	class Checkbox {
 
 		/**
-		 * Margin field constructor.
+		 * Checkbox field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */
@@ -60,7 +61,7 @@ if ( ! class_exists( ( '\Kirki\Field\Color' ) ) ) {
 	class Color {
 
 		/**
-		 * Margin field constructor.
+		 * Color field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */
@@ -85,7 +86,7 @@ if ( ! class_exists( ( '\Kirki\Field\ReactColorful' ) ) ) {
 	class ReactColorful {
 
 		/**
-		 * Margin field constructor.
+		 * ReactColorful field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */
@@ -110,7 +111,7 @@ if ( ! class_exists( ( '\Kirki\Field\Dimension' ) ) ) {
 	class Dimension {
 
 		/**
-		 * Margin field constructor.
+		 * Dimension field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */
@@ -194,7 +195,7 @@ if ( ! class_exists( ( '\Kirki\Field\Image' ) ) ) {
 	class Image {
 
 		/**
-		 * Margin field constructor.
+		 * Image field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */
@@ -227,7 +228,7 @@ if ( ! class_exists( ( '\Kirki\Field\URL' ) ) ) {
 	class URL {
 
 		/**
-		 * Margin field constructor.
+		 * URL field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */
@@ -259,6 +260,339 @@ if ( ! class_exists( ( '\Kirki\Field\Number' ) ) ) {
 		public function __construct( $field_args = [] ) {
 
 			$field_args['type'] = 'number';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Radio' ) ) ) {
+	/**
+	 * PBF's "fake" Radio class for compatiblity purpose.
+	 * This class will transform Kirki's "radio" fields into PBF's new Customizer "radio" fields.
+	 */
+	class Radio {
+
+		/**
+		 * Radio field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'radio';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Radio_Buttonset' ) ) ) {
+	/**
+	 * PBF's "fake" Radio_Buttonset class for compatiblity purpose.
+	 * This class will transform Kirki's "radio-buttonset" fields into PBF's new Customizer "radio-buttonset" fields.
+	 */
+	class Radio_Buttonset {
+
+		/**
+		 * Radio_Buttonset field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'radio-buttonset';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Radio_Image' ) ) ) {
+	/**
+	 * PBF's "fake" Radio_Image class for compatiblity purpose.
+	 * This class will transform Kirki's "radio-image" fields into PBF's new Customizer "radio-image" fields.
+	 */
+	class Radio_Image {
+
+		/**
+		 * Radio_Image field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'radio-image';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Select' ) ) ) {
+	/**
+	 * PBF's "fake" Select class for compatiblity purpose.
+	 * This class will transform Kirki's "select" fields into PBF's new Customizer "select" fields.
+	 */
+	class Select {
+
+		/**
+		 * Select field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'select';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\ReactSelect' ) ) ) {
+	/**
+	 * PBF's "fake" ReactSelect class for compatiblity purpose.
+	 * This class will transform Kirki's "select" fields into PBF's new Customizer "select" fields.
+	 */
+	class ReactSelect {
+
+		/**
+		 * ReactSelect field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'select';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Slider' ) ) ) {
+	/**
+	 * PBF's "fake" Slider class for compatiblity purpose.
+	 * This class will transform Kirki's "slider" fields into PBF's new Customizer "slider" fields.
+	 */
+	class Slider {
+
+		/**
+		 * Slider field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'slider';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Sortable' ) ) ) {
+	/**
+	 * PBF's "fake" Sortable class for compatiblity purpose.
+	 * This class will transform Kirki's "sortable" fields into PBF's new Customizer "sortable" fields.
+	 */
+	class Sortable {
+
+		/**
+		 * Sortable field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'sortable';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Checkbox_Switch' ) ) ) {
+	/**
+	 * PBF's "fake" Checkbox_Switch class for compatiblity purpose.
+	 * This class will transform Kirki's "switch" fields into PBF's new Customizer "toggle" fields with checkbox type set to "switch".
+	 */
+	class Checkbox_Switch {
+
+		/**
+		 * Checkbox_Switch field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'switch';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Text' ) ) ) {
+	/**
+	 * PBF's "fake" Text class for compatiblity purpose.
+	 * This class will transform Kirki's "text" fields into PBF's new Customizer "text" fields.
+	 */
+	class Text {
+
+		/**
+		 * Text field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'text';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Textarea' ) ) ) {
+	/**
+	 * PBF's "fake" Textarea class for compatiblity purpose.
+	 * This class will transform Kirki's "textarea" fields into PBF's new Customizer "textarea" fields.
+	 */
+	class Textarea {
+
+		/**
+		 * Textarea field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'textarea';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Checkbox_Toggle' ) ) ) {
+	/**
+	 * PBF's "fake" Checkbox_Toggle class for compatiblity purpose.
+	 * This class will transform Kirki's "toggle" fields into PBF's new Customizer "toggle" fields.
+	 */
+	class Checkbox_Toggle {
+
+		/**
+		 * Checkbox_Toggle field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'toggle';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Typography' ) ) ) {
+	/**
+	 * PBF's "fake" Typography class for compatiblity purpose.
+	 * This class will transform Kirki's "typography" fields into PBF's new Customizer "typography" fields.
+	 */
+	class Typography {
+
+		/**
+		 * Typography field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'typography';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Upload' ) ) ) {
+	/**
+	 * PBF's "fake" Upload class for compatiblity purpose.
+	 * This class will transform Kirki's "upload" fields into PBF's new Customizer "upload" fields.
+	 */
+	class Upload {
+
+		/**
+		 * Upload field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'upload';
+
+			if ( ! isset( $field_args['choices'] ) ) {
+				$field_args['choices'] = [];
+			}
+
+			if ( ! isset( $field_args['choices']['save_as'] ) ) {
+				$field_args['choices']['save_as'] = 'url';
+			}
 
 			if ( class_exists( '\Kirki' ) ) {
 				\Kirki::add_field( '', $field_args );
