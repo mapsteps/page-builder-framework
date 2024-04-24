@@ -125,8 +125,6 @@ class Kirki {
 		$description       = ! empty( $field_args['description'] ) ? $field_args['description'] : '';
 		$default           = ! empty( $field_args['default'] ) ? $field_args['default'] : '';
 		$choices           = ! empty( $field_args['choices'] ) && is_array( $field_args['choices'] ) ? $field_args['choices'] : array();
-		$is_multi          = ! empty( $field_args['multiple'] ) && 1 < $field_args['multiple'];
-		$max_selections    = $is_multi ? absint( $field_args['multiple'] ) : 1;
 		$priority          = ! empty( $field_args['priority'] ) ? $field_args['priority'] : 10;
 		$transport         = ! empty( $field_args['transport'] ) ? $field_args['transport'] : '';
 		$tooltip           = ! empty( $field_args['tooltip'] ) ? $field_args['tooltip'] : '';
@@ -140,45 +138,55 @@ class Kirki {
 			$wrapper_attrs = array_merge( $wrapper_attrs, $field_args['wrapper_attrs'] );
 		}
 
-		$min        = ! empty( $choices['min'] ) ? $choices['min'] : null;
-		$max        = ! empty( $choices['max'] ) ? $choices['max'] : null;
-		$step       = ! empty( $choices['step'] ) ? $choices['step'] : null;
-		$alpha_mode = ! empty( $choices['alpha'] ) ? true : false;
-		$save_as    = ! empty( $choices['save_as'] ) ? $choices['save_as'] : '';
-
 		$custom_props = [];
 
-		if ( ! is_null( $min ) ) {
-			$custom_props['min'] = $min;
+		if ( isset( $choices['min'] ) ) {
+			$custom_props['min'] = $choices['min'];
+			unset( $choices['min'] );
 		}
 
-		if ( ! is_null( $max ) ) {
-			$custom_props['max'] = $max;
+		if ( isset( $choices['max'] ) ) {
+			$custom_props['max'] = $choices['max'];
+			unset( $choices['max'] );
 		}
 
-		if ( ! is_null( $step ) ) {
-			$custom_props['step'] = $step;
+		if ( isset( $choices['step'] ) ) {
+			$custom_props['step'] = $choices['step'];
+			unset( $choices['step'] );
 		}
 
-		if ( $alpha_mode ) {
+		if ( isset( $choices['alpha'] ) ) {
 			$custom_props['mode'] = 'alpha';
+			unset( $choices['alpha'] );
 		}
 
-		if ( $is_multi ) {
-			$custom_props['is_multi']       = true;
-			$custom_props['max_selections'] = $max_selections;
+		if ( isset( $choices['multiple'] ) ) {
+			$custom_props['is_multi'] = is_numeric( $choices['multiple'] ) && 1 < $choices['multiple'];
+
+			if ( $custom_props['is_multi'] ) {
+				$custom_props['max_selections'] = absint( $choices['multiple'] );
+			}
+
+			unset( $choices['multiple'] );
 		}
 
-		if ( ! empty( $save_as ) ) {
-			$custom_props['save_as'] = $save_as;
-		}
-
-		if ( ! empty( $tab ) ) {
-			$custom_props['tab'] = $tab;
+		if ( isset( $choices['save_as'] ) ) {
+			$custom_props['save_as'] = $choices['save_as'];
+			unset( $choices['save_as'] );
 		}
 
 		if ( ! empty( $wrapper_attrs ) ) {
 			$custom_props['wrapper_attrs'] = $wrapper_attrs;
+		}
+
+		if ( isset( $choices['form_component'] ) ) {
+			$custom_props['form_component'] = $choices['form_component'];
+			unset( $choices['form_component'] );
+		}
+
+		if ( isset( $choices['accept_unitless'] ) ) {
+			$custom_props['allow_unitless'] = boolval( $choices['accept_unitless'] );
+			unset( $choices['accept_unitless'] );
 		}
 
 		if ( 'option' === $option_type && ! empty( $option_name ) ) {
@@ -213,7 +221,7 @@ class Kirki {
 		}
 
 		// Page Builder Framework's custom controls.
-		if ( 'responsive_padding' === $type || 'responsive_input_slider' === $type || 'responsive_input' === $type ) {
+		if ( 'padding_control' === $type || 'responsive_padding' === $type || 'responsive_input_slider' === $type || 'responsive_input' === $type ) {
 			$default = [];
 
 			if ( ! empty( $field_args['default'] ) && is_string( $field_args['default'] ) ) {
@@ -262,18 +270,6 @@ class Kirki {
 					$type = 'responsive-text';
 				}
 			}
-		}
-
-		$form_component = ! empty( $choices['form_component'] ) ? $choices['form_component'] : '';
-
-		if ( ! empty( $form_component ) ) {
-			$custom_props['form_component'] = $form_component;
-		}
-
-		$allow_unitless = isset( $choices['accept_unitless'] ) && is_bool( $choices['accept_unitless'] ) ? $choices['accept_unitless'] : null;
-
-		if ( is_bool( $allow_unitless ) ) {
-			$custom_props['allow_unitless'] = $allow_unitless;
 		}
 
 		wpbf_customizer_field()

@@ -12,6 +12,9 @@
  * - Dimensions (the plural one)
  * - Dropdown Pages
  * - Editor
+ * - Multicheck
+ * - Multicolor
+ * - Palette
  *
  * @package Page Builder Framework
  */
@@ -174,7 +177,88 @@ if ( ! class_exists( ( '\Kirki\Field\Generic' ) ) ) {
 			// Help free up memory.
 			unset( $choices );
 
-			$field_args['type'] = 'dimension';
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Image' ) ) ) {
+	/**
+	 * PBF's "fake" Image class for compatiblity purpose.
+	 * This class will transform Kirki's "image" fields into PBF's new Customizer "image" fields.
+	 */
+	class Image {
+
+		/**
+		 * Margin field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'image';
+
+			if ( ! isset( $field_args['choices'] ) ) {
+				$field_args['choices'] = [];
+			}
+
+			if ( ! isset( $field_args['choices']['save_as'] ) ) {
+				$field_args['choices']['save_as'] = 'url';
+			}
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\URL' ) ) ) {
+	/**
+	 * PBF's "fake" URL class for compatiblity purpose.
+	 * This class will transform Kirki's "url" fields into PBF's new Customizer "url" fields.
+	 */
+	class URL {
+
+		/**
+		 * Margin field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'url';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Number' ) ) ) {
+	/**
+	 * PBF's "fake" Number class for compatiblity purpose.
+	 * This class will transform Kirki's "number" fields into PBF's new Customizer "number" fields.
+	 */
+	class Number {
+
+		/**
+		 * Number field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'number';
 
 			if ( class_exists( '\Kirki' ) ) {
 				\Kirki::add_field( '', $field_args );
