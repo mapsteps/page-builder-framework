@@ -39,76 +39,67 @@ wpbf_customizer_section()
 /* Fields - Sidebar */
 
 // Shop sidebar layout.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'edd_sidebar_layout',
-	'label'    => __( 'Shop Page Sidebar', 'page-builder-framework' ),
-	'section'  => 'wpbf_edd_sidebar_options',
-	'default'  => 'global',
-	'priority' => 0,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'edd_sidebar_layout' )
+	->type( 'select' )
+	->label( __( 'Shop Page Sidebar', 'page-builder-framework' ) )
+	->defaultValue( 'global' )
+	->priority( 0 )
+	->choices( array(
 		'global' => __( 'Inherit Global Settings', 'page-builder-framework' ),
 		'right'  => __( 'Right', 'page-builder-framework' ),
 		'left'   => __( 'Left', 'page-builder-framework' ),
 		'none'   => __( 'No Sidebar', 'page-builder-framework' ),
-	),
-) );
+	) )
+	->addToSection( 'wpbf_edd_sidebar_options' );
 
 // Product sidebar layout.
-Kirki::add_field( 'wpbf', array(
-	'type'     => 'select',
-	'settings' => 'edd_single_sidebar_layout',
-	'label'    => __( 'Product Page Sidebar', 'page-builder-framework' ),
-	'section'  => 'wpbf_edd_sidebar_options',
-	'default'  => 'global',
-	'priority' => 0,
-	'multiple' => 1,
-	'choices'  => array(
+wpbf_customizer_field()
+	->id( 'edd_single_sidebar_layout' )
+	->type( 'select' )
+	->label( __( 'Product Page Sidebar', 'page-builder-framework' ) )
+	->defaultValue( 'global' )
+	->priority( 0 )
+	->choices( array(
 		'global' => __( 'Inherit Global Settings', 'page-builder-framework' ),
 		'right'  => __( 'Right', 'page-builder-framework' ),
 		'left'   => __( 'Left', 'page-builder-framework' ),
 		'none'   => __( 'No Sidebar', 'page-builder-framework' ),
-	),
-) );
+	) )
+	->addToSection( 'wpbf_edd_sidebar_options' );
 
 /* Fields - Menu Item */
 
 // Hide from non-EDD pages.
-Kirki::add_field( 'wpbf', array(
-	'type'        => 'toggle',
-	'settings'    => 'edd_menu_item_hide_if_not_edd',
-	'label'       => __( 'Hide from non-Shop Pages', 'page-builder-framework' ),
-	'description' => __( 'Display Menu Item only on EDD related pages.', 'page-builder-framework' ),
-	'section'     => 'wpbf_edd_menu_item_options',
-	'default'     => 0,
-	'priority'    => 5,
-) );
+wpbf_customizer_field()
+	->id( 'edd_menu_item_hide_if_not_edd' )
+	->type( 'toggle' )
+	->label( __( 'Hide from non-Shop Pages', 'page-builder-framework' ) )
+	->description( __( 'Display Menu Item only on EDD related pages.', 'page-builder-framework' ) )
+	->defaultValue( 0 )
+	->priority( 5 )
+	->addToSection( 'wpbf_edd_menu_item_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'edd_menu_item_separator_1',
-		'section'  => 'wpbf_edd_menu_item_options',
-		'priority' => 5,
-	]
-);
+wpbf_customizer_field()
+	->id( 'edd_menu_item_separator_1' )
+	->type( 'divider' )
+	->priority( 5 )
+	->addToSection( 'wpbf_edd_menu_item_options' );
 
 // Menu item.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'edd_menu_item_desktop',
-	'label'           => __( 'Visibility (Desktop)', 'page-builder-framework' ),
-	'description'     => __( 'Add a Cart Icon to your Main Navigation.', 'page-builder-framework' ),
-	'section'         => 'wpbf_edd_menu_item_options',
-	'default'         => 'show',
-	'priority'        => 10,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'edd_menu_item_desktop' )
+	->type( 'select' )
+	->label( __( 'Visibility (Desktop)', 'page-builder-framework' ) )
+	->description( __( 'Add a Cart Icon to your Main Navigation.', 'page-builder-framework' ) )
+	->defaultValue( 'show' )
+	->priority( 10 )
+	->choices( array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-	'partial_refresh' => array(
+	) )
+	->partialRefresh( array(
 		'eddmenuitemdesktop' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -116,59 +107,54 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	) )
+	->addToSection( 'wpbf_edd_menu_item_options' );
 
 // Menu item color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'edd_menu_item_desktop_color',
-	'label'           => __( 'Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_edd_menu_item_options',
-	'default'         => '',
-	'priority'        => 11,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'edd_menu_item_desktop_color' )
+	->type( 'color' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->defaultValue( '' )
+	->priority( 11 )
+	->transport( 'postMessage' )
+	->activeCallback( array(
 		array(
-			'setting'  => 'edd_menu_item_desktop',
+			'id'       => 'edd_menu_item_desktop',
 			'operator' => '!=',
 			'value'    => 'hide',
 		),
 		array(
-			'setting'  => 'edd_menu_item_count',
+			'id'       => 'edd_menu_item_count',
 			'operator' => '!=',
 			'value'    => 'hide',
 		),
-	),
-) );
+	) )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( 'wpbf_edd_menu_item_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'edd_menu_item_separator_2',
-		'section'  => 'wpbf_edd_menu_item_options',
-		'priority' => 12,
-	]
-);
+wpbf_customizer_field()
+	->id( 'edd_menu_item_separator_2' )
+	->type( 'divider' )
+	->priority( 12 )
+	->addToSection( 'wpbf_edd_menu_item_options' );
 
 // Mobile menu item.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'edd_menu_item_mobile',
-	'label'           => __( 'Visibility (Mobile)', 'page-builder-framework' ),
-	'description'     => __( 'Add a Cart Icon to your Mobile Navigation.', 'page-builder-framework' ),
-	'section'         => 'wpbf_edd_menu_item_options',
-	'default'         => 'show',
-	'priority'        => 13,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'edd_menu_item_mobile' )
+	->type( 'select' )
+	->label( __( 'Visibility (Mobile)', 'page-builder-framework' ) )
+	->description( __( 'Add a Cart Icon to your Mobile Navigation.', 'page-builder-framework' ) )
+	->defaultValue( 'show' )
+	->priority( 13 )
+	->choices( array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-	'partial_refresh' => array(
+	) )
+	->partialRefresh( array(
 		'eddmenuitemmobile' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
@@ -176,64 +162,59 @@ Kirki::add_field( 'wpbf', array(
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	) )
+	->addToSection( 'wpbf_edd_menu_item_options' );
 
 // Menu item color.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'color',
-	'settings'        => 'edd_menu_item_mobile_color',
-	'label'           => __( 'Color', 'page-builder-framework' ),
-	'section'         => 'wpbf_edd_menu_item_options',
-	'default'         => '',
-	'priority'        => 14,
-	'transport'       => 'postMessage',
-	'choices'         => array(
-		'alpha' => true,
-	),
-	'active_callback' => array(
+wpbf_customizer_field()
+	->id( 'edd_menu_item_mobile_color' )
+	->type( 'color' )
+	->label( __( 'Color', 'page-builder-framework' ) )
+	->defaultValue( '' )
+	->priority( 14 )
+	->transport( 'postMessage' )
+	->activeCallback( array(
 		array(
-			'setting'  => 'edd_menu_item_mobile',
+			'id'       => 'edd_menu_item_mobile',
 			'operator' => '!=',
 			'value'    => 'hide',
 		),
 		array(
-			'setting'  => 'edd_menu_item_count',
+			'id'       => 'edd_menu_item_count',
 			'operator' => '!=',
 			'value'    => 'hide',
 		),
-	),
-) );
+	) )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( 'wpbf_edd_menu_item_options' );
 
 // Separator.
-new \Kirki\Pro\Field\Divider(
-	[
-		'settings' => 'edd_menu_item_separator_3',
-		'section'  => 'wpbf_edd_menu_item_options',
-		'priority' => 15,
-	]
-);
+wpbf_customizer_field()
+	->id( 'edd_menu_item_separator_3' )
+	->type( 'divider' )
+	->priority( 15 )
+	->addToSection( 'wpbf_edd_menu_item_options' );
 
 // Menu item count.
-Kirki::add_field( 'wpbf', array(
-	'type'            => 'select',
-	'settings'        => 'edd_menu_item_count',
-	'label'           => __( 'Count', 'page-builder-framework' ),
-	'section'         => 'wpbf_edd_menu_item_options',
-	'default'         => 'show',
-	'priority'        => 16,
-	'multiple'        => 1,
-	'choices'         => array(
+wpbf_customizer_field()
+	->id( 'edd_menu_item_count' )
+	->type( 'select' )
+	->label( __( 'Count', 'page-builder-framework' ) )
+	->defaultValue( 'show' )
+	->priority( 16 )
+	->choices( array(
 		'show' => __( 'Show', 'page-builder-framework' ),
 		'hide' => __( 'Hide', 'page-builder-framework' ),
-	),
-	'partial_refresh' => array(
+	) )
+	->partialRefresh( array(
 		'eddmenuitemcount' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
-			'render_callback'     => function () {
+			'renderCallback'      => function () {
 				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
-	),
-) );
+	) )
+	->addToSection( 'wpbf_edd_menu_item_options' );
