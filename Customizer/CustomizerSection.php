@@ -46,7 +46,9 @@ final class CustomizerSection {
 	 */
 	public function id( $id ) {
 
-		$this->section->id = $id;
+		if ( ! empty( $id ) && is_string( $id ) ) {
+			$this->section->id = $id;
+		}
 
 		return $this;
 
@@ -61,7 +63,9 @@ final class CustomizerSection {
 	 */
 	public function priority( $priority ) {
 
-		$this->section->priority = $priority;
+		if ( ! empty( $priority ) && is_int( $priority ) ) {
+			$this->section->priority = $priority;
+		}
 
 		return $this;
 
@@ -76,7 +80,9 @@ final class CustomizerSection {
 	 */
 	public function capability( $capability ) {
 
-		$this->section->capability = $capability;
+		if ( ! empty( $capability ) && is_string( $capability ) ) {
+			$this->section->capability = $capability;
+		}
 
 		return $this;
 
@@ -91,7 +97,9 @@ final class CustomizerSection {
 	 */
 	public function type( $type ) {
 
-		$this->section->type = $type;
+		if ( ! empty( $type ) && is_string( $type ) ) {
+			$this->section->type = $type;
+		}
 
 		return $this;
 
@@ -106,7 +114,9 @@ final class CustomizerSection {
 	 */
 	public function title( $title ) {
 
-		$this->section->title = $title;
+		if ( ! empty( $title ) && is_string( $title ) ) {
+			$this->section->title = $title;
+		}
 
 		return $this;
 
@@ -121,7 +131,9 @@ final class CustomizerSection {
 	 */
 	public function description( $description ) {
 
-		$this->section->description = $description;
+		if ( ! empty( $description ) && is_string( $description ) ) {
+			$this->section->description = $description;
+		}
 
 		return $this;
 
@@ -139,7 +151,9 @@ final class CustomizerSection {
 	 */
 	public function activeCallback( $active_callback ) {
 
-		$this->section->active_callback = $active_callback;
+		if ( ! empty( $active_callback ) && is_callable( $active_callback ) ) {
+			$this->section->active_callback = $active_callback;
+		}
 
 		return $this;
 
@@ -152,11 +166,9 @@ final class CustomizerSection {
 	 */
 	public function tabs( $tabs ) {
 
-		if ( empty( $tabs ) || ! is_array( $tabs ) ) {
-			return $this;
+		if ( ! empty( $tabs ) && is_array( $tabs ) ) {
+			$this->section_tabs = $tabs;
 		}
-
-		$this->section_tabs = $tabs;
 
 		return $this;
 
@@ -171,7 +183,9 @@ final class CustomizerSection {
 	 */
 	public function customProperties( $properties = array() ) {
 
-		$this->section->custom_properties = $properties;
+		if ( ! empty( $properties ) && is_array( $properties ) ) {
+			$this->section->custom_properties = $properties;
+		}
 
 		return $this;
 

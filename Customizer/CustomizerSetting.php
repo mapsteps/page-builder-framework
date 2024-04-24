@@ -39,7 +39,9 @@ class CustomizerSetting {
 	 */
 	public function id( $id ) {
 
-		$this->setting->id = $id;
+		if ( ! empty( $id ) && is_string( $id ) ) {
+			$this->setting->id = $id;
+		}
 
 		return $this;
 
@@ -54,7 +56,7 @@ class CustomizerSetting {
 	 */
 	public function type( $type ) {
 
-		if ( ! empty( $type ) && is_string( $type ) ) {
+		if ( ! empty( $type ) && ( 'theme_mod' === $type || 'option' === $type ) ) {
 			$this->setting->type = $type;
 		}
 
@@ -103,7 +105,9 @@ class CustomizerSetting {
 	 */
 	public function transport( $transport ) {
 
-		$this->setting->transport = $transport;
+		if ( ! empty( $transport ) && is_string( $transport ) ) {
+			$this->setting->transport = $transport;
+		}
 
 		return $this;
 
@@ -118,7 +122,9 @@ class CustomizerSetting {
 	 */
 	public function validateCallback( $callback ) {
 
-		$this->setting->validate_callback = $callback;
+		if ( ! empty( $callback ) && is_callable( $callback ) ) {
+			$this->setting->validate_callback = $callback;
+		}
 
 		return $this;
 
@@ -133,7 +139,9 @@ class CustomizerSetting {
 	 */
 	public function sanitizeCallback( $callback ) {
 
-		$this->setting->sanitize_callback = $callback;
+		if ( ! empty( $callback ) && is_callable( $callback ) ) {
+			$this->setting->sanitize_callback = $callback;
+		}
 
 		return $this;
 
@@ -148,7 +156,9 @@ class CustomizerSetting {
 	 */
 	public function sanitizeJsCallback( $callback ) {
 
-		$this->setting->sanitize_js_callback = $callback;
+		if ( ! empty( $callback ) && is_callable( $callback ) ) {
+			$this->setting->sanitize_js_callback = $callback;
+		}
 
 		return $this;
 

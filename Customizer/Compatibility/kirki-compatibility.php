@@ -25,6 +25,7 @@ class Kirki {
 	public static function add_config( $config_key = '', $config_args = array() ) {
 
 		self::$configs[ $config_key ] = $config_args;
+
 	}
 
 	/**
@@ -120,15 +121,16 @@ class Kirki {
 		$section           = ! empty( $field_args['section'] ) ? $field_args['section'] : '';
 		$label             = ! empty( $field_args['label'] ) ? $field_args['label'] : '';
 		$description       = ! empty( $field_args['description'] ) ? $field_args['description'] : '';
-		$priority          = ! empty( $field_args['priority'] ) ? $field_args['priority'] : 10;
 		$default           = ! empty( $field_args['default'] ) ? $field_args['default'] : '';
 		$choices           = ! empty( $field_args['choices'] ) && is_array( $field_args['choices'] ) ? $field_args['choices'] : array();
 		$is_multi          = ! empty( $field_args['multiple'] ) && 1 < $field_args['multiple'];
 		$max_selections    = $is_multi ? absint( $field_args['multiple'] ) : 1;
+		$priority          = ! empty( $field_args['priority'] ) ? $field_args['priority'] : 10;
+		$transport         = ! empty( $field_args['transport'] ) ? $field_args['transport'] : '';
+		$tooltip           = ! empty( $field_args['tooltip'] ) ? $field_args['tooltip'] : '';
 		$active_callback   = ! empty( $field_args['active_callback'] ) && is_array( $field_args['active_callback'] ) ? $field_args['active_callback'] : [];
 		$sanitize_callback = ! empty( $field_args['sanitize_callback'] ) ? $field_args['sanitize_callback'] : '';
 		$partial_refresh   = ! empty( $field_args['partial_refresh'] ) ? $field_args['partial_refresh'] : array();
-		$transport         = ! empty( $field_args['transport'] ) ? $field_args['transport'] : '';
 		$input_attrs       = ! empty( $field_args['input_attrs'] ) && is_array( $field_args['input_attrs'] ) ? $field_args['input_attrs'] : [];
 		$wrapper_attrs     = ! empty( $field_args['wrapper_opts'] ) && is_array( $field_args['wrapper_opts'] ) ? $field_args['wrapper_opts'] : [];
 
@@ -272,13 +274,14 @@ class Kirki {
 			->description( $description )
 			->defaultValue( $default )
 			->choices( $choices )
+			->capability( $capability )
 			->priority( $priority )
+			->transport( $transport )
+			->properties( $custom_props )
+			->tooltip( $tooltip )
 			->activeCallback( $active_callback )
 			->sanitizeCallback( $sanitize_callback )
 			->partialRefresh( $partial_refresh )
-			->transport( $transport )
-			->properties( $custom_props )
-			->capability( $capability )
 			->addToSection( $section );
 
 	}

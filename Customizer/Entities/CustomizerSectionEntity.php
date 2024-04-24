@@ -56,7 +56,7 @@ class CustomizerSectionEntity {
 	 *
 	 * @var string
 	 */
-	public $title;
+	public $title = '';
 
 	/**
 	 * Description to show in the UI.

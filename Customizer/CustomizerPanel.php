@@ -39,7 +39,9 @@ final class CustomizerPanel {
 	 */
 	public function id( $id ) {
 
-		$this->panel->id = $id;
+		if ( ! empty( $id ) && is_string( $id ) ) {
+			$this->panel->id = $id;
+		}
 
 		return $this;
 
@@ -54,7 +56,9 @@ final class CustomizerPanel {
 	 */
 	public function priority( $priority ) {
 
-		$this->panel->priority = $priority;
+		if ( ! empty( $priority ) && is_int( $priority ) ) {
+			$this->panel->priority = $priority;
+		}
 
 		return $this;
 
@@ -69,7 +73,9 @@ final class CustomizerPanel {
 	 */
 	public function capability( $capability ) {
 
-		$this->panel->capability = $capability;
+		if ( ! empty( $capability ) && is_string( $capability ) ) {
+			$this->panel->capability = $capability;
+		}
 
 		return $this;
 
@@ -84,7 +90,9 @@ final class CustomizerPanel {
 	 */
 	public function title( $title ) {
 
-		$this->panel->title = $title;
+		if ( ! empty( $title ) && is_string( $title ) ) {
+			$this->panel->title = $title;
+		}
 
 		return $this;
 
@@ -99,7 +107,9 @@ final class CustomizerPanel {
 	 */
 	public function description( $description ) {
 
-		$this->panel->description = $description;
+		if ( ! empty( $description ) && is_string( $description ) ) {
+			$this->panel->description = $description;
+		}
 
 		return $this;
 
@@ -117,7 +127,9 @@ final class CustomizerPanel {
 	 */
 	public function activeCallback( $active_callback ) {
 
-		$this->panel->active_callback = $active_callback;
+		if ( ! empty( $active_callback ) && is_callable( $active_callback ) ) {
+			$this->panel->active_callback = $active_callback;
+		}
 
 		return $this;
 

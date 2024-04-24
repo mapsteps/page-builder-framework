@@ -114,9 +114,10 @@ final class CustomizerField {
 	 */
 	public function optionType( $option_type ) {
 
-		if ( ! empty( $option_type ) && ( 'theme_mod' === $option_type || 'option' === $option_type ) ) {
-			$this->setting_instance->type( $option_type );
-		}
+		// Tollerate developer's typo mistake.
+		$option_type = 'options' === $option_type ? 'option' : $option_type;
+
+		$this->setting_instance->type( $option_type );
 
 		return $this;
 
@@ -206,10 +207,6 @@ final class CustomizerField {
 	 * @return $this
 	 */
 	public function transport( $transport ) {
-
-		if ( empty( $transport ) ) {
-			return $this;
-		}
 
 		$this->setting_instance->transport( $transport );
 

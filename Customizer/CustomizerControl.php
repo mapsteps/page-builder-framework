@@ -56,7 +56,7 @@ final class CustomizerControl {
 	 */
 	public function type( $type ) {
 
-		if ( ! empty( $type ) && is_string( $type ) ) {
+		if ( is_string( $type ) ) {
 			$this->control->type = $type;
 		}
 
