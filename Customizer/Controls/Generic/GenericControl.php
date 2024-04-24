@@ -18,7 +18,7 @@ class GenericControl extends BaseControl {
 	/**
 	 * Control's subtype.
 	 *
-	 * Accepts one of this values: "number", "number-unit", "text", "textarea", "email", "url", "hidden", and "content".
+	 * Accepts one of this values: "number", "number-unit", "text", "textarea", "email", "password", "url", "hidden", and "content".
 	 *
 	 * @var string
 	 */
@@ -29,7 +29,7 @@ class GenericControl extends BaseControl {
 	 *
 	 * @var string[]
 	 */
-	public static $allowed_subtypes = [ 'number', 'number-unit', 'text', 'textarea', 'email', 'url', 'hidden', 'content' ];
+	public static $allowed_subtypes = [ 'number', 'number-unit', 'text', 'textarea', 'email', 'password', 'url', 'hidden', 'content' ];
 
 	/**
 	 * Number of rows for 'textarea' & 'content' subtype.

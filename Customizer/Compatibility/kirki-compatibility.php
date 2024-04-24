@@ -5,7 +5,9 @@ if ( class_exists( '\Kirki' ) ) {
 }
 
 /**
- * Faking Kirki class to support PBF's Kirki compatibility.
+ * PBF's "fake" Kirki class for compatiblity purpose.
+ * This class will transform supported Kirki's fields into PBF's new Customizer fields.
+ * Not all fields are supported yet.
  */
 class Kirki {
 
@@ -179,10 +181,6 @@ class Kirki {
 			$custom_props['wrapper_attrs'] = $wrapper_attrs;
 		}
 
-		if ( ! empty( $input_attrs ) ) {
-			$custom_props['input_attrs'] = $input_attrs;
-		}
-
 		if ( 'option' === $option_type && ! empty( $option_name ) ) {
 			$has_sub_options = false !== stripos( $settings, '[' );
 
@@ -266,6 +264,18 @@ class Kirki {
 			}
 		}
 
+		$form_component = ! empty( $choices['form_component'] ) ? $choices['form_component'] : '';
+
+		if ( ! empty( $form_component ) ) {
+			$custom_props['form_component'] = $form_component;
+		}
+
+		$allow_unitless = isset( $choices['accept_unitless'] ) && is_bool( $choices['accept_unitless'] ) ? $choices['accept_unitless'] : null;
+
+		if ( is_bool( $allow_unitless ) ) {
+			$custom_props['allow_unitless'] = $allow_unitless;
+		}
+
 		wpbf_customizer_field()
 			->id( $settings )
 			->type( $type )
@@ -277,8 +287,9 @@ class Kirki {
 			->capability( $capability )
 			->priority( $priority )
 			->transport( $transport )
-			->properties( $custom_props )
 			->tooltip( $tooltip )
+			->inputAttrs( $input_attrs )
+			->properties( $custom_props )
 			->activeCallback( $active_callback )
 			->sanitizeCallback( $sanitize_callback )
 			->partialRefresh( $partial_refresh )

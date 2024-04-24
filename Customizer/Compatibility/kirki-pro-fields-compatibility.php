@@ -1,4 +1,11 @@
 <?php
+/**
+ * PBF's "fake" Kirki Pro classes for compatiblity purpose.
+ * These classes will transform supported Kirki Pro's fields into PBF's new Customizer fields.
+ * Currently, "responsive" extension is not supported.
+ *
+ * @package Page Builder Framework
+ */
 
 namespace Kirki\Pro\Field;
 
@@ -9,6 +16,10 @@ if ( class_exists( '\Kirki' ) ) {
 }
 
 if ( ! class_exists( ( '\Kirki\Pro\Field\Margin' ) ) ) {
+	/**
+	 * PBF's "fake" Margin class for compatiblity purpose.
+	 * This class will transform Kirki Pro's "Margin" fields into PBF's new Customizer "margin" fields.
+	 */
 	class Margin {
 
 		/**
@@ -30,6 +41,10 @@ if ( ! class_exists( ( '\Kirki\Pro\Field\Margin' ) ) ) {
 }
 
 if ( ! class_exists( ( '\Kirki\Pro\Field\Padding' ) ) ) {
+	/**
+	 * PBF's "fake" Padding class for compatiblity purpose.
+	 * This class will transform Kirki Pro's "Padding" fields into PBF's new Customizer "padding" fields.
+	 */
 	class Padding {
 
 		/**
@@ -51,6 +66,10 @@ if ( ! class_exists( ( '\Kirki\Pro\Field\Padding' ) ) ) {
 }
 
 if ( ! class_exists( ( '\Kirki\Pro\Field\Headline' ) ) ) {
+	/**
+	 * PBF's "fake" Headline class for compatiblity purpose.
+	 * This class will transform Kirki Pro's "Headline" fields into PBF's new Customizer "headline" fields.
+	 */
 	class Headline {
 
 		/**
@@ -72,6 +91,10 @@ if ( ! class_exists( ( '\Kirki\Pro\Field\Headline' ) ) ) {
 }
 
 if ( ! class_exists( ( '\Kirki\Pro\Field\HeadlineToggle' ) ) ) {
+	/**
+	 * PBF's "fake" HeadlineToggle class for compatiblity purpose.
+	 * This class will transform Kirki Pro's "HeadlineToggle" fields into PBF's new Customizer "headline-toggle" fields.
+	 */
 	class HeadlineToggle {
 
 		/**
@@ -93,6 +116,10 @@ if ( ! class_exists( ( '\Kirki\Pro\Field\HeadlineToggle' ) ) ) {
 }
 
 if ( ! class_exists( ( '\Kirki\Pro\Field\Divider' ) ) ) {
+	/**
+	 * PBF's "fake" Divider class for compatiblity purpose.
+	 * This class will transform Kirki Pro's "Divider" fields into PBF's new Customizer "divider" fields.
+	 */
 	class Divider {
 
 		/**
@@ -114,6 +141,10 @@ if ( ! class_exists( ( '\Kirki\Pro\Field\Divider' ) ) ) {
 }
 
 if ( ! class_exists( ( '\Kirki\Pro\Field\InputSlider' ) ) ) {
+	/**
+	 * PBF's "fake" InputSlider class for compatiblity purpose.
+	 * This class will transform Kirki Pro's "InputSlider" fields into PBF's new Customizer "input-slider" fields.
+	 */
 	class InputSlider {
 
 		/**

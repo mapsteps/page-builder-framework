@@ -96,6 +96,7 @@ class CustomizerUtil {
 	private $grouped_controls = [
 		'generic' => [
 			'email',
+			'password',
 			'number',
 			'number-unit',
 			'text',
@@ -106,6 +107,7 @@ class CustomizerUtil {
 		],
 		'responsive-generic' => [
 			'responsive-email',
+			'responsive-password',
 			'responsive-number',
 			'responsive-number-unit',
 			'responsive-text',
