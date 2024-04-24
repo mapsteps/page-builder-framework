@@ -14,26 +14,27 @@ load_theme_textdomain( 'page-builder-framework' );
 /* Panels */
 
 // LifterLMS.
-Kirki::add_panel( 'lifterlms_panel', array(
-	'priority' => 200,
-	'title'    => __( 'LifterLMS', 'page-builder-framework' ),
-) );
+wpbf_customizer_panel()
+	->id( 'lifterlms_panel' )
+	->title( __( 'LifterLMS', 'page-builder-framework' ) )
+	->priority( 200 )
+	->add();
 
 /* Sections */
 
 // Menu item.
-Kirki::add_section( 'wpbf_lifterlms_color_options', array(
-	'title'    => __( 'Colors', 'page-builder-framework' ),
-	'panel'    => 'lifterlms_panel',
-	'priority' => 1,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_lifterlms_color_options' )
+	->title( __( 'Colors', 'page-builder-framework' ) )
+	->priority( 1 )
+	->addToPanel( 'lifterlms_panel' );
 
 // Sidebar.
-// Kirki::add_section( 'wpbf_lifterlms_sidebar_options', array(
-// 	'title'    => __( 'Sidebar', 'page-builder-framework' ),
-// 	'panel'    => 'lifterlms_panel',
-// 	'priority' => 2,
-// ) );
+// wpbf_customizer_section()
+// 	->id( 'wpbf_lifterlms_sidebar_options' )
+// 	->title( __( 'Sidebar', 'page-builder-framework' ) )
+// 	->priority( 2 )
+// 	->addToPanel( 'lifterlms_panel' );
 
 /* Fields - Colors */
 

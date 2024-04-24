@@ -14,26 +14,27 @@ load_theme_textdomain( 'page-builder-framework' );
 /* Panels */
 
 // Easy Digital Downloads.
-Kirki::add_panel( 'edd_panel', array(
-	'priority' => 200,
-	'title'    => __( 'Easy Digital Downloads', 'page-builder-framework' ),
-) );
+wpbf_customizer_panel()
+	->id( 'edd_panel' )
+	->title( __( 'Easy Digital Downloads', 'page-builder-framework' ) )
+	->priority( 200 )
+	->add();
 
 /* Sections */
 
 // Menu item.
-Kirki::add_section( 'wpbf_edd_menu_item_options', array(
-	'title'    => __( 'Cart Menu Item', 'page-builder-framework' ),
-	'panel'    => 'edd_panel',
-	'priority' => 1,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_edd_menu_item_options' )
+	->title( __( 'Cart Menu Item', 'page-builder-framework' ) )
+	->priority( 1 )
+	->addToPanel( 'edd_panel' );
 
 // Sidebar.
-Kirki::add_section( 'wpbf_edd_sidebar_options', array(
-	'title'    => __( 'Sidebar', 'page-builder-framework' ),
-	'panel'    => 'edd_panel',
-	'priority' => 2,
-) );
+wpbf_customizer_section()
+	->id( 'wpbf_edd_sidebar_options' )
+	->title( __( 'Sidebar', 'page-builder-framework' ) )
+	->priority( 2 )
+	->addToPanel( 'edd_panel' );
 
 /* Fields - Sidebar */
 
