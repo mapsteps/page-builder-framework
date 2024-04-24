@@ -1,21 +1,30 @@
 <?php
 /**
- * PBF's "fake" Kirki field classes for compatiblity purpose.
- * These classes will transform supported Kirki's fields into PBF's new Customizer fields.
+ * Collections of PBF's "fake" Kirki field classes for compatiblity purpose.
+ * These classes will transform supported Kirki's fields into PBF's new customizer fields.
  *
- * Not all fields are supported yet. These fields are currently NOT supported:
- * - Background
- * - Code
- * - Color Palette
- * - Dashicons
- * - Date
- * - Dimensions (the plural one)
- * - Dropdown Pages
- * - Editor
- * - Multicheck
- * - Multicolor
- * - Palette
- * - Repeater
+ * Supported fields:
+ * - Checkbox
+ * - Color
+ * - ReactColorful
+ * - Dimension
+ * - Generic
+ * - Image
+ * - URL
+ * - Number
+ * - Radio
+ * - Radio Buttonset
+ * - Radio Image
+ * - Select
+ * - ReactSelect
+ * - Slider
+ * - Sortable
+ * - Switch
+ * - Text
+ * - Textarea
+ * - Toggle
+ * - Typography
+ * - Upload
  *
  * @package Page Builder Framework
  */

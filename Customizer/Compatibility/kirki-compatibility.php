@@ -6,8 +6,45 @@ if ( class_exists( '\Kirki' ) ) {
 
 /**
  * PBF's "fake" Kirki class for compatiblity purpose.
- * This class will transform supported Kirki's fields into PBF's new Customizer fields.
+ * This class will transform supported Kirki's fields into PBF's new customizer fields.
  * Not all fields are supported yet.
+ *
+ * Supported fields:
+ * - Checkbox
+ * - Color
+ * - ReactColorful
+ * - Dimension
+ * - Generic
+ * - Image
+ * - URL
+ * - Number
+ * - Radio
+ * - Radio Buttonset
+ * - Radio Image
+ * - Select
+ * - ReactSelect
+ * - Slider
+ * - Sortable
+ * - Switch
+ * - Text
+ * - Textarea
+ * - Toggle
+ * - Typography
+ * - Upload
+ *
+ * Not all fields are supported yet. These fields are currently NOT supported:
+ * - Background
+ * - Code
+ * - Color Palette
+ * - Dashicons
+ * - Date
+ * - Dimensions (the plural one)
+ * - Dropdown Pages
+ * - Editor
+ * - Multicheck
+ * - Multicolor
+ * - Palette
+ * - Repeater
  */
 class Kirki {
 

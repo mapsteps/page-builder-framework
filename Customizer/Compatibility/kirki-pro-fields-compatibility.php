@@ -2,7 +2,9 @@
 /**
  * PBF's "fake" Kirki Pro classes for compatiblity purpose.
  * These classes will transform supported Kirki Pro's fields into PBF's new Customizer fields.
- * Currently, "responsive" extension is not supported.
+ *
+ * Currently, "responsive" argument is not supported.
+ * When possible, please use PBF's responsive controls instead.
  *
  * @package Page Builder Framework
  */

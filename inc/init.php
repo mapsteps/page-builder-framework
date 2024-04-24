@@ -42,6 +42,7 @@ require_once WPBF_THEME_DIR . '/Customizer/wpbf-customizer-functions.php';
 // Kirki compatiblity.
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-compatibility.php';
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-fields-compatibility.php';
+require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-unsupported-fields-compatibility.php';
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-pro-fields-compatibility.php';
 
 // Customizer functions.
