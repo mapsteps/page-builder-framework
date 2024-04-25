@@ -25,12 +25,6 @@ require_once WPBF_THEME_DIR . '/inc/options.php';
 // Quick edit.
 require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 
-// Kirki Pro.
-if ( ! class_exists( '\Kirki\Pro\Field\HeadlineToggle' ) || ! class_exists( '\Kirki\Pro\Field\Tabs' ) ) {
-	require_once WPBF_THEME_DIR . '/assets/kirki/pro-src/pro-index.php';
-	kirki_pro_load_controls();
-}
-
 // Customizer core functions.
 require_once WPBF_THEME_DIR . '/Customizer/wpbf-customizer-functions.php';
 
