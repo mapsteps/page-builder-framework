@@ -245,24 +245,6 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
 }
 
 /**
- * Add Kirki custom controls.
- *
- * @param WP_Customize_Manager $wp_customize Instance of WP_Customize_Manager.
- */
-function wpbf_custom_controls_238290( $wp_customize ) {
-
-	// Custom controls.
-	require WPBF_THEME_DIR . '/inc/customizer/controls/padding/control-padding.php';
-	require WPBF_THEME_DIR . '/inc/customizer/controls/input-slider/control-input-slider.php';
-	require WPBF_THEME_DIR . '/inc/customizer/controls/responsive-input/control-responsive-input.php';
-	require WPBF_THEME_DIR . '/inc/customizer/controls/responsive-padding/control-responsive-padding.php';
-	require WPBF_THEME_DIR . '/inc/customizer/controls/responsive-input-slider/control-responsive-input-slider.php';
-
-}
-
-add_action( 'customize_register', 'wpbf_custom_controls_238290' );
-
-/**
  * Custom Kirki default fonts.
  *
  * @param array $standard_fonts The standard fonts.
