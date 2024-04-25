@@ -4,6 +4,8 @@ if ( class_exists( '\Kirki' ) ) {
 	return;
 }
 
+// phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound
+
 /**
  * PBF's "fake" Kirki class for compatiblity purpose.
  * This class will transform supported Kirki's fields into PBF's new customizer fields.
@@ -342,4 +344,18 @@ class Kirki {
 
 	}
 
+}
+
+if ( ! class_exists( 'Kirki_Control_Base' ) ) {
+	/**
+	 * PBF's "fake" Kirki_Control_Base class for compatiblity purpose.
+	 */
+	class Kirki_Control_Base extends WP_Customize_Control {}
+}
+
+if ( ! class_exists( 'Kirki_Customize_Control' ) ) {
+	/**
+	 * PBF's "fake" Kirki_Customize_Control class for compatiblity purpose.
+	 */
+	class Kirki_Customize_Control extends WP_Customize_Control {}
 }
