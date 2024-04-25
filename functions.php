@@ -47,10 +47,9 @@ define( 'WPBF_CHILD_VERSION', '1.2' );
 // Minimum required Premium Add-On Version.
 define( 'WPBF_PREMIUM_MIN_VERSION', '2.10' );
 
-if (
-	defined( 'WPBF_MIN_VERSION' )
-	&& version_compare( WPBF_MIN_VERSION, '2.9', '<=' )
-) {
+// If the Premium Add-On is below or equal 2.9, let's remove the customizer settings
+// to prevent fatal errors. In addition to that, we show the compatibility notice under wpbf_show_compatibility_notice.
+if ( defined( 'WPBF_MIN_VERSION' ) && version_compare( WPBF_MIN_VERSION, '2.9', '<=' ) ) {
 	// Unhook Kirki.
 	remove_action( 'after_setup_theme', 'wpbf_kirki_premium', 9 );
 	remove_action( 'after_setup_theme', 'wpbf_kirki_premium_woocommerce' );
