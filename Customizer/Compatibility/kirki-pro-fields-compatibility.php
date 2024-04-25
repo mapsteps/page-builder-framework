@@ -13,10 +13,6 @@ namespace Kirki\Pro\Field;
 
 // phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound
 
-if ( class_exists( '\Kirki' ) ) {
-	return;
-}
-
 if ( ! class_exists( ( '\Kirki\Pro\Field\Margin' ) ) ) {
 	/**
 	 * PBF's "fake" Margin class for compatiblity purpose.

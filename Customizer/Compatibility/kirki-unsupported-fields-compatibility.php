@@ -25,10 +25,6 @@ namespace Kirki\Field;
 
 // phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound
 
-if ( class_exists( '\Kirki' ) ) {
-	return;
-}
-
 if ( ! class_exists( ( '\Kirki\Field\Background' ) ) ) {
 	/**
 	 * PBF's "fake" Background class for compatiblity purpose.
