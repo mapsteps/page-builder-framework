@@ -36,7 +36,7 @@ function wpbf_6_1_sub_menu_issue_hotfix( $args ) {
 }
 add_filter( 'wp_nav_menu_args', 'wpbf_6_1_sub_menu_issue_hotfix' );
 
-// Constants
+// Constants.
 define( 'WPBF_THEME_DIR', get_template_directory() );
 define( 'WPBF_THEME_URI', get_template_directory_uri() );
 define( 'WPBF_CHILD_THEME_DIR', get_stylesheet_directory() );
@@ -45,7 +45,16 @@ define( 'WPBF_VERSION', wp_get_theme( 'page-builder-framework' )->get( 'Version'
 define( 'WPBF_CHILD_VERSION', '1.2' );
 
 // Minimum required Premium Add-On Version.
-define( 'WPBF_PREMIUM_MIN_VERSION', '2.8' );
+define( 'WPBF_PREMIUM_MIN_VERSION', '2.10' );
+
+if (
+	defined( 'WPBF_MIN_VERSION' )
+	&& version_compare( WPBF_MIN_VERSION, '2.9', '<=' )
+) {
+	// Unhook Kirki.
+	remove_action( 'after_setup_theme', 'wpbf_kirki_premium', 9 );
+	remove_action( 'after_setup_theme', 'wpbf_kirki_premium_woocommerce' );
+}
 
 /**
  * Theme setup.

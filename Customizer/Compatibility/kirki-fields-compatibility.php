@@ -554,6 +554,31 @@ if ( ! class_exists( ( '\Kirki\Field\Checkbox_Toggle' ) ) ) {
 	}
 }
 
+if ( ! class_exists( ( '\Kirki\Field\Toggle' ) ) ) {
+	/**
+	 * PBF's "fake" Toggle class for compatiblity purpose.
+	 * This class will transform Kirki's "toggle" fields into PBF's new Customizer "toggle" fields.
+	 */
+	class Toggle {
+
+		/**
+		 * Toggle field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'toggle';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
 if ( ! class_exists( ( '\Kirki\Field\Typography' ) ) ) {
 	/**
 	 * PBF's "fake" Typography class for compatiblity purpose.
