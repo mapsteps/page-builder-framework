@@ -10,6 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
+use Mapsteps\Wpbf\Customizer\Controls\Code\CodeField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Custom\CustomField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
@@ -64,6 +65,7 @@ class CustomizerUtil {
 		'checkbox',
 		'toggle',
 		'custom',
+		'code',
 		'color',
 		'dimension',
 		'divider',
@@ -221,6 +223,9 @@ class CustomizerUtil {
 				break;
 			case 'custom':
 				$field = new CustomField( $control_entity );
+				break;
+			case 'code':
+				$field = new CodeField( $control_entity );
 				break;
 			case 'color':
 				$field = new ColorField( $control_entity );

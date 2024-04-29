@@ -163,6 +163,7 @@ final class Customizer {
 			$wp_customize_manager->add_panel(
 				$panel->id,
 				array(
+					'type'            => $panel->type,
 					'title'           => $panel->title,
 					'description'     => $panel->description,
 					'capability'      => $panel->capability,
