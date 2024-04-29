@@ -35,11 +35,13 @@ use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
 use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
+use Mapsteps\Wpbf\Customizer\Panels\NestedPanel;
 use Mapsteps\Wpbf\Customizer\Sections\ExpandedSection;
 use Mapsteps\Wpbf\Customizer\Sections\LinkSection;
 use Mapsteps\Wpbf\Customizer\Sections\NestedSection;
 use Mapsteps\Wpbf\Customizer\Sections\OuterSection;
 use WP_Customize_Manager;
+use WP_Customize_Panel;
 use WP_Customize_Section;
 
 /**
@@ -48,7 +50,14 @@ use WP_Customize_Section;
 class CustomizerUtil {
 
 	/**
-	 * Available section tabs.
+	 * Available panel types.
+	 *
+	 * @var string[]
+	 */
+	public $available_panel_types = [ 'default', 'nested' ];
+
+	/**
+	 * Available section types.
 	 *
 	 * @var string[]
 	 */
@@ -129,7 +138,32 @@ class CustomizerUtil {
 	];
 
 	/**
-	 * Get the section instance.
+	 * Get panel instance by type.
+	 *
+	 * @param string               $panel_type Type of the panel.
+	 * @param WP_Customize_Manager $wp_customer_manager The customizer manager object.
+	 * @param string               $id The panel id.
+	 * @param array                $args The panel arguments.
+	 *
+	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection
+	 */
+	public function getPanelInstance( $panel_type, $wp_customer_manager, $id, $args ) {
+
+		if ( empty( $panel_type ) || ! in_array( $panel_type, $this->available_section_types, true ) ) {
+			$panel_type = 'default';
+		}
+
+		switch ( $panel_type ) {
+			case 'nested':
+				return new NestedPanel( $wp_customer_manager, $id, $args );
+			default:
+				return new WP_Customize_Panel( $wp_customer_manager, $id, $args );
+		}
+
+	}
+
+	/**
+	 * Get section instance by type.
 	 *
 	 * @param string               $section_type Type of the section.
 	 * @param WP_Customize_Manager $wp_customer_manager The customizer manager object.

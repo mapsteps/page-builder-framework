@@ -19,6 +19,22 @@ use WP_Customize_Manager;
 final class Customizer {
 
 	/**
+	 * Customizer utility helper.
+	 *
+	 * @var CustomizerUtil
+	 */
+	public $customizer_util;
+
+	/**
+	 * Customizer constructor.
+	 */
+	public function __construct() {
+
+		$this->customizer_util = new CustomizerUtil();
+
+	}
+
+	/**
 	 * Initialize the class, setup hooks.
 	 *
 	 * @return void
@@ -160,17 +176,21 @@ final class Customizer {
 	private function register_panels( $wp_customize_manager ) {
 
 		foreach ( CustomizerStore::$added_panels as $panel ) {
-			$wp_customize_manager->add_panel(
-				$panel->id,
-				array(
-					'type'            => $panel->type,
-					'title'           => $panel->title,
-					'description'     => $panel->description,
-					'capability'      => $panel->capability,
-					'priority'        => $panel->priority,
-					'active_callback' => $panel->active_callback,
-				)
+			$panel_args = array(
+				'type'            => $panel->type,
+				'title'           => $panel->title,
+				'description'     => $panel->description,
+				'capability'      => $panel->capability,
+				'priority'        => $panel->priority,
+				'active_callback' => $panel->active_callback,
 			);
+
+			$wp_customize_manager->add_panel( $this->customizer_util->getPanelInstance(
+				$panel->type,
+				$wp_customize_manager,
+				$panel->id,
+				$panel_args
+			) );
 		}
 
 	}
@@ -184,11 +204,7 @@ final class Customizer {
 	 */
 	private function register_sections( $wp_customize_manager ) {
 
-		$util = new CustomizerUtil();
-
 		foreach ( CustomizerStore::$added_sections as $section ) {
-			$section_type = $section->type;
-
 			$section_args = array(
 				'panel'           => $section->panel_id,
 				'title'           => $section->title,
@@ -201,12 +217,12 @@ final class Customizer {
 			$props = $section->custom_properties;
 			$args  = wp_parse_args( $props, $section_args );
 
-			$wp_customize_manager->add_section($util->getSectionInstance(
-				$section_type,
+			$wp_customize_manager->add_section( $this->customizer_util->getSectionInstance(
+				$section->type,
 				$wp_customize_manager,
 				$section->id,
 				$args
-			));
+			) );
 		}
 
 	}
