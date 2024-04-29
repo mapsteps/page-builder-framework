@@ -42,7 +42,7 @@ if ( ! class_exists( ( '\Kirki\Field\Checkbox' ) ) ) {
 	class Checkbox {
 
 		/**
-		 * Checkbox field constructor.
+		 * PBF's "fake"Checkbox field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */

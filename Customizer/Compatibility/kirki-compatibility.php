@@ -86,12 +86,14 @@ if ( ! class_exists( '\Kirki' ) ) {
 		 */
 		public static function add_panel( $panel_id = '', $panel_args = [] ) {
 
+			$type        = isset( $panel_args['type'] ) ? $panel_args['type'] : '';
 			$priority    = isset( $panel_args['priority'] ) ? $panel_args['priority'] : 10;
 			$title       = isset( $panel_args['title'] ) ? $panel_args['title'] : '';
 			$description = isset( $panel_args['description'] ) ? $panel_args['description'] : '';
 
 			wpbf_customizer_panel()
 				->id( $panel_id )
+				->type( $type )
 				->title( $title )
 				->description( $description )
 				->priority( $priority )
@@ -107,6 +109,7 @@ if ( ! class_exists( '\Kirki' ) ) {
 		public static function add_section( $section_id = '', $section_args = [] ) {
 
 			$panel_id    = isset( $section_args['panel'] ) ? $section_args['panel'] : '';
+			$type        = isset( $section_args['type'] ) ? $section_args['type'] : '';
 			$priority    = isset( $section_args['priority'] ) ? $section_args['priority'] : 10;
 			$title       = isset( $section_args['title'] ) ? $section_args['title'] : '';
 			$description = isset( $section_args['description'] ) ? $section_args['description'] : '';
@@ -114,6 +117,7 @@ if ( ! class_exists( '\Kirki' ) ) {
 
 			wpbf_customizer_section()
 				->id( $section_id )
+				->type( $type )
 				->title( $title )
 				->description( $description )
 				->priority( $priority )

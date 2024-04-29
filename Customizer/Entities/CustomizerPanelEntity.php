@@ -24,6 +24,13 @@ class CustomizerPanelEntity {
 	public $id;
 
 	/**
+	 * Type of this panel.
+	 *
+	 * @var string
+	 */
+	public $type = '';
+
+	/**
 	 * Priority of the panel, defining the display order of panels and sections. Default 160.
 	 *
 	 * @var int

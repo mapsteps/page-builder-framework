@@ -48,6 +48,23 @@ final class CustomizerPanel {
 	}
 
 	/**
+	 * Set the panel type.
+	 *
+	 * @param string $type Panel type.
+	 *
+	 * @return $this
+	 */
+	public function type( $type ) {
+
+		if ( ! empty( $type ) && is_string( $type ) ) {
+			$this->panel->type = $type;
+		}
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the panel priority.
 	 *
 	 * @param int $priority Panel priority.
