@@ -6,7 +6,6 @@
  *
  * List of Un-supported fields:
  * - Background
- * - Code
  * - Color Palette
  * - Dashicons
  * - Date
@@ -33,22 +32,6 @@ if ( ! class_exists( ( '\Kirki\Field\Background' ) ) ) {
 
 		/**
 		 * Background field constructor.
-		 *
-		 * @param array $field_args The field arguments.
-		 */
-		public function __construct( $field_args = [] ) {}
-
-	}
-}
-
-if ( ! class_exists( ( '\Kirki\Field\Code' ) ) ) {
-	/**
-	 * PBF's "fake" Code class for compatiblity purpose.
-	 */
-	class Code {
-
-		/**
-		 * Code field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */

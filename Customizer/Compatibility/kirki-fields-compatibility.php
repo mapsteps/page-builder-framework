@@ -5,6 +5,7 @@
  *
  * Supported fields:
  * - Checkbox
+ * - Code
  * - Color
  * - ReactColorful
  * - Dimension
@@ -48,6 +49,31 @@ if ( ! class_exists( ( '\Kirki\Field\Checkbox' ) ) ) {
 		public function __construct( $field_args = [] ) {
 
 			$field_args['type'] = 'checkbox';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Code' ) ) ) {
+	/**
+	 * PBF's "fake" Code class for compatiblity purpose.
+	 * This class will transform Kirki's "code" fields into PBF's new Customizer "code" fields.
+	 */
+	class Code {
+
+		/**
+		 * Code field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'code';
 
 			if ( class_exists( '\Kirki' ) ) {
 				\Kirki::add_field( '', $field_args );

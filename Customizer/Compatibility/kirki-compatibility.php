@@ -10,6 +10,7 @@ if ( ! class_exists( '\Kirki' ) ) {
 	 *
 	 * Supported fields:
 	 * - Checkbox
+	 * - Code
 	 * - Color
 	 * - ReactColorful
 	 * - Dimension
@@ -33,7 +34,6 @@ if ( ! class_exists( '\Kirki' ) ) {
 	 *
 	 * Not all fields are supported yet. These fields are currently NOT supported:
 	 * - Background
-	 * - Code
 	 * - Color Palette
 	 * - Dashicons
 	 * - Date
@@ -261,6 +261,10 @@ if ( ! class_exists( '\Kirki' ) ) {
 				$type = 'toggle';
 
 				$custom_props['checkbox_type'] = 'switch';
+			}
+
+			if ( 'code_editor' === $type ) {
+				$type = 'code';
 			}
 
 			// Page Builder Framework's custom controls.
