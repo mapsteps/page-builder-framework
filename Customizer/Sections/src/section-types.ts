@@ -27,7 +27,7 @@ function setupSections() {
 	 * See https://github.com/justintadlock/trt-customizer-pro
 	 */
 	wp.customize.sectionConstructor["wpbf-link"] = wp.customize.Section.extend({
-		attachEvents: function () {}, // eslint-disable-line no-empty-function
+		attachEvents: function () {},
 		isContextuallyActive: function () {
 			return true;
 		},
@@ -77,7 +77,7 @@ function setupSectionsReflow() {
 	_sectionAttachEvents = wp.customize.Section.prototype.attachEvents;
 
 	wp.customize.Section = wp.customize.Section.extend({
-		attachEvents: function () {
+		attachEvents: function (this: WpbfCustomizeSection) {
 			var section = this;
 
 			if (
@@ -91,7 +91,7 @@ function setupSectionsReflow() {
 			_sectionAttachEvents.call(section);
 
 			section.expanded.bind(function (expanded: boolean) {
-				var parent = wp.customize.section(section.params.section);
+				var parent = wp.customize.section(section.params.id);
 
 				if (expanded) {
 					parent.contentContainer?.addClass("current-section-parent");
@@ -101,7 +101,7 @@ function setupSectionsReflow() {
 			});
 
 			section.container
-				.find(".customize-section-back")
+				?.find(".customize-section-back")
 				.off("click keydown")
 				.on("click keydown", function (event: any) {
 					if (wp.customize.utils.isKeydownButNotEnterEvent(event)) {
@@ -113,12 +113,12 @@ function setupSectionsReflow() {
 
 					if (section.expanded()) {
 						// wp.customize.section(section.params.section).expand();
-						wp.customize.section(section.params.section).expand(section.params);
+						wp.customize.section(section.params.id).expand(section.params);
 					}
 				});
 		},
 
-		embed: function () {
+		embed: function (this: WpbfCustomizeSection) {
 			var section = this,
 				parentContainer;
 
@@ -134,10 +134,12 @@ function setupSectionsReflow() {
 
 			parentContainer = jQuery("#sub-accordion-section-" + this.params.section);
 
-			parentContainer.append(section.headContainer);
+			if (section.headContainer) {
+				parentContainer.append(section.headContainer);
+			}
 		},
 
-		isContextuallyActive: function () {
+		isContextuallyActive: function (this: WpbfCustomizeSection) {
 			var section = this,
 				children,
 				activeCount = 0;
@@ -152,7 +154,7 @@ function setupSectionsReflow() {
 					return;
 				}
 
-				if (childSection.params.section !== section.id) {
+				if (childSection.params.id !== section.id) {
 					return;
 				}
 

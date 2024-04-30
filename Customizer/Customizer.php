@@ -99,6 +99,7 @@ final class Customizer {
 		$this->register_controls( $wp_customize_manager );
 		$this->register_selective_refreshes( $wp_customize_manager );
 
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_panel_types' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_section_types' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
 
@@ -228,7 +229,19 @@ final class Customizer {
 	}
 
 	/**
-	 * Register the customizer control dependencies.
+	 * Enqueue custom panel types.
+	 *
+	 * @return void
+	 */
+	public function enqueue_custom_panel_types() {
+
+		// Enqueue the scripts.
+		wp_enqueue_script( 'wpbf-panels', WPBF_THEME_URI . '/Customizer/Panels/dist/panel-types-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
+
+	}
+
+	/**
+	 * Enqueue custom section types.
 	 *
 	 * @return void
 	 */

@@ -29,7 +29,6 @@ import {
 import {
 	Container_Arguments,
 	Container_Deferred,
-	Container_Params,
 } from "wordpress__customize-browser/Container";
 import { Value } from "wordpress__customize-browser/Value";
 import { Notifications } from "wordpress__customize-browser/Notifications";
@@ -59,7 +58,8 @@ export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	get(): Record<string, any>;
 	defaultConstructor: WpbfCustomizeSetting<Class>;
 	control: Values<WpbfCustomizeControl<any, any> | undefined>;
-	section: Values<Section>;
+	section: Values<WpbfCustomizeSection>;
+	Section: WpbfCustomizeSection;
 	panel: Values<Panel>;
 	notifications: Notifications;
 	setDocumentTitle(documentTitle: string): void;
@@ -119,13 +119,28 @@ export interface WpbfCustomizeSectionConstructor extends Section_Constructor {
 	"wpbf-link": any;
 }
 
-export interface WpbfCustomizeSectionParams extends Container_Params {
+export interface WpbfCustomizeSectionParams {
+	id: string;
+	type?: string;
 	panel?: string | null | undefined;
+	active?: boolean;
+	content?: "";
 	customizeAction?: string | undefined;
+	title: string;
+	description?: string;
+	description_hidden: boolean;
+	instanceNumber?: number | null;
+	priority?: number;
 	section?: WpbfCustomizeSection;
 }
 
 export interface WpbfCustomizeSection extends Section {
+	prototype: {
+		embed: () => void;
+		isContextuallyActive: () => boolean;
+		attachEvents: () => void;
+	};
+	extend: (protoProps: object, staticProps?: object) => WpbfCustomizeSection;
 	params: WpbfCustomizeSectionParams;
 }
 

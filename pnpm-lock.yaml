@@ -107,7 +107,7 @@ importers:
         version: 5.4.5
       wordpress__customize-browser:
         specifier: github:usefulteam/wordpress__customize-browser
-        version: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/15818469ef3db24c0497ac7fb8a2d84e89717f5e
+        version: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/c10a35ebf2d6142a473f35228ca0d9377ecb2542
 
 packages:
 
@@ -2525,8 +2525,8 @@ packages:
     resolution: {integrity: sha512-oV0jmFtUky6CXfkqehVvBP/LSWJ2sy4vWMioiENyJLePrBO/yKyV9OyJySfAKosh+RYkIl5zJCNZ8/4JncrpdA==}
     engines: {node: '>= 0.4'}
 
-  wordpress__customize-browser@https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/15818469ef3db24c0497ac7fb8a2d84e89717f5e:
-    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/15818469ef3db24c0497ac7fb8a2d84e89717f5e}
+  wordpress__customize-browser@https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/c10a35ebf2d6142a473f35228ca0d9377ecb2542:
+    resolution: {tarball: https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/c10a35ebf2d6142a473f35228ca0d9377ecb2542}
     version: 5.5.5
 
   wrap-ansi@5.1.0:
@@ -5643,7 +5643,7 @@ snapshots:
       gopd: 1.0.1
       has-tostringtag: 1.0.2
 
-  wordpress__customize-browser@https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/15818469ef3db24c0497ac7fb8a2d84e89717f5e:
+  wordpress__customize-browser@https://codeload.github.com/usefulteam/wordpress__customize-browser/tar.gz/c10a35ebf2d6142a473f35228ca0d9377ecb2542:
     dependencies:
       '@types/jquery': 3.5.29
 
