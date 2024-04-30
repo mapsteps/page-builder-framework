@@ -82,7 +82,7 @@
     "not dead"
   ],
   "scripts": {
-    "build-wp-plugin": "node ./wpbf.mjs",
+    "build-wp-plugin": "zx ./wpbf.mjs",
     "collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
     "build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min",
     "build-site-js": "parcel build assets/js/site.js --dist-dir js/min",

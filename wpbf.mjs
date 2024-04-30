@@ -4,13 +4,18 @@ import "zx/globals";
 
 const wpPluginBuildDir = "./build";
 
+/**
+ * Delete the build directory if it exists.
+ *
+ * @param {string} dir The build directory path.
+ */
 function deleteIfDirExists(dir) {
 	if (fs.existsSync(dir)) {
 		fs.rmSync(dir, { recursive: true });
 	}
 }
 
-const filesAndDirsToSkip = [
+const rootFilesAndDirsToSkip = [
 	".parcel-cache",
 	"node_modules",
 	"build",
@@ -32,53 +37,66 @@ const filesAndDirsToSkip = [
 	"wpbf.mjs",
 ];
 
-function copyRootFilesAndDirsToBuildDirExceptSkippedOnes() {
-	const filesAndDirsToCopy = fs.readdirSync(".");
+/**
+ * Copy the files and directories from the source directory to the destination directory.
+ *
+ * @param {string} srcPath The source directory path.
+ * @param {string} destPath The destination directory path.
+ */
+function copyFilesAndDir(srcPath, destPath) {
+	const filesAndDirsToCopy = fs.readdirSync(srcPath);
 
 	filesAndDirsToCopy.forEach((fileOrDir) => {
-		if (filesAndDirsToSkip.includes(fileOrDir)) {
+		if (rootFilesAndDirsToSkip.includes(fileOrDir)) {
 			return;
 		}
 
-		const srcPath = `./${fileOrDir}`;
-		const destPath = `${wpPluginBuildDir}/${fileOrDir}`;
-
-		if (fs.lstatSync(srcPath).isDirectory()) {
-			fs.mkdirSync(destPath);
-			copyRootFilesAndDirsToBuildDirExceptSkippedOnes();
-		} else {
-			fs.copyFileSync(srcPath, destPath);
-		}
+		fs.copySync(`${srcPath}/${fileOrDir}`, `${destPath}/${fileOrDir}`);
 	});
 }
 
-function deleteMapFilesInsideBuildDir() {
-	const filesAndDirs = fs.readdirSync(wpPluginBuildDir);
+/**
+ * Delete the map files inside a directory.
+ *
+ * @param {string} dir The directory path.
+ */
+function deleteMapFiles(dir) {
+	const filesAndDirs = fs.readdirSync(dir);
 
 	filesAndDirs.forEach((fileOrDir) => {
-		if (fs.lstatSync(`${wpPluginBuildDir}/${fileOrDir}`).isDirectory()) {
+		if (fs.lstatSync(`${dir}/${fileOrDir}`).isDirectory()) {
+			deleteMapFiles(`${dir}/${fileOrDir}`);
 			return;
 		}
 
-		// If it's a map file, delete it.
 		if (fileOrDir.endsWith(".map")) {
-			fs.unlinkSync(`${wpPluginBuildDir}/${fileOrDir}`);
+			fs.unlinkSync(`${dir}/${fileOrDir}`);
 		}
 
-		// If it's a "-min.js" or "-min.css" file, then delete the line that contains "//# sourceMappingURL=".
 		if (fileOrDir.endsWith("-min.js") || fileOrDir.endsWith("-min.css")) {
-			const fileContent = fs.readFileSync(
-				`${wpPluginBuildDir}/${fileOrDir}`,
-				"utf8",
-			);
+			const fileContent = fs.readFileSync(`${dir}/${fileOrDir}`, "utf8");
+			let newFileContent = "";
 
-			const newFileContent = fileContent.replace(/## sourceMappingURL=.*/g, "");
+			/**
+			 * Remove the whole line that begins with "//# sourceMappingURL=" or "/*# sourceMappingURL="
+			 */
+			fileContent.split("\n").forEach((line) => {
+				if (
+					line.startsWith("//# sourceMappingURL=") ||
+					line.startsWith("/*# sourceMappingURL=")
+				) {
+					return;
+				}
 
-			fs.writeFileSync(
-				`${wpPluginBuildDir}/${fileOrDir}`,
-				newFileContent,
-				"utf8",
-			);
+				newFileContent += line + "\n";
+			});
+
+			// If the file content contains multiple lines, then remove the second line.
+			if (newFileContent.includes("\n\n")) {
+				newFileContent = newFileContent.replace(/\n\n/g, "\n");
+			}
+
+			fs.writeFileSync(`${dir}/${fileOrDir}`, newFileContent, "utf8");
 		}
 	});
 }
@@ -86,8 +104,8 @@ function deleteMapFilesInsideBuildDir() {
 function buildWpPlugin() {
 	deleteIfDirExists(wpPluginBuildDir);
 	fs.mkdirSync(wpPluginBuildDir);
-	copyRootFilesAndDirsToBuildDirExceptSkippedOnes();
-	deleteMapFilesInsideBuildDir();
+	copyFilesAndDir(".", wpPluginBuildDir);
+	deleteMapFiles(wpPluginBuildDir);
 }
 
 buildWpPlugin();
