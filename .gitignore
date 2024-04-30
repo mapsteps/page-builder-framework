@@ -29,3 +29,4 @@ manifest.json
 
 # project specific
 *.map
+build
