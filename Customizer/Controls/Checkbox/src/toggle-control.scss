@@ -3,7 +3,6 @@
 .wpbf-customize-control-toggle {
 	.wpbf-toggle {
 		display: flex;
-		align-items: flex-start;
 		justify-content: space-between;
 
 		.wpbf-control-label {
@@ -11,6 +10,8 @@
 		}
 
 		.wpbf-control-form {
+			display: flex;
+			align-items: center;
 			text-align: right;
 			width: 20%;
 		}
