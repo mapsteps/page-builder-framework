@@ -57,10 +57,11 @@ export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	): JQuery.Promise<any>;
 	get(): Record<string, any>;
 	defaultConstructor: WpbfCustomizeSetting<Class>;
-	control: Values<WpbfCustomizeControl<any, any> | undefined>;
+	Panel: WpbfCustomizePanel;
+	panel: Values<WpbfCustomizePanel>;
 	section: Values<WpbfCustomizeSection>;
 	Section: WpbfCustomizeSection;
-	panel: Values<Panel>;
+	control: Values<WpbfCustomizeControl<any, any> | undefined>;
 	notifications: Notifications;
 	setDocumentTitle(documentTitle: string): void;
 	settingConstructor: WpbfCustomizeSettingConstructor;
@@ -113,6 +114,30 @@ export interface WpbfCustomizeSettingConstructor {}
 
 export interface WpbfCustomizePanelConstructor {
 	themes: ThemesPanel;
+}
+
+export interface WpbfCustomizePanelParams {
+	id: string;
+	type: string;
+	active: boolean;
+	title: string;
+	description: string;
+	content: string;
+	autoExpandSoleSection: boolean;
+	instanceNumber: number;
+	priority: number;
+}
+
+export interface WpbfCustomizePanel extends Panel {
+	prototype: {
+		attachEvents(): void;
+		embed(): void;
+		isContextuallyActive(): boolean;
+	};
+	id: string;
+	params: WpbfCustomizePanelParams;
+	extend: (protoProps: object, staticProps?: object) => WpbfCustomizePanel;
+	headContainer: JQuery;
 }
 
 export interface WpbfCustomizeSectionConstructor extends Section_Constructor {
