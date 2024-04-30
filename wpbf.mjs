@@ -2,7 +2,7 @@
 
 import "zx/globals";
 
-const wpPluginBuildDir = "./build";
+const themeBuildDir = "./build";
 
 /**
  * Delete the build directory if it exists.
@@ -102,10 +102,15 @@ function deleteMapFiles(dir) {
 }
 
 function buildWpPlugin() {
-	deleteIfDirExists(wpPluginBuildDir);
-	fs.mkdirSync(wpPluginBuildDir);
-	copyFilesAndDir(".", wpPluginBuildDir);
-	deleteMapFiles(wpPluginBuildDir);
+	deleteIfDirExists(themeBuildDir);
+	fs.mkdirSync(themeBuildDir);
+
+	const wpbfBuildDir = `${themeBuildDir}/page-builder-framework`;
+	deleteIfDirExists(wpbfBuildDir);
+	fs.mkdirSync(wpbfBuildDir);
+
+	copyFilesAndDir(".", wpbfBuildDir);
+	deleteMapFiles(wpbfBuildDir);
 }
 
 buildWpPlugin();
