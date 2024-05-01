@@ -105,7 +105,10 @@ function setupPanels() {
 			const children = this._children("panel", "section");
 
 			wp.customize.panel.each(function (child: WpbfCustomizePanel) {
-				if (!child.params.id || child.params.id !== panel.id) {
+				if (
+					!child.params.parentId ||
+					child.params.parentId !== panel.id
+				) {
 					return;
 				}
 

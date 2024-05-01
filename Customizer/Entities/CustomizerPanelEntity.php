@@ -31,6 +31,13 @@ class CustomizerPanelEntity {
 	public $type = '';
 
 	/**
+	 * Parent panel id.
+	 *
+	 * @var string
+	 */
+	public $parent_id = '';
+
+	/**
 	 * Priority of the panel, defining the display order of panels and sections. Default 160.
 	 *
 	 * @var int

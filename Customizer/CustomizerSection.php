@@ -55,6 +55,23 @@ final class CustomizerSection {
 	}
 
 	/**
+	 * Set the section parent id.
+	 *
+	 * @param string $id Section parent id.
+	 *
+	 * @return $this
+	 */
+	public function parentId( $id ) {
+
+		if ( ! empty( $id ) && is_string( $id ) ) {
+			$this->section->parent_id = $id;
+		}
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the section priority.
 	 *
 	 * @param int $priority Section priority.

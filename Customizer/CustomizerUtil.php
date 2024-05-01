@@ -153,6 +153,10 @@ class CustomizerUtil {
 			$panel_type = 'default';
 		}
 
+		if ( ! empty( $args['parent_id'] ) ) {
+			$panel_type = 'nested';
+		}
+
 		switch ( $panel_type ) {
 			case 'nested':
 				return new NestedPanel( $wp_customer_manager, $id, $args );
@@ -176,6 +180,10 @@ class CustomizerUtil {
 
 		if ( empty( $section_type ) || ! in_array( $section_type, $this->available_section_types, true ) ) {
 			$section_type = 'default';
+		}
+
+		if ( ! empty( $args['parent_id'] ) ) {
+			$section_type = 'nested';
 		}
 
 		switch ( $section_type ) {

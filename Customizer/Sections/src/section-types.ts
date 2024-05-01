@@ -51,7 +51,7 @@ function setupSectionsReflow() {
 		wp.customize.section.each(function (section: WpbfCustomizeSection) {
 			if (
 				"wpbf-nested" !== section.params.type ||
-				_.isUndefined(section.params.section)
+				_.isUndefined(section.params.parentId)
 			) {
 				return;
 			}
@@ -82,7 +82,7 @@ function setupSectionsReflow() {
 
 			if (
 				"wpbf-nested" !== this.params.type ||
-				_.isUndefined(this.params.section)
+				_.isUndefined(this.params.parentId)
 			) {
 				_sectionAttachEvents.call(section);
 				return;
@@ -124,7 +124,7 @@ function setupSectionsReflow() {
 
 			if (
 				"wpbf-nested" !== this.params.type ||
-				_.isUndefined(this.params.section)
+				_.isUndefined(this.params.parentId)
 			) {
 				_sectionEmbed.call(section);
 				return;
@@ -132,7 +132,7 @@ function setupSectionsReflow() {
 
 			_sectionEmbed.call(section);
 
-			parentContainer = jQuery("#sub-accordion-section-" + this.params.section);
+			parentContainer = jQuery("#sub-accordion-section-" + this.params.parentId);
 
 			if (section.headContainer) {
 				parentContainer.append(section.headContainer);
@@ -150,11 +150,10 @@ function setupSectionsReflow() {
 			children = this._children("section", "control");
 
 			wp.customize.section.each(function (childSection: WpbfCustomizeSection) {
-				if (!childSection.params.section) {
-					return;
-				}
-
-				if (childSection.params.id !== section.id) {
+				if (
+					!childSection.params.parentId ||
+					childSection.params.parentId !== section.id
+				) {
 					return;
 				}
 

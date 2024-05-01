@@ -24,6 +24,13 @@ class CustomizerSectionEntity {
 	public $id;
 
 	/**
+	 * Parent section id.
+	 *
+	 * @var string
+	 */
+	public $parent_id = '';
+
+	/**
 	 * Priority of the section, defining the display order of panels and sections. Default 160.
 	 *
 	 * @var int

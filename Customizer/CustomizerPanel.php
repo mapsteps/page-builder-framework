@@ -48,6 +48,23 @@ final class CustomizerPanel {
 	}
 
 	/**
+	 * Set the panel parent id.
+	 *
+	 * @param string $id Panel parent id.
+	 *
+	 * @return $this
+	 */
+	public function parentId( $id ) {
+
+		if ( ! empty( $id ) && is_string( $id ) ) {
+			$this->panel->parent_id = $id;
+		}
+
+		return $this;
+
+	}
+
+	/**
 	 * Set the panel type.
 	 *
 	 * @param string $type Panel type.

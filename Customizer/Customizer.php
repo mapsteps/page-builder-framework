@@ -186,6 +186,10 @@ final class Customizer {
 				'active_callback' => $panel->active_callback,
 			);
 
+			if ( ! empty( $panel->parent_id ) ) {
+				$panel_args['parent_id'] = $panel->parent_id;
+			}
+
 			$wp_customize_manager->add_panel( $this->customizer_util->getPanelInstance(
 				$panel->type,
 				$wp_customize_manager,
@@ -214,6 +218,10 @@ final class Customizer {
 				'priority'        => $section->priority,
 				'active_callback' => $section->active_callback,
 			);
+
+			if ( ! empty( $section->parent_id ) ) {
+				$section_args['parent_id'] = $section->parent_id;
+			}
 
 			$props = $section->custom_properties;
 			$args  = wp_parse_args( $props, $section_args );

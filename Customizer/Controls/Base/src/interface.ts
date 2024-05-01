@@ -126,6 +126,7 @@ export interface WpbfCustomizePanelParams {
 	autoExpandSoleSection: boolean;
 	instanceNumber: number;
 	priority: number;
+	parentId?: string;
 }
 
 export interface WpbfCustomizePanel extends Panel {
@@ -156,7 +157,7 @@ export interface WpbfCustomizeSectionParams {
 	description_hidden: boolean;
 	instanceNumber?: number | null;
 	priority?: number;
-	section?: WpbfCustomizeSection;
+	parentId?: string;
 }
 
 export interface WpbfCustomizeSection extends Section {
