@@ -41,14 +41,11 @@ function setupSections() {
  */
 function setupSectionsReflow() {
 	wp.customize.bind("pane-contents-reflowed", function () {
-		const nestedSections: any[] = [];
+		const nestedSections: WpbfCustomizeSection[] = [];
 
 		// Reflow Sections.
 		wp.customize.section.each(function (section: WpbfCustomizeSection) {
-			if (
-				"wpbf-nested" !== section.params.type ||
-				_.isUndefined(section.params.parentId)
-			) {
+			if ("wpbf-nested" !== section.params.type || !section.params.parentId) {
 				return;
 			}
 
@@ -58,8 +55,10 @@ function setupSectionsReflow() {
 		nestedSections.sort(wp.customize.utils.prioritySort).reverse();
 
 		jQuery.each(nestedSections, function (i, nestedSection) {
+			if (!nestedSection.headContainer) return;
+
 			const parentContainer = jQuery(
-				"#sub-accordion-section-" + nestedSection.params.section,
+				"#sub-accordion-section-" + nestedSection.params.parentId,
 			);
 
 			parentContainer
@@ -101,7 +100,7 @@ function setupSectionsReflow() {
 			section.container
 				?.find(".customize-section-back")
 				.off("click keydown")
-				.on("click keydown", function (event: any) {
+				.on("click keydown", function (event) {
 					if (wp.customize.utils.isKeydownButNotEnterEvent(event)) {
 						return;
 					}
@@ -123,10 +122,7 @@ function setupSectionsReflow() {
 		embed: function (this: WpbfCustomizeSection) {
 			const section = this;
 
-			if (
-				"wpbf-nested" !== this.params.type ||
-				_.isUndefined(this.params.parentId)
-			) {
+			if ("wpbf-nested" !== section.params.type || !section.params.parentId) {
 				_sectionEmbed.call(section);
 				return;
 			}
@@ -134,7 +130,7 @@ function setupSectionsReflow() {
 			_sectionEmbed.call(section);
 
 			const parentContainer = jQuery(
-				"#sub-accordion-section-" + this.params.parentId,
+				"#sub-accordion-section-" + section.params.parentId,
 			);
 
 			if (section.headContainer) {
@@ -145,21 +141,23 @@ function setupSectionsReflow() {
 		isContextuallyActive: function (this: WpbfCustomizeSection) {
 			const section = this;
 
-			if ("wpbf-nested" !== this.params.type) {
+			if ("wpbf-nested" !== section.params.type) {
 				return _sectionIsContextuallyActive.call(this);
 			}
 
 			let activeCount = 0;
-			const children = this._children("section", "control");
+			const children = section._children("section", "control");
 
-			wp.customize.section.each(function (childSection: WpbfCustomizeSection) {
-				if (!childSection.params.parentId) return;
+			wp.customize.section.each(function (
+				iteratedSection: WpbfCustomizeSection,
+			) {
+				if (!iteratedSection.params.parentId) return;
 
-				if (childSection.params.parentId !== section.id) {
+				if (iteratedSection.params.parentId !== section.id) {
 					return;
 				}
 
-				children.push(childSection);
+				children.push(iteratedSection);
 			});
 
 			children.sort(wp.customize.utils.prioritySort);
