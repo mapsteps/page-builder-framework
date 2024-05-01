@@ -80,7 +80,7 @@ final class CustomizerSection {
 	 */
 	public function priority( $priority ) {
 
-		if ( ! empty( $priority ) && is_int( $priority ) ) {
+		if ( is_int( $priority ) ) {
 			$this->section->priority = $priority;
 		}
 

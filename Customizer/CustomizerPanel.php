@@ -90,7 +90,7 @@ final class CustomizerPanel {
 	 */
 	public function priority( $priority ) {
 
-		if ( ! empty( $priority ) && is_int( $priority ) ) {
+		if ( is_int( $priority ) ) {
 			$this->panel->priority = $priority;
 		}
 

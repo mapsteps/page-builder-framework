@@ -158,7 +158,7 @@ final class CustomizerControl {
 	 */
 	public function priority( $priority ) {
 
-		if ( ! empty( $priority ) && is_int( $priority ) ) {
+		if ( is_int( $priority ) ) {
 			$this->control->priority = $priority;
 		}
 
