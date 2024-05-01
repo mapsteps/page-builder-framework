@@ -40,12 +40,8 @@ function setupSections() {
  * @see https://wordpress.stackexchange.com/a/256103/17078
  */
 function setupSectionsReflow() {
-	let _sectionEmbed;
-	let _sectionIsContextuallyActive;
-	let _sectionAttachEvents;
-
 	wp.customize.bind("pane-contents-reflowed", function () {
-		const sections: any[] = [];
+		const nestedSections: any[] = [];
 
 		// Reflow Sections.
 		wp.customize.section.each(function (section: WpbfCustomizeSection) {
@@ -56,34 +52,35 @@ function setupSectionsReflow() {
 				return;
 			}
 
-			sections.push(section);
+			nestedSections.push(section);
 		});
 
-		sections.sort(wp.customize.utils.prioritySort).reverse();
+		nestedSections.sort(wp.customize.utils.prioritySort).reverse();
 
-		jQuery.each(sections, function (i, section) {
-			var parentContainer = jQuery(
-				"#sub-accordion-section-" + section.params.section,
+		jQuery.each(nestedSections, function (i, nestedSection) {
+			const parentContainer = jQuery(
+				"#sub-accordion-section-" + nestedSection.params.section,
 			);
 
-			parentContainer.children(".section-meta").after(section.headContainer);
+			parentContainer
+				.children(".section-meta")
+				.after(nestedSection.headContainer);
 		});
 	});
 
 	// Extend Section.
-	_sectionEmbed = wp.customize.Section.prototype.embed;
-	_sectionIsContextuallyActive =
+	const _sectionEmbed = wp.customize.Section.prototype.embed;
+
+	const _sectionIsContextuallyActive =
 		wp.customize.Section.prototype.isContextuallyActive;
-	_sectionAttachEvents = wp.customize.Section.prototype.attachEvents;
+
+	const _sectionAttachEvents = wp.customize.Section.prototype.attachEvents;
 
 	wp.customize.Section = wp.customize.Section.extend({
 		attachEvents: function (this: WpbfCustomizeSection) {
-			var section = this;
+			const section = this;
 
-			if (
-				"wpbf-nested" !== this.params.type ||
-				_.isUndefined(this.params.parentId)
-			) {
+			if ("wpbf-nested" !== section.params.type || !section.params.parentId) {
 				_sectionAttachEvents.call(section);
 				return;
 			}
@@ -91,7 +88,8 @@ function setupSectionsReflow() {
 			_sectionAttachEvents.call(section);
 
 			section.expanded.bind(function (expanded: boolean) {
-				var parent = wp.customize.section(section.params.id);
+				if (!section.params.parentId) return;
+				const parent = wp.customize.section(section.params.parentId);
 
 				if (expanded) {
 					parent.contentContainer?.addClass("current-section-parent");
@@ -111,16 +109,19 @@ function setupSectionsReflow() {
 					// Keep this AFTER the key filter above
 					event.preventDefault();
 
+					if (!section.params.parentId) return;
+
 					if (section.expanded()) {
 						// wp.customize.section(section.params.section).expand();
-						wp.customize.section(section.params.id).expand(section.params);
+						wp.customize
+							.section(section.params.parentId)
+							.expand(section.params);
 					}
 				});
 		},
 
 		embed: function (this: WpbfCustomizeSection) {
-			var section = this,
-				parentContainer;
+			const section = this;
 
 			if (
 				"wpbf-nested" !== this.params.type ||
@@ -132,7 +133,9 @@ function setupSectionsReflow() {
 
 			_sectionEmbed.call(section);
 
-			parentContainer = jQuery("#sub-accordion-section-" + this.params.parentId);
+			const parentContainer = jQuery(
+				"#sub-accordion-section-" + this.params.parentId,
+			);
 
 			if (section.headContainer) {
 				parentContainer.append(section.headContainer);
@@ -140,20 +143,19 @@ function setupSectionsReflow() {
 		},
 
 		isContextuallyActive: function (this: WpbfCustomizeSection) {
-			var section = this,
-				children,
-				activeCount = 0;
+			const section = this;
+
 			if ("wpbf-nested" !== this.params.type) {
 				return _sectionIsContextuallyActive.call(this);
 			}
 
-			children = this._children("section", "control");
+			let activeCount = 0;
+			const children = this._children("section", "control");
 
 			wp.customize.section.each(function (childSection: WpbfCustomizeSection) {
-				if (
-					!childSection.params.parentId ||
-					childSection.params.parentId !== section.id
-				) {
+				if (!childSection.params.parentId) return;
+
+				if (childSection.params.parentId !== section.id) {
 					return;
 				}
 

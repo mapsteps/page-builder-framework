@@ -12,26 +12,25 @@ declare var wp: {
  */
 function setupPanels() {
 	wp.customize.bind("pane-contents-reflowed", function () {
-		const panels: WpbfCustomizePanel[] = [];
+		const nestedPanels: WpbfCustomizePanel[] = [];
 
 		// Reflow Panels.
 		wp.customize.panel.each(function (panel: WpbfCustomizePanel) {
-			if (
-				"wpbf-nested" !== panel.params.type ||
-				_.isUndefined(panel.params.id)
-			) {
+			if ("wpbf-nested" !== panel.params.type || !panel.params.parentId) {
 				return;
 			}
 
-			panels.push(panel);
+			nestedPanels.push(panel);
 		});
 
-		panels.sort(wp.customize.utils.prioritySort).reverse();
+		nestedPanels.sort(wp.customize.utils.prioritySort).reverse();
 
-		jQuery.each(panels, function (i, panel) {
-			const parentContainer = jQuery("#sub-accordion-panel-" + panel.params.id);
+		jQuery.each(nestedPanels, function (i, nestedPanel) {
+			const parentContainer = jQuery(
+				"#sub-accordion-panel-" + nestedPanel.params.parentId,
+			);
 
-			parentContainer.children(".panel-meta").after(panel.headContainer);
+			parentContainer.children(".panel-meta").after(nestedPanel.headContainer);
 		});
 	});
 
@@ -47,21 +46,23 @@ function setupPanels() {
 		attachEvents: function (this: WpbfCustomizePanel) {
 			const panel = this;
 
-			if ("wpbf-nested" !== this.params.type || _.isUndefined(this.params.id)) {
-				_panelAttachEvents.call(this);
+			if ("wpbf-nested" !== panel.params.type || !panel.params.parentId) {
+				_panelAttachEvents.call(panel);
 				return;
 			}
 
-			_panelAttachEvents.call(this);
+			_panelAttachEvents.call(panel);
 
 			panel.expanded.bind(function (expanded) {
+				if (!panel.params.parentId) return;
+
 				if (expanded) {
 					wp.customize
-						.panel(panel.params.id)
+						.panel(panel.params.parentId)
 						.contentContainer?.addClass("current-panel-parent");
 				} else {
 					wp.customize
-						.panel(panel.params.id)
+						.panel(panel.params.parentId)
 						.contentContainer?.removeClass("current-panel-parent");
 				}
 			});
@@ -73,10 +74,14 @@ function setupPanels() {
 					if (wp.customize.utils.isKeydownButNotEnterEvent(event)) {
 						return;
 					}
-					event.preventDefault(); // Keep this AFTER the key filter above
+
+					// Keep this AFTER the key filter above
+					event.preventDefault();
+
+					if (!panel.params.parentId) return;
 
 					if (panel.expanded()) {
-						wp.customize.panel(panel.params.id).expand(panel.params);
+						wp.customize.panel(panel.params.parentId).expand(panel.params);
 					}
 				});
 		},
@@ -84,13 +89,15 @@ function setupPanels() {
 		embed: function (this: WpbfCustomizePanel) {
 			const panel = this;
 
-			if ("wpbf-nested" !== this.params.type || _.isUndefined(this.params.id)) {
-				_panelEmbed.call(this);
+			if ("wpbf-nested" !== panel.params.type || !panel.params.parentId) {
+				_panelEmbed.call(panel);
 				return;
 			}
 
-			_panelEmbed.call(this);
-			const parentContainer = jQuery("#sub-accordion-panel-" + this.params.id);
+			_panelEmbed.call(panel);
+			const parentContainer = jQuery(
+				"#sub-accordion-panel-" + panel.params.parentId,
+			);
 			parentContainer.append(panel.headContainer);
 		},
 
@@ -98,17 +105,14 @@ function setupPanels() {
 			const panel = this;
 			let activeCount = 0;
 
-			if ("wpbf-nested" !== this.params.type) {
-				return _panelIsContextuallyActive.call(this);
+			if ("wpbf-nested" !== panel.params.type) {
+				return _panelIsContextuallyActive.call(panel);
 			}
 
-			const children = this._children("panel", "section");
+			const children = panel._children("panel", "section");
 
 			wp.customize.panel.each(function (child: WpbfCustomizePanel) {
-				if (
-					!child.params.parentId ||
-					child.params.parentId !== panel.id
-				) {
+				if (!child.params.parentId || child.params.parentId !== panel.id) {
 					return;
 				}
 
