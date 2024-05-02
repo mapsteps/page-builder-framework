@@ -102,17 +102,17 @@ if ( ! function_exists( 'wpbf_get_theme_mod_value' ) ) {
 	/**
 	 * Helper function to get theme_mod array values by key.
 	 *
-	 * @param array   $array The decoded theme_mod array.
+	 * @param array   $arr The decoded theme_mod array.
 	 * @param string  $key The array key.
-	 * @param boolean $default The default to check against.
+	 * @param boolean $default_value The default to check against.
 	 * @param boolean $print_default Whether the default value should be returned.
 	 *
 	 * @return mixed The key value.
 	 */
-	function wpbf_get_theme_mod_value( $array, $key, $default = false, $print_default = false ) {
+	function wpbf_get_theme_mod_value( $arr, $key, $default_value = false, $print_default = false ) {
 
 		// Stop here if we have no array and we don't want to print a default.
-		if ( ! $array && ! $print_default ) {
+		if ( ! $arr && ! $print_default ) {
 			return false;
 		}
 
@@ -120,17 +120,17 @@ if ( ! function_exists( 'wpbf_get_theme_mod_value' ) ) {
 		$value = false;
 
 		// If we want to return a default, let's adjust the value.
-		if ( $default && $print_default ) {
-			$value = $default;
+		if ( $default_value && $print_default ) {
+			$value = $default_value;
 		}
 
 		// Get & set the value by key if we have one.
-		$value = isset( $array[ $key ] ) ? $array[ $key ] : $value;
+		$value = isset( $arr[ $key ] ) ? $arr[ $key ] : $value;
 
 		// If we don't want to return a default and the saved
 		// value matches default, we set value back to false.
-		if ( $default && ! $print_default ) {
-			$value = $default === $value ? false : $value;
+		if ( $default_value && ! $print_default ) {
+			$value = $default_value === $value ? false : $value;
 		}
 
 		return $value;
