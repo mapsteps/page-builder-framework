@@ -11,7 +11,6 @@
  * - Date
  * - Dimensions (the plural one, not the singular one)
  * - Dropdown Pages
- * - Editor
  * - Multicheck
  * - Multicolor
  * - Palette
@@ -112,22 +111,6 @@ if ( ! class_exists( ( '\Kirki\Field\Dropdown_Pages' ) ) ) {
 
 		/**
 		 * Dropdown_Pages field constructor.
-		 *
-		 * @param array $field_args The field arguments.
-		 */
-		public function __construct( $field_args = [] ) {}
-
-	}
-}
-
-if ( ! class_exists( ( '\Kirki\Field\Editor' ) ) ) {
-	/**
-	 * PBF's "fake" Editor class for compatiblity purpose.
-	 */
-	class Editor {
-
-		/**
-		 * Editor field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */

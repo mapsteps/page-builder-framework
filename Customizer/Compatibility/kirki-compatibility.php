@@ -14,6 +14,7 @@ if ( ! class_exists( '\Kirki' ) ) {
 	 * - Color
 	 * - ReactColorful
 	 * - Dimension
+	 * - Editor
 	 * - Generic
 	 * - Image
 	 * - URL
@@ -39,7 +40,6 @@ if ( ! class_exists( '\Kirki' ) ) {
 	 * - Date
 	 * - Dimensions (the plural one)
 	 * - Dropdown Pages
-	 * - Editor
 	 * - Multicheck
 	 * - Multicolor
 	 * - Palette
@@ -265,6 +265,7 @@ if ( ! class_exists( '\Kirki' ) ) {
 			}
 
 			// Kirki's field types compatibility.
+
 			if ( 'switch' === $type ) {
 				$type = 'toggle';
 
@@ -273,6 +274,18 @@ if ( ! class_exists( '\Kirki' ) ) {
 
 			if ( 'code_editor' === $type ) {
 				$type = 'code';
+			}
+
+			if ( 'editor' === $type ) {
+				if ( isset( $choices['tinymce'] ) ) {
+					$custom_props['tinymce'] = $choices['tinymce'];
+					unset( $choices['tinymce'] );
+				}
+
+				if ( isset( $choices['quicktags'] ) ) {
+					$custom_props['quicktags'] = $choices['quicktags'];
+					unset( $choices['quicktags'] );
+				}
 			}
 
 			// Page Builder Framework's custom controls.

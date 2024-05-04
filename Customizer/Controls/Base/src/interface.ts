@@ -43,6 +43,7 @@ import { Notification } from "wordpress__customize-browser/Notification";
 import { PartialObject } from "lodash";
 import { Root } from "react-dom/client";
 import { WpbfCustomizeCheckboxControl } from "../../Checkbox/src/interface";
+import { WpbfCustomizeEditorControl } from "../../Editor/src/editor-interface";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -281,6 +282,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-checkbox": WpbfCustomizeCheckboxControl;
 	"wpbf-color": WpbfCustomizeColorControl;
 	"wpbf-dimension": WpbfCustomizeDimensionControl;
+	"wpbf-editor": WpbfCustomizeEditorControl;
 	"wpbf-generic": WpbfCustomizeGenericControl;
 	"wpbf-responsive-generic": WpbfCustomizeResponsiveGenericControl;
 	"wpbf-assoc-array": WpbfCustomizeAssocArrayControl;

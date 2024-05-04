@@ -9,6 +9,7 @@
  * - Color
  * - ReactColorful
  * - Dimension
+ * - Editor
  * - Generic
  * - Image
  * - URL
@@ -149,6 +150,31 @@ if ( ! class_exists( ( '\Kirki\Field\Dimension' ) ) ) {
 		public function __construct( $field_args = [] ) {
 
 			$field_args['type'] = 'dimension';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Editor' ) ) ) {
+	/**
+	 * PBF's "fake" Editor class for compatiblity purpose.
+	 * This class will transform Kirki's "editor" fields into PBF's new Customizer "editor" fields.
+	 */
+	class Editor {
+
+		/**
+		 * Editor field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'editor';
 
 			if ( class_exists( '\Kirki' ) ) {
 				\Kirki::add_field( '', $field_args );

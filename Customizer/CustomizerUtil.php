@@ -14,6 +14,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Code\CodeField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Custom\CustomField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
+use Mapsteps\Wpbf\Customizer\Controls\Editor\EditorField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\AssocArrayField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\ResponsiveGenericField;
@@ -80,6 +81,7 @@ class CustomizerUtil {
 		'divider',
 		'headline',
 		'headline-toggle',
+		'editor',
 		'generic',
 		'responsive-generic',
 		'assoc-array',
@@ -277,6 +279,9 @@ class CustomizerUtil {
 				break;
 			case 'dimension':
 				$field = new DimensionField( $control_entity );
+				break;
+			case 'editor':
+				$field = new EditorField( $control_entity );
 				break;
 			case 'generic':
 				$field = new GenericField( $control_entity );
