@@ -44,6 +44,7 @@ import { PartialObject } from "lodash";
 import { Root } from "react-dom/client";
 import { WpbfCustomizeCheckboxControl } from "../../Checkbox/src/interface";
 import { WpbfCustomizeEditorControl } from "../../Editor/src/editor-interface";
+import { WpbfCustomizeRepeaterControl } from "../../Repeater/src/repeater-interface";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -244,6 +245,37 @@ export interface WpbfCustomizeControl<SV, CP> {
 
 	// Specific to PBF's sortable control.
 	getNewValues?: () => any[];
+
+	// Specific to PBF's repeater control.
+	settingField?: JQuery;
+	setValue?: (newValue: any, refresh?: boolean, filtering?: boolean) => void;
+	getValue?: () => any;
+	repeaterFieldsContainer?: any;
+	currentIndex?: number;
+	rows?: any[];
+	addRow?: (data?: Object) => Object;
+	initColorPicker?: () => void;
+	initSelect?: (theNewRow: any, data?: Object) => void;
+	sort?: () => void;
+	deleteRow?: (index: number) => void;
+	updateField?: (
+		e: any,
+		rowIndex: number,
+		fieldId: string,
+		element: any,
+	) => void;
+	$thisButton?: JQuery;
+	repeaterTemplate?: () => any;
+	openFrame?: (e: any) => void;
+	removeImage?: (e: any) => void;
+	removeFile?: (e: any) => void;
+	initFrame?: () => void;
+	initCropperFrame?: () => void;
+	onSelect?: (e: any) => void;
+	onSelectForCrop?: () => void;
+	onCropped?: (croppedImage: object) => void;
+	// Gave up (still some/many types are missing)
+	[key: string]: any;
 }
 
 export interface AnyWpbfCustomizeControl
@@ -295,6 +327,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-radio": {};
 	"wpbf-radio-buttonset": {};
 	"wpbf-radio-image": {};
+	"wpbf-repeater": WpbfCustomizeRepeaterControl;
 	"wpbf-select": WpbfCustomizeSelectControl;
 	"wpbf-slider": WpbfCustomizeControl<
 		number | string,
