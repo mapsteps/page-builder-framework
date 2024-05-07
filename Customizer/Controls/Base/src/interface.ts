@@ -40,7 +40,6 @@ import { ThemesPanel } from "wordpress__customize-browser/ThemesPanel";
 import { Previewer } from "wordpress__customize-browser/Previewer";
 import { Element_Synchronizer } from "wordpress__customize-browser/Element";
 import { Notification } from "wordpress__customize-browser/Notification";
-import { PartialObject } from "lodash";
 import { Root } from "react-dom/client";
 import { WpbfCustomizeCheckboxControl } from "../../Checkbox/src/interface";
 import { WpbfCustomizeEditorControl } from "../../Editor/src/editor-interface";
@@ -199,7 +198,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	settings: WpbfCustomizeControlSettings;
 	setting: WpbfCustomizeSetting<SV> | null;
 	propertyElements: Array<WpbfCustomizeElement>;
-	extend<CT>(this: CT, protoProps: PartialObject<CT>, classProps?: object): CT;
+	extend<CT>(this: CT, protoProps: Partial<CT>, classProps?: object): CT;
 	initialize(id?: string, options?: CP): void;
 	linkElements(): void;
 	embed(): void;
@@ -253,9 +252,9 @@ export interface WpbfCustomizeControl<SV, CP> {
 	repeaterFieldsContainer?: any;
 	currentIndex?: number;
 	rows?: any[];
-	addRow?: (data?: Object) => Object;
+	addRow?: (data?: object) => any;
 	initColorPicker?: () => void;
-	initSelect?: (theNewRow: any, data?: Object) => void;
+	initSelect?: (theNewRow: any, data?: Record<string, any>) => void;
 	sort?: () => void;
 	deleteRow?: (index: number) => void;
 	updateField?: (
