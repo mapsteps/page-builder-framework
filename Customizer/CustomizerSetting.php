@@ -165,6 +165,22 @@ class CustomizerSetting {
 	}
 
 	/**
+	 * Set the type of the control registered to the setting.
+	 *
+	 * @param string $control_type The control's type registered to the setting.
+	 * @return $this
+	 */
+	public function control_type( $control_type = '' ) {
+
+		if ( ! empty( $control_type ) && is_string( $control_type ) ) {
+			$this->setting->control_type = $control_type;
+		}
+
+		return $this;
+
+	}
+
+	/**
 	 * Add the setting to the Customizer singleton.
 	 *
 	 * @return CustomizerSettingEntity

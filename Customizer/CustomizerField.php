@@ -488,6 +488,8 @@ final class CustomizerField {
 			return;
 		}
 
+		$this->setting_instance->control_type( $this->control_instance->control->type );
+
 		$this->setting_instance->add();
 
 		if ( ! empty( $this->field_dependencies ) ) {

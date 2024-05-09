@@ -246,10 +246,10 @@ export interface WpbfCustomizeControl<SV, CP> {
 	getNewValues?: () => any[];
 
 	// Specific to PBF's repeater control.
-	settingField?: JQuery;
+	settingField?: JQuery<HTMLElement>;
 	setValue?: (newValue: any, refresh?: boolean, filtering?: boolean) => void;
 	getValue?: () => any;
-	repeaterFieldsContainer?: any;
+	repeaterFieldsContainer?: JQuery<HTMLElement>;
 	currentIndex?: number;
 	rows?: any[];
 	addRow?: (data?: Record<string, Record<string, any>>) => any;

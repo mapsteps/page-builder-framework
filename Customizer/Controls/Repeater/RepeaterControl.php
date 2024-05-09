@@ -96,9 +96,11 @@ class RepeaterControl extends BaseControl {
 			if ( ! isset( $value['default'] ) ) {
 				$args['fields'][ $key ]['default'] = '';
 			}
+
 			if ( ! isset( $value['label'] ) ) {
 				$args['fields'][ $key ]['label'] = '';
 			}
+
 			$args['fields'][ $key ]['id'] = $key;
 
 			// We check if the filed is an uploaded media ( image , file, video, etc.. ).
@@ -150,9 +152,11 @@ class RepeaterControl extends BaseControl {
 						// We check if this field was marked as requiring extra filtering (in this case image, cropped_images, upload).
 						if ( array_key_exists( $key, $media_fields_to_filter ) ) {
 
-							// What follows was made this way to preserve backward compatibility.
-							// The repeater control use to store the URL for images instead of the attachment ID.
-							// We check if the value look like an ID (otherwise it's probably a URL so don't filter it).
+							/**
+							 * What follows was made this way to preserve backward compatibility.
+							 * The repeater control use to store the URL for images instead of the attachment ID.
+							 * We check if the value look like an ID (otherwise it's probably a URL so don't filter it).
+							 */
 							if ( is_numeric( $value ) ) {
 
 								// "sanitize" the value.
@@ -197,7 +201,7 @@ class RepeaterControl extends BaseControl {
 		wp_enqueue_script( 'wp-color-picker-alpha', WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/wp-color-picker-alpha.min.js', array( 'jquery', 'customize-base', 'wp-color-picker' ), WPBF_VERSION, false );
 
 		wp_enqueue_script(
-			'wpbf-checkbox-control',
+			'wpbf-repeater-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/repeater-control-min.js',
 			array(
 				'customize-controls',
@@ -233,6 +237,13 @@ class RepeaterControl extends BaseControl {
 
 	/**
 	 * Render the control's content.
+	 *
+	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
+	 *
+	 * Supports basic input types `text`, `checkbox`, `textarea`, `radio`, `select` and `dropdown-pages`.
+	 * Additional input types such as `email`, `url`, `number`, `hidden` and `date` are supported implicitly.
+	 *
+	 * Control content can alternately be rendered in JS. See WP_Customize_Control::print_template().
 	 */
 	protected function render_content() {
 		?>
@@ -241,20 +252,29 @@ class RepeaterControl extends BaseControl {
 			<?php if ( ! empty( $this->label ) ) : ?>
 				<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
 			<?php endif; ?>
+
 			<?php if ( ! empty( $this->description ) ) : ?>
 				<span class="description customize-control-description"><?php echo wp_kses_post( $this->description ); ?></span>
 			<?php endif; ?>
-			<input type="hidden" {{{ data.inputAttrs }}} value="" <?php echo wp_kses_post( $this->get_link() ); ?> />
+
+			<input
+				type="hidden"
+				<?php $this->input_attrs(); ?>
+				<?php $this->link(); ?>
+				value=""
+			/>
 		</label>
 
 		<ul class="repeater-fields"></ul>
 
-		<?php if ( isset( $this->limit ) ) : ?>
+		<?php if ( false !== $this->limit ) : ?>
 			<?php /* translators: %s represents the number of rows we're limiting the repeater to allow. */ ?>
 			<p class="limit"><?php printf( esc_html__( 'Limit: %s rows', 'page-builder-framework' ), esc_html( $this->limit ) ); ?></p>
 		<?php endif; ?>
 
-		<button class="button-secondary repeater-add"><?php echo esc_html( $this->button_label ); ?></button>
+		<button type="button" class="button-secondary repeater-add">
+			<?php echo esc_html( $this->button_label ); ?>
+		</button>
 
 		<?php
 		$this->repeater_js_template();
@@ -265,29 +285,29 @@ class RepeaterControl extends BaseControl {
 	 * An Underscore (JS) template for this control's content (but not its container).
 	 * Class variables for this control class are available in the `data` JS object.
 	 */
-	public function repeater_js_template() {
+	protected function repeater_js_template() {
 		?>
 
 		<script type="text/html" class="customize-control-repeater-content">
 			<# var field; var index = data.index; #>
-
+	
 			<li class="repeater-row minimized" data-row="{{{ index }}}">
-
+	
 				<div class="repeater-row-header">
 					<span class="repeater-row-label"></span>
 					<i class="dashicons dashicons-arrow-down repeater-minimize"></i>
 				</div>
 				<div class="repeater-row-content">
 					<# _.each( data, function( field, i ) { #>
-
+	
 						<div class="repeater-field repeater-field-{{{ field.type }}} repeater-field-{{ field.id }}">
-
+	
 							<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type || 'date' === field.type || 'number' === field.type ) { #>
 								<# var fieldExtras = ''; #>
 								<# if ( 'link' === field.type ) { #>
 									<# field.type = 'url' #>
 								<# } #>
-
+	
 								<# if ( 'number' === field.type ) { #>
 									<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.min ) ) { #>
 										<# fieldExtras += ' min="' + field.choices.min + '"'; #>
@@ -299,34 +319,34 @@ class RepeaterControl extends BaseControl {
 										<# fieldExtras += ' step="' + field.choices.step + '"'; #>
 									<# } #>
 								<# } #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
 									<input type="{{field.type}}" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}"{{ fieldExtras }}>
 								</label>
-
+	
 							<# } else if ( 'number' === field.type ) { #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
 									<input type="{{ field.type }}" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}"{{ numberFieldExtras }}>
 								</label>
-
+	
 							<# } else if ( 'hidden' === field.type ) { #>
-
+	
 								<input type="hidden" data-field="{{{ field.id }}}" <# if ( field.default ) { #> value="{{{ field.default }}}" <# } #> />
-
+	
 							<# } else if ( 'checkbox' === field.type ) { #>
-
+	
 								<label>
 									<input type="checkbox" value="{{{ field.default }}}" data-field="{{{ field.id }}}" <# if ( field.default ) { #> checked="checked" <# } #> /> {{{ field.label }}}
 									<# if ( field.description ) { #>{{{ field.description }}}<# } #>
 								</label>
-
+	
 							<# } else if ( 'select' === field.type ) { #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
@@ -336,52 +356,52 @@ class RepeaterControl extends BaseControl {
 										<# }); #>
 									</select>
 								</label>
-
+	
 							<# } else if ( 'dropdown-pages' === field.type ) { #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ data.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
 									<div class="customize-control-content repeater-dropdown-pages">{{{ field.dropdown }}}</div>
 								</label>
-
+	
 							<# } else if ( 'radio' === field.type ) { #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
-
+	
 									<# _.each( field.choices, function( choice, i ) { #>
 										<label><input type="radio" name="{{{ field.id }}}{{ index }}" data-field="{{{ field.id }}}" value="{{{ i }}}" <# if ( field.default == i ) { #> checked="checked" <# } #>> {{ choice }} <br/></label>
 									<# }); #>
 								</label>
-
+	
 							<# } else if ( 'radio-image' === field.type ) { #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
-
+	
 									<# _.each( field.choices, function( choice, i ) { #>
 										<input type="radio" id="{{{ field.id }}}_{{ index }}_{{{ i }}}" name="{{{ field.id }}}{{ index }}" data-field="{{{ field.id }}}" value="{{{ i }}}" <# if ( field.default == i ) { #> checked="checked" <# } #>>
 											<label for="{{{ field.id }}}_{{ index }}_{{{ i }}}"><img src="{{ choice }}"></label>
 										</input>
 									<# }); #>
 								</label>
-
+	
 							<# } else if ( 'color' === field.type ) { #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
 								</label>
-
+	
 								<#
 								var defaultValue = '';
 								if ( field.default ) {
 									if ( -1 !== field.default.indexOf( 'rgb' ) || -1 !== field.default.indexOf( '#' ) ) {
 										defaultValue = field.default;
-
+	
 										if (-1 !== field.default.indexOf('rgba')) {
 											if (!field.choices) field.choices = {};
 											field.choices.alpha = true;
@@ -393,29 +413,29 @@ class RepeaterControl extends BaseControl {
 									}
 								}
 								#>
-
+	
 								<#
 								var alphaEnabledAttr = '';
 								if ( field.choices && field.choices.alpha ) {
 									alphaEnabledAttr = ' data-alpha-enabled=true';
 								}
 								#>
-
+	
 								<input class="wpbf-classic-color-picker" type="text" maxlength="7" value="{{{ field.default }}}" data-field="{{{ field.id }}}" data-default-color="{{{ defaultValue }}}" {{alphaEnabledAttr}} />
-
+	
 							<# } else if ( 'textarea' === field.type ) { #>
-
+	
 								<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 								<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
 								<textarea rows="5" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
-
+	
 							<# } else if ( field.type === 'image' || field.type === 'cropped_image' ) { #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
 								</label>
-
+	
 								<figure class="wpbf-image-attachment" data-placeholder="<?php esc_attr_e( 'No Image Selected', 'page-builder-framework' ); ?>" >
 									<# if ( field.default ) { #>
 										<# var defaultImageURL = ( field.default.url ) ? field.default.url : field.default; #>
@@ -424,7 +444,7 @@ class RepeaterControl extends BaseControl {
 										<?php esc_html_e( 'No Image Selected', 'page-builder-framework' ); ?>
 									<# } #>
 								</figure>
-
+	
 								<div class="actions">
 									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"><?php esc_html_e( 'Remove', 'page-builder-framework' ); ?></button>
 									<button type="button" class="button upload-button" data-label=" <?php esc_attr_e( 'Add Image', 'page-builder-framework' ); ?>" data-alt-label="<?php echo esc_attr_e( 'Change Image', 'page-builder-framework' ); ?>" >
@@ -440,14 +460,14 @@ class RepeaterControl extends BaseControl {
 										<input type="hidden" class="hidden-field" value="{{{ field.default }}}" data-field="{{{ field.id }}}" >
 									<# } #>
 								</div>
-
+	
 							<# } else if ( field.type === 'upload' ) { #>
-
+	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
 								</label>
-
+	
 								<figure class="wpbf-file-attachment" data-placeholder="<?php esc_attr_e( 'No File Selected', 'page-builder-framework' ); ?>" >
 									<# if ( field.default ) { #>
 										<# var defaultFilename = ( field.default.filename ) ? field.default.filename : field.default; #>
@@ -456,7 +476,7 @@ class RepeaterControl extends BaseControl {
 										<?php esc_html_e( 'No File Selected', 'page-builder-framework' ); ?>
 									<# } #>
 								</figure>
-
+	
 								<div class="actions">
 									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"><?php esc_html_e( 'Remove', 'page-builder-framework' ); ?></button>
 									<button type="button" class="button upload-button" data-label="<?php esc_attr_e( 'Add File', 'page-builder-framework' ); ?>" data-alt-label="<?php esc_attr_e( 'Change File', 'page-builder-framework' ); ?>">
@@ -472,18 +492,21 @@ class RepeaterControl extends BaseControl {
 										<input type="hidden" class="hidden-field" value="{{{ field.default }}}" data-field="{{{ field.id }}}" >
 									<# } #>
 								</div>
-
+	
 							<# } else if ( 'custom' === field.type ) { #>
-
+	
 								<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 								<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
 								<div data-field="{{{ field.id }}}">{{{ field.default }}}</div>
-
+	
 							<# } #>
-
+	
 						</div>
 					<# }); #>
-					<button type="button" class="button-link repeater-row-remove"><?php esc_html_e( 'Remove', 'page-builder-framework' ); ?></button>
+
+					<button type="button" class="button-link repeater-row-remove">
+						<?php esc_html_e( 'Remove', 'page-builder-framework' ); ?>
+					</button>
 				</div>
 			</li>
 		</script>

@@ -28,6 +28,12 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 		currentIndex: 0,
 
+		repeaterFieldsContainer: undefined,
+
+		settingField: undefined,
+
+		repeaterTemplate: undefined,
+
 		initWpbfControl: function (
 			this: WpbfCustomizeRepeaterControl,
 			ctrl?: WpbfCustomizeRepeaterControl,
@@ -67,6 +73,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 			control.container?.on("click", "button.repeater-add", function (e) {
 				e.preventDefault();
+
 				if (
 					!limit ||
 					("number" === typeof control.currentIndex &&
@@ -666,7 +673,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 				// Create a new row object and append the element
 				const newRow: WpbfRepeaterRow = new RepeaterRow(
 					control.currentIndex ?? 0,
-					jQuery(template).appendTo(control.repeaterFieldsContainer),
+					jQuery(template).appendTo(control.repeaterFieldsContainer!),
 					control.params.rowLabel!,
 					control,
 				);
@@ -710,13 +717,13 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 		sort: function () {
 			const control = this;
-			const $rows = this.repeaterFieldsContainer.find(".repeater-row");
+			const $rows = this.repeaterFieldsContainer?.find(".repeater-row");
 			const newOrder: any[] = [];
 			const settings = control.getValue?.();
 			const newRows: any[] = [];
 			const newSettings: any[] = [];
 
-			$rows.each(function (i: number, element: HTMLElement) {
+			$rows?.each(function (i: number, element: HTMLElement) {
 				newOrder.push(jQuery(element).data("row"));
 			});
 

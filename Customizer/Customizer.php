@@ -9,6 +9,7 @@ namespace Mapsteps\Wpbf\Customizer;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterSetting;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
 use WP_Customize_Manager;
@@ -151,6 +152,26 @@ final class Customizer {
 	private function register_settings( $wp_customize_manager ) {
 
 		foreach ( CustomizerStore::$added_settings as $setting ) {
+			if ( 'repeater' === $setting->control_type ) {
+				$wp_customize_manager->add_setting(
+					new RepeaterSetting(
+						$wp_customize_manager,
+						$setting->id,
+						array(
+							'default'              => $setting->default,
+							'type'                 => $setting->type,
+							'capability'           => $setting->capability,
+							'transport'            => $setting->transport,
+							'sanitize_callback'    => $setting->sanitize_callback,
+							'sanitize_js_callback' => $setting->sanitize_js_callback,
+							'validate_callback'    => $setting->validate_callback,
+						)
+					)
+				);
+
+				continue;
+			}
+
 			$wp_customize_manager->add_setting(
 				$setting->id,
 				array(

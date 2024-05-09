@@ -76,4 +76,11 @@ class CustomizerSettingEntity {
 	 */
 	public $sanitize_js_callback = '';
 
+	/**
+	 * Type of the control registered to the setting.
+	 *
+	 * @var string
+	 */
+	public $control_type = '';
+
 }
