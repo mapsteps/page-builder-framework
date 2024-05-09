@@ -17,6 +17,7 @@
  * - Radio
  * - Radio Buttonset
  * - Radio Image
+ * - Repeater
  * - Select
  * - ReactSelect
  * - Slider
@@ -392,6 +393,31 @@ if ( ! class_exists( ( '\Kirki\Field\Radio_Image' ) ) ) {
 		public function __construct( $field_args = [] ) {
 
 			$field_args['type'] = 'radio-image';
+
+			if ( class_exists( '\Kirki' ) ) {
+				\Kirki::add_field( '', $field_args );
+			}
+
+		}
+
+	}
+}
+
+if ( ! class_exists( ( '\Kirki\Field\Repeater' ) ) ) {
+	/**
+	 * PBF's "fake" Repeater class for compatiblity purpose.
+	 * This class will transform Kirki's "repeater" fields into PBF's new Customizer "repeater" fields.
+	 */
+	class Repeater {
+
+		/**
+		 * Repeater field constructor.
+		 *
+		 * @param array $field_args The field arguments.
+		 */
+		public function __construct( $field_args = [] ) {
+
+			$field_args['type'] = 'repeater';
 
 			if ( class_exists( '\Kirki' ) ) {
 				\Kirki::add_field( '', $field_args );

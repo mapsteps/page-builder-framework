@@ -252,7 +252,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	repeaterFieldsContainer?: any;
 	currentIndex?: number;
 	rows?: any[];
-	addRow?: (data?: object) => any;
+	addRow?: (data?: Record<string, Record<string, any>>) => any;
 	initColorPicker?: () => void;
 	initSelect?: (theNewRow: any, data?: Record<string, any>) => void;
 	sort?: () => void;

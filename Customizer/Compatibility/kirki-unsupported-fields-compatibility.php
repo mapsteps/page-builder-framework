@@ -14,7 +14,6 @@
  * - Multicheck
  * - Multicolor
  * - Palette
- * - Repeater
  *
  * @package Page Builder Framework
  */
@@ -159,22 +158,6 @@ if ( ! class_exists( ( '\Kirki\Field\Palette' ) ) ) {
 
 		/**
 		 * Palette field constructor.
-		 *
-		 * @param array $field_args The field arguments.
-		 */
-		public function __construct( $field_args = [] ) {}
-
-	}
-}
-
-if ( ! class_exists( ( '\Kirki\Field\Repeater' ) ) ) {
-	/**
-	 * PBF's "fake" Repeater class for compatiblity purpose.
-	 */
-	class Repeater {
-
-		/**
-		 * Repeater field constructor.
 		 *
 		 * @param array $field_args The field arguments.
 		 */

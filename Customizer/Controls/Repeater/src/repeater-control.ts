@@ -26,6 +26,8 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 		rows: [],
 
+		currentIndex: 0,
+
 		initWpbfControl: function (
 			this: WpbfCustomizeRepeaterControl,
 			ctrl?: WpbfCustomizeRepeaterControl,
@@ -33,7 +35,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			const control = ctrl || this;
 
 			// The current value set in Control Class (set in Kirki_Customize_Repeater_Control::to_json() function)
-			const settingValue = control.params?.value;
+			const settingValue = control.params.value;
 
 			// The hidden field that keeps the data saved (though we never update it)
 			control.settingField = control.container
@@ -54,7 +56,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			// Save the rows objects
 			control.rows = [];
 
-			// Default limit choice
+			// Default limit.
 			let limit: number | boolean = false;
 
 			if ("number" === typeof control.params.limit) {
@@ -127,28 +129,28 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			 * Function that loads the Mustache template
 			 */
 			control.repeaterTemplate = _.memoize(function () {
-				var compiled,
-					/*
-					 * Underscore's default ERB-style templates are incompatible with PHP
-					 * when asp_tags is enabled, so WordPress uses Mustache-inspired templating syntax.
-					 *
-					 * @see trac ticket #22344.
-					 */
-					options = {
-						evaluate: /<#([\s\S]+?)#>/g,
-						interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
-						escape: /\{\{([^\}]+?)\}\}(?!\})/g,
-						variable: "data",
-					};
+				/*
+				 * Underscore's default ERB-style templates are incompatible with PHP
+				 * when asp_tags is enabled, so WordPress uses Mustache-inspired templating syntax.
+				 *
+				 * @see trac ticket #22344.
+				 */
+				const options = {
+					evaluate: /<#([\s\S]+?)#>/g,
+					interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
+					escape: /\{\{([^\}]+?)\}\}(?!\})/g,
+					variable: "data",
+				};
 
 				return function (data: any) {
-					compiled = _.template(
+					const compiled = _.template(
 						control.container
 							.find(".customize-control-repeater-content")
 							.first()
 							.html(),
 						options,
 					);
+
 					return compiled(data);
 				};
 			});
@@ -174,10 +176,10 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		/**
 		 * Open the media modal.
 		 *
-		 * @param {object} event - The JS event.
+		 * @param {JQuery.TriggeredEvent} event - The JS event.
 		 * @returns {void}
 		 */
-		openFrame: function (event: any): void {
+		openFrame: function (event: JQuery.TriggeredEvent): void {
 			if (wp.customize.utils.isKeydownButNotEnterEvent(event)) {
 				return;
 			}
@@ -196,7 +198,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		},
 
 		initFrame: function () {
-			var libMediaType = this.getMimeType();
+			const libMediaType = this.getMimeType();
 
 			this.frame = wp.media({
 				states: [
@@ -228,15 +230,15 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			if (_.isString(currentFieldId) && "" !== currentFieldId) {
 				// Make fields is defined and only do the hack for cropped_image
 				if (
-					_.isObject(this.params?.fields[currentFieldId]) &&
-					"cropped_image" === this.params?.fields[currentFieldId].type
+					_.isObject(this.params.fields[currentFieldId]) &&
+					"cropped_image" === this.params.fields[currentFieldId].type
 				) {
 					// Iterate over the list of attributes.
 					for (const attr of attrs) {
 						// If the attribute exists in the field
-						if (!_.isUndefined(this.params?.fields[currentFieldId][attr])) {
+						if (!_.isUndefined(this.params.fields[currentFieldId][attr])) {
 							// Set the attribute in the main object
-							this.params[attr] = this.params?.fields[currentFieldId][attr];
+							this.params[attr] = this.params.fields[currentFieldId][attr];
 						}
 					}
 				}
@@ -252,8 +254,8 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 						library: wp.media.query({ type: libMediaType }),
 						multiple: false,
 						date: false,
-						suggestedWidth: this.params?.width,
-						suggestedHeight: this.params?.height,
+						suggestedWidth: this.params.width,
+						suggestedHeight: this.params.height,
 					}),
 					new wp.media.controller.CustomizeImageCropper({
 						imgSelectOptions: this.calculateImageSelectOptions,
@@ -268,7 +270,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		},
 
 		onSelect: function () {
-			var attachment = this.frame.state().get("selection").first().toJSON();
+			const attachment = this.frame.state().get("selection").first().toJSON();
 
 			if (
 				this.$thisButton
@@ -286,14 +288,14 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * state if the image isn't the right size.
 		 */
 
-		onSelectForCrop: function () {
-			var attachment = this.frame.state().get("selection").first().toJSON();
+		onSelectForCrop: function (this: WpbfCustomizeRepeaterControl) {
+			const attachment = this.frame.state().get("selection").first().toJSON();
 
 			if (
-				this.params?.width === attachment.width &&
-				this.params?.height === attachment.height &&
-				!this.params?.flex_width &&
-				!this.params?.flex_height
+				this.params.width === attachment.width &&
+				this.params.height === attachment.height &&
+				!this.params.flex_width &&
+				!this.params.flex_height
 			) {
 				this.setImageInRepeaterField(attachment);
 			} else {
@@ -321,21 +323,22 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {object} - Options.
 		 */
 		calculateImageSelectOptions: function (
+			this: WpbfCustomizeRepeaterControl,
 			attachment: any,
 			controller: any,
 		): object {
-			var control = controller.get("control"),
-				flexWidth = !!parseInt(control.params?.flex_width, 10),
-				flexHeight = !!parseInt(control.params?.flex_height, 10),
-				realWidth = attachment.get("width"),
-				realHeight = attachment.get("height"),
-				xInit = parseInt(control.params?.width, 10),
-				yInit = parseInt(control.params?.height, 10),
-				ratio = xInit / yInit,
-				xImg = realWidth,
-				yImg = realHeight,
-				x1,
-				y1;
+			const control = controller.get("control");
+			const flexWidth = !!parseInt(control.params.flex_width, 10);
+			const flexHeight = !!parseInt(control.params.flex_height, 10);
+			const realWidth = attachment.get("width");
+			const realHeight = attachment.get("height");
+			let xInit = parseInt(control.params.width, 10);
+			let yInit = parseInt(control.params.height, 10);
+			const ratio = xInit / yInit;
+			const xImg = realWidth;
+			const yImg = realHeight;
+			let x1;
+			let y1;
 
 			controller.set(
 				"canSkipCrop",
@@ -426,7 +429,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		onSkippedCrop: function (): void {
-			var attachment = this.frame.state().get("selection").first().toJSON();
+			const attachment = this.frame.state().get("selection").first().toJSON();
 			this.setImageInRepeaterField(attachment);
 		},
 
@@ -437,12 +440,12 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		setImageInRepeaterField: function (attachment: Record<string, any>): void {
-			var $targetDiv = this.$thisButton?.closest(
+			const $targetDiv = this.$thisButton?.closest(
 				".repeater-field-image,.repeater-field-cropped_image",
 			);
 
 			$targetDiv
-				?.find(".kirki-image-attachment")
+				?.find(".wpbf-image-attachment")
 				.html('<img src="' + attachment.url + '">')
 				.hide()
 				.slideDown("slow");
@@ -463,10 +466,10 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		setFileInRepeaterField: function (attachment: any): void {
-			var $targetDiv = this.$thisButton?.closest(".repeater-field-upload");
+			const $targetDiv = this.$thisButton?.closest(".repeater-field-upload");
 
 			$targetDiv
-				?.find(".kirki-file-attachment")
+				?.find(".wpbf-file-attachment")
 				.html(
 					'<span class="file"><span class="dashicons dashicons-media-default"></span> ' +
 						attachment.filename +
@@ -485,9 +488,9 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			this.frame.close();
 		},
 
-		getMimeType: function () {
+		getMimeType: function (this: WpbfCustomizeRepeaterControl) {
 			// We get the field id from which this was called
-			var currentFieldId = this.$thisButton
+			const currentFieldId = this.$thisButton
 				?.siblings("input.hidden-field")
 				.attr("data-field");
 
@@ -495,13 +498,13 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			if (_.isString(currentFieldId) && "" !== currentFieldId) {
 				// Make fields is defined and only do the hack for cropped_image
 				if (
-					_.isObject(this.params?.fields[currentFieldId]) &&
-					"upload" === this.params?.fields[currentFieldId].type
+					_.isObject(this.params.fields[currentFieldId]) &&
+					"upload" === this.params.fields[currentFieldId].type
 				) {
 					// If the attribute exists in the field
-					if (!_.isUndefined(this.params?.fields[currentFieldId].mime_type)) {
+					if (!_.isUndefined(this.params.fields[currentFieldId].mime_type)) {
 						// Set the attribute in the main object
-						return this.params?.fields[currentFieldId].mime_type;
+						return this.params.fields[currentFieldId].mime_type;
 					}
 				}
 			}
@@ -509,18 +512,16 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		},
 
 		removeImage: function (event) {
-			var $targetDiv, $uploadButton;
-
 			if (wp.customize.utils.isKeydownButNotEnterEvent(event)) {
 				return;
 			}
 
-			$targetDiv = this.$thisButton?.closest(
+			const $targetDiv = this.$thisButton?.closest(
 				".repeater-field-image,.repeater-field-cropped_image,.repeater-field-upload",
 			);
-			$uploadButton = $targetDiv?.find(".upload-button");
+			const $uploadButton = $targetDiv?.find(".upload-button");
 
-			$targetDiv?.find(".kirki-image-attachment").slideUp("fast", function () {
+			$targetDiv?.find(".wpbf-image-attachment").slideUp("fast", function () {
 				jQuery(this).show().html(jQuery(this).data("placeholder"));
 			});
 			$targetDiv?.find(".hidden-field").val("");
@@ -531,16 +532,14 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		},
 
 		removeFile: function (event) {
-			var $targetDiv, $uploadButton;
-
 			if (wp.customize.utils.isKeydownButNotEnterEvent(event)) {
 				return;
 			}
 
-			$targetDiv = this.$thisButton?.closest(".repeater-field-upload");
-			$uploadButton = $targetDiv?.find(".upload-button");
+			const $targetDiv = this.$thisButton?.closest(".repeater-field-upload");
+			const $uploadButton = $targetDiv?.find(".upload-button");
 
-			$targetDiv?.find(".kirki-file-attachment").slideUp("fast", function () {
+			$targetDiv?.find(".wpbf-file-attachment").slideUp("fast", function () {
 				jQuery(this).show().html(jQuery(this).data("placeholder"));
 			});
 			$targetDiv?.find(".hidden-field").val("");
@@ -563,38 +562,42 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		/**
 		 * Set a new value for the setting
 		 *
-		 * @param {object} newValue - The new value.
+		 * @param {Record<string, any>} newValue - The new value.
 		 * @param {bool} refresh - If we want to refresh the previewer or not
 		 * @param {bool} filtering - If we want to filter or not.
 		 *
 		 * @returns {void}
 		 */
 		setValue: function (
-			newValue: object,
+			this: WpbfCustomizeRepeaterControl,
+			newValue: Record<string, any>,
 			refresh?: boolean,
 			filtering?: boolean,
 		): void {
 			// We need to filter the values after the first load to remove data requrired for diplay but that we don't want to save in DB
 			const filteredValue = newValue;
-			const filter: any[] = [];
+			const filter: string[] = [];
 
 			if (filtering) {
-				jQuery.each(this.params?.fields, function (index: number, value: any) {
+				for (const fieldId in this.params.fields) {
 					if (
-						"image" === value.type ||
-						"cropped_image" === value.type ||
-						"upload" === value.type
+						this.params.fields.hasOwnProperty(fieldId) &&
+						this.params.fields[fieldId].type &&
+						["image", "cropped_image", "upload"].includes(
+							this.params.fields[fieldId].type,
+						)
 					) {
-						filter.push(index);
+						filter.push(fieldId);
 					}
-				});
-				jQuery.each(newValue, function (index, value) {
-					jQuery.each(filter, function (ind, field) {
+				}
+
+				jQuery.each(newValue, function (key: string, value: any) {
+					jQuery.each(filter, function (index, field) {
 						if (
 							!_.isUndefined(value[field]) &&
-							!_.isUndefined((value[field] as any).id)
+							!_.isUndefined(value[field].id)
 						) {
-							(filteredValue[index][field] as any) = (value[field] as any).id;
+							filteredValue[key][field] = value[field].id;
 						}
 					});
 				});
@@ -612,38 +615,50 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		/**
 		 * Add a new row to repeater settings based on the structure.
 		 *
-		 * @param {Record<string, any>} data - (Optional) object of field => value pairs (undefined if you want to get the default values)
+		 * @param {Record<string, Record<string, any>>} data - (Optional) object of field => value pairs (undefined if you want to get the default values)
 		 * @returns {object} - Returns the new row.
 		 */
 		addRow: function (
 			this: WpbfCustomizeRepeaterControl,
-			data?: Record<string, any>,
+			data?: Record<string, Record<string, any>>,
 		): any {
-			var control = this,
-				template = control.repeaterTemplate?.(), // The template for the new row (defined on Kirki_Customize_Repeater_Control::render_content() ).
-				settingValue = this.getValue?.(), // Get the current setting value.
-				templateData, // Data to pass to the template
-				i;
+			const control = this;
+
+			// Get the current setting value.
+			const settingValue = this.getValue?.();
 
 			// Saves the new setting data.
 			const newRowSetting: Record<string, any> = {};
 
+			// The template for the new row (defined on Kirki_Customize_Repeater_Control::render_content() ).
+			let template = control.repeaterTemplate?.();
+
 			if (template) {
-				// The control structure is going to define the new fields
-				// We need to clone control.params?.fields. Assigning it
-				// ould result in a reference assignment.
-				templateData = jQuery.extend(true, {}, control.params?.fields);
+				/**
+				 * Data to pass to the template.
+				 *
+				 * The control structure is going to define the new fields.
+				 * We need to clone control.params.fields.
+				 * Assigning it could result in a reference assignment.
+				 */
+				let templateData = jQuery.extend(true, {}, control.params.fields);
 
 				// But if we have passed data, we'll use the data values instead
 				if (data) {
-					for (i in data) {
-						if (data.hasOwnProperty(i) && templateData.hasOwnProperty(i)) {
-							templateData[i].default = data[i];
+					let fieldId;
+
+					for (fieldId in data) {
+						if (
+							data.hasOwnProperty(fieldId) &&
+							templateData.hasOwnProperty(fieldId)
+						) {
+							templateData[fieldId].default = data[fieldId];
 						}
 					}
 				}
 
-				templateData.index = this.currentIndex;
+				// ? I don't know if this is necessary. Furthermore, it has type error.
+				// templateData.index = this.currentIndex;
 
 				// Append the template content
 				template = template(templateData);
@@ -652,7 +667,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 				const newRow: WpbfRepeaterRow = new RepeaterRow(
 					control.currentIndex ?? 0,
 					jQuery(template).appendTo(control.repeaterFieldsContainer),
-					control.params?.rowLabel!,
+					control.params.rowLabel!,
 					control,
 				);
 
@@ -673,9 +688,11 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					this.rows[this.currentIndex] = newRow;
 				}
 
-				for (i in templateData) {
-					if (templateData.hasOwnProperty(i)) {
-						newRowSetting[i] = templateData[i].default;
+				let fieldId;
+
+				for (fieldId in templateData) {
+					if (templateData.hasOwnProperty(fieldId)) {
+						newRowSetting[fieldId] = templateData[fieldId].default;
 					}
 				}
 
@@ -692,12 +709,12 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		},
 
 		sort: function () {
-			var control = this,
-				$rows = this.repeaterFieldsContainer.find(".repeater-row"),
-				newOrder: any[] = [],
-				settings = control.getValue?.(),
-				newRows: any[] = [],
-				newSettings: any[] = [];
+			const control = this;
+			const $rows = this.repeaterFieldsContainer.find(".repeater-row");
+			const newOrder: any[] = [];
+			const settings = control.getValue?.();
+			const newRows: any[] = [];
+			const newSettings: any[] = [];
 
 			$rows.each(function (i: number, element: HTMLElement) {
 				newOrder.push(jQuery(element).data("row"));
@@ -773,15 +790,13 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 				return;
 			}
 
-			var type, row, currentSettings;
-
 			if (!this.params.fields[fieldId]) {
 				return;
 			}
 
-			type = this.params.fields[fieldId].type;
-			row = this.rows[rowIndex];
-			currentSettings = this.getValue?.();
+			const type = this.params.fields[fieldId].type;
+			const row = this.rows[rowIndex];
+			const currentSettings = this.getValue?.();
 
 			element = typeof element === "string" ? jQuery(element) : element;
 
@@ -804,31 +819,30 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 *
 		 * @returns {void}
 		 */
-		initColorPicker: function (): void {
+		initColorPicker: function (this: WpbfCustomizeRepeaterControl): void {
 			const control = this;
-			const colorPicker = control.container?.find(
-				".kirki-classic-color-picker",
-			);
-			var fieldId = colorPicker?.data("field");
-			var options: Record<string, any> = {};
+			const colorPicker = control.container?.find(".wpbf-classic-color-picker");
+			const fieldId = colorPicker?.data("field");
+			const options: Record<string, any> = {};
 
 			// We check if the color palette parameter is defined.
 			if (
 				!_.isUndefined(fieldId) &&
-				!_.isUndefined(control.params?.fields[fieldId]) &&
-				!_.isUndefined(control.params?.fields[fieldId].palettes) &&
-				_.isObject(control.params?.fields[fieldId].palettes)
+				!_.isUndefined(control.params.fields[fieldId]) &&
+				!_.isUndefined(control.params.fields[fieldId].palettes) &&
+				_.isObject(control.params.fields[fieldId].palettes)
 			) {
-				options.palettes = control.params?.fields[fieldId].palettes;
+				options.palettes = control.params.fields[fieldId].palettes;
 			}
 
 			// When the color picker value is changed we update the value of the field
 			options.change = function (event: any, ui: any) {
-				var currentPicker = jQuery(event.target);
-				var row = currentPicker.closest(".repeater-row");
-				var rowIndex = row.data("row");
-				var currentSettings = control.getValue?.();
-				var value = ui.color._alpha < 1 ? ui.color.to_s() : ui.color.toString();
+				const currentPicker = jQuery(event.target);
+				const row = currentPicker.closest(".repeater-row");
+				const rowIndex = row.data("row");
+				const currentSettings = control.getValue?.();
+				const value =
+					ui.color._alpha < 1 ? ui.color.to_s() : ui.color.toString();
 
 				currentSettings[rowIndex][currentPicker.data("field")] = value;
 				control.setValue?.(currentSettings, true);
@@ -875,10 +889,10 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			jQuery(dropdown).val(data[dataField] || jQuery(dropdown).val());
 
 			this.container.on("change", ".repeater-field select", function (event) {
-				var currentDropdown = jQuery(event.target),
-					row = currentDropdown.closest(".repeater-row"),
-					rowIndex = row.data("row"),
-					currentSettings = control.getValue?.();
+				const currentDropdown = jQuery(event.target);
+				const row = currentDropdown.closest(".repeater-row");
+				const rowIndex = row.data("row");
+				const currentSettings = control.getValue?.();
 
 				currentSettings[rowIndex][currentDropdown.data("field")] =
 					jQuery(this).val();

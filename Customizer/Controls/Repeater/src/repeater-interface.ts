@@ -5,7 +5,7 @@ import {
 
 export interface WpbfCustomizeRepeaterControlParams
 	extends WpbfCustomizeControlParams<any> {
-	fields: Record<string, any>;
+	fields: Record<string, Record<string, any>>;
 	rowLabel: Record<string, string>;
 	buttonLabel: string;
 	limit: number | boolean;

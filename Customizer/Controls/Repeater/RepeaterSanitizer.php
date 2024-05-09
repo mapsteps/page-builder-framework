@@ -27,7 +27,7 @@ class RepeaterSanitizer {
 
 		// Nothing to sanitize if we don't have fields.
 		if ( empty( $fields ) ) {
-			return $value;
+			return [];
 		}
 
 		foreach ( $value as $row_id => $row_value ) {
@@ -64,7 +64,7 @@ class RepeaterSanitizer {
 						case 'image':
 						case 'cropped_image':
 						case 'upload':
-							$save_as = isset( $subfield['choices'] ) && isset( $subfield['choices']['save_as'] ) ? $subfield['choices']['save_as'] : 'url';
+							$save_as = isset( $subfield['properties'] ) && isset( $subfield['properties']['save_as'] ) ? $subfield['properties']['save_as'] : 'url';
 
 							$media_util = 'upload' === $subfield_type ? new UploadUtil() : new ImageUtil();
 

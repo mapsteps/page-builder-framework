@@ -306,9 +306,59 @@ if ( ! class_exists( '\Kirki' ) ) {
 					unset( $choices['limit'] );
 				}
 
+				$custom_props['fields'] = [];
+
 				if ( isset( $choices['fields'] ) ) {
-					$custom_props['fields'] = $choices['fields'];
+					$custom_props['fields'] = is_array( $choices['fields'] ) ? $choices['fields'] : [];
 					unset( $choices['fields'] );
+				}
+
+				foreach ( $custom_props['fields'] as $field_id => $field ) {
+					if ( isset( $field['choices'] ) ) {
+						if ( ! isset( $field['properties'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties'] = [];
+						}
+
+						if ( isset( $field['choices']['save_as'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties']['save_as'] = $field['choices']['save_as'];
+							unset( $field['choices']['save_as'] );
+						}
+
+						if ( ! empty( $field['choices']['alpha'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties']['mode'] = 'alpha';
+							unset( $field['choices']['alpha'] );
+						}
+
+						if ( isset( $field['choices']['form_component'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties']['form_component'] = $field['choices']['form_component'];
+							unset( $field['choices']['form_component'] );
+						}
+
+						if ( isset( $field['choices']['accept_unitless'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties']['allow_unitless'] = $field['choices']['accept_unitless'];
+							unset( $field['choices']['accept_unitless'] );
+						}
+
+						if ( isset( $field['choices']['min'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties']['min'] = $field['choices']['min'];
+							unset( $field['choices']['min'] );
+						}
+
+						if ( isset( $field['choices']['max'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties']['max'] = $field['choices']['max'];
+							unset( $field['choices']['max'] );
+						}
+
+						if ( isset( $field['choices']['step'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties']['step'] = $field['choices']['step'];
+							unset( $field['choices']['step'] );
+						}
+
+						if ( isset( $field['choices']['multiple'] ) ) {
+							$custom_props['fields'][ $field_id ]['properties']['is_multi'] = 1 < $field['choices']['multiple'];
+							unset( $field['choices']['multiple'] );
+						}
+					}
 				}
 			}
 
