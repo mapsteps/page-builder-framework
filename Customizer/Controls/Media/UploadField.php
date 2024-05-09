@@ -33,26 +33,9 @@ class UploadField extends BaseField {
 
 		$util    = $this->getUtilInstance();
 		$props   = $this->control->custom_properties;
-		$save_as = $util->default_save_as;
+		$save_as = $props['save_as'] ?: $util->default_save_as;
 
-		// The properties of $src here are already sanitized.
-		$src = $util->unknownToSrcArray( $value );
-
-		if ( ! empty( $props['save_as'] ) && is_string( $props['save_as'] ) ) {
-			if ( in_array( $props['save_as'], $util->allowed_save_as, true ) ) {
-				$save_as = $props['save_as'];
-			}
-		}
-
-		if ( 'array' === $save_as ) {
-			return $src;
-		}
-
-		if ( 'id' === $save_as ) {
-			return $src['id'];
-		}
-
-		return $src['url'];
+		return ( new MediaSanitizer() )->sanitize( $value, $util, $save_as );
 
 	}
 

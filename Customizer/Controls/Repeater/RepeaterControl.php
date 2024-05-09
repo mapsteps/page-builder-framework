@@ -44,21 +44,9 @@ class RepeaterControl extends BaseControl {
 	/**
 	 * The button label
 	 *
-	 * @access public
-	 * @since 1.0
 	 * @var string
 	 */
 	public $button_label = '';
-
-	/**
-	 * The version. Used in scripts & styles for cache-busting.
-	 *
-	 * @static
-	 * @access public
-	 * @since 1.0
-	 * @var string
-	 */
-	public static $control_ver = '1.0.5';
 
 	/**
 	 * Constructor.
@@ -82,11 +70,19 @@ class RepeaterControl extends BaseControl {
 			'field' => false,
 		];
 
+		if ( ! empty( $args['row_label'] ) && is_array( $args['row_label'] ) ) {
+			$this->row_label = $args['row_label'];
+		}
+
 		$this->validate_row_label( $args );
 
 		if ( empty( $this->button_label ) ) {
 			/* translators: %s represents the label of the row. */
 			$this->button_label = sprintf( esc_html__( 'Add new %s', 'page-builder-framework' ), $this->row_label['value'] );
+		}
+
+		if ( ! empty( $args['button_label'] ) && is_string( $args['button_label'] ) ) {
+			$this->button_label = $args['button_label'];
 		}
 
 		if ( empty( $args['fields'] ) || ! is_array( $args['fields'] ) ) {

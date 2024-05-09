@@ -2,7 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
-use Mapsteps\Wpbf\Customizer\Controls\Color\ColorSanitation;
+use Mapsteps\Wpbf\Customizer\Controls\Color\ColorSanitizer;
 
 class TypographySanitizer {
 
@@ -61,7 +61,7 @@ class TypographySanitizer {
 					break;
 
 				case 'color':
-					$value['color'] = '' === $val ? '' : ( new ColorSanitation() )->sanitize( $val );
+					$value['color'] = '' === $val ? '' : ( new ColorSanitizer() )->sanitize( $val );
 					break;
 
 				default:

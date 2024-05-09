@@ -24,6 +24,7 @@ if ( ! class_exists( '\Kirki' ) ) {
 	 * - Radio Image
 	 * - Select
 	 * - ReactSelect
+	 * - Repeater
 	 * - Slider
 	 * - Sortable
 	 * - Switch
@@ -43,7 +44,6 @@ if ( ! class_exists( '\Kirki' ) ) {
 	 * - Multicheck
 	 * - Multicolor
 	 * - Palette
-	 * - Repeater
 	 */
 	class Kirki {
 
@@ -285,6 +285,30 @@ if ( ! class_exists( '\Kirki' ) ) {
 				if ( isset( $choices['quicktags'] ) ) {
 					$custom_props['quicktags'] = $choices['quicktags'];
 					unset( $choices['quicktags'] );
+				}
+			}
+
+			if ( 'repeater' === $type ) {
+				$type = 'repeater';
+
+				if ( isset( $choices['row_label'] ) ) {
+					$custom_props['row_label'] = $choices['row_label'];
+					unset( $choices['row_label'] );
+				}
+
+				if ( isset( $choices['button_label'] ) ) {
+					$custom_props['button_label'] = $choices['button_label'];
+					unset( $choices['button_label'] );
+				}
+
+				if ( isset( $choices['limit'] ) ) {
+					$custom_props['limit'] = $choices['limit'];
+					unset( $choices['limit'] );
+				}
+
+				if ( isset( $choices['fields'] ) ) {
+					$custom_props['fields'] = $choices['fields'];
+					unset( $choices['fields'] );
 				}
 			}
 

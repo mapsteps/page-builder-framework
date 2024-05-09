@@ -42,7 +42,7 @@ class ColorField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		return ( new ColorSanitation() )->sanitize( $value );
+		return ( new ColorSanitizer() )->sanitize( $value );
 
 	}
 

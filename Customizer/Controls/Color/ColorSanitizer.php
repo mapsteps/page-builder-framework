@@ -2,7 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Color;
 
-class ColorSanitation {
+class ColorSanitizer {
 
 	/**
 	 * Sanitize color value.

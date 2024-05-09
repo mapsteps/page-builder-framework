@@ -28,6 +28,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Media\UploadField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
+use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderField;
@@ -94,6 +95,7 @@ class CustomizerUtil {
 		'select',
 		'slider',
 		'input-slider',
+		'repeater',
 		'responsive-input-slider',
 		'section-tabs',
 		'sortable',
@@ -327,6 +329,9 @@ class CustomizerUtil {
 				break;
 			case 'input-slider':
 				$field = new InputSliderField( $control_entity );
+				break;
+			case 'repeater':
+				$field = new RepeaterField( $control_entity );
 				break;
 			case 'responsive-input-slider':
 				$field = new ResponsiveInputSliderField( $control_entity );
