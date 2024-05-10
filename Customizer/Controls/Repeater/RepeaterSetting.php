@@ -19,10 +19,12 @@ class RepeaterSetting extends WP_Customize_Setting {
 	 * @param array                $args    Optional. Array of properties for the new Setting object. Default empty array.
 	 */
 	public function __construct( $manager, $id, $args = [] ) {
+
 		parent::__construct( $manager, $id, $args );
 
 		// Will convert the setting from JSON to array. Must be triggered very soon.
 		add_filter( "customize_sanitize_{$this->id}", [ $this, 'sanitize_repeater_setting' ], 10, 1 );
+
 	}
 
 	/**
@@ -33,24 +35,25 @@ class RepeaterSetting extends WP_Customize_Setting {
 	 * @return mixed The value.
 	 */
 	public function value() {
+
 		return (array) parent::value();
+
 	}
 
 	/**
 	 * Convert the JSON encoded setting coming from Customizer to an Array.
 	 *
-	 * @access public
-	 * @since 1.0
 	 * @param string $value URL Encoded JSON Value.
 	 * @return array
 	 */
 	public function sanitize_repeater_setting( $value ) {
-		if ( ! is_array( $value ) ) {
+
+		if ( is_string( $value ) ) {
 			$value = json_decode( urldecode( $value ) );
 		}
 
 		if ( empty( $value ) || ! is_array( $value ) ) {
-			$value = [];
+			return [];
 		}
 
 		// Make sure that every row is an array, not an object.
@@ -67,5 +70,7 @@ class RepeaterSetting extends WP_Customize_Setting {
 		}
 
 		return $value;
+
 	}
+
 }

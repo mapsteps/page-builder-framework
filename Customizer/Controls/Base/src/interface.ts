@@ -258,10 +258,10 @@ export interface WpbfCustomizeControl<SV, CP> {
 	sort?: () => void;
 	deleteRow?: (index: number) => void;
 	updateField?: (
-		e: any,
+		e: JQuery.TriggeredEvent,
 		rowIndex: number,
 		fieldId: string,
-		element: any,
+		element: HTMLInputElement | HTMLTextAreaElement,
 	) => void;
 	$thisButton?: JQuery;
 	repeaterTemplate?: () => any;

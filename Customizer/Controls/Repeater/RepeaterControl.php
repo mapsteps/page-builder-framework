@@ -259,7 +259,6 @@ class RepeaterControl extends BaseControl {
 
 			<input
 				type="hidden"
-				<?php $this->input_attrs(); ?>
 				<?php $this->link(); ?>
 				value=""
 			/>

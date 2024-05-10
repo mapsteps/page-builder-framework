@@ -3,8 +3,19 @@ import {
 	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
 
+/**
+ * The setting value returned via PHP will be associative array
+ * because we handle it via PHP in `RepeaterSetting` class.
+ *
+ * TS type equivalent of that assoc-array is Record<string, any>.
+ *
+ * But the control.setting.get() in JS will return string
+ * because it will be taken from the linked (hidden) setting field.
+ */
+export type WpbfCustomizeRepeaterValue = Record<string, any>[] | string;
+
 export interface WpbfCustomizeRepeaterControlParams
-	extends WpbfCustomizeControlParams<any> {
+	extends WpbfCustomizeControlParams<Record<string, any>[]> {
 	fields: Record<string, Record<string, any>>;
 	rowLabel: Record<string, string>;
 	buttonLabel: string;
@@ -12,7 +23,12 @@ export interface WpbfCustomizeRepeaterControlParams
 }
 
 export interface WpbfCustomizeRepeaterControl
-	extends WpbfCustomizeControl<any, WpbfCustomizeRepeaterControlParams> {}
+	extends WpbfCustomizeControl<
+		WpbfCustomizeRepeaterValue,
+		WpbfCustomizeRepeaterControlParams
+	> {
+	rows?: WpbfRepeaterRow[];
+}
 
 export interface WpbfRepeaterRow {
 	rowIndex: number;

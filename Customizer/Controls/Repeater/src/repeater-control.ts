@@ -41,7 +41,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			const control = ctrl || this;
 
 			// The current value set in Control Class (set in Kirki_Customize_Repeater_Control::to_json() function)
-			const settingValue = control.params.value;
+			const settingValueFromParams = control.params.value;
 
 			// The hidden field that keeps the data saved (though we never update it)
 			control.settingField = control.container
@@ -71,7 +71,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 			let theNewRow;
 
-			control.container?.on("click", "button.repeater-add", function (e) {
+			control.container?.on("click", "button.repeater-add", (e) => {
 				e.preventDefault();
 
 				if (
@@ -162,14 +162,18 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 				};
 			});
 
-			// When we load the control, the fields have not been filled up
-			// This is the first time that we create all the rows
-			if (settingValue.length) {
-				_.each(settingValue, function (subValue) {
-					theNewRow = control.addRow?.(subValue);
+			/**
+			 * When we load the control, the fields have not been filled up.
+			 * This is the first time that we create all the rows.
+			 */
+			if (settingValueFromParams.length) {
+				let i = 0;
+
+				for (i = 0; i < settingValueFromParams.length; i++) {
+					theNewRow = control.addRow?.(settingValueFromParams[i]);
 					control.initColorPicker?.();
-					control.initSelect?.(theNewRow, subValue);
-				});
+					control.initSelect?.(theNewRow, settingValueFromParams[i]);
+				}
 			}
 
 			control.repeaterFieldsContainer?.sortable({
@@ -559,11 +563,27 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		/**
 		 * Get the current value of the setting
 		 *
-		 * @returns {object} - Returns the value.
+		 * @returns {Record<string, any>[]} - Returns the value.
 		 */
-		getValue: function (): object {
-			// The setting is saved in JSON
-			return JSON.parse(decodeURI(this.setting?.get()));
+		getValue: function (): Record<string, any>[] {
+			/**
+			 * The setting value returned via PHP will be associative array
+			 * because we handle it via PHP in `RepeaterSetting` class.
+			 *
+			 * TS type equivalent of that assoc-array is Record<string, any>.
+			 *
+			 * But the control.setting.get() in JS will return string
+			 * because it will be taken from the linked (hidden) setting field.
+			 */
+			const hiddenFieldValue = this.setting?.get();
+
+			const stringValue =
+				hiddenFieldValue === undefined || "string" !== typeof hiddenFieldValue
+					? ""
+					: hiddenFieldValue;
+
+			// The setting is saved in JSON.
+			return JSON.parse(decodeURI(stringValue));
 		},
 
 		/**
@@ -584,6 +604,10 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			// We need to filter the values after the first load to remove data requrired for diplay but that we don't want to save in DB
 			const filteredValue = newValue;
 			const filter: string[] = [];
+
+			if ("custom_fonts" === this.id) {
+				console.log(`newValue of ${this.id} in setValue:`, newValue);
+			}
 
 			if (filtering) {
 				for (const fieldId in this.params.fields) {
@@ -684,11 +708,25 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 				newRow.container.on(
 					"row:update",
-					function (e, rowIndex, fieldName, element) {
+					function (
+						e: JQuery.TriggeredEvent,
+						rowIndex: number,
+						fieldName: string,
+						element: HTMLInputElement | HTMLTextAreaElement,
+					) {
+						if ("custom_fonts" === control.id) {
+							console.log(
+								`value of "${fieldName}" in row:update for ${control.id} in addRow:`,
+								element.value,
+							);
+						}
+
 						control.updateField?.call(control, e, rowIndex, fieldName, element);
 						newRow.updateLabel?.();
 					},
 				);
+
+				console.log("currentIndex", this.currentIndex);
 
 				// Add the row to rows collection
 				if (this.currentIndex && this.rows) {
@@ -703,13 +741,13 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					}
 				}
 
-				if (this.currentIndex) {
+				if (undefined !== this.currentIndex) {
 					settingValue[this.currentIndex] = newRowSetting;
 				}
 
 				this.setValue?.(settingValue, true);
 
-				if (this.currentIndex !== undefined) this.currentIndex++;
+				if (undefined !== this.currentIndex) this.currentIndex++;
 
 				return newRow;
 			}
@@ -783,15 +821,15 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @param {object} e - Event object
 		 * @param {number} rowIndex - The row's index as an integer.
 		 * @param {string} fieldId - The field ID.
-		 * @param {string|JQuery<HTMLElement>} element - The element's identifier, or jQuery object of the element.
+		 * @param {HTMLInputElement | HTMLTextAreaElement} element - The element's identifier, or jQuery object of the element.
 		 * @returns {void}
 		 */
 		updateField: function (
 			this: WpbfCustomizeRepeaterControl,
-			e: object,
+			e: JQuery.TriggeredEvent,
 			rowIndex: number,
 			fieldId: string,
-			element: string | JQuery<HTMLElement>,
+			element: HTMLInputElement | HTMLTextAreaElement,
 		): void {
 			if (!this.rows || !this.rows[rowIndex]) {
 				return;
@@ -805,17 +843,21 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			const row = this.rows[rowIndex];
 			const currentSettings = this.getValue?.();
 
-			element = typeof element === "string" ? jQuery(element) : element;
+			if ("custom_fonts" === this.id) {
+				console.log(`currentSettings from updateField:`, currentSettings);
+			}
+
+			const $el = jQuery(element);
 
 			if (_.isUndefined(currentSettings[row.rowIndex][fieldId])) {
 				return;
 			}
 
 			if ("checkbox" === type) {
-				currentSettings[row.rowIndex][fieldId] = element.is(":checked");
+				currentSettings[row.rowIndex][fieldId] = $el.is(":checked");
 			} else {
 				// Update the settings
-				currentSettings[row.rowIndex][fieldId] = element.val();
+				currentSettings[row.rowIndex][fieldId] = $el.val();
 			}
 			this.setValue?.(currentSettings, true);
 		},
