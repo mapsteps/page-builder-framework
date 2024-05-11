@@ -26,12 +26,11 @@ class RepeaterSanitizer {
 		}
 
 		// Nothing to sanitize if we don't have fields.
-		if ( empty( $fields ) ) {
+		if ( empty( $fields ) || ! is_array( $fields ) ) {
 			return [];
 		}
 
 		foreach ( $value as $row_id => $row_value ) {
-
 			// Make sure the row is formatted as an array.
 			if ( ! is_array( $row_value ) ) {
 				$value[ $row_id ] = [];

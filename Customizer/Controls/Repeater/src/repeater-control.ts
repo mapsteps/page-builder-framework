@@ -17,11 +17,8 @@ declare var wp: {
 wp.customize.controlConstructor["wpbf-repeater"] =
 	wp.customize.Control.extend<WpbfCustomizeRepeaterControl>({
 		// When we're finished loading continue processing
-		ready: function (this: WpbfCustomizeRepeaterControl) {
-			const control = this;
-
-			// Init the control.
-			control.initWpbfControl?.();
+		ready: function (this: WpbfCustomizeRepeaterControl): void {
+			this.initWpbfControl?.();
 		},
 
 		rows: [],
@@ -82,7 +79,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					theNewRow = control.addRow?.();
 					theNewRow?.toggleMinimize();
 					control.initColorPicker?.();
-					control.initSelect?.(theNewRow);
+					if (theNewRow) control.initSelect?.(theNewRow);
 				} else {
 					jQuery(control.selector + " .limit").addClass("highlight");
 				}
@@ -105,7 +102,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			control.container?.on(
 				"click keypress",
 				".repeater-field-image .upload-button,.repeater-field-cropped_image .upload-button,.repeater-field-upload .upload-button",
-				function (e) {
+				function (e: JQuery.TriggeredEvent) {
 					e.preventDefault();
 					control.$thisButton = jQuery(this);
 					control.openFrame?.(e);
@@ -115,7 +112,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			control.container?.on(
 				"click keypress",
 				".repeater-field-image .remove-button,.repeater-field-cropped_image .remove-button",
-				function (e) {
+				function (e: JQuery.TriggeredEvent) {
 					e.preventDefault();
 					control.$thisButton = jQuery(this);
 					control.removeImage?.(e);
@@ -125,7 +122,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			control.container?.on(
 				"click keypress",
 				".repeater-field-upload .remove-button",
-				function (e) {
+				function (e: JQuery.TriggeredEvent) {
 					e.preventDefault();
 					control.$thisButton = jQuery(this);
 					control.removeFile?.(e);
@@ -172,7 +169,10 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 				for (i = 0; i < settingValueFromParams.length; i++) {
 					theNewRow = control.addRow?.(settingValueFromParams[i]);
 					control.initColorPicker?.();
-					control.initSelect?.(theNewRow, settingValueFromParams[i]);
+
+					if (theNewRow) {
+						control.initSelect?.(theNewRow, settingValueFromParams[i]);
+					}
 				}
 			}
 
@@ -208,7 +208,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			this.frame.open();
 		},
 
-		initFrame: function () {
+		initFrame: function (): void {
 			const libMediaType = this.getMimeType();
 
 			this.frame = wp.media({
@@ -229,7 +229,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * Create a media modal select frame, and store it so the instance can be reused when needed.
 		 * This is mostly a copy/paste of Core api.CroppedImageControl in /wp-admin/js/customize-control.js
 		 */
-		initCropperFrame: function (this: WpbfCustomizeRepeaterControl) {
+		initCropperFrame: function (this: WpbfCustomizeRepeaterControl): void {
 			// We get the field id from which this was called.
 			const currentFieldId = this.$thisButton
 				?.siblings("input.hidden-field")
@@ -247,7 +247,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					// Iterate over the list of attributes.
 					for (const attr of attrs) {
 						// If the attribute exists in the field
-						if (!_.isUndefined(this.params.fields[currentFieldId][attr])) {
+						if (undefined !== this.params.fields[currentFieldId][attr]) {
 							// Set the attribute in the main object
 							this.params[attr] = this.params.fields[currentFieldId][attr];
 						}
@@ -280,7 +280,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			this.frame.on("skippedcrop", this.onSkippedCrop, this);
 		},
 
-		onSelect: function () {
+		onSelect: function (): void {
 			const attachment = this.frame.state().get("selection").first().toJSON();
 
 			if (
@@ -288,9 +288,9 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					?.closest(".repeater-field")
 					.hasClass("repeater-field-upload")
 			) {
-				this.setFileInRepeaterField(attachment);
+				this.setFileInRepeaterField?.(attachment);
 			} else {
-				this.setImageInRepeaterField(attachment);
+				this.setImageInRepeaterField?.(attachment);
 			}
 		},
 
@@ -308,7 +308,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 				!this.params.flex_width &&
 				!this.params.flex_height
 			) {
-				this.setImageInRepeaterField(attachment);
+				this.setImageInRepeaterField?.(attachment);
 			} else {
 				this.frame.setState("cropper");
 			}
@@ -321,7 +321,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		onCropped: function (croppedImage: object): void {
-			this.setImageInRepeaterField(croppedImage);
+			this.setImageInRepeaterField?.(croppedImage);
 		},
 
 		/**
@@ -441,7 +441,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 */
 		onSkippedCrop: function (): void {
 			const attachment = this.frame.state().get("selection").first().toJSON();
-			this.setImageInRepeaterField(attachment);
+			this.setImageInRepeaterField?.(attachment);
 		},
 
 		/**
@@ -473,10 +473,10 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		/**
 		 * Updates the setting and re-renders the control UI.
 		 *
-		 * @param {object} attachment - The attachment object.
+		 * @param {Record<string, any>} attachment - The attachment object.
 		 * @returns {void}
 		 */
-		setFileInRepeaterField: function (attachment: any): void {
+		setFileInRepeaterField: function (attachment: Record<string, any>): void {
 			const $targetDiv = this.$thisButton?.closest(".repeater-field-upload");
 
 			$targetDiv
@@ -513,7 +513,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					"upload" === this.params.fields[currentFieldId].type
 				) {
 					// If the attribute exists in the field
-					if (!_.isUndefined(this.params.fields[currentFieldId].mime_type)) {
+					if (undefined !== this.params.fields[currentFieldId].mime_type) {
 						// Set the attribute in the main object
 						return this.params.fields[currentFieldId].mime_type;
 					}
@@ -605,10 +605,6 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			const filteredValue = newValue;
 			const filter: string[] = [];
 
-			if ("custom_fonts" === this.id) {
-				console.log(`newValue of ${this.id} in setValue:`, newValue);
-			}
-
 			if (filtering) {
 				for (const fieldId in this.params.fields) {
 					if (
@@ -623,11 +619,8 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 				}
 
 				jQuery.each(newValue, function (key: string, value: any) {
-					jQuery.each(filter, function (index, field) {
-						if (
-							!_.isUndefined(value[field]) &&
-							!_.isUndefined(value[field].id)
-						) {
+					jQuery.each(filter, function (idx: number, field: string) {
+						if (undefined !== value[field] && undefined !== value[field].id) {
 							filteredValue[key][field] = value[field].id;
 						}
 					});
@@ -647,12 +640,12 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * Add a new row to repeater settings based on the structure.
 		 *
 		 * @param {Record<string, Record<string, any>>} data - (Optional) object of field => value pairs (undefined if you want to get the default values)
-		 * @returns {object} - Returns the new row.
+		 * @returns {WpbfRepeaterRow|undefined} - Returns the new row.
 		 */
 		addRow: function (
 			this: WpbfCustomizeRepeaterControl,
 			data?: Record<string, Record<string, any>>,
-		): any {
+		): WpbfRepeaterRow | undefined {
 			const control = this;
 
 			// Get the current setting value.
@@ -702,9 +695,12 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					control,
 				);
 
-				newRow.container.on("row:remove", function (e: any, rowIndex: number) {
-					control.deleteRow?.(rowIndex);
-				});
+				newRow.container.on(
+					"row:remove",
+					function (e: JQuery.TriggeredEvent, rowIndex: number) {
+						control.deleteRow?.(rowIndex);
+					},
+				);
 
 				newRow.container.on(
 					"row:update",
@@ -714,22 +710,13 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 						fieldName: string,
 						element: HTMLInputElement | HTMLTextAreaElement,
 					) {
-						if ("custom_fonts" === control.id) {
-							console.log(
-								`value of "${fieldName}" in row:update for ${control.id} in addRow:`,
-								element.value,
-							);
-						}
-
 						control.updateField?.call(control, e, rowIndex, fieldName, element);
 						newRow.updateLabel?.();
 					},
 				);
 
-				console.log("currentIndex", this.currentIndex);
-
 				// Add the row to rows collection
-				if (this.currentIndex && this.rows) {
+				if (undefined !== this.currentIndex && undefined !== this.rows) {
 					this.rows[this.currentIndex] = newRow;
 				}
 
@@ -741,24 +728,33 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					}
 				}
 
-				if (undefined !== this.currentIndex) {
-					settingValue[this.currentIndex] = newRowSetting;
-				}
+				if (undefined !== settingValue) {
+					if (undefined !== this.currentIndex) {
+						settingValue[this.currentIndex] = newRowSetting;
+					}
 
-				this.setValue?.(settingValue, true);
+					this.setValue?.(settingValue, true);
+				}
 
 				if (undefined !== this.currentIndex) this.currentIndex++;
 
 				return newRow;
 			}
+
+			return undefined;
 		},
 
-		sort: function () {
+		sort: function (): void {
 			const control = this;
+
+			if (!control.getValue) {
+				return;
+			}
+
 			const $rows = this.repeaterFieldsContainer?.find(".repeater-row");
 			const newOrder: any[] = [];
-			const settings = control.getValue?.();
-			const newRows: any[] = [];
+			const settings = control.getValue();
+			const newRows: WpbfRepeaterRow[] = [];
 			const newSettings: any[] = [];
 
 			$rows?.each(function (i: number, element: HTMLElement) {
@@ -786,9 +782,10 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		deleteRow: function (index: number): void {
-			if (!this.rows) return;
+			if (undefined === this.rows) return;
+			if (!this.getValue) return;
 
-			const currentSettings = this.getValue?.();
+			const currentSettings = this.getValue();
 
 			if (currentSettings[index]) {
 				// Find the row
@@ -818,7 +815,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * Update a single field inside a row.
 		 * Triggered when a field has changed
 		 *
-		 * @param {object} e - Event object
+		 * @param {JQuery.TriggeredEvent} e - Event object
 		 * @param {number} rowIndex - The row's index as an integer.
 		 * @param {string} fieldId - The field ID.
 		 * @param {HTMLInputElement | HTMLTextAreaElement} element - The element's identifier, or jQuery object of the element.
@@ -831,7 +828,11 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			fieldId: string,
 			element: HTMLInputElement | HTMLTextAreaElement,
 		): void {
-			if (!this.rows || !this.rows[rowIndex]) {
+			if (!this.getValue) {
+				return;
+			}
+
+			if (undefined === this.rows || !this.rows[rowIndex]) {
 				return;
 			}
 
@@ -841,15 +842,11 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 			const type = this.params.fields[fieldId].type;
 			const row = this.rows[rowIndex];
-			const currentSettings = this.getValue?.();
-
-			if ("custom_fonts" === this.id) {
-				console.log(`currentSettings from updateField:`, currentSettings);
-			}
+			const currentSettings = this.getValue();
 
 			const $el = jQuery(element);
 
-			if (_.isUndefined(currentSettings[row.rowIndex][fieldId])) {
+			if (undefined === currentSettings[row.rowIndex][fieldId]) {
 				return;
 			}
 
@@ -876,28 +873,32 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 			// We check if the color palette parameter is defined.
 			if (
-				!_.isUndefined(fieldId) &&
-				!_.isUndefined(control.params.fields[fieldId]) &&
-				!_.isUndefined(control.params.fields[fieldId].palettes) &&
+				undefined !== fieldId &&
+				undefined !== control.params.fields[fieldId] &&
+				undefined !== control.params.fields[fieldId].palettes &&
 				_.isObject(control.params.fields[fieldId].palettes)
 			) {
 				options.palettes = control.params.fields[fieldId].palettes;
 			}
 
 			// When the color picker value is changed we update the value of the field
-			options.change = function (event: any, ui: any) {
+			options.change = (event: any, ui: any) => {
+				if (!control.getValue) return;
+
 				const currentPicker = jQuery(event.target);
 				const row = currentPicker.closest(".repeater-row");
 				const rowIndex = row.data("row");
-				const currentSettings = control.getValue?.();
+				const currentSettings = control.getValue();
 				const value =
 					ui.color._alpha < 1 ? ui.color.to_s() : ui.color.toString();
 
 				currentSettings[rowIndex][currentPicker.data("field")] = value;
 				control.setValue?.(currentSettings, true);
 
-				// By default if the alpha is 1, the input will be rgb.
-				// We setTimeout to 50ms to prevent race value set.
+				/**
+				 * By default if the alpha is 1, the input will be rgb.
+				 * We setTimeout to 50ms to prevent race value set.
+				 */
 				setTimeout(function () {
 					event.target.value = value;
 				}, 50);
@@ -913,14 +914,14 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * Init the dropdown-pages field.
 		 * Called after AddRow
 		 *
-		 * @param {any} theNewRow the row that was added to the repeater
+		 * @param {WpbfRepeaterRow} theNewRow the row that was added to the repeater
 		 * @param {Record<string, any>} data the data for the row if we're initializing a pre-existing row
 		 *
 		 * @returns {void}
 		 */
 		initSelect: function (
 			this: WpbfCustomizeRepeaterControl,
-			theNewRow: any,
+			theNewRow: WpbfRepeaterRow,
 			data?: Record<string, any>,
 		): void {
 			const control = this;
@@ -938,10 +939,12 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			jQuery(dropdown).val(data[dataField] || jQuery(dropdown).val());
 
 			this.container.on("change", ".repeater-field select", function (event) {
+				if (!control.getValue) return;
+
 				const currentDropdown = jQuery(event.target);
 				const row = currentDropdown.closest(".repeater-row");
 				const rowIndex = row.data("row");
-				const currentSettings = control.getValue?.();
+				const currentSettings = control.getValue();
 
 				currentSettings[rowIndex][currentDropdown.data("field")] =
 					jQuery(this).val();

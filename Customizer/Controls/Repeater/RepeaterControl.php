@@ -288,7 +288,10 @@ class RepeaterControl extends BaseControl {
 		?>
 
 		<script type="text/html" class="customize-control-repeater-content">
-			<# var field; var index = data.index; #>
+			<#
+			var field;
+			var index = data.index;
+			#>
 	
 			<li class="repeater-row minimized" data-row="{{{ index }}}">
 	
@@ -308,21 +311,23 @@ class RepeaterControl extends BaseControl {
 								<# } #>
 	
 								<# if ( 'number' === field.type ) { #>
-									<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.min ) ) { #>
-										<# fieldExtras += ' min="' + field.choices.min + '"'; #>
+									<# if ( ! _.isUndefined( field.properties ) && ! _.isUndefined( field.properties.min ) ) { #>
+										<# fieldExtras += ' min="' + field.properties.min + '"'; #>
 									<# } #>
-									<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.max ) ) { #>
-										<# fieldExtras += ' max="' + field.choices.max + '"'; #>
+									<# if ( ! _.isUndefined( field.properties ) && ! _.isUndefined( field.properties.max ) ) { #>
+										<# fieldExtras += ' max="' + field.properties.max + '"'; #>
 									<# } #>
-									<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.step ) ) { #>
-										<# fieldExtras += ' step="' + field.choices.step + '"'; #>
+									<# if ( ! _.isUndefined( field.properties ) && ! _.isUndefined( field.properties.step ) ) { #>
+										<# fieldExtras += ' step="' + field.properties.step + '"'; #>
 									<# } #>
 								<# } #>
+
+								<# var encodedValue = field.default.replace(/"/g, "&quot;"); #>
 	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
 									<# if ( field.description ) { #><span class="description customize-control-description">{{{ field.description }}}</span><# } #>
-									<input type="{{field.type}}" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}"{{ fieldExtras }}>
+									<input type="{{field.type}}" name="" value="{{{ encodedValue }}}" data-field="{{{ field.id }}}"{{ fieldExtras }}>
 								</label>
 	
 							<# } else if ( 'number' === field.type ) { #>
@@ -402,8 +407,8 @@ class RepeaterControl extends BaseControl {
 										defaultValue = field.default;
 	
 										if (-1 !== field.default.indexOf('rgba')) {
-											if (!field.choices) field.choices = {};
-											field.choices.alpha = true;
+											if (!field.properties) field.properties = {};
+											field.properties.mode = 'alpha';
 										}
 									} else {
 										if (field.default.length >= 3) {
@@ -415,7 +420,8 @@ class RepeaterControl extends BaseControl {
 	
 								<#
 								var alphaEnabledAttr = '';
-								if ( field.choices && field.choices.alpha ) {
+
+								if ( field.properties && 'alpha' === field.properties.mode ) {
 									alphaEnabledAttr = ' data-alpha-enabled=true';
 								}
 								#>

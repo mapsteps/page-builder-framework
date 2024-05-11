@@ -43,7 +43,10 @@ import { Notification } from "wordpress__customize-browser/Notification";
 import { Root } from "react-dom/client";
 import { WpbfCustomizeCheckboxControl } from "../../Checkbox/src/interface";
 import { WpbfCustomizeEditorControl } from "../../Editor/src/editor-interface";
-import { WpbfCustomizeRepeaterControl } from "../../Repeater/src/repeater-interface";
+import {
+	WpbfCustomizeRepeaterControl,
+	WpbfRepeaterRow,
+} from "../../Repeater/src/repeater-interface";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -247,14 +250,20 @@ export interface WpbfCustomizeControl<SV, CP> {
 
 	// Specific to PBF's repeater control.
 	settingField?: JQuery<HTMLElement>;
-	setValue?: (newValue: any, refresh?: boolean, filtering?: boolean) => void;
-	getValue?: () => any;
+	setValue?: (
+		newValue: Record<string, any>,
+		refresh?: boolean,
+		filtering?: boolean,
+	) => void;
+	getValue?: () => Record<string, any>[];
 	repeaterFieldsContainer?: JQuery<HTMLElement>;
 	currentIndex?: number;
-	rows?: any[];
-	addRow?: (data?: Record<string, Record<string, any>>) => any;
+	rows?: WpbfRepeaterRow[];
+	addRow?: (
+		data?: Record<string, Record<string, any>>,
+	) => WpbfRepeaterRow | undefined;
 	initColorPicker?: () => void;
-	initSelect?: (theNewRow: any, data?: Record<string, any>) => void;
+	initSelect?: (theNewRow: WpbfRepeaterRow, data?: Record<string, any>) => void;
 	sort?: () => void;
 	deleteRow?: (index: number) => void;
 	updateField?: (
@@ -265,14 +274,16 @@ export interface WpbfCustomizeControl<SV, CP> {
 	) => void;
 	$thisButton?: JQuery;
 	repeaterTemplate?: () => any;
-	openFrame?: (e: any) => void;
-	removeImage?: (e: any) => void;
-	removeFile?: (e: any) => void;
+	openFrame?: (e: JQuery.TriggeredEvent) => void;
+	removeImage?: (e: JQuery.TriggeredEvent) => void;
+	removeFile?: (e: JQuery.TriggeredEvent) => void;
 	initFrame?: () => void;
 	initCropperFrame?: () => void;
-	onSelect?: (e: any) => void;
+	onSelect?: (e: JQuery.TriggeredEvent) => void;
 	onSelectForCrop?: () => void;
 	onCropped?: (croppedImage: object) => void;
+	setImageInRepeaterField?: (attachment: Record<string, any>) => void;
+	setFileInRepeaterField?: (attachment: Record<string, any>) => void;
 	// Gave up (still some/many types are missing)
 	[key: string]: any;
 }

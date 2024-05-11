@@ -65,9 +65,7 @@ class RepeaterSetting extends WP_Customize_Setting {
 		}
 
 		// Reindex array.
-		if ( is_array( $value ) ) {
-			$value = array_values( $value );
-		}
+		$value = array_values( $value );
 
 		return $value;
 
