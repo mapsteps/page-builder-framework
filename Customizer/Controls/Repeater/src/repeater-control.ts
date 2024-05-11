@@ -494,7 +494,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			$targetDiv?.find(".upload-button").show();
 			$targetDiv?.find(".remove-button").show();
 
-			//This will activate the save button
+			// This will activate the save button.
 			$targetDiv?.find("input, textarea, select").trigger("change");
 			this.frame.close();
 		},
@@ -519,6 +519,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					}
 				}
 			}
+
 			return "image";
 		},
 
@@ -845,6 +846,10 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			const currentSettings = this.getValue();
 
 			const $el = jQuery(element);
+
+			console.log(
+				`updateField row.rowIndex: ${row.rowIndex}, fieldId: ${fieldId}, element: ${$el}, element.value: ${$el.val()}`,
+			);
 
 			if (undefined === currentSettings[row.rowIndex][fieldId]) {
 				return;
