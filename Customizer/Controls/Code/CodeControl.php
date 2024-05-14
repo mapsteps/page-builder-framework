@@ -11,14 +11,15 @@ class CodeControl extends BaseControl {
 	 *
 	 * @var string
 	 */
-	public $type = 'wpbf-code';
+	public $type = 'code_editor';
+	// public $type = 'wpbf-code';
 
 	/**
-	 * The language of the code.
+	 * Type of code that is being edited.
 	 *
 	 * @var string
 	 */
-	protected $language = '';
+	protected $code_type = '';
 
 	/**
 	 * The code editor settings.
@@ -46,8 +47,7 @@ class CodeControl extends BaseControl {
 		$this->input_attrs['aria-describedby'] = 'wpbf-code editor-keyboard-trap-help-1 editor-keyboard-trap-help-2 editor-keyboard-trap-help-3 editor-keyboard-trap-help-4';
 
 		if ( ! empty( $args['language'] ) && is_string( $args['language'] ) ) {
-			$this->language = $args['language'];
-			$this->parse_language();
+			$this->parse_language( $args['language'] );
 		}
 
 		if ( ! empty( $args['editor_settings'] ) && is_array( $args['editor_settings'] ) ) {
@@ -58,43 +58,41 @@ class CodeControl extends BaseControl {
 
 	/**
 	 * Parse the language of the code.
+	 *
+	 * @param string $language The language of the code.
 	 */
-	protected function parse_language() {
+	protected function parse_language( $language = '' ) {
 
-		if ( empty( $this->language ) || ! is_string( $this->language ) ) {
+		if ( empty( $language ) || ! is_string( $language ) ) {
 			return;
 		}
 
-		switch ( $this->language ) {
+		switch ( $language ) {
 			case 'json':
 			case 'xml':
-				$this->language = 'application/' . $this->language;
+				$this->code_type = 'application/' . $this->code_type;
 				break;
 			case 'http':
-				$this->language = 'message/' . $this->language;
+				$this->code_type = 'message/' . $this->code_type;
 				break;
 			case 'js':
 			case 'javascript':
-				$this->language = 'text/javascript';
+				$this->code_type = 'text/javascript';
 				break;
 			case 'txt':
-				$this->language = 'text/plain';
+				$this->code_type = 'text/plain';
 				break;
 			case 'css':
 			case 'jsx':
 			case 'html':
-				$this->language = 'text/' . $this->language;
+				$this->code_type = 'text/' . $this->code_type;
 				break;
 			default:
-				$this->language = ( 'js' === $this->language ) ? 'javascript' : $this->language;
-				$this->language = ( 'htm' === $this->language ) ? 'html' : $this->language;
-				$this->language = ( 'yml' === $this->language ) ? 'yaml' : $this->language;
-				$this->language = 'text/x-' . $this->language;
+				$this->code_type = ( 'js' === $this->code_type ) ? 'javascript' : $this->code_type;
+				$this->code_type = ( 'htm' === $this->code_type ) ? 'html' : $this->code_type;
+				$this->code_type = ( 'yml' === $this->code_type ) ? 'yaml' : $this->code_type;
+				$this->code_type = 'text/x-' . $this->code_type;
 				break;
-		}
-
-		if ( ! isset( $this->editor_settings ) ) {
-			$this->editor_settings = [];
 		}
 
 		if ( ! isset( $this->editor_settings['codemirror'] ) ) {
@@ -102,7 +100,7 @@ class CodeControl extends BaseControl {
 		}
 
 		if ( ! isset( $this->editor_settings['codemirror']['mode'] ) ) {
-			$this->editor_settings['codemirror']['mode'] = $this->language;
+			$this->editor_settings['codemirror']['mode'] = $this->code_type;
 		}
 
 		if ( 'text/x-scss' === $this->editor_settings['codemirror']['mode'] ) {
@@ -126,7 +124,7 @@ class CodeControl extends BaseControl {
 		$this->editor_settings = wp_enqueue_code_editor(
 			array_merge(
 				array(
-					'type'       => $this->language,
+					'type'       => $this->code_type,
 					'codemirror' => array(
 						'indentUnit' => 2,
 						'tabSize'    => 2,
@@ -139,17 +137,20 @@ class CodeControl extends BaseControl {
 	}
 
 	/**
-	 * Refresh the parameters passed to the JavaScript via JSON.
+	 * Get the data to export to the client via JSON.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return array Array of parameters passed to the JavaScript.
 	 */
-	public function to_json() {
+	public function json() {
 
-		parent::to_json();
+		$json = parent::json();
 
-		if ( ! empty( $this->editor_settings ) ) {
-			$this->json['editorSettings'] = $this->editor_settings;
-		}
+		$json['editor_settings'] = $this->editor_settings;
+		$json['input_attrs']     = $this->input_attrs;
 
-		$this->json['inputAttrsRecord'] = $this->input_attrs;
+		return $json;
 
 	}
 
@@ -161,13 +162,13 @@ class CodeControl extends BaseControl {
 	 *
 	 * @see WP_Customize_Control::print_template()
 	 */
-	protected function content_template() {
+	public function content_template() {
 		?>
 
-		<# var idPrefix = 'el' + String( Math.random() ); #>
+		<# var elementIdPrefix = 'el' + String( Math.random() ); #>
 
 		<# if ( data.label ) { #>
-			<label for="{{ idPrefix }}_editor" class="customize-control-title">
+			<label for="{{ elementIdPrefix }}_editor" class="customize-control-title">
 				{{ data.label }}
 			</label>
 		<# } #>
@@ -175,12 +176,11 @@ class CodeControl extends BaseControl {
 		<# if ( data.description ) { #>
 			<span class="description customize-control-description">{{{ data.description }}}</span>
 		<# } #>
-		
+
 		<div class="customize-control-notifications-container"></div>
-		
-		<textarea
-			id="{{ idPrefix }}_editor"
-			<# _.each( _.extend( { 'class': 'code' }, data.inputAttrsRecord ), function( value, key ) { #>
+
+		<textarea id="{{ elementIdPrefix }}_editor"
+			<# _.each( _.extend( { 'class': 'code' }, data.input_attrs ), function( value, key ) { #>
 				{{{ key }}}="{{ value }}"
 			<# }); #>
 			></textarea>
