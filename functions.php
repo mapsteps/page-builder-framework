@@ -220,7 +220,7 @@ function wpbf_enqueue_admin_scripts() {
 		wp_enqueue_style( 'wpbf-admin-rtl', get_template_directory_uri() . '/css/min/admin-rtl-min.css', '', WPBF_VERSION );
 	}
 
-	wp_enqueue_style( 'wpbf-activation-notice', WPBF_THEME_URI . '/assets/css/activation-notice.css', array(), WPBF_VERSION );
+	wp_enqueue_style( 'wpbf-activation-notice', WPBF_THEME_URI . '/assets/css/admin-notices.css', array(), WPBF_VERSION );
 	wp_enqueue_script( 'wpbf-activation-notice', WPBF_THEME_URI . '/js/min/activation-notice-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
 	wp_localize_script(
