@@ -98,10 +98,10 @@ class UploadUtil {
 
 		$src = $this->makeEmptySrcArray();
 
-		if ( is_string( $value ) ) {
-			$src = $this->urlToSrcArray( $value );
-		} elseif ( is_numeric( $value ) ) {
+		if ( is_numeric( $value ) ) {
 			$src = $this->idToSrcArray( $value );
+		} elseif ( is_string( $value ) && ! is_numeric( $value ) ) {
+			$src = $this->urlToSrcArray( $value );
 		} elseif ( is_array( $value ) ) {
 			$src = $this->properlyFormatSrcArray( $value );
 		}

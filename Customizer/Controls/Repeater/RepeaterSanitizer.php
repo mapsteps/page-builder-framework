@@ -20,7 +20,7 @@ class RepeaterSanitizer {
 	public function sanitize( $value, $fields = [] ) {
 
 		// is the value formatted as a string?
-		if ( is_string( $value ) ) {
+		if ( is_string( $value ) && ! is_numeric( $value ) ) {
 			$value = rawurldecode( $value );
 			$value = json_decode( $value, true );
 		}

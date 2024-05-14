@@ -48,7 +48,7 @@ class RepeaterSetting extends WP_Customize_Setting {
 	 */
 	public function sanitize_repeater_setting( $value ) {
 
-		if ( is_string( $value ) ) {
+		if ( is_string( $value ) && ! is_numeric( $value ) ) {
 			$value = json_decode( urldecode( $value ) );
 		}
 

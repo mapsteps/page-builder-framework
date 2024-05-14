@@ -847,10 +847,6 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 
 			const $el = jQuery(element);
 
-			console.log(
-				`updateField row.rowIndex: ${row.rowIndex}, fieldId: ${fieldId}, element: ${$el}, element.value: ${$el.val()}`,
-			);
-
 			if (undefined === currentSettings[row.rowIndex][fieldId]) {
 				return;
 			}
@@ -861,6 +857,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 				// Update the settings
 				currentSettings[row.rowIndex][fieldId] = $el.val();
 			}
+
 			this.setValue?.(currentSettings, true);
 		},
 
