@@ -161,6 +161,11 @@ function wpbf_show_compatibility_notice() {
 		return;
 	}
 
+	// Stop here if current user can't manage options.
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
 	require __DIR__ . '/settings/compatibility-notice.php';
 
 }
