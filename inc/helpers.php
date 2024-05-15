@@ -1680,3 +1680,29 @@ function wpbf_array_to_js_object( $array ) {
 	return wp_json_encode( $array );
 
 }
+
+/**
+ * Check if Premium Add-On is outdated.
+ *
+ * @return boolean
+ */
+function wpbf_is_premium_addon_outdated() {
+
+	// Stop here if Premium Add-On is not active.
+	if ( ! wpbf_is_premium() ) {
+		return false;
+	}
+
+	// Stop here if Premium Add-On version constant is not defined.
+	if ( ! defined( 'WPBF_PREMIUM_VERSION' ) ) {
+		return false;
+	}
+
+	// Stop here if Premium Add-On is not below the minimum required version.
+	if ( ! version_compare( WPBF_PREMIUM_VERSION, WPBF_PREMIUM_MIN_VERSION, '<' ) ) {
+		return false;
+	}
+
+	return true;
+
+}

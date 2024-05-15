@@ -157,23 +157,7 @@ add_action( 'admin_notices', 'wpbf_show_bfcm_notice' );
  */
 function wpbf_show_compatibility_notice() {
 
-	// Stop here if Premium Add-On is not active.
-	if ( ! wpbf_is_premium() ) {
-		return;
-	}
-
-	// Stop here if Premium Add-On version constant is not defined.
-	if ( ! defined( 'WPBF_PREMIUM_VERSION' ) ) {
-		return;
-	}
-
-	// Stop here if Premium Add-On is not below the minimum required version.
-	if ( ! version_compare( WPBF_PREMIUM_VERSION, WPBF_PREMIUM_MIN_VERSION, '<' ) ) {
-		return;
-	}
-
-	// Stop here if current user can't manage options.
-	if ( ! current_user_can( 'manage_options' ) ) {
+	if ( ! wpbf_is_premium_addon_outdated() ) {
 		return;
 	}
 
