@@ -28,6 +28,10 @@ require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 // Customizer functions.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 
+// Helpers.
+require_once WPBF_THEME_DIR . '/inc/class-vars.php';
+require_once WPBF_THEME_DIR . '/inc/helpers.php';
+
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
 
@@ -44,10 +48,6 @@ require_once WPBF_THEME_DIR . '/inc/body-classes.php';
 if ( ! function_exists( 'breadcrumb_trail' ) ) {
 	require_once WPBF_THEME_DIR . '/inc/breadcrumbs.php';
 }
-
-// Helpers.
-require_once WPBF_THEME_DIR . '/inc/class-vars.php';
-require_once WPBF_THEME_DIR . '/inc/helpers.php';
 
 // Local Gravatars.
 require_once WPBF_THEME_DIR . '/inc/gravatar.php';
