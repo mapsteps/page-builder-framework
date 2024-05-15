@@ -1698,7 +1698,7 @@ function wpbf_is_premium_addon_outdated() {
 		return false;
 	}
 
-	// Stop here if Premium Add-On is not below the minimum required version.
+	// Stop here if Premium Add-On version is not below the minimum required version.
 	if ( ! version_compare( WPBF_PREMIUM_VERSION, WPBF_PREMIUM_MIN_VERSION, '<' ) ) {
 		return false;
 	}

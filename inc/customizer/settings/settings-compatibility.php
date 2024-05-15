@@ -6,6 +6,10 @@ if ( ! wpbf_is_premium_addon_outdated() ) {
 	return;
 }
 
+if ( ! current_user_can( 'manage_options' ) ) {
+	return;
+}
+
 ob_start();
 ?>
 
