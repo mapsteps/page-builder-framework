@@ -16,6 +16,7 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-helpers.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-setup.php';
 
 // Load customizer settings.
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-compatibility.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-premium.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-general.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-blog.php';

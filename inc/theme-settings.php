@@ -155,7 +155,7 @@ add_action( 'admin_notices', 'wpbf_show_bfcm_notice' );
 /**
  * Display compatibility notice.
  */
-function wpbf_show_compatibility_notice() {
+function wpbf_compatibility_notice() {
 
 	if ( ! wpbf_is_premium_addon_outdated() ) {
 		return;
@@ -169,7 +169,7 @@ function wpbf_show_compatibility_notice() {
 	require __DIR__ . '/settings/compatibility-notice.php';
 
 }
-add_action( 'admin_notices', 'wpbf_show_compatibility_notice' );
+add_action( 'admin_notices', 'wpbf_compatibility_notice' );
 
 /**
  * Clear font cache directory.
