@@ -95,6 +95,7 @@ require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-control-base-comp
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-fields-compatibility.php';
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-unsupported-fields-compatibility.php';
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-pro-fields-compatibility.php';
+require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-class-aliases.php';
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/wpbf-old-controls-compatibility.php';
 
 if ( ! function_exists( 'wpbf_get_theme_mod_value' ) ) {
@@ -238,11 +239,9 @@ function wpbf_create_customizer_css_file() {
 	// Create wpbf-customizer-styles.css file if it doesn't exist, otherwise attempt to update it.
 	if ( ! file_exists( $pbf_dir . 'page-builder-framework/wpbf-customizer-styles.css' ) ) {
 		$wp_filesystem->put_contents( $pbf_dir . 'wpbf-customizer-styles.css', $css, 0644 );
-	} else {
+	} elseif ( $css !== $wp_filesystem->get_contents( $pbf_dir . 'wpbf-customizer-styles.css' ) ) {
 		// Override the file only if changes were made in the customizer.
-		if ( $css !== $wp_filesystem->get_contents( $pbf_dir . 'wpbf-customizer-styles.css' ) ) {
-			$wp_filesystem->put_contents( $pbf_dir . 'wpbf-customizer-styles.css', $css, 0644 );
-		}
+		$wp_filesystem->put_contents( $pbf_dir . 'wpbf-customizer-styles.css', $css, 0644 );
 	}
 
 }
