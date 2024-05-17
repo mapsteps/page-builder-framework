@@ -209,7 +209,7 @@ wpbf_customizer_field()
 		'variant'     => '700',
 		'subsets'     => array( 'latin-ext' ),
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -246,7 +246,7 @@ wpbf_customizer_field()
 		'variant'     => '700',
 		'subsets'     => array( 'latin-ext' ),
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 4 )
 	->activeCallback( array(
 		array(
@@ -278,7 +278,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => 'regular',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -327,7 +327,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => 'regular',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -377,7 +377,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => '700',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -426,7 +426,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => '700',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -475,7 +475,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => '700',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -524,7 +524,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => '700',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -573,7 +573,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => '700',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->activeCallback( array(
 		array(
 			'id'       => 'page_h5_toggle',
@@ -622,7 +622,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => '700',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -671,7 +671,7 @@ wpbf_customizer_field()
 		'font-family' => 'Helvetica, Arial, sans-serif',
 		'variant'     => 'regular',
 	) )
-	->choices( wpbf_default_font_choices() )
+	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
