@@ -322,7 +322,10 @@ class RepeaterControl extends BaseControl {
 									<# } #>
 								<# } #>
 
-								<# var encodedValue = field.default.replace(/"/g, "&quot;"); #>
+								<#
+								var encodedValue = field.default.replace(/"/g, "&quot;");
+								encodedValue = encodedValue.replace(/'/g, "&#039;");
+								#>
 	
 								<label>
 									<# if ( field.label ) { #><span class="customize-control-title">{{{ field.label }}}</span><# } #>
