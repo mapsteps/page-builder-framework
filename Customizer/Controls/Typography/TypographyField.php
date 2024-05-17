@@ -261,7 +261,7 @@ class TypographyField extends BaseField {
 
 		$defaults = $this->default_value;
 
-		$font_family = ! empty( $defaults['font-family'] ) && is_string( $defaults['font-family'] ) ? $defaults['font-family'] : '';
+		$default_value = ! empty( $defaults['font-family'] ) && is_string( $defaults['font-family'] ) ? $defaults['font-family'] : '';
 
 		wpbf_customizer_field()
 			->id( $this->control->id . '[font-family]' )
@@ -269,8 +269,8 @@ class TypographyField extends BaseField {
 			->label( __( 'Font Family', 'page-builder-framework' ) )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
-			->defaultValue( $font_family )
-			->choices( $this->typography_choices->makeFontFamilyChoices( $font_family, $this->fonts_arg ) )
+			->defaultValue( $default_value )
+			->choices( $this->typography_choices->makeFontFamilyChoices( $default_value, $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )

@@ -120,14 +120,14 @@ class TypographyChoices {
 					continue;
 				}
 
-				$font_family_key = esc_attr( $font_family_key );
+				$font_family_key = $font_family_key;
 
 				$options = [];
 
 				foreach ( $font_family_data['children'] as $font_family ) {
 					$font_family_value = ! empty( $font_family['value'] ) ? $font_family['value'] : '';
 					$font_family_value = empty( $font_family_value ) && isset( $font_family['id'] ) ? $font_family['id'] : '';
-					$font_family_value = esc_attr( $font_family_value );
+					$font_family_value = $font_family_value;
 
 					if ( empty( $font_family_value ) ) {
 						continue;
@@ -150,8 +150,12 @@ class TypographyChoices {
 					$options[ $font_family_value ] = $font_family_label;
 				}
 
+				$group_label = ! empty( $font_family_data['label'] ) ? $font_family_data['label'] : '';
+				$group_label = empty( $group_label ) && ! empty( $font_family_data['text'] ) ? $font_family_data['text'] : '';
+				$group_label = esc_attr( $group_label );
+
 				$custom_font_choices[ $font_family_key ] = [
-					$font_family_key,
+					$group_label,
 					$options,
 				];
 			}
@@ -224,7 +228,7 @@ class TypographyChoices {
 
 				$font_family_value = ! empty( $font_family['value'] ) ? $font_family['value'] : '';
 				$font_family_value = empty( $font_family_value ) && isset( $font_family['id'] ) ? $font_family['id'] : '';
-				$font_family_value = esc_attr( $font_family_value );
+				$font_family_value = $font_family_value;
 
 				if ( empty( $font_family_value ) ) {
 					continue;

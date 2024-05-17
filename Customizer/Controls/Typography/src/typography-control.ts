@@ -200,7 +200,7 @@ function composeFontProperties(
 	wp.customize(id).set(value);
 
 	wp.hooks.addAction(
-		"wpbf.dynamicControl.initKirkiControl",
+		"wpbf.dynamicControl.initWpbfControl",
 		"wpbf",
 		function (controlInit) {
 			if (variantControl && id + "[variant]" === controlInit.id) {
