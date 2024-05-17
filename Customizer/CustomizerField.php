@@ -469,6 +469,10 @@ final class CustomizerField {
 
 		$this->setting_instance->setting = $field->filterSettingEntity( $this->setting_instance->setting );
 
+		if ( ! empty( $this->custom_properties ) ) {
+			$this->control_instance->customProperties( $this->custom_properties );
+		}
+
 		if ( $field->is_wrapper_field ) {
 			$this->control_instance->control->section_id = $section_id;
 
@@ -497,10 +501,6 @@ final class CustomizerField {
 		}
 
 		$this->parsePartialRefreshArgs();
-
-		if ( ! empty( $this->custom_properties ) ) {
-			$this->control_instance->customProperties( $this->custom_properties );
-		}
 
 		$this->control_instance->addToSection( $section_id );
 
