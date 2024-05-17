@@ -32,7 +32,7 @@ if ( $page_font_toggle && $page_font_family_value ) {
 
 	if ( ! empty( $page_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_font_family_value['font-family'], ' ' ) && false === strpos( $page_font_family_value['font-family'], '"' ) && false === strpos( $page_font_family_value['font-family'], ',' ) ) {
+		if ( false !== strpos( $page_font_family_value['font-family'], ' ' ) && false === strpos( $page_font_family_value['font-family'], '"' ) && false === strpos( $page_font_family_value['font-family'], "'" ) && false === strpos( $page_font_family_value['font-family'], ',' ) ) {
 			$page_font_family_value['font-family'] = '"' . $page_font_family_value['font-family'] . '"';
 		}
 
