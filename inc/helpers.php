@@ -1706,3 +1706,52 @@ function wpbf_is_premium_addon_outdated() {
 	return true;
 
 }
+
+/**
+ * Parse font family.
+ *
+ * @param string $font_family The font family.
+ * @param bool   $for_font_face Whether we're parsing for @font-face usage.
+ *
+ * @return string The parsed font family.
+ */
+function wpbf_parse_font_family( $font_family, $for_font_face = false ) {
+
+	$font_family = trim( $font_family );
+	$font_family = esc_attr( $font_family );
+
+	/**
+	 * We only need to handle single & double quotes.
+	 * So it's not necessary to use html_entity_decode() with ENT_QUOTES here.
+	 */
+	$font_family = str_ireplace( '&quot;', '"', $font_family );
+	$font_family = str_ireplace( '&#039;', "'", $font_family );
+
+	// When parsing for @font-face usage, the font family should only be a single value.
+	if ( $for_font_face && false !== strpos( $font_family, ',' ) ) {
+		$font_families = explode( ',', $font_family );
+		$font_family   = '';
+
+		foreach ( $font_families as $family ) {
+			$family = trim( $family );
+
+			if ( ! empty( $family ) ) {
+				$font_family = $family;
+				break;
+			}
+		}
+	}
+
+	// When the font family is a single value, and it contains a space, make sure it's wrapped in quotes.
+	if (
+		false !== strpos( $font_family, ' ' )
+		&& false === strpos( $font_family, ',' )
+		&& false === strpos( $font_family, '"' )
+		&& false === strpos( $font_family, "'" )
+	) {
+		$font_family = '"' . $font_family . '"';
+	}
+
+	return $font_family;
+
+}
