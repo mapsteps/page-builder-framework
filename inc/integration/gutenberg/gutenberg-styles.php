@@ -128,11 +128,8 @@ if ( $page_font_toggle && $page_font_family_value ) {
 
 	if ( ! empty( $page_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_font_family_value['font-family'], ' ' ) && false === strpos( $page_font_family_value['font-family'], '"' ) && false === strpos( $page_font_family_value['font-family'], ',' ) ) {
-			$page_font_family_value['font-family'] = '"' . $page_font_family_value['font-family'] . '"';
-		}
+		echo sprintf( 'font-family: %s !important;', wpbf_parse_font_family( $page_font_family_value['font-family'] ) );
 
-		echo sprintf( 'font-family: %s !important;', html_entity_decode( esc_attr( $page_font_family_value['font-family'] ), ENT_QUOTES ) );
 	}
 
 	if ( ! empty( $page_font_family_value['variant'] ) ) {
@@ -201,11 +198,8 @@ if ( $page_h1_toggle && $page_h1_font_family_value ) {
 
 	if ( ! empty( $page_h1_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h1_font_family_value['font-family'], ' ' ) && false === strpos( $page_h1_font_family_value['font-family'], '"' ) && false === strpos( $page_h1_font_family_value['font-family'], ',' ) ) {
-			$page_h1_font_family_value['font-family'] = '"' . $page_h1_font_family_value['font-family'] . '"';
-		}
+		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h1_font_family_value['font-family'] ) );
 
-		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h1_font_family_value['font-family'] ), ENT_QUOTES ) );
 	}
 
 	if ( ! empty( $page_h1_font_family_value['variant'] ) ) {
@@ -273,11 +267,8 @@ if ( $page_h2_toggle && $page_h2_font_family_value ) {
 
 	if ( ! empty( $page_h2_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h2_font_family_value['font-family'], ' ' ) && false === strpos( $page_h2_font_family_value['font-family'], '"' ) && false === strpos( $page_h2_font_family_value['font-family'], ',' ) ) {
-			$page_h2_font_family_value['font-family'] = '"' . $page_h2_font_family_value['font-family'] . '"';
-		}
+		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h2_font_family_value['font-family'] ) );
 
-		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h2_font_family_value['font-family'] ), ENT_QUOTES ) );
 	}
 
 	if ( ! empty( $page_h2_font_family_value['variant'] ) ) {
@@ -353,11 +344,7 @@ if ( $page_h3_toggle && $page_h3_font_family_value ) {
 
 	if ( ! empty( $page_h3_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h3_font_family_value['font-family'], ' ' ) && false === strpos( $page_h3_font_family_value['font-family'], '"' ) && false === strpos( $page_h3_font_family_value['font-family'], ',' ) ) {
-			$page_h3_font_family_value['font-family'] = '"' . $page_h3_font_family_value['font-family'] . '"';
-		}
-
-		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h3_font_family_value['font-family'] ), ENT_QUOTES ) );
+		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h3_font_family_value['font-family'] ) );
 
 	}
 
@@ -434,11 +421,7 @@ if ( $page_h4_toggle && $page_h4_font_family_value ) {
 
 	if ( ! empty( $page_h4_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h4_font_family_value['font-family'], ' ' ) && false === strpos( $page_h4_font_family_value['font-family'], '"' ) && false === strpos( $page_h4_font_family_value['font-family'], ',' ) ) {
-			$page_h4_font_family_value['font-family'] = '"' . $page_h4_font_family_value['font-family'] . '"';
-		}
-
-		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h4_font_family_value['font-family'] ), ENT_QUOTES ) );
+		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h4_font_family_value['font-family'] ) );
 
 	}
 
@@ -515,11 +498,7 @@ if ( $page_h5_toggle && $page_h5_font_family_value ) {
 
 	if ( ! empty( $page_h5_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h5_font_family_value['font-family'], ' ' ) && false === strpos( $page_h5_font_family_value['font-family'], '"' ) && false === strpos( $page_h5_font_family_value['font-family'], ',' ) ) {
-			$page_h5_font_family_value['font-family'] = '"' . $page_h5_font_family_value['font-family'] . '"';
-		}
-
-		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h5_font_family_value['font-family'] ), ENT_QUOTES ) );
+		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h5_font_family_value['font-family'] ) );
 
 	}
 
@@ -596,11 +575,7 @@ if ( $page_h6_toggle && $page_h6_font_family_value ) {
 
 	if ( ! empty( $page_h6_font_family_value['font-family'] ) ) {
 
-		if ( false !== strpos( $page_h6_font_family_value['font-family'], ' ' ) && false === strpos( $page_h6_font_family_value['font-family'], '"' ) && false === strpos( $page_h6_font_family_value['font-family'], ',' ) ) {
-			$page_h6_font_family_value['font-family'] = '"' . $page_h6_font_family_value['font-family'] . '"';
-		}
-
-		echo sprintf( 'font-family: %s;', html_entity_decode( esc_attr( $page_h6_font_family_value['font-family'] ), ENT_QUOTES ) );
+		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h6_font_family_value['font-family'] ) );
 
 	}
 
