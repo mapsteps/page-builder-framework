@@ -25,12 +25,12 @@ require_once WPBF_THEME_DIR . '/inc/options.php';
 // Quick edit.
 require_once WPBF_THEME_DIR . '/inc/quick-edit.php';
 
-// Customizer functions.
-require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
-
 // Helpers.
 require_once WPBF_THEME_DIR . '/inc/class-vars.php';
 require_once WPBF_THEME_DIR . '/inc/helpers.php';
+
+// Customizer functions.
+require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 
 // Customizer settings.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
