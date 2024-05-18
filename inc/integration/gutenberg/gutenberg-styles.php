@@ -8,6 +8,8 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+do_action( 'wpbf_gutenberg_css' );
+
 // Global colors.
 $base_color_global       = ( $val = get_theme_mod( 'base_color_global' ) ) === '#f5f5f7' ? false : $val;
 $base_color_alt_global   = ( $val = get_theme_mod( 'base_color_alt_global' ) ) === '#dedee5' ? false : $val;
