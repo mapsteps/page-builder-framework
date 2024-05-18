@@ -11,15 +11,10 @@ class TypographyChoices {
 	 *
 	 * @see https://github.com/themeum/kirki/issues/1120#issuecomment-304480821
 	 *
-	 * @param string $default_value The default font-family value.
-	 * @param array  $fonts_arg The fonts arguments.
-	 *
+	 * @param array $fonts_arg The fonts arguments.
 	 * @return array
 	 */
-	public function makeFontFamilyChoices( $default_value, $fonts_arg ) {
-
-		$default_value = empty( $default_value ) || is_string( $default_value ) ? $default_value : '';
-		$default_label = empty( $default_value ) ? __( 'Default', 'page-builder-framework' ) : $default_value;
+	public function makeFontFamilyChoices( $fonts_arg ) {
 
 		$fonts_arg = empty( $fonts_arg ) || ! is_array( $fonts_arg ) ? [] : $fonts_arg;
 
@@ -32,23 +27,11 @@ class TypographyChoices {
 			foreach ( $standard_fonts_arg as $maybe_index_or_font_name => $font_name_or_stack ) {
 				$font_family_value = is_int( $maybe_index_or_font_name ) ? $font_name_or_stack : $maybe_index_or_font_name;
 
-				// Exclude default value from standard fonts.
-				if ( ! empty( $default_value ) && $font_family_value === $default_value ) {
-					$default_label = $font_name_or_stack;
-					continue;
-				}
-
 				$standard_font_options[ $font_family_value ] = $font_name_or_stack;
 			}
 		} else {
 			foreach ( $fonts_util->getStandardFonts() as $font_family_group_key => $font_data ) {
 				if ( empty( $font_data['stack'] ) || empty( $font_data['label'] ) ) {
-					continue;
-				}
-
-				// Exclude default value from standard fonts.
-				if ( ! empty( $default_value ) && $font_data['stack'] === $default_value ) {
-					$default_label = $font_data['label'];
 					continue;
 				}
 
@@ -98,11 +81,6 @@ class TypographyChoices {
 		$google_font_options = [];
 
 		foreach ( $google_font_names as $font_family ) {
-			// Exclude default value from Google Fonts.
-			if ( ! empty( $default_value ) && $font_family === $default_value ) {
-				continue;
-			}
-
 			$google_font_options[ $font_family ] = $font_family;
 		}
 
@@ -141,12 +119,6 @@ class TypographyChoices {
 						continue;
 					}
 
-					// Exclude default value from custom fonts.
-					if ( ! empty( $default_value ) && $font_family_value === $default_value ) {
-						$default_label = $font_family_label;
-						continue;
-					}
-
 					$options[ $font_family_value ] = $font_family_label;
 				}
 
@@ -162,13 +134,6 @@ class TypographyChoices {
 		}
 
 		$choices = array();
-
-		$choices['default'] = array(
-			__( 'Default', 'page-builder-framework' ),
-			array(
-				$default_value => $default_label,
-			),
-		);
 
 		if ( ! empty( $standard_font_options ) ) {
 			$choices['standard'] = array(

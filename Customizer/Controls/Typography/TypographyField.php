@@ -270,7 +270,7 @@ class TypographyField extends BaseField {
 			->tab( $this->tab )
 			->capability( $this->control->capability )
 			->defaultValue( $default_value )
-			->choices( $this->typography_choices->makeFontFamilyChoices( $default_value, $this->fonts_arg ) )
+			->choices( $this->typography_choices->makeFontFamilyChoices( $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			->transport( $this->transport )
 			->inputAttrs( $this->control->input_attrs )
