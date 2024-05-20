@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-do_action( 'wpbf_gutenberg_css' );
+do_action( 'wpbf_before_gutenberg_css' );
 
 // Global colors.
 $base_color_global       = ( $val = get_theme_mod( 'base_color_global' ) ) === '#f5f5f7' ? false : $val;
@@ -692,3 +692,5 @@ if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 	}
 
 }
+
+do_action( 'wpbf_after_gutenberg_css' );
