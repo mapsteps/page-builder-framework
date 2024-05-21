@@ -192,8 +192,7 @@ class TypographyChoices {
 				}
 
 				$font_family_value = ! empty( $font_family['value'] ) ? $font_family['value'] : '';
-				$font_family_value = empty( $font_family_value ) && isset( $font_family['id'] ) ? $font_family['id'] : '';
-				$font_family_value = $font_family_value;
+				$font_family_value = empty( $font_family_value ) && ! empty( $font_family['id'] ) ? $font_family['id'] : '';
 
 				if ( empty( $font_family_value ) ) {
 					continue;
@@ -205,7 +204,13 @@ class TypographyChoices {
 
 				// The $custom_variant here can be something like "400italic" or "italic".
 				foreach ( $variants_arg[ $font_family_value ] as $custom_variant ) {
-					if ( empty( $custom_variant ) || ! is_string( $custom_variant ) ) {
+					if ( empty( $custom_variant ) ) {
+						continue;
+					}
+
+					$custom_variant = is_numeric( $custom_variant ) ? (string) $custom_variant : $custom_variant;
+
+					if ( ! is_string( $custom_variant ) ) {
 						continue;
 					}
 
