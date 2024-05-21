@@ -93,10 +93,10 @@ export default function setupjQuerySite($) {
 	 * Setup scroll to top functionality.
 	 */
 	function setupScrollToTop() {
-		const scrollTop = document.querySelector(".scrolltop");
-		if (!scrollTop || !(scrollTop instanceof HTMLElement)) return;
+		const scrolltopEl = document.querySelector(".scrolltop");
+		if (!scrolltopEl || !(scrolltopEl instanceof HTMLElement)) return;
 
-		const dataScrolltop = scrollTop.dataset.scrolltopValue;
+		const dataScrolltop = scrolltopEl.dataset.scrolltopValue;
 		const scrollTopSetting = dataScrolltop ? parseFloat(dataScrolltop) : 0;
 
 		// Show or hide scroll-to-top button on window scroll event.
@@ -104,9 +104,9 @@ export default function setupjQuerySite($) {
 			const scrollTopValue = $(this).scrollTop();
 
 			if (scrollTopValue && scrollTopValue > scrollTopSetting) {
-				$(".scrolltop").fadeIn();
+				scrolltopEl.classList.add("is-visible");
 			} else {
-				$(".scrolltop").fadeOut();
+				scrolltopEl.classList.remove("is-visible");
 			}
 		});
 

@@ -78,22 +78,18 @@ export default function setupSite() {
 	 * Setup scroll to top functionality.
 	 */
 	function setupScrollToTop() {
-		const scrollTop = document.querySelector(".scrolltop");
-		if (!scrollTop || !(scrollTop instanceof HTMLElement)) return;
+		const scrolltopEl = document.querySelector(".scrolltop");
+		if (!scrolltopEl || !(scrolltopEl instanceof HTMLElement)) return;
 
-		const dataScrolltop = scrollTop.dataset.scrolltopValue;
+		const dataScrolltop = scrolltopEl.dataset.scrolltopValue;
 		const scrollTopSetting = dataScrolltop ? parseFloat(dataScrolltop) : 0;
 
 		// Show or hide scroll-to-top button on window scroll event.
 		window.addEventListener("scroll", function (e) {
 			if (window.scrollY > scrollTopSetting) {
-				forEachEl(".scrolltop", function (el) {
-					el.classList.add(".is-visible");
-				});
+				scrolltopEl.classList.add("is-visible");
 			} else {
-				forEachEl(".scrolltop", function (el) {
-					el.classList.remove(".is-visible");
-				});
+				scrolltopEl.classList.remove("is-visible");
 			}
 		});
 
