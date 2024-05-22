@@ -1,5 +1,8 @@
 import hooks from "@wordpress/hooks";
-import { WpbfCustomize } from "../../Base/src/interface";
+import {
+	AnyWpbfCustomizeControl,
+	WpbfCustomize,
+} from "../../Base/src/interface";
 import "./typography-control.scss";
 import {
 	FontProperties,
@@ -28,7 +31,7 @@ declare var wpbfTypographyControlIds: string[] | undefined;
 declare var wpbfGoogleFonts: GoogleFontsCollection | undefined;
 declare var wpbfFontVariantOptions: FontVariantsCollection | undefined;
 declare var wpbfFieldsFontVariants:
-	| Record<string, LabelValuePair[]>
+	| Record<string, Record<string, LabelValuePair[]>>
 	| undefined;
 
 wp.customize.bind("ready", function () {
@@ -84,7 +87,7 @@ function findGoogleFont(fontFamily: string): GoogleFontEntity | undefined {
 }
 
 function variantFoundInChoices(variantValue: string, variants: SelectChoices) {
-	return variants.some((variant) => variant.v === variantValue);
+	return variants.some((variant) => variant.v == variantValue);
 }
 
 function composeFontProperties(
@@ -135,19 +138,27 @@ function composeFontProperties(
 		let fieldVariantKey = id.replace(/]/g, "");
 		fieldVariantKey = fieldVariantKey.replace(/\[/g, "_");
 
-		const fieldVariants =
+		const customVariantsGroup =
 			wpbfFieldsFontVariants && wpbfFieldsFontVariants[fieldVariantKey]
 				? wpbfFieldsFontVariants[fieldVariantKey]
 				: undefined;
 
-		if (fieldVariants && fieldVariants.length) {
-			let i = 0;
+		if (customVariantsGroup && "object" === typeof customVariantsGroup) {
+			for (const variantFamily in customVariantsGroup) {
+				if (!customVariantsGroup.hasOwnProperty(variantFamily)) continue;
+				if (value["font-family"] !== variantFamily) continue;
 
-			for (; i < fieldVariants.length; ++i) {
-				variantChoices.push({
-					l: fieldVariants[i].label,
-					v: fieldVariants[i].value,
-				});
+				const variants = customVariantsGroup[variantFamily];
+				if (!variants.length) continue;
+
+				let i = 0;
+
+				for (; i < variants.length; ++i) {
+					variantChoices.push({
+						l: variants[i].label,
+						v: variants[i].value,
+					});
+				}
 			}
 		} else {
 			variantChoices.length = 0;
@@ -202,7 +213,7 @@ function composeFontProperties(
 	wp.hooks.addAction(
 		"wpbf.dynamicControl.initWpbfControl",
 		"wpbf",
-		function (controlInit) {
+		function (controlInit: AnyWpbfCustomizeControl) {
 			if (variantControl && id + "[variant]" === controlInit.id) {
 			}
 		},

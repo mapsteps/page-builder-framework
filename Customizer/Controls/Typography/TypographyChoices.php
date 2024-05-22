@@ -214,7 +214,7 @@ class TypographyChoices {
 						continue;
 					}
 
-					// Check if $custom_variant doesn't exist in self::$complete_font_variants.
+					// Check if $custom_variant doesn't match any value in self::$complete_font_variants.
 					if ( ! isset( FontsStore::$complete_font_variants[ $custom_variant ] ) ) {
 						continue;
 					}
@@ -261,6 +261,10 @@ class TypographyChoices {
 				}
 
 				foreach ( $font_name_or_stack_or_data['variants'] as $font_variant ) {
+					if ( is_numeric( $font_variant ) ) {
+						$font_variant = (string) $font_variant;
+					}
+
 					if ( ! isset( FontsStore::$standard_font_variants[ $font_variant ] ) ) {
 						continue;
 					}
@@ -327,13 +331,17 @@ class TypographyChoices {
 					}
 
 					foreach ( $fonts_arg['variants'][ $font_family['id'] ] as $custom_variant ) {
-						if ( ! isset( FontsStore::$standard_font_variants[ $custom_variant ] ) ) {
+						if ( is_numeric( $custom_variant ) ) {
+							$custom_variant = (string) $custom_variant;
+						}
+
+						if ( ! isset( FontsStore::$complete_font_variants[ $custom_variant ] ) ) {
 							continue;
 						}
 
 						$custom_font_variants[ $font_family['id'] ][] = [
 							'value' => $custom_variant,
-							'label' => FontsStore::$standard_font_variants[ $custom_variant ],
+							'label' => FontsStore::$complete_font_variants[ $custom_variant ],
 						];
 					}
 				}
