@@ -89,14 +89,16 @@ function wpbf_customizer_field() {
 }
 
 // Kirki compatiblity.
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-compatibility.php';
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-panel-section-compatibility.php';
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-control-base-compatibility.php';
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-fields-compatibility.php';
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-unsupported-fields-compatibility.php';
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-pro-fields-compatibility.php';
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-class-aliases.php';
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/wpbf-old-controls-compatibility.php';
+if ( ! is_plugin_active( 'kirki/kirki.php' ) ) {
+	require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-compatibility.php';
+	require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-panel-section-compatibility.php';
+	require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-control-base-compatibility.php';
+	require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-fields-compatibility.php';
+	require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-unsupported-fields-compatibility.php';
+	require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-pro-fields-compatibility.php';
+	require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-class-aliases.php';
+	require_once WPBF_THEME_DIR . '/Customizer/Compatibility/wpbf-old-controls-compatibility.php';
+}
 
 if ( ! function_exists( 'wpbf_get_theme_mod_value' ) ) {
 
