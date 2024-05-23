@@ -1,3 +1,4 @@
+import _ from "lodash";
 import {
 	WpbfControlDependency,
 	WpbfCustomize,
@@ -118,35 +119,91 @@ export default function setupControlDependencies() {
 	}
 
 	function isRuleSatisfied(
-		value: string | number,
+		actualValue: any,
 		operator: string,
-		expectedValue: string | number | any[],
+		expectedValue: any,
 	): boolean {
 		operator = operator.trim().toLowerCase();
 
 		switch (operator) {
 			case "==":
-				return value == expectedValue;
+				return actualValue == expectedValue;
 			case "===":
-				return value === expectedValue;
+				return actualValue === expectedValue;
 			case "!=":
-				return value != expectedValue;
+				return actualValue != expectedValue;
 			case "!==":
-				return value !== expectedValue;
+				return actualValue !== expectedValue;
 			case ">":
-				return value > expectedValue;
+				return actualValue > expectedValue;
 			case ">=":
-				return value >= expectedValue;
+				return actualValue >= expectedValue;
 			case "<":
-				return value < expectedValue;
+				return actualValue < expectedValue;
 			case "<=":
-				return value <= expectedValue;
+				return actualValue <= expectedValue;
 			case "in":
-				const arr: any[] = Array.isArray(value) ? value : [];
-				return arr.includes(expectedValue);
+				return compareInOperator(actualValue, expectedValue);
 			case "not in":
-				const arr2: any[] = Array.isArray(value) ? value : [];
-				return !arr2.includes(expectedValue);
+				return !compareInOperator(actualValue, expectedValue);
+		}
+
+		return false;
+	}
+
+	function compareInOperator(actualValue: any, expectedValue: any): boolean {
+		if (Array.isArray(expectedValue)) {
+			const expectedValueArray: any[] = expectedValue;
+			let found = false;
+
+			if (Array.isArray(actualValue)) {
+				const actualValueArray: any[] = actualValue;
+
+				for (let i = 0; i < actualValueArray.length; ++i) {
+					if (expectedValueArray.includes(actualValueArray[i])) {
+						found = true;
+						break;
+					}
+				}
+			} else {
+				if (expectedValueArray.includes(actualValue)) {
+					found = true;
+				}
+			}
+
+			return found;
+		}
+
+		if (Array.isArray(actualValue)) {
+			const actualValueArray: any[] = actualValue;
+			return actualValueArray.includes(expectedValue);
+		}
+
+		if (_.isObject(actualValue)) {
+			const actualValueObj: Record<string, any> = actualValue;
+
+			if (!_.isUndefined(actualValueObj[expectedValue])) {
+				return true;
+			}
+
+			for (const prop in actualValueObj) {
+				if (!actualValueObj.hasOwnProperty(prop)) continue;
+
+				if (actualValueObj[prop] === expectedValue) {
+					return true;
+				}
+			}
+		}
+
+		if ("string" === typeof actualValue) {
+			if ("string" === typeof expectedValue) {
+				return (
+					-1 < expectedValue.indexOf(actualValue) &&
+					-1 < actualValue.indexOf(expectedValue)
+				);
+			}
+
+			return -1 < expectedValue.indexOf(actualValue);
 		}
 
 		return false;
