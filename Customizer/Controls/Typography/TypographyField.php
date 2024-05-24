@@ -217,7 +217,7 @@ class TypographyField extends BaseField {
 			$this->addFontVariantField();
 		}
 
-		$this->addDivider();
+		// $this->addDivider();
 
 	}
 
