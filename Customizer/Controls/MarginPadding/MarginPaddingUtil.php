@@ -67,7 +67,7 @@ class MarginPaddingUtil {
 		$parsed_values = [];
 
 		foreach ( $array_values as $dimension => $dimension_value ) {
-			if ( '' === $dimension_value ) {
+			if ( '' === $dimension_value || null === $dimension_value ) {
 				$parsed_values[ $dimension ] = '';
 				continue;
 			}
