@@ -547,7 +547,7 @@ wpbf_customizer_field()
 			'value'    => true,
 		],
 	] )
-	->addToSection( 'wpbf_woocommerce_notices_options' );
+	->addToSection( 'woocommerce_store_notice' );
 
 // Separator.
 wpbf_customizer_field()
