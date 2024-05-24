@@ -2,22 +2,21 @@ import React from "react";
 
 export default function DeviceButtons(props: { devices: string[] }) {
 	return (
-		<ul className="wpbf-responsive-options">
+		<div className="wpbf-device-buttons">
 			{props.devices.map((device, index) => {
 				const deviceClassName = `dashicons dashicons-${device === "mobile" ? "smartphone" : device}`;
 
 				return (
-					<li className={device} key={index}>
-						<button
-							type="button"
-							className={`preview-${device} ${0 === index ? "active" : ""}`}
-							data-device={device}
-						>
-							<i className={deviceClassName}></i>
-						</button>
-					</li>
+					<button
+						type="button"
+						className={`wpbf-device-button wpbf-device-button-${device} ${0 === index ? " is-active" : ""}`}
+						data-wpbf-device={device}
+						key={index}
+					>
+						<i className={deviceClassName}></i>
+					</button>
 				);
 			})}
-		</ul>
+		</div>
 	);
 }

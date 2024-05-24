@@ -68,15 +68,18 @@ class ResponsiveInputSliderField extends InputSliderField {
 	 */
 	protected function initControlInstance( $wp_customize_manager, $control_id, $control_args ) {
 
-		$props = $this->control->custom_properties;
-
-		if ( ! empty( $props['save_as_json'] ) && is_bool( $props['save_as_json'] ) ) {
-			$control_args['save_as_json'] = true;
+		if ( ! isset( $control_args['wrapper_attrs'] ) ) {
+			$control_args['wrapper_attrs'] = [];
 		}
 
-		if ( ! empty( $props['devices'] ) && is_array( $props['devices'] ) ) {
-			$control_args['devices'] = $props['devices'];
+		if ( empty( $control_args['wrapper_attrs']['class'] ) ) {
+			$control_args['wrapper_attrs']['class'] = '{default_class} wpbf-customize-control-responsive';
+		} else {
+			$control_args['wrapper_attrs']['class'] .= ' wpbf-customize-control-responsive';
 		}
+
+		$control_args['save_as_json'] = ! empty( $control_args['save_as_json'] ) && is_bool( $control_args['save_as_json'] ) ? true : false;
+		$control_args['devices']      = ! empty( $control_args['devices'] ) && is_array( $control_args['devices'] ) ? $control_args['devices'] : [];
 
 		return new ResponsiveInputSliderControl( $wp_customize_manager, $control_id, $control_args );
 

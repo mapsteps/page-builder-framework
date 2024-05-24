@@ -125,88 +125,88 @@ export default function ResponsiveInputSliderForm(props: {
 	}
 
 	return (
-		<div
-			className="wpbf-control-form wpbf-responsive-padding-wrap"
-			tabIndex={1}
-		>
-			{props.label || props.description ? (
-				<label
-					className="wpbf-control-label"
-					htmlFor={`wpbf-control-input-${props.customizerSetting?.id}`}
-				>
-					{props.label && (
+		<>
+			<header className="wpbf-control-header">
+				{props.label && (
+					<label
+						className="customize-control-title"
+						htmlFor={`wpbf-control-input-${props.customizerSetting?.id}`}
+					>
 						<span className="customize-control-title">{props.label}</span>
-					)}
+					</label>
+				)}
 
-					{props.description && (
-						<span
-							className="customize-control-description description"
-							dangerouslySetInnerHTML={{ __html: props.description }}
-						/>
-					)}
-				</label>
-			) : null}
+				<DeviceButtons devices={props.devices} />
+			</header>
+
+			{props.description && (
+				<span
+					className="customize-control-description description"
+					dangerouslySetInnerHTML={{ __html: props.description }}
+				/>
+			)}
 
 			<div
 				className="customize-control-notifications-container"
 				ref={props.setNotificationContainer}
 			></div>
 
-			<DeviceButtons devices={props.devices} />
+			<div className="wpbf-control-form">
+				{props.devices.map((device, deviceIndex) => {
+					const isActive = 0 === deviceIndex;
 
-			{props.devices.map((device, deviceIndex) => {
-				const isActive = 0 === deviceIndex;
+					return (
+						<div
+							className={`wpbf-control-device wpbf-control-${device} ${isActive ? "is-active" : ""}`}
+							data-wpbf-device={device}
+							key={deviceIndex}
+						>
+							{actualValue.hasOwnProperty(device) && (
+								<>
+									<button
+										type="button"
+										className="wpbf-control-reset"
+										onClick={(e) => handleResetButtonClick(e, device)}
+									>
+										<i className="dashicons dashicons-image-rotate"></i>
+									</button>
 
-				return (
-					<div
-						className={`wpbf-control-device wpbf-control-${device} ${isActive ? "active" : ""}`}
-						key={deviceIndex}
-					>
-						{actualValue.hasOwnProperty(device) && (
-							<>
-								<button
-									type="button"
-									className="wpbf-control-reset"
-									onClick={(e) => handleResetButtonClick(e, device)}
-								>
-									<i className="dashicons dashicons-image-rotate"></i>
-								</button>
-
-								<div className="wpbf-control-cols">
-									<div className="wpbf-control-left-col">
-										<input
-											type="range"
-											id={`wpbf-control-input-${props.customizerSetting?.id}-${device}`}
-											value={makeValueForSlider(
-												actualValue[device],
-												props.min,
-												props.max,
-											)}
-											min={props.min}
-											max={props.max}
-											step={props.step}
-											className="wpbf-control-input-slider wpbf-pro-control-input-slider"
-											onChange={(e) => handleSliderChange(e, device)}
-										/>
+									<div className="wpbf-control-cols">
+										<div className="wpbf-control-left-col">
+											<input
+												type="range"
+												id={`wpbf-control-input-${props.customizerSetting?.id}-${device}`}
+												value={makeValueForSlider(
+													actualValue[device],
+													props.min,
+													props.max,
+												)}
+												min={props.min}
+												max={props.max}
+												step={props.step}
+												className="wpbf-control-input-slider wpbf-pro-control-input-slider"
+												onChange={(e) => handleSliderChange(e, device)}
+											/>
+										</div>
+										<div className="wpbf-control-right-col">
+											<input
+												type="text"
+												value={makeValueForInput(
+													actualValue[device],
+													props.min,
+													props.max,
+												)}
+												className="wpbf-control-input"
+												onChange={(e) => handleInputChange(e, device)}
+											/>
+										</div>
 									</div>
-									<div className="wpbf-control-right-col">
-										<input
-											type="text"
-											value={makeValueForInput(
-												actualValue[device],
-												props.min,
-												props.max,
-											)}
-											className="wpbf-control-input"
-											onChange={(e) => handleInputChange(e, device)}
-										/>
-									</div>
-								</div>
-							</>
-						)}
-					</div>
-				);
-			})}
-		</div>
+								</>
+							)}
+						</div>
+					);
+				})}
+			</div>
+		</>
 	);
 }
