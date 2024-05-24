@@ -6,26 +6,31 @@ import {
 } from "./interface";
 
 export function parseSingleValueAsObject(
-	value: string | number,
+	value: string | number | null,
 ): MarginPaddingSingleValueObject {
+	if (value === "" || value === null) {
+		return {
+			unit: "",
+			number: "",
+		};
+	}
+
 	let unit = "";
 	let number: number = 0;
 
+	value = "string" !== typeof value ? value.toString() : value;
+	value = value.trim();
+	const negativeSign = -1 < value.indexOf("-") ? "-" : "";
+	value = value.replace(negativeSign, "");
+
+	let numeric = "";
+
 	if ("" !== value) {
-		value = "string" !== typeof value ? value.toString() : value;
-		value = value.trim();
-		const negativeSign = -1 < value.indexOf("-") ? "-" : "";
-		value = value.replace(negativeSign, "");
+		unit = value.replace(/\d+/g, "");
+		numeric = value.replace(unit, "");
+		numeric = negativeSign + numeric.trim();
 
-		let numeric = "";
-
-		if ("" !== value) {
-			unit = value.replace(/\d+/g, "");
-			numeric = value.replace(unit, "");
-			numeric = negativeSign + numeric.trim();
-
-			number = parseFloat(numeric);
-		}
+		number = parseFloat(numeric);
 	}
 
 	return {

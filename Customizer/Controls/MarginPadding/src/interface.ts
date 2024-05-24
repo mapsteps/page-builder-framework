@@ -16,7 +16,7 @@ export interface MarginPaddingValue {
 
 export interface MarginPaddingSingleValueObject {
 	unit: string;
-	number: number;
+	number: number | "";
 }
 
 export interface MarginPaddingDimensionValuePair {

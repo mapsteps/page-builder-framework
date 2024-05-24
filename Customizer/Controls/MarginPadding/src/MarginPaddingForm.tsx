@@ -154,14 +154,6 @@ export default function MarginPaddingForm(props: {
 		return items;
 	}
 
-	function renderDeviceButtons() {
-		if (!props.isResponsive || !props.devices) {
-			return <></>;
-		}
-
-		return <DeviceButtons devices={props.devices} />;
-	}
-
 	function renderFields(
 		device: string,
 		group: MarginPaddingDimensionValuePair[],
@@ -176,7 +168,7 @@ export default function MarginPaddingForm(props: {
 					<i className="dashicons dashicons-image-rotate"></i>
 				</button>
 
-				<div className={`wpbf-control-cols ${wrapperClassName}`}>
+				<div className="wpbf-control-cols">
 					<div className="wpbf-control-left-col">
 						<div className="wpbf-control-fields">
 							{group.map((item, i) => {
@@ -222,10 +214,13 @@ export default function MarginPaddingForm(props: {
 			<>
 				{props.devices.map((device, index) => {
 					const isActive = 0 === index;
-					const wrapperClassName = `wpbf-control-device wpbf-control-${device} ${isActive ? "active" : ""}`;
 
 					return (
-						<div className={wrapperClassName} key={index}>
+						<div
+							className={`wpbf-control-device wpbf-control-${device} ${isActive ? "is-active" : ""}`}
+							data-wpbf-device={device}
+							key={index}
+						>
 							{renderFields(device, makeMappable(device))}
 						</div>
 					);
@@ -234,27 +229,36 @@ export default function MarginPaddingForm(props: {
 		);
 	}
 
-	const fieldId = `wpbf-control-input-${props.type}-top`;
+	function renderDeviceButtons() {
+		if (!props.isResponsive || !props.devices || !props.devices.length) {
+			return <></>;
+		}
+
+		return <DeviceButtons devices={props.devices} />;
+	}
+
 	const unitRef = useRef(null);
-	const wrapperClassName = `wpbf-control-form ${props.isResponsive ? "wpbf-responsive-padding-wrap" : ""}`;
 
 	return (
-		<div className={wrapperClassName} tabIndex={1}>
-			{(props.label || props.description) && (
-				<>
-					<label className="wpbf-control-label" htmlFor={fieldId}>
-						{props.label && (
-							<span className="customize-control-title">{props.label}</span>
-						)}
-
-						{props.description && (
-							<span
-								className="customize-control-description description"
-								dangerouslySetInnerHTML={{ __html: props.description }}
-							/>
-						)}
+		<>
+			<header className="wpbf-control-header">
+				{props.label && (
+					<label
+						className="customize-control-title"
+						htmlFor={`wpbf-control-input-${props.type}-top`}
+					>
+						<span className="customize-control-title">{props.label}</span>
 					</label>
-				</>
+				)}
+
+				{renderDeviceButtons()}
+			</header>
+
+			{props.description && (
+				<span
+					className="customize-control-description description"
+					dangerouslySetInnerHTML={{ __html: props.description }}
+				/>
 			)}
 
 			<div
@@ -262,8 +266,7 @@ export default function MarginPaddingForm(props: {
 				ref={props.setNotificationContainer}
 			/>
 
-			{renderDeviceButtons()}
-			{renderFieldGroups()}
-		</div>
+			<div className="wpbf-control-form">{renderFieldGroups()}</div>
+		</>
 	);
 }

@@ -39,12 +39,20 @@ class ResponsiveMarginPaddingField extends MarginPaddingField {
 	 */
 	protected function initControlInstance( $wp_customize_manager, $control_id, $control_args ) {
 
+		if ( ! isset( $control_args['wrapper_attrs'] ) ) {
+			$control_args['wrapper_attrs'] = [];
+		}
+
+		if ( empty( $control_args['wrapper_attrs']['class'] ) ) {
+			$control_args['wrapper_attrs']['class'] = '{default_class} wpbf-customize-control-responsive';
+		} else {
+			$control_args['wrapper_attrs']['class'] .= ' wpbf-customize-control-responsive';
+		}
+
 		$control = new ResponsiveMarginPaddingControl( $wp_customize_manager, $control_id, $control_args );
 
-		$props = $this->control->custom_properties;
-
-		if ( ! empty( $props['devices'] ) && is_array( $props['devices'] ) ) {
-			$control->devices = $props['devices'];
+		if ( ! empty( $control_args['devices'] ) && is_array( $control_args['devices'] ) ) {
+			$control->devices = $control_args['devices'];
 		}
 
 		return $control;
