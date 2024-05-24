@@ -336,13 +336,16 @@ class TypographyField extends BaseField {
 		wpbf_customizer_field()
 			->id( $this->control->id . '_separator' )
 			->type( 'divider' )
-			->priority( 1 )
+			->tab( $this->tab )
+			->capability( $this->control->capability )
+			->priority( $this->control->priority )
+			->activeCallback( $this->active_callback_args )
 			->properties( [
 				'wrapper_attrs' => [
 					'gap' => 'small',
 				],
 			] )
-			->addToSection( 'wpbf_blog_settings' );
+			->addToSection( $this->control->section_id );
 
 	}
 
