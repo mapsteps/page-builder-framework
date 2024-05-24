@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function ColorPickerSwatches(props: {
-	colors: Array<string | { color: string }>;
+	colors: Array<string | { color: string } | undefined>;
 	onClick: (color: string) => void;
 }) {
 	const { colors, onClick } = props;
@@ -9,7 +9,8 @@ export default function ColorPickerSwatches(props: {
 	return (
 		<div className="wpbf-color-swatches">
 			{colors.map((clr, index) => {
-				const color = typeof clr === "string" ? clr : clr.color;
+				const color =
+					typeof clr === "string" ? clr : clr && clr.color ? clr.color : "";
 
 				return (
 					<button

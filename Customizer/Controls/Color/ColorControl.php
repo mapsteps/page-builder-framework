@@ -132,6 +132,9 @@ class ColorControl extends BaseControl {
 			'#8224e3',
 		);
 
+		// The 'kirki_default_color_swatches' filter is for backwards compatibility with Kirki.
+		$default_swatches = apply_filters( 'kirki_default_color_swatches', $default_swatches );
+
 		$default_swatches = apply_filters( 'wpbf_default_color_swatches', $default_swatches );
 
 		$defined_swatches = ! empty( $this->color_swatches ) ? $this->color_swatches : array();
@@ -141,13 +144,18 @@ class ColorControl extends BaseControl {
 			$total_swatches = count( $swatches );
 
 			if ( $total_swatches < 8 ) {
-				for ( $i = $total_swatches; $i <= 8; $i++ ) {
-					$swatches[] = $total_swatches[ $i ];
+				for ( $i = $total_swatches; $i < 8; $i++ ) {
+					if ( isset( $default_swatches[ $i ] ) ) {
+						$swatches[] = $default_swatches[ $i ];
+					}
 				}
 			}
 		} else {
 			$swatches = $default_swatches;
 		}
+
+		// The 'kirki_color_swatches' filter is for backwards compatibility with Kirki.
+		$swatches = apply_filters( 'kirki_color_swatches', $swatches );
 
 		return apply_filters( 'wpbf_color_swatches', $swatches );
 

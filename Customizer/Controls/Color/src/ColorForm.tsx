@@ -55,7 +55,7 @@ export function ColorForm(props: {
 	useHueMode: boolean;
 	pickerComponent: string;
 	labelStyle: string;
-	colorSwatches: Array<string | { color: string }>;
+	colorSwatches: Array<string | { color: string } | undefined>;
 	value: string | ObjectColor | number;
 	default: string | ObjectColor | number;
 	setNotificationContainer: any;
@@ -415,8 +415,10 @@ export function ColorForm(props: {
 		// If 3rd parties applied custom colors to wpColorPicker swatches, let's use them.
 		if (Array.isArray(wpColorPickerSwatches)) {
 			if (wpColorPickerSwatches.length < 8) {
-				for (let i = wpColorPickerSwatches.length; i <= 8; i++) {
-					wpColorPickerSwatches.push(colorSwatches[i]);
+				for (let i = wpColorPickerSwatches.length; i < 8; i++) {
+					if (wpColorPickerSwatches[i]) {
+						wpColorPickerSwatches.push(colorSwatches[i]);
+					}
 				}
 			}
 

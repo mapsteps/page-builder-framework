@@ -79,6 +79,14 @@ class ColorField extends BaseField {
 			$color_control->color_swatches = $custom_props['color_swatches'];
 		} elseif ( isset( $custom_props['color_palette'] ) ) {
 			$color_control->color_swatches = $custom_props['color_palette'];
+		} elseif ( isset( $custom_props['color_palettes'] ) ) {
+			$color_control->color_swatches = $custom_props['color_palette'];
+		} elseif ( isset( $custom_props['swatches'] ) ) {
+			// The 'swatches' property is for backwards compatibility with Kirki.
+			$color_control->color_swatches = $custom_props['swatches'];
+		} elseif ( isset( $custom_props['palettes'] ) ) {
+			// The 'palettes' property is for backwards compatibility with Kirki.
+			$color_control->color_swatches = $custom_props['palettes'];
 		}
 
 		$wp_customize_manager->add_control( $color_control );

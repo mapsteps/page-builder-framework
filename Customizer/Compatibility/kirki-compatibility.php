@@ -276,6 +276,16 @@ if ( ! class_exists( '\Kirki' ) ) {
 				$type = 'code';
 			}
 
+			if ( 'color' === $type ) {
+				if ( isset( $choices['swatches'] ) ) {
+					$custom_props['color_swatches'] = $choices['swatches'];
+					unset( $choices['swatches'] );
+				} elseif ( isset( $choices['palettes'] ) ) {
+					$custom_props['color_swatches'] = $choices['palettes'];
+					unset( $choices['palettes'] );
+				}
+			}
+
 			if ( 'editor' === $type ) {
 				if ( isset( $choices['tinymce'] ) ) {
 					$custom_props['tinymce'] = $choices['tinymce'];
