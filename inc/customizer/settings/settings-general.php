@@ -313,6 +313,9 @@ wpbf_customizer_field()
 /* Fields - Background */
 
 // Background color.
+/**
+ * The idea was to replace the old WordPress color picker with our new interface.
+ * But it doesn't work as expected.
 wpbf_customizer_field()
 	->id( 'background_color' )
 	->type( 'color' )
@@ -324,6 +327,7 @@ wpbf_customizer_field()
 		'mode' => 'alpha',
 	) )
 	->addToSection( 'background_image' );
+*/
 
 /* Fields - Sidebar */
 
