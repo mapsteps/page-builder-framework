@@ -23,6 +23,22 @@ class CodeField extends BaseField {
 	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Code\CodeControl';
 
 	/**
+	 * Setting's sanitize callback.
+	 *
+	 * Code fields should not be filtered by default.
+	 * Their values usually contain CSS/JS and it it the responsibility of the theme/plugin that registers this field to properly sanitize the value.
+	 *
+	 * @param string $value The value to sanitize.
+	 *
+	 * @return string
+	 */
+	public function sanitizeCallback( $value ) {
+
+		return $value;
+
+	}
+
+	/**
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
