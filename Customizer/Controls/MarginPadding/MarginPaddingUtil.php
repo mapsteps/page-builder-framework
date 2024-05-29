@@ -2,6 +2,8 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\MarginPadding;
 
+use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
+
 class MarginPaddingUtil {
 
 	/**
@@ -64,6 +66,8 @@ class MarginPaddingUtil {
 			$array_values = $decoded_values;
 		}
 
+		$number_util = new NumberUtil();
+
 		$parsed_values = [];
 
 		foreach ( $array_values as $dimension => $dimension_value ) {
@@ -72,27 +76,22 @@ class MarginPaddingUtil {
 				continue;
 			}
 
-			$value_unit    = preg_replace( '/\d+/', '', $dimension_value );
-			$numeric_value = $value_unit ? str_ireplace( $value_unit, '', $dimension_value ) : $dimension_value;
+			$number_and_unit = $number_util->makeNumberUnitPair( $dimension_value );
 
-			if ( empty( $value_unit ) ) {
-				if ( ! empty( $unit ) ) {
-					$value_unit = $unit;
-				}
-			}
+			$value_number = $number_and_unit['number'];
+			$value_unit   = $number_and_unit['unit'];
+			$value_unit   = empty( $value_unit ) && ! empty( $unit ) ? $unit : $value_unit;
 
 			// We allow empty string.
-			if ( '' === $numeric_value ) {
+			if ( '' === $value_number ) {
 				$parsed_values[ $dimension ] = '';
 				continue;
 			}
 
-			$numeric_value = $numeric_value && is_numeric( $numeric_value ) ? (float) $numeric_value : '';
-
 			// If unit is explicitly set to `false`, then don't use unit.
-			$the_value = '' === $numeric_value ? '' : ( false === $unit ? $numeric_value : $numeric_value . $value_unit );
+			$formatted_value = false === $unit ? $value_number : $value_number . $value_unit;
 
-			$parsed_values[ $dimension ] = $the_value;
+			$parsed_values[ $dimension ] = $formatted_value;
 		}
 
 		return $this->makeDimensionsValue( $dimensions, $parsed_values );

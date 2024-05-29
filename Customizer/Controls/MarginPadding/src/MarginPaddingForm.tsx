@@ -10,10 +10,10 @@ import {
 	makeObjValueWithoutUnit,
 	makeObjValueWithoutUnitFromJson,
 	makeObjValueWithUnit,
-	parseSingleValueAsObject,
 } from "./margin-padding-util";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import { encodeJsonOrDefault } from "../../Generic/src/string-util";
+import { makeNumberUnitPair } from "../../Generic/src/number-util";
 
 export default function MarginPaddingForm(props: {
 	type: string;
@@ -63,7 +63,7 @@ export default function MarginPaddingForm(props: {
 		const values = { ...inputValues };
 		if (!values.hasOwnProperty(dimension)) return;
 
-		const singleValue = parseSingleValueAsObject(e.target.value);
+		const singleValue = makeNumberUnitPair(e.target.value);
 		values[dimension as MarginPaddingDimension] = singleValue.number;
 
 		setInputValues(values);

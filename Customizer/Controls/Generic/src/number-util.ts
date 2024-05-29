@@ -79,7 +79,7 @@ export function getUnit(value: any): string {
 /**
  * Separate number and unit.
  *
- * @param {string | number|null} value The value to separate.
+ * @param {string | number | null} value The value to separate.
  *
  * @return {NumberUnitPair} The returned value will be a pair of `unit` and `number`.
  */

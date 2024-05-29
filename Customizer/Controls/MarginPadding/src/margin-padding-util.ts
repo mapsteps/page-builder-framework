@@ -1,43 +1,6 @@
+import { makeNumberUnitPair } from "../../Generic/src/number-util";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
-import {
-	MarginPaddingDimension,
-	MarginPaddingSingleValueObject,
-	MarginPaddingValue,
-} from "./interface";
-
-export function parseSingleValueAsObject(
-	value: string | number | null,
-): MarginPaddingSingleValueObject {
-	if (value === "" || value === null) {
-		return {
-			unit: "",
-			number: "",
-		};
-	}
-
-	let unit = "";
-	let number: number = 0;
-
-	value = "string" !== typeof value ? value.toString() : value;
-	value = value.trim();
-	const negativeSign = -1 < value.indexOf("-") ? "-" : "";
-	value = value.replace(negativeSign, "");
-
-	let numeric = "";
-
-	if ("" !== value) {
-		unit = value.replace(/\d+/g, "");
-		numeric = value.replace(unit, "");
-		numeric = negativeSign + numeric.trim();
-
-		number = parseFloat(numeric);
-	}
-
-	return {
-		unit: unit,
-		number: number,
-	};
-}
+import { MarginPaddingDimension, MarginPaddingValue } from "./interface";
 
 /**
  * Create a `MarginPaddingValue` object without unit.
@@ -71,7 +34,7 @@ export function makeObjValueWithoutUnit(
 		const positionValue = value[position];
 
 		if ("" !== positionValue) {
-			const singleValue = parseSingleValueAsObject(positionValue);
+			const singleValue = makeNumberUnitPair(positionValue);
 			newValue[position] = singleValue.number;
 		}
 	}
@@ -112,7 +75,7 @@ export function makeObjValueWithUnit(
 		const positionValue = value[position as MarginPaddingDimension];
 
 		if ("" !== positionValue) {
-			const singleValue = parseSingleValueAsObject(positionValue);
+			const singleValue = makeNumberUnitPair(positionValue);
 			newValue[position] = singleValue.number + unit;
 		}
 	}

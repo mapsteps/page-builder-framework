@@ -3,6 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\MarginPadding;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
+use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
 
@@ -181,15 +182,13 @@ class MarginPaddingControl extends BaseControl {
 	 */
 	private function remove_units( $values ) {
 
+		$number_util = new NumberUtil();
+
 		foreach ( $values as $position => $value ) {
 			if ( '' !== $value ) {
-				// Force $value to not using unit.
-				if ( ! is_numeric( $value ) ) {
-					$unit  = preg_replace( '/\d+/', '', $value );
-					$value = $unit ? str_ireplace( $unit, '', $value ) : $value;
-				}
+				$number_unit_value = $number_util->makeNumberUnitPair( $value );
 
-				$value = is_numeric( $value ) ? (float) $value : '';
+				$value = $number_unit_value['number'];
 			}
 
 			$values[ $position ] = $value;
