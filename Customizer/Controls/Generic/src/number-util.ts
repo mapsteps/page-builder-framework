@@ -57,7 +57,18 @@ export function limitNumber(
 	return parsedValue;
 }
 
+/**
+ * Get unit from a value.
+ *
+ * @param {any} value The value to get unit from.
+ *
+ * @return {string} The unit or empty string if there's no unit.
+ */
 export function getUnit(value: any): string {
+	if (!value) {
+		return "";
+	}
+
 	const strValue = String(value);
 	const unitPattern = /[a-z%]+$/i;
 	const unitMatch = strValue.match(unitPattern);
@@ -68,13 +79,15 @@ export function getUnit(value: any): string {
 /**
  * Separate number and unit.
  *
- * @param {string | number} value The value to separate.
+ * @param {string | number|null} value The value to separate.
  *
  * @return {NumberUnitPair} The returned value will be a pair of `unit` and `number`.
  */
-export function makeNumberUnitPair(value: string | number): NumberUnitPair {
+export function makeNumberUnitPair(
+	value: string | number | null,
+): NumberUnitPair {
 	// We support empty string.
-	if (value === "") {
+	if (value === "" || value === null) {
 		return {
 			number: "",
 			unit: "",
@@ -91,9 +104,13 @@ export function makeNumberUnitPair(value: string | number): NumberUnitPair {
 		};
 	}
 
-	const strValue = String(value);
+	let strValue = String(value).trim();
+	const negativeSign = -1 < strValue.indexOf("-") ? "-" : "";
+	strValue = strValue.replace(negativeSign, "");
+
 	const unit = getUnit(strValue);
 	let numeric = unit ? strValue.replace(unit, "") : strValue;
+	numeric = numeric.trim();
 
 	if ("" === numeric) {
 		return {
@@ -102,6 +119,7 @@ export function makeNumberUnitPair(value: string | number): NumberUnitPair {
 		};
 	}
 
+	numeric = negativeSign + numeric;
 	const number = parseFloat(numeric);
 
 	if (isNaN(number)) {
