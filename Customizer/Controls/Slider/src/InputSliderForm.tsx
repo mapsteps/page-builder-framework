@@ -1,13 +1,15 @@
 import React, { ChangeEvent, MouseEvent, useRef } from "react";
 import { WpbfCustomizeSetting } from "../../Base/src/interface";
 import {
-	limitValue,
-	makeNumberUnitPair,
 	makeStringValue,
 	makeValueForInput,
 	makeValueForSlider,
 } from "./slider-util";
 import { WpbfCustomizeInputSliderControl } from "./interface";
+import {
+	limitNumber,
+	makeLimitedNumberUnitPair,
+} from "../../Generic/src/number-util";
 
 export default function InputSliderForm(props: {
 	control: WpbfCustomizeInputSliderControl;
@@ -48,19 +50,19 @@ export default function InputSliderForm(props: {
 	function handleSliderChange(e: ChangeEvent<HTMLInputElement>) {
 		trigger = "slider";
 
-		let value = parseFloat(e.target.value);
-		value = limitValue(value, props.min, props.max);
+		const value = parseFloat(e.target.value);
+		const limitedValue = limitNumber(value, props.min, props.max);
 
 		if (!inputRef || !inputRef.current) return;
 
 		// We're going to use the unit.
-		const numberValuePair = makeNumberUnitPair(
+		const numberValuePair = makeLimitedNumberUnitPair(
 			inputRef.current.value,
 			props.min,
 			props.max,
 		);
 
-		const valueForInput = value + numberValuePair.unit;
+		const valueForInput = String(limitedValue) + numberValuePair.unit;
 		props.customizerSetting?.set(valueForInput);
 	}
 

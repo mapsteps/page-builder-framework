@@ -1,75 +1,6 @@
-import { DevicesValue, NumberUnitPair } from "../../Responsive/src/interface";
+import { DevicesValue } from "../../Responsive/src/interface";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
-
-/**
- * Limit a value based on a min and max value.
- *
- * @export
- *
- * @param {number} value - The value to limit.
- * @param {number} min - The minimum value.
- * @param {number} max - The maximum value.
- *
- * @return {number} The limited value.
- */
-export function limitValue(value: number, min: number, max: number): number {
-	if (value < min) value = min;
-	if (value > max) value = max;
-
-	return value;
-}
-
-/**
- * Make a `NumberUnitPair` object from a string or number.
- *
- * @export
- *
- * @param {(string | number)} val - The value to convert.
- * @param {number} min - The minimum value.
- * @param {number} max - The maximum value.
- *
- * @return {NumberUnitPair} The `NumberUnitPair` object.
- */
-export function makeNumberUnitPair(
-	val: string | number,
-	min: number,
-	max: number,
-): NumberUnitPair {
-	const value = "string" === typeof val ? val : val.toString();
-
-	if (!value) {
-		return {
-			number: "",
-			unit: "",
-		};
-	}
-
-	const valueUnit = value.replace(/\d+/g, "");
-	const valueNumeric = valueUnit ? value.replace(valueUnit, "") : value;
-
-	if (!valueNumeric) {
-		return {
-			number: "",
-			unit: valueUnit,
-		};
-	}
-
-	const floatValue = parseFloat(valueNumeric.trim());
-
-	if (isNaN(floatValue)) {
-		return {
-			number: "",
-			unit: valueUnit,
-		};
-	}
-
-	const valueNumber = limitValue(floatValue, min, max);
-
-	return {
-		number: valueNumber,
-		unit: valueUnit,
-	};
-}
+import { makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
 
 /**
  * Make a value for an input field.
@@ -87,7 +18,7 @@ export function makeValueForInput(
 	min: number,
 	max: number,
 ): string | number {
-	const valueObject = makeNumberUnitPair(value, min, max);
+	const valueObject = makeLimitedNumberUnitPair(value, min, max);
 
 	if ("" === valueObject.number) return "";
 	if (!valueObject.unit) return valueObject.number;
@@ -110,9 +41,9 @@ export function makeValueForSlider(
 	min: number,
 	max: number,
 ): number {
-	const valueObject = makeNumberUnitPair(value, min, max);
+	const valueObject = makeLimitedNumberUnitPair(value, min, max);
 
-	return "string" === typeof valueObject.number ? min : valueObject.number;
+	return "" === valueObject.number ? min : valueObject.number;
 }
 
 /**

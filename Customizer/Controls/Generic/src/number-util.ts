@@ -22,13 +22,13 @@ export function normalizeMaxValue(
  * @param {number | null | undefined} min - The minimum value. Null or undefined if not set.
  * @param {number | null | undefined} max - The maximum value. Null or undefined if not set.
  *
- * @return {number | string} The returned value can be either `number` or empty string.
+ * @return {number | ""} The returned value can be either `number` or empty string.
  */
 export function limitNumber(
 	value: string | number,
 	min?: number | null,
 	max?: number | null,
-): number | string {
+): number | "" {
 	if (value === "") {
 		return "";
 	}
@@ -40,32 +40,29 @@ export function limitNumber(
 		return "";
 	}
 
-	let parsedValue: number =
-		typeof value === "string" ? parseFloat(value) : value;
-
-	if ("number" === typeof min && "number" === typeof max) {
-		if (parsedValue < min) {
-			parsedValue = min;
-		}
-
-		if (parsedValue > max) {
-			parsedValue = max;
-		}
-
-		return parsedValue;
-	}
+	let parsedValue = typeof value === "string" ? parseFloat(value) : value;
 
 	if ("number" === typeof min) {
 		if (parsedValue < min) {
 			parsedValue = min;
 		}
-	} else if ("number" === typeof max) {
+	}
+
+	if ("number" === typeof max) {
 		if (parsedValue > max) {
 			parsedValue = max;
 		}
 	}
 
 	return parsedValue;
+}
+
+export function getUnit(value: any): string {
+	const strValue = String(value);
+	const unitPattern = /[a-z%]+$/i;
+	const unitMatch = strValue.match(unitPattern);
+
+	return unitMatch ? unitMatch[0] : "";
 }
 
 /**
@@ -75,7 +72,7 @@ export function limitNumber(
  *
  * @return {NumberUnitPair} The returned value will be a pair of `unit` and `number`.
  */
-export function separateNumberAndUnit(value: string | number): NumberUnitPair {
+export function makeNumberUnitPair(value: string | number): NumberUnitPair {
 	// We support empty string.
 	if (value === "") {
 		return {
@@ -94,26 +91,59 @@ export function separateNumberAndUnit(value: string | number): NumberUnitPair {
 		};
 	}
 
-	const strValue: string = typeof value === "string" ? value : String(value);
-
-	const unit: string = strValue.replace(/\d+/g, "");
-	const parsedUnit: string = unit ? unit : "";
-	let numeric: string | number = parsedUnit
-		? strValue.replace(parsedUnit, "")
-		: strValue;
+	const strValue = String(value);
+	const unit = getUnit(strValue);
+	let numeric = unit ? strValue.replace(unit, "") : strValue;
 
 	if ("" === numeric) {
 		return {
 			number: "",
-			unit: "",
+			unit: unit,
 		};
 	}
 
 	const number = parseFloat(numeric);
 
+	if (isNaN(number)) {
+		return {
+			number: "",
+			unit: unit,
+		};
+	}
+
 	return {
 		number: number,
-		unit: parsedUnit,
+		unit: unit,
+	};
+}
+
+/**
+ * Make a `NumberUnitPair` object from a string or number.
+ *
+ * @export
+ *
+ * @param {(string | number)} val - The value to convert.
+ * @param {number} min - The minimum value.
+ * @param {number} max - The maximum value.
+ *
+ * @return {NumberUnitPair} The `NumberUnitPair` object.
+ */
+export function makeLimitedNumberUnitPair(
+	val: string | number,
+	min: number,
+	max: number,
+): NumberUnitPair {
+	const valueObject = makeNumberUnitPair(val);
+
+	if ("" === valueObject.number) {
+		return valueObject;
+	}
+
+	const number = limitNumber(valueObject.number, min, max);
+
+	return {
+		number: number,
+		unit: valueObject.unit,
 	};
 }
 
@@ -142,16 +172,16 @@ export function limitNumberWithUnit(
 		return "";
 	}
 
-	const numberAndUnit = separateNumberAndUnit(value);
+	const numberAndUnit = makeNumberUnitPair(value);
 
-	const number: string | number = numberAndUnit.number;
+	const number = numberAndUnit.number;
 	const unit: string = numberAndUnit.unit;
 
 	if (number === "") {
 		return "";
 	}
 
-	const limitedNumber: string | number = limitNumber(number, min, max);
+	const limitedNumber = limitNumber(number, min, max);
 
 	if (!unit) {
 		return limitedNumber;

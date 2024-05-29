@@ -4,12 +4,12 @@ import { WpbfCustomizeResponsiveInputSliderControl } from "./interface";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import {
 	makeDevicesValue,
-	makeNumberUnitPair,
 	makeValueForInput,
 	makeValueForSlider,
 } from "./slider-util";
 import { DevicesValue } from "../../Responsive/src/interface";
 import { encodeJsonOrDefault } from "../../Generic/src/string-util";
+import { makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
 
 export default function ResponsiveInputSliderForm(props: {
 	control: WpbfCustomizeResponsiveInputSliderControl;
@@ -89,7 +89,7 @@ export default function ResponsiveInputSliderForm(props: {
 			return;
 		}
 
-		const numberUnitPair = makeNumberUnitPair(
+		const numberUnitPair = makeLimitedNumberUnitPair(
 			existingValue,
 			props.min,
 			props.max,

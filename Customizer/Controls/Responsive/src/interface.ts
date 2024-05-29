@@ -1,6 +1,6 @@
 export type NumberUnitPair = {
 	// The `number` prop can be an empty string.
-	number: number | string;
+	number: number | "";
 	unit: string;
 };
 

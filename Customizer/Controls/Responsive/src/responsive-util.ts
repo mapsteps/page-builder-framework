@@ -1,6 +1,6 @@
 import {
 	limitNumber,
-	separateNumberAndUnit,
+	makeNumberUnitPair,
 } from "../../Generic/src/number-util";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
 import { DevicesValue } from "./interface";
@@ -82,7 +82,7 @@ export function parseSingleValue(
 	min?: number | null,
 	max?: number | null,
 ): string | number {
-	const valueObject = separateNumberAndUnit(value);
+	const valueObject = makeNumberUnitPair(value);
 	let numeric = valueObject.number;
 
 	if ("" === numeric) return "";

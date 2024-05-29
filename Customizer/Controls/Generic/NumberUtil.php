@@ -47,23 +47,13 @@ class NumberUtil {
 
 		$value = (float) $value;
 
-		if ( ! is_null( $min ) && ! is_null( $max ) ) {
-			if ( $value < $min ) {
-				$value = $min;
-			}
-
-			if ( $value > $max ) {
-				$value = $max;
-			}
-
-			return $value;
-		}
-
 		if ( ! is_null( $min ) ) {
 			if ( $value < $min ) {
 				$value = $min;
 			}
-		} elseif ( ! is_null( $max ) ) {
+		}
+
+		if ( ! is_null( $max ) ) {
 			if ( $value > $max ) {
 				$value = $max;
 			}
@@ -92,7 +82,7 @@ class NumberUtil {
 			return '';
 		}
 
-		$number_and_unit = $this->separateNumberAndUnit( $value );
+		$number_and_unit = $this->makeNumberUnitPair( $value );
 
 		$number = $number_and_unit['number'];
 		$unit   = $number_and_unit['unit'];
@@ -112,13 +102,33 @@ class NumberUtil {
 	}
 
 	/**
+	 * Get unit from a value.
+	 *
+	 * @param mixed $value The value to get unit from.
+	 *
+	 * @return string The unit or empty string if there's no unit.
+	 */
+	public function getUnit( $value ) {
+
+		$str_value    = (string) $value;
+		$unit_pattern = '/[a-z%]+$/i';
+
+		if ( preg_match( $unit_pattern, $str_value, $matches ) ) {
+			return $matches[0];
+		}
+
+		return '';
+
+	}
+
+	/**
 	 * Separate number and unit.
 	 *
 	 * @param mixed $value The value to separate.
 	 *
 	 * @return array The returned value will be a pair of `unit` and `number`.
 	 */
-	public function separateNumberAndUnit( $value ) {
+	public function makeNumberUnitPair( $value ) {
 
 		// We support empty string.
 		if ( '' === $value ) {
@@ -137,10 +147,17 @@ class NumberUtil {
 
 		$str_value = ! is_string( $value ) ? (string) $value : $value;
 
-		$unit   = preg_replace( '/\d+/', '', $str_value );
-		$unit   = $unit ?: '';
-		$number = $unit ? str_ireplace( $unit, '', $str_value ) : $str_value;
-		$number = $number && is_numeric( $number ) ? (float) $number : '';
+		$unit    = $this->getUnit( $str_value );
+		$numeric = $unit ? str_ireplace( $unit, '', $str_value ) : $str_value;
+
+		if ( '' === $numeric ) {
+			return [
+				'number' => '',
+				'unit'   => $unit,
+			];
+		}
+
+		$number = is_numeric( $numeric ) ? (float) $numeric : '';
 
 		return array(
 			'number' => $number,
@@ -161,7 +178,7 @@ class NumberUtil {
 	 */
 	public function makeSureValueWithOrWithoutUnit( $value ) {
 
-		$number_and_unit = $this->separateNumberAndUnit( $value );
+		$number_and_unit = $this->makeNumberUnitPair( $value );
 
 		$number = $number_and_unit['number'];
 		$unit   = $number_and_unit['unit'];
@@ -183,7 +200,7 @@ class NumberUtil {
 	 */
 	public function makeSureValueWithoutUnit( $value ) {
 
-		$number_and_unit = $this->separateNumberAndUnit( $value );
+		$number_and_unit = $this->makeNumberUnitPair( $value );
 
 		return $number_and_unit['number'];
 
@@ -198,7 +215,7 @@ class NumberUtil {
 	 */
 	public function makeSureValueIsNumber( $value ) {
 
-		$number_and_unit = $this->separateNumberAndUnit( $value );
+		$number_and_unit = $this->makeNumberUnitPair( $value );
 
 		$number = $number_and_unit['number'];
 
