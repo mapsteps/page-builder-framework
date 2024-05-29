@@ -54,9 +54,11 @@ export default function ResponsiveInputSliderForm(props: {
 	};
 
 	function saveToCustomizerSetting(val: DevicesValue) {
-		props.customizerSetting?.set(
-			props.saveAsJson ? encodeJsonOrDefault<DevicesValue>(val) : val,
-		);
+		const valueToSave = props.saveAsJson
+			? encodeJsonOrDefault<DevicesValue>(val)
+			: val;
+
+		props.customizerSetting?.set(valueToSave);
 	}
 
 	function handleInputChange(e: ChangeEvent<HTMLInputElement>, device: string) {
@@ -89,6 +91,7 @@ export default function ResponsiveInputSliderForm(props: {
 			return;
 		}
 
+		// Since range field doesn't have unit, we're going to get the unit from the input field.
 		const numberUnitPair = makeLimitedNumberUnitPair(
 			existingValue,
 			props.min,

@@ -15,6 +15,17 @@ export function normalizeMaxValue(
 	return Math.max(min, max);
 }
 
+export function improperNumeric(value: any): boolean {
+	if (
+		(typeof value !== "string" && typeof value !== "number") ||
+		(typeof value === "string" && isNaN(parseFloat(value)))
+	) {
+		return true;
+	}
+
+	return false;
+}
+
 /**
  * Limit number based on the min and max values.
  *
@@ -33,10 +44,7 @@ export function limitNumber(
 		return "";
 	}
 
-	if (
-		(typeof value !== "string" && typeof value !== "number") ||
-		isNaN(Number(value))
-	) {
+	if (improperNumeric(value)) {
 		return "";
 	}
 
@@ -94,10 +102,7 @@ export function makeNumberUnitPair(
 		};
 	}
 
-	if (
-		(typeof value !== "string" && typeof value !== "number") ||
-		isNaN(Number(value))
-	) {
+	if (improperNumeric(value)) {
 		return {
 			number: "",
 			unit: "",
@@ -119,6 +124,7 @@ export function makeNumberUnitPair(
 		};
 	}
 
+	const hasTrailingDot = numeric.endsWith(".");
 	numeric = negativeSign + numeric;
 	const number = parseFloat(numeric);
 
@@ -132,6 +138,7 @@ export function makeNumberUnitPair(
 	return {
 		number: number,
 		unit: unit,
+		hasTrailingDotBeforeUnit: unit && hasTrailingDot ? true : false,
 	};
 }
 
@@ -162,11 +169,15 @@ export function makeLimitedNumberUnitPair(
 	return {
 		number: number,
 		unit: valueObject.unit,
+		hasTrailingDotBeforeUnit: valueObject.hasTrailingDotBeforeUnit,
 	};
 }
 
 /**
  * Limit number with unit based on the min and max values.
+ *
+ * Currently only used in `initWpbfControl` in generic-control.ts and responsive-generic-control.ts files.
+ * Meaning, this function doesn't need to take account of the `hasTrailingDotBeforeUnit` property.
  *
  * @param {string | number} value The value to parse.
  * @param {number | null | undefined} min The minimum value. Null or undefined if not set.
@@ -183,17 +194,14 @@ export function limitNumberWithUnit(
 		return "";
 	}
 
-	if (
-		(typeof value !== "string" && typeof value !== "number") ||
-		isNaN(Number(value))
-	) {
+	if (improperNumeric(value)) {
 		return "";
 	}
 
 	const numberAndUnit = makeNumberUnitPair(value);
 
 	const number = numberAndUnit.number;
-	const unit: string = numberAndUnit.unit;
+	const unit = numberAndUnit.unit;
 
 	if (number === "") {
 		return "";

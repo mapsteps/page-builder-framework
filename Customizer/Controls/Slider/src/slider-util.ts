@@ -18,11 +18,33 @@ export function makeValueForInput(
 	min: number,
 	max: number,
 ): string | number {
+	let strValue = String(value).trim();
+
+	const isTypingNegative = strValue === "-";
+	if (isTypingNegative) return "-";
+
+	const isTypingDecimal = strValue.endsWith(".");
+	strValue = isTypingDecimal ? strValue.replace(".", "") : strValue;
+
 	const valueObject = makeLimitedNumberUnitPair(value, min, max);
 
-	if ("" === valueObject.number) return "";
-	if (!valueObject.unit) return valueObject.number;
-	return valueObject.number + valueObject.unit;
+	if ("" === valueObject.number) {
+		return isTypingDecimal ? "0." : "";
+	}
+
+	let numeric = String(valueObject.number);
+
+	/**
+	 * Having `isTypingDecimal` means, the latest char is a decimal point.
+	 * No unit is allowed before the decimal point.
+	 */
+	if (isTypingDecimal) return numeric + ".";
+
+	return valueObject.unit
+		? numeric +
+				(valueObject.hasTrailingDotBeforeUnit ? "." : "") +
+				valueObject.unit
+		: numeric;
 }
 
 /**

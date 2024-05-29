@@ -37,6 +37,7 @@ wp.customize.controlConstructor["wpbf-responsive-generic"] =
 						const valueRecord =
 							"string" === typeof existingValue
 								? makeDevicesValue(
+										params.subtype,
 										params.devices,
 										existingValue,
 										params.min,

@@ -55,7 +55,7 @@ export default function InputSliderForm(props: {
 
 		if (!inputRef || !inputRef.current) return;
 
-		// We're going to use the unit.
+		// Since range field doesn't have unit, we're going to get the unit from the input field.
 		const numberValuePair = makeLimitedNumberUnitPair(
 			inputRef.current.value,
 			props.min,

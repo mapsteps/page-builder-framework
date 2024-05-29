@@ -1,7 +1,4 @@
-import {
-	limitNumber,
-	makeNumberUnitPair,
-} from "../../Generic/src/number-util";
+import { limitNumber, makeNumberUnitPair } from "../../Generic/src/number-util";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
 import { DevicesValue } from "./interface";
 
@@ -35,6 +32,7 @@ function makeEmptyDevicesValue(devices: string[]): DevicesValue {
  * @return {DevicesValue}
  */
 export function makeDevicesValue(
+	fieldType: string,
 	devices: string[],
 	value: string | DevicesValue,
 	min?: number | null,
@@ -57,7 +55,11 @@ export function makeDevicesValue(
 			return;
 		}
 
-		const val = parseSingleValue(valueObject[device], min, max);
+		let val = valueObject[device];
+
+		if (fieldType === "number") {
+			val = parseNumberValue(valueObject[device], min, max);
+		}
 
 		devicesValue[device] =
 			"string" !== typeof val && "number" !== typeof val ? "" : val;
@@ -71,27 +73,40 @@ export function makeDevicesValue(
  *
  * @export
  *
- * @param {(string | number)} value - The value to convert.
+ * @param {string | number} value - The value to convert.
  * @param {number|undefined|null} min - The minimum value.
  * @param {number|undefined|null} max - The maximum value.
  *
  * @return {string|number} The value for the input field.
  */
-export function parseSingleValue(
+export function parseNumberValue(
 	value: string | number,
 	min?: number | null,
 	max?: number | null,
 ): string | number {
-	const valueObject = makeNumberUnitPair(value);
-	let numeric = valueObject.number;
+	let strValue = String(value).trim();
 
-	if ("" === numeric) return "";
+	if (strValue === "") {
+		return "";
+	}
+
+	const startTypingNegative = strValue === "-";
+	if (startTypingNegative) return "-";
+
+	const startTypingDecimal = strValue.endsWith(".");
+	strValue = startTypingDecimal ? strValue.replace(".", "") : strValue;
+
+	const valueObject = makeNumberUnitPair(value);
+
+	if ("" === valueObject.number) {
+		return startTypingDecimal ? "0." : "";
+	}
+
+	let numeric: number | "" = valueObject.number;
 
 	if ("number" === typeof min || "number" === typeof max) {
 		numeric = limitNumber(numeric, min, max);
-		if ("" === numeric) return "";
 	}
 
-	if (!valueObject.unit) return Number(numeric);
-	return String(numeric) + valueObject.unit;
+	return startTypingDecimal ? numeric + "." : numeric;
 }

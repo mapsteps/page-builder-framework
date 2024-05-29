@@ -3,6 +3,42 @@ import { parseJsonOrUndefined } from "../../Generic/src/string-util";
 import { MarginPaddingDimension, MarginPaddingValue } from "./interface";
 
 /**
+ * Make a value for an input number field in margin/padding control.
+ *
+ * It shouldn't contain unit because it's a number field.
+ *
+ * @export
+ *
+ * @param {string | number} value - The value to convert.
+ * @return {string|number} The value for the input field.
+ */
+export function makeMarginPaddingFieldValue(
+	value: string | number,
+): string | number {
+	let strValue = String(value).trim();
+
+	if (strValue === "") {
+		return "";
+	}
+
+	const startTypingNegative = strValue === "-";
+	if (startTypingNegative) return "-";
+
+	const startTypingDecimal = strValue.endsWith(".");
+	strValue = startTypingDecimal ? strValue.replace(".", "") : strValue;
+
+	const valueObject = makeNumberUnitPair(value);
+
+	if ("" === valueObject.number) {
+		return startTypingDecimal ? "0." : "";
+	}
+
+	let numeric = String(valueObject.number);
+
+	return startTypingDecimal ? numeric + "." : numeric;
+}
+
+/**
  * Create a `MarginPaddingValue` object without unit.
  *
  * Used for the input field's values in the customizer control.
@@ -34,8 +70,7 @@ export function makeObjValueWithoutUnit(
 		const positionValue = value[position];
 
 		if ("" !== positionValue) {
-			const singleValue = makeNumberUnitPair(positionValue);
-			newValue[position] = singleValue.number;
+			newValue[position] = makeMarginPaddingFieldValue(positionValue);
 		}
 	}
 
@@ -75,8 +110,8 @@ export function makeObjValueWithUnit(
 		const positionValue = value[position as MarginPaddingDimension];
 
 		if ("" !== positionValue) {
-			const singleValue = makeNumberUnitPair(positionValue);
-			newValue[position] = singleValue.number + unit;
+			const singleValue = makeMarginPaddingFieldValue(positionValue);
+			newValue[position] = singleValue + unit;
 		}
 	}
 
