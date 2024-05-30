@@ -47,7 +47,7 @@ class DimensionControl extends BaseControl {
 		);
 
 		wp_localize_script(
-			'wpbf-control-dimension',
+			'wpbf-dimension-control',
 			'wpbfDimensionControlL10n',
 			[
 				'invalid-value' => esc_html__( 'Invalid Value', 'page-builder-framework' ),
