@@ -192,6 +192,7 @@ function wpbf_clear_font_cache() {
 		// Delete fonts directory.
 		$file_system->rmdir( $fonts_dir, true );
 		delete_option( 'wpbf_downloaded_google_fonts' );
+		delete_option( 'wpbf_downloaded_google_fonts_stylesheet' );
 	} else {
 		wp_send_json_error( 'No local fonts found.', 'page-builder-framework' );
 	}
