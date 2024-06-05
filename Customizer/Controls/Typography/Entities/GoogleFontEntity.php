@@ -26,7 +26,7 @@ final class GoogleFontEntity {
 	public $variants;
 
 	/**
-	 * Create a new instance of `GoogleFontItemEntity` from an array.
+	 * Create a new instance of `GoogleFontEntity` from an array.
 	 *
 	 * @param array $arr The array to create the instance from.
 	 * @return self

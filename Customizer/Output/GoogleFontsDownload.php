@@ -2,6 +2,8 @@
 
 namespace Mapsteps\Wpbf\Customizer\Output;
 
+use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsUtil;
+
 class GoogleFontsDownload {
 
 	/**
@@ -53,6 +55,8 @@ class GoogleFontsDownload {
 
 		$fonts_to_download = $this->getFontUrlsFromCss( $css_content );
 
+		$css_content = $this->localizeCssFontFilesPath( $css_content );
+
 		if ( empty( $fonts_to_download ) || ! is_array( $fonts_to_download ) ) {
 			return;
 		}
@@ -65,7 +69,7 @@ class GoogleFontsDownload {
 		$existing_downloaded_fonts = ! empty( $existing_downloaded_fonts ) && is_array( $existing_downloaded_fonts ) ? $existing_downloaded_fonts : [];
 
 		foreach ( $fonts_to_download as $font_family => $variant_and_url_array ) {
-			$font_family_slug = $this->slugifyFontFamily( $font_family );
+			$font_family_slug = ( new FontsUtil() )->slugifyFontFamily( $font_family );
 			$font_family_dir  = WP_CONTENT_DIR . '/fonts/' . $font_family_slug;
 
 			// Check if the font-family directory exists.
@@ -92,12 +96,13 @@ class GoogleFontsDownload {
 				if ( ! in_array( $font_variant, $existing_downloaded_fonts[ $font_family ], true ) ) {
 					$existing_downloaded_fonts[ $font_family ][] = $font_variant;
 				}
+
+				$font_face_declarations = $this->getFontFaceDeclarations( $css_content, $font_family, $font_variant );
+
+				update_option( 'wpbf_downloaded_google_fonts_css_' . $font_family_slug . '_' . $font_variant, $font_face_declarations );
 			}
 		}
 
-		$css_content = $this->localizeCssFontFilesPath( $css_content );
-
-		update_option( 'wpbf_downloaded_google_fonts_stylesheet', $css_content );
 		update_option( 'wpbf_downloaded_google_fonts', $existing_downloaded_fonts );
 
 	}
@@ -339,26 +344,6 @@ class GoogleFontsDownload {
 	}
 
 	/**
-	 * Slugify the font-family name to be used as a directory name.
-	 *
-	 * @param string $font_family The font-family name.
-	 *
-	 * @return string
-	 */
-	private function slugifyFontFamily( $font_family = '' ) {
-
-		if ( empty( $font_family ) ) {
-			return '';
-		}
-
-		$font_family = trim( str_replace( array( "'", ';' ), '', $font_family ) );
-		$font_family = sanitize_key( strtolower( str_replace( ' ', '-', $font_family ) ) );
-
-		return $font_family;
-
-	}
-
-	/**
 	 * Download the font files.
 	 *
 	 * @param string $dir Directory to download the font file.
@@ -421,7 +406,7 @@ class GoogleFontsDownload {
 					return $content;
 				}
 
-				$font_family_slug = $this->slugifyFontFamily( $font_family );
+				$font_family_slug = ( new FontsUtil() )->slugifyFontFamily( $font_family );
 
 				// Get the font-file url inside of current @font-face declaration by detecting src: url(...) inside of it.
 				preg_match_all( '/url\(.*?\)/i', $content, $font_file_url_matches );
@@ -456,6 +441,44 @@ class GoogleFontsDownload {
 		}
 
 		return $wp_filesystem;
+
+	}
+
+	/**
+	 * Get font-face declarations for a specific font-family and font-variant.
+	 *
+	 * @param string $css_content The localized CSS content.
+	 * @param string $font_family The font-family name.
+	 * @param string $font_variant The font-variant name.
+	 *
+	 * @return string
+	 */
+	private function getFontFaceDeclarations( $css_content, $font_family, $font_variant ) {
+
+		$font_face_declarations = '';
+
+		$font_weight = $font_variant;
+
+		if ( 'italic' === $font_variant ) {
+			$font_weight = '400';
+		} elseif ( 'regular' === $font_variant ) {
+			$font_weight = '400';
+		}
+
+		$pattern = "/@font-face\s*{[^}]*font-family:\s*['\"]?" . $font_family . "['\"]?[^}]*font-weight:\s*" . $font_weight . '[^}]*}/is';
+
+		// Find all matches from the CSS content.
+		preg_match_all( $pattern, $css_content, $matches );
+
+		if ( empty( $matches[0] ) ) {
+			return $font_face_declarations;
+		}
+
+		foreach ( $matches[0] as $font_face_declaration ) {
+			$font_face_declarations .= $font_face_declaration . "\n";
+		}
+
+		return $font_face_declarations;
 
 	}
 

@@ -122,4 +122,24 @@ final class FontsUtil {
 
 	}
 
+	/**
+	 * Slugify the font-family name to be used as a directory name and part of option name.
+	 *
+	 * @param string $font_family The font-family name.
+	 *
+	 * @return string
+	 */
+	public function slugifyFontFamily( $font_family = '' ) {
+
+		if ( empty( $font_family ) ) {
+			return '';
+		}
+
+		$font_family = trim( str_replace( array( "'", ';' ), '', $font_family ) );
+		$font_family = sanitize_key( strtolower( str_replace( ' ', '-', $font_family ) ) );
+
+		return $font_family;
+
+	}
+
 }

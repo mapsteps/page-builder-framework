@@ -192,7 +192,23 @@ function wpbf_clear_font_cache() {
 		// Delete fonts directory.
 		$file_system->rmdir( $fonts_dir, true );
 		delete_option( 'wpbf_downloaded_google_fonts' );
+
+		// This option is not being used anymore.
 		delete_option( 'wpbf_downloaded_google_fonts_stylesheet' );
+
+		/**
+		 * Global WordPress database helper object.
+		 *
+		 * @var wpdb $wpdb
+		 */
+		global $wpdb;
+
+		$wpdb->query(
+			$wpdb->prepare(
+				"DELETE FROM $wpdb->options WHERE option_name LIKE %s",
+				'wpbf_downloaded_google_fonts_css_%'
+			)
+		);
 	} else {
 		wp_send_json_error( 'No local fonts found.', 'page-builder-framework' );
 	}

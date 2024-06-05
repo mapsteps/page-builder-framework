@@ -3,6 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Output;
 
 use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsStore;
+use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsUtil;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
 
@@ -22,22 +23,78 @@ class FontsOutput {
 	 */
 	public function inlineGoogleFontsCss() {
 
-		$google_fonts_to_download = $this->googleFontsToDownload();
+		/**
+		 * An associative array of Google fonts to use in frontend.
+		 *
+		 * The key will be the font-family name and value will be
+		 * an associative array of variants to use and their CSS content.
+		 *
+		 * @var array
+		 */
+		$google_fonts_to_use = $this->googleFontsToUse();
+
+		/**
+		 * An associative array of Google fonts to download.
+		 *
+		 * The key will be the font-family name and value will be variants to download.
+		 *
+		 * @var array
+		 */
+		$google_fonts_to_download = [];
+
+		foreach ( $google_fonts_to_use as $google_font_family => $google_font_variants ) {
+			foreach ( $google_font_variants as $google_font_variant => $css_content ) {
+				if ( empty( $css_content ) ) {
+					$google_fonts_to_download[ $google_font_family ][] = $google_font_variant;
+				}
+			}
+		}
 
 		if ( ! empty( $google_fonts_to_download ) ) {
 			( new GoogleFontsDownload() )->download( $google_fonts_to_download );
+
+			foreach ( $google_fonts_to_use as $google_font_family => $google_font_variants ) {
+				if ( ! isset( $google_fonts_to_download[ $google_font_family ] ) ) {
+					continue;
+				}
+
+				$downloaded_variants = $google_fonts_to_download[ $google_font_family ];
+
+				$google_font_family_slug = ( new FontsUtil() )->slugifyFontFamily( $google_font_family );
+
+				foreach ( $google_font_variants as $google_font_variant => $css_content ) {
+					if ( ! in_array( $google_font_variant, $downloaded_variants, true ) ) {
+						continue;
+					}
+
+					$variant_name = '400' === $google_font_variant ? 'regular' : $google_font_variant;
+
+					$font_face_declarations = get_option( 'wpbf_downloaded_google_fonts_css_' . $google_font_family_slug . '_' . $variant_name, '' );
+
+					$google_fonts_to_use[ $google_font_family ][ $google_font_variant ] = $font_face_declarations;
+				}
+			}
 		}
 
-		$downloaded_google_fonts_css = get_option( 'wpbf_downloaded_google_fonts_stylesheet', '' );
+		$google_fonts_css_to_print = '';
 
-		if ( empty( $downloaded_google_fonts_css ) ) {
+		foreach ( $google_fonts_to_use as $google_font_family => $google_font_variants ) {
+			foreach ( $google_font_variants as $google_font_variant => $css_content ) {
+				if ( empty( $css_content ) ) {
+					continue;
+				}
+
+				$google_fonts_css_to_print .= $css_content;
+			}
+		}
+
+		if ( empty( $google_fonts_css_to_print ) ) {
 			return;
 		}
-
 		?>
 
 		<style class="wpbf-google-fonts">
-			<?php echo wp_kses_post( $downloaded_google_fonts_css ); ?>
+			<?php echo wp_kses_post( $google_fonts_css_to_print ); ?>
 		</style>
 
 		<?php
@@ -47,9 +104,9 @@ class FontsOutput {
 	/**
 	 * Collect Google Fonts used by the theme that are not already downloaded.
 	 *
-	 * @return array Associative array of font-family as the key and array of variants as the value.
+	 * @return array Associative array of font-family as the key and associative array of variants to use and their CSS content.
 	 */
-	private function googleFontsToDownload() {
+	private function googleFontsToUse() {
 
 		$control_ids    = TypographyStore::$added_control_ids;
 		$control_values = [];
@@ -70,7 +127,15 @@ class FontsOutput {
 			$control_values[ $setting_entity->id ] = $value;
 		}
 
-		$google_fonts_to_download = [];
+		/**
+		 * An associative array of Google fonts to use in frontend.
+		 *
+		 * The key will be the font-family name and value will be
+		 * an associative array of variants to use and their CSS content.
+		 *
+		 * @var array
+		 */
+		$google_fonts_to_use = [];
 
 		foreach ( $control_values as $control_id => $value ) {
 			if ( ! $value || ! is_array( $value ) ) {
@@ -87,8 +152,8 @@ class FontsOutput {
 				continue;
 			}
 
-			if ( ! isset( $google_fonts_to_download[ $google_font_family ] ) ) {
-				$google_fonts_to_download[ $google_font_family ] = [];
+			if ( ! isset( $google_fonts_to_use[ $google_font_family ] ) ) {
+				$google_fonts_to_use[ $google_font_family ] = [];
 			}
 
 			$font_variant = isset( $value['variant'] ) ? (string) $value['variant'] : null;
@@ -101,32 +166,23 @@ class FontsOutput {
 				continue;
 			}
 
-			if ( ! in_array( $font_variant, $google_fonts_to_download[ $google_font_family ], true ) ) {
-				$google_fonts_to_download[ $google_font_family ][] = (string) $font_variant;
+			if ( ! in_array( $font_variant, $google_fonts_to_use[ $google_font_family ], true ) ) {
+				$google_fonts_to_use[ $google_font_family ][ $font_variant ] = '';
 			}
 		}
 
-		$downloaded_fonts = get_option( 'wpbf_downloaded_google_fonts', [] );
+		foreach ( $google_fonts_to_use as $google_font_family => $google_font_variants ) {
+			$google_font_family_slug = ( new FontsUtil() )->slugifyFontFamily( $google_font_family );
 
-		if ( empty( $downloaded_fonts ) ) {
-			return $google_fonts_to_download;
-		}
+			foreach ( $google_font_variants as $google_font_variant => $empty_css_content ) {
+				$variant_name = '400' === $google_font_variant ? 'regular' : $google_font_variant;
+				$css_content  = get_option( 'wpbf_downloaded_google_fonts_css_' . $google_font_family_slug . '_' . $variant_name, '' );
 
-		foreach ( $google_fonts_to_download as $google_font_family => $google_font_variants ) {
-			if ( isset( $downloaded_fonts[ $google_font_family ] ) ) {
-				$downloaded_variants = $downloaded_fonts[ $google_font_family ];
-
-				if ( in_array( $font_variant, $downloaded_variants, true ) ) {
-					$google_fonts_to_download[ $google_font_family ] = array_diff( $google_fonts_to_download[ $google_font_family ], [ $font_variant ] );
-				}
-			}
-
-			if ( empty( $google_fonts_to_download[ $google_font_family ] ) ) {
-				unset( $google_fonts_to_download[ $google_font_family ] );
+				$google_fonts_to_use[ $google_font_family ][ $google_font_variant ] = $css_content;
 			}
 		}
 
-		return $google_fonts_to_download;
+		return $google_fonts_to_use;
 
 	}
 
