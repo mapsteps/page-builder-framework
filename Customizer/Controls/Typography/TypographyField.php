@@ -217,8 +217,6 @@ class TypographyField extends BaseField {
 			$this->addFontVariantField();
 		}
 
-		// $this->addDivider();
-
 	}
 
 	/**
@@ -329,7 +327,7 @@ class TypographyField extends BaseField {
 	}
 
 	/**
-	 * Add the divider as the last field.
+	 * Add the divider as the last field (currently not used).
 	 */
 	private function addDivider() {
 

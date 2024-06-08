@@ -5,10 +5,9 @@ import {
 	RequestChangesetUpdateOptions,
 } from "wordpress__customize-browser/Customize";
 import {
+	SelectControlValue,
+	ChildSelectControlChoice,
 	WpbfCustomizeSelectControl,
-	LabelValuePair,
-	SelectGroupedOptions,
-	SelectChoices,
 } from "../../Select/src/interface";
 import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interface";
@@ -236,14 +235,8 @@ export interface WpbfCustomizeControl<SV, CP> {
 	actuallyEmbed?: () => void;
 
 	// Specific to PBF's select control.
-	formattedOptions?: LabelValuePair[] & SelectGroupedOptions[];
-	parseSelectChoices?: (choices: SelectChoices) => void;
-	isOptionDisabled?: (option: any) => boolean;
-	disabledSelectOptions?: LabelValuePair[];
-	doSelectAction?: (action: string, value: any) => void;
-	makeReactSelectValue?: (
-		value: any,
-	) => LabelValuePair | LabelValuePair[] | undefined;
+	$selectbox?: JQuery;
+	doSelectAction?: (action: string, value: SelectControlValue) => void;
 
 	// Specific to PBF's sortable control.
 	getNewValues?: () => any[];

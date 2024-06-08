@@ -62,8 +62,8 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 	 *
 	 * This will be called from the Control#embed() method in the parent class.
 	 */
-	renderContent: function renderContent() {
-		const control = this as WpbfCustomizeColorControl;
+	renderContent: function renderContent(this: WpbfCustomizeColorControl) {
+		const control = this;
 		const params = control.params;
 		const mode = params.mode;
 		const useHueMode = "hue" === mode;

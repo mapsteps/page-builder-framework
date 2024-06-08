@@ -33,7 +33,7 @@ class SelectControl extends BaseControl {
 	 *
 	 * @var int
 	 */
-	public $max_selections = 999;
+	public $max_selections = -1;
 
 	/**
 	 * Placeholder text.
@@ -65,7 +65,35 @@ class SelectControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		$this->choices = ( new SelectChoices() )->format( $this->choices );
+		$this->choices = ( new SelectChoices() )->toSelect2Format( $this->choices );
+		$this->setSelectedOptions();
+
+	}
+
+	/**
+	 * Set the selected options.
+	 */
+	private function setSelectedOptions() {
+
+		$values = $this->value();
+
+		if ( ! is_array( $values ) ) {
+			$values = '' === $values || null === $values || false === $values ? [] : [ $values ];
+		}
+
+		foreach ( $this->choices as $index => $choice ) {
+			if ( isset( $choice['id'] ) && in_array( $choice['id'], $values, true ) ) {
+				$this->choices[ $index ]['selected'] = true;
+			}
+
+			if ( is_array( $choice ) && ! empty( $choice['children'] ) ) {
+				foreach ( $choice['children'] as $child_index => $child_choice ) {
+					if ( isset( $child_choice['id'] ) && in_array( $child_choice['id'], $values, true ) ) {
+						$this->choices[ $index ]['children'][ $child_index ]['selected'] = true;
+					}
+				}
+			}
+		}
 
 	}
 
@@ -77,15 +105,21 @@ class SelectControl extends BaseControl {
 		parent::enqueue();
 
 		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-select-control', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'select2', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select2.min.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-select-control', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.css', array( 'select2' ), WPBF_VERSION );
 
 		// Enqueue the scripts.
+
+		// Deregister the select2 version that comes with WooCommerce.
+		wp_deregister_script( 'select2' );
+		wp_enqueue_script( 'select2', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select2.full.min.js', array( 'jquery' ), WPBF_VERSION, true );
+
 		wp_enqueue_script(
 			'wpbf-select-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.js',
 			array(
 				'customize-controls',
-				'react-dom',
+				'select2',
 			),
 			WPBF_VERSION,
 			false

@@ -51,7 +51,7 @@ final class Customizer {
 		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_tooltips' ) );
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'add_typography_js_vars' ) );
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'js_vars_for_controls' ) );
 
 	}
 
@@ -320,17 +320,23 @@ final class Customizer {
 	}
 
 	/**
-	 * Register control's tooltips.
+	 * Add one time global JS vars for controls.
 	 *
 	 * @return void
 	 */
-	public function add_typography_js_vars() {
+	public function js_vars_for_controls() {
 
-		if ( ! is_array( TypographyStore::$added_control_ids ) ) {
-			return;
+		if ( is_array( TypographyStore::$added_control_ids ) ) {
+			wp_localize_script( 'wpbf-typography-control', 'wpbfTypographyControlIds', TypographyStore::$added_control_ids );
 		}
 
-		wp_localize_script( 'wpbf-typography-control', 'wpbfTypographyControlIds', TypographyStore::$added_control_ids );
+		wp_localize_script(
+			'wpbf-dimension-control',
+			'wpbfDimensionControlL10n',
+			[
+				'invalid-value' => esc_html__( 'Invalid Value', 'page-builder-framework' ),
+			]
+		);
 
 	}
 

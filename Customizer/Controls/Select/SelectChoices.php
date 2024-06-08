@@ -1,6 +1,6 @@
 <?php
 /**
- * Select control.
+ * Select choices.
  *
  * @package Wpbf
  */
@@ -12,23 +12,32 @@ class SelectChoices {
 	/**
 	 * Format the 'choices' args for 'select' control.
 	 *
-	 * For the usage, it accepts format like in Kirki or ReactSelect.
-	 * It will then be converted to our internal format.
+	 * For the usage, it accepts format like in Kirki, Select2 or ReactSelect.
+	 * It will then be converted to Select2 format.
 	 *
-	 * @see https://github.com/themeum/kirki/issues/1120#issuecomment-304480821 for Kirki's choices.
-	 * @see https://github.com/JedWatson/react-select/blob/master/storybook/data.ts  for ReactSelect's options.
+	 * @see https://github.com/themeum/kirki/issues/1120#issuecomment-304480821 for Kirki's format.
+	 * @see https://select2.org/data-sources/formats for Select2's format.
+	 * @see @see https://github.com/JedWatson/react-select/blob/master/storybook/data.ts  for ReactSelect's format.
 	 *
-	 * @param array $choices The choices to format. Can be using Kirki's choices or ReactSelect's options.
+	 * @param array $choices The choices to format. Can be using Kirki, Select2 or ReactSelect's format.
 	 *
-	 * @return array The formatted choices for internal use.
+	 * @return array The choices formatted for Select2.
 	 */
-	public function format( $choices = [] ) {
+	public function toSelect2Format( $choices = [] ) {
 
 		$options = [];
 
 		foreach ( $choices as $key => $choice ) {
 			if ( is_int( $key ) ) {
 				if ( is_array( $choice ) ) {
+					if ( isset( $choice['text'] ) ) {
+						if ( isset( $choice['id'] ) || isset( $choice['children'] ) ) {
+							// If this block is reached, it's assumed that we already have correct Select2 format.
+							$options[] = $choice;
+							continue;
+						}
+					}
+
 					if ( ! isset( $choice['label'] ) ) {
 						continue;
 					}
@@ -39,23 +48,23 @@ class SelectChoices {
 
 					$option = [];
 
-					$option['l'] = (string) $choice['label'];
+					$option['text'] = (string) $choice['label'];
 
 					if ( isset( $choice['value'] ) ) {
-						$option['v'] = (string) $choice['value'];
+						$option['id'] = (string) $choice['value'];
 					}
 
 					if ( ! empty( $choice['options'] ) && is_array( $choice['options'] ) ) {
-						$option['o'] = [];
+						$option['children'] = [];
 
 						foreach ( $choice['options'] as $choice_option ) {
 							if ( ! isset( $choice_option['label'] ) || ! isset( $choice_option['value'] ) ) {
 								continue;
 							}
 
-							$option['o'][] = [
-								'l' => $choice_option['label'],
-								'v' => $choice_option['value'],
+							$option['children'][] = [
+								'text' => $choice_option['label'],
+								'id'   => $choice_option['value'],
 							];
 						}
 					}
@@ -72,8 +81,8 @@ class SelectChoices {
 
 			if ( ! is_array( $choice ) ) {
 				$options[] = [
-					'l' => $choice,
-					'v' => $key,
+					'text' => $choice,
+					'id'   => $key,
 				];
 
 				continue;
@@ -81,15 +90,15 @@ class SelectChoices {
 
 			$label = isset( $choice[0] ) ? $choice[0] : $key;
 
-			$option['l'] = $label;
-			$option['o'] = [];
+			$option['text']     = $label;
+			$option['children'] = [];
 
 			$subvalues = ! empty( $choice[1] ) && is_array( $choice[1] ) ? $choice[1] : [];
 
 			foreach ( $subvalues as $subvalue => $sublabel ) {
-				$option['o'][] = array(
-					'l' => $sublabel,
-					'v' => $subvalue,
+				$option['children'][] = array(
+					'text' => $sublabel,
+					'id'   => $subvalue,
 				);
 			}
 

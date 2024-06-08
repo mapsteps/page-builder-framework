@@ -67,7 +67,7 @@ class RadioControl extends BaseControl {
 			<# if ( data.value === key ) { #> checked<# } #>
 			>
 
-			<# if ( _.isArray( val ) ) { #>
+			<# if ( Array.isArray( val ) ) { #>
 			{{{ val[0] }}}<span class="option-description">{{{ val[1] }}}</span>
 			<# } else { #>
 			{{ val }}

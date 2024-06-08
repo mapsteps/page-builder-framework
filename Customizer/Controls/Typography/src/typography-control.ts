@@ -13,7 +13,7 @@ import {
 	WpbfCustomizeTypographyControlValue,
 } from "./interface";
 import {
-	SelectChoices,
+	SelectControlChoices,
 	WpbfCustomizeSelectControl,
 } from "../../Select/src/interface";
 
@@ -46,12 +46,16 @@ function setupTypographyFields() {
 
 		wp.customize(id, function (setting) {
 			setting.bind(function (value) {
+				if (id === "page_font_family") {
+					console.log(`${id} control value is changed:`, value);
+				}
+
 				composeFontProperties(id, value);
 			});
 		});
 
 		composeFontProperties(id);
-		listenFontPropertyFieldsChange(id);
+		// listenFontPropertyFieldsChange(id);
 	});
 }
 
@@ -86,8 +90,11 @@ function findGoogleFont(fontFamily: string): GoogleFontEntity | undefined {
 	return undefined;
 }
 
-function variantFoundInChoices(variantValue: string, variants: SelectChoices) {
-	return variants.some((variant) => variant.v == variantValue);
+function variantFoundInChoices(
+	variantValue: string,
+	variants: SelectControlChoices,
+) {
+	return variants.some((variant) => variant.id == variantValue);
 }
 
 function composeFontProperties(
@@ -98,6 +105,10 @@ function composeFontProperties(
 	if (!control || !control.setting) return;
 
 	value = value || control.setting.get();
+
+	if (id === "page_font_family") {
+		console.log(`composeFontProperties for "${id}" control:`, value);
+	}
 
 	if ("undefined" === typeof value) return;
 	if ("string" !== typeof value["font-family"]) return;
@@ -114,7 +125,7 @@ function composeFontProperties(
 
 	const googleFont = findGoogleFont(value["font-family"]);
 
-	const variantChoices: SelectChoices = [];
+	const variantChoices: SelectControlChoices = [];
 
 	if (googleFont) {
 		if (!wpbfFontVariantOptions) return variantChoices;
@@ -130,8 +141,8 @@ function composeFontProperties(
 			}
 
 			variantChoices.push({
-				l: wpbfFontVariantOptions.complete[i].label,
-				v: wpbfFontVariantOptions.complete[i].value,
+				text: wpbfFontVariantOptions.complete[i].label,
+				id: wpbfFontVariantOptions.complete[i].value,
 			});
 		}
 	} else {
@@ -155,8 +166,8 @@ function composeFontProperties(
 
 				for (; i < variants.length; ++i) {
 					variantChoices.push({
-						l: variants[i].label,
-						v: variants[i].value,
+						text: variants[i].label,
+						id: variants[i].value,
 					});
 				}
 			}
@@ -168,8 +179,8 @@ function composeFontProperties(
 
 			for (; i < wpbfFontVariantOptions.standard.length; ++i) {
 				variantChoices.push({
-					l: wpbfFontVariantOptions.standard[i].label,
-					v: wpbfFontVariantOptions.standard[i].value,
+					text: wpbfFontVariantOptions.standard[i].label,
+					id: wpbfFontVariantOptions.standard[i].value,
 				});
 			}
 		}
@@ -191,21 +202,25 @@ function composeFontProperties(
 	if (variantControl) {
 		// Hide/show variant options depending on which are available for this font-family.
 		if (variantChoices.length > 1 && control.active()) {
-			variantControl.activate();
+			if (!variantControl.active()) {
+				variantControl.activate();
+			}
 		} else {
 			// If there's only 1 variant to choose from, we can hide the control.
-			variantControl.deactivate();
+			if (variantControl.active()) {
+				variantControl.deactivate();
+			}
 		}
 
-		variantControl.parseSelectChoices?.(variantChoices);
-		variantControl.destroy?.();
+		const updatedOptionValue = variantFoundInChoices(
+			variantValue,
+			variantChoices,
+		)
+			? variantValue
+			: "regular";
 
-		if (variantFoundInChoices(variantValue, variantChoices)) {
-			variantControl.doSelectAction?.("selectOption", variantValue);
-		} else {
-			// If the selected font-family doesn't support the currently selected variant, switch to "regular".
-			variantControl.doSelectAction?.("selectOption", "regular");
-		}
+		variantControl.$selectbox?.val(updatedOptionValue);
+		variantControl.$selectbox?.trigger("change");
 	}
 
 	wp.customize(id).set(value);

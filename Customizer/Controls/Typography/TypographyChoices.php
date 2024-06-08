@@ -7,9 +7,9 @@ class TypographyChoices {
 	/**
 	 * Generate font family 'choices' args for the typography field.
 	 *
-	 * The format follows the Kirki's options.
+	 * The format follows Select2's format.
 	 *
-	 * @see https://github.com/themeum/kirki/issues/1120#issuecomment-304480821
+	 * @see https://select2.org/data-sources/formats
 	 *
 	 * @param array $fonts_arg The fonts arguments.
 	 * @return array
@@ -27,7 +27,10 @@ class TypographyChoices {
 			foreach ( $standard_fonts_arg as $maybe_index_or_font_name => $font_name_or_stack ) {
 				$font_family_value = is_int( $maybe_index_or_font_name ) ? $font_name_or_stack : $maybe_index_or_font_name;
 
-				$standard_font_options[ $font_family_value ] = $font_name_or_stack;
+				$standard_font_options[] = [
+					'text' => $font_name_or_stack,
+					'id'   => $font_family_value,
+				];
 			}
 		} else {
 			foreach ( $fonts_util->getStandardFonts() as $font_family_group_key => $font_data ) {
@@ -35,7 +38,10 @@ class TypographyChoices {
 					continue;
 				}
 
-				$standard_font_options[ $font_data['stack'] ] = $font_data['label'];
+				$standard_font_options[] = [
+					'text' => $font_data['label'],
+					'id'   => $font_data['stack'],
+				];
 			}
 		}
 
@@ -81,7 +87,10 @@ class TypographyChoices {
 		$google_font_options = [];
 
 		foreach ( $google_font_names as $font_family ) {
-			$google_font_options[ $font_family ] = $font_family;
+			$google_font_options[] = [
+				'text' => $font_family,
+				'id'   => $font_family,
+			];
 		}
 
 		$families_arg        = isset( $fonts_arg['families'] ) && is_array( $fonts_arg['families'] ) ? $fonts_arg['families'] : [];
@@ -119,16 +128,19 @@ class TypographyChoices {
 						continue;
 					}
 
-					$options[ $font_family_value ] = $font_family_label;
+					$options[] = [
+						'text' => $font_family_label,
+						'id'   => $font_family_value,
+					];
 				}
 
 				$group_label = ! empty( $font_family_data['label'] ) ? $font_family_data['label'] : '';
 				$group_label = empty( $group_label ) && ! empty( $font_family_data['text'] ) ? $font_family_data['text'] : '';
 				$group_label = esc_attr( $group_label );
 
-				$custom_font_choices[ $font_family_key ] = [
-					$group_label,
-					$options,
+				$custom_font_choices[] = [
+					'text'     => $group_label,
+					'children' => $options,
 				];
 			}
 		}
@@ -136,10 +148,10 @@ class TypographyChoices {
 		$choices = array();
 
 		if ( ! empty( $standard_font_options ) ) {
-			$choices['standard'] = array(
-				__( 'Standard Fonts', 'page-builder-framework' ),
-				$standard_font_options,
-			);
+			$choices[] = [
+				'text'     => __( 'Standard Fonts', 'page-builder-framework' ),
+				'children' => $standard_font_options,
+			];
 		}
 
 		if ( ! empty( $custom_font_choices ) ) {
@@ -147,9 +159,9 @@ class TypographyChoices {
 		}
 
 		if ( ! empty( $google_font_options ) ) {
-			$choices['google'] = [
-				__( 'Google Fonts', 'page-builder-framework' ),
-				$google_font_options,
+			$choices[] = [
+				'text'     => __( 'Google Fonts', 'page-builder-framework' ),
+				'children' => $google_font_options,
 			];
 		}
 
@@ -160,9 +172,9 @@ class TypographyChoices {
 	/**
 	 * Generate font variant 'choices' args for the typography field.
 	 *
-	 * The format follows the Kirki's options.
+	 * The format follows Select2's format.
 	 *
-	 * @see https://github.com/themeum/kirki/issues/1120#issuecomment-304480821
+	 * @see https://select2.org/data-sources/formats
 	 *
 	 * @param array $fonts_arg The fonts arguments.
 	 * @return array
@@ -219,7 +231,10 @@ class TypographyChoices {
 						continue;
 					}
 
-					$choices[ $custom_variant ] = FontsStore::$complete_font_variants[ $custom_variant ];
+					$choices[] = [
+						'text' => FontsStore::$complete_font_variants[ $custom_variant ],
+						'id'   => $custom_variant,
+					];
 				}
 			}
 			endforeach;
@@ -234,7 +249,7 @@ class TypographyChoices {
 	 * It will be printed as a property's value of global `wpbfFieldsFontVariants` JS object.
 	 *
 	 * @param array $fonts_arg The fonts arguments.
-	 * @return array Array of 'label' and 'value' pairs.
+	 * @return array Array of 'id' and 'text' pairs (like Select2 format).
 	 */
 	public function makeCustomFontVariantOptions( $fonts_arg ) {
 

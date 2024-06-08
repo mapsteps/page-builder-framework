@@ -29,10 +29,10 @@ class SelectField extends BaseField {
 		}
 
 		$total_values   = count( $value );
-		$max_selections = 999;
+		$max_selections = -1;
 
 		if ( isset( $this->control->custom_properties['max_selections'] ) ) {
-			$max_selections = absint( $this->control->custom_properties['max_selections'] );
+			$max_selections = (int) $this->control->custom_properties['max_selections'];
 		}
 
 		if ( $total_values > $max_selections ) {
