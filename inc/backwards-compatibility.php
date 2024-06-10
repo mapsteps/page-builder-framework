@@ -479,72 +479,22 @@ if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_deskto
 
 // }
 
-/**
- * Kirki 4 backwards compatibility.
- *
- * Switching to Kirki 4 means is_plugin_active is no longer present in wpbf-kirki.php in the Premium Add-On.
- * This was patched in the Premium Add-On itself. This function is here for people running older versions of the Premium Add-On (prior 2.7.7).
- */
-function wpbf_kirki_is_plugin_active_fatal_error() {
-
-	// Safety first. Check if wpbf_is_premium exists.
-	if ( ! function_exists( 'wpbf_is_premium' ) ) {
-		return;
-	}
-
-	// If there is no Premium Add-On, bail out.
-	if ( ! wpbf_is_premium() ) {
-		return;
-	}
-
-	// Stop if WPBF_PREMIUM_VERSION is not defined.
-	if ( ! defined( 'WPBF_PREMIUM_VERSION' ) ) {
-		return;
-	}
-
-	// Stop if WPBF_PREMIUM_VERSION is above 2.7.6.2.
-	if ( version_compare( WPBF_PREMIUM_VERSION, '2.7.6.2', '>' ) ) {
-		return;
-	}
-
-	// Make sure plugin.php is loaded.
-	if ( ! function_exists( 'is_plugin_active' ) ) {
-		require_once ABSPATH . '/wp-admin/includes/plugin.php';
-	}
-
-}
-add_action( 'after_setup_theme', 'wpbf_kirki_is_plugin_active_fatal_error', 5 );
-
-// BFCM 2021 admin notice dismissal.
+// Clean up previous BFCM admin notice dismissals.
 $bfcm2021 = get_option( 'wpbf_bfcm_notice_dismissed' );
+$bfcm2022 = get_option( 'wpbf_bfcm_notice_dismissed_2022' );
 
 if ( $bfcm2021 ) {
 	delete_option( 'wpbf_bfcm_notice_dismissed' );
 }
-
-// BFCM 2022 admin notice dismissal.
-$bfcm2022 = get_option( 'wpbf_bfcm_notice_dismissed_2022' );
 
 if ( $bfcm2022 ) {
 	delete_option( 'wpbf_bfcm_notice_dismissed_2022' );
 }
 
 /**
- * Delete Kirki remote URL contents (hotfix).
- *
- * This fixes the recent issue with fonts not being downloaded by Kirki
- * because of a wrong (or no longer working) declaration of user agent in Downloader.php
- *
- * See line 186 & 187.
+ * Remove previously saved option that fixed an issue with fonts not being downloaded by Kirki.
+ * Since we no longer use Kirki, this is safe to be deleted.
  */
-function wpbf_delete_kirki_transient() {
-
-	if ( get_option( 'wpbf_kirki_remote_url_contents_deleted' ) ) {
-		return;
-	}
-
-	delete_transient( 'kirki_remote_url_contents' );
-	add_option( 'wpbf_kirki_remote_url_contents_deleted', 1 );
-
+if ( get_option( 'wpbf_kirki_remote_url_contents_deleted' ) ) {
+	delete_option( 'wpbf_kirki_remote_url_contents_deleted' );
 }
-add_action( 'init', 'wpbf_delete_kirki_transient' );
