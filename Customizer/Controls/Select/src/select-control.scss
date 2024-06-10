@@ -4,8 +4,12 @@
 	}
 }
 
-body > .select2-container {
+.wp-customizer > .select2-container {
 	z-index: 500001;
+}
+
+.wp-customizer > .select2-container .select2-search__field {
+	line-height: normal;
 }
 
 .wpbf-control-form .select2-container {
