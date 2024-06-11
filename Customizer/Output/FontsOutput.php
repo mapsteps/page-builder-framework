@@ -10,10 +10,18 @@ use Mapsteps\Wpbf\Customizer\CustomizerStore;
 class FontsOutput {
 
 	/**
+	 * FontsUtil instance.
+	 *
+	 * @var FontsUtil
+	 */
+	private $fonts_util;
+
+	/**
 	 * Initialize the class, setup hooks.
 	 */
 	public function init() {
 
+		$this->fonts_util = new FontsUtil();
 		add_action( 'wp_head', [ $this, 'inlineGoogleFontsCss' ], 5 );
 
 	}
@@ -50,8 +58,13 @@ class FontsOutput {
 			}
 		}
 
+		$existing_downloaded_css = $this->fonts_util->getDownloadedGoogleFontsCss();
+
 		if ( ! empty( $google_fonts_to_download ) ) {
 			( new GoogleFontsDownload() )->download( $google_fonts_to_download );
+
+			// Get the updated downloaded CSS.
+			$existing_downloaded_css = $this->fonts_util->getDownloadedGoogleFontsCss();
 
 			foreach ( $google_fonts_to_use as $google_font_family => $google_font_variants ) {
 				if ( ! isset( $google_fonts_to_download[ $google_font_family ] ) ) {
@@ -60,16 +73,17 @@ class FontsOutput {
 
 				$downloaded_variants = $google_fonts_to_download[ $google_font_family ];
 
-				$google_font_family_slug = ( new FontsUtil() )->slugifyFontFamily( $google_font_family );
+				$google_font_family_slug = $this->fonts_util->slugifyFontFamily( $google_font_family );
 
 				foreach ( $google_font_variants as $google_font_variant => $css_content ) {
 					if ( ! in_array( $google_font_variant, $downloaded_variants, true ) ) {
 						continue;
 					}
 
-					$variant_name = '400' === $google_font_variant ? 'regular' : $google_font_variant;
+					$variant_name   = '400' === $google_font_variant ? 'regular' : $google_font_variant;
+					$sub_option_key = $google_font_family_slug . '_' . $variant_name;
 
-					$font_face_declarations = get_option( 'wpbf_downloaded_google_fonts_css_' . $google_font_family_slug . '_' . $variant_name, '' );
+					$font_face_declarations = isset( $existing_downloaded_css[ $sub_option_key ] ) ? $existing_downloaded_css[ $sub_option_key ] : '';
 
 					$google_fonts_to_use[ $google_font_family ][ $google_font_variant ] = $font_face_declarations;
 				}
@@ -171,12 +185,15 @@ class FontsOutput {
 			}
 		}
 
+		$existing_downloaded_css = $this->fonts_util->getDownloadedGoogleFontsCss();
+
 		foreach ( $google_fonts_to_use as $google_font_family => $google_font_variants ) {
-			$google_font_family_slug = ( new FontsUtil() )->slugifyFontFamily( $google_font_family );
+			$google_font_family_slug = $this->fonts_util->slugifyFontFamily( $google_font_family );
 
 			foreach ( $google_font_variants as $google_font_variant => $empty_css_content ) {
-				$variant_name = '400' === $google_font_variant ? 'regular' : $google_font_variant;
-				$css_content  = get_option( 'wpbf_downloaded_google_fonts_css_' . $google_font_family_slug . '_' . $variant_name, '' );
+				$variant_name   = '400' === $google_font_variant ? 'regular' : $google_font_variant;
+				$sub_option_key = $google_font_family_slug . '_' . $variant_name;
+				$css_content    = isset( $existing_downloaded_css[ $sub_option_key ] ) ? $existing_downloaded_css[ $sub_option_key ] : '';
 
 				$google_fonts_to_use[ $google_font_family ][ $google_font_variant ] = $css_content;
 			}

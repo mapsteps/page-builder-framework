@@ -65,11 +65,15 @@ class GoogleFontsDownload {
 			require_once wp_normalize_path( ABSPATH . '/wp-admin/includes/file.php' );
 		}
 
-		$existing_downloaded_fonts = get_option( 'wpbf_downloaded_google_fonts' );
+		$existing_downloaded_fonts = get_option( 'wpbf_downloaded_google_fonts', array() );
 		$existing_downloaded_fonts = ! empty( $existing_downloaded_fonts ) && is_array( $existing_downloaded_fonts ) ? $existing_downloaded_fonts : [];
 
+		$fonts_util = new FontsUtil();
+
+		$existing_downloaded_css = $fonts_util->getDownloadedGoogleFontsCss();
+
 		foreach ( $fonts_to_download as $font_family => $variant_and_url_array ) {
-			$font_family_slug = ( new FontsUtil() )->slugifyFontFamily( $font_family );
+			$font_family_slug = $fonts_util->slugifyFontFamily( $font_family );
 			$font_family_dir  = WP_CONTENT_DIR . '/fonts/' . $font_family_slug;
 
 			// Check if the font-family directory exists.
@@ -99,11 +103,14 @@ class GoogleFontsDownload {
 
 				$font_face_declarations = $this->getFontFaceDeclarations( $css_content, $font_family, $font_variant );
 
-				update_option( 'wpbf_downloaded_google_fonts_css_' . $font_family_slug . '_' . $font_variant, $font_face_declarations );
+				$sub_option_key = $font_family_slug . '_' . $font_variant;
+
+				$existing_downloaded_css[ $sub_option_key ] = $font_face_declarations;
 			}
 		}
 
 		update_option( 'wpbf_downloaded_google_fonts', $existing_downloaded_fonts );
+		update_option( 'wpbf_downloaded_google_fonts_css', $existing_downloaded_css );
 
 	}
 

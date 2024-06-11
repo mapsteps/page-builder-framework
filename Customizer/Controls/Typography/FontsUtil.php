@@ -142,4 +142,18 @@ final class FontsUtil {
 
 	}
 
+	/**
+	 * Get array of downloaded Google Fonts CSS.
+	 *
+	 * @return array Array of downloaded Google Fonts CSS.
+	 */
+	public function getDownloadedGoogleFontsCss() {
+
+		$downloaded_css = get_option( 'wpbf_downloaded_google_fonts_css', array() );
+		$downloaded_css = ! empty( $downloaded_css ) && is_array( $downloaded_css ) ? $downloaded_css : [];
+
+		return $downloaded_css;
+
+	}
+
 }
