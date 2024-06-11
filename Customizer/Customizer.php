@@ -58,8 +58,6 @@ final class Customizer {
 	/**
 	 * Output the customizer.
 	 *
-	 * Currently not being called. The google fonts CSS are combined with PBF customizer output.
-	 *
 	 * @return void
 	 */
 	public function output() {

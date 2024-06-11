@@ -38,6 +38,9 @@ require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
 // Init customizer.
 wpbf_customizer_init();
 
+// Output the customizer.
+wpbf_customizer_output();
+
 // Body classes.
 require_once WPBF_THEME_DIR . '/inc/body-classes.php';
 

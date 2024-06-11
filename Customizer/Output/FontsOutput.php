@@ -30,7 +30,7 @@ class FontsOutput {
 	 */
 	public function init() {
 
-		add_action( 'wp_head', [ $this, 'generateGoogleFontsCss' ], 5 );
+		add_action( 'wp_head', [ $this, 'inlineGoogleFontsCss' ], 5 );
 
 	}
 
