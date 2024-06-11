@@ -87,7 +87,6 @@ function wpbf_do_elementor_pro_integration() {
 	require_once WPBF_THEME_DIR . '/inc/integration/elementor-pro.php';
 
 }
-
 add_action( 'elementor_pro/init', 'wpbf_do_elementor_pro_integration' );
 
 // Beaver Builder integration.
@@ -127,7 +126,6 @@ if ( class_exists( 'LifterLMS' ) ) {
 function wpbf_do_pre_header() {
 	get_template_part( 'inc/template-parts/pre-header' );
 }
-
 add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
 
 /**
@@ -136,7 +134,6 @@ add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
 function wpbf_do_header() {
 	get_template_part( 'inc/template-parts/header' );
 }
-
 add_action( 'wpbf_header', 'wpbf_do_header' );
 
 /**
@@ -145,7 +142,6 @@ add_action( 'wpbf_header', 'wpbf_do_header' );
 function wpbf_do_footer() {
 	get_template_part( 'inc/template-parts/footer' );
 }
-
 add_action( 'wpbf_footer', 'wpbf_do_footer' );
 
 /**
@@ -154,5 +150,4 @@ add_action( 'wpbf_footer', 'wpbf_do_footer' );
 function wpbf_do_404() {
 	get_template_part( 'inc/template-parts/404' );
 }
-
 add_action( 'wpbf_404', 'wpbf_do_404' );
