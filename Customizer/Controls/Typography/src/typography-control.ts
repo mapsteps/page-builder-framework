@@ -138,14 +138,10 @@ function composeFontProperties(
 
 		// Hide/show variant options depending on which are available for this font-family.
 		if (variantChoices.length > 1 && control.active()) {
-			if (!variantControl.active()) {
-				variantControl.activate();
-			}
+			variantControl.activate();
 		} else {
 			// If there's only 1 variant to choose from, we can hide the control.
-			if (variantControl.active()) {
-				variantControl.deactivate();
-			}
+			variantControl.deactivate();
 		}
 
 		const updatedOptionValue = variantFoundInChoices(
