@@ -14,6 +14,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
+use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
 
 /**
  * Initialize Wpbf customizer.
@@ -199,7 +200,11 @@ function wpbf_minify_css( $css ) {
  */
 function wpbf_generate_css() {
 
+	$google_fonts_css = ( new FontsOutput() )->generateGoogleFontsCss();
+
 	ob_start();
+
+	echo wp_kses_post( $google_fonts_css );
 	include get_template_directory() . '/inc/customizer/styles.php';
 
 	return wpbf_minify_css( ob_get_clean() );
@@ -280,7 +285,10 @@ function wpbf_customizer_preview_css() {
 		return;
 	}
 
+	$google_fonts_css = ( new FontsOutput() )->generateGoogleFontsCss();
+
 	echo '<style id="wpbf-customize-saved-styles">';
+	echo wp_kses_post( $google_fonts_css );
 	require WPBF_THEME_DIR . '/inc/customizer/styles.php';
 	echo '</style>';
 

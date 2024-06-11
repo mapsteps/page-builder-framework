@@ -17,19 +17,29 @@ class FontsOutput {
 	private $fonts_util;
 
 	/**
-	 * Initialize the class, setup hooks.
+	 * `FontsOutput` constructor.
 	 */
-	public function init() {
+	public function __construct() {
 
 		$this->fonts_util = new FontsUtil();
-		add_action( 'wp_head', [ $this, 'inlineGoogleFontsCss' ], 5 );
 
 	}
 
 	/**
-	 * Output the inline Google Fonts CSS.
+	 * Initialize the class, setup hooks.
 	 */
-	public function inlineGoogleFontsCss() {
+	public function init() {
+
+		add_action( 'wp_head', [ $this, 'generateGoogleFontsCss' ], 5 );
+
+	}
+
+	/**
+	 * Generate Google Fonts CSS.
+	 *
+	 * @return string
+	 */
+	public function generateGoogleFontsCss() {
 
 		/**
 		 * An associative array of Google fonts to use in frontend.
@@ -102,17 +112,21 @@ class FontsOutput {
 			}
 		}
 
-		if ( empty( $google_fonts_css_to_print ) ) {
-			return;
-		}
+		return $google_fonts_css_to_print;
+
+	}
+
+	/**
+	 * Output the generated Google Fonts CSS as inline CSS.
+	 */
+	public function inlineGoogleFontsCss() {
 		?>
 
 		<style class="wpbf-google-fonts">
-			<?php echo wp_kses_post( $google_fonts_css_to_print ); ?>
+			<?php echo wp_kses_post( wpbf_minify_css( $this->generateGoogleFontsCss() ) ); ?>
 		</style>
 
 		<?php
-
 	}
 
 	/**
