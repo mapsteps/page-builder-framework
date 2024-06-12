@@ -26,6 +26,9 @@ export default function setupSite() {
 		wpcf7support();
 		setupBoxedLayoutSupport();
 
+		// Add identifier in body class telling if we're using the vanilla JS version.
+		document.body.classList.add("wpbf-vanilla");
+
 		// On window resize, re-run the body class setup - so that it has the updated breakpoint class name.
 		window.addEventListener("resize", function (e) {
 			setupBodyClasses();
