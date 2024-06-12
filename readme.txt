@@ -43,12 +43,6 @@ WooCommerce
 WooCommerce is licensed under the GNU General Public License v3 or later – https://www.gnu.org/licenses/gpl-3.0.html
 
 -------------------------------------------------------
-kirki
--------------------------------------------------------
-kirki is licensed under the MIT License (MIT)
-created by Aristeides Stathopoulos and David Vongries – https://github.com/kirki-framework/kirki
-
--------------------------------------------------------
 normalize.css
 -------------------------------------------------------
 normalize.css is licensed under the MIT License (MIT)

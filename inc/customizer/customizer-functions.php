@@ -327,7 +327,7 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
 }
 
 /**
- * Custom Kirki default fonts.
+ * Custom default fonts.
  *
  * @param array $standard_fonts The standard fonts.
  *

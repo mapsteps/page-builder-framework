@@ -76,13 +76,3 @@ function wpbf_customizer_setup( $wp_customize ) {
 
 }
 add_action( 'customize_register', 'wpbf_customizer_setup', 20 );
-
-/**
- * Wpbf inline style tag id.
- */
-function wpbf_kirki_inline_styles_id() {
-
-	return 'wpbf-typography-styles';
-
-}
-add_filter( 'wpbf_inline_styles_id', 'wpbf_kirki_inline_styles_id' );
