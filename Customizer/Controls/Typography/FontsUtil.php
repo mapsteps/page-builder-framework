@@ -2,6 +2,9 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
+use WP_Error;
+use WP_Filesystem_Direct;
+
 final class FontsUtil {
 
 	/**
@@ -153,6 +156,35 @@ final class FontsUtil {
 		$downloaded_css = ! empty( $downloaded_css ) && is_array( $downloaded_css ) ? $downloaded_css : [];
 
 		return $downloaded_css;
+
+	}
+
+	/**
+	 * Clear downloaded Google Fonts.
+	 *
+	 * @return true|WP_Error
+	 */
+	public function clearDownloadedGoogleFonts() {
+
+		include_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+		include_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+
+		$file_system = new WP_Filesystem_Direct( false );
+		$fonts_dir   = WP_CONTENT_DIR . '/fonts';
+
+		if ( ! is_dir( $fonts_dir ) ) {
+			return new WP_Error( 'no_local_fonts', __( 'No local fonts found.', 'page-builder-framework' ) );
+		}
+
+		$file_system->rmdir( $fonts_dir, true );
+
+		delete_option( 'wpbf_downloaded_google_fonts' );
+		delete_option( 'wpbf_downloaded_google_fonts_css' );
+
+		// This option is not being used anymore.
+		delete_option( 'wpbf_downloaded_google_fonts_stylesheet' );
+
+		return true;
 
 	}
 

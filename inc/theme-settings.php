@@ -5,6 +5,8 @@
  * @package Page Builder Framework
  */
 
+use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsUtil;
+
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
@@ -182,22 +184,10 @@ function wpbf_clear_font_cache() {
 		wp_send_json_error( 'Invalid Token' );
 	}
 
-	include_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
-	include_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+	$result = ( new FontsUtil() )->clearDownloadedGoogleFonts();
 
-	$file_system = new WP_Filesystem_Direct( false );
-	$fonts_dir   = WP_CONTENT_DIR . '/fonts';
-
-	if ( is_dir( $fonts_dir ) ) {
-		// Delete fonts directory.
-		$file_system->rmdir( $fonts_dir, true );
-		delete_option( 'wpbf_downloaded_google_fonts' );
-		delete_option( 'wpbf_downloaded_google_fonts_css' );
-
-		// This option is not being used anymore.
-		delete_option( 'wpbf_downloaded_google_fonts_stylesheet' );
-	} else {
-		wp_send_json_error( 'No local fonts found.', 'page-builder-framework' );
+	if ( is_wp_error( $result ) ) {
+		wp_send_json_error( $result->get_error_message() );
 	}
 
 	wp_send_json_success( 'Font Cache cleared.', 'page-builder-framework' );
