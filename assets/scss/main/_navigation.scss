@@ -64,6 +64,25 @@
 	margin: 0;
 }
 
+/* Search menu item - VanillaJS helper */
+.wpbf-vanilla .wpbf-menu-item-search {
+	.wpbf-menu-search {
+		// The old jQuery-based code had a 250ms transition duration when collapsing.
+		transition:
+			width 0.25s ease-in-out,
+			opacity 0.25s ease-in-out;
+
+		// The width property will be set via JS.
+		&.is-expanded {
+			opacity: 1;
+			// The old jQuery-based code had a 200ms transition duration when expanding.
+			transition:
+				width 0.2s ease-in-out,
+				opacity 0.2s ease-in-out;
+		}
+	}
+}
+
 /* Search menu item */
 .wpbf-menu-item-search {
 	position: relative;
@@ -82,19 +101,6 @@
 		opacity: 0;
 		width: 0;
 		max-width: 350px;
-		// The old jQuery-based code had a 250ms transition duration when collapsing.
-		transition:
-			width 0.25s ease-in-out,
-			opacity 0.25s ease-in-out;
-
-		// The width property will be set via JS.
-		&.is-expanded {
-			opacity: 1;
-			// The old jQuery-based code had a 200ms transition duration when expanding.
-			transition:
-				width 0.2s ease-in-out,
-				opacity 0.2s ease-in-out;
-		}
 
 		input[type="search"] {
 			height: 50px;
@@ -142,6 +148,16 @@
 	}
 }
 
+// Default sub menus (excluding mega menu) - VanillaJS helper
+.wpbf-vanilla .wpbf-sub-menu {
+	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
+		> .sub-menu {
+			// The old jQuery-based code had default jQuery animate duration (400ms).
+			transition: opacity 0.4s ease-in-out;
+		}
+	}
+}
+
 // Default sub menus (excluding mega menu)
 .wpbf-sub-menu {
 	// All sub menus
@@ -167,8 +183,6 @@
 			z-index: 111;
 			background: #fff;
 			@include box-shadow(0px 0px 10px 0px rgba(#000, 0.15));
-			// The old jQuery-based code had default jQuery animate duration (400ms).
-			transition: opacity 0.4s ease-in-out;
 		}
 	}
 }
@@ -375,12 +389,16 @@
 	}
 }
 
+/* Mobile menu - VanillaJS helper */
+.wpbf-vanilla .wpbf-mobile-menu-container {
+	// The old jQuery-based code had default fade animation duration (400ms).
+	transition: height 0.4s ease-in-out;
+}
+
 /* Mobile menu */
 .wpbf-mobile-menu-container {
 	display: none;
 	background: #fff;
-	// The old jQuery-based code had default fade animation duration (400ms).
-	transition: height 0.4s ease-in-out;
 
 	nav {
 		overflow-y: auto;
