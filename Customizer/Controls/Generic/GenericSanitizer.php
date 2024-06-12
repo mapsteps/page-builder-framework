@@ -18,7 +18,7 @@ class GenericSanitizer {
 	public function sanitize( $type, $value, $min = null, $max = null ) {
 
 		if ( 'textarea' === $type ) {
-			return sanitize_textarea_field( $value );
+			return wp_kses_post( $value );
 		} elseif ( 'url' === $type ) {
 			return esc_url_raw( $value );
 		} elseif ( 'number' === $type || 'number-unit' === $type ) {
