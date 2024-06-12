@@ -55,6 +55,7 @@ class FontsOutput {
 		if ( empty( $fonts_system_version ) ) {
 			$this->fonts_util->clearDownloadedGoogleFonts();
 			update_option( 'wpbf_fonts_system_version', $this->min_fonts_system_version );
+			return;
 		}
 
 		if ( version_compare( $fonts_system_version, $this->min_fonts_system_version, '<' ) ) {
