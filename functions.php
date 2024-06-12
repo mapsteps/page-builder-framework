@@ -9,33 +9,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-/**
- * Fixes the missing 'menu-item-has-children' class in WordPress 6.1
- *
- * We specifically check and only apply this fix in WordPress 6.1 by setting the depth argument to 0.
- * Setting depth to 0 isn't ideal as PBF is very specific with the depth of sub-menus for various menu items.
- * Still, it seems to be the best and easiest way to temporarily address the issue.
- *
- * @param array $args The arguments.
- *
- * @return array The updated arguments.
- */
-function wpbf_6_1_sub_menu_issue_hotfix( $args ) {
-
-	$current_wp_version = get_bloginfo( 'version' );
-
-	// Stop here if we are not specifically on WordPress 6.1.
-	if ( $current_wp_version !== '6.1' ) {
-		return $args;
-	}
-
-	// Globally change depth to 0 (not ideal at all but yea).
-	$args['depth'] = 0;
-	return $args;
-
-}
-add_filter( 'wp_nav_menu_args', 'wpbf_6_1_sub_menu_issue_hotfix' );
-
 // Constants.
 define( 'WPBF_THEME_DIR', get_template_directory() );
 define( 'WPBF_THEME_URI', get_template_directory_uri() );

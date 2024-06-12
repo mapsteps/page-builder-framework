@@ -61,7 +61,7 @@ require_once WPBF_THEME_DIR . '/inc/theme-mods.php';
 // Theme settings.
 require_once WPBF_THEME_DIR . '/inc/theme-settings.php';
 
-/* Integration */
+/* Integrations */
 
 // Gutenberg integration.
 require_once WPBF_THEME_DIR . '/inc/integration/gutenberg/gutenberg.php';
