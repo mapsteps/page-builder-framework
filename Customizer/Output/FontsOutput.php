@@ -17,6 +17,16 @@ class FontsOutput {
 	private $fonts_util;
 
 	/**
+	 * Minimum required fonts system version.
+	 *
+	 * If the saved option value is lower than this, we will force clear the font cache.
+	 * This fonts system version is not tied to the theme version.
+	 *
+	 * @var string
+	 */
+	private $min_fonts_system_version = '2.11.0.8';
+
+	/**
 	 * `FontsOutput` constructor.
 	 */
 	public function __construct() {
@@ -30,7 +40,26 @@ class FontsOutput {
 	 */
 	public function init() {
 
+		add_action( 'init', [ $this, 'maybeClearFontCache' ] );
 		add_action( 'wp_head', [ $this, 'inlineGoogleFontsCss' ], 5 );
+
+	}
+
+	/**
+	 * Clear the font cache if fonts system version is lower than the minimum required version.
+	public function maybeClearFontCache() {
+
+		$fonts_system_version = get_option( 'wpbf_fonts_system_version' );
+
+		if ( empty( $fonts_system_version ) ) {
+			$this->fonts_util->clearDownloadedGoogleFonts();
+			update_option( 'wpbf_fonts_system_version', $this->min_fonts_system_version );
+		}
+
+		if ( version_compare( $fonts_system_version, $this->min_fonts_system_version, '<' ) ) {
+			$this->fonts_util->clearDownloadedGoogleFonts();
+			update_option( 'wpbf_fonts_system_version', $this->min_fonts_system_version );
+		}
 
 	}
 
