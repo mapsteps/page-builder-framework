@@ -152,11 +152,7 @@ class FontsOutput {
 	 */
 	public function inlineGoogleFontsCss() {
 		?>
-
-		<style class="wpbf-google-fonts">
-			<?php echo wpbf_minify_css( $this->generateGoogleFontsCss() ); ?><br>
-		</style>
-
+		<style class="wpbf-google-fonts"><?php echo wpbf_minify_css( $this->generateGoogleFontsCss() ); ?></style>
 		<?php
 	}
 
