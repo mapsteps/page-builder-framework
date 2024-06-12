@@ -123,7 +123,7 @@ class FontsOutput {
 		?>
 
 		<style class="wpbf-google-fonts">
-			<?php echo wp_kses_post( wpbf_minify_css( $this->generateGoogleFontsCss() ) ); ?>
+			<?php echo wpbf_minify_css( $this->generateGoogleFontsCss() ); ?><br>
 		</style>
 
 		<?php
