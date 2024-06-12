@@ -47,6 +47,7 @@ class FontsOutput {
 
 	/**
 	 * Clear the font cache if fonts system version is lower than the minimum required version.
+	 */
 	public function maybeClearFontCache() {
 
 		$fonts_system_version = get_option( 'wpbf_fonts_system_version' );
