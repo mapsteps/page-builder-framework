@@ -159,12 +159,13 @@ add_action( 'admin_notices', 'wpbf_show_bfcm_notice' );
  */
 function wpbf_compatibility_notice() {
 
-	if ( ! wpbf_is_premium_addon_outdated() ) {
+	// Stop here if current user can't manage options.
+	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 
-	// Stop here if current user can't manage options.
-	if ( ! current_user_can( 'manage_options' ) ) {
+	// Stop here if Premium Add-On is not outdated.
+	if ( ! wpbf_is_premium_addon_outdated() ) {
 		return;
 	}
 

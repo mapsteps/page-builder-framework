@@ -1690,20 +1690,20 @@ function wpbf_is_premium_addon_outdated() {
 
 	// Stop here if Premium Add-On is not active.
 	if ( ! wpbf_is_premium() ) {
-		return false;
+		return;
 	}
 
-	// Stop here if Premium Add-On version constant is not defined.
+	// Stop here if WPBF_PREMIUM_VERSION is not defined.
 	if ( ! defined( 'WPBF_PREMIUM_VERSION' ) ) {
-		return false;
+		return;
 	}
 
-	// Stop here if Premium Add-On version is not below the minimum required version.
-	if ( ! version_compare( WPBF_PREMIUM_VERSION, WPBF_PREMIUM_MIN_VERSION, '<' ) ) {
-		return false;
+	// If Premium Add-On is below the minimum required version, we are outdated.
+	if ( ! version_compare( WPBF_PREMIUM_VERSION, WPBF_PREMIUM_MIN_VERSION, '>=' ) ) {
+		return true;
 	}
 
-	return true;
+	return false;
 
 }
 

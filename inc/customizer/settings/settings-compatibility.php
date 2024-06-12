@@ -2,11 +2,13 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-if ( ! wpbf_is_premium_addon_outdated() ) {
+// Stop here if current user can't manage options.
+if ( ! current_user_can( 'manage_options' ) ) {
 	return;
 }
 
-if ( ! current_user_can( 'manage_options' ) ) {
+// Stop here if Premium Add-On is not outdated.
+if ( ! wpbf_is_premium_addon_outdated() ) {
 	return;
 }
 
@@ -14,8 +16,8 @@ ob_start();
 ?>
 
 <p>
-	<?php _e( 'Your version of the <strong>Premium Add-On</strong> is outdated and no longer compatible with Page Builder Framework.', 'page-builder-framework' ); ?> <br>
-	<?php _e( 'Please update the Premium Add-On to the latest version.', 'page-builder-framework' ); ?> <br>
+	<?php _e( 'Your version of the <strong>Premium Add-On</strong> is outdated and no longer compatible with the latest version of <strong>Page Builder Framework.</strong>', 'page-builder-framework' ); ?>
+	<?php _e( 'Please update the Premium Add-On to the latest version.', 'page-builder-framework' ); ?>
 </p>
 <p>
 	<a href="<?php echo esc_url( admin_url( 'update-core.php' ) ); ?>" class="button">

@@ -19,8 +19,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				<?php _e( 'Premium Add-On - Compatibility Warning', 'page-builder-framework' ); ?>
 			</h2>
 			<p>
-				<?php _e( 'Your version of the <strong>Premium Add-On</strong> is outdated and no longer compatible with Page Builder Framework.', 'page-builder-framework' ); ?> <br>
-				<?php _e( 'Please update the Premium Add-On to the latest version.', 'page-builder-framework' ); ?> <br>
+				<?php _e( 'Your version of the <strong>Premium Add-On</strong> is outdated and no longer compatible with the latest version of <strong>Page Builder Framework.</strong>', 'page-builder-framework' ); ?> <br>
+				<?php _e( 'Please update the Premium Add-On to the latest version.', 'page-builder-framework' ); ?>
 			</p>
 			<p>
 				<a href="<?php echo esc_url( admin_url( 'update-core.php' ) ); ?>" class="button">
