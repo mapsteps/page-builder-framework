@@ -57,9 +57,13 @@
 /**
  * Override the global window object to include custom properties.
  *
- * @typedef {Object} WpbfWindow
+ * @typedef {Object} WpbfThemeWindow
  *
  * @property {wp} wp
  * @property {Wpbf} Wpbf
  * @property {LegacyWpbfTheme} WpbfTheme
+ */
+
+/**
+ * @typedef {Window & LegacyWpbfTheme} WpbfWindow
  */

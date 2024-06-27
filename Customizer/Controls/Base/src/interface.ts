@@ -6,7 +6,6 @@ import {
 } from "wordpress__customize-browser/Customize";
 import {
 	SelectControlValue,
-	ChildSelectControlChoice,
 	WpbfCustomizeSelectControl,
 } from "../../Select/src/interface";
 import { Setting } from "wordpress__customize-browser/Setting";
@@ -90,6 +89,9 @@ export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 
 	// ! There's a mistake or missing part in this type definition.
 	Notification(arg0?: any, arg1?: any): Notification;
+
+	// ! I don't have type for this yet.
+	selectiveRefresh: any;
 
 	// Specific to PBF.
 	wpbfDynamicControl: WpbfCustomizeControl<any, any>;
