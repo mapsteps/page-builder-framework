@@ -19,7 +19,7 @@
  * @property {function(NodeList|string, function(Element): void): void} forEachEl - Iterates over a collection of elements and applies a function to each.
  * @property {function(string, string|null, function(Event): void): void} listenDocumentEvent - Add document's event listener with optional selector to filter the target.
  * @property {function(string|HTMLElement, string): string} getAttr - Get attribute value of an element.
- * @property {function(string|HTMLElement, string): string} getAttrAsNumber - Get attribute value of an element as number.
+ * @property {function(string|HTMLElement, string): number} getAttrAsNumber - Get attribute value of an element as number.
  */
 
 /**
