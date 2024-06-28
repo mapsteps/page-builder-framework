@@ -245,7 +245,7 @@ export function directQuerySelector(el, selector) {
  * The "el" parameter is can be in any position (not only first child).
  *
  * @param {HTMLElement} el - The element.
- * @param {string} selector - The selector.
+ * @param {string|undefined} selector - The selector.
  *
  * @return {Array<HTMLElement>} The siblings.
  */
