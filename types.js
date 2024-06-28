@@ -52,6 +52,7 @@
  * @typedef {Object} wp
  *
  * @property {WpbfCustomize|undefined} customize
+ * @property {any} media
  */
 
 /**
