@@ -7,7 +7,14 @@
  * @returns {void}
  */
 export function forEachEl(selector, handler) {
-	if (!(selector instanceof NodeList) && typeof selector !== "string") return;
+	if (
+		!(selector instanceof NodeList) &&
+		!Array.isArray(selector) &&
+		typeof selector !== "string"
+	) {
+		return;
+	}
+
 	if (typeof handler !== "function") return;
 
 	const elms =
