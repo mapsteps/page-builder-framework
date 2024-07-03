@@ -21,9 +21,14 @@ function init() {
 
 init();
 
-// Export `Wpbf` object to `window`.
 // @ts-ignore
-window["Wpbf"] = {
+window["WpbfTheme"] = {
+	// For backwards compatibility.
+	breakpoints: getBreakpoints(),
+	activeBreakpoint: getActiveBreakpoint(),
+	isInsideCustomizer: isInsideCustomizer(),
+
+	// New properties.
 	site: {
 		getBreakpoints: getBreakpoints,
 		getActiveBreakpoint: getActiveBreakpoint,
@@ -33,12 +38,4 @@ window["Wpbf"] = {
 		getAttr: getAttr,
 		getAttrAsNumber: getAttrAsNumber,
 	},
-};
-
-// Export `WpbfTheme` object to `window` for backwards compatibility.
-// @ts-ignore
-window["WpbfTheme"] = {
-	breakpoints: getBreakpoints(),
-	activeBreakpoint: getActiveBreakpoint(),
-	isInsideCustomizer: isInsideCustomizer(),
 };

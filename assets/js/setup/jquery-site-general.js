@@ -6,7 +6,7 @@ import { getBreakpoints } from "../utils/dom-util";
  * This file will be imported from site-jquery.js file.
  *
  * @param {JQueryStatic} $ - jQuery object.
- * @return {LegacyWpbfTheme}
+ * @return {WpbfTheme}
  */
 export default function setupjQuerySite($) {
 	/**
@@ -156,5 +156,6 @@ export default function setupjQuerySite($) {
 		isInsideCustomizer: isInsideCustomizer,
 		breakpoints: breakpoints,
 		activeBreakpoint: activeBreakpoint,
+		site: undefined,
 	};
 }

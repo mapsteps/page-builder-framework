@@ -23,21 +23,19 @@
  */
 
 /**
- * Global `Wpbf` object.
+ * Global `WpbfTheme` object.
  *
- * @typedef {Object} Wpbf
+ * @typedef {Object} WpbfTheme
  *
- * @property {WpbfSite} site
- */
-
-/**
- * Global `LegacyWpbfTheme` object.
- *
- * @typedef {Object} LegacyWpbfTheme
+ * For backwards compatibility:
  *
  * @property {WpbfBreakpoints} breakpoints - Breakpoint values for desktop, tablet, and mobile.
  * @property {string} activeBreakpoint - The current active breakpoint.
  * @property {boolean} isInsideCustomizer - Whether we're inside customizer or not.
+ *
+ * New properties:
+ *
+ * @property {WpbfSite|undefined} site - The site object.
  */
 
 /**
@@ -53,18 +51,4 @@
  *
  * @property {WpbfCustomize|undefined} customize
  * @property {any} media
- */
-
-/**
- * Override the global window object to include custom properties.
- *
- * @typedef {Object} WpbfThemeWindow
- *
- * @property {wp} wp
- * @property {Wpbf} Wpbf
- * @property {LegacyWpbfTheme} WpbfTheme
- */
-
-/**
- * @typedef {Window & LegacyWpbfTheme} WpbfWindow
  */
