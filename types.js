@@ -9,20 +9,6 @@
  */
 
 /**
- * WpbfSite object.
- *
- * @typedef {Object} WpbfSite
- *
- * @property {function():WpbfBreakpoints} getBreakpoints - Get breakpoint values for desktop, tablet, and mobile.
- * @property {function():string} getActiveBreakpoint - Get the current active breakpoint.
- * @property {function():boolean} isInsideCustomizer - Check whether we're inside customizer or not.
- * @property {function(NodeList|string, function(Element): void): void} forEachEl - Iterates over a collection of elements and applies a function to each.
- * @property {function(string, string|null, function(Event): void): void} listenDocumentEvent - Add document's event listener with optional selector to filter the target.
- * @property {function(string|HTMLElement, string): string} getAttr - Get attribute value of an element.
- * @property {function(string|HTMLElement, string): number} getAttrAsNumber - Get attribute value of an element as number.
- */
-
-/**
  * Global `WpbfTheme` object.
  *
  * @typedef {Object} WpbfTheme
@@ -32,10 +18,57 @@
  * @property {WpbfBreakpoints} breakpoints - Breakpoint values for desktop, tablet, and mobile.
  * @property {string} activeBreakpoint - The current active breakpoint.
  * @property {boolean} isInsideCustomizer - Whether we're inside customizer or not.
+ */
+
+/**
+ * @typedef {Object} WpbfDom
  *
- * New properties:
+ * @property {function(string): (HTMLElement|null)} findHtmlEl
+ * @property {function(string): HTMLElement[]} getHtmlEls
+ * @property {function(HTMLElement): (HTMLElement|null)} getParentHtmlEl
+ * @property {function(HTMLElement, string=): HTMLElement[]} getSiblings
+ * @property {function(HTMLElement): (HTMLElement|null)} getSiblingHtmlEl
+ * @property {function((Element|string), string, string=): Element[]} getNextElsUntil
+ * @property {function((Element|string), string, string=): Element[]} getPrevElsUntil
+ * @property {function(string): (HTMLElement|null)} getLastHtmlEl
+ * @property {function(HTMLElement, string): (HTMLElement|null)} directQuerySelector
+ * @property {function((string|NodeListOf<Element>|HTMLElement[]), function(Element): void): void} forEachEl
+ * @property {function(string, (string|null), function(any): void): void} listenDocumentEvent
+ * @property {function((HTMLElement|string), string): string} getAttr
+ * @property {function((HTMLElement|string), string): number} getAttrAsNumber
+ * @property {function(): WpbfBreakpoints} getBreakpoints
+ * @property {function(): string} getActiveBreakpoint
+ * @property {function((HTMLElement|Element), string): void} updateElSrc
+ * @property {function(HTMLElement): {top: number, left: number}} getOffset
+ * @property {function(): number} getWindowScrollTop
+ * @property {function(HTMLElement): number} getPureHeight
+ * @property {import("vanjs-core").Van} builder
+ */
+
+/**
+ * @typedef {Object} WpbfAnim
  *
- * @property {WpbfSite|undefined} site - The site object.
+ * @property {function(HTMLElement, number): void} hideElAfterDelay
+ * @property {function(HTMLElement, (string|undefined), string=): HTMLStyleElement} writeElStyle
+ * @property {function(HTMLElement, (string|undefined)): string} getElStyleId
+ * @property {function(HTMLElement, (string|undefined)): HTMLStyleElement} getElStyleTag
+ * @property {function(number, number): void} animateScrollTop
+ */
+
+/**
+ * @typedef {Object} WpbfUrl
+ *
+ * @property {function(string, Object<string, any>): string} addUrlParams
+ */
+
+/**
+ * @typedef {Object} WpbfUtils
+ *
+ * @property {function(): boolean} isInsideCustomizer
+ * @property {WpbfDom} dom
+ * @property {WpbfAnim} anim
+ * @property {import("ky").KyInstance} fetch
+ * @property {WpbfUrl} url
  */
 
 /**
@@ -51,4 +84,14 @@
  *
  * @property {WpbfCustomize|undefined} customize
  * @property {any} media
+ */
+
+/**
+ * Custom window object.
+ *
+ * @typedef {Object} WpbfWindow
+ *
+ * @property {WpbfUtils} WpbfUtils
+ * @property {WpbfTheme} WpbfTheme
+ * @property {wp} wp
  */

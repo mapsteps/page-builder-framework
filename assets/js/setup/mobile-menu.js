@@ -1,19 +1,15 @@
-import { writeElStyle, getElStyleId } from "../utils/anim-util";
-import {
-	forEachEl,
-	getBreakpoints,
-	getPureHeight,
-	getSiblings,
-	listenDocumentEvent,
-} from "../utils/dom-util";
-
 /**
  * This module is intended to handle the mobile menu JS functionality.
  *
  * Along with the site.js and desktop-menu.js, this file will be combined to site-min.js file.
+ *
+ * @param {WpbfUtils} utils - The WpbfUtils object.
  */
-export default function setupMobileMenu() {
-	let breakpoints = getBreakpoints();
+export default function setupMobileMenu(utils) {
+	const dom = utils.dom;
+	const anim = utils.anim;
+
+	let breakpoints = dom.getBreakpoints();
 
 	/**
 	 * The menu type. Accepts: 'hamburger', 'default', or 'premium'.
@@ -22,8 +18,11 @@ export default function setupMobileMenu() {
 	 */
 	let menuType;
 
+	// Initialize the module.
+	init();
+
 	/**
-	 * Initialize the module, call the main functions.
+	 * Module initialization, call the main functions.
 	 *
 	 * This function is the only function that should be called on top level scope.
 	 * Other functions are called / hooked from this function.
@@ -31,7 +30,7 @@ export default function setupMobileMenu() {
 	function init() {
 		// On window resize, get the updated breakpoints.
 		window.addEventListener("resize", function (e) {
-			breakpoints = getBreakpoints();
+			breakpoints = dom.getBreakpoints();
 		});
 
 		setupMenuType();
@@ -72,7 +71,7 @@ export default function setupMobileMenu() {
 		 * On mobile menu item hash link click,
 		 * it will either close the mobile menu, or open the submenu if exists.
 		 */
-		listenDocumentEvent(
+		dom.listenDocumentEvent(
 			"click",
 			".wpbf-mobile-menu a",
 			/**
@@ -113,7 +112,7 @@ export default function setupMobileMenu() {
 	 * @param {HTMLElement} link The anchor element of the menu item.
 	 */
 	function toggleMobileSubmenuOnHashLinkClick(link) {
-		let toggles = getSiblings(link, ".wpbf-submenu-toggle");
+		let toggles = dom.getSiblings(link, ".wpbf-submenu-toggle");
 		if (!toggles.length) return;
 		const toggle = toggles[0];
 
@@ -132,7 +131,7 @@ export default function setupMobileMenu() {
 		 * On mobile menu toggle click, we re-run the menu type setup and then run the toggling process.
 		 * The menu type setup need to be re-run to handle the behavior inside customizer.
 		 */
-		listenDocumentEvent("click", ".wpbf-mobile-menu-toggle", function () {
+		dom.listenDocumentEvent("click", ".wpbf-mobile-menu-toggle", function () {
 			setupMenuType();
 			toggleMobileMenu(menuType);
 		});
@@ -151,7 +150,8 @@ export default function setupMobileMenu() {
 					? mobileNavWrapper.offsetHeight
 					: 0;
 
-			forEachEl(".wpbf-mobile-menu-container.active nav", function (el) {
+			dom.forEachEl(".wpbf-mobile-menu-container.active nav", function (el) {
+				if (!(el instanceof HTMLElement)) return;
 				el.style.maxHeight = windowHeight - mobileNavWrapperHeight + "px";
 			});
 
@@ -206,12 +206,12 @@ export default function setupMobileMenu() {
 		) {
 			mobileMenu.classList.add("active");
 
-			const pureHeight = getPureHeight(mobileMenu);
-			const styleTagId = getElStyleId(mobileMenu);
+			const pureHeight = dom.getPureHeight(mobileMenu);
+			const styleTagId = anim.getElStyleId(mobileMenu, undefined);
 
 			const submenuId = styleTagId.replace("wpbf-style-", "");
 
-			writeElStyle(
+			anim.writeElStyle(
 				mobileMenu,
 				`
 				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
@@ -225,7 +225,7 @@ export default function setupMobileMenu() {
 				mobileMenu.classList.add("is-expanded");
 
 				setTimeout(function () {
-					writeElStyle(
+					anim.writeElStyle(
 						mobileMenu,
 						`#${submenuId}.wpbf-slide-anim {display: block;}`,
 					);
@@ -265,11 +265,11 @@ export default function setupMobileMenu() {
 			mobileMenu instanceof HTMLElement &&
 			mobileMenu.classList.contains("active")
 		) {
-			const pureHeight = getPureHeight(mobileMenu);
-			const styleTagId = getElStyleId(mobileMenu);
+			const pureHeight = dom.getPureHeight(mobileMenu);
+			const styleTagId = anim.getElStyleId(mobileMenu, undefined);
 			const submenuId = styleTagId.replace("wpbf-style-", "");
 
-			writeElStyle(
+			anim.writeElStyle(
 				mobileMenu,
 				`
 				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
@@ -315,7 +315,7 @@ export default function setupMobileMenu() {
 				? ".wpbf-mobile-menu-hamburger .wpbf-submenu-toggle"
 				: ".wpbf-mobile-menu-default .wpbf-submenu-toggle";
 
-		listenDocumentEvent(
+		dom.listenDocumentEvent(
 			"click",
 			menuClass,
 			/**
@@ -358,14 +358,14 @@ export default function setupMobileMenu() {
 		toggle.classList.add("active");
 		toggle.setAttribute("aria-expanded", "true");
 
-		const submenus = getSiblings(toggle, ".sub-menu");
+		const submenus = dom.getSiblings(toggle, ".sub-menu");
 
 		submenus.forEach(function (submenu) {
-			const pureHeight = getPureHeight(submenu);
-			const styleTagId = getElStyleId(submenu);
+			const pureHeight = dom.getPureHeight(submenu);
+			const styleTagId = anim.getElStyleId(submenu, undefined);
 			const submenuId = styleTagId.replace("wpbf-style-", "");
 
-			writeElStyle(
+			anim.writeElStyle(
 				submenu,
 				`
 				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
@@ -379,7 +379,7 @@ export default function setupMobileMenu() {
 				submenu.classList.add("is-expanded");
 
 				setTimeout(function () {
-					writeElStyle(
+					anim.writeElStyle(
 						submenu,
 						`#${submenuId}.wpbf-slide-anim {display: block}`,
 					);
@@ -406,14 +406,14 @@ export default function setupMobileMenu() {
 		toggle.classList.remove("active");
 		toggle.setAttribute("aria-expanded", "false");
 
-		const submenus = getSiblings(toggle, ".sub-menu");
+		const submenus = dom.getSiblings(toggle, ".sub-menu");
 
 		submenus.forEach(function (submenu) {
-			const pureHeight = getPureHeight(submenu);
-			const styleTagId = getElStyleId(submenu);
+			const pureHeight = dom.getPureHeight(submenu);
+			const styleTagId = anim.getElStyleId(submenu, undefined);
 			const submenuId = styleTagId.replace("wpbf-style-", "");
 
-			writeElStyle(
+			anim.writeElStyle(
 				submenu,
 				`
 				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
@@ -459,7 +459,7 @@ export default function setupMobileMenu() {
 		const menuItem = toggle.closest(".menu-item-has-children");
 
 		if (menuItem && menuItem instanceof HTMLElement) {
-			sameLevelItems = getSiblings(menuItem, ".menu-item-has-children");
+			sameLevelItems = dom.getSiblings(menuItem, ".menu-item-has-children");
 		}
 
 		sameLevelItems.forEach(function (item) {
@@ -468,7 +468,4 @@ export default function setupMobileMenu() {
 			closeMobileSubmenu(submenuToggle);
 		});
 	}
-
-	// Run the module.
-	init();
 }
