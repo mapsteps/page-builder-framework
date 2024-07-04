@@ -132,6 +132,7 @@ export default function setupDesktopMenu(utils) {
 				// The .is-expanded doesn't have the width, let's add it to the style block.
 				anim.writeElStyle(
 					searchArea,
+					undefined,
 					`
 					.wpbf-menu-item-search .wpbf-menu-search.display-block {display: block;}
 					.wpbf-menu-item-search .wpbf-menu-search.is-expanded {width: ${itemWidth}px;}
@@ -255,6 +256,7 @@ export default function setupDesktopMenu(utils) {
 
 				anim.writeElStyle(
 					submenu,
+					undefined,
 					`
 					#${submenuId}.display-block {display: block;}
 					#${submenuId}.is-shown {opacity: 1;}
@@ -310,6 +312,7 @@ export default function setupDesktopMenu(utils) {
 
 				anim.writeElStyle(
 					submenu,
+					undefined,
 					`
 					#${submenuId}.display-block {display:block;}
 					#${submenuId}.is-shown {opacity: 1;}

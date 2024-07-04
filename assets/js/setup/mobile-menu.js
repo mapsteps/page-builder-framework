@@ -213,6 +213,7 @@ export default function setupMobileMenu(utils) {
 
 			anim.writeElStyle(
 				mobileMenu,
+				undefined,
 				`
 				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
 				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
@@ -227,6 +228,7 @@ export default function setupMobileMenu(utils) {
 				setTimeout(function () {
 					anim.writeElStyle(
 						mobileMenu,
+						undefined,
 						`#${submenuId}.wpbf-slide-anim {display: block;}`,
 					);
 				}, 400);
@@ -271,6 +273,7 @@ export default function setupMobileMenu(utils) {
 
 			anim.writeElStyle(
 				mobileMenu,
+				undefined,
 				`
 				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
 				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
@@ -367,6 +370,7 @@ export default function setupMobileMenu(utils) {
 
 			anim.writeElStyle(
 				submenu,
+				undefined,
 				`
 				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
 				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
@@ -381,6 +385,7 @@ export default function setupMobileMenu(utils) {
 				setTimeout(function () {
 					anim.writeElStyle(
 						submenu,
+						undefined,
 						`#${submenuId}.wpbf-slide-anim {display: block}`,
 					);
 				}, 400);
@@ -415,6 +420,7 @@ export default function setupMobileMenu(utils) {
 
 			anim.writeElStyle(
 				submenu,
+				undefined,
 				`
 				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
 				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
