@@ -124,7 +124,7 @@ export default function setupjQueryMobileMenu($) {
 		});
 
 		// On window resize, if the window width is wider than desktop breakpoint, then hide the mobile menu.
-		$(window).resize(function () {
+		$(window).on("resize", function () {
 			const windowHeight = $(window).height();
 			const windowWidth = $(window).width();
 
