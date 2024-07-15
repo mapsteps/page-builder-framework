@@ -213,8 +213,8 @@ export default function setupDesktopMenu(utils) {
 		).length;
 
 		let divided = totalMenuItems / 2;
+		// The vanilla version doesn't need the -1 here.
 		divided = Math.floor(divided);
-		divided = divided - 1;
 
 		// Place the logo in the center of the menu.
 		dom.forEachEl(".wpbf-menu-centered .logo-container", function (el) {
@@ -224,8 +224,8 @@ export default function setupDesktopMenu(utils) {
 					")",
 			);
 
-			if (menuItem && menuItem.parentNode) {
-				menuItem.parentNode.insertBefore(el, menuItem.nextSibling);
+			if (menuItem) {
+				menuItem.after(el);
 
 				if (el instanceof HTMLElement) {
 					el.style.display = "block";
