@@ -9,6 +9,11 @@ export default function setupDesktopMenu(utils) {
 	const dom = utils.dom;
 	const anim = utils.anim;
 
+	const nav = dom.findHtmlEl(".wpbf-navigation");
+	if (!nav) return;
+
+	const navScope = "theme-menu";
+
 	/**
 	 * The sub-menu animation duration.
 	 */
@@ -238,32 +243,36 @@ export default function setupDesktopMenu(utils) {
 	 * Setup sub-menu animation - second level.
 	 */
 	function setup2ndLevelSubmenuAnimation() {
+		const selector =
+			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children";
+		const animScope = navScope + "-2nd-lvl-submenu";
+		const animClassName = "fade-anim";
+
 		dom.listenDocumentEvent(
 			"mouseenter",
-			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
+			selector,
 			/**
 			 *
 			 * @param {MouseEvent} e - The mouse event.
 			 * @this {HTMLElement}
 			 */
 			function (e) {
+				if (!nav) return;
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu || !(submenu instanceof HTMLElement)) return;
 				if (submenu.classList.contains("is-shown")) return;
 
-				const styleTagId = anim.getElStyleId(submenu, undefined);
-				const submenuId = styleTagId.replace("wpbf-style-", "");
-
 				anim.writeElStyle(
-					submenu,
-					undefined,
+					nav,
+					animScope,
 					`
-					#${submenuId}.display-block {display: block;}
-					#${submenuId}.is-shown {opacity: 1;}
-					#${submenuId} {opacity: 0; transition-duration: ${duration}ms;}
+					${selector} .sub-menu.${animClassName}.display-block {display: block;}
+					${selector} .sub-menu.${animClassName}.is-shown {opacity: 1;}
+					${selector} .sub-menu.${animClassName} {opacity: 0; transition-duration: ${duration}ms;}
 					`,
 				);
 
+				submenu.classList.add(animClassName);
 				submenu.classList.add("display-block");
 
 				setTimeout(function () {
@@ -274,7 +283,7 @@ export default function setupDesktopMenu(utils) {
 
 		dom.listenDocumentEvent(
 			"mouseleave",
-			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
+			selector,
 			/**
 			 * @this {HTMLElement}
 			 */
@@ -287,6 +296,7 @@ export default function setupDesktopMenu(utils) {
 
 				setTimeout(function () {
 					submenu.classList.remove("display-block");
+					submenu.classList.remove(animClassName);
 				}, duration);
 			},
 		);
@@ -296,30 +306,33 @@ export default function setupDesktopMenu(utils) {
 	 * Setup sub-menu animation - fade.
 	 */
 	function setupSubmenuFadeAnimation() {
+		const selector = ".wpbf-sub-menu-animation-fade > .menu-item-has-children";
+		const animScope = navScope + "-submenu";
+		const animClassName = "fade-anim";
+
 		dom.listenDocumentEvent(
 			"mouseenter",
-			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
+			selector,
 			/**
 			 * @this {HTMLElement}
 			 */
 			function () {
+				if (!nav) return;
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu || !(submenu instanceof HTMLElement)) return;
 				if (submenu.classList.contains("is-shown")) return;
 
-				const styleTagId = anim.getElStyleId(submenu, undefined);
-				const submenuId = styleTagId.replace("wpbf-style-", "");
-
 				anim.writeElStyle(
-					submenu,
-					undefined,
+					nav,
+					animScope,
 					`
-					#${submenuId}.display-block {display:block;}
-					#${submenuId}.is-shown {opacity: 1;}
-					#${submenuId} {opacity: 0; transition: opacity ${duration}ms ease-in-out;}
+					${selector} > .sub-menu.${animClassName}.display-block {display:block;}
+					${selector} > .sub-menu.${animClassName}.is-shown {opacity: 1;}
+					${selector} > .sub-menu.${animClassName} {opacity: 0; transition: opacity ${duration}ms ease-in-out;}
 					`,
 				);
 
+				submenu.classList.add(animClassName);
 				submenu.classList.add("display-block");
 
 				setTimeout(function () {
@@ -330,7 +343,7 @@ export default function setupDesktopMenu(utils) {
 
 		dom.listenDocumentEvent(
 			"mouseleave",
-			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
+			selector,
 			/**
 			 * @param {MouseEvent} e - The mouse event.
 			 * @this {HTMLElement}
@@ -344,6 +357,7 @@ export default function setupDesktopMenu(utils) {
 
 				setTimeout(function () {
 					submenu.classList.remove("display-block");
+					submenu.classList.remove(animClassName);
 				}, duration);
 			},
 		);
