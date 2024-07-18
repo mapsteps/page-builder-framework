@@ -431,10 +431,6 @@
 	margin: 0;
 	padding: 0;
 	display: none;
-
-	&.wpbf-slide-anim {
-		@include transition(height 0.4s ease-in-out);
-	}
 }
 
 .wpbf-mobile-menu .menu-item-has-children {

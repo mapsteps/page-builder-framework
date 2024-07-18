@@ -184,6 +184,9 @@ export default function setupMobileMenu(utils) {
 	const animScope = "mobile-menu-anim";
 	const animClassName = "slide-anim";
 
+	const defaultSlideAnimDuration = 400;
+	const slideAnimCss = `transition: height ${defaultSlideAnimDuration}ms ease-in-out;`;
+
 	/**
 	 * Open mobile menu.
 	 * This function is only being called inside `toggleMobileMenu` function.
@@ -213,13 +216,12 @@ export default function setupMobileMenu(utils) {
 			const styleTagId = anim.getElStyleId(mobileMenu, animScope);
 			const submenuId = styleTagId.replace("wpbf-style-", "");
 
-			// The .is-expanded animation duration is set in SCSS file to 400ms.
 			anim.writeElStyle(
 				mobileMenu,
 				animScope,
 				`
 				#${submenuId}.${animClassName}.is-expanded {height: ${pureHeight}px;}
-				#${submenuId}.${animClassName} {display: block; height: 0; overflow: hidden;}
+				#${submenuId}.${animClassName} {display: block; height: 0; overflow: hidden; ${slideAnimCss}}
 				`,
 			);
 
@@ -268,7 +270,7 @@ export default function setupMobileMenu(utils) {
 
 				setTimeout(function () {
 					mobileMenu.classList.remove(animClassName);
-				}, 400);
+				}, defaultSlideAnimDuration);
 			}, 1);
 		}
 
@@ -357,7 +359,7 @@ export default function setupMobileMenu(utils) {
 				submenuAnimScope,
 				`
 				#${submenuId}.${animClassName}.is-expanded {height: ${pureHeight}px;}
-				#${submenuId}.${animClassName} {display: block; height: 0; overflow: hidden;}
+				#${submenuId}.${animClassName} {display: block; height: 0; overflow: hidden; ${slideAnimCss}}
 				`,
 			);
 
@@ -395,7 +397,7 @@ export default function setupMobileMenu(utils) {
 
 				setTimeout(function () {
 					submenu.classList.remove(animClassName);
-				}, 400);
+				}, defaultSlideAnimDuration);
 			}, 1);
 		});
 	}
