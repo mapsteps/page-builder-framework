@@ -12,8 +12,6 @@ export default function setupDesktopMenu(utils) {
 	const nav = dom.findHtmlEl(".wpbf-navigation");
 	if (!nav) return;
 
-	const navScope = "theme-menu";
-
 	/**
 	 * The sub-menu animation duration.
 	 */
@@ -127,6 +125,7 @@ export default function setupDesktopMenu(utils) {
 
 			const searchArea = menuItem.querySelector(".wpbf-menu-search");
 			const searchField = menuItem.querySelector("input[type=search]");
+			const animScope = "search-field-anim";
 
 			if (
 				searchArea &&
@@ -137,7 +136,7 @@ export default function setupDesktopMenu(utils) {
 				// The .is-expanded doesn't have the width, let's add it to the style block.
 				anim.writeElStyle(
 					searchArea,
-					undefined,
+					animScope,
 					`
 					.wpbf-menu-item-search .wpbf-menu-search.display-block {display: block;}
 					.wpbf-menu-item-search .wpbf-menu-search.is-expanded {width: ${itemWidth}px;}
@@ -244,8 +243,8 @@ export default function setupDesktopMenu(utils) {
 	 */
 	function setup2ndLevelSubmenuAnimation() {
 		const selector =
-			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children";
-		const animScope = navScope + "-2nd-lvl-submenu";
+			"#navigation .wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children";
+		const animScope = "nested-submenu-anim";
 		const animClassName = "fade-anim";
 
 		dom.listenDocumentEvent(
@@ -307,7 +306,7 @@ export default function setupDesktopMenu(utils) {
 	 */
 	function setupSubmenuFadeAnimation() {
 		const selector = ".wpbf-sub-menu-animation-fade > .menu-item-has-children";
-		const animScope = navScope + "-submenu";
+		const animScope = "submenu-anim";
 		const animClassName = "fade-anim";
 
 		dom.listenDocumentEvent(

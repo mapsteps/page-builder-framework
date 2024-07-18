@@ -181,6 +181,9 @@ export default function setupMobileMenu(utils) {
 		}
 	}
 
+	const animScope = "mobile-menu-anim";
+	const animClassName = "slide-anim";
+
 	/**
 	 * Open mobile menu.
 	 * This function is only being called inside `toggleMobileMenu` function.
@@ -207,31 +210,23 @@ export default function setupMobileMenu(utils) {
 			mobileMenu.classList.add("active");
 
 			const pureHeight = dom.getPureHeight(mobileMenu);
-			const styleTagId = anim.getElStyleId(mobileMenu, undefined);
-
+			const styleTagId = anim.getElStyleId(mobileMenu, animScope);
 			const submenuId = styleTagId.replace("wpbf-style-", "");
 
+			// The .is-expanded animation duration is set in SCSS file to 400ms.
 			anim.writeElStyle(
 				mobileMenu,
-				undefined,
+				animScope,
 				`
-				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
-				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.${animClassName}.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.${animClassName} {display: block; height: 0; overflow: hidden;}
 				`,
 			);
 
-			mobileMenu.classList.add("wpbf-slide-anim");
+			mobileMenu.classList.add(animClassName);
 
 			setTimeout(function () {
 				mobileMenu.classList.add("is-expanded");
-
-				setTimeout(function () {
-					anim.writeElStyle(
-						mobileMenu,
-						undefined,
-						`#${submenuId}.wpbf-slide-anim {display: block;}`,
-					);
-				}, 400);
 			}, 1);
 		}
 
@@ -267,25 +262,12 @@ export default function setupMobileMenu(utils) {
 			mobileMenu instanceof HTMLElement &&
 			mobileMenu.classList.contains("active")
 		) {
-			const pureHeight = dom.getPureHeight(mobileMenu);
-			const styleTagId = anim.getElStyleId(mobileMenu, undefined);
-			const submenuId = styleTagId.replace("wpbf-style-", "");
-
-			anim.writeElStyle(
-				mobileMenu,
-				undefined,
-				`
-				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
-				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
-				`,
-			);
-
 			setTimeout(function () {
 				mobileMenu.classList.remove("active");
 				mobileMenu.classList.remove("is-expanded");
 
 				setTimeout(function () {
-					mobileMenu.classList.remove("wpbf-slide-anim");
+					mobileMenu.classList.remove(animClassName);
 				}, 400);
 			}, 1);
 		}
@@ -345,6 +327,8 @@ export default function setupMobileMenu(utils) {
 		}
 	}
 
+	const submenuAnimScope = "mobile-submenu-anim";
+
 	/**
 	 * Open mobile submenu.
 	 *
@@ -365,30 +349,22 @@ export default function setupMobileMenu(utils) {
 
 		submenus.forEach(function (submenu) {
 			const pureHeight = dom.getPureHeight(submenu);
-			const styleTagId = anim.getElStyleId(submenu, undefined);
+			const styleTagId = anim.getElStyleId(submenu, submenuAnimScope);
 			const submenuId = styleTagId.replace("wpbf-style-", "");
 
 			anim.writeElStyle(
 				submenu,
-				undefined,
+				submenuAnimScope,
 				`
-				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
-				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.${animClassName}.is-expanded {height: ${pureHeight}px;}
+				#${submenuId}.${animClassName} {display: block; height: 0; overflow: hidden;}
 				`,
 			);
 
-			submenu.classList.add("wpbf-slide-anim");
+			submenu.classList.add(animClassName);
 
 			setTimeout(function () {
 				submenu.classList.add("is-expanded");
-
-				setTimeout(function () {
-					anim.writeElStyle(
-						submenu,
-						undefined,
-						`#${submenuId}.wpbf-slide-anim {display: block}`,
-					);
-				}, 400);
 			}, 1);
 		});
 
@@ -414,24 +390,11 @@ export default function setupMobileMenu(utils) {
 		const submenus = dom.getSiblings(toggle, ".sub-menu");
 
 		submenus.forEach(function (submenu) {
-			const pureHeight = dom.getPureHeight(submenu);
-			const styleTagId = anim.getElStyleId(submenu, undefined);
-			const submenuId = styleTagId.replace("wpbf-style-", "");
-
-			anim.writeElStyle(
-				submenu,
-				undefined,
-				`
-				#${submenuId}.wpbf-slide-anim {display: block; height: 0; overflow: hidden;}
-				#${submenuId}.wpbf-slide-anim.is-expanded {height: ${pureHeight}px;}
-				`,
-			);
-
 			setTimeout(function () {
 				submenu.classList.remove("is-expanded");
 
 				setTimeout(function () {
-					submenu.classList.remove("wpbf-slide-anim");
+					submenu.classList.remove(animClassName);
 				}, 400);
 			}, 1);
 		});
