@@ -46,6 +46,17 @@
  */
 
 /**
+ * @typedef {object} SlideToggleOpts
+ *
+ * @property {HTMLElement}           el HTMLElement to slide up or down.
+ * @property {'up'|'down'}           direction The slide direction. Accepts either "up" or "down".
+ * @property {number|undefined}      [duration] The animation duration.
+ * @property {string|undefined}      [easing] The CSS animation easing.
+ * @property {() => void|undefined}  [callback] The function to be called after animation done.
+ * @property {string|undefined}      [animScope] Scope of the CSS animation.
+ */
+
+/**
  * @typedef {Object} WpbfAnim
  *
  * @property {function(HTMLElement, number): void} hideElAfterDelay
@@ -53,6 +64,7 @@
  * @property {function(HTMLElement, (string|undefined)): string} getElStyleId
  * @property {function(HTMLElement, (string|undefined)): HTMLStyleElement} getElStyleTag
  * @property {function(number, number): void} animateScrollTop
+ * @property {function(SlideToggleOpts): void} slideToggle
  */
 
 /**

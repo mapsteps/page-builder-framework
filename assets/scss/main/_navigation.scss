@@ -148,16 +148,6 @@
 	}
 }
 
-// Default sub menus (excluding mega menu) - VanillaJS helper
-.wpbf-vanilla .wpbf-sub-menu {
-	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
-		> .sub-menu {
-			// The old jQuery-based code had default jQuery animate duration (400ms).
-			transition: opacity 0.4s ease-in-out;
-		}
-	}
-}
-
 // Default sub menus (excluding mega menu)
 .wpbf-sub-menu {
 	// All sub menus
@@ -387,12 +377,6 @@
 	.wpbf-menu-toggle-container {
 		margin-top: $margin;
 	}
-}
-
-/* Mobile menu - VanillaJS helper */
-.wpbf-vanilla .wpbf-mobile-menu-container {
-	// The old jQuery-based code had default fade animation duration (400ms).
-	transition: height 0.4s ease-in-out;
 }
 
 /* Mobile menu */

@@ -267,7 +267,7 @@ export default function setupDesktopMenu(utils) {
 					`
 					${selector} .sub-menu.${animClassName}.display-block {display: block;}
 					${selector} .sub-menu.${animClassName}.is-shown {opacity: 1;}
-					${selector} .sub-menu.${animClassName} {opacity: 0; transition-duration: ${duration}ms;}
+					${selector} .sub-menu.${animClassName} {opacity: 0; transition: opacity ${duration}ms ease-in-out;}
 					`,
 				);
 

@@ -181,11 +181,19 @@ export default function setupMobileMenu(utils) {
 		}
 	}
 
-	const animScope = "mobile-menu-anim";
-	const animClassName = "slide-anim";
+	/**
+	 * Patch mobile nav overflow-y.
+	 *
+	 * @param {string} overflow The overflow value.
+	 */
+	function patchMobileNavOverflowY(overflow) {
+		const mobileNav = dom.findHtmlEl("#mobile-navigation");
+		if (!mobileNav) return;
 
-	const defaultSlideAnimDuration = 400;
-	const slideAnimCss = `transition: height ${defaultSlideAnimDuration}ms ease-in-out;`;
+		mobileNav.style.overflowY = overflow;
+	}
+
+	const animScope = "mobile-menu-anim";
 
 	/**
 	 * Open mobile menu.
@@ -200,44 +208,32 @@ export default function setupMobileMenu(utils) {
 		if ("premium" === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
-		if (!toggle) return;
+		const toggle = dom.findHtmlEl("#wpbf-mobile-menu-toggle");
 
-		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
+		const mobileMenu = dom.findHtmlEl(".wpbf-mobile-menu-container");
 
-		if (
-			mobileMenu &&
-			mobileMenu instanceof HTMLElement &&
-			!mobileMenu.classList.contains("active")
-		) {
-			mobileMenu.classList.add("active");
+		if (mobileMenu && !mobileMenu.classList.contains("active")) {
+			patchMobileNavOverflowY("hidden");
 
-			const pureHeight = dom.getPureHeight(mobileMenu);
-			const styleTagId = anim.getElStyleId(mobileMenu, animScope);
-			const submenuId = styleTagId.replace("wpbf-style-", "");
-
-			anim.writeElStyle(
-				mobileMenu,
-				animScope,
-				`
-				#${submenuId}.${animClassName}.is-expanded {height: ${pureHeight}px;}
-				#${submenuId}.${animClassName} {display: block; height: 0; overflow: hidden; ${slideAnimCss}}
-				`,
-			);
-
-			mobileMenu.classList.add(animClassName);
-
-			setTimeout(function () {
-				mobileMenu.classList.add("is-expanded");
-			}, 1);
+			anim.slideToggle({
+				el: mobileMenu,
+				direction: "down",
+				callback: () => {
+					mobileMenu.classList.add("active");
+					patchMobileNavOverflowY("auto");
+				},
+				animScope: animScope,
+			});
 		}
 
-		toggle.classList.add("active");
-		toggle.setAttribute("aria-expanded", "true");
+		if (toggle) {
+			toggle.classList.add("active");
+			toggle.setAttribute("aria-expanded", "true");
 
-		if ("hamburger" === menuType) {
-			toggle.classList.remove("wpbff-hamburger");
-			toggle.classList.add("wpbff-times");
+			if ("hamburger" === menuType) {
+				toggle.classList.remove("wpbff-hamburger");
+				toggle.classList.add("wpbff-times");
+			}
 		}
 	}
 
@@ -251,35 +247,34 @@ export default function setupMobileMenu(utils) {
 		if ("premium" === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
-		if (!toggle) return;
+		const toggle = dom.findHtmlEl("#wpbf-mobile-menu-toggle");
 
 		// Because this function is also being called directly in several places, then we need this checking.
-		if (!toggle.classList.contains("active")) return;
+		if (!toggle || !toggle.classList.contains("active")) return;
 
-		const mobileMenu = document.querySelector(".wpbf-mobile-menu-container");
+		const mobileMenu = dom.findHtmlEl(".wpbf-mobile-menu-container");
 
-		if (
-			mobileMenu &&
-			mobileMenu instanceof HTMLElement &&
-			mobileMenu.classList.contains("active")
-		) {
-			setTimeout(function () {
-				mobileMenu.classList.remove("active");
-				mobileMenu.classList.remove("is-expanded");
+		if (mobileMenu && mobileMenu.classList.contains("active")) {
+			patchMobileNavOverflowY("hidden");
 
-				setTimeout(function () {
-					mobileMenu.classList.remove(animClassName);
-				}, defaultSlideAnimDuration);
-			}, 1);
+			anim.slideToggle({
+				el: mobileMenu,
+				direction: "up",
+				callback: () => {
+					mobileMenu.classList.remove("active");
+				},
+				animScope: animScope,
+			});
 		}
 
-		toggle.classList.remove("active");
-		toggle.setAttribute("aria-expanded", "false");
+		if (toggle) {
+			toggle.classList.remove("active");
+			toggle.setAttribute("aria-expanded", "false");
 
-		if ("hamburger" === menuType) {
-			toggle.classList.remove("wpbff-times");
-			toggle.classList.add("wpbff-hamburger");
+			if ("hamburger" === menuType) {
+				toggle.classList.remove("wpbff-times");
+				toggle.classList.add("wpbff-hamburger");
+			}
 		}
 	}
 
@@ -350,24 +345,12 @@ export default function setupMobileMenu(utils) {
 		const submenus = dom.getSiblings(toggle, ".sub-menu");
 
 		submenus.forEach(function (submenu) {
-			const pureHeight = dom.getPureHeight(submenu);
-			const styleTagId = anim.getElStyleId(submenu, submenuAnimScope);
-			const submenuId = styleTagId.replace("wpbf-style-", "");
-
-			anim.writeElStyle(
-				submenu,
-				submenuAnimScope,
-				`
-				#${submenuId}.${animClassName}.is-expanded {height: ${pureHeight}px;}
-				#${submenuId}.${animClassName} {display: block; height: 0; overflow: hidden; ${slideAnimCss}}
-				`,
-			);
-
-			submenu.classList.add(animClassName);
-
-			setTimeout(function () {
-				submenu.classList.add("is-expanded");
-			}, 1);
+			anim.slideToggle({
+				el: submenu,
+				direction: "down",
+				callback: () => {},
+				animScope: submenuAnimScope,
+			});
 		});
 
 		autoCollapseMobileSubmenus(toggle);
@@ -392,13 +375,12 @@ export default function setupMobileMenu(utils) {
 		const submenus = dom.getSiblings(toggle, ".sub-menu");
 
 		submenus.forEach(function (submenu) {
-			setTimeout(function () {
-				submenu.classList.remove("is-expanded");
-
-				setTimeout(function () {
-					submenu.classList.remove(animClassName);
-				}, defaultSlideAnimDuration);
-			}, 1);
+			anim.slideToggle({
+				el: submenu,
+				direction: "up",
+				callback: () => {},
+				animScope: submenuAnimScope,
+			});
 		});
 	}
 
