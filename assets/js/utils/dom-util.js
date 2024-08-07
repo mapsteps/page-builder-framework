@@ -1,6 +1,41 @@
 /// <reference path="../../../types.js"/>
 
 /**
+ * Iterates over a collection of elements and applies a function to each.
+ *
+ * @param {string|NodeListOf<Element>|HTMLElement[]} selector - Either a NodeList obtained from document.querySelectorAll() or a CSS selector string.
+ * @param {function(Element): void} handler - The function to be applied to each element. Accepts one parameter, which is the element.
+ *
+ * @returns {void}
+ */
+export function forEachEl(selector, handler) {
+	if (
+		!(selector instanceof NodeList) &&
+		!Array.isArray(selector) &&
+		typeof selector !== "string"
+	) {
+		return;
+	}
+
+	if (typeof handler !== "function") return;
+
+	const elms =
+		selector instanceof NodeList || Array.isArray(selector)
+			? selector
+			: document.querySelectorAll(selector);
+
+	if (!elms.length) return;
+
+	for (let i = 0; i < elms.length; i++) {
+		const elm = elms[i];
+
+		if (elm instanceof HTMLElement) {
+			handler(elm);
+		}
+	}
+}
+
+/**
  * Check whether we're inside customizer or not.
  *
  * @returns {boolean} Whether we're inside customizer or not.

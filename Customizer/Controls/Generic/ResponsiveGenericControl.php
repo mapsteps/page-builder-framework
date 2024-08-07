@@ -110,8 +110,6 @@ class ResponsiveGenericControl extends GenericControl {
 
 		parent::enqueue();
 
-		( new ResponsiveUtil() )->enqueueAssets();
-
 		// Enqueue the scripts.
 		wp_enqueue_script(
 			'wpbf-responsive-generic-control',
