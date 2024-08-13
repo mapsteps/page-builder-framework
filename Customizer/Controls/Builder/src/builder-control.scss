@@ -1,10 +1,10 @@
-#accordion-section-wpbf_header_builder_toggle_section {
+#accordion-section-wpbf_header_builder_section {
 }
 
-#sub-accordion-section-wpbf_header_builder_toggle_section {
-	padding-top: 0;
-	padding-bottom: 0;
-	border-top: none;
+#sub-accordion-section-wpbf_header_builder_section {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	border-top-width: 0 !important;
 
 	.section-meta {
 		display: none;

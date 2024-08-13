@@ -21,7 +21,7 @@ wpbf_customizer_panel()
 
 // Header builder toggle section.
 wpbf_customizer_section()
-	->id( 'wpbf_header_builder_toggle_section' )
+	->id( 'wpbf_header_builder_section' )
 	->type( 'expanded' )
 	->title( __( 'Header Builder', 'page-builder-framework' ) )
 	->priority( 0 )
@@ -34,7 +34,21 @@ wpbf_customizer_field()
 	->label( __( 'Use Header Builder', 'page-builder-framework' ) )
 	->defaultValue( true )
 	->priority( 0 )
-	->addToSection( 'wpbf_header_builder_toggle_section' );
+	->addToSection( 'wpbf_header_builder_section' );
+
+wpbf_customizer_field()
+	->id( 'wpbf_header_builder' )
+	->type( 'header-builder' )
+	->label( __( 'Header Builder', 'page-builder-framework' ) )
+	->priority( 0 )
+	->activeCallback( [
+		array(
+			'id'       => 'wpbf_use_header_builder',
+			'operator' => '==',
+			'value'    => true,
+		),
+	] )
+	->addToSection( 'wpbf_header_builder_section' );
 
 // Pre header.
 wpbf_customizer_section()

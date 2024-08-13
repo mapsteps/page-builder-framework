@@ -45,6 +45,7 @@ import {
 	WpbfCustomizeRepeaterControl,
 	WpbfRepeaterRow,
 } from "../../Repeater/src/repeater-interface";
+import { WpbfCustomizeBuilderControl } from "../../Builder/src/builder-interface";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -342,8 +343,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-responsive-input-slider": WpbfCustomizeResponsiveInputSliderControl;
 	"wpbf-sortable": WpbfCustomizeSortableControl;
 	"wpbf-toggle": WpbfCustomizeCheckboxControl;
-	"wpbf-header-builder": any;
-	"wpbf-footer-builder": any;
+	"wpbf-header-builder": WpbfCustomizeBuilderControl;
 }
 
 export interface WpbfControlDependency {

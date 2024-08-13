@@ -24,7 +24,7 @@ class HeaderBuilderField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		return null;
+		return $value;
 
 	}
 
