@@ -19,6 +19,23 @@ wpbf_customizer_panel()
 
 /* Sections - Header */
 
+// Header builder toggle section.
+wpbf_customizer_section()
+	->id( 'wpbf_header_builder_toggle_section' )
+	->type( 'expanded' )
+	->title( __( 'Header Builder', 'page-builder-framework' ) )
+	->priority( 0 )
+	->addToPanel( 'header_panel' );
+
+// Header builder toggle.
+wpbf_customizer_field()
+	->id( 'wpbf_use_header_builder' )
+	->type( 'headline-toggle' )
+	->label( __( 'Use Header Builder', 'page-builder-framework' ) )
+	->defaultValue( true )
+	->priority( 0 )
+	->addToSection( 'wpbf_header_builder_toggle_section' );
+
 // Pre header.
 wpbf_customizer_section()
 	->id( 'wpbf_pre_header_options' )
@@ -31,6 +48,13 @@ wpbf_customizer_section()
 		'design'  => [
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
+	] )
+	->activeCallback( [
+		array(
+			'id'       => 'wpbf_use_header_builder',
+			'operator' => '==',
+			'value'    => false,
+		),
 	] )
 	->addToPanel( 'header_panel' );
 
@@ -47,6 +71,13 @@ wpbf_customizer_section()
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
 	] )
+	->activeCallback( [
+		array(
+			'id'       => 'wpbf_use_header_builder',
+			'operator' => '==',
+			'value'    => false,
+		),
+	] )
 	->addToPanel( 'header_panel' );
 
 // Sub menu.
@@ -61,6 +92,13 @@ wpbf_customizer_section()
 		'design'  => [
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
+	] )
+	->activeCallback( [
+		array(
+			'id'       => 'wpbf_use_header_builder',
+			'operator' => '==',
+			'value'    => false,
+		),
 	] )
 	->addToPanel( 'header_panel' );
 
@@ -77,6 +115,13 @@ wpbf_customizer_section()
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
 	] )
+	->activeCallback( [
+		array(
+			'id'       => 'wpbf_use_header_builder',
+			'operator' => '==',
+			'value'    => false,
+		),
+	] )
 	->addToPanel( 'header_panel' );
 
 // Mobile menu.
@@ -84,6 +129,13 @@ wpbf_customizer_section()
 	->id( 'wpbf_mobile_sub_menu_options' )
 	->title( __( 'Mobile Sub Menu', 'page-builder-framework' ) )
 	->priority( 350 )
+	->activeCallback( [
+		array(
+			'id'       => 'wpbf_use_header_builder',
+			'operator' => '==',
+			'value'    => false,
+		),
+	] )
 	->addToPanel( 'header_panel' );
 
 /* Fields – Pre Header */

@@ -86,6 +86,8 @@ class ToggleControl extends CheckboxControl {
 				<# if ( data.description ) { #>
 				<span class="description customize-control-description">{{{ data.description }}}</span>
 				<# } #>
+
+				<div class="customize-control-notifications-container"></div>
 			</div>
 			<# } #>
 

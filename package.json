@@ -151,6 +151,8 @@
     "watch-typography-control": "parcel watch Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist",
     "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist",
     "watch-typography-preview": "parcel watch Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist",
-    "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist"
+    "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist",
+    "watch-header-builder-control": "parcel watch Customizer/Controls/Builder/src/builder-control.ts --dist-dir Customizer/Controls/Builder/dist",
+    "build-header-builder-control": "parcel build Customizer/Controls/Builder/src/builder-control.ts --dist-dir Customizer/Controls/Builder/dist"
   }
 }

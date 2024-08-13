@@ -342,6 +342,8 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-responsive-input-slider": WpbfCustomizeResponsiveInputSliderControl;
 	"wpbf-sortable": WpbfCustomizeSortableControl;
 	"wpbf-toggle": WpbfCustomizeCheckboxControl;
+	"wpbf-header-builder": any;
+	"wpbf-footer-builder": any;
 }
 
 export interface WpbfControlDependency {
