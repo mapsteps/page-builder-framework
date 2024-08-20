@@ -224,6 +224,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 
 	// Specific to PBF.
 	root?: Root;
+	form?: HTMLElement;
 	initialized?: boolean;
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
@@ -280,6 +281,18 @@ export interface WpbfCustomizeControl<SV, CP> {
 	onCropped?: (croppedImage: object) => void;
 	setImageInRepeaterField?: (attachment: Record<string, any>) => void;
 	setFileInRepeaterField?: (attachment: Record<string, any>) => void;
+
+	// Specific to Header Builder.
+	valuesEqual?: <T>(a: T, b: T) => boolean;
+	valueField?: HTMLInputElement | HTMLTextAreaElement | null;
+	availableWidgetsPanel?: HTMLElement;
+	builderPanel?: HTMLElement;
+	buildPanels?: () => void;
+	buildAvailableWidgetsPanel?: () => void;
+	buildBuilderPanel?: () => void;
+	sortables?: Record<string, JQueryUI.Sortable>;
+	initSortables?: () => void;
+
 	// Gave up (still some/many types are missing)
 	[key: string]: any;
 }

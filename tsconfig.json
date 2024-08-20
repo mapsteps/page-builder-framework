@@ -18,7 +18,8 @@
     "Customizer/**/*.ts",
     "assets/js/*.js",
     "wpbf.mjs",
-    "types.js"
+    "global-types.js",
+    "types.ts"
   ],
   "exclude": [
     "node_modules",

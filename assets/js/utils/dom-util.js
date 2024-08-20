@@ -1,4 +1,4 @@
-/// <reference path="../../../types.js"/>
+/// <reference path="../../../global-types.js"/>
 
 /**
  * Iterates over a collection of elements and applies a function to each.

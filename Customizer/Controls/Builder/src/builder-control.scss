@@ -10,3 +10,13 @@
 		display: none;
 	}
 }
+
+.wpbf-customize-control-header-builder {
+	.json-field {
+		opacity: 0;
+		width: 0;
+		height: 0;
+		z-index: -1;
+		position: absolute;
+	}
+}

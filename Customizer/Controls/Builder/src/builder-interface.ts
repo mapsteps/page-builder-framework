@@ -5,12 +5,11 @@ import {
 
 export interface WpbfCustomizeBuilderControlParams
 	extends WpbfCustomizeControlParams<Record<string, any>> {
-	mode: string;
-	labelStyle: string;
-	colorSwatches: string[];
-	formComponent?: string;
+	headerBuilder: {
+		availableRows: Record<string, string>;
+		availableWidgets: Record<string, string>;
+	};
 }
-
 export interface WpbfCustomizeBuilderControl
 	extends WpbfCustomizeControl<
 		Record<string, any>,
