@@ -63,7 +63,10 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 		control.buildAvailableWidgetsPanel?.();
 		control.buildBuilderPanel?.();
-		control.initSortable?.();
+
+		window.setTimeout(() => {
+			control.initSortable?.();
+		}, 3000);
 	},
 
 	buildAvailableWidgetsPanel: function () {
@@ -106,7 +109,8 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				.attr("type", "button")
 				.attr("data-widget-key", widgetKey)
 				.html(
-					`<span class="widget-label">${availableWidgets[widgetKey]}</span>`,
+					`<span class="widget-label">${availableWidgets[widgetKey]}</span>
+					<i class="dashicons dashicons-move"></i>`,
 				)
 				.appendTo($availableWidgetsEl);
 		}
@@ -156,7 +160,8 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 					.attr("type", "button")
 					.attr("data-widget-key", widgetKey)
 					.html(
-						`<span class="widget-label">${availableWidgets[widgetKey]}</span>`,
+						`<span class="widget-label">${availableWidgets[widgetKey]}</span>
+						<i class="dashicons dashicons-move"></i>`,
 					)
 					.appendTo($rowWidgetsEl);
 			}
@@ -172,9 +177,14 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		if (!params) return;
 		if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
-		jQuery(".available-widgets, .builder-widgets").sortable({
-			items: ".widget-item",
-			handle: ".widget-label",
+		const controlSelector = "#customize-control-" + params.id;
+
+		jQuery(
+			controlSelector +
+				" .available-widgets, " +
+				controlSelector +
+				" .builder-widgets",
+		).sortable({
 			connectWith: ".sortable-widgets",
 			start: function (event, ui) {
 				console.log("ui object on sortable start", ui);
@@ -183,6 +193,21 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				console.log("ui object on sortable update", ui);
 			},
 		});
+
+		// Listen to events.
+		jQuery(controlSelector + " .available-widgets").on(
+			"sortcreate",
+			function (event, ui) {
+				console.log("ui object on sortcreate", ui);
+			},
+		);
+
+		jQuery(controlSelector + " .builder-widgets").on(
+			"sortstop",
+			function (event, ui) {
+				console.log("ui object on sortstop", ui);
+			},
+		);
 	},
 
 	destroySortable: function () {
