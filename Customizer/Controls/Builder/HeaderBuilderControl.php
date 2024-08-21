@@ -42,7 +42,7 @@ class HeaderBuilderControl extends BaseControl {
 		parent::__construct( $wp_customize_manager, $id, $args );
 
 		$this->available_builder_widgets = array(
-			'logo'     => __( 'Logo', 'page-builder-framework' ),
+			'logo'     => __( 'Site Title & Logo', 'page-builder-framework' ),
 			'search'   => __( 'Search', 'page-builder-framework' ),
 			'account'  => __( 'Account', 'page-builder-framework' ),
 			'block_1'  => __( 'Block 1', 'page-builder-framework' ),
@@ -50,10 +50,8 @@ class HeaderBuilderControl extends BaseControl {
 			'block_3'  => __( 'Block 3', 'page-builder-framework' ),
 			'button_1' => __( 'Button 1', 'page-builder-framework' ),
 			'button_2' => __( 'Button 2', 'page-builder-framework' ),
-			'button_3' => __( 'Button 3', 'page-builder-framework' ),
 			'menu_1'   => __( 'Menu 1', 'page-builder-framework' ),
 			'menu_2'   => __( 'Menu 2', 'page-builder-framework' ),
-			'menu_3'   => __( 'Menu 3', 'page-builder-framework' ),
 		);
 
 		$this->available_builder_rows = array(

@@ -31,7 +31,7 @@ wpbf_customizer_section()
 wpbf_customizer_field()
 	->id( 'wpbf_use_header_builder' )
 	->type( 'headline-toggle' )
-	->label( __( 'Use Header Builder', 'page-builder-framework' ) )
+	->label( __( 'Header Builder', 'page-builder-framework' ) )
 	->defaultValue( true )
 	->priority( 0 )
 	->addToSection( 'wpbf_header_builder_section' );
@@ -39,7 +39,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'wpbf_header_builder' )
 	->type( 'header-builder' )
-	->label( __( 'Header Builder', 'page-builder-framework' ) )
+	->description( __( 'Drag and drop widgets to build your site header.', 'page-builder-framework' ) )
 	->priority( 0 )
 	->activeCallback( [
 		array(

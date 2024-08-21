@@ -287,11 +287,11 @@ export interface WpbfCustomizeControl<SV, CP> {
 	valueField?: HTMLInputElement | HTMLTextAreaElement | null;
 	availableWidgetsPanel?: HTMLElement;
 	builderPanel?: HTMLElement;
-	buildPanels?: () => void;
 	buildAvailableWidgetsPanel?: () => void;
 	buildBuilderPanel?: () => void;
 	sortables?: Record<string, JQueryUI.Sortable>;
-	initSortables?: () => void;
+	initSortable?: () => void;
+	destroySortable?: () => void;
 
 	// Gave up (still some/many types are missing)
 	[key: string]: any;

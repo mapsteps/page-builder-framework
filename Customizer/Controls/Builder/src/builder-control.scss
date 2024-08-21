@@ -19,4 +19,94 @@
 		z-index: -1;
 		position: absolute;
 	}
+
+	.wpbf-control-header {
+		padding: 0 5px;
+	}
+
+	.wpbf-control-form {
+		padding: 0 5px;
+	}
+}
+
+.sortable-widgets {
+	position: relative;
+
+	.widget-item {
+		position: relative;
+		display: inline-block;
+		padding: 12px 13px;
+		margin: 0 5px 5px 5px;
+		text-align: left;
+		font-weight: 600;
+		font-size: 12px;
+		background-color: #fff;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+		cursor: pointer;
+
+		&:hover {
+			background-color: #f9f9f9;
+			border-color: #ccc;
+		}
+
+		&.disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+	}
+}
+
+.available-widgets-panel {
+	position: relative;
+	width: 100%;
+
+	.widget-item {
+		display: block;
+		margin: 12px 0;
+		width: 100%;
+
+		&::after {
+			content: "\f545";
+			font-family: "dashicons";
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			font-size: 20px;
+			color: #ccc;
+		}
+	}
+}
+
+.header-builder-panel * {
+	box-sizing: border-box;
+}
+
+.header-builder-panel {
+	box-sizing: border-box;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding: 0 20px;
+	width: 100%;
+	min-height: 100px;
+	max-height: 60%;
+	background-color: #f0f0f1;
+	border-top: 1px solid #ddd;
+	// This z-index should be lower than the sidebar panel (10).
+	z-index: 9;
+
+	.builder-row {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 20px 0;
+		padding: 10px;
+		width: 100%;
+		min-height: 60px;
+		background-color: #f9f9f9;
+		border: 1px dotted #ccc;
+		border-radius: 5px;
+	}
 }
