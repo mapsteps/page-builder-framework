@@ -1,3 +1,9 @@
+.wpbf-dragging-widget {
+	.wp-full-overlay-sidebar-content {
+		overflow: visible;
+	}
+}
+
 #accordion-section-wpbf_header_builder_section {
 }
 
@@ -45,6 +51,7 @@
 		border-radius: 4px;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 		cursor: pointer;
+		z-index: 99999;
 
 		&:hover {
 			background-color: #f9f9f9;
@@ -61,22 +68,23 @@
 .available-widgets-panel {
 	position: relative;
 	width: 100%;
+	z-index: 999;
+	overflow: visible;
 
 	.widget-item {
-		display: block;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 		margin: 12px 0;
 		width: 100%;
 		cursor: move;
 
-		.dashicons {
-			position: absolute;
-			top: 50%;
-			right: 10px;
-			width: 12px;
-			height: 12px;
+		&::after {
+			content: "\f545";
+			font-family: "dashicons";
+			font-weight: 400;
 			font-size: 12px;
 			color: #444;
-			transform: translateY(-50%);
 		}
 	}
 }

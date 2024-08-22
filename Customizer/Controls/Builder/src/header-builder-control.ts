@@ -64,9 +64,10 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		control.buildAvailableWidgetsPanel?.();
 		control.buildBuilderPanel?.();
 
+		// Timeout to wait for the elements to be rendered.
 		window.setTimeout(() => {
 			control.initSortable?.();
-		}, 3000);
+		}, 1);
 	},
 
 	buildAvailableWidgetsPanel: function () {
@@ -102,15 +103,13 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		for (const widgetKey in availableWidgets) {
 			if (!availableWidgets.hasOwnProperty(widgetKey)) continue;
 
-			jQuery("<button></button>")
+			jQuery("<div></div>")
 				.addClass(
 					`widget-item widget-item-${widgetKey} ${activeWidgets[widgetKey] ? "disabled" : ""}`,
 				)
-				.attr("type", "button")
 				.attr("data-widget-key", widgetKey)
 				.html(
-					`<span class="widget-label">${availableWidgets[widgetKey]}</span>
-					<i class="dashicons dashicons-move"></i>`,
+					`<span class="widget-label">${availableWidgets[widgetKey]}</span>`,
 				)
 				.appendTo($availableWidgetsEl);
 		}
@@ -155,13 +154,11 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 			for (const widgetKey in matchedRow) {
 				if (!matchedRow.hasOwnProperty(widgetKey)) continue;
 
-				jQuery("<button></button>")
+				jQuery("<div></div>")
 					.addClass(`widget-item widget-item-${widgetKey}`)
-					.attr("type", "button")
 					.attr("data-widget-key", widgetKey)
 					.html(
-						`<span class="widget-label">${availableWidgets[widgetKey]}</span>
-						<i class="dashicons dashicons-move"></i>`,
+						`<span class="widget-label">${availableWidgets[widgetKey]}</span>`,
 					)
 					.appendTo($rowWidgetsEl);
 			}
@@ -186,11 +183,17 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				" .builder-widgets",
 		).sortable({
 			connectWith: ".sortable-widgets",
+			helper: "clone",
 			start: function (event, ui) {
 				console.log("ui object on sortable start", ui);
+				document.body.classList.add("wpbf-dragging-widget");
 			},
 			update: function (event, ui) {
 				console.log("ui object on sortable update", ui);
+			},
+			stop: function (event, ui) {
+				console.log("ui object on sortable stop", ui);
+				document.body.classList.remove("wpbf-dragging-widget");
 			},
 		});
 
