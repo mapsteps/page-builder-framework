@@ -1,4 +1,4 @@
-.wpbf-dragging-widget {
+.is-dragging-widget {
 	.wp-full-overlay-sidebar-content {
 		overflow: visible;
 	}
@@ -35,14 +35,14 @@
 	}
 }
 
-.sortable-widgets {
+.header-builder-widgets {
 	position: relative;
 
 	.widget-item {
 		position: relative;
 		display: inline-block;
 		padding: 12px 13px;
-		margin: 0 5px 5px 5px;
+		margin: 5px 5px;
 		text-align: left;
 		font-weight: 600;
 		font-size: 12px;
@@ -60,7 +60,12 @@
 
 		&.disabled {
 			opacity: 0.5;
-			cursor: not-allowed;
+			cursor: pointer;
+		}
+
+		&.is-dragging,
+		&:active {
+			opacity: 0.5;
 		}
 	}
 }
@@ -85,6 +90,10 @@
 			font-weight: 400;
 			font-size: 12px;
 			color: #444;
+		}
+
+		&.disabled::after {
+			content: "\f345";
 		}
 	}
 }
@@ -111,11 +120,49 @@
 		display: flex;
 		flex-wrap: wrap;
 		margin: 20px 0;
-		padding: 10px;
+		padding: 5px;
 		width: 100%;
 		min-height: 60px;
 		background-color: #f9f9f9;
 		border: 1px dotted #ccc;
 		border-radius: 5px;
+	}
+
+	.builder-widgets {
+		width: 100%;
+
+		&.dragover {
+			background-color: #f0f0f1;
+		}
+	}
+}
+
+.widget-drag-helper {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+
+	&.is-shown {
+		display: block;
+		opacity: 0.9;
+		z-index: 0;
+	}
+
+	// Since we'll clone the .widget-item element to be child of the .widget-drag-helper,
+	// we need to make sure the .widget-item under this element has the same styling.
+	.widget-item {
+		position: relative;
+		display: inline-block;
+		padding: 12px 13px;
+		margin: 0;
+		text-align: left;
+		font-weight: 600;
+		font-size: 12px;
+		background-color: #fff;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 	}
 }

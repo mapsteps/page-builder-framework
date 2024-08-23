@@ -87,6 +87,8 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 		control.availableWidgetsPanel = availableWidgetsPanel;
 
+		jQuery(document.body).append('<div class="widget-drag-helper"></div>');
+
 		const availableWidgets = params.headerBuilder.availableWidgets;
 		const activeWidgets: Record<string, string> = {};
 
@@ -96,7 +98,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		}
 
 		const $availableWidgetsEl = jQuery("<div></div>")
-			.addClass("available-widgets sortable-widgets")
+			.addClass("header-builder-widgets available-widgets")
 			.appendTo(control.availableWidgetsPanel);
 
 		// Add "li" elements based on  availableWidgets and append them to $widgetsPanel.
@@ -108,6 +110,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 					`widget-item widget-item-${widgetKey} ${activeWidgets[widgetKey] ? "disabled" : ""}`,
 				)
 				.attr("data-widget-key", widgetKey)
+				.attr("draggable", "true")
 				.html(
 					`<span class="widget-label">${availableWidgets[widgetKey]}</span>`,
 				)
@@ -144,7 +147,9 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				.appendTo($headerBuilderPanel);
 
 			const $rowWidgetsEl = jQuery("<div></div>")
-				.addClass(`builder-widgets builder-widgets-${rowKey} sortable-widgets`)
+				.addClass(
+					`header-builder-widgets builder-widgets builder-widgets-${rowKey} sortable-widgets`,
+				)
 				.appendTo($row);
 
 			const matchedRow = params.value[rowKey];
@@ -174,50 +179,172 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		if (!params) return;
 		if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
-		const controlSelector = "#customize-control-" + params.id;
+		const dragHelper = document.querySelector(".widget-drag-helper");
+		if (!(dragHelper instanceof HTMLElement)) return;
 
-		jQuery(
-			controlSelector +
-				" .available-widgets, " +
-				controlSelector +
-				" .builder-widgets",
-		).sortable({
+		const availableWidgetItems =
+			control.availableWidgetsPanel?.querySelectorAll(".widget-item");
+
+		if (availableWidgetItems && availableWidgetItems.length) {
+			availableWidgetItems.forEach((item) => {
+				// Check if item is a HTMLElement.
+				if (!(item instanceof HTMLElement)) return;
+
+				item.addEventListener("dragstart", function (e) {
+					// Check if e is a DragEvent.
+					if (!(e instanceof DragEvent)) return;
+
+					document.body.classList.add("is-dragging-widget");
+					item.classList.add("is-dragging");
+					dragHelper.classList.add("is-shown");
+
+					const widgetKey = item.dataset.widgetKey;
+
+					// Set the data to be transferred.
+					e.dataTransfer?.setData("text", JSON.stringify({ widgetKey }));
+
+					dragHelper.innerHTML = item.outerHTML;
+
+					/**
+					 * The visualDragHelper is a direct body child element with position: fixed, left: 0, and top: 0.
+					 * We need to set the position of the dragVisualHelper to be in the same position of current `item` (.wiget-item).
+					 * Meaning, we need to get the top and left position of the current event element and set the fixed position of the dragVisualHelper.
+					 */
+					const draggedElRect = item.getBoundingClientRect();
+					const draggedElFixedLeftPos = draggedElRect.left;
+					const draggedElFixedTopPos = draggedElRect.top;
+
+					dragHelper.style.left = draggedElFixedLeftPos + "px";
+					dragHelper.style.top = draggedElFixedTopPos + "px";
+
+					const dragHelperInnerEl = dragHelper.querySelector(".widget-item");
+
+					const innerElRect = dragHelperInnerEl?.getBoundingClientRect();
+					const dragHelperInnerElWidth = innerElRect?.width || 80;
+					const dragHelperInnerElHeight = innerElRect?.height || 30;
+
+					dragHelper.style.width = dragHelperInnerElWidth + "px";
+
+					const leftPos = e.clientX - dragHelperInnerElWidth / 2;
+					const topPos = e.clientY - dragHelperInnerElHeight / 2;
+
+					// Set image position to be in the middle of the cursor.
+					e.dataTransfer?.setDragImage(dragHelper, leftPos, topPos);
+
+					window.setTimeout(() => {
+						dragHelper.classList.remove("is-shown");
+					}, 10);
+				});
+
+				item.addEventListener("drag", function (e) {
+					// const innerEl = dragVisualHelper.querySelector(".widget-item");
+					// const innerElRect = innerEl?.getBoundingClientRect();
+				});
+
+				item.addEventListener("dragend", function (e) {
+					// Check if e is a DragEvent.
+					if (!(e instanceof DragEvent)) return;
+
+					e.preventDefault();
+
+					item.classList.remove("is-dragging");
+					document.body.classList.remove("is-dragging-widget");
+
+					dragHelper.classList.remove("is-shown");
+					dragHelper.innerHTML = "";
+					dragHelper.removeAttribute("style");
+				});
+			});
+		}
+
+		// Init sortables.
+		jQuery(".builder-widgets").sortable({
 			connectWith: ".sortable-widgets",
 			helper: "clone",
 			start: function (event, ui) {
-				console.log("ui object on sortable start", ui);
-				document.body.classList.add("wpbf-dragging-widget");
+				document.body.classList.add("is-dragging-widget");
 			},
 			update: function (event, ui) {
-				console.log("ui object on sortable update", ui);
+				//
 			},
 			stop: function (event, ui) {
-				console.log("ui object on sortable stop", ui);
-				document.body.classList.remove("wpbf-dragging-widget");
+				document.body.classList.remove("is-dragging-widget");
 			},
 		});
 
-		// Listen to events.
-		jQuery(controlSelector + " .available-widgets").on(
-			"sortcreate",
-			function (event, ui) {
-				console.log("ui object on sortcreate", ui);
-			},
-		);
+		const builderDropZones =
+			control.builderPanel?.querySelectorAll(".builder-widgets");
 
-		jQuery(controlSelector + " .builder-widgets").on(
-			"sortstop",
-			function (event, ui) {
-				console.log("ui object on sortstop", ui);
-			},
-		);
+		if (builderDropZones && builderDropZones.length) {
+			builderDropZones.forEach((dropZone) => {
+				if (!(dropZone instanceof HTMLElement)) return;
+
+				dropZone.addEventListener("dragover", function (e) {
+					// Check if e is a DragEvent.
+					if (!(e instanceof DragEvent)) return;
+
+					dropZone.classList.add("dragover");
+
+					e.preventDefault();
+				});
+
+				dropZone.addEventListener("dragleave", function (e) {
+					// Check if e is a DragEvent.
+					if (!(e instanceof DragEvent)) return;
+
+					// dropZone.classList.remove("dragover");
+
+					e.preventDefault();
+				});
+
+				dropZone.addEventListener("drop", function (e) {
+					// Check if e is a DragEvent.
+					if (!(e instanceof DragEvent)) return;
+
+					e.preventDefault();
+
+					const data = e.dataTransfer?.getData("text");
+					if (!data) return;
+
+					let parsedJson: null | Record<string, any> = null;
+
+					try {
+						parsedJson = JSON.parse(data);
+					} catch (e) {
+						console.error("Error parsing JSON data:", e);
+						parsedJson = null;
+					}
+
+					if (!parsedJson) return;
+
+					const widgetKey = parsedJson.widgetKey;
+					if (!widgetKey) return;
+
+					const widgetItem = control.availableWidgetsPanel?.querySelector(
+						`.widget-item[data-widget-key="${widgetKey}"]`,
+					);
+
+					if (!widgetItem) return;
+
+					// Add a new child element (cloned from the widgetItem) to this drop zone.
+					const newWidgetItem = widgetItem.cloneNode(true);
+
+					dropZone.appendChild(newWidgetItem);
+
+					// Now refresh the sortable.
+					jQuery(".builder-widgets").sortable("refresh");
+
+					widgetItem.classList.add("disabled");
+				});
+			});
+		}
 	},
 
 	destroySortable: function () {
 		const control = this;
 		if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
-		jQuery(".available-widgets, .builder-widgets").sortable("destroy");
+		jQuery(".builder-widgets").sortable("destroy");
 	},
 
 	updateComponentState: function (
