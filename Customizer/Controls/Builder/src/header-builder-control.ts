@@ -153,7 +153,13 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				.appendTo($row);
 
 			const matchedRow = params.value[rowKey];
-			if (!matchedRow) continue;
+
+			if (!matchedRow || !Object.keys(matchedRow).length) {
+				$rowWidgetsEl.html(
+					"<div class='widget-item empty-widget-item'>&nbsp;</div>",
+				);
+				continue;
+			}
 
 			// Add "li" elements based on params.value and append them to $widgetsPanel.
 			for (const widgetKey in matchedRow) {
@@ -221,15 +227,10 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 					const innerElRect = dragHelperInnerEl?.getBoundingClientRect();
 					const dragHelperInnerElWidth = innerElRect?.width || 80;
-					const dragHelperInnerElHeight = innerElRect?.height || 30;
 
 					dragHelper.style.width = dragHelperInnerElWidth + "px";
 
-					const leftPos = e.clientX - dragHelperInnerElWidth / 2;
-					const topPos = e.clientY - dragHelperInnerElHeight / 2;
-
-					// Set image position to be in the middle of the cursor.
-					e.dataTransfer?.setDragImage(dragHelper, leftPos, topPos);
+					e.dataTransfer?.setDragImage(dragHelper, 0, 0);
 
 					window.setTimeout(() => {
 						dragHelper.classList.remove("is-shown");
@@ -262,13 +263,13 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 			connectWith: ".sortable-widgets",
 			helper: "clone",
 			start: function (event, ui) {
-				document.body.classList.add("is-dragging-widget");
+				document.body.classList.add("is-sorting-widget");
 			},
 			update: function (event, ui) {
-				//
+				console.log("ui on sortable update", ui);
 			},
 			stop: function (event, ui) {
-				document.body.classList.remove("is-dragging-widget");
+				document.body.classList.remove("is-sorting-widget");
 			},
 		});
 
@@ -292,7 +293,8 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 					// Check if e is a DragEvent.
 					if (!(e instanceof DragEvent)) return;
 
-					// dropZone.classList.remove("dragover");
+					dropZone.classList.remove("dragover");
+					console.log("dragleave");
 
 					e.preventDefault();
 				});
@@ -302,6 +304,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 					if (!(e instanceof DragEvent)) return;
 
 					e.preventDefault();
+					dropZone.classList.remove("dragover");
 
 					const data = e.dataTransfer?.getData("text");
 					if (!data) return;
@@ -326,8 +329,19 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 					if (!widgetItem) return;
 
+					const emptyWidgetItem = dropZone.querySelector(".empty-widget-item");
+
+					if (emptyWidgetItem) {
+						emptyWidgetItem.remove();
+					}
+
 					// Add a new child element (cloned from the widgetItem) to this drop zone.
 					const newWidgetItem = widgetItem.cloneNode(true);
+
+					if (newWidgetItem instanceof HTMLElement) {
+						newWidgetItem.classList.remove("disabled");
+						newWidgetItem.classList.remove("is-dragging");
+					}
 
 					dropZone.appendChild(newWidgetItem);
 
