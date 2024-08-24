@@ -261,12 +261,25 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		// Init sortables.
 		jQuery(".builder-widgets").sortable({
 			connectWith: ".sortable-widgets",
-			helper: "clone",
+			placeholder: "widget-item sortable-placeholder",
 			start: function (event, ui) {
 				document.body.classList.add("is-sorting-widget");
+
+				const labelEl = ui.item[0].querySelector(".widget-label");
+
+				if (labelEl instanceof HTMLElement) {
+					ui.placeholder[0].appendChild(labelEl.cloneNode(true));
+				}
 			},
 			update: function (event, ui) {
-				console.log("ui on sortable update", ui);
+				const sortableEl = event.target;
+				const totalChildren = sortableEl.children.length;
+
+				if (!totalChildren) {
+					jQuery(sortableEl).append(
+						"<div class='widget-item empty-widget-item'>&nbsp;</div>",
+					);
+				}
 			},
 			stop: function (event, ui) {
 				document.body.classList.remove("is-sorting-widget");
@@ -281,29 +294,23 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				if (!(dropZone instanceof HTMLElement)) return;
 
 				dropZone.addEventListener("dragover", function (e) {
-					// Check if e is a DragEvent.
 					if (!(e instanceof DragEvent)) return;
+					e.preventDefault();
 
 					dropZone.classList.add("dragover");
-
-					e.preventDefault();
 				});
 
 				dropZone.addEventListener("dragleave", function (e) {
-					// Check if e is a DragEvent.
 					if (!(e instanceof DragEvent)) return;
+					e.preventDefault();
 
 					dropZone.classList.remove("dragover");
-					console.log("dragleave");
-
-					e.preventDefault();
 				});
 
 				dropZone.addEventListener("drop", function (e) {
-					// Check if e is a DragEvent.
 					if (!(e instanceof DragEvent)) return;
-
 					e.preventDefault();
+
 					dropZone.classList.remove("dragover");
 
 					const data = e.dataTransfer?.getData("text");
