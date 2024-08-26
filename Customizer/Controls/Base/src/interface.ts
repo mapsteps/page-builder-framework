@@ -45,7 +45,10 @@ import {
 	WpbfCustomizeRepeaterControl,
 	WpbfRepeaterRow,
 } from "../../Repeater/src/repeater-interface";
-import { WpbfCustomizeBuilderControl } from "../../Builder/src/builder-interface";
+import {
+	HeaderBuilderWidget,
+	WpbfCustomizeBuilderControl,
+} from "../../Builder/src/builder-interface";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -285,11 +288,14 @@ export interface WpbfCustomizeControl<SV, CP> {
 	// Specific to Header Builder.
 	valuesEqual?: <T>(a: T, b: T) => boolean;
 	valueField?: HTMLInputElement | HTMLTextAreaElement | null;
+	isWidgetActive?: (widgetKey: string) => boolean;
+	findWidgetByKey?: (widgetKey: string) => HeaderBuilderWidget | undefined;
 	availableWidgetsPanel?: HTMLElement;
 	builderPanel?: HTMLElement;
 	buildAvailableWidgetsPanel?: () => void;
 	buildBuilderPanel?: () => void;
-	sortables?: Record<string, JQueryUI.Sortable>;
+	initDraggable?: () => void;
+	destroyDraggable?: () => void;
 	initSortable?: () => void;
 	destroySortable?: () => void;
 

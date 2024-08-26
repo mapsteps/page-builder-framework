@@ -15,7 +15,6 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 	valueField: undefined,
 	availableWidgetsPanel: undefined,
 	builderPanel: undefined,
-	sortables: undefined,
 
 	initWpbfControl: function (
 		this: WpbfCustomizeBuilderControl,
@@ -23,12 +22,6 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 	) {
 		control = control || this;
 		if (!control) return;
-
-		const params = control.params;
-
-		if ("wpbf-header-builder" !== params.type) {
-			return;
-		}
 
 		const controlForm = document.querySelector(
 			`#_customize-input-${control.id} .wpbf-control-form`,
@@ -63,11 +56,56 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 		control.buildAvailableWidgetsPanel?.();
 		control.buildBuilderPanel?.();
+		control.initDraggable?.();
 
 		// Timeout to wait for the elements to be rendered.
 		window.setTimeout(() => {
 			control.initSortable?.();
 		}, 1);
+	},
+
+	isWidgetActive: function (widgetKey) {
+		if (!this.params) return false;
+
+		const value = this.params.value;
+		if (!value) return false;
+
+		for (const rowKey in value) {
+			if (!value.hasOwnProperty(rowKey)) continue;
+
+			const row = value[rowKey];
+
+			if (!row || !Object.keys(row).length) continue;
+
+			for (const columnKey in row) {
+				if (!row.hasOwnProperty(columnKey)) continue;
+
+				const column = row[columnKey];
+
+				if (!column || !column.length) continue;
+
+				if (column.includes(widgetKey)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	},
+
+	findWidgetByKey: function (widgetKey) {
+		if (!this.params) return undefined;
+
+		const availableWidgets = this.params.headerBuilder.availableWidgets;
+		if (!availableWidgets.length) return undefined;
+
+		for (const widget of availableWidgets) {
+			if (widget.key === widgetKey) {
+				return widget;
+			}
+		}
+
+		return undefined;
 	},
 
 	buildAvailableWidgetsPanel: function () {
@@ -90,32 +128,24 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		jQuery(document.body).append('<div class="widget-drag-helper"></div>');
 
 		const availableWidgets = params.headerBuilder.availableWidgets;
-		const activeWidgets: Record<string, string> = {};
 
-		for (const widgetKey in params.value) {
-			if (!params.value.hasOwnProperty(widgetKey)) continue;
-			activeWidgets[widgetKey] = params.value[widgetKey];
-		}
-
-		const $availableWidgetsEl = jQuery("<div></div>")
+		const $availableWidgetListEl = jQuery("<div></div>")
 			.addClass("header-builder-widgets available-widgets")
 			.appendTo(control.availableWidgetsPanel);
 
-		// Add "li" elements based on  availableWidgets and append them to $widgetsPanel.
-		for (const widgetKey in availableWidgets) {
-			if (!availableWidgets.hasOwnProperty(widgetKey)) continue;
+		// Build the available widgets list based on `availableWidgets`.
+		availableWidgets.forEach((widget) => {
+			const widgetKey = widget.key;
 
 			jQuery("<div></div>")
 				.addClass(
-					`widget-item widget-item-${widgetKey} ${activeWidgets[widgetKey] ? "disabled" : ""}`,
+					`widget-item widget-item-${widgetKey} ${control.isWidgetActive?.(widgetKey) ? "disabled" : ""}`,
 				)
 				.attr("data-widget-key", widgetKey)
 				.attr("draggable", "true")
-				.html(
-					`<span class="widget-label">${availableWidgets[widgetKey]}</span>`,
-				)
-				.appendTo($availableWidgetsEl);
-		}
+				.html(`<span class="widget-label">${widget.label}</span>`)
+				.appendTo($availableWidgetListEl);
+		});
 	},
 
 	buildBuilderPanel: function () {
@@ -133,52 +163,71 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 			return;
 		}
 
+		// Create the panel.
 		const $headerBuilderPanel = jQuery("<div></div>")
 			.addClass("header-builder-panel")
 			.insertAfter(customizePreview);
 
-		// Create "div" elements for each row and append them to headerBuilderPanel.
-		for (const rowKey in availableRows) {
-			if (!availableRows.hasOwnProperty(rowKey)) continue;
+		const emptyWidgetPlaceholder =
+			"<div class='widget-item empty-widget-item'>&nbsp;</div>";
 
+		availableRows.forEach((row) => {
+			// Build the row.
 			const $row = jQuery("<div></div>")
-				.addClass(`builder-row builder-${rowKey}`)
-				.attr("data-row-key", rowKey)
+				.addClass(`builder-row`)
+				.attr("data-row-key", row.key)
 				.appendTo($headerBuilderPanel);
 
-			const $rowWidgetsEl = jQuery("<div></div>")
-				.addClass(
-					`header-builder-widgets builder-widgets builder-widgets-${rowKey} sortable-widgets`,
-				)
+			// Build the inner row.
+			const $innerRow = jQuery("<div></div>")
+				.addClass(`builder-inner-row`)
 				.appendTo($row);
 
-			const matchedRow = params.value[rowKey];
+			// Build the row setting button.
+			jQuery("<button></button>")
+				.addClass("row-setting-button")
+				.attr("data-row-key", row.key)
+				.html('<i class="dashicons dashicons-admin-generic"></i>')
+				.appendTo($row);
 
-			if (!matchedRow || !Object.keys(matchedRow).length) {
-				$rowWidgetsEl.html(
-					"<div class='widget-item empty-widget-item'>&nbsp;</div>",
-				);
-				continue;
-			}
+			const matchedRow = params.value[row.key];
 
-			// Add "li" elements based on params.value and append them to $widgetsPanel.
-			for (const widgetKey in matchedRow) {
-				if (!matchedRow.hasOwnProperty(widgetKey)) continue;
+			row.columns.forEach((column) => {
+				const $widgetListEl = jQuery("<div></div>")
+					.addClass(`header-builder-widgets builder-column sortable-widgets`)
+					.attr("data-column-key", column.key)
+					.appendTo($innerRow);
 
-				jQuery("<div></div>")
-					.addClass(`widget-item widget-item-${widgetKey}`)
-					.attr("data-widget-key", widgetKey)
-					.html(
-						`<span class="widget-label">${availableWidgets[widgetKey]}</span>`,
-					)
-					.appendTo($rowWidgetsEl);
-			}
-		}
+				if (!matchedRow || !Object.keys(matchedRow).length) {
+					$widgetListEl.html(emptyWidgetPlaceholder);
+					return;
+				}
+
+				const matchedColumn = matchedRow[column.key];
+
+				if (!matchedColumn || !matchedColumn.length) {
+					$widgetListEl.html(emptyWidgetPlaceholder);
+					return;
+				}
+
+				// Build the widget list based on `matchedColumn`.
+				matchedColumn.forEach((widgetKey) => {
+					const matchedWidget = control.findWidgetByKey?.(widgetKey);
+					if (!matchedWidget) return;
+
+					jQuery("<div></div>")
+						.addClass(`widget-item widget-item-${widgetKey}`)
+						.attr("data-widget-key", widgetKey)
+						.html(`<span class="widget-label">${matchedWidget.label}</span>`)
+						.appendTo($widgetListEl);
+				});
+			});
+		});
 
 		this.builderPanel = $headerBuilderPanel[0];
 	},
 
-	initSortable: function () {
+	initDraggable: function () {
 		const control = this;
 		const params = control.params;
 
@@ -258,36 +307,8 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 			});
 		}
 
-		// Init sortables.
-		jQuery(".builder-widgets").sortable({
-			connectWith: ".sortable-widgets",
-			placeholder: "widget-item sortable-placeholder",
-			start: function (event, ui) {
-				document.body.classList.add("is-sorting-widget");
-
-				const labelEl = ui.item[0].querySelector(".widget-label");
-
-				if (labelEl instanceof HTMLElement) {
-					ui.placeholder[0].appendChild(labelEl.cloneNode(true));
-				}
-			},
-			update: function (event, ui) {
-				const sortableEl = event.target;
-				const totalChildren = sortableEl.children.length;
-
-				if (!totalChildren) {
-					jQuery(sortableEl).append(
-						"<div class='widget-item empty-widget-item'>&nbsp;</div>",
-					);
-				}
-			},
-			stop: function (event, ui) {
-				document.body.classList.remove("is-sorting-widget");
-			},
-		});
-
 		const builderDropZones =
-			control.builderPanel?.querySelectorAll(".builder-widgets");
+			control.builderPanel?.querySelectorAll(".builder-column");
 
 		if (builderDropZones && builderDropZones.length) {
 			builderDropZones.forEach((dropZone) => {
@@ -353,7 +374,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 					dropZone.appendChild(newWidgetItem);
 
 					// Now refresh the sortable.
-					jQuery(".builder-widgets").sortable("refresh");
+					jQuery(".builder-column").sortable("refresh");
 
 					widgetItem.classList.add("disabled");
 				});
@@ -361,11 +382,47 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		}
 	},
 
+	initSortable: function () {
+		const control = this;
+		const params = control.params;
+
+		if (!params) return;
+		if (!control.availableWidgetsPanel || !control.builderPanel) return;
+
+		// Init sortables.
+		jQuery(".sortable-widgets").sortable({
+			connectWith: ".builder-column",
+			placeholder: "widget-item sortable-placeholder",
+			start: function (event, ui) {
+				document.body.classList.add("is-sorting-widget");
+
+				const labelEl = ui.item[0].querySelector(".widget-label");
+
+				if (labelEl instanceof HTMLElement) {
+					ui.placeholder[0].appendChild(labelEl.cloneNode(true));
+				}
+			},
+			update: function (event, ui) {
+				const sortableEl = event.target;
+				const totalChildren = sortableEl.children.length;
+
+				if (!totalChildren) {
+					jQuery(sortableEl).append(
+						"<div class='widget-item empty-widget-item'>&nbsp;</div>",
+					);
+				}
+			},
+			stop: function (event, ui) {
+				document.body.classList.remove("is-sorting-widget");
+			},
+		});
+	},
+
 	destroySortable: function () {
 		const control = this;
 		if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
-		jQuery(".builder-widgets").sortable("destroy");
+		jQuery(".builder-column").sortable("destroy");
 	},
 
 	updateComponentState: function (

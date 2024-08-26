@@ -42,22 +42,112 @@ class HeaderBuilderControl extends BaseControl {
 		parent::__construct( $wp_customize_manager, $id, $args );
 
 		$this->available_builder_widgets = array(
-			'logo'     => __( 'Site Title & Logo', 'page-builder-framework' ),
-			'search'   => __( 'Search', 'page-builder-framework' ),
-			'account'  => __( 'Account', 'page-builder-framework' ),
-			'block_1'  => __( 'Block 1', 'page-builder-framework' ),
-			'block_2'  => __( 'Block 2', 'page-builder-framework' ),
-			'block_3'  => __( 'Block 3', 'page-builder-framework' ),
-			'button_1' => __( 'Button 1', 'page-builder-framework' ),
-			'button_2' => __( 'Button 2', 'page-builder-framework' ),
-			'menu_1'   => __( 'Menu 1', 'page-builder-framework' ),
-			'menu_2'   => __( 'Menu 2', 'page-builder-framework' ),
+			array(
+				'key'   => 'logo',
+				'label' => __( 'Site Title & Logo', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'search',
+				'label' => __( 'Search', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'account',
+				'label' => __( 'Account', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'block_1',
+				'label' => __( 'Block 1', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'block_2',
+				'label' => __( 'Block 2', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'block_3',
+				'label' => __( 'Block 3', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'button_1',
+				'label' => __( 'Button 1', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'button_2',
+				'label' => __( 'Button 2', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'menu_1',
+				'label' => __( 'Menu 1', 'page-builder-framework' ),
+			),
+			array(
+				'key'   => 'menu_2',
+				'label' => __( 'Menu 2', 'page-builder-framework' ),
+			),
 		);
 
 		$this->available_builder_rows = array(
-			'row_1' => __( 'Pre-Header', 'page-builder-framework' ),
-			'row_2' => __( 'Main Row', 'page-builder-framework' ),
-			'row_3' => __( 'Secondary Row', 'page-builder-framework' ),
+			[
+				'key'     => 'row_1',
+				'label'   => __( 'Pre-Header', 'page-builder-framework' ),
+				'columns' => [
+					[
+						'key'     => 'column_1',
+						'label'   => __( 'Column 1', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+					[
+						'key'     => 'column_2',
+						'label'   => __( 'Column 2', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+					[
+						'key'     => 'column_3',
+						'label'   => __( 'Column 3', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+				],
+			],
+			[
+				'key'     => 'row_2',
+				'label'   => __( 'Main Row', 'page-builder-framework' ),
+				'columns' => [
+					[
+						'key'     => 'column_1',
+						'label'   => __( 'Column 1', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+					[
+						'key'     => 'column_2',
+						'label'   => __( 'Column 2', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+					[
+						'key'     => 'column_3',
+						'label'   => __( 'Column 3', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+				],
+			],
+			[
+				'key'     => 'row_3',
+				'label'   => __( 'Secondary Row', 'page-builder-framework' ),
+				'columns' => [
+					[
+						'key'     => 'column_1',
+						'label'   => __( 'Column 1', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+					[
+						'key'     => 'column_2',
+						'label'   => __( 'Column 2', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+					[
+						'key'     => 'column_3',
+						'label'   => __( 'Column 3', 'page-builder-framework' ),
+						'widgets' => [],
+					],
+				],
+			],
 		);
 
 		if ( ! ( $this->setting instanceof WP_Customize_Setting ) ) {
