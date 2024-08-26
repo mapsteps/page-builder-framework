@@ -247,11 +247,16 @@
 }
 
 .widget-drag-helper {
+	box-sizing: border-box;
 	display: none;
 	position: fixed;
 	left: 0;
 	top: 0;
 	width: 100%;
+
+	* {
+		box-sizing: border-box;
+	}
 
 	&.is-shown {
 		display: block;
