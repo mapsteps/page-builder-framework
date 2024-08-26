@@ -288,8 +288,11 @@ export interface WpbfCustomizeControl<SV, CP> {
 	// Specific to Header Builder.
 	valuesEqual?: <T>(a: T, b: T) => boolean;
 	valueField?: HTMLInputElement | HTMLTextAreaElement | null;
+	emptyWidgetMarkup?: string;
+	isSortableEmpty?: (el: HTMLElement) => boolean;
 	isWidgetActive?: (widgetKey: string) => boolean;
 	findWidgetByKey?: (widgetKey: string) => HeaderBuilderWidget | undefined;
+	handleSortableSortout?: (el: HTMLElement) => void;
 	availableWidgetsPanel?: HTMLElement;
 	builderPanel?: HTMLElement;
 	buildAvailableWidgetsPanel?: () => void;

@@ -165,8 +165,34 @@
 
 	.builder-column {
 		padding: 4px;
-		width: 100%;
-		border-radius: 5px;
+		transition: width 0.2s ease-in-out;
+
+		&.column-middle {
+			background-color: rgba(253, 253, 253, 0.8);
+			border-left: 1px dashed #ccc;
+			border-right: 1px dashed #ccc;
+			min-width: auto;
+			transition: max-width 0.2s ease-in-out;
+
+			&.empty-widget-list {
+				min-width: 100px;
+			}
+		}
+
+		&.column-start,
+		&.column-end {
+			flex: 1;
+		}
+
+		&.column-start {
+			border-top-left-radius: 5px;
+			border-bottom-left-radius: 5px;
+		}
+
+		&.column-end {
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
 
 		&.dragover {
 			background-color: #f0f0f1;
@@ -176,6 +202,7 @@
 	.widget-item {
 		margin: 4px 4px;
 		padding: 8px 13px;
+		cursor: move;
 
 		&.empty-widget-item {
 			width: 1px;

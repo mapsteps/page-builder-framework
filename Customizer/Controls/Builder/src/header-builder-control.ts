@@ -12,8 +12,14 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 	"wpbf-header-builder"
 ] = wp.customize.wpbfDynamicControl.extend<WpbfCustomizeBuilderControl>({
 	form: undefined,
+
 	valueField: undefined,
+
+	emptyWidgetItemMarkup:
+		"<div class='widget-item empty-widget-item'>&nbsp;</div>",
+
 	availableWidgetsPanel: undefined,
+
 	builderPanel: undefined,
 
 	initWpbfControl: function (
@@ -62,6 +68,38 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		window.setTimeout(() => {
 			control.initSortable?.();
 		}, 1);
+	},
+
+	isSortableEmpty: function (el) {
+		const children = el.querySelectorAll(".widget-item");
+
+		if (!children.length) {
+			return true;
+		}
+
+		for (let i = 0; i < children.length; i++) {
+			const child = children[i];
+
+			if (!(child instanceof HTMLElement)) {
+				continue;
+			}
+
+			if (child.classList.contains("empty-widget-item")) {
+				continue;
+			}
+
+			if (child.classList.contains("sortable-placeholder")) {
+				continue;
+			}
+
+			if (child.classList.contains("ui-sortable-helper")) {
+				continue;
+			}
+
+			return false;
+		}
+
+		return true;
 	},
 
 	isWidgetActive: function (widgetKey) {
@@ -168,9 +206,6 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 			.addClass("header-builder-panel")
 			.insertAfter(customizePreview);
 
-		const emptyWidgetPlaceholder =
-			"<div class='widget-item empty-widget-item'>&nbsp;</div>";
-
 		availableRows.forEach((row) => {
 			// Build the row.
 			const $row = jQuery("<div></div>")
@@ -192,21 +227,34 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 			const matchedRow = params.value[row.key];
 
-			row.columns.forEach((column) => {
+			row.columns.forEach((column, columnIndex) => {
+				const columnPosClass =
+					columnIndex === 0
+						? "column-start"
+						: columnIndex === row.columns.length - 1
+							? "column-end"
+							: "column-middle";
+
 				const $widgetListEl = jQuery("<div></div>")
-					.addClass(`header-builder-widgets builder-column sortable-widgets`)
+					.addClass(
+						`header-builder-widgets builder-column sortable-widgets ${columnPosClass}`,
+					)
 					.attr("data-column-key", column.key)
 					.appendTo($innerRow);
 
+				const emptyWidgetListClass = "empty-widget-list";
+
 				if (!matchedRow || !Object.keys(matchedRow).length) {
-					$widgetListEl.html(emptyWidgetPlaceholder);
+					$widgetListEl.addClass(emptyWidgetListClass);
+					$widgetListEl.html(control.emptyWidgetItemMarkup ?? "");
 					return;
 				}
 
 				const matchedColumn = matchedRow[column.key];
 
 				if (!matchedColumn || !matchedColumn.length) {
-					$widgetListEl.html(emptyWidgetPlaceholder);
+					$widgetListEl.addClass(emptyWidgetListClass);
+					$widgetListEl.html(control.emptyWidgetItemMarkup ?? "");
 					return;
 				}
 
@@ -389,11 +437,13 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		if (!params) return;
 		if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
+		const emptyWidgetListClass = "empty-widget-list";
+
 		// Init sortables.
 		jQuery(".sortable-widgets").sortable({
 			connectWith: ".builder-column",
 			placeholder: "widget-item sortable-placeholder",
-			start: function (event, ui) {
+			start: function (e, ui) {
 				document.body.classList.add("is-sorting-widget");
 
 				const labelEl = ui.item[0].querySelector(".widget-label");
@@ -402,20 +452,51 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 					ui.placeholder[0].appendChild(labelEl.cloneNode(true));
 				}
 			},
-			update: function (event, ui) {
-				const sortableEl = event.target;
-				const totalChildren = sortableEl.children.length;
+			update: function (e, ui) {
+				const sortableEl = e.target;
+				if (!(sortableEl instanceof HTMLElement)) return;
 
-				if (!totalChildren) {
-					jQuery(sortableEl).append(
-						"<div class='widget-item empty-widget-item'>&nbsp;</div>",
-					);
-				}
+				control.handleSortableSortout?.(sortableEl);
 			},
-			stop: function (event, ui) {
+			stop: function (e, ui) {
 				document.body.classList.remove("is-sorting-widget");
 			},
 		});
+
+		jQuery(".builder-column.column-middle").on("sortover", function (e, ui) {
+			const target = e.target;
+			target.classList.remove(emptyWidgetListClass);
+		});
+
+		jQuery(".builder-column.column-middle").on("sortout", function (e, ui) {
+			control.handleSortableSortout?.(e.target);
+		});
+	},
+
+	handleSortableSortout: function (sortableEl) {
+		const emptyWidgetListClass = "empty-widget-list";
+		const emptyWidgetItemClass = "empty-widget-item";
+
+		const control = this;
+		if (!control.availableWidgetsPanel || !control.builderPanel) return;
+
+		const emptyWidgetItem = sortableEl.querySelector(
+			"." + emptyWidgetItemClass,
+		);
+
+		if (control.isSortableEmpty?.(sortableEl)) {
+			sortableEl.classList.add(emptyWidgetListClass);
+
+			if (!emptyWidgetItem) {
+				jQuery(sortableEl).append(control.emptyWidgetItemMarkup ?? "");
+			}
+		} else {
+			sortableEl.classList.remove(emptyWidgetListClass);
+
+			if (emptyWidgetItem) {
+				emptyWidgetItem.remove();
+			}
+		}
 	},
 
 	destroySortable: function () {
