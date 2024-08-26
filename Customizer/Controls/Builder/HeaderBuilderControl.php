@@ -44,7 +44,7 @@ class HeaderBuilderControl extends BaseControl {
 		$this->available_builder_widgets = array(
 			array(
 				'key'   => 'logo',
-				'label' => __( 'Site Title & Logo', 'page-builder-framework' ),
+				'label' => __( 'Logo', 'page-builder-framework' ),
 			),
 			array(
 				'key'   => 'search',
@@ -90,19 +90,16 @@ class HeaderBuilderControl extends BaseControl {
 				'label'   => __( 'Pre-Header', 'page-builder-framework' ),
 				'columns' => [
 					[
-						'key'     => 'column_1',
-						'label'   => __( 'Column 1', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_1',
+						'label' => __( 'Column 1', 'page-builder-framework' ),
 					],
 					[
-						'key'     => 'column_2',
-						'label'   => __( 'Column 2', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_2',
+						'label' => __( 'Column 2', 'page-builder-framework' ),
 					],
 					[
-						'key'     => 'column_3',
-						'label'   => __( 'Column 3', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_3',
+						'label' => __( 'Column 3', 'page-builder-framework' ),
 					],
 				],
 			],
@@ -111,19 +108,16 @@ class HeaderBuilderControl extends BaseControl {
 				'label'   => __( 'Main Row', 'page-builder-framework' ),
 				'columns' => [
 					[
-						'key'     => 'column_1',
-						'label'   => __( 'Column 1', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_1',
+						'label' => __( 'Column 1', 'page-builder-framework' ),
 					],
 					[
-						'key'     => 'column_2',
-						'label'   => __( 'Column 2', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_2',
+						'label' => __( 'Column 2', 'page-builder-framework' ),
 					],
 					[
-						'key'     => 'column_3',
-						'label'   => __( 'Column 3', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_3',
+						'label' => __( 'Column 3', 'page-builder-framework' ),
 					],
 				],
 			],
@@ -132,19 +126,16 @@ class HeaderBuilderControl extends BaseControl {
 				'label'   => __( 'Secondary Row', 'page-builder-framework' ),
 				'columns' => [
 					[
-						'key'     => 'column_1',
-						'label'   => __( 'Column 1', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_1',
+						'label' => __( 'Column 1', 'page-builder-framework' ),
 					],
 					[
-						'key'     => 'column_2',
-						'label'   => __( 'Column 2', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_2',
+						'label' => __( 'Column 2', 'page-builder-framework' ),
 					],
 					[
-						'key'     => 'column_3',
-						'label'   => __( 'Column 3', 'page-builder-framework' ),
-						'widgets' => [],
+						'key'   => 'column_3',
+						'label' => __( 'Column 3', 'page-builder-framework' ),
 					],
 				],
 			],

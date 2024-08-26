@@ -11,7 +11,6 @@ export type HeaderBuilderWidget = {
 export type HeaderBuilderColumn = {
 	key: string;
 	label: string;
-	widgets: string[];
 };
 
 export type HeaderBuilderRow = {

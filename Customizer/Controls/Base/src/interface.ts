@@ -298,6 +298,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	buildAvailableWidgetsPanel?: () => void;
 	buildBuilderPanel?: () => void;
 	initDraggable?: () => void;
+	initDroppable?: () => void;
 	destroyDraggable?: () => void;
 	initSortable?: () => void;
 	destroySortable?: () => void;

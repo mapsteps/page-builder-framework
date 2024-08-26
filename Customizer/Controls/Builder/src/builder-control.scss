@@ -31,8 +31,8 @@
 
 	.widget-item {
 		position: relative;
-		display: inline-block;
-
+		align-items: center;
+		justify-content: space-between;
 		text-align: left;
 		font-weight: 600;
 		font-size: 12px;
@@ -50,8 +50,6 @@
 
 	.widget-item {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		margin: 12px 0;
 		padding: 11px 13px;
 		width: 100%;
@@ -175,7 +173,7 @@
 			transition: max-width 0.2s ease-in-out;
 
 			&.empty-widget-list {
-				min-width: 100px;
+				min-width: 128px;
 			}
 		}
 
@@ -200,9 +198,14 @@
 	}
 
 	.widget-item {
+		display: inline-flex;
 		margin: 4px 4px;
 		padding: 8px 13px;
 		cursor: move;
+
+		&:not(.empty-widget-item) {
+			min-width: 120px;
+		}
 
 		&.empty-widget-item {
 			width: 1px;
@@ -223,6 +226,23 @@
 		&:hover {
 			border-color: #2271b1;
 		}
+	}
+
+	.widget-button {
+		padding: 0;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+
+		.dashicons {
+			width: 14px;
+			height: 14px;
+			font-size: 14px;
+		}
+	}
+
+	.delete-widget-button:hover {
+		color: tomato;
 	}
 }
 
@@ -246,6 +266,7 @@
 		display: inline-block;
 		padding: 8px 13px;
 		margin: 0;
+		min-width: 120px;
 		text-align: left;
 		font-weight: 600;
 		font-size: 12px;
