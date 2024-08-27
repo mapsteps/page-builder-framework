@@ -15,6 +15,8 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 	valueField: undefined,
 
+	draggableData: undefined,
+
 	emptyWidgetItemMarkup:
 		"<div class='widget-item empty-widget-item'>&nbsp;</div>",
 
@@ -89,7 +91,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				continue;
 			}
 
-			if (child.classList.contains("sortable-placeholder")) {
+			if (child.classList.contains("ui-sortable-placeholder")) {
 				continue;
 			}
 
@@ -304,8 +306,14 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				dragHelper.classList.add("is-shown");
 
 				const widgetKey = item.dataset.widgetKey;
+				if (!widgetKey) return;
 
-				// Set the data to be transferred.
+				/**
+				 * Set the data to be transferred.
+				 * We use both e.dataTransfer and control.draggableData to store the data.
+				 * Because e.dataTransfer can't be accessed from "dragenter" and "dragover" event.
+				 */
+				control.draggableData = { widgetKey };
 				e.dataTransfer?.setData("text", JSON.stringify({ widgetKey }));
 
 				dragHelper.innerHTML = item.outerHTML;
@@ -347,6 +355,8 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				dragHelper.classList.remove("is-shown");
 				dragHelper.innerHTML = "";
 				dragHelper.removeAttribute("style");
+
+				control.draggableData = undefined;
 			});
 		});
 	},
@@ -368,11 +378,16 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		builderDropZones.forEach((dropZone) => {
 			if (!(dropZone instanceof HTMLElement)) return;
 
-			dropZone.addEventListener("dragover", function (e) {
+			dropZone.addEventListener("dragenter", function (e) {
 				if (!(e instanceof DragEvent)) return;
 				e.preventDefault();
 
 				dropZone.classList.add("dragover");
+			});
+
+			// This empty block is necessary to let the dropZone accept the drop event.
+			dropZone.addEventListener("dragover", function (e) {
+				e.preventDefault();
 			});
 
 			dropZone.addEventListener("dragleave", function (e) {
@@ -388,49 +403,25 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 				dropZone.classList.remove("dragover");
 
-				const data = e.dataTransfer?.getData("text");
-				if (!data) return;
-
-				let parsedJson: null | Record<string, any> = null;
-
-				try {
-					parsedJson = JSON.parse(data);
-				} catch (e) {
-					console.error("Error parsing JSON data:", e);
-					parsedJson = null;
-				}
-
-				if (!parsedJson) return;
-
-				const widgetKey = parsedJson.widgetKey;
-				if (!widgetKey) return;
-
-				const widgetItem = control.availableWidgetsPanel?.querySelector(
-					`.widget-item[data-widget-key="${widgetKey}"]`,
-				);
-
+				const widgetItem = control.getWidgetItemFromDraggableData?.(e);
 				if (!widgetItem) return;
 
-				// Add a new child element (cloned from the widgetItem) to this drop zone.
-				const newWidgetItem = widgetItem.cloneNode(true);
+				const newWidgetItem = control.createWidgetItem?.(widgetItem, true);
+				if (!(newWidgetItem instanceof HTMLElement)) return;
 
-				if (newWidgetItem instanceof HTMLElement) {
-					newWidgetItem.classList.remove("disabled");
-					newWidgetItem.classList.remove("is-dragging");
+				const temporaryWidgetItem = dropZone.querySelector(
+					".ui-sortable-placeholder.from-available-widgets",
+				);
 
-					const deleteButton = document.createElement("button");
-					deleteButton.type = "button";
-					deleteButton.className = "widget-button delete-widget-button";
-					deleteButton.innerHTML = '<i class="dashicons dashicons-no-alt"></i>';
-					newWidgetItem.appendChild(deleteButton);
-
-					deleteButton.addEventListener("click", function (e) {
-						newWidgetItem.remove();
-						widgetItem.classList.remove("disabled");
-					});
+				if (temporaryWidgetItem) {
+					dropZone.removeChild(temporaryWidgetItem);
 				}
 
-				dropZone.appendChild(newWidgetItem);
+				if (dropZone.classList.contains("column-end")) {
+					dropZone.insertBefore(newWidgetItem, dropZone.firstChild);
+				} else {
+					dropZone.appendChild(newWidgetItem);
+				}
 
 				const emptyWidgetItem = dropZone.querySelector(".empty-widget-item");
 
@@ -439,11 +430,72 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				}
 
 				// Now refresh the sortable.
-				jQuery(".builder-column").sortable("refresh");
+				jQuery(dropZone).sortable("refresh");
 
 				widgetItem.classList.add("disabled");
+				control.draggableData = undefined;
 			});
 		});
+	},
+
+	parseDraggableData: function (e) {
+		const data = e.dataTransfer?.getData("text");
+		if (!data) return undefined;
+
+		let parsedJson: undefined | Record<string, any> = undefined;
+
+		try {
+			parsedJson = JSON.parse(data);
+		} catch (e) {
+			console.error("Error parsing JSON data:", e);
+		}
+
+		if (!parsedJson) return undefined;
+
+		return parsedJson;
+	},
+
+	getWidgetItemFromDraggableData: function (e) {
+		const data = e.dataTransfer?.getData("text");
+		if (!data) return undefined;
+
+		const parsedJson = this.parseDraggableData?.(e);
+		if (!parsedJson) return undefined;
+
+		const widgetKey = parsedJson.widgetKey;
+		if (!widgetKey) return undefined;
+
+		const widgetItem = this.availableWidgetsPanel?.querySelector(
+			`.widget-item[data-widget-key="${widgetKey}"]`,
+		);
+
+		if (!widgetItem || !(widgetItem instanceof HTMLElement)) return undefined;
+
+		return widgetItem;
+	},
+
+	createWidgetItem: function (widgetItemToClone, addDeleteButton) {
+		const newWidgetItem = widgetItemToClone.cloneNode(true);
+
+		if (newWidgetItem instanceof HTMLElement) {
+			newWidgetItem.classList.remove("disabled");
+			newWidgetItem.classList.remove("is-dragging");
+
+			if (addDeleteButton) {
+				const deleteButton = document.createElement("button");
+				deleteButton.type = "button";
+				deleteButton.className = "widget-button delete-widget-button";
+				deleteButton.innerHTML = '<i class="dashicons dashicons-no-alt"></i>';
+				newWidgetItem.appendChild(deleteButton);
+
+				deleteButton.addEventListener("click", function (e) {
+					newWidgetItem.remove();
+					widgetItemToClone.classList.remove("disabled");
+				});
+			}
+		}
+
+		return newWidgetItem;
 	},
 
 	initSortable: function () {
@@ -458,7 +510,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		// Init sortables.
 		jQuery(".sortable-widgets").sortable({
 			connectWith: ".builder-column",
-			placeholder: "widget-item sortable-placeholder",
+			placeholder: "widget-item",
 			start: function (e, ui) {
 				document.body.classList.add("is-sorting-widget");
 
@@ -482,6 +534,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		jQuery(".builder-column.column-middle").on("sortover", function (e, ui) {
 			const target = e.target;
 			target.classList.remove(emptyWidgetListClass);
+			console.log(ui.placeholder[0].outerHTML);
 		});
 
 		jQuery(".builder-column.column-middle").on("sortout", function (e, ui) {

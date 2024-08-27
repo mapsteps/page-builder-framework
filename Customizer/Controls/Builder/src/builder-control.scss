@@ -173,7 +173,7 @@
 			transition: max-width 0.2s ease-in-out;
 
 			&.empty-widget-list {
-				min-width: 128px;
+				min-width: 136px;
 			}
 		}
 
@@ -187,7 +187,10 @@
 			border-bottom-left-radius: 5px;
 		}
 
+		// This column is a sortable list that contains items.
 		&.column-end {
+			display: flex;
+			justify-content: flex-end;
 			border-top-right-radius: 5px;
 			border-bottom-right-radius: 5px;
 		}
@@ -216,7 +219,7 @@
 			padding-right: 0;
 		}
 
-		&.sortable-placeholder {
+		&.ui-sortable-placeholder {
 			color: transparent;
 			background-color: #f7f7f7;
 			border: 1px dotted #ddd;

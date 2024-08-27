@@ -297,10 +297,17 @@ export interface WpbfCustomizeControl<SV, CP> {
 	builderPanel?: HTMLElement;
 	buildAvailableWidgetsPanel?: () => void;
 	buildBuilderPanel?: () => void;
+	draggableData?: Record<string, string> | undefined;
 	initDraggable?: () => void;
 	initDroppable?: () => void;
-	destroyDraggable?: () => void;
+	parseDraggableData?: (e: DragEvent) => Record<string, string> | undefined;
+	getWidgetItemFromDraggableData?: (e: DragEvent) => HTMLElement | undefined;
+	createWidgetItem?: (
+		widgetItemToClone: HTMLElement,
+		addDeleteButton?: boolean,
+	) => HTMLElement | Node;
 	initSortable?: () => void;
+	destroyDraggable?: () => void;
 	destroySortable?: () => void;
 
 	// Gave up (still some/many types are missing)
