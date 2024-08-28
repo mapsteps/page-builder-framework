@@ -1,3 +1,11 @@
+#customize-preview {
+	margin-top: auto;
+	margin-bottom: auto;
+	max-height: 100%;
+	height: auto;
+	transition: bottom 0.2s ease-in-out;
+}
+
 #sub-accordion-section-wpbf_header_builder_section {
 	padding-top: 0 !important;
 	padding-bottom: 0 !important;
@@ -95,12 +103,18 @@
 	left: 0;
 	padding: 0 20px;
 	width: 100%;
-	min-height: 100px;
-	max-height: 60%;
+	max-height: 0;
 	background-color: #f0f0f1;
 	border-top: 1px solid #ddd;
+	transition: max-height 0.2s ease-in-out;
 	// This z-index should be lower than the sidebar panel (10).
 	z-index: 9;
+
+	&.before-shown {
+		opacity: 0;
+		z-index: -1;
+		max-height: none;
+	}
 
 	.builder-row {
 		position: relative;
@@ -149,6 +163,7 @@
 
 	.builder-inner-row {
 		display: flex;
+		flex-wrap: nowrap;
 		align-items: center;
 		justify-content: space-between;
 		position: relative;
