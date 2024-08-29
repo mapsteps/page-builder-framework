@@ -1,37 +1,25 @@
-import {
-	WpbfCustomize,
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "./interface";
+import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "./interface";
 import _ from "lodash";
-
-declare var wp: {
-	customize: WpbfCustomize;
-};
 
 declare var wpbfCustomizerTooltips: {
 	id: string;
 	content: string;
 }[];
 
-export function setupTooltips() {
-	wp.customize.bind("ready", wpbfSetupTooltips);
-}
-
-function wpbfSetupTooltips() {
+export function wpbfSetupTooltips(customizer: WpbfCustomize) {
 	let sectionNames: string[] = [];
 
-	wp.customize.control.each(function (
+	customizer.control.each(function (
 		control: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
 	) {
 		if (!sectionNames.includes(control.section())) {
 			sectionNames.push(control.section());
 		}
 
-		wp.customize.section(control.section(), function (section) {
+		customizer.section(control.section(), function (section) {
 			if (
 				section.expanded() ||
-				wp.customize.settings.autofocus.control === control.id
+				customizer.settings.autofocus.control === control.id
 			) {
 				wpbfInjectTooltip(control);
 			} else {
@@ -55,7 +43,7 @@ function wpbfSetupTooltips() {
 	sectionNames.forEach(function (sectionName) {
 		if (!sidebarOverlay) return;
 
-		wp.customize.section(sectionName, function (section) {
+		customizer.section(sectionName, function (section) {
 			section.expanded.bind(function (expanded) {
 				if (expanded) {
 					if (

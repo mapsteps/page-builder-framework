@@ -1,31 +1,22 @@
 import _ from "lodash";
 import {
-	WpbfControlDependency,
-	WpbfCustomize,
+	WpbfControlDependencies,
 	WpbfReversedControlDependencies,
 	WpbfReversedControlDependency,
 } from "./interface";
-import hooks from "@wordpress/hooks";
 
-declare var wp: {
-	customize: WpbfCustomize;
-	hooks: typeof hooks;
-};
-
-declare var wpbfCustomizerControlDependencies: Record<
-	string,
-	WpbfControlDependency[]
->;
-
-export default function setupControlDependencies() {
+export default function setupControlDependencies(
+	globalControlDependencies: WpbfControlDependencies,
+) {
+	if (!window.wp.customize) return;
 	const reversedControlDependencies: WpbfReversedControlDependencies = {};
 
-	for (const controlId in wpbfCustomizerControlDependencies) {
-		if (!wpbfCustomizerControlDependencies.hasOwnProperty(controlId)) {
+	for (const controlId in globalControlDependencies) {
+		if (!globalControlDependencies.hasOwnProperty(controlId)) {
 			continue;
 		}
 
-		const controlDependencies = wpbfCustomizerControlDependencies[controlId];
+		const controlDependencies = globalControlDependencies[controlId];
 
 		for (const dependency of controlDependencies) {
 			if (!reversedControlDependencies[dependency.id]) {
@@ -33,14 +24,16 @@ export default function setupControlDependencies() {
 			}
 
 			reversedControlDependencies[dependency.id].push({
-				dependantControlId: controlId,
+				dependantId: controlId,
 				operator: dependency.operator,
 				value: dependency.value,
 			});
 		}
 	}
 
-	wp.customize.bind("ready", function () {
+	const customizer = window.wp.customize;
+
+	customizer.bind("ready", function () {
 		for (const controlId in reversedControlDependencies) {
 			if (!reversedControlDependencies.hasOwnProperty(controlId)) {
 				continue;
@@ -51,7 +44,7 @@ export default function setupControlDependencies() {
 	});
 
 	function listenDependencyControl(dependencyControlId: string) {
-		wp.customize(dependencyControlId, function (setting) {
+		customizer(dependencyControlId, function (setting) {
 			const rules = reversedControlDependencies[dependencyControlId];
 
 			handleRulesCondition(dependencyControlId, setting.get(), rules);
@@ -75,15 +68,15 @@ export default function setupControlDependencies() {
 			);
 
 			if (!isDependencySatisfied) {
-				wp.customize.control(ruleSet.dependantControlId)?.toggle(false);
+				customizer.control(ruleSet.dependantId)?.toggle(false);
 				continue;
 			}
 
 			const dependantDependencies =
-				wpbfCustomizerControlDependencies[ruleSet.dependantControlId];
+				globalControlDependencies[ruleSet.dependantId];
 
 			if (dependantDependencies.length < 2) {
-				wp.customize.control(ruleSet.dependantControlId)?.toggle(true);
+				customizer.control(ruleSet.dependantId)?.toggle(true);
 				continue;
 			}
 
@@ -94,9 +87,9 @@ export default function setupControlDependencies() {
 					continue;
 				}
 
-				const dependantDependencyValue = wp
-					.customize(dependantDependency.id)
-					.get();
+				const dependantDependencyValue = customizer(
+					dependantDependency.id,
+				).get();
 
 				if (
 					!isRuleSatisfied(
@@ -111,9 +104,9 @@ export default function setupControlDependencies() {
 			}
 
 			if (!otherRulesSatisfied) {
-				wp.customize.control(ruleSet.dependantControlId)?.toggle(false);
+				customizer.control(ruleSet.dependantId)?.toggle(false);
 			} else {
-				wp.customize.control(ruleSet.dependantControlId)?.toggle(true);
+				customizer.control(ruleSet.dependantId)?.toggle(true);
 			}
 		}
 	}

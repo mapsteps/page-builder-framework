@@ -1,17 +1,10 @@
-import hooks from "@wordpress/hooks";
 import {
-	WpbfCustomize,
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
 	WpbfCustomizeElement,
 } from "./interface";
 import jQuery from "jquery";
 import _ from "lodash";
-
-declare var wp: {
-	customize: WpbfCustomize;
-	hooks: typeof hooks;
-};
 
 /**
  * Content of this file was taken from Kirki.
@@ -22,8 +15,8 @@ declare var wp: {
  *
  * @see https://github.com/xwp/wp-customize-posts
  */
-export default function setupDynamicControl() {
-	wp.customize.wpbfDynamicControl = wp.customize.Control.extend<
+export default function setupDynamicControl(customizer: WpbfCustomize) {
+	customizer.wpbfDynamicControl = customizer.Control.extend<
 		WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>
 	>({
 		initialize: function (
@@ -70,14 +63,19 @@ export default function setupDynamicControl() {
 			}
 
 			control.propertyElements = [];
-			wp.customize.Control.prototype.initialize.call(control, id, params);
-			wp.hooks.doAction("wpbf.dynamicControl.init.after", id, control, params);
+			customizer.Control.prototype.initialize.call(control, id, params);
+			window.wp.hooks.doAction(
+				"wpbf.dynamicControl.init.after",
+				id,
+				control,
+				params,
+			);
 		},
 
 		/**
 		 * Add bidirectional data binding links between inputs and the setting(s).
 		 *
-		 * This is copied from wp.customize.Control.prototype.initialize(). It
+		 * This is copied from api.Control.prototype.initialize(). It
 		 * should be changed in Core to be applied once the control is embedded.
 		 */
 		_setUpSettingRootLinks: function (
@@ -91,9 +89,9 @@ export default function setupDynamicControl() {
 				const settingKey = this.dataset.customizeSettingLink;
 				if (!settingKey) return;
 
-				wp.customize(settingKey, function (setting) {
+				customizer(settingKey, function (setting) {
 					// @ts-ignore The `new` operator has TS error (not runtime error).
-					const element = new wp.customize.Element(node);
+					const element = new customizer.Element(node);
 					control.elements.push(element);
 					element.sync(setting);
 					element.set(setting());
@@ -122,7 +120,7 @@ export default function setupDynamicControl() {
 				let propertyName = node.data("customizeSettingPropertyLink");
 
 				// @ts-ignore The `new` operator has TS error (not runtime error).
-				element = new wp.customize.Element(node);
+				element = new customizer.Element(node);
 				control.propertyElements.push(element);
 
 				if (!control.setting || typeof control.setting !== "function") {
@@ -166,17 +164,17 @@ export default function setupDynamicControl() {
 			control._setUpSettingRootLinks?.();
 			control._setUpSettingPropertyLinks?.();
 
-			wp.customize.Control.prototype.ready.call(control);
+			customizer.Control.prototype.ready.call(control);
 
 			control.deferred.embedded.done(function () {
 				control.initWpbfControl?.();
-				wp.hooks.doAction(
+				window.wp.hooks.doAction(
 					"wpbf.dynamicControl.ready.deferred.embedded.done",
 					control,
 				);
 			});
 
-			wp.hooks.doAction("wpbf.dynamicControl.ready.after", control);
+			window.wp.hooks.doAction("wpbf.dynamicControl.ready.after", control);
 		},
 
 		/**
@@ -196,11 +194,11 @@ export default function setupDynamicControl() {
 				return;
 			}
 
-			wp.customize.section(sectionId, function (section) {
+			customizer.section(sectionId, function (section) {
 				if (
 					"wpbf-expanded" === section.params.type ||
 					section.expanded() ||
-					wp.customize.settings.autofocus.control === control.id
+					customizer.settings.autofocus.control === control.id
 				) {
 					control.actuallyEmbed?.();
 				} else {
@@ -211,7 +209,7 @@ export default function setupDynamicControl() {
 					});
 				}
 			});
-			wp.hooks.doAction("wpbf.dynamicControl.embed.after", control);
+			window.wp.hooks.doAction("wpbf.dynamicControl.embed.after", control);
 		},
 
 		/**
@@ -230,7 +228,10 @@ export default function setupDynamicControl() {
 			}
 			control.renderContent();
 			control.deferred.embedded.resolve(); // This triggers control.ready().
-			wp.hooks.doAction("wpbf.dynamicControl.actuallyEmbed.after", control);
+			window.wp.hooks.doAction(
+				"wpbf.dynamicControl.actuallyEmbed.after",
+				control,
+			);
 		},
 
 		/**
@@ -243,8 +244,8 @@ export default function setupDynamicControl() {
 			const control = this;
 
 			control.actuallyEmbed?.();
-			wp.customize.Control.prototype.focus.call(control, args);
-			wp.hooks.doAction("wpbf.dynamicControl.focus.after", control);
+			customizer.Control.prototype.focus.call(control, args);
+			window.wp.hooks.doAction("wpbf.dynamicControl.focus.after", control);
 		},
 
 		/**
@@ -256,7 +257,7 @@ export default function setupDynamicControl() {
 		) {
 			control = control || this;
 
-			wp.hooks.doAction("wpbf.dynamicControl.initWpbfControl", this);
+			window.wp.hooks.doAction("wpbf.dynamicControl.initWpbfControl", this);
 
 			// Save the value
 			control.container.on("change keyup paste click", "input", function () {

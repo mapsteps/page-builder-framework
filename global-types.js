@@ -90,10 +90,17 @@
  */
 
 /**
+ * Global `hooks` object.
+ *
+ * @typedef {import("@wordpress/hooks").Hooks} WpHooks
+ */
+
+/**
  * Global `wp` object.
  *
  * @typedef {Object} wp
  *
+ * @property {WpHooks} hooks
  * @property {WpbfCustomize|undefined} customize
  * @property {any} media
  */

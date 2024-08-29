@@ -1,17 +1,10 @@
-import hooks from "@wordpress/hooks";
 import _ from "lodash";
 
 import "./base-control.scss";
 
-import { WpbfCustomize } from "./interface";
 import setupDynamicControl from "./dynamic-control";
 import setupControlDependencies from "./control-dependencies";
-import { setupTooltips } from "./tooltips";
-
-declare var wp: {
-	customize: WpbfCustomize;
-	hooks: typeof hooks;
-};
+import { wpbfSetupTooltips } from "./tooltips";
 
 /**
  * This file was taken from Kirki.
@@ -23,11 +16,22 @@ declare var wp: {
  * @see https://github.com/xwp/wp-customize-posts
  */
 
-setupDynamicControl();
-setupControlDependencies();
-setupTooltips();
+if (window.wp.customize) {
+	setupDynamicControl(window.wp.customize);
+
+	window.wp.customize.bind("ready", () => {
+		if (!window.wp.customize) return;
+		wpbfSetupTooltips(window.wp.customize);
+	});
+}
+
+if (window.wpbfCustomizerControlDependencies) {
+	setupControlDependencies(window.wpbfCustomizerControlDependencies);
+}
 
 (function (api) {
+	if (!api) return;
+
 	/**
 	 * Set the value and trigger all bound callbacks.
 	 */
@@ -91,4 +95,4 @@ setupTooltips();
 
 		return this._value;
 	};
-})(wp.customize);
+})(window.wp.customize);

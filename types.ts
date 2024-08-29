@@ -2,6 +2,7 @@
 
 import { KyInstance } from "ky";
 import { Van } from "vanjs-core";
+import { WpbfControlDependencies } from "./Customizer/Controls/Base/src/interface";
 
 export type WpbfPremiumStickyNavigation = {
 	opts: Record<string, any>;
@@ -116,6 +117,7 @@ declare global {
 		};
 		wc_add_to_cart_params?: Record<string, any>;
 		wpbf_quick_view?: Record<string, any>;
+		wpbfCustomizerControlDependencies?: WpbfControlDependencies;
 	}
 
 	interface JQuery {

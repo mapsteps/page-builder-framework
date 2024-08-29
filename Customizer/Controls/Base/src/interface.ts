@@ -382,12 +382,16 @@ export interface WpbfControlDependency {
 	value: string;
 }
 
+export interface WpbfControlDependencies {
+	[dependantId: string]: WpbfControlDependency[];
+}
+
 export interface WpbfReversedControlDependency {
-	dependantControlId: string;
+	dependantId: string;
 	operator: string;
 	value: string;
 }
 
 export interface WpbfReversedControlDependencies {
-	[dependencyControlId: string]: WpbfReversedControlDependency[];
+	[dependencyId: string]: WpbfReversedControlDependency[];
 }
