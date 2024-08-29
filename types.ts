@@ -118,6 +118,7 @@ declare global {
 		wc_add_to_cart_params?: Record<string, any>;
 		wpbf_quick_view?: Record<string, any>;
 		wpbfCustomizerControlDependencies?: WpbfControlDependencies;
+		wpbfCustomizerSectionDependencies?: WpbfControlDependencies;
 	}
 
 	interface JQuery {

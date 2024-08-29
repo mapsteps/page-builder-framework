@@ -51,6 +51,13 @@ final class CustomizerStore {
 	public static $added_sections = array();
 
 	/**
+	 * Added section dependencies.
+	 *
+	 * @var array
+	 */
+	public static $added_section_dependencies = array();
+
+	/**
 	 * Added controls.
 	 *
 	 * @var CustomizerControlEntity[]

@@ -29,6 +29,13 @@ final class CustomizerSection {
 	private $section_tabs = [];
 
 	/**
+	 * Field's dependencies.
+	 *
+	 * @var array
+	 */
+	private $section_dependencies = [];
+
+	/**
 	 * Construct the class.
 	 */
 	public function __construct() {
@@ -162,15 +169,26 @@ final class CustomizerSection {
 	 * Callback will be called with one parameter which is the instance of WP_Customize_Section.
 	 * It should return boolean to indicate whether the section is active or not.
 	 *
-	 * @param callable $active_callback Section active callback.
+	 * @param callable|array $active_callback Section active callback.
 	 *
 	 * @return $this
 	 */
 	public function activeCallback( $active_callback ) {
 
-		if ( ! empty( $active_callback ) && is_callable( $active_callback ) ) {
-			$this->section->active_callback = $active_callback;
+		if ( empty( $active_callback ) ) {
+			return $this;
 		}
+
+		if ( is_callable( $active_callback ) ) {
+			$this->section->active_callback = $active_callback;
+			return $this;
+		}
+
+		if ( ! is_array( $active_callback ) ) {
+			return $this;
+		}
+
+		$this->section_dependencies = $active_callback;
 
 		return $this;
 
@@ -215,6 +233,7 @@ final class CustomizerSection {
 	 */
 	public function add() {
 
+		$this->addSectionDependency();
 		return $this->addToPanel( '' );
 
 	}
@@ -236,7 +255,19 @@ final class CustomizerSection {
 			CustomizerStore::$added_section_tabs[ $this->section->id ] = $this->section_tabs;
 		}
 
+		$this->addSectionDependency();
+
 		return $this->section;
+
+	}
+
+	private function addSectionDependency() {
+
+		if ( empty( $this->section_dependencies ) ) {
+			return;
+		}
+
+		CustomizerStore::$added_section_dependencies[ $this->section->id ] = $this->section_dependencies;
 
 	}
 
