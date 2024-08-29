@@ -226,13 +226,6 @@ class HeaderBuilderControl extends BaseControl {
 		<div class="customize-control-notifications-container"></div>
 
 		<div class="wpbf-control-form">
-			<textarea
-				id="_customize-input-<?php echo esc_attr( $this->id ); ?>"
-				class="json-field"
-				rows="10"
-				data-customize-setting-link="<?php echo esc_attr( $this->settings['default']->id ); ?>"
-			><?php echo esc_textarea( wp_json_encode( $this->value() ) ); ?></textarea>
-
 			<div class="available-widgets-panel"></div>
 		</div>
 

@@ -1,8 +1,7 @@
 import {
-	encodeJsonOrDefault,
-	parseJsonOrUndefined,
-} from "../../Generic/src/string-util";
-import { WpbfCustomizeBuilderControl } from "./builder-interface";
+	HeaderBuilderValue,
+	WpbfCustomizeBuilderControl,
+} from "./builder-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -11,9 +10,9 @@ declare var wp: {
 const HeaderBuilderControl = (wp.customize.controlConstructor[
 	"wpbf-header-builder"
 ] = wp.customize.wpbfDynamicControl.extend<WpbfCustomizeBuilderControl>({
-	form: undefined,
+	isSaving: false,
 
-	valueField: undefined,
+	form: undefined,
 
 	draggableData: undefined,
 
@@ -31,9 +30,8 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		control = control || this;
 		if (!control) return;
 
-		const controlForm = document.querySelector(
-			`#_customize-input-${control.id} .wpbf-control-form`,
-		);
+		const controlForm =
+			control.container[0].querySelector(".wpbf-control-form");
 
 		if (controlForm instanceof HTMLElement) {
 			control.form = controlForm;
@@ -45,21 +43,6 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		 */
 		control.setting?.bind((value: Record<string, any>) => {
 			control.updateComponentState?.(value);
-		});
-
-		control.valueField = control.form?.querySelector("textarea");
-
-		/**
-		 * Listen to input change event.
-		 * Update customizer setting when input changed.
-		 */
-		control.valueField?.addEventListener("change", function () {
-			if (!control.setting) return;
-
-			const parsedJson = parseJsonOrUndefined<Record<string, any>>(this.value);
-			if (!parsedJson) return;
-
-			control.setting.set(parsedJson);
 		});
 
 		control.buildAvailableWidgetsPanel?.();
@@ -275,7 +258,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 			});
 		});
 
-		this.builderPanel = $headerBuilderPanel[0];
+		control.builderPanel = $headerBuilderPanel[0];
 	},
 
 	initDraggable: function () {
@@ -434,6 +417,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 				widgetItem.classList.add("disabled");
 				control.draggableData = undefined;
+				control.updateCustomizerSetting?.();
 			});
 		});
 	},
@@ -480,6 +464,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		if (newWidgetItem instanceof HTMLElement) {
 			newWidgetItem.classList.remove("disabled");
 			newWidgetItem.classList.remove("is-dragging");
+			newWidgetItem.removeAttribute("draggable");
 
 			if (addDeleteButton) {
 				const deleteButton = document.createElement("button");
@@ -525,6 +510,7 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 				if (!(sortableEl instanceof HTMLElement)) return;
 
 				control.handleSortableSortout?.(sortableEl);
+				control.updateCustomizerSetting?.();
 			},
 			stop: function (e, ui) {
 				document.body.classList.remove("is-sorting-widget");
@@ -534,7 +520,6 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		jQuery(".builder-column.column-middle").on("sortover", function (e, ui) {
 			const target = e.target;
 			target.classList.remove(emptyWidgetListClass);
-			console.log(ui.placeholder[0].outerHTML);
 		});
 
 		jQuery(".builder-column.column-middle").on("sortout", function (e, ui) {
@@ -575,21 +560,83 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 		jQuery(".builder-column").sortable("destroy");
 	},
 
+	updateCustomizerSetting: function () {
+		const control = this;
+
+		if (control.isSaving) {
+			return;
+		}
+
+		control.isSaving = true;
+
+		setTimeout(() => {
+			const builderRows =
+				control.builderPanel?.querySelectorAll(".builder-row");
+
+			if (!builderRows || !builderRows.length) {
+				control.isSaving = false;
+				return;
+			}
+
+			const values: HeaderBuilderValue = {};
+
+			builderRows.forEach((row) => {
+				if (!(row instanceof HTMLElement)) return;
+				const rowKey = row.dataset.rowKey;
+				if (!rowKey) return;
+
+				values[rowKey] = {};
+
+				const sortableColumns = row.querySelectorAll(
+					".builder-column.sortable-widgets",
+				);
+
+				if (!sortableColumns.length) {
+					return;
+				}
+
+				sortableColumns.forEach((column) => {
+					if (!(column instanceof HTMLElement)) return;
+					const columnKey = column.dataset.columnKey;
+					if (!columnKey) return;
+
+					values[rowKey][columnKey] = [];
+
+					const widgetItems = column.querySelectorAll(".widget-item");
+
+					if (!widgetItems.length) {
+						return;
+					}
+
+					widgetItems.forEach((widgetItem) => {
+						if (!(widgetItem instanceof HTMLElement)) return;
+
+						if (widgetItem.classList.contains("empty-widget-item")) {
+							return;
+						}
+
+						if (widgetItem.classList.contains("ui-sortable-placeholder")) {
+							return;
+						}
+
+						const widgetKey = widgetItem.dataset.widgetKey;
+						if (!widgetKey) return;
+
+						values[rowKey][columnKey].push(widgetKey);
+					});
+				});
+			});
+
+			control.setting?.set(values);
+			control.isSaving = false;
+		}, 1);
+	},
+
 	updateComponentState: function (
 		this: WpbfCustomizeBuilderControl,
 		value: Record<string, any>,
 	) {
-		const textarea = this.form?.querySelector("textarea");
-		if (!textarea) return;
-
-		textarea.value = encodeJsonOrDefault<Record<string, any>>(value);
-	},
-
-	valuesEqual: function <T>(a: T, b: T): boolean {
-		const aJson = encodeJsonOrDefault<T>(a);
-		const bJson = encodeJsonOrDefault<T>(b);
-
-		return aJson === bJson;
+		// Update available-widgets & sortable-widgets.
 	},
 }));
 

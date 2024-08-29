@@ -8,6 +8,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Builder;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
+use Mapsteps\Wpbf\Customizer\Controls\Generic\AssocArrayField;
 use WP_Customize_Manager;
 
 /**
@@ -24,7 +25,7 @@ class HeaderBuilderField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		return $value;
+		return AssocArrayField::sanitize( $value, 'block_' );
 
 	}
 

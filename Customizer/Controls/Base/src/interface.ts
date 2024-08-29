@@ -231,6 +231,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	initialized?: boolean;
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
+	updateCustomizerSetting?: () => void;
 	updateComponentState?: (val: SV) => void;
 	validateCssValue?: (value: string | number) => boolean;
 	wpbfNotifications?: VoidFunction;
@@ -286,8 +287,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	setFileInRepeaterField?: (attachment: Record<string, any>) => void;
 
 	// Specific to Header Builder.
-	valuesEqual?: <T>(a: T, b: T) => boolean;
-	valueField?: HTMLInputElement | HTMLTextAreaElement | null;
+	isSaving?: boolean;
 	emptyWidgetMarkup?: string;
 	isSortableEmpty?: (el: HTMLElement) => boolean;
 	isWidgetActive?: (widgetKey: string) => boolean;
