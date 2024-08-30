@@ -34,6 +34,12 @@ wpbf_customizer_field()
 	->label( __( 'Header Builder', 'page-builder-framework' ) )
 	->defaultValue( true )
 	->priority( 0 )
+	->properties([
+		'wrapper_attrs' => [
+			'class'                  => 'wpbf-builder-toggle',
+			'data-connected-builder' => 'wpbf_header_builder',
+		],
+	])
 	->partialRefresh( [
 		'headerbuildertoggle' => array(
 			'container_inclusive' => true,

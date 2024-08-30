@@ -6,9 +6,12 @@
 	transition: bottom 0.2s ease-in-out;
 }
 
-#customize-control-wpbf_use_header_builder {
+.wpbf-builder-toggle {
 	&.disabled {
 		margin-bottom: 0;
+		padding-left: 30px;
+		padding-right: 26px;
+		border-bottom: 1px solid #dcdcde;
 	}
 }
 
