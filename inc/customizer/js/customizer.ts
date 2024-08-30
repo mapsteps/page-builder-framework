@@ -1,7 +1,6 @@
 jQuery(document).on("ready", () => {
-	const api = window.wp.customize;
-	if (!api) return;
-	setupCustomizer(jQuery, api);
+	if (!window.wp.customize) return;
+	setupCustomizer(jQuery, window.wp.customize);
 });
 
 /**
@@ -9,7 +8,7 @@ jQuery(document).on("ready", () => {
  *
  * @param {JQueryStatic} $ - jQuery object.
  */
-function setupCustomizer($: JQueryStatic, api: WpbfCustomize) {
+function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 	const customizePreviewId = "customize-preview";
 	const headerPanelId = "header_panel";
 	const headerBuilderPanelClassName = "header-builder-panel";
@@ -53,13 +52,11 @@ function setupCustomizer($: JQueryStatic, api: WpbfCustomize) {
 	}
 
 	function setupHeaderBuilder() {
-		if (!api) return;
-
-		api.panel(headerPanelId, function (panel) {
+		customizer.panel(headerPanelId, function (panel) {
 			panel.expanded.bind(function (expanded) {
 				if (expanded) {
 					// Check for the toggleFieldId: if it's enabled, then open the panel.
-					api.control(toggleFieldId, function (control) {
+					customizer.control(toggleFieldId, function (control) {
 						if (control?.setting?.get()) {
 							openHeaderBuilderPanel();
 						}
@@ -70,18 +67,11 @@ function setupCustomizer($: JQueryStatic, api: WpbfCustomize) {
 			});
 		});
 
-		api.control(toggleFieldId, function (control) {
-			const enabled = control?.setting?.get();
-
-			if (enabled) {
-				control?.container?.removeClass("disabled");
-			} else {
-			}
-
+		customizer.control(toggleFieldId, function (control) {
 			control?.setting?.bind(function (enabled) {
 				if (enabled) {
 					// Check for the headerPanelId: if it's expanded, then open the panel.
-					api.panel(headerPanelId, function (panel) {
+					customizer.panel(headerPanelId, function (panel) {
 						if (panel.expanded()) {
 							enable(control.container ? control.container[0] : undefined);
 						}
