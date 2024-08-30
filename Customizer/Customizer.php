@@ -109,8 +109,7 @@ final class Customizer {
 		$this->register_selective_refreshes( $wp_customize_manager );
 
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_panel_types' ) );
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_section_types' ) );
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_section_dependencies' ) );
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_section_assets' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
 
 	}
@@ -267,17 +266,6 @@ final class Customizer {
 	}
 
 	/**
-	 * Register the customizer section dependencies.
-	 *
-	 * @return void
-	 */
-	public function register_section_dependencies() {
-
-		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerSectionDependencies', CustomizerStore::$added_section_dependencies );
-
-	}
-
-	/**
 	 * Enqueue custom panel types.
 	 *
 	 * @return void
@@ -290,17 +278,19 @@ final class Customizer {
 	}
 
 	/**
-	 * Enqueue custom section types.
+	 * Enqueue style & scripts related to customize sections.
 	 *
 	 * @return void
 	 */
-	public function enqueue_custom_section_types() {
+	public function enqueue_section_assets() {
 
 		// Enqueue the styles.
 		wp_enqueue_style( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/sections-min.css', array(), WPBF_VERSION );
 
 		// Enqueue the scripts.
 		wp_enqueue_script( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/sections-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
+
+		wp_localize_script( 'wpbf-sections', 'wpbfCustomizerSectionDependencies', CustomizerStore::$added_section_dependencies );
 
 	}
 

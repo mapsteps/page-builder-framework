@@ -6,6 +6,8 @@
  * @subpackage Customizer
  */
 
+use Mapsteps\Wpbf\Customizer\CustomizerStore;
+
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
@@ -46,6 +48,15 @@ function wpbf_customizer_setup( $wp_customize ) {
 	$wp_customize->get_control( 'blogdescription' )->priority  = 19;
 	$wp_customize->get_control( 'background_color' )->priority = 100;
 	$wp_customize->get_control( 'background_image' )->priority = 0;
+
+	// Active callback (section dependency) for logo section.
+	CustomizerStore::$added_section_dependencies['title_tagline'] = [
+		array(
+			'id'       => 'wpbf_use_header_builder',
+			'operator' => '==',
+			'value'    => false,
+		),
+	];
 
 	/**
 	 * Partial refresh for custom logo.

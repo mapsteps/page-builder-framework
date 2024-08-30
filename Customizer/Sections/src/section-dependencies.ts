@@ -33,24 +33,42 @@ export default function setupSectionDependencies(
 	}
 
 	customizer.bind("ready", function () {
+		setupDependencyControlListener(true);
+	});
+
+	/**
+	 * The section dependency system actually works.
+	 * But there was a bug where hidden sections are shown again after preview iframe is fully loaded.
+	 * Re-running the dependency checking on window "load" event solve the issue.
+	 */
+	window.addEventListener("load", function () {
+		setupDependencyControlListener(false);
+	});
+
+	function setupDependencyControlListener(bindValueChanges: boolean) {
 		for (const controlId in reversedSectionDependencies) {
 			if (!reversedSectionDependencies.hasOwnProperty(controlId)) {
 				continue;
 			}
 
-			listenDependencyControl(controlId);
+			listenDependencyControl(controlId, bindValueChanges);
 		}
-	});
+	}
 
-	function listenDependencyControl(dependencyControlId: string) {
+	function listenDependencyControl(
+		dependencyControlId: string,
+		bindValueChanges: boolean,
+	) {
 		customizer(dependencyControlId, function (setting) {
 			const rules = reversedSectionDependencies[dependencyControlId];
 
 			handleRulesCondition(dependencyControlId, setting.get(), rules);
 
-			setting.bind(function (newValue: string) {
-				handleRulesCondition(dependencyControlId, newValue, rules);
-			});
+			if (bindValueChanges) {
+				setting.bind(function (newValue: string) {
+					handleRulesCondition(dependencyControlId, newValue, rules);
+				});
+			}
 		});
 	}
 

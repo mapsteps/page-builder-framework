@@ -71,19 +71,36 @@ function setupCustomizer($: JQueryStatic, api: WpbfCustomize) {
 		});
 
 		api.control(toggleFieldId, function (control) {
+			const enabled = control?.setting?.get();
+
+			if (enabled) {
+				control?.container?.removeClass("disabled");
+			} else {
+			}
+
 			control?.setting?.bind(function (enabled) {
 				if (enabled) {
 					// Check for the headerPanelId: if it's expanded, then open the panel.
 					api.panel(headerPanelId, function (panel) {
 						if (panel.expanded()) {
-							openHeaderBuilderPanel();
+							enable(control.container ? control.container[0] : undefined);
 						}
 					});
 				} else {
-					closeHeaderBuilderPanel();
+					disable(control.container ? control.container[0] : undefined);
 				}
 			});
 		});
+	}
+
+	function enable(controlContainer: HTMLElement | undefined) {
+		controlContainer?.classList.remove("disabled");
+		openHeaderBuilderPanel();
+	}
+
+	function disable(controlContainer: HTMLElement | undefined) {
+		controlContainer?.classList.add("disabled");
+		closeHeaderBuilderPanel();
 	}
 
 	/**
