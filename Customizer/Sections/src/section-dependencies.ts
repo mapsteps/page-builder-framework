@@ -6,6 +6,7 @@ import {
 import { isRuleSatisfied } from "../../Controls/Base/src/control-dependencies";
 
 export default function setupSectionDependencies(
+	customizer: WpbfCustomize,
 	globalSectionDependencies: WpbfControlDependencies,
 ) {
 	if (!window.wp.customize) return;
@@ -30,8 +31,6 @@ export default function setupSectionDependencies(
 			});
 		}
 	}
-
-	const customizer = window.wp.customize;
 
 	customizer.bind("ready", function () {
 		for (const controlId in reversedSectionDependencies) {
@@ -68,7 +67,7 @@ export default function setupSectionDependencies(
 			);
 
 			if (!isDependencySatisfied) {
-				customizer.section(ruleSet.dependantId)?.active(false);
+				deactivateSection(ruleSet.dependantId);
 				continue;
 			}
 
@@ -76,7 +75,7 @@ export default function setupSectionDependencies(
 				globalSectionDependencies[ruleSet.dependantId];
 
 			if (dependantDependencies.length < 2) {
-				customizer.section(ruleSet.dependantId)?.active(true);
+				activateSection(ruleSet.dependantId);
 				continue;
 			}
 
@@ -104,10 +103,18 @@ export default function setupSectionDependencies(
 			}
 
 			if (!otherRulesSatisfied) {
-				customizer.section(ruleSet.dependantId)?.active(false);
+				deactivateSection(ruleSet.dependantId);
 			} else {
-				customizer.section(ruleSet.dependantId)?.active(true);
+				activateSection(ruleSet.dependantId);
 			}
 		}
+	}
+
+	function activateSection(sectionId: string) {
+		customizer.section(sectionId).activate();
+	}
+
+	function deactivateSection(sectionId: string) {
+		customizer.section(sectionId).deactivate();
 	}
 }

@@ -7,6 +7,9 @@ window.wp.customize?.bind("ready", () => {
 	setupSectionTypes(window.wp.customize);
 });
 
-if (window.wpbfCustomizerSectionDependencies) {
-	setupSectionDependencies(window.wpbfCustomizerSectionDependencies);
+if (window.wp.customize && window.wpbfCustomizerSectionDependencies) {
+	setupSectionDependencies(
+		window.wp.customize,
+		window.wpbfCustomizerSectionDependencies,
+	);
 }
