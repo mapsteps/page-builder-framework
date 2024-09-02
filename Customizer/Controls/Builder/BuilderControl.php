@@ -12,20 +12,20 @@ use Mapsteps\Wpbf\Customizer\Controls\Generic\AssocArrayControl;
 use WP_Customize_Setting;
 
 /**
- * Class to add Wpbf customizer header builder control.
+ * Class to add Wpbf customizer builder control.
  */
-class HeaderBuilderControl extends BaseControl {
+class BuilderControl extends BaseControl {
 
 	/**
 	 * Control's type.
 	 *
 	 * @var string
 	 */
-	public $type = 'wpbf-header-builder';
+	public $type = 'wpbf-builder';
 
-	private $available_builder_widgets = array();
+	private $available_widgets = array();
 
-	private $available_builder_rows = array();
+	private $available_rows = array();
 
 	/**
 	 * Constructor.
@@ -41,105 +41,13 @@ class HeaderBuilderControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		$this->available_builder_widgets = array(
-			array(
-				'key'   => 'logo',
-				'label' => __( 'Logo', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'search',
-				'label' => __( 'Search', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'account',
-				'label' => __( 'Account', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'block_1',
-				'label' => __( 'Block 1', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'block_2',
-				'label' => __( 'Block 2', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'block_3',
-				'label' => __( 'Block 3', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'button_1',
-				'label' => __( 'Button 1', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'button_2',
-				'label' => __( 'Button 2', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'menu_1',
-				'label' => __( 'Menu 1', 'page-builder-framework' ),
-			),
-			array(
-				'key'   => 'menu_2',
-				'label' => __( 'Menu 2', 'page-builder-framework' ),
-			),
-		);
+		if ( isset( $args['available_widgets'] ) && is_array( $args['available_widgets'] ) ) {
+			$this->available_widgets = $args['available_widgets'];
+		}
 
-		$this->available_builder_rows = array(
-			[
-				'key'     => 'row_1',
-				'label'   => __( 'Pre-Header', 'page-builder-framework' ),
-				'columns' => [
-					[
-						'key'   => 'column_1',
-						'label' => __( 'Column 1', 'page-builder-framework' ),
-					],
-					[
-						'key'   => 'column_2',
-						'label' => __( 'Column 2', 'page-builder-framework' ),
-					],
-					[
-						'key'   => 'column_3',
-						'label' => __( 'Column 3', 'page-builder-framework' ),
-					],
-				],
-			],
-			[
-				'key'     => 'row_2',
-				'label'   => __( 'Main Row', 'page-builder-framework' ),
-				'columns' => [
-					[
-						'key'   => 'column_1',
-						'label' => __( 'Column 1', 'page-builder-framework' ),
-					],
-					[
-						'key'   => 'column_2',
-						'label' => __( 'Column 2', 'page-builder-framework' ),
-					],
-					[
-						'key'   => 'column_3',
-						'label' => __( 'Column 3', 'page-builder-framework' ),
-					],
-				],
-			],
-			[
-				'key'     => 'row_3',
-				'label'   => __( 'Secondary Row', 'page-builder-framework' ),
-				'columns' => [
-					[
-						'key'   => 'column_1',
-						'label' => __( 'Column 1', 'page-builder-framework' ),
-					],
-					[
-						'key'   => 'column_2',
-						'label' => __( 'Column 2', 'page-builder-framework' ),
-					],
-					[
-						'key'   => 'column_3',
-						'label' => __( 'Column 3', 'page-builder-framework' ),
-					],
-				],
-			],
-		);
+		if ( isset( $args['available_rows'] ) && is_array( $args['available_rows'] ) ) {
+			$this->available_rows = $args['available_rows'];
+		}
 
 		if ( ! ( $this->setting instanceof WP_Customize_Setting ) ) {
 			return;
@@ -187,9 +95,9 @@ class HeaderBuilderControl extends BaseControl {
 
 		parent::to_json();
 
-		$this->json['headerBuilder'] = [
-			'availableRows'    => $this->available_builder_rows,
-			'availableWidgets' => $this->available_builder_widgets,
+		$this->json['builder'] = [
+			'availableWidgets' => $this->available_widgets,
+			'availableRows'    => $this->available_rows,
 		];
 
 	}

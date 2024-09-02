@@ -15,7 +15,7 @@
 	}
 }
 
-#sub-accordion-section-wpbf_header_builder_section {
+#customize-theme-controls .customize-pane-child.wpbf-builder-section {
 	padding-top: 0 !important;
 	padding-bottom: 0 !important;
 	border-top-width: 0 !important;
@@ -25,7 +25,7 @@
 	}
 }
 
-.wpbf-customize-control-header-builder {
+.wpbf-customize-control-builder {
 	.json-field {
 		opacity: 0;
 		width: 0;
@@ -43,7 +43,7 @@
 	}
 }
 
-.header-builder-widgets {
+.builder-widgets {
 	position: relative;
 
 	.widget-item {
@@ -101,11 +101,11 @@
 	}
 }
 
-.header-builder-panel * {
+.builder-panel * {
 	box-sizing: border-box;
 }
 
-.header-builder-panel {
+.builder-panel {
 	box-sizing: border-box;
 	position: absolute;
 	bottom: 0;

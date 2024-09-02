@@ -3,33 +3,33 @@ import {
 	WpbfCustomizeControlParams,
 } from "../../Base/src/interface";
 
-export type HeaderBuilderWidget = {
+export type BuilderWidget = {
 	key: string;
 	label: string;
 };
 
-export type HeaderBuilderColumn = {
+export type BuilderColumn = {
 	key: string;
 	label: string;
 };
 
-export type HeaderBuilderRow = {
+export type BuilderRow = {
 	key: string;
 	label: string;
-	columns: HeaderBuilderColumn[];
+	columns: BuilderColumn[];
 };
 
-export type HeaderBuilderValue = Record<string, Record<string, string[]>>;
+export type BuilderValue = Record<string, Record<string, string[]>>;
 
 export interface WpbfCustomizeBuilderControlParams
-	extends WpbfCustomizeControlParams<HeaderBuilderValue> {
-	headerBuilder: {
-		availableWidgets: HeaderBuilderWidget[];
-		availableRows: HeaderBuilderRow[];
+	extends WpbfCustomizeControlParams<BuilderValue> {
+	builder: {
+		availableWidgets: BuilderWidget[];
+		availableRows: BuilderRow[];
 	};
 }
 export interface WpbfCustomizeBuilderControl
 	extends WpbfCustomizeControl<
-		HeaderBuilderValue,
+		BuilderValue,
 		WpbfCustomizeBuilderControlParams
 	> {}

@@ -1,6 +1,8 @@
-jQuery(document).on("ready", () => {
-	if (!window.wp.customize) return;
-	setupCustomizer(jQuery, window.wp.customize);
+window.wp.customize?.bind("ready", () => {
+	setTimeout(() => {
+		if (!window.wp.customize) return;
+		setupCustomizer(jQuery, window.wp.customize);
+	}, 25);
 });
 
 /**
@@ -10,9 +12,7 @@ jQuery(document).on("ready", () => {
  */
 function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 	const customizePreviewId = "customize-preview";
-	const headerPanelId = "header_panel";
-	const headerBuilderPanelClassName = "header-builder-panel";
-	const toggleFieldId = "wpbf_use_header_builder";
+	const builderPanelClassName = "builder-panel";
 
 	init();
 
@@ -52,70 +52,131 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 	}
 
 	function setupHeaderBuilder() {
-		customizer.panel(headerPanelId, function (panel) {
-			panel.expanded.bind(function (expanded) {
-				if (expanded) {
-					// Check for the toggleFieldId: if it's enabled, then open the panel.
-					customizer.control(toggleFieldId, function (control) {
-						if (control?.setting?.get()) {
-							openHeaderBuilderPanel();
-						}
-					});
-				} else {
-					closeHeaderBuilderPanel();
-				}
-			});
-		});
+		const toggleControls = document.querySelectorAll(
+			"#customize-theme-controls .wpbf-builder-toggle",
+		);
+		if (!toggleControls.length) return;
 
-		customizer.control(toggleFieldId, function (control) {
-			control?.setting?.bind(function (enabled) {
-				if (enabled) {
-					// Check for the headerPanelId: if it's expanded, then open the panel.
-					customizer.panel(headerPanelId, function (panel) {
-						if (panel.expanded()) {
-							enable(control.container ? control.container[0] : undefined);
-						}
+		const panelFields: {
+			panelId: string;
+			toggleControlId: string;
+			builderControlId: string;
+		}[] = [];
+
+		for (const toggleControl of toggleControls) {
+			if (!(toggleControl instanceof HTMLElement)) return;
+			const toggleControlId = toggleControl.dataset.wpbfSetting;
+			if (!toggleControlId) return;
+
+			const builderControlId = toggleControl.dataset.connectedBuilder;
+			if (!builderControlId) return;
+
+			customizer.control(toggleControlId, function (control) {
+				if (!control) return;
+				const sectionId = control.section();
+
+				customizer.section(sectionId, function (section) {
+					const panelId = section.params.panel;
+					if (!panelId) return;
+
+					section.container?.addClass("wpbf-builder-section");
+
+					panelFields.push({
+						panelId,
+						toggleControlId,
+						builderControlId,
 					});
-				} else {
-					disable(control.container ? control.container[0] : undefined);
-				}
+				});
 			});
-		});
+		}
+
+		if (!panelFields.length) return;
+
+		for (const panelField of panelFields) {
+			customizer.panel(panelField.panelId, function (panel) {
+				panel.container?.addClass("wpbf-builder-panel");
+
+				panel.expanded.bind(function (expanded) {
+					if (expanded) {
+						customizer.control(panelField.toggleControlId, function (control) {
+							if (control?.setting?.get()) {
+								openBuilderPanel(panelField.builderControlId);
+							}
+						});
+					} else {
+						closeBuilderPanel(panelField.builderControlId);
+					}
+				});
+			});
+
+			customizer.control(panelField.toggleControlId, function (control) {
+				control?.setting?.bind(function (enabled) {
+					if (enabled) {
+						customizer.panel(panelField.panelId, function (panel) {
+							if (panel.expanded()) {
+								enable(
+									panelField.builderControlId,
+									control.container ? control.container[0] : undefined,
+								);
+							}
+						});
+					} else {
+						disable(
+							panelField.builderControlId,
+							control.container ? control.container[0] : undefined,
+						);
+					}
+				});
+			});
+		}
 	}
 
-	function enable(controlContainer: HTMLElement | undefined) {
-		controlContainer?.classList.remove("disabled");
-		openHeaderBuilderPanel();
+	function enable(
+		connectedBuilderControlId: string,
+		toggleControlContainer: HTMLElement | undefined,
+	) {
+		toggleControlContainer?.classList.remove("disabled");
+		openBuilderPanel(connectedBuilderControlId);
 	}
 
-	function disable(controlContainer: HTMLElement | undefined) {
-		controlContainer?.classList.add("disabled");
-		closeHeaderBuilderPanel();
+	function disable(
+		connectedBuilderControlId: string,
+		toggleControlContainer: HTMLElement | undefined,
+	) {
+		toggleControlContainer?.classList.add("disabled");
+		closeBuilderPanel(connectedBuilderControlId);
 	}
 
 	/**
-	 * Using jQuery animation (slideDown) is too slow (noticeable).
+	 * Open the header builder panel.
+	 * We don't use jQuery slideDown because it's too slow (noticeable).
+	 *
+	 * @param {string} builderControlId The builder control ID.
 	 */
-	function openHeaderBuilderPanel() {
-		const $headerBuilderPanel = $("." + headerBuilderPanelClassName);
-		$headerBuilderPanel.addClass("before-shown");
+	function openBuilderPanel(builderControlId: string) {
+		const $builderPanel = $(`.${builderControlId}-${builderPanelClassName}`);
+		$builderPanel.addClass("before-shown");
 
 		window.setTimeout(() => {
-			const panelHeight = $headerBuilderPanel.outerHeight();
-			$headerBuilderPanel.removeClass("before-shown");
+			const panelHeight = $builderPanel.outerHeight();
+			$builderPanel.removeClass("before-shown");
 
 			window.setTimeout(() => {
-				$headerBuilderPanel.css("max-height", panelHeight ?? "auto");
+				$builderPanel.css("max-height", panelHeight ?? "auto");
 				$("#" + customizePreviewId).css("bottom", panelHeight ?? "auto");
 			}, 0);
 		}, 0);
 	}
 
 	/**
-	 * Using jQuery animation (slideUp) is too slow (noticeable).
+	 * Close the header builder panel.
+	 * We don't use jQuery slideUp because it's too slow (noticeable).
+	 *
+	 * @param {string} builderControlId The builder control ID.
 	 */
-	function closeHeaderBuilderPanel() {
-		$("." + headerBuilderPanelClassName).removeAttr("style");
+	function closeBuilderPanel(builderControlId: string) {
+		$(`.${builderControlId}-${builderPanelClassName}`).removeAttr("style");
+
 		$("#" + customizePreviewId).css("bottom", 0);
 	}
 }

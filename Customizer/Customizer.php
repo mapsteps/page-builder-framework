@@ -9,6 +9,7 @@ namespace Mapsteps\Wpbf\Customizer;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderStore;
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterSetting;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
@@ -339,6 +340,10 @@ final class Customizer {
 				'invalid-value' => esc_html__( 'Invalid Value', 'page-builder-framework' ),
 			]
 		);
+
+		if ( is_array( BuilderStore::$added_control_ids ) ) {
+			wp_localize_script( 'wpbf-builder-control', 'wpbfBuilderControlIds', BuilderStore::$added_control_ids );
+		}
 
 	}
 

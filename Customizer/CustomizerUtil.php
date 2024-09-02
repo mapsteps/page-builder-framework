@@ -8,7 +8,7 @@
 namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Builder\HeaderBuilderField;
+use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Code\CodeField;
@@ -101,7 +101,7 @@ class CustomizerUtil {
 		'section-tabs',
 		'sortable',
 		'typography',
-		'header-builder',
+		'builder',
 		'upload',
 	);
 
@@ -347,8 +347,8 @@ class CustomizerUtil {
 			case 'typography':
 				$field = new TypographyField( $control_entity );
 				break;
-			case 'header-builder':
-				$field = new HeaderBuilderField( $control_entity );
+			case 'builder':
+				$field = new BuilderField( $control_entity );
 				break;
 			case 'upload':
 				$field = new UploadField( $control_entity );

@@ -119,6 +119,7 @@ declare global {
 		wpbf_quick_view?: Record<string, any>;
 		wpbfCustomizerControlDependencies?: WpbfControlDependencies;
 		wpbfCustomizerSectionDependencies?: WpbfControlDependencies;
+		wpbfBuilderControlIds?: string[];
 	}
 
 	interface JQuery {

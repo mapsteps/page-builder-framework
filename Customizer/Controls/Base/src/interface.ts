@@ -46,7 +46,7 @@ import {
 	WpbfRepeaterRow,
 } from "../../Repeater/src/repeater-interface";
 import {
-	HeaderBuilderWidget,
+	BuilderWidget,
 	WpbfCustomizeBuilderControl,
 } from "../../Builder/src/builder-interface";
 
@@ -291,7 +291,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	emptyWidgetMarkup?: string;
 	isSortableEmpty?: (el: HTMLElement) => boolean;
 	isWidgetActive?: (widgetKey: string) => boolean;
-	findWidgetByKey?: (widgetKey: string) => HeaderBuilderWidget | undefined;
+	findWidgetByKey?: (widgetKey: string) => BuilderWidget | undefined;
 	handleSortableSortout?: (el: HTMLElement) => void;
 	availableWidgetsPanel?: HTMLElement;
 	builderPanel?: HTMLElement;
@@ -373,7 +373,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-responsive-input-slider": WpbfCustomizeResponsiveInputSliderControl;
 	"wpbf-sortable": WpbfCustomizeSortableControl;
 	"wpbf-toggle": WpbfCustomizeCheckboxControl;
-	"wpbf-header-builder": WpbfCustomizeBuilderControl;
+	"wpbf-builder": WpbfCustomizeBuilderControl;
 }
 
 export interface WpbfControlDependency {

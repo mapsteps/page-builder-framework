@@ -6,6 +6,8 @@
  * @subpackage Customizer
  */
 
+use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderStore;
+
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /* Panel */
@@ -53,9 +55,13 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( 'wpbf_header_builder' )
-	->type( 'header-builder' )
+	->type( 'builder' )
 	->description( __( 'Drag and drop widgets to build your site header.', 'page-builder-framework' ) )
 	->priority( 0 )
+	->properties( array(
+		'available_widgets' => BuilderStore::headerBuilderAvailableWidgets(),
+		'available_rows'    => BuilderStore::headerBuilderAvailableRows(),
+	) )
 	->activeCallback( [
 		array(
 			'id'       => 'wpbf_use_header_builder',

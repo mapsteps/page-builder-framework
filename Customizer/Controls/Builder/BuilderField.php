@@ -12,9 +12,9 @@ use Mapsteps\Wpbf\Customizer\Controls\Generic\AssocArrayField;
 use WP_Customize_Manager;
 
 /**
- * Default settings for the header builder field.
+ * Default settings for the builder field.
  */
-class HeaderBuilderField extends BaseField {
+class BuilderField extends BaseField {
 
 	/**
 	 * Setting's sanitize callback.
@@ -38,11 +38,13 @@ class HeaderBuilderField extends BaseField {
 
 		$control_args = $this->parseControlArgs();
 
-		$wp_customize_manager->add_control( new HeaderBuilderControl(
+		$wp_customize_manager->add_control( new BuilderControl(
 			$wp_customize_manager,
 			$this->control->id,
 			$control_args
 		) );
+
+		BuilderStore::$added_control_ids[] = $this->control->id;
 
 	}
 
