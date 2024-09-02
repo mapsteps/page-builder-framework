@@ -246,14 +246,15 @@ const HeaderBuilderControl = (wp.customize.controlConstructor[
 
 				// Build the widget list based on `matchedColumn`.
 				matchedColumn.forEach((widgetKey) => {
-					const matchedWidget = control.findWidgetByKey?.(widgetKey);
-					if (!matchedWidget) return;
+					const widgetItem = control.availableWidgetsPanel?.querySelector(
+						`.widget-item[data-widget-key="${widgetKey}"]`,
+					);
+					if (!(widgetItem instanceof HTMLElement)) return;
 
-					jQuery("<div></div>")
-						.addClass(`widget-item widget-item-${widgetKey}`)
-						.attr("data-widget-key", widgetKey)
-						.html(`<span class="widget-label">${matchedWidget.label}</span>`)
-						.appendTo($widgetListEl);
+					const newWidgetItem = control.createWidgetItem?.(widgetItem, true);
+					if (!(newWidgetItem instanceof HTMLElement)) return;
+
+					$widgetListEl.append(newWidgetItem);
 				});
 			});
 		});
