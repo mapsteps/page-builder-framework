@@ -122,17 +122,19 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 					if (enabled) {
 						customizer.panel(panelField.panelId, function (panel) {
 							if (panel.expanded()) {
-								enable(
-									panelField.builderControlId,
-									control.container ? control.container[0] : undefined,
-								);
+								if (control.container[0]) {
+									control.container[0].classList.remove("disabled");
+								}
+
+								openBuilderPanel(panelField.builderControlId);
 							}
 						});
 					} else {
-						disable(
-							panelField.builderControlId,
-							control.container ? control.container[0] : undefined,
-						);
+						if (control.container[0]) {
+							control.container[0].classList.add("disabled");
+						}
+
+						closeBuilderPanel(panelField.builderControlId);
 					}
 				});
 			});
@@ -155,7 +157,6 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 								// If the builder is disabled, then we don't need to do anything.
 								if (!isBuilderEnabled(panelField.builderControlId)) return;
 
-								// The builder panel at the bottom of the page, under the customize preview area.
 								const builderPanel = document.querySelector(
 									`.${panelField.builderControlId}-builder-panel`,
 								);
@@ -183,30 +184,21 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 		}
 	}
 
-	function isBuilderEnabled(builderControlId: string) {
-		const isActive = customizer.control(builderControlId)?.active();
+	/**
+	 * Check if builder control is enabled.
+	 *
+	 * @param {string} builderControlId The builder control ID.
+	 * @returns {boolean} Whether builder is enabled or not.
+	 */
+	function isBuilderEnabled(builderControlId: string): boolean {
+		const customizePanel = getBuilderCustomizePanel(builderControlId);
+		if (!customizePanel) return false;
 
-		return isActive ?? false;
-	}
-
-	function enable(
-		connectedBuilderControlId: string,
-		toggleControlContainer: HTMLElement | undefined,
-	) {
-		toggleControlContainer?.classList.remove("disabled");
-		openBuilderPanel(connectedBuilderControlId);
-	}
-
-	function disable(
-		connectedBuilderControlId: string,
-		toggleControlContainer: HTMLElement | undefined,
-	) {
-		toggleControlContainer?.classList.add("disabled");
-		closeBuilderPanel(connectedBuilderControlId);
+		return customizePanel.classList.contains("builder-is-shown");
 	}
 
 	/**
-	 * Open the header builder panel.
+	 * Open the builder panel.
 	 * We don't use jQuery slideDown because it's too slow (noticeable).
 	 *
 	 * @param {string} builderControlId The builder control ID.
@@ -231,7 +223,7 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 	}
 
 	/**
-	 * Close the header builder panel.
+	 * Close builder panel.
 	 * We don't use jQuery slideUp because it's too slow (noticeable).
 	 *
 	 * @param {string} builderControlId The builder control ID.
@@ -246,6 +238,12 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 		customizePanel.classList.remove("builder-is-shown");
 	}
 
+	/**
+	 * Get builder customize panel.
+	 *
+	 * @param {string} builderControlId The builder control ID.
+	 * @returns {HTMLElement|undefined} The builder customize panel.
+	 */
 	function getBuilderCustomizePanel(builderControlId: string) {
 		const customizePanel = document.querySelector(
 			`.control-panel-content.${builderControlId}-control-panel`,

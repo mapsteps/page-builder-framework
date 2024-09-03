@@ -11,6 +11,11 @@ final class BuilderStore {
 	 */
 	public static $added_control_ids = array();
 
+	/**
+	 * Get header builder available widgets.
+	 *
+	 * @return array
+	 */
 	public static function headerBuilderAvailableWidgets() {
 
 		return array(
@@ -27,21 +32,6 @@ final class BuilderStore {
 			array(
 				'key'     => 'account',
 				'label'   => __( 'Account', 'page-builder-framework' ),
-				'section' => '',
-			),
-			array(
-				'key'     => 'block_1',
-				'label'   => __( 'Block 1', 'page-builder-framework' ),
-				'section' => '',
-			),
-			array(
-				'key'     => 'block_2',
-				'label'   => __( 'Block 2', 'page-builder-framework' ),
-				'section' => '',
-			),
-			array(
-				'key'     => 'block_3',
-				'label'   => __( 'Block 3', 'page-builder-framework' ),
 				'section' => '',
 			),
 			array(
@@ -68,6 +58,11 @@ final class BuilderStore {
 
 	}
 
+	/**
+	 * Get header builder available rows.
+	 *
+	 * @return array
+	 */
 	public static function headerBuilderAvailableRows() {
 
 		return array(

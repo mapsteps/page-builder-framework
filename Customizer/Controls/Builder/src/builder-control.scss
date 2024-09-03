@@ -6,7 +6,7 @@
 	transition: bottom 0.2s ease-in-out;
 }
 
-.customize-pane-child.control-panel-wpbf-builder.current-panel {
+.customize-pane-child.control-panel-wpbf-builder {
 	&.builder-is-shown
 		> .control-subsection:not(.builder-control-section)
 		> .accordion-section-title {

@@ -1,5 +1,3 @@
-/// <reference path="../../../global-types.js"/>
-
 /**
  * Iterates over a collection of elements and applies a function to each.
  *
@@ -41,7 +39,6 @@ export function forEachEl(selector, handler) {
  * @returns {boolean} Whether we're inside customizer or not.
  */
 export function isInsideCustomizer() {
-	// @ts-ignore
 	return window.wp && window.wp.customize ? true : false;
 }
 
