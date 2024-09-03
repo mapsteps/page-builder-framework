@@ -268,5 +268,37 @@ export default function setupDynamicControl(customizer: WpbfCustomize) {
 				control?.setting?.set(jQuery(this).val());
 			});
 		},
+
+		findHtmlEl: function (elOrSelector, selector) {
+			if (!elOrSelector) return undefined;
+
+			if (typeof elOrSelector === "string") {
+				const result = document.querySelector(elOrSelector);
+
+				return result instanceof HTMLElement ? result : undefined;
+			}
+
+			if (!selector) return undefined;
+
+			const result = elOrSelector.querySelector(selector);
+
+			return result instanceof HTMLElement ? result : undefined;
+		},
+
+		findHtmlEls: function (elOrSelector, selector) {
+			if (!elOrSelector) return [];
+
+			if (typeof elOrSelector === "string") {
+				const result = document.querySelectorAll(elOrSelector);
+
+				return Array.from(result).filter((el) => el instanceof HTMLElement);
+			}
+
+			if (!selector) return [];
+
+			const result = elOrSelector.querySelectorAll(selector);
+
+			return Array.from(result).filter((el) => el instanceof HTMLElement);
+		},
 	});
 }

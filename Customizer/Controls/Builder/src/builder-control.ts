@@ -45,19 +45,15 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				}, 1);
 			},
 
-			isSortableEmpty: function (el) {
-				const children = el.querySelectorAll(".widget-item");
+			isSortableEmpty: function (sortableEl) {
+				const children = this.findHtmlEls?.(sortableEl, ".widget-item");
 
-				if (!children.length) {
+				if (!children || !children.length) {
 					return true;
 				}
 
 				for (let i = 0; i < children.length; i++) {
 					const child = children[i];
-
-					if (!(child instanceof HTMLElement)) {
-						continue;
-					}
 
 					if (child.classList.contains("empty-widget-item")) {
 						continue;
@@ -128,13 +124,12 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				const params = control.params;
 				if (!params) return;
 
-				const availableWidgetsPanel = control.container[0].querySelector(
-					`.available-widgets-panel`,
+				const availableWidgetsPanel = control.findHtmlEl?.(
+					control.container[0],
+					".available-widgets-panel",
 				);
 
-				if (!(availableWidgetsPanel instanceof HTMLElement)) {
-					return;
-				}
+				if (!availableWidgetsPanel) return;
 
 				control.availableWidgetsPanel = availableWidgetsPanel;
 
@@ -175,11 +170,8 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				const availableWidgets = params.builder.availableWidgets;
 				if (!availableRows || !availableWidgets) return;
 
-				const customizePreview = document.querySelector("#customize-preview");
-
-				if (!(customizePreview instanceof HTMLElement)) {
-					return;
-				}
+				const customizePreview = control.findHtmlEl?.("#customize-preview");
+				if (!customizePreview) return;
 
 				// Create the panel.
 				const $builderPanel = jQuery("<div></div>")
@@ -252,10 +244,10 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				control.builderPanel = $builderPanel[0];
 			},
 
-			handleWidgetClick: function (el, widgetData) {
+			handleWidgetClick: function (widgetEl, widgetData) {
 				// If this is from the available widgets panel.
-				if (!el.classList.contains("ui-sortable-handle")) {
-					if (!el.classList.contains("disabled")) {
+				if (!widgetEl.classList.contains("ui-sortable-handle")) {
+					if (!widgetEl.classList.contains("disabled")) {
 						return;
 					}
 				}
@@ -277,11 +269,13 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				if (!params) return;
 				if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
-				const dragHelper = document.querySelector(".widget-drag-helper");
-				if (!(dragHelper instanceof HTMLElement)) return;
+				const dragHelper = control.findHtmlEl?.(".widget-drag-helper");
+				if (!dragHelper) return;
 
-				const availableWidgetItems =
-					control.availableWidgetsPanel?.querySelectorAll(".widget-item");
+				const availableWidgetItems = control.findHtmlEls?.(
+					control.availableWidgetsPanel,
+					".widget-item",
+				);
 
 				if (!availableWidgetItems || !availableWidgetItems.length) {
 					return;
@@ -322,7 +316,10 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 						dragHelper.style.left = draggedElFixedLeftPos + "px";
 						dragHelper.style.top = draggedElFixedTopPos + "px";
 
-						const dragHelperInnerEl = dragHelper.querySelector(".widget-item");
+						const dragHelperInnerEl = control.findHtmlEl?.(
+							dragHelper,
+							".widget-item",
+						);
 
 						const innerElRect = dragHelperInnerEl?.getBoundingClientRect();
 						const dragHelperInnerElWidth = innerElRect?.width || 80;
@@ -360,16 +357,16 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				if (!params) return;
 				if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
-				const builderDropZones =
-					control.builderPanel?.querySelectorAll(".builder-column");
+				const builderDropZones = control.findHtmlEls?.(
+					control.builderPanel,
+					".builder-column",
+				);
 
 				if (!builderDropZones || !builderDropZones.length) {
 					return;
 				}
 
 				builderDropZones.forEach((dropZone) => {
-					if (!(dropZone instanceof HTMLElement)) return;
-
 					dropZone.addEventListener("dragenter", function (e) {
 						if (!(e instanceof DragEvent)) return;
 						e.preventDefault();
@@ -455,6 +452,7 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 			getWidgetItemFromDraggableData: function (e) {
 				const data = e.dataTransfer?.getData("text");
 				if (!data) return undefined;
+				const control = this;
 
 				const parsedJson = this.parseDraggableData?.(e);
 				if (!parsedJson) return undefined;
@@ -462,12 +460,10 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				const widgetKey = parsedJson.widgetKey;
 				if (!widgetKey) return undefined;
 
-				const widgetItem = this.availableWidgetsPanel?.querySelector(
+				const widgetItem = control.findHtmlEl?.(
+					this.availableWidgetsPanel,
 					`.widget-item[data-widget-key="${widgetKey}"]`,
 				);
-
-				if (!widgetItem || !(widgetItem instanceof HTMLElement))
-					return undefined;
 
 				return widgetItem;
 			},
@@ -477,10 +473,12 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				const widgetData = control.findWidgetByKey?.(widgetKey);
 				if (!widgetData) return undefined;
 
-				const widgetItemToClone = control.availableWidgetsPanel?.querySelector(
+				const widgetItemToClone = control.findHtmlEl?.(
+					control.availableWidgetsPanel,
 					`.widget-item[data-widget-key="${widgetKey}"]`,
 				);
-				if (!(widgetItemToClone instanceof HTMLElement)) return undefined;
+
+				if (!widgetItemToClone) return undefined;
 
 				const newWidgetItem = widgetItemToClone.cloneNode(true);
 				if (!(newWidgetItem instanceof HTMLElement)) return undefined;
@@ -498,8 +496,10 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 
 					deleteButton.addEventListener("click", function (e) {
 						e.preventDefault();
-						newWidgetItem.remove();
-						widgetItemToClone.classList.remove("disabled");
+						control.handleDeleteActiveWidget?.(
+							newWidgetItem,
+							widgetItemToClone,
+						);
 					});
 
 					newWidgetItem.addEventListener("click", function (e) {
@@ -520,16 +520,15 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 
 				const emptyWidgetListClass = "empty-widget-list";
 
-				// Init sortables.
 				jQuery(".sortable-widgets").sortable({
 					connectWith: ".builder-column",
 					placeholder: "widget-item",
 					start: function (e, ui) {
 						document.body.classList.add("is-sorting-widget");
 
-						const labelEl = ui.item[0].querySelector(".widget-label");
+						const labelEl = control.findHtmlEl?.(ui.item[0], ".widget-label");
 
-						if (labelEl instanceof HTMLElement) {
+						if (labelEl) {
 							ui.placeholder[0].appendChild(labelEl.cloneNode(true));
 						}
 					},
@@ -537,7 +536,7 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 						const sortableEl = e.target;
 						if (!(sortableEl instanceof HTMLElement)) return;
 
-						control.handleSortableSortout?.(sortableEl);
+						control.checkSortableContent?.(sortableEl);
 						control.updateCustomizerSetting?.();
 					},
 					stop: function (e, ui) {
@@ -554,26 +553,43 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				);
 
 				jQuery(".builder-column.column-middle").on("sortout", function (e, ui) {
-					control.handleSortableSortout?.(e.target);
+					control.checkSortableContent?.(e.target);
 				});
 			},
 
-			handleSortableSortout: function (sortableEl) {
+			handleDeleteActiveWidget: function (activeWidgetEl, availableWidgetEl) {
+				const control = this;
+
+				availableWidgetEl?.classList.remove("disabled");
+
+				const sortableEL = activeWidgetEl.closest(".sortable-widgets");
+
+				activeWidgetEl.remove();
+
+				if (sortableEL instanceof HTMLElement) {
+					control.checkSortableContent?.(sortableEL);
+				}
+
+				if (sortableEL) {
+					jQuery(sortableEL).sortable("refresh");
+				}
+
+				control.updateCustomizerSetting?.();
+			},
+
+			checkSortableContent: function (sortableEl) {
 				const emptyWidgetListClass = "empty-widget-list";
 				const emptyWidgetItemClass = "empty-widget-item";
-
-				const control = this;
-				if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
 				const emptyWidgetItem = sortableEl.querySelector(
 					"." + emptyWidgetItemClass,
 				);
 
-				if (control.isSortableEmpty?.(sortableEl)) {
+				if (this.isSortableEmpty?.(sortableEl)) {
 					sortableEl.classList.add(emptyWidgetListClass);
 
 					if (!emptyWidgetItem) {
-						jQuery(sortableEl).append(control.emptyWidgetItemMarkup ?? "");
+						jQuery(sortableEl).append(this.emptyWidgetItemMarkup ?? "");
 					}
 				} else {
 					sortableEl.classList.remove(emptyWidgetListClass);
@@ -601,8 +617,10 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				control.isSaving = true;
 
 				setTimeout(() => {
-					const builderRows =
-						control.builderPanel?.querySelectorAll(".builder-row");
+					const builderRows = control.findHtmlEls?.(
+						control.builderPanel,
+						".builder-row",
+					);
 
 					if (!builderRows || !builderRows.length) {
 						control.isSaving = false;
@@ -612,36 +630,33 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 					const values: BuilderValue = {};
 
 					builderRows.forEach((row) => {
-						if (!(row instanceof HTMLElement)) return;
 						const rowKey = row.dataset.rowKey;
 						if (!rowKey) return;
 
 						values[rowKey] = {};
 
-						const sortableColumns = row.querySelectorAll(
+						const sortableColumns = control.findHtmlEls?.(
+							row,
 							".builder-column.sortable-widgets",
 						);
 
-						if (!sortableColumns.length) {
+						if (!sortableColumns || !sortableColumns.length) {
 							return;
 						}
 
 						sortableColumns.forEach((column) => {
-							if (!(column instanceof HTMLElement)) return;
 							const columnKey = column.dataset.columnKey;
 							if (!columnKey) return;
 
 							values[rowKey][columnKey] = [];
 
-							const widgetItems = column.querySelectorAll(".widget-item");
+							const widgetItems = control.findHtmlEls?.(column, ".widget-item");
 
-							if (!widgetItems.length) {
+							if (!widgetItems || !widgetItems.length) {
 								return;
 							}
 
 							widgetItems.forEach((widgetItem) => {
-								if (!(widgetItem instanceof HTMLElement)) return;
-
 								if (widgetItem.classList.contains("empty-widget-item")) {
 									return;
 								}

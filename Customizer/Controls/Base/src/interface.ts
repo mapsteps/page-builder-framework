@@ -229,6 +229,14 @@ export interface WpbfCustomizeControl<SV, CP> {
 	root?: Root;
 	form?: HTMLElement;
 	initialized?: boolean;
+	findHtmlEl?: (
+		elOrSelector: string | HTMLElement | undefined | null,
+		selector?: string,
+	) => HTMLElement | undefined;
+	findHtmlEls?: (
+		elOrSelector: string | HTMLElement | undefined | null,
+		selector?: string,
+	) => HTMLElement[];
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
 	updateCustomizerSetting?: () => void;
@@ -289,10 +297,14 @@ export interface WpbfCustomizeControl<SV, CP> {
 	// Specific to Header Builder.
 	isSaving?: boolean;
 	emptyWidgetMarkup?: string;
-	isSortableEmpty?: (el: HTMLElement) => boolean;
+	isSortableEmpty?: (sortableEl: HTMLElement) => boolean;
+	checkSortableContent?: (sortableEl: HTMLElement) => void;
 	isWidgetActive?: (widgetKey: string) => boolean;
 	findWidgetByKey?: (widgetKey: string) => BuilderWidget | undefined;
-	handleSortableSortout?: (el: HTMLElement) => void;
+	handleDeleteActiveWidget?: (
+		activeWidgetEl: HTMLElement,
+		availableWidgetEl: HTMLElement,
+	) => void;
 	availableWidgetsPanel?: HTMLElement;
 	builderPanel?: HTMLElement;
 	buildAvailableWidgetsPanel?: () => void;
@@ -306,7 +318,10 @@ export interface WpbfCustomizeControl<SV, CP> {
 		widgetKey: string,
 		insideBuilderPanel?: boolean,
 	) => HTMLElement | undefined;
-	handleWidgetClick?: (el: HTMLElement, widget: BuilderWidget) => void;
+	handleWidgetClick?: (
+		widgetEl: HTMLElement,
+		widgetData: BuilderWidget,
+	) => void;
 	initSortable?: () => void;
 	destroyDraggable?: () => void;
 	destroySortable?: () => void;
