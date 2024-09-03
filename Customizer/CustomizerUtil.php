@@ -38,8 +38,10 @@ use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
 use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
+use Mapsteps\Wpbf\Customizer\Panels\BuilderPanel;
 use Mapsteps\Wpbf\Customizer\Panels\NestedPanel;
 use Mapsteps\Wpbf\Customizer\Sections\ExpandedSection;
+use Mapsteps\Wpbf\Customizer\Sections\InvisibleSection;
 use Mapsteps\Wpbf\Customizer\Sections\LinkSection;
 use Mapsteps\Wpbf\Customizer\Sections\NestedSection;
 use Mapsteps\Wpbf\Customizer\Sections\OuterSection;
@@ -57,14 +59,14 @@ class CustomizerUtil {
 	 *
 	 * @var string[]
 	 */
-	public $available_panel_types = [ 'default', 'nested' ];
+	public $available_panel_types = [ 'default', 'nested', 'builder' ];
 
 	/**
 	 * Available section types.
 	 *
 	 * @var string[]
 	 */
-	public $available_section_types = [ 'default', 'expanded', 'link', 'nested', 'outer' ];
+	public $available_section_types = [ 'default', 'expanded', 'link', 'nested', 'outer', 'invisible' ];
 
 	/**
 	 * The available fields.
@@ -151,11 +153,11 @@ class CustomizerUtil {
 	 * @param string               $id The panel id.
 	 * @param array                $args The panel arguments.
 	 *
-	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection
+	 * @return WP_Customize_Panel|NestedPanel|BuilderPanel
 	 */
 	public function getPanelInstance( $panel_type, $wp_customer_manager, $id, $args ) {
 
-		if ( empty( $panel_type ) || ! in_array( $panel_type, $this->available_section_types, true ) ) {
+		if ( empty( $panel_type ) || ! in_array( $panel_type, $this->available_panel_types, true ) ) {
 			$panel_type = 'default';
 		}
 
@@ -166,6 +168,8 @@ class CustomizerUtil {
 		switch ( $panel_type ) {
 			case 'nested':
 				return new NestedPanel( $wp_customer_manager, $id, $args );
+			case 'builder':
+				return new BuilderPanel( $wp_customer_manager, $id, $args );
 			default:
 				return new WP_Customize_Panel( $wp_customer_manager, $id, $args );
 		}
@@ -180,7 +184,7 @@ class CustomizerUtil {
 	 * @param string               $id The section id.
 	 * @param array                $args The section arguments.
 	 *
-	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection
+	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection|InvisibleSection
 	 */
 	public function getSectionInstance( $section_type, $wp_customer_manager, $id, $args ) {
 
@@ -201,6 +205,8 @@ class CustomizerUtil {
 				return new NestedSection( $wp_customer_manager, $id, $args );
 			case 'outer':
 				return new OuterSection( $wp_customer_manager, $id, $args );
+			case 'invisible':
+				return new InvisibleSection( $wp_customer_manager, $id, $args );
 			default:
 				return new WP_Customize_Section( $wp_customer_manager, $id, $args );
 		}

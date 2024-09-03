@@ -208,7 +208,6 @@ final class Customizer {
 
 		foreach ( CustomizerStore::$added_panels as $panel ) {
 			$panel_args = array(
-				'type'            => $panel->type,
 				'title'           => $panel->title,
 				'description'     => $panel->description,
 				'capability'      => $panel->capability,

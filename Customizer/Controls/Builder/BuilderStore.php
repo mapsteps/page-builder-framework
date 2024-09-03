@@ -22,7 +22,7 @@ final class BuilderStore {
 			array(
 				'key'     => 'search',
 				'label'   => __( 'Search', 'page-builder-framework' ),
-				'section' => '',
+				'section' => 'wpbf_invisible_search_section',
 			),
 			array(
 				'key'     => 'account',

@@ -101,7 +101,7 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 		for (const panelField of panelFields) {
 			customizer.panel(panelField.panelId, function (panel) {
 				panel.container?.addClass(
-					`builder-control-panel ${panelField.builderControlId}-control-panel`,
+					`${panelField.builderControlId}-control-panel`,
 				);
 
 				panel.expanded.bind(function (expanded) {
@@ -178,7 +178,7 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 
 								// If this section is collapsed, then deactivate it.
 								if (!expanded) {
-									section.deactivate();
+									// section.deactivate();
 								}
 							});
 						});
