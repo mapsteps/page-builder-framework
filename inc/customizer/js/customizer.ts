@@ -206,9 +206,9 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 	function openBuilderPanel(builderControlId: string) {
 		const $builderPanel = $(`.${builderControlId}-${builderPanelClassName}`);
 		$builderPanel.addClass("before-shown");
+		const panelHeight = $builderPanel.outerHeight();
 
 		window.setTimeout(() => {
-			const panelHeight = $builderPanel.outerHeight();
 			$builderPanel.removeClass("before-shown");
 
 			window.setTimeout(() => {
@@ -244,7 +244,9 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 	 * @param {string} builderControlId The builder control ID.
 	 * @returns {HTMLElement|undefined} The builder customize panel.
 	 */
-	function getBuilderCustomizePanel(builderControlId: string) {
+	function getBuilderCustomizePanel(
+		builderControlId: string,
+	): HTMLElement | undefined {
 		const customizePanel = document.querySelector(
 			`.control-panel-content.${builderControlId}-control-panel`,
 		);
