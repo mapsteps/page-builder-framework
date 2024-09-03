@@ -150,13 +150,18 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				availableWidgets.forEach((widget) => {
 					const widgetKey = widget.key;
 
-					jQuery("<div></div>")
+					const $widgetItem = jQuery("<div></div>");
+
+					$widgetItem
 						.addClass(
 							`widget-item widget-item-${widgetKey} ${control.isWidgetActive?.(widgetKey) ? "disabled" : ""}`,
 						)
 						.attr("data-widget-key", widgetKey)
 						.attr("draggable", "true")
 						.html(`<span class="widget-label">${widget.label}</span>`)
+						.on("click", function (e) {
+							control.handleWidgetClick?.(this, widget);
+						})
 						.appendTo($availableWidgetListEl);
 				});
 			},
@@ -178,7 +183,7 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 
 				// Create the panel.
 				const $builderPanel = jQuery("<div></div>")
-					.addClass(`builder-panel ${params.id}-builder-panel`)
+					.addClass(`wpbf-builder-panel ${params.id}-builder-panel`)
 					.attr("data-wpbf-builder-panel", params.id)
 					.insertAfter(customizePreview);
 
@@ -236,16 +241,8 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 
 						// Build the widget list based on `matchedColumn`.
 						matchedColumn.forEach((widgetKey) => {
-							const widgetItem = control.availableWidgetsPanel?.querySelector(
-								`.widget-item[data-widget-key="${widgetKey}"]`,
-							);
-							if (!(widgetItem instanceof HTMLElement)) return;
-
-							const newWidgetItem = control.createWidgetItem?.(
-								widgetItem,
-								true,
-							);
-							if (!(newWidgetItem instanceof HTMLElement)) return;
+							const newWidgetItem = control.createWidgetItem?.(widgetKey, true);
+							if (!newWidgetItem) return;
 
 							$widgetListEl.append(newWidgetItem);
 						});
@@ -253,6 +250,25 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				});
 
 				control.builderPanel = $builderPanel[0];
+			},
+
+			handleWidgetClick: function (el, widgetData) {
+				// If this is from the available widgets panel.
+				if (!el.classList.contains("ui-sortable-handle")) {
+					if (!el.classList.contains("disabled")) {
+						return;
+					}
+				}
+
+				if (!widgetData.section) return;
+
+				const connectedSection = window.wp.customize?.section(
+					widgetData.section,
+				);
+				if (!connectedSection || !connectedSection.params) return;
+
+				connectedSection.activate();
+				connectedSection.expand(connectedSection.params);
 			},
 
 			initDraggable: function () {
@@ -383,8 +399,11 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 						const widgetItem = control.getWidgetItemFromDraggableData?.(e);
 						if (!widgetItem) return;
 
-						const newWidgetItem = control.createWidgetItem?.(widgetItem, true);
-						if (!(newWidgetItem instanceof HTMLElement)) return;
+						const widgetKey = widgetItem.dataset.widgetKey;
+						if (!widgetKey) return;
+
+						const newWidgetItem = control.createWidgetItem?.(widgetKey, true);
+						if (!newWidgetItem) return;
 
 						const temporaryWidgetItem = dropZone.querySelector(
 							".ui-sortable-placeholder.from-available-widgets",
@@ -454,27 +473,40 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				return widgetItem;
 			},
 
-			createWidgetItem: function (widgetItemToClone, addDeleteButton) {
+			createWidgetItem: function (widgetKey, insideBuilderPanel) {
+				const control = this;
+				const widgetData = control.findWidgetByKey?.(widgetKey);
+				if (!widgetData) return undefined;
+
+				const widgetItemToClone = control.availableWidgetsPanel?.querySelector(
+					`.widget-item[data-widget-key="${widgetKey}"]`,
+				);
+				if (!(widgetItemToClone instanceof HTMLElement)) return undefined;
+
 				const newWidgetItem = widgetItemToClone.cloneNode(true);
+				if (!(newWidgetItem instanceof HTMLElement)) return undefined;
 
-				if (newWidgetItem instanceof HTMLElement) {
-					newWidgetItem.classList.remove("disabled");
-					newWidgetItem.classList.remove("is-dragging");
-					newWidgetItem.removeAttribute("draggable");
+				newWidgetItem.classList.remove("disabled");
+				newWidgetItem.classList.remove("is-dragging");
+				newWidgetItem.removeAttribute("draggable");
 
-					if (addDeleteButton) {
-						const deleteButton = document.createElement("button");
-						deleteButton.type = "button";
-						deleteButton.className = "widget-button delete-widget-button";
-						deleteButton.innerHTML =
-							'<i class="dashicons dashicons-no-alt"></i>';
-						newWidgetItem.appendChild(deleteButton);
+				if (insideBuilderPanel) {
+					const deleteButton = document.createElement("button");
+					deleteButton.type = "button";
+					deleteButton.className = "widget-button delete-widget-button";
+					deleteButton.innerHTML = '<i class="dashicons dashicons-no-alt"></i>';
+					newWidgetItem.appendChild(deleteButton);
 
-						deleteButton.addEventListener("click", function (e) {
-							newWidgetItem.remove();
-							widgetItemToClone.classList.remove("disabled");
-						});
-					}
+					deleteButton.addEventListener("click", function (e) {
+						e.preventDefault();
+						newWidgetItem.remove();
+						widgetItemToClone.classList.remove("disabled");
+					});
+
+					newWidgetItem.addEventListener("click", function (e) {
+						e.preventDefault();
+						control.handleWidgetClick?.(this, widgetData);
+					});
 				}
 
 				return newWidgetItem;

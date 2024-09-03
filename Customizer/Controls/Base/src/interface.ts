@@ -303,9 +303,10 @@ export interface WpbfCustomizeControl<SV, CP> {
 	parseDraggableData?: (e: DragEvent) => Record<string, string> | undefined;
 	getWidgetItemFromDraggableData?: (e: DragEvent) => HTMLElement | undefined;
 	createWidgetItem?: (
-		widgetItemToClone: HTMLElement,
-		addDeleteButton?: boolean,
-	) => HTMLElement | Node;
+		widgetKey: string,
+		insideBuilderPanel?: boolean,
+	) => HTMLElement | undefined;
+	handleWidgetClick?: (el: HTMLElement, widget: BuilderWidget) => void;
 	initSortable?: () => void;
 	destroyDraggable?: () => void;
 	destroySortable?: () => void;

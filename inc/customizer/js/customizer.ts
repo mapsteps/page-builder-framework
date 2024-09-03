@@ -1,3 +1,11 @@
+import { WpbfCustomizeBuilderControl } from "../../../Customizer/Controls/Builder/src/builder-interface";
+
+type BuilderPanelData = {
+	panelId: string;
+	builderControlId: string;
+	toggleControlId: string;
+};
+
 window.wp.customize?.bind("ready", () => {
 	setTimeout(() => {
 		if (!window.wp.customize) return;
@@ -18,7 +26,7 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 
 	function init() {
 		setupLogoContainerWidth();
-		setupHeaderBuilder();
+		setupBuilderControl();
 	}
 
 	function setupLogoContainerWidth() {
@@ -51,17 +59,13 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 			});
 	}
 
-	function setupHeaderBuilder() {
+	function setupBuilderControl() {
 		const toggleControls = document.querySelectorAll(
 			"#customize-theme-controls .wpbf-builder-toggle",
 		);
 		if (!toggleControls.length) return;
 
-		const panelFields: {
-			panelId: string;
-			toggleControlId: string;
-			builderControlId: string;
-		}[] = [];
+		const panelFields: BuilderPanelData[] = [];
 
 		for (const toggleControl of toggleControls) {
 			if (!(toggleControl instanceof HTMLElement)) return;
@@ -79,7 +83,9 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 					const panelId = section.params.panel;
 					if (!panelId) return;
 
-					section.container?.addClass("wpbf-builder-section");
+					section.container?.addClass(
+						`builder-control-section ${builderControlId}-control-section`,
+					);
 
 					panelFields.push({
 						panelId,
@@ -94,7 +100,9 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 
 		for (const panelField of panelFields) {
 			customizer.panel(panelField.panelId, function (panel) {
-				panel.container?.addClass("wpbf-builder-panel");
+				panel.container?.addClass(
+					`builder-control-panel ${panelField.builderControlId}-control-panel`,
+				);
 
 				panel.expanded.bind(function (expanded) {
 					if (expanded) {
@@ -128,7 +136,62 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 					}
 				});
 			});
+
+			customizer.control(
+				panelField.builderControlId,
+				function (control: WpbfCustomizeBuilderControl | undefined) {
+					if (!control) return;
+					const params = control.params;
+
+					const availableWidgets = params.builder.availableWidgets;
+					if (!availableWidgets.length) return;
+
+					for (const widget of availableWidgets) {
+						const connectedSectionId = widget.section;
+						if (!connectedSectionId) continue;
+
+						customizer.section(connectedSectionId, function (section) {
+							section.expanded.bind(function (expanded) {
+								// If the builder is disabled, then we don't need to do anything.
+								if (!isBuilderEnabled(panelField.builderControlId)) return;
+
+								// The builder panel at the bottom of the page, under the customize preview area.
+								const builderPanel = document.querySelector(
+									`.${panelField.builderControlId}-builder-panel`,
+								);
+
+								if (builderPanel) {
+									const activeWidget = builderPanel.querySelector(
+										`.widget-item[data-widget-key="${widget.key}"]`,
+									);
+
+									if (activeWidget) {
+										if (expanded) {
+											activeWidget.classList.add("connected-section-expanded");
+										} else {
+											activeWidget.classList.remove(
+												"connected-section-expanded",
+											);
+										}
+									}
+								}
+
+								// If this section is collapsed, then deactivate it.
+								if (!expanded) {
+									section.deactivate();
+								}
+							});
+						});
+					}
+				},
+			);
 		}
+	}
+
+	function isBuilderEnabled(builderControlId: string) {
+		const isActive = customizer.control(builderControlId)?.active();
+
+		return isActive ?? false;
 	}
 
 	function enable(
@@ -165,6 +228,10 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 				$builderPanel.css("max-height", panelHeight ?? "auto");
 				$("#" + customizePreviewId).css("bottom", panelHeight ?? "auto");
 			}, 0);
+
+			const customizePanel = getBuilderCustomizePanel(builderControlId);
+			if (!customizePanel) return;
+			customizePanel.classList.add("builder-is-shown");
 		}, 0);
 	}
 
@@ -178,5 +245,18 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 		$(`.${builderControlId}-${builderPanelClassName}`).removeAttr("style");
 
 		$("#" + customizePreviewId).css("bottom", 0);
+
+		const customizePanel = getBuilderCustomizePanel(builderControlId);
+		if (!customizePanel) return;
+		customizePanel.classList.remove("builder-is-shown");
+	}
+
+	function getBuilderCustomizePanel(builderControlId: string) {
+		const customizePanel = document.querySelector(
+			`.control-panel-content.${builderControlId}-control-panel`,
+		);
+		if (!(customizePanel instanceof HTMLElement)) return undefined;
+
+		return customizePanel;
 	}
 }

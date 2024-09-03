@@ -6,6 +6,14 @@
 	transition: bottom 0.2s ease-in-out;
 }
 
+.builder-control-panel {
+	&.builder-is-shown.current-panel {
+		.control-section:not(.builder-control-section) > h3 {
+			display: none;
+		}
+	}
+}
+
 .wpbf-builder-toggle {
 	&.disabled {
 		margin-bottom: 0;
@@ -15,7 +23,7 @@
 	}
 }
 
-#customize-theme-controls .customize-pane-child.wpbf-builder-section {
+#customize-theme-controls .customize-pane-child.builder-control-section {
 	padding-top: 0 !important;
 	padding-bottom: 0 !important;
 	border-top-width: 0 !important;
@@ -101,11 +109,11 @@
 	}
 }
 
-.builder-panel * {
+.wpbf-builder-panel * {
 	box-sizing: border-box;
 }
 
-.builder-panel {
+.wpbf-builder-panel {
 	box-sizing: border-box;
 	position: absolute;
 	bottom: 0;
@@ -250,8 +258,13 @@
 			z-index: 0;
 		}
 
-		&:hover {
+		&:hover,
+		&.connected-section-expanded {
 			border-color: #2271b1;
+		}
+
+		&.connected-section-expanded {
+			outline: 1px solid #2271b1;
 		}
 	}
 

@@ -15,44 +15,54 @@ final class BuilderStore {
 
 		return array(
 			array(
-				'key'   => 'logo',
-				'label' => __( 'Logo', 'page-builder-framework' ),
+				'key'     => 'logo',
+				'label'   => __( 'Logo', 'page-builder-framework' ),
+				'section' => 'title_tagline',
 			),
 			array(
-				'key'   => 'search',
-				'label' => __( 'Search', 'page-builder-framework' ),
+				'key'     => 'search',
+				'label'   => __( 'Search', 'page-builder-framework' ),
+				'section' => '',
 			),
 			array(
-				'key'   => 'account',
-				'label' => __( 'Account', 'page-builder-framework' ),
+				'key'     => 'account',
+				'label'   => __( 'Account', 'page-builder-framework' ),
+				'section' => '',
 			),
 			array(
-				'key'   => 'block_1',
-				'label' => __( 'Block 1', 'page-builder-framework' ),
+				'key'     => 'block_1',
+				'label'   => __( 'Block 1', 'page-builder-framework' ),
+				'section' => '',
 			),
 			array(
-				'key'   => 'block_2',
-				'label' => __( 'Block 2', 'page-builder-framework' ),
+				'key'     => 'block_2',
+				'label'   => __( 'Block 2', 'page-builder-framework' ),
+				'section' => '',
 			),
 			array(
-				'key'   => 'block_3',
-				'label' => __( 'Block 3', 'page-builder-framework' ),
+				'key'     => 'block_3',
+				'label'   => __( 'Block 3', 'page-builder-framework' ),
+				'section' => '',
 			),
 			array(
-				'key'   => 'button_1',
-				'label' => __( 'Button 1', 'page-builder-framework' ),
+				'key'     => 'button_1',
+				'label'   => __( 'Button 1', 'page-builder-framework' ),
+				'section' => '',
 			),
 			array(
-				'key'   => 'button_2',
-				'label' => __( 'Button 2', 'page-builder-framework' ),
+				'key'     => 'button_2',
+				'label'   => __( 'Button 2', 'page-builder-framework' ),
+				'section' => '',
 			),
 			array(
-				'key'   => 'menu_1',
-				'label' => __( 'Menu 1', 'page-builder-framework' ),
+				'key'     => 'menu_1',
+				'label'   => __( 'Menu 1', 'page-builder-framework' ),
+				'section' => '',
 			),
 			array(
-				'key'   => 'menu_2',
-				'label' => __( 'Menu 2', 'page-builder-framework' ),
+				'key'     => 'menu_2',
+				'label'   => __( 'Menu 2', 'page-builder-framework' ),
+				'section' => '',
 			),
 		);
 

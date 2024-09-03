@@ -6,6 +6,7 @@ import {
 export type BuilderWidget = {
 	key: string;
 	label: string;
+	section: string;
 };
 
 export type BuilderColumn = {
