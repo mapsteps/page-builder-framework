@@ -267,7 +267,6 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 				);
 				if (!connectedSection || !connectedSection.params) return;
 
-				// connectedSection.activate();
 				connectedSection.expand(connectedSection.params);
 			},
 

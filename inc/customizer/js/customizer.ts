@@ -175,11 +175,6 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 										}
 									}
 								}
-
-								// If this section is collapsed, then deactivate it.
-								if (!expanded) {
-									// section.deactivate();
-								}
 							});
 						});
 					}
