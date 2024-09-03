@@ -15,6 +15,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 // Header.
 wpbf_customizer_panel()
 	->id( 'header_panel' )
+	->type( 'builder' )
 	->title( __( 'Header', 'page-builder-framework' ) )
 	->priority( 4 )
 	->add();
@@ -53,6 +54,33 @@ wpbf_customizer_field()
 	] )
 	->addToSection( 'wpbf_header_builder_section' );
 
+/* Invisible Section - Search */
+wpbf_customizer_section()
+	->id( 'wpbf_invisible_search_section' )
+	->type( 'invisible' )
+	->title( __( 'Search', 'page-builder-framework' ) )
+	->priority( 0 )
+	->addToPanel( 'header_panel' );
+
+// Search icon.
+wpbf_customizer_field()
+	->id( 'builder_menu_search_icon' )
+	->setting( 'menu_search_icon' )
+	->type( 'toggle' )
+	->tab( 'general' )
+	->label( __( 'Search Icon', 'page-builder-framework' ) )
+	->priority( 1 )
+	->partialRefresh( [
+		'menusearchicon' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function () {
+				return get_template_part( 'inc/template-parts/header' );
+			},
+		),
+	] )
+	->addToSection( 'wpbf_invisible_search_section' );
+
 wpbf_customizer_field()
 	->id( 'wpbf_header_builder' )
 	->type( 'builder' )
@@ -62,13 +90,6 @@ wpbf_customizer_field()
 		'available_widgets' => BuilderStore::headerBuilderAvailableWidgets(),
 		'available_rows'    => BuilderStore::headerBuilderAvailableRows(),
 	) )
-	->activeCallback( [
-		array(
-			'id'       => 'wpbf_use_header_builder',
-			'operator' => '==',
-			'value'    => true,
-		),
-	] )
 	->partialRefresh( [
 		'headerbuilder' => array(
 			'container_inclusive' => true,
@@ -93,13 +114,6 @@ wpbf_customizer_section()
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
 	] )
-	->activeCallback( [
-		array(
-			'id'       => 'wpbf_use_header_builder',
-			'operator' => '==',
-			'value'    => false,
-		),
-	] )
 	->addToPanel( 'header_panel' );
 
 // Navigation.
@@ -114,13 +128,6 @@ wpbf_customizer_section()
 		'design'  => [
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
-	] )
-	->activeCallback( [
-		array(
-			'id'       => 'wpbf_use_header_builder',
-			'operator' => '==',
-			'value'    => false,
-		),
 	] )
 	->addToPanel( 'header_panel' );
 
@@ -137,13 +144,6 @@ wpbf_customizer_section()
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
 	] )
-	->activeCallback( [
-		array(
-			'id'       => 'wpbf_use_header_builder',
-			'operator' => '==',
-			'value'    => false,
-		),
-	] )
 	->addToPanel( 'header_panel' );
 
 // Mobile menu.
@@ -159,13 +159,6 @@ wpbf_customizer_section()
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
 	] )
-	->activeCallback( [
-		array(
-			'id'       => 'wpbf_use_header_builder',
-			'operator' => '==',
-			'value'    => false,
-		),
-	] )
 	->addToPanel( 'header_panel' );
 
 // Mobile menu.
@@ -173,13 +166,6 @@ wpbf_customizer_section()
 	->id( 'wpbf_mobile_sub_menu_options' )
 	->title( __( 'Mobile Sub Menu', 'page-builder-framework' ) )
 	->priority( 350 )
-	->activeCallback( [
-		array(
-			'id'       => 'wpbf_use_header_builder',
-			'operator' => '==',
-			'value'    => false,
-		),
-	] )
 	->addToPanel( 'header_panel' );
 
 /* Fields – Pre Header */
