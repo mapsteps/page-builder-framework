@@ -99,89 +99,95 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 		if (!panelFields.length) return;
 
 		for (const panelField of panelFields) {
-			customizer.panel(panelField.panelId, function (panel) {
-				panel.container?.addClass(
-					`${panelField.builderControlId}-control-panel`,
-				);
+			listenBuilderPanel(panelField);
+			listenToggleControl(panelField);
+			listenConnectedSections(panelField.builderControlId);
+		}
+	}
 
-				panel.expanded.bind(function (expanded) {
-					if (expanded) {
-						customizer.control(panelField.toggleControlId, function (control) {
-							if (control?.setting?.get()) {
-								openBuilderPanel(panelField.builderControlId);
-							}
-						});
-					} else {
-						closeBuilderPanel(panelField.builderControlId);
-					}
-				});
-			});
+	function listenBuilderPanel(panelField: BuilderPanelData) {
+		customizer.panel(panelField.panelId, function (panel) {
+			panel.container?.addClass(`${panelField.builderControlId}-control-panel`);
 
-			customizer.control(panelField.toggleControlId, function (control) {
-				control?.setting?.bind(function (enabled) {
-					if (enabled) {
-						customizer.panel(panelField.panelId, function (panel) {
-							if (panel.expanded()) {
-								if (control.container[0]) {
-									control.container[0].classList.remove("disabled");
-								}
-
-								openBuilderPanel(panelField.builderControlId);
-							}
-						});
-					} else {
-						if (control.container[0]) {
-							control.container[0].classList.add("disabled");
+			panel.expanded.bind(function (expanded) {
+				if (expanded) {
+					customizer.control(panelField.toggleControlId, function (control) {
+						if (control?.setting?.get()) {
+							openBuilderPanel(panelField.builderControlId);
 						}
-
-						closeBuilderPanel(panelField.builderControlId);
-					}
-				});
+					});
+				} else {
+					closeBuilderPanel(panelField.builderControlId);
+				}
 			});
+		});
+	}
 
-			customizer.control(
-				panelField.builderControlId,
-				function (control: WpbfCustomizeBuilderControl | undefined) {
-					if (!control) return;
-					const params = control.params;
+	function listenToggleControl(panelField: BuilderPanelData) {
+		customizer.control(panelField.toggleControlId, function (control) {
+			control?.setting?.bind(function (enabled) {
+				if (enabled) {
+					customizer.panel(panelField.panelId, function (panel) {
+						if (panel.expanded()) {
+							if (control.container[0]) {
+								control.container[0].classList.remove("disabled");
+							}
 
-					const availableWidgets = params.builder.availableWidgets;
-					if (!availableWidgets.length) return;
+							openBuilderPanel(panelField.builderControlId);
+						}
+					});
+				} else {
+					if (control.container[0]) {
+						control.container[0].classList.add("disabled");
+					}
 
-					for (const widget of availableWidgets) {
-						const connectedSectionId = widget.section;
-						if (!connectedSectionId) continue;
+					closeBuilderPanel(panelField.builderControlId);
+				}
+			});
+		});
+	}
 
-						customizer.section(connectedSectionId, function (section) {
-							section.expanded.bind(function (expanded) {
-								// If the builder is disabled, then we don't need to do anything.
-								if (!isBuilderEnabled(panelField.builderControlId)) return;
+	function listenConnectedSections(builderControlId: string) {
+		customizer.control(
+			builderControlId,
+			function (control: WpbfCustomizeBuilderControl | undefined) {
+				if (!control) return;
+				const params = control.params;
 
-								const builderPanel = document.querySelector(
-									`.${panelField.builderControlId}-builder-panel`,
+				const availableWidgets = params.builder.availableWidgets;
+				if (!availableWidgets.length) return;
+
+				for (const widget of availableWidgets) {
+					const connectedSectionId = widget.section;
+					if (!connectedSectionId) continue;
+
+					customizer.section(connectedSectionId, function (section) {
+						section.expanded.bind(function (expanded) {
+							// If the builder is disabled, then we don't need to do anything.
+							if (!isBuilderEnabled(builderControlId)) return;
+
+							const builderPanel = document.querySelector(
+								`.${builderControlId}-builder-panel`,
+							);
+
+							if (builderPanel) {
+								const activeWidget = builderPanel.querySelector(
+									`.widget-item[data-widget-key="${widget.key}"]`,
 								);
 
-								if (builderPanel) {
-									const activeWidget = builderPanel.querySelector(
-										`.widget-item[data-widget-key="${widget.key}"]`,
-									);
-
-									if (activeWidget) {
-										if (expanded) {
-											activeWidget.classList.add("connected-section-expanded");
-										} else {
-											activeWidget.classList.remove(
-												"connected-section-expanded",
-											);
-										}
+								if (activeWidget) {
+									if (expanded) {
+										activeWidget.classList.add("connected-section-expanded");
+									} else {
+										activeWidget.classList.remove("connected-section-expanded");
 									}
 								}
-							});
+							}
 						});
-					}
-				},
-			);
-		}
+					});
+				}
+			},
+		);
 	}
 
 	/**
