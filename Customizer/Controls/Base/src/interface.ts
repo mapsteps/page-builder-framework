@@ -152,6 +152,8 @@ export interface WpbfCustomizePanel extends Panel {
 
 export interface WpbfCustomizeSectionConstructor extends Section_Constructor {
 	"wpbf-link": any;
+	"wpbf-base": any;
+	"wpbf-invisible": any;
 }
 
 export interface WpbfCustomizeSectionParams {

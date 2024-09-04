@@ -1,23 +1,16 @@
-.rtl {
-	.wpbf-customize-control-section-tabs {
-		left: 0;
-		right: -24px;
+.wpbf-tab-section {
+	.customize-section-description-container {
+		margin-bottom: 0;
 	}
-}
-
-.wpbf-customize-control-section-tabs {
-	position: relative;
-	left: -24px;
-	width: calc(100% + 48px);
 }
 
 .wpbf-tab {
-	.wpbf-tab-menu,
-	.wpbf-tab-menu-item {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
+	list-style: none;
+	position: relative;
+	margin: 0;
+	padding: 0 0 12px;
+	left: -24px;
+	width: calc(100% + 48px);
 
 	.wpbf-tab-menu {
 		display: flex;

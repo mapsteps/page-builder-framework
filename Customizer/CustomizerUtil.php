@@ -35,11 +35,11 @@ use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
-use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Panels\BuilderPanel;
 use Mapsteps\Wpbf\Customizer\Panels\NestedPanel;
+use Mapsteps\Wpbf\Customizer\Sections\BaseSection;
 use Mapsteps\Wpbf\Customizer\Sections\ExpandedSection;
 use Mapsteps\Wpbf\Customizer\Sections\InvisibleSection;
 use Mapsteps\Wpbf\Customizer\Sections\LinkSection;
@@ -100,7 +100,6 @@ class CustomizerUtil {
 		'input-slider',
 		'repeater',
 		'responsive-input-slider',
-		'section-tabs',
 		'sortable',
 		'typography',
 		'builder',
@@ -208,7 +207,7 @@ class CustomizerUtil {
 			case 'invisible':
 				return new InvisibleSection( $wp_customer_manager, $id, $args );
 			default:
-				return new WP_Customize_Section( $wp_customer_manager, $id, $args );
+				return new BaseSection( $wp_customer_manager, $id, $args );
 		}
 
 	}
@@ -343,9 +342,6 @@ class CustomizerUtil {
 				break;
 			case 'responsive-input-slider':
 				$field = new ResponsiveInputSliderField( $control_entity );
-				break;
-			case 'section-tabs':
-				$field = new SectionTabsField( $control_entity );
 				break;
 			case 'sortable':
 				$field = new SortableField( $control_entity );

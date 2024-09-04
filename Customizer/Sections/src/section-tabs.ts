@@ -1,16 +1,4 @@
-import "./section-tabs-control.scss";
-
-import { WpbfCustomize } from "../../Base/src/interface";
-
-declare var wp: {
-	customize: WpbfCustomize;
-};
-
-wp.customize.bind("ready", function () {
-	setupTabs();
-});
-
-function setupTabs() {
+export default function setupSectionTabs() {
 	const childControls = document.querySelectorAll("[data-wpbf-parent-tab-id]");
 
 	let tabIds: string[] = [];
@@ -61,9 +49,19 @@ function setupTabs() {
 	function setupTabClicks() {
 		jQuery(document).on("click", ".wpbf-tab-menu-item a", function (e) {
 			e.preventDefault();
+			if (!(this instanceof HTMLElement)) return;
 
-			const tabId = this.parentNode.parentNode.parentNode.dataset.wpbfTabId;
-			const tabItemName = this.parentNode.dataset.wpbfTabMenuId;
+			const parent = this.parentElement;
+			if (!parent) return;
+
+			const wrapper = parent.parentElement?.parentElement;
+			if (!wrapper) return;
+
+			const tabId = wrapper.dataset.wpbfTabId;
+			if (!tabId) return;
+
+			const tabItemName = parent.dataset.wpbfTabMenuId;
+			if (!tabItemName) return;
 
 			switchTabs(tabId, tabItemName);
 		});
@@ -71,7 +69,7 @@ function setupTabs() {
 
 	function setupBindings() {
 		tabIds.forEach(function (tabId) {
-			wp.customize.section(tabId, function (section) {
+			window.wp.customize?.section(tabId, function (section) {
 				section.expanded.bind(function (isExpanded) {
 					if (isExpanded) {
 						const activeTabMenu = document.querySelector(
@@ -80,7 +78,7 @@ function setupTabs() {
 								'"] .wpbf-tab-menu-item.is-active',
 						);
 
-						if (activeTabMenu && activeTabMenu instanceof HTMLElement) {
+						if (activeTabMenu instanceof HTMLElement) {
 							const activeTabMenuId = activeTabMenu.dataset.wpbfTabMenuId;
 							if (activeTabMenuId) switchTabs(tabId, activeTabMenuId);
 						}

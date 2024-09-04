@@ -139,8 +139,6 @@
     "build-responsive-input-slider-control": "parcel build Customizer/Controls/Slider/src/responsive-input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
     "watch-repeater-control": "parcel watch Customizer/Controls/Repeater/src/repeater-control.ts --dist-dir Customizer/Controls/Repeater/dist",
     "build-repeater-control": "parcel build Customizer/Controls/Repeater/src/repeater-control.ts --dist-dir Customizer/Controls/Repeater/dist",
-    "watch-section-tabs-control": "parcel watch Customizer/Controls/Tabs/src/section-tabs-control.ts --dist-dir Customizer/Controls/Tabs/dist",
-    "build-section-tabs-control": "parcel build Customizer/Controls/Tabs/src/section-tabs-control.ts --dist-dir Customizer/Controls/Tabs/dist",
     "watch-sortable-control": "parcel watch Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist",
     "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist",
     "watch-typography-control": "parcel watch Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist",

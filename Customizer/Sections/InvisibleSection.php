@@ -14,6 +14,15 @@ class InvisibleSection extends WP_Customize_Section {
 	public $type = 'wpbf-invisible';
 
 	/**
+	 * Path of the section class for this field.
+	 *
+	 * This property is required for the `WP_Customize_Section::render_template()` method to work.
+	 *
+	 * @var string
+	 */
+	public $class_path = '\Mapsteps\Wpbf\Customizer\Sections\InvisibleSection';
+
+	/**
 	 * An Underscore (JS) template for rendering this section.
 	 *
 	 * Class variables for this section class are available in the `data` JS object;
@@ -27,15 +36,6 @@ class InvisibleSection extends WP_Customize_Section {
 		?>
 
 		<li id="accordion-section-{{ data.id }}" class="accordion-section control-section control-section-{{ data.type }}">
-			<h3 class="accordion-section-title" tabindex="0">
-				{{ data.title }}
-				<span class="screen-reader-text">
-					<?php
-					/* translators: Hidden accessibility text. */
-					_e( 'Press return or enter to open this section' );
-					?>
-				</span>
-			</h3>
 			<ul class="accordion-section-content">
 				<li class="customize-section-description-container section-meta <# if ( data.description_hidden ) { #>customize-info<# } #>">
 					<div class="customize-section-title">

@@ -22,13 +22,6 @@ final class CustomizerSection {
 	private $section;
 
 	/**
-	 * Tabs for the section.
-	 *
-	 * @var array
-	 */
-	private $section_tabs = [];
-
-	/**
 	 * Field's dependencies.
 	 *
 	 * @var array
@@ -202,7 +195,7 @@ final class CustomizerSection {
 	public function tabs( $tabs ) {
 
 		if ( ! empty( $tabs ) && is_array( $tabs ) ) {
-			$this->section_tabs = $tabs;
+			$this->section->tabs = $tabs;
 		}
 
 		return $this;
@@ -251,16 +244,15 @@ final class CustomizerSection {
 
 		CustomizerStore::$added_sections[] = $this->section;
 
-		if ( ! empty( $this->section_tabs ) ) {
-			CustomizerStore::$added_section_tabs[ $this->section->id ] = $this->section_tabs;
-		}
-
 		$this->addSectionDependency();
 
 		return $this->section;
 
 	}
 
+	/**
+	 * Add section dependency.
+	 */
 	private function addSectionDependency() {
 
 		if ( empty( $this->section_dependencies ) ) {

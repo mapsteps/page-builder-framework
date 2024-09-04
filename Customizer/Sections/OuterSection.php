@@ -2,9 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Sections;
 
-use WP_Customize_Section;
-
-class OuterSection extends WP_Customize_Section {
+class OuterSection extends BaseSection {
 
 	/**
 	 * Type of this section.

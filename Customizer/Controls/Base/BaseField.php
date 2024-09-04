@@ -137,10 +137,6 @@ abstract class BaseField {
 			return $props;
 		}
 
-		if ( ! isset( CustomizerStore::$added_section_tabs[ $this->control->section_id ] ) ) {
-			return $props;
-		}
-
 		$tab_wrapper_attrs = array(
 			'data-wpbf-parent-tab-id'   => $this->control->section_id,
 			'data-wpbf-parent-tab-item' => esc_attr( $props['tab'] ),

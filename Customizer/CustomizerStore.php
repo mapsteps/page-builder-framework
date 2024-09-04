@@ -87,13 +87,6 @@ final class CustomizerStore {
 	public static $controls_using_content_template = array();
 
 	/**
-	 * Added section tabs.
-	 *
-	 * @var array
-	 */
-	public static $added_section_tabs = array();
-
-	/**
 	 * Find added setting by control id.
 	 *
 	 * @param string $control_id Control id.

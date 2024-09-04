@@ -43,12 +43,6 @@ final class Customizer {
 	 */
 	public function init() {
 
-		/**
-		 * Added with priority 5 to ensure that the 'section-tab' fields will be added
-		 * in the next priority where 'register_wpbf_customizer' is called.
-		 */
-		add_action( 'customize_register', array( $this, 'add_section_tabs' ), 5 );
-
 		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_tooltips' ) );
@@ -64,32 +58,6 @@ final class Customizer {
 	public function output() {
 
 		( new FontsOutput() )->init();
-
-	}
-
-	/**
-	 * Add section tabs by adding 'section-tab' fields.
-	 *
-	 * These 'section-tab' fields are added by hooking it to 'customize_register' action with priority 5.
-	 * The reason was to allow 'section-tab' fields to be added via Premium Add-On.
-	 * It's fine, because these fields are basically just a visual fields.
-	 *
-	 * @return void
-	 */
-	public function add_section_tabs() {
-
-		foreach ( CustomizerStore::$added_section_tabs as $section_id => $section_tabs ) {
-			if ( empty( $section_tabs ) ) {
-				continue;
-			}
-
-			wpbf_customizer_field()
-				->id( 'wpbf_section_tabs_' . $section_id )
-				->type( 'section-tabs' )
-				->priority( -1 )
-				->choices( $section_tabs )
-				->addToSection( $section_id );
-		}
 
 	}
 
@@ -253,14 +221,25 @@ final class Customizer {
 			}
 
 			$props = $section->custom_properties;
-			$args  = wp_parse_args( $props, $section_args );
 
-			$wp_customize_manager->add_section( $this->customizer_util->getSectionInstance(
+			if ( ! empty( $section->tabs ) ) {
+				$props['tabs'] = $section->tabs;
+			}
+
+			$args = wp_parse_args( $props, $section_args );
+
+			$section_instance = $this->customizer_util->getSectionInstance(
 				$section->type,
 				$wp_customize_manager,
 				$section->id,
 				$args
-			) );
+			);
+
+			if ( property_exists( $section_instance, 'class_path' ) && ! empty( $section_instance->class_path ) ) {
+				$wp_customize_manager->register_section_type( $section_instance->class_path );
+			}
+
+			$wp_customize_manager->add_section( $section_instance );
 		}
 
 	}
