@@ -40,6 +40,23 @@ $partial_refresh_args = array(
 /* General Tab */
 
 wpbf_customizer_field()
+	->id( $control_id_prefix . 'new_tab' )
+	->type( 'toggle' )
+	->tab( 'general' )
+	->label( __( 'Open in New Tab', 'page-builder-framework' ) )
+	->defaultValue( false )
+	->partialRefresh( [
+		$partial_refresh_key_prefix . 'new_tab' => $partial_refresh_args,
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'link_separator' )
+	->type( 'divider' )
+	->tab( 'general' )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
 	->id( $control_id_prefix . 'text' )
 	->type( 'text' )
 	->tab( 'general' )
@@ -76,23 +93,6 @@ wpbf_customizer_field()
 	) )
 	->partialRefresh( [
 		$partial_refresh_key_prefix . 'rel' => $partial_refresh_args,
-	] )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'link_separator' )
-	->type( 'divider' )
-	->tab( 'general' )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'new_tab' )
-	->type( 'toggle' )
-	->tab( 'general' )
-	->label( __( 'Open in New Tab', 'page-builder-framework' ) )
-	->defaultValue( false )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'new_tab' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
 

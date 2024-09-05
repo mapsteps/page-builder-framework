@@ -33,7 +33,7 @@ class InvisibleSection extends BaseSection {
 	protected function render_template() {
 		?>
 
-		<li id="accordion-section-{{ data.id }}" class="accordion-section control-section control-section-{{ data.type }}">
+		<li id="accordion-section-{{ data.id }}" class="accordion-section control-section control-section-{{ data.type }} {{ data.tabClassName }}">
 			<ul class="accordion-section-content">
 				<li class="customize-section-description-container section-meta <# if ( data.description_hidden ) { #>customize-info<# } #>">
 					<div class="customize-section-title">
