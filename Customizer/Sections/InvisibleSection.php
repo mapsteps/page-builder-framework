@@ -2,9 +2,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Sections;
 
-use WP_Customize_Section;
-
-class InvisibleSection extends WP_Customize_Section {
+class InvisibleSection extends BaseSection {
 
 	/**
 	 * Type of this section.
@@ -74,6 +72,8 @@ class InvisibleSection extends WP_Customize_Section {
 						</div>
 					<# } #>
 				</li>
+
+				<?php $this->render_tabs_template(); ?>
 			</ul>
 		</li>
 

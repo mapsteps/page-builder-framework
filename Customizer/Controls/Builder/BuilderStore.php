@@ -27,17 +27,12 @@ final class BuilderStore {
 			array(
 				'key'     => 'search',
 				'label'   => __( 'Search', 'page-builder-framework' ),
-				'section' => 'wpbf_invisible_search_section',
-			),
-			array(
-				'key'     => 'account',
-				'label'   => __( 'Account', 'page-builder-framework' ),
-				'section' => '',
+				'section' => 'wpbf_header_builder_search_section',
 			),
 			array(
 				'key'     => 'button_1',
 				'label'   => __( 'Button 1', 'page-builder-framework' ),
-				'section' => '',
+				'section' => 'wpbf_header_builder_button_1_section',
 			),
 			array(
 				'key'     => 'button_2',

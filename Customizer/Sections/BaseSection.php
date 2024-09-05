@@ -79,6 +79,25 @@ class BaseSection extends WP_Customize_Section {
 	}
 
 	/**
+	 * An Underscore (JS) template for rendering tabs template.
+	 *
+	 * Class variables for this section class are available in the `data` JS object;
+	 */
+	protected function render_tabs_template() {
+		?>
+
+		<# if ( data.tabs && Object.keys( data.tabs ).length ) { #>
+			<li class="wpbf-tab" data-wpbf-tab-id="{{ data.id }}">
+				<div class="wpbf-tab-menu">
+					{{{ data.tabMenuOutput }}}
+				</div>
+			</li>
+		<# } #>
+
+		<?php
+	}
+
+	/**
 	 * An Underscore (JS) template for rendering this section.
 	 *
 	 * Class variables for this section class are available in the `data` JS object;
@@ -138,13 +157,7 @@ class BaseSection extends WP_Customize_Section {
 					<# } #>
 				</li>
 
-				<# if ( data.tabs && Object.keys( data.tabs ).length ) { #>
-					<li class="wpbf-tab" data-wpbf-tab-id="{{ data.id }}">
-						<div class="wpbf-tab-menu">
-							{{{ data.tabMenuOutput }}}
-						</div>
-					</li>
-				<# } #>
+				<?php $this->render_tabs_template(); ?>
 			</ul>
 		</li>
 
