@@ -60,3 +60,4 @@ wpbf_customizer_field()
 
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/search-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-2-section.php';

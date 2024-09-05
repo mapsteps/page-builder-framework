@@ -37,7 +37,7 @@ final class BuilderStore {
 			array(
 				'key'     => 'button_2',
 				'label'   => __( 'Button 2', 'page-builder-framework' ),
-				'section' => '',
+				'section' => 'wpbf_header_builder_button_2_section',
 			),
 			array(
 				'key'     => 'menu_1',
