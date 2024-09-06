@@ -2,17 +2,23 @@ import React, { useRef, useState } from "react";
 import { colord } from "colord";
 import ColorPickerSwatches from "./components/ColorPickerSwatches";
 import ColorPickerInput from "./components/ColorPickerInput";
-import convertColorForInput from "./utils/convert-color-for-input";
-import convertColorForCustomizer from "./utils/convert-color-for-customizer";
-import convertColorForPicker from "./utils/convert-color-for-picker";
 import useWindowResize from "./hooks/useWindowResize";
 import useFocusOutside from "./hooks/useFocusOutside";
 import useClickOutside from "./hooks/useClickOutside";
 import ColorPickerComponent from "./components/ColorPickerComponent";
 import ColorPickerHeader from "./components/ColorPickerHeader";
-import { WpbfCustomizeColorControl } from "./color-interface";
-import { WpbfCustomizeSetting } from "../../Base/src/interface";
-import { ObjectColor } from "colord/types";
+import {
+	WpbfColorPickerValue,
+	WpbfCustomizeColorControl,
+	WpbfCustomizeColorControlValue,
+} from "./color-interface";
+import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
+import {
+	parseCustomizerValue,
+	parseHueModeValue,
+	parseInputValue,
+	parsePickerValue,
+} from "./utils/value-parser";
 
 /**
  * The form component of Kirki React Colorful.
@@ -21,79 +27,47 @@ export function ColorForm(props: {
 	control: WpbfCustomizeColorControl;
 	label: string;
 	description: string;
-	customizerSetting?: WpbfCustomizeSetting<any>;
+	customizerSetting?: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>;
 	useHueMode: boolean;
 	pickerComponent: string;
 	labelStyle: string;
 	colorSwatches: Array<string | { color: string } | undefined>;
-	value: string | ObjectColor | number;
-	default: string | ObjectColor | number;
+	value: WpbfCustomizeColorControlValue;
+	default: WpbfCustomizeColorControlValue;
 	setNotificationContainer: any;
 	formComponent?: string;
-	onChange?: (color: string | ObjectColor) => void;
+	onChange?: (color: WpbfCustomizeColorControlValue) => void;
 }) {
-	const {
-		control,
-		customizerSetting,
-		useHueMode,
-		pickerComponent,
-		labelStyle,
-	} = props;
+	const { control, customizerSetting, pickerComponent, labelStyle } = props;
 
-	const parseEmptyValue = () => (useHueMode ? 0 : "#000000");
-
-	function parseHueModeValue(hueValue: any) {
-		hueValue = hueValue || parseEmptyValue();
-		hueValue = hueValue < 0 ? 0 : hueValue;
-
-		return hueValue > 360 ? 360 : hueValue;
-	}
-
-	function parseInputValue(value: any) {
-		if ("" === value) return "";
-
-		return useHueMode
-			? parseHueModeValue(value)
-			: convertColorForInput(
-					value,
-					pickerComponent,
-					props.formComponent,
-				).replace(";", "");
-	}
-
-	function parseCustomizerValue(value: any) {
-		if ("" === value) return "";
-
-		return convertColorForCustomizer(
-			value,
-			pickerComponent,
-			props.formComponent,
-		);
-	}
-
-	function parsePickerValue(value: any) {
-		value = value || parseEmptyValue();
-
-		// Hard coded saturation and lightness when using hue mode.
-		return useHueMode
-			? { h: value, s: 100, l: 50 }
-			: convertColorForPicker(value, pickerComponent);
-	}
+	const useHueMode = props.useHueMode || typeof props.value === "number";
+	const formComponent = props.formComponent;
 
 	const [inputValue, setInputValue] = useState(() => {
-		return parseInputValue(props.value);
+		return parseInputValue(
+			props.value,
+			pickerComponent,
+			formComponent,
+			useHueMode,
+		);
 	});
 
 	const [pickerValue, setPickerValue] = useState(() => {
-		return parsePickerValue(props.value);
+		return parsePickerValue(props.value, pickerComponent, useHueMode);
 	});
 
 	let currentInputValue = inputValue;
 	let currentPickerValue = pickerValue;
 
 	// This function will be called when this control's customizer value is changed.
-	control.updateComponentState = (value: any) => {
-		const valueForInput = parseInputValue(value);
+	control.updateComponentState = (value: WpbfCustomizeColorControlValue) => {
+		const valueForInput = parseInputValue(
+			value,
+			pickerComponent,
+			formComponent,
+			useHueMode,
+		);
+
 		let changeInputValue: boolean;
 
 		if (typeof valueForInput === "string" || useHueMode) {
@@ -103,9 +77,11 @@ export function ColorForm(props: {
 				JSON.stringify(valueForInput) !== JSON.stringify(currentInputValue);
 		}
 
-		if (changeInputValue) setInputValue(valueForInput);
+		if (changeInputValue) {
+			setInputValue(valueForInput);
+		}
 
-		const valueForPicker = parsePickerValue(value);
+		const valueForPicker = parsePickerValue(value, pickerComponent, useHueMode);
 		let changePickerValue: boolean;
 
 		if (typeof valueForPicker === "string" || useHueMode) {
@@ -118,20 +94,23 @@ export function ColorForm(props: {
 		if (changePickerValue) setPickerValue(valueForPicker);
 	};
 
-	function saveToCustomizer(value: any) {
+	function saveToCustomizer(value: WpbfCustomizeColorControlValue) {
+		/**
+		 * When using hue mode, the pickerComponent is HslColorPicker.
+		 * If there is value.h, then value is set from the picker.
+		 * Otherwise, value is set from the input or the customizer.
+		 */
+
 		if (useHueMode) {
-			/**
-			 * When using hue mode, the pickerComponent is HslColorPicker.
-			 * If there is value.h, then value is set from the picker.
-			 * Otherwise, value is set from the input or the customizer.
-			 */
-			value = value.h || 0 === value.h ? value.h : value;
-			value = parseHueModeValue(value);
-		} else {
-			value = parseCustomizerValue(value);
+			customizerSetting?.set(parseHueModeValue(value));
+			return;
 		}
 
-		customizerSetting?.set(value);
+		if (typeof value !== "number") {
+			customizerSetting?.set(
+				parseCustomizerValue(value, pickerComponent, formComponent),
+			);
+		}
 	}
 
 	const initialColor =
@@ -142,15 +121,15 @@ export function ColorForm(props: {
 	/**
 	 * Function to run on picker change.
 	 *
-	 * @param {string|Object} color The value returned by the picker. It can be a string or a color object.
+	 * @param {WpbfCustomizeColorControlValue} color The value returned by the picker. It can be a string or a color object.
 	 */
-	function handlePickerChange(color: any) {
+	function handlePickerChange(color: WpbfColorPickerValue) {
 		if (props.onChange) props.onChange(color);
 		currentPickerValue = color;
 		saveToCustomizer(color);
 	}
 
-	function handleInputChange(value: any) {
+	function handleInputChange(value: string) {
 		currentInputValue = value;
 		saveToCustomizer(value);
 	}
@@ -164,7 +143,7 @@ export function ColorForm(props: {
 		saveToCustomizer(initialColor);
 	}
 
-	function handleSwatchesClick(swatchColor: any) {
+	function handleSwatchesClick(swatchColor: string) {
 		saveToCustomizer(swatchColor);
 	}
 
@@ -204,11 +183,15 @@ export function ColorForm(props: {
 		return pickerContainerStyle;
 	};
 
-	const convertInputValueTo6Digits = () => {
-		if (4 === inputValue.length && inputValue.includes("#")) {
+	function convertInputValueTo6Digits() {
+		if (
+			typeof inputValue === "string" &&
+			4 === inputValue.length &&
+			inputValue.includes("#")
+		) {
 			setInputValue(colord(inputValue).toHex());
 		}
-	};
+	}
 
 	const togglePicker = () => {
 		if (isPickerOpen) {

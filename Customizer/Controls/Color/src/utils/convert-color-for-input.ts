@@ -1,17 +1,17 @@
 import { colord } from "colord";
-import { ObjectColor } from "colord/types";
+import { WpbfColorPickerValue } from "../color-interface";
 
 /**
  * Convert the value for the color input.
  *
- * @param {string|ObjectColor} value - The value to be converted.
+ * @param {WpbfColorPickerValue} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  * @param {string|undefined} formComponent - The form component name.
  *
  * @returns {string} The converted value.
  */
 export default function convertColorForInput(
-	value: string | ObjectColor,
+	value: WpbfColorPickerValue,
 	pickerComponent: string,
 	formComponent?: string,
 ): string {

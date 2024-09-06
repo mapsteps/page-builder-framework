@@ -1,4 +1,4 @@
-import { WpbfCustomizePanel } from "../../Controls/Base/src/interface";
+import { WpbfCustomizePanel } from "../../Controls/Base/src/base-interface";
 import _ from "lodash";
 
 declare var wp: {

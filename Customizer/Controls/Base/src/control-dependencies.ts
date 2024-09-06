@@ -3,7 +3,7 @@ import {
 	WpbfControlDependencies,
 	WpbfReversedControlDependencies,
 	WpbfReversedControlDependency,
-} from "./interface";
+} from "./base-interface";
 
 export default function setupControlDependencies(
 	globalControlDependencies: WpbfControlDependencies,

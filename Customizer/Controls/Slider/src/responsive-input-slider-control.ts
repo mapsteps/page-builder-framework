@@ -1,5 +1,5 @@
 import ResponsiveInputSliderControl from "./ResponsiveInputSliderControl";
-import { WpbfCustomize } from "../../Base/src/interface";
+import { WpbfCustomize } from "../../Base/src/base-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;

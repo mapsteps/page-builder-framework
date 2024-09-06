@@ -2,7 +2,7 @@ import {
 	WpbfControlDependencies,
 	WpbfReversedControlDependencies,
 	WpbfReversedControlDependency,
-} from "../../Controls/Base/src/interface";
+} from "../../Controls/Base/src/base-interface";
 import { isRuleSatisfied } from "../../Controls/Base/src/control-dependencies";
 
 export default function setupSectionDependencies(

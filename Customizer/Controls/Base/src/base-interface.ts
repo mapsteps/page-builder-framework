@@ -9,7 +9,10 @@ import {
 	WpbfCustomizeSelectControl,
 } from "../../Select/src/interface";
 import { Setting } from "wordpress__customize-browser/Setting";
-import { WpbfCustomizeColorControl } from "../../Color/src/color-interface";
+import {
+	WpbfCustomizeColorControl,
+	WpbfCustomizeMulticolorControl,
+} from "../../Color/src/color-interface";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
 import {
@@ -367,6 +370,7 @@ export interface WpbfCustomizeControlParams<SV> {
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-checkbox": WpbfCustomizeCheckboxControl;
 	"wpbf-color": WpbfCustomizeColorControl;
+	"wpbf-multicolor": WpbfCustomizeMulticolorControl;
 	"wpbf-dimension": WpbfCustomizeDimensionControl;
 	"wpbf-editor": WpbfCustomizeEditorControl;
 	"wpbf-generic": WpbfCustomizeGenericControl;

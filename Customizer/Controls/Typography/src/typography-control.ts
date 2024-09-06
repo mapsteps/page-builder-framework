@@ -2,7 +2,7 @@ import hooks from "@wordpress/hooks";
 import {
 	AnyWpbfCustomizeControl,
 	WpbfCustomize,
-} from "../../Base/src/interface";
+} from "../../Base/src/base-interface";
 import "./typography-control.scss";
 import {
 	FontProperties,

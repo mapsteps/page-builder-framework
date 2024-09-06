@@ -2,7 +2,6 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
-use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;

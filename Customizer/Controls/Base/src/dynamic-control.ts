@@ -2,7 +2,7 @@ import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
 	WpbfCustomizeElement,
-} from "./interface";
+} from "./base-interface";
 import jQuery from "jquery";
 import _ from "lodash";
 

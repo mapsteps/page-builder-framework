@@ -1,10 +1,8 @@
 import React from "react";
 import ColorPickerCircle from "./ColorPickerCircle";
-import { colord } from "colord";
 
 export default function ColorPickerTrigger(props: {
 	inputValue: string;
-	useHueMode: boolean;
 	pickerComponent: string;
 	isPickerOpen: boolean;
 	resetRef: React.LegacyRef<HTMLButtonElement> | null;
@@ -25,12 +23,7 @@ export default function ColorPickerTrigger(props: {
 
 			<ColorPickerCircle
 				pickerComponent={props.pickerComponent}
-				useHueMode={props.useHueMode}
-				color={
-					props.useHueMode && typeof props.inputValue === "number"
-						? colord({ h: props.inputValue, s: 100, l: 50 }).toHex()
-						: props.inputValue
-				}
+				color={props.inputValue}
 				isPickerOpen={props.isPickerOpen}
 				onToggleButtonClick={props.onToggleButtonClick}
 			/>

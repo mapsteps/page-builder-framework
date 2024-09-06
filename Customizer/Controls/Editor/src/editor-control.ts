@@ -1,4 +1,4 @@
-import { WpbfCustomize } from "../../Base/src/interface";
+import { WpbfCustomize } from "../../Base/src/base-interface";
 import "./editor-control.scss";
 import { WpbfCustomizeEditorControl } from "./editor-interface";
 

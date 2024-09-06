@@ -2,7 +2,7 @@
 
 import { KyInstance } from "ky";
 import { Van } from "vanjs-core";
-import { WpbfControlDependencies } from "./Customizer/Controls/Base/src/interface";
+import { WpbfControlDependencies } from "./Customizer/Controls/Base/src/base-interface";
 
 export type WpbfPremiumStickyNavigation = {
 	opts: Record<string, any>;

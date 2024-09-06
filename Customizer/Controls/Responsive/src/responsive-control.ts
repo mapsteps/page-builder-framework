@@ -1,5 +1,5 @@
 import { forEachEl } from "../../../../assets/js/utils/dom-util";
-import { WpbfCustomize } from "../../Base/src/interface";
+import { WpbfCustomize } from "../../Base/src/base-interface";
 import "./responsive-control.scss";
 
 declare var wp: {

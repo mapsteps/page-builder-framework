@@ -22,19 +22,12 @@ import {
 	RgbaColor,
 	RgbColor,
 } from "colord";
+import { WpbfColorPickerValue } from "../color-interface";
 
 export default function ColorPickerComponent(props: {
 	pickerComponent: string;
-	value:
-		| string
-		| number
-		| RgbColor
-		| RgbaColor
-		| HslColor
-		| HslaColor
-		| HsvColor
-		| HsvaColor;
-	onChange: (e: any) => void;
+	value: WpbfColorPickerValue;
+	onChange: (e: WpbfColorPickerValue) => void;
 }) {
 	// Spread props to variables.
 	const { pickerComponent, value, onChange } = props;

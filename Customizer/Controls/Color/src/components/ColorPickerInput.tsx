@@ -1,8 +1,9 @@
+import { colord } from "colord";
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 export type ColorPickerInputProps = {
 	onChange: (color: string) => void;
-	color?: string;
+	color?: string | number;
 	pickerComponent: string;
 	useHueMode: boolean;
 };
@@ -61,6 +62,14 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 		? 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAAHnlligAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHJJREFUeNpi+P///4EDBxiAGMgCCCAGFB5AADGCRBgYDh48CCRZIJS9vT2QBAggFBkmBiSAogxFBiCAoHogAKIKAlBUYTELAiAmEtABEECk20G6BOmuIl0CIMBQ/IEMkO0myiSSraaaBhZcbkUOs0HuBwDplz5uFJ3Z4gAAAABJRU5ErkJggg==")'
 		: "none";
 
+	function parseBgColor() {
+		if (typeof value === "number") {
+			return colord({ h: value, s: 100, l: 50 }).toHex();
+		}
+
+		return value ?? "transparent";
+	}
+
 	return (
 		<div className="wpbf-color-input-wrapper">
 			<div className="wpbf-color-input-control">
@@ -75,7 +84,7 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 							type="button"
 							className="wpbf-color-preview"
 							style={{
-								backgroundColor: value,
+								backgroundColor: parseBgColor(),
 							}}
 						></button>
 					</div>

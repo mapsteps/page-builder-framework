@@ -13,6 +13,7 @@ use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Code\CodeField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
+use Mapsteps\Wpbf\Customizer\Controls\Color\MulticolorField;
 use Mapsteps\Wpbf\Customizer\Controls\Custom\CustomField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Editor\EditorField;
@@ -81,6 +82,7 @@ class CustomizerUtil {
 		'custom',
 		'code',
 		'color',
+		'multicolor',
 		'dimension',
 		'divider',
 		'headline',
@@ -282,6 +284,9 @@ class CustomizerUtil {
 				break;
 			case 'color':
 				$field = new ColorField( $control_entity );
+				break;
+			case 'multicolor':
+				$field = new MulticolorField( $control_entity );
 				break;
 			case 'divider':
 				$field = new DividerField( $control_entity );

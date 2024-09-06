@@ -1,7 +1,7 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+} from "../../Base/src/base-interface";
 
 export interface WpbfCustomizeDimensionControlParams
 	extends WpbfCustomizeControlParams<string | number> {

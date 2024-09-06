@@ -1,4 +1,4 @@
-import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "./interface";
+import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "./base-interface";
 import _ from "lodash";
 
 declare var wpbfCustomizerTooltips: {

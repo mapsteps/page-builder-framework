@@ -1,6 +1,7 @@
 import React from "react";
 import ControlHeader from "./ControlHeader";
 import ColorPickerTrigger from "./ColorPickerTrigger";
+import { colord } from "colord";
 
 export default function ColorPickerHeader(props: {
 	label: string;
@@ -8,7 +9,7 @@ export default function ColorPickerHeader(props: {
 	labelStyle: string;
 	pickerComponent: string;
 	useHueMode: boolean;
-	inputValue: string;
+	inputValue: string | number;
 	isPickerOpen: boolean;
 	togglePicker: () => void;
 	resetRef: React.LegacyRef<HTMLButtonElement> | null;
@@ -29,8 +30,11 @@ export default function ColorPickerHeader(props: {
 	function renderTrigger() {
 		return (
 			<ColorPickerTrigger
-				inputValue={props.inputValue}
-				useHueMode={props.useHueMode}
+				inputValue={
+					typeof props.inputValue === "number"
+						? colord({ h: props.inputValue, s: 100, l: 50 }).toHex()
+						: props.inputValue
+				}
 				pickerComponent={props.pickerComponent}
 				isPickerOpen={props.isPickerOpen}
 				resetRef={props.resetRef}

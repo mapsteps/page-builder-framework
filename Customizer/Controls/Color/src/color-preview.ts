@@ -3,30 +3,16 @@ import {
 	HslOrHslaColor,
 	HsvOrHsvaColor,
 	RgbOrRgbaColor,
+	WpbfColorObject,
+	WpbfCustomizeColorControlValue,
 } from "./color-interface";
-import { ObjectColor } from "colord/types";
+import { isNumeric } from "./utils/value-parser";
 
 (() => {
 	/**
-	 * Check if the provided value is a numeric.
-	 *
-	 * Thanks to Dan (https://stackoverflow.com/users/17121/dan) for his answer on StackOverflow:
-	 * @see https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number#answer-175787
-	 */
-	function isNumeric(char: string | number | ObjectColor): boolean {
-		// Number is a numeric.
-		if ("number" === typeof char) return true;
-
-		// We only process strings.
-		if ("string" !== typeof char) return false;
-
-		return !isNaN(parseFloat(char));
-	}
-
-	/**
 	 * Generate value from color object.
 	 */
-	function generateStringValueFromColorObj(value: ObjectColor): string {
+	function generateStringValueFromColorObj(value: WpbfColorObject): string {
 		let alphaEnabled = false;
 		let colorMode: ColorMode = "";
 
@@ -90,7 +76,7 @@ import { ObjectColor } from "colord/types";
 	 * Function to hook into `wpbfPostMessageStylesOutput` filter.
 	 *
 	 * @param {string} styles - The styles to be filtered.
-	 * @param {string|number|ObjectColor} value - The control's value.
+	 * @param {WpbfCustomizeColorControlValue} value - The control's value.
 	 * @param {object} output - The control's output argument.
 	 * @param {string} controlType - The control type.
 	 *
@@ -98,7 +84,7 @@ import { ObjectColor } from "colord/types";
 	 */
 	function stylesOutput(
 		styles: string,
-		value: string | number | ObjectColor,
+		value: WpbfCustomizeColorControlValue,
 		output: any,
 		controlType: string,
 	): string {

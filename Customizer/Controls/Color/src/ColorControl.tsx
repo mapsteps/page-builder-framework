@@ -1,16 +1,16 @@
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	WpbfCustomizeColorControl,
+	WpbfCustomizeColorControlParams,
 	WpbfCustomizeColorControlValue,
 } from "./color-interface";
 import { ColorForm } from "./ColorForm";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-export default function ColorControl(customizer: WpbfCustomize) {
+export default function ColorControl(
+	customizer: WpbfCustomize,
+): WpbfCustomizeColorControl {
 	return customizer.Control.extend<WpbfCustomizeColorControl>({
 		root: undefined,
 
@@ -20,7 +20,7 @@ export default function ColorControl(customizer: WpbfCustomize) {
 		initialize: function (
 			this: WpbfCustomizeColorControl,
 			id: string,
-			params?: WpbfCustomizeControlParams<WpbfCustomizeColorControlValue>,
+			params?: WpbfCustomizeColorControlParams,
 		) {
 			const control = this;
 
@@ -50,9 +50,12 @@ export default function ColorControl(customizer: WpbfCustomize) {
 		setNotificationContainer: function setNotificationContainer(
 			el: HTMLElement,
 		) {
-			const control = this as WpbfCustomizeColorControl;
-			control.notifications.container = jQuery(el);
-			control.notifications.render();
+			const control = this;
+
+			if (control.notifications) {
+				control.notifications.container = jQuery(el);
+				control.notifications.render();
+			}
 		},
 
 		/**
@@ -108,7 +111,7 @@ export default function ColorControl(customizer: WpbfCustomize) {
 		 * React is available to be used here instead of the customizer.Element abstraction.
 		 */
 		ready: function ready() {
-			const control = this as WpbfCustomizeColorControl;
+			const control = this;
 
 			/**
 			 * Update component state when customizer setting changes.
@@ -131,12 +134,13 @@ export default function ColorControl(customizer: WpbfCustomize) {
 			 *
 			 * The result: Even though the "x" color picker becomes very slow, it's still usable and responsive enough.
 			 */
-			control.setting?.bind((val: any) => {
-				if (control.updateComponentState) control.updateComponentState(val);
+			control.setting?.bind((val: WpbfCustomizeColorControlValue) => {
+				if (!control.updateComponentState) return;
+				control.updateComponentState(val);
 			});
 		},
 
-		updateComponentState: () => {},
+		updateComponentState: (val: WpbfCustomizeColorControlValue) => {},
 
 		/**
 		 * Handle removal/de-registration of the control.
@@ -144,7 +148,7 @@ export default function ColorControl(customizer: WpbfCustomize) {
 		 * This is essentially the inverse of the Control#embed() method.
 		 */
 		destroy: function destroy() {
-			const control = this as WpbfCustomizeColorControl;
+			const control = this;
 
 			// Garbage collection: undo mounting that was done in the embed/renderContent method.
 			control.root?.unmount();

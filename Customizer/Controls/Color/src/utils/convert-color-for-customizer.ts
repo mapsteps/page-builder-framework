@@ -1,20 +1,23 @@
 import { colord } from "colord";
-import { ObjectColor } from "colord/types";
+import {
+	WpbfColorPickerValue,
+	WpbfCustomizeColorControlValue,
+} from "../color-interface";
 
 /**
  * Convert the value for the customizer.
  *
- * @param {string|ObjectColor} value - The value to be converted.
+ * @param {WpbfColorPickerValue} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  * @param {string|undefined} formComponent - The form component name.
  *
- * @returns {string|ObjectColor} The converted value.
+ * @returns {WpbfCustomizeColorControlValue} The converted value.
  */
 export default function convertColorForCustomizer(
-	value: string | ObjectColor,
+	value: WpbfColorPickerValue,
 	pickerComponent: string,
 	formComponent?: string,
-): string | ObjectColor {
+): WpbfCustomizeColorControlValue {
 	let rgba;
 	let hsv;
 	let hsva;

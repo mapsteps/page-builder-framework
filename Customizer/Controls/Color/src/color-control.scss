@@ -1,11 +1,6 @@
 .wpbf-customize-control-color {
 	.wpbf-control-form {
 		position: relative;
-		box-sizing: border-box;
-	}
-
-	.wpbf-control-form * {
-		box-sizing: border-box;
 	}
 
 	.wpbf-control-cols {
@@ -49,7 +44,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 3px;
 		width: 33px;
 		height: 33px;
 		border-radius: 50%;

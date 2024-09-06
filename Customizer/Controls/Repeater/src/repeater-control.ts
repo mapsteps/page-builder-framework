@@ -1,6 +1,6 @@
 import "./repeater-control.scss";
 
-import { WpbfCustomize } from "../../Base/src/interface";
+import { WpbfCustomize } from "../../Base/src/base-interface";
 import {
 	RepeaterImageSelectOptions,
 	WpbfCustomizeRepeaterControl,

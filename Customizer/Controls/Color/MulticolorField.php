@@ -35,4 +35,22 @@ class MulticolorField extends ColorField {
 
 	}
 
+	/**
+	 * Get the control instance.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
+	 * @param array                $control_args         Optional. Array of properties for the new Control object.
+	 *
+	 * @return MulticolorControl
+	 */
+	protected function controlInstance( $wp_customize_manager, $control_args = [] ) {
+
+		return new MulticolorControl(
+			$wp_customize_manager,
+			$this->control->id,
+			$control_args
+		);
+
+	}
+
 }

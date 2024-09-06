@@ -1,5 +1,5 @@
 import "./toggle-control.scss";
-import { WpbfCustomize } from "../../Base/src/interface";
+import { WpbfCustomize } from "../../Base/src/base-interface";
 import { WpbfCustomizeCheckboxControl } from "./interface";
 
 declare var wp: {

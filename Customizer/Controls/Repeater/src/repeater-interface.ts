@@ -1,7 +1,7 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+} from "../../Base/src/base-interface";
 
 /**
  * The setting value returned via PHP will be associative array

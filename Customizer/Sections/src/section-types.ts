@@ -2,7 +2,7 @@ import _ from "lodash";
 import {
 	WpbfCustomize,
 	WpbfCustomizeSection,
-} from "../../Controls/Base/src/interface";
+} from "../../Controls/Base/src/base-interface";
 
 export function setupSectionTypes(customizer: WpbfCustomize) {
 	customizer.section.each(function (section: WpbfCustomizeSection) {

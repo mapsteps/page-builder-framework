@@ -2,7 +2,7 @@ import MarginPaddingForm from "./MarginPaddingForm";
 import {
 	AnyWpbfCustomizeControl,
 	WpbfCustomize,
-} from "../../Base/src/interface";
+} from "../../Base/src/base-interface";
 import {
 	MarginPaddingValue,
 	WpbfCustomizeMarginPaddingControl,

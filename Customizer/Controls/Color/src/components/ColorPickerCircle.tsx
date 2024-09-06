@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 
 export default function ColorPickerCircle(props: {
 	pickerComponent?: any;
-	useHueMode?: boolean;
 	color?: string;
 	isPickerOpen?: boolean;
 	onToggleButtonClick: () => void;
 }) {
-	const { color = "" } = props;
+	const color = props.color ?? "";
 	const [value, setValue] = useState(() => color);
 
 	// Update the local state when `color` property value is changed.
@@ -32,7 +31,7 @@ export default function ColorPickerCircle(props: {
 				<div
 					className="wpbf-color-preview"
 					style={{
-						backgroundColor: value ? value : "transparent",
+						backgroundColor: value ?? "transparent",
 					}}
 				></div>
 			</button>
