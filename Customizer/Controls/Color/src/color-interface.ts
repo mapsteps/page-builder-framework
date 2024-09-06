@@ -34,9 +34,15 @@ export type HslOrHslaColor = HslColor & { a?: number };
 
 export type HsvOrHsvaColor = HsvColor & { a?: number };
 
-export type WpbfCustomizeColorControlValue =
+export type WpbfColorPickerValue =
 	| string
+	| RgbOrRgbaColor
+	| HslOrHslaColor
+	| HsvOrHsvaColor;
+
+export type WpbfCustomizeColorControlValue =
 	| number
+	| string
 	| RgbOrRgbaColor
 	| HslOrHslaColor
 	| HsvOrHsvaColor;

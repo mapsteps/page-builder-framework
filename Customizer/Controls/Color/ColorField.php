@@ -47,6 +47,21 @@ class ColorField extends BaseField {
 	}
 
 	/**
+	 * Get the control instance.
+	 *
+	 * @return ColorField
+	 */
+	protected function controlInstance() {
+
+		if ( 'multicolor' === $this->control->type ) {
+			return new MulticolorField( $this->control );
+		}
+
+		return new ColorField( $this->control );
+
+	}
+
+	/**
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.

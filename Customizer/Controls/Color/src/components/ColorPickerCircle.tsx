@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-export type ColorPickerCircleProps = {
+export default function ColorPickerCircle(props: {
 	pickerComponent?: any;
 	useHueMode?: boolean;
 	color?: string;
 	isPickerOpen?: boolean;
-	togglePickerHandler: () => void;
-};
-
-export default function ColorPickerCircle(props: ColorPickerCircleProps) {
+	onToggleButtonClick: () => void;
+}) {
 	const { color = "" } = props;
 	const [value, setValue] = useState(() => color);
 
@@ -26,7 +24,7 @@ export default function ColorPickerCircle(props: ColorPickerCircleProps) {
 			<button
 				type="button"
 				className="wpbf-trigger-circle"
-				onClick={props.togglePickerHandler}
+				onClick={props.onToggleButtonClick}
 				style={{
 					backgroundImage: triggerButtonBgImage,
 				}}

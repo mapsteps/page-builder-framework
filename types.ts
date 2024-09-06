@@ -122,9 +122,11 @@ declare global {
 		wpbfBuilderControlIds?: string[];
 	}
 
-	interface JQuery {
+	interface JQueryStatic {
 		wc_product_gallery?: any;
 		wc_variation_form?: any;
-		wpColorPicker?: any;
+		wp?: {
+			wpColorPicker?: any;
+		};
 	}
 }
