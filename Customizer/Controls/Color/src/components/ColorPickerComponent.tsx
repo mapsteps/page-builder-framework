@@ -29,7 +29,6 @@ export default function ColorPickerComponent(props: {
 	value: WpbfColorPickerValue;
 	onChange: (e: WpbfColorPickerValue) => void;
 }) {
-	// Spread props to variables.
 	const { pickerComponent, value, onChange } = props;
 
 	switch (pickerComponent) {

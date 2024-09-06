@@ -20,7 +20,7 @@ export default function ColorPickerSwatches(props: {
 						data-wpbf-color={color}
 						style={{ backgroundColor: color }}
 						onClick={() => onClick(color)}
-					></button>
+					/>
 				);
 			})}
 		</div>

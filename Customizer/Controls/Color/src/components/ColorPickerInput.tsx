@@ -1,18 +1,15 @@
-import { colord } from "colord";
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 
-export type ColorPickerInputProps = {
+export default function ColorPickerInput(props: {
 	onChange: (color: string) => void;
-	color?: string | number;
 	pickerComponent: string;
 	useHueMode: boolean;
-};
-
-export default function ColorPickerInput(props: ColorPickerInputProps) {
-	const { onChange, color = "" } = props;
+	color?: string | number;
+}) {
+	const { onChange, pickerComponent, useHueMode, color } = props;
 	const [value, setValue] = useState(() => color);
 
-	const handleChange = useCallback(
+	const handleInputChange = useCallback(
 		(e: ChangeEvent) => {
 			const target = e.target as HTMLInputElement | undefined;
 			let val = target?.value ?? "";
@@ -35,7 +32,8 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 			);
 
 			if ("" === val || pattern.test(val)) {
-				onChange(val); // Run onChange handler passed by `KirkiReactColorfulForm` component.
+				// Run onChange handler passed by `ColorForm` component.
+				onChange(val);
 			}
 
 			setValue(val);
@@ -58,13 +56,18 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 		"HsvaStringColorPicker",
 	];
 
-	const previewWrapperBgImg = pickersWithAlpha.includes(props.pickerComponent)
+	const previewWrapperBgImg = pickersWithAlpha.includes(pickerComponent)
 		? 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAAHnlligAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHJJREFUeNpi+P///4EDBxiAGMgCCCAGFB5AADGCRBgYDh48CCRZIJS9vT2QBAggFBkmBiSAogxFBiCAoHogAKIKAlBUYTELAiAmEtABEECk20G6BOmuIl0CIMBQ/IEMkO0myiSSraaaBhZcbkUOs0HuBwDplz5uFJ3Z4gAAAABJRU5ErkJggg==")'
 		: "none";
 
-	function parseBgColor() {
-		if (typeof value === "number") {
-			return colord({ h: value, s: 100, l: 50 }).toHex();
+	/**
+	 * Parse value to be used as background color.
+	 *
+	 * This is only used for non-hue mode.
+	 */
+	function parseBgColorValue() {
+		if (useHueMode || typeof value === "number") {
+			return "transparent";
 		}
 
 		return value ?? "transparent";
@@ -73,7 +76,7 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 	return (
 		<div className="wpbf-color-input-wrapper">
 			<div className="wpbf-color-input-control">
-				{!props.useHueMode && (
+				{!useHueMode && (
 					<div
 						className="wpbf-color-preview-wrapper"
 						style={{
@@ -84,17 +87,17 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 							type="button"
 							className="wpbf-color-preview"
 							style={{
-								backgroundColor: parseBgColor(),
+								backgroundColor: parseBgColorValue(),
 							}}
 						></button>
 					</div>
 				)}
 				<input
 					type="text"
-					value={value}
+					value={value ?? ""}
 					className="wpbf-color-input"
 					spellCheck="false"
-					onChange={handleChange}
+					onChange={handleInputChange}
 				/>
 			</div>
 		</div>

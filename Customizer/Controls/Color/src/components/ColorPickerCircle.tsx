@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 export default function ColorPickerCircle(props: {
-	pickerComponent?: any;
 	color?: string;
-	isPickerOpen?: boolean;
-	onToggleButtonClick: () => void;
+	onToggleButtonClick?: () => void;
 }) {
-	const color = props.color ?? "";
+	const { color, onToggleButtonClick } = props;
 	const [value, setValue] = useState(() => color);
 
 	// Update the local state when `color` property value is changed.
@@ -23,7 +21,7 @@ export default function ColorPickerCircle(props: {
 			<button
 				type="button"
 				className="wpbf-trigger-circle"
-				onClick={props.onToggleButtonClick}
+				onClick={onToggleButtonClick}
 				style={{
 					backgroundImage: triggerButtonBgImage,
 				}}
@@ -31,7 +29,7 @@ export default function ColorPickerCircle(props: {
 				<div
 					className="wpbf-color-preview"
 					style={{
-						backgroundColor: value ?? "transparent",
+						backgroundColor: value ? value : "transparent",
 					}}
 				></div>
 			</button>

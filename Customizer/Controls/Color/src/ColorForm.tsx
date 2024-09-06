@@ -6,19 +6,16 @@ import useWindowResize from "./hooks/useWindowResize";
 import useFocusOutside from "./hooks/useFocusOutside";
 import useClickOutside from "./hooks/useClickOutside";
 import ColorPickerComponent from "./components/ColorPickerComponent";
-import ColorPickerHeader from "./components/ColorPickerHeader";
+import ControlHeader from "./components/ControlHeader";
 import {
 	WpbfColorPickerValue,
 	WpbfCustomizeColorControl,
 	WpbfCustomizeColorControlValue,
 } from "./color-interface";
 import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
-import {
-	parseCustomizerValue,
-	parseHueModeValue,
-	parseInputValue,
-	parsePickerValue,
-} from "./utils/value-parser";
+import convertColorForCustomizer from "./utils/convert-color-for-customizer";
+import convertColorForInput from "./utils/convert-color-for-input";
+import convertColorForPicker from "./utils/convert-color-for-picker";
 
 /**
  * The form component of Kirki React Colorful.
@@ -38,22 +35,28 @@ export function ColorForm(props: {
 	formComponent?: string;
 	onChange?: (color: WpbfCustomizeColorControlValue) => void;
 }) {
-	const { control, customizerSetting, pickerComponent, labelStyle } = props;
-
-	const useHueMode = props.useHueMode || typeof props.value === "number";
-	const formComponent = props.formComponent;
+	const {
+		control,
+		customizerSetting,
+		useHueMode,
+		pickerComponent,
+		formComponent,
+		label,
+		description,
+		labelStyle,
+	} = props;
 
 	const [inputValue, setInputValue] = useState(() => {
-		return parseInputValue(
+		return convertColorForInput(
 			props.value,
+			useHueMode,
 			pickerComponent,
 			formComponent,
-			useHueMode,
 		);
 	});
 
 	const [pickerValue, setPickerValue] = useState(() => {
-		return parsePickerValue(props.value, pickerComponent, useHueMode);
+		return convertColorForPicker(props.value, useHueMode, pickerComponent);
 	});
 
 	let currentInputValue = inputValue;
@@ -61,56 +64,55 @@ export function ColorForm(props: {
 
 	// This function will be called when this control's customizer value is changed.
 	control.updateComponentState = (value: WpbfCustomizeColorControlValue) => {
-		const valueForInput = parseInputValue(
+		const valueForInput = convertColorForInput(
 			value,
+			useHueMode,
 			pickerComponent,
 			formComponent,
-			useHueMode,
 		);
 
-		let changeInputValue: boolean;
+		let shouldChangeInputValue = false;
 
 		if (typeof valueForInput === "string" || useHueMode) {
-			changeInputValue = valueForInput !== inputValue;
+			shouldChangeInputValue = valueForInput !== inputValue;
 		} else {
-			changeInputValue =
+			shouldChangeInputValue =
 				JSON.stringify(valueForInput) !== JSON.stringify(currentInputValue);
 		}
 
-		if (changeInputValue) {
+		if (shouldChangeInputValue) {
 			setInputValue(valueForInput);
 		}
 
-		const valueForPicker = parsePickerValue(value, pickerComponent, useHueMode);
-		let changePickerValue: boolean;
+		const valueForPicker = convertColorForPicker(
+			value,
+			useHueMode,
+			pickerComponent,
+		);
+
+		let shouldChangePickerValue: boolean;
 
 		if (typeof valueForPicker === "string" || useHueMode) {
-			changePickerValue = valueForPicker !== pickerValue;
+			shouldChangePickerValue = valueForPicker !== pickerValue;
 		} else {
-			changePickerValue =
+			shouldChangePickerValue =
 				JSON.stringify(valueForPicker) !== JSON.stringify(currentPickerValue);
 		}
 
-		if (changePickerValue) setPickerValue(valueForPicker);
+		if (shouldChangePickerValue) {
+			setPickerValue(valueForPicker);
+		}
 	};
 
 	function saveToCustomizer(value: WpbfCustomizeColorControlValue) {
-		/**
-		 * When using hue mode, the pickerComponent is HslColorPicker.
-		 * If there is value.h, then value is set from the picker.
-		 * Otherwise, value is set from the input or the customizer.
-		 */
-
-		if (useHueMode) {
-			customizerSetting?.set(parseHueModeValue(value));
-			return;
-		}
-
-		if (typeof value !== "number") {
-			customizerSetting?.set(
-				parseCustomizerValue(value, pickerComponent, formComponent),
-			);
-		}
+		customizerSetting?.set(
+			convertColorForCustomizer(
+				value,
+				useHueMode,
+				pickerComponent,
+				formComponent,
+			),
+		);
 	}
 
 	const initialColor =
@@ -257,10 +259,10 @@ export function ColorForm(props: {
 	return (
 		<>
 			<div className={formClassName} ref={formRef} tabIndex={1}>
-				<ColorPickerHeader
-					label={props.label}
-					description={props.description}
-					labelStyle={props.labelStyle}
+				<ControlHeader
+					label={label}
+					description={description}
+					labelStyle={labelStyle}
 					pickerComponent={pickerComponent}
 					useHueMode={useHueMode}
 					inputValue={inputValue}

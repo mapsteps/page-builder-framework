@@ -70,15 +70,13 @@ export default function ColorControl(
 			const useHueMode = "hue" === mode;
 			const formComponent = params.formComponent;
 
-			let pickerComponent;
+			let pickerComponent = "";
 
 			if (formComponent) {
 				pickerComponent = formComponent;
 			} else {
 				pickerComponent =
-					mode === "alpha" || mode === "hue"
-						? "RgbaStringColorPicker"
-						: "HexColorPicker";
+					mode === "alpha" ? "RgbaStringColorPicker" : "HexColorPicker";
 			}
 
 			pickerComponent = useHueMode ? "HueColorPicker" : pickerComponent;

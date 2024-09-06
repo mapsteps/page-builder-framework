@@ -1,20 +1,31 @@
 import { colord } from "colord";
-import { WpbfColorPickerValue } from "../color-interface";
+import { WpbfCustomizeColorControlValue } from "../color-interface";
+import { parseHueModeValue } from "./value-parser";
 
 /**
  * Convert the value for the color input.
  *
- * @param {WpbfColorPickerValue} value - The value to be converted.
+ * @param {WpbfCustomizeColorControlValue} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  * @param {string|undefined} formComponent - The form component name.
  *
  * @returns {string} The converted value.
  */
 export default function convertColorForInput(
-	value: WpbfColorPickerValue,
+	value: WpbfCustomizeColorControlValue,
+	useHueMode: boolean,
 	pickerComponent: string,
 	formComponent?: string,
 ): string {
+	if ("" === value) return "";
+
+	if (useHueMode) {
+		return String(parseHueModeValue(value));
+	}
+
+	// If hudeMode is false, but value is a number, then return empty string.
+	if (typeof value === "number") return "";
+
 	let rgba;
 	let hsv;
 	let hsva;
@@ -182,5 +193,5 @@ export default function convertColorForInput(
 			break;
 	}
 
-	return convertedValue;
+	return convertedValue.replace(";", "");
 }

@@ -2,8 +2,7 @@ import React from "react";
 import ColorPickerCircle from "./ColorPickerCircle";
 
 export default function ColorPickerTrigger(props: {
-	inputValue: string;
-	pickerComponent: string;
+	color: string;
 	isPickerOpen: boolean;
 	resetRef: React.LegacyRef<HTMLButtonElement> | null;
 	onToggleButtonClick: () => void;
@@ -22,9 +21,7 @@ export default function ColorPickerTrigger(props: {
 			</button>
 
 			<ColorPickerCircle
-				pickerComponent={props.pickerComponent}
-				color={props.inputValue}
-				isPickerOpen={props.isPickerOpen}
+				color={props.color}
 				onToggleButtonClick={props.onToggleButtonClick}
 			/>
 		</>

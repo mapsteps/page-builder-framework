@@ -1,23 +1,31 @@
 import { colord } from "colord";
-import {
-	WpbfColorPickerValue,
-	WpbfCustomizeColorControlValue,
-} from "../color-interface";
+import { WpbfCustomizeColorControlValue } from "../color-interface";
+import { parseHueModeValue } from "./value-parser";
 
 /**
  * Convert the value for the customizer.
  *
- * @param {WpbfColorPickerValue} value - The value to be converted.
+ * @param {WpbfCustomizeColorControlValue} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  * @param {string|undefined} formComponent - The form component name.
  *
  * @returns {WpbfCustomizeColorControlValue} The converted value.
  */
 export default function convertColorForCustomizer(
-	value: WpbfColorPickerValue,
+	value: WpbfCustomizeColorControlValue,
+	useHueMode: boolean,
 	pickerComponent: string,
 	formComponent?: string,
 ): WpbfCustomizeColorControlValue {
+	if ("" === value) return "";
+
+	if (useHueMode) {
+		return parseHueModeValue(value);
+	}
+
+	// If hudeMode is false, but value is a number, then return empty string.
+	if (typeof value === "number") return "";
+
 	let rgba;
 	let hsv;
 	let hsva;

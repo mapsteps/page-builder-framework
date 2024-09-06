@@ -3,31 +3,40 @@ import React from "react";
 export default function ControlLabel(props: {
 	label: string;
 	description: string;
-	labelStyle?: string;
+	setNotificationContainer?: any;
 }) {
-	if (!props.label && !props.description) {
-		return <></>;
-	}
+	const { label, description, setNotificationContainer } = props;
 
 	return (
-		<label className="wpbf-control-label">
-			{props.label ? (
-				<span
-					className="customize-control-title"
-					dangerouslySetInnerHTML={{ __html: props.label }}
-				/>
+		<>
+			{label && description ? (
+				<label className="wpbf-control-label">
+					{label ? (
+						<span
+							className="customize-control-title"
+							dangerouslySetInnerHTML={{ __html: label }}
+						/>
+					) : (
+						""
+					)}
+
+					{description ? (
+						<span
+							className="description customize-control-description"
+							dangerouslySetInnerHTML={{ __html: description }}
+						></span>
+					) : (
+						""
+					)}
+				</label>
 			) : (
 				""
 			)}
 
-			{props.description ? (
-				<span
-					className="description customize-control-description"
-					dangerouslySetInnerHTML={{ __html: props.description }}
-				></span>
-			) : (
-				""
-			)}
-		</label>
+			<div
+				className="customize-control-notifications-container"
+				ref={setNotificationContainer}
+			/>
+		</>
 	);
 }
