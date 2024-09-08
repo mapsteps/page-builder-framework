@@ -9,7 +9,7 @@ export default function ColorPickerTrigger(props: {
 	onResetButtonClick: () => void;
 }) {
 	return (
-		<>
+		<div className="wpbf-trigger-buttons">
 			<button
 				type="button"
 				ref={props.resetRef}
@@ -24,6 +24,6 @@ export default function ColorPickerTrigger(props: {
 				color={props.color}
 				onToggleButtonClick={props.onToggleButtonClick}
 			/>
-		</>
+		</div>
 	);
 }

@@ -19,6 +19,14 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
+
+		.wpbf-trigger-buttons {
+			display: flex;
+			align-items: center;
+			position: relative;
+			// Add top: -2px because .customize-control-title has margin bottom 4px.
+			top: -2px;
+		}
 	}
 
 	.use-hue-mode {
@@ -75,7 +83,7 @@
 		position: absolute;
 		top: 35px;
 		right: 0;
-		margin-top: 5px;
+		margin-top: 3px;
 		width: 100%;
 		padding: 15px;
 		background-color: #fff;
