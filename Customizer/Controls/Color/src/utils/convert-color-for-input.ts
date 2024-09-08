@@ -1,6 +1,6 @@
 import { colord } from "colord";
 import { WpbfCustomizeColorControlValue } from "../color-interface";
-import { parseHueModeValue } from "./value-parser";
+import { parseHueModeValue } from "./misc";
 
 /**
  * Convert the value for the color input.

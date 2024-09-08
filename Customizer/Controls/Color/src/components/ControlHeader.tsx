@@ -2,7 +2,7 @@ import React from "react";
 import ColorPickerTrigger from "./ColorPickerTrigger";
 import ControlLabel from "./ControlLabel";
 import { colord } from "colord";
-import { isNumeric } from "../utils/value-parser";
+import { isNumeric } from "../utils/misc";
 
 export default function ControlHeader(props: {
 	label: string;

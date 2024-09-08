@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { colorBgImgData } from "../utils/misc";
 
 export default function ColorPickerInput(props: {
 	onChange: (color: string) => void;
@@ -57,7 +58,7 @@ export default function ColorPickerInput(props: {
 	];
 
 	const previewWrapperBgImg = pickersWithAlpha.includes(pickerComponent)
-		? 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAAHnlligAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHJJREFUeNpi+P///4EDBxiAGMgCCCAGFB5AADGCRBgYDh48CCRZIJS9vT2QBAggFBkmBiSAogxFBiCAoHogAKIKAlBUYTELAiAmEtABEECk20G6BOmuIl0CIMBQ/IEMkO0myiSSraaaBhZcbkUOs0HuBwDplz5uFJ3Z4gAAAABJRU5ErkJggg==")'
+		? `url("${colorBgImgData}")`
 		: "none";
 
 	/**

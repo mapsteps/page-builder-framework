@@ -496,6 +496,8 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 
 					deleteButton.addEventListener("click", function (e) {
 						e.preventDefault();
+						e.stopPropagation();
+
 						control.handleDeleteActiveWidget?.(
 							newWidgetItem,
 							widgetItemToClone,
