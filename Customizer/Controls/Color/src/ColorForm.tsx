@@ -246,15 +246,8 @@ export function ColorForm(props: {
 		}
 	}
 
-	let formClassName = useHueMode
-		? "wpbf-control-form use-hue-mode"
-		: "wpbf-control-form";
-
-	formClassName += " has-" + labelStyle + "-label-style";
-
-	let pickerContainerClassName = isPickerOpen
-		? pickerComponent + " colorPickerContainer is-open"
-		: pickerComponent + " colorPickerContainer";
+	const formClassName = `wpbf-control-form ${useHueMode ? "use-hue-mode" : ""} has-${labelStyle}-label-style`;
+	const pickerContainerClassName = `${pickerComponent} colorPickerContainer ${isPickerOpen ? "is-open" : ""}`;
 
 	return (
 		<>

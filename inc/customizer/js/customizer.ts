@@ -1,4 +1,5 @@
 import { WpbfCustomizeBuilderControl } from "../../../Customizer/Controls/Builder/src/builder-interface";
+import { WpbfCustomizeCheckboxControl } from "../../../Customizer/Controls/Checkbox/src/interface";
 
 type BuilderPanelData = {
 	panelId: string;
@@ -124,27 +125,42 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 	}
 
 	function listenToggleControl(panelField: BuilderPanelData) {
-		customizer.control(panelField.toggleControlId, function (control) {
-			control?.setting?.bind(function (enabled) {
-				if (enabled) {
-					customizer.panel(panelField.panelId, function (panel) {
-						if (panel.expanded()) {
-							if (control.container[0]) {
-								control.container[0].classList.remove("disabled");
-							}
+		customizer.control(
+			panelField.toggleControlId,
+			function (control: WpbfCustomizeCheckboxControl | undefined) {
+				if (!control) return;
 
-							openBuilderPanel(panelField.builderControlId);
-						}
-					});
-				} else {
+				checkToggleControl(panelField, control, control.setting?.get());
+
+				control.setting?.bind(function (enabled) {
+					checkToggleControl(panelField, control, enabled);
+				});
+			},
+		);
+	}
+
+	function checkToggleControl(
+		panelField: BuilderPanelData,
+		control: WpbfCustomizeCheckboxControl,
+		controlEnabled?: boolean,
+	) {
+		if (controlEnabled) {
+			customizer.panel(panelField.panelId, function (panel) {
+				if (panel.expanded()) {
 					if (control.container[0]) {
-						control.container[0].classList.add("disabled");
+						control.container[0].classList.remove("disabled");
 					}
 
-					closeBuilderPanel(panelField.builderControlId);
+					openBuilderPanel(panelField.builderControlId);
 				}
 			});
-		});
+		} else {
+			if (control.container[0]) {
+				control.container[0].classList.add("disabled");
+			}
+
+			closeBuilderPanel(panelField.builderControlId);
+		}
 	}
 
 	function listenConnectedSections(builderControlId: string) {
