@@ -138,6 +138,8 @@ export default function ColorControl(
 			});
 		},
 
+		updateCustomizerSetting: (val?: WpbfCustomizeColorControlValue) => {},
+
 		updateComponentState: (val: WpbfCustomizeColorControlValue) => {},
 
 		/**

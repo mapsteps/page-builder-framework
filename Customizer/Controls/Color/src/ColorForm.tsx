@@ -104,7 +104,11 @@ export function ColorForm(props: {
 		}
 	};
 
-	function saveToCustomizer(value: WpbfCustomizeColorControlValue) {
+	control.updateCustomizerSetting = (
+		value?: WpbfCustomizeColorControlValue,
+	) => {
+		if (typeof value === "undefined") return;
+
 		customizerSetting?.set(
 			convertColorForCustomizer(
 				value,
@@ -113,7 +117,7 @@ export function ColorForm(props: {
 				formComponent,
 			),
 		);
-	}
+	};
 
 	const initialColor =
 		"" !== props.default && "undefined" !== typeof props.default
@@ -128,12 +132,12 @@ export function ColorForm(props: {
 	function handlePickerChange(color: WpbfColorPickerValue) {
 		if (props.onChange) props.onChange(color);
 		currentPickerValue = color;
-		saveToCustomizer(color);
+		control.updateCustomizerSetting?.(color);
 	}
 
 	function handleInputChange(value: string) {
 		currentInputValue = value;
-		saveToCustomizer(value);
+		control.updateCustomizerSetting?.(value);
 	}
 
 	function handleReset() {
@@ -142,11 +146,11 @@ export function ColorForm(props: {
 			currentPickerValue = "";
 		}
 
-		saveToCustomizer(initialColor);
+		control.updateCustomizerSetting?.(initialColor);
 	}
 
 	function handleSwatchesClick(swatchColor: string) {
-		saveToCustomizer(swatchColor);
+		control.updateCustomizerSetting?.(swatchColor);
 	}
 
 	function handleWindowResize() {

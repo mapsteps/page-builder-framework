@@ -244,7 +244,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	) => HTMLElement[];
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
-	updateCustomizerSetting?: () => void;
+	updateCustomizerSetting?: (value?: SV) => void;
 	updateComponentState?: (val: SV) => void;
 	validateCssValue?: (value: string | number) => boolean;
 	wpbfNotifications?: VoidFunction;
