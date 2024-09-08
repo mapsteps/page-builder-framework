@@ -9,24 +9,20 @@ export default function ControlLabel(props: {
 
 	return (
 		<>
-			{label && description ? (
+			{label || description ? (
 				<label className="wpbf-control-label">
-					{label ? (
+					{label && (
 						<span
 							className="customize-control-title"
 							dangerouslySetInnerHTML={{ __html: label }}
 						/>
-					) : (
-						""
 					)}
 
-					{description ? (
+					{description && (
 						<span
 							className="description customize-control-description"
 							dangerouslySetInnerHTML={{ __html: description }}
 						></span>
-					) : (
-						""
 					)}
 				</label>
 			) : (
