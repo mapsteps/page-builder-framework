@@ -3,19 +3,20 @@ import ColorPickerTrigger from "./ColorPickerTrigger";
 import ControlLabel from "./ControlLabel";
 import { colord } from "colord";
 import { isNumeric } from "../utils/misc";
+import { ColorControlLabelStyle } from "../color-interface";
 
 export default function ControlHeader(props: {
 	label: string;
 	description: string;
-	labelStyle: string;
+	labelStyle: ColorControlLabelStyle;
 	pickerComponent: string;
 	useHueMode: boolean;
-	inputValue: string | number;
-	isPickerOpen: boolean;
-	togglePicker: () => void;
-	resetRef: React.LegacyRef<HTMLButtonElement> | null;
+	inputValue?: string | number;
+	isPickerOpen?: boolean;
+	togglePicker?: () => void;
+	resetRef?: React.LegacyRef<HTMLButtonElement> | null;
 	onResetButtonClick: () => void;
-	setNotificationContainer: any;
+	setNotificationContainer?: any;
 }) {
 	const {
 		label,
@@ -37,6 +38,13 @@ export default function ControlHeader(props: {
 	}
 
 	function renderTrigger() {
+		if (
+			typeof inputValue === "undefined" ||
+			typeof isPickerOpen === "undefined"
+		) {
+			return <></>;
+		}
+
 		let color = inputValue;
 
 		if (props.useHueMode) {
@@ -75,6 +83,9 @@ export default function ControlHeader(props: {
 					{renderTrigger()}
 				</>
 			);
+
+		case "none":
+			return renderTrigger();
 	}
 
 	return (

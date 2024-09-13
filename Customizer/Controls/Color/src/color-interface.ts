@@ -4,20 +4,21 @@ import {
 	WpbfCustomizeControlParams,
 } from "../../Base/src/base-interface";
 
+export type ColorControlLabelStyle = "tooltip" | "top" | "none" | "default";
+
 export interface WpbfCustomizeColorControlParams
 	extends WpbfCustomizeControlParams<WpbfCustomizeColorControlValue> {
 	mode: string;
-	labelStyle: string;
+	labelStyle: ColorControlLabelStyle;
 	colorSwatches: string[];
 	formComponent?: string;
 }
 
 export interface WpbfCustomizeMulticolorControlParams
-	extends WpbfCustomizeControlParams<
-		Record<string, WpbfCustomizeColorControlValue>
-	> {
+	extends WpbfCustomizeControlParams<WpbfCustomizeMulticolorControlValue> {
+	choices: Record<string, string>;
 	mode: string;
-	labelStyle: string;
+	labelStyle: ColorControlLabelStyle;
 	colorSwatches: string[];
 	formComponent?: string;
 }
@@ -30,7 +31,7 @@ export interface WpbfCustomizeColorControl
 
 export interface WpbfCustomizeMulticolorControl
 	extends WpbfCustomizeControl<
-		Record<string, WpbfCustomizeColorControlValue>,
+		WpbfCustomizeMulticolorControlValue,
 		WpbfCustomizeMulticolorControlParams
 	> {}
 
@@ -64,3 +65,8 @@ export type WpbfCustomizeColorControlValue =
 	| RgbOrRgbaColor
 	| HslOrHslaColor
 	| HsvOrHsvaColor;
+
+export type WpbfCustomizeMulticolorControlValue = Record<
+	string,
+	WpbfCustomizeColorControlValue
+>;

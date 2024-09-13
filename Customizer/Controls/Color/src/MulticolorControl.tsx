@@ -1,17 +1,17 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
-	WpbfCustomizeColorControl,
-	WpbfCustomizeColorControlValue,
+	WpbfCustomizeMulticolorControlValue,
+	WpbfCustomizeMulticolorControl,
 } from "./color-interface";
-import ColorForm from "./ColorForm";
+import MulticolorForm from "./MulticolorForm";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
-export default function ColorControl(
+export default function MulticolorControl(
 	customizer: WpbfCustomize,
-): WpbfCustomizeColorControl {
-	return customizer.Control.extend<WpbfCustomizeColorControl>({
+): WpbfCustomizeMulticolorControl {
+	return customizer.Control.extend<WpbfCustomizeMulticolorControl>({
 		root: undefined,
 
 		/**
@@ -80,9 +80,11 @@ export default function ColorControl(
 			}
 
 			this.root?.render(
-				<ColorForm
-					control={this as WpbfCustomizeColorControl}
+				<MulticolorForm
+					control={this as WpbfCustomizeMulticolorControl}
 					container={this.container[0]}
+					choices={params.choices}
+					keys={Object.keys(params.choices)}
 					label={params.label}
 					description={params.description}
 					useHueMode={useHueMode}
@@ -107,26 +109,8 @@ export default function ColorControl(
 
 			/**
 			 * Update component state when customizer setting changes.
-			 *
-			 * There was an issue (that's fixed):
-			 *
-			 * Let's say we have other color picker ("x" color picker) and this current color picker ("y" color picker).
-			 * Let's say there's a script that bind to that "x" color picker to make change to this "y" color picker.
-			 *
-			 * When "x" color picker is changed fast (by dragging the color, for example),
-			 * then the re-render of this "y" color picker will be messy.
-			 * There was something like "function-call race" between component re-render and function call inside the component.
-			 *
-			 * When that happens, the "x" color picker becomes unresponsive and un-usable.
-			 *
-			 * How we fixed that:
-			 * - Provide a updateColorPicker property to this file.
-			 * - Inside the component, assign the updateColorPicker with a function to update some states.
-			 * - Then inside the binding below, call updateColorPicker instead of re-rendering the component.
-			 *
-			 * The result: Even though the "x" color picker becomes very slow, it's still usable and responsive enough.
 			 */
-			this.setting?.bind((val: WpbfCustomizeColorControlValue) => {
+			this.setting?.bind((val: WpbfCustomizeMulticolorControlValue) => {
 				control.updateComponentState?.(val);
 			});
 		},
@@ -140,7 +124,8 @@ export default function ColorControl(
 			if (!params) return;
 
 			const initialColor =
-				"" !== params.default && "undefined" !== typeof params.default
+				"undefined" !== typeof params.default &&
+				Object.keys(params.default).length > 0
 					? params.default
 					: params.value;
 
@@ -165,21 +150,27 @@ export default function ColorControl(
 					mode === "alpha" ? "RgbaStringColorPicker" : "HexColorPicker";
 			}
 
-			this.setting?.set(
-				convertColorForCustomizer(
-					val,
+			const value: WpbfCustomizeMulticolorControlValue = {};
+
+			for (const key in val) {
+				if (!val.hasOwnProperty(key)) continue;
+
+				value[key] = convertColorForCustomizer(
+					val[key],
 					useHueMode,
 					pickerComponent,
 					formComponent,
-				),
-			);
+				);
+			}
+
+			this.setting?.set(value);
 		},
 
 		// This method will be replaced in ColorForm component.
-		updateColorPicker: (val) => {},
+		updateColorPickers: (val) => {},
 
 		updateComponentState: function (val) {
-			this.updateColorPicker?.(val);
+			this.updateColorPickers?.(val);
 		},
 
 		/**

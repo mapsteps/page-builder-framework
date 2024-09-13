@@ -8,6 +8,7 @@ import useClickOutside from "./hooks/useClickOutside";
 import ColorPickerComponent from "./components/ColorPickerComponent";
 import ControlHeader from "./components/ControlHeader";
 import {
+	ColorControlLabelStyle,
 	WpbfColorPickerValue,
 	WpbfCustomizeColorControlValue,
 } from "./color-interface";
@@ -18,18 +19,18 @@ import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 /**
  * The form component of Kirki React Colorful.
  */
-export function ColorForm(props: {
+export default function ColorForm(props: {
 	control: AnyWpbfCustomizeControl;
 	container: HTMLElement;
 	label: string;
 	description: string;
 	useHueMode: boolean;
 	pickerComponent: string;
-	labelStyle: string;
+	labelStyle: ColorControlLabelStyle;
 	colorSwatches: Array<string | { color: string } | undefined>;
 	value: WpbfCustomizeColorControlValue;
 	default: WpbfCustomizeColorControlValue;
-	setNotificationContainer: any;
+	setNotificationContainer?: any;
 	formComponent?: string;
 	onChange?: (value: WpbfCustomizeColorControlValue) => void;
 	onReset?: () => void;
@@ -62,7 +63,7 @@ export function ColorForm(props: {
 	let currentPickerValue = pickerValue;
 
 	// This function will be called when this control's customizer value is changed.
-	control.updateColorPicker = (value: WpbfCustomizeColorControlValue) => {
+	control.updateColorPicker = function (value) {
 		const valueForInput = convertColorForInput(
 			value,
 			useHueMode,
@@ -115,12 +116,12 @@ export function ColorForm(props: {
 	 */
 	function handlePickerChange(color: WpbfColorPickerValue) {
 		currentPickerValue = color;
-		if (props.onChange) props.onChange(color);
+		props.onChange?.(color);
 	}
 
 	function handleInputChange(value: string) {
 		currentInputValue = value;
-		if (props.onChange) props.onChange(value);
+		props.onChange?.(value);
 	}
 
 	function handleReset() {
@@ -129,11 +130,11 @@ export function ColorForm(props: {
 			currentPickerValue = "";
 		}
 
-		if (props.onReset) props.onReset();
+		props.onReset?.();
 	}
 
 	function handleSwatchesClick(swatchColor: string) {
-		if (props.onChange) props.onChange(swatchColor);
+		props.onChange?.(swatchColor);
 	}
 
 	function handleWindowResize() {

@@ -13,6 +13,7 @@ import {
 	WpbfCustomizeColorControl,
 	WpbfCustomizeColorControlValue,
 	WpbfCustomizeMulticolorControl,
+	WpbfCustomizeMulticolorControlValue,
 } from "../../Color/src/color-interface";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
@@ -260,6 +261,9 @@ export interface WpbfCustomizeControl<SV, CP> {
 
 	// Specific to PBF's color control.
 	updateColorPicker?: (value: WpbfCustomizeColorControlValue) => void;
+
+	// Specific to PBF's multicolor control.
+	updateColorPickers?: (value: WpbfCustomizeMulticolorControlValue) => void;
 
 	// Specific to PBF's select control.
 	$selectbox?: JQuery;

@@ -4,9 +4,9 @@ import ColorPickerCircle from "./ColorPickerCircle";
 export default function ColorPickerTrigger(props: {
 	color: string;
 	isPickerOpen: boolean;
-	resetRef: React.LegacyRef<HTMLButtonElement> | null;
-	onToggleButtonClick: () => void;
-	onResetButtonClick: () => void;
+	resetRef?: React.LegacyRef<HTMLButtonElement> | null;
+	onToggleButtonClick?: () => void;
+	onResetButtonClick?: () => void;
 }) {
 	return (
 		<div className="wpbf-trigger-buttons">
