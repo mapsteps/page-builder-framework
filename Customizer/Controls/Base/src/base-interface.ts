@@ -11,6 +11,7 @@ import {
 import { Setting } from "wordpress__customize-browser/Setting";
 import {
 	WpbfCustomizeColorControl,
+	WpbfCustomizeColorControlValue,
 	WpbfCustomizeMulticolorControl,
 } from "../../Color/src/color-interface";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
@@ -248,12 +249,17 @@ export interface WpbfCustomizeControl<SV, CP> {
 	updateComponentState?: (val: SV) => void;
 	validateCssValue?: (value: string | number) => boolean;
 	wpbfNotifications?: VoidFunction;
+	onChange?: (value: SV) => void;
+	onReset?: () => void;
 
 	// Specific to PBF's dynamic control.
 	_setUpSettingRootLinks?: () => void;
 	_setUpSettingPropertyLinks?: () => void;
 	initWpbfControl?: (control?: WpbfCustomizeControl<SV, CP>) => void;
 	actuallyEmbed?: () => void;
+
+	// Specific to PBF's color control.
+	updateColorPicker?: (value: WpbfCustomizeColorControlValue) => void;
 
 	// Specific to PBF's select control.
 	$selectbox?: JQuery;

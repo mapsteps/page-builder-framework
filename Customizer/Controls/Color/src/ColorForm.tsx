@@ -9,22 +9,20 @@ import ColorPickerComponent from "./components/ColorPickerComponent";
 import ControlHeader from "./components/ControlHeader";
 import {
 	WpbfColorPickerValue,
-	WpbfCustomizeColorControl,
 	WpbfCustomizeColorControlValue,
 } from "./color-interface";
-import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
-import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 import convertColorForInput from "./utils/convert-color-for-input";
 import convertColorForPicker from "./utils/convert-color-for-picker";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 
 /**
  * The form component of Kirki React Colorful.
  */
 export function ColorForm(props: {
-	control: WpbfCustomizeColorControl;
+	control: AnyWpbfCustomizeControl;
+	container: HTMLElement;
 	label: string;
 	description: string;
-	customizerSetting?: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>;
 	useHueMode: boolean;
 	pickerComponent: string;
 	labelStyle: string;
@@ -33,11 +31,12 @@ export function ColorForm(props: {
 	default: WpbfCustomizeColorControlValue;
 	setNotificationContainer: any;
 	formComponent?: string;
-	onChange?: (color: WpbfCustomizeColorControlValue) => void;
+	onChange?: (value: WpbfCustomizeColorControlValue) => void;
+	onReset?: () => void;
 }) {
 	const {
 		control,
-		customizerSetting,
+		container,
 		useHueMode,
 		pickerComponent,
 		formComponent,
@@ -63,7 +62,7 @@ export function ColorForm(props: {
 	let currentPickerValue = pickerValue;
 
 	// This function will be called when this control's customizer value is changed.
-	control.updateComponentState = (value: WpbfCustomizeColorControlValue) => {
+	control.updateColorPicker = (value: WpbfCustomizeColorControlValue) => {
 		const valueForInput = convertColorForInput(
 			value,
 			useHueMode,
@@ -104,21 +103,6 @@ export function ColorForm(props: {
 		}
 	};
 
-	control.updateCustomizerSetting = (
-		value?: WpbfCustomizeColorControlValue,
-	) => {
-		if (typeof value === "undefined") return;
-
-		customizerSetting?.set(
-			convertColorForCustomizer(
-				value,
-				useHueMode,
-				pickerComponent,
-				formComponent,
-			),
-		);
-	};
-
 	const initialColor =
 		"" !== props.default && "undefined" !== typeof props.default
 			? props.default
@@ -130,14 +114,13 @@ export function ColorForm(props: {
 	 * @param {WpbfCustomizeColorControlValue} color The value returned by the picker. It can be a string or a color object.
 	 */
 	function handlePickerChange(color: WpbfColorPickerValue) {
-		if (props.onChange) props.onChange(color);
 		currentPickerValue = color;
-		control.updateCustomizerSetting?.(color);
+		if (props.onChange) props.onChange(color);
 	}
 
 	function handleInputChange(value: string) {
 		currentInputValue = value;
-		control.updateCustomizerSetting?.(value);
+		if (props.onChange) props.onChange(value);
 	}
 
 	function handleReset() {
@@ -146,11 +129,11 @@ export function ColorForm(props: {
 			currentPickerValue = "";
 		}
 
-		control.updateCustomizerSetting?.(initialColor);
+		if (props.onReset) props.onReset();
 	}
 
 	function handleSwatchesClick(swatchColor: string) {
-		control.updateCustomizerSetting?.(swatchColor);
+		if (props.onChange) props.onChange(swatchColor);
 	}
 
 	function handleWindowResize() {
@@ -173,16 +156,16 @@ export function ColorForm(props: {
 		if (!usePositionFixed) return pickerContainerStyle;
 
 		const rawPadding = window.getComputedStyle(
-			control.container[0].parentNode as HTMLElement,
+			container.parentNode as HTMLElement,
 		).paddingLeft;
 
 		const padding = parseInt(rawPadding, 10) * 2;
 
 		pickerContainerStyle.width =
-			(control.container[0].parentNode as HTMLElement).getBoundingClientRect()
-				.width - padding;
+			(container.parentNode as HTMLElement).getBoundingClientRect().width -
+			padding;
 
-		const controlLeftOffset = (control.container[0].offsetLeft - 9) * -1;
+		const controlLeftOffset = (container.offsetLeft - 9) * -1;
 
 		pickerContainerStyle.left = controlLeftOffset + "px";
 

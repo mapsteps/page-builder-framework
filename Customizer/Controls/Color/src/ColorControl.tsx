@@ -1,12 +1,12 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	WpbfCustomizeColorControl,
-	WpbfCustomizeColorControlParams,
 	WpbfCustomizeColorControlValue,
 } from "./color-interface";
 import { ColorForm } from "./ColorForm";
 import React from "react";
 import { createRoot } from "react-dom/client";
+import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
 export default function ColorControl(
 	customizer: WpbfCustomize,
@@ -17,16 +17,12 @@ export default function ColorControl(
 		/**
 		 * Initialize.
 		 */
-		initialize: function (
-			this: WpbfCustomizeColorControl,
-			id: string,
-			params?: WpbfCustomizeColorControlParams,
-		) {
+		initialize: function (id, params) {
 			const control = this;
 
 			// Bind functions to this control context for passing as React props.
-			control.setNotificationContainer =
-				control.setNotificationContainer?.bind(control);
+			this.setNotificationContainer =
+				this.setNotificationContainer?.bind(control);
 
 			customizer.Control.prototype.initialize.call(control, id, params);
 
@@ -34,7 +30,7 @@ export default function ColorControl(
 			function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 				if (control === removedControl) {
 					if (control.destroy) control.destroy();
-					control.container.remove();
+					control.container?.remove();
 					customizer.control.unbind("removed", onRemoved);
 				}
 			}
@@ -47,14 +43,10 @@ export default function ColorControl(
 		 *
 		 * This is called when the React component is mounted.
 		 */
-		setNotificationContainer: function setNotificationContainer(
-			el: HTMLElement,
-		) {
-			const control = this;
-
-			if (control.notifications) {
-				control.notifications.container = jQuery(el);
-				control.notifications.render();
+		setNotificationContainer: function setNotificationContainer(el) {
+			if (this.notifications) {
+				this.notifications.container = jQuery(el);
+				this.notifications.render();
 			}
 		},
 
@@ -63,9 +55,11 @@ export default function ColorControl(
 		 *
 		 * This will be called from the Control#embed() method in the parent class.
 		 */
-		renderContent: function renderContent(this: WpbfCustomizeColorControl) {
-			const control = this;
-			const params = control.params;
+		renderContent: function renderContent() {
+			const params = this.params;
+			if (!params) return;
+			if (!this.container || !this.container.length) return;
+
 			const mode = params.mode;
 			const useHueMode = "hue" === mode;
 			const formComponent = params.formComponent;
@@ -81,24 +75,24 @@ export default function ColorControl(
 
 			pickerComponent = useHueMode ? "HueColorPicker" : pickerComponent;
 
-			if (!control.root) {
-				control.root = createRoot(control.container[0]);
+			if (!this.root && this.container) {
+				this.root = createRoot(this.container[0]);
 			}
 
-			control.root.render(
+			this.root?.render(
 				<ColorForm
-					control={control}
+					control={this as WpbfCustomizeColorControl}
+					container={this.container[0]}
 					label={params.label}
 					description={params.description}
-					customizerSetting={control.setting ?? undefined}
 					useHueMode={useHueMode}
 					formComponent={formComponent}
 					pickerComponent={pickerComponent}
 					labelStyle={params.labelStyle}
 					colorSwatches={params.colorSwatches}
-					value={control.params.value}
-					default={control.params.default}
-					setNotificationContainer={control.setNotificationContainer}
+					value={params.value}
+					default={params.default}
+					setNotificationContainer={this.setNotificationContainer}
 				/>,
 			);
 		},
@@ -126,21 +120,67 @@ export default function ColorControl(
 			 * When that happens, the "x" color picker becomes unresponsive and un-usable.
 			 *
 			 * How we fixed that:
-			 * - Provide a updateComponentState property to this file.
-			 * - Inside the component, assign the updateComponentState with a function to update some states.
-			 * - Then inside the binding below, call updateComponentState instead of re-rendering the component.
+			 * - Provide a updateColorPicker property to this file.
+			 * - Inside the component, assign the updateColorPicker with a function to update some states.
+			 * - Then inside the binding below, call updateColorPicker instead of re-rendering the component.
 			 *
 			 * The result: Even though the "x" color picker becomes very slow, it's still usable and responsive enough.
 			 */
-			control.setting?.bind((val: WpbfCustomizeColorControlValue) => {
-				if (!control.updateComponentState) return;
-				control.updateComponentState(val);
+			this.setting?.bind((val: WpbfCustomizeColorControlValue) => {
+				control.updateComponentState?.(val);
 			});
 		},
 
-		updateCustomizerSetting: (val?: WpbfCustomizeColorControlValue) => {},
+		onChange: function (val) {
+			this.updateCustomizerSetting?.(val);
+		},
 
-		updateComponentState: (val: WpbfCustomizeColorControlValue) => {},
+		onReset: function () {
+			const params = this.params;
+			if (!params) return;
+
+			const initialColor =
+				"" !== params.default && "undefined" !== typeof params.default
+					? params.default
+					: params.value;
+
+			this.updateCustomizerSetting?.(initialColor);
+		},
+
+		updateCustomizerSetting: function (val) {
+			if (typeof val === "undefined") return;
+			const params = this.params;
+			if (!params) return;
+
+			const mode = params.mode;
+			const useHueMode = "hue" === mode;
+			const formComponent = params.formComponent;
+
+			let pickerComponent = "";
+
+			if (formComponent) {
+				pickerComponent = formComponent;
+			} else {
+				pickerComponent =
+					mode === "alpha" ? "RgbaStringColorPicker" : "HexColorPicker";
+			}
+
+			this.setting?.set(
+				convertColorForCustomizer(
+					val,
+					useHueMode,
+					pickerComponent,
+					formComponent,
+				),
+			);
+		},
+
+		// This method will be replaced in ColorForm component.
+		updateColorPicker: (val) => {},
+
+		updateComponentState: function (val: WpbfCustomizeColorControlValue) {
+			this.updateColorPicker?.(val);
+		},
 
 		/**
 		 * Handle removal/de-registration of the control.
