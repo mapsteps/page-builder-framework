@@ -47,19 +47,13 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'icon_color' )
-	->type( 'color' )
+	->type( 'multicolor' )
 	->label( __( 'Icon Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
-	->properties( [
-		'mode' => 'alpha',
-	] )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'icon_accent_color' )
-	->type( 'color' )
-	->label( __( 'Icon Accent Color', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
 	->properties( [
 		'mode' => 'alpha',
 	] )
