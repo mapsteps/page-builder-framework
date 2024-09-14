@@ -4,7 +4,12 @@ import {
 	WpbfCustomizeControlParams,
 } from "../../Base/src/base-interface";
 
-export type ColorControlLabelStyle = "tooltip" | "top" | "none" | "default";
+export type ColorControlLabelStyle =
+	| "tooltip"
+	| "top"
+	| "none"
+	| "label_only"
+	| "default";
 
 export interface WpbfCustomizeColorControlParams
 	extends WpbfCustomizeControlParams<WpbfCustomizeColorControlValue> {

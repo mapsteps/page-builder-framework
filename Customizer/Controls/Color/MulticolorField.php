@@ -45,11 +45,23 @@ class MulticolorField extends ColorField {
 	 */
 	protected function controlInstance( $wp_customize_manager, $control_args = [] ) {
 
-		return new MulticolorControl(
+		$wrapper_attrs = isset( $control_args['wrapper_attrs'] ) && is_array( $control_args['wrapper_attrs'] ) ? $control_args['wrapper_attrs'] : [];
+
+		if ( isset( $wrapper_attrs['class'] ) ) {
+			$wrapper_attrs['class'] .= ' wpbf-customize-control-color';
+		} else {
+			$wrapper_attrs['class'] = '{default_class} wpbf-customize-control-color';
+		}
+
+		$control = new MulticolorControl(
 			$wp_customize_manager,
 			$this->control->id,
 			$control_args
 		);
+
+		$control->wrapper_attrs = $wrapper_attrs;
+
+		return $control;
 
 	}
 

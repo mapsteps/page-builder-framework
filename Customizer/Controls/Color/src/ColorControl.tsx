@@ -8,14 +8,12 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
-export default function ColorControl(
-	customizer: WpbfCustomize,
-): WpbfCustomizeColorControl {
-	return customizer.Control.extend<WpbfCustomizeColorControl>({
+const ColorControl =
+	window.wp.customize?.Control.extend<WpbfCustomizeColorControl>({
 		root: undefined,
 
 		/**
-		 * Initialize.
+		 * Initialize the control.
 		 */
 		initialize: function (id, params) {
 			const control = this;
@@ -24,18 +22,22 @@ export default function ColorControl(
 			this.setNotificationContainer =
 				this.setNotificationContainer?.bind(control);
 
-			customizer.Control.prototype.initialize.call(control, id, params);
+			window.wp.customize?.Control.prototype.initialize.call(
+				control,
+				id,
+				params,
+			);
 
 			// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 			function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 				if (control === removedControl) {
 					if (control.destroy) control.destroy();
 					control.container?.remove();
-					customizer.control.unbind("removed", onRemoved);
+					window.wp.customize?.control.unbind("removed", onRemoved);
 				}
 			}
 
-			customizer.control.bind("removed", onRemoved);
+			window.wp.customize?.control.bind("removed", onRemoved);
 		},
 
 		/**
@@ -43,7 +45,7 @@ export default function ColorControl(
 		 *
 		 * This is called when the React component is mounted.
 		 */
-		setNotificationContainer: function setNotificationContainer(el) {
+		setNotificationContainer: function (el) {
 			if (this.notifications) {
 				this.notifications.container = jQuery(el);
 				this.notifications.render();
@@ -55,7 +57,7 @@ export default function ColorControl(
 		 *
 		 * This will be called from the Control#embed() method in the parent class.
 		 */
-		renderContent: function renderContent() {
+		renderContent: function () {
 			const params = this.params;
 			if (!params) return;
 			if (!this.container || !this.container.length) return;
@@ -102,7 +104,7 @@ export default function ColorControl(
 		 *
 		 * React is available to be used here instead of the customizer.Element abstraction.
 		 */
-		ready: function ready() {
+		ready: function () {
 			const control = this;
 
 			/**
@@ -129,22 +131,6 @@ export default function ColorControl(
 			this.setting?.bind((val: WpbfCustomizeColorControlValue) => {
 				control.updateComponentState?.(val);
 			});
-		},
-
-		onChange: function (val) {
-			this.updateCustomizerSetting?.(val);
-		},
-
-		onReset: function () {
-			const params = this.params;
-			if (!params) return;
-
-			const initialColor =
-				"" !== params.default && "undefined" !== typeof params.default
-					? params.default
-					: params.value;
-
-			this.updateCustomizerSetting?.(initialColor);
 		},
 
 		updateCustomizerSetting: function (val) {
@@ -175,8 +161,24 @@ export default function ColorControl(
 			);
 		},
 
+		onChange: function (val) {
+			this.updateCustomizerSetting?.(val);
+		},
+
+		onReset: function () {
+			const params = this.params;
+			if (!params) return;
+
+			const initialColor =
+				"" !== params.default && "undefined" !== typeof params.default
+					? params.default
+					: params.value;
+
+			this.updateCustomizerSetting?.(initialColor);
+		},
+
 		// This method will be replaced in ColorForm component.
-		updateColorPicker: (val) => {},
+		updateColorPicker: function (val) {},
 
 		updateComponentState: function (val) {
 			this.updateColorPicker?.(val);
@@ -187,17 +189,15 @@ export default function ColorControl(
 		 *
 		 * This is essentially the inverse of the Control#embed() method.
 		 */
-		destroy: function destroy() {
-			const control = this;
-
-			// Garbage collection: undo mounting that was done in the embed/renderContent method.
-			control.root?.unmount();
-			control.root = undefined;
+		destroy: function () {
+			this.root?.unmount();
+			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
-			if (customizer.Control.prototype.destroy) {
-				customizer.Control.prototype.destroy.call(control);
+			if (window.wp.customize?.Control.prototype.destroy) {
+				window.wp.customize.Control.prototype.destroy.call(this);
 			}
 		},
 	});
-}
+
+export default ColorControl;

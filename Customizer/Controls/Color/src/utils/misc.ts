@@ -36,3 +36,10 @@ export function parseHueModeValue(value: WpbfCustomizeColorControlValue) {
 
 	return hueValue > 360 ? 360 : hueValue;
 }
+
+export function hexColorFromHueModeValue(
+	value: WpbfCustomizeColorControlValue,
+) {
+	const hue = parseHueModeValue(value);
+	return colord({ h: hue, s: 100, l: 50 }).toHex();
+}

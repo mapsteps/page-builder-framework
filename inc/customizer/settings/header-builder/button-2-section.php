@@ -152,10 +152,14 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'border_color' )
-	->type( 'color' )
+	->type( 'multicolor' )
 	->tab( 'design' )
 	->label( __( 'Border Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
 	->properties( [
 		'mode' => 'alpha',
 	] )
@@ -163,10 +167,14 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'bg_color' )
-	->type( 'color' )
+	->type( 'multicolor' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
 	->properties( [
 		'mode' => 'alpha',
 	] )
@@ -174,21 +182,14 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'text_color' )
-	->type( 'color' )
+	->type( 'multicolor' )
 	->tab( 'design' )
 	->label( __( 'Text Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
-	->properties( [
-		'mode' => 'alpha',
-	] )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'accent_color' )
-	->type( 'color' )
-	->tab( 'design' )
-	->label( __( 'Accent Color', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
 	->properties( [
 		'mode' => 'alpha',
 	] )

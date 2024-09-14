@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { colord } from "colord";
 import ColorPickerSwatches from "./components/ColorPickerSwatches";
 import ColorPickerInput from "./components/ColorPickerInput";
@@ -32,6 +32,8 @@ export default function ColorForm(props: {
 	default: WpbfCustomizeColorControlValue;
 	setNotificationContainer?: any;
 	formComponent?: string;
+	removeHeader?: boolean;
+	isPopupOpen?: boolean;
 	onChange?: (value: WpbfCustomizeColorControlValue) => void;
 	onReset?: () => void;
 }) {
@@ -109,19 +111,28 @@ export default function ColorForm(props: {
 			? props.default
 			: props.value;
 
+	function handleValueChange(val: WpbfColorPickerValue | string) {
+		if (props.onChange) {
+			props.onChange(val);
+			return;
+		}
+
+		control.onChange?.(val);
+	}
+
 	/**
 	 * Function to run on picker change.
 	 *
 	 * @param {WpbfCustomizeColorControlValue} color The value returned by the picker. It can be a string or a color object.
 	 */
-	function handlePickerChange(color: WpbfColorPickerValue) {
+	function handlePickerValueChange(color: WpbfColorPickerValue) {
 		currentPickerValue = color;
-		props.onChange?.(color);
+		handleValueChange(color);
 	}
 
-	function handleInputChange(value: string) {
+	function handleInputValueChange(value: string) {
 		currentInputValue = value;
-		props.onChange?.(value);
+		handleValueChange(value);
 	}
 
 	function handleReset() {
@@ -130,11 +141,15 @@ export default function ColorForm(props: {
 			currentPickerValue = "";
 		}
 
-		props.onReset?.();
+		if (props.onReset) {
+			props.onReset();
+		} else {
+			control.onReset?.();
+		}
 	}
 
 	function handleSwatchesClick(swatchColor: string) {
-		props.onChange?.(swatchColor);
+		handleValueChange(swatchColor);
 	}
 
 	function handleWindowResize() {
@@ -145,7 +160,29 @@ export default function ColorForm(props: {
 	const pickerRef = useRef(null); // Reference to the picker popup.
 	const resetRef = useRef(null); // Reference to the picker popup.
 
-	const [isPickerOpen, setIsPickerOpen] = useState(false);
+	const [isPopupOpen, setIsPopupOpen] = useState(props.isPopupOpen ?? false);
+
+	// On multicolor control, listen to `isPopupOpen` property change.
+	if (control.params && control.params.type === "wpbf-multicolor") {
+		useEffect(() => {
+			setInputValue(
+				convertColorForInput(
+					props.value,
+					useHueMode,
+					pickerComponent,
+					formComponent,
+				),
+			);
+
+			setPickerValue(
+				convertColorForPicker(props.value, useHueMode, pickerComponent),
+			);
+		}, [props.value]);
+
+		useEffect(() => {
+			setIsPopupOpen(props.isPopupOpen ?? false);
+		}, [props.isPopupOpen]);
+	}
 
 	const usePositionFixed = "default" !== labelStyle;
 
@@ -183,36 +220,36 @@ export default function ColorForm(props: {
 		}
 	}
 
-	const togglePicker = () => {
-		if (isPickerOpen) {
-			closePicker();
+	function togglePopup() {
+		if (isPopupOpen) {
+			closePopup();
 		} else {
-			openPicker();
+			openPopup();
 		}
-	};
+	}
 
-	const openPicker = () => {
-		if (isPickerOpen) return;
+	function openPopup() {
+		if (isPopupOpen) return;
 
 		setPickerContainerStyle(getPickerContainerStyle());
 		convertInputValueTo6Digits();
-		setIsPickerOpen(true);
-	};
+		setIsPopupOpen(true);
+	}
 
-	const closePicker = () => {
-		if (!isPickerOpen) return;
+	function closePopup() {
+		if (!isPopupOpen) return;
 
-		setIsPickerOpen(false);
+		setIsPopupOpen(false);
 		setTimeout(convertInputValueTo6Digits, 200);
-	};
+	}
 
 	useWindowResize(handleWindowResize);
 
 	// Handle outside focus to close the picker popup.
-	useFocusOutside(formRef, closePicker);
+	useFocusOutside(formRef, closePopup);
 
 	// Handle outside click to close the picker popup.
-	useClickOutside(pickerRef, resetRef, closePicker);
+	useClickOutside(pickerRef, resetRef, closePopup);
 
 	let colorSwatches = props.colorSwatches;
 
@@ -235,24 +272,27 @@ export default function ColorForm(props: {
 	}
 
 	const formClassName = `wpbf-control-form ${useHueMode ? "use-hue-mode" : ""} has-${labelStyle}-label-style`;
-	const pickerContainerClassName = `${pickerComponent} colorPickerContainer ${isPickerOpen ? "is-open" : ""}`;
+	const pickerContainerClassName = `${pickerComponent} colorPickerContainer ${isPopupOpen ? "is-open" : ""}`;
 
 	return (
 		<>
 			<div className={formClassName} ref={formRef} tabIndex={1}>
-				<ControlHeader
-					label={label}
-					description={description}
-					labelStyle={labelStyle}
-					pickerComponent={pickerComponent}
-					useHueMode={useHueMode}
-					inputValue={inputValue}
-					isPickerOpen={isPickerOpen}
-					togglePicker={togglePicker}
-					resetRef={resetRef}
-					onResetButtonClick={handleReset}
-					setNotificationContainer={props.setNotificationContainer}
-				/>
+				{!props.removeHeader && (
+					<ControlHeader
+						label={label}
+						description={description}
+						labelStyle={labelStyle}
+						pickerComponent={pickerComponent}
+						useHueMode={useHueMode}
+						inputValue={inputValue}
+						isPopupOpen={isPopupOpen}
+						togglePicker={togglePopup}
+						resetRef={resetRef}
+						onResetButtonClick={handleReset}
+						setNotificationContainer={props.setNotificationContainer}
+					/>
+				)}
+
 				<div
 					ref={pickerRef}
 					className={pickerContainerClassName}
@@ -268,14 +308,14 @@ export default function ColorForm(props: {
 					<ColorPickerComponent
 						pickerComponent={pickerComponent}
 						value={pickerValue}
-						onChange={handlePickerChange}
+						onChange={handlePickerValueChange}
 					/>
 
 					<ColorPickerInput
 						pickerComponent={pickerComponent}
 						useHueMode={useHueMode}
 						color={inputValue}
-						onChange={handleInputChange}
+						onChange={handleInputValueChange}
 					/>
 				</div>
 			</div>

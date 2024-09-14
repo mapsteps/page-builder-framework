@@ -20,7 +20,7 @@
 		justify-content: flex-end;
 		align-items: center;
 
-		.wpbf-trigger-buttons {
+		.wpbf-buttons {
 			display: flex;
 			align-items: center;
 			position: relative;
@@ -51,6 +51,7 @@
 		position: relative;
 		// top: -3px;
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
 		width: 28px;
@@ -185,7 +186,7 @@
 	}
 
 	.wpbf-control-reset {
-		display: flex;
+		display: none;
 		align-items: center;
 		justify-content: center;
 		right: 38px;
@@ -194,6 +195,12 @@
 		border-radius: 50%;
 		border-width: 0;
 		z-index: 3;
+	}
+
+	&:hover {
+		.wpbf-control-reset {
+			display: flex;
+		}
 	}
 
 	.wpbf-control-reset:hover i {
@@ -244,14 +251,14 @@
 
 	.wpbf-label-tooltip {
 		position: absolute;
-		bottom: 45px;
-		left: -8px;
-		padding: 7px 10px 3px; // The 4px of bottom side is handled by label / description's margin-bottom.
+		bottom: 42px;
+		padding: 6px 8px;
 		width: auto; // just for fallback for max-content.
 		width: max-content;
 		max-width: 100px;
 		color: #fff;
-		background-color: rgba(0, 0, 0, 0.7);
+		// background-color: rgba(0, 0, 0, 0.7);
+		background-color: #484848;
 		border-radius: 4px;
 		opacity: 0;
 		visibility: hidden;
@@ -261,10 +268,12 @@
 			content: "";
 			position: absolute;
 			bottom: -8px;
-			left: 19px;
+			left: 50%;
 			border-width: 8px 7px 0 7px;
 			border-style: solid;
-			border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+			// border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+			border-color: #484848 transparent transparent transparent;
+			transform: translateX(-50%);
 		}
 
 		.customize-control-title {
@@ -272,22 +281,25 @@
 		}
 	}
 
-	.wpbf-trigger-circle-wrapper {
-		&:hover ~ .wpbf-label-tooltip {
+	.wpbf-trigger-circle-wrapper:hover {
+		.wpbf-label-tooltip {
 			opacity: 1;
 			visibility: visible;
 		}
 	}
 
-	&[data-wpbf-parent-control-type="wpbf-multicolor"] {
-		margin-right: 8px;
-		margin-bottom: 20px;
-		padding-right: 0;
-		width: 35px;
-
+	.wpbf-multicolor {
 		.wpbf-control-reset {
-			top: -19px;
-			right: 8px;
+			position: relative;
+			right: auto;
+		}
+
+		.wpbf-trigger-circle-wrapper {
+			margin-left: 8px;
+		}
+
+		.colorPickerContainer {
+			top: 7px;
 		}
 	}
 

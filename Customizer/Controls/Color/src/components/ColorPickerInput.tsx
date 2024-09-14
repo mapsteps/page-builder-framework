@@ -7,8 +7,12 @@ export default function ColorPickerInput(props: {
 	useHueMode: boolean;
 	color?: string | number;
 }) {
-	const { onChange, pickerComponent, useHueMode, color } = props;
-	const [value, setValue] = useState(() => color);
+	const { onChange, pickerComponent, useHueMode } = props;
+	const [value, setValue] = useState(() => props.color);
+
+	useEffect(() => {
+		setValue(props.color);
+	}, [props.color]);
 
 	const handleInputChange = useCallback(
 		(e: ChangeEvent) => {
@@ -41,12 +45,6 @@ export default function ColorPickerInput(props: {
 		},
 		[onChange],
 	);
-
-	// Update the local state when `color` property value is changed.
-	useEffect(() => {
-		// We don't need to convert the color since it's already handled in parent component.
-		setValue(color);
-	}, [color]);
 
 	const pickersWithAlpha = [
 		"RgbaColorPicker",

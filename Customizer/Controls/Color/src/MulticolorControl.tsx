@@ -8,10 +8,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
-export default function MulticolorControl(
-	customizer: WpbfCustomize,
-): WpbfCustomizeMulticolorControl {
-	return customizer.Control.extend<WpbfCustomizeMulticolorControl>({
+const MulticolorControl =
+	window.wp.customize?.Control.extend<WpbfCustomizeMulticolorControl>({
 		root: undefined,
 
 		/**
@@ -24,18 +22,22 @@ export default function MulticolorControl(
 			this.setNotificationContainer =
 				this.setNotificationContainer?.bind(control);
 
-			customizer.Control.prototype.initialize.call(control, id, params);
+			window.wp.customize?.Control.prototype.initialize.call(
+				control,
+				id,
+				params,
+			);
 
 			// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 			function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 				if (control === removedControl) {
 					if (control.destroy) control.destroy();
 					control.container?.remove();
-					customizer.control.unbind("removed", onRemoved);
+					window.wp.customize?.control.unbind("removed", onRemoved);
 				}
 			}
 
-			customizer.control.bind("removed", onRemoved);
+			window.wp.customize?.control.bind("removed", onRemoved);
 		},
 
 		/**
@@ -102,7 +104,7 @@ export default function MulticolorControl(
 		/**
 		 * After control has been first rendered, start re-rendering when setting changes.
 		 *
-		 * React is available to be used here instead of the customizer.Element abstraction.
+		 * React is available to be used here instead of the window.wp.customize?.Element abstraction.
 		 */
 		ready: function ready() {
 			const control = this;
@@ -186,9 +188,10 @@ export default function MulticolorControl(
 			control.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
-			if (customizer.Control.prototype.destroy) {
-				customizer.Control.prototype.destroy.call(control);
+			if (window.wp.customize?.Control.prototype.destroy) {
+				window.wp.customize?.Control.prototype.destroy.call(control);
 			}
 		},
 	});
-}
+
+export default MulticolorControl;

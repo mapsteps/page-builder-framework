@@ -1,8 +1,7 @@
 import React from "react";
-import ColorPickerTrigger from "./ColorPickerTrigger";
+import ColorPickerCirleTrigger from "./ColorPickerCircleTrigger";
 import ControlLabel from "./ControlLabel";
-import { colord } from "colord";
-import { isNumeric } from "../utils/misc";
+import { hexColorFromHueModeValue } from "../utils/misc";
 import { ColorControlLabelStyle } from "../color-interface";
 
 export default function ControlHeader(props: {
@@ -12,22 +11,15 @@ export default function ControlHeader(props: {
 	pickerComponent: string;
 	useHueMode: boolean;
 	inputValue?: string | number;
-	isPickerOpen?: boolean;
+	isPopupOpen?: boolean;
 	togglePicker?: () => void;
 	resetRef?: React.LegacyRef<HTMLButtonElement> | null;
 	onResetButtonClick: () => void;
 	setNotificationContainer?: any;
 }) {
-	const {
-		label,
-		description,
-		isPickerOpen,
-		labelStyle,
-		inputValue,
-		setNotificationContainer,
-	} = props;
+	const { label, description, labelStyle, setNotificationContainer } = props;
 
-	function renderHeader() {
+	function renderLabel() {
 		return (
 			<ControlLabel
 				label={label}
@@ -37,63 +29,58 @@ export default function ControlHeader(props: {
 		);
 	}
 
-	function renderTrigger() {
+	function renderTrigger(useTooltip?: boolean) {
 		if (
-			typeof inputValue === "undefined" ||
-			typeof isPickerOpen === "undefined"
+			typeof props.inputValue === "undefined" ||
+			typeof props.isPopupOpen === "undefined"
 		) {
 			return <></>;
 		}
 
-		let color = inputValue;
-
-		if (props.useHueMode) {
-			color = isNumeric(inputValue) ? Number(inputValue) : 0;
-			color = colord({ h: color, s: 100, l: 50 }).toHex();
-		}
-
-		color = String(color);
-
 		return (
-			<ColorPickerTrigger
-				color={color}
-				isPickerOpen={isPickerOpen}
-				resetRef={props.resetRef}
-				onToggleButtonClick={props.togglePicker}
-				onResetButtonClick={props.onResetButtonClick}
-			/>
+			<div className="wpbf-buttons">
+				<ColorPickerCirleTrigger
+					color={String(
+						props.useHueMode
+							? hexColorFromHueModeValue(props.inputValue)
+							: props.inputValue,
+					)}
+					isPopupOpen={props.isPopupOpen}
+					resetRef={props.resetRef}
+					onToggleButtonClick={props.togglePicker}
+					onResetButtonClick={props.onResetButtonClick}
+					tooltip={useTooltip && !props.isPopupOpen ? label : undefined}
+				/>
+			</div>
 		);
 	}
 
 	switch (labelStyle) {
 		case "tooltip":
-			return (
-				<>
-					{renderTrigger()}
-					{!isPickerOpen && (
-						<div className="wpbf-label-tooltip">{renderHeader()}</div>
-					)}
-				</>
-			);
+			return <>{renderTrigger(true)}</>;
 
 		case "top":
 			return (
 				<>
-					{renderHeader()}
+					{renderLabel()}
 					{renderTrigger()}
 				</>
 			);
 
+		case "label_only":
+			return renderLabel();
+
 		case "none":
 			return renderTrigger();
-	}
 
-	return (
-		<>
-			<div className="wpbf-control-cols">
-				<div className="wpbf-control-left-col">{renderHeader()}</div>
-				<div className="wpbf-control-right-col">{renderTrigger()}</div>
-			</div>
-		</>
-	);
+		default:
+			return (
+				<>
+					<div className="wpbf-control-cols">
+						<div className="wpbf-control-left-col">{renderLabel()}</div>
+						<div className="wpbf-control-right-col">{renderTrigger()}</div>
+					</div>
+				</>
+			);
+	}
 }
