@@ -17,12 +17,6 @@ export default function ColorPickerCirleTrigger(props: {
 		onToggleButtonClick,
 	} = props;
 
-	// const [color, setColor] = useState(() => props.color);
-
-	// useEffect(() => {
-	// 	setColor(props.color);
-	// }, [props.color]);
-
 	const triggerButtonBgImage = `url("${colorBgImgData}")`;
 
 	function hasResetButton() {
@@ -35,9 +29,8 @@ export default function ColorPickerCirleTrigger(props: {
 				<button
 					type="button"
 					ref={resetRef}
-					className="wpbf-control-reset"
+					className={`wpbf-control-reset${isPopupOpen ? " is-shown" : ""}`}
 					onClick={onResetButtonClick}
-					style={{ display: isPopupOpen ? "flex" : "" }}
 				>
 					<i className="dashicons dashicons-image-rotate"></i>
 				</button>

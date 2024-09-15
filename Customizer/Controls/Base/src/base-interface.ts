@@ -264,6 +264,8 @@ export interface WpbfCustomizeControl<SV, CP> {
 
 	// Specific to PBF's multicolor control.
 	updateColorPickers?: (value: WpbfCustomizeMulticolorControlValue) => void;
+	togglePopup?: Record<string, () => void>;
+	isPopupOpen?: Record<string, () => boolean>;
 
 	// Specific to PBF's select control.
 	$selectbox?: JQuery;

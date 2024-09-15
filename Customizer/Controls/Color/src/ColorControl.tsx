@@ -95,6 +95,8 @@ const ColorControl =
 					value={params.value}
 					default={params.default}
 					setNotificationContainer={this.setNotificationContainer}
+					onChange={(value) => this.onChange?.(value)}
+					onReset={() => this.onReset?.()}
 				/>,
 			);
 		},

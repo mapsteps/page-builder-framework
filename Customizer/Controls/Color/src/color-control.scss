@@ -49,15 +49,13 @@
 
 	.wpbf-trigger-circle-wrapper {
 		position: relative;
-		// top: -3px;
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
-		width: 28px;
-		height: 28px;
+		width: 26px;
+		height: 26px;
 		border-radius: 50%;
-		border: 1px solid #ccc;
 	}
 
 	.wpbf-trigger-circle {
@@ -67,16 +65,14 @@
 		width: 100%;
 		height: 100%;
 		background-size: 10px;
-		border: none;
 		border-radius: 50%;
+		border: 1px solid #ccc;
 		cursor: pointer;
 
 		.wpbf-color-preview {
-			position: absolute;
 			top: 0;
 			left: 0;
-			width: 100%;
-			height: 100%;
+			box-shadow: none;
 		}
 	}
 
@@ -158,14 +154,13 @@
 	.wpbf-color-preview-wrapper {
 		position: absolute;
 		left: 6px;
-		width: 22px;
-		height: 22px;
+		width: 18px;
+		height: 18px;
 		background-repeat: repeat;
 		background-size: 8px;
 		border-radius: 50%;
-		border: 2px solid #fff;
-		-webkit-box-shadow: 0 0 0 1px #ddd;
-		box-shadow: 0 0 0 1px #ddd;
+		border-width: 0;
+		box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.09);
 		z-index: 2;
 	}
 
@@ -186,20 +181,32 @@
 	}
 
 	.wpbf-control-reset {
-		display: none;
+		display: flex;
 		align-items: center;
 		justify-content: center;
 		right: 38px;
 		width: 17px;
 		height: 17px;
+		color: #50575e;
 		border-radius: 50%;
 		border-width: 0;
+		opacity: 0;
+		visibility: hidden;
 		z-index: 3;
+		transition:
+			opacity 0.3s,
+			visibility 0.3s;
+
+		&.is-shown {
+			opacity: 1;
+			visibility: visible;
+		}
 	}
 
 	&:hover {
 		.wpbf-control-reset {
-			display: flex;
+			opacity: 1;
+			visibility: visible;
 		}
 	}
 
@@ -219,9 +226,14 @@
 	.wpbf-color-swatches {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 4px;
 		align-items: center;
+		justify-content: space-between;
 		margin-bottom: 12px;
+
+		&.no-stretch {
+			justify-content: flex-start;
+			gap: 10px;
+		}
 	}
 
 	.wpbf-color-swatch {
@@ -231,12 +243,11 @@
 		width: 25px;
 		height: 25px;
 		border-radius: 50%;
-		border: 2px solid #fff;
+		border-width: 0;
+		box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.09);
 		cursor: pointer;
 		transform: scale(1, 1);
 		transition: transform 0.2s;
-		-webkit-box-shadow: 0 0 0 1px #ddd;
-		box-shadow: 0 0 0 1px #ddd;
 	}
 
 	.wpbf-color-swatch:active,
@@ -246,12 +257,12 @@
 
 	.wpbf-color-swatch:hover,
 	.wpbf-color-swatch:focus {
-		transform: scale(1.1, 1.1);
+		transform: scale(1.2);
 	}
 
 	.wpbf-label-tooltip {
 		position: absolute;
-		bottom: 42px;
+		bottom: 40px;
 		padding: 6px 8px;
 		width: auto; // just for fallback for max-content.
 		width: max-content;
@@ -267,9 +278,9 @@
 		&::before {
 			content: "";
 			position: absolute;
-			bottom: -8px;
+			bottom: -6px;
 			left: 50%;
-			border-width: 8px 7px 0 7px;
+			border-width: 7px 6px 0 6px;
 			border-style: solid;
 			// border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
 			border-color: #484848 transparent transparent transparent;

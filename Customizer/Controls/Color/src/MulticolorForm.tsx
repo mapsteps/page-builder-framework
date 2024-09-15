@@ -4,11 +4,12 @@ import {
 	WpbfCustomizeMulticolorControlValue,
 	WpbfCustomizeMulticolorControl,
 	ColorControlLabelStyle,
-	WpbfCustomizeColorControlValue,
 } from "./color-interface";
 import ControlLabel from "./components/ControlLabel";
 import ColorPickerCirleTrigger from "./components/ColorPickerCircleTrigger";
 import convertColorForInput from "./utils/convert-color-for-input";
+import useFocusOutside from "./hooks/useFocusOutside";
+import useClickOutside from "./hooks/useClickOutside";
 
 export default function MulticolorForm(props: {
 	control: WpbfCustomizeMulticolorControl;
@@ -39,9 +40,7 @@ export default function MulticolorForm(props: {
 	} = props;
 
 	const [value, setValue] = useState<WpbfCustomizeMulticolorControlValue>(
-		() => {
-			return props.value;
-		},
+		props.value,
 	);
 
 	const [openedPopupKey, setOpenedPopupKey] = useState<string | undefined>(
@@ -53,31 +52,36 @@ export default function MulticolorForm(props: {
 		setValue(value);
 	};
 
-	function handleChange(key: string, newValue: WpbfCustomizeColorControlValue) {
-		const val = { ...value };
-		val[key] = newValue;
-
-		control.onChange?.(val);
-	}
-
-	function isPopupOpen(key: string) {
-		return openedPopupKey === key;
-	}
-
 	function togglePopup(key: string) {
-		if (isPopupOpen(key)) {
+		if (openedPopupKey) {
 			setOpenedPopupKey(undefined);
 		} else {
 			setOpenedPopupKey(key);
 		}
 	}
 
-	// Reference to the picker popup.
+	function closePopup() {
+		setOpenedPopupKey(undefined);
+	}
+
+	// Reference to the form div.
+	const formRef = useRef<HTMLDivElement | null>(null);
+
+	// Reference to the color picker popup.
+	const pickerRef = useRef<HTMLDivElement | null>(null);
+
+	// Reference to the reset button.
 	const resetRef = useRef<HTMLButtonElement | null>(null);
+
+	// Handle outside focus to close the picker popup.
+	useFocusOutside(formRef, closePopup);
+
+	// Handle outside click to close the picker popup.
+	useClickOutside(pickerRef, resetRef, closePopup);
 
 	return (
 		<>
-			<div className="wpbf-multicolor">
+			<div className="wpbf-multicolor" ref={formRef}>
 				<div className="wpbf-control-cols">
 					<div className="wpbf-control-left-col">
 						<ControlLabel
@@ -91,7 +95,7 @@ export default function MulticolorForm(props: {
 							<button
 								type="button"
 								ref={resetRef}
-								className="wpbf-control-reset"
+								className={`wpbf-control-reset${openedPopupKey ? " is-shown" : ""}`}
 								title="Reset colors set"
 								onClick={() => control.onReset?.()}
 							>
@@ -109,7 +113,7 @@ export default function MulticolorForm(props: {
 								return (
 									<ColorPickerCirleTrigger
 										color={circleColor}
-										isPopupOpen={isPopupOpen(key)}
+										isPopupOpen={openedPopupKey === key}
 										tooltip={choices[key] ?? undefined}
 										onToggleButtonClick={() => togglePopup(key)}
 									/>
@@ -119,27 +123,35 @@ export default function MulticolorForm(props: {
 					</div>
 				</div>
 
-				{props.keys.map((key) => {
-					return (
-						<ColorForm
-							control={control}
-							container={container}
-							label={props.label}
-							description={props.description}
-							useHueMode={useHueMode}
-							formComponent={formComponent}
-							pickerComponent={pickerComponent}
-							labelStyle="none"
-							colorSwatches={props.colorSwatches}
-							value={value[key] ?? ""}
-							default={props.default[key]}
-							setNotificationContainer={props.setNotificationContainer}
-							removeHeader={true}
-							isPopupOpen={isPopupOpen(key)}
-							onChange={(newValue) => handleChange(key, newValue)}
-						/>
-					);
-				})}
+				<div ref={pickerRef} className="wpbf-color-picker-popup">
+					{props.keys.map((key) => {
+						return (
+							<ColorForm
+								control={control}
+								container={container}
+								label={props.label}
+								description={props.description}
+								useHueMode={useHueMode}
+								formComponent={formComponent}
+								pickerComponent={pickerComponent}
+								labelStyle="none"
+								colorSwatches={props.colorSwatches}
+								value={value[key] ?? ""}
+								default={props.default[key]}
+								setNotificationContainer={props.setNotificationContainer}
+								removeHeader={true}
+								isPopupOpen={openedPopupKey === key}
+								useExternalPopupToggle={true}
+								onChange={(newValue) => {
+									const val = { ...value };
+									val[key] = newValue;
+
+									control.onChange?.(val);
+								}}
+							/>
+						);
+					})}
+				</div>
 			</div>
 		</>
 	);
