@@ -128,6 +128,12 @@ function wpbf_do_pre_header() {
 }
 add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
 
+$heeader_builder_enabled = boolval( get_theme_mod( 'wpbf_header_builder_enabled', false ) );
+
+if ( $heeader_builder_enabled ) {
+	require WPBF_THEME_DIR . '/inc/header-builder.php';
+}
+
 /**
  * Render header.
  */

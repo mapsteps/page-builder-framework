@@ -49,7 +49,7 @@
 .wpbf-icon {
 	svg {
 		position: relative;
-		top: .2em;
+		top: 0.2em;
 		fill: currentColor;
 		height: 1em;
 		width: 1em;
@@ -99,12 +99,13 @@
 	float: right;
 }
 
-[class*='wpbf-float-'] {
+[class*="wpbf-float-"] {
 	max-width: 100%;
 }
 
 /* Buttons */
-.wpbf-button, input[type="submit"] {
+.wpbf-button,
+input[type="submit"] {
 	position: relative;
 	-webkit-appearance: none;
 	text-align: center;
@@ -123,7 +124,8 @@
 	font-weight: 700;
 }
 
-.wpbf-button:hover, input[type="submit"]:hover {
+.wpbf-button:hover,
+input[type="submit"]:hover {
 	background: $base-color;
 	color: $brand-color-alt;
 }
@@ -200,12 +202,30 @@ input[type="datetime"] {
 }
 
 // Placeholder
-form :-ms-input-placeholder {color: $brand-color; opacity: .5;}
-form ::-ms-input-placeholder {color: $brand-color; opacity: .5;}
-form ::placeholder {color: $brand-color; opacity: .5;}
-form [placeholder]:focus:-ms-input-placeholder {color: $brand-color; opacity: .7;}
-form [placeholder]:focus::-ms-input-placeholder {color: $brand-color; opacity: .7;}
-form [placeholder]:focus::placeholder {color: $brand-color; opacity: .7;}
+form :-ms-input-placeholder {
+	color: $brand-color;
+	opacity: 0.5;
+}
+form ::-ms-input-placeholder {
+	color: $brand-color;
+	opacity: 0.5;
+}
+form ::placeholder {
+	color: $brand-color;
+	opacity: 0.5;
+}
+form [placeholder]:focus:-ms-input-placeholder {
+	color: $brand-color;
+	opacity: 0.7;
+}
+form [placeholder]:focus::-ms-input-placeholder {
+	color: $brand-color;
+	opacity: 0.7;
+}
+form [placeholder]:focus::placeholder {
+	color: $brand-color;
+	opacity: 0.7;
+}
 
 // Select
 select {
@@ -242,28 +262,28 @@ select {
 
 // Notice modifier (warning)
 .wpbf-notice-warning {
-	background: rgba($yellow,.1);
+	background: rgba($yellow, 0.1);
 	border-color: $yellow;
 	color: $yellow;
 }
 
 // Notice modifier (error)
 .wpbf-notice-error {
-	background: rgba($red,.1);
+	background: rgba($red, 0.1);
 	border-color: $red;
 	color: $red;
 }
 
 // Notice modifier (success)
 .wpbf-notice-success {
-	background: rgba($green,.1);
+	background: rgba($green, 0.1);
 	border-color: $green;
 	color: $green;
 }
 
 // Notice modifier (primary)
 .wpbf-notice-primary {
-	background: rgba($blue,.1);
+	background: rgba($blue, 0.1);
 	border-color: $blue;
 	color: $blue;
 }
@@ -332,6 +352,7 @@ table thead th,
 	@include flex();
 	flex-wrap: wrap;
 }
+
 .wpbf-grid > * {
 	width: 100%;
 	padding-left: $grid;
@@ -344,6 +365,18 @@ table thead th,
 
 .wpbf-grid + .wpbf-grid {
 	margin-top: $grid;
+}
+
+.wpbf-content-start {
+	justify-content: flex-start;
+}
+
+.wpbf-content-center {
+	justify-content: center;
+}
+
+.wpbf-content-end {
+	justify-content: flex-end;
 }
 
 // xLarge gutter
@@ -418,15 +451,15 @@ table thead th,
 	padding-right: $divider;
 }
 
-.wpbf-grid-divider > [class*='wpbf-1-']:not(.wpbf-1-1):nth-child(n+2),
-.wpbf-grid-divider > [class*='wpbf-2-']:nth-child(n+2),
-.wpbf-grid-divider > [class*='wpbf-3-']:nth-child(n+2),
-.wpbf-grid-divider > [class*='wpbf-4-']:nth-child(n+2),
-.wpbf-grid-divider > [class*='wpbf-5-']:nth-child(n+2),
-.wpbf-grid-divider > [class*='wpbf-6-']:nth-child(n+2),
-.wpbf-grid-divider > [class*='wpbf-7-']:nth-child(n+2),
-.wpbf-grid-divider > [class*='wpbf-8-']:nth-child(n+2),
-.wpbf-grid-divider > [class*='wpbf-9-']:nth-child(n+2) {
+.wpbf-grid-divider > [class*="wpbf-1-"]:not(.wpbf-1-1):nth-child(n + 2),
+.wpbf-grid-divider > [class*="wpbf-2-"]:nth-child(n + 2),
+.wpbf-grid-divider > [class*="wpbf-3-"]:nth-child(n + 2),
+.wpbf-grid-divider > [class*="wpbf-4-"]:nth-child(n + 2),
+.wpbf-grid-divider > [class*="wpbf-5-"]:nth-child(n + 2),
+.wpbf-grid-divider > [class*="wpbf-6-"]:nth-child(n + 2),
+.wpbf-grid-divider > [class*="wpbf-7-"]:nth-child(n + 2),
+.wpbf-grid-divider > [class*="wpbf-8-"]:nth-child(n + 2),
+.wpbf-grid-divider > [class*="wpbf-9-"]:nth-child(n + 2) {
 	border-left: 1px solid $base-color;
 }
 

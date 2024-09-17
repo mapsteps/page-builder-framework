@@ -119,12 +119,14 @@ body {
 
 // Author box
 .wpbf-author-box {
-	h1 {
-		margin-bottom: $margin;
-	}
 	background: $base-color-alt;
 	margin-bottom: $margin;
 	padding: $padding;
+
+	h1 {
+		margin-bottom: $margin;
+	}
+
 	.avatar {
 		border-radius: 100%;
 		width: 60px;

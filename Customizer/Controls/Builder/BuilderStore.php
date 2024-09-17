@@ -49,6 +49,16 @@ final class BuilderStore {
 				'label'   => __( 'Menu 2', 'page-builder-framework' ),
 				'section' => '',
 			),
+			array(
+				'key'     => 'html_1',
+				'label'   => __( 'HTML 1', 'page-builder-framework' ),
+				'section' => '',
+			),
+			array(
+				'key'     => 'html_2',
+				'label'   => __( 'HTML 2', 'page-builder-framework' ),
+				'section' => '',
+			),
 		);
 
 	}
