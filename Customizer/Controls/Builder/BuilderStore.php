@@ -52,7 +52,7 @@ final class BuilderStore {
 			array(
 				'key'     => 'html_1',
 				'label'   => __( 'HTML 1', 'page-builder-framework' ),
-				'section' => '',
+				'section' => 'wpbf_header_builder_html_1_section',
 			),
 			array(
 				'key'     => 'html_2',

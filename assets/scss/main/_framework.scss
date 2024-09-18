@@ -367,6 +367,19 @@ table thead th,
 	margin-top: $grid;
 }
 
+.wpbf-flex {
+	display: flex;
+	flex-wrap: wrap;
+
+	&.no-wrap {
+		flex-wrap: nowrap;
+	}
+}
+
+.wpbf-items-center {
+	align-items: center;
+}
+
 .wpbf-content-start {
 	justify-content: flex-start;
 }

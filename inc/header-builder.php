@@ -22,30 +22,63 @@ function wpbf_do_header_builder() {
 		return;
 	}
 
+	$active_rows = [];
+
 	foreach ( $rows as $row_key => $cols ) {
+		if ( empty( $row_key ) || empty( $cols ) ) {
+			continue;
+		}
+
+		foreach ( $cols as $col_key => $widget_keys ) {
+			if ( empty( $widget_keys ) ) {
+				continue;
+			}
+
+			if ( ! isset( $active_rows[ $row_key ] ) ) {
+				$active_rows[ $row_key ] = [];
+			}
+
+			$active_rows[ $row_key ][ $col_key ] = $widget_keys;
+		}
+	}
+
+	foreach ( $active_rows as $row_key => $cols ) {
 		if ( empty( $row_key ) || empty( $cols ) ) {
 			continue;
 		}
 
 		$total_cols = count( $cols );
 
-		$col_class = 1 === $total_cols ? 'wpbf-1-1' : '';
+		if ( 'row_1' === $row_key ) {
+			echo '<div id="pre-header" class="wpbf-pre-header">';
+		}
 
-		echo '<div class="wpbf-grid ' . esc_attr( $row_key ) . '">';
+		$row_class = 'wpbf-container wpbf-container-center';
+
+		if ( 'row_1' === $row_key ) {
+			$row_class .= ' wpbf-inner-pre-header';
+		} elseif ( 'row_2' === $row_key ) {
+			$row_class .= ' wpbf-nav-wrapper';
+		}
+
+		echo '<div class="' . esc_attr( $row_class ) . '" data-row-key="' . esc_attr( $row_key ) . '">';
+		echo '<div class="wpbf-flex wpbf-items-center wpbf-content-center">';
+
+		$col_class = 'wpbf-flex';
 
 		foreach ( $cols as $col_key => $widget_keys ) {
 			$alignment_class = 'wpbf-content-center';
 
-			if ( 'column_1' === $col_key ) {
+			if ( false !== stripos( $col_key, '_start' ) ) {
 				$alignment_class = 'wpbf-content-start';
-			} elseif ( 'column_3' === $col_key ) {
+			} elseif ( false !== stripos( $col_key, '_end' ) ) {
 				$alignment_class = 'wpbf-content-end';
 			}
 
 			echo '<div class="' . esc_attr( "$col_class $alignment_class" ) . '">';
 
 			foreach ( $widget_keys as $widget_key ) {
-				if ( $widget_key ) {
+				if ( empty( $widget_key ) ) {
 					continue;
 				}
 
@@ -56,6 +89,11 @@ function wpbf_do_header_builder() {
 		}
 
 		echo '</div>';
+		echo '</div>';
+
+		if ( 'row_1' === $row_key ) {
+			echo '</div>';
+		}
 	}
 
 }
@@ -110,10 +148,8 @@ function wpbf_render_builder_widget( $widget_key ) {
 			wpbf_render_builder_menu_widget( $widget_key );
 			break;
 		case 'html_1':
-			wpbf_render_builder_html_widget( $widget_key );
-			break;
 		case 'html_2':
-			wpbf_render_builder_html_widget( $widget_key );
+			wpbf_render_builder_html_widget( 'wpbf_header_builder_' . $widget_key . '_content' );
 			break;
 	}
 
@@ -161,7 +197,23 @@ function wpbf_render_builder_menu_widget( $widget_key ) {
 	// todo
 }
 
-function wpbf_render_builder_html_widget( $widget_key ) {
+/**
+ * Render the builder html widget.
+ *
+ * @param string $setting_id The setting id.
+ */
+function wpbf_render_builder_html_widget( $setting_id ) {
 
-	// todo
+	$content = get_theme_mod( $setting_id, '' );
+
+	if ( empty( $content ) ) {
+		return;
+	}
+	?>
+
+	<div class="wpbf-html-widget">
+		<?php echo wp_kses_post( $content ); ?>
+	</div>
+
+	<?php
 }

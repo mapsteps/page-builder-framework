@@ -593,3 +593,9 @@ div.aligncenter {
 	margin-bottom: $margin;
 	clear: both;
 }
+
+.wpbf-html-widget {
+	p:last-child {
+		margin-bottom: 0;
+	}
+}
