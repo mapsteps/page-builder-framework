@@ -3,13 +3,10 @@
  * Header builder customizer settings.
  *
  * This header-builder.php file is included in init.php
- * inside a condition where the value of `wpbf_header_builder_enabled` is true.
+ * inside a condition where the value of `wpbf_enable_header_builder` is true.
  *
  * @package Page Builder Framework
  */
-
-remove_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
-remove_action( 'wpbf_navigation', 'wpbf_menu' );
 
 /**
  * Render header builder.
@@ -42,26 +39,36 @@ function wpbf_do_header_builder() {
 		}
 	}
 
+	if ( empty( $active_rows ) ) {
+		return;
+	}
+
 	foreach ( $active_rows as $row_key => $cols ) {
 		if ( empty( $row_key ) || empty( $cols ) ) {
 			continue;
 		}
 
-		$total_cols = count( $cols );
+		$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-		if ( 'row_1' === $row_key ) {
-			echo '<div id="pre-header" class="wpbf-pre-header">';
+		$dimensions   = [ 'large', 'medium', 'small' ];
+		$visibilities = get_theme_mod( $row_id_prefix . 'visibility', null );
+		$visibilities = is_array( $visibilities ) ? $visibilities : [ 'large', 'medium', 'small' ];
+
+		$hidden_dimensions = array_diff( $dimensions, $visibilities );
+
+		$visibility_class = implode( ' ', array_map( function ( $dimension ) {
+			return 'wpbf-hidden-' . esc_attr( $dimension );
+		}, $hidden_dimensions ) );
+
+		$use_container = get_theme_mod( $row_id_prefix . 'use_container', null );
+		$use_container = is_null( $use_container ) ? true : boolval( $use_container );
+
+		echo '<div class="wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class ) . '">';
+
+		if ( $use_container ) {
+			echo '<div class="wpbf-container wpbf-container-center">';
 		}
 
-		$row_class = 'wpbf-container wpbf-container-center';
-
-		if ( 'row_1' === $row_key ) {
-			$row_class .= ' wpbf-inner-pre-header';
-		} elseif ( 'row_2' === $row_key ) {
-			$row_class .= ' wpbf-nav-wrapper';
-		}
-
-		echo '<div class="' . esc_attr( $row_class ) . '" data-row-key="' . esc_attr( $row_key ) . '">';
 		echo '<div class="wpbf-flex wpbf-items-center wpbf-content-center">';
 
 		$col_class = 'wpbf-flex';
@@ -89,15 +96,16 @@ function wpbf_do_header_builder() {
 		}
 
 		echo '</div>';
-		echo '</div>';
 
-		if ( 'row_1' === $row_key ) {
+		if ( $use_container ) {
 			echo '</div>';
 		}
+
+		echo '</div>';
 	}
 
 }
-add_action( 'wpbf_header', 'wpbf_do_header_builder' );
+add_action( 'wpbf_header_builder', 'wpbf_do_header_builder' );
 
 /**
  * Header builder pre-header.

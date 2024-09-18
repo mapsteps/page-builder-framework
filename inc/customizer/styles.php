@@ -1147,7 +1147,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-	// Custom post type archives & taxonomies.
+		// Custom post type archives & taxonomies.
 	} elseif ( $custom_width && strpos( $archive, '-' ) ) {
 
 		$cpt = substr( $archive, 0, strpos( $archive, '-' ) );
@@ -1158,7 +1158,7 @@ foreach ( $archives as $archive ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-	// Other archives.
+		// Other archives.
 	} elseif ( $custom_width ) {
 
 		echo '.' . $archive . ' #inner-content {';
@@ -1491,7 +1491,7 @@ foreach ( $singles as $single ) {
 		echo sprintf( 'max-width: %s;', esc_attr( $custom_width ) );
 		echo '}';
 
-	// Individual post types.
+		// Individual post types.
 	} elseif ( 'single' !== $single && $custom_width ) {
 
 		echo '.single-' . $single . ' #inner-content {';
@@ -2502,6 +2502,8 @@ if ( 'none' !== $pre_header_layout && $pre_header_font_size ) {
 	echo '}';
 
 }
+
+require_once WPBF_THEME_DIR . '/inc/customizer/styles/header-builder-styles.php';
 
 /* Footer */
 

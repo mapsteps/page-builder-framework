@@ -128,9 +128,12 @@ function wpbf_do_pre_header() {
 }
 add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
 
-$heeader_builder_enabled = boolval( get_theme_mod( 'wpbf_header_builder_enabled', false ) );
+$header_builder_enabled = get_theme_mod( 'wpbf_enable_header_builder', false );
 
-if ( $heeader_builder_enabled ) {
+// var_dump( $header_builder_enabled );
+// exit;
+
+if ( $header_builder_enabled ) {
 	require WPBF_THEME_DIR . '/inc/header-builder.php';
 }
 
@@ -138,7 +141,15 @@ if ( $heeader_builder_enabled ) {
  * Render header.
  */
 function wpbf_do_header() {
-	get_template_part( 'inc/template-parts/header' );
+
+	$header_builder_enabled = get_theme_mod( 'wpbf_enable_header_builder', false );
+
+	if ( $header_builder_enabled ) {
+		get_template_part( 'inc/template-parts/header-builder' );
+	} else {
+		get_template_part( 'inc/template-parts/header' );
+	}
+
 }
 add_action( 'wpbf_header', 'wpbf_do_header' );
 

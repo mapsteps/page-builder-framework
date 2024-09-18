@@ -18,25 +18,16 @@ wpbf_customizer_section()
 	->addToPanel( 'header_panel' );
 
 wpbf_customizer_field()
-	->id( 'wpbf_header_builder_enabled' )
+	->id( 'wpbf_enable_header_builder' )
 	->type( 'headline-toggle' )
 	->label( __( 'Header Builder', 'page-builder-framework' ) )
-	->defaultValue( true )
+	->defaultValue( false )
 	->properties([
 		'wrapper_attrs' => [
 			'class'                  => 'wpbf-builder-toggle',
 			'data-connected-builder' => 'wpbf_header_builder',
 		],
 	])
-	->partialRefresh( [
-		'headerbuildertoggle' => array(
-			'container_inclusive' => true,
-			'selector'            => '#header',
-			'render_callback'     => function () {
-				return get_template_part( 'inc/template-parts/header' );
-			},
-		),
-	] )
 	->addToSection( 'wpbf_header_builder_main_section' );
 
 wpbf_customizer_field()
@@ -52,7 +43,7 @@ wpbf_customizer_field()
 			'container_inclusive' => true,
 			'selector'            => '#header',
 			'render_callback'     => function () {
-				return get_template_part( 'inc/template-parts/header' );
+				return get_template_part( 'inc/template-parts/header-builder' );
 			},
 		),
 	] )

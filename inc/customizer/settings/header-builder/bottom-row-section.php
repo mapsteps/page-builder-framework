@@ -8,7 +8,9 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$section_id = 'wpbf_header_builder_row_3_section';
+$row_key = 'row_3';
+
+$section_id = 'wpbf_header_builder_' . $row_key . '_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
@@ -25,68 +27,72 @@ wpbf_customizer_section()
 	->priority( 3 )
 	->addToPanel( 'header_panel' );
 
-$control_id_prefix = 'wpbf_header_builder_row_3_';
+$control_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-$partial_refresh_key_prefix = 'headerbuilder_row_3_';
+$partial_refresh_key_prefix = 'headerbuilder_' . $row_key . '_';
 
 $partial_refresh_args = array(
 	'container_inclusive' => true,
 	'selector'            => '#header',
 	'render_callback'     => function () {
-		return get_template_part( 'inc/template-parts/header' );
+		return get_template_part( 'inc/template-parts/header-builder' );
 	},
 );
 
 /* General Tab */
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'min_height' )
-	->type( 'responsive-input-slider' )
+	->id( $control_id_prefix . 'visibility' )
+	->type( 'checkbox-buttonset' )
 	->tab( 'general' )
-	->label( __( 'Min Height', 'page-builder-framework' ) )
-	->defaultValue( [
-		'desktop' => '50px',
+	->label( __( 'Visibility', 'page-builder-framework' ) )
+	->description( __( 'In which devices this row should be displayed.', 'page-builder-framework' ) )
+	->defaultValue( [ 'large', 'medium', 'small' ] )
+	->choices( [
+		'large'  => __( 'Desktop', 'page-builder-framework' ),
+		'medium' => __( 'Tablet', 'page-builder-framework' ),
+		'small'  => __( 'Mobile', 'page-builder-framework' ),
 	] )
-	->transport( 'postMessage' )
-	->properties( [
-		'min'  => 0,
-		'max'  => 300,
-		'step' => 1,
-	] )
+	->transport( 'auto' )
 	->partialRefresh( [
-		$partial_refresh_key_prefix . 'min_height' => $partial_refresh_args,
+		$partial_refresh_key_prefix . 'visibility' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'visibility' )
-	->type( 'checkbox-buttonset' )
+	->id( $control_id_prefix . 'visibility_separator' )
+	->type( 'divider' )
 	->tab( 'general' )
-	->label( __( 'Visible on:', 'page-builder-framework' ) )
-	->defaultValue( [ 'desktop', 'tablet', 'mobile' ] )
-	->choices( [
-		'desktop' => __( 'Desktop', 'page-builder-framework' ),
-		'tablet'  => __( 'Tablet', 'page-builder-framework' ),
-		'mobile'  => __( 'Mobile', 'page-builder-framework' ),
-	] )
-	->properties( [
-		'multiple' => true,
-	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'use_container' )
+	->type( 'toggle' )
+	->tab( 'general' )
+	->label( __( 'Use Container', 'page-builder-framework' ) )
+	->description( __( "Whether to make this row's layout contained (boxed).", 'page-builder-framework' ) )
+	->defaultValue( true )
+	->transport( 'auto' )
 	->partialRefresh( [
-		$partial_refresh_key_prefix . 'min_height' => $partial_refresh_args,
+		$partial_refresh_key_prefix . 'use_container' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
 
 /* Design Tab */
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'bg_color' )
-	->type( 'color' )
+	->id( $control_id_prefix . 'min_height' )
+	->type( 'responsive-input-slider' )
 	->tab( 'design' )
-	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
+	->label( __( 'Min Height', 'page-builder-framework' ) )
+	->defaultValue( [
+		'desktop' => '50px',
+	] )
+	->transport( 'auto' )
 	->properties( [
-		'mode' => 'alpha',
+		'min'  => 0,
+		'max'  => 300,
+		'step' => 1,
 	] )
 	->partialRefresh( [
 		$partial_refresh_key_prefix . 'min_height' => $partial_refresh_args,
@@ -101,13 +107,27 @@ wpbf_customizer_field()
 	->defaultValue( [
 		'desktop' => '15px',
 	] )
-	->transport( 'postMessage' )
+	->transport( 'auto' )
 	->properties( [
 		'min'  => 0,
 		'max'  => 200,
 		'step' => 1,
 	] )
 	->partialRefresh( [
-		$partial_refresh_key_prefix . 'min_height' => $partial_refresh_args,
+		$partial_refresh_key_prefix . 'vertical_padding' => $partial_refresh_args,
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->transport( 'auto' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->partialRefresh( [
+		$partial_refresh_key_prefix . 'bg_color' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
