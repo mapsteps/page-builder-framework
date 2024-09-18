@@ -4,14 +4,14 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Checkbox;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
 
-class CheckboxControl extends BaseControl {
+class CheckboxButtonsetControl extends BaseControl {
 
 	/**
 	 * Control's type.
 	 *
 	 * @var string
 	 */
-	public $type = 'wpbf-checkbox';
+	public $type = 'wpbf-checkbox-buttonset';
 
 	/**
 	 * Enqueue control related scripts/styles.
@@ -45,20 +45,23 @@ class CheckboxControl extends BaseControl {
 	protected function content_template() {
 		?>
 
-		<input
-			id="_customize-input-{{ data.id }}"
-			type="checkbox"
-			value="{{ data.value }}"
-			{{{ data.link }}}
-		<# if ( data.description ) { #>aria-describedby="_customize-description-{{ data.id }}"<# } #>
-		<# if ( data.value ) { #>checked="checked"<# } #>
-		>
+		<# if ( data.label ) { #><span class="customize-control-title">{{{ data.label }}}</span><# } #>
+		<# if ( data.description ) { #><span class="description customize-control-description">{{{ data.description }}}</span><# } #>
 
-		<label for="_customize-input-{{ data.id }}">{{{ data.label }}}</label>
+		<div id="input_{{ data.id }}" class="buttonset">
+			<# var index = 0; #>
+			<# var totalChoices = Object.keys( data.choices ).length; #>
 
-		<# if ( data.description ) { #>
-		<span id="_customize-description-{{ data.id }}" class="description customize-control-description">{{{ data.description }}}</span>
-		<# } #>
+			<# for ( key in data.choices ) { #>
+				<input {{{ data.inputAttrs }}} class="switch-input screen-reader-text" type="checkbox" value="{{ key }}" name="_customize-checkbox-{{{ data.id }}}" id="{{ data.id }}-{{ key }}"<# if ( data.value.includes(key) ) { #> checked="checked" <# } #> />
+
+				<label class="switch-label<# if ( index === 0 ) {#> first-label <#} #><# if ( index === totalChoices - 1 ) {#> last-label <#} #>" for="{{ data.id }}-{{ key }}">
+					{{{ data.choices[ key ] }}}
+				</label>
+
+				<# index++; #>
+			<# } #>
+		</div>
 
 		<?php
 	}

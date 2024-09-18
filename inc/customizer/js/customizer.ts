@@ -1,5 +1,5 @@
 import { WpbfCustomizeBuilderControl } from "../../../Customizer/Controls/Builder/src/builder-interface";
-import { WpbfCustomizeCheckboxControl } from "../../../Customizer/Controls/Checkbox/src/interface";
+import { WpbfCustomizeCheckboxControl } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 
 type BuilderPanelData = {
 	panelId: string;

@@ -44,7 +44,10 @@ import { Previewer } from "wordpress__customize-browser/Previewer";
 import { Element_Synchronizer } from "wordpress__customize-browser/Element";
 import { Notification } from "wordpress__customize-browser/Notification";
 import { Root } from "react-dom/client";
-import { WpbfCustomizeCheckboxControl } from "../../Checkbox/src/interface";
+import {
+	WpbfCustomizeCheckboxButtonsetControl,
+	WpbfCustomizeCheckboxControl,
+} from "../../Checkbox/src/checkbox-interface";
 import { WpbfCustomizeEditorControl } from "../../Editor/src/editor-interface";
 import {
 	WpbfCustomizeRepeaterControl,
@@ -335,6 +338,8 @@ export interface WpbfCustomizeControl<SV, CP> {
 		widgetKey: string,
 		insideBuilderPanel?: boolean,
 	) => HTMLElement | undefined;
+	handleRowSettingClick?: (rowKey: string) => void;
+	bindCustomizeSection?: (rowKey: string) => void;
 	handleWidgetClick?: (
 		widgetEl: HTMLElement,
 		widgetData: BuilderWidget,
@@ -381,6 +386,7 @@ export interface WpbfCustomizeControlParams<SV> {
 
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-checkbox": WpbfCustomizeCheckboxControl;
+	"wpbf-checkbox-buttonset": WpbfCustomizeCheckboxButtonsetControl;
 	"wpbf-color": WpbfCustomizeColorControl;
 	"wpbf-multicolor": WpbfCustomizeMulticolorControl;
 	"wpbf-dimension": WpbfCustomizeDimensionControl;

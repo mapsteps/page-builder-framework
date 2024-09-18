@@ -58,6 +58,12 @@ wpbf_customizer_field()
 	] )
 	->addToSection( 'wpbf_header_builder_main_section' );
 
+// Row sections.
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/top-row-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/main-row-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/bottom-row-section.php';
+
+// Widget sections
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/search-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-1-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-2-section.php';

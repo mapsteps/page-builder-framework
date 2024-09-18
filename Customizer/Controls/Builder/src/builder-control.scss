@@ -143,6 +143,66 @@
 		position: relative;
 		margin: 20px 0;
 		padding-left: 30px;
+		border-radius: 5px;
+		transition: box-shadow 100ms;
+
+		&:hover {
+			.row-label {
+				opacity: 1;
+				visibility: 1;
+			}
+
+			.row-setting-button:hover {
+				border-top-left-radius: 4px;
+				border-bottom-left-radius: 4px;
+			}
+		}
+
+		&.is-active {
+			.row-setting-button {
+				background-color: #2271b1;
+				border-color: #2271b1;
+				border-style: solid;
+
+				.dashicons {
+					color: #fff;
+				}
+			}
+		}
+
+		&:hover,
+		&.is-active {
+			box-shadow: 0 0 0 2px #2271b1;
+
+			.row-setting-button {
+				border-color: transparent;
+				border-right-color: #ccc;
+			}
+
+			.builder-inner-row {
+				border-color: transparent;
+			}
+		}
+	}
+
+	.row-label {
+		position: absolute;
+		top: -25px;
+		left: 30px;
+		max-width: max-content;
+		padding: 0 10px;
+		height: 25px;
+		line-height: 25px;
+		color: #fff;
+		font-size: 12px;
+		background-color: #2271b1;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+		opacity: 0;
+		visibility: 0;
+		transition:
+			opacity 100ms,
+			visibility 100ms;
 	}
 
 	.row-setting-button {
@@ -161,7 +221,7 @@
 		border: 1px dashed #ccc;
 		border-top-left-radius: 5px;
 		border-bottom-left-radius: 5px;
-		transition: background-color 150ms;
+		transition: all 100ms;
 		cursor: pointer;
 		z-index: 2;
 
@@ -173,10 +233,10 @@
 		}
 
 		&:hover,
-		.is-active {
+		&:focus {
 			background-color: #2271b1;
-			border-style: solid;
 			border-color: #2271b1;
+			border-style: solid;
 
 			.dashicons {
 				color: #fff;

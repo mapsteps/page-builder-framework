@@ -3,10 +3,9 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Checkbox;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use WP_Customize_Manager;
 
-class CheckboxField extends BaseField {
+class CheckboxButtonsetField extends BaseField {
 
 	/**
 	 * Whether the control of this field renders its content
@@ -21,7 +20,7 @@ class CheckboxField extends BaseField {
 	 *
 	 * @var string
 	 */
-	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl';
+	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxButtonsetControl';
 
 	/**
 	 * Filter the setting entity.
@@ -34,7 +33,7 @@ class CheckboxField extends BaseField {
 	 */
 	public function filterSettingEntity( $setting ) {
 
-		$setting->default = ( new CheckboxUtil() )->sanitize( $setting->default );
+		$setting->default = $this->sanitizeCallback( $setting->default );
 
 		return $setting;
 
@@ -43,13 +42,21 @@ class CheckboxField extends BaseField {
 	/**
 	 * Setting's sanitize callback.
 	 *
-	 * @param string $value The value to sanitize.
+	 * @param mixed $value The value to sanitize.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	public function sanitizeCallback( $value ) {
 
-		return ( new CheckboxUtil() )->sanitize( $value );
+		if ( ! is_array( $value ) || empty( $value ) ) {
+			return [];
+		}
+
+		$sanitized_value = array_map(function ( $val ) {
+			return sanitize_text_field( $val );
+		}, $value);
+
+		return array_values( $sanitized_value );
 
 	}
 
@@ -63,7 +70,7 @@ class CheckboxField extends BaseField {
 		$control_args = $this->parseControlArgs();
 
 		$wp_customize_manager->add_control(
-			new CheckboxControl(
+			new CheckboxButtonsetControl(
 				$wp_customize_manager,
 				$this->control->id,
 				$control_args

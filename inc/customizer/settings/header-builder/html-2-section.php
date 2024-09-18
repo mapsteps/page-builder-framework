@@ -32,6 +32,7 @@ $partial_refresh_args = array(
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'content' )
 	->type( 'editor' )
+	->defaultValue( __( 'Content for widget HTML 2', 'page-builder-framework' ) )
 	->partialRefresh( [
 		$partial_refresh_key_prefix . 'icon_size' => $partial_refresh_args,
 	] )

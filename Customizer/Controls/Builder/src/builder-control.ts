@@ -167,11 +167,19 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 						.addClass(`builder-inner-row`)
 						.appendTo($row);
 
+					// Build the row label (tooltip)
+					jQuery("<div></div>")
+						.addClass("row-label")
+						.attr("data-row-key", row.key)
+						.text(row.label)
+						.appendTo($row);
+
 					// Build the row setting button.
 					jQuery("<button></button>")
 						.addClass("row-setting-button")
 						.attr("data-row-key", row.key)
 						.html('<i class="dashicons dashicons-admin-generic"></i>')
+						.on("click", () => control.handleRowSettingClick?.(row.key))
 						.appendTo($row);
 
 					const matchedRow = params.value[row.key];
@@ -184,18 +192,20 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 						} else if (column.key.endsWith("_end")) {
 							columnPosClass = "wpbf-content-end";
 						} else {
-							columnPosClass = "wpbf-content-center column-middle";
+							if (columnIndex !== 0 && columnIndex !== row.columns.length - 1) {
+								columnPosClass = "wpbf-content-center column-middle";
+							}
 						}
 
 						if (columnIndex === 0) {
-							columnPosClass += " column-start";
+							columnPosClass += " column-start wpbf-content-start";
 						} else if (columnIndex === row.columns.length - 1) {
-							columnPosClass += " column-end";
+							columnPosClass += " column-end wpbf-content-end";
 						}
 
 						const $widgetListEl = jQuery("<div></div>")
 							.addClass(
-								`builder-widgets builder-column sortable-widgets ${columnPosClass}`,
+								`builder-widgets builder-column sortable-widgets wpbf-flex ${columnPosClass}`,
 							)
 							.attr("data-column-key", column.key)
 							.appendTo($innerRow);
@@ -224,9 +234,40 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 							$widgetListEl.append(newWidgetItem);
 						});
 					});
+
+					control.bindCustomizeSection?.(row.key);
 				});
 
 				control.builderPanel = $builderPanel[0];
+			},
+
+			handleRowSettingClick: function (rowKey) {
+				window.wp.customize?.section(
+					`wpbf_header_builder_${rowKey}_section`,
+					function (section) {
+						section.expand(section.params);
+					},
+				);
+			},
+
+			bindCustomizeSection: function (rowKey) {
+				window.wp.customize?.section(
+					`wpbf_header_builder_${rowKey}_section`,
+					function (section) {
+						section.expanded.bind(function (expanded) {
+							const row = document.querySelector(
+								`.builder-row[data-row-key="${rowKey}"]`,
+							);
+							if (!row) return;
+
+							if (expanded) {
+								row.classList.add("is-active");
+							} else {
+								row.classList.remove("is-active");
+							}
+						});
+					},
+				);
 			},
 
 			handleWidgetClick: function (widgetEl, widgetData) {

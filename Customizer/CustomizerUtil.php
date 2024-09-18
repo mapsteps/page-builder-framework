@@ -9,6 +9,7 @@ namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderField;
+use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Code\CodeField;
@@ -78,6 +79,7 @@ class CustomizerUtil {
 	 */
 	public $available_fields = array(
 		'checkbox',
+		'checkbox-buttonset',
 		'toggle',
 		'custom',
 		'code',
@@ -272,6 +274,9 @@ class CustomizerUtil {
 		switch ( $control_type ) {
 			case 'checkbox':
 				$field = new CheckboxField( $control_entity );
+				break;
+			case 'checkbox-buttonset':
+				$field = new CheckboxButtonsetField( $control_entity );
 				break;
 			case 'toggle':
 				$field = new ToggleField( $control_entity );
