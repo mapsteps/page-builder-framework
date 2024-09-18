@@ -76,16 +76,24 @@ final class BuilderStore {
 				'label'   => __( 'Pre-Header', 'page-builder-framework' ),
 				'columns' => array(
 					array(
-						'key'   => 'column_1',
-						'label' => __( 'Column 1', 'page-builder-framework' ),
+						'key'   => 'column_1_start',
+						'label' => __( 'Column 1 Start', 'page-builder-framework' ),
+					),
+					array(
+						'key'   => 'column_1_end',
+						'label' => __( 'Column 1 End', 'page-builder-framework' ),
 					),
 					array(
 						'key'   => 'column_2',
 						'label' => __( 'Column 2', 'page-builder-framework' ),
 					),
 					array(
-						'key'   => 'column_3',
-						'label' => __( 'Column 3', 'page-builder-framework' ),
+						'key'   => 'column_3_start',
+						'label' => __( 'Column 3 Start', 'page-builder-framework' ),
+					),
+					array(
+						'key'   => 'column_3_end',
+						'label' => __( 'Column 3 End', 'page-builder-framework' ),
 					),
 				),
 			),
@@ -94,16 +102,24 @@ final class BuilderStore {
 				'label'   => __( 'Main Row', 'page-builder-framework' ),
 				'columns' => array(
 					array(
-						'key'   => 'column_1',
-						'label' => __( 'Column 1', 'page-builder-framework' ),
+						'key'   => 'column_1_start',
+						'label' => __( 'Column 1 Start', 'page-builder-framework' ),
+					),
+					array(
+						'key'   => 'column_1_end',
+						'label' => __( 'Column 1 End', 'page-builder-framework' ),
 					),
 					array(
 						'key'   => 'column_2',
 						'label' => __( 'Column 2', 'page-builder-framework' ),
 					),
 					array(
-						'key'   => 'column_3',
-						'label' => __( 'Column 3', 'page-builder-framework' ),
+						'key'   => 'column_3_start',
+						'label' => __( 'Column 3 Start', 'page-builder-framework' ),
+					),
+					array(
+						'key'   => 'column_3_end',
+						'label' => __( 'Column 3 End', 'page-builder-framework' ),
 					),
 				),
 			),
@@ -112,16 +128,24 @@ final class BuilderStore {
 				'label'   => __( 'Secondary Row', 'page-builder-framework' ),
 				'columns' => array(
 					array(
-						'key'   => 'column_1',
-						'label' => __( 'Column 1', 'page-builder-framework' ),
+						'key'   => 'column_1_start',
+						'label' => __( 'Column 1 Start', 'page-builder-framework' ),
+					),
+					array(
+						'key'   => 'column_1_end',
+						'label' => __( 'Column 1 End', 'page-builder-framework' ),
 					),
 					array(
 						'key'   => 'column_2',
 						'label' => __( 'Column 2', 'page-builder-framework' ),
 					),
 					array(
-						'key'   => 'column_3',
-						'label' => __( 'Column 3', 'page-builder-framework' ),
+						'key'   => 'column_3_start',
+						'label' => __( 'Column 3 Start', 'page-builder-framework' ),
+					),
+					array(
+						'key'   => 'column_3_end',
+						'label' => __( 'Column 3 End', 'page-builder-framework' ),
 					),
 				),
 			),

@@ -23,8 +23,25 @@ class BuilderControl extends BaseControl {
 	 */
 	public $type = 'wpbf-builder';
 
+	/**
+	 * Available widgets.
+	 *
+	 * @var array
+	 */
 	private $available_widgets = array();
 
+	/**
+	 * Active widgets.
+	 *
+	 * @var string[]
+	 */
+	private $active_widget_keys = array();
+
+	/**
+	 * Available rows.
+	 *
+	 * @var array
+	 */
 	private $available_rows = array();
 
 	/**
@@ -95,10 +112,98 @@ class BuilderControl extends BaseControl {
 
 		parent::to_json();
 
+		$value = $this->value();
+
+		if ( ! empty( $value ) && is_array( $value ) ) {
+			foreach ( $value as $row_key => $columns ) {
+				if ( ! $this->rowKeyExists( $row_key ) ) {
+					continue;
+				}
+
+				foreach ( $columns as $column_key => $widget_keys ) {
+					if ( ! $this->columnKeyExists( $column_key ) ) {
+						continue;
+					}
+
+					foreach ( $widget_keys as $widget_key ) {
+						if ( empty( $widget_key ) ) {
+							continue;
+						}
+
+						if ( ! $this->widgetExists( $widget_key ) ) {
+							continue;
+						}
+
+						$this->active_widget_keys[] = $widget_key;
+					}
+				}
+			}
+		}
+
 		$this->json['builder'] = [
 			'availableWidgets' => $this->available_widgets,
 			'availableRows'    => $this->available_rows,
+			'activeWidgetKeys' => $this->active_widget_keys,
 		];
+
+	}
+
+	/**
+	 * Check if the row key exists in $this->available_rows.
+	 *
+	 * @param string $row_key The row key.
+	 *
+	 * @return bool
+	 */
+	private function rowKeyExists( $row_key ) {
+
+		foreach ( $this->available_rows as $available_row ) {
+			if ( $available_row['key'] === $row_key ) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Check if the column key exists in $this->available_rows.
+	 *
+	 * @param string $column_key The column key.
+	 *
+	 * @return bool
+	 */
+	private function columnKeyExists( $column_key ) {
+
+		foreach ( $this->available_rows as $available_row ) {
+			foreach ( $available_row['columns'] as $available_column ) {
+				if ( $available_column['key'] === $column_key ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Check if the widget key exists in $this->available_widgets.
+	 *
+	 * @param string $widget_key The widget key.
+	 *
+	 * @return bool
+	 */
+	private function widgetExists( $widget_key ) {
+
+		foreach ( $this->available_widgets as $available_widget ) {
+			if ( $available_widget['key'] === $widget_key ) {
+				return true;
+			}
+		}
+
+		return false;
 
 	}
 

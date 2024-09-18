@@ -29,13 +29,7 @@ function wpbf_do_header_builder() {
 
 		$total_cols = count( $cols );
 
-		if ( 3 === $total_cols ) {
-			$col_class = 'wpbf-1-3';
-		} elseif ( 2 === $total_cols ) {
-			$col_class = 'wpbf-1-2';
-		} else {
-			$col_class = 'wpbf-1-1';
-		}
+		$col_class = 1 === $total_cols ? 'wpbf-1-1' : '';
 
 		echo '<div class="wpbf-grid ' . esc_attr( $row_key ) . '">';
 

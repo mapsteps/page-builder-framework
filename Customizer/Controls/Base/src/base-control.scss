@@ -19,6 +19,18 @@
 	max-width: 299px;
 }
 
+.wpbf-content-start {
+	justify-content: flex-start;
+}
+
+.wpbf-content-center {
+	justify-content: center;
+}
+
+.wpbf-content-end {
+	justify-content: flex-end;
+}
+
 .wpbf-w100 {
 	width: 100%;
 }

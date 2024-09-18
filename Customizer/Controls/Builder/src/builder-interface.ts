@@ -26,6 +26,7 @@ export interface WpbfCustomizeBuilderControlParams
 	extends WpbfCustomizeControlParams<BuilderValue> {
 	builder: {
 		availableWidgets: BuilderWidget[];
+		activeWidgetKeys: string[];
 		availableRows: BuilderRow[];
 	};
 }

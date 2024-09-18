@@ -75,31 +75,7 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 
 			isWidgetActive: function (widgetKey) {
 				if (!this.params) return false;
-
-				const value = this.params.value;
-				if (!value) return false;
-
-				for (const rowKey in value) {
-					if (!value.hasOwnProperty(rowKey)) continue;
-
-					const row = value[rowKey];
-
-					if (!row || !Object.keys(row).length) continue;
-
-					for (const columnKey in row) {
-						if (!row.hasOwnProperty(columnKey)) continue;
-
-						const column = row[columnKey];
-
-						if (!column || !column.length) continue;
-
-						if (column.includes(widgetKey)) {
-							return true;
-						}
-					}
-				}
-
-				return false;
+				return this.params.builder.activeWidgetKeys.includes(widgetKey);
 			},
 
 			findWidgetByKey: function (widgetKey) {
@@ -201,12 +177,21 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 					const matchedRow = params.value[row.key];
 
 					row.columns.forEach((column, columnIndex) => {
-						const columnPosClass =
-							columnIndex === 0
-								? "column-start"
-								: columnIndex === row.columns.length - 1
-									? "column-end"
-									: "column-middle";
+						let columnPosClass = "";
+
+						if (column.key.endsWith("_start")) {
+							columnPosClass = "wpbf-content-start";
+						} else if (column.key.endsWith("_end")) {
+							columnPosClass = "wpbf-content-end";
+						} else {
+							columnPosClass = "wpbf-content-center column-middle";
+						}
+
+						if (columnIndex === 0) {
+							columnPosClass += " column-start";
+						} else if (columnIndex === row.columns.length - 1) {
+							columnPosClass += " column-end";
+						}
 
 						const $widgetListEl = jQuery("<div></div>")
 							.addClass(

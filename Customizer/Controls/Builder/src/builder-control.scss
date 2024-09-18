@@ -201,6 +201,7 @@
 
 	.builder-column {
 		padding: 4px;
+		min-width: 136px;
 		transition: width 0.2s ease-in-out;
 
 		&.column-middle {
@@ -227,8 +228,6 @@
 
 		// This column is a sortable list that contains items.
 		&.column-end {
-			display: flex;
-			justify-content: flex-end;
 			border-top-right-radius: 5px;
 			border-bottom-right-radius: 5px;
 		}
