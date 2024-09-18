@@ -53,6 +53,9 @@ wpbf_customizer_field()
 		'max'  => 300,
 		'step' => 1,
 	] )
+	->partialRefresh( [
+		$partial_refresh_key_prefix . 'min_height' => $partial_refresh_args,
+	] )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -84,5 +87,27 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->properties( [
 		'mode' => 'alpha',
+	] )
+	->partialRefresh( [
+		$partial_refresh_key_prefix . 'min_height' => $partial_refresh_args,
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'vertical_padding' )
+	->type( 'responsive-input-slider' )
+	->tab( 'design' )
+	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
+	->defaultValue( [
+		'desktop' => '15px',
+	] )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 200,
+		'step' => 1,
+	] )
+	->partialRefresh( [
+		$partial_refresh_key_prefix . 'min_height' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
