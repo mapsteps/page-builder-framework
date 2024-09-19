@@ -99,6 +99,8 @@
     "build-individual-assets": "pnpm build-individual-js && pnpm build-individual-css",
     "build-customizer": "parcel build inc/customizer/js/customizer.ts --dist-dir js/min",
     "watch-customizer": "parcel watch inc/customizer/js/customizer.ts --dist-dir js/min",
+    "build-postmessage": "parcel build inc/customizer/js/postmessage.ts --dist-dir js/min",
+    "watch-postmessage": "parcel watch inc/customizer/js/postmessage.ts --dist-dir js/min",
     "watch-customize-panels": "parcel watch Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist",
     "build-customize-panels": "parcel build Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist",
     "watch-customize-sections": "parcel watch Customizer/Sections/src/sections.ts --dist-dir Customizer/Sections/dist",

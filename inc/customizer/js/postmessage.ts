@@ -1,4 +1,6 @@
-(function ($) {
+(function ($: JQueryStatic, customizer: WpbfCustomize | undefined) {
+	if (!customizer) return;
+
 	var customizeBreakpoints = {
 		desktop: 1024,
 		tablet: 768,
@@ -17,7 +19,7 @@
 	 * @param {string} id The style data id.
 	 * @return {HTMLElement} The style tag.
 	 */
-	function setupStyleTag(id) {
+	function setupStyleTag(id: string): HTMLStyleElement {
 		var tag = document.createElement("style");
 		tag.dataset.id = id;
 		tag.className = "wpbf-customize-live-style";
@@ -34,7 +36,12 @@
 	 * @param {string|string[]} rule - The CSS rule.
 	 * @param {Record<string, any>} value - The responsive CSS value.
 	 */
-	function writeResponsiveCSS(styleTag, selector, rule, value) {
+	function writeResponsiveCSS(
+		styleTag: HTMLStyleElement,
+		selector: string,
+		rule: string | string[],
+		value: Record<string, any>,
+	) {
 		let css = "";
 
 		if ("desktop" in value && value["desktop"]) {
@@ -71,7 +78,7 @@
 	/* Layout */
 
 	// Page width.
-	wp.customize("page_max_width", function (value) {
+	customizer("page_max_width", function (value) {
 		var styleTag = setupStyleTag("page_max_width");
 
 		value.bind(function (newval) {
@@ -84,7 +91,7 @@
 	});
 
 	// Padding.
-	wp.customize("page_padding", function (value) {
+	customizer("page_padding", function (value) {
 		var styleTag = setupStyleTag("page_padding");
 
 		value.bind(function (newval) {
@@ -159,7 +166,7 @@
 	});
 
 	// Boxed margin.
-	wp.customize("page_boxed_margin", function (value) {
+	customizer("page_boxed_margin", function (value) {
 		value.bind(function (newval) {
 			$(".wpbf-page")
 				.css("margin-top", newval + "px")
@@ -168,7 +175,7 @@
 	});
 
 	// Boxed padding.
-	wp.customize("page_boxed_padding", function (value) {
+	customizer("page_boxed_padding", function (value) {
 		var styleTag = setupStyleTag("page_boxed_padding");
 
 		value.bind(function (newval) {
@@ -182,7 +189,7 @@
 	});
 
 	// Boxed background color.
-	wp.customize("page_boxed_background", function (value) {
+	customizer("page_boxed_background", function (value) {
 		var styleTag = setupStyleTag("page_boxed_background");
 
 		value.bind(function (newval) {
@@ -191,7 +198,7 @@
 	});
 
 	// ScrollTop position.
-	wp.customize("scrolltop_position", function (value) {
+	customizer("scrolltop_position", function (value) {
 		var styleTag = setupStyleTag("scrolltop_position");
 
 		value.bind(function (newval) {
@@ -204,7 +211,7 @@
 	});
 
 	// ScrollTop background color.
-	wp.customize("scrolltop_bg_color", function (value) {
+	customizer("scrolltop_bg_color", function (value) {
 		var styleTag = setupStyleTag("scrolltop_bg_color");
 
 		value.bind(function (newval) {
@@ -213,7 +220,7 @@
 	});
 
 	// ScrollTop background color.
-	wp.customize("scrolltop_bg_color_alt", function (value) {
+	customizer("scrolltop_bg_color_alt", function (value) {
 		var styleTag = setupStyleTag("scrolltop_bg_color_alt");
 
 		value.bind(function (newval) {
@@ -223,7 +230,7 @@
 	});
 
 	// ScrollTop icon color.
-	wp.customize("scrolltop_icon_color", function (value) {
+	customizer("scrolltop_icon_color", function (value) {
 		var styleTag = setupStyleTag("scrolltop_icon_color");
 
 		value.bind(function (newval) {
@@ -232,7 +239,7 @@
 	});
 
 	// ScrollTop icon color.
-	wp.customize("scrolltop_icon_color_alt", function (value) {
+	customizer("scrolltop_icon_color_alt", function (value) {
 		var styleTag = setupStyleTag("scrolltop_icon_color_alt");
 
 		value.bind(function (newval) {
@@ -241,7 +248,7 @@
 	});
 
 	// ScrollTop border radius.
-	wp.customize("scrolltop_border_radius", function (value) {
+	customizer("scrolltop_border_radius", function (value) {
 		var styleTag = setupStyleTag("scrolltop_border_radius");
 
 		value.bind(function (newval) {
@@ -251,7 +258,7 @@
 
 	/* Typography */
 
-	wp.customize("page_font_color", function (value) {
+	customizer("page_font_color", function (value) {
 		var styleTag = setupStyleTag("page_font_color");
 
 		value.bind(function (newval) {
@@ -261,13 +268,13 @@
 
 	/* 404 */
 
-	wp.customize("404_headline", function (value) {
+	customizer("404_headline", function (value) {
 		value.bind(function (newval) {
 			$(".wpbf-404-content .entry-title").text(newval);
 		});
 	});
 
-	wp.customize("404_text", function (value) {
+	customizer("404_text", function (value) {
 		value.bind(function (newval) {
 			$(".wpbf-404-content p").text(newval);
 		});
@@ -276,7 +283,7 @@
 	/* Navigation */
 
 	// Width.
-	wp.customize("menu_width", function (value) {
+	customizer("menu_width", function (value) {
 		var styleTag = setupStyleTag("menu_width");
 
 		value.bind(function (newval) {
@@ -286,7 +293,7 @@
 	});
 
 	// Menu height.
-	wp.customize("menu_height", function (value) {
+	customizer("menu_height", function (value) {
 		var styleTag = setupStyleTag("menu_height");
 
 		value.bind(function (newval) {
@@ -300,7 +307,7 @@
 	});
 
 	// Menu padding.
-	wp.customize("menu_padding", function (value) {
+	customizer("menu_padding", function (value) {
 		var styleTag = setupStyleTag("menu_padding");
 
 		value.bind(function (newval) {
@@ -314,7 +321,7 @@
 	});
 
 	// Background color.
-	wp.customize("menu_bg_color", function (value) {
+	customizer("menu_bg_color", function (value) {
 		var styleTag = setupStyleTag("menu_bg_color");
 
 		value.bind(function (newval) {
@@ -326,7 +333,7 @@
 	});
 
 	// Font color.
-	wp.customize("menu_font_color", function (value) {
+	customizer("menu_font_color", function (value) {
 		var styleTag = setupStyleTag("menu_font_color");
 
 		value.bind(function (newval) {
@@ -338,7 +345,7 @@
 	});
 
 	// Font color hover.
-	wp.customize("menu_font_color_alt", function (value) {
+	customizer("menu_font_color_alt", function (value) {
 		var styleTag = setupStyleTag("menu_font_color_alt");
 
 		value.bind(function (newval) {
@@ -355,7 +362,7 @@
 	});
 
 	// Font size.
-	wp.customize("menu_font_size", function (value) {
+	customizer("menu_font_size", function (value) {
 		var styleTag = setupStyleTag("menu_font_size");
 
 		value.bind(function (newval) {
@@ -371,7 +378,7 @@
 	/* Sub Menu */
 
 	// Text alignment.
-	wp.customize("sub_menu_text_alignment", function (value) {
+	customizer("sub_menu_text_alignment", function (value) {
 		var styleTag = setupStyleTag("sub_menu_text_alignment");
 
 		value.bind(function (newval) {
@@ -387,7 +394,7 @@
 	});
 
 	// Padding.
-	wp.customize("sub_menu_padding", function (value) {
+	customizer("sub_menu_padding", function (value) {
 		var styleTag = setupStyleTag("sub_menu_padding");
 
 		value.bind(function (newval) {
@@ -418,7 +425,7 @@
 	});
 
 	// Width.
-	wp.customize("sub_menu_width", function (value) {
+	customizer("sub_menu_width", function (value) {
 		var styleTag = setupStyleTag("sub_menu_width");
 
 		value.bind(function (newval) {
@@ -430,7 +437,7 @@
 	});
 
 	// Background color.
-	wp.customize("sub_menu_bg_color", function (value) {
+	customizer("sub_menu_bg_color", function (value) {
 		var styleTag = setupStyleTag("sub_menu_bg_color");
 
 		value.bind(function (newval) {
@@ -447,7 +454,7 @@
 	});
 
 	// Background color hover.
-	wp.customize("sub_menu_bg_color_alt", function (value) {
+	customizer("sub_menu_bg_color_alt", function (value) {
 		var styleTag = setupStyleTag("sub_menu_bg_color_alt");
 
 		value.bind(function (newval) {
@@ -463,7 +470,7 @@
 	});
 
 	// Accent color.
-	wp.customize("sub_menu_accent_color", function (value) {
+	customizer("sub_menu_accent_color", function (value) {
 		var styleTag = setupStyleTag("sub_menu_accent_color");
 
 		value.bind(function (newval) {
@@ -472,7 +479,7 @@
 	});
 
 	// Accent color hover.
-	wp.customize("sub_menu_accent_color_alt", function (value) {
+	customizer("sub_menu_accent_color_alt", function (value) {
 		var styleTag = setupStyleTag("sub_menu_accent_color_alt");
 
 		value.bind(function (newval) {
@@ -484,7 +491,7 @@
 	});
 
 	// Font size.
-	wp.customize("sub_menu_font_size", function (value) {
+	customizer("sub_menu_font_size", function (value) {
 		var styleTag = setupStyleTag("sub_menu_font_size");
 
 		value.bind(function (newval) {
@@ -495,7 +502,7 @@
 	});
 
 	// Separator color.
-	wp.customize("sub_menu_separator_color", function (value) {
+	customizer("sub_menu_separator_color", function (value) {
 		var styleTag = setupStyleTag("sub_menu_separator_color");
 
 		value.bind(function (newval) {
@@ -509,7 +516,7 @@
 	/* Mobile Navigation */
 
 	// Height.
-	wp.customize("mobile_menu_height", function (value) {
+	customizer("mobile_menu_height", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_height");
 
 		value.bind(function (newval) {
@@ -523,7 +530,7 @@
 	});
 
 	// Background color.
-	wp.customize("mobile_menu_background_color", function (value) {
+	customizer("mobile_menu_background_color", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_background_color");
 
 		value.bind(function (newval) {
@@ -533,7 +540,7 @@
 	});
 
 	// Icon color.
-	wp.customize("mobile_menu_hamburger_color", function (value) {
+	customizer("mobile_menu_hamburger_color", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_hamburger_color");
 
 		value.bind(function (newval) {
@@ -545,7 +552,7 @@
 	});
 
 	// Hamburger size.
-	wp.customize("mobile_menu_hamburger_size", function (value) {
+	customizer("mobile_menu_hamburger_size", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_hamburger_size");
 
 		value.bind(function (newval) {
@@ -556,7 +563,7 @@
 	});
 
 	// Hamburger border radius (filled).
-	wp.customize("mobile_menu_hamburger_border_radius", function (value) {
+	customizer("mobile_menu_hamburger_border_radius", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_hamburger_border_radius");
 
 		value.bind(function (newval) {
@@ -566,7 +573,7 @@
 	});
 
 	// Padding.
-	wp.customize("mobile_menu_padding", function (value) {
+	customizer("mobile_menu_padding", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_padding");
 
 		value.bind(function (newval) {
@@ -598,7 +605,7 @@
 	});
 
 	// Menu item background color.
-	wp.customize("mobile_menu_bg_color", function (value) {
+	customizer("mobile_menu_bg_color", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_bg_color");
 
 		value.bind(function (newval) {
@@ -608,7 +615,7 @@
 	});
 
 	// Menu item background color hover.
-	wp.customize("mobile_menu_bg_color_alt", function (value) {
+	customizer("mobile_menu_bg_color_alt", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_bg_color_alt");
 
 		value.bind(function (newval) {
@@ -620,7 +627,7 @@
 	});
 
 	// Menu item font color.
-	wp.customize("mobile_menu_font_color", function (value) {
+	customizer("mobile_menu_font_color", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_font_color");
 
 		value.bind(function (newval) {
@@ -632,7 +639,7 @@
 	});
 
 	// Menu item font color hover.
-	wp.customize("mobile_menu_font_color_alt", function (value) {
+	customizer("mobile_menu_font_color_alt", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_font_color_alt");
 
 		value.bind(function (newval) {
@@ -644,7 +651,7 @@
 	});
 
 	// Menu item divider color.
-	wp.customize("mobile_menu_border_color", function (value) {
+	customizer("mobile_menu_border_color", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_border_color");
 
 		value.bind(function (newval) {
@@ -661,7 +668,7 @@
 	});
 
 	// Sub menu arrow color.
-	wp.customize("mobile_menu_submenu_arrow_color", function (value) {
+	customizer("mobile_menu_submenu_arrow_color", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_submenu_arrow_color");
 
 		value.bind(function (newval) {
@@ -670,7 +677,7 @@
 	});
 
 	// Menu item font size.
-	wp.customize("mobile_menu_font_size", function (value) {
+	customizer("mobile_menu_font_size", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_font_size");
 
 		value.bind(function (newval) {
@@ -686,7 +693,7 @@
 	/* Mobile sub menu */
 
 	// Submenu auto collapse.
-	wp.customize("mobile_sub_menu_auto_collapse", function (value) {
+	customizer("mobile_sub_menu_auto_collapse", function (value) {
 		value.bind(function (newval) {
 			if (!document.querySelector("#mobile-navigation")) return;
 
@@ -703,11 +710,11 @@
 	});
 
 	// Indent.
-	wp.customize("mobile_sub_menu_indent", function (value) {
+	customizer("mobile_sub_menu_indent", function (value) {
 		var styleTag = setupStyleTag("mobile_sub_menu_indent");
 
 		value.bind(function (newval) {
-			var padding = wp.customize("mobile_menu_padding").get();
+			var padding = customizer("mobile_menu_padding").get();
 			padding = JSON.parse(padding);
 
 			var calculation = parseInt(newval, 10) + parseInt(padding.left, 10);
@@ -717,7 +724,7 @@
 	});
 
 	// Menu item background color.
-	wp.customize("mobile_sub_menu_bg_color", function (value) {
+	customizer("mobile_sub_menu_bg_color", function (value) {
 		var styleTag = setupStyleTag("mobile_sub_menu_bg_color");
 
 		value.bind(function (newval) {
@@ -727,7 +734,7 @@
 	});
 
 	// Menu item background color hover.
-	wp.customize("mobile_sub_menu_bg_color_alt", function (value) {
+	customizer("mobile_sub_menu_bg_color_alt", function (value) {
 		var styleTag = setupStyleTag("mobile_sub_menu_bg_color_alt");
 
 		value.bind(function (newval) {
@@ -739,7 +746,7 @@
 	});
 
 	// Menu item font color.
-	wp.customize("mobile_sub_menu_font_color", function (value) {
+	customizer("mobile_sub_menu_font_color", function (value) {
 		var styleTag = setupStyleTag("mobile_sub_menu_font_color");
 
 		value.bind(function (newval) {
@@ -749,7 +756,7 @@
 	});
 
 	// Menu item font color hover.
-	wp.customize("mobile_sub_menu_font_color_alt", function (value) {
+	customizer("mobile_sub_menu_font_color_alt", function (value) {
 		var styleTag = setupStyleTag("mobile_sub_menu_font_color_alt");
 
 		value.bind(function (newval) {
@@ -761,7 +768,7 @@
 	});
 
 	// Menu item divider color.
-	wp.customize("mobile_sub_menu_border_color", function (value) {
+	customizer("mobile_sub_menu_border_color", function (value) {
 		var styleTag = setupStyleTag("mobile_sub_menu_border_color");
 
 		value.bind(function (newval) {
@@ -773,7 +780,7 @@
 	});
 
 	// Sub menu arrow color.
-	wp.customize("mobile_sub_menu_arrow_color", function (value) {
+	customizer("mobile_sub_menu_arrow_color", function (value) {
 		var styleTag = setupStyleTag("mobile_sub_menu_arrow_color");
 
 		value.bind(function (newval) {
@@ -785,7 +792,7 @@
 	});
 
 	// Menu item font size.
-	wp.customize("mobile_sub_menu_font_size", function (value) {
+	customizer("mobile_sub_menu_font_size", function (value) {
 		var styleTag = setupStyleTag("mobile_sub_menu_font_size");
 
 		value.bind(function (newval) {
@@ -801,7 +808,7 @@
 	/* Logo */
 
 	// Width.
-	wp.customize("menu_logo_size", function (value) {
+	customizer("menu_logo_size", function (value) {
 		var styleTag = setupStyleTag("menu_logo_size");
 
 		value.bind(function (newval) {
@@ -842,7 +849,7 @@
 	});
 
 	// Font size.
-	wp.customize("menu_logo_font_size", function (value) {
+	customizer("menu_logo_font_size", function (value) {
 		var styleTag = setupStyleTag("menu_logo_font_size");
 
 		value.bind(function (newval) {
@@ -883,7 +890,7 @@
 	});
 
 	// Color.
-	wp.customize("menu_logo_color", function (value) {
+	customizer("menu_logo_color", function (value) {
 		var styleTag = setupStyleTag("menu_logo_color");
 
 		value.bind(function (newval) {
@@ -893,7 +900,7 @@
 	});
 
 	// Color hover.
-	wp.customize("menu_logo_color_alt", function (value) {
+	customizer("menu_logo_color_alt", function (value) {
 		var styleTag = setupStyleTag("menu_logo_color_alt");
 
 		value.bind(function (newval) {
@@ -905,7 +912,7 @@
 	});
 
 	// Container width.
-	wp.customize("menu_logo_container_width", function (value) {
+	customizer("menu_logo_container_width", function (value) {
 		var styleTag = setupStyleTag("menu_logo_container_width");
 
 		value.bind(function (newval) {
@@ -923,7 +930,7 @@
 	});
 
 	// Mobile container width.
-	wp.customize("mobile_menu_logo_container_width", function (value) {
+	customizer("mobile_menu_logo_container_width", function (value) {
 		var styleTag = setupStyleTag("mobile_menu_logo_container_width");
 
 		value.bind(function (newval) {
@@ -947,7 +954,7 @@
 	/* Tagline */
 
 	// Font size.
-	wp.customize("menu_logo_description_font_size", function (value) {
+	customizer("menu_logo_description_font_size", function (value) {
 		var styleTag = setupStyleTag("menu_logo_description_font_size");
 
 		value.bind(function (newval) {
@@ -988,7 +995,7 @@
 	});
 
 	// Font color.
-	wp.customize("menu_logo_description_color", function (value) {
+	customizer("menu_logo_description_color", function (value) {
 		var styleTag = setupStyleTag("menu_logo_description_color");
 
 		value.bind(function (newval) {
@@ -999,7 +1006,7 @@
 	/* Pre Header */
 
 	// Width.
-	wp.customize("pre_header_width", function (value) {
+	customizer("pre_header_width", function (value) {
 		var styleTag = setupStyleTag("pre_header_width");
 
 		value.bind(function (newval) {
@@ -1010,7 +1017,7 @@
 	});
 
 	// Height.
-	wp.customize("pre_header_height", function (value) {
+	customizer("pre_header_height", function (value) {
 		var styleTag = setupStyleTag("pre_header_height");
 
 		value.bind(function (newval) {
@@ -1024,7 +1031,7 @@
 	});
 
 	// Background color.
-	wp.customize("pre_header_bg_color", function (value) {
+	customizer("pre_header_bg_color", function (value) {
 		var styleTag = setupStyleTag("pre_header_bg_color");
 
 		value.bind(function (newval) {
@@ -1034,7 +1041,7 @@
 	});
 
 	// Font color.
-	wp.customize("pre_header_font_color", function (value) {
+	customizer("pre_header_font_color", function (value) {
 		var styleTag = setupStyleTag("pre_header_font_color");
 
 		value.bind(function (newval) {
@@ -1043,7 +1050,7 @@
 	});
 
 	// Accent color.
-	wp.customize("pre_header_accent_color", function (value) {
+	customizer("pre_header_accent_color", function (value) {
 		var styleTag = setupStyleTag("pre_header_accent_color");
 
 		value.bind(function (newval) {
@@ -1052,7 +1059,7 @@
 	});
 
 	// Accent color hover.
-	wp.customize("pre_header_accent_color_alt", function (value) {
+	customizer("pre_header_accent_color_alt", function (value) {
 		var styleTag = setupStyleTag("pre_header_accent_color_alt");
 
 		value.bind(function (newval) {
@@ -1064,7 +1071,7 @@
 	});
 
 	// Font size.
-	wp.customize("pre_header_font_size", function (value) {
+	customizer("pre_header_font_size", function (value) {
 		var styleTag = setupStyleTag("pre_header_font_size");
 
 		value.bind(function (newval) {
@@ -1086,7 +1093,7 @@
 	/* Blog – Pagination */
 
 	// Border radius.
-	wp.customize("blog_pagination_border_radius", function (value) {
+	customizer("blog_pagination_border_radius", function (value) {
 		var styleTag = setupStyleTag("blog_pagination_border_radius");
 
 		value.bind(function (newval) {
@@ -1096,7 +1103,7 @@
 	});
 
 	// Background color.
-	wp.customize("blog_pagination_background_color", function (value) {
+	customizer("blog_pagination_background_color", function (value) {
 		var styleTag = setupStyleTag("blog_pagination_background_color");
 
 		value.bind(function (newval) {
@@ -1108,7 +1115,7 @@
 	});
 
 	// Background color hover.
-	wp.customize("blog_pagination_background_color_alt", function (value) {
+	customizer("blog_pagination_background_color_alt", function (value) {
 		var styleTag = setupStyleTag("blog_pagination_background_color_alt");
 
 		value.bind(function (newval) {
@@ -1120,7 +1127,7 @@
 	});
 
 	// Background color active.
-	wp.customize("blog_pagination_background_color_active", function (value) {
+	customizer("blog_pagination_background_color_active", function (value) {
 		var styleTag = setupStyleTag("blog_pagination_background_color_active");
 
 		value.bind(function (newval) {
@@ -1130,7 +1137,7 @@
 	});
 
 	// Font color.
-	wp.customize("blog_pagination_font_color", function (value) {
+	customizer("blog_pagination_font_color", function (value) {
 		var styleTag = setupStyleTag("blog_pagination_font_color");
 
 		value.bind(function (newval) {
@@ -1140,7 +1147,7 @@
 	});
 
 	// Font color hover.
-	wp.customize("blog_pagination_font_color_alt", function (value) {
+	customizer("blog_pagination_font_color_alt", function (value) {
 		var styleTag = setupStyleTag("blog_pagination_font_color_alt");
 
 		value.bind(function (newval) {
@@ -1152,7 +1159,7 @@
 	});
 
 	// Font color active.
-	wp.customize("blog_pagination_font_color_active", function (value) {
+	customizer("blog_pagination_font_color_active", function (value) {
 		var styleTag = setupStyleTag("blog_pagination_font_color_active");
 
 		value.bind(function (newval) {
@@ -1162,7 +1169,7 @@
 	});
 
 	// Font size.
-	wp.customize("blog_pagination_font_size", function (value) {
+	customizer("blog_pagination_font_size", function (value) {
 		var styleTag = setupStyleTag("blog_pagination_font_size");
 
 		value.bind(function (newval) {
@@ -1175,7 +1182,7 @@
 	/* Sidebar */
 
 	// Width.
-	wp.customize("sidebar_width", function (value) {
+	customizer("sidebar_width", function (value) {
 		var styleTag = setupStyleTag("sidebar_width");
 
 		value.bind(function (newval) {
@@ -1196,7 +1203,7 @@
 	});
 
 	// Background color.
-	wp.customize("sidebar_bg_color", function (value) {
+	customizer("sidebar_bg_color", function (value) {
 		var styleTag = setupStyleTag("sidebar_bg_color");
 
 		value.bind(function (newval) {
@@ -1210,7 +1217,7 @@
 	/* Buttons */
 
 	// Background color.
-	wp.customize("button_bg_color", function (value) {
+	customizer("button_bg_color", function (value) {
 		var styleTag = setupStyleTag("button_bg_color");
 
 		value.bind(function (newval) {
@@ -1222,7 +1229,7 @@
 	});
 
 	// Background color hover.
-	wp.customize("button_bg_color_alt", function (value) {
+	customizer("button_bg_color_alt", function (value) {
 		var styleTag = setupStyleTag("button_bg_color_alt");
 
 		value.bind(function (newval) {
@@ -1234,7 +1241,7 @@
 	});
 
 	// Text color.
-	wp.customize("button_text_color", function (value) {
+	customizer("button_text_color", function (value) {
 		var styleTag = setupStyleTag("button_text_color");
 
 		value.bind(function (newval) {
@@ -1246,7 +1253,7 @@
 	});
 
 	// Text color hover.
-	wp.customize("button_text_color_alt", function (value) {
+	customizer("button_text_color_alt", function (value) {
 		var styleTag = setupStyleTag("button_text_color_alt");
 
 		value.bind(function (newval) {
@@ -1258,7 +1265,7 @@
 	});
 
 	// Primary background color.
-	wp.customize("button_primary_bg_color", function (value) {
+	customizer("button_primary_bg_color", function (value) {
 		var styleTag = setupStyleTag("button_primary_bg_color");
 
 		value.bind(function (newval) {
@@ -1280,7 +1287,7 @@
 	});
 
 	// Primary background color hover.
-	wp.customize("button_primary_bg_color_alt", function (value) {
+	customizer("button_primary_bg_color_alt", function (value) {
 		var styleTag = setupStyleTag("button_primary_bg_color_alt");
 
 		value.bind(function (newval) {
@@ -1302,7 +1309,7 @@
 	});
 
 	// Primary text color.
-	wp.customize("button_primary_text_color", function (value) {
+	customizer("button_primary_text_color", function (value) {
 		var styleTag = setupStyleTag("button_primary_text_color");
 
 		value.bind(function (newval) {
@@ -1319,7 +1326,7 @@
 	});
 
 	// Primary text color hover.
-	wp.customize("button_primary_text_color_alt", function (value) {
+	customizer("button_primary_text_color_alt", function (value) {
 		var styleTag = setupStyleTag("button_primary_text_color_alt");
 
 		value.bind(function (newval) {
@@ -1336,7 +1343,7 @@
 	});
 
 	// Border radius.
-	wp.customize("button_border_radius", function (value) {
+	customizer("button_border_radius", function (value) {
 		var styleTag = setupStyleTag("button_border_radius");
 
 		value.bind(function (newval) {
@@ -1346,7 +1353,7 @@
 	});
 
 	// Border width.
-	wp.customize("button_border_width", function (value) {
+	customizer("button_border_width", function (value) {
 		var styleTag = setupStyleTag("button_border_width");
 
 		value.bind(function (newval) {
@@ -1358,7 +1365,7 @@
 	});
 
 	// Border color.
-	wp.customize("button_border_color", function (value) {
+	customizer("button_border_color", function (value) {
 		var styleTag = setupStyleTag("button_border_color");
 
 		value.bind(function (newval) {
@@ -1370,7 +1377,7 @@
 	});
 
 	// Border color hover.
-	wp.customize("button_border_color_alt", function (value) {
+	customizer("button_border_color_alt", function (value) {
 		var styleTag = setupStyleTag("button_border_color_alt");
 
 		value.bind(function (newval) {
@@ -1382,7 +1389,7 @@
 	});
 
 	// Primary border color.
-	wp.customize("button_primary_border_color", function (value) {
+	customizer("button_primary_border_color", function (value) {
 		var styleTag = setupStyleTag("button_primary_border_color");
 
 		value.bind(function (newval) {
@@ -1392,7 +1399,7 @@
 	});
 
 	// Primary border color hover.
-	wp.customize("button_primary_border_color_alt", function (value) {
+	customizer("button_primary_border_color_alt", function (value) {
 		var styleTag = setupStyleTag("button_primary_border_color_alt");
 
 		value.bind(function (newval) {
@@ -1404,7 +1411,7 @@
 	/* Breadcrumbs */
 
 	// Background background color.
-	wp.customize("breadcrumbs_background_color", function (value) {
+	customizer("breadcrumbs_background_color", function (value) {
 		var styleTag = setupStyleTag("breadcrumbs_background_color");
 
 		value.bind(function (newval) {
@@ -1414,7 +1421,7 @@
 	});
 
 	// Alignment.
-	wp.customize("breadcrumbs_alignment", function (value) {
+	customizer("breadcrumbs_alignment", function (value) {
 		var styleTag = setupStyleTag("breadcrumbs_alignment");
 
 		value.bind(function (newval) {
@@ -1424,7 +1431,7 @@
 	});
 
 	// Font color.
-	wp.customize("breadcrumbs_font_color", function (value) {
+	customizer("breadcrumbs_font_color", function (value) {
 		var styleTag = setupStyleTag("breadcrumbs_font_color");
 
 		value.bind(function (newval) {
@@ -1433,7 +1440,7 @@
 	});
 
 	// Accent color.
-	wp.customize("breadcrumbs_accent_color", function (value) {
+	customizer("breadcrumbs_accent_color", function (value) {
 		var styleTag = setupStyleTag("breadcrumbs_accent_color");
 
 		value.bind(function (newval) {
@@ -1442,7 +1449,7 @@
 	});
 
 	// Accent color hover.
-	wp.customize("breadcrumbs_accent_color_alt", function (value) {
+	customizer("breadcrumbs_accent_color_alt", function (value) {
 		var styleTag = setupStyleTag("breadcrumbs_accent_color_alt");
 
 		value.bind(function (newval) {
@@ -1453,7 +1460,7 @@
 	/* Footer */
 
 	// Width.
-	wp.customize("footer_width", function (value) {
+	customizer("footer_width", function (value) {
 		var styleTag = setupStyleTag("footer_width");
 
 		value.bind(function (newval) {
@@ -1463,7 +1470,7 @@
 	});
 
 	// Height.
-	wp.customize("footer_height", function (value) {
+	customizer("footer_height", function (value) {
 		var styleTag = setupStyleTag("footer_height");
 
 		value.bind(function (newval) {
@@ -1477,7 +1484,7 @@
 	});
 
 	// Background color.
-	wp.customize("footer_bg_color", function (value) {
+	customizer("footer_bg_color", function (value) {
 		var styleTag = setupStyleTag("footer_bg_color");
 
 		value.bind(function (newval) {
@@ -1487,7 +1494,7 @@
 	});
 
 	// Font color.
-	wp.customize("footer_font_color", function (value) {
+	customizer("footer_font_color", function (value) {
 		var styleTag = setupStyleTag("footer_font_color");
 
 		value.bind(function (newval) {
@@ -1496,7 +1503,7 @@
 	});
 
 	// Accent color.
-	wp.customize("footer_accent_color", function (value) {
+	customizer("footer_accent_color", function (value) {
 		var styleTag = setupStyleTag("footer_accent_color");
 
 		value.bind(function (newval) {
@@ -1505,7 +1512,7 @@
 	});
 
 	// Accent color hover.
-	wp.customize("footer_accent_color_alt", function (value) {
+	customizer("footer_accent_color_alt", function (value) {
 		var styleTag = setupStyleTag("footer_accent_color_alt");
 
 		value.bind(function (newval) {
@@ -1517,7 +1524,7 @@
 	});
 
 	// Font size.
-	wp.customize("footer_font_size", function (value) {
+	customizer("footer_font_size", function (value) {
 		var styleTag = setupStyleTag("footer_font_size");
 
 		value.bind(function (newval) {
@@ -1533,7 +1540,7 @@
 	/* WooCommerce - Defaults */
 
 	// Button border radius.
-	wp.customize("button_border_radius", function (value) {
+	customizer("button_border_radius", function (value) {
 		var styleTag = setupStyleTag("button_border_radius");
 
 		value.bind(function (newval) {
@@ -1545,7 +1552,7 @@
 	});
 
 	// Custom width.
-	wp.customize("woocommerce_loop_custom_width", function (value) {
+	customizer("woocommerce_loop_custom_width", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_custom_width");
 
 		value.bind(function (newval) {
@@ -1558,7 +1565,7 @@
 	/* WooCommerce - Menu Item */
 
 	// Desktop color.
-	wp.customize("woocommerce_menu_item_desktop_color", function (value) {
+	customizer("woocommerce_menu_item_desktop_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_menu_item_desktop_color");
 
 		value.bind(function (newval) {
@@ -1572,7 +1579,7 @@
 	});
 
 	// Mobile color.
-	wp.customize("woocommerce_menu_item_mobile_color", function (value) {
+	customizer("woocommerce_menu_item_mobile_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_menu_item_mobile_color");
 
 		value.bind(function (newval) {
@@ -1588,7 +1595,7 @@
 	/* WooCommerce - Loop */
 
 	// Content alignment.
-	wp.customize("woocommerce_loop_content_alignment", function (value) {
+	customizer("woocommerce_loop_content_alignment", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_content_alignment");
 
 		value.bind(function (newval) {
@@ -1618,7 +1625,7 @@
 	});
 
 	// Image alignment.
-	wp.customize("woocommerce_loop_image_alignment", function (value) {
+	customizer("woocommerce_loop_image_alignment", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_image_alignment");
 
 		value.bind(function (newval) {
@@ -1639,7 +1646,7 @@
 	});
 
 	// Image width.
-	wp.customize("woocommerce_loop_image_width", function (value) {
+	customizer("woocommerce_loop_image_width", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_image_width");
 
 		value.bind(function (newval) {
@@ -1656,7 +1663,7 @@
 	});
 
 	// Title font size.
-	wp.customize("woocommerce_loop_title_size", function (value) {
+	customizer("woocommerce_loop_title_size", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_title_size");
 
 		value.bind(function (newval) {
@@ -1677,7 +1684,7 @@
 	});
 
 	// Title font color.
-	wp.customize("woocommerce_loop_title_color", function (value) {
+	customizer("woocommerce_loop_title_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_title_color");
 
 		value.bind(function (newval) {
@@ -1695,7 +1702,7 @@
 	});
 
 	// Price font size.
-	wp.customize("woocommerce_loop_price_size", function (value) {
+	customizer("woocommerce_loop_price_size", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_price_size");
 
 		value.bind(function (newval) {
@@ -1709,7 +1716,7 @@
 	});
 
 	// Price font color.
-	wp.customize("woocommerce_loop_price_color", function (value) {
+	customizer("woocommerce_loop_price_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_price_color");
 
 		value.bind(function (newval) {
@@ -1719,7 +1726,7 @@
 	});
 
 	// Out of stock notice.
-	wp.customize("woocommerce_loop_out_of_stock_font_size", function (value) {
+	customizer("woocommerce_loop_out_of_stock_font_size", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_out_of_stock_font_size");
 
 		value.bind(function (newval) {
@@ -1733,7 +1740,7 @@
 	});
 
 	// Out of stock color.
-	wp.customize("woocommerce_loop_out_of_stock_font_color", function (value) {
+	customizer("woocommerce_loop_out_of_stock_font_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_out_of_stock_font_color");
 
 		value.bind(function (newval) {
@@ -1745,7 +1752,7 @@
 	});
 
 	// Out of stock background color.
-	wp.customize(
+	customizer(
 		"woocommerce_loop_out_of_stock_background_color",
 		function (value) {
 			var styleTag = setupStyleTag(
@@ -1762,7 +1769,7 @@
 	);
 
 	// Sale font size.
-	wp.customize("woocommerce_loop_sale_font_size", function (value) {
+	customizer("woocommerce_loop_sale_font_size", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_sale_font_size");
 
 		value.bind(function (newval) {
@@ -1773,7 +1780,7 @@
 	});
 
 	// Sale font color.
-	wp.customize("woocommerce_loop_sale_font_color", function (value) {
+	customizer("woocommerce_loop_sale_font_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_sale_font_color");
 
 		value.bind(function (newval) {
@@ -1782,7 +1789,7 @@
 	});
 
 	// Sale background color.
-	wp.customize("woocommerce_loop_sale_background_color", function (value) {
+	customizer("woocommerce_loop_sale_background_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_loop_sale_background_color");
 
 		value.bind(function (newval) {
@@ -1794,7 +1801,7 @@
 	/* WooCommerce - Single */
 
 	// Custom width.
-	wp.customize("woocommerce_single_custom_width", function (value) {
+	customizer("woocommerce_single_custom_width", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_custom_width");
 
 		value.bind(function (newval) {
@@ -1805,7 +1812,7 @@
 	});
 
 	// Image alignment.
-	wp.customize("woocommerce_single_alignment", function (value) {
+	customizer("woocommerce_single_alignment", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_alignment");
 
 		value.bind(function (newval) {
@@ -1844,7 +1851,7 @@
 	});
 
 	// Image width.
-	wp.customize("woocommerce_single_image_width", function (value) {
+	customizer("woocommerce_single_image_width", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_image_width");
 
 		value.bind(function (newval) {
@@ -1868,7 +1875,7 @@
 	});
 
 	// Price font size.
-	wp.customize("woocommerce_single_price_size", function (value) {
+	customizer("woocommerce_single_price_size", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_price_size");
 
 		value.bind(function (newval) {
@@ -1882,7 +1889,7 @@
 	});
 
 	// Price font color.
-	wp.customize("woocommerce_single_price_color", function (value) {
+	customizer("woocommerce_single_price_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_price_color");
 
 		value.bind(function (newval) {
@@ -1894,7 +1901,7 @@
 	});
 
 	// Tabs background color.
-	wp.customize("woocommerce_single_tabs_background_color", function (value) {
+	customizer("woocommerce_single_tabs_background_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_tabs_background_color");
 
 		value.bind(function (newval) {
@@ -1906,26 +1913,23 @@
 	});
 
 	// Tabs background color hover.
-	wp.customize(
-		"woocommerce_single_tabs_background_color_alt",
-		function (value) {
-			var styleTag = setupStyleTag(
-				"woocommerce_single_tabs_background_color_alt",
-			);
+	customizer("woocommerce_single_tabs_background_color_alt", function (value) {
+		var styleTag = setupStyleTag(
+			"woocommerce_single_tabs_background_color_alt",
+		);
 
-			value.bind(function (newval) {
-				styleTag.innerHTML =
-					".woocommerce div.product .woocommerce-tabs ul.tabs li:hover {background-color: " +
-					newval +
-					"; border-bottom-color: " +
-					newval +
-					";}";
-			});
-		},
-	);
+		value.bind(function (newval) {
+			styleTag.innerHTML =
+				".woocommerce div.product .woocommerce-tabs ul.tabs li:hover {background-color: " +
+				newval +
+				"; border-bottom-color: " +
+				newval +
+				";}";
+		});
+	});
 
 	// Tabs background color active.
-	wp.customize(
+	customizer(
 		"woocommerce_single_tabs_background_color_active",
 		function (value) {
 			var styleTag = setupStyleTag(
@@ -1944,7 +1948,7 @@
 	);
 
 	// Tabs font color.
-	wp.customize("woocommerce_single_tabs_font_color", function (value) {
+	customizer("woocommerce_single_tabs_font_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_tabs_font_color");
 
 		value.bind(function (newval) {
@@ -1956,7 +1960,7 @@
 	});
 
 	// Tabs font color hover.
-	wp.customize("woocommerce_single_tabs_font_color_alt", function (value) {
+	customizer("woocommerce_single_tabs_font_color_alt", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_tabs_font_color_alt");
 
 		value.bind(function (newval) {
@@ -1968,7 +1972,7 @@
 	});
 
 	// Tabs font color active.
-	wp.customize("woocommerce_single_tabs_font_color_active", function (value) {
+	customizer("woocommerce_single_tabs_font_color_active", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_tabs_font_color_active");
 
 		value.bind(function (newval) {
@@ -1982,7 +1986,7 @@
 	/** Woocommerce Store & Notices */
 
 	// Woocommerce info notice's accent color.
-	wp.customize("woocommerce_info_notice_color", function (value) {
+	customizer("woocommerce_info_notice_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_info_notice_color");
 
 		value.bind(function (newval) {
@@ -1999,7 +2003,7 @@
 	});
 
 	// Woocommerce success notice's accent color.
-	wp.customize("woocommerce_message_notice_color", function (value) {
+	customizer("woocommerce_message_notice_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_message_notice_color");
 
 		value.bind(function (newval) {
@@ -2016,7 +2020,7 @@
 	});
 
 	// Woocommerce error notice's accent color.
-	wp.customize("woocommerce_error_notice_color", function (value) {
+	customizer("woocommerce_error_notice_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_error_notice_color");
 
 		value.bind(function (newval) {
@@ -2033,7 +2037,7 @@
 	});
 
 	// Woocommerce general notice's background color.
-	wp.customize("woocommerce_notice_bg_color", function (value) {
+	customizer("woocommerce_notice_bg_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_notice_bg_color");
 
 		value.bind(function (newval) {
@@ -2043,7 +2047,7 @@
 	});
 
 	// Woocommerce general notice's text color.
-	wp.customize("woocommerce_notice_text_color", function (value) {
+	customizer("woocommerce_notice_text_color", function (value) {
 		var styleTag = setupStyleTag("woocommerce_notice_text_color");
 
 		value.bind(function (newval) {
@@ -2052,7 +2056,7 @@
 	});
 
 	// Tabs font size.
-	wp.customize("woocommerce_single_tabs_font_size", function (value) {
+	customizer("woocommerce_single_tabs_font_size", function (value) {
 		var styleTag = setupStyleTag("woocommerce_single_tabs_font_size");
 
 		value.bind(function (newval) {
@@ -2068,7 +2072,7 @@
 	/* EDD - Menu Item */
 
 	// Desktop color.
-	wp.customize("edd_menu_item_desktop_color", function (value) {
+	customizer("edd_menu_item_desktop_color", function (value) {
 		var styleTag = setupStyleTag("edd_menu_item_desktop_color");
 
 		value.bind(function (newval) {
@@ -2082,7 +2086,7 @@
 	});
 
 	// Mobile color.
-	wp.customize("edd_menu_item_mobile_color", function (value) {
+	customizer("edd_menu_item_mobile_color", function (value) {
 		var styleTag = setupStyleTag("edd_menu_item_mobile_color");
 
 		value.bind(function (newval) {
@@ -2098,7 +2102,7 @@
 	/* Easy Digital Downloads - Defaults */
 
 	// Button border radius.
-	wp.customize("button_border_radius", function (value) {
+	customizer("button_border_radius", function (value) {
 		var styleTag = setupStyleTag("button_border_radius");
 
 		value.bind(function (newval) {
@@ -2111,26 +2115,26 @@
 	var headerBuilderRows = ["row_1", "row_2", "row_3"];
 
 	headerBuilderRows.forEach((rowKey) => {
-		var controlIdPrefix = `wpbf_header_builder_${rowKey}_`;
+		const controlIdPrefix = `wpbf_header_builder_${rowKey}_`;
 
-		var minHeightControlId = `${controlIdPrefix}min_height`;
+		const minHeightControlId = `${controlIdPrefix}min_height`;
 
-		wp.customize(minHeightControlId, function (control) {
-			var styleTag = setupStyleTag(minHeightControlId);
-			var selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
+		customizer(minHeightControlId, function (value) {
+			const styleTag = setupStyleTag(minHeightControlId);
+			const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
 
-			control.bind(function (newval) {
+			value.bind(function (newval) {
 				writeResponsiveCSS(styleTag, selector, "min-height", newval);
 			});
 		});
 
 		var vPaddingControlId = `${controlIdPrefix}vertical_padding`;
 
-		wp.customize(vPaddingControlId, function (control) {
-			var styleTag = setupStyleTag(vPaddingControlId);
-			var selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
+		customizer(vPaddingControlId, function (value) {
+			const styleTag = setupStyleTag(vPaddingControlId);
+			const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
 
-			control.bind(function (newval) {
+			value.bind(function (newval) {
 				writeResponsiveCSS(
 					styleTag,
 					selector,
@@ -2140,12 +2144,12 @@
 			});
 		});
 
-		var bgColorControlId = `${controlIdPrefix}bg_color`;
+		const bgColorControlId = `${controlIdPrefix}bg_color`;
 
-		wp.customize(bgColorControlId, function (control) {
-			var styleTag = setupStyleTag(bgColorControlId);
+		customizer(bgColorControlId, function (value) {
+			const styleTag = setupStyleTag(bgColorControlId);
 
-			control.bind(function (newval) {
+			value.bind(function (newval) {
 				if (!newval) return;
 
 				styleTag.innerHTML = `
@@ -2156,12 +2160,12 @@
 			});
 		});
 
-		var textColorControlId = `${controlIdPrefix}text_color`;
+		const textColorControlId = `${controlIdPrefix}text_color`;
 
-		wp.customize(textColorControlId, function (control) {
-			var styleTag = setupStyleTag(textColorControlId);
+		customizer(textColorControlId, function (value) {
+			const styleTag = setupStyleTag(textColorControlId);
 
-			control.bind(function (newval) {
+			value.bind(function (newval) {
 				if (!newval) return;
 
 				styleTag.innerHTML = `
@@ -2172,4 +2176,4 @@
 			});
 		});
 	});
-})(jQuery);
+})(jQuery, window.wp.customize);

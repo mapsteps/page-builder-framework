@@ -295,7 +295,7 @@ function wpbf_customizer_preview_js() {
 
 	wp_enqueue_script(
 		'wpbf-postmessage',
-		WPBF_THEME_URI . '/inc/customizer/js/postmessage.js',
+		WPBF_THEME_URI . '/js/min/postmessage-min.js',
 		array(
 			'jquery',
 			'customize-preview',
