@@ -45,7 +45,7 @@ if ( is_array( $header_builder_rows ) && ! empty( $header_builder_rows ) ) {
 foreach ( $rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-	echo '.wpbf-header-row-' . esc_attr( $row_key ) . '{';
+	echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
 
 	$min_heights = get_theme_mod( $row_id_prefix . 'min_height', [] );
 	$min_heights = ! is_array( $min_heights ) ? [] : $min_heights;
@@ -92,10 +92,20 @@ foreach ( $rows as $row_key => $columns ) {
 		}
 	}
 
+	echo '}';
+
+	echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
+
 	$bg_color = get_theme_mod( $row_id_prefix . 'bg_color', '' );
 
 	if ( $bg_color ) {
 		echo sprintf( 'background-color: %s;', esc_attr( $bg_color ) );
+	}
+
+	$text_color = get_theme_mod( $row_id_prefix . 'text_color', '' );
+
+	if ( $text_color ) {
+		echo sprintf( 'color: %s;', esc_attr( $text_color ) );
 	}
 
 	echo '}';

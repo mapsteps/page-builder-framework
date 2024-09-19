@@ -69,7 +69,7 @@ function wpbf_do_header_builder() {
 			echo '<div class="wpbf-container wpbf-container-center">';
 		}
 
-		echo '<div class="wpbf-flex wpbf-items-center wpbf-content-center">';
+		echo '<div class="wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
 
 		$col_class = 'wpbf-flex';
 

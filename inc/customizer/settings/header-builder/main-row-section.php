@@ -88,14 +88,11 @@ wpbf_customizer_field()
 	->defaultValue( [
 		'desktop' => '50px',
 	] )
-	->transport( 'auto' )
+	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
-		'max'  => 300,
+		'max'  => 600,
 		'step' => 1,
-	] )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'min_height' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
 
@@ -107,15 +104,18 @@ wpbf_customizer_field()
 	->defaultValue( [
 		'desktop' => '15px',
 	] )
-	->transport( 'auto' )
+	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
 		'max'  => 200,
 		'step' => 1,
 	] )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'vertical_padding' => $partial_refresh_args,
-	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'color_separator' )
+	->type( 'divider' )
+	->tab( 'design' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -123,11 +123,19 @@ wpbf_customizer_field()
 	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->transport( 'auto' )
+	->transport( 'postMessage' )
 	->properties( [
 		'mode' => 'alpha',
 	] )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'bg_color' => $partial_refresh_args,
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'text_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Text Color', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
 	] )
 	->addToSection( $section_id );
