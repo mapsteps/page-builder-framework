@@ -6,7 +6,7 @@
 				.wpbf-header-row-${o} {
 					color: ${n};
 				}
-				`)})})})}function r(o){var n=document.createElement("style");return n.dataset.id=o,n.className="wpbf-customize-live-style",document.head.append(n),n}function t(o,n,e,r){let t="";"desktop"in r&&r.desktop&&(t+=`
+				`)})}),n(`${e}visibility`,function(n){let e=["large","medium","small"];n.bind(function(n){if(!n||!Array.isArray(n))return;let i=document.querySelector(`.wpbf-header-row-${o}`);i&&e.forEach(function(o){n.includes(o)?i.classList.remove(`wpbf-hidden-${o}`):i.classList.add(`wpbf-hidden-${o}`)})})})})}function r(o){var n=document.createElement("style");return n.dataset.id=o,n.className="wpbf-customize-live-style",document.head.append(n),n}function t(o,n,e,r){let t="";"desktop"in r&&r.desktop&&(t+=`
 					${n} {
 						${"string"==typeof e?`${e}: ${r.desktop};`:e.map(o=>`${o}: ${r.desktop};`).join("\n")}
 					}

@@ -2175,5 +2175,26 @@
 				`;
 			});
 		});
+
+		const visibilityControlId = `${controlIdPrefix}visibility`;
+
+		customizer(visibilityControlId, function (value) {
+			const availableSizes = ["large", "medium", "small"];
+
+			value.bind(function (newval) {
+				if (!newval || !Array.isArray(newval)) return;
+
+				const el = document.querySelector(`.wpbf-header-row-${rowKey}`);
+				if (!el) return;
+
+				availableSizes.forEach(function (size) {
+					if (newval.includes(size)) {
+						el.classList.remove(`wpbf-hidden-${size}`);
+					} else {
+						el.classList.add(`wpbf-hidden-${size}`);
+					}
+				});
+			});
+		});
 	});
 })(jQuery, window.wp.customize);

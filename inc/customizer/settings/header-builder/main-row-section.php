@@ -53,10 +53,7 @@ wpbf_customizer_field()
 		'medium' => __( 'Tablet', 'page-builder-framework' ),
 		'small'  => __( 'Mobile', 'page-builder-framework' ),
 	] )
-	->transport( 'auto' )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'visibility' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
