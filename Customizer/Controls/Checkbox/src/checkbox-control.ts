@@ -1,6 +1,5 @@
 import "./checkbox-control.scss";
 import {
-	WpbfCheckboxButtonsetControlValue,
 	WpbfCustomizeCheckboxButtonsetControl,
 	WpbfCustomizeCheckboxControl,
 } from "./checkbox-interface";
@@ -10,13 +9,10 @@ import {
 
 	customizer.controlConstructor["wpbf-checkbox"] =
 		customizer.wpbfDynamicControl.extend<WpbfCustomizeCheckboxControl>({
-			initWpbfControl: function (
-				this: WpbfCustomizeCheckboxControl,
-				ctrl?: WpbfCustomizeCheckboxControl,
-			) {
+			initWpbfControl: function (ctrl) {
 				const control = ctrl || this;
 
-				control.container.on("change", "input", function () {
+				control.container?.on("change", "input", function () {
 					control.setting?.set(jQuery(this).is(":checked"));
 				});
 			},
@@ -24,13 +20,10 @@ import {
 
 	customizer.controlConstructor["wpbf-toggle"] =
 		customizer.wpbfDynamicControl.extend<WpbfCustomizeCheckboxControl>({
-			initWpbfControl: function (
-				this: WpbfCustomizeCheckboxControl,
-				ctrl?: WpbfCustomizeCheckboxControl,
-			) {
+			initWpbfControl: function (ctrl) {
 				const control = ctrl || this;
 
-				control.container.on("change", "input", function () {
+				control.container?.on("change", "input", function () {
 					control.setting?.set(jQuery(this).is(":checked"));
 				});
 			},
@@ -39,10 +32,14 @@ import {
 	customizer.controlConstructor["wpbf-checkbox-buttonset"] =
 		customizer.wpbfDynamicControl.extend<WpbfCustomizeCheckboxButtonsetControl>(
 			{
-				initWpbfControl: function (ctrl) {
-					const control = ctrl || this;
+				currentValue: undefined,
 
-					control.container?.on("change", "input", () => {
+				ready: function () {
+					const control = this;
+
+					this.currentValue = this.setting?.get();
+
+					this.container?.on("change", ".switch-input", (e) => {
 						const values: string[] = [];
 
 						if (!control.container) return values;
@@ -58,16 +55,15 @@ import {
 
 						control.setting?.set(values);
 					});
-				},
-				ready: function () {
-					const control = this;
 
-					this.setting?.bind((val: WpbfCheckboxButtonsetControlValue) => {
+					this.setting?.bind((val) => {
 						control.updateComponentState?.(val);
 					});
 				},
 				updateComponentState: function (val) {
+					if (this.currentValue === val) return;
 					if (!this.container) return;
+
 					const fields = this.container[0].querySelectorAll(".switch-input");
 
 					fields.forEach((field) => {

@@ -262,6 +262,9 @@ export interface WpbfCustomizeControl<SV, CP> {
 	initWpbfControl?: (control?: WpbfCustomizeControl<SV, CP>) => void;
 	actuallyEmbed?: () => void;
 
+	// Specific to PBF's checkbox-buttonset control.
+	currentValue?: SV;
+
 	// Specific to PBF's color control.
 	updateColorPicker?: (value: WpbfCustomizeColorControlValue) => void;
 
