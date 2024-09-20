@@ -69,10 +69,7 @@ wpbf_customizer_field()
 	->label( __( 'Use Container', 'page-builder-framework' ) )
 	->description( __( "Whether to make this row's layout contained (boxed).", 'page-builder-framework' ) )
 	->defaultValue( true )
-	->transport( 'auto' )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'use_container' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 /* Design Tab */

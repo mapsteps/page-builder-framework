@@ -2196,5 +2196,44 @@
 				});
 			});
 		});
+
+		const useContainerControlId = `${controlIdPrefix}use_container`;
+
+		customizer(useContainerControlId, function (value) {
+			value.bind(function (newval) {
+				const row = document.querySelector(`.wpbf-header-row-${rowKey}`);
+				if (!row) return;
+
+				const rowContent = row.querySelector(
+					`.wpbf-header-row-${rowKey} .wpbf-row-content`,
+				);
+				if (!rowContent) return;
+
+				const parentEl = rowContent.parentElement;
+				if (!parentEl) return;
+
+				if (newval) {
+					if (!parentEl.classList.contains("wpbf-container")) {
+						const wrapperEl = document.createElement("div");
+						wrapperEl.classList.add("wpbf-container", "wpbf-container-center");
+
+						wrapperEl.appendChild(rowContent);
+						parentEl.appendChild(wrapperEl);
+					}
+				} else {
+					if (parentEl.classList.contains("wpbf-container-center")) {
+						// Unwrap parentEL and its children.
+						const children = parentEl.children;
+
+						for (let i = 0; i < children.length; i++) {
+							const child = children[i];
+							row.appendChild(child);
+						}
+
+						parentEl.remove();
+					}
+				}
+			});
+		});
 	});
 })(jQuery, window.wp.customize);
