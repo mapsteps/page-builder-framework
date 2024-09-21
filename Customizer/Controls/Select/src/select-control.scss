@@ -66,12 +66,13 @@
 }
 
 .wp-customizer > .select2-container .select2-search {
-	padding: 5px;
+	padding: 6px;
 }
 
 .wp-customizer > .select2-container .select2-search__field {
 	margin-left: 0;
 	margin-right: 0;
+	min-height: 20px;
 }
 
 .wp-customizer > .select2-container .select2-results__option {
