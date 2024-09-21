@@ -282,7 +282,7 @@ function wpbf_customizer_preview_css() {
 	}
 
 	echo '<style id="wpbf-customize-saved-styles">';
-	require WPBF_THEME_DIR . '/inc/customizer/styles.php';
+	require_once WPBF_THEME_DIR . '/inc/customizer/styles.php';
 	echo '</style>';
 
 }
@@ -299,6 +299,7 @@ function wpbf_customizer_preview_js() {
 		array(
 			'jquery',
 			'customize-preview',
+			'wpbf-site',
 		),
 		WPBF_VERSION,
 		true
@@ -457,7 +458,7 @@ function wpbf_render_builder_button_widget( $setting_group ) {
 	?>
 
 	<a
-		href="<?php echo esc_url( $link_url ); ?>"
+		href="<?php echo esc_url( wpbf_parse_template_tags( $link_url ) ); ?>"
 		class="<?php echo esc_attr( $button_class ); ?>"
 		<?php echo esc_attr( empty( $open_new_tab ) ? '' : 'target="_blank"' ); ?>
 		<?php echo esc_attr( empty( $link_rel ) ? '' : ' rel="' . $link_rel . '"' ); ?>

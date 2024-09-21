@@ -1755,3 +1755,22 @@ function wpbf_parse_font_family( $font_family, $for_font_face = false ) {
 	return $font_family;
 
 }
+
+/**
+ * Parse template tags.
+ *
+ * @param string $value The value to parse.
+ * @return string
+ */
+function wpbf_parse_template_tags( $value ) {
+
+	if ( ! is_string( $value ) ) {
+		return $value;
+	}
+
+	$find = array( '{site_url}' );
+	$rep  = array( site_url() );
+
+	return str_replace( $find, $rep, $value );
+
+}

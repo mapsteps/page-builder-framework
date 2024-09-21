@@ -6,7 +6,7 @@ import {
 	WpbfCustomizeSelectControl,
 	SelectControlParams,
 	SelectControlValue,
-} from "./interface";
+} from "./select-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -60,7 +60,7 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 		const control = this;
 		const params = control.params;
 
-		const template = `
+		const headerTemplate = `
 		<header clas="wpbf-control-header">
 			${
 				params.label
@@ -82,14 +82,31 @@ const SelectControl = wp.customize.Control.extend<WpbfCustomizeSelectControl>({
 					</div>`
 					: ""
 			}
+
+			<div class="customize-control-notifications-container"></div>
 		</header>
+		`;
 
-		<div class="customize-control-notifications-container"></div>
-
+		const formTemplate = `
 		<div class="wpbf-control-form">
 			<select class="wpbf-select2"${params.isMulti ? " multiple" : ""}></select>
 		</div>
 		`;
+
+		let template = headerTemplate + formTemplate;
+
+		if (params.layoutStyle === "horizontal") {
+			template = `
+			<div class="wpbf-control-cols">
+				<div class="wpbf-control-left-col wpbf-w50">
+					${headerTemplate}
+				</div>
+				<div class="wpbf-control-right-col wpbf-flex wpbf-content-end wpbf-w50">
+					${formTemplate}
+				</div>
+			</div>
+			`;
+		}
 
 		control.container.html(template);
 

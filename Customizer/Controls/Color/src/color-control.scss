@@ -4,19 +4,16 @@
 	}
 
 	.wpbf-control-cols {
-		display: flex;
 		align-items: flex-start;
-		justify-content: space-between;
 	}
 
 	.wpbf-control-left-col {
 		padding-right: 30px;
 		width: 90%;
-		width: calc(100% - 35px);
+		width: calc(100% - 30px);
 	}
 
 	.wpbf-control-right-col {
-		display: flex;
 		justify-content: flex-end;
 		align-items: center;
 

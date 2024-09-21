@@ -7,6 +7,10 @@
 	}
 }
 
+#customize-footer-actions .devices {
+	display: flex;
+}
+
 #customize-theme-controls .customize-pane-child.open {
 	overflow: visible;
 }
@@ -32,6 +36,18 @@
 }
 
 .wpbf-content-end {
+	justify-content: flex-end;
+}
+
+.wpbf-justify-start {
+	justify-content: flex-start;
+}
+
+.wpbf-justify-center {
+	justify-content: center;
+}
+
+.wpbf-justify-end {
 	justify-content: flex-end;
 }
 
@@ -77,6 +93,20 @@
 
 .wpbf-w5 {
 	width: 5%;
+}
+
+.wpbf-control-cols {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.wpbf-control-left-col {
+	padding-right: 13px;
+}
+
+.wpbf-control-right-col {
+	text-align: right;
 }
 
 .control-section-wpbf-default,

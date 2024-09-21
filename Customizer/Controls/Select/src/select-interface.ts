@@ -25,6 +25,7 @@ export type SelectControlValue = string | string[];
 export interface SelectControlParams
 	extends WpbfCustomizeControlParams<SelectControlValue> {
 	choices: SelectControlChoices;
+	isSearchable: boolean;
 	isClearable: boolean;
 	isMulti: boolean;
 	placeholder: string;

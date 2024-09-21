@@ -63,12 +63,18 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
+// We use 'text' instead of 'url' because we support template tags such as '{site_url}'.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'url' )
-	->type( 'url' )
+	->type( 'text' )
 	->tab( 'general' )
 	->label( __( 'Link URL', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
+	->description( sprintf(
+		// translators: Template tag.
+		__( 'You can use template tags such as %s.', 'page-builder-framework' ),
+		'<code>{site_url}</code>'
+	) )
+	->defaultValue( '{site_url}' )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
@@ -95,11 +101,10 @@ wpbf_customizer_field()
 	->type( 'select' )
 	->tab( 'design' )
 	->label( __( 'Button Size', 'page-builder-framework' ) )
-	->defaultValue( 'default' )
+	->defaultValue( '' )
 	->choices( array(
 		'default' => __( 'Default', 'page-builder-framework' ),
 		'small'   => __( 'Small', 'page-builder-framework' ),
-		'medium'  => __( 'Medium', 'page-builder-framework' ),
 		'large'   => __( 'Large', 'page-builder-framework' ),
 	) )
 	->transport( 'postMessage' )
@@ -114,7 +119,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
-		'max'  => 50,
+		'max'  => 100,
 		'step' => 1,
 	] )
 	->addToSection( $section_id );
@@ -124,12 +129,31 @@ wpbf_customizer_field()
 	->type( 'responsive-input-slider' )
 	->tab( 'design' )
 	->label( __( 'Border Width', 'page-builder-framework' ) )
-	->defaultValue( 1 )
+	->defaultValue( 0 )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
 		'max'  => 20,
 		'step' => 1,
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'border_style' )
+	->type( 'select' )
+	->tab( 'design' )
+	->label( __( 'Border Style', 'page-builder-framework' ) )
+	->choices( array(
+		'none'   => __( 'None', 'page-builder-framework' ),
+		'solid'  => __( 'Solid', 'page-builder-framework' ),
+		'dashed' => __( 'Dashed', 'page-builder-framework' ),
+		'dotted' => __( 'Dotted', 'page-builder-framework' ),
+	) )
+	->defaultValue( 'none' )
+	->transport( 'postMessage' )
+	->properties( [
+		'layout_style' => 'horizontal',
+		'searchable'   => false,
 	] )
 	->addToSection( $section_id );
 

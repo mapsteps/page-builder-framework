@@ -7,7 +7,7 @@ import {
 import {
 	SelectControlValue,
 	WpbfCustomizeSelectControl,
-} from "../../Select/src/interface";
+} from "../../Select/src/select-interface";
 import { Setting } from "wordpress__customize-browser/Setting";
 import {
 	WpbfCustomizeColorControl,

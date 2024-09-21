@@ -158,6 +158,9 @@ foreach ( $button_keys as $button_key ) {
 	$responsive_border_width = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_border_width', [] );
 	$responsive_border_width = ! is_array( $responsive_border_width ) ? [] : $responsive_border_width;
 
+	$button_border_style = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_border_style', '' );
+	$button_border_style = ! empty( $button_border_style ) ? $button_border_style : 'none';
+
 	$button_border_colors = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_border_color', [] );
 	$button_border_colors = ! is_array( $button_border_colors ) ? [] : $button_border_colors;
 
@@ -181,6 +184,10 @@ foreach ( $button_keys as $button_key ) {
 		$desktop_border_width_value = is_numeric( $desktop_border_width_value ) ? $desktop_border_width_value . 'px' : $desktop_border_width_value;
 
 		echo sprintf( 'border-width: %s;', esc_attr( $desktop_border_width_value ) );
+	}
+
+	if ( 'none' !== $button_border_style ) {
+		echo sprintf( 'border-style: %s;', esc_attr( $button_border_style ) );
 	}
 
 	if ( isset( $button_border_colors['default'] ) ) {

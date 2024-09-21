@@ -78,6 +78,10 @@ class SelectField extends BaseField {
 			$select_control->clearable = $custom_props['clearable'];
 		}
 
+		if ( isset( $custom_props['layout_style'] ) ) {
+			$select_control->layout_style = $custom_props['layout_style'];
+		}
+
 		$wp_customize_manager->add_control( $select_control );
 
 	}

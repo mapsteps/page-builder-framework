@@ -16,7 +16,7 @@ import {
 import {
 	SelectControlChoices,
 	WpbfCustomizeSelectControl,
-} from "../../Select/src/interface";
+} from "../../Select/src/select-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;

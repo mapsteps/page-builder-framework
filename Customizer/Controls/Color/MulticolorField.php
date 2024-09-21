@@ -31,7 +31,7 @@ class MulticolorField extends ColorField {
 			$sanitized_values[ $key ] = ( new ColorSanitizer() )->sanitize( $value );
 		}
 
-		return ( new ColorSanitizer() )->sanitize( $sanitized_values );
+		return $sanitized_values;
 
 	}
 

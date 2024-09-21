@@ -4,16 +4,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 (function ($: JQueryStatic, customizer: WpbfCustomize | undefined) {
 	if (!customizer) return;
 
-	const customizeBreakpoints = {
-		desktop: 1024,
-		tablet: 768,
-		mobile: 480,
-	};
+	const breakpoints = window.WpbfTheme.breakpoints;
 
 	const mediaQueries = {
-		tablet:
-			"max-width: " + (customizeBreakpoints.desktop - 1).toString() + "px",
-		mobile: "max-width: " + (customizeBreakpoints.tablet - 1).toString() + "px",
+		tablet: "max-width: " + (breakpoints.desktop - 1).toString() + "px",
+		mobile: "max-width: " + (breakpoints.tablet - 1).toString() + "px",
 	};
 
 	function valueHasUnit(value: string | number): boolean {
@@ -37,12 +32,12 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 	}
 
 	/**
-	 * Setup style tag element.
+	 * Get style tag element based on control id.
 	 *
 	 * @param {string} id The style data id.
 	 * @return {HTMLStyleElement} The style tag element.
 	 */
-	function setupStyleTag(id: string): HTMLStyleElement {
+	function getStyleTag(id: string): HTMLStyleElement {
 		const tag = document.head.querySelector(`style[data-id="${id}"]`);
 		if (tag instanceof HTMLStyleElement) return tag;
 
@@ -73,24 +68,21 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 		for (const device of devices) {
 			if (!value.hasOwnProperty(device)) continue;
-
-			const deviceValue = valueHasUnit(value[device])
-				? value[device]
-				: value[device] + "px";
+			if (value[device] === "") continue;
 
 			css += `${selector} {
-				${"string" === typeof rule ? `${rule}: ${deviceValue};` : rule.map((rule) => `${rule}: ${deviceValue};`).join("\n")}
+				${"string" === typeof rule ? `${rule}: ${value[device]};` : rule.map((rule) => `${rule}: ${value[device]};`).join("\n")}
 			}`;
 		}
 
-		styleTag.textContent = css;
+		styleTag.innerHTML = css;
 	}
 
 	/* Layout */
 
 	// Page width.
 	customizer("page_max_width", function (value) {
-		const styleTag = setupStyleTag("page_max_width");
+		const styleTag = getStyleTag("page_max_width");
 
 		value.bind(function (newValue) {
 			newValue = !newValue ? "1200px" : newValue;
@@ -103,7 +95,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Padding.
 	customizer("page_padding", function (value) {
-		const styleTag = setupStyleTag("page_padding");
+		const styleTag = getStyleTag("page_padding");
 
 		value.bind(function (newValue) {
 			const obj = JSON.parse(newValue);
@@ -188,7 +180,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Boxed padding.
 	customizer("page_boxed_padding", function (value) {
-		const styleTag = setupStyleTag("page_boxed_padding");
+		const styleTag = getStyleTag("page_boxed_padding");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -202,7 +194,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Boxed background color.
 	customizer("page_boxed_background", function (value) {
-		const styleTag = setupStyleTag("page_boxed_background");
+		const styleTag = getStyleTag("page_boxed_background");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-page {background-color: " + newValue + ";}";
@@ -211,7 +203,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// ScrollTop position.
 	customizer("scrolltop_position", function (value) {
-		const styleTag = setupStyleTag("scrolltop_position");
+		const styleTag = getStyleTag("scrolltop_position");
 
 		value.bind(function (newValue) {
 			if (newValue === "left") {
@@ -224,7 +216,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// ScrollTop background color.
 	customizer("scrolltop_bg_color", function (value) {
-		const styleTag = setupStyleTag("scrolltop_bg_color");
+		const styleTag = getStyleTag("scrolltop_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".scrolltop {background-color: " + newValue + ";}";
@@ -233,7 +225,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// ScrollTop background color.
 	customizer("scrolltop_bg_color_alt", function (value) {
-		const styleTag = setupStyleTag("scrolltop_bg_color_alt");
+		const styleTag = getStyleTag("scrolltop_bg_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -243,7 +235,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// ScrollTop icon color.
 	customizer("scrolltop_icon_color", function (value) {
-		const styleTag = setupStyleTag("scrolltop_icon_color");
+		const styleTag = getStyleTag("scrolltop_icon_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".scrolltop {color: " + newValue + ";}";
@@ -252,7 +244,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// ScrollTop icon color.
 	customizer("scrolltop_icon_color_alt", function (value) {
-		const styleTag = setupStyleTag("scrolltop_icon_color_alt");
+		const styleTag = getStyleTag("scrolltop_icon_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".scrolltop:hover {color: " + newValue + ";}";
@@ -261,7 +253,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// ScrollTop border radius.
 	customizer("scrolltop_border_radius", function (value) {
-		const styleTag = setupStyleTag("scrolltop_border_radius");
+		const styleTag = getStyleTag("scrolltop_border_radius");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".scrolltop {border-radius: " + newValue + "px;}";
@@ -271,7 +263,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 	/* Typography */
 
 	customizer("page_font_color", function (value) {
-		const styleTag = setupStyleTag("page_font_color");
+		const styleTag = getStyleTag("page_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = "body {color: " + newValue + ";}";
@@ -296,7 +288,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Width.
 	customizer("menu_width", function (value) {
-		const styleTag = setupStyleTag("menu_width");
+		const styleTag = getStyleTag("menu_width");
 
 		value.bind(function (newValue) {
 			newValue = !newValue ? "1200px" : newValue;
@@ -306,7 +298,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu height.
 	customizer("menu_height", function (value) {
-		const styleTag = setupStyleTag("menu_height");
+		const styleTag = getStyleTag("menu_height");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -320,7 +312,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu padding.
 	customizer("menu_padding", function (value) {
-		const styleTag = setupStyleTag("menu_padding");
+		const styleTag = getStyleTag("menu_padding");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -334,7 +326,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color.
 	customizer("menu_bg_color", function (value) {
-		const styleTag = setupStyleTag("menu_bg_color");
+		const styleTag = getStyleTag("menu_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -346,7 +338,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color.
 	customizer("menu_font_color", function (value) {
-		const styleTag = setupStyleTag("menu_font_color");
+		const styleTag = getStyleTag("menu_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -358,7 +350,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color hover.
 	customizer("menu_font_color_alt", function (value) {
-		const styleTag = setupStyleTag("menu_font_color_alt");
+		const styleTag = getStyleTag("menu_font_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -375,7 +367,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font size.
 	customizer("menu_font_size", function (value) {
-		const styleTag = setupStyleTag("menu_font_size");
+		const styleTag = getStyleTag("menu_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -391,7 +383,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Text alignment.
 	customizer("sub_menu_text_alignment", function (value) {
-		const styleTag = setupStyleTag("sub_menu_text_alignment");
+		const styleTag = getStyleTag("sub_menu_text_alignment");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -407,7 +399,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Padding.
 	customizer("sub_menu_padding", function (value) {
-		const styleTag = setupStyleTag("sub_menu_padding");
+		const styleTag = getStyleTag("sub_menu_padding");
 
 		value.bind(function (newValue) {
 			var obj = JSON.parse(newValue),
@@ -438,7 +430,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Width.
 	customizer("sub_menu_width", function (value) {
-		const styleTag = setupStyleTag("sub_menu_width");
+		const styleTag = getStyleTag("sub_menu_width");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -450,7 +442,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color.
 	customizer("sub_menu_bg_color", function (value) {
-		const styleTag = setupStyleTag("sub_menu_bg_color");
+		const styleTag = getStyleTag("sub_menu_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -467,7 +459,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color hover.
 	customizer("sub_menu_bg_color_alt", function (value) {
-		const styleTag = setupStyleTag("sub_menu_bg_color_alt");
+		const styleTag = getStyleTag("sub_menu_bg_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -483,7 +475,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Accent color.
 	customizer("sub_menu_accent_color", function (value) {
-		const styleTag = setupStyleTag("sub_menu_accent_color");
+		const styleTag = getStyleTag("sub_menu_accent_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-menu .sub-menu a {color: " + newValue + ";}";
@@ -492,7 +484,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Accent color hover.
 	customizer("sub_menu_accent_color_alt", function (value) {
-		const styleTag = setupStyleTag("sub_menu_accent_color_alt");
+		const styleTag = getStyleTag("sub_menu_accent_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -504,7 +496,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font size.
 	customizer("sub_menu_font_size", function (value) {
-		const styleTag = setupStyleTag("sub_menu_font_size");
+		const styleTag = getStyleTag("sub_menu_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -515,7 +507,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Separator color.
 	customizer("sub_menu_separator_color", function (value) {
-		const styleTag = setupStyleTag("sub_menu_separator_color");
+		const styleTag = getStyleTag("sub_menu_separator_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -529,7 +521,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Height.
 	customizer("mobile_menu_height", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_height");
+		const styleTag = getStyleTag("mobile_menu_height");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -543,7 +535,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color.
 	customizer("mobile_menu_background_color", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_background_color");
+		const styleTag = getStyleTag("mobile_menu_background_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -553,7 +545,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Icon color.
 	customizer("mobile_menu_hamburger_color", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_hamburger_color");
+		const styleTag = getStyleTag("mobile_menu_hamburger_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -565,7 +557,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Hamburger size.
 	customizer("mobile_menu_hamburger_size", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_hamburger_size");
+		const styleTag = getStyleTag("mobile_menu_hamburger_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -576,7 +568,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Hamburger border radius (filled).
 	customizer("mobile_menu_hamburger_border_radius", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_hamburger_border_radius");
+		const styleTag = getStyleTag("mobile_menu_hamburger_border_radius");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -586,7 +578,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Padding.
 	customizer("mobile_menu_padding", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_padding");
+		const styleTag = getStyleTag("mobile_menu_padding");
 
 		value.bind(function (newValue) {
 			var obj = JSON.parse(newValue),
@@ -618,7 +610,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item background color.
 	customizer("mobile_menu_bg_color", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_bg_color");
+		const styleTag = getStyleTag("mobile_menu_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -630,7 +622,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item background color hover.
 	customizer("mobile_menu_bg_color_alt", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_bg_color_alt");
+		const styleTag = getStyleTag("mobile_menu_bg_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -642,7 +634,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item font color.
 	customizer("mobile_menu_font_color", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_font_color");
+		const styleTag = getStyleTag("mobile_menu_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -654,7 +646,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item font color hover.
 	customizer("mobile_menu_font_color_alt", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_font_color_alt");
+		const styleTag = getStyleTag("mobile_menu_font_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -666,7 +658,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item divider color.
 	customizer("mobile_menu_border_color", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_border_color");
+		const styleTag = getStyleTag("mobile_menu_border_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -683,7 +675,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Sub menu arrow color.
 	customizer("mobile_menu_submenu_arrow_color", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_submenu_arrow_color");
+		const styleTag = getStyleTag("mobile_menu_submenu_arrow_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-submenu-toggle {color: " + newValue + ";}";
@@ -692,7 +684,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item font size.
 	customizer("mobile_menu_font_size", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_font_size");
+		const styleTag = getStyleTag("mobile_menu_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -725,7 +717,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Indent.
 	customizer("mobile_sub_menu_indent", function (value) {
-		const styleTag = setupStyleTag("mobile_sub_menu_indent");
+		const styleTag = getStyleTag("mobile_sub_menu_indent");
 
 		value.bind(function (newValue) {
 			var padding = customizer("mobile_menu_padding").get();
@@ -739,7 +731,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item background color.
 	customizer("mobile_sub_menu_bg_color", function (value) {
-		const styleTag = setupStyleTag("mobile_sub_menu_bg_color");
+		const styleTag = getStyleTag("mobile_sub_menu_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -749,7 +741,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item background color hover.
 	customizer("mobile_sub_menu_bg_color_alt", function (value) {
-		const styleTag = setupStyleTag("mobile_sub_menu_bg_color_alt");
+		const styleTag = getStyleTag("mobile_sub_menu_bg_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -761,7 +753,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item font color.
 	customizer("mobile_sub_menu_font_color", function (value) {
-		const styleTag = setupStyleTag("mobile_sub_menu_font_color");
+		const styleTag = getStyleTag("mobile_sub_menu_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -771,7 +763,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item font color hover.
 	customizer("mobile_sub_menu_font_color_alt", function (value) {
-		const styleTag = setupStyleTag("mobile_sub_menu_font_color_alt");
+		const styleTag = getStyleTag("mobile_sub_menu_font_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -783,7 +775,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item divider color.
 	customizer("mobile_sub_menu_border_color", function (value) {
-		const styleTag = setupStyleTag("mobile_sub_menu_border_color");
+		const styleTag = getStyleTag("mobile_sub_menu_border_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -795,7 +787,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Sub menu arrow color.
 	customizer("mobile_sub_menu_arrow_color", function (value) {
-		const styleTag = setupStyleTag("mobile_sub_menu_arrow_color");
+		const styleTag = getStyleTag("mobile_sub_menu_arrow_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -807,7 +799,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Menu item font size.
 	customizer("mobile_sub_menu_font_size", function (value) {
-		const styleTag = setupStyleTag("mobile_sub_menu_font_size");
+		const styleTag = getStyleTag("mobile_sub_menu_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -823,7 +815,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Width.
 	customizer("menu_logo_size", function (value) {
-		const styleTag = setupStyleTag("menu_logo_size");
+		const styleTag = getStyleTag("menu_logo_size");
 
 		value.bind(function (newValue) {
 			var obj = JSON.parse(newValue),
@@ -864,7 +856,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font size.
 	customizer("menu_logo_font_size", function (value) {
-		const styleTag = setupStyleTag("menu_logo_font_size");
+		const styleTag = getStyleTag("menu_logo_font_size");
 
 		value.bind(function (newValue) {
 			var obj = JSON.parse(newValue),
@@ -905,7 +897,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Color.
 	customizer("menu_logo_color", function (value) {
-		const styleTag = setupStyleTag("menu_logo_color");
+		const styleTag = getStyleTag("menu_logo_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -915,7 +907,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Color hover.
 	customizer("menu_logo_color_alt", function (value) {
-		const styleTag = setupStyleTag("menu_logo_color_alt");
+		const styleTag = getStyleTag("menu_logo_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -927,7 +919,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Container width.
 	customizer("menu_logo_container_width", function (value) {
-		const styleTag = setupStyleTag("menu_logo_container_width");
+		const styleTag = getStyleTag("menu_logo_container_width");
 
 		value.bind(function (newValue) {
 			var calculation = 100 - newValue;
@@ -945,7 +937,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Mobile container width.
 	customizer("mobile_menu_logo_container_width", function (value) {
-		const styleTag = setupStyleTag("mobile_menu_logo_container_width");
+		const styleTag = getStyleTag("mobile_menu_logo_container_width");
 
 		value.bind(function (newValue) {
 			var calculation = 100 - newValue;
@@ -969,7 +961,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font size.
 	customizer("menu_logo_description_font_size", function (value) {
-		const styleTag = setupStyleTag("menu_logo_description_font_size");
+		const styleTag = getStyleTag("menu_logo_description_font_size");
 
 		value.bind(function (newValue) {
 			var obj = JSON.parse(newValue),
@@ -1010,7 +1002,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color.
 	customizer("menu_logo_description_color", function (value) {
-		const styleTag = setupStyleTag("menu_logo_description_color");
+		const styleTag = getStyleTag("menu_logo_description_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-tagline {color: " + newValue + ";}";
@@ -1021,7 +1013,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Width.
 	customizer("pre_header_width", function (value) {
-		const styleTag = setupStyleTag("pre_header_width");
+		const styleTag = getStyleTag("pre_header_width");
 
 		value.bind(function (newValue) {
 			newValue = !newValue ? "1200px" : newValue;
@@ -1032,7 +1024,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Height.
 	customizer("pre_header_height", function (value) {
-		const styleTag = setupStyleTag("pre_header_height");
+		const styleTag = getStyleTag("pre_header_height");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1046,7 +1038,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color.
 	customizer("pre_header_bg_color", function (value) {
-		const styleTag = setupStyleTag("pre_header_bg_color");
+		const styleTag = getStyleTag("pre_header_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1056,7 +1048,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color.
 	customizer("pre_header_font_color", function (value) {
-		const styleTag = setupStyleTag("pre_header_font_color");
+		const styleTag = getStyleTag("pre_header_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-pre-header {color: " + newValue + ";}";
@@ -1065,7 +1057,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Accent color.
 	customizer("pre_header_accent_color", function (value) {
-		const styleTag = setupStyleTag("pre_header_accent_color");
+		const styleTag = getStyleTag("pre_header_accent_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-pre-header a {color: " + newValue + ";}";
@@ -1074,7 +1066,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Accent color hover.
 	customizer("pre_header_accent_color_alt", function (value) {
-		const styleTag = setupStyleTag("pre_header_accent_color_alt");
+		const styleTag = getStyleTag("pre_header_accent_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1086,7 +1078,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font size.
 	customizer("pre_header_font_size", function (value) {
-		const styleTag = setupStyleTag("pre_header_font_size");
+		const styleTag = getStyleTag("pre_header_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -1108,7 +1100,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Border radius.
 	customizer("blog_pagination_border_radius", function (value) {
-		const styleTag = setupStyleTag("blog_pagination_border_radius");
+		const styleTag = getStyleTag("blog_pagination_border_radius");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1118,7 +1110,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color.
 	customizer("blog_pagination_background_color", function (value) {
-		const styleTag = setupStyleTag("blog_pagination_background_color");
+		const styleTag = getStyleTag("blog_pagination_background_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1130,7 +1122,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color hover.
 	customizer("blog_pagination_background_color_alt", function (value) {
-		const styleTag = setupStyleTag("blog_pagination_background_color_alt");
+		const styleTag = getStyleTag("blog_pagination_background_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1142,7 +1134,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color active.
 	customizer("blog_pagination_background_color_active", function (value) {
-		const styleTag = setupStyleTag("blog_pagination_background_color_active");
+		const styleTag = getStyleTag("blog_pagination_background_color_active");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1154,7 +1146,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color.
 	customizer("blog_pagination_font_color", function (value) {
-		const styleTag = setupStyleTag("blog_pagination_font_color");
+		const styleTag = getStyleTag("blog_pagination_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1164,7 +1156,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color hover.
 	customizer("blog_pagination_font_color_alt", function (value) {
-		const styleTag = setupStyleTag("blog_pagination_font_color_alt");
+		const styleTag = getStyleTag("blog_pagination_font_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1176,7 +1168,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color active.
 	customizer("blog_pagination_font_color_active", function (value) {
-		const styleTag = setupStyleTag("blog_pagination_font_color_active");
+		const styleTag = getStyleTag("blog_pagination_font_color_active");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1186,7 +1178,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font size.
 	customizer("blog_pagination_font_size", function (value) {
-		const styleTag = setupStyleTag("blog_pagination_font_size");
+		const styleTag = getStyleTag("blog_pagination_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -1199,7 +1191,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Width.
 	customizer("sidebar_width", function (value) {
-		const styleTag = setupStyleTag("sidebar_width");
+		const styleTag = getStyleTag("sidebar_width");
 
 		value.bind(function (newValue) {
 			var calculation = 100 - newValue;
@@ -1220,7 +1212,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color.
 	customizer("sidebar_bg_color", function (value) {
-		const styleTag = setupStyleTag("sidebar_bg_color");
+		const styleTag = getStyleTag("sidebar_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1234,7 +1226,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color.
 	customizer("button_bg_color", function (value) {
-		const styleTag = setupStyleTag("button_bg_color");
+		const styleTag = getStyleTag("button_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1246,7 +1238,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color hover.
 	customizer("button_bg_color_alt", function (value) {
-		const styleTag = setupStyleTag("button_bg_color_alt");
+		const styleTag = getStyleTag("button_bg_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1258,7 +1250,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Text color.
 	customizer("button_text_color", function (value) {
-		const styleTag = setupStyleTag("button_text_color");
+		const styleTag = getStyleTag("button_text_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1270,7 +1262,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Text color hover.
 	customizer("button_text_color_alt", function (value) {
-		const styleTag = setupStyleTag("button_text_color_alt");
+		const styleTag = getStyleTag("button_text_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1282,7 +1274,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Primary background color.
 	customizer("button_primary_bg_color", function (value) {
-		const styleTag = setupStyleTag("button_primary_bg_color");
+		const styleTag = getStyleTag("button_primary_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1304,7 +1296,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Primary background color hover.
 	customizer("button_primary_bg_color_alt", function (value) {
-		const styleTag = setupStyleTag("button_primary_bg_color_alt");
+		const styleTag = getStyleTag("button_primary_bg_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1326,7 +1318,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Primary text color.
 	customizer("button_primary_text_color", function (value) {
-		const styleTag = setupStyleTag("button_primary_text_color");
+		const styleTag = getStyleTag("button_primary_text_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1343,7 +1335,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Primary text color hover.
 	customizer("button_primary_text_color_alt", function (value) {
-		const styleTag = setupStyleTag("button_primary_text_color_alt");
+		const styleTag = getStyleTag("button_primary_text_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1360,7 +1352,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Border radius.
 	customizer("button_border_radius", function (value) {
-		const styleTag = setupStyleTag("button_border_radius");
+		const styleTag = getStyleTag("button_border_radius");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1372,7 +1364,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Border width.
 	customizer("button_border_width", function (value) {
-		const styleTag = setupStyleTag("button_border_width");
+		const styleTag = getStyleTag("button_border_width");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1384,7 +1376,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Border color.
 	customizer("button_border_color", function (value) {
-		const styleTag = setupStyleTag("button_border_color");
+		const styleTag = getStyleTag("button_border_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1396,7 +1388,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Border color hover.
 	customizer("button_border_color_alt", function (value) {
-		const styleTag = setupStyleTag("button_border_color_alt");
+		const styleTag = getStyleTag("button_border_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1408,7 +1400,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Primary border color.
 	customizer("button_primary_border_color", function (value) {
-		const styleTag = setupStyleTag("button_primary_border_color");
+		const styleTag = getStyleTag("button_primary_border_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1418,7 +1410,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Primary border color hover.
 	customizer("button_primary_border_color_alt", function (value) {
-		const styleTag = setupStyleTag("button_primary_border_color_alt");
+		const styleTag = getStyleTag("button_primary_border_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1430,7 +1422,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background background color.
 	customizer("breadcrumbs_background_color", function (value) {
-		const styleTag = setupStyleTag("breadcrumbs_background_color");
+		const styleTag = getStyleTag("breadcrumbs_background_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1440,7 +1432,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Alignment.
 	customizer("breadcrumbs_alignment", function (value) {
-		const styleTag = setupStyleTag("breadcrumbs_alignment");
+		const styleTag = getStyleTag("breadcrumbs_alignment");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1450,7 +1442,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color.
 	customizer("breadcrumbs_font_color", function (value) {
-		const styleTag = setupStyleTag("breadcrumbs_font_color");
+		const styleTag = getStyleTag("breadcrumbs_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-breadcrumbs {color: " + newValue + ";}";
@@ -1459,7 +1451,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Accent color.
 	customizer("breadcrumbs_accent_color", function (value) {
-		const styleTag = setupStyleTag("breadcrumbs_accent_color");
+		const styleTag = getStyleTag("breadcrumbs_accent_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-breadcrumbs a {color: " + newValue + ";}";
@@ -1468,7 +1460,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Accent color hover.
 	customizer("breadcrumbs_accent_color_alt", function (value) {
-		const styleTag = setupStyleTag("breadcrumbs_accent_color_alt");
+		const styleTag = getStyleTag("breadcrumbs_accent_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1480,7 +1472,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Width.
 	customizer("footer_width", function (value) {
-		const styleTag = setupStyleTag("footer_width");
+		const styleTag = getStyleTag("footer_width");
 
 		value.bind(function (newValue) {
 			newValue = !newValue ? "1200px" : newValue;
@@ -1490,7 +1482,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Height.
 	customizer("footer_height", function (value) {
-		const styleTag = setupStyleTag("footer_height");
+		const styleTag = getStyleTag("footer_height");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1504,7 +1496,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Background color.
 	customizer("footer_bg_color", function (value) {
-		const styleTag = setupStyleTag("footer_bg_color");
+		const styleTag = getStyleTag("footer_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1514,7 +1506,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font color.
 	customizer("footer_font_color", function (value) {
-		const styleTag = setupStyleTag("footer_font_color");
+		const styleTag = getStyleTag("footer_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-inner-footer {color: " + newValue + ";}";
@@ -1523,7 +1515,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Accent color.
 	customizer("footer_accent_color", function (value) {
-		const styleTag = setupStyleTag("footer_accent_color");
+		const styleTag = getStyleTag("footer_accent_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".wpbf-inner-footer a {color: " + newValue + ";}";
@@ -1532,7 +1524,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Accent color hover.
 	customizer("footer_accent_color_alt", function (value) {
-		const styleTag = setupStyleTag("footer_accent_color_alt");
+		const styleTag = getStyleTag("footer_accent_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1544,7 +1536,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Font size.
 	customizer("footer_font_size", function (value) {
-		const styleTag = setupStyleTag("footer_font_size");
+		const styleTag = getStyleTag("footer_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -1560,7 +1552,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Button border radius.
 	customizer("button_border_radius", function (value) {
-		const styleTag = setupStyleTag("button_border_radius");
+		const styleTag = getStyleTag("button_border_radius");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1572,7 +1564,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Custom width.
 	customizer("woocommerce_loop_custom_width", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_custom_width");
+		const styleTag = getStyleTag("woocommerce_loop_custom_width");
 
 		value.bind(function (newValue) {
 			newValue = !newValue ? "1200px" : newValue;
@@ -1585,7 +1577,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Desktop color.
 	customizer("woocommerce_menu_item_desktop_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_menu_item_desktop_color");
+		const styleTag = getStyleTag("woocommerce_menu_item_desktop_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1599,7 +1591,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Mobile color.
 	customizer("woocommerce_menu_item_mobile_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_menu_item_mobile_color");
+		const styleTag = getStyleTag("woocommerce_menu_item_mobile_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1615,7 +1607,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Content alignment.
 	customizer("woocommerce_loop_content_alignment", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_content_alignment");
+		const styleTag = getStyleTag("woocommerce_loop_content_alignment");
 
 		value.bind(function (newValue) {
 			if (newValue === "center") {
@@ -1645,7 +1637,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Image alignment.
 	customizer("woocommerce_loop_image_alignment", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_image_alignment");
+		const styleTag = getStyleTag("woocommerce_loop_image_alignment");
 
 		value.bind(function (newValue) {
 			if (newValue == "left") {
@@ -1666,7 +1658,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Image width.
 	customizer("woocommerce_loop_image_width", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_image_width");
+		const styleTag = getStyleTag("woocommerce_loop_image_width");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1683,7 +1675,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Title font size.
 	customizer("woocommerce_loop_title_size", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_title_size");
+		const styleTag = getStyleTag("woocommerce_loop_title_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -1704,7 +1696,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Title font color.
 	customizer("woocommerce_loop_title_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_title_color");
+		const styleTag = getStyleTag("woocommerce_loop_title_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1722,7 +1714,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Price font size.
 	customizer("woocommerce_loop_price_size", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_price_size");
+		const styleTag = getStyleTag("woocommerce_loop_price_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -1736,7 +1728,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Price font color.
 	customizer("woocommerce_loop_price_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_price_color");
+		const styleTag = getStyleTag("woocommerce_loop_price_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1746,7 +1738,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Out of stock notice.
 	customizer("woocommerce_loop_out_of_stock_font_size", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_out_of_stock_font_size");
+		const styleTag = getStyleTag("woocommerce_loop_out_of_stock_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -1760,7 +1752,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Out of stock color.
 	customizer("woocommerce_loop_out_of_stock_font_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_out_of_stock_font_color");
+		const styleTag = getStyleTag("woocommerce_loop_out_of_stock_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1774,7 +1766,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 	customizer(
 		"woocommerce_loop_out_of_stock_background_color",
 		function (value) {
-			const styleTag = setupStyleTag(
+			const styleTag = getStyleTag(
 				"woocommerce_loop_out_of_stock_background_color",
 			);
 
@@ -1789,7 +1781,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Sale font size.
 	customizer("woocommerce_loop_sale_font_size", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_sale_font_size");
+		const styleTag = getStyleTag("woocommerce_loop_sale_font_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -1800,7 +1792,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Sale font color.
 	customizer("woocommerce_loop_sale_font_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_sale_font_color");
+		const styleTag = getStyleTag("woocommerce_loop_sale_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1810,7 +1802,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Sale background color.
 	customizer("woocommerce_loop_sale_background_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_loop_sale_background_color");
+		const styleTag = getStyleTag("woocommerce_loop_sale_background_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1822,7 +1814,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Custom width.
 	customizer("woocommerce_single_custom_width", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_custom_width");
+		const styleTag = getStyleTag("woocommerce_single_custom_width");
 
 		value.bind(function (newValue) {
 			newValue = !newValue ? "1200px" : newValue;
@@ -1833,7 +1825,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Image alignment.
 	customizer("woocommerce_single_alignment", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_alignment");
+		const styleTag = getStyleTag("woocommerce_single_alignment");
 
 		value.bind(function (newValue) {
 			if (newValue === "right") {
@@ -1872,7 +1864,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Image width.
 	customizer("woocommerce_single_image_width", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_image_width");
+		const styleTag = getStyleTag("woocommerce_single_image_width");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1896,7 +1888,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Price font size.
 	customizer("woocommerce_single_price_size", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_price_size");
+		const styleTag = getStyleTag("woocommerce_single_price_size");
 
 		value.bind(function (newValue) {
 			var suffix = $.isNumeric(newValue) ? "px" : "";
@@ -1910,7 +1902,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Price font color.
 	customizer("woocommerce_single_price_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_price_color");
+		const styleTag = getStyleTag("woocommerce_single_price_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1922,7 +1914,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Tabs background color.
 	customizer("woocommerce_single_tabs_background_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_tabs_background_color");
+		const styleTag = getStyleTag("woocommerce_single_tabs_background_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1934,7 +1926,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Tabs background color hover.
 	customizer("woocommerce_single_tabs_background_color_alt", function (value) {
-		const styleTag = setupStyleTag(
+		const styleTag = getStyleTag(
 			"woocommerce_single_tabs_background_color_alt",
 		);
 
@@ -1952,7 +1944,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 	customizer(
 		"woocommerce_single_tabs_background_color_active",
 		function (value) {
-			const styleTag = setupStyleTag(
+			const styleTag = getStyleTag(
 				"woocommerce_single_tabs_background_color_active",
 			);
 
@@ -1969,7 +1961,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Tabs font color.
 	customizer("woocommerce_single_tabs_font_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_tabs_font_color");
+		const styleTag = getStyleTag("woocommerce_single_tabs_font_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1981,7 +1973,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Tabs font color hover.
 	customizer("woocommerce_single_tabs_font_color_alt", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_tabs_font_color_alt");
+		const styleTag = getStyleTag("woocommerce_single_tabs_font_color_alt");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -1993,7 +1985,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Tabs font color active.
 	customizer("woocommerce_single_tabs_font_color_active", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_tabs_font_color_active");
+		const styleTag = getStyleTag("woocommerce_single_tabs_font_color_active");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -2007,7 +1999,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Woocommerce info notice's accent color.
 	customizer("woocommerce_info_notice_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_info_notice_color");
+		const styleTag = getStyleTag("woocommerce_info_notice_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -2024,7 +2016,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Woocommerce success notice's accent color.
 	customizer("woocommerce_message_notice_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_message_notice_color");
+		const styleTag = getStyleTag("woocommerce_message_notice_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -2041,7 +2033,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Woocommerce error notice's accent color.
 	customizer("woocommerce_error_notice_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_error_notice_color");
+		const styleTag = getStyleTag("woocommerce_error_notice_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -2058,7 +2050,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Woocommerce general notice's background color.
 	customizer("woocommerce_notice_bg_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_notice_bg_color");
+		const styleTag = getStyleTag("woocommerce_notice_bg_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -2068,7 +2060,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Woocommerce general notice's text color.
 	customizer("woocommerce_notice_text_color", function (value) {
-		const styleTag = setupStyleTag("woocommerce_notice_text_color");
+		const styleTag = getStyleTag("woocommerce_notice_text_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML = ".woocommerce-message {color: " + newValue + ";}";
@@ -2077,7 +2069,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Tabs font size.
 	customizer("woocommerce_single_tabs_font_size", function (value) {
-		const styleTag = setupStyleTag("woocommerce_single_tabs_font_size");
+		const styleTag = getStyleTag("woocommerce_single_tabs_font_size");
 
 		value.bind(function (newValue) {
 			const suffix = $.isNumeric(newValue) ? "px" : "";
@@ -2094,7 +2086,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Desktop color.
 	customizer("edd_menu_item_desktop_color", function (value) {
-		const styleTag = setupStyleTag("edd_menu_item_desktop_color");
+		const styleTag = getStyleTag("edd_menu_item_desktop_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -2108,7 +2100,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Mobile color.
 	customizer("edd_menu_item_mobile_color", function (value) {
-		const styleTag = setupStyleTag("edd_menu_item_mobile_color");
+		const styleTag = getStyleTag("edd_menu_item_mobile_color");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -2124,7 +2116,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 	// Button border radius.
 	customizer("button_border_radius", function (value) {
-		const styleTag = setupStyleTag("button_border_radius");
+		const styleTag = getStyleTag("button_border_radius");
 
 		value.bind(function (newValue) {
 			styleTag.innerHTML =
@@ -2141,26 +2133,34 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 		const minHeightControlId = `${controlIdPrefix}min_height`;
 
 		customizer(minHeightControlId, function (value) {
-			const styleTag = setupStyleTag(minHeightControlId);
+			const styleTag = getStyleTag(minHeightControlId);
 			const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
 
 			value.bind(function (newValue) {
-				writeResponsiveCSS(styleTag, selector, "min-height", newValue);
+				const minHeightValue = valueHasUnit(newValue)
+					? newValue
+					: newValue + "px";
+
+				writeResponsiveCSS(styleTag, selector, "min-height", minHeightValue);
 			});
 		});
 
 		var vPaddingControlId = `${controlIdPrefix}vertical_padding`;
 
 		customizer(vPaddingControlId, function (value) {
-			const styleTag = setupStyleTag(vPaddingControlId);
+			const styleTag = getStyleTag(vPaddingControlId);
 			const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
 
 			value.bind(function (newValue) {
+				const vPaddingValue = valueHasUnit(newValue)
+					? newValue
+					: `${newValue}px`;
+
 				writeResponsiveCSS(
 					styleTag,
 					selector,
 					["padding-top", "padding-bottom"],
-					newValue,
+					vPaddingValue,
 				);
 			});
 		});
@@ -2168,7 +2168,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 		const bgColorControlId = `${controlIdPrefix}bg_color`;
 
 		customizer(bgColorControlId, function (value) {
-			const styleTag = setupStyleTag(bgColorControlId);
+			const styleTag = getStyleTag(bgColorControlId);
 
 			value.bind(function (newValue) {
 				if (!newValue) return;
@@ -2184,7 +2184,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 		const textColorControlId = `${controlIdPrefix}text_color`;
 
 		customizer(textColorControlId, function (value) {
-			const styleTag = setupStyleTag(textColorControlId);
+			const styleTag = getStyleTag(textColorControlId);
 
 			value.bind(function (newValue) {
 				if (!newValue) return;
@@ -2336,14 +2336,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 					link.classList.remove("wpbf-button-small");
 					link.classList.remove("wpbf-button-large");
-					link.classList.remove("wpbf-button-full");
 
 					if ("small" === newValue) {
 						link.classList.add("wpbf-button-small");
 					} else if ("large" === newValue) {
 						link.classList.add("wpbf-button-large");
-					} else if ("full" === newValue) {
-						link.classList.add("wpbf-button-full");
 					}
 				});
 			},
@@ -2364,6 +2361,20 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 			cssProps: "border-width",
 			useValueSuffix: true,
 		});
+
+		// Listen to the header builder's border style control.
+		customizer(
+			`${controlIdPrefix}_border_style`,
+			function (value: WpbfCustomizeSetting<string>) {
+				const styleTag = getStyleTag(controlIdPrefix);
+
+				value.bind(function (newValue) {
+					styleTag.innerHTML = `.wpbf-button.${controlIdPrefix} {
+						border-style: ${newValue};
+					}`;
+				});
+			},
+		);
 
 		// Listen to the header builder's border color control.
 		listenToBuilderMulticolorControl({
@@ -2397,7 +2408,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 		customizer(
 			props.controlId,
 			function (value: WpbfCustomizeSetting<Record<string, string>>) {
-				const styleTag = setupStyleTag(props.controlId);
+				const styleTag = getStyleTag(props.controlId);
 				const states = ["default", "hover", "active", "focus"];
 
 				value.bind((newValue) => {
@@ -2441,7 +2452,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 		customizer(
 			props.controlId,
 			function (values: WpbfCustomizeSetting<string | DevicesValue>) {
-				const styleTag = setupStyleTag(props.controlId);
+				const styleTag = getStyleTag(props.controlId);
 
 				values.bind((newValues) => {
 					if ("string" === typeof newValues) {
@@ -2453,6 +2464,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interf
 
 					for (const device in newValues) {
 						if (!newValues.hasOwnProperty(device)) continue;
+						if (newValues[device] === "") continue;
 
 						const deviceValue = props.useValueSuffix
 							? valueHasUnit(newValues[device])

@@ -50,6 +50,20 @@ class SelectControl extends BaseControl {
 	public $clearable = false;
 
 	/**
+	 * Whether the select is searchable.
+	 *
+	 * @var bool
+	 */
+	public $searchable = true;
+
+	/**
+	 * The layout style.
+	 *
+	 * @var string
+	 */
+	public $layout_style = 'default';
+
+	/**
 	 * Constructor.
 	 *
 	 * Supplied `$args` override class property defaults.
@@ -148,10 +162,10 @@ class SelectControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		// @link https://react-select.com/props
-		$this->json['isClearable'] = $this->clearable;
-		$this->json['isMulti']     = $this->multiple;
-		$this->json['placeholder'] = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'page-builder-framework' );
+		$this->json['isClearable']  = $this->clearable;
+		$this->json['isSearchable'] = $this->searchable;
+		$this->json['isMulti']      = $this->multiple;
+		$this->json['placeholder']  = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'page-builder-framework' );
 
 		// Will be a custom implementation, couldn't find an official prop to set this in react-select.
 		$this->json['maxSelections'] = $this->max_selections;
@@ -160,6 +174,8 @@ class SelectControl extends BaseControl {
 			// translators: %s is the limit of selection number.
 			'maxLimitReached' => sprintf( esc_html__( 'You can only select %s items', 'page-builder-framework' ), $this->max_selections ),
 		);
+
+		$this->json['layoutStyle'] = $this->layout_style;
 
 	}
 
