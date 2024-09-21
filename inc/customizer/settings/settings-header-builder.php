@@ -59,3 +59,6 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/search-se
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-1-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-2-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/html-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/html-2-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/menu-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/menu-2-section.php';

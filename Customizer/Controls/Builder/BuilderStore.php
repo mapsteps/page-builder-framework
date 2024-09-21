@@ -42,12 +42,12 @@ final class BuilderStore {
 			array(
 				'key'     => 'menu_1',
 				'label'   => __( 'Menu 1', 'page-builder-framework' ),
-				'section' => '',
+				'section' => 'wpbf_header_builder_menu_1_section',
 			),
 			array(
 				'key'     => 'menu_2',
 				'label'   => __( 'Menu 2', 'page-builder-framework' ),
-				'section' => '',
+				'section' => 'wpbf_header_builder_menu_2_section',
 			),
 			array(
 				'key'     => 'html_1',
@@ -57,7 +57,7 @@ final class BuilderStore {
 			array(
 				'key'     => 'html_2',
 				'label'   => __( 'HTML 2', 'page-builder-framework' ),
-				'section' => '',
+				'section' => 'wpbf_header_builder_html_2_section',
 			),
 		);
 
