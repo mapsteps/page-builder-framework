@@ -155,6 +155,7 @@ function wpbf_scripts() {
 	wp_add_inline_script(
 		'wpbf-site',
 		'var WpbfObj = {
+			siteUrl: "' . esc_url( site_url() ) . '",
 			ajaxurl: "' . admin_url( 'admin-ajax.php' ) . '"
 		};',
 		'before'

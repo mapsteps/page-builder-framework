@@ -566,15 +566,10 @@
 }
 
 .wpbf-header-column {
-	flex-grow: 1;
+	flex-grow: 0;
+	flex-shrink: 0;
 
-	&.wpbf-content-center {
-		flex-grow: 0;
-		flex-shrink: 0;
-	}
-
-	& > .wpbf-menu,
-	& > nav {
+	&.wpbf-column-grow {
 		flex-grow: 1;
 	}
 }

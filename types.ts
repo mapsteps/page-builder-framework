@@ -105,6 +105,10 @@ declare global {
 	interface Window {
 		ajaxurl?: string;
 		wp: wp;
+		WpbfObj: {
+			siteUrl: string;
+			ajaxurl: string;
+		};
 		WpbfUtils: WpbfUtils;
 		WpbfTheme: WpbfTheme;
 		WpbfPremium: WpbfPremium;

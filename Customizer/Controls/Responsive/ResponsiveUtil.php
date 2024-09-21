@@ -3,7 +3,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Responsive;
 
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericSanitizer;
-use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 
 class ResponsiveUtil {
 
@@ -24,6 +23,17 @@ class ResponsiveUtil {
 		'tablet'  => 'dashicons-tablet',
 		'mobile'  => 'dashicons-smartphone',
 	];
+
+	/**
+	 * Get predefined devices names.
+	 *
+	 * @return string[]
+	 */
+	public function devices() {
+
+		return $this->default_devices;
+
+	}
 
 	/**
 	 * Enqueue responsive control's assets.

@@ -45,9 +45,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Open in New Tab', 'page-builder-framework' ) )
 	->defaultValue( false )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'new_tab' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -62,9 +60,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Link Text', 'page-builder-framework' ) )
 	->defaultValue( 'Button 1' )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'text' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -72,10 +68,9 @@ wpbf_customizer_field()
 	->type( 'url' )
 	->tab( 'general' )
 	->label( __( 'Link URL', 'page-builder-framework' ) )
+	->defaultValue( '{site_url}' )
 	->transport( 'postMessage' )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'url' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -91,9 +86,7 @@ wpbf_customizer_field()
 	->properties( array(
 		'multiple' => true,
 	) )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'rel' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 /* Design Tab */
@@ -103,16 +96,14 @@ wpbf_customizer_field()
 	->type( 'select' )
 	->tab( 'design' )
 	->label( __( 'Button Size', 'page-builder-framework' ) )
-	->defaultValue( 'default' )
+	->defaultValue( '' )
 	->choices( array(
-		'default' => __( 'Default', 'page-builder-framework' ),
-		'small'   => __( 'Small', 'page-builder-framework' ),
-		'medium'  => __( 'Medium', 'page-builder-framework' ),
-		'large'   => __( 'Large', 'page-builder-framework' ),
+		''      => __( 'Default', 'page-builder-framework' ),
+		'small' => __( 'Small', 'page-builder-framework' ),
+		'large' => __( 'Large', 'page-builder-framework' ),
+		'full'  => __( 'Full', 'page-builder-framework' ),
 	) )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'size' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -120,7 +111,6 @@ wpbf_customizer_field()
 	->type( 'responsive-input-slider' )
 	->tab( 'design' )
 	->label( __( 'Border Radius', 'page-builder-framework' ) )
-	->defaultValue( 4 )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
@@ -134,7 +124,6 @@ wpbf_customizer_field()
 	->type( 'responsive-input-slider' )
 	->tab( 'design' )
 	->label( __( 'Border Width', 'page-builder-framework' ) )
-	->defaultValue( 1 )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,

@@ -45,9 +45,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Open in New Tab', 'page-builder-framework' ) )
 	->defaultValue( false )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'new_tab' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -62,9 +60,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Link Text', 'page-builder-framework' ) )
 	->defaultValue( 'Button 2' )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'text' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -73,9 +69,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Link URL', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'url' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -91,9 +85,7 @@ wpbf_customizer_field()
 	->properties( array(
 		'multiple' => true,
 	) )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'rel' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 /* Design Tab */
@@ -110,9 +102,7 @@ wpbf_customizer_field()
 		'medium'  => __( 'Medium', 'page-builder-framework' ),
 		'large'   => __( 'Large', 'page-builder-framework' ),
 	) )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'size' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()

@@ -359,3 +359,290 @@ function wpbf_custom_default_fonts( $standard_fonts ) {
 
 }
 add_filter( 'wpbf_fonts_standard_fonts', 'wpbf_custom_default_fonts', 0 );
+
+/**
+ * ----------------------------------------------------------------------
+ * Common Builder Functions
+ *
+ * These functions are used by both header builder and footer builder.
+ * ----------------------------------------------------------------------
+ */
+
+/**
+ * Render builder widget for frontend.
+ *
+ * @param string $builder_type The builder type. Accepts 'header_builder' or 'footer_builder'.
+ * @param string $widget_key The widget key.
+ * @param string $column_position The column position.
+ */
+function wpbf_render_builder_widget( $builder_type, $widget_key, $column_position = '' ) {
+
+	if ( empty( $widget_key ) ) {
+		return;
+	}
+
+	$setting_group = "wpbf_$builder_type" . '_' . $widget_key;
+
+	switch ( $widget_key ) {
+		case 'logo':
+			wpbf_render_builder_logo_widget( $setting_group );
+			break;
+		case 'search':
+			wpbf_render_builder_search_widget( $setting_group );
+			break;
+		case 'button_1':
+		case 'button_2':
+			wpbf_render_builder_button_widget( $setting_group );
+			break;
+		case 'menu_1':
+		case 'menu_2':
+			wpbf_render_builder_menu_widget( $setting_group, $column_position );
+			break;
+		case 'html_1':
+		case 'html_2':
+			wpbf_render_builder_html_widget( $setting_group );
+			break;
+	}
+
+}
+
+/**
+ * Render the builder logo widget.
+ *
+ * @param string $setting_group The setting group key.
+ */
+function wpbf_render_builder_logo_widget( $setting_group ) {
+
+	get_template_part( 'inc/template-parts/logo/logo' );
+
+}
+
+/**
+ * Render the builder search widget.
+ *
+ * @param string $setting_group The setting group key.
+ */
+function wpbf_render_builder_search_widget( $setting_group ) {
+
+	echo wp_kses_post( wpbf_search_menu_item( false, false ) );
+
+}
+
+/**
+ * Render the builder button widget.
+ *
+ * @param string $setting_group The setting group key.
+ */
+function wpbf_render_builder_button_widget( $setting_group ) {
+
+	$link_text = get_theme_mod( $setting_group . '_text', '' );
+	$link_url  = get_theme_mod( $setting_group . '_url', '' );
+
+	if ( empty( $link_text ) && empty( $link_url ) ) {
+		return;
+	}
+
+	$link_rel = '';
+
+	$link_rel_values = get_theme_mod( $setting_group . '_rel', [] );
+	$link_rel_values = ! is_array( $link_rel_values ) ? [] : $link_rel_values;
+
+	if ( ! empty( $link_rel_values ) ) {
+		$link_rel = implode( ' ', $link_rel_values );
+	}
+
+	$open_new_tab = get_theme_mod( $setting_group . '_new_tab', false );
+	$button_size  = get_theme_mod( $setting_group . '_size', '' );
+	$button_class = 'wpbf-button' . ( empty( $button_size ) ? '' : ' wpbf-button-' . $button_size ) . ' ' . $setting_group;
+	?>
+
+	<a
+		href="<?php echo esc_url( $link_url ); ?>"
+		class="<?php echo esc_attr( $button_class ); ?>"
+		<?php echo esc_attr( empty( $open_new_tab ) ? '' : 'target="_blank"' ); ?>
+		<?php echo esc_attr( empty( $link_rel ) ? '' : ' rel="' . $link_rel . '"' ); ?>
+	>
+		<?php echo esc_html( $link_text ); ?>
+	</a>
+
+	<?php
+}
+
+/**
+ * Render the builder menu widget.
+ *
+ * @param string $setting_group The setting group key.
+ * @param string $column_position The column position. Accepts 'left', 'center', 'right', or empty string.
+ */
+function wpbf_render_builder_menu_widget( $setting_group, $column_position = '' ) {
+
+	$menu_id = get_theme_mod( $setting_group . '_menu_id', '' );
+
+	if ( empty( $menu_id ) ) {
+		return;
+	}
+
+	$menu_position_class = 'wpbf-menu-' . $column_position;
+	?>
+
+	<nav class="navigation wpbf-clearfix <?php echo esc_attr( $menu_position_class ); ?>" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>">
+
+		<?php
+		wp_nav_menu(
+			array(
+				'menu'        => $menu_id,
+				'container'   => false,
+				'menu_class'  => 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect(),
+				'depth'       => 4,
+				'fallback_cb' => false,
+			)
+		);
+		?>
+
+	</nav>
+
+	<?php
+}
+
+/**
+ * Render the builder html widget.
+ *
+ * @param string $setting_group The setting group key.
+ */
+function wpbf_render_builder_html_widget( $setting_group ) {
+
+	$content = get_theme_mod( $setting_group . '_content', '' );
+	?>
+
+	<div class="wpbf-html-widget">
+		<?php echo wp_kses_post( $content ); ?>
+	</div>
+
+	<?php
+}
+
+/**
+ * ----------------------------------------------------------------------
+ * Header Builder Functions
+ * ----------------------------------------------------------------------
+ */
+function wpbf_header_builder_enabled() {
+
+	$enabled = get_theme_mod( 'wpbf_enable_header_builder', false );
+
+	return $enabled ? true : false;
+
+}
+
+/**
+ * Render header builder for frontend.
+ *
+ * This function will be hooked into `wpbf_header_builder` action.
+ *
+ * @see page-builder-framework/inc/init.php
+ */
+function wpbf_do_header_builder() {
+
+	$rows = get_theme_mod( 'wpbf_header_builder', array() );
+
+	if ( empty( $rows ) ) {
+		return;
+	}
+
+	$active_rows = [];
+
+	foreach ( $rows as $row_key => $columns ) {
+		if ( empty( $row_key ) || empty( $columns ) ) {
+			continue;
+		}
+
+		foreach ( $columns as $column_key => $widget_keys ) {
+			if ( empty( $widget_keys ) ) {
+				continue;
+			}
+
+			if ( ! isset( $active_rows[ $row_key ] ) ) {
+				$active_rows[ $row_key ] = [];
+			}
+
+			$active_rows[ $row_key ][ $column_key ] = $widget_keys;
+		}
+	}
+
+	if ( empty( $active_rows ) ) {
+		return;
+	}
+
+	foreach ( $active_rows as $row_key => $columns ) {
+		if ( empty( $row_key ) || empty( $columns ) ) {
+			continue;
+		}
+
+		$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
+
+		$dimensions   = [ 'large', 'medium', 'small' ];
+		$visibilities = get_theme_mod( $row_id_prefix . 'visibility', null );
+		$visibilities = is_array( $visibilities ) ? $visibilities : [ 'large', 'medium', 'small' ];
+
+		$hidden_dimensions = array_diff( $dimensions, $visibilities );
+
+		$visibility_class = implode( ' ', array_map( function ( $dimension ) {
+			return 'wpbf-hidden-' . esc_attr( $dimension );
+		}, $hidden_dimensions ) );
+
+		$use_container = get_theme_mod( $row_id_prefix . 'use_container', null );
+		$use_container = is_null( $use_container ) ? true : boolval( $use_container );
+
+		echo '<div class="wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class ) . '">';
+
+		if ( $use_container ) {
+			echo '<div class="wpbf-container wpbf-container-center">';
+		}
+
+		echo '<div class="wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
+
+		foreach ( $columns as $column_key => $widget_keys ) {
+			$column_class    = 'wpbf-flex wpbf-header-column';
+			$alignment_class = 'wpbf-content-center';
+			$column_position = '';
+
+			if ( false !== stripos( $column_key, '_start' ) ) {
+				$alignment_class = 'wpbf-content-start';
+				$column_position = 'left';
+			} elseif ( false !== stripos( $column_key, '_end' ) ) {
+				$alignment_class = 'wpbf-content-end';
+				$column_position = 'right';
+			}
+
+			if (
+				in_array( 'menu_1', $widget_keys, true )
+				|| in_array( 'menu_2', $widget_keys, true )
+				|| in_array( 'html_1', $widget_keys, true )
+				|| in_array( 'html_2', $widget_keys, true )
+			) {
+				$column_class .= ' wpbf-column-grow';
+			}
+
+			echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
+
+			foreach ( $widget_keys as $widget_key ) {
+				if ( empty( $widget_key ) ) {
+					continue;
+				}
+
+				wpbf_render_builder_widget( 'header_builder', $widget_key, $column_position );
+			}
+
+			echo '</div>';
+		}
+
+		echo '</div>';
+
+		if ( $use_container ) {
+			echo '</div>';
+		}
+
+		echo '</div>';
+	}
+
+}
