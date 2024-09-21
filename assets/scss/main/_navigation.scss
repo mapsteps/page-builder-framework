@@ -559,3 +559,22 @@
 		display: none;
 	}
 }
+
+/* Header Builder */
+.wpbf-row-content {
+	width: 100%;
+}
+
+.wpbf-header-column {
+	flex-grow: 1;
+
+	&.wpbf-content-center {
+		flex-grow: 0;
+		flex-shrink: 0;
+	}
+
+	& > .wpbf-menu,
+	& > nav {
+		flex-grow: 1;
+	}
+}

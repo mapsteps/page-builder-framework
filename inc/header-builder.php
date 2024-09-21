@@ -71,15 +71,19 @@ function wpbf_do_header_builder() {
 
 		echo '<div class="wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
 
-		$col_class = 'wpbf-flex';
+		$col_class = 'wpbf-flex wpbf-header-column';
+
+		$column_position = '';
 
 		foreach ( $cols as $col_key => $widget_keys ) {
 			$alignment_class = 'wpbf-content-center';
 
 			if ( false !== stripos( $col_key, '_start' ) ) {
 				$alignment_class = 'wpbf-content-start';
+				$column_position = 'left';
 			} elseif ( false !== stripos( $col_key, '_end' ) ) {
 				$alignment_class = 'wpbf-content-end';
+				$column_position = 'right';
 			}
 
 			echo '<div class="' . esc_attr( "$col_class $alignment_class" ) . '">';
@@ -89,7 +93,7 @@ function wpbf_do_header_builder() {
 					continue;
 				}
 
-				wpbf_render_builder_widget( $widget_key );
+				wpbf_render_builder_widget( 'header_builder', $widget_key, $column_position );
 			}
 
 			echo '</div>';
@@ -128,36 +132,36 @@ function wpbf_do_header_builder_secondary_row() {
 /**
  * Render builder widget.
  *
+ * @param string $builder_type The builder type. Accepts 'header_builder' or 'footer_builder'.
  * @param string $widget_key The widget key.
+ * @param string $column_position The column position.
  */
-function wpbf_render_builder_widget( $widget_key ) {
+function wpbf_render_builder_widget( $builder_type, $widget_key, $column_position = '' ) {
 
 	if ( empty( $widget_key ) ) {
 		return;
 	}
 
+	$setting_group = "wpbf_$builder_type" . '_' . $widget_key;
+
 	switch ( $widget_key ) {
 		case 'logo':
-			wpbf_render_builder_logo_widget( $widget_key );
+			wpbf_render_builder_logo_widget( $setting_group );
 			break;
 		case 'search':
-			wpbf_render_builder_search_widget( $widget_key );
+			wpbf_render_builder_search_widget( $setting_group );
 			break;
 		case 'button_1':
-			wpbf_render_builder_button_widget( $widget_key );
-			break;
 		case 'button_2':
-			wpbf_render_builder_button_widget( $widget_key );
+			wpbf_render_builder_button_widget( $setting_group );
 			break;
 		case 'menu_1':
-			wpbf_render_builder_menu_widget( $widget_key );
-			break;
 		case 'menu_2':
-			wpbf_render_builder_menu_widget( $widget_key );
+			wpbf_render_builder_menu_widget( $setting_group, $column_position );
 			break;
 		case 'html_1':
 		case 'html_2':
-			wpbf_render_builder_html_widget( 'wpbf_header_builder_' . $widget_key . '_content' );
+			wpbf_render_builder_html_widget( $setting_group );
 			break;
 	}
 
@@ -166,9 +170,9 @@ function wpbf_render_builder_widget( $widget_key ) {
 /**
  * Render the builder logo widget.
  *
- * @param string $widget_key The widget key.
+ * @param string $setting_group The setting group key.
  */
-function wpbf_render_builder_logo_widget( $widget_key ) {
+function wpbf_render_builder_logo_widget( $setting_group ) {
 
 	get_template_part( 'inc/template-parts/logo/logo' );
 
@@ -177,9 +181,9 @@ function wpbf_render_builder_logo_widget( $widget_key ) {
 /**
  * Render the builder search widget.
  *
- * @param string $widget_key The widget key.
+ * @param string $setting_group The setting group key.
  */
-function wpbf_render_builder_search_widget( $widget_key ) {
+function wpbf_render_builder_search_widget( $setting_group ) {
 
 	wpbf_search_menu_item( false, false );
 
@@ -188,9 +192,9 @@ function wpbf_render_builder_search_widget( $widget_key ) {
 /**
  * Render the builder button widget.
  *
- * @param string $widget_key The widget key.
+ * @param string $setting_group The setting group key.
  */
-function wpbf_render_builder_button_widget( $widget_key ) {
+function wpbf_render_builder_button_widget( $setting_group ) {
 
 	// todo
 }
@@ -198,25 +202,47 @@ function wpbf_render_builder_button_widget( $widget_key ) {
 /**
  * Render the builder menu widget.
  *
- * @param string $widget_key The widget key.
+ * @param string $setting_group The setting group key.
+ * @param string $column_position The column position. Accepts 'left', 'center', 'right', or empty string.
  */
-function wpbf_render_builder_menu_widget( $widget_key ) {
+function wpbf_render_builder_menu_widget( $setting_group, $column_position = '' ) {
 
-	// todo
+	$menu_id = get_theme_mod( $setting_group . '_menu_id', '' );
+
+	if ( empty( $menu_id ) ) {
+		return;
+	}
+
+	$menu_position_class = 'wpbf-menu-' . $column_position;
+	?>
+
+	<nav class="navigation wpbf-clearfix <?php echo esc_attr( $menu_position_class ); ?>" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>">
+
+		<?php
+		wp_nav_menu(
+			array(
+				'menu'        => $menu_id,
+				'container'   => false,
+				'menu_class'  => 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect(),
+				'depth'       => 4,
+				'fallback_cb' => false,
+			)
+		);
+		?>
+
+	</nav>
+
+	<?php
 }
 
 /**
  * Render the builder html widget.
  *
- * @param string $setting_id The setting id.
+ * @param string $setting_group The setting group key.
  */
-function wpbf_render_builder_html_widget( $setting_id ) {
+function wpbf_render_builder_html_widget( $setting_group ) {
 
-	$content = get_theme_mod( $setting_id, '' );
-
-	if ( empty( $content ) ) {
-		return;
-	}
+	$content = get_theme_mod( $setting_group . '_content', '' );
 	?>
 
 	<div class="wpbf-html-widget">

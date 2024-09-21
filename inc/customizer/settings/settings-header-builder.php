@@ -22,18 +22,29 @@ wpbf_customizer_field()
 	->type( 'headline-toggle' )
 	->label( __( 'Header Builder', 'page-builder-framework' ) )
 	->defaultValue( false )
+	->transport( 'auto' )
 	->properties([
 		'wrapper_attrs' => [
 			'class'                  => 'wpbf-builder-toggle',
 			'data-connected-builder' => 'wpbf_header_builder',
 		],
 	])
+	->partialRefresh( [
+		'headerbuilder_toggle' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function () {
+				return get_template_part( 'inc/template-parts/header-builder' );
+			},
+		),
+	] )
 	->addToSection( 'wpbf_header_builder_main_section' );
 
 wpbf_customizer_field()
 	->id( 'wpbf_header_builder' )
 	->type( 'builder' )
 	->description( __( 'Drag and drop widgets to build your site header.', 'page-builder-framework' ) )
+	->transport( 'auto' )
 	->properties( array(
 		'available_widgets' => BuilderStore::headerBuilderAvailableWidgets(),
 		'available_rows'    => BuilderStore::headerBuilderAvailableRows(),
@@ -54,7 +65,9 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/top-row-s
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/main-row-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/bottom-row-section.php';
 
-// Widget sections
+// Column sections.
+
+// Widget sections.
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/search-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-1-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-2-section.php';

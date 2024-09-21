@@ -130,9 +130,6 @@ add_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
 
 $header_builder_enabled = get_theme_mod( 'wpbf_enable_header_builder', false );
 
-// var_dump( $header_builder_enabled );
-// exit;
-
 if ( $header_builder_enabled ) {
 	require WPBF_THEME_DIR . '/inc/header-builder.php';
 }

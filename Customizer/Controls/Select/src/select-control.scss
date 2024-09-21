@@ -15,3 +15,16 @@
 .wpbf-control-form .select2-container {
 	max-width: 100%;
 }
+
+.wp-customizer > .select2-container .select2-search {
+	padding: 5px;
+}
+
+.wp-customizer > .select2-container .select2-search__field {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.wp-customizer > .select2-container .select2-results__option {
+	margin-bottom: 0;
+}

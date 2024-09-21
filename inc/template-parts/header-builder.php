@@ -16,7 +16,11 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 	<?php do_action( 'wpbf_header_open' ); ?>
 
-	<?php do_action( 'wpbf_header_builder' ); ?>
+	<div class="<?php wpbf_navigation_classes(); ?>" <?php wpbf_navigation_attributes(); ?>>
+
+		<?php do_action( 'wpbf_header_builder' ); ?>
+
+	</div>
 
 	<?php do_action( 'wpbf_header_close' ); ?>
 
