@@ -14,6 +14,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
+use Wpbf\Vars;
 
 /**
  * Initialize Wpbf customizer.
@@ -536,13 +537,17 @@ function wpbf_header_builder_enabled() {
 }
 
 /**
- * Render header builder for frontend.
+ * Hook functions to be used when header builder is enabled.
  *
- * This function will be hooked into `wpbf_header_builder` action.
+ * This function will called directly in `template-parts/header.php` file.
  *
- * @see page-builder-framework/inc/init.php
+ * @see page-builder-framework/inc/template-parts/header.php
  */
-function wpbf_do_header_builder() {
+function wpbf_header_builder_hooks() {
+
+	if ( ! wpbf_header_builder_enabled() ) {
+		return;
+	}
 
 	$rows = get_theme_mod( 'wpbf_header_builder', array() );
 
@@ -579,71 +584,147 @@ function wpbf_do_header_builder() {
 			continue;
 		}
 
-		$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
+		Vars::set( "header_builder_$row_key", $columns );
+	}
 
-		$dimensions   = [ 'large', 'medium', 'small' ];
-		$visibilities = get_theme_mod( $row_id_prefix . 'visibility', null );
-		$visibilities = is_array( $visibilities ) ? $visibilities : [ 'large', 'medium', 'small' ];
+	// Unhook functions which are supposed to be used when header builder is disabled.
+	remove_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
+	remove_action( 'wpbf_navigation', 'wpbf_menu' );
 
-		$hidden_dimensions = array_diff( $dimensions, $visibilities );
+	// Hook functions which are supposed to be used when header builder is enabled.
+	add_action( 'wpbf_pre_header', 'wpbf_do_header_builder_pre_header' );
+	add_action( 'wpbf_navigation', 'wpbf_do_header_builder_navigation' );
 
-		$visibility_class = implode( ' ', array_map( function ( $dimension ) {
-			return 'wpbf-hidden-' . esc_attr( $dimension );
-		}, $hidden_dimensions ) );
+}
 
-		$use_container = get_theme_mod( $row_id_prefix . 'use_container', null );
-		$use_container = is_null( $use_container ) ? true : boolval( $use_container );
+/**
+ * An action to render pre-header for header builder.
+ *
+ * This action will be hooked to `wpbf_pre_header` action hook.
+ *
+ * @see wpbf_header_builder_hooks()
+ */
+function wpbf_do_header_builder_pre_header() {
 
-		echo '<div class="wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class ) . '">';
+	$pre_header_columns = Vars::get( 'header_builder_row_1' );
 
-		if ( $use_container ) {
-			echo '<div class="wpbf-container wpbf-container-center">';
+	if ( empty( $pre_header_columns ) || ! is_array( $pre_header_columns ) ) {
+		return;
+	}
+	?>
+
+	<div id="pre-header" class="wpbf-pre-header">
+		<?php
+		do_action( 'wpbf_before_pre_header' );
+		wpbf_header_builder_row( 'row_1', $pre_header_columns );
+		do_action( 'wpbf_after_pre_header' );
+		?>
+	</div>
+
+	<?php
+}
+
+/**
+ * An action to render navigation for header builder.
+ *
+ * This action will be hooked to `wpbf_navigation` action hook.
+ *
+ * @see wpbf_header_builder_hooks()
+ */
+function wpbf_do_header_builder_navigation() {
+
+	$row_2_columns = Vars::get( 'header_builder_row_2' );
+
+	if ( ! empty( $row_2_columns ) && is_array( $row_2_columns ) ) {
+		wpbf_header_builder_row( 'row_2', $row_2_columns );
+	}
+
+	$row_3_columns = Vars::get( 'header_builder_row_3' );
+
+	if ( ! empty( $row_3_columns ) && is_array( $row_3_columns ) ) {
+		wpbf_header_builder_row( 'row_3', $row_3_columns );
+	}
+
+}
+
+/**
+ * Render a header builder row.
+ *
+ * @param string $row_key The row key.
+ * @param array  $columns The row columns.
+ */
+function wpbf_header_builder_row( $row_key, $columns ) {
+
+	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
+
+	$dimensions   = [ 'large', 'medium', 'small' ];
+	$visibilities = get_theme_mod( $row_id_prefix . 'visibility', null );
+	$visibilities = is_array( $visibilities ) ? $visibilities : [ 'large', 'medium', 'small' ];
+
+	$hidden_dimensions = array_diff( $dimensions, $visibilities );
+
+	$visibility_class = implode( ' ', array_map( function ( $dimension ) {
+		return 'wpbf-hidden-' . esc_attr( $dimension );
+	}, $hidden_dimensions ) );
+
+	$use_container = get_theme_mod( $row_id_prefix . 'use_container', null );
+	$use_container = is_null( $use_container ) ? true : boolval( $use_container );
+
+	$row_class = 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
+
+	if ( 'row_1' === $row_key ) {
+		$row_class .= ' wpbf-inner-pre-header';
+	}
+
+	echo '<div class="' . esc_attr( $row_class ) . '">';
+
+	if ( $use_container ) {
+		echo '<div class="wpbf-container wpbf-container-center">';
+	}
+
+	echo '<div class="wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
+
+	foreach ( $columns as $column_key => $widget_keys ) {
+		$column_class    = 'wpbf-flex wpbf-header-column';
+		$alignment_class = 'wpbf-content-center';
+		$column_position = '';
+
+		if ( false !== stripos( $column_key, '_start' ) ) {
+			$alignment_class = 'wpbf-content-start';
+			$column_position = 'left';
+		} elseif ( false !== stripos( $column_key, '_end' ) ) {
+			$alignment_class = 'wpbf-content-end';
+			$column_position = 'right';
 		}
 
-		echo '<div class="wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
-
-		foreach ( $columns as $column_key => $widget_keys ) {
-			$column_class    = 'wpbf-flex wpbf-header-column';
-			$alignment_class = 'wpbf-content-center';
-			$column_position = '';
-
-			if ( false !== stripos( $column_key, '_start' ) ) {
-				$alignment_class = 'wpbf-content-start';
-				$column_position = 'left';
-			} elseif ( false !== stripos( $column_key, '_end' ) ) {
-				$alignment_class = 'wpbf-content-end';
-				$column_position = 'right';
-			}
-
-			if (
-				in_array( 'menu_1', $widget_keys, true )
-				|| in_array( 'menu_2', $widget_keys, true )
-				|| in_array( 'html_1', $widget_keys, true )
-				|| in_array( 'html_2', $widget_keys, true )
-			) {
-				$column_class .= ' wpbf-column-grow';
-			}
-
-			echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
-
-			foreach ( $widget_keys as $widget_key ) {
-				if ( empty( $widget_key ) ) {
-					continue;
-				}
-
-				wpbf_render_builder_widget( 'header_builder', $widget_key, $column_position );
-			}
-
-			echo '</div>';
+		if (
+			in_array( 'menu_1', $widget_keys, true )
+			|| in_array( 'menu_2', $widget_keys, true )
+			|| in_array( 'html_1', $widget_keys, true )
+			|| in_array( 'html_2', $widget_keys, true )
+		) {
+			$column_class .= ' wpbf-column-grow';
 		}
 
-		echo '</div>';
+		echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
 
-		if ( $use_container ) {
-			echo '</div>';
+		foreach ( $widget_keys as $widget_key ) {
+			if ( empty( $widget_key ) ) {
+				continue;
+			}
+
+			wpbf_render_builder_widget( 'header_builder', $widget_key, $column_position );
 		}
 
 		echo '</div>';
 	}
+
+	echo '</div>';
+
+	if ( $use_container ) {
+		echo '</div>';
+	}
+
+	echo '</div>';
 
 }

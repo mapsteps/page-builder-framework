@@ -34,7 +34,7 @@ wpbf_customizer_field()
 			'container_inclusive' => true,
 			'selector'            => '#header',
 			'render_callback'     => function () {
-				return get_template_part( 'inc/template-parts/header-builder' );
+				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
 	] )
@@ -54,7 +54,7 @@ wpbf_customizer_field()
 			'container_inclusive' => true,
 			'selector'            => '#header',
 			'render_callback'     => function () {
-				return get_template_part( 'inc/template-parts/header-builder' );
+				return get_template_part( 'inc/template-parts/header' );
 			},
 		),
 	] )
