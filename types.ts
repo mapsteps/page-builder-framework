@@ -127,11 +127,8 @@ declare global {
 	}
 
 	interface JQueryStatic {
-		wc_product_gallery?: any;
-		wc_variation_form?: any;
 		wp?: {
 			wpColorPicker?: any;
 		};
-		wpColorPicker?: any;
 	}
 }
