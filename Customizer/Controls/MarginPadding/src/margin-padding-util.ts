@@ -1,6 +1,6 @@
 import { makeNumberUnitPair } from "../../Generic/src/number-util";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
-import { MarginPaddingDimension, MarginPaddingValue } from "./interface";
+import { MarginPaddingDimension, MarginPaddingValue } from "./margin-padding-interface";
 
 /**
  * Make a value for an input number field in margin/padding control.

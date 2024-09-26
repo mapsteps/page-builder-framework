@@ -19,7 +19,6 @@
     "assets/js/*.js",
     "inc/customizer/js/*.ts",
     "wpbf.mjs",
-    "global-types.js",
     "types.ts"
   ],
   "exclude": [

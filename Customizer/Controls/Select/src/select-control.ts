@@ -1,5 +1,4 @@
 import "./select-control.scss";
-import { WpbfCustomize } from "../../Base/src/base-interface";
 import SelectControl from "./SelectControl";
 
 declare var wp: {

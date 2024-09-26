@@ -5,7 +5,7 @@ import {
 	makeValueForInput,
 	makeValueForSlider,
 } from "./slider-util";
-import { WpbfCustomizeInputSliderControl } from "./interface";
+import { WpbfCustomizeInputSliderControl } from "./slider-interface";
 import {
 	limitNumber,
 	makeLimitedNumberUnitPair,

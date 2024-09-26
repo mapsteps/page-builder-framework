@@ -1,13 +1,13 @@
 import React, { ChangeEvent, MouseEvent, useState } from "react";
 import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
-import { WpbfCustomizeResponsiveInputSliderControl } from "./interface";
+import { WpbfCustomizeResponsiveInputSliderControl } from "./slider-interface";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import {
 	makeDevicesValue,
 	makeValueForInput,
 	makeValueForSlider,
 } from "./slider-util";
-import { DevicesValue } from "../../Responsive/src/interface";
+import { DevicesValue } from "../../Responsive/src/responsive-interface";
 import { encodeJsonOrDefault } from "../../Generic/src/string-util";
 import { makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
 

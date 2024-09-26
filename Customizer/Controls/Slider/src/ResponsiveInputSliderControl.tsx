@@ -1,7 +1,4 @@
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomize,
-} from "../../Base/src/base-interface";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import { createRoot } from "react-dom/client";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -9,8 +6,8 @@ import ResponsiveInputSliderForm from "./ResponsiveInputSliderForm";
 import {
 	WpbfCustomizeResponsiveInputSliderControl,
 	WpbfCustomizeResponsiveInputSliderControlParams,
-} from "./interface";
-import { DevicesValue } from "../../Responsive/src/interface";
+} from "./slider-interface";
+import { DevicesValue } from "../../Responsive/src/responsive-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;

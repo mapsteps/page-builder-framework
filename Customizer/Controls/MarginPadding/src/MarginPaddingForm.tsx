@@ -5,7 +5,7 @@ import {
 	MarginPaddingDimensionValuePair,
 	MarginPaddingValue,
 	WpbfCustomizeMarginPaddingControl,
-} from "./interface";
+} from "./margin-padding-interface";
 import {
 	makeObjValueWithoutUnit,
 	makeObjValueWithoutUnitFromJson,

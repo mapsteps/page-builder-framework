@@ -1,7 +1,4 @@
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomize,
-} from "../../Base/src/base-interface";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	WpbfCustomizeSelectControl,
 	SelectControlParams,

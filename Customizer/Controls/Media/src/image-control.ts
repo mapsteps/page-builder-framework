@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { WpbfCustomize } from "../../Base/src/base-interface";
 import i18n from "@wordpress/i18n/build-types/default-i18n";
 import { WpbfCustomizeImageControl } from "./image-interface";
 

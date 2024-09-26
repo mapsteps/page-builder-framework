@@ -1,5 +1,4 @@
-import { WpbfCustomize } from "../../Base/src/base-interface";
-import { WpbfCustomizeAssocArrayControl } from "./interface";
+import { WpbfCustomizeAssocArrayControl } from "./generic-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;

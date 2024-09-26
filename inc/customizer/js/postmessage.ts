@@ -1,5 +1,5 @@
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
-import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/interface";
+import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/responsive-interface";
 
 (function ($: JQueryStatic, customizer: WpbfCustomize | undefined) {
 	if (!customizer) return;

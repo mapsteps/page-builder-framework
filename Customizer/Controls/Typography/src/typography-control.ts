@@ -1,8 +1,5 @@
 import hooks from "@wordpress/hooks";
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomize,
-} from "../../Base/src/base-interface";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import "./typography-control.scss";
 import {
 	FontProperties,
@@ -12,7 +9,7 @@ import {
 	GoogleFontsCollection,
 	LabelValuePair,
 	WpbfCustomizeTypographyControlValue,
-} from "./interface";
+} from "./typography-interface";
 import {
 	SelectControlChoices,
 	WpbfCustomizeSelectControl,

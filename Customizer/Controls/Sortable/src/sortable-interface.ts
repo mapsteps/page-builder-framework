@@ -7,5 +7,4 @@ export interface WpbfCustomizeSortableControlParams
 	extends WpbfCustomizeControlParams<any[]> {}
 
 export interface WpbfCustomizeSortableControl
-	extends WpbfCustomizeControl<any[], WpbfCustomizeSortableControlParams> {
-}
+	extends WpbfCustomizeControl<any[], WpbfCustomizeSortableControlParams> {}

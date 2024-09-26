@@ -2,7 +2,7 @@ import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
 } from "../../Base/src/base-interface";
-import { DevicesValue } from "../../Responsive/src/interface";
+import { DevicesValue } from "../../Responsive/src/responsive-interface";
 
 export interface WpbfCustomizeGenericControl
 	extends WpbfCustomizeControl<

@@ -15,20 +15,20 @@ import {
 	WpbfCustomizeMulticolorControl,
 	WpbfCustomizeMulticolorControlValue,
 } from "../../Color/src/color-interface";
-import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
-import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
+import { WpbfCustomizeDimensionControl } from "../../Dimension/src/dimension-interface";
+import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/margin-padding-interface";
 import {
 	WpbfCustomizeInputSliderControl,
 	WpbfCustomizeResponsiveInputSliderControl,
-} from "../../Slider/src/interface";
-import { WpbfCustomizeSortableControl } from "../../Sortable/src/interface";
+} from "../../Slider/src/slider-interface";
+import { WpbfCustomizeSortableControl } from "../../Sortable/src/sortable-interface";
 import { Section_Constructor } from "wordpress__customize-browser/Section_Constructor";
 import { Section } from "wordpress__customize-browser/Section";
 import {
 	WpbfCustomizeAssocArrayControl,
 	WpbfCustomizeGenericControl,
 	WpbfCustomizeResponsiveGenericControl,
-} from "../../Generic/src/interface";
+} from "../../Generic/src/generic-interface";
 import {
 	Container_Arguments,
 	Container_Deferred,
@@ -58,55 +58,57 @@ import {
 	WpbfCustomizeBuilderControl,
 } from "../../Builder/src/builder-interface";
 
-export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
-	_latestRevision: number;
-	_lastSavedRevision: number;
-	_latestSettingRevision: Record<string, number>;
-	utils: Utils;
-	ensure(element: string | JQuery): JQuery;
-	dirtyValues(options?: DirtyValuesOptions): Record<string, any>;
-	requestChangesetUpdate(
-		changes?: Record<string, any>,
-		args?: RequestChangesetUpdateOptions,
-	): JQuery.Promise<any>;
-	get(): Record<string, any>;
-	defaultConstructor: WpbfCustomizeSetting<Class>;
-	Panel: WpbfCustomizePanel;
-	panel: Values<WpbfCustomizePanel>;
-	section: Values<WpbfCustomizeSection>;
-	Section: WpbfCustomizeSection;
-	control: Values<WpbfCustomizeControl<any, any> | undefined>;
-	notifications: Notifications;
-	setDocumentTitle(documentTitle: string): void;
-	settingConstructor: WpbfCustomizeSettingConstructor;
-	controlConstructor: WpbfCustomizeControlConstructor;
-	panelConstructor: WpbfCustomizePanelConstructor;
-	sectionConstructor: WpbfCustomizeSectionConstructor;
-	_handleSettingValidities(args: HandleSettingValiditiesArgs): void;
-	findControlsForSettings(
-		settingIds: readonly string[],
-	): Record<string, WpbfCustomizeControl<any, any>>;
-	reflowPaneContents(): void;
-	state: Values<Class>;
-	settings: any;
-	l10n: Record<string, string>;
-	previewer: Previewer<string>;
-	previewedDevice: Value<string>;
-	Control: WpbfCustomizeControl<any, any>;
+declare global {
+	export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
+		_latestRevision: number;
+		_lastSavedRevision: number;
+		_latestSettingRevision: Record<string, number>;
+		utils: Utils;
+		ensure(element: string | JQuery): JQuery;
+		dirtyValues(options?: DirtyValuesOptions): Record<string, any>;
+		requestChangesetUpdate(
+			changes?: Record<string, any>,
+			args?: RequestChangesetUpdateOptions,
+		): JQuery.Promise<any>;
+		get(): Record<string, any>;
+		defaultConstructor: WpbfCustomizeSetting<Class>;
+		Panel: WpbfCustomizePanel;
+		panel: Values<WpbfCustomizePanel>;
+		section: Values<WpbfCustomizeSection>;
+		Section: WpbfCustomizeSection;
+		control: Values<WpbfCustomizeControl<any, any> | undefined>;
+		notifications: Notifications;
+		setDocumentTitle(documentTitle: string): void;
+		settingConstructor: WpbfCustomizeSettingConstructor;
+		controlConstructor: WpbfCustomizeControlConstructor;
+		panelConstructor: WpbfCustomizePanelConstructor;
+		sectionConstructor: WpbfCustomizeSectionConstructor;
+		_handleSettingValidities(args: HandleSettingValiditiesArgs): void;
+		findControlsForSettings(
+			settingIds: readonly string[],
+		): Record<string, WpbfCustomizeControl<any, any>>;
+		reflowPaneContents(): void;
+		state: Values<Class>;
+		settings: any;
+		l10n: Record<string, string>;
+		previewer: Previewer<string>;
+		previewedDevice: Value<string>;
+		Control: WpbfCustomizeControl<any, any>;
 
-	// ! There's a mistake or missing part in this type definition.
-	Element: WpbfCustomizeElement;
+		// ! There's a mistake or missing part in this type definition.
+		Element: WpbfCustomizeElement;
 
-	Value: Value<any>;
+		Value: Value<any>;
 
-	// ! There's a mistake or missing part in this type definition.
-	Notification(arg0?: any, arg1?: any): Notification;
+		// ! There's a mistake or missing part in this type definition.
+		Notification(arg0?: any, arg1?: any): Notification;
 
-	// ! I don't have type for this yet.
-	selectiveRefresh: any;
+		// ! I don't have type for this yet.
+		selectiveRefresh: any;
 
-	// Specific to PBF.
-	wpbfDynamicControl: WpbfCustomizeControl<any, any>;
+		// Specific to PBF.
+		wpbfDynamicControl: WpbfCustomizeControl<any, any>;
+	}
 }
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {

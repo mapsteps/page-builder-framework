@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { WpbfCustomize } from "../../Base/src/base-interface";
 import jQuery from "jquery";
 import {
 	WpbfCustomizeRepeaterControl,

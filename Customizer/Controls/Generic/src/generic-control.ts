@@ -1,5 +1,4 @@
-import { WpbfCustomize } from "../../Base/src/base-interface";
-import { WpbfCustomizeGenericControl } from "./interface";
+import { WpbfCustomizeGenericControl } from "./generic-interface";
 import {
 	limitNumber,
 	limitNumberWithUnit,

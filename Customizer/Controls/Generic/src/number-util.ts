@@ -1,4 +1,4 @@
-import { NumberUnitPair } from "../../Responsive/src/interface";
+import { NumberUnitPair } from "../../Responsive/src/responsive-interface";
 
 export function normalizeMaxValue(
 	min: number | null | undefined,

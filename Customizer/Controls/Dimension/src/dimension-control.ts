@@ -1,6 +1,6 @@
 import "./dimension-control.scss";
-import { WpbfCustomize, WpbfCustomizeSetting } from "../../Base/src/base-interface";
-import { WpbfCustomizeDimensionControl } from "./interface";
+import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
+import { WpbfCustomizeDimensionControl } from "./dimension-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;

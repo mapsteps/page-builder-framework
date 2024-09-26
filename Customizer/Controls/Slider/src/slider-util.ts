@@ -1,4 +1,4 @@
-import { DevicesValue } from "../../Responsive/src/interface";
+import { DevicesValue } from "../../Responsive/src/responsive-interface";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
 import { makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
 

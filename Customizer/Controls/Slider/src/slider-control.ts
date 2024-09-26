@@ -1,7 +1,6 @@
 import "./slider-control.scss";
 import SliderControl from "./SliderControl";
-import { WpbfCustomize } from "../../Base/src/base-interface";
-import { WpbfCustomizeSliderControl } from "./interface";
+import { WpbfCustomizeSliderControl } from "./slider-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;

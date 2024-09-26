@@ -1,6 +1,5 @@
-import { WpbfCustomize } from "../../Base/src/base-interface";
 import { encodeJsonOrDefault } from "./string-util";
-import { WpbfCustomizeResponsiveGenericControl } from "./interface";
+import { WpbfCustomizeResponsiveGenericControl } from "./generic-interface";
 import {
 	limitNumber,
 	limitNumberWithUnit,

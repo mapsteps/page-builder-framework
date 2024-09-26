@@ -1,7 +1,4 @@
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomize,
-} from "../../Base/src/base-interface";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import { createRoot } from "react-dom/client";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -9,7 +6,7 @@ import SliderForm from "./SliderForm";
 import {
 	WpbfCustomizeSliderControl,
 	WpbfCustomizeSliderControlParams,
-} from "./interface";
+} from "./slider-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;

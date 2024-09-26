@@ -1,13 +1,10 @@
 import MarginPaddingForm from "./MarginPaddingForm";
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomize,
-} from "../../Base/src/base-interface";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	MarginPaddingValue,
 	WpbfCustomizeMarginPaddingControl,
 	WpbfCustomizeMarginPaddingControlParams,
-} from "./interface";
+} from "./margin-padding-interface";
 import ReactDOM from "react-dom";
 import React from "react";
 import { createRoot } from "react-dom/client";
