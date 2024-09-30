@@ -82,6 +82,10 @@ class SelectField extends BaseField {
 			$select_control->layout_style = $custom_props['layout_style'];
 		}
 
+		if ( ! empty( $custom_props['choices_global_var'] ) && is_string( $custom_props['choices_global_var'] ) ) {
+			$select_control->choices_global_var = $custom_props['choices_global_var'];
+		}
+
 		$wp_customize_manager->add_control( $select_control );
 
 	}

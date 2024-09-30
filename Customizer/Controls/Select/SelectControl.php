@@ -64,6 +64,16 @@ class SelectControl extends BaseControl {
 	public $layout_style = 'default';
 
 	/**
+	 * Global JS variable name to be used as choices.
+	 * It will be accessed via `window[choices_global_var]`.
+	 *
+	 * If this is set, the normal choices won't be used.
+	 *
+	 * @var string|null
+	 */
+	public $choices_global_var = null;
+
+	/**
 	 * Constructor.
 	 *
 	 * Supplied `$args` override class property defaults.
@@ -176,6 +186,15 @@ class SelectControl extends BaseControl {
 		);
 
 		$this->json['layoutStyle'] = $this->layout_style;
+
+		if ( ! empty( $this->choices_global_var ) ) {
+			// Normal choices won't be used.
+			$this->choices = [];
+
+			$this->json['choices'] = [];
+
+			$this->json['choicesGlobalVar'] = $this->choices_global_var;
+		}
 
 	}
 

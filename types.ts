@@ -124,6 +124,7 @@ declare global {
 		wpbfCustomizerControlDependencies?: WpbfControlDependencies;
 		wpbfCustomizerSectionDependencies?: WpbfControlDependencies;
 		wpbfBuilderControlIds?: string[];
+		[key: string]: any;
 	}
 
 	interface JQueryStatic {

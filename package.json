@@ -14,7 +14,7 @@
     "@types/jquery": "^3.5.31",
     "@types/jqueryui": "^1.12.23",
     "@types/lodash": "^4.17.9",
-    "@types/react": "^18.3.9",
+    "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "@types/select2": "^4.0.63",
     "parcel": "^2.12.0",
@@ -22,7 +22,9 @@
     "parcel-resolver-ignore": "^2.2.0",
     "prettier": "^3.3.3",
     "process": "^0.11.10",
+    "sass-embedded": "^1.79.4",
     "typescript": "^5.6.2",
+    "vite": "^5.4.8",
     "wordpress__customize-browser": "github:usefulteam/wordpress__customize-browser"
   },
   "dependencies": {
@@ -90,6 +92,7 @@
   "scripts": {
     "build-wp-theme": "zx ./wpbf.mjs",
     "collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
+    "build-control": "vite build",
     "build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min",
     "build-site-js": "parcel build assets/js/site.js --dist-dir js/min",
     "build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min",

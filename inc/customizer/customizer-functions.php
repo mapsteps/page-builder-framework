@@ -8,6 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyChoices;
 use Mapsteps\Wpbf\Customizer\Customizer;
 use Mapsteps\Wpbf\Customizer\CustomizerControl;
 use Mapsteps\Wpbf\Customizer\CustomizerField;
@@ -361,6 +362,31 @@ function wpbf_custom_default_fonts( $standard_fonts ) {
 
 }
 add_filter( 'wpbf_fonts_standard_fonts', 'wpbf_custom_default_fonts', 0 );
+
+/**
+ * Global Typography Fonts.
+ */
+function wpbf_global_typography_js_vars() {
+
+	$font_choices = wpbf_default_font_choices();
+
+	$fonts_arg = ! empty( $font_choices ) && is_array( $font_choices ) ? $font_choices : array();
+	$fonts_arg = ! empty( $fonts_arg['fonts'] ) && is_array( $fonts_arg['fonts'] ) ? $fonts_arg['fonts'] : array();
+
+	wp_localize_script(
+		'wpbf-select-control',
+		'wpbfGoogleFontFamilies',
+		( new TypographyChoices() )->makeFontFamilyChoices( $fonts_arg )
+	);
+
+	wp_localize_script(
+		'wpbf-select-control',
+		'wpbfGoogleFontVariants',
+		( new TypographyChoices() )->makeFontVariantChoices( $fonts_arg )
+	);
+
+}
+add_action( 'customize_controls_enqueue_scripts', 'wpbf_global_typography_js_vars' );
 
 /**
  * ----------------------------------------------------------------------

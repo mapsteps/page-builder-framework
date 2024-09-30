@@ -18,13 +18,11 @@ export type SelectControlChoice = {
 	children?: ChildSelectControlChoice[];
 };
 
-export type SelectControlChoices = SelectControlChoice[];
-
 export type SelectControlValue = string | string[];
 
 export interface SelectControlParams
 	extends WpbfCustomizeControlParams<SelectControlValue> {
-	choices: SelectControlChoices;
+	choices: SelectControlChoice[];
 	isSearchable: boolean;
 	isClearable: boolean;
 	isMulti: boolean;
@@ -33,6 +31,7 @@ export interface SelectControlParams
 	messages: {
 		maxLimitReached: string;
 	};
+	choicesGlobalVar?: string;
 }
 
 export interface WpbfCustomizeSelectControl

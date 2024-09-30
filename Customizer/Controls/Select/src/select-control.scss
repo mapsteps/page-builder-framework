@@ -57,10 +57,6 @@
 	z-index: 500001;
 }
 
-.wp-customizer > .select2-container .select2-search__field {
-	line-height: normal;
-}
-
 .wpbf-control-form .select2-container {
 	max-width: 100%;
 }
@@ -73,6 +69,7 @@
 	margin-left: 0;
 	margin-right: 0;
 	min-height: 20px;
+	line-height: normal;
 }
 
 .wp-customizer > .select2-container .select2-results__option {
