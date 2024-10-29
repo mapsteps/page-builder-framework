@@ -696,6 +696,12 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 	$use_container = get_theme_mod( $row_id_prefix . 'use_container', null );
 	$use_container = is_null( $use_container ) ? true : boolval( $use_container );
 
+	/**
+	 * The top row will be forced to use container and (conditionally) combined with max-width.
+	 * The max-width value will be taken from the 'pre_header_width' setting.
+	 */
+	$use_container = 'row_1' === $row_key ? true : $use_container;
+
 	$row_class = 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
 
 	if ( 'row_1' === $row_key ) {

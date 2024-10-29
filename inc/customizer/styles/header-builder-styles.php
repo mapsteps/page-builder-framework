@@ -119,6 +119,24 @@ foreach ( $rows as $row_key => $columns ) {
 
 	echo '}';
 
+	/**
+	 * This is instended to be used for the row 1 (top row).
+	 *
+	 * @var string|null
+	 */
+	$max_width = null;
+
+	if ( 'row_1' === $row_key ) {
+		$max_width_val = get_theme_mod( 'pre_header_width' );
+		$max_width     = '' === $max_width_val || is_null( $max_width_val ) ? null : $max_width_val;
+	}
+
+	if ( ! is_null( $max_width ) ) {
+		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' > .wpbf-container {
+			max-width: ' . esc_attr( $max_width ) . ';
+		}';
+	}
+
 	echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
 
 	$bg_color = get_theme_mod( $row_id_prefix . 'bg_color', '' );

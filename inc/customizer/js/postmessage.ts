@@ -2218,44 +2218,71 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			});
 		});
 
-		const useContainerControlId = `${controlIdPrefix}use_container`;
+		/**
+		 * The `use_container` settings is not available in top row
+		 * because the top row will use existing 'pre_header_width' setting.
+		 */
+		if (rowKey !== "row_1") {
+			const useContainerControlId = `${controlIdPrefix}use_container`;
 
-		customizer(useContainerControlId, function (value) {
-			value.bind(function (newValue) {
-				const row = document.querySelector(`.wpbf-header-row-${rowKey}`);
-				if (!row) return;
+			customizer(useContainerControlId, function (value) {
+				value.bind(function (newValue) {
+					const row = document.querySelector(`.wpbf-header-row-${rowKey}`);
+					if (!row) return;
 
-				const rowContent = row.querySelector(
-					`.wpbf-header-row-${rowKey} .wpbf-row-content`,
-				);
-				if (!rowContent) return;
+					const rowContent = row.querySelector(
+						`.wpbf-header-row-${rowKey} .wpbf-row-content`,
+					);
+					if (!rowContent) return;
 
-				const parentEl = rowContent.parentElement;
-				if (!parentEl) return;
+					const parentEl = rowContent.parentElement;
+					if (!parentEl) return;
 
-				if (newValue) {
-					if (!parentEl.classList.contains("wpbf-container")) {
-						const wrapperEl = document.createElement("div");
-						wrapperEl.classList.add("wpbf-container", "wpbf-container-center");
+					if (newValue) {
+						if (!parentEl.classList.contains("wpbf-container")) {
+							const wrapperEl = document.createElement("div");
+							wrapperEl.classList.add(
+								"wpbf-container",
+								"wpbf-container-center",
+							);
 
-						wrapperEl.appendChild(rowContent);
-						parentEl.appendChild(wrapperEl);
-					}
-				} else {
-					if (parentEl.classList.contains("wpbf-container-center")) {
-						// Unwrap parentEL and its children.
-						const children = parentEl.children;
-
-						for (let i = 0; i < children.length; i++) {
-							const child = children[i];
-							row.appendChild(child);
+							wrapperEl.appendChild(rowContent);
+							parentEl.appendChild(wrapperEl);
 						}
+					} else {
+						if (parentEl.classList.contains("wpbf-container-center")) {
+							// Unwrap parentEL and its children.
+							const children = parentEl.children;
 
-						parentEl.remove();
+							for (let i = 0; i < children.length; i++) {
+								const child = children[i];
+								row.appendChild(child);
+							}
+
+							parentEl.remove();
+						}
 					}
-				}
+				});
 			});
-		});
+		} else {
+			const widthControlId = `${controlIdPrefix}_width`;
+
+			// Only available for top row.
+			customizer(widthControlId, function (value) {
+				const styleTag = getStyleTag("pre_header_width");
+
+				value.bind((newValue) => {
+					const val = newValue ? newValue : "1200px";
+
+					styleTag.innerHTML =
+						".wpbf-header-row-" +
+						rowKey +
+						" > .wpbf-container {max-width: " +
+						val +
+						";}";
+				});
+			});
+		}
 	});
 
 	const headerBuilderButtonKeys = ["button_1", "button_2"];
