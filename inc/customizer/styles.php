@@ -2439,7 +2439,9 @@ $pre_header_accent_color     = get_theme_mod( 'pre_header_accent_color' );
 $pre_header_accent_color_alt = get_theme_mod( 'pre_header_accent_color_alt' );
 $pre_header_font_size        = ( $val = get_theme_mod( 'pre_header_font_size' ) ) === '14px' ? false : $val;
 
-if ( 'none' !== $pre_header_layout && ( $pre_header_height || $pre_header_width ) ) {
+$header_builder_enabled = get_theme_mod( 'wpbf_enable_header_builder' );
+
+if ( ! $header_builder_enabled && 'none' !== $pre_header_layout && ( $pre_header_height || $pre_header_width ) ) {
 
 	echo '.wpbf-inner-pre-header {';
 

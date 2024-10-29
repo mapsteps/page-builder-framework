@@ -50,6 +50,29 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	}
 
 	/**
+	 * Write CSS using a value for a single or multiple CSS properties.
+	 *
+	 * @param {HTMLStyleElement} styleTag - The style tag element.
+	 * @param {string} selector - The CSS selector.
+	 * @param {string[]} cssProps - The CSS properties.
+	 * @param {string|number} cssValue - The CSS value.
+	 */
+	function writeCSS(
+		styleTag: HTMLStyleElement,
+		selector: string,
+		cssProps: string[],
+		cssValue: string | number,
+	) {
+		styleTag.innerHTML = selector + "{";
+
+		for (const prop of cssProps) {
+			styleTag.innerHTML += prop + ": " + cssValue + ";";
+		}
+
+		styleTag.innerHTML += "}";
+	}
+
+	/**
 	 * Write responsive CSS.
 	 *
 	 * @param {HTMLStyleElement} styleTag - The style tag element.
@@ -2130,38 +2153,51 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	headerBuilderRows.forEach((rowKey) => {
 		const controlIdPrefix = `wpbf_header_builder_${rowKey}_`;
 
-		const minHeightControlId = `${controlIdPrefix}min_height`;
+		// The top row doesn't use min_height setting.
+		if (rowKey !== "row_1") {
+			const minHeightControlId = `${controlIdPrefix}min_height`;
 
-		customizer(minHeightControlId, function (value) {
-			const styleTag = getStyleTag(minHeightControlId);
-			const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
+			customizer(minHeightControlId, function (value) {
+				const styleTag = getStyleTag(minHeightControlId);
+				const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
 
-			value.bind(function (newValue) {
-				const minHeightValue = valueHasUnit(newValue)
-					? newValue
-					: newValue + "px";
+				value.bind(function (newValue) {
+					const minHeightValue = valueHasUnit(newValue)
+						? newValue
+						: newValue + "px";
 
-				writeResponsiveCSS(styleTag, selector, "min-height", minHeightValue);
+					writeResponsiveCSS(styleTag, selector, "min-height", minHeightValue);
+				});
 			});
-		});
+		}
 
-		var vPaddingControlId = `${controlIdPrefix}vertical_padding`;
+		const vPaddingControlId = `${controlIdPrefix}vertical_padding`;
 
 		customizer(vPaddingControlId, function (value) {
 			const styleTag = getStyleTag(vPaddingControlId);
-			const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
+
+			const selector =
+				rowKey === "row_1"
+					? `.wpbf-header-row-${rowKey} > .wpbf-container`
+					: ".wpbf-inner-pre-header";
 
 			value.bind(function (newValue) {
-				const vPaddingValue = valueHasUnit(newValue)
-					? newValue
-					: `${newValue}px`;
-
-				writeResponsiveCSS(
-					styleTag,
-					selector,
-					["padding-top", "padding-bottom"],
-					vPaddingValue,
-				);
+				if (rowKey === "row_1") {
+					// The top row use existing 'pre_header_height' setting as the vertical padding value.
+					writeCSS(
+						styleTag,
+						selector,
+						["padding-top", "padding-bottom"],
+						newValue + "px",
+					);
+				} else {
+					writeResponsiveCSS(
+						styleTag,
+						selector,
+						["padding-top", "padding-bottom"],
+						newValue,
+					);
+				}
 			});
 		});
 
@@ -2274,12 +2310,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				value.bind((newValue) => {
 					const val = newValue ? newValue : "1200px";
 
-					styleTag.innerHTML =
-						".wpbf-header-row-" +
-						rowKey +
-						" > .wpbf-container {max-width: " +
-						val +
-						";}";
+					writeCSS(styleTag, ".wpbf-inner-pre-header", ["max-width"], val);
 				});
 			});
 		}

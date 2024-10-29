@@ -75,66 +75,73 @@ foreach ( $rows as $row_key => $columns ) {
 	$min_heights = get_theme_mod( $row_id_prefix . 'min_height', [] );
 	$min_heights = ! is_array( $min_heights ) ? [] : $min_heights;
 
-	if ( $min_heights ) {
-		if ( isset( $min_heights['desktop'] ) ) {
-			echo sprintf( 'min-height: %s;', esc_attr( $min_heights['desktop'] ) );
+	if ( 'row_1' !== $row_key ) {
+		// The top row doesn't have min-height setting.
+		if ( $min_heights ) {
+			if ( isset( $min_heights['desktop'] ) ) {
+				echo sprintf( 'min-height: %s;', esc_attr( $min_heights['desktop'] ) );
+			}
+
+			if ( isset( $min_heights['tablet'] ) ) {
+				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
+				echo sprintf( 'min-height: %s;', esc_attr( $min_heights['tablet'] ) );
+				echo '}';
+			}
+
+			if ( isset( $min_heights['mobile'] ) ) {
+				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
+				echo sprintf( 'min-height: %s;', esc_attr( $min_heights['mobile'] ) );
+				echo '}';
+			}
 		}
 
-		if ( isset( $min_heights['tablet'] ) ) {
-			echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
-			echo sprintf( 'min-height: %s;', esc_attr( $min_heights['tablet'] ) );
-			echo '}';
-		}
+		$v_paddings = get_theme_mod( $row_id_prefix . 'vertical_padding', [] );
+		$v_paddings = ! is_array( $v_paddings ) ? [] : $v_paddings;
 
-		if ( isset( $min_heights['mobile'] ) ) {
-			echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
-			echo sprintf( 'min-height: %s;', esc_attr( $min_heights['mobile'] ) );
-			echo '}';
-		}
-	}
+		// Vertical padding for top row is handled differently.
+		if ( $v_paddings ) {
+			if ( isset( $v_paddings['desktop'] ) ) {
+				echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['desktop'] ) );
+				echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['desktop'] ) );
+			}
 
-	$v_paddings = get_theme_mod( $row_id_prefix . 'vertical_padding', [] );
-	$v_paddings = ! is_array( $v_paddings ) ? [] : $v_paddings;
+			if ( isset( $v_paddings['tablet'] ) ) {
+				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
+				echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['tablet'] ) );
+				echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['tablet'] ) );
+				echo '}';
+			}
 
-	if ( $v_paddings ) {
-		if ( isset( $v_paddings['desktop'] ) ) {
-			echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['desktop'] ) );
-			echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['desktop'] ) );
-		}
-
-		if ( isset( $v_paddings['tablet'] ) ) {
-			echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
-			echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['tablet'] ) );
-			echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['tablet'] ) );
-			echo '}';
-		}
-
-		if ( isset( $v_paddings['mobile'] ) ) {
-			echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
-			echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['mobile'] ) );
-			echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['mobile'] ) );
-			echo '}';
+			if ( isset( $v_paddings['mobile'] ) ) {
+				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
+				echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['mobile'] ) );
+				echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['mobile'] ) );
+				echo '}';
+			}
 		}
 	}
 
 	echo '}';
 
-	/**
-	 * This is instended to be used for the row 1 (top row).
-	 *
-	 * @var string|null
-	 */
-	$max_width = null;
-
 	if ( 'row_1' === $row_key ) {
 		$max_width_val = get_theme_mod( 'pre_header_width' );
-		$max_width     = '' === $max_width_val || is_null( $max_width_val ) ? null : $max_width_val;
-	}
+		$max_width     = '' === $max_width_val || is_null( $max_width_val ) ? null : strval( $max_width_val );
 
-	if ( ! is_null( $max_width ) ) {
-		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' > .wpbf-container {
-			max-width: ' . esc_attr( $max_width ) . ';
-		}';
+		$v_padding_val = get_theme_mod( 'pre_header_height' );
+		$v_padding     = '10' === $v_padding_val ? null : absint( $v_padding_val );
+
+		echo '.wpbf-inner-pre-header {';
+
+		if ( ! is_null( $max_width ) ) {
+			echo 'max-width: ' . esc_attr( $max_width ) . ';';
+		}
+
+		if ( ! is_null( $v_padding ) ) {
+			echo 'padding-top: ' . esc_attr( $v_padding ) . 'px;';
+			echo 'padding-bottom: ' . esc_attr( $v_padding ) . 'px;';
+		}
+
+		echo '}';
 	}
 
 	echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';

@@ -64,47 +64,31 @@ wpbf_customizer_field()
 
 // Use existing pre_header_width setting from pre-header section.
 wpbf_customizer_field()
-	->id( $control_id_prefix . '_width' )
+	->id( $control_id_prefix . 'width' )
 	->settings( 'pre_header_width' )
 	->type( 'dimension' )
 	->tab( 'general' )
-	->label( __( 'Top Row Width', 'page-builder-framework' ) )
+	->label( __( 'Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
 /* Design Tab */
 
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'min_height' )
-	->type( 'responsive-input-slider' )
-	->tab( 'design' )
-	->label( __( 'Min Height', 'page-builder-framework' ) )
-	->defaultValue( [
-		'desktop' => '50px',
-	] )
-	->transport( 'postMessage' )
-	->properties( [
-		'min'  => 0,
-		'max'  => 600,
-		'step' => 1,
-	] )
-	->addToSection( $section_id );
-
+// Use existing pre_header_height setting from pre-header section.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'vertical_padding' )
-	->type( 'responsive-input-slider' )
+	->settings( 'pre_header_height' )
+	->type( 'slider' )
 	->tab( 'design' )
 	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
-	->defaultValue( [
-		'desktop' => '15px',
-	] )
+	->defaultValue( 10 )
 	->transport( 'postMessage' )
-	->properties( [
-		'min'  => 0,
-		'max'  => 200,
+	->properties( array(
+		'min'  => 1,
+		'max'  => 25,
 		'step' => 1,
-	] )
+	) )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()

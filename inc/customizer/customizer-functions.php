@@ -696,22 +696,21 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 	$use_container = get_theme_mod( $row_id_prefix . 'use_container', null );
 	$use_container = is_null( $use_container ) ? true : boolval( $use_container );
 
-	/**
-	 * The top row will be forced to use container and (conditionally) combined with max-width.
-	 * The max-width value will be taken from the 'pre_header_width' setting.
-	 */
-	$use_container = 'row_1' === $row_key ? true : $use_container;
+	// The top row will have wpbf-container in the wpbf-inner-pre-header div.
+	$use_container = 'row_1' === $row_key ? false : $use_container;
+
+	$container_class = 'wpbf-container wpbf-container-center';
 
 	$row_class = 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
 
 	if ( 'row_1' === $row_key ) {
-		$row_class .= ' wpbf-inner-pre-header';
+		$row_class .= " wpbf-inner-pre-header $container_class";
 	}
 
 	echo '<div class="' . esc_attr( $row_class ) . '">';
 
 	if ( $use_container ) {
-		echo '<div class="wpbf-container wpbf-container-center">';
+		echo '<div class="' . esc_attr( $container_class ) . '">';
 	}
 
 	echo '<div class="wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
