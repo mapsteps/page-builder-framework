@@ -2430,14 +2430,16 @@ if ( $mobile_sub_menu_border_color ) {
 }
 
 // Pre header.
-$pre_header_layout           = get_theme_mod( 'pre_header_layout' );
-$pre_header_width            = ( $val = get_theme_mod( 'pre_header_width' ) ) === '1200px' ? false : $val;
-$pre_header_height           = ( $val = get_theme_mod( 'pre_header_height' ) ) === '10' ? false : $val;
-$pre_header_bg_color         = ( $val = get_theme_mod( 'pre_header_bg_color' ) ) === '#ffffff' ? false : $val;
-$pre_header_font_color       = get_theme_mod( 'pre_header_font_color' );
-$pre_header_accent_color     = get_theme_mod( 'pre_header_accent_color' );
-$pre_header_accent_color_alt = get_theme_mod( 'pre_header_accent_color_alt' );
-$pre_header_font_size        = ( $val = get_theme_mod( 'pre_header_font_size' ) ) === '14px' ? false : $val;
+$pre_header_layout     = get_theme_mod( 'pre_header_layout' );
+$pre_header_width      = ( $val = get_theme_mod( 'pre_header_width' ) ) === '1200px' ? false : $val;
+$pre_header_height     = ( $val = get_theme_mod( 'pre_header_height' ) ) === '10' ? false : $val;
+$pre_header_bg_color   = ( $val = get_theme_mod( 'pre_header_bg_color' ) ) === '#ffffff' ? false : $val;
+$pre_header_font_color = get_theme_mod( 'pre_header_font_color' );
+
+$pre_header_accent_colors = get_theme_mod( 'pre_header_accent_colors', array() );
+$pre_header_accent_colors = ! is_array( $pre_header_accent_colors ) ? array() : $pre_header_accent_colors;
+
+$pre_header_font_size = ( $val = get_theme_mod( 'pre_header_font_size' ) ) === '14px' ? false : $val;
 
 $header_builder_enabled = get_theme_mod( 'wpbf_enable_header_builder' );
 
@@ -2482,22 +2484,22 @@ if ( $render_pre_header_style && ( $pre_header_bg_color || $pre_header_font_colo
 
 }
 
-if ( $render_pre_header_style && $pre_header_accent_color ) {
+if ( $render_pre_header_style && ! empty( $pre_header_accent_colors['default'] ) ) {
 
 	echo '.wpbf-pre-header a {';
-	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_color ) );
+	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_colors['default'] ) );
 	echo '}';
 
 }
 
-if ( $render_pre_header_style && $pre_header_accent_color_alt ) {
+if ( $render_pre_header_style && ! empty( $pre_header_accent_colors['hover'] ) ) {
 
 	echo '.wpbf-pre-header a:hover {';
-	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_color_alt ) );
+	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_colors['hover'] ) );
 	echo '}';
 
 	echo '.wpbf-pre-header .wpbf-menu > .current-menu-item > a {';
-	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_color_alt ) . '!important' );
+	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_colors['hover'] ) . '!important' );
 	echo '}';
 
 }

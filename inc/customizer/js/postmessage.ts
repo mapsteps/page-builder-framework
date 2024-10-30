@@ -1,4 +1,9 @@
+import { colord } from "colord";
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
+import {
+	WpbfCustomizeColorControlValue,
+	WpbfCustomizeMulticolorControlValue,
+} from "../../../Customizer/Controls/Color/src/color-interface";
 import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/responsive-interface";
 
 (function ($: JQueryStatic, customizer: WpbfCustomize | undefined) {
@@ -49,27 +54,49 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		return styleTag;
 	}
 
+	type WriteCssArgs = {
+		selector: string;
+		props: string[];
+		value: string | number | null | undefined;
+		important?: boolean;
+	};
+
 	/**
-	 * Write CSS using a value for a single or multiple CSS properties.
+	 * Write CSS to the style tag.
 	 *
-	 * @param {HTMLStyleElement} styleTag - The style tag element.
-	 * @param {string} selector - The CSS selector.
-	 * @param {string[]} cssProps - The CSS properties.
-	 * @param {string|number} cssValue - The CSS value.
+	 * @param {HTMLStyleElement|string} styleTagOrId - The style tag element or the style tag id.
+	 * @param {WriteCssArgs} args - The arguments.
 	 */
 	function writeCSS(
-		styleTag: HTMLStyleElement,
-		selector: string,
-		cssProps: string[],
-		cssValue: string | number,
+		styleTagOrId: HTMLStyleElement | string,
+		args: WriteCssArgs[],
 	) {
-		styleTag.innerHTML = selector + "{";
+		const styleTag =
+			typeof styleTagOrId === "string"
+				? getStyleTag(styleTagOrId)
+				: styleTagOrId;
 
-		for (const prop of cssProps) {
-			styleTag.innerHTML += prop + ": " + cssValue + ";";
-		}
+		if (!args.length) return;
 
-		styleTag.innerHTML += "}";
+		let content = "";
+
+		args.forEach((arg) => {
+			const { selector, props, value, important } = arg;
+
+			if (value === "" || value === null || value === undefined) {
+				return;
+			}
+
+			content += "\n" + selector + " {";
+
+			for (const prop of props) {
+				content += prop + ": " + value + (important ? " !important" : "") + ";";
+			}
+
+			content += "}";
+		});
+
+		styleTag.innerHTML = content;
 	}
 
 	/**
@@ -99,6 +126,13 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		}
 
 		styleTag.innerHTML = css;
+	}
+
+	function toStringColor(color: WpbfCustomizeColorControlValue) {
+		if (typeof color === "string") return color;
+		if (typeof color === "number") return "";
+
+		return colord(color).toRgbString();
 	}
 
 	/* Layout */
@@ -1078,26 +1112,36 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 	});
 
+	const preHeaderAccentColorSettingId = "pre_header_accent_colors";
+
 	// Accent color.
-	customizer("pre_header_accent_color", function (value) {
-		const styleTag = getStyleTag("pre_header_accent_color");
+	customizer(
+		preHeaderAccentColorSettingId,
+		(value: WpbfCustomizeSetting<WpbfCustomizeMulticolorControlValue>) => {
+			value.bind(function (newValue) {
+				const rawDefaultColor = newValue.default ?? "";
+				const defaultColor = toStringColor(rawDefaultColor);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-pre-header a {color: " + newValue + ";}";
-		});
-	});
+				const rawHoverColor = newValue.hover ?? "";
+				const hoverColor = toStringColor(rawHoverColor);
 
-	// Accent color hover.
-	customizer("pre_header_accent_color_alt", function (value) {
-		const styleTag = getStyleTag("pre_header_accent_color_alt");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-pre-header a:hover, .wpbf-pre-header .wpbf-menu > .current-menu-item > a {color: " +
-				newValue +
-				"!important;}";
-		});
-	});
+				writeCSS(preHeaderAccentColorSettingId, [
+					{
+						selector: ".wpbf-pre-header a",
+						props: ["color"],
+						value: defaultColor,
+					},
+					{
+						selector:
+							".wpbf-pre-header a:hover, .wpbf-pre-header .wpbf-menu > .current-menu-item > a",
+						props: ["color"],
+						value: hoverColor,
+						important: true,
+					},
+				]);
+			});
+		},
+	);
 
 	// Font size.
 	customizer("pre_header_font_size", function (value) {
@@ -2262,34 +2306,29 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			const bgColorSettinglId = `${controlIdPrefix}bg_color`;
 
 			customizer(bgColorSettinglId, function (value) {
-				const styleTag = getStyleTag(bgColorSettinglId);
-
-				const selector = `.wpbf-header-row-${rowKey}`;
-
 				value.bind(function (newValue) {
-					if (!newValue) {
-						styleTag.innerHTML = "";
-						return;
-					}
-
-					writeCSS(styleTag, selector, ["background-color"], newValue);
+					writeCSS(bgColorSettinglId, [
+						{
+							selector: `.wpbf-header-row-${rowKey}`,
+							props: ["background-color"],
+							value: newValue,
+						},
+					]);
 				});
 			});
 		}
 
-		const textColorControlId = `${controlIdPrefix}text_color`;
+		const textColorSettingId = `${controlIdPrefix}text_color`;
 
-		customizer(textColorControlId, function (value) {
-			const styleTag = getStyleTag(textColorControlId);
-
+		customizer(textColorSettingId, function (value) {
 			value.bind(function (newValue) {
-				if (!newValue) return;
-
-				styleTag.innerHTML = `
-				.wpbf-header-row-${rowKey} {
-					color: ${newValue};
-				}
-				`;
+				writeCSS(textColorSettingId, [
+					{
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: ["color"],
+						value: newValue,
+					},
+				]);
 			});
 		});
 	});

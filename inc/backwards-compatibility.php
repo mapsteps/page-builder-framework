@@ -112,6 +112,36 @@ if ( empty( $executed_backwards_compat['menu_logo_size_data_type'] ) ) {
 }
 
 /**
+ * Merge individual color setting keys to multicolor control.
+ */
+
+// Merge pre_header_accent_color and pre_header_accent_color_alt.
+if ( empty( $executed_backwards_compat['pre_header_accent_color'] ) ) {
+	$pre_header_accent_color     = get_theme_mod( 'pre_header_accent_color' );
+	$pre_header_accent_color_alt = get_theme_mod( 'pre_header_accent_color_alt' );
+
+	// Delete the old theme mods regardless of their emptyness.
+	remove_theme_mod( 'pre_header_accent_color' );
+	remove_theme_mod( 'pre_header_accent_color_alt' );
+
+	if ( $pre_header_accent_color || $pre_header_accent_color_alt ) {
+		$pre_header_accent_colors = array();
+
+		if ( $pre_header_accent_color ) {
+			$pre_header_accent_colors['default'] = $pre_header_accent_color;
+		}
+
+		if ( $pre_header_accent_color_alt ) {
+			$pre_header_accent_colors['hover'] = $pre_header_accent_color_alt;
+		}
+
+		set_theme_mod( 'pre_header_accent_colors', $pre_header_accent_colors );
+	}
+
+	$executed_backwards_compat['pre_header_accent_color'] = 1;
+}
+
+/**
  * Convert individual responsive controls.
  *
  * From here downwards we convert previous individual responsive setting keys to be saved in a single key.

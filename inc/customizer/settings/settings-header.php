@@ -357,32 +357,16 @@ wpbf_customizer_field()
 
 // Accent color.
 wpbf_customizer_field()
-	->id( 'pre_header_accent_color' )
-	->type( 'color' )
+	->id( 'pre_header_accent_colors' )
+	->type( 'multicolor' )
 	->tab( 'design' )
 	->label( __( 'Accent Color', 'page-builder-framework' ) )
 	->priority( 4 )
 	->transport( 'postMessage' )
-	->properties( array(
-		'mode' => 'alpha',
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
 	) )
-	->activeCallback( [
-		array(
-			'id'       => 'pre_header_layout',
-			'operator' => '!=',
-			'value'    => 'none',
-		),
-	] )
-	->addToSection( 'wpbf_pre_header_options' );
-
-// Accent color alt.
-wpbf_customizer_field()
-	->id( 'pre_header_accent_color_alt' )
-	->type( 'color' )
-	->tab( 'design' )
-	->label( __( 'Hover', 'page-builder-framework' ) )
-	->priority( 4 )
-	->transport( 'postMessage' )
 	->properties( array(
 		'mode' => 'alpha',
 	) )
