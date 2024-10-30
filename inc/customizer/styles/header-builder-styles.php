@@ -70,12 +70,59 @@ if ( is_array( $header_builder_rows ) && ! empty( $header_builder_rows ) ) {
 foreach ( $rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-	echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
+	if ( 'row_1' === $row_key ) {
+		$bg_color_val = trim( strval( get_theme_mod( 'pre_header_bg_color' ) ) );
+		$bg_color     = '' === $bg_color_val || '#ffffff' === $bg_color_val || '#fff' === $bg_color_val ? null : strval( $bg_color_val );
 
-	$min_heights = get_theme_mod( $row_id_prefix . 'min_height', [] );
-	$min_heights = ! is_array( $min_heights ) ? [] : $min_heights;
+		if ( ! is_null( $bg_color ) ) {
+			echo '.wpbf-pre-header {';
+			echo 'background-color: ' . esc_attr( $bg_color ) . ';';
+			echo '}';
+		}
 
-	if ( 'row_1' !== $row_key ) {
+		$max_width_val = trim( strval( get_theme_mod( 'pre_header_width' ) ) );
+		$max_width     = '' === $max_width_val || '1200px' === $max_width_val || is_null( $max_width_val ) ? null : strval( $max_width_val );
+
+		$v_padding_val = trim( strval( get_theme_mod( 'pre_header_height' ) ) );
+		$v_padding     = '' === $v_padding_val || '10' === $v_padding_val ? null : absint( $v_padding_val );
+
+		if ( ! is_null( $max_width ) || ! is_null( $v_padding ) ) {
+			echo '.wpbf-inner-pre-header {';
+
+			if ( ! is_null( $max_width ) ) {
+				echo 'max-width: ' . esc_attr( $max_width ) . ';';
+			}
+
+			if ( ! is_null( $v_padding ) ) {
+				echo 'padding-top: ' . esc_attr( $v_padding ) . 'px;';
+				echo 'padding-bottom: ' . esc_attr( $v_padding ) . 'px;';
+			}
+
+			echo '}';
+		}
+
+	} else {
+		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
+
+		$bg_color = get_theme_mod( $row_id_prefix . 'bg_color', '' );
+
+		if ( $bg_color ) {
+			echo sprintf( 'background-color: %s;', esc_attr( $bg_color ) );
+		}
+
+		$text_color = get_theme_mod( $row_id_prefix . 'text_color', '' );
+
+		if ( $text_color ) {
+			echo sprintf( 'color: %s;', esc_attr( $text_color ) );
+		}
+
+		echo '}';
+
+		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
+
+		$min_heights = get_theme_mod( $row_id_prefix . 'min_height', [] );
+		$min_heights = ! is_array( $min_heights ) ? [] : $min_heights;
+
 		// The top row doesn't have min-height setting.
 		if ( $min_heights ) {
 			if ( isset( $min_heights['desktop'] ) ) {
@@ -119,46 +166,10 @@ foreach ( $rows as $row_key => $columns ) {
 				echo '}';
 			}
 		}
-	}
-
-	echo '}';
-
-	if ( 'row_1' === $row_key ) {
-		$max_width_val = get_theme_mod( 'pre_header_width' );
-		$max_width     = '' === $max_width_val || is_null( $max_width_val ) ? null : strval( $max_width_val );
-
-		$v_padding_val = get_theme_mod( 'pre_header_height' );
-		$v_padding     = '10' === $v_padding_val ? null : absint( $v_padding_val );
-
-		echo '.wpbf-inner-pre-header {';
-
-		if ( ! is_null( $max_width ) ) {
-			echo 'max-width: ' . esc_attr( $max_width ) . ';';
-		}
-
-		if ( ! is_null( $v_padding ) ) {
-			echo 'padding-top: ' . esc_attr( $v_padding ) . 'px;';
-			echo 'padding-bottom: ' . esc_attr( $v_padding ) . 'px;';
-		}
 
 		echo '}';
 	}
 
-	echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
-
-	$bg_color = get_theme_mod( $row_id_prefix . 'bg_color', '' );
-
-	if ( $bg_color ) {
-		echo sprintf( 'background-color: %s;', esc_attr( $bg_color ) );
-	}
-
-	$text_color = get_theme_mod( $row_id_prefix . 'text_color', '' );
-
-	if ( $text_color ) {
-		echo sprintf( 'color: %s;', esc_attr( $text_color ) );
-	}
-
-	echo '}';
 }
 
 $devices = ( new ResponsiveUtil() )->devices();

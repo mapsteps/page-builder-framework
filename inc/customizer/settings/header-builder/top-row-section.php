@@ -99,13 +99,15 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'bg_color' )
+	->settings( 'pre_header_bg_color' )
 	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#ffffff' )
 	->transport( 'postMessage' )
-	->properties( [
+	->properties( array(
 		'mode' => 'alpha',
-	] )
+	) )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()

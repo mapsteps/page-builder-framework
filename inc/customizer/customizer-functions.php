@@ -701,11 +701,7 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 
 	$container_class = 'wpbf-container wpbf-container-center';
 
-	$row_class = 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
-
-	if ( 'row_1' === $row_key ) {
-		$row_class .= " wpbf-inner-pre-header $container_class";
-	}
+	$row_class = ( 'row_1' === $row_key ? "wpbf-inner-pre-header $container_class" : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
 
 	echo '<div class="' . esc_attr( $row_class ) . '">';
 
@@ -713,7 +709,7 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 		echo '<div class="' . esc_attr( $container_class ) . '">';
 	}
 
-	echo '<div class="wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
+	echo '<div class="' . ( 'row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
 
 	foreach ( $columns as $column_key => $widget_keys ) {
 		$column_class    = 'wpbf-flex wpbf-header-column';

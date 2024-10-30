@@ -2171,51 +2171,61 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			});
 		}
 
-		const vPaddingControlId = `${controlIdPrefix}vertical_padding`;
+		const vPaddingSettingId = `${controlIdPrefix}vertical_padding`;
 
-		customizer(vPaddingControlId, function (value) {
-			const styleTag = getStyleTag(vPaddingControlId);
+		customizer(
+			rowKey === "row_1" ? "pre_header_height" : vPaddingSettingId,
+			function (value) {
+				const styleTag = getStyleTag(vPaddingSettingId);
 
-			const selector =
-				rowKey === "row_1"
-					? `.wpbf-header-row-${rowKey} > .wpbf-container`
-					: ".wpbf-inner-pre-header";
+				const selector =
+					rowKey === "row_1"
+						? ".wpbf-inner-pre-header"
+						: `.wpbf-header-row-${rowKey} .wpbf-row-content`;
 
-			value.bind(function (newValue) {
-				if (rowKey === "row_1") {
-					// The top row use existing 'pre_header_height' setting as the vertical padding value.
-					writeCSS(
-						styleTag,
-						selector,
-						["padding-top", "padding-bottom"],
-						newValue + "px",
-					);
-				} else {
-					writeResponsiveCSS(
-						styleTag,
-						selector,
-						["padding-top", "padding-bottom"],
-						newValue,
-					);
-				}
-			});
-		});
+				value.bind(function (newValue) {
+					if (rowKey === "row_1") {
+						// The top row use existing 'pre_header_height' setting as the vertical padding value.
+						writeCSS(
+							styleTag,
+							selector,
+							["padding-top", "padding-bottom"],
+							newValue + "px",
+						);
+					} else {
+						writeResponsiveCSS(
+							styleTag,
+							selector,
+							["padding-top", "padding-bottom"],
+							newValue,
+						);
+					}
+				});
+			},
+		);
 
-		const bgColorControlId = `${controlIdPrefix}bg_color`;
+		const bgColorSettinglId = `${controlIdPrefix}bg_color`;
 
-		customizer(bgColorControlId, function (value) {
-			const styleTag = getStyleTag(bgColorControlId);
+		customizer(
+			rowKey === "row_1" ? "pre_header_bg_color" : bgColorSettinglId,
+			function (value) {
+				const styleTag = getStyleTag(bgColorSettinglId);
 
-			value.bind(function (newValue) {
-				if (!newValue) return;
+				const selector =
+					rowKey === "row_1"
+						? ".wpbf-pre-header"
+						: `.wpbf-header-row-${rowKey}`;
 
-				styleTag.innerHTML = `
-				.wpbf-header-row-${rowKey} {
-					background-color: ${newValue};
-				}
-				`;
-			});
-		});
+				value.bind(function (newValue) {
+					if (!newValue) {
+						styleTag.innerHTML = "";
+						return;
+					}
+
+					writeCSS(styleTag, selector, ["background-color"], newValue);
+				});
+			},
+		);
 
 		const textColorControlId = `${controlIdPrefix}text_color`;
 
