@@ -238,15 +238,15 @@ foreach ( $archives as $archive ) {
 	$boxed_padding_bottom_desktop = get_theme_mod( $archive . '_boxed_padding_bottom_desktop' );
 	$boxed_padding_left_desktop   = get_theme_mod( $archive . '_boxed_padding_left_desktop' );
 
-	$boxed_padding_top_tablet     = get_theme_mod( $archive . '_boxed_padding_top_tablet' );
-	$boxed_padding_right_tablet   = get_theme_mod( $archive . '_boxed_padding_right_tablet' );
-	$boxed_padding_bottom_tablet  = get_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
-	$boxed_padding_left_tablet    = get_theme_mod( $archive . '_boxed_padding_left_tablet' );
+	$boxed_padding_top_tablet    = get_theme_mod( $archive . '_boxed_padding_top_tablet' );
+	$boxed_padding_right_tablet  = get_theme_mod( $archive . '_boxed_padding_right_tablet' );
+	$boxed_padding_bottom_tablet = get_theme_mod( $archive . '_boxed_padding_bottom_tablet' );
+	$boxed_padding_left_tablet   = get_theme_mod( $archive . '_boxed_padding_left_tablet' );
 
-	$boxed_padding_top_mobile     = get_theme_mod( $archive . '_boxed_padding_top_mobile' );
-	$boxed_padding_right_mobile   = get_theme_mod( $archive . '_boxed_padding_right_mobile' );
-	$boxed_padding_bottom_mobile  = get_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
-	$boxed_padding_left_mobile    = get_theme_mod( $archive . '_boxed_padding_left_mobile' );
+	$boxed_padding_top_mobile    = get_theme_mod( $archive . '_boxed_padding_top_mobile' );
+	$boxed_padding_right_mobile  = get_theme_mod( $archive . '_boxed_padding_right_mobile' );
+	$boxed_padding_bottom_mobile = get_theme_mod( $archive . '_boxed_padding_bottom_mobile' );
+	$boxed_padding_left_mobile   = get_theme_mod( $archive . '_boxed_padding_left_mobile' );
 
 	if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop || $boxed_padding_top_tablet || $boxed_padding_right_tablet || $boxed_padding_bottom_tablet || $boxed_padding_left_tablet || $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop || $boxed_padding_top_mobile || $boxed_padding_right_mobile || $boxed_padding_bottom_mobile || $boxed_padding_left_mobile ) {
 
@@ -294,15 +294,15 @@ $boxed_padding_right_desktop  = get_theme_mod( 'single_boxed_padding_right_deskt
 $boxed_padding_bottom_desktop = get_theme_mod( 'single_boxed_padding_bottom_desktop' );
 $boxed_padding_left_desktop   = get_theme_mod( 'single_boxed_padding_left_desktop' );
 
-$boxed_padding_top_tablet     = get_theme_mod( 'single_boxed_padding_top_tablet' );
-$boxed_padding_right_tablet   = get_theme_mod( 'single_boxed_padding_right_tablet' );
-$boxed_padding_bottom_tablet  = get_theme_mod( 'single_boxed_padding_bottom_tablet' );
-$boxed_padding_left_tablet    = get_theme_mod( 'single_boxed_padding_left_tablet' );
+$boxed_padding_top_tablet    = get_theme_mod( 'single_boxed_padding_top_tablet' );
+$boxed_padding_right_tablet  = get_theme_mod( 'single_boxed_padding_right_tablet' );
+$boxed_padding_bottom_tablet = get_theme_mod( 'single_boxed_padding_bottom_tablet' );
+$boxed_padding_left_tablet   = get_theme_mod( 'single_boxed_padding_left_tablet' );
 
-$boxed_padding_top_mobile     = get_theme_mod( 'single_boxed_padding_top_mobile' );
-$boxed_padding_right_mobile   = get_theme_mod( 'single_boxed_padding_right_mobile' );
-$boxed_padding_bottom_mobile  = get_theme_mod( 'single_boxed_padding_bottom_mobile' );
-$boxed_padding_left_mobile    = get_theme_mod( 'single_boxed_padding_left_mobile' );
+$boxed_padding_top_mobile    = get_theme_mod( 'single_boxed_padding_top_mobile' );
+$boxed_padding_right_mobile  = get_theme_mod( 'single_boxed_padding_right_mobile' );
+$boxed_padding_bottom_mobile = get_theme_mod( 'single_boxed_padding_bottom_mobile' );
+$boxed_padding_left_mobile   = get_theme_mod( 'single_boxed_padding_left_mobile' );
 
 if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop || $boxed_padding_top_tablet || $boxed_padding_right_tablet || $boxed_padding_bottom_tablet || $boxed_padding_left_tablet || $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_padding_bottom_desktop || $boxed_padding_left_desktop || $boxed_padding_top_mobile || $boxed_padding_right_mobile || $boxed_padding_bottom_mobile || $boxed_padding_left_mobile ) {
 
@@ -348,15 +348,15 @@ $page_padding_right_desktop  = get_theme_mod( 'page_padding_right_desktop' );
 $page_padding_bottom_desktop = get_theme_mod( 'page_padding_bottom_desktop' );
 $page_padding_left_desktop   = get_theme_mod( 'page_padding_left_desktop' );
 
-$page_padding_top_tablet     = get_theme_mod( 'page_padding_top_tablet' );
-$page_padding_right_tablet   = get_theme_mod( 'page_padding_right_tablet' );
-$page_padding_bottom_tablet  = get_theme_mod( 'page_padding_bottom_tablet' );
-$page_padding_left_tablet    = get_theme_mod( 'page_padding_left_tablet' );
+$page_padding_top_tablet    = get_theme_mod( 'page_padding_top_tablet' );
+$page_padding_right_tablet  = get_theme_mod( 'page_padding_right_tablet' );
+$page_padding_bottom_tablet = get_theme_mod( 'page_padding_bottom_tablet' );
+$page_padding_left_tablet   = get_theme_mod( 'page_padding_left_tablet' );
 
-$page_padding_top_mobile     = get_theme_mod( 'page_padding_top_mobile' );
-$page_padding_right_mobile   = get_theme_mod( 'page_padding_right_mobile' );
-$page_padding_bottom_mobile  = get_theme_mod( 'page_padding_bottom_mobile' );
-$page_padding_left_mobile    = get_theme_mod( 'page_padding_left_mobile' );
+$page_padding_top_mobile    = get_theme_mod( 'page_padding_top_mobile' );
+$page_padding_right_mobile  = get_theme_mod( 'page_padding_right_mobile' );
+$page_padding_bottom_mobile = get_theme_mod( 'page_padding_bottom_mobile' );
+$page_padding_left_mobile   = get_theme_mod( 'page_padding_left_mobile' );
 
 if ( $page_padding_top_desktop || $page_padding_right_desktop || $page_padding_bottom_desktop || $page_padding_left_desktop || $page_padding_top_tablet || $page_padding_right_tablet || $page_padding_bottom_tablet || $page_padding_left_tablet || $page_padding_top_desktop || $page_padding_right_desktop || $page_padding_bottom_desktop || $page_padding_left_desktop || $page_padding_top_mobile || $page_padding_right_mobile || $page_padding_bottom_mobile || $page_padding_left_mobile ) {
 
@@ -402,15 +402,15 @@ $sidebar_widget_padding_right_desktop  = get_theme_mod( 'sidebar_widget_padding_
 $sidebar_widget_padding_bottom_desktop = get_theme_mod( 'sidebar_widget_padding_bottom_desktop' );
 $sidebar_widget_padding_left_desktop   = get_theme_mod( 'sidebar_widget_padding_left_desktop' );
 
-$sidebar_widget_padding_top_tablet     = get_theme_mod( 'sidebar_widget_padding_top_tablet' );
-$sidebar_widget_padding_right_tablet   = get_theme_mod( 'sidebar_widget_padding_right_tablet' );
-$sidebar_widget_padding_bottom_tablet  = get_theme_mod( 'sidebar_widget_padding_bottom_tablet' );
-$sidebar_widget_padding_left_tablet    = get_theme_mod( 'sidebar_widget_padding_left_tablet' );
+$sidebar_widget_padding_top_tablet    = get_theme_mod( 'sidebar_widget_padding_top_tablet' );
+$sidebar_widget_padding_right_tablet  = get_theme_mod( 'sidebar_widget_padding_right_tablet' );
+$sidebar_widget_padding_bottom_tablet = get_theme_mod( 'sidebar_widget_padding_bottom_tablet' );
+$sidebar_widget_padding_left_tablet   = get_theme_mod( 'sidebar_widget_padding_left_tablet' );
 
-$sidebar_widget_padding_top_mobile     = get_theme_mod( 'sidebar_widget_padding_top_mobile' );
-$sidebar_widget_padding_right_mobile   = get_theme_mod( 'sidebar_widget_padding_right_mobile' );
-$sidebar_widget_padding_bottom_mobile  = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
-$sidebar_widget_padding_left_mobile    = get_theme_mod( 'sidebar_widget_padding_left_mobile' );
+$sidebar_widget_padding_top_mobile    = get_theme_mod( 'sidebar_widget_padding_top_mobile' );
+$sidebar_widget_padding_right_mobile  = get_theme_mod( 'sidebar_widget_padding_right_mobile' );
+$sidebar_widget_padding_bottom_mobile = get_theme_mod( 'sidebar_widget_padding_bottom_mobile' );
+$sidebar_widget_padding_left_mobile   = get_theme_mod( 'sidebar_widget_padding_left_mobile' );
 
 if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_desktop || $sidebar_widget_padding_bottom_desktop || $sidebar_widget_padding_left_desktop || $sidebar_widget_padding_top_tablet || $sidebar_widget_padding_right_tablet || $sidebar_widget_padding_bottom_tablet || $sidebar_widget_padding_left_tablet || $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_desktop || $sidebar_widget_padding_bottom_desktop || $sidebar_widget_padding_left_desktop || $sidebar_widget_padding_top_mobile || $sidebar_widget_padding_right_mobile || $sidebar_widget_padding_bottom_mobile || $sidebar_widget_padding_left_mobile ) {
 
@@ -450,34 +450,38 @@ if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_deskto
 
 }
 
-// Page boxed padding.
-// This conversion is wrong as we need only one field per breakpoint (we are only working with left & right padding, not all around).
-// It remains here for the future.
+/**
+ * Page boxed padding.
+ * This conversion is wrong as we need only one field per breakpoint (we are only working with left & right padding, not all around).
+ * It remains here for the future.
+ */
 
-// $page_boxed_padding = get_theme_mod( 'page_boxed_padding' );
+/**
+$page_boxed_padding = get_theme_mod( 'page_boxed_padding' );
 
-// if ( is_numeric( $page_boxed_padding ) ) {
+if ( is_numeric( $page_boxed_padding ) ) {
 
-// 	$theme_mod_array = array(
-// 		'desktop_top'    => $page_boxed_padding,
-// 		'desktop_right'  => $page_boxed_padding,
-// 		'desktop_bottom' => $page_boxed_padding,
-// 		'desktop_left'   => $page_boxed_padding,
-// 		'tablet_top'     => false,
-// 		'tablet_right'   => false,
-// 		'tablet_bottom'  => false,
-// 		'tablet_left'    => false,
-// 		'mobile_top'     => false,
-// 		'mobile_right'   => false,
-// 		'mobile_bottom'  => false,
-// 		'mobile_left'    => false,
-// 	);
+	$theme_mod_array = array(
+		'desktop_top'    => $page_boxed_padding,
+		'desktop_right'  => $page_boxed_padding,
+		'desktop_bottom' => $page_boxed_padding,
+		'desktop_left'   => $page_boxed_padding,
+		'tablet_top'     => false,
+		'tablet_right'   => false,
+		'tablet_bottom'  => false,
+		'tablet_left'    => false,
+		'mobile_top'     => false,
+		'mobile_right'   => false,
+		'mobile_bottom'  => false,
+		'mobile_left'    => false,
+	);
 
-// 	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = json_encode( $theme_mod_array, true );
 
-// 	set_theme_mod( 'page_boxed_padding', $theme_mod_array );
+	set_theme_mod( 'page_boxed_padding', $theme_mod_array );
 
-// }
+}
+*/
 
 // Clean up previous BFCM admin notice dismissals.
 $bfcm2021 = get_option( 'wpbf_bfcm_notice_dismissed' );
