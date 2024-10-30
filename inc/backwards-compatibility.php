@@ -78,7 +78,7 @@ if ( is_numeric( $menu_logo_size ) ) {
 		'mobile'  => false,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'menu_logo_size', $theme_mod_array );
 
@@ -97,7 +97,7 @@ if ( $menu_logo_size_desktop || $menu_logo_size_tablet || $menu_logo_size_mobile
 		'mobile'  => $menu_logo_size_mobile,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'menu_logo_size', $theme_mod_array );
 
@@ -120,7 +120,7 @@ if ( $menu_logo_font_size_desktop || $menu_logo_font_size_tablet || $menu_logo_f
 		'mobile'  => $menu_logo_font_size_mobile,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'menu_logo_font_size', $theme_mod_array );
 
@@ -143,7 +143,7 @@ if ( $menu_logo_description_font_size_desktop || $menu_logo_description_font_siz
 		'mobile'  => $menu_logo_description_font_size_mobile,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'menu_logo_description_font_size', $theme_mod_array );
 
@@ -168,7 +168,7 @@ if ( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_botto
 		'left'   => $sub_menu_padding_left,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'sub_menu_padding', $theme_mod_array );
 
@@ -194,7 +194,7 @@ if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padd
 		'left'   => $mobile_menu_padding_left,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'mobile_menu_padding', $theme_mod_array );
 
@@ -218,7 +218,7 @@ if ( $woocommerce_loop_products_per_row_desktop || $woocommerce_loop_products_pe
 		'mobile'  => $woocommerce_loop_products_per_row_mobile ? $woocommerce_loop_products_per_row_mobile : '1',
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'woocommerce_loop_products_per_row', $theme_mod_array );
 
@@ -265,7 +265,7 @@ foreach ( $archives as $archive ) {
 			'mobile_left'    => $boxed_padding_left_mobile,
 		);
 
-		$theme_mod_array = json_encode( $theme_mod_array, true );
+		$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 		set_theme_mod( $archive . '_boxed_padding', $theme_mod_array );
 
@@ -321,7 +321,7 @@ if ( $boxed_padding_top_desktop || $boxed_padding_right_desktop || $boxed_paddin
 		'mobile_left'    => $boxed_padding_left_mobile,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'single_boxed_padding', $theme_mod_array );
 
@@ -375,7 +375,7 @@ if ( $page_padding_top_desktop || $page_padding_right_desktop || $page_padding_b
 		'mobile_left'    => $page_padding_left_mobile,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'page_padding', $theme_mod_array );
 
@@ -429,7 +429,7 @@ if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_deskto
 		'mobile_left'    => $sidebar_widget_padding_left_mobile,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'sidebar_widget_padding', $theme_mod_array );
 
@@ -476,7 +476,7 @@ if ( is_numeric( $page_boxed_padding ) ) {
 		'mobile_left'    => false,
 	);
 
-	$theme_mod_array = json_encode( $theme_mod_array, true );
+	$theme_mod_array = wp_json_encode( $theme_mod_array, true );
 
 	set_theme_mod( 'page_boxed_padding', $theme_mod_array );
 
