@@ -2153,99 +2153,9 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	headerBuilderRows.forEach((rowKey) => {
 		const controlIdPrefix = `wpbf_header_builder_${rowKey}_`;
 
-		// The top row doesn't use min_height setting.
-		if (rowKey !== "row_1") {
-			const minHeightControlId = `${controlIdPrefix}min_height`;
+		const visibilitySettingId = `${controlIdPrefix}visibility`;
 
-			customizer(minHeightControlId, function (value) {
-				const styleTag = getStyleTag(minHeightControlId);
-				const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
-
-				value.bind(function (newValue) {
-					const minHeightValue = valueHasUnit(newValue)
-						? newValue
-						: newValue + "px";
-
-					writeResponsiveCSS(styleTag, selector, "min-height", minHeightValue);
-				});
-			});
-		}
-
-		const vPaddingSettingId = `${controlIdPrefix}vertical_padding`;
-
-		customizer(
-			rowKey === "row_1" ? "pre_header_height" : vPaddingSettingId,
-			function (value) {
-				const styleTag = getStyleTag(vPaddingSettingId);
-
-				const selector =
-					rowKey === "row_1"
-						? ".wpbf-inner-pre-header"
-						: `.wpbf-header-row-${rowKey} .wpbf-row-content`;
-
-				value.bind(function (newValue) {
-					if (rowKey === "row_1") {
-						// The top row use existing 'pre_header_height' setting as the vertical padding value.
-						writeCSS(
-							styleTag,
-							selector,
-							["padding-top", "padding-bottom"],
-							newValue + "px",
-						);
-					} else {
-						writeResponsiveCSS(
-							styleTag,
-							selector,
-							["padding-top", "padding-bottom"],
-							newValue,
-						);
-					}
-				});
-			},
-		);
-
-		const bgColorSettinglId = `${controlIdPrefix}bg_color`;
-
-		customizer(
-			rowKey === "row_1" ? "pre_header_bg_color" : bgColorSettinglId,
-			function (value) {
-				const styleTag = getStyleTag(bgColorSettinglId);
-
-				const selector =
-					rowKey === "row_1"
-						? ".wpbf-pre-header"
-						: `.wpbf-header-row-${rowKey}`;
-
-				value.bind(function (newValue) {
-					if (!newValue) {
-						styleTag.innerHTML = "";
-						return;
-					}
-
-					writeCSS(styleTag, selector, ["background-color"], newValue);
-				});
-			},
-		);
-
-		const textColorControlId = `${controlIdPrefix}text_color`;
-
-		customizer(textColorControlId, function (value) {
-			const styleTag = getStyleTag(textColorControlId);
-
-			value.bind(function (newValue) {
-				if (!newValue) return;
-
-				styleTag.innerHTML = `
-				.wpbf-header-row-${rowKey} {
-					color: ${newValue};
-				}
-				`;
-			});
-		});
-
-		const visibilityControlId = `${controlIdPrefix}visibility`;
-
-		customizer(visibilityControlId, function (value) {
+		customizer(visibilitySettingId, function (value) {
 			const availableSizes = ["large", "medium", "small"];
 
 			value.bind(function (newValue) {
@@ -2265,13 +2175,19 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 
 		/**
-		 * The `use_container` settings is not available in top row
-		 * because the top row will use existing 'pre_header_width' setting.
+		 * We let the old pre_header settings to handle these settings:
+		 * - vertical_padding.
+		 * - width (because row_1 doesn't use "use_container")
+		 * - bg_color
+		 *
+		 * And we don't use these settings in row_1:
+		 * - use_container
+		 * - min_height
 		 */
 		if (rowKey !== "row_1") {
-			const useContainerControlId = `${controlIdPrefix}use_container`;
+			const useContainerSettingId = `${controlIdPrefix}use_container`;
 
-			customizer(useContainerControlId, function (value) {
+			customizer(useContainerSettingId, function (value) {
 				value.bind(function (newValue) {
 					const row = document.querySelector(`.wpbf-header-row-${rowKey}`);
 					if (!row) return;
@@ -2310,20 +2226,72 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 					}
 				});
 			});
-		} else {
-			const widthControlId = `${controlIdPrefix}_width`;
 
-			// Only available for top row.
-			customizer(widthControlId, function (value) {
-				const styleTag = getStyleTag("pre_header_width");
+			const minHeightSettingId = `${controlIdPrefix}min_height`;
 
-				value.bind((newValue) => {
-					const val = newValue ? newValue : "1200px";
+			customizer(minHeightSettingId, function (value) {
+				const styleTag = getStyleTag(minHeightSettingId);
+				const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
 
-					writeCSS(styleTag, ".wpbf-inner-pre-header", ["max-width"], val);
+				value.bind(function (newValue) {
+					const minHeightValue = valueHasUnit(newValue)
+						? newValue
+						: newValue + "px";
+
+					writeResponsiveCSS(styleTag, selector, "min-height", minHeightValue);
+				});
+			});
+
+			const vPaddingSettingId = `${controlIdPrefix}vertical_padding`;
+
+			customizer(vPaddingSettingId, function (value) {
+				const styleTag = getStyleTag(vPaddingSettingId);
+
+				const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
+
+				value.bind(function (newValue) {
+					writeResponsiveCSS(
+						styleTag,
+						selector,
+						["padding-top", "padding-bottom"],
+						newValue,
+					);
+				});
+			});
+
+			const bgColorSettinglId = `${controlIdPrefix}bg_color`;
+
+			customizer(bgColorSettinglId, function (value) {
+				const styleTag = getStyleTag(bgColorSettinglId);
+
+				const selector = `.wpbf-header-row-${rowKey}`;
+
+				value.bind(function (newValue) {
+					if (!newValue) {
+						styleTag.innerHTML = "";
+						return;
+					}
+
+					writeCSS(styleTag, selector, ["background-color"], newValue);
 				});
 			});
 		}
+
+		const textColorControlId = `${controlIdPrefix}text_color`;
+
+		customizer(textColorControlId, function (value) {
+			const styleTag = getStyleTag(textColorControlId);
+
+			value.bind(function (newValue) {
+				if (!newValue) return;
+
+				styleTag.innerHTML = `
+				.wpbf-header-row-${rowKey} {
+					color: ${newValue};
+				}
+				`;
+			});
+		});
 	});
 
 	const headerBuilderButtonKeys = ["button_1", "button_2"];

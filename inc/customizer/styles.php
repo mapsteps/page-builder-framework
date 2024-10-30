@@ -2441,7 +2441,13 @@ $pre_header_font_size        = ( $val = get_theme_mod( 'pre_header_font_size' ) 
 
 $header_builder_enabled = get_theme_mod( 'wpbf_enable_header_builder' );
 
-if ( ! $header_builder_enabled && 'none' !== $pre_header_layout && ( $pre_header_height || $pre_header_width ) ) {
+$render_pre_header_style = false;
+
+if ( $header_builder_enabled || 'none' !== $pre_header_layout ) {
+	$render_pre_header_style = true;
+}
+
+if ( $render_pre_header_style && ( $pre_header_height || $pre_header_width ) ) {
 
 	echo '.wpbf-inner-pre-header {';
 
@@ -2460,7 +2466,7 @@ if ( ! $header_builder_enabled && 'none' !== $pre_header_layout && ( $pre_header
 
 }
 
-if ( 'none' !== $pre_header_layout && ( $pre_header_bg_color || $pre_header_font_color ) ) {
+if ( $render_pre_header_style && ( $pre_header_bg_color || $pre_header_font_color ) ) {
 
 	echo '.wpbf-pre-header {';
 
@@ -2476,7 +2482,7 @@ if ( 'none' !== $pre_header_layout && ( $pre_header_bg_color || $pre_header_font
 
 }
 
-if ( 'none' !== $pre_header_layout && $pre_header_accent_color ) {
+if ( $render_pre_header_style && $pre_header_accent_color ) {
 
 	echo '.wpbf-pre-header a {';
 	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_color ) );
@@ -2484,7 +2490,7 @@ if ( 'none' !== $pre_header_layout && $pre_header_accent_color ) {
 
 }
 
-if ( 'none' !== $pre_header_layout && $pre_header_accent_color_alt ) {
+if ( $render_pre_header_style && $pre_header_accent_color_alt ) {
 
 	echo '.wpbf-pre-header a:hover {';
 	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_color_alt ) );
@@ -2496,11 +2502,11 @@ if ( 'none' !== $pre_header_layout && $pre_header_accent_color_alt ) {
 
 }
 
-if ( 'none' !== $pre_header_layout && $pre_header_font_size ) {
+if ( $render_pre_header_style && $pre_header_font_size ) {
 
 	$suffix = is_numeric( $pre_header_font_size ) ? 'px' : '';
 	echo '.wpbf-pre-header, .wpbf-pre-header .wpbf-menu, .wpbf-pre-header .wpbf-menu .sub-menu a {';
-	echo sprintf( 'font-size: %s;', esc_attr( $pre_header_font_size ) . $suffix );
+	echo sprintf( 'font-size: %s;', esc_attr( $pre_header_font_size . $suffix ) );
 	echo '}';
 
 }

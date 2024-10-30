@@ -70,38 +70,17 @@ if ( is_array( $header_builder_rows ) && ! empty( $header_builder_rows ) ) {
 foreach ( $rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-	if ( 'row_1' === $row_key ) {
-		$bg_color_val = trim( strval( get_theme_mod( 'pre_header_bg_color' ) ) );
-		$bg_color     = '' === $bg_color_val || '#ffffff' === $bg_color_val || '#fff' === $bg_color_val ? null : strval( $bg_color_val );
-
-		if ( ! is_null( $bg_color ) ) {
-			echo '.wpbf-pre-header {';
-			echo 'background-color: ' . esc_attr( $bg_color ) . ';';
-			echo '}';
-		}
-
-		$max_width_val = trim( strval( get_theme_mod( 'pre_header_width' ) ) );
-		$max_width     = '' === $max_width_val || '1200px' === $max_width_val || is_null( $max_width_val ) ? null : strval( $max_width_val );
-
-		$v_padding_val = trim( strval( get_theme_mod( 'pre_header_height' ) ) );
-		$v_padding     = '' === $v_padding_val || '10' === $v_padding_val ? null : absint( $v_padding_val );
-
-		if ( ! is_null( $max_width ) || ! is_null( $v_padding ) ) {
-			echo '.wpbf-inner-pre-header {';
-
-			if ( ! is_null( $max_width ) ) {
-				echo 'max-width: ' . esc_attr( $max_width ) . ';';
-			}
-
-			if ( ! is_null( $v_padding ) ) {
-				echo 'padding-top: ' . esc_attr( $v_padding ) . 'px;';
-				echo 'padding-bottom: ' . esc_attr( $v_padding ) . 'px;';
-			}
-
-			echo '}';
-		}
-
-	} else {
+	/**
+	 * We let the old pre_header settings to handle these settings:
+	 * - vertical_padding.
+	 * - width (because row_1 doesn't use "use_container")
+	 * - bg_color
+	 *
+	 * And we don't use these settings in row_1:
+	 * - use_container
+	 * - min_height
+	 */
+	if ( 'row_1' !== $row_key ) {
 		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
 
 		$bg_color = get_theme_mod( $row_id_prefix . 'bg_color', '' );
