@@ -701,7 +701,7 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 
 	$container_class = 'wpbf-container wpbf-container-center';
 
-	$row_class = ( 'row_1' === $row_key ? "wpbf-inner-pre-header $container_class" : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
+	$row_class = ( 'row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
 
 	echo '<div class="' . esc_attr( $row_class ) . '">';
 
