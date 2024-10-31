@@ -62,7 +62,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->addToSection( $section_id );
 
-// Use existing pre_header_width setting from pre-header section.
+// Use existing pre_header_width setting from the old pre-header section.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'width' )
 	->settings( 'pre_header_width' )
@@ -75,7 +75,7 @@ wpbf_customizer_field()
 
 /* Design Tab */
 
-// Use existing pre_header_height setting from pre-header section.
+// Use existing pre_header_height setting from the old pre-header section.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'vertical_padding' )
 	->settings( 'pre_header_height' )
@@ -91,12 +91,29 @@ wpbf_customizer_field()
 	) )
 	->addToSection( $section_id );
 
+// Use existing pre_header_font_size setting from the old pre-header section.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'font_size' )
+	->settings( 'pre_header_font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '14px' )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );
+
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'color_separator' )
 	->type( 'divider' )
 	->tab( 'design' )
 	->addToSection( $section_id );
 
+// Use existing pre_header_bg_color setting from the old pre-header section.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'bg_color' )
 	->settings( 'pre_header_bg_color' )
@@ -110,6 +127,7 @@ wpbf_customizer_field()
 	) )
 	->addToSection( $section_id );
 
+// Use existing pre_header_font_color setting from the old pre-header section.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'text_color' )
 	->settings( 'pre_header_font_color' )
@@ -122,6 +140,7 @@ wpbf_customizer_field()
 	) )
 	->addToSection( $section_id );
 
+// Use existing pre_header_accent_colors setting from the old pre-header section.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'accent_colors' )
 	->settings( 'pre_header_accent_colors' )
