@@ -112,11 +112,28 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'text_color' )
+	->settings( 'pre_header_font_color' )
 	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Text Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
-	->properties( [
+	->properties( array(
 		'mode' => 'alpha',
-	] )
+	) )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'accent_colors' )
+	->settings( 'pre_header_accent_colors' )
+	->type( 'multicolor' )
+	->tab( 'design' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
 	->addToSection( $section_id );
