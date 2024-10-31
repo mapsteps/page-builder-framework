@@ -1,4 +1,5 @@
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
+import { WpbfCheckboxButtonsetControlValue } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 import {
 	WpbfCustomizeColorControlValue,
 	WpbfCustomizeMulticolorControlValue,
@@ -2215,24 +2216,32 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 		const visibilitySettingId = `${controlIdPrefix}visibility`;
 
-		customizer(visibilitySettingId, function (value) {
-			const availableSizes = ["large", "medium", "small"];
+		customizer(
+			visibilitySettingId,
+			(value: WpbfCustomizeSetting<WpbfCheckboxButtonsetControlValue>) => {
+				const availableSizes = ["large", "medium", "small"];
 
-			value.bind(function (newValue) {
-				if (!newValue || !Array.isArray(newValue)) return;
+				value.bind(function (newValue) {
+					if (!newValue || !Array.isArray(newValue)) return;
 
-				const el = document.querySelector(`.wpbf-header-row-${rowKey}`);
-				if (!el) return;
+					const selector =
+						rowKey === "row_1"
+							? ".wpbf-pre-header"
+							: `.wpbf-header-row-${rowKey}`;
 
-				availableSizes.forEach(function (size) {
-					if (newValue.includes(size)) {
-						el.classList.remove(`wpbf-hidden-${size}`);
-					} else {
-						el.classList.add(`wpbf-hidden-${size}`);
-					}
+					const el = document.querySelector(selector);
+					if (!el) return;
+
+					availableSizes.forEach(function (size) {
+						if (newValue.includes(size)) {
+							el.classList.remove(`wpbf-hidden-${size}`);
+						} else {
+							el.classList.add(`wpbf-hidden-${size}`);
+						}
+					});
 				});
-			});
-		});
+			},
+		);
 
 		// Some settings in row_1 are handled by the old pre_header settings.
 		if (rowKey !== "row_1") {
@@ -2255,29 +2264,51 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 			const minHeightSettingId = `${controlIdPrefix}min_height`;
 
-			customizer(minHeightSettingId, function (value) {
-				value.bind(function (newValue) {
-					writeResponsiveCSS(
-						minHeightSettingId,
-						`.wpbf-header-row-${rowKey} .wpbf-row-content`,
-						"min-height",
-						newValue,
-					);
-				});
-			});
+			customizer(
+				minHeightSettingId,
+				(value: WpbfCustomizeSetting<string | DevicesValue>) => {
+					value.bind(function (newValue) {
+						writeResponsiveCSS(
+							minHeightSettingId,
+							`.wpbf-header-row-${rowKey} .wpbf-row-content`,
+							"min-height",
+							typeof newValue === "string" ? {} : newValue,
+						);
+					});
+				},
+			);
 
 			const vPaddingSettingId = `${controlIdPrefix}vertical_padding`;
 
-			customizer(vPaddingSettingId, function (value) {
-				value.bind(function (newValue) {
-					writeResponsiveCSS(
-						vPaddingSettingId,
-						`.wpbf-header-row-${rowKey} .wpbf-row-content`,
-						["padding-top", "padding-bottom"],
-						newValue,
-					);
-				});
-			});
+			customizer(
+				vPaddingSettingId,
+				function (value: WpbfCustomizeSetting<string | DevicesValue>) {
+					value.bind(function (newValue) {
+						writeResponsiveCSS(
+							vPaddingSettingId,
+							`.wpbf-header-row-${rowKey} .wpbf-row-content`,
+							["padding-top", "padding-bottom"],
+							typeof newValue === "string" ? {} : newValue,
+						);
+					});
+				},
+			);
+
+			const fontSizeSettingId = `${controlIdPrefix}font_size`;
+
+			customizer(
+				fontSizeSettingId,
+				(value: WpbfCustomizeSetting<string | DevicesValue>) => {
+					value.bind(function (newValue) {
+						writeResponsiveCSS(
+							fontSizeSettingId,
+							`.wpbf-header-row-${rowKey}`,
+							["font-size"],
+							typeof newValue === "string" ? {} : newValue,
+						);
+					});
+				},
+			);
 
 			const bgColorSettinglId = `${controlIdPrefix}bg_color`;
 
@@ -2307,6 +2338,34 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				]);
 			});
 		});
+
+		const accentColorsSettingId = `${controlIdPrefix}accent_colors`;
+
+		customizer(
+			accentColorsSettingId,
+			(value: WpbfCustomizeSetting<WpbfCustomizeMulticolorControlValue>) => {
+				value.bind(function (newValue) {
+					const rawDefaultColor = newValue.default ?? "";
+					const defaultColor = toStringColor(rawDefaultColor);
+
+					const rawHoverColor = newValue.hover ?? "";
+					const hoverColor = toStringColor(rawHoverColor);
+
+					writeCSS(accentColorsSettingId, [
+						{
+							selector: `.wpbf-header-row-${rowKey} a`,
+							props: ["color"],
+							value: defaultColor,
+						},
+						{
+							selector: `.wpbf-header-row-${rowKey} a:hover, .wpbf-header-row-${rowKey} a:focus`,
+							props: ["color"],
+							value: hoverColor,
+						},
+					]);
+				});
+			},
+		);
 	});
 
 	const headerBuilderButtonKeys = ["button_1", "button_2"];

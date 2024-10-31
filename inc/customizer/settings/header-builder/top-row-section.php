@@ -91,12 +91,6 @@ wpbf_customizer_field()
 	) )
 	->addToSection( $section_id );
 
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'font_separator' )
-	->type( 'divider' )
-	->tab( 'design' )
-	->addToSection( $section_id );
-
 // Use existing pre_header_font_size setting from the old pre-header section.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'font_size' )

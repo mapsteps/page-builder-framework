@@ -72,22 +72,6 @@ foreach ( $rows as $row_key => $columns ) {
 
 	// Some settings in row_1 are handled by the old pre_header settings.
 	if ( 'row_1' !== $row_key ) {
-		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
-
-		$bg_color = get_theme_mod( $row_id_prefix . 'bg_color', '' );
-
-		if ( $bg_color ) {
-			echo sprintf( 'background-color: %s;', esc_attr( $bg_color ) );
-		}
-
-		$text_color = get_theme_mod( $row_id_prefix . 'text_color', '' );
-
-		if ( $text_color ) {
-			echo sprintf( 'color: %s;', esc_attr( $text_color ) );
-		}
-
-		echo '}';
-
 		$max_width_val = trim( strval( get_theme_mod( $row_id_prefix . 'max_width', '' ) ) );
 		$max_width     = '' === $max_width_val || '1200px' === $max_width_val || is_null( $max_width_val ) ? null : strval( $max_width_val );
 
@@ -168,8 +152,76 @@ foreach ( $rows as $row_key => $columns ) {
 				echo '}';
 			}
 		}
-	}
 
+		$font_sizes = get_theme_mod( $row_id_prefix . 'font_size', [] );
+		$font_sizes = ! is_array( $font_sizes ) ? [] : $font_sizes;
+
+		$desktop_font_size = isset( $font_sizes['desktop'] ) && '' !== $font_sizes['desktop'] && '16px' !== $font_sizes['desktop'] && '16' !== $font_sizes['desktop'] ? $font_sizes['desktop'] : null;
+		$desktop_font_size = is_numeric( $desktop_font_size ) ? $desktop_font_size . 'px' : $desktop_font_size;
+
+		$bg_color   = get_theme_mod( $row_id_prefix . 'bg_color', '' );
+		$text_color = get_theme_mod( $row_id_prefix . 'text_color', '' );
+
+		if ( ! is_null( $desktop_font_size ) || $bg_color || $text_color ) {
+			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
+
+			if ( $desktop_font_size ) {
+				echo 'font-size: ' . esc_attr( $desktop_font_size ) . ';';
+			}
+
+			if ( $bg_color ) {
+				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
+			}
+
+			if ( $text_color ) {
+				echo 'color: ' . esc_attr( $text_color ) . ';';
+			}
+
+			echo '}';
+		}
+
+		$tablet_font_size = isset( $font_sizes['tablet'] ) && '' !== $font_sizes['tablet'] ? $font_sizes['tablet'] : null;
+		$tablet_font_size = is_numeric( $tablet_font_size ) ? $tablet_font_size . 'px' : $tablet_font_size;
+
+		if ( ! is_null( $tablet_font_size ) ) {
+			echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {
+				.wpbf-header-row-' . esc_attr( $row_key ) . ' {
+					font-size: ' . esc_attr( $tablet_font_size ) . ';
+				}
+			}';
+		}
+
+		$mobile_font_size = isset( $font_sizes['mobile'] ) && '' !== $font_sizes['mobile'] ? $font_sizes['mobile'] : null;
+		$mobile_font_size = is_numeric( $mobile_font_size ) ? $mobile_font_size . 'px' : $mobile_font_size;
+
+		if ( ! is_null( $mobile_font_size ) ) {
+			echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {
+				.wpbf-header-row-' . esc_attr( $row_key ) . ' {
+					font-size: ' . esc_attr( $mobile_font_size ) . ';
+				}
+			}';
+		}
+
+		$accent_colors = get_theme_mod( $row_id_prefix . 'accent_colors', [] );
+		$accent_colors = ! is_array( $accent_colors ) ? [] : $accent_colors;
+
+		if ( ! empty( $accent_colors ) ) {
+			$default_color = isset( $accent_colors['default'] ) && '' !== $accent_colors['default'] ? $accent_colors['default'] : null;
+			$hover_color   = isset( $accent_colors['hover'] ) && '' !== $accent_colors['hover'] ? $accent_colors['hover'] : null;
+
+			if ( ! is_null( $default_color ) ) {
+				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' a {
+					color: ' . esc_attr( $default_color ) . ';
+				}';
+			}
+
+			if ( ! is_null( $hover_color ) ) {
+				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:focus {
+					color: ' . esc_attr( $hover_color ) . ';
+				}';
+			}
+		}
+	}
 }
 
 $devices = ( new ResponsiveUtil() )->devices();

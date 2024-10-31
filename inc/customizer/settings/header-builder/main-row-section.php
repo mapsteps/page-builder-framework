@@ -78,13 +78,10 @@ wpbf_customizer_field()
 	->type( 'responsive-input-slider' )
 	->tab( 'design' )
 	->label( __( 'Min Height', 'page-builder-framework' ) )
-	->defaultValue( [
-		'desktop' => '50px',
-	] )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
-		'max'  => 600,
+		'max'  => 1000,
 		'step' => 1,
 	] )
 	->addToSection( $section_id );
@@ -101,6 +98,20 @@ wpbf_customizer_field()
 	->properties( [
 		'min'  => 0,
 		'max'  => 200,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'font_size' )
+	->type( 'responsive-input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->description( __( 'Default: 16px', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 1,
+		'max'  => 100,
 		'step' => 1,
 	] )
 	->addToSection( $section_id );
@@ -131,4 +142,19 @@ wpbf_customizer_field()
 	->properties( [
 		'mode' => 'alpha',
 	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'accent_colors' )
+	->type( 'multicolor' )
+	->tab( 'design' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
 	->addToSection( $section_id );
