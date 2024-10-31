@@ -63,12 +63,11 @@ wpbf_customizer_field()
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'use_container' )
-	->type( 'toggle' )
+	->id( $control_id_prefix . 'max_width' )
+	->type( 'dimension' )
 	->tab( 'general' )
-	->label( __( 'Use Container', 'page-builder-framework' ) )
-	->description( __( "Whether to make this row's layout contained (boxed).", 'page-builder-framework' ) )
-	->defaultValue( true )
+	->label( __( 'Width', 'page-builder-framework' ) )
+	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
 

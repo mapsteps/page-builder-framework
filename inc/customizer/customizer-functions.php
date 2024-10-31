@@ -693,19 +693,13 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 		return 'wpbf-hidden-' . esc_attr( $dimension );
 	}, $hidden_dimensions ) );
 
-	$use_container = get_theme_mod( $row_id_prefix . 'use_container', null );
-	$use_container = is_null( $use_container ) ? true : boolval( $use_container );
-
-	// The top row will have wpbf-container in the wpbf-inner-pre-header div.
-	$use_container = 'row_1' === $row_key ? false : $use_container;
-
 	$container_class = 'wpbf-container wpbf-container-center';
 
 	$row_class = ( 'row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
 
 	echo '<div class="' . esc_attr( $row_class ) . '">';
 
-	if ( $use_container ) {
+	if ( 'row_1' !== $row_key ) {
 		echo '<div class="' . esc_attr( $container_class ) . '">';
 	}
 
@@ -748,7 +742,7 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 
 	echo '</div>';
 
-	if ( $use_container ) {
+	if ( 'row_1' !== $row_key ) {
 		echo '</div>';
 	}
 

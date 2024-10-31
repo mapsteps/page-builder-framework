@@ -70,16 +70,7 @@ if ( is_array( $header_builder_rows ) && ! empty( $header_builder_rows ) ) {
 foreach ( $rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-	/**
-	 * We let the old pre_header settings to handle these settings:
-	 * - vertical_padding.
-	 * - width (because row_1 doesn't use "use_container")
-	 * - bg_color
-	 *
-	 * And we don't use these settings in row_1:
-	 * - use_container
-	 * - min_height
-	 */
+	// Some settings in row_1 are handled by the old pre_header settings.
 	if ( 'row_1' !== $row_key ) {
 		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
 
@@ -97,56 +88,86 @@ foreach ( $rows as $row_key => $columns ) {
 
 		echo '}';
 
-		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
+		$max_width_val = trim( strval( get_theme_mod( $row_id_prefix . 'max_width', '' ) ) );
+		$max_width     = '' === $max_width_val || '1200px' === $max_width_val || is_null( $max_width_val ) ? null : strval( $max_width_val );
+
+		if ( ! is_null( $max_width ) ) {
+			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-container {';
+			echo 'max-width: ' . esc_attr( $max_width ) . ';';
+			echo '}';
+		}
 
 		$min_heights = get_theme_mod( $row_id_prefix . 'min_height', [] );
 		$min_heights = ! is_array( $min_heights ) ? [] : $min_heights;
 
-		// The top row doesn't have min-height setting.
-		if ( $min_heights ) {
-			if ( isset( $min_heights['desktop'] ) ) {
-				echo sprintf( 'min-height: %s;', esc_attr( $min_heights['desktop'] ) );
-			}
-
-			if ( isset( $min_heights['tablet'] ) ) {
-				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
-				echo sprintf( 'min-height: %s;', esc_attr( $min_heights['tablet'] ) );
-				echo '}';
-			}
-
-			if ( isset( $min_heights['mobile'] ) ) {
-				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
-				echo sprintf( 'min-height: %s;', esc_attr( $min_heights['mobile'] ) );
-				echo '}';
-			}
-		}
-
 		$v_paddings = get_theme_mod( $row_id_prefix . 'vertical_padding', [] );
 		$v_paddings = ! is_array( $v_paddings ) ? [] : $v_paddings;
 
-		// Vertical padding for top row is handled differently.
-		if ( $v_paddings ) {
-			if ( isset( $v_paddings['desktop'] ) ) {
-				echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['desktop'] ) );
-				echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['desktop'] ) );
-			}
+		if ( ! empty( $min_heights ) || ! empty( $v_paddings ) ) {
+			$desktop_min_height = isset( $min_heights['desktop'] ) && '' !== $min_heights['desktop'] ? $min_heights['desktop'] : null;
+			$desktop_v_padding  = isset( $v_paddings['desktop'] ) && '' !== $v_paddings['desktop'] ? $v_paddings['desktop'] : null;
 
-			if ( isset( $v_paddings['tablet'] ) ) {
-				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
-				echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['tablet'] ) );
-				echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['tablet'] ) );
+			if ( ! is_null( $desktop_min_height ) || ! is_null( $desktop_v_padding ) ) {
+				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
+
+				if ( ! is_null( $desktop_min_height ) ) {
+					echo 'min-height:' . esc_attr( $desktop_min_height ) . ';';
+				}
+
+				if ( ! is_null( $desktop_v_padding ) ) {
+					echo '
+						padding-top:' . esc_attr( $desktop_v_padding ) . ';
+						padding-bottom:' . esc_attr( $desktop_v_padding ) . ';
+					';
+				}
+
 				echo '}';
 			}
 
-			if ( isset( $v_paddings['mobile'] ) ) {
+			$tablet_min_height = isset( $min_heights['tablet'] ) && '' !== $min_heights['tablet'] ? $min_heights['tablet'] : null;
+			$tablet_v_padding  = isset( $v_paddings['tablet'] ) && '' !== $v_paddings['tablet'] ? $v_paddings['tablet'] : null;
+
+			if ( ! is_null( $tablet_min_height ) || ! is_null( $tablet_v_padding ) ) {
+				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
+				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
+
+				if ( ! is_null( $tablet_min_height ) ) {
+					echo 'min-height:' . esc_attr( $tablet_min_height ) . ';';
+				}
+
+				if ( ! is_null( $tablet_v_padding ) ) {
+					echo '
+						padding-top:' . esc_attr( $tablet_v_padding ) . ';
+						padding-bottom:' . esc_attr( $tablet_v_padding ) . ';
+					';
+				}
+
+				echo '}';
+				echo '}';
+			}
+
+			$mobile_min_height = isset( $min_heights['mobile'] ) && '' !== $min_heights['mobile'] ? $min_heights['mobile'] : null;
+			$mobile_v_padding  = isset( $v_paddings['mobile'] ) && '' !== $v_paddings['mobile'] ? $v_paddings['mobile'] : null;
+
+			if ( ! is_null( $mobile_min_height ) || ! is_null( $mobile_v_padding ) ) {
 				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
-				echo sprintf( 'padding-top: %s;', esc_attr( $v_paddings['mobile'] ) );
-				echo sprintf( 'padding-bottom: %s;', esc_attr( $v_paddings['mobile'] ) );
+				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
+
+				if ( ! is_null( $mobile_min_height ) ) {
+					echo 'min-height:' . esc_attr( $mobile_min_height ) . ';';
+				}
+
+				if ( ! is_null( $mobile_v_padding ) ) {
+					echo '
+						padding-top:' . esc_attr( $mobile_v_padding ) . ';
+						padding-bottom:' . esc_attr( $mobile_v_padding ) . ';
+					';
+				}
+
+				echo '}';
 				echo '}';
 			}
 		}
-
-		echo '}';
 	}
 
 }

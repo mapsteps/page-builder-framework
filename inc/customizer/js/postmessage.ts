@@ -27,6 +27,13 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		return unitMatch && unitMatch.length > 0 ? true : false;
 	}
 
+	function maybeAppendSuffix(value: string | number, suffix?: string) {
+		if (value === "") return "";
+		suffix = suffix || "px";
+
+		return valueHasUnit(value) ? value : value + suffix;
+	}
+
 	function parseTemplateTags(value: string): string {
 		if (!value) return "";
 
@@ -101,17 +108,22 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	/**
 	 * Write responsive CSS.
 	 *
-	 * @param {HTMLStyleElement} styleTag - The style tag element.
+	 * @param {HTMLStyleElement} styleTagOrId - The style tag element or the style tag id.
 	 * @param {string} selector - The CSS selector.
 	 * @param {string|string[]} rule - The CSS rule.
 	 * @param {Record<string, any>} value - The responsive CSS value.
 	 */
 	function writeResponsiveCSS(
-		styleTag: HTMLStyleElement,
+		styleTagOrId: HTMLStyleElement | string,
 		selector: string,
 		rule: string | string[],
 		value: Record<string, any>,
 	) {
+		const styleTag =
+			typeof styleTagOrId === "string"
+				? getStyleTag(styleTagOrId)
+				: styleTagOrId;
+
 		const devices = Object.keys(window.WpbfTheme.breakpoints);
 		let css = "";
 
@@ -2222,85 +2234,45 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			});
 		});
 
-		/**
-		 * We let the old pre_header settings to handle these settings:
-		 * - vertical_padding.
-		 * - width (because row_1 doesn't use "use_container")
-		 * - bg_color
-		 *
-		 * And we don't use these settings in row_1:
-		 * - use_container
-		 * - min_height
-		 */
+		// Some settings in row_1 are handled by the old pre_header settings.
 		if (rowKey !== "row_1") {
-			const useContainerSettingId = `${controlIdPrefix}use_container`;
+			const maxWidthSettingId = `${controlIdPrefix}max_width`;
 
-			customizer(useContainerSettingId, function (value) {
-				value.bind(function (newValue) {
-					const row = document.querySelector(`.wpbf-header-row-${rowKey}`);
-					if (!row) return;
-
-					const rowContent = row.querySelector(
-						`.wpbf-header-row-${rowKey} .wpbf-row-content`,
-					);
-					if (!rowContent) return;
-
-					const parentEl = rowContent.parentElement;
-					if (!parentEl) return;
-
-					if (newValue) {
-						if (!parentEl.classList.contains("wpbf-container")) {
-							const wrapperEl = document.createElement("div");
-							wrapperEl.classList.add(
-								"wpbf-container",
-								"wpbf-container-center",
-							);
-
-							wrapperEl.appendChild(rowContent);
-							parentEl.appendChild(wrapperEl);
-						}
-					} else {
-						if (parentEl.classList.contains("wpbf-container-center")) {
-							// Unwrap parentEL and its children.
-							const children = parentEl.children;
-
-							for (let i = 0; i < children.length; i++) {
-								const child = children[i];
-								row.appendChild(child);
-							}
-
-							parentEl.remove();
-						}
-					}
-				});
-			});
+			customizer(
+				maxWidthSettingId,
+				(value: WpbfCustomizeSetting<string | number>) => {
+					value.bind(function (newValue) {
+						writeCSS(maxWidthSettingId, [
+							{
+								selector: `.wpbf-header-row-${rowKey} .wpbf-container`,
+								props: ["max-width"],
+								value: maybeAppendSuffix(newValue),
+							},
+						]);
+					});
+				},
+			);
 
 			const minHeightSettingId = `${controlIdPrefix}min_height`;
 
 			customizer(minHeightSettingId, function (value) {
-				const styleTag = getStyleTag(minHeightSettingId);
-				const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
-
 				value.bind(function (newValue) {
-					const minHeightValue = valueHasUnit(newValue)
-						? newValue
-						: newValue + "px";
-
-					writeResponsiveCSS(styleTag, selector, "min-height", minHeightValue);
+					writeResponsiveCSS(
+						minHeightSettingId,
+						`.wpbf-header-row-${rowKey} .wpbf-row-content`,
+						"min-height",
+						newValue,
+					);
 				});
 			});
 
 			const vPaddingSettingId = `${controlIdPrefix}vertical_padding`;
 
 			customizer(vPaddingSettingId, function (value) {
-				const styleTag = getStyleTag(vPaddingSettingId);
-
-				const selector = `.wpbf-header-row-${rowKey} .wpbf-row-content`;
-
 				value.bind(function (newValue) {
 					writeResponsiveCSS(
-						styleTag,
-						selector,
+						vPaddingSettingId,
+						`.wpbf-header-row-${rowKey} .wpbf-row-content`,
 						["padding-top", "padding-bottom"],
 						newValue,
 					);
