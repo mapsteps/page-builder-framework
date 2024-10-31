@@ -1,4 +1,3 @@
-import { colord } from "colord";
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
 import {
 	WpbfCustomizeColorControlValue,
@@ -131,8 +130,13 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	function toStringColor(color: WpbfCustomizeColorControlValue) {
 		if (typeof color === "string") return color;
 		if (typeof color === "number") return "";
+		if (!("r" in color)) return "";
 
-		return colord(color).toRgbString();
+		const alpha = "a" in color ? color.a : 1;
+
+		return alpha && alpha < 1
+			? `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`
+			: `rgb(${color.r}, ${color.g}, ${color.b})`;
 	}
 
 	/* Layout */
