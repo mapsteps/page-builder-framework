@@ -54,12 +54,7 @@ wpbf_customizer_field()
 		'small'  => __( 'Mobile', 'page-builder-framework' ),
 	] )
 	->transport( 'postMessage' )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'visibility_separator' )
-	->type( 'divider' )
-	->tab( 'general' )
+	->priority( 10 )
 	->addToSection( $section_id );
 
 // Use existing pre_header_width setting from the old pre-header section.
@@ -71,6 +66,7 @@ wpbf_customizer_field()
 	->label( __( 'Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->priority( 15 )
 	->addToSection( $section_id );
 
 /* Design Tab */
@@ -84,6 +80,7 @@ wpbf_customizer_field()
 	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
 	->defaultValue( 10 )
 	->transport( 'postMessage' )
+	->priority( 20 )
 	->properties( array(
 		'min'  => 1,
 		'max'  => 25,
@@ -100,6 +97,7 @@ wpbf_customizer_field()
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->defaultValue( '14px' )
 	->transport( 'postMessage' )
+	->priority( 25 )
 	->properties( [
 		'min'  => 0,
 		'max'  => 50,
@@ -111,6 +109,7 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'color_separator' )
 	->type( 'divider' )
 	->tab( 'design' )
+	->priority( 30 )
 	->addToSection( $section_id );
 
 // Use existing pre_header_bg_color setting from the old pre-header section.
@@ -122,6 +121,7 @@ wpbf_customizer_field()
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->defaultValue( '#ffffff' )
 	->transport( 'postMessage' )
+	->priority( 35 )
 	->properties( array(
 		'mode' => 'alpha',
 	) )
@@ -135,6 +135,7 @@ wpbf_customizer_field()
 	->tab( 'design' )
 	->label( __( 'Text Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->priority( 40 )
 	->properties( array(
 		'mode' => 'alpha',
 	) )
@@ -152,6 +153,7 @@ wpbf_customizer_field()
 		'default' => __( 'Default', 'page-builder-framework' ),
 		'hover'   => __( 'Hover', 'page-builder-framework' ),
 	) )
+	->priority( 45 )
 	->properties( array(
 		'mode' => 'alpha',
 	) )
