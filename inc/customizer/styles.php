@@ -2441,11 +2441,9 @@ $pre_header_accent_colors = ! is_array( $pre_header_accent_colors ) ? array() : 
 
 $pre_header_font_size = ( $val = get_theme_mod( 'pre_header_font_size' ) ) === '14px' ? false : $val;
 
-$header_builder_enabled = get_theme_mod( 'wpbf_enable_header_builder' );
-
 $render_pre_header_style = false;
 
-if ( $header_builder_enabled || 'none' !== $pre_header_layout ) {
+if ( wpbf_header_builder_enabled() || 'none' !== $pre_header_layout ) {
 	$render_pre_header_style = true;
 }
 
