@@ -88,7 +88,7 @@ export default function setupjQueryDesktopMenu($) {
 				.css({ display: "block" })
 				.animate({ width: itemWidth, opacity: "1" }, 200);
 
-			$("input[type=search]", this).val("").focus();
+			$("input[type=search]", this).val("").trigger("focus");
 		}
 	}
 
