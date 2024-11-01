@@ -452,7 +452,7 @@ function wpbf_render_builder_logo_widget( $setting_group ) {
  */
 function wpbf_render_builder_search_widget( $setting_group ) {
 
-	echo wp_kses_post( wpbf_search_menu_item( false, false ) );
+	echo wpbf_search_menu_item( false, false );
 
 }
 
