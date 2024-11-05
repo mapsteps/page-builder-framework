@@ -13,6 +13,7 @@ import {
 	SelectControlChoice,
 	WpbfCustomizeSelectControl,
 } from "../../Select/src/select-interface";
+import { WpbfCustomizeAssocArrayControl } from "../../Generic/src/generic-interface";
 
 /**
  * These var declarations are for the global variables that are set in the PHP file.
@@ -27,9 +28,8 @@ declare var wpbfFieldsFontVariants:
 	| undefined;
 
 window.wp.customize?.bind("ready", function () {
-	if (window.wp.customize) {
-		setupTypographyFields(window.wp.customize);
-	}
+	if (!window.wp.customize) return;
+	setupTypographyFields(window.wp.customize);
 });
 
 function setupTypographyFields(customizer: WpbfCustomize) {
@@ -39,13 +39,14 @@ function setupTypographyFields(customizer: WpbfCustomize) {
 		if (!customizer.control(id)) return;
 
 		customizer(id, function (setting) {
-			setting.bind(function (value) {
-				composeFontProperties(id, undefined, undefined, value);
-			});
-		});
+			composeFontProperties(id, undefined, undefined, undefined);
 
-		composeFontProperties(id, undefined, undefined, undefined);
-		listenFontPropertyFieldsChange(id);
+			setting.bind(function (value) {
+				composeFontProperties(id, value, undefined, undefined);
+			});
+
+			listenFontPropertyFieldsChange(id);
+		});
 	});
 }
 
@@ -58,7 +59,13 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 
 		window.wp.customize?.(propertyControlId, function (setting) {
 			setting.bind(function (value) {
-				composeFontProperties(typographyControlId, property, value, undefined);
+				composeFontProperties(
+					typographyControlId,
+					undefined,
+					property,
+					value,
+					true,
+				);
 			});
 		});
 	});
@@ -82,14 +89,19 @@ function variantFoundInChoices(
 
 function composeFontProperties(
 	id: string,
+	val?: WpbfCustomizeTypographyControlValue,
 	triggerPropertyName?: FontProperty,
 	triggerPropertyValue?: string,
-	value?: WpbfCustomizeTypographyControlValue,
+	triggerChange?: boolean,
 ) {
-	const control = window.wp.customize?.control(id);
+	const control: WpbfCustomizeAssocArrayControl | undefined =
+		window.wp.customize?.control(id);
 	if (!control || !control.setting) return;
 
-	value = value || control.setting.get();
+	val = val || control.setting.get();
+
+	const value = { ...val };
+
 	if ("undefined" === typeof value) return;
 	if ("string" !== typeof value["font-family"]) return;
 
@@ -144,17 +156,23 @@ function composeFontProperties(
 			? variantValue
 			: "regular";
 
-		variantControl.$selectbox?.empty();
-		variantControl.$selectbox?.append(
+		const $variantSelectbox = variantControl.container?.find(".wpbf-select2");
+
+		$variantSelectbox?.empty();
+		$variantSelectbox?.append(
 			variantChoices.map((choice) => {
 				return new Option(choice.text, choice.id, false, false);
 			}),
 		);
-		variantControl.$selectbox?.val(updatedOptionValue);
-		variantControl.$selectbox?.trigger("change");
+		$variantSelectbox?.val(updatedOptionValue);
+		$variantSelectbox?.trigger("change");
 	}
 
-	window.wp.customize?.(id).set(value);
+	if (triggerChange) {
+		value["random"] = Date.now();
+	}
+
+	control.setting.set(value);
 
 	window.wp.hooks.addAction(
 		"wpbf.dynamicControl.initWpbfControl",

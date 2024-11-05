@@ -60,6 +60,7 @@ import {
 						control.updateComponentState?.(val);
 					});
 				},
+
 				updateComponentState: function (val) {
 					if (this.currentValue === val) return;
 					if (!this.container) return;

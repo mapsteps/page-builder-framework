@@ -26,6 +26,8 @@ $page_font_toggle       = get_theme_mod( 'page_font_toggle' );
 $page_font_family_value = get_theme_mod( 'page_font_family' );
 $page_font_color        = ( $val = get_theme_mod( 'page_font_color' ) ) === '#6d7680' ? false : $val;
 
+error_log( "page_font_family_value:\n" . print_r( $page_font_family_value, true ) );
+
 if ( $page_font_toggle && $page_font_family_value ) {
 
 	echo 'body, button, input, optgroup, select, textarea, h1, h2, h3, h4, h5, h6 {';

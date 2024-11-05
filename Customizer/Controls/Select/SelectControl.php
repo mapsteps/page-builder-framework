@@ -148,8 +148,8 @@ class SelectControl extends BaseControl {
 			'wpbf-select-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.js',
 			array(
-				'customize-controls',
 				'select2',
+				'wpbf-base-control',
 			),
 			WPBF_VERSION,
 			false

@@ -276,7 +276,6 @@ export interface WpbfCustomizeControl<SV, CP> {
 	isPopupOpen?: Record<string, () => boolean>;
 
 	// Specific to PBF's select control.
-	$selectbox?: JQuery;
 	doSelectAction?: (action: string, value: SelectControlValue) => void;
 
 	// Specific to PBF's sortable control.

@@ -49,11 +49,15 @@ class GoogleFontsDownload {
 
 		$css_content = $this->downloadStylesheet( $stylesheet_url );
 
+		// error_log( "downloaded css content:\n" . print_r( $css_content, true ) );
+
 		if ( empty( $css_content ) ) {
 			return;
 		}
 
 		$fonts_to_download = $this->getFontUrlsFromCss( $css_content );
+
+		// error_log( "fonts to download:]\n" . print_r( $fonts_to_download, true ) );
 
 		$css_content = $this->localizeCssFontFilesPath( $css_content );
 

@@ -32,6 +32,7 @@ export interface SelectControlParams
 		maxLimitReached: string;
 	};
 	choicesGlobalVar?: string;
+	preventSave?: boolean;
 }
 
 export interface WpbfCustomizeSelectControl

@@ -7,21 +7,17 @@ import {
 import "./select-control.scss";
 
 if (window.wp.customize) {
-	setupSelectControl(window.wp.customize);
-}
+	const customizer = window.wp.customize;
 
-function setupSelectControl(customizer: WpbfCustomize) {
 	customizer.controlConstructor["wpbf-select"] =
 		customizer.Control.extend<WpbfCustomizeSelectControl>({
-			$selectbox: undefined,
-
 			/**
 			 * Initialize.
 			 */
 			initialize: function (id, params) {
-				customizer.Control.prototype.initialize.call(this, id, params);
-
 				const control = this;
+
+				customizer.Control.prototype.initialize.call(control, id, params);
 
 				// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 				function onRemoved(removedControl: AnyWpbfCustomizeControl) {
@@ -107,12 +103,10 @@ function setupSelectControl(customizer: WpbfCustomize) {
 					this.setNotificationContainer?.(notificationsContainer);
 				}
 
-				this.$selectbox = this.container?.find(
-					".wpbf-control-form .wpbf-select2",
-				);
+				const $selectbox = this.container?.find(".wpbf-select2");
 
-				this.$selectbox?.on("change.select2", (e) => {
-					const selectedOptions = this.$selectbox?.select2("data");
+				$selectbox?.on("change.select2", (e) => {
+					const selectedOptions = $selectbox?.select2("data");
 
 					const values = selectedOptions?.map((option) => option.id);
 					let value = null;
@@ -154,7 +148,7 @@ function setupSelectControl(customizer: WpbfCustomize) {
 					});
 				}
 
-				this.$selectbox?.select2({
+				$selectbox?.select2({
 					placeholder: params.placeholder,
 					allowClear: params.isClearable,
 					multiple: params.isMulti,
@@ -185,7 +179,10 @@ function setupSelectControl(customizer: WpbfCustomize) {
 			},
 
 			updateComponentState: function (value) {
-				this.$selectbox?.val(value);
+				const $selectbox = this.container?.find(".wpbf-select2");
+				if (!$selectbox) return;
+
+				$selectbox.val(value);
 			},
 
 			/**
@@ -196,11 +193,11 @@ function setupSelectControl(customizer: WpbfCustomize) {
 			 * @link https://core.trac.wordpress.org/ticket/31334
 			 */
 			destroy: function destroy() {
-				if (this.$selectbox) {
-					this.$selectbox.off("change.select2");
-					this.$selectbox.select2("destroy");
-					this.$selectbox = undefined;
-				}
+				const $selectbox = this.container?.find(".wpbf-select2");
+				if (!$selectbox) return;
+
+				$selectbox.off("change.select2");
+				$selectbox.select2("destroy");
 
 				this.container?.html("");
 
