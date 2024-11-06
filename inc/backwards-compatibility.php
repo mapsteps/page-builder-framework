@@ -482,6 +482,7 @@ if ( $sidebar_widget_padding_top_desktop || $sidebar_widget_padding_right_deskto
 // Clean up previous BFCM admin notice dismissals.
 $bfcm2021 = get_option( 'wpbf_bfcm_notice_dismissed' );
 $bfcm2022 = get_option( 'wpbf_bfcm_notice_dismissed_2022' );
+$bfcm2023 = get_option( 'wpbf_bfcm_notice_dismissed_2023' );
 
 if ( $bfcm2021 ) {
 	delete_option( 'wpbf_bfcm_notice_dismissed' );
@@ -489,6 +490,10 @@ if ( $bfcm2021 ) {
 
 if ( $bfcm2022 ) {
 	delete_option( 'wpbf_bfcm_notice_dismissed_2022' );
+}
+
+if ( $bfcm2023 ) {
+	delete_option( 'wpbf_bfcm_notice_dismissed_2023' );
 }
 
 /**
