@@ -135,8 +135,8 @@ function wpbf_show_bfcm_notice() {
 		return;
 	}
 
-	$start = strtotime( 'november 20th, 2024' );
-	$end   = strtotime( 'november 27th, 2024' );
+	$start = strtotime( 'november 29th, 2024' );
+	$end   = strtotime( 'december 2nd, 2024' );
 	$now   = time();
 
 	// Stop here if we are not in the sales period.
