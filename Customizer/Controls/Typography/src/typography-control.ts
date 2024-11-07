@@ -112,7 +112,7 @@ function composeFontProperties(
 		value[triggerPropertyName] = triggerPropertyValue;
 	}
 
-	const variantValue =
+	let variantValue =
 		"undefined" === typeof value.variant ? "regular" : value.variant;
 
 	const maybeVariantControl = window.wp.customize?.control(id + "[variant]");
@@ -121,19 +121,6 @@ function composeFontProperties(
 		maybeVariantControl && "wpbf-select" === maybeVariantControl.params.type
 			? (maybeVariantControl as WpbfCustomizeSelectControl)
 			: undefined;
-
-	// Set the font-style value.
-	if (-1 !== variantValue.indexOf("i")) {
-		value["font-style"] = "italic";
-	} else {
-		value["font-style"] = "normal";
-	}
-
-	// Set the font-weight value.
-	value["font-weight"] =
-		"regular" === variantValue || "italic" === variantValue
-			? 400
-			: parseInt(variantValue, 10);
 
 	if (
 		variantControl &&
@@ -156,6 +143,9 @@ function composeFontProperties(
 			? variantValue
 			: "regular";
 
+		// Update the `variantValue` with the updated option value.
+		variantValue = updatedOptionValue;
+
 		const $variantSelectbox = variantControl.container?.find(".wpbf-select2");
 
 		$variantSelectbox?.empty();
@@ -164,9 +154,22 @@ function composeFontProperties(
 				return new Option(choice.text, choice.id, false, false);
 			}),
 		);
-		$variantSelectbox?.val(updatedOptionValue);
+		$variantSelectbox?.val(variantValue);
 		$variantSelectbox?.trigger("change");
 	}
+
+	// Set the font-style value.
+	if (-1 !== variantValue.indexOf("i")) {
+		value["font-style"] = "italic";
+	} else {
+		value["font-style"] = "normal";
+	}
+
+	// Set the font-weight value.
+	value["font-weight"] =
+		"regular" === variantValue || "italic" === variantValue
+			? 400
+			: parseInt(variantValue, 10);
 
 	if (triggerChange) {
 		value["random"] = Date.now();

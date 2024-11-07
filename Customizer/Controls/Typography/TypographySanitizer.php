@@ -75,10 +75,6 @@ class TypographySanitizer {
 			unset( $value['random'] );
 		}
 
-		if ( str_contains( $setting_id, 'page_font_family' ) ) {
-			error_log( "sanitized typography value:\n" . print_r( $value, true ) );
-		}
-
 		return $value;
 
 	}

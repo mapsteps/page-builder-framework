@@ -82,8 +82,6 @@ class FontsOutput {
 		 */
 		$google_fonts_to_use = $this->googleFontsToUse();
 
-		// error_log( "google fonts to use:\n" . print_r( $google_fonts_to_use, true ) );
-
 		/**
 		 * An associative array of Google fonts to download.
 		 *
@@ -100,8 +98,6 @@ class FontsOutput {
 				}
 			}
 		}
-
-		// error_log( "google fonts to download:\n" . print_r( $google_fonts_to_download, true ) );
 
 		$existing_downloaded_css = $this->fonts_util->getDownloadedGoogleFontsCss();
 
@@ -196,8 +192,6 @@ class FontsOutput {
 		 */
 		$google_fonts_to_use = [];
 
-		// error_log( "control values:\n" . print_r( $control_values, true ) );
-
 		foreach ( $control_values as $control_id => $value ) {
 			if ( ! $value || ! is_array( $value ) ) {
 				continue;
@@ -232,11 +226,7 @@ class FontsOutput {
 			}
 		}
 
-		// error_log( "google fonts to use:\n" . print_r( $google_fonts_to_use, true ) );
-
 		$existing_downloaded_css = $this->fonts_util->getDownloadedGoogleFontsCss();
-
-		// error_log( "existing downloaded css:\n" . print_r( $existing_downloaded_css, true ) );
 
 		foreach ( $google_fonts_to_use as $google_font_family => $google_font_variants ) {
 			$google_font_family_slug = $this->fonts_util->slugifyFontFamily( $google_font_family );
