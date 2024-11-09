@@ -85,15 +85,15 @@ export default function setupSectionDependencies(
 			);
 
 			if (!isDependencySatisfied) {
-				deactivateSection(ruleSet.dependantId);
+				deactivateSection(ruleSet.dependantControlId);
 				continue;
 			}
 
 			const dependantDependencies =
-				globalSectionDependencies[ruleSet.dependantId];
+				globalSectionDependencies[ruleSet.dependantControlId];
 
 			if (dependantDependencies.length < 2) {
-				activateSection(ruleSet.dependantId);
+				activateSection(ruleSet.dependantControlId);
 				continue;
 			}
 
@@ -121,9 +121,9 @@ export default function setupSectionDependencies(
 			}
 
 			if (!otherRulesSatisfied) {
-				deactivateSection(ruleSet.dependantId);
+				deactivateSection(ruleSet.dependantControlId);
 			} else {
-				activateSection(ruleSet.dependantId);
+				activateSection(ruleSet.dependantControlId);
 			}
 		}
 	}

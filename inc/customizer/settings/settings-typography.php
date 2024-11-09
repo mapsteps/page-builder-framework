@@ -118,7 +118,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'page_font_toggle',
+			'setting'  => 'page_font_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -213,7 +213,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'menu_logo_font_toggle',
+			'setting'  => 'menu_logo_font_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -250,7 +250,7 @@ wpbf_customizer_field()
 	->priority( 4 )
 	->activeCallback( array(
 		array(
-			'id'       => 'menu_logo_description_toggle',
+			'setting'  => 'menu_logo_description_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -282,7 +282,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'menu_font_family_toggle',
+			'setting'  => 'menu_font_family_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -331,7 +331,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'sub_menu_font_family_toggle',
+			'setting'  => 'sub_menu_font_family_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -381,7 +381,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'page_h1_toggle',
+			'setting'  => 'page_h1_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -430,7 +430,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'page_h2_toggle',
+			'setting'  => 'page_h2_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -479,7 +479,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'page_h3_toggle',
+			'setting'  => 'page_h3_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -528,7 +528,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'page_h4_toggle',
+			'setting'  => 'page_h4_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -576,7 +576,7 @@ wpbf_customizer_field()
 	->properties( wpbf_typography_field_properties() )
 	->activeCallback( array(
 		array(
-			'id'       => 'page_h5_toggle',
+			'setting'  => 'page_h5_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -626,7 +626,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'page_h6_toggle',
+			'setting'  => 'page_h6_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -675,7 +675,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( array(
 		array(
-			'id'       => 'footer_font_toggle',
+			'setting'  => 'footer_font_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),

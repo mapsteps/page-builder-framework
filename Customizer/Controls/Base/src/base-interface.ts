@@ -421,21 +421,23 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 }
 
 export interface WpbfControlDependency {
-	id: string;
+	// The `id` prop here is for backwards compatibility.
+	id?: string;
+	setting: string;
 	operator: string;
 	value: string;
 }
 
 export interface WpbfControlDependencies {
-	[dependantId: string]: WpbfControlDependency[];
+	[dependantControlId: string]: WpbfControlDependency[];
 }
 
 export interface WpbfReversedControlDependency {
-	dependantId: string;
+	dependantControlId: string;
 	operator: string;
 	value: string;
 }
 
 export interface WpbfReversedControlDependencies {
-	[dependencyId: string]: WpbfReversedControlDependency[];
+	[dependencySettingId: string]: WpbfReversedControlDependency[];
 }

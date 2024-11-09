@@ -87,7 +87,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -121,12 +121,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
 		array(
-			'id'       => 'footer_column_one_layout',
+			'setting'  => 'footer_column_one_layout',
 			'operator' => '==',
 			'value'    => 'text',
 		),
@@ -141,7 +141,7 @@ wpbf_customizer_field()
 	->priority( 3 )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
@@ -163,7 +163,7 @@ wpbf_customizer_field()
 	->priority( 3 )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
@@ -197,12 +197,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
 		array(
-			'id'       => 'footer_column_two_layout',
+			'setting'  => 'footer_column_two_layout',
 			'operator' => '==',
 			'value'    => 'text',
 		),
@@ -220,7 +220,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -243,7 +243,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -264,7 +264,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -284,7 +284,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -304,7 +304,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -324,7 +324,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -342,7 +342,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'footer_layout',
+			'setting'  => 'footer_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),

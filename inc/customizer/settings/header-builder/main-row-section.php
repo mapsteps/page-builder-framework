@@ -54,12 +54,14 @@ wpbf_customizer_field()
 		'small'  => __( 'Mobile', 'page-builder-framework' ),
 	] )
 	->transport( 'postMessage' )
+	->priority( 10 )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'visibility_separator' )
 	->type( 'divider' )
 	->tab( 'general' )
+	->priority( 15 )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -69,6 +71,7 @@ wpbf_customizer_field()
 	->label( __( 'Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->priority( 20 )
 	->addToSection( $section_id );
 
 /* Design Tab */
@@ -79,6 +82,7 @@ wpbf_customizer_field()
 	->tab( 'design' )
 	->label( __( 'Min Height', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->priority( 25 )
 	->properties( [
 		'min'  => 0,
 		'max'  => 1000,
@@ -95,6 +99,7 @@ wpbf_customizer_field()
 		'desktop' => '15px',
 	] )
 	->transport( 'postMessage' )
+	->priority( 30 )
 	->properties( [
 		'min'  => 0,
 		'max'  => 200,
@@ -109,6 +114,7 @@ wpbf_customizer_field()
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->description( __( 'Default: 16px', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->priority( 35 )
 	->properties( [
 		'min'  => 1,
 		'max'  => 100,
@@ -120,6 +126,7 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'color_separator' )
 	->type( 'divider' )
 	->tab( 'design' )
+	->priority( 40 )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -128,6 +135,7 @@ wpbf_customizer_field()
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->priority( 45 )
 	->properties( [
 		'mode' => 'alpha',
 	] )
@@ -139,6 +147,7 @@ wpbf_customizer_field()
 	->tab( 'design' )
 	->label( __( 'Text Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->priority( 50 )
 	->properties( [
 		'mode' => 'alpha',
 	] )
@@ -150,6 +159,7 @@ wpbf_customizer_field()
 	->tab( 'design' )
 	->label( __( 'Accent Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->priority( 55 )
 	->choices( array(
 		'default' => __( 'Default', 'page-builder-framework' ),
 		'hover'   => __( 'Hover', 'page-builder-framework' ),

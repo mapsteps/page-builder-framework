@@ -135,7 +135,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -170,12 +170,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
 		array(
-			'id'       => 'pre_header_column_one_layout',
+			'setting'  => 'pre_header_column_one_layout',
 			'operator' => '==',
 			'value'    => 'text',
 		),
@@ -190,7 +190,7 @@ wpbf_customizer_field()
 	->priority( 2 )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
@@ -212,7 +212,7 @@ wpbf_customizer_field()
 	->priority( 2 )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
@@ -246,12 +246,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
 		array(
-			'id'       => 'pre_header_column_two_layout',
+			'setting'  => 'pre_header_column_two_layout',
 			'operator' => '==',
 			'value'    => 'text',
 		),
@@ -266,7 +266,7 @@ wpbf_customizer_field()
 	->priority( 3 )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -284,7 +284,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -307,7 +307,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -328,7 +328,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -348,7 +348,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -372,7 +372,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -390,7 +390,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -412,7 +412,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '!=',
 			'value'    => '',
 		),
@@ -443,7 +443,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '!=',
 			'value'    => '',
 		),
@@ -470,7 +470,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -490,7 +490,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -511,7 +511,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -532,7 +532,7 @@ wpbf_customizer_field()
 	->priority( 14 )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -551,7 +551,7 @@ wpbf_customizer_field()
 	->priority( 20 )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -577,12 +577,12 @@ wpbf_customizer_field()
 	->priority( 20 )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'id'       => 'menu_logo_description',
+			'setting'  => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -611,12 +611,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'id'       => 'menu_logo_description',
+			'setting'  => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -632,12 +632,12 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'id'       => 'menu_logo_description',
+			'setting'  => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -679,7 +679,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '!==',
 			'value'    => '',
 		),
@@ -695,7 +695,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '!==',
 			'value'    => '',
 		),
@@ -861,12 +861,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'menu_position',
+			'setting'  => 'menu_position',
 			'operator' => '!=',
 			'value'    => 'menu-off-canvas',
 		),
 		array(
-			'id'       => 'menu_position',
+			'setting'  => 'menu_position',
 			'operator' => '!=',
 			'value'    => 'menu-off-canvas-left',
 		),
@@ -1120,7 +1120,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'sub_menu_separator',
+			'setting'  => 'sub_menu_separator',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1181,7 +1181,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1197,7 +1197,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1221,7 +1221,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1257,7 +1257,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => '!=',
 			'value'    => 'menu-mobile-elementor',
 		),
@@ -1277,7 +1277,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1300,7 +1300,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1322,7 +1322,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1345,12 +1345,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
 		array(
-			'id'       => 'mobile_menu_hamburger_bg_color',
+			'setting'  => 'mobile_menu_hamburger_bg_color',
 			'operator' => '!=',
 			'value'    => false,
 		),

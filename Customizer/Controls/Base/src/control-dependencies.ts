@@ -11,20 +11,31 @@ export default function setupControlDependencies(
 	if (!window.wp.customize) return;
 	const reversedControlDependencies: WpbfReversedControlDependencies = {};
 
-	for (const controlId in globalControlDependencies) {
-		if (!globalControlDependencies.hasOwnProperty(controlId)) {
+	for (const dependantControlId in globalControlDependencies) {
+		if (!globalControlDependencies.hasOwnProperty(dependantControlId)) {
 			continue;
 		}
 
-		const controlDependencies = globalControlDependencies[controlId];
+		const controlDependencies = globalControlDependencies[dependantControlId];
 
 		for (const dependency of controlDependencies) {
-			if (!reversedControlDependencies[dependency.id]) {
-				reversedControlDependencies[dependency.id] = [];
+			let dependencySettingId = dependency.setting;
+
+			// Backwards compatibility.
+			if (!dependencySettingId && dependency.id) {
+				dependencySettingId = dependency.id;
 			}
 
-			reversedControlDependencies[dependency.id].push({
-				dependantId: controlId,
+			if (!dependencySettingId) {
+				continue;
+			}
+
+			if (!reversedControlDependencies[dependencySettingId]) {
+				reversedControlDependencies[dependencySettingId] = [];
+			}
+
+			reversedControlDependencies[dependencySettingId].push({
+				dependantControlId: dependantControlId,
 				operator: dependency.operator,
 				value: dependency.value,
 			});
@@ -34,29 +45,29 @@ export default function setupControlDependencies(
 	const customizer = window.wp.customize;
 
 	customizer.bind("ready", function () {
-		for (const controlId in reversedControlDependencies) {
-			if (!reversedControlDependencies.hasOwnProperty(controlId)) {
+		for (const dependencySettingId in reversedControlDependencies) {
+			if (!reversedControlDependencies.hasOwnProperty(dependencySettingId)) {
 				continue;
 			}
 
-			listenDependencyControl(controlId);
+			listenDependencyControl(dependencySettingId);
 		}
 	});
 
-	function listenDependencyControl(dependencyControlId: string) {
-		customizer(dependencyControlId, function (setting) {
-			const rules = reversedControlDependencies[dependencyControlId];
+	function listenDependencyControl(dependencySettingId: string) {
+		customizer(dependencySettingId, function (setting) {
+			const rules = reversedControlDependencies[dependencySettingId];
 
-			handleRulesCondition(dependencyControlId, setting.get(), rules);
+			handleRulesCondition(dependencySettingId, setting.get(), rules);
 
 			setting.bind(function (newValue: string) {
-				handleRulesCondition(dependencyControlId, newValue, rules);
+				handleRulesCondition(dependencySettingId, newValue, rules);
 			});
 		});
 	}
 
 	function handleRulesCondition(
-		dependencyControlId: string,
+		dependencySettingId: string,
 		newValue: string,
 		rules: WpbfReversedControlDependency[],
 	) {
@@ -68,27 +79,38 @@ export default function setupControlDependencies(
 			);
 
 			if (!isDependencySatisfied) {
-				customizer.control(ruleSet.dependantId)?.toggle(false);
+				customizer.control(ruleSet.dependantControlId)?.toggle(false);
 				continue;
 			}
 
 			const dependantDependencies =
-				globalControlDependencies[ruleSet.dependantId];
+				globalControlDependencies[ruleSet.dependantControlId];
 
 			if (dependantDependencies.length < 2) {
-				customizer.control(ruleSet.dependantId)?.toggle(true);
+				customizer.control(ruleSet.dependantControlId)?.toggle(true);
 				continue;
 			}
 
 			let otherRulesSatisfied = true;
 
 			for (const dependantDependency of dependantDependencies) {
-				if (dependantDependency.id === dependencyControlId) {
+				let dependantDependencySettingId = dependantDependency.setting;
+
+				// Backwards compatibility.
+				if (!dependantDependencySettingId && dependantDependency.id) {
+					dependantDependencySettingId = dependantDependency.id;
+				}
+
+				if (!dependantDependencySettingId) {
+					continue;
+				}
+
+				if (dependantDependencySettingId === dependencySettingId) {
 					continue;
 				}
 
 				const dependantDependencyValue = customizer(
-					dependantDependency.id,
+					dependantDependencySettingId,
 				).get();
 
 				if (
@@ -104,9 +126,9 @@ export default function setupControlDependencies(
 			}
 
 			if (!otherRulesSatisfied) {
-				customizer.control(ruleSet.dependantId)?.toggle(false);
+				customizer.control(ruleSet.dependantControlId)?.toggle(false);
 			} else {
-				customizer.control(ruleSet.dependantId)?.toggle(true);
+				customizer.control(ruleSet.dependantControlId)?.toggle(true);
 			}
 		}
 	}
