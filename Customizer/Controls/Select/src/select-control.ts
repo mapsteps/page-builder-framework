@@ -122,9 +122,10 @@ if (window.wp.customize) {
 
 				const choicesGlobalVar = params.choicesGlobalVar;
 
-				const choicesFromGlobalVar = choicesGlobalVar
-					? (window[choicesGlobalVar] as SelectControlChoice[])
-					: undefined;
+				const choicesFromGlobalVar =
+					choicesGlobalVar && choicesGlobalVar in window
+						? (window[choicesGlobalVar] as SelectControlChoice[])
+						: undefined;
 
 				if (choicesFromGlobalVar) {
 					const value = this.setting?.get();

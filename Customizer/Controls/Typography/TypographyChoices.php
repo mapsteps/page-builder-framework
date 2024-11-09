@@ -188,7 +188,7 @@ class TypographyChoices {
 		$families_arg = ! empty( $fonts_arg['families'] ) && is_array( $fonts_arg['families'] ) ? $fonts_arg['families'] : [];
 
 		if ( empty( $families_arg ) ) {
-			return $fonts_util->getStandardVariants();
+			return $fonts_util->getStandardVariantOptions();
 		}
 
 		$choices = [];
