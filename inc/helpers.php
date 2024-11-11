@@ -1858,59 +1858,13 @@ function wpbf_write_css( $args = [] ) {
 		return;
 	}
 
-	$rules = empty( $args['rules'] ) || ! is_array( $args['rules'] ) ? array() : $args['rules'];
 	$props = empty( $args['props'] ) || ! is_array( $args['props'] ) ? array() : $args['props'];
-	$prop  = empty( $args['prop'] ) ? '' : $args['prop'];
 
-	// Either rules or props must be set.
-	if ( empty( $rules ) && empty( $props ) && empty( $prop ) ) {
+	if ( empty( $props ) ) {
 		return;
 	}
 
 	$media_query = empty( $args['media_query'] ) ? '' : $args['media_query'];
-
-	if ( ! empty( $rules ) ) {
-		if ( $media_query ) {
-			echo esc_html( $media_query ) . ' {';
-		}
-
-		echo esc_html( $selector ) . ' {';
-
-		foreach ( $rules as $rule ) {
-			$props = ! empty( $rule['props'] ) && is_array( $rule['props'] ) ? $rule['props'] : array();
-			$prop  = ! empty( $rule['prop'] ) ? $rule['prop'] : '';
-			$val   = ! empty( $rule['val'] ) ? $rule['val'] : '';
-
-			if ( ( empty( $props ) && empty( $prop ) ) || '' === $val ) {
-				continue;
-			}
-
-			$important = ! empty( $rule['important'] ) ? $rule['important'] : false;
-
-			foreach ( $props as $css_prop ) {
-				echo esc_attr( $css_prop ) . ': ' . esc_attr( $val ) . ( $important ? ' !important' : '' ) . ';';
-			}
-
-			echo esc_attr( $prop ) . ': ' . esc_attr( $val ) . ( $important ? ' !important' : '' ) . ';';
-		}
-
-		echo '}';
-
-		if ( $media_query ) {
-			echo '}';
-		}
-
-		// If rules are set, `$args['props']`, `$args['value']` and `$args['important']` are ignored.
-		return;
-	}
-
-	$value = isset( $args['value'] ) ? strval( $args['value'] ) : '';
-
-	if ( '' === $value ) {
-		return;
-	}
-
-	$important = empty( $args['important'] ) ? false : $args['important'];
 
 	if ( $media_query ) {
 		echo esc_html( $media_query ) . ' {';
@@ -1918,12 +1872,12 @@ function wpbf_write_css( $args = [] ) {
 
 	echo esc_html( $selector ) . ' {';
 
-	foreach ( $props as $css_prop ) {
-		echo esc_attr( $css_prop ) . ': ' . esc_attr( $value ) . ( $important ? ' !important' : '' ) . ';';
-	}
+	foreach ( $props as $css_prop => $css_value ) {
+		if ( empty( $css_prop ) ) {
+			continue;
+		}
 
-	if ( ! empty( $prop ) ) {
-		echo esc_attr( $prop ) . ': ' . esc_attr( $value ) . ( $important ? ' !important' : '' ) . ';';
+		echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
 	}
 
 	echo '}';
