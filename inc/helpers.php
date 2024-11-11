@@ -1790,6 +1790,40 @@ function wpbf_customize_str_value( $setting_id, $default_value = '' ) {
 }
 
 /**
+ * Get the value of a customizer setting as a boolean.
+ *
+ * @param string $setting_id The setting id.
+ * @param bool   $default_value The default value.
+ *
+ * @return bool
+ */
+function wpbf_customize_bool_value( $setting_id, $default_value = false ) {
+
+	return (bool) get_theme_mod( $setting_id, $default_value );
+
+}
+
+/**
+ * Get the value of a customizer setting as an array.
+ *
+ * @param string $setting_id The setting id.
+ * @param array  $default_value The default value.
+ *
+ * @return array
+ */
+function wpbf_customize_array_value( $setting_id, $default_value = array() ) {
+
+	$value = get_theme_mod( $setting_id, $default_value );
+
+	if ( ! is_array( $value ) ) {
+		return array();
+	}
+
+	return $value;
+
+}
+
+/**
  * Conditionally append a suffix to a CSS value.
  *
  * @param string $value The CSS value.
@@ -1807,7 +1841,16 @@ function wpbf_maybe_append_suffix( $value, $suffix = 'px' ) {
 
 }
 
+/**
+ * Write CSS block (doesn't write the style tag).
+ *
+ * @param array $args The arguments.
+ */
 function wpbf_write_css( $args = [] ) {
+
+	if ( empty( $args ) ) {
+		return;
+	}
 
 	$selector = empty( $args['selector'] ) ? '' : $args['selector'];
 
@@ -1815,25 +1858,77 @@ function wpbf_write_css( $args = [] ) {
 		return;
 	}
 
-	$props = empty( $args['props'] ) ? [] : $args['props'];
+	$rules = empty( $args['rules'] ) || ! is_array( $args['rules'] ) ? array() : $args['rules'];
+	$props = empty( $args['props'] ) || ! is_array( $args['props'] ) ? array() : $args['props'];
+	$prop  = empty( $args['prop'] ) ? '' : $args['prop'];
 
-	if ( empty( $props ) ) {
+	// Either rules or props must be set.
+	if ( empty( $rules ) && empty( $props ) && empty( $prop ) ) {
 		return;
 	}
 
-	$value = empty( $args['value'] ) ? '' : $args['value'];
+	$media_query = empty( $args['media_query'] ) ? '' : $args['media_query'];
 
-	if ( empty( $value ) ) {
+	if ( ! empty( $rules ) ) {
+		if ( $media_query ) {
+			echo esc_html( $media_query ) . ' {';
+		}
+
+		echo esc_html( $selector ) . ' {';
+
+		foreach ( $rules as $rule ) {
+			$props = ! empty( $rule['props'] ) && is_array( $rule['props'] ) ? $rule['props'] : array();
+			$prop  = ! empty( $rule['prop'] ) ? $rule['prop'] : '';
+			$val   = ! empty( $rule['val'] ) ? $rule['val'] : '';
+
+			if ( ( empty( $props ) && empty( $prop ) ) || '' === $val ) {
+				continue;
+			}
+
+			$important = ! empty( $rule['important'] ) ? $rule['important'] : false;
+
+			foreach ( $props as $css_prop ) {
+				echo esc_attr( $css_prop ) . ': ' . esc_attr( $val ) . ( $important ? ' !important' : '' ) . ';';
+			}
+
+			echo esc_attr( $prop ) . ': ' . esc_attr( $val ) . ( $important ? ' !important' : '' ) . ';';
+		}
+
+		echo '}';
+
+		if ( $media_query ) {
+			echo '}';
+		}
+
+		// If rules are set, `$args['props']`, `$args['value']` and `$args['important']` are ignored.
+		return;
+	}
+
+	$value = isset( $args['value'] ) ? strval( $args['value'] ) : '';
+
+	if ( '' === $value ) {
 		return;
 	}
 
 	$important = empty( $args['important'] ) ? false : $args['important'];
 
+	if ( $media_query ) {
+		echo esc_html( $media_query ) . ' {';
+	}
+
 	echo esc_html( $selector ) . ' {';
 
-	foreach ( $props as $prop ) {
+	foreach ( $props as $css_prop ) {
+		echo esc_attr( $css_prop ) . ': ' . esc_attr( $value ) . ( $important ? ' !important' : '' ) . ';';
+	}
+
+	if ( ! empty( $prop ) ) {
 		echo esc_attr( $prop ) . ': ' . esc_attr( $value ) . ( $important ? ' !important' : '' ) . ';';
 	}
 
 	echo '}';
+
+	if ( $media_query ) {
+		echo '}';
+	}
 }

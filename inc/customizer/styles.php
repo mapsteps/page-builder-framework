@@ -24,351 +24,475 @@ $header_builder_enabled = wpbf_header_builder_enabled();
 /* Typography */
 
 // Page font settings.
-$page_font_toggle       = get_theme_mod( 'page_font_toggle' );
-$page_font_family_value = get_theme_mod( 'page_font_family' );
-$page_font_color        = ( $val = get_theme_mod( 'page_font_color' ) ) === '#6d7680' ? false : $val;
+$page_font_toggle = wpbf_customize_bool_value( 'page_font_toggle' );
+$page_font_family = wpbf_customize_array_value( 'page_font_family' );
 
-if ( $page_font_toggle && $page_font_family_value ) {
+if ( $page_font_toggle && $page_font_family ) {
 
-	echo 'body, button, input, optgroup, select, textarea, h1, h2, h3, h4, h5, h6 {';
+	$rules = array();
 
-	if ( ! empty( $page_font_family_value['font-family'] ) ) {
+	if ( ! empty( $page_font_family['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_font_family_value['font-family'] ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $page_font_family['font-family'] ),
+		);
 
 	}
 
-	if ( ! empty( $page_font_family_value['variant'] ) ) {
+	if ( ! empty( $page_font_family['variant'] ) ) {
 
-		$page_font_family_font_weight = str_replace( 'italic', '', $page_font_family_value['variant'] );
-		$page_font_family_font_weight = ( in_array( $page_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_font_family_font_weight;
+		$page_font_family_font_weight = str_replace( 'italic', '', $page_font_family['variant'] );
+		$page_font_family_font_weight = ( in_array( $page_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $page_font_family_font_weight;
 
-		$page_font_family_is_italic  = ( false !== strpos( $page_font_family_value['variant'], 'italic' ) );
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $page_font_family_font_weight,
+		);
+
+		$page_font_family_is_italic  = false !== strpos( $page_font_family['variant'], 'italic' );
 		$page_font_family_font_style = $page_font_family_is_italic ? 'italic' : 'normal';
 
-		echo sprintf( 'font-weight: %s;', esc_attr( $page_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $page_font_family_font_style ) );
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $page_font_family_font_style,
+		);
 
 	}
 
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => 'body, button, input, optgroup, select, textarea, h1, h2, h3, h4, h5, h6',
+		'rules'    => $rules,
+	) );
 
 }
 
+$page_font_color = wpbf_customize_str_value( 'page_font_color' );
+$page_font_color = '#6d7680' === $page_font_color ? '' : $page_font_color;
+
 if ( $page_font_color ) {
 
-	echo 'body {';
-	echo sprintf( 'color: %s;', esc_attr( $page_font_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => 'body',
+		'prop'     => 'color',
+		'value'    => $page_font_color,
+	) );
 
 }
 
 // Menu font settings.
-$menu_font_family_toggle = get_theme_mod( 'menu_font_family_toggle' );
-$menu_font_family_value  = get_theme_mod( 'menu_font_family' );
+$menu_font_family_toggle = wpbf_customize_bool_value( 'menu_font_family_toggle' );
+$menu_font_family_value  = wpbf_customize_array_value( 'menu_font_family' );
 
 if ( $menu_font_family_toggle && $menu_font_family_value ) {
 
-	echo '.wpbf-menu, .wpbf-mobile-menu {';
+	$rules = array();
 
 	if ( ! empty( $menu_font_family_value['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $menu_font_family_value['font-family'] ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $menu_font_family_value['font-family'] ),
+		);
 
 	}
 
 	if ( ! empty( $menu_font_family_value['variant'] ) ) {
 
 		$menu_font_family_font_weight = str_replace( 'italic', '', $menu_font_family_value['variant'] );
-		$menu_font_family_font_weight = ( in_array( $menu_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $menu_font_family_font_weight;
+		$menu_font_family_font_weight = ( in_array( $menu_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $menu_font_family_font_weight;
 
-		$menu_font_family_is_italic = ( false !== strpos( $menu_font_family_value['variant'], 'italic' ) );
-		$menu_font_family_is_style  = $menu_font_family_is_italic ? 'italic' : 'normal';
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $menu_font_family_font_weight,
+		);
 
-		echo sprintf( 'font-weight: %s;', esc_attr( $menu_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $menu_font_family_is_style ) );
+		$menu_font_family_is_italic  = false !== strpos( $menu_font_family_value['variant'], 'italic' );
+		$menu_font_family_font_style = $menu_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $menu_font_family_font_style,
+		);
 
 	}
 
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-menu, .wpbf-mobile-menu',
+		'rules'    => $rules,
+	) );
 
 }
 
 // Sub Menu font settings.
-$sub_menu_font_family_toggle = get_theme_mod( 'sub_menu_font_family_toggle' );
-$sub_menu_font_family_value  = get_theme_mod( 'sub_menu_font_family' );
+$sub_menu_font_family_toggle = wpbf_customize_bool_value( 'sub_menu_font_family_toggle' );
+$sub_menu_font_family_value  = wpbf_customize_array_value( 'sub_menu_font_family' );
 
 if ( $sub_menu_font_family_toggle && $sub_menu_font_family_value ) {
 
-	echo '.wpbf-menu .sub-menu, .wpbf-mobile-menu .sub-menu {';
+	$rules = array();
 
 	if ( ! empty( $sub_menu_font_family_value['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $sub_menu_font_family_value['font-family'] ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $sub_menu_font_family_value['font-family'] ),
+		);
 
 	}
 
 	if ( ! empty( $sub_menu_font_family_value['variant'] ) ) {
 
 		$sub_menu_font_family_font_weight = str_replace( 'italic', '', $sub_menu_font_family_value['variant'] );
-		$sub_menu_font_family_font_weight = ( in_array( $sub_menu_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $sub_menu_font_family_font_weight;
+		$sub_menu_font_family_font_weight = ( in_array( $sub_menu_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $sub_menu_font_family_font_weight;
 
-		$sub_menu_font_family_is_italic = ( false !== strpos( $sub_menu_font_family_value['variant'], 'italic' ) );
-		$sub_menu_font_family_is_style  = $sub_menu_font_family_is_italic ? 'italic' : 'normal';
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $sub_menu_font_family_font_weight,
+		);
 
-		echo sprintf( 'font-weight: %s;', esc_attr( $sub_menu_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $sub_menu_font_family_is_style ) );
+		$sub_menu_font_family_is_italic  = false !== strpos( $sub_menu_font_family_value['variant'], 'italic' );
+		$sub_menu_font_family_font_style = $sub_menu_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $sub_menu_font_family_font_style,
+		);
 
 	}
 
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-menu .sub-menu, .wpbf-mobile-menu .sub-menu',
+		'rules'    => $rules,
+	) );
 
 }
 
 // H1 font settings.
-$page_h1_toggle            = get_theme_mod( 'page_h1_toggle' );
-$page_h1_font_family_value = get_theme_mod( 'page_h1_font_family' );
+$page_h1_toggle      = wpbf_customize_bool_value( 'page_h1_toggle' );
+$page_h1_font_family = wpbf_customize_array_value( 'page_h1_font_family' );
 
-if ( $page_h1_toggle && $page_h1_font_family_value ) {
+if ( $page_h1_toggle && $page_h1_font_family ) {
 
-	echo 'h1, h2, h3, h4, h5, h6 {';
+	$rules = [];
 
-	if ( ! empty( $page_h1_font_family_value['font-family'] ) ) {
+	if ( ! empty( $page_h1_font_family['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h1_font_family_value['font-family'] ) );
-
-	}
-
-	if ( ! empty( $page_h1_font_family_value['variant'] ) ) {
-
-		$page_h1_font_family_font_weight = str_replace( 'italic', '', $page_h1_font_family_value['variant'] );
-		$page_h1_font_family_font_weight = ( in_array( $page_h1_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h1_font_family_font_weight;
-
-		$page_h1_font_family_is_italic = ( false !== strpos( $page_h1_font_family_value['variant'], 'italic' ) );
-		$page_h1_font_family_is_style  = $page_h1_font_family_is_italic ? 'italic' : 'normal';
-
-		echo sprintf( 'font-weight: %s;', esc_attr( $page_h1_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $page_h1_font_family_is_style ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $page_h1_font_family['font-family'] ),
+		);
 
 	}
 
-	echo '}';
+	if ( ! empty( $page_h1_font_family['variant'] ) ) {
+
+		$page_h1_font_family_font_weight = str_replace( 'italic', '', $page_h1_font_family['variant'] );
+		$page_h1_font_family_font_weight = ( in_array( $page_h1_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $page_h1_font_family_font_weight;
+
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $page_h1_font_family_font_weight,
+		);
+
+		$page_h1_font_family_is_italic  = ( false !== strpos( $page_h1_font_family['variant'], 'italic' ) );
+		$page_h1_font_family_font_style = $page_h1_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $page_h1_font_family_font_style,
+		);
+
+	}
+
+	wpbf_write_css( array(
+		// ? Why don't we use h1 only here? Why specify h1-h6?
+		'selector' => 'h1, h2, h3, h4, h5, h6',
+		'rules'    => $rules,
+	) );
 
 }
 
 // H2 font settings.
-$page_h2_font_family_value = get_theme_mod( 'page_h2_font_family' );
-$page_h2_toggle            = get_theme_mod( 'page_h2_toggle' );
+$page_h2_toggle      = wpbf_customize_bool_value( 'page_h2_toggle' );
+$page_h2_font_family = wpbf_customize_array_value( 'page_h2_font_family' );
 
-if ( $page_h2_toggle && $page_h2_font_family_value ) {
+if ( $page_h2_toggle && $page_h2_font_family ) {
 
-	echo 'h2 {';
+	$rules = array();
 
-	if ( ! empty( $page_h2_font_family_value['font-family'] ) ) {
+	if ( ! empty( $page_h2_font_family['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h2_font_family_value['font-family'] ) );
-
-	}
-
-	if ( ! empty( $page_h2_font_family_value['variant'] ) ) {
-
-		$page_h2_font_family_font_weight = str_replace( 'italic', '', $page_h2_font_family_value['variant'] );
-		$page_h2_font_family_font_weight = ( in_array( $page_h2_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h2_font_family_font_weight;
-
-		$page_h2_font_family_is_italic = ( false !== strpos( $page_h2_font_family_value['variant'], 'italic' ) );
-		$page_h2_font_family_is_style  = $page_h2_font_family_is_italic ? 'italic' : 'normal';
-
-		echo sprintf( 'font-weight: %s;', esc_attr( $page_h2_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $page_h2_font_family_is_style ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $page_h2_font_family['font-family'] ),
+		);
 
 	}
 
-	echo '}';
+	if ( ! empty( $page_h2_font_family['variant'] ) ) {
+
+		$page_h2_font_family_font_weight = str_replace( 'italic', '', $page_h2_font_family['variant'] );
+		$page_h2_font_family_font_weight = ( in_array( $page_h2_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $page_h2_font_family_font_weight;
+
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $page_h2_font_family_font_weight,
+		);
+
+		$page_h2_font_family_is_italic  = ( false !== strpos( $page_h2_font_family['variant'], 'italic' ) );
+		$page_h2_font_family_font_style = $page_h2_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $page_h2_font_family_font_style,
+		);
+
+	}
+
+	wpbf_write_css( array(
+		'selector' => 'h2',
+		'rules'    => $rules,
+	) );
 
 }
 
 // H3 font settings.
-$page_h3_toggle            = get_theme_mod( 'page_h3_toggle' );
-$page_h3_font_family_value = get_theme_mod( 'page_h3_font_family' );
+$page_h3_toggle      = wpbf_customize_bool_value( 'page_h3_toggle' );
+$page_h3_font_family = wpbf_customize_array_value( 'page_h3_font_family' );
 
-if ( $page_h3_toggle && $page_h3_font_family_value ) {
+if ( $page_h3_toggle && $page_h3_font_family ) {
 
-	echo 'h3 {';
+	$rules = array();
 
-	if ( ! empty( $page_h3_font_family_value['font-family'] ) ) {
+	if ( ! empty( $page_h3_font_family['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h3_font_family_value['font-family'] ) );
-
-	}
-
-	if ( ! empty( $page_h3_font_family_value['variant'] ) ) {
-
-		$page_h3_font_family_font_weight = str_replace( 'italic', '', $page_h3_font_family_value['variant'] );
-		$page_h3_font_family_font_weight = ( in_array( $page_h3_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h3_font_family_font_weight;
-
-		$page_h3_font_family_is_italic = ( false !== strpos( $page_h3_font_family_value['variant'], 'italic' ) );
-		$page_h3_font_family_is_style  = $page_h3_font_family_is_italic ? 'italic' : 'normal';
-
-		echo sprintf( 'font-weight: %s;', esc_attr( $page_h3_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $page_h3_font_family_is_style ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $page_h3_font_family['font-family'] ),
+		);
 
 	}
 
-	echo '}';
+	if ( ! empty( $page_h3_font_family['variant'] ) ) {
+
+		$page_h3_font_family_font_weight = str_replace( 'italic', '', $page_h3_font_family['variant'] );
+		$page_h3_font_family_font_weight = ( in_array( $page_h3_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $page_h3_font_family_font_weight;
+
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $page_h3_font_family_font_weight,
+		);
+
+		$page_h3_font_family_is_italic  = ( false !== strpos( $page_h3_font_family['variant'], 'italic' ) );
+		$page_h3_font_family_font_style = $page_h3_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $page_h3_font_family_font_style,
+		);
+
+	}
+
+	wpbf_write_css( array(
+		'selector' => 'h3',
+		'rules'    => $rules,
+	) );
 
 }
 
 // H4 font settings.
-$page_h4_toggle            = get_theme_mod( 'page_h4_toggle' );
-$page_h4_font_family_value = get_theme_mod( 'page_h4_font_family' );
+$page_h4_toggle      = wpbf_customize_bool_value( 'page_h4_toggle' );
+$page_h4_font_family = wpbf_customize_array_value( 'page_h4_font_family' );
 
-if ( $page_h4_toggle && $page_h4_font_family_value ) {
+if ( $page_h4_toggle && $page_h4_font_family ) {
 
-	echo 'h4 {';
+	$rules = array();
 
-	if ( ! empty( $page_h4_font_family_value['font-family'] ) ) {
+	if ( ! empty( $page_h4_font_family['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h4_font_family_value['font-family'] ) );
-
-	}
-
-	if ( ! empty( $page_h4_font_family_value['variant'] ) ) {
-
-		$page_h4_font_family_font_weight = str_replace( 'italic', '', $page_h4_font_family_value['variant'] );
-		$page_h4_font_family_font_weight = ( in_array( $page_h4_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h4_font_family_font_weight;
-
-		$page_h4_font_family_is_italic = ( false !== strpos( $page_h4_font_family_value['variant'], 'italic' ) );
-		$page_h4_font_family_is_style  = $page_h4_font_family_is_italic ? 'italic' : 'normal';
-
-		echo sprintf( 'font-weight: %s;', esc_attr( $page_h4_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $page_h4_font_family_is_style ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $page_h4_font_family['font-family'] ),
+		);
 
 	}
 
-	echo '}';
+	if ( ! empty( $page_h4_font_family['variant'] ) ) {
+
+		$page_h4_font_family_font_weight = str_replace( 'italic', '', $page_h4_font_family['variant'] );
+		$page_h4_font_family_font_weight = ( in_array( $page_h4_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $page_h4_font_family_font_weight;
+
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $page_h4_font_family_font_weight,
+		);
+
+		$page_h4_font_family_is_italic  = ( false !== strpos( $page_h4_font_family['variant'], 'italic' ) );
+		$page_h4_font_family_font_style = $page_h4_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $page_h4_font_family_font_style,
+		);
+
+	}
+
+	wpbf_write_css( array(
+		'selector' => 'h4',
+		'rules'    => $rules,
+	) );
 
 }
 
 // H5 font settings.
-$page_h5_toggle            = get_theme_mod( 'page_h5_toggle' );
-$page_h5_font_family_value = get_theme_mod( 'page_h5_font_family' );
+$page_h5_toggle      = wpbf_customize_bool_value( 'page_h5_toggle' );
+$page_h5_font_family = wpbf_customize_array_value( 'page_h5_font_family' );
 
-if ( $page_h5_toggle && $page_h5_font_family_value ) {
+if ( $page_h5_toggle && $page_h5_font_family ) {
 
-	echo 'h5 {';
+	$rules = array();
 
-	if ( ! empty( $page_h5_font_family_value['font-family'] ) ) {
+	if ( ! empty( $page_h5_font_family['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h5_font_family_value['font-family'] ) );
-
-	}
-
-	if ( ! empty( $page_h5_font_family_value['variant'] ) ) {
-
-		$page_h5_font_family_font_weight = str_replace( 'italic', '', $page_h5_font_family_value['variant'] );
-		$page_h5_font_family_font_weight = ( in_array( $page_h5_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h5_font_family_font_weight;
-
-		$page_h5_font_family_is_italic = ( false !== strpos( $page_h5_font_family_value['variant'], 'italic' ) );
-		$page_h5_font_family_is_style  = $page_h5_font_family_is_italic ? 'italic' : 'normal';
-
-		echo sprintf( 'font-weight: %s;', esc_attr( $page_h5_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $page_h5_font_family_is_style ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $page_h5_font_family['font-family'] ),
+		);
 
 	}
 
-	echo '}';
+	if ( ! empty( $page_h5_font_family['variant'] ) ) {
+
+		$page_h5_font_family_font_weight = str_replace( 'italic', '', $page_h5_font_family['variant'] );
+		$page_h5_font_family_font_weight = ( in_array( $page_h5_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $page_h5_font_family_font_weight;
+
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $page_h5_font_family_font_weight,
+		);
+
+		$page_h5_font_family_is_italic  = ( false !== strpos( $page_h5_font_family['variant'], 'italic' ) );
+		$page_h5_font_family_font_style = $page_h5_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $page_h5_font_family_font_style,
+		);
+
+	}
+
+	wpbf_write_css( array(
+		'selector' => 'h5',
+		'rules'    => $rules,
+	) );
 
 }
 
 // H6 font settings.
-$page_h6_toggle            = get_theme_mod( 'page_h6_toggle' );
-$page_h6_font_family_value = get_theme_mod( 'page_h6_font_family' );
+$page_h6_toggle      = wpbf_customize_bool_value( 'page_h6_toggle' );
+$page_h6_font_family = wpbf_customize_array_value( 'page_h6_font_family' );
 
-if ( $page_h6_toggle && $page_h6_font_family_value ) {
+if ( $page_h6_toggle && $page_h6_font_family ) {
 
-	echo 'h6 {';
+	$rules = array();
 
-	if ( ! empty( $page_h6_font_family_value['font-family'] ) ) {
+	if ( ! empty( $page_h6_font_family['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $page_h6_font_family_value['font-family'] ) );
-
-	}
-
-	if ( ! empty( $page_h6_font_family_value['variant'] ) ) {
-
-		$page_h6_font_family_font_weight = str_replace( 'italic', '', $page_h6_font_family_value['variant'] );
-		$page_h6_font_family_font_weight = ( in_array( $page_h6_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $page_h6_font_family_font_weight;
-
-		$page_h6_font_family_is_italic = ( false !== strpos( $page_h6_font_family_value['variant'], 'italic' ) );
-		$page_h6_font_family_is_style  = $page_h6_font_family_is_italic ? 'italic' : 'normal';
-
-		echo sprintf( 'font-weight: %s;', esc_attr( $page_h6_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $page_h6_font_family_is_style ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $page_h6_font_family['font-family'] ),
+		);
 
 	}
 
-	echo '}';
+	if ( ! empty( $page_h6_font_family['variant'] ) ) {
+
+		$page_h6_font_family_font_weight = str_replace( 'italic', '', $page_h6_font_family['variant'] );
+		$page_h6_font_family_font_weight = ( in_array( $page_h6_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $page_h6_font_family_font_weight;
+
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $page_h6_font_family_font_weight,
+		);
+
+		$page_h6_font_family_is_italic  = ( false !== strpos( $page_h6_font_family['variant'], 'italic' ) );
+		$page_h6_font_family_font_style = $page_h6_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $page_h6_font_family_font_style,
+		);
+
+	}
+
+	wpbf_write_css( array(
+		'selector' => 'h6',
+		'rules'    => $rules,
+	) );
 
 }
 
 // Footer font settings.
-$footer_font_toggle       = get_theme_mod( 'footer_font_toggle' );
-$footer_font_family_value = get_theme_mod( 'footer_font_family' );
+$footer_font_toggle = wpbf_customize_bool_value( 'footer_font_toggle' );
+$footer_font_family = wpbf_customize_array_value( 'footer_font_family' );
 
-if ( $footer_font_toggle && $footer_font_family_value ) {
+if ( $footer_font_toggle && $footer_font_family ) {
 
-	echo '.wpbf-page-footer {';
+	$rules = array();
 
-	if ( ! empty( $footer_font_family_value['font-family'] ) ) {
+	if ( ! empty( $footer_font_family['font-family'] ) ) {
 
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $footer_font_family_value['font-family'] ) );
-
-	}
-
-	if ( ! empty( $footer_font_family_value['variant'] ) ) {
-
-		$footer_font_family_font_weight = str_replace( 'italic', '', $footer_font_family_value['variant'] );
-		$footer_font_family_font_weight = ( in_array( $footer_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $footer_font_family_font_weight;
-
-		$footer_font_family_is_italic = ( false !== strpos( $footer_font_family_value['variant'], 'italic' ) );
-		$footer_font_family_is_style  = $footer_font_family_is_italic ? 'italic' : 'normal';
-
-		echo sprintf( 'font-weight: %s;', esc_attr( $footer_font_family_font_weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $footer_font_family_is_style ) );
+		$rules[] = array(
+			'prop'  => 'font-family',
+			'value' => wpbf_parse_font_family( $footer_font_family['font-family'] ),
+		);
 
 	}
 
-	echo '}';
+	if ( ! empty( $footer_font_family['variant'] ) ) {
+
+		$footer_font_family_font_weight = str_replace( 'italic', '', $footer_font_family['variant'] );
+		$footer_font_family_font_weight = ( in_array( $footer_font_family_font_weight, array( '', 'regular' ), true ) ) ? '400' : $footer_font_family_font_weight;
+
+		$rules[] = array(
+			'prop'  => 'font-weight',
+			'value' => $footer_font_family_font_weight,
+		);
+
+		$footer_font_family_is_italic  = ( false !== strpos( $footer_font_family['variant'], 'italic' ) );
+		$footer_font_family_font_style = $footer_font_family_is_italic ? 'italic' : 'normal';
+
+		$rules[] = array(
+			'prop'  => 'font-style',
+			'value' => $footer_font_family_font_style,
+		);
+
+	}
+
+	wpbf_write_css( array(
+		'selector' => '.wpbf-page-footer',
+		'rules'    => $rules,
+	) );
 
 }
 
 /* General */
 
 // Page settings.
-$page_width                   = ( $val = get_theme_mod( 'page_max_width' ) ) === '1200px' ? false : $val;
-$page_boxed                   = get_theme_mod( 'page_boxed' );
-$page_boxed_padding           = ( $val = get_theme_mod( 'page_boxed_padding' ) ) === '20' ? false : $val;
-$page_boxed_margin            = get_theme_mod( 'page_boxed_margin' );
-$page_boxed_background        = get_theme_mod( 'page_boxed_background', '#ffffff' );
-$page_boxed_shadow            = get_theme_mod( 'page_boxed_box_shadow' );
-$page_boxed_shadow_horizontal = ( $val = get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) ? $val . 'px' : '0px';
-$page_boxed_shadow_vertical   = ( $val = get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) ? $val . 'px' : '0px';
-$page_boxed_shadow_blur       = ( $val = get_theme_mod( 'page_boxed_box_shadow_blur' ) ) ? $val . 'px' : '25px';
-$page_boxed_shadow_spread     = ( $val = get_theme_mod( 'page_boxed_box_shadow_spread' ) ) ? $val . 'px' : '0px';
-$page_boxed_shadow_color      = get_theme_mod( 'page_boxed_box_shadow_color', 'rgba(0,0,0,.15)' );
-$page_padding                 = json_decode( get_theme_mod( 'page_padding' ), true );
-$page_padding_top_desktop     = wpbf_get_theme_mod_value( $page_padding, 'desktop_top' );
-$page_padding_right_desktop   = wpbf_get_theme_mod_value( $page_padding, 'desktop_right' );
-$page_padding_bottom_desktop  = wpbf_get_theme_mod_value( $page_padding, 'desktop_bottom' );
-$page_padding_left_desktop    = wpbf_get_theme_mod_value( $page_padding, 'desktop_left' );
-$page_padding_top_tablet      = wpbf_get_theme_mod_value( $page_padding, 'tablet_top' );
-$page_padding_right_tablet    = wpbf_get_theme_mod_value( $page_padding, 'tablet_right' );
-$page_padding_bottom_tablet   = wpbf_get_theme_mod_value( $page_padding, 'tablet_bottom' );
-$page_padding_left_tablet     = wpbf_get_theme_mod_value( $page_padding, 'tablet_left' );
-$page_padding_top_mobile      = wpbf_get_theme_mod_value( $page_padding, 'mobile_top' );
-$page_padding_right_mobile    = wpbf_get_theme_mod_value( $page_padding, 'mobile_right' );
-$page_padding_bottom_mobile   = wpbf_get_theme_mod_value( $page_padding, 'mobile_bottom' );
-$page_padding_left_mobile     = wpbf_get_theme_mod_value( $page_padding, 'mobile_left' );
+$page_padding                = json_decode( get_theme_mod( 'page_padding' ), true );
+$page_padding_top_desktop    = wpbf_get_theme_mod_value( $page_padding, 'desktop_top' );
+$page_padding_right_desktop  = wpbf_get_theme_mod_value( $page_padding, 'desktop_right' );
+$page_padding_bottom_desktop = wpbf_get_theme_mod_value( $page_padding, 'desktop_bottom' );
+$page_padding_left_desktop   = wpbf_get_theme_mod_value( $page_padding, 'desktop_left' );
+$page_padding_top_tablet     = wpbf_get_theme_mod_value( $page_padding, 'tablet_top' );
+$page_padding_right_tablet   = wpbf_get_theme_mod_value( $page_padding, 'tablet_right' );
+$page_padding_bottom_tablet  = wpbf_get_theme_mod_value( $page_padding, 'tablet_bottom' );
+$page_padding_left_tablet    = wpbf_get_theme_mod_value( $page_padding, 'tablet_left' );
+$page_padding_top_mobile     = wpbf_get_theme_mod_value( $page_padding, 'mobile_top' );
+$page_padding_right_mobile   = wpbf_get_theme_mod_value( $page_padding, 'mobile_right' );
+$page_padding_bottom_mobile  = wpbf_get_theme_mod_value( $page_padding, 'mobile_bottom' );
+$page_padding_left_mobile    = wpbf_get_theme_mod_value( $page_padding, 'mobile_left' );
 
 if ( is_numeric( $page_padding_top_desktop ) || is_numeric( $page_padding_right_desktop ) || is_numeric( $page_padding_bottom_desktop ) || is_numeric( $page_padding_left_desktop ) ) {
 
@@ -506,136 +630,222 @@ if ( is_numeric( $page_padding_right_mobile ) || is_numeric( $page_padding_left_
 
 }
 
+$page_width = wpbf_customize_str_value( 'page_max_width' );
+$page_width = '1200' === $page_width || '1200px' === $page_width ? '' : $page_width;
+
 if ( $page_width ) {
 
-	echo '.wpbf-container {';
-	echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-container',
+		'prop'     => 'max-width',
+		'value'    => $page_width,
+	) );
 
 }
 
+$page_boxed = wpbf_customize_bool_value( 'page_boxed' );
+
 if ( $page_boxed ) {
+
+	$page_boxed_padding = wpbf_customize_str_value( 'page_boxed_padding' );
+	$page_boxed_padding = '20' === $page_boxed_padding || '20px' === $page_boxed_padding ? '' : $page_boxed_padding;
 
 	if ( $page_boxed_padding ) {
 
-		echo '.wpbf-container {';
-		echo sprintf( 'padding-left: %s;', esc_attr( $page_boxed_padding ) . 'px' );
-		echo sprintf( 'padding-right: %s;', esc_attr( $page_boxed_padding ) . 'px' );
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-container',
+			'props'    => array( 'padding-left', 'padding-right' ),
+			'value'    => wpbf_maybe_append_suffix( $page_boxed_padding ),
+		) );
 
 	}
 
-	echo '.wpbf-page {';
+	$page_boxed_css_rules = [];
 
-	if ( $page_width ) {
+	$page_boxed_max_width = $page_width ? $page_width : '1200px';
 
-		echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
+	$page_boxed_css_rules[] = array(
+		'prop'  => 'max-width',
+		'value' => $page_boxed_max_width,
+	);
 
-	} else {
+	$page_boxed_css_rules[] = array(
+		'prop'  => 'margin',
+		'value' => '0 auto',
+	);
 
-		echo 'max-width: 1200px;';
-
-	}
-
-	echo 'margin: 0 auto;';
+	$page_boxed_margin = wpbf_customize_str_value( 'page_boxed_margin' );
 
 	if ( $page_boxed_margin ) {
 
-		echo sprintf( 'margin-top: %s;', esc_attr( $page_boxed_margin ) . 'px' );
-		echo sprintf( 'margin-bottom: %s;', esc_attr( $page_boxed_margin ) . 'px' );
+		$page_boxed_css_rules[] = array(
+			'props' => array( 'margin-top', 'margin-bottom' ),
+			'val'   => wpbf_maybe_append_suffix( $page_boxed_margin ),
+		);
 
 	}
+
+	$page_boxed_background = wpbf_customize_str_value( 'page_boxed_background', '#ffffff' );
 
 	if ( $page_boxed_background ) {
-		echo sprintf( 'background-color: %s;', esc_attr( $page_boxed_background ) );
+		$page_boxed_css_rules[] = array(
+			'prop'  => 'background-color',
+			'value' => $page_boxed_background,
+		);
 	}
 
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-page',
+		'rules'    => $page_boxed_css_rules,
+	) );
+
+	$page_boxed_shadow = wpbf_customize_bool_value( 'page_boxed_box_shadow' );
+
+	$page_boxed_shadow_horizontal = wpbf_customize_str_value( 'page_boxed_box_shadow_horizontal' );
+	$page_boxed_shadow_horizontal = $page_boxed_shadow_horizontal ? wpbf_maybe_append_suffix( $page_boxed_shadow_horizontal ) : '0px';
+
+	$page_boxed_shadow_vertical = wpbf_customize_str_value( 'page_boxed_box_shadow_vertical' );
+	$page_boxed_shadow_vertical = $page_boxed_shadow_vertical ? wpbf_maybe_append_suffix( $page_boxed_shadow_vertical ) : '0px';
+
+	$page_boxed_shadow_blur = wpbf_customize_str_value( 'page_boxed_box_shadow_blur' );
+	$page_boxed_shadow_blur = $page_boxed_shadow_blur ? wpbf_maybe_append_suffix( $page_boxed_shadow_blur ) : '25px';
+
+	$page_boxed_shadow_spread = wpbf_customize_str_value( 'page_boxed_box_shadow_spread' );
+	$page_boxed_shadow_spread = $page_boxed_shadow_spread ? wpbf_maybe_append_suffix( $page_boxed_shadow_spread ) : '0px';
+
+	$page_boxed_shadow_color = wpbf_customize_str_value( 'page_boxed_box_shadow_color', 'rgba(0, 0, 0, .15)' );
 
 	if ( $page_boxed_shadow ) {
 
-		echo '#container {';
-		echo sprintf( 'box-shadow: %1$s %2$s %3$s %4$s %5$s;', esc_attr( $page_boxed_shadow_horizontal ), esc_attr( $page_boxed_shadow_vertical ), esc_attr( $page_boxed_shadow_blur ), esc_attr( $page_boxed_shadow_spread ), esc_attr( $page_boxed_shadow_color ) );
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '#container',
+			'prop'     => 'box-shadow',
+			'value'    => $page_boxed_shadow_horizontal . ' ' . $page_boxed_shadow_vertical . ' ' . $page_boxed_shadow_blur . ' ' . $page_boxed_shadow_spread . ' ' . $page_boxed_shadow_color,
+		) );
 
 	}
 }
 
 // ScrollTop.
-$scrolltop                = get_theme_mod( 'layout_scrolltop' );
-$scrolltop_position       = get_theme_mod( 'scrolltop_position', 'right' );
-$scrolltop_bg_color       = ( $val = get_theme_mod( 'scrolltop_bg_color' ) ) === 'rgba(62,67,73,0.5)' ? false : $val;
-$scrolltop_bg_color_alt   = ( $val = get_theme_mod( 'scrolltop_bg_color_alt' ) ) === 'rgba(62,67,73,0.7)' ? false : $val;
-$scrolltop_icon_color     = ( $val = get_theme_mod( 'scrolltop_icon_color' ) ) === '#ffffff' ? false : $val;
-$scrolltop_icon_color_alt = get_theme_mod( 'scrolltop_icon_color_alt' );
-$scrolltop_border_radius  = get_theme_mod( 'scrolltop_border_radius' );
+$scrolltop = wpbf_customize_bool_value( 'layout_scrolltop' );
 
 if ( $scrolltop ) {
 
+	$scrolltop_position = wpbf_customize_str_value( 'scrolltop_position', 'right' );
+
+	$scrolltop_bg_color = wpbf_customize_str_value( 'scrolltop_bg_color' );
+	$scrolltop_bg_color = 'rgba(62,67,73,0.5)' === $scrolltop_bg_color || 'rgba(62, 67, 73, 0.5)' === $scrolltop_bg_color ? '' : $val;
+
+	$scrolltop_bg_color_alt = wpbf_customize_str_value( 'scrolltop_bg_color_alt' );
+	$scrolltop_bg_color_alt = 'rgba(62,67,73,0.7)' === $scrolltop_bg_color_alt || 'rgba(62, 67, 73, 0.7)' === $scrolltop_bg_color_alt ? '' : $val;
+
+	$scrolltop_icon_color = wpbf_customize_str_value( 'scrolltop_icon_color' );
+	$scrolltop_icon_color = '#ffffff' === $scrolltop_icon_color ? '' : $scrolltop_icon_color;
+
+	$scrolltop_icon_color_alt = wpbf_customize_str_value( 'scrolltop_icon_color_alt' );
+	$scrolltop_border_radius  = wpbf_customize_str_value( 'scrolltop_border_radius' );
+
 	if ( 'left' === $scrolltop_position ) {
 
-		echo '.scrolltop {';
-		echo 'right: auto;';
-		echo 'left: 20px;';
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.scrolltop',
+			'rules'    => array(
+				array(
+					'prop'  => 'right',
+					'value' => 'auto',
+				),
+				array(
+					'prop'  => 'left',
+					'value' => '20px',
+				),
+			),
+		) );
 
-		echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
-		echo '.scrolltop {';
-		echo 'left: 10px;';
-		echo 'bottom: 10px;';
-		echo '}';
-		echo '}';
+		wpbf_write_css( array(
+			'media_query' => '@media screen and (max-width: ' . $breakpoint_medium . ')',
+			'selector'    => '.scrolltop',
+			'rules'       => array(
+				array(
+					'prop'  => 'left',
+					'value' => '10px',
+				),
+				array(
+					'prop'  => 'bottom',
+					'value' => '10px',
+				),
+			),
+		) );
 
 	}
 
 	if ( 'right' === $scrolltop_position ) {
 
-		echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
-		echo '.scrolltop {';
-		echo 'right: 10px;';
-		echo 'bottom: 10px;';
-		echo '}';
-		echo '}';
+		wpbf_write_css( array(
+			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ')',
+			'selector'    => '.scrolltop',
+			'props'       => array( 'right', 'bottom' ),
+			'value'       => '10px',
+		) );
 
 	}
 
 	if ( $scrolltop_bg_color || $scrolltop_border_radius ) {
 
-		echo '.scrolltop {';
+		$scrolltop_css_rules = array();
 
 		if ( $scrolltop_bg_color ) {
-			echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color ) );
+			$scrolltop_css_rules[] = array(
+				'prop'  => 'background-color',
+				'value' => $scrolltop_bg_color,
+			);
 		}
 
 		if ( $scrolltop_border_radius ) {
-			echo sprintf( 'border-radius: %s;', esc_attr( $scrolltop_border_radius ) . 'px' );
+			$scrolltop_css_rules[] = array(
+				'prop'  => 'border-radius',
+				'value' => wpbf_maybe_append_suffix( $scrolltop_border_radius ),
+			);
 		}
 
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.scrolltop',
+			'rules'    => $scrolltop_css_rules,
+		) );
 
 	}
 
 	if ( $scrolltop_icon_color ) {
 
-		echo '.scrolltop, .scrolltop:hover {';
-		echo sprintf( 'color: %s;', esc_attr( $scrolltop_icon_color ) );
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.scrolltop, .scrolltop:hover',
+			'prop'     => 'color',
+			'value'    => $scrolltop_icon_color,
+		) );
 
 	}
 
 	if ( $scrolltop_bg_color_alt || $scrolltop_icon_color_alt ) {
 
-		echo '.scrolltop:hover {';
+		$scrolltop_css_rules = array();
 
 		if ( $scrolltop_bg_color_alt ) {
-			echo sprintf( 'background-color: %s;', esc_attr( $scrolltop_bg_color_alt ) );
+			$scrolltop_css_rules[] = array(
+				'prop'  => 'background-color',
+				'value' => $scrolltop_bg_color_alt,
+			);
 		}
 
 		if ( $scrolltop_icon_color_alt ) {
-			echo sprintf( 'color: %s;', esc_attr( $scrolltop_icon_color_alt ) );
+			$scrolltop_css_rules[] = array(
+				'prop'  => 'color',
+				'value' => $scrolltop_icon_color_alt,
+			);
 		}
 
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.scrolltop:hover',
+			'rules'    => $scrolltop_css_rules,
+		) );
 
 	}
 
@@ -889,7 +1099,7 @@ if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 }
 
 if ( $page_width ) {
-	// Chang the max-width of the cover & group block contents.
+	// Change the max-width of the cover & group block contents.
 	echo '.wp-block-cover .wp-block-cover__inner-container, .wp-block-group .wp-block-group__inner-container {';
 	echo sprintf( 'max-width: %s;', esc_attr( $page_width ) );
 	echo '}';
