@@ -410,34 +410,43 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 	});
 
-	// Font color.
-	customizer("menu_font_color", function (value) {
-		const styleTag = getStyleTag("menu_font_color");
+	const menuFontColorsSettingId = "menu_font_colors";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close {color: " +
-				newValue +
-				";}";
-		});
-	});
+	// Menu font colors.
+	customizer(
+		menuFontColorsSettingId,
+		(value: WpbfCustomizeSetting<WpbfCustomizeMulticolorControlValue>) => {
+			value.bind(function (newValue) {
+				const rawDefaultColor = newValue.default ?? "";
+				const defaultColor = toStringColor(rawDefaultColor);
 
-	// Font color hover.
-	customizer("menu_font_color_alt", function (value) {
-		const styleTag = getStyleTag("menu_font_color_alt");
+				const rawHoverColor = newValue.hover ?? "";
+				const hoverColor = toStringColor(rawHoverColor);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover {color: " +
-				newValue +
-				";}\
-				.wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a {color: " +
-				newValue +
-				"!important;}\
-			";
-		});
-	});
+				writeCSS(menuFontColorsSettingId, [
+					{
+						selector:
+							".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close",
+						props: ["color"],
+						value: defaultColor,
+					},
+					{
+						selector:
+							".wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover",
+						props: ["color"],
+						value: hoverColor,
+					},
+					{
+						selector:
+							".wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a",
+						props: ["color"],
+						value: hoverColor,
+						important: true,
+					},
+				]);
+			});
+		},
+	);
 
 	// Font size.
 	customizer("menu_font_size", function (value) {
@@ -1129,11 +1138,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 	});
 
-	const preHeaderAccentColorSettingId = "pre_header_accent_colors";
+	const preHeaderAccentColorsSettingId = "pre_header_accent_colors";
 
-	// Accent color.
+	// Pre-header accent colors.
 	customizer(
-		preHeaderAccentColorSettingId,
+		preHeaderAccentColorsSettingId,
 		(value: WpbfCustomizeSetting<WpbfCustomizeMulticolorControlValue>) => {
 			value.bind(function (newValue) {
 				const rawDefaultColor = newValue.default ?? "";
@@ -1142,7 +1151,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				const rawHoverColor = newValue.hover ?? "";
 				const hoverColor = toStringColor(rawHoverColor);
 
-				writeCSS(preHeaderAccentColorSettingId, [
+				writeCSS(preHeaderAccentColorsSettingId, [
 					{
 						selector: ".wpbf-pre-header a",
 						props: ["color"],
@@ -2243,8 +2252,35 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			},
 		);
 
-		// Some settings in row_1 are handled by the old pre_header settings.
-		if (rowKey !== "row_1") {
+		/**
+		 * These fields are handled here for row_3 only
+		 * because row_3 didn't exist before the new header builder added.
+		 *
+		 * Max width:
+		 * - In row_1, the value is using the existing `pre_header_width` setting.
+		 * - In row_2, the value is using the existing `menu_width` setting.
+		 *
+		 * Vertical padding:
+		 * - In row_1, the value is using the existing `pre_header_height` setting.
+		 * - In row_2, the value is using the existing `menu_height` setting.
+		 *
+		 * Font size:
+		 * - In row_1, the value is using the existing `pre_header_font_size` setting.
+		 * - In row_2, the value is using the existing `menu_font_size` setting.
+		 *
+		 * Background color:
+		 * - In row_1, the value is using the existing `pre_header_bg_color` setting.
+		 * - In row_2, the value is using the existing `menu_bg_color` setting.
+		 *
+		 * Text color:
+		 * - In row_1, the value is using the existing `pre_header_font_color` setting.
+		 * - In row_2, the value is using the existing `menu_font_colors` (multicolor) setting.
+		 *
+		 * Accent colors:
+		 * - In row_1, the value is using the existing `pre_header_accent_colors` (multicolor) setting.
+		 * - In row_2, there's no accent colors setting (we follow the old header section).
+		 */
+		if (rowKey === "row_3") {
 			const maxWidthSettingId = `${controlIdPrefix}max_width`;
 
 			customizer(
@@ -2262,34 +2298,19 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				},
 			);
 
-			const minHeightSettingId = `${controlIdPrefix}min_height`;
-
-			customizer(
-				minHeightSettingId,
-				(value: WpbfCustomizeSetting<string | DevicesValue>) => {
-					value.bind(function (newValue) {
-						writeResponsiveCSS(
-							minHeightSettingId,
-							`.wpbf-header-row-${rowKey} .wpbf-row-content`,
-							"min-height",
-							typeof newValue === "string" ? {} : newValue,
-						);
-					});
-				},
-			);
-
 			const vPaddingSettingId = `${controlIdPrefix}vertical_padding`;
 
 			customizer(
 				vPaddingSettingId,
-				function (value: WpbfCustomizeSetting<string | DevicesValue>) {
+				function (value: WpbfCustomizeSetting<string | number>) {
 					value.bind(function (newValue) {
-						writeResponsiveCSS(
-							vPaddingSettingId,
-							`.wpbf-header-row-${rowKey} .wpbf-row-content`,
-							["padding-top", "padding-bottom"],
-							typeof newValue === "string" ? {} : newValue,
-						);
+						writeCSS(vPaddingSettingId, [
+							{
+								selector: `.wpbf-header-row-${rowKey} .wpbf-row-content`,
+								props: ["padding-top", "padding-bottom"],
+								value: maybeAppendSuffix(newValue),
+							},
+						]);
 					});
 				},
 			);
@@ -2298,14 +2319,15 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 			customizer(
 				fontSizeSettingId,
-				(value: WpbfCustomizeSetting<string | DevicesValue>) => {
+				(value: WpbfCustomizeSetting<string | number>) => {
 					value.bind(function (newValue) {
-						writeResponsiveCSS(
-							fontSizeSettingId,
-							`.wpbf-header-row-${rowKey}`,
-							["font-size"],
-							typeof newValue === "string" ? {} : newValue,
-						);
+						writeCSS(fontSizeSettingId, [
+							{
+								selector: `.wpbf-header-row-${rowKey}`,
+								props: ["font-size"],
+								value: maybeAppendSuffix(newValue),
+							},
+						]);
 					});
 				},
 			);

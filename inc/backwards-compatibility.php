@@ -115,7 +115,7 @@ if ( empty( $executed_backwards_compat['menu_logo_size_data_type'] ) ) {
  * Merge individual color setting keys to multicolor control.
  */
 
-// Merge pre_header_accent_color and pre_header_accent_color_alt.
+// Merge `pre_header_accent_color` and `pre_header_accent_color_alt` to `pre_header_accent_colors`.
 if ( empty( $executed_backwards_compat['pre_header_accent_color'] ) ) {
 	$pre_header_accent_color     = get_theme_mod( 'pre_header_accent_color' );
 	$pre_header_accent_color_alt = get_theme_mod( 'pre_header_accent_color_alt' );
@@ -139,6 +139,32 @@ if ( empty( $executed_backwards_compat['pre_header_accent_color'] ) ) {
 	}
 
 	$executed_backwards_compat['pre_header_accent_color'] = 1;
+}
+
+// Merge `menu_font_color` and `menu_font_color_alt` to `menu_font_colors`.
+if ( empty( $executed_backwards_compat['menu_font_colors'] ) ) {
+	$menu_font_color     = get_theme_mod( 'menu_font_color' );
+	$menu_font_color_alt = get_theme_mod( 'menu_font_color_alt' );
+
+	// Delete the old theme mods regardless of their emptyness.
+	remove_theme_mod( 'menu_font_color' );
+	remove_theme_mod( 'menu_font_color_alt' );
+
+	if ( $menu_font_color || $menu_font_color_alt ) {
+		$menu_font_colors = array();
+
+		if ( $menu_font_color ) {
+			$menu_font_colors['default'] = $menu_font_color;
+		}
+
+		if ( $menu_font_color_alt ) {
+			$menu_font_colors['hover'] = $menu_font_color_alt;
+		}
+
+		set_theme_mod( 'menu_font_colors', $menu_font_colors );
+	}
+
+	$executed_backwards_compat['menu_font_colors'] = 1;
 }
 
 /**

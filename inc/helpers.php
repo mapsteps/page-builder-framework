@@ -1774,3 +1774,21 @@ function wpbf_parse_template_tags( $value ) {
 	return str_replace( $find, $rep, $value );
 
 }
+
+/**
+ * Add suffix to CSS value.
+ *
+ * @param string $value The CSS value.
+ * @param string $suffix The suffix.
+ *
+ * @return string The updated CSS value.
+ */
+function wpbf_suffix_css_value( $value, $suffix = 'px' ) {
+
+	if ( '' === $value || '' === $suffix ) {
+		return $value;
+	}
+
+	return is_numeric( $value ) ? $value . $suffix : $value;
+
+}

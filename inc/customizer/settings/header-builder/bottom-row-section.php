@@ -57,57 +57,36 @@ wpbf_customizer_field()
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'visibility_separator' )
-	->type( 'divider' )
-	->tab( 'general' )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
 	->id( $control_id_prefix . 'max_width' )
 	->type( 'dimension' )
 	->tab( 'general' )
-	->label( __( 'Width', 'page-builder-framework' ) )
+	->label( __( 'Container Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'vertical_padding' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
+	->defaultValue( 15 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 80,
+		'step' => 1,
+	] )
 	->addToSection( $section_id );
 
 /* Design Tab */
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'min_height' )
-	->type( 'responsive-input-slider' )
-	->tab( 'design' )
-	->label( __( 'Min Height', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
-	->properties( [
-		'min'  => 0,
-		'max'  => 1000,
-		'step' => 1,
-	] )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'vertical_padding' )
-	->type( 'responsive-input-slider' )
-	->tab( 'design' )
-	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
-	->defaultValue( [
-		'desktop' => '15px',
-	] )
-	->transport( 'postMessage' )
-	->properties( [
-		'min'  => 0,
-		'max'  => 200,
-		'step' => 1,
-	] )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
 	->id( $control_id_prefix . 'font_size' )
-	->type( 'responsive-input-slider' )
+	->type( 'input-slider' )
 	->tab( 'design' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
-	->description( __( 'Default: 16px', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 1,

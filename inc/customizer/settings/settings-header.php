@@ -355,7 +355,7 @@ wpbf_customizer_field()
 	] )
 	->addToSection( 'wpbf_pre_header_options' );
 
-// Accent color.
+// Accent colors.
 wpbf_customizer_field()
 	->id( 'pre_header_accent_colors' )
 	->type( 'multicolor' )
@@ -887,30 +887,21 @@ wpbf_customizer_field()
 	] )
 	->addToSection( 'wpbf_menu_options' );
 
-// Font color.
+// Font colors.
 wpbf_customizer_field()
-	->id( 'menu_font_color' )
-	->type( 'color' )
+	->id( 'menu_font_colors' )
+	->type( 'multicolor' )
 	->tab( 'design' )
-	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->label( __( 'Font Colors', 'page-builder-framework' ) )
 	->priority( 6 )
 	->transport( 'postMessage' )
-	->properties( [
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
 		'mode' => 'alpha',
-	] )
-	->addToSection( 'wpbf_menu_options' );
-
-// Font color alt.
-wpbf_customizer_field()
-	->id( 'menu_font_color_alt' )
-	->type( 'color' )
-	->tab( 'design' )
-	->label( __( 'Hover', 'page-builder-framework' ) )
-	->priority( 7 )
-	->transport( 'postMessage' )
-	->properties( [
-		'mode' => 'alpha',
-	] )
+	) )
 	->addToSection( 'wpbf_menu_options' );
 
 // Font size.

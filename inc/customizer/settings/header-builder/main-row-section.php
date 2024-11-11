@@ -58,63 +58,43 @@ wpbf_customizer_field()
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'visibility_separator' )
-	->type( 'divider' )
-	->tab( 'general' )
-	->priority( 15 )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
 	->id( $control_id_prefix . 'max_width' )
+	->settings( 'menu_width' )
 	->type( 'dimension' )
 	->tab( 'general' )
-	->label( __( 'Width', 'page-builder-framework' ) )
+	->label( __( 'Container Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
 	->priority( 20 )
 	->addToSection( $section_id );
 
-/* Design Tab */
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'min_height' )
-	->type( 'responsive-input-slider' )
-	->tab( 'design' )
-	->label( __( 'Min Height', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
-	->priority( 25 )
-	->properties( [
-		'min'  => 0,
-		'max'  => 1000,
-		'step' => 1,
-	] )
-	->addToSection( $section_id );
-
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'vertical_padding' )
-	->type( 'responsive-input-slider' )
-	->tab( 'design' )
+	->settings( 'menu_height' )
+	->type( 'slider' )
+	->tab( 'general' )
 	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
-	->defaultValue( [
-		'desktop' => '15px',
-	] )
+	->defaultValue( 20 )
 	->transport( 'postMessage' )
 	->priority( 30 )
 	->properties( [
 		'min'  => 0,
-		'max'  => 200,
+		'max'  => 80,
 		'step' => 1,
 	] )
 	->addToSection( $section_id );
 
+/* Design Tab */
+
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'font_size' )
-	->type( 'responsive-input-slider' )
+	->settings( 'menu_font_size' )
+	->type( 'input-slider' )
 	->tab( 'design' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
-	->description( __( 'Default: 16px', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
 	->transport( 'postMessage' )
-	->priority( 35 )
+	->priority( 40 )
 	->properties( [
 		'min'  => 1,
 		'max'  => 100,
@@ -126,40 +106,30 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'color_separator' )
 	->type( 'divider' )
 	->tab( 'design' )
-	->priority( 40 )
+	->priority( 50 )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'bg_color' )
+	->settings( 'menu_bg_color' )
 	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
-	->priority( 45 )
+	->priority( 60 )
 	->properties( [
 		'mode' => 'alpha',
 	] )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'text_color' )
-	->type( 'color' )
-	->tab( 'design' )
-	->label( __( 'Text Color', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
-	->priority( 50 )
-	->properties( [
-		'mode' => 'alpha',
-	] )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'accent_colors' )
+	->id( $control_id_prefix . 'text_colors' )
+	->settings( 'menu_font_colors' )
 	->type( 'multicolor' )
 	->tab( 'design' )
-	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->label( __( 'Text Colors', 'page-builder-framework' ) )
+	->priority( 70 )
 	->transport( 'postMessage' )
-	->priority( 55 )
 	->choices( array(
 		'default' => __( 'Default', 'page-builder-framework' ),
 		'hover'   => __( 'Hover', 'page-builder-framework' ),

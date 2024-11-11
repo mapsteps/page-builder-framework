@@ -1973,14 +1973,12 @@ if ( ! $custom_logo && $menu_logo_description ) {
 }
 
 // Navigation.
-$menu_position       = get_theme_mod( 'menu_position' );
-$menu_width          = ( $val = get_theme_mod( 'menu_width' ) ) === '1200px' ? false : $val;
-$menu_height         = ( $val = get_theme_mod( 'menu_height' ) ) === '20' ? false : $val;
-$menu_padding        = ( $val = get_theme_mod( 'menu_padding' ) ) === '20' ? false : $val;
-$menu_bg_color       = ( $val = get_theme_mod( 'menu_bg_color' ) ) === '#f5f5f7' ? false : $val;
-$menu_font_color     = get_theme_mod( 'menu_font_color' );
-$menu_font_color_alt = get_theme_mod( 'menu_font_color_alt' );
-$menu_font_size      = get_theme_mod( 'menu_font_size' );
+$menu_position  = get_theme_mod( 'menu_position' );
+$menu_width     = ( $val = get_theme_mod( 'menu_width' ) ) === '1200px' ? false : $val;
+$menu_height    = ( $val = get_theme_mod( 'menu_height' ) ) === '20' ? false : $val;
+$menu_padding   = ( $val = get_theme_mod( 'menu_padding' ) ) === '20' ? false : $val;
+$menu_bg_color  = ( $val = get_theme_mod( 'menu_bg_color' ) ) === '#f5f5f7' ? false : $val;
+$menu_font_size = get_theme_mod( 'menu_font_size' );
 
 if ( $menu_width ) {
 
@@ -2034,23 +2032,33 @@ if ( $menu_bg_color ) {
 
 }
 
-if ( $menu_font_color ) {
+$menu_font_colors = get_theme_mod( 'menu_font_colors', array() );
+$menu_font_colors = ! is_array( $menu_font_colors ) ? array() : $menu_font_colors;
 
-	echo '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close {';
-	echo sprintf( 'color: %s;', esc_attr( $menu_font_color ) );
-	echo '}';
+if ( ! empty( $menu_font_colors ) ) {
 
-}
+	$menu_font_color_default = ! empty( $menu_font_colors['default'] ) && is_string( $menu_font_colors['default'] ) ? $menu_font_colors['default'] : null;
+	$menu_font_color_hover   = ! empty( $menu_font_colors['hover'] ) && is_string( $menu_font_colors['hover'] ) ? $menu_font_colors['hover'] : null;
 
-if ( $menu_font_color_alt ) {
+	if ( $menu_font_color_default ) {
 
-	echo '.wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover {';
-	echo sprintf( 'color: %s;', esc_attr( $menu_font_color_alt ) );
-	echo '}';
+		echo '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close {';
+		echo sprintf( 'color: %s;', esc_attr( $menu_font_color_default ) );
+		echo '}';
 
-	echo '.wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a {';
-	echo sprintf( 'color: %s;', esc_attr( $menu_font_color_alt ) . '!important' );
-	echo '}';
+	}
+
+	if ( $menu_font_color_hover ) {
+
+		echo '.wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover {';
+		echo sprintf( 'color: %s;', esc_attr( $menu_font_color_hover ) );
+		echo '}';
+
+		echo '.wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a {';
+		echo sprintf( 'color: %s;', esc_attr( $menu_font_color_hover ) . '!important' );
+		echo '}';
+
+	}
 
 }
 

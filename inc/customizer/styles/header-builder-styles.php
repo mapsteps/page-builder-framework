@@ -70,104 +70,67 @@ if ( is_array( $header_builder_rows ) && ! empty( $header_builder_rows ) ) {
 foreach ( $rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-	// Some settings in row_1 are handled by the old pre_header settings.
-	if ( 'row_1' !== $row_key ) {
-		$max_width_val = trim( strval( get_theme_mod( $row_id_prefix . 'max_width', '' ) ) );
-		$max_width     = '' === $max_width_val || '1200px' === $max_width_val || is_null( $max_width_val ) ? null : strval( $max_width_val );
+	/**
+	 * These fields are handled here for row_3 only
+	 * because row_3 didn't exist before the new header builder added.
+	 *
+	 * Max width:
+	 * - In row_1, the value is using the existing `pre_header_width` setting.
+	 * - In row_2, the value is using the existing `menu_width` setting.
+	 *
+	 * Vertical padding:
+	 * - In row_1, the value is using the existing `pre_header_height` setting.
+	 * - In row_2, the value is using the existing `menu_height` setting.
+	 *
+	 * Font size:
+	 * - In row_1, the value is using the existing `pre_header_font_size` setting.
+	 * - In row_2, the value is using the existing `menu_font_size` setting.
+	 *
+	 * Background color:
+	 * - In row_1, the value is using the existing `pre_header_bg_color` setting.
+	 * - In row_2, the value is using the existing `menu_bg_color` setting.
+	 *
+	 * Text color:
+	 * - In row_1, the value is using the existing `pre_header_font_color` setting.
+	 * - In row_2, the value is using the existing `menu_font_colors` (multicolor) setting.
+	 *
+	 * Accent colors:
+	 * - In row_1, the value is using the existing `pre_header_accent_colors` (multicolor) setting.
+	 * - In row_2, there's no accent colors setting (we follow the old header section).
+	 */
+	if ( 'row_3' === $row_key ) {
+		$max_width = trim( strval( get_theme_mod( $row_id_prefix . 'max_width', '' ) ) );
+		$max_width = '' === $max_width || '1200' === $max_width || '1200px' === $max_width ? null : strval( $max_width );
 
 		if ( ! is_null( $max_width ) ) {
-			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-container {';
-			echo 'max-width: ' . esc_attr( $max_width ) . ';';
-			echo '}';
+			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-container {
+				max-width: ' . esc_attr( wpbf_suffix_css_value( $max_width ) ) . ';
+			}';
 		}
 
-		$min_heights = get_theme_mod( $row_id_prefix . 'min_height', [] );
-		$min_heights = ! is_array( $min_heights ) ? [] : $min_heights;
+		$v_padding = trim( strval( get_theme_mod( $row_id_prefix . 'vertical_padding' ) ) );
+		$v_padding = '' === $v_padding || '15' === $v_padding || '15px' === $v_padding ? '15px' : $v_padding;
+		$v_padding = wpbf_suffix_css_value( $v_padding );
 
-		$v_paddings = get_theme_mod( $row_id_prefix . 'vertical_padding', [] );
-		$v_paddings = ! is_array( $v_paddings ) ? [] : $v_paddings;
+		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {
+			padding-top: ' . esc_attr( $v_padding ) . 'px;
+			padding-bottom: ' . esc_attr( $v_padding ) . 'px;
+		}';
 
-		if ( ! empty( $min_heights ) || ! empty( $v_paddings ) ) {
-			$desktop_min_height = isset( $min_heights['desktop'] ) && '' !== $min_heights['desktop'] ? $min_heights['desktop'] : null;
-			$desktop_v_padding  = isset( $v_paddings['desktop'] ) && '' !== $v_paddings['desktop'] ? $v_paddings['desktop'] : null;
+		$font_size = trim( strval( get_theme_mod( $row_id_prefix . 'font_size' ) ) );
+		$font_size = '' === $font_size || '16' === $font_size || '16px' === $font_size ? '16px' : $font_size;
 
-			if ( ! is_null( $desktop_min_height ) || ! is_null( $desktop_v_padding ) ) {
-				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
-
-				if ( ! is_null( $desktop_min_height ) ) {
-					echo 'min-height:' . esc_attr( $desktop_min_height ) . ';';
-				}
-
-				if ( ! is_null( $desktop_v_padding ) ) {
-					echo '
-						padding-top:' . esc_attr( $desktop_v_padding ) . ';
-						padding-bottom:' . esc_attr( $desktop_v_padding ) . ';
-					';
-				}
-
-				echo '}';
-			}
-
-			$tablet_min_height = isset( $min_heights['tablet'] ) && '' !== $min_heights['tablet'] ? $min_heights['tablet'] : null;
-			$tablet_v_padding  = isset( $v_paddings['tablet'] ) && '' !== $v_paddings['tablet'] ? $v_paddings['tablet'] : null;
-
-			if ( ! is_null( $tablet_min_height ) || ! is_null( $tablet_v_padding ) ) {
-				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
-				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
-
-				if ( ! is_null( $tablet_min_height ) ) {
-					echo 'min-height:' . esc_attr( $tablet_min_height ) . ';';
-				}
-
-				if ( ! is_null( $tablet_v_padding ) ) {
-					echo '
-						padding-top:' . esc_attr( $tablet_v_padding ) . ';
-						padding-bottom:' . esc_attr( $tablet_v_padding ) . ';
-					';
-				}
-
-				echo '}';
-				echo '}';
-			}
-
-			$mobile_min_height = isset( $min_heights['mobile'] ) && '' !== $min_heights['mobile'] ? $min_heights['mobile'] : null;
-			$mobile_v_padding  = isset( $v_paddings['mobile'] ) && '' !== $v_paddings['mobile'] ? $v_paddings['mobile'] : null;
-
-			if ( ! is_null( $mobile_min_height ) || ! is_null( $mobile_v_padding ) ) {
-				echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
-				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {';
-
-				if ( ! is_null( $mobile_min_height ) ) {
-					echo 'min-height:' . esc_attr( $mobile_min_height ) . ';';
-				}
-
-				if ( ! is_null( $mobile_v_padding ) ) {
-					echo '
-						padding-top:' . esc_attr( $mobile_v_padding ) . ';
-						padding-bottom:' . esc_attr( $mobile_v_padding ) . ';
-					';
-				}
-
-				echo '}';
-				echo '}';
-			}
+		if ( $font_size ) {
+			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {
+				font-size: ' . esc_attr( wpbf_suffix_css_value( $font_size ) ) . '
+			}';
 		}
-
-		$font_sizes = get_theme_mod( $row_id_prefix . 'font_size', [] );
-		$font_sizes = ! is_array( $font_sizes ) ? [] : $font_sizes;
-
-		$desktop_font_size = isset( $font_sizes['desktop'] ) && '' !== $font_sizes['desktop'] && '16px' !== $font_sizes['desktop'] && '16' !== $font_sizes['desktop'] ? $font_sizes['desktop'] : null;
-		$desktop_font_size = is_numeric( $desktop_font_size ) ? $desktop_font_size . 'px' : $desktop_font_size;
 
 		$bg_color   = get_theme_mod( $row_id_prefix . 'bg_color', '' );
 		$text_color = get_theme_mod( $row_id_prefix . 'text_color', '' );
 
-		if ( ! is_null( $desktop_font_size ) || $bg_color || $text_color ) {
+		if ( $bg_color || $text_color ) {
 			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
-
-			if ( $desktop_font_size ) {
-				echo 'font-size: ' . esc_attr( $desktop_font_size ) . ';';
-			}
 
 			if ( $bg_color ) {
 				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
@@ -178,28 +141,6 @@ foreach ( $rows as $row_key => $columns ) {
 			}
 
 			echo '}';
-		}
-
-		$tablet_font_size = isset( $font_sizes['tablet'] ) && '' !== $font_sizes['tablet'] ? $font_sizes['tablet'] : null;
-		$tablet_font_size = is_numeric( $tablet_font_size ) ? $tablet_font_size . 'px' : $tablet_font_size;
-
-		if ( ! is_null( $tablet_font_size ) ) {
-			echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {
-				.wpbf-header-row-' . esc_attr( $row_key ) . ' {
-					font-size: ' . esc_attr( $tablet_font_size ) . ';
-				}
-			}';
-		}
-
-		$mobile_font_size = isset( $font_sizes['mobile'] ) && '' !== $font_sizes['mobile'] ? $font_sizes['mobile'] : null;
-		$mobile_font_size = is_numeric( $mobile_font_size ) ? $mobile_font_size . 'px' : $mobile_font_size;
-
-		if ( ! is_null( $mobile_font_size ) ) {
-			echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {
-				.wpbf-header-row-' . esc_attr( $row_key ) . ' {
-					font-size: ' . esc_attr( $mobile_font_size ) . ';
-				}
-			}';
 		}
 
 		$accent_colors = get_theme_mod( $row_id_prefix . 'accent_colors', [] );

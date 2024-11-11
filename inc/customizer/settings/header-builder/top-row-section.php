@@ -63,30 +63,30 @@ wpbf_customizer_field()
 	->settings( 'pre_header_width' )
 	->type( 'dimension' )
 	->tab( 'general' )
-	->label( __( 'Width', 'page-builder-framework' ) )
+	->label( __( 'Container Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
-	->priority( 15 )
+	->priority( 20 )
 	->addToSection( $section_id );
-
-/* Design Tab */
 
 // Use existing pre_header_height setting from the old pre-header section.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'vertical_padding' )
 	->settings( 'pre_header_height' )
 	->type( 'slider' )
-	->tab( 'design' )
+	->tab( 'general' )
 	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
 	->defaultValue( 10 )
 	->transport( 'postMessage' )
-	->priority( 20 )
+	->priority( 30 )
 	->properties( array(
 		'min'  => 1,
 		'max'  => 25,
 		'step' => 1,
 	) )
 	->addToSection( $section_id );
+
+/* Design Tab */
 
 // Use existing pre_header_font_size setting from the old pre-header section.
 wpbf_customizer_field()
@@ -97,7 +97,7 @@ wpbf_customizer_field()
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->defaultValue( '14px' )
 	->transport( 'postMessage' )
-	->priority( 25 )
+	->priority( 40 )
 	->properties( [
 		'min'  => 0,
 		'max'  => 50,
@@ -109,7 +109,7 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'color_separator' )
 	->type( 'divider' )
 	->tab( 'design' )
-	->priority( 30 )
+	->priority( 50 )
 	->addToSection( $section_id );
 
 // Use existing pre_header_bg_color setting from the old pre-header section.
@@ -121,7 +121,7 @@ wpbf_customizer_field()
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->defaultValue( '#ffffff' )
 	->transport( 'postMessage' )
-	->priority( 35 )
+	->priority( 60 )
 	->properties( array(
 		'mode' => 'alpha',
 	) )
@@ -135,7 +135,7 @@ wpbf_customizer_field()
 	->tab( 'design' )
 	->label( __( 'Text Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
-	->priority( 40 )
+	->priority( 70 )
 	->properties( array(
 		'mode' => 'alpha',
 	) )
@@ -153,7 +153,7 @@ wpbf_customizer_field()
 		'default' => __( 'Default', 'page-builder-framework' ),
 		'hover'   => __( 'Hover', 'page-builder-framework' ),
 	) )
-	->priority( 45 )
+	->priority( 80 )
 	->properties( array(
 		'mode' => 'alpha',
 	) )
