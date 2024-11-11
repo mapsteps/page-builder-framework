@@ -1776,14 +1776,28 @@ function wpbf_parse_template_tags( $value ) {
 }
 
 /**
- * Add suffix to CSS value.
+ * Get the value of a customizer setting as a string.
+ *
+ * @param string $setting_id The setting id.
+ * @param string $default_value The default value.
+ *
+ * @return string
+ */
+function wpbf_customize_str_value( $setting_id, $default_value = '' ) {
+
+	return trim( strval( get_theme_mod( $setting_id, $default_value ) ) );
+
+}
+
+/**
+ * Conditionally append a suffix to a CSS value.
  *
  * @param string $value The CSS value.
  * @param string $suffix The suffix.
  *
  * @return string The updated CSS value.
  */
-function wpbf_suffix_css_value( $value, $suffix = 'px' ) {
+function wpbf_maybe_append_suffix( $value, $suffix = 'px' ) {
 
 	if ( '' === $value || '' === $suffix ) {
 		return $value;
@@ -1791,4 +1805,35 @@ function wpbf_suffix_css_value( $value, $suffix = 'px' ) {
 
 	return is_numeric( $value ) ? $value . $suffix : $value;
 
+}
+
+function wpbf_write_css( $args = [] ) {
+
+	$selector = empty( $args['selector'] ) ? '' : $args['selector'];
+
+	if ( empty( $selector ) ) {
+		return;
+	}
+
+	$props = empty( $args['props'] ) ? [] : $args['props'];
+
+	if ( empty( $props ) ) {
+		return;
+	}
+
+	$value = empty( $args['value'] ) ? '' : $args['value'];
+
+	if ( empty( $value ) ) {
+		return;
+	}
+
+	$important = empty( $args['important'] ) ? false : $args['important'];
+
+	echo esc_html( $selector ) . ' {';
+
+	foreach ( $props as $prop ) {
+		echo esc_attr( $prop ) . ': ' . esc_attr( $value ) . ( $important ? ' !important' : '' ) . ';';
+	}
+
+	echo '}';
 }

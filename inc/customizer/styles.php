@@ -19,6 +19,8 @@ $breakpoint_mobile      = $breakpoint_mobile_int . 'px';
 $breakpoint_medium      = $breakpoint_medium_int . 'px';
 $breakpoint_desktop     = $breakpoint_desktop_int . 'px';
 
+$header_builder_enabled = wpbf_header_builder_enabled();
+
 /* Typography */
 
 // Page font settings.
@@ -1975,7 +1977,6 @@ if ( ! $custom_logo && $menu_logo_description ) {
 // Navigation.
 $menu_position  = get_theme_mod( 'menu_position' );
 $menu_width     = ( $val = get_theme_mod( 'menu_width' ) ) === '1200px' ? false : $val;
-$menu_height    = ( $val = get_theme_mod( 'menu_height' ) ) === '20' ? false : $val;
 $menu_padding   = ( $val = get_theme_mod( 'menu_padding' ) ) === '20' ? false : $val;
 $menu_bg_color  = ( $val = get_theme_mod( 'menu_bg_color' ) ) === '#f5f5f7' ? false : $val;
 $menu_font_size = get_theme_mod( 'menu_font_size' );
@@ -1988,25 +1989,29 @@ if ( $menu_width ) {
 
 }
 
-if ( $menu_height !== false ) {
+$menu_height = wpbf_customize_str_value( 'menu_height' );
+$menu_height = '' === $menu_height || '20' === $menu_height || '20px' === $menu_height ? null : $menu_height;
 
-	echo '.wpbf-nav-wrapper {';
+if ( ! is_null( $menu_height ) ) {
 
-	echo sprintf( 'padding-top: %s;', esc_attr( $menu_height ) . 'px' );
-	echo sprintf( 'padding-bottom: %s;', esc_attr( $menu_height ) . 'px' );
+	wpbf_write_css( array(
+		'selector' => $header_builder_enabled ? '.wpbf-header-row-row_2 .wpbf-row-content' : '.wpbf-nav-wrapper',
+		'props'    => array( 'padding-top', 'padding-bottom' ),
+		'value'    => wpbf_maybe_append_suffix( $menu_height ),
+	) );
 
-	echo '}';
+	if ( ! $header_builder_enabled && 'menu-stacked' === $menu_position ) {
+
+		wpbf_write_css( array(
+			'selector' => '.wpbf-menu-stacked nav',
+			'props'    => array( 'margin-top' ),
+			'value'    => wpbf_maybe_append_suffix( $menu_height ),
+		) );
+
+	}
 
 }
 
-
-if ( $menu_height && 'menu-stacked' === $menu_position ) {
-
-	echo '.wpbf-menu-stacked nav {';
-	echo sprintf( 'margin-top: %s;', esc_attr( $menu_height ) . 'px' );
-	echo '}';
-
-}
 
 if ( $menu_padding ) {
 
@@ -2451,7 +2456,7 @@ $pre_header_font_size = ( $val = get_theme_mod( 'pre_header_font_size' ) ) === '
 
 $render_pre_header_style = false;
 
-if ( wpbf_header_builder_enabled() || 'none' !== $pre_header_layout ) {
+if ( $header_builder_enabled || 'none' !== $pre_header_layout ) {
 	$render_pre_header_style = true;
 }
 

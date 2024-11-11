@@ -104,13 +104,13 @@ foreach ( $rows as $row_key => $columns ) {
 
 		if ( ! is_null( $max_width ) ) {
 			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-container {
-				max-width: ' . esc_attr( wpbf_suffix_css_value( $max_width ) ) . ';
+				max-width: ' . esc_attr( wpbf_maybe_append_suffix( $max_width ) ) . ';
 			}';
 		}
 
 		$v_padding = trim( strval( get_theme_mod( $row_id_prefix . 'vertical_padding' ) ) );
 		$v_padding = '' === $v_padding || '15' === $v_padding || '15px' === $v_padding ? '15px' : $v_padding;
-		$v_padding = wpbf_suffix_css_value( $v_padding );
+		$v_padding = wpbf_maybe_append_suffix( $v_padding );
 
 		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {
 			padding-top: ' . esc_attr( $v_padding ) . 'px;
@@ -122,7 +122,7 @@ foreach ( $rows as $row_key => $columns ) {
 
 		if ( $font_size ) {
 			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {
-				font-size: ' . esc_attr( wpbf_suffix_css_value( $font_size ) ) . '
+				font-size: ' . esc_attr( wpbf_maybe_append_suffix( $font_size ) ) . '
 			}';
 		}
 

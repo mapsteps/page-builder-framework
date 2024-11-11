@@ -43,6 +43,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		return parsedValue;
 	}
 
+	function headerBuilderEnabled() {
+		if (!customizer) return false;
+		return customizer("wpbf_enable_header_builder").get() ? true : false;
+	}
+
 	/**
 	 * Get style tag element based on control id.
 	 *
@@ -370,19 +375,27 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 	});
 
-	// Menu height.
-	customizer("menu_height", function (value) {
-		const styleTag = getStyleTag("menu_height");
+	const headerHeightSettingId = "menu_height";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-nav-wrapper {padding-top: " +
-				newValue +
-				"px; padding-bottom: " +
-				newValue +
-				"px;}";
-		});
-	});
+	// Menu height.
+	customizer(
+		headerHeightSettingId,
+		function (setting: WpbfCustomizeSetting<number | string>) {
+			setting.bind(function (value) {
+				const selector = headerBuilderEnabled()
+					? `.wpbf-header-row-row_2 .wpbf-row-content`
+					: `.wpbf-nav-wrapper`;
+
+				writeCSS(headerHeightSettingId, [
+					{
+						selector: selector,
+						props: ["padding-top", "padding-bottom"],
+						value: maybeAppendSuffix(value),
+					},
+				]);
+			});
+		},
+	);
 
 	// Menu padding.
 	customizer("menu_padding", function (value) {
