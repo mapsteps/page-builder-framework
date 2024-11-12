@@ -1831,6 +1831,26 @@ function wpbf_parse_template_tags( $value ) {
 }
 
 /**
+ * Get the value of a customizer setting as an absolute integer.
+ *
+ * @param string $setting_id The setting id.
+ * @param int    $default_value The default value.
+ *
+ * @return int
+ */
+function wpbf_customize_absint_value( $setting_id, $default_value = 0 ) {
+
+	$value = get_theme_mod( $setting_id, $default_value );
+
+	if ( is_numeric( $value ) ) {
+		return absint( $value );
+	}
+
+	return $default_value;
+
+}
+
+/**
  * Get the value of a customizer setting as a string.
  *
  * @param string $setting_id The setting id.
