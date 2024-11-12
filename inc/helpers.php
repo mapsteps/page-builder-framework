@@ -1757,6 +1757,61 @@ function wpbf_parse_font_family( $font_family, $for_font_face = false ) {
 }
 
 /**
+ * Get the font family from the typography setting.
+ *
+ * @param array $typography_setting The typography setting.
+ *
+ * @return string|null
+ */
+function wpbf_typography_font_family( $typography_setting = [] ) {
+
+	if ( empty( $typography_setting ) || ! is_array( $typography_setting ) || empty( $typography_setting['font-family'] ) ) {
+		return null;
+	}
+
+	return wpbf_parse_font_family( $typography_setting['font-family'] );
+
+}
+
+/**
+ * Get the font weight from the typography setting.
+ *
+ * @param array $typography_setting The typography setting.
+ *
+ * @return string|null
+ */
+function wpbf_typography_font_weight( $typography_setting = [] ) {
+
+	if ( empty( $typography_setting ) || ! is_array( $typography_setting ) || empty( $typography_setting['variant'] ) ) {
+		return null;
+	}
+
+	$font_weight = str_replace( 'italic', '', $typography_setting['variant'] );
+
+	return ( in_array( $font_weight, array( '', 'regular' ), true ) ? '400' : $font_weight );
+
+}
+
+/**
+ * Get the font style from the typography setting.
+ *
+ * @param array $typography_setting The typography setting.
+ *
+ * @return string|null
+ */
+function wpbf_typography_font_style( $typography_setting = [] ) {
+
+	if ( empty( $typography_setting ) || ! is_array( $typography_setting ) || empty( $typography_setting['variant'] ) ) {
+		return null;
+	}
+
+	$is_italic = false !== strpos( $typography_setting['variant'], 'italic' );
+
+	return ( $is_italic ? 'italic' : 'normal' );
+
+}
+
+/**
  * Parse template tags.
  *
  * @param string $value The value to parse.
@@ -1856,9 +1911,51 @@ function wpbf_write_css( $args = [] ) {
 		return;
 	}
 
+	$blocks   = empty( $args['blocks'] ) || ! is_array( $args['blocks'] ) ? array() : $args['blocks'];
 	$selector = empty( $args['selector'] ) ? '' : $args['selector'];
 
-	if ( empty( $selector ) ) {
+	// Either blocks or selector should be set.
+	if ( empty( $blocks ) && empty( $selector ) ) {
+		return;
+	}
+
+	$media_query = empty( $args['media_query'] ) ? '' : $args['media_query'];
+
+	if ( ! empty( $blocks ) ) {
+		if ( $media_query ) {
+			echo esc_html( $media_query ) . ' {';
+		}
+
+		foreach ( $blocks as $block ) {
+			if ( ! is_array( $block ) || empty( $block ) ) {
+				continue;
+			}
+
+			$block_selector = empty( $block['selector'] ) ? '' : $block['selector'];
+			$block_props    = empty( $block['props'] ) || ! is_array( $block['props'] ) ? array() : $block['props'];
+
+			if ( empty( $block_selector ) || empty( $block_props ) ) {
+				continue;
+			}
+
+			echo esc_html( $block_selector ) . ' {';
+
+			foreach ( $block_props as $css_prop => $css_value ) {
+				// The `is_null()` check is needed to skip empty values (has to be exactly `null`).
+				if ( empty( $css_prop ) || is_null( $css_value ) ) {
+					continue;
+				}
+
+				echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
+			}
+
+			echo '}';
+		}
+
+		if ( $media_query ) {
+			echo '}';
+		}
+
 		return;
 	}
 
@@ -1868,8 +1965,6 @@ function wpbf_write_css( $args = [] ) {
 		return;
 	}
 
-	$media_query = empty( $args['media_query'] ) ? '' : $args['media_query'];
-
 	if ( $media_query ) {
 		echo esc_html( $media_query ) . ' {';
 	}
@@ -1877,7 +1972,8 @@ function wpbf_write_css( $args = [] ) {
 	echo esc_html( $selector ) . ' {';
 
 	foreach ( $props as $css_prop => $css_value ) {
-		if ( empty( $css_prop ) ) {
+		// The `is_null()` check is needed to skip empty values (has to be exactly `null`).
+		if ( empty( $css_prop ) || is_null( $css_value ) ) {
 			continue;
 		}
 
