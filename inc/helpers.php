@@ -1815,6 +1815,10 @@ function wpbf_customize_array_value( $setting_id, $default_value = array() ) {
 
 	$value = get_theme_mod( $setting_id, $default_value );
 
+	if ( is_string( $value ) ) {
+		$value = json_decode( $value, true );
+	}
+
 	if ( ! is_array( $value ) ) {
 		return array();
 	}
