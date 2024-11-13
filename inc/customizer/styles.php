@@ -1513,7 +1513,8 @@ if ( $menu_logo_container_width ) {
 
 }
 
-$mobile_menu_logo_container_width = ( $val = get_theme_mod( 'mobile_menu_logo_container_width' ) ) === '66' ? false : $val;
+$mobile_menu_logo_container_width = wpbf_customize_str_value( 'mobile_menu_logo_container_width' );
+$mobile_menu_logo_container_width = '66' === $mobile_menu_logo_container_width || '66%' === $mobile_menu_logo_container_width ? '' : $mobile_menu_logo_container_width;
 
 if ( $mobile_menu_logo_container_width ) {
 
@@ -1666,101 +1667,96 @@ if ( $custom_logo_id ) {
 }
 
 // Tagline.
-$menu_logo_description                   = get_theme_mod( 'menu_logo_description' );
-$menu_logo_description_toggle            = get_theme_mod( 'menu_logo_description_toggle' );
-$menu_logo_description_font_size         = json_decode( get_theme_mod( 'menu_logo_description_font_size' ), true );
-$menu_logo_description_font_size_desktop = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'desktop' );
-$menu_logo_description_font_size_tablet  = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'tablet' );
-$menu_logo_description_font_size_mobile  = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'mobile' );
-$menu_logo_description_color             = get_theme_mod( 'menu_logo_description_color' );
-$menu_logo_description_font_family_value = get_theme_mod( 'menu_logo_description_font_family' );
+$menu_logo_description           = wpbf_customize_bool_value( 'menu_logo_description' );
+$menu_logo_description_font_size = wpbf_customize_array_value( 'menu_logo_description_font_size' );
 
 if ( ! $custom_logo_id && $menu_logo_description ) {
 
-	if ( $menu_logo_description_toggle && $menu_logo_description_font_family_value ) {
+	$menu_logo_description_toggle       = wpbf_customize_bool_value( 'menu_logo_description_toggle' );
+	$menu_logo_description_font_setting = get_theme_mod( 'menu_logo_description_font_family' );
 
-		echo '.wpbf-tagline {';
+	if ( $menu_logo_description_toggle && $menu_logo_description_font_setting ) {
 
-		if ( ! empty( $menu_logo_description_font_family_value['font-family'] ) ) {
-
-			echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $menu_logo_description_font_family_value['font-family'] ) );
-
-		}
-
-		if ( ! empty( $menu_logo_description_font_family_value['variant'] ) ) {
-
-			$menu_logo_description_font_family_font_weight = str_replace( 'italic', '', $menu_logo_description_font_family_value['variant'] );
-			$menu_logo_description_font_family_font_weight = ( in_array( $menu_logo_description_font_family_font_weight, array( '', 'regular' ) ) ) ? '400' : $menu_logo_description_font_family_font_weight;
-
-			$menu_logo__description_font_family_is_italic = ( false !== strpos( $menu_logo_description_font_family_value['variant'], 'italic' ) );
-			$menu_logo_description_font_family_font_style = $menu_logo__description_font_family_is_italic ? 'italic' : 'normal';
-
-			echo sprintf( 'font-weight: %s;', esc_attr( $menu_logo_description_font_family_font_weight ) );
-			echo sprintf( 'font-style: %s;', esc_attr( $menu_logo_description_font_family_font_style ) );
-
-		}
-
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-tagline',
+			'props'    => array(
+				'font-family' => wpbf_typography_font_family( $menu_logo_description_font_setting ),
+				'font-weight' => wpbf_typography_font_weight( $menu_logo_description_font_setting ),
+				'font-style'  => wpbf_typography_font_style( $menu_logo_description_font_setting ),
+			),
+		) );
 
 	}
+
+	$menu_logo_description_color = get_theme_mod( 'menu_logo_description_color' );
 
 	if ( $menu_logo_description_color ) {
 
-		echo '.wpbf-tagline {';
-		echo sprintf( 'color: %s;', esc_attr( $menu_logo_description_color ) );
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-tagline',
+			'props'    => array(
+				'color' => $menu_logo_description_color,
+			),
+		) );
 
 	}
+
+	$menu_logo_description_font_size_desktop = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'desktop' );
 
 	if ( $menu_logo_description_font_size_desktop ) {
 
-		$suffix = is_numeric( $menu_logo_description_font_size_desktop ) ? 'px' : '';
-
-		echo '.wpbf-tagline {';
-		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_description_font_size_desktop . $suffix ) );
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-tagline',
+			'props'    => array(
+				'font-size' => wpbf_maybe_append_suffix( $menu_logo_description_font_size_desktop ),
+			),
+		) );
 
 	}
+
+	$menu_logo_description_font_size_tablet = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'tablet' );
 
 	if ( $menu_logo_description_font_size_tablet ) {
 
-		$suffix = is_numeric( $menu_logo_description_font_size_tablet ) ? 'px' : '';
-
-		echo '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ') {';
-		echo '.wpbf-tagline {';
-		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_description_font_size_tablet . $suffix ) );
-		echo '}';
-		echo '}';
+		wpbf_write_css( array(
+			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ')',
+			'selector'    => '.wpbf-tagline',
+			'props'       => array(
+				'font-size' => wpbf_maybe_append_suffix( $menu_logo_description_font_size_tablet ),
+			),
+		) );
 
 	}
 
+	$menu_logo_description_font_size_mobile = wpbf_get_theme_mod_value( $menu_logo_description_font_size, 'mobile' );
+
 	if ( $menu_logo_description_font_size_mobile ) {
 
-		$suffix = is_numeric( $menu_logo_description_font_size_mobile ) ? 'px' : '';
-
-		echo '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ') {';
-		echo '.wpbf-tagline {';
-		echo sprintf( 'font-size: %s;', esc_attr( $menu_logo_description_font_size_mobile . $suffix ) );
-		echo '}';
-		echo '}';
+		wpbf_write_css( array(
+			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ')',
+			'selector'    => '.wpbf-tagline',
+			'props'       => array(
+				'font-size' => wpbf_maybe_append_suffix( $menu_logo_description_font_size_mobile ),
+			),
+		) );
 
 	}
 }
 
 // Navigation.
-$menu_position  = get_theme_mod( 'menu_position' );
-$menu_width     = ( $val = get_theme_mod( 'menu_width' ) ) === '1200px' ? false : $val;
-$menu_padding   = ( $val = get_theme_mod( 'menu_padding' ) ) === '20' ? false : $val;
-$menu_bg_color  = ( $val = get_theme_mod( 'menu_bg_color' ) ) === '#f5f5f7' ? false : $val;
-$menu_font_size = get_theme_mod( 'menu_font_size' );
+$menu_width = wpbf_customize_str_value( 'menu_width' );
+$menu_width = '1200' === $menu_width || '1200px' === $menu_width ? '' : $menu_width;
 
 if ( $menu_width ) {
 
-	echo '.wpbf-nav-wrapper {';
-	echo sprintf( 'max-width: %s;', esc_attr( $menu_width ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-nav-wrapper',
+		'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $menu_width ) ),
+	) );
 
 }
+
+$menu_position = wpbf_customize_str_value( 'menu_position' );
 
 $menu_height = wpbf_customize_str_value( 'menu_height' );
 $menu_height = '20' === $menu_height || '20px' === $menu_height ? '' : $menu_height;
@@ -1788,28 +1784,38 @@ if ( $menu_height ) {
 
 }
 
+$menu_padding = wpbf_customize_str_value( 'menu_padding' );
+$menu_padding = '20' === $menu_padding || '20px' === $menu_padding ? '' : $menu_padding;
 
 if ( $menu_padding ) {
 
-	echo '.wpbf-navigation .wpbf-menu > .menu-item > a {';
-	echo sprintf( 'padding-left: %s;', esc_attr( $menu_padding ) . 'px' );
-	echo sprintf( 'padding-right: %s;', esc_attr( $menu_padding ) . 'px' );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-navigation .wpbf-menu > .menu-item > a',
+		'props'    => array(
+			'padding-left'  => wpbf_maybe_append_suffix( $menu_padding ),
+			'padding-right' => wpbf_maybe_append_suffix( $menu_padding ),
+		),
+	) );
 
 	if ( 'menu-centered' === $menu_position ) {
 
-		echo '.wpbf-menu-centered .logo-container {';
-		echo sprintf( 'padding: 0 %s;', esc_attr( $menu_padding ) . 'px' );
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-menu-centered .logo-container',
+			'props'    => array( 'padding' => '0 ' . wpbf_maybe_append_suffix( $menu_padding ) ),
+		) );
 
 	}
 }
 
+$menu_bg_color = wpbf_customize_str_value( 'menu_bg_color' );
+$menu_bg_color = '#f5f5f7' === $menu_bg_color ? '' : $menu_bg_color;
+
 if ( $menu_bg_color ) {
 
-	echo '.wpbf-navigation:not(.wpbf-navigation-transparent):not(.wpbf-navigation-active) {';
-	echo sprintf( 'background-color: %s;', esc_attr( $menu_bg_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-navigation:not(.wpbf-navigation-transparent):not(.wpbf-navigation-active)',
+		'props'    => array( 'background-color' => $menu_bg_color ),
+	) );
 
 }
 
@@ -1823,40 +1829,48 @@ if ( ! empty( $menu_font_colors ) ) {
 
 	if ( $menu_font_color_default ) {
 
-		echo '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close {';
-		echo sprintf( 'color: %s;', esc_attr( $menu_font_color_default ) );
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close',
+			'props'    => array( 'color' => $menu_font_color_default ),
+		) );
 
 	}
 
 	if ( $menu_font_color_hover ) {
 
-		echo '.wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover {';
-		echo sprintf( 'color: %s;', esc_attr( $menu_font_color_hover ) );
-		echo '}';
-
-		echo '.wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a {';
-		echo sprintf( 'color: %s;', esc_attr( $menu_font_color_hover ) . '!important' );
-		echo '}';
+		wpbf_write_css( array(
+			'blocks' => array(
+				array(
+					'selector' => '.wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover',
+					'props'    => array( 'color' => $menu_font_color_hover ),
+				),
+				array(
+					'selector' => '.wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a',
+					'props'    => array( 'color' => $menu_font_color_hover . '!important' ),
+				),
+			),
+		) );
 
 	}
 
 }
 
+$menu_font_size = wpbf_customize_str_value( 'menu_font_size' );
+
 if ( $menu_font_size ) {
 
-	$suffix = is_numeric( $menu_font_size ) ? 'px' : '';
-	echo '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a {';
-	echo sprintf( 'font-size: %s;', esc_attr( $menu_font_size ) . $suffix );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a',
+		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $menu_font_size ) ),
+	) );
 
 }
 
 // Sub menu.
-$sub_menu_text_alignment   = get_theme_mod( 'sub_menu_text_alignment' );
-$sub_menu_bg_color         = ( $val = get_theme_mod( 'sub_menu_bg_color' ) ) === '#ffffff' ? false : $val;
-$sub_menu_bg_color_alt     = get_theme_mod( 'sub_menu_bg_color_alt' );
-$sub_menu_width            = ( $val = get_theme_mod( 'sub_menu_width' ) ) === '220' ? false : $val;
+$sub_menu_text_alignment = wpbf_customize_str_value( 'sub_menu_text_alignment' );
+
+
+
 $sub_menu_padding          = json_decode( get_theme_mod( 'sub_menu_padding' ), true );
 $sub_menu_padding_top      = wpbf_get_theme_mod_value( $sub_menu_padding, 'top', 10 );
 $sub_menu_padding_right    = wpbf_get_theme_mod_value( $sub_menu_padding, 'right', 20 );
@@ -1865,118 +1879,116 @@ $sub_menu_padding_left     = wpbf_get_theme_mod_value( $sub_menu_padding, 'left'
 $sub_menu_accent_color     = get_theme_mod( 'sub_menu_accent_color' );
 $sub_menu_font_size        = get_theme_mod( 'sub_menu_font_size' );
 $sub_menu_accent_color_alt = get_theme_mod( 'sub_menu_accent_color_alt' );
-$sub_menu_separator        = get_theme_mod( 'sub_menu_separator' );
-$sub_menu_separator_color  = ( $val = get_theme_mod( 'sub_menu_separator_color' ) ) === '#f5f5f7' ? false : $val;
+
 
 if ( $sub_menu_text_alignment ) {
 
-	echo '.wpbf-sub-menu .sub-menu {';
-	echo sprintf( 'text-align: %s;', esc_attr( $sub_menu_text_alignment ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-sub-menu .sub-menu',
+		'props'    => array( 'text-align' => $sub_menu_text_alignment ),
+	) );
 
 }
+
+$sub_menu_bg_color = wpbf_customize_str_value( 'sub_menu_bg_color' );
+$sub_menu_bg_color = '#ffffff' === $sub_menu_bg_color ? '' : $sub_menu_bg_color;
 
 if ( $sub_menu_bg_color ) {
 
-	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li, .wpbf-sub-menu > .wpbf-mega-menu > .sub-menu {';
-	echo sprintf( 'background-color: %s;', esc_attr( $sub_menu_bg_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li, .wpbf-sub-menu > .wpbf-mega-menu > .sub-menu',
+		'props'    => array( 'background-color' => $sub_menu_bg_color ),
+	) );
 
 }
+
+$sub_menu_bg_color_alt = wpbf_customize_str_value( 'sub_menu_bg_color_alt' );
 
 if ( $sub_menu_bg_color_alt ) {
 
-	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li:hover {';
-	echo sprintf( 'background-color: %s;', esc_attr( $sub_menu_bg_color_alt ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li:hover',
+		'props'    => array( 'background-color' => $sub_menu_bg_color_alt ),
+	) );
 
 }
+
+$sub_menu_separator = wpbf_customize_bool_value( 'sub_menu_separator' );
+
+$sub_menu_separator_color = wpbf_customize_str_value( 'sub_menu_separator_color' );
+$sub_menu_separator_color = '#f5f5f7' === $sub_menu_separator_color ? '' : $sub_menu_separator_color;
 
 if ( $sub_menu_separator ) {
 
-	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li {';
-	echo 'border-bottom: 1px solid #f5f5f7;';
-
-	if ( $sub_menu_separator_color ) {
-		echo sprintf( 'border-bottom-color: %s;', esc_attr( $sub_menu_separator_color ) );
-	}
-
-	echo '}';
-
-	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li:last-child {';
-	echo 'border-bottom: none';
-	echo '}';
+	wpbf_write_css( array(
+		'blocks' => array(
+			array(
+				'selector' => '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li',
+				'props'    => array(
+					'border-bottom'       => '1px solid #f5f5f7',
+					'border-bottom-color' => $sub_menu_separator_color ? $sub_menu_separator_color : null,
+				),
+			),
+			array(
+				'selector' => '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li:last-child',
+				'props'    => array( 'border-bottom' => 'none' ),
+			),
+		),
+	) );
 
 }
 
+$sub_menu_width = wpbf_customize_str_value( 'sub_menu_width' );
+$sub_menu_width = '220' === $sub_menu_width || '220px' === $sub_menu_width ? '' : $sub_menu_width;
+
 if ( $sub_menu_width ) {
 
-	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu {';
-	echo sprintf( 'width: %s;', esc_attr( $sub_menu_width ) . 'px' );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu',
+		'props'    => array( 'width' => wpbf_maybe_append_suffix( $sub_menu_width ) ),
+	) );
 
 }
 
 if ( $sub_menu_padding_top || $sub_menu_padding_right || $sub_menu_padding_bottom || $sub_menu_padding_left ) {
 
-	echo '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a {';
-
-	if ( $sub_menu_padding_top ) {
-		echo sprintf( 'padding-top: %s;', esc_attr( $sub_menu_padding_top ) . 'px' );
-	}
-
-	if ( $sub_menu_padding_right ) {
-		echo sprintf( 'padding-right: %s;', esc_attr( $sub_menu_padding_right ) . 'px' );
-	}
-
-	if ( $sub_menu_padding_bottom ) {
-		echo sprintf( 'padding-bottom: %s;', esc_attr( $sub_menu_padding_bottom ) . 'px' );
-	}
-
-	if ( $sub_menu_padding_left ) {
-		echo sprintf( 'padding-left: %s;', esc_attr( $sub_menu_padding_left ) . 'px' );
-	}
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a',
+		'props'    => array(
+			'padding-top'    => $sub_menu_padding_top ? wpbf_maybe_append_suffix( $sub_menu_padding_top ) : null,
+			'padding-right'  => $sub_menu_padding_right ? wpbf_maybe_append_suffix( $sub_menu_padding_right ) : null,
+			'padding-bottom' => $sub_menu_padding_bottom ? wpbf_maybe_append_suffix( $sub_menu_padding_bottom ) : null,
+			'padding-left'   => $sub_menu_padding_left ? wpbf_maybe_append_suffix( $sub_menu_padding_left ) : null,
+		),
+	) );
 
 }
 
 if ( $sub_menu_accent_color || $sub_menu_font_size ) {
 
-	echo '.wpbf-navigation .wpbf-menu .sub-menu a {';
-
-	if ( $sub_menu_accent_color ) {
-		echo sprintf( 'color: %s;', esc_attr( $sub_menu_accent_color ) );
-	}
-
-	if ( $sub_menu_font_size ) {
-		$suffix = is_numeric( $sub_menu_font_size ) ? 'px' : '';
-		echo sprintf( 'font-size: %s;', esc_attr( $sub_menu_font_size ) . $suffix );
-	}
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-navigation .wpbf-menu .sub-menu a',
+		'props'    => array(
+			'color'     => $sub_menu_accent_color ? $sub_menu_accent_color : null,
+			'font-size' => $sub_menu_font_size ? wpbf_maybe_append_suffix( $sub_menu_font_size ) : null,
+		),
+	) );
 
 }
 
 if ( $sub_menu_accent_color_alt ) {
 
-	echo '.wpbf-navigation .wpbf-menu .sub-menu a:hover {';
-	echo sprintf( 'color: %s;', esc_attr( $sub_menu_accent_color_alt ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-navigation .wpbf-menu .sub-menu a:hover',
+		'props'    => array( 'color' => $sub_menu_accent_color_alt ),
+	) );
 
 }
 
 // Mobile navigation.
-$mobile_menu_height                  = ( $val = get_theme_mod( 'mobile_menu_height' ) ) === '20' ? false : $val;
-$mobile_menu_background_color        = get_theme_mod( 'mobile_menu_background_color' );
-$mobile_menu_padding                 = json_decode( get_theme_mod( 'mobile_menu_padding' ), true );
-$mobile_menu_padding_top             = wpbf_get_theme_mod_value( $mobile_menu_padding, 'top', 10 );
-$mobile_menu_padding_right           = wpbf_get_theme_mod_value( $mobile_menu_padding, 'right', 20 );
-$mobile_menu_padding_bottom          = wpbf_get_theme_mod_value( $mobile_menu_padding, 'bottom', 10 );
-$mobile_menu_padding_left            = wpbf_get_theme_mod_value( $mobile_menu_padding, 'left', 20 );
 $mobile_menu_font_color              = get_theme_mod( 'mobile_menu_font_color' );
 $mobile_menu_font_color_alt          = get_theme_mod( 'mobile_menu_font_color_alt' );
-$mobile_menu_border_color            = ( $val = get_theme_mod( 'mobile_menu_border_color' ) ) === '#d9d9e0' ? false : $val;
+
 $mobile_menu_options                 = get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
 $mobile_menu_hamburger_color         = get_theme_mod( 'mobile_menu_hamburger_color' );
 $mobile_menu_hamburger_size          = ( $val = get_theme_mod( 'mobile_menu_hamburger_size' ) ) === '16px' ? false : $val;
@@ -1987,397 +1999,438 @@ $mobile_menu_bg_color_alt            = get_theme_mod( 'mobile_menu_bg_color_alt'
 $mobile_menu_submenu_arrow_color     = get_theme_mod( 'mobile_menu_submenu_arrow_color' );
 $mobile_menu_font_size               = ( $val = get_theme_mod( 'mobile_menu_font_size' ) ) === '16px' ? false : $val;
 
-if ( $mobile_menu_height !== false ) {
+$mobile_menu_height = wpbf_customize_str_value( 'mobile_menu_height' );
+$mobile_menu_height = '20' === $mobile_menu_height || '20px' === $mobile_menu_height ? '' : $mobile_menu_height;
 
-	echo '.wpbf-mobile-nav-wrapper {';
-	echo sprintf( 'padding-top: %s;', esc_attr( $mobile_menu_height ) . 'px' );
-	echo sprintf( 'padding-bottom: %s;', esc_attr( $mobile_menu_height ) . 'px' );
-	echo '}';
+if ( $mobile_menu_height ) {
+
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-nav-wrapper',
+		'props'    => array(
+			'padding-top'    => wpbf_maybe_append_suffix( $mobile_menu_height ),
+			'padding-bottom' => wpbf_maybe_append_suffix( $mobile_menu_height ),
+		),
+	) );
 
 }
+
+$mobile_menu_background_color = wpbf_customize_str_value( 'mobile_menu_background_color' );
 
 if ( $mobile_menu_background_color ) {
 
-	echo '.wpbf-mobile-nav-wrapper {';
-	echo sprintf( 'background: %s;', esc_attr( $mobile_menu_background_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-nav-wrapper',
+		'props'    => array( 'background-color' => $mobile_menu_background_color ),
+	) );
 
 }
 
+$mobile_menu_padding = wpbf_customize_array_value( 'mobile_menu_padding' );
+
+$mobile_menu_padding_top    = wpbf_get_theme_mod_value( $mobile_menu_padding, 'top', 10 );
+$mobile_menu_padding_right  = wpbf_get_theme_mod_value( $mobile_menu_padding, 'right', 20 );
+$mobile_menu_padding_bottom = wpbf_get_theme_mod_value( $mobile_menu_padding, 'bottom', 10 );
+$mobile_menu_padding_left   = wpbf_get_theme_mod_value( $mobile_menu_padding, 'left', 20 );
+
 if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padding_bottom || $mobile_menu_padding_left ) {
 
-	echo '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {';
-
-	if ( $mobile_menu_padding_top ) {
-		echo sprintf( 'padding-top: %s;', esc_attr( $mobile_menu_padding_top ) . 'px' );
-	}
-
-	if ( $mobile_menu_padding_right ) {
-		echo sprintf( 'padding-right: %s;', esc_attr( $mobile_menu_padding_right ) . 'px' );
-	}
-
-	if ( $mobile_menu_padding_bottom ) {
-		echo sprintf( 'padding-bottom: %s;', esc_attr( $mobile_menu_padding_bottom ) . 'px' );
-	}
-
-	if ( $mobile_menu_padding_left ) {
-		echo sprintf( 'padding-left: %s;', esc_attr( $mobile_menu_padding_left ) . 'px' );
-	}
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle',
+		'props'    => array(
+			'padding-top'    => $mobile_menu_padding_top ? wpbf_maybe_append_suffix( $mobile_menu_padding_top ) : null,
+			'padding-right'  => $mobile_menu_padding_right ? wpbf_maybe_append_suffix( $mobile_menu_padding_right ) : null,
+			'padding-bottom' => $mobile_menu_padding_bottom ? wpbf_maybe_append_suffix( $mobile_menu_padding_bottom ) : null,
+			'padding-left'   => $mobile_menu_padding_left ? wpbf_maybe_append_suffix( $mobile_menu_padding_left ) : null,
+		),
+	) );
 
 }
 
 if ( $mobile_menu_font_color ) {
 
-	echo '.wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close {';
-	echo sprintf( 'color: %s;', esc_attr( $mobile_menu_font_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close',
+		'props'    => array( 'color' => $mobile_menu_font_color ),
+	) );
 
 }
 
 if ( $mobile_menu_font_color_alt ) {
 
-	echo '.wpbf-mobile-menu a:hover {';
-	echo sprintf( 'color: %s;', esc_attr( $mobile_menu_font_color_alt ) );
-	echo '}';
-
-	echo '.wpbf-mobile-menu > .current-menu-item > a {';
-	echo sprintf( 'color: %s;', esc_attr( $mobile_menu_font_color_alt ) . '!important' );
-	echo '}';
+	wpbf_write_css( array(
+		'blocks' => array(
+			array(
+				'selector' => '.wpbf-mobile-menu a:hover',
+				'props'    => array( 'color' => $mobile_menu_font_color_alt ),
+			),
+			array(
+				'selector' => '.wpbf-mobile-menu > .current-menu-item > a',
+				'props'    => array( 'color' => $mobile_menu_font_color_alt . '!important' ),
+			),
+		),
+	) );
 
 }
+
+$mobile_menu_border_color = wpbf_customize_str_value( 'mobile_menu_border_color' );
+$mobile_menu_border_color = '#d9d9e0' === $mobile_menu_border_color ? false : $mobile_menu_border_color;
 
 if ( $mobile_menu_border_color ) {
 
-	echo '.wpbf-mobile-menu .menu-item {';
-	echo sprintf( 'border-top-color: %s;', esc_attr( $mobile_menu_border_color ) );
-	echo '}';
-
-	echo '.wpbf-mobile-menu > .menu-item:last-child {';
-	echo sprintf( 'border-bottom-color: %s;', esc_attr( $mobile_menu_border_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'blocks' => array(
+			array(
+				'selector' => '.wpbf-mobile-menu .menu-item',
+				'props'    => array( 'border-top-color' => $mobile_menu_border_color ),
+			),
+			array(
+				'selector' => '.wpbf-mobile-menu > .menu-item:last-child',
+				'props'    => array( 'border-bottom-color' => $mobile_menu_border_color ),
+			),
+		),
+	) );
 
 }
 
-if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ) ) ) {
+if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ), true ) ) {
 
 	if ( $mobile_menu_hamburger_color || $mobile_menu_hamburger_size ) {
 
-		echo '.wpbf-mobile-nav-item {';
-
-		if ( $mobile_menu_hamburger_color ) {
-			echo sprintf( 'color: %s;', esc_attr( $mobile_menu_hamburger_color ) );
-		}
-
-		if ( $mobile_menu_hamburger_size ) {
-			$suffix = is_numeric( $mobile_menu_hamburger_size ) ? 'px' : '';
-			echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_hamburger_size ) . $suffix );
-		}
-
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-mobile-nav-item',
+			'props'    => array(
+				'color'     => $mobile_menu_hamburger_color ? $mobile_menu_hamburger_color : null,
+				'font-size' => $mobile_menu_hamburger_size ? wpbf_maybe_append_suffix( $mobile_menu_hamburger_size ) : null,
+			),
+		) );
 
 		if ( $mobile_menu_hamburger_color ) {
 
-			echo '.wpbf-mobile-nav-item a {';
-			echo sprintf( 'color: %s;', esc_attr( $mobile_menu_hamburger_color ) );
-			echo '}';
+			wpbf_write_css( array(
+				'selector' => '.wpbf-mobile-nav-item a',
+				'props'    => array( 'color' => $mobile_menu_hamburger_color ),
+			) );
 
 		}
 	}
 
 	if ( $mobile_menu_hamburger_bg_color ) {
 
-		echo '.wpbf-mobile-menu-toggle {';
-		echo sprintf( 'background: %s;', esc_attr( $mobile_menu_hamburger_bg_color ) );
-		echo 'color: #ffffff !important;';
-		echo 'padding: 10px;';
-		echo 'line-height: 1;';
-
-		if ( $mobile_menu_hamburger_border_radius ) {
-			echo sprintf( 'border-radius: %s;', esc_attr( $mobile_menu_hamburger_border_radius ) . 'px' );
-		}
-
-		echo '}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-mobile-menu-toggle',
+			'props'    => array(
+				'background-color' => $mobile_menu_hamburger_bg_color,
+				'color'            => '#ffffff !important',
+				'padding'          => '10px',
+				'line-height'      => '1',
+				'border-radius'    => $mobile_menu_hamburger_border_radius ? wpbf_maybe_append_suffix( $mobile_menu_hamburger_border_radius ) : null,
+			),
+		) );
 
 	}
 }
 
 if ( $mobile_menu_bg_color ) {
 
-	echo '.wpbf-mobile-menu > .menu-item a {';
-	echo sprintf( 'background-color: %s;', esc_attr( $mobile_menu_bg_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu > .menu-item a',
+		'props'    => array( 'background-color' => $mobile_menu_bg_color ),
+	) );
 
 }
 
 if ( $mobile_menu_bg_color_alt ) {
 
-	echo '.wpbf-mobile-menu > .menu-item a:hover {';
-	echo sprintf( 'background-color: %s;', esc_attr( $mobile_menu_bg_color_alt ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu > .menu-item a:hover',
+		'props'    => array( 'background-color' => $mobile_menu_bg_color_alt ),
+	) );
 
 }
 
 if ( $mobile_menu_submenu_arrow_color ) {
 
-	echo '.wpbf-mobile-menu .wpbf-submenu-toggle {';
-	echo sprintf( 'color: %s;', esc_attr( $mobile_menu_submenu_arrow_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu .wpbf-submenu-toggle',
+		'props'    => array( 'color' => $mobile_menu_submenu_arrow_color ),
+	) );
 
 }
 
 if ( $mobile_menu_font_size ) {
 
-	$suffix = is_numeric( $mobile_menu_font_size ) ? 'px' : '';
-	echo '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {';
-	echo sprintf( 'font-size: %s;', esc_attr( $mobile_menu_font_size ) . $suffix );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle',
+		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $mobile_menu_font_size ) ),
+	) );
 
 }
 
 // Mobile sub menu.
-$mobile_sub_menu_indent         = get_theme_mod( 'mobile_sub_menu_indent' );
-$mobile_sub_menu_bg_color       = get_theme_mod( 'mobile_sub_menu_bg_color' );
-$mobile_sub_menu_bg_color_alt   = get_theme_mod( 'mobile_sub_menu_bg_color_alt' );
-$mobile_sub_menu_arrow_color    = get_theme_mod( 'mobile_sub_menu_arrow_color' );
-$mobile_sub_menu_font_size      = get_theme_mod( 'mobile_sub_menu_font_size' );
-$mobile_sub_menu_font_color     = get_theme_mod( 'mobile_sub_menu_font_color' );
-$mobile_sub_menu_font_color_alt = get_theme_mod( 'mobile_sub_menu_font_color_alt' );
-$mobile_sub_menu_border_color   = get_theme_mod( 'mobile_sub_menu_border_color' );
+$mobile_sub_menu_indent = wpbf_customize_absint_value( 'mobile_sub_menu_indent' );
 
 if ( $mobile_sub_menu_indent ) {
 
-	$default                = get_theme_mod( 'mobile_menu_padding_left', '20' );
-	$mobile_sub_menu_indent = $mobile_sub_menu_indent + $default;
+	// ? Why do we use 'mobile_menu_padding_left' here?
+	// ? Because in backwards-compatibility, this option is deleted and replaced with 'mobile_menu_padding' (which is an array).
+	$default_legacy_padding_left = wpbf_customize_absint_value( 'mobile_menu_padding_left', 20 );
+	$mobile_sub_menu_indent      = $mobile_sub_menu_indent + $default_legacy_padding_left;
 
-	echo '.wpbf-mobile-menu .sub-menu a {';
-	echo sprintf( 'padding-left: %s;', esc_attr( $mobile_sub_menu_indent ) . 'px' );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu .sub-menu a',
+		'props'    => array( 'padding-left' => wpbf_maybe_append_suffix( $mobile_sub_menu_indent ) ),
+	) );
 
 }
+
+$mobile_sub_menu_bg_color = wpbf_customize_str_value( 'mobile_sub_menu_bg_color' );
 
 if ( $mobile_sub_menu_bg_color ) {
 
-	echo '.wpbf-mobile-menu .sub-menu a {';
-	echo sprintf( 'background-color: %s;', esc_attr( $mobile_sub_menu_bg_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu .sub-menu a',
+		'props'    => array( 'background-color' => $mobile_sub_menu_bg_color ),
+	) );
 
 }
+
+$mobile_sub_menu_bg_color_alt = wpbf_customize_str_value( 'mobile_sub_menu_bg_color_alt' );
 
 if ( $mobile_sub_menu_bg_color_alt ) {
 
-	echo '.wpbf-mobile-menu .sub-menu a:hover {';
-	echo sprintf( 'background-color: %s;', esc_attr( $mobile_sub_menu_bg_color_alt ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu .sub-menu a:hover',
+		'props'    => array( 'background-color' => $mobile_sub_menu_bg_color_alt ),
+	) );
 
 }
+
+$mobile_sub_menu_arrow_color = wpbf_customize_str_value( 'mobile_sub_menu_arrow_color' );
 
 if ( $mobile_sub_menu_arrow_color ) {
 
-	echo '.wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle {';
-	echo sprintf( 'color: %s;', esc_attr( $mobile_sub_menu_arrow_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle',
+		'props'    => array( 'color' => $mobile_sub_menu_arrow_color ),
+	) );
 
 }
+
+$mobile_sub_menu_font_size = wpbf_customize_str_value( 'mobile_sub_menu_font_size' );
 
 if ( $mobile_sub_menu_font_size ) {
 
-	$suffix = is_numeric( $mobile_sub_menu_font_size ) ? 'px' : '';
-	echo '.wpbf-mobile-menu .sub-menu a, .wpbf-mobile-menu .sub-menu .menu-item-has-children .wpbf-submenu-toggle {';
-	echo sprintf( 'font-size: %s;', esc_attr( $mobile_sub_menu_font_size ) . $suffix );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu .sub-menu a, .wpbf-mobile-menu .sub-menu .menu-item-has-children .wpbf-submenu-toggle',
+		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $mobile_sub_menu_font_size ) ),
+	) );
 
 }
+
+$mobile_sub_menu_font_color = wpbf_customize_str_value( 'mobile_sub_menu_font_color' );
 
 if ( $mobile_sub_menu_font_color ) {
 
-	echo '.wpbf-mobile-menu .sub-menu a {';
-	echo sprintf( 'color: %s;', esc_attr( $mobile_sub_menu_font_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu .sub-menu a',
+		'props'    => array( 'color' => $mobile_sub_menu_font_color ),
+	) );
 
 }
+
+$mobile_sub_menu_font_color_alt = wpbf_customize_str_value( 'mobile_sub_menu_font_color_alt' );
 
 if ( $mobile_sub_menu_font_color_alt ) {
 
-	echo '.wpbf-mobile-menu .sub-menu a:hover {';
-	echo sprintf( 'color: %s;', esc_attr( $mobile_sub_menu_font_color_alt ) );
-	echo '}';
-
-	echo '.wpbf-mobile-menu .sub-menu > .current-menu-item > a {';
-	echo sprintf( 'color: %s;', esc_attr( $mobile_sub_menu_font_color_alt ) . '!important' );
-	echo '}';
+	wpbf_write_css( array(
+		'blocks' => array(
+			array(
+				'selector' => '.wpbf-mobile-menu .sub-menu a:hover',
+				'props'    => array( 'color' => $mobile_sub_menu_font_color_alt ),
+			),
+			array(
+				'selector' => '.wpbf-mobile-menu .sub-menu > .current-menu-item > a',
+				'props'    => array( 'color' => $mobile_sub_menu_font_color_alt . '!important' ),
+			),
+		),
+	) );
 
 }
 
+$mobile_sub_menu_border_color = wpbf_customize_str_value( 'mobile_sub_menu_border_color' );
+
 if ( $mobile_sub_menu_border_color ) {
 
-	echo '.wpbf-mobile-menu .sub-menu .menu-item {';
-	echo sprintf( 'border-top-color: %s;', esc_attr( $mobile_sub_menu_border_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-mobile-menu .sub-menu .menu-item',
+		'props'    => array( 'border-top-color' => $mobile_sub_menu_border_color ),
+	) );
 
 }
 
 // Pre header.
-$pre_header_layout     = get_theme_mod( 'pre_header_layout' );
-$pre_header_width      = ( $val = get_theme_mod( 'pre_header_width' ) ) === '1200px' ? false : $val;
-$pre_header_height     = ( $val = get_theme_mod( 'pre_header_height' ) ) === '10' ? false : $val;
-$pre_header_bg_color   = ( $val = get_theme_mod( 'pre_header_bg_color' ) ) === '#ffffff' ? false : $val;
-$pre_header_font_color = get_theme_mod( 'pre_header_font_color' );
+$pre_header_layout       = wpbf_customize_str_value( 'pre_header_layout' );
+$render_pre_header_style = $header_builder_enabled || 'none' !== $pre_header_layout ? true : false;
 
-$pre_header_accent_colors = get_theme_mod( 'pre_header_accent_colors', array() );
-$pre_header_accent_colors = ! is_array( $pre_header_accent_colors ) ? array() : $pre_header_accent_colors;
+$pre_header_width = wpbf_customize_str_value( 'pre_header_width' );
+$pre_header_width = '1200' === $pre_header_width || '1200px' === $pre_header_width ? '' : $pre_header_width;
 
-$pre_header_font_size = ( $val = get_theme_mod( 'pre_header_font_size' ) ) === '14px' ? false : $val;
+$pre_header_height = wpbf_customize_str_value( 'pre_header_height' );
+$pre_header_height = '10' === $pre_header_height || '10px' === $pre_header_height ? '' : $pre_header_height;
 
-$render_pre_header_style = false;
+if ( $render_pre_header_style && ( $pre_header_width || $pre_header_height ) ) {
 
-if ( $header_builder_enabled || 'none' !== $pre_header_layout ) {
-	$render_pre_header_style = true;
-}
-
-if ( $render_pre_header_style && ( $pre_header_height || $pre_header_width ) ) {
-
-	echo '.wpbf-inner-pre-header {';
-
-	if ( $pre_header_height ) {
-
-		echo sprintf( 'padding-top: %s;', esc_attr( $pre_header_height ) . 'px' );
-		echo sprintf( 'padding-bottom: %s;', esc_attr( $pre_header_height ) . 'px' );
-
-	}
-
-	if ( $pre_header_width ) {
-		echo sprintf( 'max-width: %s;', esc_attr( $pre_header_width ) );
-	}
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-inner-pre-header',
+		'props'    => array(
+			'padding-top'    => $pre_header_height ? wpbf_maybe_append_suffix( $pre_header_height ) : null,
+			'padding-bottom' => $pre_header_height ? wpbf_maybe_append_suffix( $pre_header_height ) : null,
+			'max-width'      => $pre_header_width ? wpbf_maybe_append_suffix( $pre_header_width ) : null,
+		),
+	) );
 
 }
+
+$pre_header_bg_color   = wpbf_customize_str_value( 'pre_header_bg_color' );
+$pre_header_bg_color   = '#ffffff' === $pre_header_bg_color ? '' : $pre_header_bg_color;
+$pre_header_font_color = wpbf_customize_str_value( 'pre_header_font_color' );
 
 if ( $render_pre_header_style && ( $pre_header_bg_color || $pre_header_font_color ) ) {
 
-	echo '.wpbf-pre-header {';
-
-	if ( $pre_header_bg_color ) {
-		echo sprintf( 'background-color: %s;', esc_attr( $pre_header_bg_color ) );
-	}
-
-	if ( $pre_header_font_color ) {
-		echo sprintf( 'color: %s;', esc_attr( $pre_header_font_color ) );
-	}
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-pre-header',
+		'props'    => array(
+			'background-color' => $pre_header_bg_color ? $pre_header_bg_color : null,
+			'color'            => $pre_header_font_color ? $pre_header_font_color : null,
+		),
+	) );
 
 }
 
+$pre_header_accent_colors = wpbf_customize_array_value( 'pre_header_accent_colors' );
+
 if ( $render_pre_header_style && ! empty( $pre_header_accent_colors['default'] ) ) {
 
-	echo '.wpbf-pre-header a {';
-	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_colors['default'] ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-pre-header a',
+		'props'    => array( 'color' => $pre_header_accent_colors['default'] ),
+	) );
 
 }
 
 if ( $render_pre_header_style && ! empty( $pre_header_accent_colors['hover'] ) ) {
 
-	echo '.wpbf-pre-header a:hover {';
-	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_colors['hover'] ) );
-	echo '}';
-
-	echo '.wpbf-pre-header .wpbf-menu > .current-menu-item > a {';
-	echo sprintf( 'color: %s;', esc_attr( $pre_header_accent_colors['hover'] ) . '!important' );
-	echo '}';
+	wpbf_write_css( array(
+		'blocks' => array(
+			array(
+				'selector' => '.wpbf-pre-header a:hover',
+				'props'    => array( 'color' => $pre_header_accent_colors['hover'] ),
+			),
+			array(
+				'selector' => '.wpbf-pre-header .wpbf-menu > .current-menu-item > a',
+				'props'    => array( 'color' => $pre_header_accent_colors['hover'] . '!important' ),
+			),
+		),
+	) );
 
 }
 
+$pre_header_font_size = wpbf_customize_str_value( 'pre_header_font_size' );
+$pre_header_font_size = '14' === $pre_header_font_size || '14px' === $pre_header_font_size ? '' : $pre_header_font_size;
+
 if ( $render_pre_header_style && $pre_header_font_size ) {
 
-	$suffix = is_numeric( $pre_header_font_size ) ? 'px' : '';
-	echo '.wpbf-pre-header, .wpbf-pre-header .wpbf-menu, .wpbf-pre-header .wpbf-menu .sub-menu a {';
-	echo sprintf( 'font-size: %s;', esc_attr( $pre_header_font_size . $suffix ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-pre-header, .wpbf-pre-header .wpbf-menu, .wpbf-pre-header .wpbf-menu .sub-menu a',
+		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $pre_header_font_size ) ),
+	) );
 
 }
 
 require_once WPBF_THEME_DIR . '/inc/customizer/styles/header-builder-styles.php';
 
 /* Footer */
+$footer_layout = wpbf_customize_str_value( 'footer_layout' );
+$footer_width  = wpbf_customize_str_value( 'footer_width' );
+$footer_width  = '1200' === $footer_width || '1200px' === $footer_width ? '' : $footer_width;
+$footer_height = wpbf_customize_str_value( 'footer_height' );
+$footer_height = '20' === $footer_height || '20px' === $footer_height ? '' : $footer_height;
 
-$footer_layout           = get_theme_mod( 'footer_layout' );
-$footer_width            = ( $val = get_theme_mod( 'footer_width' ) ) === '1200px' ? false : $val;
-$footer_height           = ( $val = get_theme_mod( 'footer_height' ) ) === '20' ? false : $val;
-$footer_bg_color         = ( $val = get_theme_mod( 'footer_bg_color' ) ) === '#f5f5f7' ? false : $val;
-$footer_font_color       = get_theme_mod( 'footer_font_color' );
-$footer_accent_color     = get_theme_mod( 'footer_accent_color' );
-$footer_accent_color_alt = get_theme_mod( 'footer_accent_color_alt' );
-$footer_font_size        = ( $val = get_theme_mod( 'footer_font_size' ) ) === '14px' ? false : $val;
+if ( 'none' !== $footer_layout && ( $footer_width || $footer_height ) ) {
 
-if ( 'none' !== $footer_layout && ( $footer_height || $footer_width ) ) {
-
-	echo '.wpbf-inner-footer {';
-
-	if ( $footer_height ) {
-
-		echo sprintf( 'padding-top: %s;', esc_attr( $footer_height ) . 'px' );
-		echo sprintf( 'padding-bottom: %s;', esc_attr( $footer_height ) . 'px' );
-
-	}
-
-	if ( $footer_width ) {
-		echo sprintf( 'max-width: %s;', esc_attr( $footer_width ) );
-	}
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-inner-footer',
+		'props'    => array(
+			'padding-top'    => $footer_height ? wpbf_maybe_append_suffix( $footer_height ) : null,
+			'padding-bottom' => $footer_height ? wpbf_maybe_append_suffix( $footer_height ) : null,
+			'max-width'      => $footer_width ? wpbf_maybe_append_suffix( $footer_width ) : null,
+		),
+	) );
 
 }
+
+$footer_bg_color = wpbf_customize_str_value( 'footer_bg_color' );
+$footer_bg_color = '#f5f5f7' === $footer_bg_color ? '' : $footer_bg_color;
 
 if ( 'none' !== $footer_layout && $footer_bg_color ) {
 
-	echo '.wpbf-page-footer {';
-
-	echo sprintf( 'background-color: %s;', esc_attr( $footer_bg_color ) );
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-page-footer',
+		'props'    => array( 'background-color' => $footer_bg_color ),
+	) );
 
 }
+
+$footer_font_color = wpbf_customize_str_value( 'footer_font_color' );
 
 if ( 'none' !== $footer_layout && $footer_font_color ) {
 
-	echo '.wpbf-inner-footer {';
-
-	echo sprintf( 'color: %s;', esc_attr( $footer_font_color ) );
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-inner-footer',
+		'props'    => array( 'color' => $footer_font_color ),
+	) );
 
 }
+
+$footer_accent_color = wpbf_customize_str_value( 'footer_accent_color' );
 
 if ( 'none' !== $footer_layout && $footer_accent_color ) {
 
-	echo '.wpbf-inner-footer a {';
-	echo sprintf( 'color: %s;', esc_attr( $footer_accent_color ) );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-inner-footer a',
+		'props'    => array( 'color' => $footer_accent_color ),
+	) );
 
 }
+
+$footer_accent_color_alt = wpbf_customize_str_value( 'footer_accent_color_alt' );
 
 if ( 'none' !== $footer_layout && $footer_accent_color_alt ) {
 
-	echo '.wpbf-inner-footer a:hover {';
-	echo sprintf( 'color: %s;', esc_attr( $footer_accent_color_alt ) );
-	echo '}';
-
-	echo '.wpbf-inner-footer .wpbf-menu > .current-menu-item > a {';
-	echo sprintf( 'color: %s;', esc_attr( $footer_accent_color_alt ) . '!important' );
-	echo '}';
+	wpbf_write_css( array(
+		'blocks' => array(
+			array(
+				'selector' => '.wpbf-inner-footer a:hover',
+				'props'    => array( 'color' => $footer_accent_color_alt ),
+			),
+			array(
+				'selector' => '.wpbf-inner-footer .wpbf-menu > .current-menu-item > a',
+				'props'    => array( 'color' => $footer_accent_color_alt . '!important' ),
+			),
+		),
+	) );
 
 }
 
+$footer_font_size = wpbf_customize_str_value( 'footer_font_size' );
+$footer_font_size = '14' === $footer_font_size || '14px' === $footer_font_size ? '' : $footer_font_size;
+
 if ( 'none' !== $footer_layout && $footer_font_size ) {
 
-	$suffix = is_numeric( $footer_font_size ) ? 'px' : '';
-	echo '.wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu {';
-	echo sprintf( 'font-size: %s;', esc_attr( $footer_font_size ) . $suffix );
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => '.wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu',
+		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $footer_font_size ) ),
+	) );
 
 }
 
