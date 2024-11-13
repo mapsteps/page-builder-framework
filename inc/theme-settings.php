@@ -135,7 +135,7 @@ function wpbf_show_bfcm_notice() {
 		return;
 	}
 
-	$start = strtotime( 'november 29th, 2024' );
+	$start = strtotime( 'november 22nd, 2024' );
 	$end   = strtotime( 'december 2nd, 2024' );
 	$now   = time();
 
