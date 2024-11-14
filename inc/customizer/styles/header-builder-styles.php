@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * ----------------------------------------------------------------------
  */
 
-$header_builder_rows = get_theme_mod( 'wpbf_header_builder', array() );
+$header_builder_rows = wpbf_customize_array_value( 'wpbf_header_builder', array() );
 
 $rows = array();
 
@@ -99,35 +99,39 @@ foreach ( $rows as $row_key => $columns ) {
 	 * - In row_2, there's no accent colors setting (we follow the old header section).
 	 */
 	if ( 'row_3' === $row_key ) {
-		$max_width = trim( strval( get_theme_mod( $row_id_prefix . 'max_width', '' ) ) );
-		$max_width = '' === $max_width || '1200' === $max_width || '1200px' === $max_width ? null : strval( $max_width );
+		$max_width = wpbf_customize_str_value( $row_id_prefix . 'max_width' );
+		$max_width = '' === $max_width || '1200' === $max_width || '1200px' === $max_width ? null : $max_width;
 
-		if ( ! is_null( $max_width ) ) {
-			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-container {
-				max-width: ' . esc_attr( wpbf_maybe_append_suffix( $max_width ) ) . ';
-			}';
+		if ( $max_width ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-container',
+				'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $max_width ) ),
+			) );
 		}
 
-		$v_padding = trim( strval( get_theme_mod( $row_id_prefix . 'vertical_padding' ) ) );
-		$v_padding = '' === $v_padding || '15' === $v_padding || '15px' === $v_padding ? '15px' : $v_padding;
-		$v_padding = wpbf_maybe_append_suffix( $v_padding );
+		$v_padding = wpbf_customize_str_value( $row_id_prefix . 'vertical_padding' );
+		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
 
-		echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content {
-			padding-top: ' . esc_attr( $v_padding ) . 'px;
-			padding-bottom: ' . esc_attr( $v_padding ) . 'px;
-		}';
+		wpbf_write_css( array(
+			'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content',
+			'props'    => array(
+				'padding-top'    => wpbf_maybe_append_suffix( $v_padding ),
+				'padding-bottom' => wpbf_maybe_append_suffix( $v_padding ),
+			),
+		) );
 
-		$font_size = trim( strval( get_theme_mod( $row_id_prefix . 'font_size' ) ) );
-		$font_size = '' === $font_size || '16' === $font_size || '16px' === $font_size ? '16px' : $font_size;
+		$font_size = wpbf_customize_str_value( $row_id_prefix . 'font_size' );
+		$font_size = '' === $font_size || '16' === $font_size ? '16px' : $font_size;
 
 		if ( $font_size ) {
-			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {
-				font-size: ' . esc_attr( wpbf_maybe_append_suffix( $font_size ) ) . '
-			}';
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
+				'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
+			) );
 		}
 
-		$bg_color   = get_theme_mod( $row_id_prefix . 'bg_color', '' );
-		$text_color = get_theme_mod( $row_id_prefix . 'text_color', '' );
+		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
 
 		if ( $bg_color || $text_color ) {
 			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
@@ -143,23 +147,24 @@ foreach ( $rows as $row_key => $columns ) {
 			echo '}';
 		}
 
-		$accent_colors = get_theme_mod( $row_id_prefix . 'accent_colors', [] );
-		$accent_colors = ! is_array( $accent_colors ) ? [] : $accent_colors;
+		$accent_colors = wpbf_customize_array_value( $row_id_prefix . 'accent_colors' );
 
 		if ( ! empty( $accent_colors ) ) {
-			$default_color = isset( $accent_colors['default'] ) && '' !== $accent_colors['default'] ? $accent_colors['default'] : null;
-			$hover_color   = isset( $accent_colors['hover'] ) && '' !== $accent_colors['hover'] ? $accent_colors['hover'] : null;
+			$default_color = ! empty( $accent_colors['default'] ) ? $accent_colors['default'] : '';
+			$hover_color   = ! empty( $accent_colors['hover'] ) ? $accent_colors['hover'] : '';
 
-			if ( ! is_null( $default_color ) ) {
-				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' a {
-					color: ' . esc_attr( $default_color ) . ';
-				}';
+			if ( $default_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a',
+					'props'    => array( 'color' => $default_color ),
+				) );
 			}
 
-			if ( ! is_null( $hover_color ) ) {
-				echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:focus {
-					color: ' . esc_attr( $hover_color ) . ';
-				}';
+			if ( $hover_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:focus',
+					'props'    => array( 'color' => $hover_color ),
+				) );
 			}
 		}
 	}
@@ -181,126 +186,57 @@ foreach ( $button_keys as $button_key ) {
 
 	$selector = '.wpbf-button.' . $header_builder_control_id_prefix . $button_key;
 
-	$responsive_border_radius = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_border_radius', [] );
-	$responsive_border_radius = ! is_array( $responsive_border_radius ) ? [] : $responsive_border_radius;
+	$responsive_border_radius = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_border_radius' );
+	$responsive_border_width  = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_border_width' );
+	$button_border_style      = wpbf_customize_str_value( $header_builder_control_id_prefix . $button_key . '_border_style' );
+	$button_border_style      = ! empty( $button_border_style ) ? $button_border_style : 'none';
+	$button_border_colors     = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_border_color' );
+	$button_bg_colors         = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_bg_color' );
+	$button_text_colors       = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_text_color' );
 
-	$responsive_border_width = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_border_width', [] );
-	$responsive_border_width = ! is_array( $responsive_border_width ) ? [] : $responsive_border_width;
+	wpbf_write_css( array(
+		'selector' => $selector,
+		'props'    => array(
+			'border-radius'    => isset( $responsive_border_radius['desktop'] ) && '' !== $responsive_border_radius['desktop'] ? $responsive_border_radius['desktop'] : null,
+			'border-width'     => isset( $responsive_border_width['desktop'] ) && '' !== $responsive_border_width['desktop'] ? $responsive_border_width['desktop'] : null,
+			'border-style'     => 'none' !== $button_border_style ? $button_border_style : null,
+			'border-color'     => isset( $button_border_colors['default'] ) && '' !== $button_border_colors['default'] ? $button_border_colors['default'] : null,
+			'background-color' => isset( $button_bg_colors['default'] ) && '' !== $button_bg_colors['default'] ? $button_bg_colors['default'] : null,
+			'color'            => isset( $button_text_colors['default'] ) && '' !== $button_text_colors['default'] ? $button_text_colors['default'] : null,
+		),
+	) );
 
-	$button_border_style = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_border_style', '' );
-	$button_border_style = ! empty( $button_border_style ) ? $button_border_style : 'none';
-
-	$button_border_colors = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_border_color', [] );
-	$button_border_colors = ! is_array( $button_border_colors ) ? [] : $button_border_colors;
-
-	$button_bg_colors = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_bg_color', [] );
-	$button_bg_colors = ! is_array( $button_bg_colors ) ? [] : $button_bg_colors;
-
-	$button_text_colors = get_theme_mod( $header_builder_control_id_prefix . $button_key . '_text_color', [] );
-	$button_text_colors = ! is_array( $button_text_colors ) ? [] : $button_text_colors;
-
-	echo esc_attr( $selector ) . ' {';
-
-	if ( isset( $responsive_border_radius['desktop'] ) ) {
-		$desktop_border_radius_value = $responsive_border_radius['desktop'];
-		$desktop_border_radius_value = is_numeric( $desktop_border_radius_value ) ? $desktop_border_radius_value . 'px' : $desktop_border_radius_value;
-
-		echo sprintf( 'border-radius: %s;', esc_attr( $desktop_border_radius_value ) );
-	}
-
-	if ( isset( $responsive_border_width['desktop'] ) ) {
-		$desktop_border_width_value = $responsive_border_width['desktop'];
-		$desktop_border_width_value = is_numeric( $desktop_border_width_value ) ? $desktop_border_width_value . 'px' : $desktop_border_width_value;
-
-		echo sprintf( 'border-width: %s;', esc_attr( $desktop_border_width_value ) );
-	}
-
-	if ( 'none' !== $button_border_style ) {
-		echo sprintf( 'border-style: %s;', esc_attr( $button_border_style ) );
-	}
-
-	if ( isset( $button_border_colors['default'] ) ) {
-		$button_default_border_color_value = $button_border_colors['default'];
-
-		if ( $button_default_border_color_value ) {
-			echo sprintf( 'border-color: %s;', esc_attr( $button_default_border_color_value ) );
-		}
-	}
-
-	if ( isset( $button_bg_colors['default'] ) ) {
-		$button_default_bg_color_value = $button_bg_colors['default'];
-
-		if ( $button_default_bg_color_value ) {
-			echo sprintf( 'background-color: %s;', esc_attr( $button_default_bg_color_value ) );
-		}
-	}
-
-	if ( isset( $button_text_colors['default'] ) ) {
-		$button_default_text_color_value = $button_text_colors['default'];
-
-		if ( $button_default_text_color_value ) {
-			echo sprintf( 'color: %s;', esc_attr( $button_default_text_color_value ) );
-		}
-	}
-
-	echo '}';
-
-	echo esc_attr( $selector ) . ':hover {';
-
-	if ( isset( $button_border_colors['hover'] ) ) {
-		$button_hover_border_color_value = $button_border_colors['hover'];
-
-		if ( $button_hover_border_color_value ) {
-			echo sprintf( 'border-color: %s;', esc_attr( $button_hover_border_color_value ) );
-		}
-	}
-
-	if ( isset( $button_bg_colors['hover'] ) ) {
-		$button_hover_bg_color_value = $button_bg_colors['hover'];
-
-		if ( $button_hover_bg_color_value ) {
-			echo sprintf( 'background-color: %s;', esc_attr( $button_hover_bg_color_value ) );
-		}
-	}
-
-	if ( isset( $button_text_colors['hover'] ) ) {
-		$button_hover_text_color_value = $button_text_colors['hover'];
-
-		if ( $button_hover_text_color_value ) {
-			echo sprintf( 'color: %s;', esc_attr( $button_hover_text_color_value ) );
-		}
-	}
-
-	echo '}';
+	wpbf_write_css( array(
+		'selector' => $selector . ':hover',
+		'props'    => array(
+			'border-color'     => isset( $button_border_colors['hover'] ) && '' !== $button_border_colors['hover'] ? $button_border_colors['hover'] : null,
+			'background-color' => isset( $button_bg_colors['hover'] ) && '' !== $button_bg_colors['hover'] ? $button_bg_colors['hover'] : null,
+			'color'            => isset( $button_text_colors['hover'] ) && '' !== $button_text_colors['hover'] ? $button_text_colors['hover'] : null,
+		),
+	) );
 
 	foreach ( $devices as $device ) {
-		if ( 'desktop' === $device ) {
+		if ( 'tablet' !== $device && 'mobile' !== $device ) {
 			continue;
 		}
 
-		if ( 'tablet' === $device || 'mobile' === $device ) {
-			$breakpoint_width = 'tablet' === $device ? $breakpoint_medium : $breakpoint_mobile;
+		$breakpoint_width = 'tablet' === $device ? $breakpoint_medium : $breakpoint_mobile;
 
-			echo sprintf( '@media screen and (max-width: %s) {', esc_attr( $breakpoint_width ) );
-			echo esc_attr( $selector ) . ' {';
+		$device_border_radius = isset( $responsive_border_radius[ $device ] ) && '' !== $responsive_border_radius[ $device ] ? $responsive_border_radius[ $device ] : null;
+		$device_border_width  = isset( $responsive_border_width[ $device ] ) && '' !== $responsive_border_width[ $device ] ? $responsive_border_width[ $device ] : null;
 
-			if ( isset( $responsive_border_radius[ $device ] ) ) {
-				$border_radius_value = $responsive_border_radius[ $device ];
-				$border_radius_value = is_numeric( $border_radius_value ) ? $border_radius_value . 'px' : $border_radius_value;
-
-				echo sprintf( 'border-radius: %s;', esc_attr( $border_radius_value ) );
-			}
-
-			if ( isset( $responsive_border_width[ $device ] ) ) {
-				$border_width_value = $responsive_border_width[ $device ];
-				$border_width_value = is_numeric( $border_width_value ) ? $border_width_value . 'px' : $border_width_value;
-
-				echo sprintf( 'border-width: %s;', esc_attr( $border_width_value ) );
-			}
-
-			echo '}';
-			echo '}';
+		if ( is_null( $device_border_radius ) && is_null( $device_border_width ) ) {
+			continue;
 		}
+
+		wpbf_write_css( array(
+			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_width ) . ')',
+			'selector'    => $selector,
+			'props'       => array(
+				'border-radius' => $device_border_radius ? wpbf_maybe_append_suffix( $device_border_radius ) : null,
+				'border-width'  => $device_border_width ? wpbf_maybe_append_suffix( $device_border_width ) : null,
+			),
+		) );
 	}
 
 }
