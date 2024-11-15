@@ -1848,6 +1848,24 @@ function wpbf_is_zero( $value ) {
 }
 
 /**
+ * Check if the value is not empty but zero is allowed.
+ *
+ * @param mixed $value The value to check.
+ * @return bool
+ */
+function wpbf_not_empty_allow_zero( $value ) {
+	if ( empty( $value ) ) {
+		if ( 0 === $value || '0' === $value ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	return true;
+}
+
+/**
  * Get the value of a customizer setting as an absolute integer.
  *
  * @param string $setting_id The setting id.

@@ -66,47 +66,92 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		return styleTag;
 	}
 
-	type WriteCssArgs = {
-		selector: string;
-		props: string[];
-		value: string | number | null | undefined;
-		important?: boolean;
-	};
-
-	/**
-	 * Write CSS to the style tag.
-	 *
-	 * @param {HTMLStyleElement|string} styleTagOrId - The style tag element or the style tag id.
-	 * @param {WriteCssArgs} args - The arguments.
-	 */
 	function writeCSS(
 		styleTagOrId: HTMLStyleElement | string,
-		args: WriteCssArgs[],
+		args: {
+			mediaQuery?: string;
+			blocks?: {
+				selector: string;
+				props: Record<string, string | number | null | undefined>;
+			}[];
+			selector?: string;
+			props?: Record<string, string | number | null | undefined>;
+		},
 	) {
 		const styleTag =
 			typeof styleTagOrId === "string"
 				? getStyleTag(styleTagOrId)
 				: styleTagOrId;
 
-		if (!args.length) return;
+		const blocks = args.blocks && Array.isArray(args.blocks) ? args.blocks : [];
+		const selector = args.selector || "";
+
+		// Either blocks or selector should be set.
+		if (!blocks.length && !selector) {
+			return;
+		}
+
+		const mediaQuery = args.mediaQuery || "";
 
 		let content = "";
 
-		args.forEach((arg) => {
-			const { selector, props, value, important } = arg;
-
-			if (value === "" || value === null || value === undefined) {
-				return;
+		if (blocks.length) {
+			if (mediaQuery) {
+				content += `${mediaQuery} {`;
 			}
 
-			content += "\n" + selector + " {";
+			blocks.forEach((block) => {
+				const blockSelector = block.selector;
+				const blockProps = block.props;
 
-			for (const prop of props) {
-				content += prop + ": " + value + (important ? " !important" : "") + ";";
+				if (!blockSelector || !blockProps || !Object.keys(blockProps).length) {
+					return;
+				}
+
+				content += `${blockSelector} {`;
+
+				for (const [cssProp, cssValue] of Object.entries(blockProps)) {
+					if (!cssProp || cssValue === null || cssValue === undefined) {
+						continue;
+					}
+
+					content += `${cssProp}: ${cssValue};`;
+				}
+
+				content += "}";
+			});
+
+			if (mediaQuery) {
+				content += "}";
 			}
 
+			styleTag.innerHTML = content;
+			return;
+		}
+
+		const props = args.props;
+
+		if (!props || !Object.keys(props).length) {
+			return;
+		}
+
+		content = "";
+
+		if (mediaQuery) {
+			content += `${mediaQuery} {`;
+		}
+
+		for (const [cssProp, cssValue] of Object.entries(props)) {
+			if (!cssProp || cssValue === null || cssValue === undefined) {
+				continue;
+			}
+
+			content += `${cssProp}: ${cssValue};`;
+		}
+
+		if (mediaQuery) {
 			content += "}";
-		});
+		}
 
 		styleTag.innerHTML = content;
 	}
@@ -365,15 +410,24 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 	/* Navigation */
 
-	// Width.
-	customizer("menu_width", function (value) {
-		const styleTag = getStyleTag("menu_width");
+	const headerWidthSettingId = "menu_width";
 
-		value.bind(function (newValue) {
-			newValue = !newValue ? "1200px" : newValue;
-			styleTag.innerHTML = ".wpbf-nav-wrapper {max-width: " + newValue + ";}";
-		});
-	});
+	// Width.
+	customizer(
+		headerWidthSettingId,
+		function (setting: WpbfCustomizeSetting<number | string>) {
+			setting.bind(function (value) {
+				const selector = headerBuilderEnabled()
+					? `.wpbf-header-row-row_2 .wpbf-row-content`
+					: `.wpbf-nav-wrapper`;
+
+				writeCSS(headerWidthSettingId, {
+					selector: selector,
+					props: { "max-width": maybeAppendSuffix(value) },
+				});
+			});
+		},
+	);
 
 	const headerHeightSettingId = "menu_height";
 
@@ -386,13 +440,13 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 					? `.wpbf-header-row-row_2 .wpbf-row-content`
 					: `.wpbf-nav-wrapper`;
 
-				writeCSS(headerHeightSettingId, [
-					{
-						selector: selector,
-						props: ["padding-top", "padding-bottom"],
-						value: maybeAppendSuffix(value),
+				writeCSS(headerHeightSettingId, {
+					selector: selector,
+					props: {
+						"padding-top": maybeAppendSuffix(value),
+						"padding-bottom": maybeAppendSuffix(value),
 					},
-				]);
+				});
 			});
 		},
 	);
@@ -436,27 +490,25 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				const rawHoverColor = newValue.hover ?? "";
 				const hoverColor = toStringColor(rawHoverColor);
 
-				writeCSS(menuFontColorsSettingId, [
-					{
-						selector:
-							".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close",
-						props: ["color"],
-						value: defaultColor,
-					},
-					{
-						selector:
-							".wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover",
-						props: ["color"],
-						value: hoverColor,
-					},
-					{
-						selector:
-							".wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a",
-						props: ["color"],
-						value: hoverColor,
-						important: true,
-					},
-				]);
+				writeCSS(menuFontColorsSettingId, {
+					blocks: [
+						{
+							selector:
+								".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close",
+							props: { color: defaultColor },
+						},
+						{
+							selector:
+								".wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover",
+							props: { color: hoverColor },
+						},
+						{
+							selector:
+								".wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a",
+							props: { color: `${hoverColor}!important` },
+						},
+					],
+				});
 			});
 		},
 	);
@@ -1164,20 +1216,19 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				const rawHoverColor = newValue.hover ?? "";
 				const hoverColor = toStringColor(rawHoverColor);
 
-				writeCSS(preHeaderAccentColorsSettingId, [
-					{
-						selector: ".wpbf-pre-header a",
-						props: ["color"],
-						value: defaultColor,
-					},
-					{
-						selector:
-							".wpbf-pre-header a:hover, .wpbf-pre-header .wpbf-menu > .current-menu-item > a",
-						props: ["color"],
-						value: hoverColor,
-						important: true,
-					},
-				]);
+				writeCSS(preHeaderAccentColorsSettingId, {
+					blocks: [
+						{
+							selector: ".wpbf-pre-header a",
+							props: { color: defaultColor },
+						},
+						{
+							selector:
+								".wpbf-pre-header a:hover, .wpbf-pre-header .wpbf-menu > .current-menu-item > a",
+							props: { color: `${hoverColor}!important` },
+						},
+					],
+				});
 			});
 		},
 	);
@@ -2300,13 +2351,10 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				maxWidthSettingId,
 				(value: WpbfCustomizeSetting<string | number>) => {
 					value.bind(function (newValue) {
-						writeCSS(maxWidthSettingId, [
-							{
-								selector: `.wpbf-header-row-${rowKey} .wpbf-container`,
-								props: ["max-width"],
-								value: maybeAppendSuffix(newValue),
-							},
-						]);
+						writeCSS(maxWidthSettingId, {
+							selector: `.wpbf-header-row-${rowKey} .wpbf-container`,
+							props: { "max-width": maybeAppendSuffix(newValue) },
+						});
 					});
 				},
 			);
@@ -2317,13 +2365,13 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				vPaddingSettingId,
 				function (value: WpbfCustomizeSetting<string | number>) {
 					value.bind(function (newValue) {
-						writeCSS(vPaddingSettingId, [
-							{
-								selector: `.wpbf-header-row-${rowKey} .wpbf-row-content`,
-								props: ["padding-top", "padding-bottom"],
-								value: maybeAppendSuffix(newValue),
+						writeCSS(vPaddingSettingId, {
+							selector: `.wpbf-header-row-${rowKey} .wpbf-row-content`,
+							props: {
+								"padding-top": maybeAppendSuffix(newValue),
+								"padding-bottom": maybeAppendSuffix(newValue),
 							},
-						]);
+						});
 					});
 				},
 			);
@@ -2334,13 +2382,10 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				fontSizeSettingId,
 				(value: WpbfCustomizeSetting<string | number>) => {
 					value.bind(function (newValue) {
-						writeCSS(fontSizeSettingId, [
-							{
-								selector: `.wpbf-header-row-${rowKey}`,
-								props: ["font-size"],
-								value: maybeAppendSuffix(newValue),
-							},
-						]);
+						writeCSS(fontSizeSettingId, {
+							selector: `.wpbf-header-row-${rowKey}`,
+							props: { "font-size": maybeAppendSuffix(newValue) },
+						});
 					});
 				},
 			);
@@ -2349,13 +2394,10 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 			customizer(bgColorSettinglId, function (value) {
 				value.bind(function (newValue) {
-					writeCSS(bgColorSettinglId, [
-						{
-							selector: `.wpbf-header-row-${rowKey}`,
-							props: ["background-color"],
-							value: newValue,
-						},
-					]);
+					writeCSS(bgColorSettinglId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { "background-color": newValue },
+					});
 				});
 			});
 		}
@@ -2364,13 +2406,10 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 		customizer(textColorSettingId, function (value) {
 			value.bind(function (newValue) {
-				writeCSS(textColorSettingId, [
-					{
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: ["color"],
-						value: newValue,
-					},
-				]);
+				writeCSS(textColorSettingId, {
+					selector: `.wpbf-header-row-${rowKey}`,
+					props: { color: newValue },
+				});
 			});
 		});
 
@@ -2386,18 +2425,18 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 					const rawHoverColor = newValue.hover ?? "";
 					const hoverColor = toStringColor(rawHoverColor);
 
-					writeCSS(accentColorsSettingId, [
-						{
-							selector: `.wpbf-header-row-${rowKey} a`,
-							props: ["color"],
-							value: defaultColor,
-						},
-						{
-							selector: `.wpbf-header-row-${rowKey} a:hover, .wpbf-header-row-${rowKey} a:focus`,
-							props: ["color"],
-							value: hoverColor,
-						},
-					]);
+					writeCSS(accentColorsSettingId, {
+						blocks: [
+							{
+								selector: `.wpbf-header-row-${rowKey} a`,
+								props: { color: defaultColor },
+							},
+							{
+								selector: `.wpbf-header-row-${rowKey} a:hover, .wpbf-header-row-${rowKey} a:focus`,
+								props: { color: hoverColor },
+							},
+						],
+					});
 				});
 			},
 		);
