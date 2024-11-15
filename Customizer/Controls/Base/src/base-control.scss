@@ -127,6 +127,8 @@
 	height: 0;
 }
 
+// The .accordion-trigger patch is to fix the overflow-x issue in WP 6.7.
+.control-section > h3 > .accordion-trigger,
 .wpbf-customize-control,
 .wpbf-customize-control * {
 	box-sizing: border-box;
