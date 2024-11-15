@@ -513,19 +513,22 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		},
 	);
 
-	// Font size.
-	customizer("menu_font_size", function (value) {
-		const styleTag = getStyleTag("menu_font_size");
+	const menuFontSizeSettingId = "menu_font_size";
 
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a {font-size: " +
-				newValue +
-				suffix +
-				";}";
-		});
-	});
+	// Font size.
+	customizer(
+		menuFontSizeSettingId,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(menuFontSizeSettingId, {
+					selector: ".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a",
+					props: {
+						fontSize: maybeAppendSuffix(value),
+					},
+				});
+			});
+		},
+	);
 
 	/* Sub Menu */
 
