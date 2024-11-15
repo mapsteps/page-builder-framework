@@ -1,31 +1,42 @@
 import {
-	WpbfControlDependencies,
-	WpbfReversedControlDependencies,
-	WpbfReversedControlDependency,
+	WpbfSectionDependencies,
+	WpbfReversedSectionDependencies,
+	WpbfReversedSectionDependency,
 } from "../../Controls/Base/src/base-interface";
 import { isRuleSatisfied } from "../../Controls/Base/src/control-dependencies";
 
 export default function setupSectionDependencies(
 	customizer: WpbfCustomize,
-	globalSectionDependencies: WpbfControlDependencies,
+	globalSectionDependencies: WpbfSectionDependencies,
 ) {
 	if (!window.wp.customize) return;
-	const reversedSectionDependencies: WpbfReversedControlDependencies = {};
+	const reversedSectionDependencies: WpbfReversedSectionDependencies = {};
 
-	for (const sectionId in globalSectionDependencies) {
-		if (!globalSectionDependencies.hasOwnProperty(sectionId)) {
+	for (const dependantSectionId in globalSectionDependencies) {
+		if (!globalSectionDependencies.hasOwnProperty(dependantSectionId)) {
 			continue;
 		}
 
-		const sectionDependencies = globalSectionDependencies[sectionId];
+		const sectionDependencies = globalSectionDependencies[dependantSectionId];
 
 		for (const dependency of sectionDependencies) {
-			if (!reversedSectionDependencies[dependency.id]) {
-				reversedSectionDependencies[dependency.id] = [];
+			let dependencySettingId = dependency.setting;
+
+			// Backwards compatibility.
+			if (!dependencySettingId && dependency.id) {
+				dependencySettingId = dependency.id;
 			}
 
-			reversedSectionDependencies[dependency.id].push({
-				dependantId: sectionId,
+			if (!dependencySettingId) {
+				continue;
+			}
+
+			if (!reversedSectionDependencies[dependencySettingId]) {
+				reversedSectionDependencies[dependencySettingId] = [];
+			}
+
+			reversedSectionDependencies[dependencySettingId].push({
+				dependantSectionId: dependantSectionId,
 				operator: dependency.operator,
 				value: dependency.value,
 			});
@@ -56,26 +67,26 @@ export default function setupSectionDependencies(
 	}
 
 	function listenDependencyControl(
-		dependencyControlId: string,
+		dependencySettingId: string,
 		bindValueChanges: boolean,
 	) {
-		customizer(dependencyControlId, function (setting) {
-			const rules = reversedSectionDependencies[dependencyControlId];
+		customizer(dependencySettingId, function (setting) {
+			const rules = reversedSectionDependencies[dependencySettingId];
 
-			handleRulesCondition(dependencyControlId, setting.get(), rules);
+			handleRulesCondition(dependencySettingId, setting.get(), rules);
 
 			if (bindValueChanges) {
 				setting.bind(function (newValue: string) {
-					handleRulesCondition(dependencyControlId, newValue, rules);
+					handleRulesCondition(dependencySettingId, newValue, rules);
 				});
 			}
 		});
 	}
 
 	function handleRulesCondition(
-		dependencyControlId: string,
+		dependencySettingId: string,
 		newValue: string,
-		rules: WpbfReversedControlDependency[],
+		rules: WpbfReversedSectionDependency[],
 	) {
 		for (const ruleSet of rules) {
 			let isDependencySatisfied = isRuleSatisfied(
@@ -85,27 +96,38 @@ export default function setupSectionDependencies(
 			);
 
 			if (!isDependencySatisfied) {
-				deactivateSection(ruleSet.dependantControlId);
+				deactivateSection(ruleSet.dependantSectionId);
 				continue;
 			}
 
 			const dependantDependencies =
-				globalSectionDependencies[ruleSet.dependantControlId];
+				globalSectionDependencies[ruleSet.dependantSectionId];
 
 			if (dependantDependencies.length < 2) {
-				activateSection(ruleSet.dependantControlId);
+				activateSection(ruleSet.dependantSectionId);
 				continue;
 			}
 
 			let otherRulesSatisfied = true;
 
 			for (const dependantDependency of dependantDependencies) {
-				if (dependantDependency.id === dependencyControlId) {
+				let dependantDependencySettingId = dependantDependency.setting;
+
+				// Backwards compatibility.
+				if (!dependantDependencySettingId && dependantDependency.id) {
+					dependantDependencySettingId = dependantDependency.id;
+				}
+
+				if (!dependantDependencySettingId) {
+					continue;
+				}
+
+				if (dependantDependencySettingId === dependencySettingId) {
 					continue;
 				}
 
 				const dependantDependencyValue = customizer(
-					dependantDependency.id,
+					dependantDependencySettingId,
 				).get();
 
 				if (
@@ -121,9 +143,9 @@ export default function setupSectionDependencies(
 			}
 
 			if (!otherRulesSatisfied) {
-				deactivateSection(ruleSet.dependantControlId);
+				deactivateSection(ruleSet.dependantSectionId);
 			} else {
-				activateSection(ruleSet.dependantControlId);
+				activateSection(ruleSet.dependantSectionId);
 			}
 		}
 	}

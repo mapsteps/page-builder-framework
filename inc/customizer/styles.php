@@ -1747,7 +1747,7 @@ if ( ! $custom_logo_id && $menu_logo_description ) {
 $menu_width = wpbf_customize_str_value( 'menu_width' );
 $menu_width = '1200' === $menu_width || '1200px' === $menu_width ? '' : $menu_width;
 
-if ( $menu_width ) {
+if ( $menu_width || wpbf_is_zero( $menu_width ) ) {
 
 	wpbf_write_css( array(
 		'selector' => '.wpbf-nav-wrapper',
@@ -1761,7 +1761,7 @@ $menu_position = wpbf_customize_str_value( 'menu_position' );
 $menu_height = wpbf_customize_str_value( 'menu_height' );
 $menu_height = '20' === $menu_height || '20px' === $menu_height ? '' : $menu_height;
 
-if ( $menu_height ) {
+if ( $menu_height || wpbf_is_zero( $menu_height ) ) {
 
 	wpbf_write_css( array(
 		'selector' => $header_builder_enabled ? '.wpbf-header-row-row_2 .wpbf-row-content' : '.wpbf-nav-wrapper',

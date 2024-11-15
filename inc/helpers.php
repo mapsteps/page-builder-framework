@@ -1831,6 +1831,23 @@ function wpbf_parse_template_tags( $value ) {
 }
 
 /**
+ * Check if the value is a numeric zero.
+ *
+ * @param mixed $value The value to check.
+ *
+ * @return bool
+ */
+function wpbf_is_zero( $value ) {
+
+	if ( 0 === $value || '0' === $value ) {
+		return true;
+	}
+
+	return false;
+
+}
+
+/**
  * Get the value of a customizer setting as an absolute integer.
  *
  * @param string $setting_id The setting id.

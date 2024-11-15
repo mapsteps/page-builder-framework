@@ -420,6 +420,28 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-builder": WpbfCustomizeBuilderControl;
 }
 
+export interface WpbfSectionDependency {
+	// The `id` prop here is for backwards compatibility.
+	id?: string;
+	setting: string;
+	operator: string;
+	value: string;
+}
+
+export interface WpbfSectionDependencies {
+	[dependantSectionId: string]: WpbfSectionDependency[];
+}
+
+export interface WpbfReversedSectionDependency {
+	dependantSectionId: string;
+	operator: string;
+	value: string;
+}
+
+export interface WpbfReversedSectionDependencies {
+	[dependencySettingId: string]: WpbfReversedSectionDependency[];
+}
+
 export interface WpbfControlDependency {
 	// The `id` prop here is for backwards compatibility.
 	id?: string;
