@@ -183,13 +183,13 @@ class CustomizerUtil {
 	 * Get section instance by type.
 	 *
 	 * @param string               $section_type Type of the section.
-	 * @param WP_Customize_Manager $wp_customer_manager The customizer manager object.
+	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
 	 * @param string               $id The section id.
 	 * @param array                $args The section arguments.
 	 *
 	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection|InvisibleSection
 	 */
-	public function getSectionInstance( $section_type, $wp_customer_manager, $id, $args ) {
+	public function getSectionInstance( $section_type, $wp_customize_manager, $id, $args ) {
 
 		if ( empty( $section_type ) || ! in_array( $section_type, $this->available_section_types, true ) ) {
 			$section_type = 'default';
@@ -201,17 +201,17 @@ class CustomizerUtil {
 
 		switch ( $section_type ) {
 			case 'expanded':
-				return new ExpandedSection( $wp_customer_manager, $id, $args );
+				return new ExpandedSection( $wp_customize_manager, $id, $args );
 			case 'link':
-				return new LinkSection( $wp_customer_manager, $id, $args );
+				return new LinkSection( $wp_customize_manager, $id, $args );
 			case 'nested':
-				return new NestedSection( $wp_customer_manager, $id, $args );
+				return new NestedSection( $wp_customize_manager, $id, $args );
 			case 'outer':
-				return new OuterSection( $wp_customer_manager, $id, $args );
+				return new OuterSection( $wp_customize_manager, $id, $args );
 			case 'invisible':
-				return new InvisibleSection( $wp_customer_manager, $id, $args );
+				return new InvisibleSection( $wp_customize_manager, $id, $args );
 			default:
-				return new BaseSection( $wp_customer_manager, $id, $args );
+				return new BaseSection( $wp_customize_manager, $id, $args );
 		}
 
 	}

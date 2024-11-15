@@ -109,16 +109,12 @@ class BaseSection extends WP_Customize_Section {
 		?>
 
 		<li id="accordion-section-{{ data.id }}" class="accordion-section control-section control-section-default control-section-{{ data.type }} {{ data.tabClassName }}">
-			<h3 class="accordion-section-title" tabindex="0">
-				{{ data.title }}
-				<span class="screen-reader-text">
-					<?php
-					/* translators: Hidden accessibility text. */
-					_e( 'Press return or enter to open this section', 'page-builder-framework' );
-					?>
-				</span>
+			<h3 class="accordion-section-title">
+				<button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="{{ data.id }}-content">
+					{{ data.title }}
+				</button>
 			</h3>
-			<ul class="accordion-section-content">
+			<ul class="accordion-section-content" id="{{ data.id }}-content">
 				<li class="customize-section-description-container section-meta <# if ( data.description_hidden ) { #>customize-info<# } #>">
 					<div class="customize-section-title">
 						<button class="customize-section-back" tabindex="-1">
