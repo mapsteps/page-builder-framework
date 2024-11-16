@@ -141,6 +141,8 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			content += `${mediaQuery} {`;
 		}
 
+		content += `${selector} {`;
+
 		for (const [cssProp, cssValue] of Object.entries(props)) {
 			if (!cssProp || cssValue === null || cssValue === undefined) {
 				continue;
@@ -148,6 +150,8 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 			content += `${cssProp}: ${cssValue};`;
 		}
+
+		content += "}";
 
 		if (mediaQuery) {
 			content += "}";
