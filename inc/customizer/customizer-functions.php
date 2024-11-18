@@ -198,12 +198,19 @@ function wpbf_minify_css( $css ) {
 
 /**
  * Generate customizer CSS.
+ *
+ * @param bool $run_once Whether to run the function only once.
+ * @return string The generated CSS.
  */
-function wpbf_generate_css() {
+function wpbf_generate_css( $run_once = false ) {
 
 	ob_start();
 
-	include get_template_directory() . '/inc/customizer/styles.php';
+	if ( $run_once ) {
+		require_once WPBF_THEME_DIR . '/inc/customizer/styles.php';
+	} else {
+		include WPBF_THEME_DIR . '/inc/customizer/styles.php';
+	}
 
 	return wpbf_minify_css( ob_get_clean() );
 
@@ -284,7 +291,7 @@ function wpbf_customizer_preview_css() {
 	}
 
 	echo '<style id="wpbf-customize-saved-styles">';
-	require_once WPBF_THEME_DIR . '/inc/customizer/styles.php';
+	echo wpbf_generate_css( true );
 	echo '</style>';
 
 }

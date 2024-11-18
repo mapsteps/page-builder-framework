@@ -1759,7 +1759,8 @@ if ( wpbf_not_empty_allow_zero( $menu_width ) ) {
 $menu_position = wpbf_customize_str_value( 'menu_position' );
 
 $menu_height = wpbf_customize_str_value( 'menu_height' );
-$menu_height = '20' === $menu_height || '20px' === $menu_height ? '' : $menu_height;
+$menu_height = ! $header_builder_enabled && ( '20' === $menu_height || '20px' === $menu_height ) ? '' : $menu_height;
+$menu_height = $header_builder_enabled && '' === $menu_height ? '20px' : $menu_height;
 
 if ( wpbf_not_empty_allow_zero( $menu_height ) ) {
 

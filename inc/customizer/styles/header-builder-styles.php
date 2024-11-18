@@ -197,8 +197,8 @@ foreach ( $button_keys as $button_key ) {
 	wpbf_write_css( array(
 		'selector' => $selector,
 		'props'    => array(
-			'border-radius'    => isset( $responsive_border_radius['desktop'] ) && '' !== $responsive_border_radius['desktop'] ? $responsive_border_radius['desktop'] : null,
-			'border-width'     => isset( $responsive_border_width['desktop'] ) && '' !== $responsive_border_width['desktop'] ? $responsive_border_width['desktop'] : null,
+			'border-radius'    => isset( $responsive_border_radius['desktop'] ) && '' !== $responsive_border_radius['desktop'] ? wpbf_maybe_append_suffix( $responsive_border_radius['desktop'] ) : null,
+			'border-width'     => isset( $responsive_border_width['desktop'] ) && '' !== $responsive_border_width['desktop'] ? wpbf_maybe_append_suffix( $responsive_border_width['desktop'] ) : null,
 			'border-style'     => 'none' !== $button_border_style ? $button_border_style : null,
 			'border-color'     => isset( $button_border_colors['default'] ) && '' !== $button_border_colors['default'] ? $button_border_colors['default'] : null,
 			'background-color' => isset( $button_bg_colors['default'] ) && '' !== $button_bg_colors['default'] ? $button_bg_colors['default'] : null,
@@ -230,7 +230,7 @@ foreach ( $button_keys as $button_key ) {
 		}
 
 		wpbf_write_css( array(
-			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_width ) . ')',
+			'media_query' => '@media screen and (max-width: ' . $breakpoint_width . ')',
 			'selector'    => $selector,
 			'props'       => array(
 				'border-radius' => $device_border_radius ? wpbf_maybe_append_suffix( $device_border_radius ) : null,
