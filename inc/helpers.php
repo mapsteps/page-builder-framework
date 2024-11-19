@@ -1830,214 +1830,225 @@ function wpbf_parse_template_tags( $value ) {
 
 }
 
-/**
- * Check if the value is a numeric zero.
- *
- * @param mixed $value The value to check.
- *
- * @return bool
- */
-function wpbf_is_zero( $value ) {
+if ( ! function_exists( 'wpbf_not_empty_allow_zero' ) ) {
 
-	if ( 0 === $value || '0' === $value ) {
+	/**
+	 * Check if the value is not empty but zero is allowed.
+	 *
+	 * @param mixed $value The value to check.
+	 * @return bool
+	 */
+	function wpbf_not_empty_allow_zero( $value ) {
+		if ( empty( $value ) ) {
+			if ( 0 === $value || '0' === $value ) {
+				return true;
+			}
+
+			return false;
+		}
+
 		return true;
 	}
 
-	return false;
-
 }
 
-/**
- * Check if the value is not empty but zero is allowed.
- *
- * @param mixed $value The value to check.
- * @return bool
- */
-function wpbf_not_empty_allow_zero( $value ) {
-	if ( empty( $value ) ) {
-		if ( 0 === $value || '0' === $value ) {
-			return true;
+if ( ! function_exists( 'wpbf_customize_absint_value' ) ) {
+
+	/**
+	 * Get the value of a customizer setting as an absolute integer.
+	 *
+	 * @param string $setting_id The setting id.
+	 * @param int    $default_value The default value.
+	 *
+	 * @return int
+	 */
+	function wpbf_customize_absint_value( $setting_id, $default_value = 0 ) {
+
+		$value = get_theme_mod( $setting_id, $default_value );
+
+		if ( is_numeric( $value ) ) {
+			return absint( $value );
 		}
 
-		return false;
+		return $default_value;
+
 	}
 
-	return true;
 }
 
-/**
- * Get the value of a customizer setting as an absolute integer.
- *
- * @param string $setting_id The setting id.
- * @param int    $default_value The default value.
- *
- * @return int
- */
-function wpbf_customize_absint_value( $setting_id, $default_value = 0 ) {
+if ( ! function_exists( 'wpbf_customize_str_value' ) ) {
 
-	$value = get_theme_mod( $setting_id, $default_value );
+	/**
+	 * Get the value of a customizer setting as a string.
+	 *
+	 * @param string $setting_id The setting id.
+	 * @param string $default_value The default value.
+	 *
+	 * @return string
+	 */
+	function wpbf_customize_str_value( $setting_id, $default_value = '' ) {
 
-	if ( is_numeric( $value ) ) {
-		return absint( $value );
+		return trim( strval( get_theme_mod( $setting_id, $default_value ) ) );
+
 	}
 
-	return $default_value;
-
 }
 
-/**
- * Get the value of a customizer setting as a string.
- *
- * @param string $setting_id The setting id.
- * @param string $default_value The default value.
- *
- * @return string
- */
-function wpbf_customize_str_value( $setting_id, $default_value = '' ) {
+if ( ! function_exists( 'wpbf_customize_bool_value' ) ) {
 
-	return trim( strval( get_theme_mod( $setting_id, $default_value ) ) );
+	/**
+	 * Get the value of a customizer setting as a boolean.
+	 *
+	 * @param string $setting_id The setting id.
+	 * @param bool   $default_value The default value.
+	 *
+	 * @return bool
+	 */
+	function wpbf_customize_bool_value( $setting_id, $default_value = false ) {
 
-}
+		return (bool) get_theme_mod( $setting_id, $default_value );
 
-/**
- * Get the value of a customizer setting as a boolean.
- *
- * @param string $setting_id The setting id.
- * @param bool   $default_value The default value.
- *
- * @return bool
- */
-function wpbf_customize_bool_value( $setting_id, $default_value = false ) {
-
-	return (bool) get_theme_mod( $setting_id, $default_value );
-
-}
-
-/**
- * Get the value of a customizer setting as an array.
- *
- * @param string $setting_id The setting id.
- * @param array  $default_value The default value.
- *
- * @return array
- */
-function wpbf_customize_array_value( $setting_id, $default_value = array() ) {
-
-	$value = get_theme_mod( $setting_id, $default_value );
-
-	if ( is_string( $value ) ) {
-		$value = json_decode( $value, true );
 	}
 
-	if ( ! is_array( $value ) ) {
-		return array();
-	}
-
-	return $value;
-
 }
 
-/**
- * Conditionally append a suffix to a CSS value.
- *
- * @param string $value The CSS value.
- * @param string $suffix The suffix.
- *
- * @return string The updated CSS value.
- */
-function wpbf_maybe_append_suffix( $value, $suffix = 'px' ) {
+if ( ! function_exists( 'wpbf_customize_array_value' ) ) {
 
-	if ( '' === $value || '' === $suffix ) {
+	/**
+	 * Get the value of a customizer setting as an array.
+	 *
+	 * @param string $setting_id The setting id.
+	 * @param array  $default_value The default value.
+	 *
+	 * @return array
+	 */
+	function wpbf_customize_array_value( $setting_id, $default_value = array() ) {
+
+		$value = get_theme_mod( $setting_id, $default_value );
+
+		if ( is_string( $value ) ) {
+			$value = json_decode( $value, true );
+		}
+
+		if ( ! is_array( $value ) ) {
+			return array();
+		}
+
 		return $value;
-	}
 
-	return is_numeric( $value ) ? $value . $suffix : $value;
+	}
 
 }
 
-/**
- * Write CSS block (doesn't write the style tag).
- *
- * @param array $args The arguments.
- */
-function wpbf_write_css( $args = [] ) {
+if ( ! function_exists( 'wpbf_maybe_append_suffix' ) ) {
 
-	if ( empty( $args ) ) {
-		return;
+	/**
+	 * Conditionally append a suffix to a CSS value.
+	 *
+	 * @param string $value The CSS value.
+	 * @param string $suffix The suffix.
+	 *
+	 * @return string The updated CSS value.
+	 */
+	function wpbf_maybe_append_suffix( $value, $suffix = 'px' ) {
+
+		if ( '' === $value || '' === $suffix ) {
+			return $value;
+		}
+
+		return is_numeric( $value ) ? $value . $suffix : $value;
+
 	}
 
-	$blocks   = empty( $args['blocks'] ) || ! is_array( $args['blocks'] ) ? array() : $args['blocks'];
-	$selector = empty( $args['selector'] ) ? '' : $args['selector'];
+}
 
-	// Either blocks or selector should be set.
-	if ( empty( $blocks ) && empty( $selector ) ) {
-		return;
-	}
+if ( ! function_exists( 'wpbf_write_css' ) ) {
 
-	$media_query = empty( $args['media_query'] ) ? '' : $args['media_query'];
+	/**
+	 * Write CSS block (doesn't write the style tag).
+	 *
+	 * @param array $args The arguments.
+	 */
+	function wpbf_write_css( $args = [] ) {
 
-	if ( ! empty( $blocks ) ) {
+		if ( empty( $args ) ) {
+			return;
+		}
+
+		$blocks   = empty( $args['blocks'] ) || ! is_array( $args['blocks'] ) ? array() : $args['blocks'];
+		$selector = empty( $args['selector'] ) ? '' : $args['selector'];
+
+		// Either blocks or selector should be set.
+		if ( empty( $blocks ) && empty( $selector ) ) {
+			return;
+		}
+
+		$media_query = empty( $args['media_query'] ) ? '' : $args['media_query'];
+
+		if ( ! empty( $blocks ) ) {
+			if ( $media_query ) {
+				echo esc_html( $media_query ) . ' {';
+			}
+
+			foreach ( $blocks as $block ) {
+				if ( ! is_array( $block ) || empty( $block ) ) {
+					continue;
+				}
+
+				$block_selector = empty( $block['selector'] ) ? '' : $block['selector'];
+				$block_props    = empty( $block['props'] ) || ! is_array( $block['props'] ) ? array() : $block['props'];
+
+				if ( empty( $block_selector ) || empty( $block_props ) ) {
+					continue;
+				}
+
+				echo esc_html( $block_selector ) . ' {';
+
+				foreach ( $block_props as $css_prop => $css_value ) {
+					// The `is_null()` check is needed to skip empty values (has to be exactly `null`).
+					if ( empty( $css_prop ) || is_null( $css_value ) ) {
+						continue;
+					}
+
+					echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
+				}
+
+				echo '}';
+			}
+
+			if ( $media_query ) {
+				echo '}';
+			}
+
+			return;
+		}
+
+		$props = empty( $args['props'] ) || ! is_array( $args['props'] ) ? array() : $args['props'];
+
+		if ( empty( $props ) ) {
+			return;
+		}
+
 		if ( $media_query ) {
 			echo esc_html( $media_query ) . ' {';
 		}
 
-		foreach ( $blocks as $block ) {
-			if ( ! is_array( $block ) || empty( $block ) ) {
+		echo esc_html( $selector ) . ' {';
+
+		foreach ( $props as $css_prop => $css_value ) {
+			// The `is_null()` check is needed to skip empty values (has to be exactly `null`).
+			if ( empty( $css_prop ) || is_null( $css_value ) ) {
 				continue;
 			}
 
-			$block_selector = empty( $block['selector'] ) ? '' : $block['selector'];
-			$block_props    = empty( $block['props'] ) || ! is_array( $block['props'] ) ? array() : $block['props'];
-
-			if ( empty( $block_selector ) || empty( $block_props ) ) {
-				continue;
-			}
-
-			echo esc_html( $block_selector ) . ' {';
-
-			foreach ( $block_props as $css_prop => $css_value ) {
-				// The `is_null()` check is needed to skip empty values (has to be exactly `null`).
-				if ( empty( $css_prop ) || is_null( $css_value ) ) {
-					continue;
-				}
-
-				echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
-			}
-
-			echo '}';
+			echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
 		}
+
+		echo '}';
 
 		if ( $media_query ) {
 			echo '}';
 		}
-
-		return;
 	}
 
-	$props = empty( $args['props'] ) || ! is_array( $args['props'] ) ? array() : $args['props'];
-
-	if ( empty( $props ) ) {
-		return;
-	}
-
-	if ( $media_query ) {
-		echo esc_html( $media_query ) . ' {';
-	}
-
-	echo esc_html( $selector ) . ' {';
-
-	foreach ( $props as $css_prop => $css_value ) {
-		// The `is_null()` check is needed to skip empty values (has to be exactly `null`).
-		if ( empty( $css_prop ) || is_null( $css_value ) ) {
-			continue;
-		}
-
-		echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
-	}
-
-	echo '}';
-
-	if ( $media_query ) {
-		echo '}';
-	}
 }
