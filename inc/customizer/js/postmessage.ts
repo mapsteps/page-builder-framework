@@ -30,7 +30,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		return unitMatch && unitMatch.length > 0 ? true : false;
 	}
 
-	function maybeAppendSuffix(value: string | number, suffix?: string) {
+	function maybeAppendSuffix(
+		value: string | number | undefined,
+		suffix?: string,
+	) {
+		if (value === undefined) return undefined;
 		if (value === "") return "";
 		suffix = suffix || "px";
 
@@ -573,19 +577,14 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 						? parseJsonOrUndefined<Record<string, number | string>>(value)
 						: value;
 
-				const top = obj?.top ?? 0;
-				const right = obj?.right ?? 0;
-				const bottom = obj?.bottom ?? 0;
-				const left = obj?.left ?? 0;
-
 				writeCSS(subMenuPaddingSettingId, {
 					selector:
 						".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a",
 					props: {
-						"padding-top": maybeAppendSuffix(top),
-						"padding-right": maybeAppendSuffix(right),
-						"padding-bottom": maybeAppendSuffix(bottom),
-						"padding-left": maybeAppendSuffix(left),
+						"padding-top": maybeAppendSuffix(obj?.top),
+						"padding-right": maybeAppendSuffix(obj?.right),
+						"padding-bottom": maybeAppendSuffix(obj?.bottom),
+						"padding-left": maybeAppendSuffix(obj?.left),
 					},
 				});
 			});
@@ -673,414 +672,491 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	const subMenuFontSizeSettingId = "sub_menu_font_size";
 
 	// Font size.
-	customizer(subMenuFontSizeSettingId, function (setting: WpbfCustomizeSetting<string|number>) {
+	customizer(
+		subMenuFontSizeSettingId,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(subMenuFontSizeSettingId, {
+					selector: ".wpbf-menu .sub-menu a",
+					props: { "font-size": maybeAppendSuffix(value) },
+				});
+			});
+		},
+	);
+
+	const subMenuSeparatorColorSettingId = "sub_menu_separator_color";
+
+	// Separator color.
+	customizer(
+		subMenuSeparatorColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(subMenuSeparatorColorSettingId, {
+					selector:
+						".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li",
+					props: { "border-bottom-color": toStringColor(value) },
+				});
+			});
+		},
+	);
+
+	/* Mobile Navigation */
+
+	const mobileMenuHeight = "mobile_menu_height";
+
+	// Height.
+	customizer(
+		mobileMenuHeight,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuHeight, {
+					selector: ".wpbf-mobile-nav-wrapper",
+					props: {
+						"padding-top": maybeAppendSuffix(value),
+						"padding-bottom": maybeAppendSuffix(value),
+					},
+				});
+			});
+		},
+	);
+
+	const mobileMenuBgColorSettingId = "mobile_menu_background_color";
+
+	// Background color.
+	customizer(
+		mobileMenuBgColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuBgColorSettingId, {
+					selector: ".wpbf-mobile-nav-wrapper",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
+
+	const mobileMenuHamburgerColorSettingId = "mobile_menu_hamburger_color";
+
+	// Icon color.
+	customizer(
+		mobileMenuHamburgerColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuHamburgerColorSettingId, {
+					selector: ".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
+
+	const mobileMenuHamburgerSize = "mobile_menu_hamburger_size";
+
+	// Hamburger size.
+	customizer(mobileMenuHamburgerSize, function (setting) {
 		setting.bind(function (value) {
-			writeCSS(subMenuFontSizeSettingId, {
-				selector: ".wpbf-menu .sub-menu a",
+			writeCSS(mobileMenuHamburgerSize, {
+				selector: ".wpbf-mobile-nav-item",
 				props: { "font-size": maybeAppendSuffix(value) },
 			});
 		});
 	});
 
-	// Separator color.
-	customizer("sub_menu_separator_color", function (value) {
-		const styleTag = getStyleTag("sub_menu_separator_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li {border-bottom-color: " +
-				newValue +
-				";}";
-		});
-	});
-
-	/* Mobile Navigation */
-
-	// Height.
-	customizer("mobile_menu_height", function (value) {
-		const styleTag = getStyleTag("mobile_menu_height");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-nav-wrapper {padding-top: " +
-				newValue +
-				"px; padding-bottom: " +
-				newValue +
-				"px;}";
-		});
-	});
-
-	// Background color.
-	customizer("mobile_menu_background_color", function (value) {
-		const styleTag = getStyleTag("mobile_menu_background_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-nav-wrapper {background-color: " + newValue + ";}";
-		});
-	});
-
-	// Icon color.
-	customizer("mobile_menu_hamburger_color", function (value) {
-		const styleTag = getStyleTag("mobile_menu_hamburger_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a {color: " +
-				newValue +
-				";}";
-		});
-	});
-
-	// Hamburger size.
-	customizer("mobile_menu_hamburger_size", function (value) {
-		const styleTag = getStyleTag("mobile_menu_hamburger_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".wpbf-mobile-nav-item {font-size: " + newValue + suffix + ";}";
-		});
-	});
+	const mobileMenuHamburgerBorderRadius = "mobile_menu_hamburger_border_radius";
 
 	// Hamburger border radius (filled).
-	customizer("mobile_menu_hamburger_border_radius", function (value) {
-		const styleTag = getStyleTag("mobile_menu_hamburger_border_radius");
+	customizer(
+		mobileMenuHamburgerBorderRadius,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuHamburgerBorderRadius, {
+					selector: ".wpbf-mobile-nav-item",
+					props: { "border-radius": maybeAppendSuffix(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-nav-item {border-radius: " + newValue + "px;}";
-		});
-	});
+	const mobileMenuPadding = "mobile_menu_padding";
 
 	// Padding.
-	customizer("mobile_menu_padding", function (value) {
-		const styleTag = getStyleTag("mobile_menu_padding");
+	customizer(
+		mobileMenuPadding,
+		function (setting: WpbfCustomizeSetting<MarginPaddingValue | string>) {
+			setting.bind(function (value) {
+				const obj =
+					typeof value === "string"
+						? parseJsonOrUndefined<Record<string, string | number>>(value)
+						: value;
 
-		value.bind(function (newValue) {
-			var obj = JSON.parse(newValue),
-				top = obj.top,
-				right = obj.right,
-				bottom = obj.bottom,
-				left = obj.left;
+				writeCSS(mobileMenuPadding, {
+					selector:
+						".wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle",
+					props: {
+						"padding-top": maybeAppendSuffix(obj?.top),
+						"padding-right": maybeAppendSuffix(obj?.right),
+						"padding-bottom": maybeAppendSuffix(obj?.bottom),
+						"padding-left": maybeAppendSuffix(obj?.left),
+					},
+				});
+			});
+		},
+	);
 
-			styleTag.innerHTML =
-				"\
-				.wpbf-mobile-menu a,\
-				.wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {\
-					padding-top: " +
-				top +
-				"px;\
-					padding-right: " +
-				right +
-				"px;\
-					padding-bottom: " +
-				bottom +
-				"px;\
-					padding-left: " +
-				left +
-				"px;\
-				}\
-			";
-		});
-	});
+	const mobileMenuItemBgColorSettingId = "mobile_menu_bg_color";
 
 	// Menu item background color.
-	customizer("mobile_menu_bg_color", function (value) {
-		const styleTag = getStyleTag("mobile_menu_bg_color");
+	customizer(
+		mobileMenuItemBgColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuItemBgColorSettingId, {
+					selector: ".wpbf-mobile-menu > .menu-item a",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu > .menu-item a {background-color: " +
-				newValue +
-				";}";
-		});
-	});
+	const mobileMenuItemBgColorAltSettingId = "mobile_menu_bg_color_alt";
 
 	// Menu item background color hover.
-	customizer("mobile_menu_bg_color_alt", function (value) {
-		const styleTag = getStyleTag("mobile_menu_bg_color_alt");
+	customizer(
+		mobileMenuItemBgColorAltSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuItemBgColorAltSettingId, {
+					selector: ".wpbf-mobile-menu > .menu-item a:hover",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu > .menu-item a:hover {background-color: " +
-				newValue +
-				";}";
-		});
-	});
+	const mobileMenuItemFontColorSettingId = "mobile_menu_font_color";
 
 	// Menu item font color.
-	customizer("mobile_menu_font_color", function (value) {
-		const styleTag = getStyleTag("mobile_menu_font_color");
+	customizer(
+		mobileMenuItemFontColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuItemFontColorSettingId, {
+					selector:
+						".wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close {color: " +
-				newValue +
-				";}";
-		});
-	});
+	const mobileMenuItemFontColorAltSettingId = "mobile_menu_font_color_alt";
 
 	// Menu item font color hover.
-	customizer("mobile_menu_font_color_alt", function (value) {
-		const styleTag = getStyleTag("mobile_menu_font_color_alt");
+	customizer(
+		mobileMenuItemFontColorAltSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuItemFontColorAltSettingId, {
+					selector:
+						".wpbf-mobile-menu a:hover, .wpbf-mobile-menu > .current-menu-item > a",
+					props: { color: toStringColor(value) + "!important" },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu a:hover, .wpbf-mobile-menu > .current-menu-item > a {color: " +
-				newValue +
-				"!important;}";
-		});
-	});
+	const mobileMenuItemBorderColor = "mobile_menu_border_color";
 
 	// Menu item divider color.
-	customizer("mobile_menu_border_color", function (value) {
-		const styleTag = getStyleTag("mobile_menu_border_color");
+	customizer(
+		mobileMenuItemBorderColor,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileMenuItemBorderColor, {
+					blocks: [
+						{
+							selector: ".wpbf-mobile-menu .menu-item",
+							props: { "border-top-color": toStringColor(value) },
+						},
+						{
+							selector: ".wpbf-mobile-menu > .menu-item:last-child",
+							props: { "border-bottom-color": toStringColor(value) },
+						},
+					],
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-mobile-menu .menu-item {border-top-color: " +
-				newValue +
-				";}\
-				.wpbf-mobile-menu > .menu-item:last-child {border-bottom-color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	const mobileSubMenuArrowColorSettingId = "mobile_menu_submenu_arrow_color";
 
 	// Sub menu arrow color.
-	customizer("mobile_menu_submenu_arrow_color", function (value) {
-		const styleTag = getStyleTag("mobile_menu_submenu_arrow_color");
+	customizer(
+		mobileSubMenuArrowColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileSubMenuArrowColorSettingId, {
+					selector: ".wpbf-submenu-toggle",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-submenu-toggle {color: " + newValue + ";}";
-		});
-	});
+	const mobileMenuItemFontSize = "mobile_menu_font_size";
 
 	// Menu item font size.
-	customizer("mobile_menu_font_size", function (value) {
-		const styleTag = getStyleTag("mobile_menu_font_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle {font-size: " +
-				newValue +
-				suffix +
-				";}";
+	customizer(mobileMenuItemFontSize, function (setting) {
+		setting.bind(function (value) {
+			writeCSS(mobileMenuItemFontSize, {
+				selector:
+					".wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle",
+				props: { "font-size": maybeAppendSuffix(value) },
+			});
 		});
 	});
 
 	/* Mobile sub menu */
 
-	// Submenu auto collapse.
-	customizer("mobile_sub_menu_auto_collapse", function (value) {
-		value.bind(function (newValue) {
-			if (!document.querySelector("#mobile-navigation")) return;
+	const mobileSubMenuAutoCollapseSettingId = "mobile_sub_menu_auto_collapse";
 
-			if (newValue) {
-				$("#mobile-navigation")
-					.closest(".wpbf-navigation")
-					.addClass("wpbf-mobile-sub-menu-auto-collapse");
-			} else {
-				$("#mobile-navigation")
-					.closest(".wpbf-navigation")
-					.removeClass("wpbf-mobile-sub-menu-auto-collapse");
-			}
-		});
-	});
+	// Submenu auto collapse.
+	customizer(
+		mobileSubMenuAutoCollapseSettingId,
+		function (setting: WpbfCustomizeSetting<boolean>) {
+			setting.bind(function (value) {
+				if (!document.querySelector("#mobile-navigation")) return;
+
+				if (value) {
+					$("#mobile-navigation")
+						.closest(".wpbf-navigation")
+						.addClass("wpbf-mobile-sub-menu-auto-collapse");
+				} else {
+					$("#mobile-navigation")
+						.closest(".wpbf-navigation")
+						.removeClass("wpbf-mobile-sub-menu-auto-collapse");
+				}
+			});
+		},
+	);
+
+	const mobileSubMenuIndentSettingId = "mobile_sub_menu_indent";
 
 	// Indent.
-	customizer("mobile_sub_menu_indent", function (value) {
-		const styleTag = getStyleTag("mobile_sub_menu_indent");
+	customizer(
+		mobileSubMenuIndentSettingId,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				const paddingVal = customizer("mobile_menu_padding").get() as
+					| string
+					| MarginPaddingValue;
 
-		value.bind(function (newValue) {
-			var padding = customizer("mobile_menu_padding").get();
-			padding = JSON.parse(padding);
+				const padding =
+					typeof paddingVal === "string"
+						? parseJsonOrUndefined<Record<string, string | number>>(paddingVal)
+						: paddingVal;
 
-			var calculation = parseInt(newValue, 10) + parseInt(padding.left, 10);
-			styleTag.innerHTML =
-				".wpbf-mobile-menu .sub-menu a {padding-left: " + calculation + "px;}";
-		});
-	});
+				let paddingLeft = String(padding?.left ?? 0);
 
-	// Menu item background color.
-	customizer("mobile_sub_menu_bg_color", function (value) {
-		const styleTag = getStyleTag("mobile_sub_menu_bg_color");
+				const calculation =
+					parseInt(String(value), 10) + parseInt(paddingLeft, 10);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu .sub-menu a {background-color: " + newValue + ";}";
-		});
-	});
+				writeCSS(mobileSubMenuIndentSettingId, {
+					selector: ".wpbf-mobile-menu .sub-menu a",
+					props: { "padding-left": maybeAppendSuffix(calculation) },
+				});
+			});
+		},
+	);
 
-	// Menu item background color hover.
-	customizer("mobile_sub_menu_bg_color_alt", function (value) {
-		const styleTag = getStyleTag("mobile_sub_menu_bg_color_alt");
+	const mobileSubMenuItemBgColorSettingId = "mobile_sub_menu_bg_color";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu .sub-menu a:hover {background-color: " +
-				newValue +
-				";}";
-		});
-	});
+	// Mobile sub-menu item background color.
+	customizer(
+		mobileSubMenuItemBgColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileSubMenuItemBgColorSettingId, {
+					selector: ".wpbf-mobile-menu .sub-menu a",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
 
-	// Menu item font color.
-	customizer("mobile_sub_menu_font_color", function (value) {
-		const styleTag = getStyleTag("mobile_sub_menu_font_color");
+	const mobileSubMenuItemBgColorAlt = "mobile_sub_menu_bg_color_alt";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu .sub-menu a {color: " + newValue + ";}";
-		});
-	});
+	// Mobile sub-menu item background color hover.
+	customizer(
+		mobileSubMenuItemBgColorAlt,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileSubMenuItemBgColorAlt, {
+					selector: ".wpbf-mobile-menu .sub-menu a:hover",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
+
+	const mobileSubMenuItemFontColor = "mobile_sub_menu_font_color";
+
+	// Mobile sub-menu item font color.
+	customizer(
+		mobileSubMenuItemFontColor,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileSubMenuItemFontColor, {
+					selector: ".wpbf-mobile-menu .sub-menu a",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
+
+	const mobileSubMenuItemFontColorAlt = "mobile_sub_menu_font_color_alt";
 
 	// Menu item font color hover.
-	customizer("mobile_sub_menu_font_color_alt", function (value) {
-		const styleTag = getStyleTag("mobile_sub_menu_font_color_alt");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu .sub-menu a:hover, .wpbf-mobile-menu .sub-menu > .current-menu-item > a {color: " +
-				newValue +
-				"!important;}";
+	customizer(mobileSubMenuItemFontColorAlt, function (setting) {
+		setting.bind(function (value) {
+			writeCSS(mobileSubMenuItemFontColorAlt, {
+				selector:
+					".wpbf-mobile-menu .sub-menu a:hover, .wpbf-mobile-menu .sub-menu > .current-menu-item > a",
+				props: { color: toStringColor(value) + "!important" },
+			});
 		});
 	});
 
-	// Menu item divider color.
-	customizer("mobile_sub_menu_border_color", function (value) {
-		const styleTag = getStyleTag("mobile_sub_menu_border_color");
+	const mobileSubMenuItemBorderColor = "mobile_sub_menu_border_color";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu .sub-menu .menu-item {border-top-color: " +
-				newValue +
-				";}";
-		});
-	});
+	// Mobile sub-menu item divider color.
+	customizer(
+		mobileSubMenuItemBorderColor,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileSubMenuItemBorderColor, {
+					selector: ".wpbf-mobile-menu .sub-menu .menu-item",
+					props: { "border-top-color": toStringColor(value) },
+				});
+			});
+		},
+	);
 
-	// Sub menu arrow color.
-	customizer("mobile_sub_menu_arrow_color", function (value) {
-		const styleTag = getStyleTag("mobile_sub_menu_arrow_color");
+	const mobileSubMenuItemArrowColorSettingId = "mobile_sub_menu_arrow_color";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle {color: " +
-				newValue +
-				";}";
-		});
-	});
+	// Mobile sub-menu item arrow color.
+	customizer(
+		mobileSubMenuItemArrowColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(mobileSubMenuItemArrowColorSettingId, {
+					selector: ".wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
 
-	// Menu item font size.
-	customizer("mobile_sub_menu_font_size", function (value) {
-		const styleTag = getStyleTag("mobile_sub_menu_font_size");
+	const mobileSubMenuItemFontSize = "mobile_sub_menu_font_size";
 
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".wpbf-mobile-menu .sub-menu a, .wpbf-mobile-menu .sub-menu .menu-item-has-children .wpbf-submenu-toggle {font-size: " +
-				newValue +
-				suffix +
-				";}";
-		});
-	});
+	// Mobile sub-menu item font size.
+	customizer(
+		mobileSubMenuItemFontSize,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(mobileSubMenuItemFontSize, {
+					selector:
+						".wpbf-mobile-menu .sub-menu a, .wpbf-mobile-menu .sub-menu .menu-item-has-children .wpbf-submenu-toggle",
+					props: { "font-size": maybeAppendSuffix(value) },
+				});
+			});
+		},
+	);
 
 	/* Logo */
 
+	const menuLogoSizeSettingId = "menu_logo_size";
+
 	// Width.
-	customizer("menu_logo_size", function (value) {
-		const styleTag = getStyleTag("menu_logo_size");
+	customizer(
+		menuLogoSizeSettingId,
+		function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
+			setting.bind(function (value) {
+				const obj =
+					typeof value === "string"
+						? parseJsonOrUndefined<DevicesValue>(value)
+						: value;
 
-		value.bind(function (newValue) {
-			var obj = JSON.parse(newValue),
-				desktop = obj.desktop,
-				tablet = obj.tablet,
-				mobile = obj.mobile,
-				desktopsuffix = $.isNumeric(desktop) ? "px" : "",
-				tabletsuffix = $.isNumeric(tablet) ? "px" : "",
-				mobilesuffix = $.isNumeric(mobile) ? "px" : "";
+				writeCSS(menuLogoSizeSettingId + "-desktop", {
+					selector: ".wpbf-logo img, .wpbf-mobile-logo img",
+					props: {
+						width: maybeAppendSuffix(obj?.desktop),
+					},
+				});
 
-			styleTag.innerHTML =
-				"\
-				.wpbf-logo img, .wpbf-mobile-logo img {\
-					width: " +
-				desktop +
-				desktopsuffix +
-				";\
-				}\
-				@media (" +
-				mediaQueries.tablet +
-				") {\
-					.wpbf-mobile-logo img {width: " +
-				tablet +
-				tabletsuffix +
-				";}\
-				}\
-				@media (" +
-				mediaQueries.mobile +
-				") {\
-					.wpbf-mobile-logo img {width: " +
-				mobile +
-				mobilesuffix +
-				";}\
-				}\
-			";
-		});
-	});
+				writeCSS(menuLogoSizeSettingId + "-tablet", {
+					mediaQuery: `@media (${mediaQueries.tablet})`,
+					selector: ".wpbf-mobile-logo img",
+					props: { width: maybeAppendSuffix(obj?.tablet) },
+				});
+
+				writeCSS(menuLogoSizeSettingId + "-mobile", {
+					mediaQuery: `@media (${mediaQueries.mobile})`,
+					selector: ".wpbf-mobile-logo img",
+					props: { width: maybeAppendSuffix(obj?.mobile) },
+				});
+			});
+		},
+	);
+
+	const menuLogoFontSizeSettingId = "menu_logo_font_size";
 
 	// Font size.
-	customizer("menu_logo_font_size", function (value) {
-		const styleTag = getStyleTag("menu_logo_font_size");
+	customizer(
+		menuLogoFontSizeSettingId,
+		function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
+			setting.bind(function (value) {
+				const obj =
+					typeof value === "string"
+						? parseJsonOrUndefined<DevicesValue>(value)
+						: value;
 
-		value.bind(function (newValue) {
-			var obj = JSON.parse(newValue),
-				desktop = obj.desktop,
-				tablet = obj.tablet,
-				mobile = obj.mobile,
-				desktopsuffix = $.isNumeric(desktop) ? "px" : "",
-				tabletsuffix = $.isNumeric(tablet) ? "px" : "",
-				mobilesuffix = $.isNumeric(mobile) ? "px" : "";
+				writeCSS(menuLogoFontSizeSettingId + "-desktop", {
+					selector: ".wpbf-logo a, .wpbf-mobile-logo a",
+					props: {
+						"font-size": maybeAppendSuffix(obj?.desktop),
+					},
+				});
 
-			styleTag.innerHTML =
-				"\
-				.wpbf-logo a, .wpbf-mobile-logo a {\
-					font-size: " +
-				desktop +
-				desktopsuffix +
-				";\
-				}\
-				@media (" +
-				mediaQueries.tablet +
-				") {\
-					.wpbf-mobile-logo a {font-size: " +
-				tablet +
-				tabletsuffix +
-				";}\
-				}\
-				@media (" +
-				mediaQueries.mobile +
-				") {\
-					.wpbf-mobile-logo a {font-size: " +
-				mobile +
-				mobilesuffix +
-				";}\
-				}\
-			";
-		});
-	});
+				writeCSS(menuLogoFontSizeSettingId + "-tablet", {
+					mediaQuery: `@media (${mediaQueries.tablet})`,
+					selector: ".wpbf-mobile-logo a",
+					props: { "font-size": maybeAppendSuffix(obj?.tablet) },
+				});
+
+				writeCSS(menuLogoFontSizeSettingId + "-mobile", {
+					mediaQuery: `@media (${mediaQueries.mobile})`,
+					selector: ".wpbf-mobile-logo a",
+					props: { "font-size": maybeAppendSuffix(obj?.mobile) },
+				});
+			});
+		},
+	);
+
+	const menuLogoColor = "menu_logo_color";
 
 	// Color.
-	customizer("menu_logo_color", function (value) {
-		const styleTag = getStyleTag("menu_logo_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-logo a, .wpbf-mobile-logo a {color: " + newValue + ";}";
-		});
-	});
+	customizer(
+		menuLogoColor,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(menuLogoColor, {
+					selector: ".wpbf-logo a, .wpbf-mobile-logo a",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
 
 	// Color hover.
 	customizer("menu_logo_color_alt", function (value) {
