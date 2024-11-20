@@ -2010,7 +2010,13 @@ if ( ! function_exists( 'wpbf_write_css' ) ) {
 						continue;
 					}
 
-					echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
+					if ( is_array( $css_value ) ) {
+						foreach ( $css_value as $css_value_item ) {
+							echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value_item ) . ';';
+						}
+					} else {
+						echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
+					}
 				}
 
 				echo '}';
@@ -2041,7 +2047,13 @@ if ( ! function_exists( 'wpbf_write_css' ) ) {
 				continue;
 			}
 
-			echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
+			if ( is_array( $css_value ) ) {
+				foreach ( $css_value as $css_value_item ) {
+					echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value_item ) . ';';
+				}
+			} else {
+				echo esc_attr( $css_prop ) . ': ' . esc_attr( $css_value ) . ';';
+			}
 		}
 
 		echo '}';
