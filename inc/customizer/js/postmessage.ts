@@ -18,6 +18,28 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		mobile: "max-width: " + (breakpoints.tablet - 1).toString() + "px",
 	};
 
+	function toNumberValue(value: string | number): number {
+		if (typeof value === "number") {
+			return value;
+		}
+
+		return parseFloat(value);
+	}
+
+	/**
+	 * Check if provided value is empty but not zero.
+	 *
+	 * @param {number|string} value The value to check.
+	 * @returns {boolean} True or false.
+	 */
+	function emptyNotZero(value: number | string): boolean {
+		if (value === "0" || value === 0) {
+			return false;
+		}
+
+		return value ? false : true;
+	}
+
 	function valueHasUnit(value: string | number): boolean {
 		if (!value) {
 			return false;
@@ -1158,155 +1180,195 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		},
 	);
 
-	// Color hover.
-	customizer("menu_logo_color_alt", function (value) {
-		const styleTag = getStyleTag("menu_logo_color_alt");
+	const menuLogoColorAlt = "menu_logo_color_alt";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-logo a:hover, .wpbf-mobile-logo a:hover {color: " +
-				newValue +
-				";}";
-		});
-	});
+	// Color hover.
+	customizer(
+		menuLogoColorAlt,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(menuLogoColorAlt, {
+					selector: ".wpbf-logo a:hover, .wpbf-mobile-logo a:hover",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
+
+	const menuLogoContainerWidth = "menu_logo_container_width";
 
 	// Container width.
-	customizer("menu_logo_container_width", function (value) {
-		const styleTag = getStyleTag("menu_logo_container_width");
+	customizer(
+		menuLogoContainerWidth,
+		function (setting: WpbfCustomizeSetting<number | string>) {
+			setting.bind(function (value) {
+				const calculation = 100 - toNumberValue(value);
 
-		value.bind(function (newValue) {
-			var calculation = 100 - newValue;
-			styleTag.innerHTML =
-				"\
-				.wpbf-navigation .wpbf-1-4 {width: " +
-				newValue +
-				"%;}\
-				.wpbf-navigation .wpbf-3-4 {width: " +
-				calculation +
-				"%;}\
-			";
-		});
-	});
+				writeCSS(menuLogoContainerWidth, {
+					blocks: [
+						{
+							selector: ".wpbf-navigation .wpbf-1-4",
+							props: {
+								width: maybeAppendSuffix(value, "%"),
+							},
+						},
+						{
+							selector: ".wpbf-navigation .wpbf-3-4",
+							props: {
+								width: maybeAppendSuffix(calculation, "%"),
+							},
+						},
+					],
+				});
+			});
+		},
+	);
+
+	const mobileMenuLogoContainerWidthSettingId =
+		"mobile_menu_logo_container_width";
 
 	// Mobile container width.
-	customizer("mobile_menu_logo_container_width", function (value) {
-		const styleTag = getStyleTag("mobile_menu_logo_container_width");
+	customizer(
+		mobileMenuLogoContainerWidthSettingId,
+		function (setting: WpbfCustomizeSetting<number | string>) {
+			setting.bind(function (value) {
+				const calculation = 100 - toNumberValue(value);
 
-		value.bind(function (newValue) {
-			var calculation = 100 - newValue;
-			styleTag.innerHTML =
-				"\
-				@media (" +
-				mediaQueries.tablet +
-				") {\
-					.wpbf-navigation .wpbf-2-3 {width: " +
-				newValue +
-				"%;}\
-					.wpbf-navigation .wpbf-1-3 {width: " +
-				calculation +
-				"%;}\
-				}\
-			";
-		});
-	});
+				writeCSS(mobileMenuLogoContainerWidthSettingId, {
+					mediaQuery: `@media (${mediaQueries.tablet})`,
+					blocks: [
+						{
+							selector: ".wpbf-navigation .wpbf-2-3",
+							props: { width: maybeAppendSuffix(value, "%") },
+						},
+						{
+							selector: ".wpbf-navigation .wpbf-1-3",
+							props: { width: maybeAppendSuffix(calculation, "%") },
+						},
+					],
+				});
+			});
+		},
+	);
 
 	/* Tagline */
 
+	const menuLogoDescriptionFontSizeSettingId =
+		"menu_logo_description_font_size";
+
 	// Font size.
-	customizer("menu_logo_description_font_size", function (value) {
-		const styleTag = getStyleTag("menu_logo_description_font_size");
+	customizer(
+		menuLogoDescriptionFontSizeSettingId,
+		function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
+			setting.bind(function (value) {
+				const obj =
+					typeof value === "string"
+						? parseJsonOrUndefined<DevicesValue>(value)
+						: value;
 
-		value.bind(function (newValue) {
-			var obj = JSON.parse(newValue),
-				desktop = obj.desktop,
-				tablet = obj.tablet,
-				mobile = obj.mobile,
-				desktopsuffix = $.isNumeric(desktop) ? "px" : "",
-				tabletsuffix = $.isNumeric(tablet) ? "px" : "",
-				mobilesuffix = $.isNumeric(mobile) ? "px" : "";
+				writeCSS(menuLogoDescriptionFontSizeSettingId + "-desktop", {
+					selector: ".wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline",
+					props: {
+						"font-size": maybeAppendSuffix(obj?.desktop),
+					},
+				});
 
-			styleTag.innerHTML =
-				"\
-				.wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline {\
-					font-size: " +
-				desktop +
-				desktopsuffix +
-				";\
-				}\
-				@media (" +
-				mediaQueries.tablet +
-				") {\
-					.wpbf-mobile-logo .wpbf-tagline {font-size: " +
-				tablet +
-				tabletsuffix +
-				";}\
-				}\
-				@media (" +
-				mediaQueries.mobile +
-				") {\
-					.wpbf-mobile-logo .wpbf-tagline {font-size: " +
-				mobile +
-				mobilesuffix +
-				";}\
-				}\
-			";
-		});
-	});
+				writeCSS(menuLogoDescriptionFontSizeSettingId + "-tablet", {
+					mediaQuery: `@media (${mediaQueries.tablet})`,
+					selector: ".wpbf-mobile-logo .wpbf-tagline",
+					props: { "font-size": maybeAppendSuffix(obj?.tablet) },
+				});
+
+				writeCSS(menuLogoDescriptionFontSizeSettingId + "-mobile", {
+					mediaQuery: `@media (${mediaQueries.mobile})`,
+					selector: ".wpbf-mobile-logo .wpbf-tagline",
+					props: { "font-size": maybeAppendSuffix(obj?.mobile) },
+				});
+			});
+		},
+	);
+
+	const menuLogoDescriptionColorSettingId = "menu_logo_description_color";
 
 	// Font color.
-	customizer("menu_logo_description_color", function (value) {
-		const styleTag = getStyleTag("menu_logo_description_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-tagline {color: " + newValue + ";}";
-		});
-	});
+	customizer(
+		menuLogoDescriptionColorSettingId,
+		function (value: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			value.bind(function (newValue) {
+				writeCSS(menuLogoDescriptionColorSettingId, {
+					selector: ".wpbf-tagline",
+					props: { color: toStringColor(newValue) },
+				});
+			});
+		},
+	);
 
 	/* Pre Header */
 
-	// Width.
-	customizer("pre_header_width", function (value) {
-		const styleTag = getStyleTag("pre_header_width");
+	const preHeaderWidthSettingId = "pre_header_width";
 
-		value.bind(function (newValue) {
-			newValue = !newValue ? "1200px" : newValue;
-			styleTag.innerHTML =
-				".wpbf-inner-pre-header {max-width: " + newValue + ";}";
-		});
-	});
+	// Width.
+	customizer(
+		preHeaderWidthSettingId,
+		function (setting: WpbfCustomizeSetting<number | string>) {
+			setting.bind(function (value) {
+				value = emptyNotZero(value) ? "1200px" : value;
+
+				writeCSS(preHeaderWidthSettingId, {
+					selector: ".wpbf-inner-pre-header",
+					props: { "max-width": maybeAppendSuffix(value) },
+				});
+			});
+		},
+	);
+
+	const preHeaderHeightSettingId = "pre_header_height";
 
 	// Height.
-	customizer("pre_header_height", function (value) {
-		const styleTag = getStyleTag("pre_header_height");
+	customizer(
+		preHeaderHeightSettingId,
+		function (setting: WpbfCustomizeSetting<number | string>) {
+			setting.bind(function (value) {
+				writeCSS(preHeaderHeightSettingId, {
+					selector: ".wpbf-inner-pre-header",
+					props: {
+						"padding-top": maybeAppendSuffix(value),
+						"padding-bottom": maybeAppendSuffix(value),
+					},
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-inner-pre-header {padding-top: " +
-				newValue +
-				"px; padding-bottom: " +
-				newValue +
-				"px;}";
-		});
-	});
+	const preHeaderBgColorSettingId = "pre_header_bg_color";
 
 	// Background color.
-	customizer("pre_header_bg_color", function (value) {
-		const styleTag = getStyleTag("pre_header_bg_color");
+	customizer(
+		preHeaderBgColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(preHeaderBgColorSettingId, {
+					selector: ".wpbf-pre-header",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-pre-header {background-color: " + newValue + ";}";
-		});
-	});
+	const preHeaderFontColorSettingId = "pre_header_font_color";
 
 	// Font color.
-	customizer("pre_header_font_color", function (value) {
-		const styleTag = getStyleTag("pre_header_font_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-pre-header {color: " + newValue + ";}";
-		});
-	});
+	customizer(
+		preHeaderFontColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(preHeaderFontColorSettingId, {
+					selector: ".wpbf-pre-header",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
 
 	const preHeaderAccentColorsSettingId = "pre_header_accent_colors";
 
@@ -1338,149 +1400,184 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		},
 	);
 
-	// Font size.
-	customizer("pre_header_font_size", function (value) {
-		const styleTag = getStyleTag("pre_header_font_size");
+	const preHeaderFontSizeSettingId = "pre_header_font_size";
 
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				"\
-				.wpbf-pre-header,\
-				.wpbf-pre-header .wpbf-menu,\
-				.wpbf-pre-header .wpbf-menu .sub-menu a {\
-					font-size: " +
-				newValue +
-				suffix +
-				";\
-				}\
-			";
-		});
-	});
+	// Font size.
+	customizer(
+		preHeaderFontSizeSettingId,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(preHeaderFontSizeSettingId, {
+					selector:
+						".wpbf-pre-header, .wpbf-pre-header .wpbf-menu, .wpbf-pre-header .wpbf-menu .sub-menu a",
+					props: { "font-size": maybeAppendSuffix(value) },
+				});
+			});
+		},
+	);
 
 	/* Blog – Pagination */
 
-	// Border radius.
-	customizer("blog_pagination_border_radius", function (value) {
-		const styleTag = getStyleTag("blog_pagination_border_radius");
+	const blogPaginationBorderRadiusSettingId = "blog_pagination_border_radius";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".pagination .page-numbers {border-radius: " + newValue + "px;}";
-		});
-	});
+	// Border radius.
+	customizer(
+		blogPaginationBorderRadiusSettingId,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(blogPaginationBorderRadiusSettingId, {
+					selector: ".pagination .page-numbers",
+					props: { borderRadius: maybeAppendSuffix(value) },
+				});
+			});
+		},
+	);
+
+	const blogPaginationBgColorSettingId = "blog_pagination_background_color";
 
 	// Background color.
-	customizer("blog_pagination_background_color", function (value) {
-		const styleTag = getStyleTag("blog_pagination_background_color");
+	customizer(
+		blogPaginationBgColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(blogPaginationBgColorSettingId, {
+					selector: ".pagination .page-numbers:not(.current)",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".pagination .page-numbers:not(.current) {background-color: " +
-				newValue +
-				";}";
-		});
-	});
+	const blogPaginationBgColorAltSettingId =
+		"blog_pagination_background_color_alt";
 
 	// Background color hover.
-	customizer("blog_pagination_background_color_alt", function (value) {
-		const styleTag = getStyleTag("blog_pagination_background_color_alt");
+	customizer(
+		blogPaginationBgColorAltSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(blogPaginationBgColorAltSettingId, {
+					selector: ".pagination .page-numbers:not(.current):hover",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".pagination .page-numbers:not(.current):hover {background-color: " +
-				newValue +
-				";}";
-		});
-	});
+	const blogPaginationBgColorActiveSettingId =
+		"blog_pagination_background_color_active";
 
 	// Background color active.
-	customizer("blog_pagination_background_color_active", function (value) {
-		const styleTag = getStyleTag("blog_pagination_background_color_active");
+	customizer(
+		blogPaginationBgColorActiveSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(blogPaginationBgColorActiveSettingId, {
+					selector: ".pagination .page-numbers.current",
+					props: { "background-color": toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".pagination .page-numbers.current {background-color: " +
-				newValue +
-				";}";
-		});
-	});
+	const blogPaginationFontColorSettingId = "blog_pagination_font_color";
 
 	// Font color.
-	customizer("blog_pagination_font_color", function (value) {
-		const styleTag = getStyleTag("blog_pagination_font_color");
+	customizer(
+		blogPaginationFontColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(blogPaginationFontColorSettingId, {
+					selector: ".pagination .page-numbers:not(.current)",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".pagination .page-numbers:not(.current) {color: " + newValue + ";}";
-		});
-	});
+	const blogPaginationFontColorAltSettingId = "blog_pagination_font_color_alt";
 
 	// Font color hover.
-	customizer("blog_pagination_font_color_alt", function (value) {
-		const styleTag = getStyleTag("blog_pagination_font_color_alt");
+	customizer(
+		blogPaginationFontColorAltSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(blogPaginationFontColorAltSettingId, {
+					selector: ".pagination .page-numbers:not(.current):hover",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".pagination .page-numbers:not(.current):hover {color: " +
-				newValue +
-				";}";
-		});
-	});
+	const blogPaginationFontColorActive = "blog_pagination_font_color_active";
 
 	// Font color active.
-	customizer("blog_pagination_font_color_active", function (value) {
-		const styleTag = getStyleTag("blog_pagination_font_color_active");
+	customizer(
+		blogPaginationFontColorActive,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(blogPaginationFontColorActive, {
+					selector: ".pagination .page-numbers.current",
+					props: { color: toStringColor(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".pagination .page-numbers.current {color: " + newValue + ";}";
-		});
-	});
+	const blogPaginationFontSizeSettingId = "blog_pagination_font_size";
 
 	// Font size.
-	customizer("blog_pagination_font_size", function (value) {
-		const styleTag = getStyleTag("blog_pagination_font_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".pagination .page-numbers {font-size: " + newValue + suffix + ";}";
-		});
-	});
+	customizer(
+		blogPaginationFontSizeSettingId,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(blogPaginationFontSizeSettingId, {
+					selector: ".pagination .page-numbers",
+					props: { "font-size": maybeAppendSuffix(value) },
+				});
+			});
+		},
+	);
 
 	/* Sidebar */
 
+	const sidebarWidthSettingId = "sidebar_width";
+
 	// Width.
-	customizer("sidebar_width", function (value) {
-		const styleTag = getStyleTag("sidebar_width");
+	customizer(
+		sidebarWidthSettingId,
+		function (setting: WpbfCustomizeSetting<number | string>) {
+			setting.bind(function (value) {
+				const calculation = 100 - toNumberValue(value);
 
-		value.bind(function (newValue) {
-			var calculation = 100 - newValue;
+				writeCSS(sidebarWidthSettingId, {
+					mediaQuery: "@media (min-width: 769px)",
+					blocks: [
+						{
+							selector:
+								"body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3",
+							props: { width: maybeAppendSuffix(value, "%") },
+						},
+						{
+							selector: "body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3",
+							props: { width: maybeAppendSuffix(calculation, "%") },
+						},
+					],
+				});
+			});
+		},
+	);
 
-			styleTag.innerHTML =
-				"\
-				@media (min-width: 769px) {\
-					body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3 {width: " +
-				newValue +
-				"%;}\
-					body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3 {width: " +
-				calculation +
-				"%;}\
-				}\
-			";
-		});
-	});
+	const sidebarBgColorSettingId = "sidebar_bg_color";
 
 	// Background color.
-	customizer("sidebar_bg_color", function (value) {
-		const styleTag = getStyleTag("sidebar_bg_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-sidebar .widget, .elementor-widget-sidebar .widget {background-color: " +
-				newValue +
-				";}";
+	customizer(sidebarBgColorSettingId, function (setting) {
+		setting.bind(function (value) {
+			writeCSS(sidebarBgColorSettingId, {
+				selector: ".wpbf-sidebar .widget, .elementor-widget-sidebar .widget",
+				props: { "background-color": value ? value : undefined },
+			});
 		});
 	});
 
