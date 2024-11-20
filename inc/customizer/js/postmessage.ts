@@ -63,6 +63,19 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		return valueHasUnit(value) ? value : value + suffix;
 	}
 
+	function maybeAppendSuffixOrUndefined(
+		value: string | number | undefined,
+		suffix?: string,
+	) {
+		const newValue = maybeAppendSuffix(value);
+
+		if (newValue === undefined || newValue === "") {
+			return undefined;
+		}
+
+		return newValue;
+	}
+
 	function parseTemplateTags(value: string): string {
 		if (!value) return "";
 
@@ -232,6 +245,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		return alpha && alpha < 1
 			? `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`
 			: `rgb(${color.r}, ${color.g}, ${color.b})`;
+	}
+
+	function toStringColorOrUndefined(value: WpbfCustomizeColorControlValue) {
+		const color = toStringColor(value);
+		return color === "" ? undefined : color;
 	}
 
 	/* Layout */
@@ -1583,167 +1601,240 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 	/* Buttons */
 
-	// Background color.
-	customizer("button_bg_color", function (value) {
-		const styleTag = getStyleTag("button_bg_color");
+	const buttonBgColorSettingId = "button_bg_color";
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				'.wpbf-button:not(.wpbf-button-primary), input[type="submit"] {background-color: ' +
-				newValue +
-				";}";
-		});
-	});
+	// Background color.
+	customizer(
+		buttonBgColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(buttonBgColorSettingId, {
+					selector:
+						'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+					props: { "background-color": toStringColorOrUndefined(value) },
+				});
+			});
+		},
+	);
+
+	const buttonBgColorAltSettingId = "button_bg_color_alt";
 
 	// Background color hover.
-	customizer("button_bg_color_alt", function (value) {
-		const styleTag = getStyleTag("button_bg_color_alt");
+	customizer(
+		buttonBgColorAltSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(buttonBgColorAltSettingId, {
+					selector:
+						'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
+					props: { "background-color": toStringColorOrUndefined(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover {background-color: ' +
-				newValue +
-				";}";
-		});
-	});
+	const buttonTextColorSettingId = "button_text_color";
 
 	// Text color.
-	customizer("button_text_color", function (value) {
-		const styleTag = getStyleTag("button_text_color");
+	customizer(
+		buttonTextColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(buttonTextColorSettingId, {
+					selector:
+						'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+					props: { color: toStringColorOrUndefined(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				'.wpbf-button:not(.wpbf-button-primary), input[type="submit"] {color: ' +
-				newValue +
-				";}";
-		});
-	});
+	const buttonTextColorAltSettingId = "button_text_color_alt";
 
 	// Text color hover.
-	customizer("button_text_color_alt", function (value) {
-		const styleTag = getStyleTag("button_text_color_alt");
+	customizer(
+		buttonTextColorAltSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(buttonTextColorAltSettingId, {
+					selector:
+						'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
+					props: { color: toStringColorOrUndefined(value) },
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover {color: ' +
-				newValue +
-				";}";
-		});
-	});
+	const btnPrimaryBgColorSettingId = "button_primary_bg_color";
 
 	// Primary background color.
-	customizer("button_primary_bg_color", function (value) {
-		const styleTag = getStyleTag("button_primary_bg_color");
+	customizer(
+		btnPrimaryBgColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(btnPrimaryBgColorSettingId, {
+					blocks: [
+						{
+							selector: ".wpbf-button-primary",
+							props: {
+								"background-color": toStringColorOrUndefined(value),
+							},
+						},
+						{
+							selector:
+								".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background)",
+							props: {
+								"background-color": toStringColorOrUndefined(value),
+							},
+						},
+						{
+							selector:
+								".is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background)",
+							props: {
+								"border-color": toStringColorOrUndefined(value),
+								color: toStringColorOrUndefined(value),
+							},
+						},
+					],
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-button-primary {background-color: " +
-				newValue +
-				";}\
-				.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background) {background-color: " +
-				newValue +
-				";}\
-				.is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background) {border-color: " +
-				newValue +
-				"; color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	const btnPrimaryBgColorAltSettingId = "button_primary_bg_color_alt";
 
 	// Primary background color hover.
-	customizer("button_primary_bg_color_alt", function (value) {
-		const styleTag = getStyleTag("button_primary_bg_color_alt");
+	customizer(
+		btnPrimaryBgColorAltSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(btnPrimaryBgColorAltSettingId, {
+					blocks: [
+						{
+							selector: ".wpbf-button-primary:hover",
+							props: { "background-color": toStringColorOrUndefined(value) },
+						},
+						{
+							selector:
+								".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover",
+							props: { "background-color": toStringColorOrUndefined(value) },
+						},
+						{
+							selector:
+								".is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background):hover",
+							props: {
+								"border-color": toStringColorOrUndefined(value),
+								color: toStringColorOrUndefined(value),
+							},
+						},
+					],
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-button-primary:hover {background-color: " +
-				newValue +
-				";}\
-				.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover {background-color: " +
-				newValue +
-				";}\
-				.is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background):hover {border-color: " +
-				newValue +
-				"; color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	const btnPrimaryTextColorSettingId = "button_primary_text_color";
 
 	// Primary text color.
-	customizer("button_primary_text_color", function (value) {
-		const styleTag = getStyleTag("button_primary_text_color");
+	customizer(
+		btnPrimaryTextColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(btnPrimaryTextColorSettingId, {
+					blocks: [
+						{
+							selector: ".wpbf-button-primary",
+							props: { color: toStringColorOrUndefined(value) },
+						},
+						{
+							selector:
+								".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-text-color)",
+							props: { color: toStringColorOrUndefined(value) },
+						},
+					],
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-button-primary {color: " +
-				newValue +
-				";}\
-				.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-text-color) {color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	const btnPrimaryTextColorAltSettingId = "button_primary_text_color_alt";
 
 	// Primary text color hover.
-	customizer("button_primary_text_color_alt", function (value) {
-		const styleTag = getStyleTag("button_primary_text_color_alt");
+	customizer(
+		btnPrimaryTextColorAltSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(btnPrimaryTextColorAltSettingId, {
+					blocks: [
+						{
+							selector: ".wpbf-button-primary:hover",
+							props: {
+								color: toStringColorOrUndefined(value),
+							},
+						},
+						{
+							selector:
+								".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover",
+							props: {
+								color: toStringColorOrUndefined(value),
+							},
+						},
+					],
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-button-primary:hover {color: " +
-				newValue +
-				";}\
-				.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover {color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	const buttonBorderRadiusSettingId = "button_border_radius";
 
 	// Border radius.
-	customizer("button_border_radius", function (value) {
-		const styleTag = getStyleTag("button_border_radius");
+	customizer(
+		buttonBorderRadiusSettingId,
+		function (setting: WpbfCustomizeSetting<string | number>) {
+			setting.bind(function (value) {
+				writeCSS(buttonBorderRadiusSettingId, {
+					selector: '.wpbf-button, input[type="submit"]',
+					props: {
+						"border-radius": maybeAppendSuffix(value),
+					},
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				'.wpbf-button, input[type="submit"] {border-radius: ' +
-				newValue +
-				"px;}";
-		});
-	});
+	const buttonBorderWidthSettingId = "button_border_width";
 
 	// Border width.
-	customizer("button_border_width", function (value) {
-		const styleTag = getStyleTag("button_border_width");
+	customizer(
+		buttonBorderWidthSettingId,
+		function (setting: WpbfCustomizeSetting<number | string>) {
+			setting.bind(function (value) {
+				writeCSS(buttonBorderWidthSettingId, {
+					selector: '.wpbf-button, input[type="submit"]',
+					props: {
+						"border-width": maybeAppendSuffix(value),
+						"border-style": "solid",
+					},
+				});
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				'.wpbf-button, input[type="submit"] {border-width: ' +
-				newValue +
-				"px; border-style: solid;}";
-		});
-	});
+	const buttonBorderColorSettingId = "button_border_color";
 
 	// Border color.
-	customizer("button_border_color", function (value) {
-		const styleTag = getStyleTag("button_border_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				'.wpbf-button:not(.wpbf-button-primary), input[type="submit"] {border-color: ' +
-				newValue +
-				";}";
-		});
-	});
+	customizer(
+		buttonBorderColorSettingId,
+		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
+			setting.bind(function (value) {
+				writeCSS(buttonBorderColorSettingId, {
+					selector:
+						'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+					props: { borderColor: toStringColorOrUndefined(value) },
+				});
+			});
+		},
+	);
 
 	// Border color hover.
 	customizer("button_border_color_alt", function (value) {
