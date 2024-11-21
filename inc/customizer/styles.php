@@ -94,7 +94,7 @@ $page_h1_font_setting = wpbf_customize_array_value( 'page_h1_font_family' );
 if ( $page_h1_font_toggle && $page_h1_font_setting ) {
 
 	wpbf_write_css( array(
-		// ? Why don't we use h1 only here? Why specify h1-h6?
+		// Intentionally affecting h1-h6.
 		'selector' => 'h1, h2, h3, h4, h5, h6',
 		'props'    => array(
 			'font-family' => wpbf_typography_font_family( $page_h1_font_setting ),

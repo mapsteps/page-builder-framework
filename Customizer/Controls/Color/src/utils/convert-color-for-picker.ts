@@ -1,20 +1,20 @@
 import { colord } from "colord";
 import {
 	WpbfColorPickerValue,
-	WpbfCustomizeColorControlValue,
+	WpbfColorControlValue,
 } from "../color-interface";
 import { parseHueModeValue } from "./misc";
 
 /**
  * Convert the value for the color picker.
  *
- * @param {WpbfCustomizeColorControlValue} value - The value to be converted.
+ * @param {WpbfColorControlValue} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  *
  * @returns {WpbfColorPickerValue} The converted value.
  */
 export default function convertColorForPicker(
-	value: WpbfCustomizeColorControlValue,
+	value: WpbfColorControlValue,
 	useHueMode: boolean,
 	pickerComponent: string,
 ): WpbfColorPickerValue {

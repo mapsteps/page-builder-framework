@@ -12,7 +12,7 @@ export type ColorControlLabelStyle =
 	| "default";
 
 export interface WpbfCustomizeColorControlParams
-	extends WpbfCustomizeControlParams<WpbfCustomizeColorControlValue> {
+	extends WpbfCustomizeControlParams<WpbfColorControlValue> {
 	mode: string;
 	labelStyle: ColorControlLabelStyle;
 	colorSwatches: string[];
@@ -30,7 +30,7 @@ export interface WpbfCustomizeMulticolorControlParams
 
 export interface WpbfCustomizeColorControl
 	extends WpbfCustomizeControl<
-		WpbfCustomizeColorControlValue,
+		WpbfColorControlValue,
 		WpbfCustomizeColorControlParams
 	> {}
 
@@ -64,7 +64,7 @@ export type WpbfColorPickerValue =
 	| HslOrHslaColor
 	| HsvOrHsvaColor;
 
-export type WpbfCustomizeColorControlValue =
+export type WpbfColorControlValue =
 	| number
 	| string
 	| RgbOrRgbaColor
@@ -73,5 +73,5 @@ export type WpbfCustomizeColorControlValue =
 
 export type WpbfCustomizeMulticolorControlValue = Record<
 	string,
-	WpbfCustomizeColorControlValue
+	WpbfColorControlValue
 >;

@@ -4,7 +4,7 @@ import {
 	HsvOrHsvaColor,
 	RgbOrRgbaColor,
 	WpbfColorObject,
-	WpbfCustomizeColorControlValue,
+	WpbfColorControlValue,
 } from "./color-interface";
 
 (() => {
@@ -14,7 +14,7 @@ import {
 	 * Thanks to Dan (https://stackoverflow.com/users/17121/dan) for his answer on StackOverflow:
 	 * @see https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number#answer-175787
 	 */
-	function isNumeric(char: WpbfCustomizeColorControlValue): boolean {
+	function isNumeric(char: WpbfColorControlValue): boolean {
 		// Number is a numeric.
 		if ("number" === typeof char) return true;
 
@@ -91,7 +91,7 @@ import {
 	 * Function to hook into `wpbfPostMessageStylesOutput` filter.
 	 *
 	 * @param {string} styles - The styles to be filtered.
-	 * @param {WpbfCustomizeColorControlValue} value - The control's value.
+	 * @param {WpbfColorControlValue} value - The control's value.
 	 * @param {object} output - The control's output argument.
 	 * @param {string} controlType - The control type.
 	 *
@@ -99,7 +99,7 @@ import {
 	 */
 	function stylesOutput(
 		styles: string,
-		value: WpbfCustomizeColorControlValue,
+		value: WpbfColorControlValue,
 		output: any,
 		controlType: string,
 	): string {

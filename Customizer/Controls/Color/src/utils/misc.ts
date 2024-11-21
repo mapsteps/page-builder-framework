@@ -1,5 +1,5 @@
 import { colord } from "colord";
-import { WpbfCustomizeColorControlValue } from "../color-interface";
+import { WpbfColorControlValue } from "../color-interface";
 
 // Thanks to Blocksy for their base64 image data in their color picker control.
 export const colorBgImgData =
@@ -11,7 +11,7 @@ export const colorBgImgData =
  * Thanks to Dan (https://stackoverflow.com/users/17121/dan) for his answer on StackOverflow:
  * @see https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number#answer-175787
  */
-export function isNumeric(char: WpbfCustomizeColorControlValue): boolean {
+export function isNumeric(char: WpbfColorControlValue): boolean {
 	// Number is a numeric.
 	if ("number" === typeof char) return true;
 
@@ -21,7 +21,7 @@ export function isNumeric(char: WpbfCustomizeColorControlValue): boolean {
 	return !isNaN(parseFloat(char));
 }
 
-export function parseHueModeValue(value: WpbfCustomizeColorControlValue) {
+export function parseHueModeValue(value: WpbfColorControlValue) {
 	let hueValue = 0;
 
 	if (isNumeric(value)) {
@@ -38,7 +38,7 @@ export function parseHueModeValue(value: WpbfCustomizeColorControlValue) {
 }
 
 export function hexColorFromHueModeValue(
-	value: WpbfCustomizeColorControlValue,
+	value: WpbfColorControlValue,
 ) {
 	const hue = parseHueModeValue(value);
 	return colord({ h: hue, s: 100, l: 50 }).toHex();

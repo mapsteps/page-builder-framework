@@ -11,7 +11,7 @@ import {
 import { Setting } from "wordpress__customize-browser/Setting";
 import {
 	WpbfCustomizeColorControl,
-	WpbfCustomizeColorControlValue,
+	WpbfColorControlValue,
 	WpbfCustomizeMulticolorControl,
 	WpbfCustomizeMulticolorControlValue,
 } from "../../Color/src/color-interface";
@@ -268,7 +268,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	currentValue?: SV;
 
 	// Specific to PBF's color control.
-	updateColorPicker?: (value: WpbfCustomizeColorControlValue) => void;
+	updateColorPicker?: (value: WpbfColorControlValue) => void;
 
 	// Specific to PBF's multicolor control.
 	updateColorPickers?: (value: WpbfCustomizeMulticolorControlValue) => void;

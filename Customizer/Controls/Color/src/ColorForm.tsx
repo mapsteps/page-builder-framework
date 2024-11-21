@@ -9,7 +9,7 @@ import ColorPickerComponent from "./components/ColorPickerComponent";
 import ControlHeader from "./components/ControlHeader";
 import {
 	ColorControlLabelStyle,
-	WpbfCustomizeColorControlValue,
+	WpbfColorControlValue,
 } from "./color-interface";
 import convertColorForInput from "./utils/convert-color-for-input";
 import convertColorForPicker from "./utils/convert-color-for-picker";
@@ -27,14 +27,14 @@ export default function ColorForm(props: {
 	pickerComponent: string;
 	labelStyle: ColorControlLabelStyle;
 	colorSwatches: Array<string | { color: string } | undefined>;
-	value: WpbfCustomizeColorControlValue;
-	default: WpbfCustomizeColorControlValue;
+	value: WpbfColorControlValue;
+	default: WpbfColorControlValue;
 	setNotificationContainer?: any;
 	formComponent?: string;
 	removeHeader?: boolean;
 	isPopupOpen?: boolean;
 	useExternalPopupToggle?: boolean;
-	onChange?: (value: WpbfCustomizeColorControlValue) => void;
+	onChange?: (value: WpbfColorControlValue) => void;
 	onReset?: () => void;
 }) {
 	const {

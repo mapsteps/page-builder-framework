@@ -1,7 +1,7 @@
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
 import { WpbfCheckboxButtonsetControlValue } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 import {
-	WpbfCustomizeColorControlValue,
+	WpbfColorControlValue,
 	WpbfCustomizeMulticolorControlValue,
 } from "../../../Customizer/Controls/Color/src/color-interface";
 import { parseJsonOrUndefined } from "../../../Customizer/Controls/Generic/src/string-util";
@@ -53,27 +53,31 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	}
 
 	function maybeAppendSuffix(
-		value: string | number | undefined,
+		value: string | number | undefined | null,
 		suffix?: string,
 	) {
-		if (value === undefined) return undefined;
-		if (value === "") return "";
+		if (value === undefined || value === "" || value === null) {
+			return undefined;
+		}
+
 		suffix = suffix || "px";
 
 		return valueHasUnit(value) ? value : value + suffix;
 	}
 
-	function maybeAppendSuffixOrUndefined(
-		value: string | number | undefined,
-		suffix?: string,
-	) {
-		const newValue = maybeAppendSuffix(value);
-
-		if (newValue === undefined || newValue === "") {
+	function toStringColor(color: WpbfColorControlValue) {
+		if (color === "" || typeof color === "number") {
 			return undefined;
 		}
 
-		return newValue;
+		if (typeof color === "string") return color;
+		if (!("r" in color)) return undefined;
+
+		const alpha = "a" in color ? color.a : 1;
+
+		return alpha && alpha < 1
+			? `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`
+			: `rgb(${color.r}, ${color.g}, ${color.b})`;
 	}
 
 	function parseTemplateTags(value: string): string {
@@ -235,1660 +239,1345 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		styleTag.innerHTML = css;
 	}
 
-	function toStringColor(color: WpbfCustomizeColorControlValue) {
-		if (typeof color === "string") return color;
-		if (typeof color === "number") return "";
-		if (!("r" in color)) return "";
-
-		const alpha = "a" in color ? color.a : 1;
-
-		return alpha && alpha < 1
-			? `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`
-			: `rgb(${color.r}, ${color.g}, ${color.b})`;
-	}
-
-	function toStringColorOrUndefined(value: WpbfCustomizeColorControlValue) {
-		const color = toStringColor(value);
-		return color === "" ? undefined : color;
+	function listenToCustomizerValueChange<VT>(
+		settingId: string,
+		fn: (settingId: string, value: VT) => void,
+	) {
+		customizer?.(settingId, function (setting: WpbfCustomizeSetting<VT>) {
+			setting.bind(function (value) {
+				fn(settingId, value);
+			});
+		});
 	}
 
 	/* Layout */
 
 	// Page width.
-	customizer("page_max_width", function (value) {
-		const styleTag = getStyleTag("page_max_width");
+	listenToCustomizerValueChange<string | number>(
+		"page_max_width",
+		function (settingId, value) {
+			value = emptyNotZero(value) ? "1200px" : value;
 
-		value.bind(function (newValue) {
-			newValue = !newValue ? "1200px" : newValue;
-			styleTag.innerHTML =
-				".wpbf-container, .wpbf-boxed-layout .wpbf-page {max-width: " +
-				newValue +
-				";}";
-		});
-	});
+			writeCSS(settingId, {
+				selector: ".wpbf-container, .wpbf-boxed-layout .wpbf-page",
+				props: {
+					"max-width": maybeAppendSuffix(value),
+				},
+			});
+		},
+	);
 
 	// Padding.
-	customizer("page_padding", function (value) {
-		const styleTag = getStyleTag("page_padding");
+	listenToCustomizerValueChange<string | MarginPaddingValue>(
+		"page_padding",
+		function (settingId, value) {
+			const obj = parseJsonOrUndefined<MarginPaddingValue>(value);
 
-		value.bind(function (newValue) {
-			const obj = JSON.parse(newValue);
+			writeCSS(settingId + "-desktop", {
+				selector: "#inner-content",
+				props: {
+					"padding-top": maybeAppendSuffix(obj?.desktop_top),
+					"padding-right": maybeAppendSuffix(obj?.desktop_right),
+					"padding-bottom": maybeAppendSuffix(obj?.desktop_bottom),
+					"padding-left": maybeAppendSuffix(obj?.desktop_left),
+				},
+			});
 
-			const desktop_top = obj.desktop_top;
-			const desktop_right = obj.desktop_right;
-			const desktop_bottom = obj.desktop_bottom;
-			const desktop_left = obj.desktop_left;
-			const tablet_top = obj.tablet_top;
-			const tablet_right = obj.tablet_right;
-			const tablet_bottom = obj.tablet_bottom;
-			const tablet_left = obj.tablet_left;
-			const mobile_top = obj.mobile_top;
-			const mobile_right = obj.mobile_right;
-			const mobile_bottom = obj.mobile_bottom;
-			const mobile_left = obj.mobile_left;
+			writeCSS(settingId + "-tablet", {
+				mediaQuery: `@media (${mediaQueries.tablet})`,
+				selector: "#inner-content",
+				props: {
+					"padding-top": maybeAppendSuffix(obj?.tablet_top),
+					"padding-right": maybeAppendSuffix(obj?.tablet_right),
+					"padding-bottom": maybeAppendSuffix(obj?.tablet_bottom),
+					"padding-left": maybeAppendSuffix(obj?.tablet_left),
+				},
+			});
 
-			styleTag.innerHTML =
-				"\
-				#inner-content {\
-					padding-top: " +
-				desktop_top +
-				"px;\
-					padding-right: " +
-				desktop_right +
-				"px;\
-					padding-bottom: " +
-				desktop_bottom +
-				"px;\
-					padding-left: " +
-				desktop_left +
-				"px;\
-				}\
-				@media (" +
-				mediaQueries.tablet +
-				") {\
-					#inner-content {\
-						padding-top: " +
-				tablet_top +
-				"px;\
-						padding-right: " +
-				tablet_right +
-				"px;\
-						padding-bottom: " +
-				tablet_bottom +
-				"px;\
-						padding-left: " +
-				tablet_left +
-				"px;\
-					}\
-				}\
-				@media (" +
-				mediaQueries.mobile +
-				") {\
-					#inner-content {\
-						padding-top: " +
-				mobile_top +
-				"px;\
-						padding-right: " +
-				mobile_right +
-				"px;\
-						padding-bottom: " +
-				mobile_bottom +
-				"px;\
-						padding-left: " +
-				mobile_left +
-				"px;\
-					}\
-				}\
-			";
-		});
-	});
+			writeCSS(settingId + "-mobile", {
+				mediaQuery: `@media (${mediaQueries.mobile})`,
+				selector: "#inner-content",
+				props: {
+					"padding-top": maybeAppendSuffix(obj?.mobile_top),
+					"padding-right": maybeAppendSuffix(obj?.mobile_right),
+					"padding-bottom": maybeAppendSuffix(obj?.mobile_bottom),
+					"padding-left": maybeAppendSuffix(obj?.mobile_left),
+				},
+			});
+		},
+	);
 
 	// Boxed margin.
-	customizer("page_boxed_margin", function (value) {
-		value.bind(function (newValue) {
+	listenToCustomizerValueChange<string | number>(
+		"page_boxed_margin",
+		function (settingId, value) {
 			$(".wpbf-page")
-				.css("margin-top", newValue + "px")
-				.css("margin-bottom", newValue + "px");
-		});
-	});
+				.css("margin-top", value + "px")
+				.css("margin-bottom", value + "px");
+		},
+	);
 
 	// Boxed padding.
-	customizer("page_boxed_padding", function (value) {
-		const styleTag = getStyleTag("page_boxed_padding");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-container {padding-left: " +
-				newValue +
-				"px; padding-right: " +
-				newValue +
-				"px;}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"page_boxed_padding",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-container",
+				props: {
+					"padding-left": maybeAppendSuffix(value),
+					"padding-right": maybeAppendSuffix(value),
+				},
+			});
+		},
+	);
 
 	// Boxed background color.
-	customizer("page_boxed_background", function (value) {
-		const styleTag = getStyleTag("page_boxed_background");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-page {background-color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"page_boxed_background",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-page",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// ScrollTop position.
-	customizer("scrolltop_position", function (value) {
-		const styleTag = getStyleTag("scrolltop_position");
-
-		value.bind(function (newValue) {
-			if (newValue === "left") {
-				styleTag.innerHTML = ".scrolltop {left: 20px; right: auto;}";
-			} else {
-				styleTag.innerHTML = ".scrolltop {left: auto; right: 20px;}";
-			}
-		});
-	});
-
-	// ScrollTop background color.
-	customizer("scrolltop_bg_color", function (value) {
-		const styleTag = getStyleTag("scrolltop_bg_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".scrolltop {background-color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<string>(
+		"scrolltop_position",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".scrolltop",
+				props: {
+					left: value === "left" ? "20px" : "auto",
+					right: value === "left" ? "auto" : "20px",
+				},
+			});
+		},
+	);
 
 	// ScrollTop background color.
-	customizer("scrolltop_bg_color_alt", function (value) {
-		const styleTag = getStyleTag("scrolltop_bg_color_alt");
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"scrolltop_bg_color",
+		function (settingId, value) {
+			// styleTag.innerHTML = ".scrolltop {background-color: " + newValue + ";}";
+			writeCSS(settingId, {
+				selector: ".scrolltop",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".scrolltop:hover {background-color: " + newValue + ";}";
-		});
-	});
+	// ScrollTop background color.
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"scrolltop_bg_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".scrolltop:hover",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// ScrollTop icon color.
-	customizer("scrolltop_icon_color", function (value) {
-		const styleTag = getStyleTag("scrolltop_icon_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".scrolltop {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"scrolltop_icon_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".scrolltop",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// ScrollTop icon color.
-	customizer("scrolltop_icon_color_alt", function (value) {
-		const styleTag = getStyleTag("scrolltop_icon_color_alt");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".scrolltop:hover {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"scrolltop_icon_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".scrolltop:hover",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// ScrollTop border radius.
-	customizer("scrolltop_border_radius", function (value) {
-		const styleTag = getStyleTag("scrolltop_border_radius");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".scrolltop {border-radius: " + newValue + "px;}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"scrolltop_border_radius",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".scrolltop",
+				props: { borderRadius: maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	/* Typography */
 
-	customizer("page_font_color", function (value) {
-		const styleTag = getStyleTag("page_font_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = "body {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"page_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: "body",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	/* 404 */
 
-	customizer("404_headline", function (value) {
-		value.bind(function (newValue) {
-			$(".wpbf-404-content .entry-title").text(newValue);
-		});
-	});
+	listenToCustomizerValueChange<string>(
+		"404_headline",
+		function (settingId, value) {
+			$(".wpbf-404-content .entry-title").text(value);
+		},
+	);
 
-	customizer("404_text", function (value) {
-		value.bind(function (newValue) {
-			$(".wpbf-404-content p").text(newValue);
-		});
-	});
+	listenToCustomizerValueChange<string>(
+		"404_text",
+		function (settingId, value) {
+			$(".wpbf-404-content p").text(value);
+		},
+	);
 
 	/* Navigation */
 
-	const headerWidthSettingId = "menu_width";
-
 	// Width.
-	customizer(
-		headerWidthSettingId,
-		function (setting: WpbfCustomizeSetting<number | string>) {
-			setting.bind(function (value) {
-				const selector = headerBuilderEnabled()
-					? `.wpbf-header-row-row_2 .wpbf-row-content`
-					: `.wpbf-nav-wrapper`;
+	listenToCustomizerValueChange<number | string>(
+		"menu_width",
+		function (settingId, value) {
+			const selector = headerBuilderEnabled()
+				? `.wpbf-header-row-row_2 .wpbf-row-content`
+				: `.wpbf-nav-wrapper`;
 
-				writeCSS(headerWidthSettingId, {
-					selector: selector,
-					props: { "max-width": maybeAppendSuffix(value) },
-				});
+			writeCSS(settingId, {
+				selector: selector,
+				props: { "max-width": maybeAppendSuffix(value) },
 			});
 		},
 	);
-
-	const headerHeightSettingId = "menu_height";
 
 	// Menu height.
-	customizer(
-		headerHeightSettingId,
-		function (setting: WpbfCustomizeSetting<number | string>) {
-			setting.bind(function (value) {
-				const selector = headerBuilderEnabled()
-					? `.wpbf-header-row-row_2 .wpbf-row-content`
-					: `.wpbf-nav-wrapper`;
+	listenToCustomizerValueChange<number | string>(
+		"menu_height",
+		function (settingId, value) {
+			const selector = headerBuilderEnabled()
+				? `.wpbf-header-row-row_2 .wpbf-row-content`
+				: `.wpbf-nav-wrapper`;
 
-				writeCSS(headerHeightSettingId, {
-					selector: selector,
-					props: {
-						"padding-top": maybeAppendSuffix(value),
-						"padding-bottom": maybeAppendSuffix(value),
-					},
-				});
+			writeCSS(settingId, {
+				selector: selector,
+				props: {
+					"padding-top": maybeAppendSuffix(value),
+					"padding-bottom": maybeAppendSuffix(value),
+				},
 			});
 		},
 	);
-
-	const menuPaddingSettingId = "menu_padding";
 
 	// Menu padding.
-	customizer(
-		menuPaddingSettingId,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(menuPaddingSettingId, {
-					selector: ".wpbf-navigation .wpbf-menu > .menu-item > a",
-					props: {
-						"padding-left": maybeAppendSuffix(value),
-						"padding-right": maybeAppendSuffix(value),
-					},
-				});
+	listenToCustomizerValueChange<string | number>(
+		"menu_padding",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-navigation .wpbf-menu > .menu-item > a",
+				props: {
+					"padding-left": maybeAppendSuffix(value),
+					"padding-right": maybeAppendSuffix(value),
+				},
 			});
 		},
 	);
-
-	const menuBgColorSettingId = "menu_bg_color";
 
 	// Background color.
-	customizer(
-		menuBgColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(menuBgColorSettingId, {
-					selector:
-						".wpbf-navigation:not(.wpbf-navigation-transparent):not(.wpbf-navigation-active)",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"menu_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-navigation:not(.wpbf-navigation-transparent):not(.wpbf-navigation-active)",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const menuFontColorsSettingId = "menu_font_colors";
 
 	// Menu font colors.
-	customizer(
-		menuFontColorsSettingId,
-		(value: WpbfCustomizeSetting<WpbfCustomizeMulticolorControlValue>) => {
-			value.bind(function (newValue) {
-				const rawDefaultColor = newValue.default ?? "";
-				const defaultColor = toStringColor(rawDefaultColor);
+	listenToCustomizerValueChange<WpbfCustomizeMulticolorControlValue>(
+		"menu_font_colors",
+		(settingId, value) => {
+			const rawDefaultColor = value.default ?? "";
+			const defaultColor = toStringColor(rawDefaultColor);
 
-				const rawHoverColor = newValue.hover ?? "";
-				const hoverColor = toStringColor(rawHoverColor);
+			const rawHoverColor = value.hover ?? "";
+			const hoverColor = toStringColor(rawHoverColor);
 
-				writeCSS(menuFontColorsSettingId, {
-					blocks: [
-						{
-							selector:
-								".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close",
-							props: { color: defaultColor },
-						},
-						{
-							selector:
-								".wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover",
-							props: { color: hoverColor },
-						},
-						{
-							selector:
-								".wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a",
-							props: { color: `${hoverColor}!important` },
-						},
-					],
-				});
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector:
+							".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a, .wpbf-close",
+						props: { color: defaultColor },
+					},
+					{
+						selector:
+							".wpbf-navigation .wpbf-menu a:hover, .wpbf-mobile-menu a:hover",
+						props: { color: hoverColor },
+					},
+					{
+						selector:
+							".wpbf-navigation .wpbf-menu > .current-menu-item > a, .wpbf-mobile-menu > .current-menu-item > a",
+						props: { color: `${hoverColor}!important` },
+					},
+				],
 			});
 		},
 	);
 
-	const menuFontSizeSettingId = "menu_font_size";
-
 	// Font size.
-	customizer(
-		menuFontSizeSettingId,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(menuFontSizeSettingId, {
-					selector: ".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a",
-					props: {
-						fontSize: maybeAppendSuffix(value),
-					},
-				});
+	listenToCustomizerValueChange<string | number>(
+		"menu_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a",
+				props: {
+					fontSize: maybeAppendSuffix(value),
+				},
 			});
 		},
 	);
 
 	/* Sub Menu */
 
-	const subMenuTextAlignmentSettingId = "sub_menu_text_alignment";
-
 	// Text alignment.
-	customizer(
-		subMenuTextAlignmentSettingId,
-		function (setting: WpbfCustomizeSetting<string>) {
-			setting.bind(function (value) {
-				writeCSS(subMenuTextAlignmentSettingId, {
-					selector: ".wpbf-sub-menu .sub-menu",
-					props: { "text-align": value },
-				});
+	listenToCustomizerValueChange<string>(
+		"sub_menu_text_alignment",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-sub-menu .sub-menu",
+				props: { "text-align": value },
 			});
 		},
 	);
-
-	const subMenuPaddingSettingId = "sub_menu_padding";
 
 	// Padding.
-	customizer(
-		subMenuPaddingSettingId,
-		function (setting: WpbfCustomizeSetting<MarginPaddingValue | string>) {
-			setting.bind(function (value) {
-				const obj =
-					typeof value === "string"
-						? parseJsonOrUndefined<Record<string, number | string>>(value)
-						: value;
+	listenToCustomizerValueChange<MarginPaddingValue | string>(
+		"sub_menu_padding",
+		function (settingId, value) {
+			const obj = parseJsonOrUndefined<Record<string, number | string>>(value);
 
-				writeCSS(subMenuPaddingSettingId, {
-					selector:
-						".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a",
-					props: {
-						"padding-top": maybeAppendSuffix(obj?.top),
-						"padding-right": maybeAppendSuffix(obj?.right),
-						"padding-bottom": maybeAppendSuffix(obj?.bottom),
-						"padding-left": maybeAppendSuffix(obj?.left),
-					},
-				});
+			writeCSS(settingId, {
+				selector:
+					".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu a",
+				props: {
+					"padding-top": maybeAppendSuffix(obj?.top),
+					"padding-right": maybeAppendSuffix(obj?.right),
+					"padding-bottom": maybeAppendSuffix(obj?.bottom),
+					"padding-left": maybeAppendSuffix(obj?.left),
+				},
 			});
 		},
 	);
-
-	const subMenuWidth = "sub_menu_width";
 
 	// Width.
-	customizer(
-		subMenuWidth,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(subMenuWidth, {
-					selector:
-						".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu",
-					props: { width: maybeAppendSuffix(value) },
-				});
+	listenToCustomizerValueChange<string | number>(
+		"sub_menu_width",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu",
+				props: { width: maybeAppendSuffix(value) },
 			});
 		},
 	);
-
-	const subMenuBgColor = "sub_menu_bg_color";
 
 	// Background color.
-	customizer(
-		subMenuBgColor,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(subMenuBgColor, {
-					selector:
-						".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li",
-					props: { "background-color": value },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"sub_menu_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const subMenuBgColorAltSettingId = "sub_menu_bg_color_alt";
 
 	// Background color hover.
-	customizer(
-		subMenuBgColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(subMenuBgColorAltSettingId, {
-					selector:
-						".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li:hover",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"sub_menu_bg_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .sub-menu li:hover",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const subMenuAccentColorSettingId = "sub_menu_accent_color";
 
 	// Accent color.
-	customizer(
-		subMenuAccentColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(subMenuAccentColorSettingId, {
-					selector: ".wpbf-menu .sub-menu a",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"sub_menu_accent_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-menu .sub-menu a",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const subMenuAccentColorAltSettingId = "sub_menu_accent_color_alt";
 
 	// Accent color hover.
-	customizer(
-		subMenuAccentColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(subMenuAccentColorAltSettingId, {
-					selector: ".wpbf-navigation .wpbf-menu .sub-menu a:hover",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"sub_menu_accent_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-navigation .wpbf-menu .sub-menu a:hover",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const subMenuFontSizeSettingId = "sub_menu_font_size";
 
 	// Font size.
-	customizer(
-		subMenuFontSizeSettingId,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(subMenuFontSizeSettingId, {
-					selector: ".wpbf-menu .sub-menu a",
-					props: { "font-size": maybeAppendSuffix(value) },
-				});
+	listenToCustomizerValueChange<string | number>(
+		"sub_menu_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-menu .sub-menu a",
+				props: { "font-size": maybeAppendSuffix(value) },
 			});
 		},
 	);
 
-	const subMenuSeparatorColorSettingId = "sub_menu_separator_color";
-
 	// Separator color.
-	customizer(
-		subMenuSeparatorColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(subMenuSeparatorColorSettingId, {
-					selector:
-						".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li",
-					props: { "border-bottom-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"sub_menu_separator_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) li",
+				props: { "border-bottom-color": toStringColor(value) },
 			});
 		},
 	);
 
 	/* Mobile Navigation */
 
-	const mobileMenuHeight = "mobile_menu_height";
-
 	// Height.
-	customizer(
-		mobileMenuHeight,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuHeight, {
-					selector: ".wpbf-mobile-nav-wrapper",
-					props: {
-						"padding-top": maybeAppendSuffix(value),
-						"padding-bottom": maybeAppendSuffix(value),
-					},
-				});
+	listenToCustomizerValueChange<string | number>(
+		"mobile_menu_height",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-nav-wrapper",
+				props: {
+					"padding-top": maybeAppendSuffix(value),
+					"padding-bottom": maybeAppendSuffix(value),
+				},
 			});
 		},
 	);
-
-	const mobileMenuBgColorSettingId = "mobile_menu_background_color";
 
 	// Background color.
-	customizer(
-		mobileMenuBgColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuBgColorSettingId, {
-					selector: ".wpbf-mobile-nav-wrapper",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_background_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-nav-wrapper",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const mobileMenuHamburgerColorSettingId = "mobile_menu_hamburger_color";
 
 	// Icon color.
-	customizer(
-		mobileMenuHamburgerColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuHamburgerColorSettingId, {
-					selector: ".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_hamburger_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
 
-	const mobileMenuHamburgerSize = "mobile_menu_hamburger_size";
-
 	// Hamburger size.
-	customizer(mobileMenuHamburgerSize, function (setting) {
-		setting.bind(function (value) {
-			writeCSS(mobileMenuHamburgerSize, {
+	listenToCustomizerValueChange<string | number>(
+		"mobile_menu_hamburger_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
 				selector: ".wpbf-mobile-nav-item",
 				props: { "font-size": maybeAppendSuffix(value) },
 			});
-		});
-	});
-
-	const mobileMenuHamburgerBorderRadius = "mobile_menu_hamburger_border_radius";
+		},
+	);
 
 	// Hamburger border radius (filled).
-	customizer(
-		mobileMenuHamburgerBorderRadius,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuHamburgerBorderRadius, {
-					selector: ".wpbf-mobile-nav-item",
-					props: { "border-radius": maybeAppendSuffix(value) },
-				});
+	listenToCustomizerValueChange<string | number>(
+		"mobile_menu_hamburger_border_radius",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-nav-item",
+				props: { "border-radius": maybeAppendSuffix(value) },
 			});
 		},
 	);
-
-	const mobileMenuPadding = "mobile_menu_padding";
 
 	// Padding.
-	customizer(
-		mobileMenuPadding,
-		function (setting: WpbfCustomizeSetting<MarginPaddingValue | string>) {
-			setting.bind(function (value) {
-				const obj =
-					typeof value === "string"
-						? parseJsonOrUndefined<Record<string, string | number>>(value)
-						: value;
+	listenToCustomizerValueChange<MarginPaddingValue | string>(
+		"mobile_menu_padding",
+		function (settingId, value) {
+			const obj = parseJsonOrUndefined<Record<string, string | number>>(value);
 
-				writeCSS(mobileMenuPadding, {
-					selector:
-						".wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle",
-					props: {
-						"padding-top": maybeAppendSuffix(obj?.top),
-						"padding-right": maybeAppendSuffix(obj?.right),
-						"padding-bottom": maybeAppendSuffix(obj?.bottom),
-						"padding-left": maybeAppendSuffix(obj?.left),
-					},
-				});
+			writeCSS(settingId, {
+				selector:
+					".wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle",
+				props: {
+					"padding-top": maybeAppendSuffix(obj?.top),
+					"padding-right": maybeAppendSuffix(obj?.right),
+					"padding-bottom": maybeAppendSuffix(obj?.bottom),
+					"padding-left": maybeAppendSuffix(obj?.left),
+				},
 			});
 		},
 	);
-
-	const mobileMenuItemBgColorSettingId = "mobile_menu_bg_color";
 
 	// Menu item background color.
-	customizer(
-		mobileMenuItemBgColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuItemBgColorSettingId, {
-					selector: ".wpbf-mobile-menu > .menu-item a",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu > .menu-item a",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const mobileMenuItemBgColorAltSettingId = "mobile_menu_bg_color_alt";
 
 	// Menu item background color hover.
-	customizer(
-		mobileMenuItemBgColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuItemBgColorAltSettingId, {
-					selector: ".wpbf-mobile-menu > .menu-item a:hover",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_bg_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu > .menu-item a:hover",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const mobileMenuItemFontColorSettingId = "mobile_menu_font_color";
 
 	// Menu item font color.
-	customizer(
-		mobileMenuItemFontColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuItemFontColorSettingId, {
-					selector:
-						".wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const mobileMenuItemFontColorAltSettingId = "mobile_menu_font_color_alt";
 
 	// Menu item font color hover.
-	customizer(
-		mobileMenuItemFontColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuItemFontColorAltSettingId, {
-					selector:
-						".wpbf-mobile-menu a:hover, .wpbf-mobile-menu > .current-menu-item > a",
-					props: { color: toStringColor(value) + "!important" },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_font_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-mobile-menu a:hover, .wpbf-mobile-menu > .current-menu-item > a",
+				props: { color: toStringColor(value) + "!important" },
 			});
 		},
 	);
-
-	const mobileMenuItemBorderColor = "mobile_menu_border_color";
 
 	// Menu item divider color.
-	customizer(
-		mobileMenuItemBorderColor,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileMenuItemBorderColor, {
-					blocks: [
-						{
-							selector: ".wpbf-mobile-menu .menu-item",
-							props: { "border-top-color": toStringColor(value) },
-						},
-						{
-							selector: ".wpbf-mobile-menu > .menu-item:last-child",
-							props: { "border-bottom-color": toStringColor(value) },
-						},
-					],
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_border_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-mobile-menu .menu-item",
+						props: { "border-top-color": toStringColor(value) },
+					},
+					{
+						selector: ".wpbf-mobile-menu > .menu-item:last-child",
+						props: { "border-bottom-color": toStringColor(value) },
+					},
+				],
 			});
 		},
 	);
-
-	const mobileSubMenuArrowColorSettingId = "mobile_menu_submenu_arrow_color";
 
 	// Sub menu arrow color.
-	customizer(
-		mobileSubMenuArrowColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileSubMenuArrowColorSettingId, {
-					selector: ".wpbf-submenu-toggle",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_submenu_arrow_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-submenu-toggle",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
 
-	const mobileMenuItemFontSize = "mobile_menu_font_size";
-
 	// Menu item font size.
-	customizer(mobileMenuItemFontSize, function (setting) {
-		setting.bind(function (value) {
-			writeCSS(mobileMenuItemFontSize, {
+	listenToCustomizerValueChange<string | number>(
+		"mobile_menu_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
 				selector:
 					".wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle",
 				props: { "font-size": maybeAppendSuffix(value) },
 			});
-		});
-	});
+		},
+	);
 
 	/* Mobile sub menu */
 
-	const mobileSubMenuAutoCollapseSettingId = "mobile_sub_menu_auto_collapse";
-
 	// Submenu auto collapse.
-	customizer(
-		mobileSubMenuAutoCollapseSettingId,
-		function (setting: WpbfCustomizeSetting<boolean>) {
-			setting.bind(function (value) {
-				if (!document.querySelector("#mobile-navigation")) return;
+	listenToCustomizerValueChange<boolean>(
+		"mobile_sub_menu_auto_collapse",
+		function (settingId, value) {
+			if (!document.querySelector("#mobile-navigation")) return;
 
-				if (value) {
-					$("#mobile-navigation")
-						.closest(".wpbf-navigation")
-						.addClass("wpbf-mobile-sub-menu-auto-collapse");
-				} else {
-					$("#mobile-navigation")
-						.closest(".wpbf-navigation")
-						.removeClass("wpbf-mobile-sub-menu-auto-collapse");
-				}
-			});
+			if (value) {
+				$("#mobile-navigation")
+					.closest(".wpbf-navigation")
+					.addClass("wpbf-mobile-sub-menu-auto-collapse");
+			} else {
+				$("#mobile-navigation")
+					.closest(".wpbf-navigation")
+					.removeClass("wpbf-mobile-sub-menu-auto-collapse");
+			}
 		},
 	);
-
-	const mobileSubMenuIndentSettingId = "mobile_sub_menu_indent";
 
 	// Indent.
-	customizer(
-		mobileSubMenuIndentSettingId,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				const paddingVal = customizer("mobile_menu_padding").get() as
-					| string
-					| MarginPaddingValue;
+	listenToCustomizerValueChange<string | number>(
+		"mobile_sub_menu_indent",
+		function (settingId, value) {
+			const paddingVal = customizer("mobile_menu_padding").get() as
+				| string
+				| MarginPaddingValue;
 
-				const padding =
-					typeof paddingVal === "string"
-						? parseJsonOrUndefined<Record<string, string | number>>(paddingVal)
-						: paddingVal;
+			const padding =
+				parseJsonOrUndefined<Record<string, string | number>>(paddingVal);
 
-				let paddingLeft = String(padding?.left ?? 0);
+			let paddingLeft = String(padding?.left ?? 0);
 
-				const calculation =
-					parseInt(String(value), 10) + parseInt(paddingLeft, 10);
+			const calculation =
+				parseInt(String(value), 10) + parseInt(paddingLeft, 10);
 
-				writeCSS(mobileSubMenuIndentSettingId, {
-					selector: ".wpbf-mobile-menu .sub-menu a",
-					props: { "padding-left": maybeAppendSuffix(calculation) },
-				});
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu .sub-menu a",
+				props: { "padding-left": maybeAppendSuffix(calculation) },
 			});
 		},
 	);
-
-	const mobileSubMenuItemBgColorSettingId = "mobile_sub_menu_bg_color";
 
 	// Mobile sub-menu item background color.
-	customizer(
-		mobileSubMenuItemBgColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileSubMenuItemBgColorSettingId, {
-					selector: ".wpbf-mobile-menu .sub-menu a",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_sub_menu_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu .sub-menu a",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const mobileSubMenuItemBgColorAlt = "mobile_sub_menu_bg_color_alt";
 
 	// Mobile sub-menu item background color hover.
-	customizer(
-		mobileSubMenuItemBgColorAlt,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileSubMenuItemBgColorAlt, {
-					selector: ".wpbf-mobile-menu .sub-menu a:hover",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_sub_menu_bg_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu .sub-menu a:hover",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const mobileSubMenuItemFontColor = "mobile_sub_menu_font_color";
 
 	// Mobile sub-menu item font color.
-	customizer(
-		mobileSubMenuItemFontColor,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileSubMenuItemFontColor, {
-					selector: ".wpbf-mobile-menu .sub-menu a",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_sub_menu_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu .sub-menu a",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
 
-	const mobileSubMenuItemFontColorAlt = "mobile_sub_menu_font_color_alt";
-
 	// Menu item font color hover.
-	customizer(mobileSubMenuItemFontColorAlt, function (setting) {
-		setting.bind(function (value) {
-			writeCSS(mobileSubMenuItemFontColorAlt, {
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_sub_menu_font_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
 				selector:
 					".wpbf-mobile-menu .sub-menu a:hover, .wpbf-mobile-menu .sub-menu > .current-menu-item > a",
 				props: { color: toStringColor(value) + "!important" },
 			});
-		});
-	});
-
-	const mobileSubMenuItemBorderColor = "mobile_sub_menu_border_color";
+		},
+	);
 
 	// Mobile sub-menu item divider color.
-	customizer(
-		mobileSubMenuItemBorderColor,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileSubMenuItemBorderColor, {
-					selector: ".wpbf-mobile-menu .sub-menu .menu-item",
-					props: { "border-top-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_sub_menu_border_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu .sub-menu .menu-item",
+				props: { "border-top-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const mobileSubMenuItemArrowColorSettingId = "mobile_sub_menu_arrow_color";
 
 	// Mobile sub-menu item arrow color.
-	customizer(
-		mobileSubMenuItemArrowColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(mobileSubMenuItemArrowColorSettingId, {
-					selector: ".wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_sub_menu_arrow_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
 
-	const mobileSubMenuItemFontSize = "mobile_sub_menu_font_size";
-
 	// Mobile sub-menu item font size.
-	customizer(
-		mobileSubMenuItemFontSize,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(mobileSubMenuItemFontSize, {
-					selector:
-						".wpbf-mobile-menu .sub-menu a, .wpbf-mobile-menu .sub-menu .menu-item-has-children .wpbf-submenu-toggle",
-					props: { "font-size": maybeAppendSuffix(value) },
-				});
+	listenToCustomizerValueChange<string | number>(
+		"mobile_sub_menu_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-mobile-menu .sub-menu a, .wpbf-mobile-menu .sub-menu .menu-item-has-children .wpbf-submenu-toggle",
+				props: { "font-size": maybeAppendSuffix(value) },
 			});
 		},
 	);
 
 	/* Logo */
 
-	const menuLogoSizeSettingId = "menu_logo_size";
-
 	// Width.
-	customizer(
-		menuLogoSizeSettingId,
-		function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
-			setting.bind(function (value) {
-				const obj =
-					typeof value === "string"
-						? parseJsonOrUndefined<DevicesValue>(value)
-						: value;
+	listenToCustomizerValueChange<string | DevicesValue>(
+		"menu_logo_size",
+		function (settingId, value) {
+			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
-				writeCSS(menuLogoSizeSettingId + "-desktop", {
-					selector: ".wpbf-logo img, .wpbf-mobile-logo img",
-					props: {
-						width: maybeAppendSuffix(obj?.desktop),
-					},
-				});
+			writeCSS(settingId + "-desktop", {
+				selector: ".wpbf-logo img, .wpbf-mobile-logo img",
+				props: {
+					width: maybeAppendSuffix(obj?.desktop),
+				},
+			});
 
-				writeCSS(menuLogoSizeSettingId + "-tablet", {
-					mediaQuery: `@media (${mediaQueries.tablet})`,
-					selector: ".wpbf-mobile-logo img",
-					props: { width: maybeAppendSuffix(obj?.tablet) },
-				});
+			writeCSS(settingId + "-tablet", {
+				mediaQuery: `@media (${mediaQueries.tablet})`,
+				selector: ".wpbf-mobile-logo img",
+				props: { width: maybeAppendSuffix(obj?.tablet) },
+			});
 
-				writeCSS(menuLogoSizeSettingId + "-mobile", {
-					mediaQuery: `@media (${mediaQueries.mobile})`,
-					selector: ".wpbf-mobile-logo img",
-					props: { width: maybeAppendSuffix(obj?.mobile) },
-				});
+			writeCSS(settingId + "-mobile", {
+				mediaQuery: `@media (${mediaQueries.mobile})`,
+				selector: ".wpbf-mobile-logo img",
+				props: { width: maybeAppendSuffix(obj?.mobile) },
 			});
 		},
 	);
-
-	const menuLogoFontSizeSettingId = "menu_logo_font_size";
 
 	// Font size.
-	customizer(
-		menuLogoFontSizeSettingId,
-		function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
-			setting.bind(function (value) {
-				const obj =
-					typeof value === "string"
-						? parseJsonOrUndefined<DevicesValue>(value)
-						: value;
+	listenToCustomizerValueChange<string | DevicesValue>(
+		"menu_logo_font_size",
+		function (settingId, value) {
+			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
-				writeCSS(menuLogoFontSizeSettingId + "-desktop", {
-					selector: ".wpbf-logo a, .wpbf-mobile-logo a",
-					props: {
-						"font-size": maybeAppendSuffix(obj?.desktop),
-					},
-				});
+			writeCSS(settingId + "-desktop", {
+				selector: ".wpbf-logo a, .wpbf-mobile-logo a",
+				props: {
+					"font-size": maybeAppendSuffix(obj?.desktop),
+				},
+			});
 
-				writeCSS(menuLogoFontSizeSettingId + "-tablet", {
-					mediaQuery: `@media (${mediaQueries.tablet})`,
-					selector: ".wpbf-mobile-logo a",
-					props: { "font-size": maybeAppendSuffix(obj?.tablet) },
-				});
+			writeCSS(settingId + "-tablet", {
+				mediaQuery: `@media (${mediaQueries.tablet})`,
+				selector: ".wpbf-mobile-logo a",
+				props: { "font-size": maybeAppendSuffix(obj?.tablet) },
+			});
 
-				writeCSS(menuLogoFontSizeSettingId + "-mobile", {
-					mediaQuery: `@media (${mediaQueries.mobile})`,
-					selector: ".wpbf-mobile-logo a",
-					props: { "font-size": maybeAppendSuffix(obj?.mobile) },
-				});
+			writeCSS(settingId + "-mobile", {
+				mediaQuery: `@media (${mediaQueries.mobile})`,
+				selector: ".wpbf-mobile-logo a",
+				props: { "font-size": maybeAppendSuffix(obj?.mobile) },
 			});
 		},
 	);
-
-	const menuLogoColor = "menu_logo_color";
 
 	// Color.
-	customizer(
-		menuLogoColor,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(menuLogoColor, {
-					selector: ".wpbf-logo a, .wpbf-mobile-logo a",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"menu_logo_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-logo a, .wpbf-mobile-logo a",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const menuLogoColorAlt = "menu_logo_color_alt";
 
 	// Color hover.
-	customizer(
-		menuLogoColorAlt,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(menuLogoColorAlt, {
-					selector: ".wpbf-logo a:hover, .wpbf-mobile-logo a:hover",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"menu_logo_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-logo a:hover, .wpbf-mobile-logo a:hover",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const menuLogoContainerWidth = "menu_logo_container_width";
 
 	// Container width.
-	customizer(
-		menuLogoContainerWidth,
-		function (setting: WpbfCustomizeSetting<number | string>) {
-			setting.bind(function (value) {
-				const calculation = 100 - toNumberValue(value);
+	listenToCustomizerValueChange<number | string>(
+		"menu_logo_container_width",
+		function (settingId, value) {
+			const calculation = 100 - toNumberValue(value);
 
-				writeCSS(menuLogoContainerWidth, {
-					blocks: [
-						{
-							selector: ".wpbf-navigation .wpbf-1-4",
-							props: {
-								width: maybeAppendSuffix(value, "%"),
-							},
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-navigation .wpbf-1-4",
+						props: {
+							width: maybeAppendSuffix(value, "%"),
 						},
-						{
-							selector: ".wpbf-navigation .wpbf-3-4",
-							props: {
-								width: maybeAppendSuffix(calculation, "%"),
-							},
+					},
+					{
+						selector: ".wpbf-navigation .wpbf-3-4",
+						props: {
+							width: maybeAppendSuffix(calculation, "%"),
 						},
-					],
-				});
+					},
+				],
 			});
 		},
 	);
 
-	const mobileMenuLogoContainerWidthSettingId =
-		"mobile_menu_logo_container_width";
-
 	// Mobile container width.
-	customizer(
-		mobileMenuLogoContainerWidthSettingId,
-		function (setting: WpbfCustomizeSetting<number | string>) {
-			setting.bind(function (value) {
-				const calculation = 100 - toNumberValue(value);
+	listenToCustomizerValueChange<number | string>(
+		"mobile_menu_logo_container_width",
+		function (settingId, value) {
+			const calculation = 100 - toNumberValue(value);
 
-				writeCSS(mobileMenuLogoContainerWidthSettingId, {
-					mediaQuery: `@media (${mediaQueries.tablet})`,
-					blocks: [
-						{
-							selector: ".wpbf-navigation .wpbf-2-3",
-							props: { width: maybeAppendSuffix(value, "%") },
-						},
-						{
-							selector: ".wpbf-navigation .wpbf-1-3",
-							props: { width: maybeAppendSuffix(calculation, "%") },
-						},
-					],
-				});
+			writeCSS(settingId, {
+				mediaQuery: `@media (${mediaQueries.tablet})`,
+				blocks: [
+					{
+						selector: ".wpbf-navigation .wpbf-2-3",
+						props: { width: maybeAppendSuffix(value, "%") },
+					},
+					{
+						selector: ".wpbf-navigation .wpbf-1-3",
+						props: { width: maybeAppendSuffix(calculation, "%") },
+					},
+				],
 			});
 		},
 	);
 
 	/* Tagline */
 
-	const menuLogoDescriptionFontSizeSettingId =
-		"menu_logo_description_font_size";
-
 	// Font size.
-	customizer(
-		menuLogoDescriptionFontSizeSettingId,
-		function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
-			setting.bind(function (value) {
-				const obj =
-					typeof value === "string"
-						? parseJsonOrUndefined<DevicesValue>(value)
-						: value;
+	listenToCustomizerValueChange<string | DevicesValue>(
+		"menu_logo_description_font_size",
+		function (settingId, value) {
+			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
-				writeCSS(menuLogoDescriptionFontSizeSettingId + "-desktop", {
-					selector: ".wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline",
-					props: {
-						"font-size": maybeAppendSuffix(obj?.desktop),
-					},
-				});
+			writeCSS(settingId + "-desktop", {
+				selector: ".wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline",
+				props: {
+					"font-size": maybeAppendSuffix(obj?.desktop),
+				},
+			});
 
-				writeCSS(menuLogoDescriptionFontSizeSettingId + "-tablet", {
-					mediaQuery: `@media (${mediaQueries.tablet})`,
-					selector: ".wpbf-mobile-logo .wpbf-tagline",
-					props: { "font-size": maybeAppendSuffix(obj?.tablet) },
-				});
+			writeCSS(settingId + "-tablet", {
+				mediaQuery: `@media (${mediaQueries.tablet})`,
+				selector: ".wpbf-mobile-logo .wpbf-tagline",
+				props: { "font-size": maybeAppendSuffix(obj?.tablet) },
+			});
 
-				writeCSS(menuLogoDescriptionFontSizeSettingId + "-mobile", {
-					mediaQuery: `@media (${mediaQueries.mobile})`,
-					selector: ".wpbf-mobile-logo .wpbf-tagline",
-					props: { "font-size": maybeAppendSuffix(obj?.mobile) },
-				});
+			writeCSS(settingId + "-mobile", {
+				mediaQuery: `@media (${mediaQueries.mobile})`,
+				selector: ".wpbf-mobile-logo .wpbf-tagline",
+				props: { "font-size": maybeAppendSuffix(obj?.mobile) },
 			});
 		},
 	);
 
-	const menuLogoDescriptionColorSettingId = "menu_logo_description_color";
-
 	// Font color.
-	customizer(
-		menuLogoDescriptionColorSettingId,
-		function (value: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			value.bind(function (newValue) {
-				writeCSS(menuLogoDescriptionColorSettingId, {
-					selector: ".wpbf-tagline",
-					props: { color: toStringColor(newValue) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"menu_logo_description_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-tagline",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
 
 	/* Pre Header */
 
-	const preHeaderWidthSettingId = "pre_header_width";
-
 	// Width.
-	customizer(
-		preHeaderWidthSettingId,
-		function (setting: WpbfCustomizeSetting<number | string>) {
-			setting.bind(function (value) {
-				value = emptyNotZero(value) ? "1200px" : value;
+	listenToCustomizerValueChange<number | string>(
+		"pre_header_width",
+		function (settingId, value) {
+			value = emptyNotZero(value) ? "1200px" : value;
 
-				writeCSS(preHeaderWidthSettingId, {
-					selector: ".wpbf-inner-pre-header",
-					props: { "max-width": maybeAppendSuffix(value) },
-				});
+			writeCSS(settingId, {
+				selector: ".wpbf-inner-pre-header",
+				props: { "max-width": maybeAppendSuffix(value) },
 			});
 		},
 	);
-
-	const preHeaderHeightSettingId = "pre_header_height";
 
 	// Height.
-	customizer(
-		preHeaderHeightSettingId,
-		function (setting: WpbfCustomizeSetting<number | string>) {
-			setting.bind(function (value) {
-				writeCSS(preHeaderHeightSettingId, {
-					selector: ".wpbf-inner-pre-header",
-					props: {
-						"padding-top": maybeAppendSuffix(value),
-						"padding-bottom": maybeAppendSuffix(value),
-					},
-				});
+	listenToCustomizerValueChange<number | string>(
+		"pre_header_height",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-inner-pre-header",
+				props: {
+					"padding-top": maybeAppendSuffix(value),
+					"padding-bottom": maybeAppendSuffix(value),
+				},
 			});
 		},
 	);
-
-	const preHeaderBgColorSettingId = "pre_header_bg_color";
 
 	// Background color.
-	customizer(
-		preHeaderBgColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(preHeaderBgColorSettingId, {
-					selector: ".wpbf-pre-header",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"pre_header_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-pre-header",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const preHeaderFontColorSettingId = "pre_header_font_color";
 
 	// Font color.
-	customizer(
-		preHeaderFontColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(preHeaderFontColorSettingId, {
-					selector: ".wpbf-pre-header",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"pre_header_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-pre-header",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const preHeaderAccentColorsSettingId = "pre_header_accent_colors";
 
 	// Pre-header accent colors.
-	customizer(
-		preHeaderAccentColorsSettingId,
-		(value: WpbfCustomizeSetting<WpbfCustomizeMulticolorControlValue>) => {
-			value.bind(function (newValue) {
-				const rawDefaultColor = newValue.default ?? "";
-				const defaultColor = toStringColor(rawDefaultColor);
+	listenToCustomizerValueChange<WpbfCustomizeMulticolorControlValue>(
+		"pre_header_accent_colors",
+		(settingId, value) => {
+			const rawDefaultColor = value.default ?? "";
+			const defaultColor = toStringColor(rawDefaultColor);
 
-				const rawHoverColor = newValue.hover ?? "";
-				const hoverColor = toStringColor(rawHoverColor);
+			const rawHoverColor = value.hover ?? "";
+			const hoverColor = toStringColor(rawHoverColor);
 
-				writeCSS(preHeaderAccentColorsSettingId, {
-					blocks: [
-						{
-							selector: ".wpbf-pre-header a",
-							props: { color: defaultColor },
-						},
-						{
-							selector:
-								".wpbf-pre-header a:hover, .wpbf-pre-header .wpbf-menu > .current-menu-item > a",
-							props: { color: `${hoverColor}!important` },
-						},
-					],
-				});
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-pre-header a",
+						props: { color: defaultColor },
+					},
+					{
+						selector:
+							".wpbf-pre-header a:hover, .wpbf-pre-header .wpbf-menu > .current-menu-item > a",
+						props: { color: `${hoverColor}!important` },
+					},
+				],
 			});
 		},
 	);
 
-	const preHeaderFontSizeSettingId = "pre_header_font_size";
-
 	// Font size.
-	customizer(
-		preHeaderFontSizeSettingId,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(preHeaderFontSizeSettingId, {
-					selector:
-						".wpbf-pre-header, .wpbf-pre-header .wpbf-menu, .wpbf-pre-header .wpbf-menu .sub-menu a",
-					props: { "font-size": maybeAppendSuffix(value) },
-				});
+	listenToCustomizerValueChange<string | number>(
+		"pre_header_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-pre-header, .wpbf-pre-header .wpbf-menu, .wpbf-pre-header .wpbf-menu .sub-menu a",
+				props: { "font-size": maybeAppendSuffix(value) },
 			});
 		},
 	);
 
 	/* Blog – Pagination */
 
-	const blogPaginationBorderRadiusSettingId = "blog_pagination_border_radius";
-
 	// Border radius.
-	customizer(
-		blogPaginationBorderRadiusSettingId,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(blogPaginationBorderRadiusSettingId, {
-					selector: ".pagination .page-numbers",
-					props: { borderRadius: maybeAppendSuffix(value) },
-				});
+	listenToCustomizerValueChange<string | number>(
+		"blog_pagination_border_radius",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".pagination .page-numbers",
+				props: { borderRadius: maybeAppendSuffix(value) },
 			});
 		},
 	);
-
-	const blogPaginationBgColorSettingId = "blog_pagination_background_color";
 
 	// Background color.
-	customizer(
-		blogPaginationBgColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(blogPaginationBgColorSettingId, {
-					selector: ".pagination .page-numbers:not(.current)",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"blog_pagination_background_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".pagination .page-numbers:not(.current)",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const blogPaginationBgColorAltSettingId =
-		"blog_pagination_background_color_alt";
 
 	// Background color hover.
-	customizer(
-		blogPaginationBgColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(blogPaginationBgColorAltSettingId, {
-					selector: ".pagination .page-numbers:not(.current):hover",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"blog_pagination_background_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".pagination .page-numbers:not(.current):hover",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const blogPaginationBgColorActiveSettingId =
-		"blog_pagination_background_color_active";
 
 	// Background color active.
-	customizer(
-		blogPaginationBgColorActiveSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(blogPaginationBgColorActiveSettingId, {
-					selector: ".pagination .page-numbers.current",
-					props: { "background-color": toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"blog_pagination_background_color_active",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".pagination .page-numbers.current",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const blogPaginationFontColorSettingId = "blog_pagination_font_color";
 
 	// Font color.
-	customizer(
-		blogPaginationFontColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(blogPaginationFontColorSettingId, {
-					selector: ".pagination .page-numbers:not(.current)",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"blog_pagination_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".pagination .page-numbers:not(.current)",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const blogPaginationFontColorAltSettingId = "blog_pagination_font_color_alt";
 
 	// Font color hover.
-	customizer(
-		blogPaginationFontColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(blogPaginationFontColorAltSettingId, {
-					selector: ".pagination .page-numbers:not(.current):hover",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"blog_pagination_font_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".pagination .page-numbers:not(.current):hover",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const blogPaginationFontColorActive = "blog_pagination_font_color_active";
 
 	// Font color active.
-	customizer(
-		blogPaginationFontColorActive,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(blogPaginationFontColorActive, {
-					selector: ".pagination .page-numbers.current",
-					props: { color: toStringColor(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"blog_pagination_font_color_active",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".pagination .page-numbers.current",
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
 
-	const blogPaginationFontSizeSettingId = "blog_pagination_font_size";
-
 	// Font size.
-	customizer(
-		blogPaginationFontSizeSettingId,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(blogPaginationFontSizeSettingId, {
-					selector: ".pagination .page-numbers",
-					props: { "font-size": maybeAppendSuffix(value) },
-				});
+	listenToCustomizerValueChange<string | number>(
+		"blog_pagination_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".pagination .page-numbers",
+				props: { "font-size": maybeAppendSuffix(value) },
 			});
 		},
 	);
 
 	/* Sidebar */
 
-	const sidebarWidthSettingId = "sidebar_width";
-
 	// Width.
-	customizer(
-		sidebarWidthSettingId,
-		function (setting: WpbfCustomizeSetting<number | string>) {
-			setting.bind(function (value) {
-				const calculation = 100 - toNumberValue(value);
+	listenToCustomizerValueChange<number | string>(
+		"sidebar_width",
+		function (settingId, value) {
+			const calculation = 100 - toNumberValue(value);
 
-				writeCSS(sidebarWidthSettingId, {
-					mediaQuery: "@media (min-width: 769px)",
-					blocks: [
-						{
-							selector:
-								"body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3",
-							props: { width: maybeAppendSuffix(value, "%") },
-						},
-						{
-							selector: "body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3",
-							props: { width: maybeAppendSuffix(calculation, "%") },
-						},
-					],
-				});
+			writeCSS(settingId, {
+				mediaQuery: "@media (min-width: 769px)",
+				blocks: [
+					{
+						selector:
+							"body:not(.wpbf-no-sidebar) .wpbf-sidebar-wrapper.wpbf-medium-1-3",
+						props: { width: maybeAppendSuffix(value, "%") },
+					},
+					{
+						selector: "body:not(.wpbf-no-sidebar) .wpbf-main.wpbf-medium-2-3",
+						props: { width: maybeAppendSuffix(calculation, "%") },
+					},
+				],
 			});
 		},
 	);
 
-	const sidebarBgColorSettingId = "sidebar_bg_color";
-
 	// Background color.
-	customizer(sidebarBgColorSettingId, function (setting) {
-		setting.bind(function (value) {
-			writeCSS(sidebarBgColorSettingId, {
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"sidebar_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
 				selector: ".wpbf-sidebar .widget, .elementor-widget-sidebar .widget",
-				props: { "background-color": value ? value : undefined },
+				props: { "background-color": toStringColor(value) },
 			});
-		});
-	});
+		},
+	);
 
 	/* Buttons */
 
-	const buttonBgColorSettingId = "button_bg_color";
-
 	// Background color.
-	customizer(
-		buttonBgColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(buttonBgColorSettingId, {
-					selector:
-						'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
-					props: { "background-color": toStringColorOrUndefined(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const buttonBgColorAltSettingId = "button_bg_color_alt";
 
 	// Background color hover.
-	customizer(
-		buttonBgColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(buttonBgColorAltSettingId, {
-					selector:
-						'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
-					props: { "background-color": toStringColorOrUndefined(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_bg_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
-
-	const buttonTextColorSettingId = "button_text_color";
 
 	// Text color.
-	customizer(
-		buttonTextColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(buttonTextColorSettingId, {
-					selector:
-						'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
-					props: { color: toStringColorOrUndefined(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_text_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const buttonTextColorAltSettingId = "button_text_color_alt";
 
 	// Text color hover.
-	customizer(
-		buttonTextColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(buttonTextColorAltSettingId, {
-					selector:
-						'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
-					props: { color: toStringColorOrUndefined(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_text_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
-
-	const btnPrimaryBgColorSettingId = "button_primary_bg_color";
 
 	// Primary background color.
-	customizer(
-		btnPrimaryBgColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(btnPrimaryBgColorSettingId, {
-					blocks: [
-						{
-							selector: ".wpbf-button-primary",
-							props: {
-								"background-color": toStringColorOrUndefined(value),
-							},
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_primary_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-button-primary",
+						props: {
+							"background-color": toStringColor(value),
 						},
-						{
-							selector:
-								".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background)",
-							props: {
-								"background-color": toStringColorOrUndefined(value),
-							},
+					},
+					{
+						selector:
+							".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background)",
+						props: {
+							"background-color": toStringColor(value),
 						},
-						{
-							selector:
-								".is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background)",
-							props: {
-								"border-color": toStringColorOrUndefined(value),
-								color: toStringColorOrUndefined(value),
-							},
+					},
+					{
+						selector:
+							".is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background)",
+						props: {
+							"border-color": toStringColor(value),
+							color: toStringColor(value),
 						},
-					],
-				});
+					},
+				],
 			});
 		},
 	);
-
-	const btnPrimaryBgColorAltSettingId = "button_primary_bg_color_alt";
 
 	// Primary background color hover.
-	customizer(
-		btnPrimaryBgColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(btnPrimaryBgColorAltSettingId, {
-					blocks: [
-						{
-							selector: ".wpbf-button-primary:hover",
-							props: { "background-color": toStringColorOrUndefined(value) },
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_primary_bg_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-button-primary:hover",
+						props: { "background-color": toStringColor(value) },
+					},
+					{
+						selector:
+							".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover",
+						props: { "background-color": toStringColor(value) },
+					},
+					{
+						selector:
+							".is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background):hover",
+						props: {
+							"border-color": toStringColor(value),
+							color: toStringColor(value),
 						},
-						{
-							selector:
-								".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover",
-							props: { "background-color": toStringColorOrUndefined(value) },
-						},
-						{
-							selector:
-								".is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background):hover",
-							props: {
-								"border-color": toStringColorOrUndefined(value),
-								color: toStringColorOrUndefined(value),
-							},
-						},
-					],
-				});
+					},
+				],
 			});
 		},
 	);
-
-	const btnPrimaryTextColorSettingId = "button_primary_text_color";
 
 	// Primary text color.
-	customizer(
-		btnPrimaryTextColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(btnPrimaryTextColorSettingId, {
-					blocks: [
-						{
-							selector: ".wpbf-button-primary",
-							props: { color: toStringColorOrUndefined(value) },
-						},
-						{
-							selector:
-								".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-text-color)",
-							props: { color: toStringColorOrUndefined(value) },
-						},
-					],
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_primary_text_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-button-primary",
+						props: { color: toStringColor(value) },
+					},
+					{
+						selector:
+							".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-text-color)",
+						props: { color: toStringColor(value) },
+					},
+				],
 			});
 		},
 	);
-
-	const btnPrimaryTextColorAltSettingId = "button_primary_text_color_alt";
 
 	// Primary text color hover.
-	customizer(
-		btnPrimaryTextColorAltSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(btnPrimaryTextColorAltSettingId, {
-					blocks: [
-						{
-							selector: ".wpbf-button-primary:hover",
-							props: {
-								color: toStringColorOrUndefined(value),
-							},
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_primary_text_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-button-primary:hover",
+						props: {
+							color: toStringColor(value),
 						},
-						{
-							selector:
-								".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover",
-							props: {
-								color: toStringColorOrUndefined(value),
-							},
+					},
+					{
+						selector:
+							".wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover",
+						props: {
+							color: toStringColor(value),
 						},
-					],
-				});
+					},
+				],
 			});
 		},
 	);
-
-	const buttonBorderRadiusSettingId = "button_border_radius";
 
 	// Border radius.
-	customizer(
-		buttonBorderRadiusSettingId,
-		function (setting: WpbfCustomizeSetting<string | number>) {
-			setting.bind(function (value) {
-				writeCSS(buttonBorderRadiusSettingId, {
-					selector: '.wpbf-button, input[type="submit"]',
-					props: {
-						"border-radius": maybeAppendSuffix(value),
-					},
-				});
+	listenToCustomizerValueChange<string | number>(
+		"button_border_radius",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: '.wpbf-button, input[type="submit"]',
+				props: {
+					"border-radius": maybeAppendSuffix(value),
+				},
 			});
 		},
 	);
-
-	const buttonBorderWidthSettingId = "button_border_width";
 
 	// Border width.
-	customizer(
-		buttonBorderWidthSettingId,
-		function (setting: WpbfCustomizeSetting<number | string>) {
-			setting.bind(function (value) {
-				writeCSS(buttonBorderWidthSettingId, {
-					selector: '.wpbf-button, input[type="submit"]',
-					props: {
-						"border-width": maybeAppendSuffix(value),
-						"border-style": "solid",
-					},
-				});
+	listenToCustomizerValueChange<number | string>(
+		"button_border_width",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: '.wpbf-button, input[type="submit"]',
+				props: {
+					"border-width": maybeAppendSuffix(value),
+					"border-style": "solid",
+				},
 			});
 		},
 	);
 
-	const buttonBorderColorSettingId = "button_border_color";
-
 	// Border color.
-	customizer(
-		buttonBorderColorSettingId,
-		function (setting: WpbfCustomizeSetting<WpbfCustomizeColorControlValue>) {
-			setting.bind(function (value) {
-				writeCSS(buttonBorderColorSettingId, {
-					selector:
-						'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
-					props: { borderColor: toStringColorOrUndefined(value) },
-				});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_border_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+				props: { "border-color": toStringColor(value) },
 			});
 		},
 	);
 
 	// Border color hover.
-	customizer("button_border_color_alt", function (value) {
-		const styleTag = getStyleTag("button_border_color_alt");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover {border-color: ' +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_border_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
+				props: { "border-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// Primary border color.
-	customizer("button_primary_border_color", function (value) {
-		const styleTag = getStyleTag("button_primary_border_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-button-primary {border-color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_primary_border_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-button-primary",
+				props: { "border-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// Primary border color hover.
-	customizer("button_primary_border_color_alt", function (value) {
-		const styleTag = getStyleTag("button_primary_border_color_alt");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-button-primary:hover {border-color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"button_primary_border_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-button-primary:hover",
+				props: { "border-color": toStringColor(value) },
+			});
+		},
+	);
 
 	/* Breadcrumbs */
 
 	// Background background color.
-	customizer("breadcrumbs_background_color", function (value) {
-		const styleTag = getStyleTag("breadcrumbs_background_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-breadcrumbs-container {background-color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"breadcrumbs_background_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-breadcrumbs-container",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// Alignment.
-	customizer("breadcrumbs_alignment", function (value) {
-		const styleTag = getStyleTag("breadcrumbs_alignment");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-breadcrumbs-container {text-align: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<string>(
+		"breadcrumbs_alignment",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-breadcrumbs-container",
+				props: { "text-align": value },
+			});
+		},
+	);
 
 	// Font color.
 	customizer("breadcrumbs_font_color", function (value) {

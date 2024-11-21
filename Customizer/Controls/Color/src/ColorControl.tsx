@@ -1,7 +1,7 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	WpbfCustomizeColorControl,
-	WpbfCustomizeColorControlValue,
+	WpbfColorControlValue,
 } from "./color-interface";
 import ColorForm from "./ColorForm";
 import React from "react";
@@ -130,7 +130,7 @@ const ColorControl =
 			 *
 			 * The result: Even though the "x" color picker becomes very slow, it's still usable and responsive enough.
 			 */
-			this.setting?.bind((val: WpbfCustomizeColorControlValue) => {
+			this.setting?.bind((val: WpbfColorControlValue) => {
 				control.updateComponentState?.(val);
 			});
 		},
