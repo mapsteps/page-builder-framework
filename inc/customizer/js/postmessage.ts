@@ -1807,11 +1807,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				blocks: [
 					{
 						selector: ".wpbf-woo-list-view .wpbf-woo-loop-thumbnail-wrapper",
-						props: { width: maybeAppendSuffix(numberValue - 2, "%") },
+						props: { width: String(numberValue - 2) + "%" },
 					},
 					{
 						selector: ".wpbf-woo-list-view .wpbf-woo-loop-summary",
-						props: { width: maybeAppendSuffix(98 - numberValue, "%") },
+						props: { width: String(98 - numberValue) + "%" },
 					},
 				],
 			});
@@ -1974,42 +1974,39 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	);
 
 	// Image width.
-	customizer("woocommerce_single_image_width", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_image_width");
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_single_image_width",
+		function (settingId, value) {
+			const numberValue = toNumberValue(value);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.woocommerce div.product div.images,\
-				.woocommerce #content div.product div.images,\
-				.woocommerce-page div.product div.images,\
-				.woocommerce-page #content div.product div.images {width: " +
-				(newValue - 2) +
-				"%;}\
-				\
-				.woocommerce div.product div.summary,\
-				.woocommerce #content div.product div.summary,\
-				.woocommerce-page div.product div.summary,\
-				.woocommerce-page #content div.product div.summary {width: " +
-				(98 - newValue) +
-				"%;}\
-			";
-		});
-	});
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector:
+							".woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images",
+						props: { width: String(numberValue - 2) + "%" },
+					},
+					{
+						selector:
+							".woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary",
+						props: { width: String(98 - numberValue) + "%" },
+					},
+				],
+			});
+		},
+	);
 
 	// Price font size.
-	customizer("woocommerce_single_price_size", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_price_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".woocommerce div.product span.price, .woocommerce div.product p.price {font-size: " +
-				newValue +
-				suffix +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_single_price_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce div.product span.price, .woocommerce div.product p.price",
+				props: { fontSize: maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Price font color.
 	customizer("woocommerce_single_price_color", function (value) {
@@ -2024,216 +2021,210 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	});
 
 	// Tabs background color.
-	customizer("woocommerce_single_tabs_background_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_tabs_background_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce div.product .woocommerce-tabs ul.tabs li {background-color: " +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_single_tabs_background_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce div.product .woocommerce-tabs ul.tabs li",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// Tabs background color hover.
-	customizer("woocommerce_single_tabs_background_color_alt", function (value) {
-		const styleTag = getStyleTag(
-			"woocommerce_single_tabs_background_color_alt",
-		);
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce div.product .woocommerce-tabs ul.tabs li:hover {background-color: " +
-				newValue +
-				"; border-bottom-color: " +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_single_tabs_background_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce div.product .woocommerce-tabs ul.tabs li:hover",
+				props: {
+					"background-color": toStringColor(value),
+					"border-bottom-color": toStringColor(value),
+				},
+			});
+		},
+	);
 
 	// Tabs background color active.
-	customizer(
+	listenToCustomizerValueChange<WpbfColorControlValue>(
 		"woocommerce_single_tabs_background_color_active",
-		function (value) {
-			const styleTag = getStyleTag(
-				"woocommerce_single_tabs_background_color_active",
-			);
-
-			value.bind(function (newValue) {
-				styleTag.innerHTML =
-					".woocommerce div.product .woocommerce-tabs ul.tabs li.active, .woocommerce div.product .woocommerce-tabs ul.tabs li.active:hover {background-color: " +
-					newValue +
-					"; border-bottom-color: " +
-					newValue +
-					";}";
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce div.product .woocommerce-tabs ul.tabs li.active, .woocommerce div.product .woocommerce-tabs ul.tabs li.active:hover",
+				props: {
+					"background-color": toStringColor(value),
+					"border-bottom-color": toStringColor(value),
+				},
 			});
 		},
 	);
 
 	// Tabs font color.
-	customizer("woocommerce_single_tabs_font_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_tabs_font_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce div.product .woocommerce-tabs ul.tabs li:not(.active) a {color: " +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_single_tabs_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce div.product .woocommerce-tabs ul.tabs li:not(.active) a",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Tabs font color hover.
-	customizer("woocommerce_single_tabs_font_color_alt", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_tabs_font_color_alt");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce div.product .woocommerce-tabs ul.tabs li:not(.active) a:hover {color: " +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_single_tabs_font_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce div.product .woocommerce-tabs ul.tabs li:not(.active) a:hover",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Tabs font color active.
-	customizer("woocommerce_single_tabs_font_color_active", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_tabs_font_color_active");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce div.product .woocommerce-tabs ul.tabs li.active a {color: " +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_single_tabs_font_color_active",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce div.product .woocommerce-tabs ul.tabs li.active a",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	/** Woocommerce Store & Notices */
 
 	// Woocommerce info notice's accent color.
-	customizer("woocommerce_info_notice_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_info_notice_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.woocommerce-info {border-top-color: " +
-				newValue +
-				";}\
-				.woocommerce-info:before, .woocommerce-info a {color: " +
-				newValue +
-				"}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_info_notice_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".woocommerce-info",
+						props: { "border-top-color": toStringColor(value) },
+					},
+					{
+						selector: ".woocommerce-info:before, .woocommerce-info a",
+						props: { color: toStringColor(value) },
+					},
+				],
+			});
+		},
+	);
 
 	// Woocommerce success notice's accent color.
-	customizer("woocommerce_message_notice_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_message_notice_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.woocommerce-message {border-top-color: " +
-				newValue +
-				";}\
-				.woocommerce-message:before, .woocommerce-message a {color: " +
-				newValue +
-				"}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_message_notice_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".woocommerce-message",
+						props: { "border-top-color": toStringColor(value) },
+					},
+					{
+						selector: ".woocommerce-message:before, .woocommerce-message a",
+						props: { color: toStringColor(value) },
+					},
+				],
+			});
+		},
+	);
 
 	// Woocommerce error notice's accent color.
-	customizer("woocommerce_error_notice_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_error_notice_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.woocommerce-error {border-top-color: " +
-				newValue +
-				";}\
-				.woocommerce-error:before, .woocommerce-error a {color: " +
-				newValue +
-				"}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_error_notice_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".woocommerce-error",
+						props: { "border-top-color": toStringColor(value) },
+					},
+					{
+						selector: ".woocommerce-error:before, .woocommerce-error a",
+						props: { color: toStringColor(value) },
+					},
+				],
+			});
+		},
+	);
 
 	// Woocommerce general notice's background color.
-	customizer("woocommerce_notice_bg_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_notice_bg_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce-message {background-color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_notice_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce-message",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// Woocommerce general notice's text color.
-	customizer("woocommerce_notice_text_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_notice_text_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".woocommerce-message {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_notice_text_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce-message",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Tabs font size.
-	customizer("woocommerce_single_tabs_font_size", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_tabs_font_size");
-
-		value.bind(function (newValue) {
-			const suffix = $.isNumeric(newValue) ? "px" : "";
-
-			styleTag.innerHTML =
-				".woocommerce div.product .woocommerce-tabs ul.tabs li a {font-size: " +
-				newValue +
-				suffix +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_single_tabs_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce div.product .woocommerce-tabs ul.tabs li a",
+				props: { fontSize: maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	/* EDD - Menu Item */
 
 	// Desktop color.
-	customizer("edd_menu_item_desktop_color", function (value) {
-		const styleTag = getStyleTag("edd_menu_item_desktop_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count {background-color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"edd_menu_item_desktop_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-menu .wpbf-edd-menu-item .wpbf-edd-menu-item-count",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// Mobile color.
-	customizer("edd_menu_item_mobile_color", function (value) {
-		const styleTag = getStyleTag("edd_menu_item_mobile_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count {background-color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"edd_menu_item_mobile_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-mobile-nav-wrapper .wpbf-edd-menu-item .wpbf-edd-menu-item-count",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	/* Easy Digital Downloads - Defaults */
 
 	// Button border radius.
-	customizer("button_border_radius", function (value) {
-		const styleTag = getStyleTag("button_border_radius");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".edd-submit.button {border-radius: " + newValue + "px;}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"button_border_radius",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".edd-submit.button",
+				props: { borderRadius: maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	/* Header Builder */
 	const headerBuilderRows = ["row_1", "row_2", "row_3"];
@@ -2299,98 +2290,80 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		 * - In row_2, there's no accent colors setting (we follow the old header section).
 		 */
 		if (rowKey === "row_3") {
-			const maxWidthSettingId = `${controlIdPrefix}max_width`;
-
-			customizer(
-				maxWidthSettingId,
-				(value: WpbfCustomizeSetting<string | number>) => {
-					value.bind(function (newValue) {
-						writeCSS(maxWidthSettingId, {
-							selector: `.wpbf-header-row-${rowKey} .wpbf-container`,
-							props: { "max-width": maybeAppendSuffix(newValue) },
-						});
+			listenToCustomizerValueChange<string | number>(
+				`${controlIdPrefix}max_width`,
+				(settingId, value) => {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey} .wpbf-container`,
+						props: { "max-width": maybeAppendSuffix(value) },
 					});
 				},
 			);
 
-			const vPaddingSettingId = `${controlIdPrefix}vertical_padding`;
-
-			customizer(
-				vPaddingSettingId,
-				function (value: WpbfCustomizeSetting<string | number>) {
-					value.bind(function (newValue) {
-						writeCSS(vPaddingSettingId, {
-							selector: `.wpbf-header-row-${rowKey} .wpbf-row-content`,
-							props: {
-								"padding-top": maybeAppendSuffix(newValue),
-								"padding-bottom": maybeAppendSuffix(newValue),
-							},
-						});
+			listenToCustomizerValueChange<string | number>(
+				`${controlIdPrefix}vertical_padding`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey} .wpbf-row-content`,
+						props: {
+							"padding-top": maybeAppendSuffix(value),
+							"padding-bottom": maybeAppendSuffix(value),
+						},
 					});
 				},
 			);
 
-			const fontSizeSettingId = `${controlIdPrefix}font_size`;
-
-			customizer(
-				fontSizeSettingId,
-				(value: WpbfCustomizeSetting<string | number>) => {
-					value.bind(function (newValue) {
-						writeCSS(fontSizeSettingId, {
-							selector: `.wpbf-header-row-${rowKey}`,
-							props: { "font-size": maybeAppendSuffix(newValue) },
-						});
-					});
-				},
-			);
-
-			const bgColorSettinglId = `${controlIdPrefix}bg_color`;
-
-			customizer(bgColorSettinglId, function (value) {
-				value.bind(function (newValue) {
-					writeCSS(bgColorSettinglId, {
+			listenToCustomizerValueChange<string | number>(
+				`${controlIdPrefix}font_size`,
+				(settingId, value) => {
+					writeCSS(settingId, {
 						selector: `.wpbf-header-row-${rowKey}`,
-						props: { "background-color": newValue },
+						props: { "font-size": maybeAppendSuffix(value) },
 					});
-				});
-			});
+				},
+			);
+
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				`${controlIdPrefix}bg_color`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { "background-color": toStringColor(value) },
+					});
+				},
+			);
 		}
 
-		const textColorSettingId = `${controlIdPrefix}text_color`;
-
-		customizer(textColorSettingId, function (value) {
-			value.bind(function (newValue) {
-				writeCSS(textColorSettingId, {
+		listenToCustomizerValueChange<WpbfColorControlValue>(
+			`${controlIdPrefix}text_color`,
+			function (settingId, value) {
+				writeCSS(settingId, {
 					selector: `.wpbf-header-row-${rowKey}`,
-					props: { color: newValue },
+					props: { color: toStringColor(value) },
 				});
-			});
-		});
+			},
+		);
 
-		const accentColorsSettingId = `${controlIdPrefix}accent_colors`;
+		listenToCustomizerValueChange<WpbfCustomizeMulticolorControlValue>(
+			`${controlIdPrefix}accent_colors`,
+			(settingId, value) => {
+				const rawDefaultColor = value.default ?? "";
+				const defaultColor = toStringColor(rawDefaultColor);
 
-		customizer(
-			accentColorsSettingId,
-			(value: WpbfCustomizeSetting<WpbfCustomizeMulticolorControlValue>) => {
-				value.bind(function (newValue) {
-					const rawDefaultColor = newValue.default ?? "";
-					const defaultColor = toStringColor(rawDefaultColor);
+				const rawHoverColor = value.hover ?? "";
+				const hoverColor = toStringColor(rawHoverColor);
 
-					const rawHoverColor = newValue.hover ?? "";
-					const hoverColor = toStringColor(rawHoverColor);
-
-					writeCSS(accentColorsSettingId, {
-						blocks: [
-							{
-								selector: `.wpbf-header-row-${rowKey} a`,
-								props: { color: defaultColor },
-							},
-							{
-								selector: `.wpbf-header-row-${rowKey} a:hover, .wpbf-header-row-${rowKey} a:focus`,
-								props: { color: hoverColor },
-							},
-						],
-					});
+				writeCSS(settingId, {
+					blocks: [
+						{
+							selector: `.wpbf-header-row-${rowKey} a`,
+							props: { color: defaultColor },
+						},
+						{
+							selector: `.wpbf-header-row-${rowKey} a:hover, .wpbf-header-row-${rowKey} a:focus`,
+							props: { color: hoverColor },
+						},
+					],
 				});
 			},
 		);
@@ -2401,86 +2374,66 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	headerBuilderButtonKeys.forEach((buttonKey) => {
 		const controlIdPrefix = `wpbf_header_builder_${buttonKey}`;
 
-		customizer(
+		listenToCustomizerValueChange<boolean>(
 			controlIdPrefix + "_new_tab",
-			function (value: WpbfCustomizeSetting<boolean>) {
-				value.bind((newValue) => {
-					const link = document.querySelector(
-						`.wpbf-button.${controlIdPrefix}`,
-					);
-					if (!(link instanceof HTMLAnchorElement)) return;
+			function (settingId, value) {
+				const link = document.querySelector(`.wpbf-button.${controlIdPrefix}`);
+				if (!(link instanceof HTMLAnchorElement)) return;
 
-					if (newValue) {
-						link.target = "_blank";
-					} else {
-						link.removeAttribute("target");
-					}
-				});
+				if (value) {
+					link.target = "_blank";
+				} else {
+					link.removeAttribute("target");
+				}
 			},
 		);
 
-		customizer(
+		listenToCustomizerValueChange<string>(
 			controlIdPrefix + "_text",
-			function (value: WpbfCustomizeSetting<string>) {
-				value.bind((newValue) => {
-					const link = document.querySelector(
-						`.wpbf-button.${controlIdPrefix}`,
-					);
-					if (!(link instanceof HTMLAnchorElement)) return;
-					link.innerHTML = parseTemplateTags(newValue);
-				});
+			function (settingId, value) {
+				const link = document.querySelector(`.wpbf-button.${controlIdPrefix}`);
+				if (!(link instanceof HTMLAnchorElement)) return;
+				link.innerHTML = parseTemplateTags(value);
 			},
 		);
 
-		customizer(
+		listenToCustomizerValueChange<string>(
 			controlIdPrefix + "_url",
-			function (value: WpbfCustomizeSetting<string>) {
-				value.bind((newValue) => {
-					const link = document.querySelector(
-						`.wpbf-button.${controlIdPrefix}`,
-					);
-					if (!(link instanceof HTMLAnchorElement)) return;
-					link.href = parseTemplateTags(newValue);
-				});
+			function (settingId, value) {
+				const link = document.querySelector(`.wpbf-button.${controlIdPrefix}`);
+				if (!(link instanceof HTMLAnchorElement)) return;
+				link.href = parseTemplateTags(value);
 			},
 		);
 
-		customizer(
+		listenToCustomizerValueChange<string[]>(
 			controlIdPrefix + "_rel",
-			function (value: WpbfCustomizeSetting<string[]>) {
-				value.bind((newValue) => {
-					const link = document.querySelector(
-						`.wpbf-button.${controlIdPrefix}`,
-					);
-					if (!(link instanceof HTMLAnchorElement)) return;
+			function (settingId, value) {
+				const link = document.querySelector(`.wpbf-button.${controlIdPrefix}`);
+				if (!(link instanceof HTMLAnchorElement)) return;
 
-					if (Array.isArray(newValue) && newValue.length) {
-						link.rel = newValue.join(" ");
-					} else {
-						link.removeAttribute("rel");
-					}
-				});
+				if (Array.isArray(value) && value.length) {
+					link.rel = value.join(" ");
+				} else {
+					link.removeAttribute("rel");
+				}
 			},
 		);
 
-		customizer(
+		listenToCustomizerValueChange<string | number>(
 			controlIdPrefix + "_size",
-			function (value: WpbfCustomizeSetting<string>) {
-				value.bind((newValue) => {
-					const link = document.querySelector(
-						`.wpbf-button.${controlIdPrefix}`,
-					);
-					if (!(link instanceof HTMLAnchorElement)) return;
+			function (settingId, value) {
+				const link = document.querySelector(`.wpbf-button.${controlIdPrefix}`);
+				if (!(link instanceof HTMLAnchorElement)) return;
 
-					link.classList.remove("wpbf-button-small");
-					link.classList.remove("wpbf-button-large");
+				link.classList.remove("wpbf-button-small");
+				link.classList.remove("wpbf-button-large");
 
-					if ("small" === newValue) {
-						link.classList.add("wpbf-button-small");
-					} else if ("large" === newValue) {
-						link.classList.add("wpbf-button-large");
-					}
-				});
+				if ("small" === value) {
+					link.classList.add("wpbf-button-small");
+				} else if ("large" === value) {
+					link.classList.add("wpbf-button-large");
+				}
 			},
 		);
 
@@ -2501,15 +2454,12 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 
 		// Listen to the header builder's border style control.
-		customizer(
+		listenToCustomizerValueChange<string>(
 			`${controlIdPrefix}_border_style`,
-			function (value: WpbfCustomizeSetting<string>) {
-				const styleTag = getStyleTag(controlIdPrefix);
-
-				value.bind(function (newValue) {
-					styleTag.innerHTML = `.wpbf-button.${controlIdPrefix} {
-						border-style: ${newValue};
-					}`;
+			function (settingId, value) {
+				writeCSS(settingId, {
+					selector: `.wpbf-button.${controlIdPrefix}`,
+					props: { "border-style": value },
 				});
 			},
 		);
@@ -2589,26 +2539,26 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 		customizer(
 			props.controlId,
-			function (values: WpbfCustomizeSetting<string | DevicesValue>) {
+			function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
 				const styleTag = getStyleTag(props.controlId);
 
-				values.bind((newValues) => {
-					if ("string" === typeof newValues) {
+				setting.bind((values) => {
+					if ("string" === typeof values) {
 						styleTag.innerHTML = "";
 						return;
 					}
 
 					const validatedValues: DevicesValue = {};
 
-					for (const device in newValues) {
-						if (!newValues.hasOwnProperty(device)) continue;
-						if (newValues[device] === "") continue;
+					for (const device in values) {
+						if (!values.hasOwnProperty(device)) continue;
+						if (values[device] === "") continue;
 
 						const deviceValue = props.useValueSuffix
-							? valueHasUnit(newValues[device])
-								? newValues[device]
-								: newValues[device] + "px"
-							: newValues[device];
+							? valueHasUnit(values[device])
+								? values[device]
+								: values[device] + "px"
+							: values[device];
 
 						validatedValues[device] = deviceValue;
 					}
