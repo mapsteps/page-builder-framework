@@ -23,6 +23,8 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			return value;
 		}
 
+		if (value === "") return 0;
+
 		return parseFloat(value);
 	}
 
@@ -1580,426 +1582,396 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	);
 
 	// Font color.
-	customizer("breadcrumbs_font_color", function (value) {
-		const styleTag = getStyleTag("breadcrumbs_font_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-breadcrumbs {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"breadcrumbs_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-breadcrumbs",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Accent color.
-	customizer("breadcrumbs_accent_color", function (value) {
-		const styleTag = getStyleTag("breadcrumbs_accent_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-breadcrumbs a {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"breadcrumbs_accent_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-breadcrumbs a",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Accent color hover.
-	customizer("breadcrumbs_accent_color_alt", function (value) {
-		const styleTag = getStyleTag("breadcrumbs_accent_color_alt");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-breadcrumbs a:hover {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"breadcrumbs_accent_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-breadcrumbs a:hover",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	/* Footer */
 
 	// Width.
-	customizer("footer_width", function (value) {
-		const styleTag = getStyleTag("footer_width");
+	listenToCustomizerValueChange<string | number>(
+		"footer_width",
+		function (settingId, value) {
+			value = emptyNotZero(value) ? "1200px" : value;
 
-		value.bind(function (newValue) {
-			newValue = !newValue ? "1200px" : newValue;
-			styleTag.innerHTML = ".wpbf-inner-footer {max-width: " + newValue + ";}";
-		});
-	});
+			writeCSS(settingId, {
+				selector: ".wpbf-inner-footer",
+				props: { "max-width": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Height.
-	customizer("footer_height", function (value) {
-		const styleTag = getStyleTag("footer_height");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-inner-footer {padding-top: " +
-				newValue +
-				"px; padding-bottom: " +
-				newValue +
-				"px;}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"footer_height",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-inner-footer",
+				props: {
+					"padding-top": maybeAppendSuffix(value),
+					"padding-bottom": maybeAppendSuffix(value),
+				},
+			});
+		},
+	);
 
 	// Background color.
-	customizer("footer_bg_color", function (value) {
-		const styleTag = getStyleTag("footer_bg_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-page-footer {background-color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"footer_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-page-footer",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// Font color.
-	customizer("footer_font_color", function (value) {
-		const styleTag = getStyleTag("footer_font_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-inner-footer {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"footer_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-inner-footer",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Accent color.
-	customizer("footer_accent_color", function (value) {
-		const styleTag = getStyleTag("footer_accent_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML = ".wpbf-inner-footer a {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"footer_accent_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-inner-footer a",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Accent color hover.
-	customizer("footer_accent_color_alt", function (value) {
-		const styleTag = getStyleTag("footer_accent_color_alt");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".wpbf-inner-footer a:hover, .wpbf-inner-footer .wpbf-menu > .current-menu-item > a {color: " +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"footer_accent_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-inner-footer a:hover, .wpbf-inner-footer .wpbf-menu > .current-menu-item > a",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Font size.
-	customizer("footer_font_size", function (value) {
-		const styleTag = getStyleTag("footer_font_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu {font-size: " +
-				newValue +
-				suffix +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"footer_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu",
+				props: {
+					"font-size": maybeAppendSuffix(value),
+				},
+			});
+		},
+	);
 
 	/* WooCommerce - Defaults */
 
 	// Button border radius.
-	customizer("button_border_radius", function (value) {
-		const styleTag = getStyleTag("button_border_radius");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce a.button, .woocommerce button.button {border-radius: " +
-				newValue +
-				"px;}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"button_border_radius",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce a.button, .woocommerce button.button",
+				props: { "border-radius": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Custom width.
-	customizer("woocommerce_loop_custom_width", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_custom_width");
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_loop_custom_width",
+		function (settingId, value) {
+			value = emptyNotZero(value) ? "1200px" : value;
 
-		value.bind(function (newValue) {
-			newValue = !newValue ? "1200px" : newValue;
-			styleTag.innerHTML =
-				".archive.woocommerce #inner-content {max-width: " + newValue + ";}";
-		});
-	});
+			writeCSS(settingId, {
+				selector: ".archive.woocommerce #inner-content",
+				props: { "max-width": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	/* WooCommerce - Menu Item */
 
 	// Desktop color.
-	customizer("woocommerce_menu_item_desktop_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_menu_item_desktop_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count {background-color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_menu_item_desktop_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-menu .wpbf-woo-menu-item .wpbf-woo-menu-item-count",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	// Mobile color.
-	customizer("woocommerce_menu_item_mobile_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_menu_item_mobile_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count {background-color: " +
-				newValue +
-				";}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_menu_item_mobile_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".wpbf-mobile-nav-wrapper .wpbf-woo-menu-item .wpbf-woo-menu-item-count",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	/* WooCommerce - Loop */
 
 	// Content alignment.
-	customizer("woocommerce_loop_content_alignment", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_content_alignment");
-
-		value.bind(function (newValue) {
-			if (newValue === "center") {
-				styleTag.innerHTML =
-					"\
-						.woocommerce ul.products li.product, .woocommerce-page ul.products li.product {text-align: " +
-					newValue +
-					";}\
-						.woocommerce .products .star-rating {margin: 0 auto 10px auto;}\
-					";
-			} else if (newValue === "right") {
-				styleTag.innerHTML =
-					"\
-						.woocommerce ul.products li.product, .woocommerce-page ul.products li.product {text-align: " +
-					newValue +
-					";}\
-						.woocommerce .products .star-rating {display: inline-block; text-align: right;}\
-					";
-			} else {
-				styleTag.innerHTML =
-					".woocommerce ul.products li.product, .woocommerce-page ul.products li.product {text-align: " +
-					newValue +
-					";}";
-			}
-		});
-	});
+	listenToCustomizerValueChange<string>(
+		"woocommerce_loop_content_alignment",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector:
+							".woocommerce ul.products li.product, .woocommerce-page ul.products li.product",
+						props: { "text-align": value },
+					},
+					{
+						selector: ".woocommerce .products .star-rating",
+						props: {
+							display: value === "right" ? "inline-block" : undefined,
+							margin: value === "center" ? "0 auto 10px auto" : undefined,
+							"text-align": value === "right" ? "right" : undefined,
+						},
+					},
+				],
+			});
+		},
+	);
 
 	// Image alignment.
-	customizer("woocommerce_loop_image_alignment", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_image_alignment");
-
-		value.bind(function (newValue) {
-			if (newValue == "left") {
-				styleTag.innerHTML =
-					"\
-					.wpbf-woo-list-view .wpbf-woo-loop-thumbnail-wrapper {float: left;}\
-					.wpbf-woo-list-view .wpbf-woo-loop-summary {float: right;}\
-				";
-			} else {
-				styleTag.innerHTML =
-					"\
-					.wpbf-woo-list-view .wpbf-woo-loop-thumbnail-wrapper {float: right;}\
-					.wpbf-woo-list-view .wpbf-woo-loop-summary {float: left;}\
-				";
-			}
-		});
-	});
+	listenToCustomizerValueChange<string>(
+		"woocommerce_loop_image_alignment",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-woo-list-view .wpbf-woo-loop-thumbnail-wrapper",
+						props: { float: value === "left" ? "left" : "right" },
+					},
+					{
+						selector: ".wpbf-woo-list-view .wpbf-woo-loop-summary",
+						props: { float: value === "left" ? "right" : "left" },
+					},
+				],
+			});
+		},
+	);
 
 	// Image width.
-	customizer("woocommerce_loop_image_width", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_image_width");
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_loop_image_width",
+		function (settingId, value) {
+			const numberValue = toNumberValue(value);
 
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.wpbf-woo-list-view .wpbf-woo-loop-thumbnail-wrapper {width: " +
-				(newValue - 2) +
-				"%;}\
-				.wpbf-woo-list-view .wpbf-woo-loop-summary {width: " +
-				(98 - newValue) +
-				"%;}\
-			";
-		});
-	});
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector: ".wpbf-woo-list-view .wpbf-woo-loop-thumbnail-wrapper",
+						props: { width: maybeAppendSuffix(numberValue - 2, "%") },
+					},
+					{
+						selector: ".wpbf-woo-list-view .wpbf-woo-loop-summary",
+						props: { width: maybeAppendSuffix(98 - numberValue, "%") },
+					},
+				],
+			});
+		},
+	);
 
 	// Title font size.
-	customizer("woocommerce_loop_title_size", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_title_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-
-			styleTag.innerHTML =
-				"\
-				.woocommerce ul.products li.product h3,\
-				.woocommerce ul.products li.product .woocommerce-loop-product__title,\
-				.woocommerce ul.products li.product .woocommerce-loop-category__title {\
-					font-size: " +
-				newValue +
-				suffix +
-				";\
-				}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_loop_title_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce ul.products li.product h3, .woocommerce ul.products li.product .woocommerce-loop-product__title, .woocommerce ul.products li.product .woocommerce-loop-category__title",
+				props: { "font-size": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Title font color.
-	customizer("woocommerce_loop_title_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_title_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				"\
-				.woocommerce ul.products li.product h3,\
-				.woocommerce ul.products li.product .woocommerce-loop-product__title,\
-				.woocommerce ul.products li.product .woocommerce-loop-category__title {\
-					color: " +
-				newValue +
-				";\
-				}\
-			";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_loop_title_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce ul.products li.product h3, .woocommerce ul.products li.product .woocommerce-loop-product__title, .woocommerce ul.products li.product .woocommerce-loop-category__title",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Price font size.
-	customizer("woocommerce_loop_price_size", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_price_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".woocommerce ul.products li.product .price {font-size: " +
-				newValue +
-				suffix +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_loop_price_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce ul.products li.product .price",
+				props: { "font-size": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Price font color.
-	customizer("woocommerce_loop_price_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_price_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce ul.products li.product .price {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_loop_price_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce ul.products li.product .price",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Out of stock notice.
-	customizer("woocommerce_loop_out_of_stock_font_size", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_out_of_stock_font_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock {font-size: " +
-				newValue +
-				suffix +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_loop_out_of_stock_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock",
+				props: { "font-size": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Out of stock color.
-	customizer("woocommerce_loop_out_of_stock_font_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_out_of_stock_font_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock {color: " +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_loop_out_of_stock_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Out of stock background color.
-	customizer(
+	listenToCustomizerValueChange<WpbfColorControlValue>(
 		"woocommerce_loop_out_of_stock_background_color",
-		function (value) {
-			const styleTag = getStyleTag(
-				"woocommerce_loop_out_of_stock_background_color",
-			);
-
-			value.bind(function (newValue) {
-				styleTag.innerHTML =
-					".woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock {background-color: " +
-					newValue +
-					";}";
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce ul.products li.product .wpbf-woo-loop-out-of-stock",
+				props: { "background-color": toStringColor(value) },
 			});
 		},
 	);
 
 	// Sale font size.
-	customizer("woocommerce_loop_sale_font_size", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_sale_font_size");
-
-		value.bind(function (newValue) {
-			var suffix = $.isNumeric(newValue) ? "px" : "";
-			styleTag.innerHTML =
-				".woocommerce span.onsale {font-size: " + newValue + suffix + ";}";
-		});
-	});
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_loop_sale_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce span.onsale",
+				props: { "font-size": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Sale font color.
-	customizer("woocommerce_loop_sale_font_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_sale_font_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce span.onsale {color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_loop_sale_font_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce span.onsale",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Sale background color.
-	customizer("woocommerce_loop_sale_background_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_loop_sale_background_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce span.onsale {background-color: " + newValue + ";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_loop_sale_background_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".woocommerce span.onsale",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
 
 	/* WooCommerce - Single */
 
 	// Custom width.
-	customizer("woocommerce_single_custom_width", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_custom_width");
+	listenToCustomizerValueChange<string | number>(
+		"woocommerce_single_custom_width",
+		function (settingId, value) {
+			value = emptyNotZero(value) ? "1200px" : value;
 
-		value.bind(function (newValue) {
-			newValue = !newValue ? "1200px" : newValue;
-			styleTag.innerHTML =
-				".single.woocommerce #inner-content {max-width: " + newValue + ";}";
-		});
-	});
+			writeCSS(settingId, {
+				selector: ".single.woocommerce #inner-content",
+				props: { "max-width": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Image alignment.
-	customizer("woocommerce_single_alignment", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_alignment");
-
-		value.bind(function (newValue) {
-			if (newValue === "right") {
-				styleTag.innerHTML =
-					"\
-					.woocommerce div.product div.summary,\
-					.woocommerce #content div.product div.summary,\
-					.woocommerce-page div.product div.summary,\
-					.woocommerce-page #content div.product div.summary {float: left;}\
-					\
-					.woocommerce div.product div.images,\
-					.woocommerce #content div.product div.images,\
-					.woocommerce-page div.product div.images,\
-					.woocommerce-page #content div.product div.images {float: right;}\
-					\
-					.single-product.woocommerce span.onsale {display: none;}\
-				";
-			} else {
-				styleTag.innerHTML =
-					"\
-					.woocommerce div.product div.summary,\
-					.woocommerce #content div.product div.summary,\
-					.woocommerce-page div.product div.summary,\
-					.woocommerce-page #content div.product div.summary {float: right;}\
-					\
-					.woocommerce div.product div.images,\
-					.woocommerce #content div.product div.images,\
-					.woocommerce-page div.product div.images,\
-					.woocommerce-page #content div.product div.images {float: left;}\
-					\
-					.single-product.woocommerce span.onsale {display: block;}\
-				";
-			}
-		});
-	});
+	listenToCustomizerValueChange<string>(
+		"woocommerce_single_alignment",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				blocks: [
+					{
+						selector:
+							".woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary",
+						props: { float: value === "right" ? "left" : "right" },
+					},
+					{
+						selector:
+							".woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images",
+						props: { float: value === "right" ? "right" : "left" },
+					},
+					{
+						selector: ".single-product.woocommerce span.onsale",
+						props: { display: value === "right" ? "none" : "block" },
+					},
+				],
+			});
+		},
+	);
 
 	// Image width.
 	customizer("woocommerce_single_image_width", function (value) {
