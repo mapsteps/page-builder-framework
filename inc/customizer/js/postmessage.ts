@@ -2009,16 +2009,16 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	);
 
 	// Price font color.
-	customizer("woocommerce_single_price_color", function (value) {
-		const styleTag = getStyleTag("woocommerce_single_price_color");
-
-		value.bind(function (newValue) {
-			styleTag.innerHTML =
-				".woocommerce div.product span.price, .woocommerce div.product p.price {color: " +
-				newValue +
-				";}";
-		});
-	});
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"woocommerce_single_price_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector:
+					".woocommerce div.product span.price, .woocommerce div.product p.price",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
 	// Tabs background color.
 	listenToCustomizerValueChange<WpbfColorControlValue>(
