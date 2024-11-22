@@ -1,1 +1,2 @@
 !function(){!function(){let t=document.querySelector(".wpbf-layout-option");t&&t.addEventListener("change",e)}();function e(){let e=document.querySelector(".wpbf-layout-custom-width-field-wrapper");if(!e)return;let t=document.querySelector("#layout-custom-width");t instanceof HTMLInputElement&&t.checked?e.classList.remove("wpbf-is-hidden"):e.classList.add("wpbf-is-hidden")}}();
+//# sourceMappingURL=edit-post-min.js.map
