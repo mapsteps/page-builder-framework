@@ -54,7 +54,7 @@ function setupBfcmNoticeDismissal() {
  * @this {HTMLElement}
  */
 function saveBfcmDismissal() {
-	$.ajax({
+	jQuery.ajax({
 		// @ts-ignore
 		url: window.ajaxurl,
 		type: "post",
