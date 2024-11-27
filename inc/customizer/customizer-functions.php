@@ -556,18 +556,21 @@ function wpbf_render_builder_html_widget( $setting_group ) {
 	<?php
 }
 
-/**
- * ----------------------------------------------------------------------
- * Header Builder Functions
- * ----------------------------------------------------------------------
- */
-function wpbf_header_builder_enabled() {
+if ( ! function_exists( 'wpbf_header_builder_enabled' ) ) {
+	/**
+	 * ----------------------------------------------------------------------
+	 * Header Builder Functions
+	 * ----------------------------------------------------------------------
+	 */
+	function wpbf_header_builder_enabled() {
 
-	$enabled = get_theme_mod( 'wpbf_enable_header_builder', false );
+		$enabled = get_theme_mod( 'wpbf_enable_header_builder', false );
 
-	return $enabled ? true : false;
+		return $enabled ? true : false;
 
+	}
 }
+
 
 /**
  * Hook functions to be used when header builder is enabled.

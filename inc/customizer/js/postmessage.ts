@@ -451,7 +451,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		"menu_width",
 		function (settingId, value) {
 			const selector = headerBuilderEnabled()
-				? `.wpbf-header-row-row_2 .wpbf-row-content`
+				? `.wpbf-header-row-row_2 .wpbf-container`
 				: `.wpbf-nav-wrapper`;
 
 			writeCSS(settingId, {
@@ -466,7 +466,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		"menu_height",
 		function (settingId, value) {
 			const selector = headerBuilderEnabled()
-				? `.wpbf-header-row-row_2 .wpbf-row-content`
+				? `.wpbf-header-row-row_2`
 				: `.wpbf-nav-wrapper`;
 
 			writeCSS(settingId, {

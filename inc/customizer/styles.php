@@ -1750,7 +1750,7 @@ $menu_width = '1200' === $menu_width || '1200px' === $menu_width ? '' : $menu_wi
 if ( wpbf_not_empty_allow_zero( $menu_width ) ) {
 
 	wpbf_write_css( array(
-		'selector' => $header_builder_enabled ? '.wpbf-header-row-row_2 .wpbf-row-content' : '.wpbf-nav-wrapper',
+		'selector' => $header_builder_enabled ? '.wpbf-header-row-row_2 .wpbf-container' : '.wpbf-nav-wrapper',
 		'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $menu_width ) ),
 	) );
 
@@ -1765,7 +1765,7 @@ $menu_height = $header_builder_enabled && '' === $menu_height ? '20px' : $menu_h
 if ( wpbf_not_empty_allow_zero( $menu_height ) ) {
 
 	wpbf_write_css( array(
-		'selector' => $header_builder_enabled ? '.wpbf-header-row-row_2 .wpbf-row-content' : '.wpbf-nav-wrapper',
+		'selector' => $header_builder_enabled ? '.wpbf-header-row-row_2' : '.wpbf-nav-wrapper',
 		'props'    => array(
 			'padding-top'    => wpbf_maybe_append_suffix( $menu_height ),
 			'padding-bottom' => wpbf_maybe_append_suffix( $menu_height ),
