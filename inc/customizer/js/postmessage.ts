@@ -8,9 +8,7 @@ import { parseJsonOrUndefined } from "../../../Customizer/Controls/Generic/src/s
 import { MarginPaddingValue } from "../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
 import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/responsive-interface";
 
-(function ($: JQueryStatic, customizer: WpbfCustomize | undefined) {
-	if (!customizer) return;
-
+(function ($: JQueryStatic) {
 	const breakpoints = window.WpbfTheme.breakpoints;
 
 	const mediaQueries = {
@@ -91,8 +89,9 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	}
 
 	function headerBuilderEnabled() {
-		if (!customizer) return false;
-		return customizer("wpbf_enable_header_builder").get() ? true : false;
+		return window.wp.customize?.("wpbf_enable_header_builder").get()
+			? true
+			: false;
 	}
 
 	/**
@@ -245,11 +244,14 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		settingId: string,
 		fn: (settingId: string, value: VT) => void,
 	) {
-		customizer?.(settingId, function (setting: WpbfCustomizeSetting<VT>) {
-			setting.bind(function (value) {
-				fn(settingId, value);
-			});
-		});
+		window.wp.customize?.(
+			settingId,
+			function (setting: WpbfCustomizeSetting<VT>) {
+				setting.bind(function (value) {
+					fn(settingId, value);
+				});
+			},
+		);
 	}
 
 	/* Layout */
@@ -852,7 +854,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	listenToCustomizerValueChange<string | number>(
 		"mobile_sub_menu_indent",
 		function (settingId, value) {
-			const paddingVal = customizer("mobile_menu_padding").get() as
+			const paddingVal = window.wp.customize?.("mobile_menu_padding").get() as
 				| string
 				| MarginPaddingValue;
 
@@ -2234,7 +2236,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 		const visibilitySettingId = `${controlIdPrefix}visibility`;
 
-		customizer(
+		window.wp.customize?.(
 			visibilitySettingId,
 			(value: WpbfCustomizeSetting<WpbfCheckboxButtonsetControlValue>) => {
 				const availableSizes = ["large", "medium", "small"];
@@ -2491,9 +2493,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		cssSelector: string;
 		cssProps: string | string[];
 	}) {
-		if (!customizer) return;
-
-		customizer(
+		window.wp.customize?.(
 			props.controlId,
 			function (value: WpbfCustomizeSetting<Record<string, string>>) {
 				const styleTag = getStyleTag(props.controlId);
@@ -2535,9 +2535,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		cssProps: string | string[];
 		useValueSuffix?: boolean;
 	}) {
-		if (!customizer) return;
-
-		customizer(
+		window.wp.customize?.(
 			props.controlId,
 			function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
 				const styleTag = getStyleTag(props.controlId);
@@ -2573,4 +2571,4 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			},
 		);
 	}
-})(jQuery, window.wp.customize);
+})(jQuery);
