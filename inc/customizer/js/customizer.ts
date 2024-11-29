@@ -312,5 +312,37 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 				},
 			],
 		});
+
+		setupControlsMovement({
+			dependency: {
+				settingId: "wpbf_enable_header_builder",
+				moveForwardWhenValueIs: true,
+			},
+			sectionFrom: "wpbf_menu_options",
+			sectionTo: "wpbf_header_builder_row_2_section",
+			controlsToMove: [
+				{
+					id: "menu_bg_color",
+					prio: {
+						from: 0,
+						to: 60,
+					},
+				},
+				{
+					id: "menu_font_colors",
+					prio: {
+						from: 0,
+						to: 70,
+					},
+				},
+				{
+					id: "menu_font_size",
+					prio: {
+						from: 0,
+						to: 40,
+					},
+				},
+			],
+		});
 	}
 }
