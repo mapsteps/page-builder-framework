@@ -57,33 +57,6 @@ wpbf_customizer_field()
 	->priority( 10 )
 	->addToSection( $section_id );
 
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'max_width' )
-	->settings( 'menu_width' )
-	->type( 'dimension' )
-	->tab( 'general' )
-	->label( __( 'Container Width', 'page-builder-framework' ) )
-	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
-	->priority( 20 )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'vertical_padding' )
-	->settings( 'menu_height' )
-	->type( 'slider' )
-	->tab( 'general' )
-	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
-	->defaultValue( 20 )
-	->transport( 'postMessage' )
-	->priority( 30 )
-	->properties( [
-		'min'  => 0,
-		'max'  => 80,
-		'step' => 1,
-	] )
-	->addToSection( $section_id );
-
 /* Design Tab */
 
 wpbf_customizer_field()

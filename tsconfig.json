@@ -17,6 +17,7 @@
   "include": [
     "Customizer/**/*.ts",
     "assets/js/*.js",
+    "assets/**/*.ts",
     "inc/customizer/js/*.ts",
     "wpbf.mjs",
     "types.ts"

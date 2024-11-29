@@ -1,3 +1,4 @@
+import { setupControlsMovement } from "../../../assets/js/utils/customizer-util";
 import { WpbfCustomizeBuilderControl } from "../../../Customizer/Controls/Builder/src/builder-interface";
 import { WpbfCustomizeCheckboxControl } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 
@@ -28,6 +29,7 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 	function init() {
 		setupLogoContainerWidth();
 		setupBuilderControl();
+		listenToHeaderBuilderToggle();
 	}
 
 	function setupLogoContainerWidth() {
@@ -275,5 +277,40 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 		if (!(customizePanel instanceof HTMLElement)) return undefined;
 
 		return customizePanel;
+	}
+
+	function listenToHeaderBuilderToggle() {
+		setupControlsMovement({
+			dependency: {
+				settingId: "wpbf_enable_header_builder",
+				moveForwardWhenValueIs: true,
+			},
+			sectionFrom: "wpbf_menu_options",
+			sectionTo: "wpbf_header_builder_row_2_section",
+			controlsToMove: [
+				{
+					id: "menu_width",
+					label: {
+						from: "",
+						to: "Container Width",
+					},
+					prio: {
+						from: 0,
+						to: 20,
+					},
+				},
+				{
+					id: "menu_height",
+					label: {
+						from: "",
+						to: "Vertical Padding",
+					},
+					prio: {
+						from: 0,
+						to: 30,
+					},
+				},
+			],
+		});
 	}
 }
