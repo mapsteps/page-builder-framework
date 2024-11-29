@@ -92,7 +92,14 @@ export function setupControlsMovement<SV>(props: {
 					.html(moveForward ? controlObj.label.to : controlObj.label.from);
 			}
 
-			control.section(moveForward ? props.sectionTo : props.sectionFrom);
+			const section = window.wp.customize?.section(
+				moveForward ? props.sectionTo : props.sectionFrom,
+			);
+
+			if (section) {
+				control.container.attr("data-wpbf-parent-tab-id", section.params.id);
+				control.section(section.id);
+			}
 		}
 	}
 }

@@ -56,20 +56,22 @@ class BaseSection extends WP_Customize_Section {
 
 		$arr = parent::json();
 
-		$arr['tabs'] = $this->tabs;
-
 		$arr['tabMenuOutput'] = '';
 
-		$loop_index = -1;
+		if ( ! empty( $this->tabs ) ) {
+			$arr['tabs'] = $this->tabs;
 
-		foreach ( $this->tabs as $tab_key => $tab_args ) {
-			++$loop_index;
+			$loop_index = -1;
 
-			$arr['tabMenuOutput'] .= '
-			<div class="wpbf-tab-menu-item' . ( 0 === $loop_index ? ' is-active' : '' ) . '" data-wpbf-tab-menu-id="' . esc_attr( $tab_key ) . '">
-				<a href="#" class="wpbf-tab-link">' . esc_html( $tab_args['label'] ) . '</a>
-			</div>
-			';
+			foreach ( $this->tabs as $tab_key => $tab_args ) {
+				++$loop_index;
+
+				$arr['tabMenuOutput'] .= '
+				<div class="wpbf-tab-menu-item' . ( 0 === $loop_index ? ' is-active' : '' ) . '" data-wpbf-tab-menu-id="' . esc_attr( $tab_key ) . '">
+					<a href="#" class="wpbf-tab-link">' . esc_html( $tab_args['label'] ) . '</a>
+				</div>
+				';
+			}
 		}
 
 		$arr['tabClassName'] = ! empty( $this->tabs ) ? 'wpbf-tab-section' : '';

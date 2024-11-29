@@ -179,6 +179,9 @@ export interface WpbfCustomizeSectionParams {
 	instanceNumber?: number | null;
 	priority?: number;
 	parentId?: string;
+	tabs?: Record<string, { label: string; [key: string]: string }>[];
+	tabMenuOutput: string;
+	tabClassName: string;
 }
 
 export interface WpbfCustomizeSection extends Section {
