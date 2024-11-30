@@ -146,13 +146,19 @@ export default function setupControlDependencies(
 
 		customizer.control(controlId)?.onChangeActive(false, {
 			completeCallback: () => {
-				customizer
-					.control(controlId)
-					?.container.removeClass("wpbf-tab-item-invisible");
+				if (
+					customizer
+						.control(controlId)
+						?.container.hasClass("wpbf-tab-item-invisible")
+				) {
+					customizer
+						.control(controlId)
+						?.container.removeClass("wpbf-tab-item-invisible");
 
-				customizer
-					.control(controlId)
-					?.container.addClass("wpbf-tab-item-hidden");
+					customizer
+						.control(controlId)
+						?.container.addClass("wpbf-tab-item-hidden");
+				}
 			},
 		});
 	}
