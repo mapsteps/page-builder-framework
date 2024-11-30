@@ -58,3 +58,10 @@
 .wpbf-tab-item-hidden {
 	display: none !important;
 }
+
+// This is needed to fix show/hide conflict between field dependency behavior & tab switching behavior.
+.wpbf-tab-item-invisible {
+	opacity: 0;
+	height: 0;
+	overflow: hidden;
+}

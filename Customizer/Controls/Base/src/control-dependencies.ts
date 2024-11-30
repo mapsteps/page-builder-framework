@@ -79,7 +79,7 @@ export default function setupControlDependencies(
 			);
 
 			if (!isDependencySatisfied) {
-				customizer.control(ruleSet.dependantControlId)?.toggle(false);
+				hideControl(ruleSet.dependantControlId);
 				continue;
 			}
 
@@ -87,7 +87,7 @@ export default function setupControlDependencies(
 				globalControlDependencies[ruleSet.dependantControlId];
 
 			if (dependantDependencies.length < 2) {
-				customizer.control(ruleSet.dependantControlId)?.toggle(true);
+				showControl(ruleSet.dependantControlId);
 				continue;
 			}
 
@@ -126,12 +126,47 @@ export default function setupControlDependencies(
 			}
 
 			if (!otherRulesSatisfied) {
-				customizer.control(ruleSet.dependantControlId)?.toggle(false);
+				hideControl(ruleSet.dependantControlId);
 			} else {
-				customizer.control(ruleSet.dependantControlId)?.toggle(true);
+				showControl(ruleSet.dependantControlId);
 			}
 		}
 	}
+
+	function hideControl(controlId: string) {
+		if (insideInactiveTab(customizer.control(controlId)?.container[0])) {
+			customizer
+				.control(controlId)
+				?.container.removeClass("wpbf-tab-item-hidden");
+
+			customizer
+				.control(controlId)
+				?.container.addClass("wpbf-tab-item-invisible");
+		}
+
+		customizer.control(controlId)?.onChangeActive(false, {
+			completeCallback: () => {
+				customizer
+					.control(controlId)
+					?.container.removeClass("wpbf-tab-item-invisible");
+
+				customizer
+					.control(controlId)
+					?.container.addClass("wpbf-tab-item-hidden");
+			},
+		});
+	}
+
+	function showControl(controlId: string) {
+		customizer.control(controlId)?.onChangeActive(true, {});
+	}
+}
+
+function insideInactiveTab(el: HTMLElement | undefined | null) {
+	if (!el) return false;
+	if (!el.dataset.wpbfParentTabId) return false;
+	if (!el.classList.contains("wpbf-tab-item-hidden")) return false;
+	return true;
 }
 
 export function isRuleSatisfied(
