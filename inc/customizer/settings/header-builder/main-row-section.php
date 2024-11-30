@@ -54,5 +54,5 @@ wpbf_customizer_field()
 		'small'  => __( 'Mobile', 'page-builder-framework' ),
 	] )
 	->transport( 'postMessage' )
-	->priority( 10 )
+	->priority( 5 )
 	->addToSection( $section_id );

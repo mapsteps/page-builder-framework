@@ -298,7 +298,7 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 							},
 							prio: {
 								from: undefined,
-								to: 20,
+								to: 10,
 							},
 						},
 						{
@@ -309,7 +309,7 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 							},
 							prio: {
 								from: undefined,
-								to: 30,
+								to: 15,
 							},
 						},
 					],
@@ -329,14 +329,14 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 							id: "menu_font_colors",
 							prio: {
 								from: undefined,
-								to: 210,
+								to: 205,
 							},
 						},
 						{
 							id: "menu_font_size",
 							prio: {
 								from: undefined,
-								to: 220,
+								to: 210,
 							},
 						},
 					],
