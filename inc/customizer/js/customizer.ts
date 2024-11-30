@@ -285,62 +285,61 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 				settingId: "wpbf_enable_header_builder",
 				moveForwardWhenValueIs: true,
 			},
-			sectionFrom: "wpbf_menu_options",
-			sectionTo: "wpbf_header_builder_row_2_section",
-			controlsToMove: [
+			sections: [
 				{
-					id: "menu_width",
-					label: {
-						from: "",
-						to: "Container Width",
-					},
-					prio: {
-						from: 0,
-						to: 20,
-					},
+					from: "wpbf_menu_options",
+					to: "wpbf_header_builder_row_2_section",
+					controlsToMove: [
+						{
+							id: "menu_width",
+							label: {
+								from: undefined,
+								to: "Container Width",
+							},
+							prio: {
+								from: undefined,
+								to: 20,
+							},
+						},
+						{
+							id: "menu_height",
+							label: {
+								from: undefined,
+								to: "Vertical Padding",
+							},
+							prio: {
+								from: undefined,
+								to: 30,
+							},
+						},
+					],
 				},
 				{
-					id: "menu_height",
-					label: {
-						from: "",
-						to: "Vertical Padding",
-					},
-					prio: {
-						from: 0,
-						to: 30,
-					},
-				},
-			],
-		});
-
-		setupControlsMovement({
-			dependency: {
-				settingId: "wpbf_enable_header_builder",
-				moveForwardWhenValueIs: true,
-			},
-			sectionFrom: "wpbf_menu_options",
-			sectionTo: "wpbf_header_builder_row_2_section",
-			controlsToMove: [
-				{
-					id: "menu_bg_color",
-					prio: {
-						from: 0,
-						to: 60,
-					},
-				},
-				{
-					id: "menu_font_colors",
-					prio: {
-						from: 0,
-						to: 70,
-					},
-				},
-				{
-					id: "menu_font_size",
-					prio: {
-						from: 0,
-						to: 40,
-					},
+					from: "wpbf_menu_options",
+					to: "wpbf_header_builder_row_2_section",
+					controlsToMove: [
+						{
+							id: "menu_bg_color",
+							prio: {
+								from: undefined,
+								to: 60,
+							},
+						},
+						{
+							id: "menu_font_colors",
+							prio: {
+								from: undefined,
+								to: 70,
+							},
+						},
+						{
+							id: "menu_font_size",
+							prio: {
+								from: undefined,
+								to: 40,
+							},
+						},
+					],
 				},
 			],
 		});
