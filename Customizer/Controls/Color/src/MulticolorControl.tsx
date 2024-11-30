@@ -181,15 +181,12 @@ const MulticolorControl =
 		 * This is essentially the inverse of the Control#embed() method.
 		 */
 		destroy: function destroy() {
-			const control = this;
-
-			// Garbage collection: undo mounting that was done in the embed/renderContent method.
-			control.root?.unmount();
-			control.root = undefined;
+			this.root?.unmount();
+			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
 			if (window.wp.customize?.Control.prototype.destroy) {
-				window.wp.customize?.Control.prototype.destroy.call(control);
+				window.wp.customize?.Control.prototype.destroy.call(this);
 			}
 		},
 	});

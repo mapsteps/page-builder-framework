@@ -322,21 +322,21 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 							id: "menu_bg_color",
 							prio: {
 								from: undefined,
-								to: 60,
+								to: 200,
 							},
 						},
 						{
 							id: "menu_font_colors",
 							prio: {
 								from: undefined,
-								to: 70,
+								to: 210,
 							},
 						},
 						{
 							id: "menu_font_size",
 							prio: {
 								from: undefined,
-								to: 40,
+								to: 220,
 							},
 						},
 					],

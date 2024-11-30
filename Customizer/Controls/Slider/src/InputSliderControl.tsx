@@ -1,7 +1,6 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import { createRoot } from "react-dom/client";
 import React from "react";
-import ReactDOM from "react-dom";
 import InputSliderForm from "./InputSliderForm";
 import {
 	WpbfCustomizeInputSliderControl,
@@ -70,9 +69,12 @@ const InputSliderControl =
 		) {
 			const control = this;
 			const params = control.params;
-			const root = createRoot(control.container[0]);
 
-			root.render(
+			if (!this.root && this.container) {
+				this.root = createRoot(this.container[0]);
+			}
+
+			this.root?.render(
 				<InputSliderForm
 					control={control}
 					customizerSetting={control.setting ?? undefined}
@@ -124,14 +126,12 @@ const InputSliderControl =
 		 * @link https://core.trac.wordpress.org/ticket/31334
 		 */
 		destroy: function destroy(this: WpbfCustomizeInputSliderControl) {
-			const control = this;
-
-			// Garbage collection: undo mounting that was done in the embed/renderContent method.
-			ReactDOM.unmountComponentAtNode(control.container[0]);
+			this.root?.unmount();
+			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
 			if (wp.customize.Control.prototype.destroy) {
-				wp.customize.Control.prototype.destroy.call(control);
+				wp.customize.Control.prototype.destroy.call(this);
 			}
 		},
 	});

@@ -191,7 +191,7 @@ const ColorControl =
 		 *
 		 * This is essentially the inverse of the Control#embed() method.
 		 */
-		destroy: function () {
+		destroy: function destroy() {
 			this.root?.unmount();
 			this.root = undefined;
 
