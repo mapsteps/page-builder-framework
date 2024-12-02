@@ -53,6 +53,7 @@ wpbf_customizer_field()
 		'medium' => __( 'Tablet', 'page-builder-framework' ),
 		'small'  => __( 'Mobile', 'page-builder-framework' ),
 	] )
+	->priority( 5 )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
@@ -62,6 +63,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Container Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
+	->priority( 10 )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
@@ -71,6 +73,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
 	->defaultValue( 15 )
+	->priority( 15 )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
@@ -82,30 +85,11 @@ wpbf_customizer_field()
 /* Design Tab */
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'font_size' )
-	->type( 'input-slider' )
-	->tab( 'design' )
-	->label( __( 'Font Size', 'page-builder-framework' ) )
-	->defaultValue( '16px' )
-	->transport( 'postMessage' )
-	->properties( [
-		'min'  => 1,
-		'max'  => 100,
-		'step' => 1,
-	] )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'color_separator' )
-	->type( 'divider' )
-	->tab( 'design' )
-	->addToSection( $section_id );
-
-wpbf_customizer_field()
 	->id( $control_id_prefix . 'bg_color' )
 	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->priority( 200 )
 	->transport( 'postMessage' )
 	->properties( [
 		'mode' => 'alpha',
@@ -117,6 +101,7 @@ wpbf_customizer_field()
 	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 205 )
 	->transport( 'postMessage' )
 	->properties( [
 		'mode' => 'alpha',
@@ -128,6 +113,7 @@ wpbf_customizer_field()
 	->type( 'multicolor' )
 	->tab( 'design' )
 	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->priority( 210 )
 	->transport( 'postMessage' )
 	->choices( array(
 		'default' => __( 'Default', 'page-builder-framework' ),
@@ -136,4 +122,19 @@ wpbf_customizer_field()
 	->properties( array(
 		'mode' => 'alpha',
 	) )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( 215 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 1,
+		'max'  => 100,
+		'step' => 1,
+	] )
 	->addToSection( $section_id );
