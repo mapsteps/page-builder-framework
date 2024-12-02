@@ -287,6 +287,62 @@ function setupCustomizer($: JQueryStatic, customizer: WpbfCustomize) {
 			},
 			sections: [
 				{
+					from: "wpbf_pre_header_options",
+					to: "wpbf_header_builder_row_1_section",
+					controlsToMove: [
+						{
+							id: "pre_header_width",
+							label: {
+								from: undefined,
+								to: "Container Width",
+							},
+							prio: {
+								from: undefined,
+								to: 10,
+							},
+						},
+						{
+							id: "pre_header_height",
+							label: {
+								from: undefined,
+								to: "Vertical Padding",
+							},
+							prio: {
+								from: undefined,
+								to: 15,
+							},
+						},
+						{
+							id: "pre_header_bg_color",
+							prio: {
+								from: undefined,
+								to: 200,
+							},
+						},
+						{
+							id: "pre_header_font_color",
+							prio: {
+								from: undefined,
+								to: 205,
+							},
+						},
+						{
+							id: "pre_header_accent_colors",
+							prio: {
+								from: undefined,
+								to: 210,
+							},
+						},
+						{
+							id: "pre_header_font_size",
+							prio: {
+								from: undefined,
+								to: 220,
+							},
+						},
+					],
+				},
+				{
 					from: "wpbf_menu_options",
 					to: "wpbf_header_builder_row_2_section",
 					controlsToMove: [
