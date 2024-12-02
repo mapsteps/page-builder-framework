@@ -116,7 +116,7 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'text_color' )
 	->type( 'color' )
 	->tab( 'design' )
-	->label( __( 'Text Color', 'page-builder-framework' ) )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
 	->properties( [
 		'mode' => 'alpha',
