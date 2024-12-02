@@ -102,7 +102,7 @@ export default function MulticolorForm(props: {
 								<i className="dashicons dashicons-image-rotate"></i>
 							</button>
 
-							{props.keys.map((key) => {
+							{props.keys.map((key, i) => {
 								const circleColor = convertColorForInput(
 									value[key] ?? "",
 									useHueMode,
@@ -112,6 +112,7 @@ export default function MulticolorForm(props: {
 
 								return (
 									<ColorPickerCirleTrigger
+										key={`${key}-${i}`}
 										color={circleColor}
 										isPopupOpen={openedPopupKey === key}
 										tooltip={choices[key] ?? undefined}
@@ -124,9 +125,10 @@ export default function MulticolorForm(props: {
 				</div>
 
 				<div ref={pickerRef} className="wpbf-color-picker-popup">
-					{props.keys.map((key) => {
+					{props.keys.map((key, i) => {
 						return (
 							<ColorForm
+								key={`${key}-${i}`}
 								control={control}
 								container={container}
 								label={props.label}
