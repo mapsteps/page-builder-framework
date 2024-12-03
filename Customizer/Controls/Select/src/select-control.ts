@@ -1,7 +1,7 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	SelectControlChoice,
-	WpbfCustomizeSelectControl,
+	WpbfSelectControl,
 } from "./select-interface";
 
 import "./select-control.scss";
@@ -10,7 +10,7 @@ if (window.wp.customize) {
 	const customizer = window.wp.customize;
 
 	customizer.controlConstructor["wpbf-select"] =
-		customizer.Control.extend<WpbfCustomizeSelectControl>({
+		customizer.Control.extend<WpbfSelectControl>({
 			/**
 			 * Initialize.
 			 */

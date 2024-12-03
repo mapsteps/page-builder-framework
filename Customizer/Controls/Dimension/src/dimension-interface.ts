@@ -3,15 +3,12 @@ import {
 	WpbfCustomizeControlParams,
 } from "../../Base/src/base-interface";
 
-export interface WpbfCustomizeDimensionControlParams
+export interface WpbfDimensionControlParams
 	extends WpbfCustomizeControlParams<string | number> {
 	inputClass: string;
 	labelPosition: string;
 	allowUnitless: boolean;
 }
 
-export interface WpbfCustomizeDimensionControl
-	extends WpbfCustomizeControl<
-		string | number,
-		WpbfCustomizeDimensionControlParams
-	> {}
+export interface WpbfDimensionControl
+	extends WpbfCustomizeControl<string | number, WpbfDimensionControlParams> {}

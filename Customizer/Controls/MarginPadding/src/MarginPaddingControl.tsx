@@ -2,8 +2,8 @@ import MarginPaddingForm from "./MarginPaddingForm";
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	MarginPaddingValue,
-	WpbfCustomizeMarginPaddingControl,
-	WpbfCustomizeMarginPaddingControlParams,
+	WpbfMarginPaddingControl,
+	WpbfMarginPaddingControlParams,
 } from "./margin-padding-interface";
 import React from "react";
 import { createRoot } from "react-dom/client";
@@ -17,14 +17,14 @@ declare var wp: {
  * KirkiMarginPaddingControl.
  */
 const KirkiMarginPaddingControl =
-	wp.customize.Control.extend<WpbfCustomizeMarginPaddingControl>({
+	wp.customize.Control.extend<WpbfMarginPaddingControl>({
 		/**
 		 * Initialize.
 		 */
 		initialize: function (
-			this: WpbfCustomizeMarginPaddingControl,
+			this: WpbfMarginPaddingControl,
 			id: string,
-			params: WpbfCustomizeMarginPaddingControlParams,
+			params: WpbfMarginPaddingControlParams,
 		) {
 			const control = this;
 
@@ -52,7 +52,7 @@ const KirkiMarginPaddingControl =
 		 * This is called when the React component is mounted.
 		 */
 		setNotificationContainer: function setNotificationContainer(
-			this: WpbfCustomizeMarginPaddingControl,
+			this: WpbfMarginPaddingControl,
 			element: HTMLElement,
 		) {
 			const control = this;
@@ -67,7 +67,7 @@ const KirkiMarginPaddingControl =
 		 * This is called from the Control#embed() method in the parent class.
 		 */
 		renderContent: function renderContent(
-			this: WpbfCustomizeMarginPaddingControl,
+			this: WpbfMarginPaddingControl,
 		) {
 			const control = this;
 			const params = control.params;
@@ -116,7 +116,7 @@ const KirkiMarginPaddingControl =
 		 *
 		 * React is available to be used here instead of the wp.customize.Element abstraction.
 		 */
-		ready: function ready(this: WpbfCustomizeMarginPaddingControl) {
+		ready: function ready(this: WpbfMarginPaddingControl) {
 			const control = this;
 
 			/**
@@ -144,7 +144,7 @@ const KirkiMarginPaddingControl =
 		 *
 		 * @link https://core.trac.wordpress.org/ticket/31334
 		 */
-		destroy: function destroy(this: WpbfCustomizeMarginPaddingControl) {
+		destroy: function destroy(this: WpbfMarginPaddingControl) {
 			this.root?.unmount();
 			this.root = undefined;
 

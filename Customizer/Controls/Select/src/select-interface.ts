@@ -35,5 +35,5 @@ export interface SelectControlParams
 	preventSave?: boolean;
 }
 
-export interface WpbfCustomizeSelectControl
+export interface WpbfSelectControl
 	extends WpbfCustomizeControl<SelectControlValue, SelectControlParams> {}

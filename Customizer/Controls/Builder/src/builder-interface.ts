@@ -22,7 +22,7 @@ export type BuilderRow = {
 
 export type BuilderValue = Record<string, Record<string, string[]>>;
 
-export interface WpbfCustomizeBuilderControlParams
+export interface WpbfBuilderControlParams
 	extends WpbfCustomizeControlParams<BuilderValue> {
 	builder: {
 		availableWidgets: BuilderWidget[];
@@ -30,8 +30,5 @@ export interface WpbfCustomizeBuilderControlParams
 		availableRows: BuilderRow[];
 	};
 }
-export interface WpbfCustomizeBuilderControl
-	extends WpbfCustomizeControl<
-		BuilderValue,
-		WpbfCustomizeBuilderControlParams
-	> {}
+export interface WpbfBuilderControl
+	extends WpbfCustomizeControl<BuilderValue, WpbfBuilderControlParams> {}

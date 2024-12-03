@@ -3,8 +3,8 @@ import {
 	WpbfCustomizeControlParams,
 } from "../../Base/src/base-interface";
 
-export interface WpbfCustomizeSortableControlParams
+export interface WpbfSortableControlParams
 	extends WpbfCustomizeControlParams<any[]> {}
 
-export interface WpbfCustomizeSortableControl
-	extends WpbfCustomizeControl<any[], WpbfCustomizeSortableControlParams> {}
+export interface WpbfSortableControl
+	extends WpbfCustomizeControl<any[], WpbfSortableControlParams> {}

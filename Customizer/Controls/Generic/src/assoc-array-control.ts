@@ -1,5 +1,5 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
-import { WpbfCustomizeAssocArrayControl } from "./generic-interface";
+import { WpbfAssocArrayControl } from "./generic-interface";
 
 if (window.wp.customize) {
 	setupAssocArrayControl(window.wp.customize);
@@ -7,10 +7,10 @@ if (window.wp.customize) {
 
 function setupAssocArrayControl(customizer: WpbfCustomize) {
 	customizer.controlConstructor["wpbf-assoc-array"] =
-		customizer.wpbfDynamicControl.extend<WpbfCustomizeAssocArrayControl>({
+		customizer.wpbfDynamicControl.extend<WpbfAssocArrayControl>({
 			initWpbfControl: function (
-				this: WpbfCustomizeAssocArrayControl,
-				control?: WpbfCustomizeAssocArrayControl,
+				this: WpbfAssocArrayControl,
+				control?: WpbfAssocArrayControl,
 			) {
 				control = control || this;
 				if (!control) return;
@@ -32,7 +32,7 @@ function setupAssocArrayControl(customizer: WpbfCustomize) {
 			},
 
 			updateComponentState: function (
-				this: WpbfCustomizeAssocArrayControl,
+				this: WpbfAssocArrayControl,
 				value: Record<string, any>,
 			) {
 				const fields = this.container[0].querySelectorAll(

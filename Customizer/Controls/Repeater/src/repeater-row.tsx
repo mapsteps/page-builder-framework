@@ -1,7 +1,7 @@
 import _ from "lodash";
 import jQuery from "jquery";
 import {
-	WpbfCustomizeRepeaterControl,
+	WpbfRepeaterControl,
 	WpbfRepeaterRow,
 } from "./repeater-interface";
 
@@ -14,13 +14,13 @@ export default class RepeaterRow implements WpbfRepeaterRow {
 	container: JQuery<HTMLElement>;
 	label: Record<string, string>;
 	header: JQuery<HTMLElement>;
-	control: WpbfCustomizeRepeaterControl;
+	control: WpbfRepeaterControl;
 
 	constructor(
 		rowIndex: number,
 		container: JQuery<HTMLElement>,
 		label: Record<string, string>,
-		control: WpbfCustomizeRepeaterControl,
+		control: WpbfRepeaterControl,
 	) {
 		this.rowIndex = rowIndex;
 		this.container = container;

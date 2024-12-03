@@ -4,29 +4,23 @@ import {
 } from "../../Base/src/base-interface";
 import { DevicesValue } from "../../Responsive/src/responsive-interface";
 
-export interface WpbfCustomizeSliderControlParams
+export interface WpbfSliderControlParams
 	extends WpbfCustomizeControlParams<number | string> {}
 
-export interface WpbfCustomizeSliderControl
-	extends WpbfCustomizeControl<
-		number | string,
-		WpbfCustomizeSliderControlParams
-	> {}
+export interface WpbfSliderControl
+	extends WpbfCustomizeControl<number | string, WpbfSliderControlParams> {}
 
-export interface WpbfCustomizeInputSliderControlParams
+export interface WpbfInputSliderControlParams
 	extends WpbfCustomizeControlParams<string | number> {}
 
-export interface WpbfCustomizeInputSliderControl
-	extends WpbfCustomizeControl<
-		string | number,
-		WpbfCustomizeInputSliderControlParams
-	> {}
+export interface WpbfInputSliderControl
+	extends WpbfCustomizeControl<string | number, WpbfInputSliderControlParams> {}
 
-export interface WpbfCustomizeResponsiveInputSliderControl
+export interface WpbfResponsiveInputSliderControl
 	extends WpbfCustomizeControl<
 		string | DevicesValue,
-		WpbfCustomizeResponsiveInputSliderControlParams
+		WpbfResponsiveInputSliderControlParams
 	> {}
 
-export interface WpbfCustomizeResponsiveInputSliderControlParams
+export interface WpbfResponsiveInputSliderControlParams
 	extends WpbfCustomizeControlParams<string | DevicesValue> {}

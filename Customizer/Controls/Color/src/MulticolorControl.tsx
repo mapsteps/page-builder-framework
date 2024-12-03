@@ -1,7 +1,7 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
-	WpbfCustomizeMulticolorControlValue,
-	WpbfCustomizeMulticolorControl,
+	WpbfMulticolorControlValue,
+	WpbfMulticolorControl,
 } from "./color-interface";
 import MulticolorForm from "./MulticolorForm";
 import React from "react";
@@ -9,7 +9,7 @@ import { createRoot } from "react-dom/client";
 import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
 const MulticolorControl =
-	window.wp.customize?.Control.extend<WpbfCustomizeMulticolorControl>({
+	window.wp.customize?.Control.extend<WpbfMulticolorControl>({
 		root: undefined,
 
 		/**
@@ -83,7 +83,7 @@ const MulticolorControl =
 
 			this.root?.render(
 				<MulticolorForm
-					control={this as WpbfCustomizeMulticolorControl}
+					control={this as WpbfMulticolorControl}
 					container={this.container[0]}
 					choices={params.choices}
 					keys={Object.keys(params.choices)}
@@ -112,7 +112,7 @@ const MulticolorControl =
 			/**
 			 * Update component state when customizer setting changes.
 			 */
-			this.setting?.bind((val: WpbfCustomizeMulticolorControlValue) => {
+			this.setting?.bind((val: WpbfMulticolorControlValue) => {
 				control.updateComponentState?.(val);
 			});
 		},
@@ -152,7 +152,7 @@ const MulticolorControl =
 					mode === "alpha" ? "RgbaStringColorPicker" : "HexColorPicker";
 			}
 
-			const value: WpbfCustomizeMulticolorControlValue = {};
+			const value: WpbfMulticolorControlValue = {};
 
 			for (const key in val) {
 				if (!val.hasOwnProperty(key)) continue;

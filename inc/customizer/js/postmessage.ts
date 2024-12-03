@@ -2,7 +2,7 @@ import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base
 import { WpbfCheckboxButtonsetControlValue } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 import {
 	WpbfColorControlValue,
-	WpbfCustomizeMulticolorControlValue,
+	WpbfMulticolorControlValue,
 } from "../../../Customizer/Controls/Color/src/color-interface";
 import { parseJsonOrUndefined } from "../../../Customizer/Controls/Generic/src/string-util";
 import { MarginPaddingValue } from "../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
@@ -506,7 +506,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	);
 
 	// Menu font colors.
-	listenToCustomizerValueChange<WpbfCustomizeMulticolorControlValue>(
+	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
 		"menu_font_colors",
 		(settingId, value) => {
 			const rawDefaultColor = value.default ?? "";
@@ -1169,7 +1169,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	);
 
 	// Pre-header accent colors.
-	listenToCustomizerValueChange<WpbfCustomizeMulticolorControlValue>(
+	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
 		"pre_header_accent_colors",
 		(settingId, value) => {
 			const rawDefaultColor = value.default ?? "";
@@ -2346,7 +2346,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			},
 		);
 
-		listenToCustomizerValueChange<WpbfCustomizeMulticolorControlValue>(
+		listenToCustomizerValueChange<WpbfMulticolorControlValue>(
 			`${controlIdPrefix}accent_colors`,
 			(settingId, value) => {
 				const rawDefaultColor = value.default ?? "";

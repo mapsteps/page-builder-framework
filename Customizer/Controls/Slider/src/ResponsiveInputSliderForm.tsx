@@ -1,6 +1,6 @@
 import React, { ChangeEvent, MouseEvent, useState } from "react";
 import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
-import { WpbfCustomizeResponsiveInputSliderControl } from "./slider-interface";
+import { WpbfResponsiveInputSliderControl } from "./slider-interface";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import {
 	makeDevicesValue,
@@ -12,7 +12,7 @@ import { encodeJsonOrDefault } from "../../Generic/src/string-util";
 import { makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
 
 export default function ResponsiveInputSliderForm(props: {
-	control: WpbfCustomizeResponsiveInputSliderControl;
+	control: WpbfResponsiveInputSliderControl;
 	customizerSetting?: WpbfCustomizeSetting<string | DevicesValue>;
 	setNotificationContainer: any;
 	saveAsJson: boolean;

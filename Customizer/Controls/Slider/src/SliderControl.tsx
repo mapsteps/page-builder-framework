@@ -3,19 +3,19 @@ import { createRoot } from "react-dom/client";
 import React from "react";
 import SliderForm from "./SliderForm";
 import {
-	WpbfCustomizeSliderControl,
-	WpbfCustomizeSliderControlParams,
+	WpbfSliderControl,
+	WpbfSliderControlParams,
 } from "./slider-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
 };
 
-const SliderControl = wp.customize.Control.extend<WpbfCustomizeSliderControl>({
+const SliderControl = wp.customize.Control.extend<WpbfSliderControl>({
 	initialize: function (
-		this: WpbfCustomizeSliderControl,
+		this: WpbfSliderControl,
 		id: string,
-		params: WpbfCustomizeSliderControlParams,
+		params: WpbfSliderControlParams,
 	) {
 		const control = this;
 
@@ -42,7 +42,7 @@ const SliderControl = wp.customize.Control.extend<WpbfCustomizeSliderControl>({
 	 * This will be called when the React component is mounted.
 	 */
 	setNotificationContainer: function setNotificationContainer(
-		this: WpbfCustomizeSliderControl,
+		this: WpbfSliderControl,
 		el: HTMLElement,
 	) {
 		const control = this;
@@ -56,7 +56,7 @@ const SliderControl = wp.customize.Control.extend<WpbfCustomizeSliderControl>({
 	 *
 	 * This will be called from the Control#embed() method in the parent class.
 	 */
-	renderContent: function renderContent(this: WpbfCustomizeSliderControl) {
+	renderContent: function renderContent(this: WpbfSliderControl) {
 		const control = this;
 		const params = control.params;
 
@@ -89,7 +89,7 @@ const SliderControl = wp.customize.Control.extend<WpbfCustomizeSliderControl>({
 	 *
 	 * React is available to be used here instead of the wp.customize.Element abstraction.
 	 */
-	ready: function ready(this: WpbfCustomizeSliderControl) {
+	ready: function ready(this: WpbfSliderControl) {
 		const control = this;
 
 		if (control.setting) {
@@ -115,7 +115,7 @@ const SliderControl = wp.customize.Control.extend<WpbfCustomizeSliderControl>({
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/31334
 	 */
-	destroy: function destroy(this: WpbfCustomizeSliderControl) {
+	destroy: function destroy(this: WpbfSliderControl) {
 		this.root?.unmount();
 		this.root = undefined;
 

@@ -1,5 +1,5 @@
 import "./editor-control.scss";
-import { WpbfCustomizeEditorControl } from "./editor-interface";
+import { WpbfEditorControl } from "./editor-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -10,10 +10,10 @@ declare var tinyMCE: any;
 
 /* global tinyMCE */
 wp.customize.controlConstructor["wpbf-editor"] =
-	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeEditorControl>({
+	wp.customize.wpbfDynamicControl.extend<WpbfEditorControl>({
 		initWpbfControl: function (
-			this: WpbfCustomizeEditorControl,
-			ctrl?: WpbfCustomizeEditorControl,
+			this: WpbfEditorControl,
+			ctrl?: WpbfEditorControl,
 		) {
 			const control = ctrl || this;
 			const element = control.container.find("textarea");

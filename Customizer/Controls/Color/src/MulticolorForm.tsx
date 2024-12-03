@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import ColorForm from "./ColorForm";
 import {
-	WpbfCustomizeMulticolorControlValue,
-	WpbfCustomizeMulticolorControl,
+	WpbfMulticolorControlValue,
+	WpbfMulticolorControl,
 	ColorControlLabelStyle,
 } from "./color-interface";
 import ControlLabel from "./components/ControlLabel";
@@ -12,7 +12,7 @@ import useFocusOutside from "./hooks/useFocusOutside";
 import useClickOutside from "./hooks/useClickOutside";
 
 export default function MulticolorForm(props: {
-	control: WpbfCustomizeMulticolorControl;
+	control: WpbfMulticolorControl;
 	container: HTMLElement;
 	choices: Record<string, string>;
 	keys: string[];
@@ -22,8 +22,8 @@ export default function MulticolorForm(props: {
 	pickerComponent: string;
 	labelStyle: ColorControlLabelStyle;
 	colorSwatches: Array<string | { color: string } | undefined>;
-	value: WpbfCustomizeMulticolorControlValue;
-	default: WpbfCustomizeMulticolorControlValue;
+	value: WpbfMulticolorControlValue;
+	default: WpbfMulticolorControlValue;
 	setNotificationContainer: any;
 	formComponent?: string;
 }) {
@@ -39,7 +39,7 @@ export default function MulticolorForm(props: {
 		description,
 	} = props;
 
-	const [value, setValue] = useState<WpbfCustomizeMulticolorControlValue>(
+	const [value, setValue] = useState<WpbfMulticolorControlValue>(
 		props.value,
 	);
 

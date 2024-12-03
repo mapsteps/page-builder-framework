@@ -4,7 +4,7 @@ import {
 	MarginPaddingDimension,
 	MarginPaddingDimensionValuePair,
 	MarginPaddingValue,
-	WpbfCustomizeMarginPaddingControl,
+	WpbfMarginPaddingControl,
 } from "./margin-padding-interface";
 import {
 	makeObjValueWithoutUnit,
@@ -21,7 +21,7 @@ export default function MarginPaddingForm(props: {
 	description?: string;
 	// setNotificationContainer: (el: HTMLElement) => void;
 	setNotificationContainer: any;
-	control: WpbfCustomizeMarginPaddingControl;
+	control: WpbfMarginPaddingControl;
 	customizerSetting?: WpbfCustomizeSetting<MarginPaddingValue | string>;
 	default?: any;
 	defaultArray: MarginPaddingValue;

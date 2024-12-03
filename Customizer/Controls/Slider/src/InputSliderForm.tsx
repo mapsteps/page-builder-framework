@@ -5,14 +5,14 @@ import {
 	makeValueForInput,
 	makeValueForSlider,
 } from "./slider-util";
-import { WpbfCustomizeInputSliderControl } from "./slider-interface";
+import { WpbfInputSliderControl } from "./slider-interface";
 import {
 	limitNumber,
 	makeLimitedNumberUnitPair,
 } from "../../Generic/src/number-util";
 
 export default function InputSliderForm(props: {
-	control: WpbfCustomizeInputSliderControl;
+	control: WpbfInputSliderControl;
 	customizerSetting?: WpbfCustomizeSetting<string | number>;
 	setNotificationContainer: any;
 	label: string | undefined;

@@ -3,19 +3,19 @@ import {
 	WpbfCustomizeControlParams,
 } from "../../Base/src/base-interface";
 
-export interface WpbfCustomizeCheckboxControlParams
+export interface WpbfCheckboxControlParams
 	extends WpbfCustomizeControlParams<boolean> {}
 
-export interface WpbfCustomizeCheckboxControl
-	extends WpbfCustomizeControl<boolean, WpbfCustomizeCheckboxControlParams> {}
+export interface WpbfCheckboxControl
+	extends WpbfCustomizeControl<boolean, WpbfCheckboxControlParams> {}
 
 export type WpbfCheckboxButtonsetControlValue = string[];
 
-export interface WpbfCustomizeCheckboxButtonsetControlParams
+export interface WpbfCheckboxButtonsetControlParams
 	extends WpbfCustomizeControlParams<WpbfCheckboxButtonsetControlValue> {}
 
-export interface WpbfCustomizeCheckboxButtonsetControl
+export interface WpbfCheckboxButtonsetControl
 	extends WpbfCustomizeControl<
 		WpbfCheckboxButtonsetControlValue,
-		WpbfCustomizeCheckboxButtonsetControlParams
+		WpbfCheckboxButtonsetControlParams
 	> {}

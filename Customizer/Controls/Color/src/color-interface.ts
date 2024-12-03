@@ -11,7 +11,7 @@ export type ColorControlLabelStyle =
 	| "label_only"
 	| "default";
 
-export interface WpbfCustomizeColorControlParams
+export interface WpbfColorControlParams
 	extends WpbfCustomizeControlParams<WpbfColorControlValue> {
 	mode: string;
 	labelStyle: ColorControlLabelStyle;
@@ -19,8 +19,8 @@ export interface WpbfCustomizeColorControlParams
 	formComponent?: string;
 }
 
-export interface WpbfCustomizeMulticolorControlParams
-	extends WpbfCustomizeControlParams<WpbfCustomizeMulticolorControlValue> {
+export interface WpbfMulticolorControlParams
+	extends WpbfCustomizeControlParams<WpbfMulticolorControlValue> {
 	choices: Record<string, string>;
 	mode: string;
 	labelStyle: ColorControlLabelStyle;
@@ -28,16 +28,13 @@ export interface WpbfCustomizeMulticolorControlParams
 	formComponent?: string;
 }
 
-export interface WpbfCustomizeColorControl
-	extends WpbfCustomizeControl<
-		WpbfColorControlValue,
-		WpbfCustomizeColorControlParams
-	> {}
+export interface WpbfColorControl
+	extends WpbfCustomizeControl<WpbfColorControlValue, WpbfColorControlParams> {}
 
-export interface WpbfCustomizeMulticolorControl
+export interface WpbfMulticolorControl
 	extends WpbfCustomizeControl<
-		WpbfCustomizeMulticolorControlValue,
-		WpbfCustomizeMulticolorControlParams
+		WpbfMulticolorControlValue,
+		WpbfMulticolorControlParams
 	> {}
 
 export type ColorMode =
@@ -71,7 +68,4 @@ export type WpbfColorControlValue =
 	| HslOrHslaColor
 	| HsvOrHsvaColor;
 
-export type WpbfCustomizeMulticolorControlValue = Record<
-	string,
-	WpbfColorControlValue
->;
+export type WpbfMulticolorControlValue = Record<string, WpbfColorControlValue>;

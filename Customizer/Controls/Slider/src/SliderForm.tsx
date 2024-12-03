@@ -1,9 +1,9 @@
 import React, { ChangeEvent, MouseEvent, useRef } from "react";
 import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
-import { WpbfCustomizeSliderControl } from "./slider-interface";
+import { WpbfSliderControl } from "./slider-interface";
 
 export default function SliderForm(props: {
-	control: WpbfCustomizeSliderControl;
+	control: WpbfSliderControl;
 	customizerSetting?: WpbfCustomizeSetting<string | number>;
 	setNotificationContainer?: any;
 	label?: string;

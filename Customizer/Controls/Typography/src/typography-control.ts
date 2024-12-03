@@ -11,9 +11,9 @@ import {
 } from "./typography-interface";
 import {
 	SelectControlChoice,
-	WpbfCustomizeSelectControl,
+	WpbfSelectControl,
 } from "../../Select/src/select-interface";
-import { WpbfCustomizeAssocArrayControl } from "../../Generic/src/generic-interface";
+import { WpbfAssocArrayControl } from "../../Generic/src/generic-interface";
 
 /**
  * These var declarations are for the global variables that are set in the PHP file.
@@ -94,7 +94,7 @@ function composeFontProperties(
 	triggerPropertyValue?: string,
 	triggerChange?: boolean,
 ) {
-	const control: WpbfCustomizeAssocArrayControl | undefined =
+	const control: WpbfAssocArrayControl | undefined =
 		window.wp.customize?.control(id);
 	if (!control || !control.setting) return;
 
@@ -119,7 +119,7 @@ function composeFontProperties(
 
 	const variantControl =
 		maybeVariantControl && "wpbf-select" === maybeVariantControl.params.type
-			? (maybeVariantControl as WpbfCustomizeSelectControl)
+			? (maybeVariantControl as WpbfSelectControl)
 			: undefined;
 
 	if (

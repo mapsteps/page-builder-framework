@@ -1,6 +1,6 @@
 import "./slider-control.scss";
 import SliderControl from "./SliderControl";
-import { WpbfCustomizeSliderControl } from "./slider-interface";
+import { WpbfSliderControl } from "./slider-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -8,4 +8,4 @@ declare var wp: {
 
 // Register control type with Customizer.
 wp.customize.controlConstructor["wpbf-slider"] =
-	SliderControl as WpbfCustomizeSliderControl;
+	SliderControl as WpbfSliderControl;

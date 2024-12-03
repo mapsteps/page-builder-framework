@@ -1,14 +1,14 @@
 import "./checkbox-control.scss";
 import {
-	WpbfCustomizeCheckboxButtonsetControl,
-	WpbfCustomizeCheckboxControl,
+	WpbfCheckboxButtonsetControl,
+	WpbfCheckboxControl,
 } from "./checkbox-interface";
 
 ((customizer: WpbfCustomize | undefined) => {
 	if (!customizer) return;
 
 	customizer.controlConstructor["wpbf-checkbox"] =
-		customizer.wpbfDynamicControl.extend<WpbfCustomizeCheckboxControl>({
+		customizer.wpbfDynamicControl.extend<WpbfCheckboxControl>({
 			initWpbfControl: function (ctrl) {
 				const control = ctrl || this;
 
@@ -19,7 +19,7 @@ import {
 		});
 
 	customizer.controlConstructor["wpbf-toggle"] =
-		customizer.wpbfDynamicControl.extend<WpbfCustomizeCheckboxControl>({
+		customizer.wpbfDynamicControl.extend<WpbfCheckboxControl>({
 			initWpbfControl: function (ctrl) {
 				const control = ctrl || this;
 
@@ -30,7 +30,7 @@ import {
 		});
 
 	customizer.controlConstructor["wpbf-checkbox-buttonset"] =
-		customizer.wpbfDynamicControl.extend<WpbfCustomizeCheckboxButtonsetControl>(
+		customizer.wpbfDynamicControl.extend<WpbfCheckboxButtonsetControl>(
 			{
 				currentValue: undefined,
 

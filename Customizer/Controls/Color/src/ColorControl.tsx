@@ -1,6 +1,6 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
-	WpbfCustomizeColorControl,
+	WpbfColorControl,
 	WpbfColorControlValue,
 } from "./color-interface";
 import ColorForm from "./ColorForm";
@@ -9,7 +9,7 @@ import { createRoot } from "react-dom/client";
 import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
 const ColorControl =
-	window.wp.customize?.Control.extend<WpbfCustomizeColorControl>({
+	window.wp.customize?.Control.extend<WpbfColorControl>({
 		root: undefined,
 
 		/**
@@ -83,7 +83,7 @@ const ColorControl =
 
 			this.root?.render(
 				<ColorForm
-					control={this as WpbfCustomizeColorControl}
+					control={this as WpbfColorControl}
 					container={this.container[0]}
 					label={params.label}
 					description={params.description}

@@ -19,11 +19,11 @@ export interface MarginPaddingDimensionValuePair {
 	value: string | number;
 }
 
-export interface WpbfCustomizeMarginPaddingControlParams
+export interface WpbfMarginPaddingControlParams
 	extends WpbfCustomizeControlParams<MarginPaddingValue | string> {}
 
-export interface WpbfCustomizeMarginPaddingControl
+export interface WpbfMarginPaddingControl
 	extends WpbfCustomizeControl<
 		MarginPaddingValue | string,
-		WpbfCustomizeMarginPaddingControlParams
+		WpbfMarginPaddingControlParams
 	> {}

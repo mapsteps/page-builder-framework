@@ -18,7 +18,7 @@
     "Customizer/**/*.ts",
     "assets/js/*.js",
     "assets/**/*.ts",
-    "inc/customizer/js/*.ts",
+    "inc/customizer/**/*.ts",
     "wpbf.mjs",
     "types.ts"
   ],

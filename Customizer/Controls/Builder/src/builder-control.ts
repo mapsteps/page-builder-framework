@@ -1,11 +1,11 @@
 import "./builder-control.scss";
-import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
+import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
 
 (function () {
 	if (!window.wp.customize) return;
 
 	window.wp.customize.controlConstructor["wpbf-builder"] =
-		window.wp.customize.wpbfDynamicControl.extend<WpbfCustomizeBuilderControl>({
+		window.wp.customize.wpbfDynamicControl.extend<WpbfBuilderControl>({
 			isSaving: false,
 
 			form: undefined,
@@ -20,8 +20,8 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 			builderPanel: undefined,
 
 			initWpbfControl: function (
-				this: WpbfCustomizeBuilderControl,
-				control?: WpbfCustomizeBuilderControl,
+				this: WpbfBuilderControl,
+				control?: WpbfBuilderControl,
 			) {
 				control = control || this;
 				if (!control) return;
@@ -707,7 +707,7 @@ import { BuilderValue, WpbfCustomizeBuilderControl } from "./builder-interface";
 			},
 
 			updateComponentState: function (
-				this: WpbfCustomizeBuilderControl,
+				this: WpbfBuilderControl,
 				value: Record<string, any>,
 			) {
 				// Update available-widgets & sortable-widgets.

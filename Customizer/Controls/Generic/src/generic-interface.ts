@@ -4,13 +4,10 @@ import {
 } from "../../Base/src/base-interface";
 import { DevicesValue } from "../../Responsive/src/responsive-interface";
 
-export interface WpbfCustomizeGenericControl
-	extends WpbfCustomizeControl<
-		string | number,
-		WpbfCustomizeGenericControlParams
-	> {}
+export interface WpbfGenericControl
+	extends WpbfCustomizeControl<string | number, WpbfGenericControlParams> {}
 
-export interface WpbfCustomizeGenericControlParams
+export interface WpbfGenericControlParams
 	extends WpbfCustomizeControlParams<string | number> {
 	subtype: string;
 	inputTag: string;
@@ -21,14 +18,14 @@ export interface WpbfCustomizeGenericControlParams
 	rows?: number;
 }
 
-export interface WpbfCustomizeResponsiveGenericControl
+export interface WpbfResponsiveGenericControl
 	extends WpbfCustomizeControl<
 		DevicesValue | string,
-		WpbfCustomizeResponsiveGenericControlParams
+		WpbfResponsiveGenericControlParams
 	> {}
 
-export interface WpbfCustomizeResponsiveGenericControlParams
-	extends WpbfCustomizeGenericControlParams {
+export interface WpbfResponsiveGenericControlParams
+	extends WpbfGenericControlParams {
 	defaultArray: DevicesValue;
 	valueArray: DevicesValue;
 	devices: string[];
@@ -36,8 +33,11 @@ export interface WpbfCustomizeResponsiveGenericControlParams
 	saveAsJson: boolean;
 }
 
-export interface AssocArrayControlParams
+export interface WpbfAssocArrayControlParams
 	extends WpbfCustomizeControlParams<Record<string, any>> {}
 
-export interface WpbfCustomizeAssocArrayControl
-	extends WpbfCustomizeControl<Record<string, any>, AssocArrayControlParams> {}
+export interface WpbfAssocArrayControl
+	extends WpbfCustomizeControl<
+		Record<string, any>,
+		WpbfAssocArrayControlParams
+	> {}

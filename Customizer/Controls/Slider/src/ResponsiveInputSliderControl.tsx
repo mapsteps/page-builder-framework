@@ -3,8 +3,8 @@ import { createRoot } from "react-dom/client";
 import React from "react";
 import ResponsiveInputSliderForm from "./ResponsiveInputSliderForm";
 import {
-	WpbfCustomizeResponsiveInputSliderControl,
-	WpbfCustomizeResponsiveInputSliderControlParams,
+	WpbfResponsiveInputSliderControl,
+	WpbfResponsiveInputSliderControlParams,
 } from "./slider-interface";
 import { DevicesValue } from "../../Responsive/src/responsive-interface";
 
@@ -20,11 +20,11 @@ declare var wp: {
  * @augments wp.customize.Class
  */
 const ResponsiveInputSliderControl =
-	wp.customize.Control.extend<WpbfCustomizeResponsiveInputSliderControl>({
+	wp.customize.Control.extend<WpbfResponsiveInputSliderControl>({
 		initialize: function (
-			this: WpbfCustomizeResponsiveInputSliderControl,
+			this: WpbfResponsiveInputSliderControl,
 			id: string,
-			params: WpbfCustomizeResponsiveInputSliderControlParams,
+			params: WpbfResponsiveInputSliderControlParams,
 		) {
 			const control = this;
 
@@ -51,7 +51,7 @@ const ResponsiveInputSliderControl =
 		 * This will be called when the React component is mounted.
 		 */
 		setNotificationContainer: function setNotificationContainer(
-			this: WpbfCustomizeResponsiveInputSliderControl,
+			this: WpbfResponsiveInputSliderControl,
 			el: HTMLElement,
 		) {
 			const control = this;
@@ -66,7 +66,7 @@ const ResponsiveInputSliderControl =
 		 * This will be called from the Control#embed() method in the parent class.
 		 */
 		renderContent: function renderContent(
-			this: WpbfCustomizeResponsiveInputSliderControl,
+			this: WpbfResponsiveInputSliderControl,
 		) {
 			const control = this;
 			const params = control.params;
@@ -102,7 +102,7 @@ const ResponsiveInputSliderControl =
 		 *
 		 * React is available to be used here instead of the wp.customize.Element abstraction.
 		 */
-		ready: function ready(this: WpbfCustomizeResponsiveInputSliderControl) {
+		ready: function ready(this: WpbfResponsiveInputSliderControl) {
 			const control = this;
 
 			if (control.setting) {
@@ -127,7 +127,7 @@ const ResponsiveInputSliderControl =
 		 *
 		 * @link https://core.trac.wordpress.org/ticket/31334
 		 */
-		destroy: function destroy(this: WpbfCustomizeResponsiveInputSliderControl) {
+		destroy: function destroy(this: WpbfResponsiveInputSliderControl) {
 			this.root?.unmount();
 			this.root = undefined;
 

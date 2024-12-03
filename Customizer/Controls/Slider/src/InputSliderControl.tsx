@@ -3,8 +3,8 @@ import { createRoot } from "react-dom/client";
 import React from "react";
 import InputSliderForm from "./InputSliderForm";
 import {
-	WpbfCustomizeInputSliderControl,
-	WpbfCustomizeInputSliderControlParams,
+	WpbfInputSliderControl,
+	WpbfInputSliderControlParams,
 } from "./slider-interface";
 
 declare var wp: {
@@ -19,11 +19,11 @@ declare var wp: {
  * @augments wp.customize.Class
  */
 const InputSliderControl =
-	wp.customize.Control.extend<WpbfCustomizeInputSliderControl>({
+	wp.customize.Control.extend<WpbfInputSliderControl>({
 		initialize: function (
-			this: WpbfCustomizeInputSliderControl,
+			this: WpbfInputSliderControl,
 			id: string,
-			params: WpbfCustomizeInputSliderControlParams,
+			params: WpbfInputSliderControlParams,
 		) {
 			const control = this;
 
@@ -50,7 +50,7 @@ const InputSliderControl =
 		 * This will be called when the React component is mounted.
 		 */
 		setNotificationContainer: function setNotificationContainer(
-			this: WpbfCustomizeInputSliderControl,
+			this: WpbfInputSliderControl,
 			el: HTMLElement,
 		) {
 			const control = this;
@@ -65,7 +65,7 @@ const InputSliderControl =
 		 * This will be called from the Control#embed() method in the parent class.
 		 */
 		renderContent: function renderContent(
-			this: WpbfCustomizeInputSliderControl,
+			this: WpbfInputSliderControl,
 		) {
 			const control = this;
 			const params = control.params;
@@ -99,7 +99,7 @@ const InputSliderControl =
 		 *
 		 * React is available to be used here instead of the wp.customize.Element abstraction.
 		 */
-		ready: function ready(this: WpbfCustomizeInputSliderControl) {
+		ready: function ready(this: WpbfInputSliderControl) {
 			const control = this;
 
 			if (control.setting) {
@@ -125,7 +125,7 @@ const InputSliderControl =
 		 *
 		 * @link https://core.trac.wordpress.org/ticket/31334
 		 */
-		destroy: function destroy(this: WpbfCustomizeInputSliderControl) {
+		destroy: function destroy(this: WpbfInputSliderControl) {
 			this.root?.unmount();
 			this.root = undefined;
 

@@ -2,7 +2,7 @@ import "./repeater-control.scss";
 
 import {
 	RepeaterImageSelectOptions,
-	WpbfCustomizeRepeaterControl,
+	WpbfRepeaterControl,
 	WpbfRepeaterRow,
 } from "./repeater-interface";
 import RepeaterRow from "./repeater-row";
@@ -14,9 +14,9 @@ declare var wp: {
 };
 
 wp.customize.controlConstructor["wpbf-repeater"] =
-	wp.customize.Control.extend<WpbfCustomizeRepeaterControl>({
+	wp.customize.Control.extend<WpbfRepeaterControl>({
 		// When we're finished loading continue processing
-		ready: function (this: WpbfCustomizeRepeaterControl): void {
+		ready: function (this: WpbfRepeaterControl): void {
 			this.initWpbfControl?.();
 		},
 
@@ -31,8 +31,8 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		repeaterTemplate: undefined,
 
 		initWpbfControl: function (
-			this: WpbfCustomizeRepeaterControl,
-			ctrl?: WpbfCustomizeRepeaterControl,
+			this: WpbfRepeaterControl,
+			ctrl?: WpbfRepeaterControl,
 		) {
 			const control = ctrl || this;
 
@@ -228,7 +228,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * Create a media modal select frame, and store it so the instance can be reused when needed.
 		 * This is mostly a copy/paste of Core api.CroppedImageControl in /wp-admin/js/customize-control.js
 		 */
-		initCropperFrame: function (this: WpbfCustomizeRepeaterControl): void {
+		initCropperFrame: function (this: WpbfRepeaterControl): void {
 			// We get the field id from which this was called.
 			const currentFieldId = this.$thisButton
 				?.siblings("input.hidden-field")
@@ -298,7 +298,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * state if the image isn't the right size.
 		 */
 
-		onSelectForCrop: function (this: WpbfCustomizeRepeaterControl) {
+		onSelectForCrop: function (this: WpbfRepeaterControl) {
 			const attachment = this.frame.state().get("selection").first().toJSON();
 
 			if (
@@ -333,7 +333,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {object} - Options.
 		 */
 		calculateImageSelectOptions: function (
-			this: WpbfCustomizeRepeaterControl,
+			this: WpbfRepeaterControl,
 			attachment: any,
 			controller: any,
 		): object {
@@ -498,7 +498,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			this.frame.close();
 		},
 
-		getMimeType: function (this: WpbfCustomizeRepeaterControl) {
+		getMimeType: function (this: WpbfRepeaterControl) {
 			// We get the field id from which this was called
 			const currentFieldId = this.$thisButton
 				?.siblings("input.hidden-field")
@@ -596,7 +596,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		setValue: function (
-			this: WpbfCustomizeRepeaterControl,
+			this: WpbfRepeaterControl,
 			newValue: Record<string, any>,
 			refresh?: boolean,
 			filtering?: boolean,
@@ -643,7 +643,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {WpbfRepeaterRow|undefined} - Returns the new row.
 		 */
 		addRow: function (
-			this: WpbfCustomizeRepeaterControl,
+			this: WpbfRepeaterControl,
 			data?: Record<string, Record<string, any>>,
 		): WpbfRepeaterRow | undefined {
 			const control = this;
@@ -822,7 +822,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		updateField: function (
-			this: WpbfCustomizeRepeaterControl,
+			this: WpbfRepeaterControl,
 			e: JQuery.TriggeredEvent,
 			rowIndex: number,
 			fieldId: string,
@@ -866,7 +866,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 *
 		 * @returns {void}
 		 */
-		initColorPicker: function (this: WpbfCustomizeRepeaterControl): void {
+		initColorPicker: function (this: WpbfRepeaterControl): void {
 			const control = this;
 			const colorPicker = control.container?.find(".wpbf-classic-color-picker");
 			const fieldId = colorPicker?.data("field");
@@ -921,7 +921,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		initSelect: function (
-			this: WpbfCustomizeRepeaterControl,
+			this: WpbfRepeaterControl,
 			theNewRow: WpbfRepeaterRow,
 			data?: Record<string, any>,
 		): void {

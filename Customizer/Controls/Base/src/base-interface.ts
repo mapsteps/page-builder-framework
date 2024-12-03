@@ -6,28 +6,28 @@ import {
 } from "wordpress__customize-browser/Customize";
 import {
 	SelectControlValue,
-	WpbfCustomizeSelectControl,
+	WpbfSelectControl,
 } from "../../Select/src/select-interface";
 import { Setting } from "wordpress__customize-browser/Setting";
 import {
-	WpbfCustomizeColorControl,
+	WpbfColorControl,
 	WpbfColorControlValue,
-	WpbfCustomizeMulticolorControl,
-	WpbfCustomizeMulticolorControlValue,
+	WpbfMulticolorControl,
+	WpbfMulticolorControlValue,
 } from "../../Color/src/color-interface";
-import { WpbfCustomizeDimensionControl } from "../../Dimension/src/dimension-interface";
-import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/margin-padding-interface";
+import { WpbfDimensionControl } from "../../Dimension/src/dimension-interface";
+import { WpbfMarginPaddingControl } from "../../MarginPadding/src/margin-padding-interface";
 import {
-	WpbfCustomizeInputSliderControl,
-	WpbfCustomizeResponsiveInputSliderControl,
+	WpbfInputSliderControl,
+	WpbfResponsiveInputSliderControl,
 } from "../../Slider/src/slider-interface";
-import { WpbfCustomizeSortableControl } from "../../Sortable/src/sortable-interface";
+import { WpbfSortableControl } from "../../Sortable/src/sortable-interface";
 import { Section_Constructor } from "wordpress__customize-browser/Section_Constructor";
 import { Section } from "wordpress__customize-browser/Section";
 import {
-	WpbfCustomizeAssocArrayControl,
-	WpbfCustomizeGenericControl,
-	WpbfCustomizeResponsiveGenericControl,
+	WpbfAssocArrayControl,
+	WpbfGenericControl,
+	WpbfResponsiveGenericControl,
 } from "../../Generic/src/generic-interface";
 import {
 	Container_Arguments,
@@ -45,18 +45,19 @@ import { Element_Synchronizer } from "wordpress__customize-browser/Element";
 import { Notification } from "wordpress__customize-browser/Notification";
 import { Root } from "react-dom/client";
 import {
-	WpbfCustomizeCheckboxButtonsetControl,
-	WpbfCustomizeCheckboxControl,
+	WpbfCheckboxButtonsetControl,
+	WpbfCheckboxControl,
 } from "../../Checkbox/src/checkbox-interface";
-import { WpbfCustomizeEditorControl } from "../../Editor/src/editor-interface";
+import { WpbfEditorControl } from "../../Editor/src/editor-interface";
 import {
-	WpbfCustomizeRepeaterControl,
+	WpbfRepeaterControl,
 	WpbfRepeaterRow,
 } from "../../Repeater/src/repeater-interface";
 import {
 	BuilderWidget,
-	WpbfCustomizeBuilderControl,
+	WpbfBuilderControl,
 } from "../../Builder/src/builder-interface";
+import { WpbfImageControl } from "../../Media/src/image-interface";
 
 declare global {
 	export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
@@ -274,7 +275,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	updateColorPicker?: (value: WpbfColorControlValue) => void;
 
 	// Specific to PBF's multicolor control.
-	updateColorPickers?: (value: WpbfCustomizeMulticolorControlValue) => void;
+	updateColorPickers?: (value: WpbfMulticolorControlValue) => void;
 	togglePopup?: Record<string, () => void>;
 	isPopupOpen?: Record<string, () => boolean>;
 
@@ -392,35 +393,32 @@ export interface WpbfCustomizeControlParams<SV> {
 }
 
 export interface WpbfCustomizeControlConstructor extends Control_Constructor {
-	"wpbf-checkbox": WpbfCustomizeCheckboxControl;
-	"wpbf-checkbox-buttonset": WpbfCustomizeCheckboxButtonsetControl;
-	"wpbf-color": WpbfCustomizeColorControl;
-	"wpbf-multicolor": WpbfCustomizeMulticolorControl;
-	"wpbf-dimension": WpbfCustomizeDimensionControl;
-	"wpbf-editor": WpbfCustomizeEditorControl;
-	"wpbf-generic": WpbfCustomizeGenericControl;
-	"wpbf-responsive-generic": WpbfCustomizeResponsiveGenericControl;
-	"wpbf-assoc-array": WpbfCustomizeAssocArrayControl;
-	"wpbf-image": WpbfCustomizeControl<
-		number | string | object,
-		WpbfCustomizeControlParams<number | string | object>
-	>;
-	"wpbf-margin-padding": WpbfCustomizeMarginPaddingControl;
-	"wpbf-responsive-margin-padding": WpbfCustomizeMarginPaddingControl;
+	"wpbf-checkbox": WpbfCheckboxControl;
+	"wpbf-checkbox-buttonset": WpbfCheckboxButtonsetControl;
+	"wpbf-color": WpbfColorControl;
+	"wpbf-multicolor": WpbfMulticolorControl;
+	"wpbf-dimension": WpbfDimensionControl;
+	"wpbf-editor": WpbfEditorControl;
+	"wpbf-generic": WpbfGenericControl;
+	"wpbf-responsive-generic": WpbfResponsiveGenericControl;
+	"wpbf-assoc-array": WpbfAssocArrayControl;
+	"wpbf-image": WpbfImageControl;
+	"wpbf-margin-padding": WpbfMarginPaddingControl;
+	"wpbf-responsive-margin-padding": WpbfMarginPaddingControl;
 	"wpbf-radio": {};
 	"wpbf-radio-buttonset": {};
 	"wpbf-radio-image": {};
-	"wpbf-repeater": WpbfCustomizeRepeaterControl;
-	"wpbf-select": WpbfCustomizeSelectControl;
+	"wpbf-repeater": WpbfRepeaterControl;
+	"wpbf-select": WpbfSelectControl;
 	"wpbf-slider": WpbfCustomizeControl<
 		number | string,
 		WpbfCustomizeControlParams<number | string>
 	>;
-	"wpbf-input-slider": WpbfCustomizeInputSliderControl;
-	"wpbf-responsive-input-slider": WpbfCustomizeResponsiveInputSliderControl;
-	"wpbf-sortable": WpbfCustomizeSortableControl;
-	"wpbf-toggle": WpbfCustomizeCheckboxControl;
-	"wpbf-builder": WpbfCustomizeBuilderControl;
+	"wpbf-input-slider": WpbfInputSliderControl;
+	"wpbf-responsive-input-slider": WpbfResponsiveInputSliderControl;
+	"wpbf-sortable": WpbfSortableControl;
+	"wpbf-toggle": WpbfCheckboxControl;
+	"wpbf-builder": WpbfBuilderControl;
 }
 
 export interface WpbfSectionDependency {
