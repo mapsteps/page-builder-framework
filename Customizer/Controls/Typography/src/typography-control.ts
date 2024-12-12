@@ -46,13 +46,14 @@ function setupTypographyFields() {
 		if (!wp.customize.control(id)) return;
 
 		wp.customize(id, function (setting) {
-			setting.bind(function (value) {
-				composeFontProperties(id, undefined, undefined, value);
-			});
-		});
+			composeFontProperties(id, undefined, undefined, undefined);
 
-		composeFontProperties(id, undefined, undefined, undefined);
-		listenFontPropertyFieldsChange(id);
+			setting.bind(function (value) {
+				composeFontProperties(id, value, undefined, undefined);
+			});
+
+			listenFontPropertyFieldsChange(id);
+		});
 	});
 }
 
@@ -65,7 +66,13 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 
 		wp.customize(propertyControlId, function (setting) {
 			setting.bind(function (value) {
-				composeFontProperties(typographyControlId, property, value, undefined);
+				composeFontProperties(
+					typographyControlId,
+					undefined,
+					property,
+					value,
+					true,
+				);
 			});
 		});
 	});
@@ -89,14 +96,18 @@ function variantFoundInChoices(
 
 function composeFontProperties(
 	id: string,
+	val?: WpbfCustomizeTypographyControlValue,
 	triggerPropertyName?: FontProperty,
 	triggerPropertyValue?: string,
-	value?: WpbfCustomizeTypographyControlValue,
+	triggerChange?: boolean,
 ) {
 	const control = wp.customize.control(id);
 	if (!control || !control.setting) return;
 
-	value = value || control.setting.get();
+	val = val || control.setting.get();
+
+	const value = { ...val };
+
 	if ("undefined" === typeof value) return;
 	if ("string" !== typeof value["font-family"]) return;
 
@@ -116,19 +127,6 @@ function composeFontProperties(
 		maybeVariantControl && "wpbf-select" === maybeVariantControl.params.type
 			? (maybeVariantControl as WpbfCustomizeSelectControl)
 			: undefined;
-
-	// Set the font-style value.
-	if (-1 !== variantValue.indexOf("i")) {
-		value["font-style"] = "italic";
-	} else {
-		value["font-style"] = "normal";
-	}
-
-	// Set the font-weight value.
-	value["font-weight"] =
-		"regular" === variantValue || "italic" === variantValue
-			? 400
-			: parseInt(variantValue, 10);
 
 	if (
 		variantControl &&
@@ -161,7 +159,24 @@ function composeFontProperties(
 		variantControl.$selectbox?.trigger("change");
 	}
 
-	wp.customize(id).set(value);
+	// Set the font-style value.
+	if (-1 !== variantValue.indexOf("i")) {
+		value["font-style"] = "italic";
+	} else {
+		value["font-style"] = "normal";
+	}
+
+	// Set the font-weight value.
+	value["font-weight"] =
+		"regular" === variantValue || "italic" === variantValue
+			? 400
+			: parseInt(variantValue, 10);
+
+	if (triggerChange) {
+		value["random"] = Date.now();
+	}
+
+	control.setting.set(value);
 
 	wp.hooks.addAction(
 		"wpbf.dynamicControl.initWpbfControl",
