@@ -8,9 +8,6 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-// Load textdomain. This is required to make strings translatable.
-load_theme_textdomain( 'page-builder-framework' );
-
 /**
  * Setup.
  *

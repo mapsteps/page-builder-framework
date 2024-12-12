@@ -25,9 +25,6 @@ define( 'WPBF_PREMIUM_MIN_VERSION', '2.10' );
  */
 function wpbf_theme_setup() {
 
-	// Textdomain.
-	load_theme_textdomain( 'page-builder-framework', WPBF_THEME_DIR . '/languages' );
-
 	// Custom logo.
 	add_theme_support(
 		'custom-logo',
@@ -114,6 +111,17 @@ function wpbf_theme_setup() {
 
 }
 add_action( 'after_setup_theme', 'wpbf_theme_setup' );
+
+/**
+ * Theme init.
+ */
+function wpbf_theme_init() {
+
+	// Textdomain.
+	load_theme_textdomain( 'page-builder-framework', WPBF_THEME_DIR . '/languages' );
+
+}
+add_action( 'init', 'wpbf_theme_init' );
 
 // Content width.
 if ( ! isset( $content_width ) ) {
