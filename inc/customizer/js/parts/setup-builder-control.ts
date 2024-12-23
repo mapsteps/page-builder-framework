@@ -180,7 +180,7 @@ function isBuilderEnabled(builderControlId: string): boolean {
  * @param {string} builderControlId The builder control ID.
  */
 function openBuilderPanel(builderControlId: string) {
-	const $builderPanel = $(`.${builderControlId}-${builderPanelClassName}`);
+	const $builderPanel = jQuery(`.${builderControlId}-${builderPanelClassName}`);
 	$builderPanel.addClass("before-shown");
 	const panelHeight = $builderPanel.outerHeight();
 
@@ -189,7 +189,7 @@ function openBuilderPanel(builderControlId: string) {
 
 		window.setTimeout(() => {
 			$builderPanel.css("max-height", panelHeight ?? "auto");
-			$("#" + customizePreviewId).css("bottom", panelHeight ?? "auto");
+			jQuery("#" + customizePreviewId).css("bottom", panelHeight ?? "auto");
 		}, 0);
 
 		const customizePanel = getBuilderCustomizePanel(builderControlId);
@@ -205,9 +205,9 @@ function openBuilderPanel(builderControlId: string) {
  * @param {string} builderControlId The builder control ID.
  */
 function closeBuilderPanel(builderControlId: string) {
-	$(`.${builderControlId}-${builderPanelClassName}`).removeAttr("style");
+	jQuery(`.${builderControlId}-${builderPanelClassName}`).removeAttr("style");
 
-	$("#" + customizePreviewId).css("bottom", 0);
+	jQuery("#" + customizePreviewId).css("bottom", 0);
 
 	const customizePanel = getBuilderCustomizePanel(builderControlId);
 	if (!customizePanel) return;

@@ -47,6 +47,13 @@
     "vanjs-core": "^1.5.2",
     "zx": "^8.2.4"
   },
+  "parcel": {
+    "transformers": {
+      "*.{js,jsx,ts,tsx}": {
+        "runtime": "classic"
+      }
+    }
+  },
   "alias": {
     "react": {
       "global": "React"
@@ -100,57 +107,31 @@
     "build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min",
     "build-individual-css": "parcel build \"assets/scss/!(style)*.scss\" --dist-dir css/min",
     "build-individual-assets": "pnpm build-individual-js && pnpm build-individual-css",
-    "build-customizer": "parcel build inc/customizer/js/customizer.ts --dist-dir js/min",
-    "watch-customizer": "parcel watch inc/customizer/js/customizer.ts --dist-dir js/min",
+    "build-customizer": "parcel build inc/customizer/js/customizer.ts --dist-dir js/min --no-cache",
     "build-postmessage": "parcel build inc/customizer/js/postmessage.ts --dist-dir js/min",
-    "watch-postmessage": "parcel watch inc/customizer/js/postmessage.ts --dist-dir js/min",
-    "watch-customize-panels": "parcel watch Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist",
     "build-customize-panels": "parcel build Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist",
-    "watch-customize-sections": "parcel watch Customizer/Sections/src/sections.ts --dist-dir Customizer/Sections/dist",
     "build-customize-sections": "parcel build Customizer/Sections/src/sections.ts --dist-dir Customizer/Sections/dist",
-    "watch-base-control": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist",
     "build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist",
-    "watch-checkbox-control": "parcel watch Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist",
     "build-checkbox-control": "parcel build Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist",
-    "watch-color-control": "parcel watch Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist",
     "build-color-control": "parcel build Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist",
-    "watch-dimension-control": "parcel watch Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist",
     "build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist",
-    "watch-editor-control": "parcel watch Customizer/Controls/Editor/src/editor-control.ts --dist-dir Customizer/Controls/Editor/dist",
     "build-editor-control": "parcel build Customizer/Controls/Editor/src/editor-control.ts --dist-dir Customizer/Controls/Editor/dist",
-    "watch-generic-control": "parcel watch Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
     "build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "watch-responsive-generic-control": "parcel watch Customizer/Controls/Generic/src/responsive-generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
     "build-responsive-generic-control": "parcel build Customizer/Controls/Generic/src/responsive-generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "watch-assoc-array-control": "parcel watch Customizer/Controls/Generic/src/assoc-array-control.ts --dist-dir Customizer/Controls/Generic/dist",
     "build-assoc-array-control": "parcel build Customizer/Controls/Generic/src/assoc-array-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "watch-headline-control": "parcel watch Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist",
     "build-headline-control": "parcel build Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist",
-    "watch-image-control": "parcel watch Customizer/Controls/Media/src/image-control.ts --dist-dir Customizer/Controls/Media/dist",
     "build-image-control": "parcel build Customizer/Controls/Media/src/image-control.ts --dist-dir Customizer/Controls/Media/dist",
-    "watch-margin-padding-control": "parcel watch Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist",
     "build-margin-padding-control": "parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist",
-    "watch-radio-control": "parcel watch Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist",
     "build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist",
-    "watch-responsive-control": "parcel watch Customizer/Controls/Responsive/src/responsive-control.ts --dist-dir Customizer/Controls/Responsive/dist",
     "build-responsive-control": "parcel build Customizer/Controls/Responsive/src/responsive-control.ts --dist-dir Customizer/Controls/Responsive/dist",
-    "watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist",
     "build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist",
-    "watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
     "build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "watch-input-slider-control": "parcel watch Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
     "build-input-slider-control": "parcel build Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "watch-responsive-input-slider-control": "parcel watch Customizer/Controls/Slider/src/responsive-input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
     "build-responsive-input-slider-control": "parcel build Customizer/Controls/Slider/src/responsive-input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "watch-repeater-control": "parcel watch Customizer/Controls/Repeater/src/repeater-control.ts --dist-dir Customizer/Controls/Repeater/dist",
     "build-repeater-control": "parcel build Customizer/Controls/Repeater/src/repeater-control.ts --dist-dir Customizer/Controls/Repeater/dist",
-    "watch-sortable-control": "parcel watch Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist",
     "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist",
-    "watch-typography-control": "parcel watch Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist",
     "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist",
-    "watch-typography-preview": "parcel watch Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist",
     "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist",
-    "watch-builder-control": "parcel watch Customizer/Controls/Builder/src/builder-control.ts --dist-dir Customizer/Controls/Builder/dist",
     "build-builder-control": "parcel build Customizer/Controls/Builder/src/builder-control.ts --dist-dir Customizer/Controls/Builder/dist"
   }
 }
