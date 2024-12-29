@@ -172,10 +172,10 @@ class SelectControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		$this->json['isClearable']  = $this->clearable;
-		$this->json['isSearchable'] = $this->searchable;
-		$this->json['isMulti']      = $this->multiple;
-		$this->json['placeholder']  = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'page-builder-framework' );
+		$this->json['clearable']   = $this->clearable;
+		$this->json['searchable']  = $this->searchable;
+		$this->json['isMulti']     = $this->multiple;
+		$this->json['placeholder'] = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'page-builder-framework' );
 
 		// Will be a custom implementation, couldn't find an official prop to set this in react-select.
 		$this->json['maxSelections'] = $this->max_selections;

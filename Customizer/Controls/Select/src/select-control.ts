@@ -151,7 +151,7 @@ if (window.wp.customize) {
 
 				$selectbox?.select2({
 					placeholder: params.placeholder,
-					allowClear: params.isClearable,
+					allowClear: params.clearable,
 					multiple: params.isMulti,
 					maximumSelectionLength: params.isMulti
 						? params.maxSelections
