@@ -1,14 +1,13 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
-import {
-	SelectControlChoice,
-	WpbfSelectControl,
-} from "./select-interface";
+import { SelectControlChoice, WpbfSelectControl } from "./select-interface";
 
 import "./select-control.scss";
 
 if (window.wp.customize) {
-	const customizer = window.wp.customize;
+	setupSelectControl(window.wp.customize);
+}
 
+function setupSelectControl(customizer: WpbfCustomize) {
 	customizer.controlConstructor["wpbf-select"] =
 		customizer.Control.extend<WpbfSelectControl>({
 			/**
@@ -22,7 +21,7 @@ if (window.wp.customize) {
 				// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 				function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 					if (control === removedControl) {
-						if (control.destroy) control.destroy();
+						control?.destroy?.();
 						control.container?.remove();
 						customizer.control.unbind("removed", onRemoved);
 					}
@@ -71,7 +70,7 @@ if (window.wp.customize) {
 
 				const formTemplate = `
 				<div class="wpbf-control-form">
-					<select class="wpbf-select2"${params.isMulti ? " multiple" : ""}></select>
+					<select class="wpbf-select2"${params.multiple ? " multiple" : ""}></select>
 				</div>
 				`;
 
@@ -112,9 +111,9 @@ if (window.wp.customize) {
 					let value = null;
 
 					if (values?.length) {
-						value = params.isMulti ? values : values[0];
+						value = params.multiple ? values : values[0];
 					} else {
-						value = params.isMulti ? [] : "";
+						value = params.multiple ? [] : "";
 					}
 
 					this.setting?.set(value);
@@ -152,8 +151,8 @@ if (window.wp.customize) {
 				$selectbox?.select2({
 					placeholder: params.placeholder,
 					allowClear: params.clearable,
-					multiple: params.isMulti,
-					maximumSelectionLength: params.isMulti
+					multiple: params.multiple,
+					maximumSelectionLength: params.multiple
 						? params.maxSelections
 						: undefined,
 					// @ts-ignore - In a grouped option, id can be omitted, but Select2's types requires id to be a string|number -_-.
@@ -171,7 +170,7 @@ if (window.wp.customize) {
 						let value = val;
 
 						if (undefined === value) {
-							value = this.params?.isMulti ? [] : "";
+							value = this.params?.multiple ? [] : "";
 						}
 
 						this.updateComponentState(value);
@@ -181,9 +180,7 @@ if (window.wp.customize) {
 
 			updateComponentState: function (value) {
 				const $selectbox = this.container?.find(".wpbf-select2");
-				if (!$selectbox) return;
-
-				$selectbox.val(value);
+				$selectbox?.val(value);
 			},
 
 			/**
@@ -195,10 +192,8 @@ if (window.wp.customize) {
 			 */
 			destroy: function destroy() {
 				const $selectbox = this.container?.find(".wpbf-select2");
-				if (!$selectbox) return;
-
-				$selectbox.off("change.select2");
-				$selectbox.select2("destroy");
+				$selectbox?.off("change.select2");
+				$selectbox?.select2("destroy");
 
 				this.container?.html("");
 

@@ -25,7 +25,7 @@ export interface SelectControlParams
 	choices: SelectControlChoice[];
 	searchable: boolean;
 	clearable: boolean;
-	isMulti: boolean;
+	multiple: boolean;
 	placeholder: string;
 	maxSelections: number;
 	messages: {

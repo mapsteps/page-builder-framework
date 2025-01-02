@@ -7,7 +7,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Select;
 
-class SelectChoices {
+class SelectUtil {
 
 	/**
 	 * Format the 'choices' args for 'select' control.
@@ -106,6 +106,32 @@ class SelectChoices {
 		}
 
 		return $options;
+
+	}
+
+	/**
+	 * Sanitize the value of a select control.
+	 *
+	 * @param string|string[] $value The value to sanitize.
+	 * @param int             $max_selections The maximum amount of selections allowed.
+	 *
+	 * @return string|string[]
+	 */
+	public function sanitize( $value, $max_selections = -1 ) {
+
+		if ( ! is_array( $value ) ) {
+			return sanitize_text_field( $value );
+		}
+
+		$total_values = count( $value );
+
+		if ( $max_selections > -1 && $total_values > $max_selections ) {
+			$value = array_slice( $value, 0, $max_selections );
+		}
+
+		$values = array_map( 'sanitize_text_field', $value );
+
+		return array_values( $values );
 
 	}
 

@@ -207,7 +207,7 @@ wpbf_customizer_field()
 // Read more button.
 wpbf_customizer_field()
 	->id( 'blog_read_more_link' )
-	->type( 'select' )
+	->type( 'native-select' )
 	->label( __( 'Read More Link', 'page-builder-framework' ) )
 	->defaultValue( 'button' )
 	->choices( [
@@ -393,7 +393,7 @@ foreach ( $archives as $archive ) {
 		// Headline.
 		wpbf_customizer_field()
 			->id( $archive . '_headline' )
-			->type( 'select' )
+			->type( 'native-select' )
 			->label( ucwords( str_replace( '-', ' ', $archive ) ) . '&nbsp;' . __( 'Headline', 'page-builder-framework' ) )
 			->defaultValue( 'show' )
 			->priority( 0 )

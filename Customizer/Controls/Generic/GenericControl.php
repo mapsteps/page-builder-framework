@@ -191,8 +191,7 @@ class GenericControl extends BaseControl {
 	 *
 	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
 	 *
-	 * Supports basic input types `text`, `checkbox`, `textarea`, `radio`, `select` and `dropdown-pages`.
-	 * Additional input types such as `email`, `url`, `number`, `hidden` and `date` are supported implicitly.
+	 * Accepts one of this values: "number", "number-unit", "text", "textarea", "email", "password", "url", "hidden", and "content".
 	 *
 	 * Control content can alternately be rendered in JS. See WP_Customize_Control::print_template().
 	 */

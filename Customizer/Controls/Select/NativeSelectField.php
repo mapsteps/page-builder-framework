@@ -13,7 +13,7 @@ use WP_Customize_Manager;
 /**
  * Default settings for the select field.
  */
-class SelectField extends BaseField {
+class NativeSelectField extends BaseField {
 
 	/**
 	 * Setting's sanitize callback.
@@ -45,7 +45,7 @@ class SelectField extends BaseField {
 
 		$custom_props = $this->control->custom_properties;
 
-		$select_control = new SelectControl(
+		$select_control = new NativeSelectControl(
 			$wp_customize_manager,
 			$this->control->id,
 			$control_args
@@ -63,20 +63,8 @@ class SelectField extends BaseField {
 			$select_control->placeholder = $custom_props['placeholder'];
 		}
 
-		if ( isset( $custom_props['searchable'] ) ) {
-			$select_control->searchable = $custom_props['searchable'];
-		}
-
-		if ( isset( $custom_props['clearable'] ) ) {
-			$select_control->clearable = $custom_props['clearable'];
-		}
-
 		if ( isset( $custom_props['layout_style'] ) ) {
 			$select_control->layout_style = $custom_props['layout_style'];
-		}
-
-		if ( ! empty( $custom_props['choices_global_var'] ) && is_string( $custom_props['choices_global_var'] ) ) {
-			$select_control->choices_global_var = $custom_props['choices_global_var'];
 		}
 
 		$wp_customize_manager->add_control( $select_control );
