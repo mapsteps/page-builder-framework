@@ -118,7 +118,8 @@ function composeFontProperties(
 	const maybeVariantControl = window.wp.customize?.control(id + "[variant]");
 
 	const variantControl =
-		maybeVariantControl && "wpbf-select" === maybeVariantControl.params.type
+		maybeVariantControl &&
+		"wpbf-enhanced-select" === maybeVariantControl.params.type
 			? (maybeVariantControl as WpbfSelectControl)
 			: undefined;
 
