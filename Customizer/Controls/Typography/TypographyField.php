@@ -287,7 +287,7 @@ class TypographyField extends BaseField {
 
 		wpbf_customizer_field()
 			->id( $this->control->id . '[font-family]' )
-			->type( 'select' )
+			->type( 'enhanced-select' )
 			->label( __( 'Font Family', 'page-builder-framework' ) )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
@@ -341,7 +341,7 @@ class TypographyField extends BaseField {
 
 		wpbf_customizer_field()
 			->id( $this->control->id . '[variant]' )
-			->type( 'select' )
+			->type( 'enhanced-select' )
 			->label( __( 'Font Variant', 'page-builder-framework' ) )
 			->tab( $this->tab )
 			->capability( $this->control->capability )

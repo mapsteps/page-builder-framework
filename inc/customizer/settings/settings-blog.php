@@ -207,7 +207,7 @@ wpbf_customizer_field()
 // Read more button.
 wpbf_customizer_field()
 	->id( 'blog_read_more_link' )
-	->type( 'native-select' )
+	->type( 'select' )
 	->label( __( 'Read More Link', 'page-builder-framework' ) )
 	->defaultValue( 'button' )
 	->choices( [
@@ -393,7 +393,7 @@ foreach ( $archives as $archive ) {
 		// Headline.
 		wpbf_customizer_field()
 			->id( $archive . '_headline' )
-			->type( 'native-select' )
+			->type( 'select' )
 			->label( ucwords( str_replace( '-', ' ', $archive ) ) . '&nbsp;' . __( 'Headline', 'page-builder-framework' ) )
 			->defaultValue( 'show' )
 			->priority( 0 )
@@ -409,7 +409,7 @@ foreach ( $archives as $archive ) {
 	// Sidebar layout.
 	wpbf_customizer_field()
 		->id( $archive . '_sidebar_layout' )
-		->type( 'native-select' )
+		->type( 'select' )
 		->label( __( 'Sidebar', 'page-builder-framework' ) )
 		->defaultValue( 'global' )
 		->priority( 0 )
@@ -488,7 +488,7 @@ foreach ( $archives as $archive ) {
 	// Layout.
 	wpbf_customizer_field()
 		->id( $archive . '_layout' )
-		->type( 'native-select' )
+		->type( 'select' )
 		->label( __( 'Layout', 'page-builder-framework' ) )
 		->defaultValue( 'default' )
 		->choices( apply_filters(
@@ -504,7 +504,7 @@ foreach ( $archives as $archive ) {
 	// Style.
 	wpbf_customizer_field()
 		->id( $archive . '_post_style' )
-		->type( 'native-select' )
+		->type( 'select' )
 		->label( __( 'Style', 'page-builder-framework' ) )
 		->defaultValue( 'plain' )
 		->choices( [
@@ -727,7 +727,7 @@ foreach ( $singles as $single ) {
 	// Sidebar layout.
 	wpbf_customizer_field()
 		->id( $single . '_sidebar_layout' )
-		->type( 'native-select' )
+		->type( 'select' )
 		->label( __( 'Sidebar', 'page-builder-framework' ) )
 		->defaultValue( 'global' )
 		->choices( [
@@ -811,7 +811,7 @@ foreach ( $singles as $single ) {
 	// Post navigation.
 	wpbf_customizer_field()
 		->id( $single . '_post_nav' )
-		->type( 'native-select' )
+		->type( 'select' )
 		->label( __( 'Post Navigation', 'page-builder-framework' ) )
 		->defaultValue( 'show' )
 		->choices( [
@@ -825,7 +825,7 @@ foreach ( $singles as $single ) {
 	// Style.
 	wpbf_customizer_field()
 		->id( $single . '_post_style' )
-		->type( 'native-select' )
+		->type( 'select' )
 		->label( __( 'Style', 'page-builder-framework' ) )
 		->defaultValue( 'plain' )
 		->choices( [

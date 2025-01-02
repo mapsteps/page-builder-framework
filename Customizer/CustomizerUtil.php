@@ -32,8 +32,8 @@ use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterField;
-use Mapsteps\Wpbf\Customizer\Controls\Select\NativeSelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
+use Mapsteps\Wpbf\Customizer\Controls\Select\EnhancedSelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
@@ -100,8 +100,8 @@ class CustomizerUtil {
 		'radio',
 		'radio-buttonset',
 		'radio-image',
+		'enhanced-select',
 		'select',
-		'native-select',
 		'slider',
 		'input-slider',
 		'repeater',
@@ -340,11 +340,11 @@ class CustomizerUtil {
 			case 'radio-image':
 				$field = new RadioImageField( $control_entity );
 				break;
+			case 'enhanced-select':
+				$field = new EnhancedSelectField( $control_entity );
+				break;
 			case 'select':
 				$field = new SelectField( $control_entity );
-				break;
-			case 'native-select':
-				$field = new NativeSelectField( $control_entity );
 				break;
 			case 'slider':
 				$field = new SliderField( $control_entity );

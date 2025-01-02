@@ -53,7 +53,7 @@ if ( ! empty( $menu_term_list ) ) {
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'menu_id' )
-	->type( 'select' )
+	->type( 'enhanced-select' )
 	->tab( 'general' )
 	->label( __( 'Select Menu', 'page-builder-framework' ) )
 	->choices( $menu_choices )

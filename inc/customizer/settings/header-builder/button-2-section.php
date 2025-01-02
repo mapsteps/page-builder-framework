@@ -80,7 +80,7 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'rel' )
-	->type( 'native-select' )
+	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Link Rel', 'page-builder-framework' ) )
 	->choices( array(
@@ -98,7 +98,7 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'size' )
-	->type( 'native-select' )
+	->type( 'select' )
 	->tab( 'design' )
 	->label( __( 'Button Size', 'page-builder-framework' ) )
 	->defaultValue( '' )
@@ -140,7 +140,7 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'border_style' )
-	->type( 'native-select' )
+	->type( 'select' )
 	->tab( 'design' )
 	->label( __( 'Border Style', 'page-builder-framework' ) )
 	->choices( array(

@@ -409,7 +409,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-radio-buttonset": {};
 	"wpbf-radio-image": {};
 	"wpbf-repeater": WpbfRepeaterControl;
-	"wpbf-select": WpbfSelectControl;
+	"wpbf-enhanced-select": WpbfSelectControl;
 	"wpbf-slider": WpbfCustomizeControl<
 		number | string,
 		WpbfCustomizeControlParams<number | string>

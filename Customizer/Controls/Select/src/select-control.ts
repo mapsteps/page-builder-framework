@@ -8,7 +8,7 @@ if (window.wp.customize) {
 }
 
 function setupSelectControl(customizer: WpbfCustomize) {
-	customizer.controlConstructor["wpbf-select"] =
+	customizer.controlConstructor["wpbf-enhanced-select"] =
 		customizer.Control.extend<WpbfSelectControl>({
 			/**
 			 * Initialize.
