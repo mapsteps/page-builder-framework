@@ -80,16 +80,13 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'rel' )
-	->type( 'select' )
+	->type( 'native-select' )
 	->tab( 'general' )
 	->label( __( 'Link Rel', 'page-builder-framework' ) )
 	->choices( array(
-		'nofollow'     => __( 'nofollow', 'page-builder-framework' ),
-		'noreferrer'   => __( 'noreferrer', 'page-builder-framework' ),
-		'noopener'     => __( 'noopener', 'page-builder-framework' ),
-		'nofollow-2'   => __( 'nofollow 2', 'page-builder-framework' ),
-		'noreferrer-2' => __( 'noreferrer 2', 'page-builder-framework' ),
-		'noopener-2'   => __( 'noopener 2', 'page-builder-framework' ),
+		'nofollow'   => __( 'nofollow', 'page-builder-framework' ),
+		'noreferrer' => __( 'noreferrer', 'page-builder-framework' ),
+		'noopener'   => __( 'noopener', 'page-builder-framework' ),
 	) )
 	->properties( array(
 		'multiple' => true,
@@ -101,7 +98,7 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'size' )
-	->type( 'select' )
+	->type( 'native-select' )
 	->tab( 'design' )
 	->label( __( 'Button Size', 'page-builder-framework' ) )
 	->defaultValue( '' )
@@ -142,7 +139,7 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'border_style' )
-	->type( 'select' )
+	->type( 'native-select' )
 	->tab( 'design' )
 	->label( __( 'Border Style', 'page-builder-framework' ) )
 	->choices( array(

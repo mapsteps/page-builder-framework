@@ -70,15 +70,10 @@ wpbf_customizer_field()
 // Column one layout.
 wpbf_customizer_field()
 	->id( 'footer_column_one_layout' )
-	->type( 'select' )
+	->type( 'native-select' )
 	->tab( 'general' )
 	->label( __( 'Column 1', 'page-builder-framework' ) )
 	->defaultValue( 'text' )
-	->choices( [
-		'text'    => __( 'Text', 'page-builder-framework' ),
-		'button'  => __( 'Button', 'page-builder-framework' ),
-		'primary' => __( 'Button (Primary)', 'page-builder-framework' ),
-	] )
 	->priority( 2 )
 	->choices( [
 		'none' => __( 'None', 'page-builder-framework' ),
@@ -151,7 +146,7 @@ wpbf_customizer_field()
 // Column two layout.
 wpbf_customizer_field()
 	->id( 'footer_column_two_layout' )
-	->type( 'select' )
+	->type( 'native-select' )
 	->tab( 'general' )
 	->label( __( 'Column 2', 'page-builder-framework' ) )
 	->defaultValue( 'text' )

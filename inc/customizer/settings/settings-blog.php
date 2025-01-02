@@ -409,7 +409,7 @@ foreach ( $archives as $archive ) {
 	// Sidebar layout.
 	wpbf_customizer_field()
 		->id( $archive . '_sidebar_layout' )
-		->type( 'select' )
+		->type( 'native-select' )
 		->label( __( 'Sidebar', 'page-builder-framework' ) )
 		->defaultValue( 'global' )
 		->priority( 0 )
@@ -488,7 +488,7 @@ foreach ( $archives as $archive ) {
 	// Layout.
 	wpbf_customizer_field()
 		->id( $archive . '_layout' )
-		->type( 'select' )
+		->type( 'native-select' )
 		->label( __( 'Layout', 'page-builder-framework' ) )
 		->defaultValue( 'default' )
 		->choices( apply_filters(
@@ -504,7 +504,7 @@ foreach ( $archives as $archive ) {
 	// Style.
 	wpbf_customizer_field()
 		->id( $archive . '_post_style' )
-		->type( 'select' )
+		->type( 'native-select' )
 		->label( __( 'Style', 'page-builder-framework' ) )
 		->defaultValue( 'plain' )
 		->choices( [
@@ -727,7 +727,7 @@ foreach ( $singles as $single ) {
 	// Sidebar layout.
 	wpbf_customizer_field()
 		->id( $single . '_sidebar_layout' )
-		->type( 'select' )
+		->type( 'native-select' )
 		->label( __( 'Sidebar', 'page-builder-framework' ) )
 		->defaultValue( 'global' )
 		->choices( [
@@ -811,7 +811,7 @@ foreach ( $singles as $single ) {
 	// Post navigation.
 	wpbf_customizer_field()
 		->id( $single . '_post_nav' )
-		->type( 'select' )
+		->type( 'native-select' )
 		->label( __( 'Post Navigation', 'page-builder-framework' ) )
 		->defaultValue( 'show' )
 		->choices( [
@@ -825,7 +825,7 @@ foreach ( $singles as $single ) {
 	// Style.
 	wpbf_customizer_field()
 		->id( $single . '_post_style' )
-		->type( 'select' )
+		->type( 'native-select' )
 		->label( __( 'Style', 'page-builder-framework' ) )
 		->defaultValue( 'plain' )
 		->choices( [
