@@ -2,7 +2,7 @@ import { WpbfBuilderControl } from "../../../../Customizer/Controls/Builder/src/
 import { WpbfCheckboxControl } from "../../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 
 type BuilderPanelData = {
-	panelId: string;
+	togglePanelId: string;
 	builderControlId: string;
 	toggleControlId: string;
 };
@@ -14,13 +14,19 @@ declare var wp: {
 const customizePreviewId = "customize-preview";
 const builderPanelClassName = "builder-panel";
 
-export default function setupBuilderControl() {
+/**
+ * Setup builder control toggle behavior.
+ *
+ * This function will setup any toggle controls that have the `.wpbf-builder-toggle` class.
+ * The toggle controls will be used to toggle the connected builder panel.
+ */
+export default function setupBuilderControlToggleBehavior() {
 	const toggleControls = document.querySelectorAll(
 		"#customize-theme-controls .wpbf-builder-toggle",
 	);
 	if (!toggleControls.length) return;
 
-	const panelFields: BuilderPanelData[] = [];
+	const panelDataList: BuilderPanelData[] = [];
 
 	for (const toggleControl of toggleControls) {
 		if (!(toggleControl instanceof HTMLElement)) return;
@@ -42,8 +48,8 @@ export default function setupBuilderControl() {
 					`builder-control-section ${builderControlId}-control-section`,
 				);
 
-				panelFields.push({
-					panelId,
+				panelDataList.push({
+					togglePanelId: panelId,
 					toggleControlId,
 					builderControlId,
 				});
@@ -51,76 +57,98 @@ export default function setupBuilderControl() {
 		});
 	}
 
-	if (!panelFields.length) return;
+	if (!panelDataList.length) return;
 
-	for (const panelField of panelFields) {
-		listenBuilderPanel(panelField);
-		listenToggleControl(panelField);
-		listenConnectedSections(panelField.builderControlId);
+	for (const panelData of panelDataList) {
+		listenToTogglePanelExpand(panelData);
+		listenToToggleControlValue(panelData);
+		listenToWidgetConnectedSections(panelData.builderControlId);
 	}
 }
 
-function listenBuilderPanel(panelField: BuilderPanelData) {
-	wp.customize?.panel(panelField.panelId, function (panel) {
-		panel.container?.addClass(`${panelField.builderControlId}-control-panel`);
+/**
+ * Listen to the expand/collapse event of the toggle's panel.
+ *
+ * Panel here is the panel of the toggle control, not the panel of the builder control itself.
+ *
+ * @param {BuilderPanelData} panelData - The builder panel data.
+ */
+function listenToTogglePanelExpand(panelData: BuilderPanelData) {
+	wp.customize?.panel(panelData.togglePanelId, function (panel) {
+		panel.container?.addClass(`${panelData.builderControlId}-control-panel`);
 
 		panel.expanded.bind(function (expanded) {
 			if (expanded) {
-				wp.customize?.control(panelField.toggleControlId, function (control) {
+				wp.customize?.control(panelData.toggleControlId, function (control) {
 					if (control?.setting?.get()) {
-						openBuilderPanel(panelField.builderControlId);
+						openBuilderPanel(panelData.builderControlId);
 					}
 				});
 			} else {
-				closeBuilderPanel(panelField.builderControlId);
+				closeBuilderPanel(panelData.builderControlId);
 			}
 		});
 	});
 }
 
-function listenToggleControl(panelField: BuilderPanelData) {
+/**
+ * Listen to the toggle control's value change.
+ */
+function listenToToggleControlValue(panelData: BuilderPanelData) {
 	wp.customize?.control(
-		panelField.toggleControlId,
-		function (control: WpbfCheckboxControl | undefined) {
+		panelData.toggleControlId,
+		(control: WpbfCheckboxControl | undefined) => {
 			if (!control) return;
 
-			checkToggleControl(panelField, control, control.setting?.get());
+			toggleBuilderPanel(panelData, control, control.setting?.get());
 
 			control.setting?.bind(function (enabled) {
-				checkToggleControl(panelField, control, enabled);
+				toggleBuilderPanel(panelData, control, enabled);
 			});
 		},
 	);
 }
 
-function checkToggleControl(
-	panelField: BuilderPanelData,
-	control: WpbfCheckboxControl,
-	controlEnabled?: boolean,
+/**
+ * Toggle the builder panel.
+ *
+ * @param {BuilderPanelData} panelData - The builder panel data.
+ * @param {WpbfCheckboxControl} toggleControl - The toggle control.
+ * @param {boolean} toggleEnabled - Whether the toggle control is enabled.
+ */
+function toggleBuilderPanel(
+	panelData: BuilderPanelData,
+	toggleControl: WpbfCheckboxControl,
+	toggleEnabled?: boolean,
 ) {
-	if (controlEnabled) {
-		wp.customize?.panel(panelField.panelId, function (panel) {
+	if (toggleEnabled) {
+		wp.customize?.panel(panelData.togglePanelId, function (panel) {
 			if (panel.expanded()) {
-				if (control.container[0]) {
-					control.container[0].classList.remove("disabled");
+				if (toggleControl.container[0]) {
+					toggleControl.container[0].classList.remove("disabled");
 				}
 
-				openBuilderPanel(panelField.builderControlId);
+				openBuilderPanel(panelData.builderControlId);
 			}
 		});
 	} else {
-		if (control.container[0]) {
-			control.container[0].classList.add("disabled");
+		if (toggleControl.container[0]) {
+			toggleControl.container[0].classList.add("disabled");
 		}
 
-		closeBuilderPanel(panelField.builderControlId);
+		closeBuilderPanel(panelData.builderControlId);
 	}
 }
 
-function listenConnectedSections(builderControlId: string) {
+/**
+ * Listen to the expand/collapse event of the connected sections of the builder widgets.
+ *
+ * @param {string} builderControlId - The builder control ID.
+ */
+function listenToWidgetConnectedSections(builderControlId: string) {
 	wp.customize?.control(
 		builderControlId,
-		function (control: WpbfBuilderControl | undefined) {
+		(control: WpbfBuilderControl | undefined) => {
 			if (!control) return;
 			const params = control.params;
 
@@ -215,7 +243,7 @@ function closeBuilderPanel(builderControlId: string) {
 }
 
 /**
- * Get builder customize panel.
+ * Get the builder's customizer panel.
  *
  * @param {string} builderControlId The builder control ID.
  * @returns {HTMLElement|undefined} The builder customize panel.

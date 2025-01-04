@@ -1,9 +1,8 @@
 import { setupControlsMovement } from "../../../assets/js/utils/customizer-util";
-import setupBuilderControl from "./parts/setup-builder-control";
+import setupBuilderControlToggleBehavior from "./parts/setup-builder-control";
 
 window.wp.customize?.bind("ready", () => {
 	setTimeout(() => {
-		if (!window.wp.customize) return;
 		setupCustomizer();
 	}, 25);
 });
@@ -16,7 +15,7 @@ function setupCustomizer() {
 
 	function init() {
 		setupLogoContainerWidth();
-		setupBuilderControl();
+		setupBuilderControlToggleBehavior();
 		listenToHeaderBuilderToggle();
 	}
 
