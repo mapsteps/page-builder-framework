@@ -101,7 +101,7 @@ class BaseControl extends WP_Customize_Control {
 		if ( ! wp_script_is( 'react', 'registered' ) ) {
 			wp_register_script(
 				'react',
-				"https://cdnjs.cloudflare.com/ajax/libs/react/{$react_version}/umd/react.production.min.js",
+				WPBF_THEME_URI . '/Customizer/Controls/Base/libs/react.min.js',
 				array(),
 				$react_version,
 				true
@@ -111,8 +111,8 @@ class BaseControl extends WP_Customize_Control {
 		if ( ! wp_script_is( 'react-dom', 'registered' ) ) {
 			wp_register_script(
 				'react-dom',
-				"https://cdnjs.cloudflare.com/ajax/libs/react/{$react_version}/umd/react-dom.production.min.js",
-				array( 'react' ), // Make sure React is loaded first
+				WPBF_THEME_URI . '/Customizer/Controls/Base/libs/react.dom-min.js',
+				array( 'react' ),
 				$react_version,
 				true
 			);
@@ -121,8 +121,8 @@ class BaseControl extends WP_Customize_Control {
 		if ( ! wp_script_is( 'react-jsx-runtime', 'registered' ) ) {
 			wp_register_script(
 				'react-jsx-runtime',
-				"https://cdnjs.cloudflare.com/ajax/libs/react/{$react_version}/umd/react-jsx-runtime.production.min.js",
-				array( 'react' ), // JSX Runtime depends on React
+				WPBF_THEME_URI . '/Customizer/Controls/Base/libs/react-jsx-runtime.min.js',
+				array( 'react' ),
 				$react_version,
 				true
 			);
