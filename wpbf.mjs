@@ -14,6 +14,42 @@ import { Parcel } from "@parcel/core";
 
 const loadingSpinner = spinner();
 
+// Parcel shared configuration
+const parcelConfig = {
+	defaultConfig: "@parcel/config-default",
+	mode: "production",
+	defaultTargetOptions: {
+		engines: {
+			browsers: ["> 0.5%", "last 2 versions", "not dead"],
+		},
+	},
+	namers: ["parcel-namer-rewrite"],
+	resolvers: ["parcel-resolver-ignore", "..."],
+	additionalResolveOptions: {
+		alias: {
+			// Your alias configuration from package.json
+			react: { global: "React" },
+			"react-dom": { global: "ReactDOM" },
+			"react/jsx-runtime": { global: "_jsx" },
+			jquery: { global: "jQuery" },
+			wp: { global: "wp" },
+			lodash: { global: "_" },
+			"@wordpress/editor": { global: "wp.editor" },
+			"@wordpress/i18n": { global: "wp.i18n" },
+			"@wordpress/hooks": { global: "wp.hooks" },
+		},
+	},
+	nameConfig: {
+		rules: {
+			"(.*).js": "$1-min.js",
+			"(.*).css": "$1-min.css",
+		},
+		hashing: "never",
+		silent: true,
+	},
+	ignore: ["img/.+"],
+};
+
 intro(`Page Builder Framework`);
 
 const selectedTask = await select({
@@ -46,7 +82,7 @@ if (selectedTask === "build-wp-plugin") {
 		}
 
 		loadingSpinner.start(`Building customizer control: ${controlName}...`);
-		//
+		bundleCustomizerControl(controlName);
 		loadingSpinner.stop();
 	}
 }
@@ -69,17 +105,14 @@ async function bundleCustomizerControl(controlName) {
 	);
 
 	const bundler = new Parcel({
+		...parcelConfig,
 		entries: controlPath,
-		defaultConfig: "@parcel/config-default",
-		mode: "production",
-		defaultTargetOptions: {
-			engines: {
-				browsers: ["> 0.5%", "last 2 versions", "not dead"],
-			},
-		},
 		targets: {
 			main: {
-				distDir: path.join(__dirname, "Customizer/Controls/Checkbox/dist"),
+				distDir: path.join(
+					__dirname,
+					`Customizer/Controls/${pascalCaseControlName}/dist`,
+				),
 				engines: {
 					browsers: ["> 0.5%", "last 2 versions", "not dead"],
 				},
@@ -96,7 +129,9 @@ async function bundleCustomizerControl(controlName) {
 		console.log(`✨ Built ${bundles.length} bundles in ${buildTime}ms!`);
 	} catch (err) {
 		console.log(
-			typeof err === "object" && err && "diagnostics" in err ? err.diagnostics : err,
+			typeof err === "object" && err && "diagnostics" in err
+				? err.diagnostics
+				: err,
 		);
 	}
 }
