@@ -64,6 +64,18 @@ export default function setupBuilderControlToggleBehavior() {
 		listenToToggleControlValue(panelData);
 		listenToWidgetConnectedSections(panelData.builderControlId);
 	}
+
+	listenDevicePreviewSwitch();
+}
+
+/**
+ * Listen device switch event and switch our device buttons accordingly.
+ */
+function listenDevicePreviewSwitch() {
+	// Bind device changes from WordPress default.
+	wp.customize?.previewedDevice.bind(function (device: string) {
+		// Do something later.
+	});
 }
 
 /**
