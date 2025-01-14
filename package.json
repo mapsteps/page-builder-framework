@@ -64,7 +64,7 @@
       "global": "ReactDOM"
     },
     "react/jsx-runtime": {
-      "global": "_jsx"
+      "global": "ReactJSXRuntime"
     },
     "jquery": {
       "global": "jQuery"

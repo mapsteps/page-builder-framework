@@ -142,15 +142,35 @@ async function main() {
  */
 async function bundleCustomizerControl(controlName) {
 	const pascalCaseControlName = toPascalCase(controlName);
+	const srcDirName = `Customizer/Controls/${pascalCaseControlName}/src`;
+
+	/**
+	 * The entries to pass to Parcel.
+	 *
+	 * @type {string[]}
+	 */
+	const entries = [];
 
 	const controlPath = path.join(
 		__dirname,
-		`Customizer/Controls/${pascalCaseControlName}/src/${controlName}-control.ts`,
+		`${srcDirName}/${controlName}-control.ts`,
 	);
+
+	entries.push(controlPath);
+
+	// Check if ${controlName}-preview.ts exists in src directory.
+	const previewPath = path.join(
+		__dirname,
+		`${srcDirName}/${controlName}-preview.ts`,
+	);
+
+	if (fs.existsSync(previewPath)) {
+		entries.push(previewPath);
+	}
 
 	const bundler = new Parcel({
 		...parcelConfig,
-		entries: controlPath,
+		entries: entries,
 		shouldDisableCache: true,
 		targets: {
 			main: {
