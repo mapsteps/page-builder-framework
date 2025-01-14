@@ -24,7 +24,7 @@
     "parcel-resolver-ignore": "^2.2.0",
     "prettier": "^3.4.2",
     "process": "^0.11.10",
-    "sass-embedded": "^1.83.1",
+    "sass-embedded": "^1.83.4",
     "typescript": "^5.7.3",
     "vite": "^5.4.11",
     "wordpress__customize-browser": "github:usefulteam/wordpress__customize-browser",
