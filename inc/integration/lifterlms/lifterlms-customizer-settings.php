@@ -8,9 +8,6 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-// Textdomain. This is required, otherwise strings aren't translateable.
-load_theme_textdomain( 'page-builder-framework' );
-
 /* Panels */
 
 // LifterLMS.
