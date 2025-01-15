@@ -1,6 +1,7 @@
 #!/usr/bin/env zx
 
 import "zx/globals";
+import { exec } from "child_process";
 import { fileURLToPath } from "url";
 import {
 	intro,
@@ -15,7 +16,8 @@ import { Parcel } from "@parcel/core";
 import { dirname } from "path";
 
 process.env.NODE_ENV = "production";
-process.env.PARCEL_WORKERS = "0";
+process.env.context = "browser";
+process.env.sourceType = "script";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -110,11 +112,11 @@ async function main() {
 async function bundleCustomizerControl(controlName) {
 	const pascalCaseControlName = toPascalCase(controlName);
 
-	const srcDirName = `Customizer/Controls/${pascalCaseControlName}/src`;
-	const srcDir = path.join(__dirname, srcDirName);
+	const srcDir = `Customizer/Controls/${pascalCaseControlName}/src`;
+	const absSrcDir = path.join(__dirname, srcDir);
 
-	const distDirName = `Customizer/Controls/${pascalCaseControlName}/dist`;
-	const distDir = path.join(__dirname, distDirName);
+	const distDir = `Customizer/Controls/${pascalCaseControlName}/dist`;
+	const absDistDir = path.join(__dirname, distDir);
 
 	// Find files inside `srcDir` directory that suffixed with `-control.ts`.
 	const controlFiles = fs.readdirSync(srcDir).filter((file) => {
@@ -124,7 +126,7 @@ async function bundleCustomizerControl(controlName) {
 	if (controlFiles.length === 0) {
 		return {
 			success: false,
-			message: `No control files found in ${srcDirName} directory.`,
+			message: `No control files found in ${srcDir} directory.`,
 		};
 	}
 
@@ -149,56 +151,15 @@ async function bundleCustomizerControl(controlName) {
 		}
 	}
 
-	const bundler = new Parcel({
-		entries: entries,
-		shouldDisableCache: true,
-		defaultConfig: "@parcel/config-default",
-		mode: "production",
-		env: {
-			NODE_ENV: "production",
-			PARCEL_BUILD_ENV: "browser",
-			context: "browser",
-			sourceType: "script",
-		},
-		defaultTargetOptions: {
-			publicUrl: "./",
-			shouldOptimize: true,
-			shouldScopeHoist: true,
-			isLibrary: false,
-			outputFormat: "global",
-		},
-		targets: {
-			main: {
-				context: "browser",
-				publicUrl: "./",
-				distDir: path.join(
-					__dirname,
-					`Customizer/Controls/${pascalCaseControlName}/dist`,
-				),
-				engines: {
-					browsers: ["> 0.5%", "last 2 versions", "not dead"],
-				},
-				outputFormat: "global",
-				isLibrary: false,
-				scopeHoist: true,
-				optimize: true,
-				sourceMap: true,
-				includeNodeModules: true,
-			},
-		},
-		shouldContentHash: false,
-		shouldBuildLazily: false,
-		shouldBundleIncrementally: false,
-	});
+	const buildViaAPI = false;
+	// console.log("entries", entries);
 
 	try {
-		const { bundleGraph, buildTime } = await bundler.run();
-		const bundles = bundleGraph.getBundles();
+		if (buildViaAPI) {
+			return await bundleViaAPI(entries, absDistDir);
+		}
 
-		return {
-			success: true,
-			message: `✨ Built ${bundles.length} bundles in ${buildTime}ms!`,
-		};
+		return await bundleViaCLI(entries, absDistDir);
 	} catch (err) {
 		if (typeof err === "string") {
 			return {
@@ -258,6 +219,90 @@ async function bundleCustomizerControl(controlName) {
 			message: "Unknown error occurred.",
 		};
 	}
+}
+
+/**
+ * Bundle the customizer control using the Parcel API.
+ *
+ * @param {string[]} entries The entries to pass to Parcel.
+ * @param {string} distDir The dist directory path.
+ * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
+ */
+async function bundleViaCLI(entries, distDir) {
+	const startTime = Date.now();
+
+	// Construct the Parcel CLI command
+	let parcelCmd = `parcel build ${entries.join(" ")} --dist-dir ${distDir} --no-cache`;
+
+	// Replace backslashes with forward slashes
+	parcelCmd = parcelCmd.replace(/\\/g, "/");
+
+	// Execute the command using zx (doesn't work: No quote function is defined: https://ï.at/no-quote-func)
+	// await $`${parcelCmd}`;
+
+	// Lets use exec instead of zx.
+	exec(parcelCmd);
+
+	const endTime = Date.now();
+
+	return {
+		success: true,
+		message: `✨ Built ${entries.length} bundles in ${endTime - startTime}ms!`,
+	};
+}
+
+/**
+ * Bundle the customizer control using the Parcel API.
+ *
+ * @param {string[]} entries The entries to pass to Parcel.
+ * @param {string} distDir The dist directory path.
+ * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
+ */
+async function bundleViaAPI(entries, distDir) {
+	const bundler = new Parcel({
+		entries: entries,
+		shouldDisableCache: true,
+		defaultConfig: "@parcel/config-default",
+		mode: "production",
+		env: {
+			NODE_ENV: "production",
+			context: "browser",
+			sourceType: "script",
+		},
+		defaultTargetOptions: {
+			shouldOptimize: true,
+			shouldScopeHoist: true,
+			isLibrary: false,
+			outputFormat: "global",
+			publicUrl: "./",
+		},
+		targets: {
+			default: {
+				context: "browser",
+				distDir: distDir,
+				engines: {
+					browsers: ["> 0.5%", "last 2 versions", "not dead"],
+				},
+				outputFormat: "global",
+				isLibrary: false,
+				scopeHoist: true,
+				optimize: true,
+				sourceMap: true,
+				includeNodeModules: true,
+			},
+		},
+		shouldContentHash: false,
+		shouldBuildLazily: false,
+		shouldBundleIncrementally: false,
+	});
+
+	const { bundleGraph, buildTime } = await bundler.run();
+	const bundles = bundleGraph.getBundles();
+
+	return {
+		success: true,
+		message: `✨ Built ${bundles.length} bundles in ${buildTime}ms!`,
+	};
 }
 
 /**
