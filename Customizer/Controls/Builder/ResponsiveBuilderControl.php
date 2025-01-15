@@ -24,46 +24,25 @@ class ResponsiveBuilderControl extends BaseControl {
 	public $type = 'wpbf-responsive-builder';
 
 	/**
-	 * Available widgets for desktop.
+	 * Available widgets.
 	 *
 	 * @var array
 	 */
-	private $desktop_available_widgets = array();
+	private $available_widgets = array();
 
 	/**
-	 * Available widgets for tablet & phone.
+	 * Active widget keys.
 	 *
 	 * @var array
 	 */
-	private $mobile_available_widgets = array();
+	private $active_widget_keys = array();
 
 	/**
-	 * Active widgets for desktop.
-	 *
-	 * @var string[]
-	 */
-	private $desktop_active_widget_keys = array();
-
-	/**
-	 * Active widgets for tablet & phone.
-	 *
-	 * @var string[]
-	 */
-	private $mobile_active_widget_keys = array();
-
-	/**
-	 * Available rows for desktop.
+	 * Available rows.
 	 *
 	 * @var array
 	 */
-	private $desktop_available_rows = array();
-
-	/**
-	 * Available rows for tablet & phone.
-	 *
-	 * @var array
-	 */
-	private $mobile_available_rows = array();
+	private $available_rows = array();
 
 	/**
 	 * Constructor.
@@ -79,23 +58,15 @@ class ResponsiveBuilderControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		if ( isset( $args['desktop'] ) && is_array( $args['desktop'] ) ) {
-			if ( isset( $args['desktop']['available_widgets'] ) && is_array( $args['desktop']['available_widgets'] ) ) {
-				$this->desktop_available_widgets = $args['desktop']['available_widgets'];
-			}
-
-			if ( isset( $args['desktop']['available_rows'] ) && is_array( $args['desktop']['available_rows'] ) ) {
-				$this->desktop_available_rows = $args['desktop']['available_rows'];
+		if ( isset( $args['available_widgets'] ) && is_array( $args['available_widgets'] ) ) {
+			if ( isset( $args['available_widgets']['desktop'] ) && is_array( $args['available_widgets']['desktop'] ) ) {
+				$this->available_widgets = $args['available_widgets'];
 			}
 		}
 
-		if ( isset( $args['mobile'] ) && is_array( $args['mobile'] ) ) {
-			if ( isset( $args['mobile']['available_widgets'] ) && is_array( $args['mobile']['available_widgets'] ) ) {
-				$this->mobile_available_widgets = $args['mobile']['available_widgets'];
-			}
-
-			if ( isset( $args['mobile']['available_rows'] ) && is_array( $args['mobile']['available_rows'] ) ) {
-				$this->mobile_available_rows = $args['mobile']['available_rows'];
+		if ( isset( $args['available_rows'] ) && is_array( $args['available_rows'] ) ) {
+			if ( isset( $args['available_rows']['desktop'] ) && is_array( $args['available_rows']['desktop'] ) ) {
+				$this->available_rows = $args['available_rows'];
 			}
 		}
 
@@ -125,7 +96,7 @@ class ResponsiveBuilderControl extends BaseControl {
 		// Enqueue the scripts.
 		wp_enqueue_script(
 			'wpbf-builder-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Builder/dist/builder-control-min.js',
+			WPBF_THEME_URI . '/Customizer/Controls/Builder/dist/responsive-builder-control-min.js',
 			array(
 				'customize-controls',
 				'jquery-ui-draggable',
@@ -148,14 +119,34 @@ class ResponsiveBuilderControl extends BaseControl {
 		$value = $this->value();
 
 		if ( ! empty( $value ) && is_array( $value ) ) {
-			if ( isset( $value['desktop'] ) && is_array( $value['desktop'] ) ) {
-				foreach ( $value['desktop'] as $row_key => $columns ) {
-					if ( ! $this->rowKeyExists( $row_key ) ) {
+			foreach ( $value as $device => $device_value ) {
+				if ( ! is_array( $device_value ) ) {
+					continue;
+				}
+
+				foreach ( $device_value as $row_key => $columns_or_widget_keys ) {
+					if ( ! is_array( $columns_or_widget_keys ) ) {
 						continue;
 					}
 
-					foreach ( $columns as $column_key => $widget_keys ) {
-						if ( ! $this->columnKeyExists( $column_key ) ) {
+					if ( 'mobile' === $device && 'sidebar' === $row_key ) {
+						foreach ( $columns_or_widget_keys as $widget_key ) {
+							if ( empty( $widget_key ) || ! is_string( $widget_key ) ) {
+								continue;
+							}
+
+							$this->active_widget_keys[ $device ] = $widget_key;
+						}
+
+						continue;
+					}
+
+					if ( ! $this->rowKeyExists( $device, $row_key ) ) {
+						continue;
+					}
+
+					foreach ( $columns_or_widget_keys as $column_key => $widget_keys ) {
+						if ( ! $this->columnKeyExists( $device, $column_key ) ) {
 							continue;
 						}
 
@@ -164,11 +155,11 @@ class ResponsiveBuilderControl extends BaseControl {
 								continue;
 							}
 
-							if ( ! $this->widgetExists( $widget_key ) ) {
+							if ( ! $this->widgetExists( $device, $widget_key ) ) {
 								continue;
 							}
 
-							$this->active_widget_keys[] = $widget_key;
+							$this->active_widget_keys[ $device ] = $widget_key;
 						}
 					}
 				}
@@ -177,14 +168,14 @@ class ResponsiveBuilderControl extends BaseControl {
 
 		$this->json['builder'] = [
 			'desktop' => [
-				'availableWidgets' => $this->desktop_available_widgets,
-				'availableRows'    => $this->desktop_available_rows,
-				'activeWidgetKeys' => $this->desktop_active_widget_keys,
+				'availableWidgets' => isset( $this->available_widgets['desktop'] ) ? $this->available_widgets['desktop'] : array(),
+				'availableRows'    => isset( $this->available_rows['desktop'] ) ? $this->available_rows['desktop'] : array(),
+				'activeWidgetKeys' => isset( $this->active_widget_keys['desktop'] ) ? $this->active_widget_keys['desktop'] : array(),
 			],
 			'mobile' => [
-				'availableWidgets' => $this->mobile_available_widgets,
-				'availableRows'    => $this->mobile_available_rows,
-				'activeWidgetKeys' => $this->mobile_active_widget_keys,
+				'availableWidgets' => isset( $this->available_widgets['mobile'] ) ? $this->available_widgets['mobile'] : array(),
+				'availableRows'    => isset( $this->available_rows['mobile'] ) ? $this->available_rows['mobile'] : array(),
+				'activeWidgetKeys' => isset( $this->active_widget_keys['mobile'] ) ? $this->active_widget_keys['mobile'] : array(),
 			],
 		];
 
@@ -193,15 +184,18 @@ class ResponsiveBuilderControl extends BaseControl {
 	/**
 	 * Check if the row key exists in $this->available_rows.
 	 *
+	 * @param string $device The device name. Accepts 'desktop' or 'mobile'.
 	 * @param string $row_key The row key.
 	 *
 	 * @return bool
 	 */
-	private function rowKeyExists( $row_key ) {
+	private function rowKeyExists( $device, $row_key ) {
 
-		foreach ( $this->available_rows as $available_row ) {
-			if ( $available_row['key'] === $row_key ) {
-				return true;
+		if ( isset( $this->available_rows[ $device ] ) && is_array( $this->available_rows[ $device ] ) ) {
+			foreach ( $this->available_rows[ $device ] as $available_row ) {
+				if ( $available_row['key'] === $row_key ) {
+					return true;
+				}
 			}
 		}
 
@@ -212,16 +206,19 @@ class ResponsiveBuilderControl extends BaseControl {
 	/**
 	 * Check if the column key exists in $this->available_rows.
 	 *
+	 * @param string $device The device name. Accepts 'desktop' or 'mobile'.
 	 * @param string $column_key The column key.
 	 *
 	 * @return bool
 	 */
-	private function columnKeyExists( $column_key ) {
+	private function columnKeyExists( $device, $column_key ) {
 
-		foreach ( $this->available_rows as $available_row ) {
-			foreach ( $available_row['columns'] as $available_column ) {
-				if ( $available_column['key'] === $column_key ) {
-					return true;
+		if ( isset( $this->available_rows[ $device ] ) && is_array( $this->available_rows[ $device ] ) ) {
+			foreach ( $this->available_rows[ $device ] as $available_row ) {
+				foreach ( $available_row['columns'] as $available_column ) {
+					if ( $available_column['key'] === $column_key ) {
+						return true;
+					}
 				}
 			}
 		}
@@ -233,15 +230,18 @@ class ResponsiveBuilderControl extends BaseControl {
 	/**
 	 * Check if the widget key exists in $this->available_widgets.
 	 *
+	 * @param string $device The device name. Accepts 'desktop' or 'mobile'.
 	 * @param string $widget_key The widget key.
 	 *
 	 * @return bool
 	 */
-	private function widgetExists( $widget_key ) {
+	private function widgetExists( $device, $widget_key ) {
 
-		foreach ( $this->available_widgets as $available_widget ) {
-			if ( $available_widget['key'] === $widget_key ) {
-				return true;
+		if ( isset( $this->available_widgets[ $device ] ) && is_array( $this->available_widgets[ $device ] ) ) {
+			foreach ( $this->available_widgets[ $device ] as $available_widget ) {
+				if ( $available_widget['key'] === $widget_key ) {
+					return true;
+				}
 			}
 		}
 
