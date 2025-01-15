@@ -95,7 +95,7 @@ class ResponsiveBuilderControl extends BaseControl {
 
 		// Enqueue the scripts.
 		wp_enqueue_script(
-			'wpbf-builder-control',
+			'wpbf-responsive-builder-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Builder/dist/responsive-builder-control-min.js',
 			array(
 				'customize-controls',
@@ -132,6 +132,10 @@ class ResponsiveBuilderControl extends BaseControl {
 					if ( 'mobile' === $device && 'sidebar' === $row_key ) {
 						foreach ( $columns_or_widget_keys as $widget_key ) {
 							if ( empty( $widget_key ) || ! is_string( $widget_key ) ) {
+								continue;
+							}
+
+							if ( ! $this->widgetExists( $device, $widget_key ) ) {
 								continue;
 							}
 
