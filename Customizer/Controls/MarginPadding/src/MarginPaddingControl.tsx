@@ -5,19 +5,11 @@ import {
 	WpbfMarginPaddingControl,
 	WpbfMarginPaddingControlParams,
 } from "./margin-padding-interface";
-import React from "react";
 import { createRoot } from "react-dom/client";
 import { makeObjValueWithoutUnitFromJson } from "./margin-padding-util";
 
-declare var wp: {
-	customize: WpbfCustomize;
-};
-
-/**
- * KirkiMarginPaddingControl.
- */
-const KirkiMarginPaddingControl =
-	wp.customize.Control.extend<WpbfMarginPaddingControl>({
+export default function MarginPaddingControl(customizer: WpbfCustomize) {
+	return customizer.Control.extend<WpbfMarginPaddingControl>({
 		/**
 		 * Initialize.
 		 */
@@ -32,18 +24,18 @@ const KirkiMarginPaddingControl =
 			control.setNotificationContainer =
 				control.setNotificationContainer!.bind(control);
 
-			wp.customize.Control.prototype.initialize.call(control, id, params);
+			customizer.Control.prototype.initialize.call(control, id, params);
 
 			// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 			function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 				if (control === removedControl) {
 					control.destroy!();
 					control.container.remove();
-					wp.customize.control.unbind("removed", onRemoved);
+					customizer.control.unbind("removed", onRemoved);
 				}
 			}
 
-			wp.customize.control.bind("removed", onRemoved);
+			customizer.control.bind("removed", onRemoved);
 		},
 
 		/**
@@ -66,9 +58,7 @@ const KirkiMarginPaddingControl =
 		 *
 		 * This is called from the Control#embed() method in the parent class.
 		 */
-		renderContent: function renderContent(
-			this: WpbfMarginPaddingControl,
-		) {
+		renderContent: function renderContent(this: WpbfMarginPaddingControl) {
 			const control = this;
 			const params = control.params;
 
@@ -114,7 +104,7 @@ const KirkiMarginPaddingControl =
 		/**
 		 * After control has been first rendered, start re-rendering when setting changes.
 		 *
-		 * React is available to be used here instead of the wp.customize.Element abstraction.
+		 * React is available to be used here instead of the customizer.Element abstraction.
 		 */
 		ready: function ready(this: WpbfMarginPaddingControl) {
 			const control = this;
@@ -149,10 +139,9 @@ const KirkiMarginPaddingControl =
 			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
-			if (wp.customize.Control.prototype.destroy) {
-				wp.customize.Control.prototype.destroy.call(this);
+			if (customizer.Control.prototype.destroy) {
+				customizer.Control.prototype.destroy.call(this);
 			}
 		},
 	});
-
-export default KirkiMarginPaddingControl;
+}

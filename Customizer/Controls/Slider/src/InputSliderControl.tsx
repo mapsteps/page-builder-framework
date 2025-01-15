@@ -1,25 +1,13 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import { createRoot } from "react-dom/client";
-import React from "react";
 import InputSliderForm from "./InputSliderForm";
 import {
 	WpbfInputSliderControl,
 	WpbfInputSliderControlParams,
 } from "./slider-interface";
 
-declare var wp: {
-	customize: WpbfCustomize;
-};
-
-/**
- * InputSliderControl
- *
- * @class
- * @augments wp.customize.Control
- * @augments wp.customize.Class
- */
-const InputSliderControl =
-	wp.customize.Control.extend<WpbfInputSliderControl>({
+export default function InputSliderControl(customizer: WpbfCustomize) {
+	return customizer.Control.extend<WpbfInputSliderControl>({
 		initialize: function (
 			this: WpbfInputSliderControl,
 			id: string,
@@ -31,17 +19,17 @@ const InputSliderControl =
 			control.setNotificationContainer =
 				control.setNotificationContainer?.bind(control);
 
-			wp.customize.Control.prototype.initialize.call(control, id, params);
+			customizer.Control.prototype.initialize.call(control, id, params);
 
 			// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 			function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 				if (control !== removedControl) return;
 				if (control.destroy) control.destroy();
 				control.container.remove();
-				wp.customize.control.unbind("removed", onRemoved);
+				customizer.control.unbind("removed", onRemoved);
 			}
 
-			wp.customize.control.bind("removed", onRemoved);
+			customizer.control.bind("removed", onRemoved);
 		},
 
 		/**
@@ -64,9 +52,7 @@ const InputSliderControl =
 		 *
 		 * This will be called from the Control#embed() method in the parent class.
 		 */
-		renderContent: function renderContent(
-			this: WpbfInputSliderControl,
-		) {
+		renderContent: function renderContent(this: WpbfInputSliderControl) {
 			const control = this;
 			const params = control.params;
 
@@ -97,7 +83,7 @@ const InputSliderControl =
 		/**
 		 * After control has been first rendered, start re-rendering when setting changes.
 		 *
-		 * React is available to be used here instead of the wp.customize.Element abstraction.
+		 * React is available to be used here instead of the customizer.Element abstraction.
 		 */
 		ready: function ready(this: WpbfInputSliderControl) {
 			const control = this;
@@ -130,10 +116,9 @@ const InputSliderControl =
 			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
-			if (wp.customize.Control.prototype.destroy) {
-				wp.customize.Control.prototype.destroy.call(this);
+			if (customizer.Control.prototype.destroy) {
+				customizer.Control.prototype.destroy.call(this);
 			}
 		},
 	});
-
-export default InputSliderControl;
+}

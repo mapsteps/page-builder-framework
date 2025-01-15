@@ -5,7 +5,7 @@ export default function ColorPickerCirleTrigger(props: {
 	color: string;
 	isPopupOpen: boolean;
 	tooltip?: JSX.Element | string;
-	resetRef?: React.LegacyRef<HTMLButtonElement> | null;
+	resetRef?: React.MutableRefObject<HTMLButtonElement | null>;
 	onResetButtonClick?: () => void;
 	onToggleButtonClick?: () => void;
 }) {

@@ -1,10 +1,12 @@
-import "./builder-control.scss";
-import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
+import {
+	BuilderValue,
+	WpbfBuilderControl,
+} from "./responsive-builder-interface";
 
 (function () {
 	if (!window.wp.customize) return;
 
-	window.wp.customize.controlConstructor["wpbf-builder"] =
+	window.wp.customize.controlConstructor["wpbf-responsive-builder"] =
 		window.wp.customize.wpbfDynamicControl.extend<WpbfBuilderControl>({
 			isSaving: false,
 

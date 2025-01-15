@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
 import { WpbfResponsiveInputSliderControl } from "./slider-interface";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";

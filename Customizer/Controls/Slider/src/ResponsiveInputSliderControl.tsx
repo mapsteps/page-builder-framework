@@ -1,6 +1,5 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import { createRoot } from "react-dom/client";
-import React from "react";
 import ResponsiveInputSliderForm from "./ResponsiveInputSliderForm";
 import {
 	WpbfResponsiveInputSliderControl,
@@ -8,19 +7,10 @@ import {
 } from "./slider-interface";
 import { DevicesValue } from "../../Responsive/src/responsive-interface";
 
-declare var wp: {
-	customize: WpbfCustomize;
-};
-
-/**
- * ResponsiveInputSliderControl
- *
- * @class
- * @augments wp.customize.Control
- * @augments wp.customize.Class
- */
-const ResponsiveInputSliderControl =
-	wp.customize.Control.extend<WpbfResponsiveInputSliderControl>({
+export default function ResponsiveInputSliderControl(
+	customizer: WpbfCustomize,
+) {
+	return customizer.Control.extend<WpbfResponsiveInputSliderControl>({
 		initialize: function (
 			this: WpbfResponsiveInputSliderControl,
 			id: string,
@@ -32,17 +22,17 @@ const ResponsiveInputSliderControl =
 			control.setNotificationContainer =
 				control.setNotificationContainer?.bind(control);
 
-			wp.customize.Control.prototype.initialize.call(control, id, params);
+			customizer.Control.prototype.initialize.call(control, id, params);
 
 			// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 			function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 				if (control !== removedControl) return;
 				if (control.destroy) control.destroy();
 				control.container.remove();
-				wp.customize.control.unbind("removed", onRemoved);
+				customizer.control.unbind("removed", onRemoved);
 			}
 
-			wp.customize.control.bind("removed", onRemoved);
+			customizer.control.bind("removed", onRemoved);
 		},
 
 		/**
@@ -100,7 +90,7 @@ const ResponsiveInputSliderControl =
 		/**
 		 * After control has been first rendered, start re-rendering when setting changes.
 		 *
-		 * React is available to be used here instead of the wp.customize.Element abstraction.
+		 * React is available to be used here instead of the customizer.Element abstraction.
 		 */
 		ready: function ready(this: WpbfResponsiveInputSliderControl) {
 			const control = this;
@@ -132,10 +122,9 @@ const ResponsiveInputSliderControl =
 			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
-			if (wp.customize.Control.prototype.destroy) {
-				wp.customize.Control.prototype.destroy.call(this);
+			if (customizer.Control.prototype.destroy) {
+				customizer.Control.prototype.destroy.call(this);
 			}
 		},
 	});
-
-export default ResponsiveInputSliderControl;
+}

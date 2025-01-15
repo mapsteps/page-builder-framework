@@ -419,6 +419,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-sortable": WpbfSortableControl;
 	"wpbf-toggle": WpbfCheckboxControl;
 	"wpbf-builder": WpbfBuilderControl;
+	"wpbf-responsive-builder": WpbfBuilderControl;
 }
 
 export interface WpbfSectionDependency {

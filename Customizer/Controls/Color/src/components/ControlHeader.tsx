@@ -13,7 +13,7 @@ export default function ControlHeader(props: {
 	inputValue?: string | number;
 	isPopupOpen?: boolean;
 	togglePicker?: () => void;
-	resetRef?: React.LegacyRef<HTMLButtonElement> | null;
+	resetRef?: React.MutableRefObject<HTMLButtonElement | null>;
 	onResetButtonClick: () => void;
 	setNotificationContainer?: any;
 }) {

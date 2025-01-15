@@ -120,7 +120,7 @@
     "build-customize-sections": "parcel build Customizer/Sections/src/sections.ts --dist-dir Customizer/Sections/dist --no-cache",
     "build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-cache",
     "build-checkbox-control": "parcel build Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist --no-cache",
-    "build-color-control": "parcel build Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-cache",
+    "build-color-control": "shx rm -rf Customizer/Controls/Color/dist && parcel build Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-cache",
     "build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-cache",
     "build-editor-control": "parcel build Customizer/Controls/Editor/src/editor-control.ts --dist-dir Customizer/Controls/Editor/dist --no-cache",
     "build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-cache",
@@ -128,7 +128,7 @@
     "build-assoc-array-control": "parcel build Customizer/Controls/Generic/src/assoc-array-control.ts --dist-dir Customizer/Controls/Generic/dist --no-cache",
     "build-headline-control": "parcel build Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist --no-cache",
     "build-image-control": "parcel build Customizer/Controls/Media/src/image-control.ts --dist-dir Customizer/Controls/Media/dist --no-cache",
-    "build-margin-padding-control": "parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Control --no-caches/MarginPadding/dist",
+    "build-margin-padding-control": "shx rm -rf Customizer/Controls/MarginPadding/dist && parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist --no-cache",
     "build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-cache",
     "build-responsive-control": "parcel build Customizer/Controls/Responsive/src/responsive-control.ts --dist-dir Customizer/Controls/Responsive/dist --no-cache",
     "build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-cache",
@@ -137,6 +137,6 @@
     "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-cache",
     "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist --no-cache",
     "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist --no-cache",
-    "build-builder-control": "parcel build Customizer/Controls/Builder/src/builder-control.ts --dist-dir Customizer/Controls/Builder/dist --no-cache"
+    "build-builder-control": "shx rm -rf Customizer/Controls/Builder/dist && parcel build Customizer/Controls/Builder/src/builder-control.ts --dist-dir Customizer/Controls/Builder/dist --no-cache"
   }
 }

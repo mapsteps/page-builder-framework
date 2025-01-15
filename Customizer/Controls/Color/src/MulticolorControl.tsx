@@ -4,7 +4,6 @@ import {
 	WpbfMulticolorControl,
 } from "./color-interface";
 import MulticolorForm from "./MulticolorForm";
-import React from "react";
 import { createRoot } from "react-dom/client";
 import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
