@@ -14,6 +14,9 @@ import {
 import { Parcel } from "@parcel/core";
 import { dirname } from "path";
 
+process.env.NODE_ENV = "production";
+process.env.PARCEL_WORKERS = "0";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -45,47 +48,6 @@ const rootFilesAndDirsToSkip = [
 
 const loadingSpinner = spinner();
 
-// Parcel shared configuration
-const parcelConfig = {
-	defaultConfig: "@parcel/config-default",
-	mode: "production",
-	defaultTargetOptions: {
-		engines: {
-			browsers: ["> 0.5%", "last 2 versions", "not dead"],
-		},
-	},
-	additionalResolveOptions: {
-		// Handled in package.json
-		/*
-		alias: {
-			react: { global: "React" },
-			"react-dom": { global: "ReactDOM" },
-			"react/jsx-runtime": { global: "_jsx" },
-			jquery: { global: "jQuery" },
-			wp: { global: "wp" },
-			lodash: { global: "_" },
-			"@wordpress/editor": { global: "wp.editor" },
-			"@wordpress/i18n": { global: "wp.i18n" },
-			"@wordpress/hooks": { global: "wp.hooks" },
-		},
-		*/
-	},
-	// Handled in package.json
-	/*
-	namers: ["parcel-namer-rewrite"],
-	resolvers: ["parcel-resolver-ignore", "..."],
-	nameConfig: {
-		rules: {
-			"(.*).js": "$1-min.js",
-			"(.*).css": "$1-min.css",
-		},
-		hashing: "never",
-		silent: true,
-	},
-	ignore: ["img/.+"],
-	*/
-};
-
 async function main() {
 	intro(`Page Builder Framework`);
 
@@ -110,7 +72,7 @@ async function main() {
 	} else {
 		if (selectedTask === "build-customizer-control") {
 			const controlName = await text({
-				message: "Insert the customizer control name (e.g: checkbox):",
+				message: "Insert the customizer control namespace (e.g: slider):",
 			});
 
 			if (isCancel(controlName)) {
@@ -128,11 +90,16 @@ async function main() {
 			);
 
 			const response = await bundleCustomizerControl(controlName);
-			loadingSpinner.stop(response);
+
+			if (response.success) {
+				loadingSpinner.stop(response.message);
+			} else {
+				loadingSpinner.stop(response.message, 500);
+			}
 		}
 	}
 
-	outro(`Done!`);
+	outro(`Done`);
 }
 
 /**
@@ -142,7 +109,24 @@ async function main() {
  */
 async function bundleCustomizerControl(controlName) {
 	const pascalCaseControlName = toPascalCase(controlName);
+
 	const srcDirName = `Customizer/Controls/${pascalCaseControlName}/src`;
+	const srcDir = path.join(__dirname, srcDirName);
+
+	const distDirName = `Customizer/Controls/${pascalCaseControlName}/dist`;
+	const distDir = path.join(__dirname, distDirName);
+
+	// Find files inside `srcDir` directory that suffixed with `-control.ts`.
+	const controlFiles = fs.readdirSync(srcDir).filter((file) => {
+		return file.endsWith("-control.ts");
+	});
+
+	if (controlFiles.length === 0) {
+		return {
+			success: false,
+			message: `No control files found in ${srcDirName} directory.`,
+		};
+	}
 
 	/**
 	 * The entries to pass to Parcel.
@@ -151,29 +135,42 @@ async function bundleCustomizerControl(controlName) {
 	 */
 	const entries = [];
 
-	const controlPath = path.join(
-		__dirname,
-		`${srcDirName}/${controlName}-control.ts`,
-	);
+	for (const controlFile of controlFiles) {
+		entries.push(path.join(srcDir, controlFile));
 
-	entries.push(controlPath);
+		// Get the control file name without the "-control.ts" suffix.
+		const controlFileName = controlFile.replace(/-control\.ts$/, "");
 
-	// Check if ${controlName}-preview.ts exists in src directory.
-	const previewPath = path.join(
-		__dirname,
-		`${srcDirName}/${controlName}-preview.ts`,
-	);
+		// Check if ${controlFileName}-preview.ts exists in src directory.
+		const previewPath = path.join(srcDir, `${controlFileName}-preview.ts`);
 
-	if (fs.existsSync(previewPath)) {
-		entries.push(previewPath);
+		if (fs.existsSync(previewPath)) {
+			entries.push(previewPath);
+		}
 	}
 
 	const bundler = new Parcel({
-		...parcelConfig,
 		entries: entries,
 		shouldDisableCache: true,
+		defaultConfig: "@parcel/config-default",
+		mode: "production",
+		env: {
+			NODE_ENV: "production",
+			PARCEL_BUILD_ENV: "browser",
+			context: "browser",
+			sourceType: "script",
+		},
+		defaultTargetOptions: {
+			publicUrl: "./",
+			shouldOptimize: true,
+			shouldScopeHoist: true,
+			isLibrary: false,
+			outputFormat: "global",
+		},
 		targets: {
 			main: {
+				context: "browser",
+				publicUrl: "./",
 				distDir: path.join(
 					__dirname,
 					`Customizer/Controls/${pascalCaseControlName}/dist`,
@@ -181,24 +178,85 @@ async function bundleCustomizerControl(controlName) {
 				engines: {
 					browsers: ["> 0.5%", "last 2 versions", "not dead"],
 				},
-				// outputFormat: "esmodule",
-				sourceMap: true,
+				outputFormat: "global",
+				isLibrary: false,
+				scopeHoist: true,
 				optimize: true,
+				sourceMap: true,
+				includeNodeModules: true,
 			},
 		},
+		shouldContentHash: false,
+		shouldBuildLazily: false,
+		shouldBundleIncrementally: false,
 	});
 
 	try {
-		let { bundleGraph, buildTime } = await bundler.run();
-		let bundles = bundleGraph.getBundles();
+		const { bundleGraph, buildTime } = await bundler.run();
+		const bundles = bundleGraph.getBundles();
 
-		return `✨ Built ${bundles.length} bundles in ${buildTime}ms!`;
+		return {
+			success: true,
+			message: `✨ Built ${bundles.length} bundles in ${buildTime}ms!`,
+		};
 	} catch (err) {
-		return String(
-			typeof err === "object" && err && "diagnostics" in err
-				? err.diagnostics
-				: err,
-		);
+		if (typeof err === "string") {
+			return {
+				success: false,
+				message: err,
+			};
+		}
+
+		if (err instanceof Error) {
+			return {
+				success: false,
+				message: err.message,
+			};
+		}
+
+		if (typeof err === "object" && err) {
+			if ("diagnostics" in err && Array.isArray(err.diagnostics)) {
+				let msg = "";
+
+				err.diagnostics.forEach((item) => {
+					msg += "Error: " + item.message + "\n";
+				});
+
+				// Remove trailing newline.
+				msg = msg.slice(0, -1);
+
+				return {
+					success: false,
+					message: msg,
+				};
+			}
+
+			if ("stderr" in err && err.stderr) {
+				return {
+					success: false,
+					message: err.stderr.toString(),
+				};
+			}
+
+			if ("stdout" in err && err.stdout) {
+				return {
+					success: false,
+					message: err.stdout.toString(),
+				};
+			}
+
+			console.log(err);
+
+			return {
+				success: false,
+				message: "An unknown error occurred during the build process.",
+			};
+		}
+
+		return {
+			success: false,
+			message: "Unknown error occurred.",
+		};
 	}
 }
 
@@ -209,7 +267,15 @@ async function bundleCustomizerControl(controlName) {
  * @returns {string} The converted string.
  */
 function toPascalCase(str) {
-	return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+	return (
+		str
+			// Split the string by spaces and hyphens.
+			.split(/[\s-]+/)
+			// Capitalize first letter of each word and make rest lowercase
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+			// Join all words together
+			.join("")
+	);
 }
 
 /**
