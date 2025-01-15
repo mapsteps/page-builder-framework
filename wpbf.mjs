@@ -1,7 +1,6 @@
 #!/usr/bin/env zx
 
 import "zx/globals";
-import { exec } from "child_process";
 import { fileURLToPath } from "url";
 import {
 	intro,
@@ -151,15 +150,10 @@ async function bundleCustomizerControl(controlName) {
 		}
 	}
 
-	const buildViaAPI = false;
 	// console.log("entries", entries);
 
 	try {
-		if (buildViaAPI) {
-			return await bundleViaAPI(entries, absDistDir);
-		}
-
-		return await bundleViaCLI(entries, absDistDir);
+		return await bundleViaAPI(entries, absDistDir);
 	} catch (err) {
 		if (typeof err === "string") {
 			return {
@@ -228,36 +222,6 @@ async function bundleCustomizerControl(controlName) {
  * @param {string} distDir The dist directory path.
  * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
  */
-async function bundleViaCLI(entries, distDir) {
-	const startTime = Date.now();
-
-	// Construct the Parcel CLI command
-	let parcelCmd = `parcel build ${entries.join(" ")} --dist-dir ${distDir} --no-cache`;
-
-	// Replace backslashes with forward slashes
-	parcelCmd = parcelCmd.replace(/\\/g, "/");
-
-	// Execute the command using zx (doesn't work: No quote function is defined: https://ï.at/no-quote-func)
-	// await $`${parcelCmd}`;
-
-	// Lets use exec instead of zx.
-	exec(parcelCmd);
-
-	const endTime = Date.now();
-
-	return {
-		success: true,
-		message: `✨ Built ${entries.length} bundles in ${endTime - startTime}ms!`,
-	};
-}
-
-/**
- * Bundle the customizer control using the Parcel API.
- *
- * @param {string[]} entries The entries to pass to Parcel.
- * @param {string} distDir The dist directory path.
- * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
- */
 async function bundleViaAPI(entries, distDir) {
 	const bundler = new Parcel({
 		entries: entries,
@@ -275,17 +239,15 @@ async function bundleViaAPI(entries, distDir) {
 			isLibrary: false,
 			outputFormat: "global",
 			publicUrl: "./",
+			distDir: distDir,
+			engines: {
+				browsers: ["> 0.5%", "last 2 versions", "not dead"],
+			},
 		},
 		targets: {
 			default: {
 				context: "browser",
 				distDir: distDir,
-				engines: {
-					browsers: ["> 0.5%", "last 2 versions", "not dead"],
-				},
-				outputFormat: "global",
-				isLibrary: false,
-				scopeHoist: true,
 				optimize: true,
 				sourceMap: true,
 				includeNodeModules: true,
