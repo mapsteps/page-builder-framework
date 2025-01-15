@@ -5,7 +5,7 @@
  * @package Wpbf
  */
 
-namespace Mapsteps\Wpbf\Customizer\Controls\ResponsiveBuilder;
+namespace Mapsteps\Wpbf\Customizer\Controls\Builder;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\AssocArrayField;

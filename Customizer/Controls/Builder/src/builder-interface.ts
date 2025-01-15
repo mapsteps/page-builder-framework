@@ -20,6 +20,11 @@ export type BuilderRow = {
 	columns: BuilderColumn[];
 };
 
+export type BuilderSidebar = {
+	key: string;
+	label: string;
+}
+
 export type BuilderValue = Record<string, Record<string, string[]>>;
 
 export interface WpbfBuilderControlParams

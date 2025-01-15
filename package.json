@@ -137,6 +137,6 @@
     "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-cache",
     "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist --no-cache",
     "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist --no-cache",
-    "build-builder-control": "shx rm -rf Customizer/Controls/Builder/dist && parcel build Customizer/Controls/Builder/src/builder-control.ts --dist-dir Customizer/Controls/Builder/dist --no-cache"
+    "build-builder-control": "shx rm -rf Customizer/Controls/Builder/dist && parcel build Customizer/Controls/Builder/src/builder-control.ts parcel build Customizer/Controls/Builder/src/responsive-builder-control.ts --dist-dir Customizer/Controls/Builder/dist --no-cache"
   }
 }

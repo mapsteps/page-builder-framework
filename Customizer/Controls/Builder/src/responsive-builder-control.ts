@@ -1,7 +1,4 @@
-import {
-	BuilderValue,
-	WpbfBuilderControl,
-} from "./responsive-builder-interface";
+import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
 
 (function () {
 	if (!window.wp.customize) return;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mapsteps\Wpbf\Customizer\Controls\ResponsiveBuilder;
+namespace Mapsteps\Wpbf\Customizer\Controls\Builder;
 
 final class ResponsiveBuilderStore {
 

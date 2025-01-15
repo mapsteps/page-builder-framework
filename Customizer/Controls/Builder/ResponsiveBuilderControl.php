@@ -5,7 +5,7 @@
  * @package Wpbf
  */
 
-namespace Mapsteps\Wpbf\Customizer\Controls\ResponsiveBuilder;
+namespace Mapsteps\Wpbf\Customizer\Controls\Builder;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\AssocArrayControl;
@@ -24,25 +24,46 @@ class ResponsiveBuilderControl extends BaseControl {
 	public $type = 'wpbf-responsive-builder';
 
 	/**
-	 * Available widgets.
+	 * Available widgets for desktop.
 	 *
 	 * @var array
 	 */
-	private $available_widgets = array();
+	private $desktop_available_widgets = array();
 
 	/**
-	 * Active widgets.
+	 * Available widgets for tablet & phone.
+	 *
+	 * @var array
+	 */
+	private $mobile_available_widgets = array();
+
+	/**
+	 * Active widgets for desktop.
 	 *
 	 * @var string[]
 	 */
-	private $active_widget_keys = array();
+	private $desktop_active_widget_keys = array();
 
 	/**
-	 * Available rows.
+	 * Active widgets for tablet & phone.
+	 *
+	 * @var string[]
+	 */
+	private $mobile_active_widget_keys = array();
+
+	/**
+	 * Available rows for desktop.
 	 *
 	 * @var array
 	 */
-	private $available_rows = array();
+	private $desktop_available_rows = array();
+
+	/**
+	 * Available rows for tablet & phone.
+	 *
+	 * @var array
+	 */
+	private $mobile_available_rows = array();
 
 	/**
 	 * Constructor.
@@ -58,12 +79,24 @@ class ResponsiveBuilderControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		if ( isset( $args['available_widgets'] ) && is_array( $args['available_widgets'] ) ) {
-			$this->available_widgets = $args['available_widgets'];
+		if ( isset( $args['desktop'] ) && is_array( $args['desktop'] ) ) {
+			if ( isset( $args['desktop']['available_widgets'] ) && is_array( $args['desktop']['available_widgets'] ) ) {
+				$this->desktop_available_widgets = $args['desktop']['available_widgets'];
+			}
+
+			if ( isset( $args['desktop']['available_rows'] ) && is_array( $args['desktop']['available_rows'] ) ) {
+				$this->desktop_available_rows = $args['desktop']['available_rows'];
+			}
 		}
 
-		if ( isset( $args['available_rows'] ) && is_array( $args['available_rows'] ) ) {
-			$this->available_rows = $args['available_rows'];
+		if ( isset( $args['mobile'] ) && is_array( $args['mobile'] ) ) {
+			if ( isset( $args['mobile']['available_widgets'] ) && is_array( $args['mobile']['available_widgets'] ) ) {
+				$this->mobile_available_widgets = $args['mobile']['available_widgets'];
+			}
+
+			if ( isset( $args['mobile']['available_rows'] ) && is_array( $args['mobile']['available_rows'] ) ) {
+				$this->mobile_available_rows = $args['mobile']['available_rows'];
+			}
 		}
 
 		if ( ! ( $this->setting instanceof WP_Customize_Setting ) ) {
@@ -115,35 +148,44 @@ class ResponsiveBuilderControl extends BaseControl {
 		$value = $this->value();
 
 		if ( ! empty( $value ) && is_array( $value ) ) {
-			foreach ( $value as $row_key => $columns ) {
-				if ( ! $this->rowKeyExists( $row_key ) ) {
-					continue;
-				}
-
-				foreach ( $columns as $column_key => $widget_keys ) {
-					if ( ! $this->columnKeyExists( $column_key ) ) {
+			if ( isset( $value['desktop'] ) && is_array( $value['desktop'] ) ) {
+				foreach ( $value['desktop'] as $row_key => $columns ) {
+					if ( ! $this->rowKeyExists( $row_key ) ) {
 						continue;
 					}
 
-					foreach ( $widget_keys as $widget_key ) {
-						if ( empty( $widget_key ) ) {
+					foreach ( $columns as $column_key => $widget_keys ) {
+						if ( ! $this->columnKeyExists( $column_key ) ) {
 							continue;
 						}
 
-						if ( ! $this->widgetExists( $widget_key ) ) {
-							continue;
-						}
+						foreach ( $widget_keys as $widget_key ) {
+							if ( empty( $widget_key ) ) {
+								continue;
+							}
 
-						$this->active_widget_keys[] = $widget_key;
+							if ( ! $this->widgetExists( $widget_key ) ) {
+								continue;
+							}
+
+							$this->active_widget_keys[] = $widget_key;
+						}
 					}
 				}
 			}
 		}
 
 		$this->json['builder'] = [
-			'availableWidgets' => $this->available_widgets,
-			'availableRows'    => $this->available_rows,
-			'activeWidgetKeys' => $this->active_widget_keys,
+			'desktop' => [
+				'availableWidgets' => $this->desktop_available_widgets,
+				'availableRows'    => $this->desktop_available_rows,
+				'activeWidgetKeys' => $this->desktop_active_widget_keys,
+			],
+			'mobile' => [
+				'availableWidgets' => $this->mobile_available_widgets,
+				'availableRows'    => $this->mobile_available_rows,
+				'activeWidgetKeys' => $this->mobile_active_widget_keys,
+			],
 		];
 
 	}
