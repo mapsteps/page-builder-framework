@@ -14,9 +14,26 @@ function setupCustomizer() {
 	init();
 
 	function init() {
+		listenDevicePreviewSwitch();
 		setupLogoContainerWidth();
 		setupBuilderControlToggleBehavior();
 		listenToHeaderBuilderToggle();
+	}
+
+	function listenDevicePreviewSwitch() {
+		const previewedDevice = window.wp.customize?.previewedDevice.get();
+
+		if (previewedDevice) {
+			document.body.classList.add(`wpbf-${previewedDevice}-preview`);
+		}
+
+		window.wp.customize?.previewedDevice.bind(function (device) {
+			document.body.classList.remove(`wpbf-desktop-preview`);
+			document.body.classList.remove(`wpbf-tablet-preview`);
+			document.body.classList.remove(`wpbf-mobile-preview`);
+
+			document.body.classList.add(`wpbf-${device}-preview`);
+		});
 	}
 
 	function setupLogoContainerWidth() {

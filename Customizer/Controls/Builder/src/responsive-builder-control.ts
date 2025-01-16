@@ -113,31 +113,38 @@ const allowedDevices = ["desktop", "mobile"];
 				},
 
 				buildAvailableWidgetsPanel: function () {
-					const control = this;
 					if (!this.container) return;
 
 					const params = this.params;
 					if (!params) return;
+
+					const controlForm = this.findHtmlEl?.(
+						this.container[0],
+						".wpbf-control-form",
+					);
+
+					if (!controlForm) return;
+
+					const control = this;
 
 					for (const device in params.builder) {
 						if (!params.builder.hasOwnProperty(device)) continue;
 						if (device !== "desktop" && device !== "mobile") continue;
 						if (!params.builder[device].availableWidgets.length) continue;
 
-						const availableWidgetsPanel = this.findHtmlEl?.(
-							this.container[0],
-							".available-widgets-panel[data-device='" + device + "']",
-						);
+						const $availableWidgetPanel = jQuery("<div></div>")
+							.addClass("available-widgets-panel")
+							.attr("data-device", device)
+							.appendTo(controlForm);
 
 						if (
-							!availableWidgetsPanel ||
 							!this.availableWidgetsPanels ||
 							!this.availableWidgetsPanels[device]
 						) {
 							continue;
 						}
 
-						this.availableWidgetsPanels[device] = availableWidgetsPanel;
+						this.availableWidgetsPanels[device] = $availableWidgetPanel[0];
 
 						const $availableWidgetListEl = jQuery("<div></div>")
 							.addClass("builder-widgets available-widgets")
@@ -183,7 +190,7 @@ const allowedDevices = ["desktop", "mobile"];
 						.insertAfter(customizePreview);
 
 					const $builderSlotsEl = jQuery("<div></div>")
-						.addClass("wpbf-builder-slots is-hidden")
+						.addClass("wpbf-builder-slots")
 						.appendTo($builderPanel);
 
 					const emptyWidgetListClass = "empty-widget-list";
@@ -378,17 +385,15 @@ const allowedDevices = ["desktop", "mobile"];
 				},
 
 				initDraggable: function () {
-					const control = this;
-					const params = control.params;
+					if (!this.params || !this.container || !this.builderPanel) {
+						return;
+					}
 
-					if (!params) return;
-					if (!control.availableWidgetsPanel || !control.builderPanel) return;
-
-					const dragHelper = control.findHtmlEl?.(".widget-drag-helper");
+					const dragHelper = this.findHtmlEl?.(".widget-drag-helper");
 					if (!dragHelper) return;
 
-					const availableWidgetItems = control.findHtmlEls?.(
-						control.availableWidgetsPanel,
+					const availableWidgetItems = this.findHtmlEls?.(
+						this.container[0],
 						".widget-item",
 					);
 
@@ -396,10 +401,12 @@ const allowedDevices = ["desktop", "mobile"];
 						return;
 					}
 
+					const control = this;
+
 					availableWidgetItems.forEach((item) => {
 						if (!(item instanceof HTMLElement)) return;
 
-						item.addEventListener("dragstart", function (e) {
+						item.addEventListener("dragstart", (e) => {
 							if (!(e instanceof DragEvent)) return;
 
 							document.body.classList.add("is-dragging-widget");
@@ -448,7 +455,7 @@ const allowedDevices = ["desktop", "mobile"];
 							}, 10);
 						});
 
-						item.addEventListener("dragend", function (e) {
+						item.addEventListener("dragend", (e) => {
 							if (!(e instanceof DragEvent)) return;
 
 							e.preventDefault();
@@ -466,14 +473,12 @@ const allowedDevices = ["desktop", "mobile"];
 				},
 
 				initDroppable: function () {
-					const control = this;
-					const params = control.params;
+					if (!this.builderPanel) {
+						return;
+					}
 
-					if (!params) return;
-					if (!control.availableWidgetsPanel || !control.builderPanel) return;
-
-					const builderDropZones = control.findHtmlEls?.(
-						control.builderPanel,
+					const builderDropZones = this.findHtmlEls?.(
+						this.builderPanel,
 						".active-widgets",
 					);
 
@@ -481,8 +486,10 @@ const allowedDevices = ["desktop", "mobile"];
 						return;
 					}
 
+					const control = this;
+
 					builderDropZones.forEach((dropZone) => {
-						dropZone.addEventListener("dragenter", function (e) {
+						dropZone.addEventListener("dragenter", (e) => {
 							if (!(e instanceof DragEvent)) return;
 							e.preventDefault();
 
@@ -490,18 +497,18 @@ const allowedDevices = ["desktop", "mobile"];
 						});
 
 						// This empty block is necessary to let the dropZone accept the drop event.
-						dropZone.addEventListener("dragover", function (e) {
+						dropZone.addEventListener("dragover", (e) => {
 							e.preventDefault();
 						});
 
-						dropZone.addEventListener("dragleave", function (e) {
+						dropZone.addEventListener("dragleave", (e) => {
 							if (!(e instanceof DragEvent)) return;
 							e.preventDefault();
 
 							dropZone.classList.remove("dragover");
 						});
 
-						dropZone.addEventListener("drop", function (e) {
+						dropZone.addEventListener("drop", (e) => {
 							if (!(e instanceof DragEvent)) return;
 							e.preventDefault();
 
@@ -567,7 +574,7 @@ const allowedDevices = ["desktop", "mobile"];
 				getWidgetItemFromDraggableData: function (e) {
 					const data = e.dataTransfer?.getData("text");
 					if (!data) return undefined;
-					const control = this;
+					if (!this.container) return undefined;
 
 					const parsedJson = this.parseDraggableData?.(e);
 					if (!parsedJson) return undefined;
@@ -575,8 +582,8 @@ const allowedDevices = ["desktop", "mobile"];
 					const widgetKey = parsedJson.widgetKey;
 					if (!widgetKey) return undefined;
 
-					const widgetItem = control.findHtmlEl?.(
-						this.availableWidgetsPanel,
+					const widgetItem = this.findHtmlEl?.(
+						this.container[0],
 						`.widget-item[data-widget-key="${widgetKey}"]`,
 					);
 
@@ -584,12 +591,15 @@ const allowedDevices = ["desktop", "mobile"];
 				},
 
 				createWidgetItem: function (widgetKey, insideBuilderPanel) {
-					const control = this;
-					const widgetData = control.findWidgetByKey?.(widgetKey);
+					if (!this.container) return undefined;
+
+					const widgetData = this.findWidgetByKey?.(widgetKey);
 					if (!widgetData) return undefined;
 
-					const widgetItemToClone = control.findHtmlEl?.(
-						control.availableWidgetsPanel,
+					const control = this;
+
+					const widgetItemToClone = this.findHtmlEl?.(
+						this.container[0],
 						`.widget-item[data-widget-key="${widgetKey}"]`,
 					);
 
@@ -610,7 +620,7 @@ const allowedDevices = ["desktop", "mobile"];
 							'<i class="dashicons dashicons-no-alt"></i>';
 						newWidgetItem.appendChild(deleteButton);
 
-						deleteButton.addEventListener("click", function (e) {
+						deleteButton.addEventListener("click", (e) => {
 							e.preventDefault();
 							e.stopPropagation();
 
@@ -631,11 +641,6 @@ const allowedDevices = ["desktop", "mobile"];
 
 				initSortable: function () {
 					const control = this;
-					const params = control.params;
-
-					if (!params) return;
-					if (!control.availableWidgetsPanel || !control.builderPanel) return;
-
 					const emptyWidgetListClass = "empty-widget-list";
 
 					jQuery(".active-widgets").sortable({
@@ -722,10 +727,8 @@ const allowedDevices = ["desktop", "mobile"];
 				},
 
 				destroySortable: function () {
-					const control = this;
-					if (!control.availableWidgetsPanel || !control.builderPanel) return;
-
-					jQuery(".active-widgets").sortable("destroy");
+					if (!this.builderPanel) return;
+					jQuery(".wpbf-builder-panel .active-widgets").sortable("destroy");
 				},
 
 				updateCustomizerSetting: function () {

@@ -296,9 +296,7 @@ class ResponsiveBuilderControl extends BaseControl {
 
 		<div class="customize-control-notifications-container"></div>
 
-		<div class="wpbf-control-form">
-			<div class="available-widgets-panel"></div>
-		</div>
+		<div class="wpbf-control-form"></div>
 
 		<?php
 	}

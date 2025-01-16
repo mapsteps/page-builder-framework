@@ -394,10 +394,6 @@
 	width: 100%;
 	height: 100%;
 
-	&.is-hidden {
-		display: none;
-	}
-
 	.builder-sidebar {
 		// Already positioned as 'relative' because div.builder-sidebar also has a .builder-widgets class.
 		width: 30%;
@@ -408,5 +404,58 @@
 		position: relative;
 		padding-left: 20px;
 		width: 70%;
+	}
+}
+
+.wpbf-desktop-preview {
+	.wpbf-customize-control-responsive-builder {
+		[data-device="desktop"] {
+			display: block;
+		}
+
+		[data-device="mobile"] {
+			display: none;
+		}
+	}
+
+	.wpbf-builder-panel {
+		[data-device="desktop"] {
+			display: block;
+
+			&.wpbf-flex {
+				display: flex;
+			}
+		}
+
+		[data-device="mobile"] {
+			display: none;
+		}
+	}
+}
+
+.wpbf-tablet-preview,
+.wpbf-mobile-preview {
+	.wpbf-customize-control-responsive-builder {
+		[data-device="desktop"] {
+			display: none;
+		}
+
+		[data-device="mobile"] {
+			display: block;
+		}
+	}
+
+	.wpbf-builder-panel {
+		[data-device="desktop"] {
+			display: none;
+		}
+
+		[data-device="mobile"] {
+			display: block;
+
+			&.wpbf-flex {
+				display: flex;
+			}
+		}
 	}
 }
