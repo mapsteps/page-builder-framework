@@ -34,23 +34,27 @@ export interface WpbfBuilderControlParams
 export interface WpbfBuilderControl
 	extends WpbfCustomizeControl<BuilderValue, WpbfBuilderControlParams> {}
 
-export type ResponsiveBuilderValue = {
-	desktop: {
-		rows: {
-			[rowKey: string]: {
-				[columnKey: string]: string[];
+export type ResponsiveBuilderValue =
+	| {
+			desktop: {
+				rows: {
+					[rowKey: string]: {
+						[columnKey: string]: string[];
+					};
+				};
 			};
-		};
-	};
-	mobile: {
-		sidebar: string[];
-		rows: {
-			[rowKey: string]: {
-				[columnKey: string]: string[];
+			mobile: {
+				sidebar: string[];
+				rows: {
+					[rowKey: string]: {
+						[columnKey: string]: string[];
+					};
+				};
 			};
-		};
-	};
-};
+	  }
+	| null
+	| undefined
+	| "";
 
 export interface WpbfResponsiveBuilderControlParams
 	extends WpbfCustomizeControlParams<ResponsiveBuilderValue> {

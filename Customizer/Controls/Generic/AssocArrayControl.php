@@ -73,7 +73,7 @@ class AssocArrayControl extends BaseControl {
 			}
 		}
 
-		return AssocArrayField::sanitize( $default_value );
+		return AssocArrayField::sanitize( $default_value, 'block_' );
 
 	}
 

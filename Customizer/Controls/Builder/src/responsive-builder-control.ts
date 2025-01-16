@@ -1,6 +1,5 @@
 import {
 	ResponsiveBuilderValue,
-	WpbfBuilderControl,
 	WpbfResponsiveBuilderControl,
 } from "./builder-interface";
 
@@ -13,8 +12,6 @@ const allowedDevices = ["desktop", "mobile"];
 		window.wp.customize.wpbfDynamicControl.extend<WpbfResponsiveBuilderControl>(
 			{
 				isSaving: false,
-
-				form: undefined,
 
 				draggableData: undefined,
 
@@ -189,6 +186,8 @@ const allowedDevices = ["desktop", "mobile"];
 						.addClass("wpbf-builder-slots is-hidden")
 						.appendTo($builderPanel);
 
+					const emptyWidgetListClass = "empty-widget-list";
+
 					for (const device in params.builder) {
 						if (!params.builder.hasOwnProperty(device)) continue;
 						if (device !== "desktop" && device !== "mobile") continue;
@@ -207,7 +206,7 @@ const allowedDevices = ["desktop", "mobile"];
 						) {
 							$builderSlotsEl.addClass(`wpbf-flex wpbf-content-center`);
 
-							jQuery("<div></div>")
+							const $mobileBuilderSidebar = jQuery("<div></div>")
 								.addClass("builder-sidebar builder-widgets active-widgets")
 								.text(params.builder[device].availableSlots.sidebar.label)
 								.appendTo($builderSlotsEl);
@@ -216,7 +215,18 @@ const allowedDevices = ["desktop", "mobile"];
 								.addClass("builder-rows")
 								.appendTo($builderSlotsEl);
 
-							continue;
+							if (params.value) {
+								// Build the widget list based on `params.value`.
+								params.value[device].sidebar.forEach((widgetKey) => {
+									const newWidgetItem = control.createWidgetItem?.(
+										widgetKey,
+										true,
+									);
+									if (!newWidgetItem) return;
+
+									$mobileBuilderSidebar.append(newWidgetItem);
+								});
+							}
 						}
 
 						const availableSlots = params.builder[device].availableSlots;
@@ -254,7 +264,9 @@ const allowedDevices = ["desktop", "mobile"];
 								.on("click", () => control.handleRowSettingClick?.(row.key))
 								.appendTo($row);
 
-							const matchedRow = params.value[device].rows[row.key];
+							const matchedRow = params.value
+								? params.value[device].rows[row.key]
+								: undefined;
 
 							row.columns.forEach((column, columnIndex) => {
 								let columnPosClass = "";
@@ -284,8 +296,6 @@ const allowedDevices = ["desktop", "mobile"];
 									)
 									.attr("data-column-key", column.key)
 									.appendTo($innerRow);
-
-								const emptyWidgetListClass = "empty-widget-list";
 
 								if (!matchedRow || !Object.keys(matchedRow).length) {
 									$widgetListEl.addClass(emptyWidgetListClass);
@@ -836,10 +846,7 @@ const allowedDevices = ["desktop", "mobile"];
 					}, 1);
 				},
 
-				updateComponentState: function (
-					this: WpbfBuilderControl,
-					value: Record<string, any>,
-				) {
+				updateComponentState: function (value) {
 					// Update available-widgets & active-widgets.
 				},
 			},
