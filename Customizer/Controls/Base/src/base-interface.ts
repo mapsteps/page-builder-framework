@@ -56,6 +56,7 @@ import {
 import {
 	BuilderWidget,
 	WpbfBuilderControl,
+	WpbfResponsiveBuilderControl,
 } from "../../Builder/src/builder-interface";
 import { WpbfImageControl } from "../../Media/src/image-interface";
 
@@ -327,7 +328,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	emptyWidgetMarkup?: string;
 	isSortableEmpty?: (sortableEl: HTMLElement) => boolean;
 	checkSortableContent?: (sortableEl: HTMLElement) => void;
-	isWidgetActive?: (widgetKey: string) => boolean;
+	isWidgetActive?: (widgetKey: string, device?: string) => boolean;
 	findWidgetByKey?: (widgetKey: string) => BuilderWidget | undefined;
 	handleDeleteActiveWidget?: (
 		activeWidgetEl: HTMLElement,
@@ -419,7 +420,7 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-sortable": WpbfSortableControl;
 	"wpbf-toggle": WpbfCheckboxControl;
 	"wpbf-builder": WpbfBuilderControl;
-	"wpbf-responsive-builder": WpbfBuilderControl;
+	"wpbf-responsive-builder": WpbfResponsiveBuilderControl;
 }
 
 export interface WpbfSectionDependency {

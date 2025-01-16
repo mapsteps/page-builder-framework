@@ -23,7 +23,7 @@ export type BuilderRow = {
 export type BuilderSidebar = {
 	key: string;
 	label: string;
-}
+};
 
 export type BuilderValue = Record<string, Record<string, string[]>>;
 
@@ -35,5 +35,51 @@ export interface WpbfBuilderControlParams
 		availableRows: BuilderRow[];
 	};
 }
+
 export interface WpbfBuilderControl
 	extends WpbfCustomizeControl<BuilderValue, WpbfBuilderControlParams> {}
+
+export type ResponsiveBuilderValue = {
+	desktop: {
+		rows: {
+			[rowKey: string]: {
+				[columnKey: string]: string[];
+			};
+		};
+	};
+	mobile: {
+		sidebar: string[];
+		rows: {
+			[rowKey: string]: {
+				[columnKey: string]: string[];
+			};
+		};
+	};
+};
+
+export interface WpbfResponsiveBuilderControlParams
+	extends WpbfCustomizeControlParams<ResponsiveBuilderValue> {
+	builder: {
+		desktop: {
+			availableWidgets: BuilderWidget[];
+			activeWidgetKeys: string[];
+			availableSlots: {
+				rows: BuilderRow[];
+			};
+		};
+		mobile: {
+			availableWidgets: BuilderWidget[];
+			activeWidgetKeys: string[];
+			availableSlots: {
+				sidebar: BuilderSidebar;
+				rows: BuilderRow[];
+			};
+		};
+	};
+}
+
+export interface WpbfResponsiveBuilderControl
+	extends WpbfCustomizeControl<
+		ResponsiveBuilderValue,
+		WpbfResponsiveBuilderControlParams
+	> {}
