@@ -213,16 +213,29 @@ const allowedDevices = ["desktop", "mobile"];
 						) {
 							$builderSlotsEl.addClass(`wpbf-flex wpbf-content-center`);
 
-							const $mobileBuilderSidebar = jQuery("<div></div>")
-								.addClass("builder-sidebar builder-widgets active-widgets")
-								.text(params.builder[device].availableSlots.sidebar.label)
+							const $builderSidebar = jQuery("<div></div>")
+								.addClass("builder-sidebar")
 								.appendTo($builderSlotsEl);
 
-							$mobileBuilderRows = jQuery("<div></div>")
-								.addClass("builder-rows")
-								.appendTo($builderSlotsEl);
+							// Build the row setting button.
+							jQuery("<button></button>")
+								.attr("type", "button")
+								.addClass("row-setting-button")
+								.html(
+									`<i class="dashicons dashicons-admin-generic"></i><span>${params.builder[device].availableSlots.sidebar.label}</span>`,
+								)
+								.on("click", () =>
+									control.handleRowSettingClick?.(
+										params.builder[device].availableSlots.sidebar.key,
+									),
+								)
+								.appendTo($builderSidebar);
 
 							if (params.value) {
+								const $builderInnerSidebar = jQuery("<div></div>")
+									.addClass("builder-widgets active-widgets")
+									.appendTo($builderSidebar);
+
 								// Build the widget list based on `params.value`.
 								params.value[device].sidebar.forEach((widgetKey) => {
 									const newWidgetItem = control.createWidgetItem?.(
@@ -231,9 +244,13 @@ const allowedDevices = ["desktop", "mobile"];
 									);
 									if (!newWidgetItem) return;
 
-									$mobileBuilderSidebar.append(newWidgetItem);
+									$builderInnerSidebar.append(newWidgetItem);
 								});
 							}
+
+							$mobileBuilderRows = jQuery("<div></div>")
+								.addClass("builder-rows")
+								.appendTo($builderSlotsEl);
 						}
 
 						const availableSlots = params.builder[device].availableSlots;
@@ -266,6 +283,7 @@ const allowedDevices = ["desktop", "mobile"];
 							// Build the row setting button.
 							jQuery("<button></button>")
 								.addClass("row-setting-button")
+								.attr("type", "button")
 								.attr("data-row-key", row.key)
 								.html('<i class="dashicons dashicons-admin-generic"></i>')
 								.on("click", () => control.handleRowSettingClick?.(row.key))

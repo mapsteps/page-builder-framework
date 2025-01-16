@@ -71,6 +71,7 @@ export interface WpbfResponsiveBuilderControlParams
 			activeWidgetKeys: string[];
 			availableSlots: {
 				sidebar: {
+					key: string;
 					label: string;
 				};
 				rows: BuilderRow[];
