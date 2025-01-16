@@ -4,6 +4,8 @@ import {
 	WpbfResponsiveBuilderControl,
 } from "./builder-interface";
 
+const allowedDevices = ["desktop", "mobile"];
+
 (function () {
 	if (!window.wp.customize) return;
 
@@ -183,27 +185,35 @@ import {
 						.attr("data-wpbf-builder-panel", params.id)
 						.insertAfter(customizePreview);
 
+					const $builderSlotsEl = jQuery("<div></div>")
+						.addClass("wpbf-builder-slots is-hidden")
+						.appendTo($builderPanel);
+
 					for (const device in params.builder) {
 						if (!params.builder.hasOwnProperty(device)) continue;
 						if (device !== "desktop" && device !== "mobile") continue;
 						if (!params.builder[device].availableWidgets.length) continue;
 
+						$builderSlotsEl.data("device", device);
+
 						const availableWidgets = params.builder[device].availableWidgets;
 						if (!availableWidgets.length) return;
 
-						let $builderSlotsEl: JQuery<HTMLElement> | undefined = undefined;
+						let $mobileBuilderRows: JQuery<HTMLElement> | undefined = undefined;
 
 						if (
 							device === "mobile" &&
 							params.builder[device].availableSlots.sidebar
 						) {
-							$builderSlotsEl = jQuery("<div></div>")
-								.addClass("wpbf-builder-slots wpbf-flex wpbf-content-center")
-								.appendTo($builderPanel);
+							$builderSlotsEl.addClass(`wpbf-flex wpbf-content-center`);
 
 							jQuery("<div></div>")
-								.addClass("wpbf-builder-sidebar")
+								.addClass("builder-sidebar builder-widgets active-widgets")
 								.text(params.builder[device].availableSlots.sidebar.label)
+								.appendTo($builderSlotsEl);
+
+							$mobileBuilderRows = jQuery("<div></div>")
+								.addClass("builder-rows")
 								.appendTo($builderSlotsEl);
 
 							continue;
@@ -213,9 +223,9 @@ import {
 						if (!availableSlots.rows.length) continue;
 
 						const $rowsWrapper =
-							device === "mobile" && $builderSlotsEl
-								? $builderSlotsEl
-								: $builderPanel;
+							device === "mobile" && $mobileBuilderRows
+								? $mobileBuilderRows
+								: $builderSlotsEl;
 
 						availableSlots.rows.forEach((row) => {
 							// Build the row.
@@ -270,7 +280,7 @@ import {
 
 								const $widgetListEl = jQuery("<div></div>")
 									.addClass(
-										`builder-widgets builder-column sortable-widgets wpbf-flex ${columnPosClass}`,
+										`builder-column builder-widgets active-widgets wpbf-flex ${columnPosClass}`,
 									)
 									.attr("data-column-key", column.key)
 									.appendTo($innerRow);
@@ -306,8 +316,6 @@ import {
 							control.bindCustomizeSection?.(row.key);
 						});
 					}
-
-					// Codes from here below (inside of this functions) are incorrect.
 
 					control.builderPanel = $builderPanel[0];
 				},
@@ -456,7 +464,7 @@ import {
 
 					const builderDropZones = control.findHtmlEls?.(
 						control.builderPanel,
-						".builder-column",
+						".active-widgets",
 					);
 
 					if (!builderDropZones || !builderDropZones.length) {
@@ -620,8 +628,8 @@ import {
 
 					const emptyWidgetListClass = "empty-widget-list";
 
-					jQuery(".sortable-widgets").sortable({
-						connectWith: ".builder-column",
+					jQuery(".active-widgets").sortable({
+						connectWith: ".active-widgets",
 						placeholder: "widget-item",
 						start: function (e, ui) {
 							document.body.classList.add("is-sorting-widget");
@@ -665,7 +673,7 @@ import {
 
 					availableWidgetEl?.classList.remove("disabled");
 
-					const sortableEL = activeWidgetEl.closest(".sortable-widgets");
+					const sortableEL = activeWidgetEl.closest(".active-widgets");
 
 					activeWidgetEl.remove();
 
@@ -707,7 +715,7 @@ import {
 					const control = this;
 					if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
-					jQuery(".builder-column").sortable("destroy");
+					jQuery(".active-widgets").sortable("destroy");
 				},
 
 				updateCustomizerSetting: function () {
@@ -720,52 +728,35 @@ import {
 					control.isSaving = true;
 
 					setTimeout(() => {
+						if (!control.availableWidgetsPanels) {
+							return;
+						}
+
 						const newValue: ResponsiveBuilderValue = {
 							desktop: { rows: {} },
 							mobile: { sidebar: [], rows: {} },
 						};
 
-						const builderRows = control.findHtmlEls?.(
-							control.builderPanel,
-							".builder-row",
-						);
-
-						if (!builderRows || !builderRows.length) {
-							control.isSaving = false;
-							return;
-						}
-
-						builderRows.forEach((row) => {
-							const rowKey = row.dataset.rowKey;
-							if (!rowKey) return;
-
-							newValue[rowKey] = {};
-
-							const sortableColumns = control.findHtmlEls?.(
-								row,
-								".builder-column.sortable-widgets",
-							);
-
-							if (!sortableColumns || !sortableColumns.length) {
-								return;
+						for (const device of allowedDevices) {
+							if (!control.availableWidgetsPanels.hasOwnProperty(device)) {
+								continue;
 							}
 
-							sortableColumns.forEach((column) => {
-								const columnKey = column.dataset.columnKey;
-								if (!columnKey) return;
+							if (device !== "desktop" && device !== "mobile") {
+								continue;
+							}
 
-								newValue[rowKey][columnKey] = [];
+							if (device === "mobile") {
+								const sortableEl = control.findHtmlEl?.(
+									".builder-sidebar.active-widgets",
+								);
 
 								const widgetItems = control.findHtmlEls?.(
-									column,
+									sortableEl,
 									".widget-item",
 								);
 
-								if (!widgetItems || !widgetItems.length) {
-									return;
-								}
-
-								widgetItems.forEach((widgetItem) => {
+								widgetItems?.forEach((widgetItem) => {
 									if (widgetItem.classList.contains("empty-widget-item")) {
 										return;
 									}
@@ -779,10 +770,66 @@ import {
 									const widgetKey = widgetItem.dataset.widgetKey;
 									if (!widgetKey) return;
 
-									newValue[rowKey][columnKey].push(widgetKey);
+									newValue[device].sidebar.push(widgetKey);
+								});
+							}
+
+							const builderRows = control.findHtmlEls?.(
+								control.availableWidgetsPanels[device],
+								".builder-row",
+							);
+
+							if (!builderRows || !builderRows.length) {
+								continue;
+							}
+
+							builderRows.forEach((row) => {
+								const rowKey = row.dataset.rowKey;
+								if (!rowKey) return;
+
+								const sortableColumns = control.findHtmlEls?.(
+									row,
+									".active-widgets",
+								);
+
+								if (!sortableColumns || !sortableColumns.length) {
+									return;
+								}
+
+								sortableColumns.forEach((column) => {
+									const columnKey = column.dataset.columnKey;
+									if (!columnKey) return;
+
+									newValue[device].rows[rowKey][columnKey] = [];
+
+									const widgetItems = control.findHtmlEls?.(
+										column,
+										".widget-item",
+									);
+
+									if (!widgetItems || !widgetItems.length) {
+										return;
+									}
+
+									widgetItems.forEach((widgetItem) => {
+										if (widgetItem.classList.contains("empty-widget-item")) {
+											return;
+										}
+
+										if (
+											widgetItem.classList.contains("ui-sortable-placeholder")
+										) {
+											return;
+										}
+
+										const widgetKey = widgetItem.dataset.widgetKey;
+										if (!widgetKey) return;
+
+										newValue[device].rows[rowKey][columnKey].push(widgetKey);
+									});
 								});
 							});
-						});
+						}
 
 						control.setting?.set(newValue);
 						control.isSaving = false;
@@ -793,7 +840,7 @@ import {
 					this: WpbfBuilderControl,
 					value: Record<string, any>,
 				) {
-					// Update available-widgets & sortable-widgets.
+					// Update available-widgets & active-widgets.
 				},
 			},
 		);
