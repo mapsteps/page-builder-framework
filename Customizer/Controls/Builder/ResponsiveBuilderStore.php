@@ -191,7 +191,6 @@ final class ResponsiveBuilderStore {
 			),
 			'mobile' => array(
 				'sidebar' => array(
-					'key'   => 'mobile_sidebar',
 					'label' => __( 'Off Canvas', 'page-builder-framework' ),
 				),
 				'rows' => array(

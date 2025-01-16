@@ -329,12 +329,19 @@ export interface WpbfCustomizeControl<SV, CP> {
 	isSortableEmpty?: (sortableEl: HTMLElement) => boolean;
 	checkSortableContent?: (sortableEl: HTMLElement) => void;
 	isWidgetActive?: (widgetKey: string, device?: string) => boolean;
-	findWidgetByKey?: (widgetKey: string) => BuilderWidget | undefined;
+	findWidgetByKey?: (
+		widgetKey: string,
+		device?: string,
+	) => BuilderWidget | undefined;
 	handleDeleteActiveWidget?: (
 		activeWidgetEl: HTMLElement,
 		availableWidgetEl: HTMLElement,
 	) => void;
 	availableWidgetsPanel?: HTMLElement;
+	availableWidgetsPanels?: {
+		desktop?: HTMLElement;
+		mobile?: HTMLElement;
+	};
 	builderPanel?: HTMLElement;
 	buildAvailableWidgetsPanel?: () => void;
 	buildBuilderPanel?: () => void;

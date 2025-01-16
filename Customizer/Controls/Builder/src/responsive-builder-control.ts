@@ -1,13 +1,11 @@
 import {
-	BuilderValue,
+	ResponsiveBuilderValue,
 	WpbfBuilderControl,
 	WpbfResponsiveBuilderControl,
 } from "./builder-interface";
 
 (function () {
 	if (!window.wp.customize) return;
-
-	const allowedDevices = ["desktop", "mobile"];
 
 	window.wp.customize.controlConstructor["wpbf-responsive-builder"] =
 		window.wp.customize.wpbfDynamicControl.extend<WpbfResponsiveBuilderControl>(
@@ -21,7 +19,10 @@ import {
 				emptyWidgetItemMarkup:
 					"<div class='widget-item empty-widget-item'>&nbsp;</div>",
 
-				availableWidgetsPanel: undefined,
+				availableWidgetsPanels: {
+					desktop: undefined,
+					mobile: undefined,
+				},
 
 				builderPanel: undefined,
 
@@ -77,23 +78,30 @@ import {
 				},
 
 				isWidgetActive: function (widgetKey, device) {
-					if (!this.params || !device || !allowedDevices.includes(device)) {
+					if (
+						!this.params ||
+						!device ||
+						(device !== "desktop" && device !== "mobile")
+					) {
 						return false;
 					}
 
-					// return this.params.builder.activeWidgetKeys.includes(widgetKey);
-
-					const activeWidgetKeys = this.params.builder.activeWidgetKeys;
+					const activeWidgetKeys = this.params.builder[device].activeWidgetKeys;
 					if (!activeWidgetKeys.length) return false;
 
-					const activeWidgetKey = activeWidgetKeys[device];
-					if (!activeWidgetKey) return false;
+					return activeWidgetKeys.includes(widgetKey);
 				},
 
-				findWidgetByKey: function (widgetKey) {
-					if (!this.params) return undefined;
+				findWidgetByKey: function (widgetKey, device) {
+					if (
+						!this.params ||
+						!device ||
+						(device !== "desktop" && device !== "mobile")
+					) {
+						return undefined;
+					}
 
-					const availableWidgets = this.params.builder.availableWidgets;
+					const availableWidgets = this.params.builder[device].availableWidgets;
 					if (!availableWidgets.length) return undefined;
 
 					for (const widget of availableWidgets) {
@@ -107,58 +115,64 @@ import {
 
 				buildAvailableWidgetsPanel: function () {
 					const control = this;
-					if (!control.container) return;
+					if (!this.container) return;
 
-					const params = control.params;
+					const params = this.params;
 					if (!params) return;
 
-					const availableWidgetsPanel = control.findHtmlEl?.(
-						control.container[0],
-						".available-widgets-panel",
-					);
+					for (const device in params.builder) {
+						if (!params.builder.hasOwnProperty(device)) continue;
+						if (device !== "desktop" && device !== "mobile") continue;
+						if (!params.builder[device].availableWidgets.length) continue;
 
-					if (!availableWidgetsPanel) return;
+						const availableWidgetsPanel = this.findHtmlEl?.(
+							this.container[0],
+							".available-widgets-panel[data-device='" + device + "']",
+						);
 
-					control.availableWidgetsPanel = availableWidgetsPanel;
+						if (
+							!availableWidgetsPanel ||
+							!this.availableWidgetsPanels ||
+							!this.availableWidgetsPanels[device]
+						) {
+							continue;
+						}
+
+						this.availableWidgetsPanels[device] = availableWidgetsPanel;
+
+						const $availableWidgetListEl = jQuery("<div></div>")
+							.addClass("builder-widgets available-widgets")
+							.appendTo(this.availableWidgetsPanels[device]);
+
+						const availableWidgets = params.builder[device].availableWidgets;
+
+						// Build the available widgets list based on `availableWidgets`.
+						availableWidgets.forEach((widget) => {
+							const widgetKey = widget.key;
+
+							jQuery("<div></div>")
+								.addClass(
+									`widget-item widget-item-${widgetKey} ${control.isWidgetActive?.(widgetKey) ? "disabled" : ""}`,
+								)
+								.attr("data-widget-key", widgetKey)
+								.attr("draggable", "true")
+								.html(`<span class="widget-label">${widget.label}</span>`)
+								.on("click", function (e) {
+									control.handleWidgetClick?.(this, widget);
+								})
+								.appendTo($availableWidgetListEl);
+						});
+					}
 
 					jQuery(document.body).append(
 						'<div class="widget-drag-helper"></div>',
 					);
-
-					const availableWidgets = params.builder.availableWidgets;
-
-					const $availableWidgetListEl = jQuery("<div></div>")
-						.addClass("builder-widgets available-widgets")
-						.appendTo(control.availableWidgetsPanel);
-
-					// Build the available widgets list based on `availableWidgets`.
-					availableWidgets.forEach((widget) => {
-						const widgetKey = widget.key;
-
-						const $widgetItem = jQuery("<div></div>");
-
-						$widgetItem
-							.addClass(
-								`widget-item widget-item-${widgetKey} ${control.isWidgetActive?.(widgetKey) ? "disabled" : ""}`,
-							)
-							.attr("data-widget-key", widgetKey)
-							.attr("draggable", "true")
-							.html(`<span class="widget-label">${widget.label}</span>`)
-							.on("click", function (e) {
-								control.handleWidgetClick?.(this, widget);
-							})
-							.appendTo($availableWidgetListEl);
-					});
 				},
 
 				buildBuilderPanel: function () {
 					const control = this;
 					const params = control.params;
 					if (!params) return;
-
-					const availableRows = params.builder.availableRows;
-					const availableWidgets = params.builder.availableWidgets;
-					if (!availableRows || !availableWidgets) return;
 
 					const customizePreview = control.findHtmlEl?.("#customize-preview");
 					if (!customizePreview) return;
@@ -169,94 +183,131 @@ import {
 						.attr("data-wpbf-builder-panel", params.id)
 						.insertAfter(customizePreview);
 
-					availableRows.forEach((row) => {
-						// Build the row.
-						const $row = jQuery("<div></div>")
-							.addClass(`builder-row`)
-							.attr("data-row-key", row.key)
-							.appendTo($builderPanel);
+					for (const device in params.builder) {
+						if (!params.builder.hasOwnProperty(device)) continue;
+						if (device !== "desktop" && device !== "mobile") continue;
+						if (!params.builder[device].availableWidgets.length) continue;
 
-						// Build the inner row.
-						const $innerRow = jQuery("<div></div>")
-							.addClass(`builder-inner-row`)
-							.appendTo($row);
+						const availableWidgets = params.builder[device].availableWidgets;
+						if (!availableWidgets.length) return;
 
-						// Build the row label (tooltip)
-						jQuery("<div></div>")
-							.addClass("row-label")
-							.attr("data-row-key", row.key)
-							.text(row.label)
-							.appendTo($row);
+						let $builderSlotsEl: JQuery<HTMLElement> | undefined = undefined;
 
-						// Build the row setting button.
-						jQuery("<button></button>")
-							.addClass("row-setting-button")
-							.attr("data-row-key", row.key)
-							.html('<i class="dashicons dashicons-admin-generic"></i>')
-							.on("click", () => control.handleRowSettingClick?.(row.key))
-							.appendTo($row);
+						if (
+							device === "mobile" &&
+							params.builder[device].availableSlots.sidebar
+						) {
+							$builderSlotsEl = jQuery("<div></div>")
+								.addClass("wpbf-builder-slots wpbf-flex wpbf-content-center")
+								.appendTo($builderPanel);
 
-						const matchedRow = params.value[row.key];
+							jQuery("<div></div>")
+								.addClass("wpbf-builder-sidebar")
+								.text(params.builder[device].availableSlots.sidebar.label)
+								.appendTo($builderSlotsEl);
 
-						row.columns.forEach((column, columnIndex) => {
-							let columnPosClass = "";
+							continue;
+						}
 
-							if (column.key.endsWith("_start")) {
-								columnPosClass = "wpbf-content-start";
-							} else if (column.key.endsWith("_end")) {
-								columnPosClass = "wpbf-content-end";
-							} else {
-								if (
-									columnIndex !== 0 &&
-									columnIndex !== row.columns.length - 1
-								) {
-									columnPosClass = "wpbf-content-center column-middle";
+						const availableSlots = params.builder[device].availableSlots;
+						if (!availableSlots.rows.length) continue;
+
+						const $rowsWrapper =
+							device === "mobile" && $builderSlotsEl
+								? $builderSlotsEl
+								: $builderPanel;
+
+						availableSlots.rows.forEach((row) => {
+							// Build the row.
+							const $row = jQuery("<div></div>")
+								.addClass(`builder-row`)
+								.attr("data-row-key", row.key)
+								.appendTo($rowsWrapper);
+
+							// Build the inner row.
+							const $innerRow = jQuery("<div></div>")
+								.addClass(`builder-inner-row`)
+								.appendTo($row);
+
+							// Build the row label (tooltip)
+							jQuery("<div></div>")
+								.addClass("row-label")
+								.attr("data-row-key", row.key)
+								.text(row.label)
+								.appendTo($row);
+
+							// Build the row setting button.
+							jQuery("<button></button>")
+								.addClass("row-setting-button")
+								.attr("data-row-key", row.key)
+								.html('<i class="dashicons dashicons-admin-generic"></i>')
+								.on("click", () => control.handleRowSettingClick?.(row.key))
+								.appendTo($row);
+
+							const matchedRow = params.value[device].rows[row.key];
+
+							row.columns.forEach((column, columnIndex) => {
+								let columnPosClass = "";
+
+								if (column.key.endsWith("_start")) {
+									columnPosClass = "wpbf-content-start";
+								} else if (column.key.endsWith("_end")) {
+									columnPosClass = "wpbf-content-end";
+								} else {
+									if (
+										columnIndex !== 0 &&
+										columnIndex !== row.columns.length - 1
+									) {
+										columnPosClass = "wpbf-content-center column-middle";
+									}
 								}
-							}
 
-							if (columnIndex === 0) {
-								columnPosClass += " column-start wpbf-content-start";
-							} else if (columnIndex === row.columns.length - 1) {
-								columnPosClass += " column-end wpbf-content-end";
-							}
+								if (columnIndex === 0) {
+									columnPosClass += " column-start wpbf-content-start";
+								} else if (columnIndex === row.columns.length - 1) {
+									columnPosClass += " column-end wpbf-content-end";
+								}
 
-							const $widgetListEl = jQuery("<div></div>")
-								.addClass(
-									`builder-widgets builder-column sortable-widgets wpbf-flex ${columnPosClass}`,
-								)
-								.attr("data-column-key", column.key)
-								.appendTo($innerRow);
+								const $widgetListEl = jQuery("<div></div>")
+									.addClass(
+										`builder-widgets builder-column sortable-widgets wpbf-flex ${columnPosClass}`,
+									)
+									.attr("data-column-key", column.key)
+									.appendTo($innerRow);
 
-							const emptyWidgetListClass = "empty-widget-list";
+								const emptyWidgetListClass = "empty-widget-list";
 
-							if (!matchedRow || !Object.keys(matchedRow).length) {
-								$widgetListEl.addClass(emptyWidgetListClass);
-								$widgetListEl.html(control.emptyWidgetItemMarkup ?? "");
-								return;
-							}
+								if (!matchedRow || !Object.keys(matchedRow).length) {
+									$widgetListEl.addClass(emptyWidgetListClass);
+									$widgetListEl.html(control.emptyWidgetItemMarkup ?? "");
+									return;
+								}
 
-							const matchedColumn = matchedRow[column.key];
+								const matchedColumn = matchedRow[column.key];
 
-							if (!matchedColumn || !matchedColumn.length) {
-								$widgetListEl.addClass(emptyWidgetListClass);
-								$widgetListEl.html(control.emptyWidgetItemMarkup ?? "");
-								return;
-							}
+								if (!matchedColumn || !matchedColumn.length) {
+									$widgetListEl.addClass(emptyWidgetListClass);
+									$widgetListEl.html(control.emptyWidgetItemMarkup ?? "");
+									return;
+								}
 
-							// Build the widget list based on `matchedColumn`.
-							matchedColumn.forEach((widgetKey) => {
-								const newWidgetItem = control.createWidgetItem?.(
-									widgetKey,
-									true,
-								);
-								if (!newWidgetItem) return;
+								// Build the widget list based on `matchedColumn`.
+								matchedColumn.forEach((widgetKey) => {
+									const newWidgetItem = control.createWidgetItem?.(
+										widgetKey,
+										true,
+									);
+									if (!newWidgetItem) return;
 
-								$widgetListEl.append(newWidgetItem);
+									$widgetListEl.append(newWidgetItem);
+								});
 							});
-						});
 
-						control.bindCustomizeSection?.(row.key);
-					});
+							control.bindCustomizeSection?.(row.key);
+						});
+					}
+
+					// Codes from here below (inside of this functions) are incorrect.
 
 					control.builderPanel = $builderPanel[0];
 				},
@@ -669,6 +720,11 @@ import {
 					control.isSaving = true;
 
 					setTimeout(() => {
+						const newValue: ResponsiveBuilderValue = {
+							desktop: { rows: {} },
+							mobile: { sidebar: [], rows: {} },
+						};
+
 						const builderRows = control.findHtmlEls?.(
 							control.builderPanel,
 							".builder-row",
@@ -679,13 +735,11 @@ import {
 							return;
 						}
 
-						const values: BuilderValue = {};
-
 						builderRows.forEach((row) => {
 							const rowKey = row.dataset.rowKey;
 							if (!rowKey) return;
 
-							values[rowKey] = {};
+							newValue[rowKey] = {};
 
 							const sortableColumns = control.findHtmlEls?.(
 								row,
@@ -700,7 +754,7 @@ import {
 								const columnKey = column.dataset.columnKey;
 								if (!columnKey) return;
 
-								values[rowKey][columnKey] = [];
+								newValue[rowKey][columnKey] = [];
 
 								const widgetItems = control.findHtmlEls?.(
 									column,
@@ -725,12 +779,12 @@ import {
 									const widgetKey = widgetItem.dataset.widgetKey;
 									if (!widgetKey) return;
 
-									values[rowKey][columnKey].push(widgetKey);
+									newValue[rowKey][columnKey].push(widgetKey);
 								});
 							});
 						});
 
-						control.setting?.set(values);
+						control.setting?.set(newValue);
 						control.isSaving = false;
 					}, 1);
 				},
