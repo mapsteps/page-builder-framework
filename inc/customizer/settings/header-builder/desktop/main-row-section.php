@@ -1,6 +1,6 @@
 <?php
 /**
- * Header builder's top row section.
+ * Header builder's main row section.
  *
  * @package Page Builder Framework
  * @subpackage Customizer
@@ -8,14 +8,14 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$row_key = 'row_1';
+$row_key = 'desktop_row_2';
 
 $section_id = 'wpbf_header_builder_' . $row_key . '_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
 	->type( 'invisible' )
-	->title( __( 'Top Row', 'page-builder-framework' ) )
+	->title( __( 'Main Row', 'page-builder-framework' ) )
 	->tabs( [
 		'general' => [
 			'label' => esc_html__( 'General', 'page-builder-framework' ),
@@ -56,5 +56,3 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->priority( 5 )
 	->addToSection( $section_id );
-
-/* Design Tab */

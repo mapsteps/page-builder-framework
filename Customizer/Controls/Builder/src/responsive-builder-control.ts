@@ -510,7 +510,6 @@ const allowedDevices = ["desktop", "mobile"];
 
 					builderDropZones.forEach((dropZone) => {
 						dropZone.addEventListener("dragenter", (e) => {
-							console.log(e);
 							if (!(e instanceof DragEvent)) return;
 							e.preventDefault();
 

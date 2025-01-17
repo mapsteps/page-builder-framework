@@ -28,37 +28,37 @@ final class ResponsiveBuilderStore {
 				array(
 					'key'     => 'desktop_search',
 					'label'   => __( 'Search', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_search_section',
+					'section' => 'wpbf_header_builder_desktop_search_section',
 				),
 				array(
 					'key'     => 'desktop_button_1',
 					'label'   => __( 'Button 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_button_1_section',
+					'section' => 'wpbf_header_builder_desktop_button_1_section',
 				),
 				array(
 					'key'     => 'desktop_button_2',
 					'label'   => __( 'Button 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_button_2_section',
+					'section' => 'wpbf_header_builder_desktop_button_2_section',
 				),
 				array(
 					'key'     => 'desktop_menu_1',
 					'label'   => __( 'Menu 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_menu_1_section',
+					'section' => 'wpbf_header_builder_desktop_menu_1_section',
 				),
 				array(
 					'key'     => 'desktop_menu_2',
 					'label'   => __( 'Menu 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_menu_2_section',
+					'section' => 'wpbf_header_builder_desktop_menu_2_section',
 				),
 				array(
 					'key'     => 'desktop_html_1',
 					'label'   => __( 'HTML 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_html_1_section',
+					'section' => 'wpbf_header_builder_desktop_html_1_section',
 				),
 				array(
 					'key'     => 'desktop_html_2',
 					'label'   => __( 'HTML 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_html_2_section',
+					'section' => 'wpbf_header_builder_desktop_html_2_section',
 				),
 			),
 			'mobile' => array(
@@ -70,37 +70,37 @@ final class ResponsiveBuilderStore {
 				array(
 					'key'     => 'mobile_search',
 					'label'   => __( 'Search', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_search_section',
+					'section' => 'wpbf_header_builder_mobile_search_section',
 				),
 				array(
 					'key'     => 'mobile_button_1',
 					'label'   => __( 'Button 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_button_1_section',
+					'section' => 'wpbf_header_builder_mobile_button_1_section',
 				),
 				array(
 					'key'     => 'mobile_button_2',
 					'label'   => __( 'Button 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_button_2_section',
+					'section' => 'wpbf_header_builder_mobile_button_2_section',
 				),
 				array(
 					'key'     => 'mobile_menu_1',
 					'label'   => __( 'Menu 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_menu_1_section',
+					'section' => 'wpbf_header_builder_mobile_menu_1_section',
 				),
 				array(
 					'key'     => 'mobile_menu_2',
 					'label'   => __( 'Menu 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_menu_2_section',
+					'section' => 'wpbf_header_builder_mobile_menu_2_section',
 				),
 				array(
 					'key'     => 'mobile_html_1',
 					'label'   => __( 'HTML 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_html_1_section',
+					'section' => 'wpbf_header_builder_mobile_html_1_section',
 				),
 				array(
 					'key'     => 'mobile_html_2',
 					'label'   => __( 'HTML 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_html_2_section',
+					'section' => 'wpbf_header_builder_mobile_html_2_section',
 				),
 			),
 		);

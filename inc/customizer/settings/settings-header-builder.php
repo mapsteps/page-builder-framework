@@ -6,7 +6,6 @@
  * @subpackage Customizer
  */
 
-use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderStore;
 use Mapsteps\Wpbf\Customizer\Controls\Builder\ResponsiveBuilderStore;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
@@ -76,17 +75,15 @@ wpbf_customizer_field()
 	->addToSection( 'wpbf_header_builder_main_section' );
 
 // Row sections.
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/top-row-section.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/main-row-section.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/bottom-row-section.php';
-
-// Column sections.
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/top-row-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/main-row-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/bottom-row-section.php';
 
 // Widget sections.
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/search-section.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-1-section.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/button-2-section.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/html-1-section.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/html-2-section.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/menu-1-section.php';
-require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/menu-2-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/search-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/button-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/button-2-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/html-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/html-2-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/menu-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/menu-2-section.php';

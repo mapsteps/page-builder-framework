@@ -1,6 +1,6 @@
 <?php
 /**
- * Header builder's main row section.
+ * Header builder's menu 1 section.
  *
  * @package Page Builder Framework
  * @subpackage Customizer
@@ -8,14 +8,14 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$row_key = 'row_2';
+$row_key = 'desktop_menu_2';
 
 $section_id = 'wpbf_header_builder_' . $row_key . '_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
 	->type( 'invisible' )
-	->title( __( 'Main Row', 'page-builder-framework' ) )
+	->title( __( 'Menu 2', 'page-builder-framework' ) )
 	->tabs( [
 		'general' => [
 			'label' => esc_html__( 'General', 'page-builder-framework' ),
@@ -41,18 +41,24 @@ $partial_refresh_args = array(
 
 /* General Tab */
 
+$menu_term_list = wp_get_nav_menus();
+
+$menu_choices = [];
+
+if ( ! empty( $menu_term_list ) ) {
+	foreach ( $menu_term_list as $menu_term ) {
+		$menu_choices[ $menu_term->term_id ] = $menu_term->name;
+	}
+}
+
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'visibility' )
-	->type( 'checkbox-buttonset' )
+	->id( $control_id_prefix . 'menu_id' )
+	->type( 'enhanced-select' )
 	->tab( 'general' )
-	->label( __( 'Visibility', 'page-builder-framework' ) )
-	->description( __( 'In which devices this row should be displayed.', 'page-builder-framework' ) )
-	->defaultValue( [ 'large', 'medium', 'small' ] )
-	->choices( [
-		'large'  => __( 'Desktop', 'page-builder-framework' ),
-		'medium' => __( 'Tablet', 'page-builder-framework' ),
-		'small'  => __( 'Mobile', 'page-builder-framework' ),
-	] )
+	->label( __( 'Select Menu', 'page-builder-framework' ) )
+	->choices( $menu_choices )
 	->transport( 'postMessage' )
-	->priority( 5 )
+	->partialRefresh( [
+		$partial_refresh_key_prefix . 'visibility' => $partial_refresh_args,
+	] )
 	->addToSection( $section_id );

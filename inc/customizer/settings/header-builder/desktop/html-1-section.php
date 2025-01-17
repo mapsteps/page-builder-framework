@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$section_id = 'wpbf_header_builder_html_1_section';
+$section_id = 'wpbf_header_builder_desktop_html_1_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
@@ -17,9 +17,9 @@ wpbf_customizer_section()
 	->priority( 3 )
 	->addToPanel( 'header_panel' );
 
-$control_id_prefix = 'wpbf_header_builder_html_1_';
+$control_id_prefix = 'wpbf_header_builder_desktop_html_1_';
 
-$partial_refresh_key_prefix = 'headerbuilder_html_1_';
+$partial_refresh_key_prefix = 'headerbuilder_desktop_html_1_';
 
 $partial_refresh_args = array(
 	'container_inclusive' => true,

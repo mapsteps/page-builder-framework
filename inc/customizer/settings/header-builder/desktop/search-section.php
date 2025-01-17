@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$section_id = 'wpbf_header_builder_search_section';
+$section_id = 'wpbf_header_builder_desktop_search_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
@@ -17,9 +17,9 @@ wpbf_customizer_section()
 	->priority( 3 )
 	->addToPanel( 'header_panel' );
 
-$control_id_prefix = 'wpbf_header_builder_search_';
+$control_id_prefix = 'wpbf_header_builder_desktop_search_';
 
-$partial_refresh_key_prefix = 'headerbuilder_search_';
+$partial_refresh_key_prefix = 'headerbuilder_desktop_search_';
 
 $partial_refresh_args = array(
 	'container_inclusive' => true,
