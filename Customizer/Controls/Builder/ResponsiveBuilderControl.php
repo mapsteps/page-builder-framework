@@ -176,7 +176,11 @@ class ResponsiveBuilderControl extends BaseControl {
 					}
 				}
 			}
+		} else {
+			$value = null;
 		}
+
+		$this->json['value'] = $value;
 
 		$this->json['builder'] = [
 			'desktop' => [

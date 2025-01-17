@@ -14,7 +14,8 @@
 	}
 
 	&:not(.builder-is-shown) {
-		.wpbf-customize-control-builder {
+		.wpbf-customize-control-builder,
+		.wpbf-customize-control-responsive-builder {
 			display: none;
 		}
 	}
@@ -39,15 +40,8 @@
 	}
 }
 
-.wpbf-customize-control-builder {
-	.json-field {
-		opacity: 0;
-		width: 0;
-		height: 0;
-		z-index: -1;
-		position: absolute;
-	}
-
+.wpbf-customize-control-builder,
+.wpbf-customize-control-responsive-builder {
 	.wpbf-control-header {
 		padding: 0 5px;
 	}

@@ -137,10 +137,7 @@ const allowedDevices = ["desktop", "mobile"];
 							.attr("data-device", device)
 							.appendTo(controlForm);
 
-						if (
-							!this.availableWidgetsPanels ||
-							!this.availableWidgetsPanels[device]
-						) {
+						if (!this.availableWidgetsPanels) {
 							continue;
 						}
 
@@ -151,6 +148,8 @@ const allowedDevices = ["desktop", "mobile"];
 							.appendTo(this.availableWidgetsPanels[device]);
 
 						const availableWidgets = params.builder[device].availableWidgets;
+
+						console.log("availableWidgets", availableWidgets);
 
 						// Build the available widgets list based on `availableWidgets`.
 						availableWidgets.forEach((widget) => {

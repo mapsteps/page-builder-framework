@@ -9,6 +9,7 @@ namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderField;
+use Mapsteps\Wpbf\Customizer\Controls\Builder\ResponsiveBuilderField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
@@ -109,6 +110,7 @@ class CustomizerUtil {
 		'sortable',
 		'typography',
 		'builder',
+		'responsive-builder',
 		'upload',
 	);
 
@@ -366,6 +368,9 @@ class CustomizerUtil {
 				break;
 			case 'builder':
 				$field = new BuilderField( $control_entity );
+				break;
+			case 'responsive-builder':
+				$field = new ResponsiveBuilderField( $control_entity );
 				break;
 			case 'upload':
 				$field = new UploadField( $control_entity );

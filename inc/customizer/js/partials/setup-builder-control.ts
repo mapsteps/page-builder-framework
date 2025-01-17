@@ -1,4 +1,4 @@
-import { WpbfBuilderControl } from "../../../../Customizer/Controls/Builder/src/builder-interface";
+import { WpbfResponsiveBuilderControl } from "../../../../Customizer/Controls/Builder/src/builder-interface";
 import { WpbfCheckboxControl } from "../../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 
 type BuilderPanelData = {
@@ -160,41 +160,46 @@ function toggleBuilderPanel(
 function listenToWidgetConnectedSections(builderControlId: string) {
 	wp.customize?.control(
 		builderControlId,
-		(control: WpbfBuilderControl | undefined) => {
+		(control: WpbfResponsiveBuilderControl | undefined) => {
 			if (!control) return;
 			const params = control.params;
 
-			const availableWidgets = params.builder.availableWidgets;
-			if (!availableWidgets.length) return;
+			for (const device in params.builder) {
+				if (!params.builder.hasOwnProperty(device)) continue;
+				if (device !== "desktop" && device !== "mobile") continue;
 
-			for (const widget of availableWidgets) {
-				const connectedSectionId = widget.section;
-				if (!connectedSectionId) continue;
+				const availableWidgets = params.builder[device].availableWidgets;
+				if (!availableWidgets.length) continue;
 
-				wp.customize?.section(connectedSectionId, function (section) {
-					section.expanded.bind(function (expanded) {
-						// If the builder is disabled, then we don't need to do anything.
-						if (!isBuilderEnabled(builderControlId)) return;
+				for (const widget of availableWidgets) {
+					const connectedSectionId = widget.section;
+					if (!connectedSectionId) continue;
 
-						const builderPanel = document.querySelector(
-							`.${builderControlId}-builder-panel`,
-						);
+					wp.customize?.section(connectedSectionId, function (section) {
+						section.expanded.bind(function (expanded) {
+							// If the builder is disabled, then we don't need to do anything.
+							if (!isBuilderEnabled(builderControlId)) return;
 
-						if (builderPanel) {
-							const activeWidget = builderPanel.querySelector(
-								`.widget-item[data-widget-key="${widget.key}"]`,
+							const builderPanel = document.querySelector(
+								`.${builderControlId}-builder-panel`,
 							);
 
-							if (activeWidget) {
-								if (expanded) {
-									activeWidget.classList.add("connected-section-expanded");
-								} else {
-									activeWidget.classList.remove("connected-section-expanded");
+							if (builderPanel) {
+								const activeWidget = builderPanel.querySelector(
+									`.widget-item[data-widget-key="${widget.key}"]`,
+								);
+
+								if (activeWidget) {
+									if (expanded) {
+										activeWidget.classList.add("connected-section-expanded");
+									} else {
+										activeWidget.classList.remove("connected-section-expanded");
+									}
 								}
 							}
-						}
+						});
 					});
-				});
+				}
 			}
 		},
 	);
