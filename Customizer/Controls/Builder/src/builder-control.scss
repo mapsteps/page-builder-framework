@@ -158,6 +158,10 @@
 				border-color: #2271b1;
 				border-style: solid;
 				color: #fff;
+
+				.dashicons {
+					color: #fff;
+				}
 			}
 		}
 
@@ -228,6 +232,10 @@
 			border-color: #2271b1;
 			border-style: solid;
 			color: #fff;
+
+			.dashicons {
+				color: #fff;
+			}
 		}
 	}
 
@@ -278,7 +286,9 @@
 			border-top-right-radius: 5px;
 			border-bottom-right-radius: 5px;
 		}
+	}
 
+	.active-widgets {
 		&.dragover {
 			background-color: #f0f0f1;
 		}
@@ -385,7 +395,7 @@
 		position: relative;
 		padding-top: 20px;
 		padding-bottom: 20px;
-		width: 25%;
+		width: 20%;
 	}
 
 	.builder-inner-sidebar {
@@ -398,18 +408,39 @@
 	.builder-rows {
 		position: relative;
 		padding-left: 20px;
-		width: 75%;
+		width: 80%;
 	}
 }
 
-.wpbf-builder-panel .builder-sidebar .row-setting-button {
-	justify-content: flex-start;
-	position: relative;
-	padding: 0 10px;
-	width: 100%;
-	height: 30px;
-	border-bottom-left-radius: 0;
-	border-top-right-radius: 5px;
+.wpbf-builder-panel .builder-sidebar {
+	.row-setting-button {
+		justify-content: flex-start;
+		position: relative;
+		padding: 0 10px;
+		width: 100%;
+		height: 30px;
+		border-bottom-left-radius: 0;
+		border-top-right-radius: 5px;
+
+		.button-label {
+			display: inline-block;
+			margin-left: 3px;
+		}
+	}
+
+	.active-widgets {
+		padding: 8px;
+		height: calc(100% - 30px);
+
+		.widget-item:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.widget-item {
+		display: flex;
+		margin: 0 0 10px;
+	}
 }
 
 .wpbf-desktop-preview {

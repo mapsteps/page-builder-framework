@@ -353,6 +353,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	createWidgetItem?: (
 		widgetKey: string,
 		insideBuilderPanel?: boolean,
+		device?: string,
 	) => HTMLElement | undefined;
 	handleRowSettingClick?: (rowKey: string) => void;
 	bindCustomizeSection?: (rowKey: string) => void;

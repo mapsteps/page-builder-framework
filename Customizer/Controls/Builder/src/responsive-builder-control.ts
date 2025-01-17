@@ -222,7 +222,7 @@ const allowedDevices = ["desktop", "mobile"];
 								.attr("type", "button")
 								.addClass("row-setting-button")
 								.html(
-									`<i class="dashicons dashicons-admin-generic"></i><span>${params.builder[device].availableSlots.sidebar.label}</span>`,
+									`<i class="dashicons dashicons-admin-generic"></i><span class="button-label">${params.builder[device].availableSlots.sidebar.label}</span>`,
 								)
 								.on("click", () =>
 									control.handleRowSettingClick?.(
@@ -241,6 +241,7 @@ const allowedDevices = ["desktop", "mobile"];
 									const newWidgetItem = control.createWidgetItem?.(
 										widgetKey,
 										true,
+										device,
 									);
 									if (!newWidgetItem) return;
 
@@ -341,6 +342,7 @@ const allowedDevices = ["desktop", "mobile"];
 									const newWidgetItem = control.createWidgetItem?.(
 										widgetKey,
 										true,
+										device,
 									);
 									if (!newWidgetItem) return;
 
@@ -508,6 +510,7 @@ const allowedDevices = ["desktop", "mobile"];
 
 					builderDropZones.forEach((dropZone) => {
 						dropZone.addEventListener("dragenter", (e) => {
+							console.log(e);
 							if (!(e instanceof DragEvent)) return;
 							e.preventDefault();
 
@@ -538,7 +541,21 @@ const allowedDevices = ["desktop", "mobile"];
 							const widgetKey = widgetItem.dataset.widgetKey;
 							if (!widgetKey) return;
 
-							const newWidgetItem = control.createWidgetItem?.(widgetKey, true);
+							const area = dropZone.closest(".wpbf-builder-slots");
+							if (!(area instanceof HTMLElement)) return;
+
+							const device = area.dataset.device;
+
+							if (!device || (device !== "desktop" && device !== "mobile")) {
+								return;
+							}
+
+							const newWidgetItem = control.createWidgetItem?.(
+								widgetKey,
+								true,
+								device,
+							);
+
 							if (!newWidgetItem) return;
 
 							const temporaryWidgetItem = dropZone.querySelector(
@@ -608,10 +625,10 @@ const allowedDevices = ["desktop", "mobile"];
 					return widgetItem;
 				},
 
-				createWidgetItem: function (widgetKey, insideBuilderPanel) {
+				createWidgetItem: function (widgetKey, insideBuilderPanel, device) {
 					if (!this.container) return undefined;
 
-					const widgetData = this.findWidgetByKey?.(widgetKey);
+					const widgetData = this.findWidgetByKey?.(widgetKey, device);
 					if (!widgetData) return undefined;
 
 					const control = this;
