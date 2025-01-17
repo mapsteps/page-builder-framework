@@ -149,8 +149,6 @@ const allowedDevices = ["desktop", "mobile"];
 
 						const availableWidgets = params.builder[device].availableWidgets;
 
-						console.log("availableWidgets", availableWidgets);
-
 						// Build the available widgets list based on `availableWidgets`.
 						availableWidgets.forEach((widget) => {
 							const widgetKey = widget.key;
@@ -188,10 +186,6 @@ const allowedDevices = ["desktop", "mobile"];
 						.attr("data-wpbf-builder-panel", params.id)
 						.insertAfter(customizePreview);
 
-					const $builderSlotsEl = jQuery("<div></div>")
-						.addClass("wpbf-builder-slots")
-						.appendTo($builderPanel);
-
 					const emptyWidgetListClass = "empty-widget-list";
 
 					for (const device in params.builder) {
@@ -199,7 +193,10 @@ const allowedDevices = ["desktop", "mobile"];
 						if (device !== "desktop" && device !== "mobile") continue;
 						if (!params.builder[device].availableWidgets.length) continue;
 
-						$builderSlotsEl.data("device", device);
+						const $builderSlotsEl = jQuery("<div></div>")
+							.addClass("wpbf-builder-slots")
+							.attr("data-device", device)
+							.appendTo($builderPanel);
 
 						const availableWidgets = params.builder[device].availableWidgets;
 						if (!availableWidgets.length) return;
@@ -216,6 +213,10 @@ const allowedDevices = ["desktop", "mobile"];
 								.addClass("builder-sidebar")
 								.appendTo($builderSlotsEl);
 
+							const $builderInnerSidebar = jQuery("<div></div>")
+								.addClass("builder-inner-sidebar")
+								.appendTo($builderSidebar);
+
 							// Build the row setting button.
 							jQuery("<button></button>")
 								.attr("type", "button")
@@ -228,13 +229,13 @@ const allowedDevices = ["desktop", "mobile"];
 										params.builder[device].availableSlots.sidebar.key,
 									),
 								)
-								.appendTo($builderSidebar);
+								.appendTo($builderInnerSidebar);
+
+							const $sidebarWidgetsEl = jQuery("<div></div>")
+								.addClass("builder-widgets active-widgets")
+								.appendTo($builderInnerSidebar);
 
 							if (params.value) {
-								const $builderInnerSidebar = jQuery("<div></div>")
-									.addClass("builder-widgets active-widgets")
-									.appendTo($builderSidebar);
-
 								// Build the widget list based on `params.value`.
 								params.value[device].sidebar.forEach((widgetKey) => {
 									const newWidgetItem = control.createWidgetItem?.(
@@ -243,7 +244,7 @@ const allowedDevices = ["desktop", "mobile"];
 									);
 									if (!newWidgetItem) return;
 
-									$builderInnerSidebar.append(newWidgetItem);
+									$sidebarWidgetsEl.append(newWidgetItem);
 								});
 							}
 
