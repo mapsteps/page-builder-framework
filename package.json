@@ -27,7 +27,7 @@
     "sass-embedded": "^1.83.4",
     "shx": "^0.3.4",
     "typescript": "^5.7.3",
-    "vite": "^6.0.7",
+    "vite": "^6.0.9",
     "wordpress__customize-browser": "github:usefulteam/wordpress__customize-browser",
     "zx": "^8.3.0"
   },
