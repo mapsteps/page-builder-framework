@@ -40,6 +40,7 @@
     "@wordpress/hooks": "^4.15.0",
     "@wordpress/i18n": "^5.15.1",
     "@wordpress/url": "^4.15.0",
+    "choices.js": "^11.0.3",
     "colord": "^2.9.3",
     "jquery": "^3.7.1",
     "ky": "^1.7.4",
@@ -84,6 +85,9 @@
     },
     "@wordpress/hooks": {
       "global": "wp.hooks"
+    },
+    "choices.js": {
+      "global": "Choices"
     }
   },
   "parcel-namer-rewrite": {
