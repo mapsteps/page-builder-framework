@@ -775,9 +775,17 @@ import {
 							continue;
 						}
 
+						const deviceBuilderPanel = this.findHtmlEl?.(
+							this.builderPanel,
+							`.wpbf-builder-slots[data-device="${device}"]`,
+						);
+
+						if (!deviceBuilderPanel) return;
+
 						if (device === "mobile") {
 							const sortableEl = this.findHtmlEl?.(
-								".builder-sidebar.active-widgets",
+								deviceBuilderPanel,
+								".builder-sidebar .active-widgets",
 							);
 
 							const widgetItems = this.findHtmlEls?.(
@@ -800,13 +808,6 @@ import {
 								newValue[device].sidebar.push(widgetKey);
 							});
 						}
-
-						const deviceBuilderPanel = this.findHtmlEl?.(
-							this.builderPanel,
-							`.wpbf-builder-slots[data-device="${device}"]`,
-						);
-
-						if (!deviceBuilderPanel) return;
 
 						const builderRows = this.findHtmlEls?.(
 							deviceBuilderPanel,
