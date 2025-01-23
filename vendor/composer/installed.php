@@ -3,7 +3,7 @@
         'name' => 'mapsteps/aura',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '02e632ecb9eac3054b63572ef5eb1276b5c296da',
+        'reference' => 'ce3c5a4cf255a521c66e1d0ec0008c496e20a5cd',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'mapsteps/aura' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '02e632ecb9eac3054b63572ef5eb1276b5c296da',
+            'reference' => 'ce3c5a4cf255a521c66e1d0ec0008c496e20a5cd',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

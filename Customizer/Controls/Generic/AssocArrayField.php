@@ -44,7 +44,7 @@ class AssocArrayField extends BaseField {
 				continue;
 			}
 
-			$item = ! empty( $special_key ) && stripos( $key, $special_key ) ? wp_kses_post( $item ) : sanitize_text_field( $item );
+			$item = ! empty( $special_key ) && false !== stripos( $key, $special_key ) ? wp_kses_post( $item ) : sanitize_text_field( $item );
 			$item = is_numeric( $item ) ? absint( $item ) : $item;
 
 			$arr[ $key ] = $item;
