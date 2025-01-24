@@ -75,7 +75,7 @@ function setupCustomizer() {
 			sections: [
 				{
 					from: "wpbf_pre_header_options",
-					to: "wpbf_header_builder_row_1_section",
+					to: "wpbf_header_builder_desktop_row_1_section",
 					controlsToMove: [
 						{
 							id: "pre_header_width",
@@ -87,6 +87,7 @@ function setupCustomizer() {
 								from: undefined,
 								to: 10,
 							},
+							forceActive: true,
 						},
 						{
 							id: "pre_header_height",
@@ -98,6 +99,7 @@ function setupCustomizer() {
 								from: undefined,
 								to: 15,
 							},
+							forceActive: true,
 						},
 						{
 							id: "pre_header_bg_color",
@@ -105,6 +107,7 @@ function setupCustomizer() {
 								from: undefined,
 								to: 200,
 							},
+							forceActive: true,
 						},
 						{
 							id: "pre_header_font_color",
@@ -112,6 +115,7 @@ function setupCustomizer() {
 								from: undefined,
 								to: 205,
 							},
+							forceActive: true,
 						},
 						{
 							id: "pre_header_accent_colors",
@@ -119,6 +123,7 @@ function setupCustomizer() {
 								from: undefined,
 								to: 210,
 							},
+							forceActive: true,
 						},
 						{
 							id: "pre_header_font_size",
@@ -126,12 +131,13 @@ function setupCustomizer() {
 								from: undefined,
 								to: 220,
 							},
+							forceActive: true,
 						},
 					],
 				},
 				{
 					from: "wpbf_menu_options",
-					to: "wpbf_header_builder_row_2_section",
+					to: "wpbf_header_builder_desktop_row_2_section",
 					controlsToMove: [
 						{
 							id: "menu_width",
@@ -159,7 +165,7 @@ function setupCustomizer() {
 				},
 				{
 					from: "wpbf_menu_options",
-					to: "wpbf_header_builder_row_2_section",
+					to: "wpbf_header_builder_desktop_row_2_section",
 					controlsToMove: [
 						{
 							id: "menu_bg_color",

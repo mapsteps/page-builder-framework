@@ -451,7 +451,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		"menu_width",
 		function (settingId, value) {
 			const selector = headerBuilderEnabled()
-				? `.wpbf-header-row-row_2 .wpbf-container`
+				? `.wpbf-header-row-desktop_row_2 .wpbf-container`
 				: `.wpbf-nav-wrapper`;
 
 			writeCSS(settingId, {
@@ -466,7 +466,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		"menu_height",
 		function (settingId, value) {
 			const selector = headerBuilderEnabled()
-				? `.wpbf-header-row-row_2`
+				? `.wpbf-header-row-desktop_row_2`
 				: `.wpbf-nav-wrapper`;
 
 			writeCSS(settingId, {
@@ -2229,7 +2229,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	);
 
 	/* Header Builder */
-	const headerBuilderRows = ["row_1", "row_2", "row_3"];
+	const headerBuilderRows = ["desktop_row_1", "desktop_row_2", "desktop_row_3"];
 
 	headerBuilderRows.forEach((rowKey) => {
 		const controlIdPrefix = `wpbf_header_builder_${rowKey}_`;
@@ -2245,7 +2245,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 					if (!newValue || !Array.isArray(newValue)) return;
 
 					const selector =
-						rowKey === "row_1"
+						rowKey === "desktop_row_1"
 							? ".wpbf-pre-header"
 							: `.wpbf-header-row-${rowKey}`;
 
@@ -2264,34 +2264,34 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		);
 
 		/**
-		 * These fields are handled here for row_3 only
-		 * because row_3 didn't exist before the new header builder added.
+		 * These fields are handled here for desktop_row_3 only
+		 * because desktop_row_3 didn't exist before the new header builder added.
 		 *
 		 * Max width:
-		 * - In row_1, the value is using the existing `pre_header_width` setting.
-		 * - In row_2, the value is using the existing `menu_width` setting.
+		 * - In desktop_row_1, the value is using the existing `pre_header_width` setting.
+		 * - In desktop_row_2, the value is using the existing `menu_width` setting.
 		 *
 		 * Vertical padding:
-		 * - In row_1, the value is using the existing `pre_header_height` setting.
-		 * - In row_2, the value is using the existing `menu_height` setting.
+		 * - In desktop_row_1, the value is using the existing `pre_header_height` setting.
+		 * - In desktop_row_2, the value is using the existing `menu_height` setting.
 		 *
 		 * Font size:
-		 * - In row_1, the value is using the existing `pre_header_font_size` setting.
-		 * - In row_2, the value is using the existing `menu_font_size` setting.
+		 * - In desktop_row_1, the value is using the existing `pre_header_font_size` setting.
+		 * - In desktop_row_2, the value is using the existing `menu_font_size` setting.
 		 *
 		 * Background color:
-		 * - In row_1, the value is using the existing `pre_header_bg_color` setting.
-		 * - In row_2, the value is using the existing `menu_bg_color` setting.
+		 * - In desktop_row_1, the value is using the existing `pre_header_bg_color` setting.
+		 * - In desktop_row_2, the value is using the existing `menu_bg_color` setting.
 		 *
 		 * Text color:
-		 * - In row_1, the value is using the existing `pre_header_font_color` setting.
-		 * - In row_2, the value is using the existing `menu_font_colors` (multicolor) setting.
+		 * - In desktop_row_1, the value is using the existing `pre_header_font_color` setting.
+		 * - In desktop_row_2, the value is using the existing `menu_font_colors` (multicolor) setting.
 		 *
 		 * Accent colors:
-		 * - In row_1, the value is using the existing `pre_header_accent_colors` (multicolor) setting.
-		 * - In row_2, there's no accent colors setting (we follow the old header section).
+		 * - In desktop_row_1, the value is using the existing `pre_header_accent_colors` (multicolor) setting.
+		 * - In desktop_row_2, there's no accent colors setting (we follow the old header section).
 		 */
-		if (rowKey === "row_3") {
+		if (rowKey === "desktop_row_3") {
 			listenToCustomizerValueChange<string | number>(
 				`${controlIdPrefix}max_width`,
 				(settingId, value) => {

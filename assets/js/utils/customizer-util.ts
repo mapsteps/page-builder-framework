@@ -4,6 +4,7 @@ export type ControlToMove = {
 	id: string;
 	label?: { from: string | undefined; to: string };
 	prio?: { from: number | undefined; to: number };
+	forceActive?: boolean;
 };
 
 function toBoolOrString(value: any) {
@@ -65,17 +66,15 @@ export function setupControlsMovement<SV>(props: {
 	window.wp.customize?.(
 		props.dependency.settingId,
 		(setting: WpbfCustomizeSetting<SV>) => {
-			moveStickyHeaderControls(
-				toBoolOrString(setting.get()) === dependencyValue,
-			);
+			moveControls(toBoolOrString(setting.get()) === dependencyValue);
 
 			setting.bind((value) => {
-				moveStickyHeaderControls(toBoolOrString(value) === dependencyValue);
+				moveControls(toBoolOrString(value) === dependencyValue);
 			});
 		},
 	);
 
-	function moveStickyHeaderControls(moveForward: boolean) {
+	function moveControls(moveForward: boolean) {
 		for (
 			let sectionIndex = 0;
 			sectionIndex < props.sections.length;
@@ -119,6 +118,10 @@ export function setupControlsMovement<SV>(props: {
 						.html(
 							moveForward ? controlObj.label.to : (controlObj.label.from ?? ""),
 						);
+				}
+
+				if (controlObj.forceActive && moveForward) {
+					control.onChangeActive(true, {});
 				}
 
 				const sectionId = moveForward ? sectionObj.to : sectionObj.from;

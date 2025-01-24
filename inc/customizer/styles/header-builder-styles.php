@@ -31,13 +31,15 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * ----------------------------------------------------------------------
  */
 
-$header_builder_rows = wpbf_customize_array_value( 'wpbf_header_builder', array() );
+$saved_values   = wpbf_customize_array_value( 'wpbf_header_builder', array() );
+$desktop_values = isset( $saved_values['desktop'] ) && is_array( $saved_values['desktop'] ) ? $saved_values['desktop'] : array();
+$desktop_rows   = isset( $desktop_values['rows'] ) && is_array( $desktop_values['rows'] ) ? $desktop_values['rows'] : array();
 
 $rows = array();
 
 // Filter the saved rows.
-if ( is_array( $header_builder_rows ) && ! empty( $header_builder_rows ) ) {
-	foreach ( $header_builder_rows as $row_key => $columns ) {
+if ( is_array( $desktop_rows ) && ! empty( $desktop_rows ) ) {
+	foreach ( $desktop_rows as $row_key => $columns ) {
 		if ( empty( $row_key ) || empty( $columns ) ) {
 			continue;
 		}
@@ -71,34 +73,34 @@ foreach ( $rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
 	/**
-	 * These fields are handled here for row_3 only
-	 * because row_3 didn't exist before the new header builder added.
+	 * These fields are handled here for desktop_row_3 only
+	 * because desktop_row_3 didn't exist before the new header builder added.
 	 *
 	 * Max width:
-	 * - In row_1, the value is using the existing `pre_header_width` setting.
-	 * - In row_2, the value is using the existing `menu_width` setting.
+	 * - In desktop_row_1, the value is using the existing `pre_header_width` setting.
+	 * - In desktop_row_2, the value is using the existing `menu_width` setting.
 	 *
 	 * Vertical padding:
-	 * - In row_1, the value is using the existing `pre_header_height` setting.
-	 * - In row_2, the value is using the existing `menu_height` setting.
+	 * - In desktop_row_1, the value is using the existing `pre_header_height` setting.
+	 * - In desktop_row_2, the value is using the existing `menu_height` setting.
 	 *
 	 * Font size:
-	 * - In row_1, the value is using the existing `pre_header_font_size` setting.
-	 * - In row_2, the value is using the existing `menu_font_size` setting.
+	 * - In desktop_row_1, the value is using the existing `pre_header_font_size` setting.
+	 * - In desktop_row_2, the value is using the existing `menu_font_size` setting.
 	 *
 	 * Background color:
-	 * - In row_1, the value is using the existing `pre_header_bg_color` setting.
-	 * - In row_2, the value is using the existing `menu_bg_color` setting.
+	 * - In desktop_row_1, the value is using the existing `pre_header_bg_color` setting.
+	 * - In desktop_row_2, the value is using the existing `menu_bg_color` setting.
 	 *
 	 * Text color:
-	 * - In row_1, the value is using the existing `pre_header_font_color` setting.
-	 * - In row_2, the value is using the existing `menu_font_colors` (multicolor) setting.
+	 * - In desktop_row_1, the value is using the existing `pre_header_font_color` setting.
+	 * - In desktop_row_2, the value is using the existing `menu_font_colors` (multicolor) setting.
 	 *
 	 * Accent colors:
-	 * - In row_1, the value is using the existing `pre_header_accent_colors` (multicolor) setting.
-	 * - In row_2, there's no accent colors setting (we follow the old header section).
+	 * - In desktop_row_1, the value is using the existing `pre_header_accent_colors` (multicolor) setting.
+	 * - In desktop_row_2, there's no accent colors setting (we follow the old header section).
 	 */
-	if ( 'row_3' === $row_key ) {
+	if ( 'desktop_row_3' === $row_key ) {
 		$max_width = wpbf_customize_str_value( $row_id_prefix . 'max_width' );
 		$max_width = '' === $max_width || '1200' === $max_width || '1200px' === $max_width ? null : $max_width;
 
@@ -180,7 +182,7 @@ $header_builder_control_id_prefix = 'wpbf_header_builder_';
  * ----------------------------------------------------------------------
  */
 
-$button_keys = array( 'button_1', 'button_2' );
+$button_keys = array( 'desktop_button_1', 'desktop_button_2' );
 
 foreach ( $button_keys as $button_key ) {
 

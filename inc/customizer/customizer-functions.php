@@ -420,21 +420,37 @@ function wpbf_render_builder_widget( $builder_type, $widget_key, $column_positio
 
 	switch ( $widget_key ) {
 		case 'logo':
+		case 'desktop_logo':
+		case 'mobile_logo':
 			wpbf_render_builder_logo_widget( $setting_group );
 			break;
 		case 'search':
+		case 'desktop_search':
+		case 'mobile_search':
 			wpbf_render_builder_search_widget( $setting_group );
 			break;
 		case 'button_1':
 		case 'button_2':
+		case 'desktop_button_1':
+		case 'desktop_button_2':
+		case 'mobile_button_1':
+		case 'mobile_button_2':
 			wpbf_render_builder_button_widget( $setting_group );
 			break;
 		case 'menu_1':
 		case 'menu_2':
+		case 'desktop_menu_1':
+		case 'desktop_menu_2':
+		case 'mobile_menu_1':
+		case 'mobile_menu_2':
 			wpbf_render_builder_menu_widget( $setting_group, $column_position );
 			break;
 		case 'html_1':
 		case 'html_2':
+		case 'desktop_html_1':
+		case 'desktop_html_2':
+		case 'mobile_html_1':
+		case 'mobile_html_2':
 			wpbf_render_builder_html_widget( $setting_group );
 			break;
 	}
@@ -585,15 +601,17 @@ function wpbf_header_builder_hooks() {
 		return;
 	}
 
-	$rows = get_theme_mod( 'wpbf_header_builder', array() );
+	$saved_values   = get_theme_mod( 'wpbf_header_builder', array() );
+	$desktop_values = isset( $saved_values['desktop'] ) && is_array( $saved_values['desktop'] ) ? $saved_values['desktop'] : array();
+	$desktop_rows   = isset( $desktop_values['rows'] ) && is_array( $desktop_values['rows'] ) ? $desktop_values['rows'] : array();
 
-	if ( empty( $rows ) ) {
+	if ( empty( $desktop_rows ) ) {
 		return;
 	}
 
 	$active_rows = [];
 
-	foreach ( $rows as $row_key => $columns ) {
+	foreach ( $desktop_rows as $row_key => $columns ) {
 		if ( empty( $row_key ) || empty( $columns ) ) {
 			continue;
 		}
@@ -642,7 +660,7 @@ function wpbf_header_builder_hooks() {
  */
 function wpbf_do_header_builder_pre_header() {
 
-	$pre_header_columns = Vars::get( 'header_builder_row_1' );
+	$pre_header_columns = Vars::get( 'header_builder_desktop_row_1' );
 
 	if ( empty( $pre_header_columns ) || ! is_array( $pre_header_columns ) ) {
 		return;
@@ -652,7 +670,7 @@ function wpbf_do_header_builder_pre_header() {
 	<div id="pre-header" class="wpbf-pre-header">
 		<?php
 		do_action( 'wpbf_before_pre_header' );
-		wpbf_header_builder_row( 'row_1', $pre_header_columns );
+		wpbf_header_builder_row( 'desktop_row_1', $pre_header_columns );
 		do_action( 'wpbf_after_pre_header' );
 		?>
 	</div>
@@ -669,16 +687,16 @@ function wpbf_do_header_builder_pre_header() {
  */
 function wpbf_do_header_builder_navigation() {
 
-	$row_2_columns = Vars::get( 'header_builder_row_2' );
+	$row_2_columns = Vars::get( 'header_builder_desktop_row_2' );
 
 	if ( ! empty( $row_2_columns ) && is_array( $row_2_columns ) ) {
-		wpbf_header_builder_row( 'row_2', $row_2_columns );
+		wpbf_header_builder_row( 'desktop_row_2', $row_2_columns );
 	}
 
-	$row_3_columns = Vars::get( 'header_builder_row_3' );
+	$row_3_columns = Vars::get( 'header_builder_desktop_row_3' );
 
 	if ( ! empty( $row_3_columns ) && is_array( $row_3_columns ) ) {
-		wpbf_header_builder_row( 'row_3', $row_3_columns );
+		wpbf_header_builder_row( 'desktop_row_3', $row_3_columns );
 	}
 
 }
@@ -705,15 +723,15 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 
 	$container_class = 'wpbf-container wpbf-container-center';
 
-	$row_class = ( 'row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
+	$row_class = ( 'desktop_row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
 
 	echo '<div class="' . esc_attr( $row_class ) . '">';
 
-	if ( 'row_1' !== $row_key ) {
+	if ( 'desktop_row_1' !== $row_key ) {
 		echo '<div class="' . esc_attr( $container_class ) . '">';
 	}
 
-	echo '<div class="' . ( 'row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
+	echo '<div class="' . ( 'desktop_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
 
 	foreach ( $columns as $column_key => $widget_keys ) {
 		$column_class    = 'wpbf-flex wpbf-header-column';
@@ -729,10 +747,10 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 		}
 
 		if (
-			in_array( 'menu_1', $widget_keys, true )
-			|| in_array( 'menu_2', $widget_keys, true )
-			|| in_array( 'html_1', $widget_keys, true )
-			|| in_array( 'html_2', $widget_keys, true )
+			in_array( 'desktop_menu_1', $widget_keys, true )
+			|| in_array( 'desktop_menu_2', $widget_keys, true )
+			|| in_array( 'desktop_html_1', $widget_keys, true )
+			|| in_array( 'desktop_html_2', $widget_keys, true )
 		) {
 			$column_class .= ' wpbf-column-grow';
 		}
@@ -752,7 +770,7 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 
 	echo '</div>';
 
-	if ( 'row_1' !== $row_key ) {
+	if ( 'desktop_row_1' !== $row_key ) {
 		echo '</div>';
 	}
 

@@ -118,7 +118,7 @@
     "build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-cache",
     "build-individual-css": "parcel build \"assets/scss/!(style)*.scss\" --dist-dir css/min --no-cache",
     "build-individual-assets": "pnpm build-individual-js && pnpm build-individual-css --no-cache",
-    "build-customizer": "parcel build inc/customizer/js/customizer.ts --dist-dir js/min --no-cache",
+    "build-customizer": "shx rm -rf js/min/customizer-min.js && shx rm -rf js/min/customizer-min.js.map && parcel build inc/customizer/js/customizer.ts --dist-dir js/min --no-cache",
     "build-postmessage": "parcel build inc/customizer/js/postmessage.ts --dist-dir js/min --no-cache",
     "build-customize-panels": "parcel build Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist --no-cache",
     "build-customize-sections": "parcel build Customizer/Sections/src/sections.ts --dist-dir Customizer/Sections/dist --no-cache",
