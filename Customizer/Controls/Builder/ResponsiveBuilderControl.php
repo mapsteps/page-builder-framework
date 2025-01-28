@@ -128,6 +128,10 @@ class ResponsiveBuilderControl extends BaseControl {
 					continue;
 				}
 
+				if ( ! isset( $this->active_widget_keys[ $device ] ) || ! is_array( $this->active_widget_keys[ $device ] ) ) {
+					$this->active_widget_keys[ $device ] = [];
+				}
+
 				if ( 'mobile' === $device && isset( $device_value['sidebar'] ) && is_array( $device_value['sidebar'] ) ) {
 					foreach ( $device_value['sidebar'] as $widget_key ) {
 						if ( empty( $widget_key ) || ! is_string( $widget_key ) ) {
@@ -138,10 +142,8 @@ class ResponsiveBuilderControl extends BaseControl {
 							continue;
 						}
 
-						$this->active_widget_keys[ $device ] = $widget_key;
+						$this->active_widget_keys[ $device ][] = $widget_key;
 					}
-
-					continue;
 				}
 
 				if ( ! isset( $device_value['rows'] ) || ! is_array( $device_value['rows'] ) ) {
@@ -171,7 +173,7 @@ class ResponsiveBuilderControl extends BaseControl {
 								continue;
 							}
 
-							$this->active_widget_keys[ $device ] = $widget_key;
+							$this->active_widget_keys[ $device ][] = $widget_key;
 						}
 					}
 				}
@@ -208,7 +210,7 @@ class ResponsiveBuilderControl extends BaseControl {
 	private function rowKeyExists( $row_key, $device ) {
 
 		if ( isset( $this->available_slots[ $device ] ) && is_array( $this->available_slots[ $device ] ) ) {
-			if ( isset( $this->available_slots[ $device ]['rows'] ) ) {
+			if ( isset( $this->available_slots[ $device ]['rows'] ) && is_array( $this->available_slots[ $device ]['rows'] ) ) {
 				foreach ( $this->available_slots[ $device ]['rows'] as $available_row ) {
 					if ( isset( $available_row['key'] ) && $available_row['key'] === $row_key ) {
 						return true;

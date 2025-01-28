@@ -126,6 +126,8 @@ import {
 
 				const control = this;
 
+				if (!this.availableWidgetsPanels) return;
+
 				for (const device in params.builder) {
 					if (!params.builder.hasOwnProperty(device)) continue;
 					if (device !== "desktop" && device !== "mobile") continue;
@@ -135,10 +137,6 @@ import {
 						.addClass("available-widgets-panel")
 						.attr("data-device", device)
 						.appendTo(controlForm);
-
-					if (!this.availableWidgetsPanels) {
-						continue;
-					}
 
 					this.availableWidgetsPanels[device] = $availableWidgetPanel[0];
 
@@ -154,7 +152,7 @@ import {
 
 						jQuery("<div></div>")
 							.addClass(
-								`widget-item widget-item-${widgetKey} ${control.isWidgetActive?.(widgetKey) ? "disabled" : ""}`,
+								`widget-item widget-item-${widgetKey} ${control.isWidgetActive?.(widgetKey, device) ? "disabled" : ""}`,
 							)
 							.attr("data-widget-key", widgetKey)
 							.attr("draggable", "true")
