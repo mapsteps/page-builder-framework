@@ -133,22 +133,14 @@
 		max-height: none;
 	}
 
-	.builder-row {
+	.sortable-group {
 		position: relative;
-		margin: 20px 0;
-		padding-left: 30px;
-		border-radius: 5px;
 		transition: box-shadow 100ms;
 
 		&:hover {
 			.row-label {
 				opacity: 1;
 				visibility: 1;
-			}
-
-			.row-setting-button:hover {
-				border-top-left-radius: 4px;
-				border-bottom-left-radius: 4px;
 			}
 		}
 
@@ -171,11 +163,28 @@
 
 			.row-setting-button {
 				border-color: transparent;
-				border-right-color: #ccc;
 			}
 
-			.builder-inner-row {
+			.dotted-border {
 				border-color: transparent;
+			}
+		}
+	}
+
+	.builder-row {
+		margin: 20px 0;
+		padding-left: 30px;
+		border-radius: 5px;
+
+		.row-setting-button {
+			border-top-left-radius: 4px;
+			border-bottom-left-radius: 4px;
+		}
+
+		&:hover,
+		&.is-active {
+			.row-setting-button {
+				border-right-color: #ccc;
 			}
 		}
 	}
@@ -213,8 +222,7 @@
 		height: 100%;
 		background-color: #f9f9f9;
 		border: 1px dashed #ccc;
-		border-top-left-radius: 5px;
-		border-bottom-left-radius: 5px;
+
 		transition: all 100ms;
 		cursor: pointer;
 		z-index: 2;
@@ -239,6 +247,10 @@
 		}
 	}
 
+	.dotted-border {
+		border: 1px dashed #ccc;
+	}
+
 	.builder-inner-row {
 		display: flex;
 		flex-wrap: nowrap;
@@ -248,7 +260,7 @@
 		width: 100%;
 		min-height: 52px;
 		background-color: #f9f9f9;
-		border: 1px dashed #ccc;
+
 		border-left-width: 0;
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
@@ -401,8 +413,13 @@
 	.builder-inner-sidebar {
 		height: 100%;
 		background-color: #f9f9f9;
-		border: 1px dashed #ccc;
 		border-radius: 5px;
+
+		.dotted-border {
+			border-top-width: 0;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
 	}
 
 	.builder-rows {
@@ -412,34 +429,51 @@
 	}
 }
 
-.wpbf-builder-panel .builder-sidebar {
-	.row-setting-button {
-		justify-content: flex-start;
-		position: relative;
-		padding: 0 10px;
-		width: 100%;
-		height: 30px;
-		border-bottom-left-radius: 0;
-		border-top-right-radius: 5px;
+.wpbf-builder-panel {
+	.builder-inner-sidebar {
+		.row-setting-button {
+			justify-content: flex-start;
+			position: relative;
+			padding: 0 10px;
+			width: 100%;
+			height: 30px;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
 
-		.button-label {
-			display: inline-block;
-			margin-left: 3px;
+			.dashicons {
+				width: 12px;
+				height: 12px;
+				font-size: 12px;
+			}
+
+			.button-label {
+				display: inline-block;
+				margin-left: 3px;
+			}
+		}
+
+		&:hover,
+		&.is-active {
+			.row-setting-button {
+				border-bottom-color: #ccc;
+			}
 		}
 	}
 
-	.active-widgets {
-		padding: 8px;
-		height: calc(100% - 30px);
+	.builder-sidebar {
+		.active-widgets {
+			padding: 8px;
+			height: calc(100% - 30px);
 
-		.widget-item:last-child {
-			margin-bottom: 0;
+			.widget-item:last-child {
+				margin-bottom: 0;
+			}
 		}
-	}
 
-	.widget-item {
-		display: flex;
-		margin: 0 0 10px;
+		.widget-item {
+			display: flex;
+			margin: 0 0 10px;
+		}
 	}
 }
 

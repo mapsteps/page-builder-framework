@@ -209,7 +209,7 @@ import {
 							.appendTo($builderSlotsEl);
 
 						const $builderInnerSidebar = jQuery("<div></div>")
-							.addClass("builder-inner-sidebar")
+							.addClass("builder-inner-sidebar sortable-group")
 							.appendTo($builderSidebar);
 
 						// Build the row setting button.
@@ -227,7 +227,7 @@ import {
 							.appendTo($builderInnerSidebar);
 
 						const $sidebarWidgetsEl = jQuery("<div></div>")
-							.addClass("builder-widgets active-widgets")
+							.addClass("builder-widgets active-widgets dotted-border")
 							.appendTo($builderInnerSidebar);
 
 						if (params.value) {
@@ -260,13 +260,13 @@ import {
 					availableSlots.rows.forEach((row) => {
 						// Build the row.
 						const $row = jQuery("<div></div>")
-							.addClass(`builder-row`)
+							.addClass(`builder-row sortable-group`)
 							.attr("data-row-key", row.key)
 							.appendTo($rowsWrapper);
 
 						// Build the inner row.
 						const $innerRow = jQuery("<div></div>")
-							.addClass(`builder-inner-row`)
+							.addClass(`builder-inner-row dotted-border`)
 							.appendTo($row);
 
 						// Build the row label (tooltip)
