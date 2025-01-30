@@ -529,3 +529,25 @@
 		}
 	}
 }
+
+#customize-control-wpbf_header_builder_mobile_menu_trigger_icon {
+	.buttonset {
+		.switch-label {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 20%;
+		}
+
+		[for="wpbf_header_builder_mobile_menu_trigger_icon-"] svg {
+			max-width: 20px;
+			height: auto;
+		}
+	}
+
+	.switch-label-on {
+		svg {
+			fill: #fff;
+		}
+	}
+}

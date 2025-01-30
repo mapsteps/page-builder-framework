@@ -27,16 +27,6 @@ wpbf_customizer_section()
 
 $control_id_prefix = 'wpbf_header_builder_desktop_button_1_';
 
-$partial_refresh_key_prefix = 'headerbuilder_desktop_button_1_';
-
-$partial_refresh_args = array(
-	'container_inclusive' => true,
-	'selector'            => '#header',
-	'render_callback'     => function () {
-		return get_template_part( 'inc/template-parts/header' );
-	},
-);
-
 /* General Tab */
 
 wpbf_customizer_field()

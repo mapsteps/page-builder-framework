@@ -83,6 +83,11 @@ final class ResponsiveBuilderStore {
 					'section' => 'wpbf_header_builder_mobile_button_2_section',
 				),
 				array(
+					'key'     => 'mobile_menu_trigger',
+					'label'   => __( 'Toggle Button', 'page-builder-framework' ),
+					'section' => 'wpbf_header_builder_mobile_menu_trigger_section',
+				),
+				array(
 					'key'     => 'mobile_menu_1',
 					'label'   => __( 'Menu 1', 'page-builder-framework' ),
 					'section' => 'wpbf_header_builder_mobile_menu_1_section',
