@@ -41,6 +41,7 @@ $partial_refresh_args = array(
 
 /* General Tab */
 
+/*
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'visibility' )
 	->type( 'checkbox-buttonset' )
@@ -56,6 +57,7 @@ wpbf_customizer_field()
 	->priority( 5 )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
+*/
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'max_width' )

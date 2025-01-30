@@ -715,6 +715,9 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 	$visibilities = get_theme_mod( $row_id_prefix . 'visibility', null );
 	$visibilities = is_array( $visibilities ) ? $visibilities : [ 'large', 'medium', 'small' ];
 
+	// Lets only enable desktop for now.
+	$visibilities = [ 'large' ];
+
 	$hidden_dimensions = array_diff( $dimensions, $visibilities );
 
 	$visibility_class = implode( ' ', array_map( function ( $dimension ) {
