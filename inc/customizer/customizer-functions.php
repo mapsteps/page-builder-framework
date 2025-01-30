@@ -738,7 +738,7 @@ function wpbf_header_builder_row( $row_key, $columns ) {
 
 	foreach ( $columns as $column_key => $widget_keys ) {
 		$column_class    = 'wpbf-flex wpbf-header-column';
-		$alignment_class = 'wpbf-content-center';
+		$alignment_class = 'wpbf-content-center wpbf-items-center';
 		$column_position = '';
 
 		if ( false !== stripos( $column_key, '_start' ) ) {
