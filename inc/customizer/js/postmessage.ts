@@ -2371,7 +2371,12 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		);
 	});
 
-	const headerBuilderButtonKeys = ["button_1", "button_2"];
+	const headerBuilderButtonKeys = [
+		"desktop_button_1",
+		"desktop_button_2",
+		"mobile_button_1",
+		"mobile_button_2",
+	];
 
 	headerBuilderButtonKeys.forEach((buttonKey) => {
 		const controlIdPrefix = `wpbf_header_builder_${buttonKey}`;
