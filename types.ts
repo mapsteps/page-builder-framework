@@ -110,6 +110,9 @@ declare global {
 			siteUrl: string;
 			ajaxurl: string;
 		};
+		WpbfCustomizeSection?: {
+			switchTabs?: (tabGroupId: string, tabItemId: string) => void;
+		};
 		WpbfUtils: WpbfUtils;
 		WpbfTheme: WpbfTheme;
 		wpbf_infinte_scroll_object: {

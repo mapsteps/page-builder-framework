@@ -120,7 +120,7 @@ export function setupControlsMovement<SV>(props: {
 						);
 				}
 
-				if (controlObj.forceActive && moveForward) {
+				if (moveForward) {
 					control.onChangeActive(true, {});
 				}
 
@@ -128,6 +128,31 @@ export function setupControlsMovement<SV>(props: {
 
 				control.container.attr("data-wpbf-parent-tab-id", sectionId);
 				control.section(sectionId);
+			}
+
+			if (moveForward) {
+				window.wp.customize?.section(sectionObj.to, function (section) {
+					if (section.params.tabs && Object.keys(section.params.tabs).length) {
+						const tabGroupId = section.params.id;
+
+						const activeTabMenuItem = document.querySelector(
+							'[data-wpbf-tab-id="' +
+								tabGroupId +
+								'"] .wpbf-tab-menu-item.is-active',
+						);
+
+						if (activeTabMenuItem instanceof HTMLElement) {
+							const activeTabItemId = activeTabMenuItem.dataset.wpbfTabMenuId;
+
+							if (activeTabItemId) {
+								window.WpbfCustomizeSection?.switchTabs?.(
+									tabGroupId,
+									activeTabItemId,
+								);
+							}
+						}
+					}
+				});
 			}
 		}
 	}

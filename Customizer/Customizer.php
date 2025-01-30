@@ -271,6 +271,8 @@ final class Customizer {
 
 		wp_localize_script( 'wpbf-sections', 'wpbfCustomizerSectionDependencies', CustomizerStore::$added_section_dependencies );
 
+		wp_add_inline_script( 'wpbf-sections', 'window.WpbfCustomizeSection = {};', 'before' );
+
 	}
 
 	/**

@@ -1,4 +1,4 @@
-export default function setupSectionTabs() {
+export function setupSectionTabs() {
 	const childControls = document.querySelectorAll("[data-wpbf-parent-tab-id]");
 
 	let tabIds: string[] = [];
@@ -57,34 +57,34 @@ export default function setupSectionTabs() {
 			});
 		});
 	}
+}
 
-	function switchTabs(tabId: string, tabItemName: string) {
-		jQuery(
-			'[data-wpbf-tab-id="' + tabId + '"] .wpbf-tab-menu-item',
-		).removeClass("is-active");
+export function switchTabs(tabGroupId: string, tabItemId: string) {
+	jQuery(
+		'[data-wpbf-tab-id="' + tabGroupId + '"] .wpbf-tab-menu-item',
+	).removeClass("is-active");
 
-		const tabMenuItem = document.querySelector(
-			'[data-wpbf-tab-id="' +
-				tabId +
-				'"] [data-wpbf-tab-menu-id="' +
-				tabItemName +
-				'"]',
-		);
+	const tabMenuItem = document.querySelector(
+		'[data-wpbf-tab-id="' +
+			tabGroupId +
+			'"] [data-wpbf-tab-menu-id="' +
+			tabItemId +
+			'"]',
+	);
 
-		if (tabMenuItem) tabMenuItem.classList.add("is-active");
+	if (tabMenuItem) tabMenuItem.classList.add("is-active");
 
-		const tabContentItems = document.querySelectorAll(
-			'[data-wpbf-parent-tab-id="' + tabId + '"]',
-		);
+	const tabContentItems = document.querySelectorAll(
+		'[data-wpbf-parent-tab-id="' + tabGroupId + '"]',
+	);
 
-		tabContentItems.forEach(function (tabItem) {
-			if (!(tabItem instanceof HTMLElement)) return;
+	tabContentItems.forEach(function (tabItem) {
+		if (!(tabItem instanceof HTMLElement)) return;
 
-			if (tabItem.dataset.wpbfParentTabItem === tabItemName) {
-				tabItem.classList.remove("wpbf-tab-item-hidden");
-			} else {
-				tabItem.classList.add("wpbf-tab-item-hidden");
-			}
-		});
-	}
+		if (tabItem.dataset.wpbfParentTabItem === tabItemId) {
+			tabItem.classList.remove("wpbf-tab-item-hidden");
+		} else {
+			tabItem.classList.add("wpbf-tab-item-hidden");
+		}
+	});
 }
