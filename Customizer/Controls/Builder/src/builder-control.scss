@@ -539,15 +539,9 @@
 			width: 20%;
 		}
 
-		[for="wpbf_header_builder_mobile_menu_trigger_icon-"] svg {
+		[for="wpbf_header_builder_mobile_menu_trigger_icon-none"] svg {
 			max-width: 20px;
 			height: auto;
-		}
-	}
-
-	.switch-label-on {
-		svg {
-			fill: #fff;
 		}
 	}
 }
