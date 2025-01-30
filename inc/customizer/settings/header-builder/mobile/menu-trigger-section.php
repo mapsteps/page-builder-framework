@@ -58,3 +58,12 @@ wpbf_customizer_field()
 	->defaultValue( 'variant-1' )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'text' )
+	->type( 'text' )
+	->tab( 'general' )
+	->label( __( 'Text', 'page-builder-framework' ) )
+	->defaultValue( 'Menu' )
+	->transport( 'postMessage' )
+	->addToSection( $section_id );

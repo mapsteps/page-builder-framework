@@ -84,7 +84,7 @@ final class ResponsiveBuilderStore {
 				),
 				array(
 					'key'     => 'mobile_menu_trigger',
-					'label'   => __( 'Toggle Button', 'page-builder-framework' ),
+					'label'   => __( 'Menu Trigger', 'page-builder-framework' ),
 					'section' => 'wpbf_header_builder_mobile_menu_trigger_section',
 				),
 				array(
@@ -205,7 +205,7 @@ final class ResponsiveBuilderStore {
 			'mobile' => array(
 				'sidebar' => array(
 					'key'   => 'mobile_sidebar',
-					'label' => __( 'Off Canvas', 'page-builder-framework' ),
+					'label' => __( 'Mobile Menu', 'page-builder-framework' ),
 				),
 				'rows' => array(
 					array(
