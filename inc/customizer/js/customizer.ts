@@ -17,7 +17,7 @@ function setupCustomizer() {
 		listenDevicePreviewSwitch();
 		setupLogoContainerWidth();
 		setupBuilderControlToggleBehavior();
-		listenToHeaderBuilderToggle();
+		moveControls();
 	}
 
 	function listenDevicePreviewSwitch() {
@@ -66,7 +66,7 @@ function setupCustomizer() {
 			});
 	}
 
-	function listenToHeaderBuilderToggle() {
+	function moveControls() {
 		setupControlsMovement({
 			dependency: {
 				settingId: "wpbf_enable_header_builder",
@@ -87,7 +87,6 @@ function setupCustomizer() {
 								from: undefined,
 								to: 10,
 							},
-							forceActive: true,
 						},
 						{
 							id: "pre_header_height",
@@ -99,7 +98,6 @@ function setupCustomizer() {
 								from: undefined,
 								to: 15,
 							},
-							forceActive: true,
 						},
 						{
 							id: "pre_header_bg_color",
@@ -107,7 +105,6 @@ function setupCustomizer() {
 								from: undefined,
 								to: 200,
 							},
-							forceActive: true,
 						},
 						{
 							id: "pre_header_font_color",
@@ -115,7 +112,6 @@ function setupCustomizer() {
 								from: undefined,
 								to: 205,
 							},
-							forceActive: true,
 						},
 						{
 							id: "pre_header_accent_colors",
@@ -123,7 +119,6 @@ function setupCustomizer() {
 								from: undefined,
 								to: 210,
 							},
-							forceActive: true,
 						},
 						{
 							id: "pre_header_font_size",
@@ -131,7 +126,6 @@ function setupCustomizer() {
 								from: undefined,
 								to: 220,
 							},
-							forceActive: true,
 						},
 					],
 				},
@@ -186,6 +180,19 @@ function setupCustomizer() {
 							prio: {
 								from: undefined,
 								to: 210,
+							},
+						},
+					],
+				},
+				{
+					from: "wpbf_mobile_menu_options",
+					to: "wpbf_header_builder_mobile_row_2_section",
+					controlsToMove: [
+						{
+							id: "mobile_menu_background_color",
+							prio: {
+								from: undefined,
+								to: 200,
 							},
 						},
 					],

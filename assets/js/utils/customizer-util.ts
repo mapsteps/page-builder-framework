@@ -4,7 +4,6 @@ export type ControlToMove = {
 	id: string;
 	label?: { from: string | undefined; to: string };
 	prio?: { from: number | undefined; to: number };
-	forceActive?: boolean;
 };
 
 function toBoolOrString(value: any) {
