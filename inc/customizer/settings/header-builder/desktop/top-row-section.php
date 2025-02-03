@@ -1,6 +1,6 @@
 <?php
 /**
- * Header builder's top row section.
+ * Header builder's desktop top row section.
  *
  * @package Page Builder Framework
  * @subpackage Customizer

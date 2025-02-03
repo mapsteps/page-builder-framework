@@ -1,6 +1,6 @@
 <?php
 /**
- * Header builder's main row section.
+ * Header builder's mobile main row section.
  *
  * @package Page Builder Framework
  * @subpackage Customizer
