@@ -29,12 +29,74 @@ wpbf_customizer_section()
 
 $control_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-$partial_refresh_key_prefix = 'headerbuilder_' . $row_key . '_';
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'vertical_padding' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
+	->defaultValue( 15 )
+	->priority( 10 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 80,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );
 
-$partial_refresh_args = array(
-	'container_inclusive' => true,
-	'selector'            => '#header',
-	'render_callback'     => function () {
-		return get_template_part( 'inc/template-parts/header' );
-	},
-);
+/* Design Tab */
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->priority( 200 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'text_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 205 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'accent_colors' )
+	->type( 'multicolor' )
+	->tab( 'design' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->priority( 210 )
+	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( 215 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 1,
+		'max'  => 100,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );

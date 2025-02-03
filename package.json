@@ -108,6 +108,7 @@
   ],
   "scripts": {
     "wpbf": "node wpbf.mjs",
+    "clean-cache": "shx rm -rf .parcel-cache",
     "build-wp-theme": "zx ./wpbf.mjs --no-cache",
     "collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
     "build-control": "vite build --no-cache",
@@ -135,7 +136,7 @@
     "build-margin-padding-control": "shx rm -rf Customizer/Controls/MarginPadding/dist && parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist --no-cache",
     "build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-cache",
     "build-responsive-control": "parcel build Customizer/Controls/Responsive/src/responsive-control.ts --dist-dir Customizer/Controls/Responsive/dist --no-cache",
-    "build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-cache",
+    "build-select-control": "shx rm -rf Customizer/Controls/Select/dist && parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-cache",
     "build-slider-control": "shx rm -rf Customizer/Controls/Slider/dist && parcel build Customizer/Controls/Slider/src/slider-control.ts Customizer/Controls/Slider/src/input-slider-control.ts Customizer/Controls/Slider/src/responsive-input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-cache",
     "build-repeater-control": "parcel build Customizer/Controls/Repeater/src/repeater-control.ts --dist-dir Customizer/Controls/Repeater/dist --no-cache",
     "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-cache",
