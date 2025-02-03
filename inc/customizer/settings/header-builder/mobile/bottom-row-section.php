@@ -15,7 +15,7 @@ $section_id = 'wpbf_header_builder_' . $row_key . '_section';
 wpbf_customizer_section()
 	->id( $section_id )
 	->type( 'invisible' )
-	->title( __( 'Bottom Row', 'page-builder-framework' ) )
+	->title( __( 'Mobile Bottom Row', 'page-builder-framework' ) )
 	->tabs( [
 		'general' => [
 			'label' => esc_html__( 'General', 'page-builder-framework' ),
