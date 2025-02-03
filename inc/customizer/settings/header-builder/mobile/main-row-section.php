@@ -29,12 +29,17 @@ wpbf_customizer_section()
 
 $control_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
-$partial_refresh_key_prefix = 'headerbuilder_' . $row_key . '_';
-
-$partial_refresh_args = array(
-	'container_inclusive' => true,
-	'selector'            => '#header',
-	'render_callback'     => function () {
-		return get_template_part( 'inc/template-parts/header' );
-	},
-);
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'vertical_padding' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
+	->defaultValue( 15 )
+	->priority( 10 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 80,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );
