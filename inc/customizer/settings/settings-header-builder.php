@@ -88,5 +88,11 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/h
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/menu-1-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/menu-2-section.php';
 
+// Mobile row sections.
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/top-row-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/main-row-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/bottom-row-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/sidebar-section.php';
+
 // Mobile widget sections.
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/menu-trigger-section.php';
