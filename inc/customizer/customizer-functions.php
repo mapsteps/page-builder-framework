@@ -15,7 +15,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
-use Wpbf\Vars;
+use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderOutput;
 
 /**
  * Initialize Wpbf customizer.
@@ -580,18 +580,15 @@ if ( ! function_exists( 'wpbf_header_builder_enabled' ) ) {
 	 */
 	function wpbf_header_builder_enabled() {
 
-		$enabled = get_theme_mod( 'wpbf_enable_header_builder', false );
-
-		return $enabled ? true : false;
+		return wpbf_customize_bool_value( 'wpbf_enable_header_builder' );
 
 	}
 }
 
-
 /**
- * Hook functions to be used when header builder is enabled.
+ * Setup hooks when header builder is enabled.
  *
- * This function will called directly in `template-parts/header.php` file.
+ * This function will be called directly in `template-parts/header.php` file.
  *
  * @see page-builder-framework/inc/template-parts/header.php
  */
@@ -601,182 +598,6 @@ function wpbf_header_builder_hooks() {
 		return;
 	}
 
-	$saved_values   = get_theme_mod( 'wpbf_header_builder', array() );
-	$desktop_values = isset( $saved_values['desktop'] ) && is_array( $saved_values['desktop'] ) ? $saved_values['desktop'] : array();
-	$desktop_rows   = isset( $desktop_values['rows'] ) && is_array( $desktop_values['rows'] ) ? $desktop_values['rows'] : array();
-
-	if ( empty( $desktop_rows ) ) {
-		return;
-	}
-
-	$active_rows = [];
-
-	foreach ( $desktop_rows as $row_key => $columns ) {
-		if ( empty( $row_key ) || empty( $columns ) ) {
-			continue;
-		}
-
-		foreach ( $columns as $column_key => $widget_keys ) {
-			if ( empty( $widget_keys ) ) {
-				continue;
-			}
-
-			if ( ! isset( $active_rows[ $row_key ] ) ) {
-				$active_rows[ $row_key ] = [];
-			}
-
-			$active_rows[ $row_key ][ $column_key ] = $widget_keys;
-		}
-	}
-
-	if ( empty( $active_rows ) ) {
-		return;
-	}
-
-	foreach ( $active_rows as $row_key => $columns ) {
-		if ( empty( $row_key ) || empty( $columns ) ) {
-			continue;
-		}
-
-		Vars::set( "header_builder_$row_key", $columns );
-	}
-
-	// Unhook functions which are supposed to be used when header builder is disabled.
-	remove_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
-	remove_action( 'wpbf_navigation', 'wpbf_menu' );
-
-	// Hook functions which are supposed to be used when header builder is enabled.
-	add_action( 'wpbf_pre_header', 'wpbf_do_header_builder_pre_header' );
-	add_action( 'wpbf_navigation', 'wpbf_do_header_builder_navigation' );
-
-}
-
-/**
- * An action to render pre-header for header builder.
- *
- * This action will be hooked to `wpbf_pre_header` action hook.
- *
- * @see wpbf_header_builder_hooks()
- */
-function wpbf_do_header_builder_pre_header() {
-
-	$pre_header_columns = Vars::get( 'header_builder_desktop_row_1' );
-
-	if ( empty( $pre_header_columns ) || ! is_array( $pre_header_columns ) ) {
-		return;
-	}
-	?>
-
-	<div id="pre-header" class="wpbf-pre-header">
-		<?php
-		do_action( 'wpbf_before_pre_header' );
-		wpbf_header_builder_row( 'desktop_row_1', $pre_header_columns );
-		do_action( 'wpbf_after_pre_header' );
-		?>
-	</div>
-
-	<?php
-}
-
-/**
- * An action to render navigation for header builder.
- *
- * This action will be hooked to `wpbf_navigation` action hook.
- *
- * @see wpbf_header_builder_hooks()
- */
-function wpbf_do_header_builder_navigation() {
-
-	$row_2_columns = Vars::get( 'header_builder_desktop_row_2' );
-
-	if ( ! empty( $row_2_columns ) && is_array( $row_2_columns ) ) {
-		wpbf_header_builder_row( 'desktop_row_2', $row_2_columns );
-	}
-
-	$row_3_columns = Vars::get( 'header_builder_desktop_row_3' );
-
-	if ( ! empty( $row_3_columns ) && is_array( $row_3_columns ) ) {
-		wpbf_header_builder_row( 'desktop_row_3', $row_3_columns );
-	}
-
-}
-
-/**
- * Render a header builder row.
- *
- * @param string $row_key The row key.
- * @param array  $columns The row columns.
- */
-function wpbf_header_builder_row( $row_key, $columns ) {
-
-	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
-
-	$dimensions   = [ 'large', 'medium', 'small' ];
-	$visibilities = get_theme_mod( $row_id_prefix . 'visibility', null );
-	$visibilities = is_array( $visibilities ) ? $visibilities : [ 'large', 'medium', 'small' ];
-
-	// Lets only enable desktop for now.
-	$visibilities = [ 'large' ];
-
-	$hidden_dimensions = array_diff( $dimensions, $visibilities );
-
-	$visibility_class = implode( ' ', array_map( function ( $dimension ) {
-		return 'wpbf-hidden-' . esc_attr( $dimension );
-	}, $hidden_dimensions ) );
-
-	$container_class = 'wpbf-container wpbf-container-center';
-
-	$row_class = ( 'desktop_row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
-
-	echo '<div class="' . esc_attr( $row_class ) . '">';
-
-	if ( 'desktop_row_1' !== $row_key ) {
-		echo '<div class="' . esc_attr( $container_class ) . '">';
-	}
-
-	echo '<div class="' . ( 'desktop_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
-
-	foreach ( $columns as $column_key => $widget_keys ) {
-		$column_class    = 'wpbf-flex wpbf-header-column';
-		$alignment_class = 'wpbf-content-center wpbf-items-center';
-		$column_position = '';
-
-		if ( false !== stripos( $column_key, '_start' ) ) {
-			$alignment_class = 'wpbf-content-start';
-			$column_position = 'left';
-		} elseif ( false !== stripos( $column_key, '_end' ) ) {
-			$alignment_class = 'wpbf-content-end';
-			$column_position = 'right';
-		}
-
-		if (
-			in_array( 'desktop_menu_1', $widget_keys, true )
-			|| in_array( 'desktop_menu_2', $widget_keys, true )
-			|| in_array( 'desktop_html_1', $widget_keys, true )
-			|| in_array( 'desktop_html_2', $widget_keys, true )
-		) {
-			$column_class .= ' wpbf-column-grow';
-		}
-
-		echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
-
-		foreach ( $widget_keys as $widget_key ) {
-			if ( empty( $widget_key ) ) {
-				continue;
-			}
-
-			wpbf_render_builder_widget( 'header_builder', $widget_key, $column_position );
-		}
-
-		echo '</div>';
-	}
-
-	echo '</div>';
-
-	if ( 'desktop_row_1' !== $row_key ) {
-		echo '</div>';
-	}
-
-	echo '</div>';
+	( new HeaderBuilderOutput() )->setup_hooks();
 
 }

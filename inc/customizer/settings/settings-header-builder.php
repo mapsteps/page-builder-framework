@@ -6,7 +6,7 @@
  * @subpackage Customizer
  */
 
-use Mapsteps\Wpbf\Customizer\Controls\Builder\ResponsiveBuilderStore;
+use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderConfig;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
@@ -53,8 +53,8 @@ wpbf_customizer_field()
 	->description( __( 'Drag and drop widgets to build your site header.', 'page-builder-framework' ) )
 	->transport( 'auto' )
 	->properties( array(
-		'available_widgets' => ResponsiveBuilderStore::headerBuilderAvailableWidgets(),
-		'available_slots'   => ResponsiveBuilderStore::headerBuilderAvailableSlots(),
+		'available_widgets' => HeaderBuilderConfig::availableWidgets(),
+		'available_slots'   => HeaderBuilderConfig::availableSlots(),
 	) )
 	->partialRefresh( [
 		'headerbuilder' => array(
