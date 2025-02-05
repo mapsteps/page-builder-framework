@@ -1,6 +1,4 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
-import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
-import { WpbfResponsiveInputSliderControl } from "./slider-interface";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import {
 	makeDevicesValue,
@@ -12,8 +10,11 @@ import { encodeJsonOrDefault } from "../../Generic/src/string-util";
 import { makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
 
 export default function ResponsiveInputSliderForm(props: {
-	control: WpbfResponsiveInputSliderControl;
-	customizerSetting?: WpbfCustomizeSetting<string | DevicesValue>;
+	id: string;
+	overrideUpdateComponentStateFn?: (
+		fn: (val: string | DevicesValue) => void,
+	) => void;
+	updateCustomizerSetting?: (val: string | DevicesValue) => void;
 	setNotificationContainer: any;
 	saveAsJson: boolean;
 	devices: string[];
@@ -42,7 +43,7 @@ export default function ResponsiveInputSliderForm(props: {
 	 *
 	 * @param {string|DevicesValue} val - The value from customizer setting.
 	 */
-	props.control.updateComponentState = (val: string | DevicesValue) => {
+	function updateComponentState(val: string | DevicesValue) {
 		const devicesValue = makeDevicesValue(
 			props.devices,
 			val,
@@ -51,14 +52,16 @@ export default function ResponsiveInputSliderForm(props: {
 		);
 
 		setActualValue(devicesValue);
-	};
+	}
 
-	function saveToCustomizerSetting(val: DevicesValue) {
+	props.overrideUpdateComponentStateFn?.(updateComponentState);
+
+	function updateCustomizerSetting(val: DevicesValue) {
 		const valueToSave = props.saveAsJson
 			? encodeJsonOrDefault<DevicesValue>(val)
 			: val;
 
-		props.customizerSetting?.set(valueToSave);
+		props.updateCustomizerSetting?.(valueToSave);
 	}
 
 	function handleInputChange(e: ChangeEvent<HTMLInputElement>, device: string) {
@@ -71,7 +74,7 @@ export default function ResponsiveInputSliderForm(props: {
 		const fieldValue = makeValueForInput(e.target.value, props.min, props.max);
 		devicesValue[device] = fieldValue;
 
-		saveToCustomizerSetting(devicesValue);
+		updateCustomizerSetting(devicesValue);
 	}
 
 	function handleSliderChange(
@@ -106,7 +109,7 @@ export default function ResponsiveInputSliderForm(props: {
 			? fieldValue + numberUnitPair.unit
 			: fieldValue;
 
-		saveToCustomizerSetting(devicesValue);
+		updateCustomizerSetting(devicesValue);
 	}
 
 	function handleResetButtonClick(
@@ -124,7 +127,7 @@ export default function ResponsiveInputSliderForm(props: {
 
 		devicesValue[device] = defaultValue[device];
 
-		saveToCustomizerSetting(devicesValue);
+		updateCustomizerSetting(devicesValue);
 	}
 
 	return (
@@ -133,7 +136,7 @@ export default function ResponsiveInputSliderForm(props: {
 				{props.label && (
 					<label
 						className="customize-control-title"
-						htmlFor={`wpbf-control-input-${props.customizerSetting?.id}`}
+						htmlFor={`wpbf-control-input-${props.id}`}
 					>
 						<span className="customize-control-title">{props.label}</span>
 					</label>
@@ -178,7 +181,7 @@ export default function ResponsiveInputSliderForm(props: {
 										<div className="wpbf-control-left-col">
 											<input
 												type="range"
-												id={`wpbf-control-input-${props.customizerSetting?.id}-${device}`}
+												id={`wpbf-control-input-${props.id}-${device}`}
 												value={makeValueForSlider(
 													actualValue[device],
 													props.min,

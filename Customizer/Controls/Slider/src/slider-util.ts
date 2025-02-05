@@ -69,19 +69,6 @@ export function makeValueForSlider(
 }
 
 /**
- * Make a string value from a string or number.
- *
- * @export
- *
- * @param {(string | number)} value - The value to convert.
- *
- * @return {string} The string value.
- */
-export function makeStringValue(value: string | number): string {
-	return "string" === typeof value ? value : value.toString();
-}
-
-/**
  * Make an empty `DevicesValue` object.
  *
  * @param {string[]} devices - The allowed devices.

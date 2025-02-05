@@ -356,10 +356,6 @@ import {
 				customizer?.section(
 					`wpbf_header_builder_${rowKey}_section`,
 					function (section) {
-						console.log(
-							`expanding section ${section.params.id}`,
-							section.params,
-						);
 						section.expand(section.params);
 					},
 				);
