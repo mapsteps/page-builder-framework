@@ -258,6 +258,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	destroy?: VoidFunction;
 	updateCustomizerSetting?: (value?: SV) => void;
 	updateComponentState?: (val: SV) => void;
+	overrideUpdateComponentStateFn?: (fn: (val: SV) => void) => void;
 	validateCssValue?: (value: string | number) => boolean;
 	wpbfNotifications?: VoidFunction;
 	onChange?: (value: SV) => void;

@@ -1,17 +1,17 @@
-import React, { ChangeEvent, MouseEvent, useRef } from "react";
+import { ChangeEvent, MouseEvent, useRef } from "react";
 
 export default function SliderForm(props: {
 	id: string;
-	updateCustomizerSetting?: (val: string | number) => void;
-	overrideUpdateComponentStateFn?: (fn: (val: string | number) => void) => void;
-	setNotificationContainer?: any;
+	min: number;
+	max: number;
+	step: number;
 	label?: string;
 	description?: string;
 	default?: string | number;
 	value?: string | number;
-	min: number;
-	max: number;
-	step: number;
+	updateCustomizerSetting?: (val: string | number) => void;
+	overrideUpdateComponentStateFn?: (fn: (val: string | number) => void) => void;
+	setNotificationContainer?: any;
 }) {
 	let trigger = "";
 

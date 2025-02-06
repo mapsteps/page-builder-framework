@@ -8,6 +8,9 @@ export default function SliderControl(customizer: WpbfCustomize) {
 		initialize: function (id: string, params: WpbfSliderControlParams) {
 			// Bind functions to this control context for passing as React props.
 			this.setNotificationContainer = this.setNotificationContainer?.bind(this);
+			this.overrideUpdateComponentStateFn =
+				this.overrideUpdateComponentStateFn?.bind(this);
+			this.updateCustomizerSetting = this.updateCustomizerSetting?.bind(this);
 
 			customizer.Control.prototype.initialize.call(this, id, params);
 
@@ -47,16 +50,16 @@ export default function SliderControl(customizer: WpbfCustomize) {
 			this.root?.render(
 				<SliderForm
 					id={this.setting?.id ?? ""}
-					updateCustomizerSetting={this.updateCustomizerSetting}
-					overrideUpdateComponentStateFn={this.overrideUpdateComponentStateFn}
-					setNotificationContainer={this.setNotificationContainer}
+					min={this.params?.min}
+					max={this.params?.max}
+					step={this.params?.step}
 					label={this.params?.label}
 					description={this.params?.description}
 					default={this.params?.default}
 					value={this.params?.value}
-					min={this.params?.min}
-					max={this.params?.max}
-					step={this.params?.step}
+					updateCustomizerSetting={this.updateCustomizerSetting}
+					overrideUpdateComponentStateFn={this.overrideUpdateComponentStateFn}
+					setNotificationContainer={this.setNotificationContainer}
 				/>,
 			);
 
@@ -71,7 +74,7 @@ export default function SliderControl(customizer: WpbfCustomize) {
 		 * React is available to be used here instead of the customizer.Element abstraction.
 		 */
 		ready: function ready() {
-			// Update component value's state when customizer setting's value is changed.
+			// Update component's state when customizer setting's value is changed.
 			this.setting?.bind((val) => {
 				this.updateComponentState?.(val);
 			});
@@ -83,7 +86,7 @@ export default function SliderControl(customizer: WpbfCustomize) {
 		},
 
 		/**
-		 * This method will be overriden by the rendered component.
+		 * This method will be overriden by the rendered component via overrideUpdateComponentStateFn.
 		 */
 		updateComponentState: function (val) {},
 

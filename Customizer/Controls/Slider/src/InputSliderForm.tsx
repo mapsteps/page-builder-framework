@@ -7,16 +7,16 @@ import {
 
 export default function InputSliderForm(props: {
 	id: string;
-	overrideUpdateComponentStateFn?: (fn: (val: string | number) => void) => void;
-	updateCustomizerSetting?: (val: string | number) => void;
-	setNotificationContainer: any;
-	label: string | undefined;
-	description: string | undefined;
 	min: number;
 	max: number;
 	step: number;
+	label: string | undefined;
+	description: string | undefined;
 	default: string | number;
 	value: string | number;
+	overrideUpdateComponentStateFn?: (fn: (val: string | number) => void) => void;
+	updateCustomizerSetting?: (val: string | number) => void;
+	setNotificationContainer: any;
 }) {
 	let trigger = "";
 

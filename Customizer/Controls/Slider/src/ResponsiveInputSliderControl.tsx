@@ -17,6 +17,9 @@ export default function ResponsiveInputSliderControl(
 		) {
 			// Bind functions to this control context for passing as React props.
 			this.setNotificationContainer = this.setNotificationContainer?.bind(this);
+			this.overrideUpdateComponentStateFn =
+				this.overrideUpdateComponentStateFn?.bind(this);
+			this.updateCustomizerSetting = this.updateCustomizerSetting?.bind(this);
 
 			customizer.Control.prototype.initialize.call(this, id, params);
 
@@ -56,18 +59,18 @@ export default function ResponsiveInputSliderControl(
 			this.root?.render(
 				<ResponsiveInputSliderForm
 					id={this.setting?.id ?? ""}
+					min={this.params?.min}
+					max={this.params?.max}
+					step={this.params?.step}
+					label={this.params?.label}
+					description={this.params?.description}
+					default={this.params?.default ?? ""}
+					value={this.params?.value ?? ""}
 					overrideUpdateComponentStateFn={this.overrideUpdateComponentStateFn}
 					updateCustomizerSetting={this.updateCustomizerSetting}
 					setNotificationContainer={this.setNotificationContainer}
 					devices={this.params?.devices}
 					saveAsJson={this.params?.saveAsJson}
-					label={this.params?.label}
-					description={this.params?.description}
-					min={this.params?.min}
-					max={this.params?.max}
-					step={this.params?.step}
-					default={this.params?.default ?? ""}
-					value={this.params?.value ?? ""}
 				/>,
 			);
 
