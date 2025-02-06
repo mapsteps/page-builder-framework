@@ -117,8 +117,7 @@ class ImageControl extends BaseControl {
 			'wpbf-image-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Media/dist/image-control-min.js',
 			array(
-				'customize-controls',
-				'react-dom',
+				'wpbf-base-control',
 			),
 			WPBF_VERSION,
 			false

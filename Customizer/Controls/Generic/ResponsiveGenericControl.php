@@ -115,8 +115,7 @@ class ResponsiveGenericControl extends GenericControl {
 			'wpbf-responsive-generic-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/responsive-generic-control-min.js',
 			array(
-				'customize-controls',
-				'react-dom',
+				'wpbf-base-control',
 			),
 			WPBF_VERSION,
 			false

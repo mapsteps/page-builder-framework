@@ -68,8 +68,7 @@ class EditorControl extends BaseControl {
 			'wpbf-editor-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Editor/dist/editor-control-min.js',
 			array(
-				'customize-controls',
-				'react-dom',
+				'wpbf-base-control',
 			),
 			WPBF_VERSION,
 			false

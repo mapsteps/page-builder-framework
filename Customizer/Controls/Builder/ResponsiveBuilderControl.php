@@ -98,7 +98,7 @@ class ResponsiveBuilderControl extends BaseControl {
 			'wpbf-responsive-builder-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Builder/dist/responsive-builder-control-min.js',
 			array(
-				'customize-controls',
+				'wpbf-base-control',
 				'jquery-ui-draggable',
 				'jquery-ui-droppable',
 				'jquery-ui-sortable',

@@ -93,8 +93,7 @@ class ResponsiveInputSliderControl extends InputSliderControl {
 			'wpbf-responsive-input-slider-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/responsive-input-slider-control-min.js',
 			array(
-				'customize-controls',
-				'react-dom',
+				'wpbf-base-control',
 			),
 			WPBF_VERSION,
 			false

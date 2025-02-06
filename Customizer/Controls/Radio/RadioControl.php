@@ -28,8 +28,7 @@ class RadioControl extends BaseControl {
 			'wpbf-radio-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Radio/dist/radio-control-min.js',
 			array(
-				'customize-controls',
-				'react-dom',
+				'wpbf-base-control',
 			),
 			WPBF_VERSION,
 			false

@@ -147,8 +147,7 @@ class GenericControl extends BaseControl {
 			'wpbf-generic-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/generic-control-min.js',
 			array(
-				'customize-controls',
-				'react-dom',
+				'wpbf-base-control',
 			),
 			WPBF_VERSION,
 			false

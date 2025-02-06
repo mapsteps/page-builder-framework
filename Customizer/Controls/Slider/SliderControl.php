@@ -118,8 +118,7 @@ class SliderControl extends BaseControl {
 			'wpbf-slider-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control-min.js',
 			array(
-				'customize-controls',
-				'react-dom',
+				'wpbf-base-control',
 			),
 			WPBF_VERSION,
 			false
