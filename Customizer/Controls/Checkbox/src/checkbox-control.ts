@@ -30,48 +30,48 @@ import {
 		});
 
 	customizer.controlConstructor["wpbf-checkbox-buttonset"] =
-		customizer.wpbfDynamicControl.extend<WpbfCheckboxButtonsetControl>(
-			{
-				currentValue: undefined,
+		customizer.wpbfDynamicControl.extend<WpbfCheckboxButtonsetControl>({
+			currentValue: undefined,
 
-				ready: function () {
-					const control = this;
+			initWpbfControl: function (ctrl) {},
 
-					this.currentValue = this.setting?.get();
+			ready: function () {
+				const control = this;
 
-					this.container?.on("change", ".switch-input", (e) => {
-						const values: string[] = [];
+				this.currentValue = this.setting?.get();
 
-						if (!control.container) return values;
+				this.container?.on("change", ".switch-input", (e) => {
+					const values: string[] = [];
 
-						const fields = control.container[0].querySelectorAll(
-							".switch-input:checked",
-						);
+					if (!control.container) return values;
 
-						fields.forEach((field) => {
-							if (!(field instanceof HTMLInputElement)) return;
-							values.push(field.value);
-						});
-
-						control.setting?.set(values);
-					});
-
-					this.setting?.bind((val) => {
-						control.updateComponentState?.(val);
-					});
-				},
-
-				updateComponentState: function (val) {
-					if (this.currentValue === val) return;
-					if (!this.container) return;
-
-					const fields = this.container[0].querySelectorAll(".switch-input");
+					const fields = control.container[0].querySelectorAll(
+						".switch-input:checked",
+					);
 
 					fields.forEach((field) => {
 						if (!(field instanceof HTMLInputElement)) return;
-						field.checked = val.includes(field.value);
+						values.push(field.value);
 					});
-				},
+
+					control.setting?.set(values);
+				});
+
+				this.setting?.bind((val) => {
+					control.updateComponentState?.(val);
+				});
 			},
-		);
+
+			updateComponentState: function (val) {
+				if (this.currentValue === val) return;
+				if (!this.container) return;
+
+				const fields = this.container[0].querySelectorAll(".switch-input");
+
+				fields.forEach((field) => {
+					if (!(field instanceof HTMLInputElement)) return;
+					field.checked = val.includes(field.value);
+				});
+			},
+		});
 })(window.wp.customize);

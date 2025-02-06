@@ -273,9 +273,6 @@ export interface WpbfCustomizeControl<SV, CP> {
 	// Specific to PBF's checkbox-buttonset control.
 	currentValue?: SV;
 
-	// Specific to PBF's color control.
-	updateColorPicker?: (value: WpbfColorControlValue) => void;
-
 	// Specific to PBF's multicolor control.
 	updateColorPickers?: (value: WpbfMulticolorControlValue) => void;
 	togglePopup?: Record<string, () => void>;

@@ -9,34 +9,26 @@ import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
 const MulticolorControl =
 	window.wp.customize?.Control.extend<WpbfMulticolorControl>({
-		root: undefined,
+		initialize: function initialize(id, params) {
+			// Bind functions to this control context for passing as React props.
+			this.setNotificationContainer = this.setNotificationContainer?.bind(this);
+			this.overrideUpdateComponentStateFn =
+				this.overrideUpdateComponentStateFn?.bind(this);
 
-		/**
-		 * Initialize.
-		 */
-		initialize: function (id, params) {
+			window.wp.customize?.Control.prototype.initialize.call(this, id, params);
+
 			const control = this;
 
-			// Bind functions to this control context for passing as React props.
-			this.setNotificationContainer =
-				this.setNotificationContainer?.bind(control);
-
-			window.wp.customize?.Control.prototype.initialize.call(
-				control,
-				id,
-				params,
-			);
-
 			// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
-			function onRemoved(removedControl: AnyWpbfCustomizeControl) {
+			function handleOnRemoved(removedControl: AnyWpbfCustomizeControl) {
 				if (control === removedControl) {
 					if (control.destroy) control.destroy();
 					control.container?.remove();
-					window.wp.customize?.control.unbind("removed", onRemoved);
+					window.wp.customize?.control.unbind("removed", handleOnRemoved);
 				}
 			}
 
-			window.wp.customize?.control.bind("removed", onRemoved);
+			window.wp.customize?.control.bind("removed", handleOnRemoved);
 		},
 
 		/**
@@ -57,13 +49,12 @@ const MulticolorControl =
 		 * This will be called from the Control#embed() method in the parent class.
 		 */
 		renderContent: function renderContent() {
-			const params = this.params;
-			if (!params) return;
+			if (!this.params) return;
 			if (!this.container || !this.container.length) return;
 
-			const mode = params.mode;
+			const mode = this.params.mode;
 			const useHueMode = "hue" === mode;
-			const formComponent = params.formComponent;
+			const formComponent = this.params.formComponent;
 
 			let pickerComponent = "";
 
@@ -82,19 +73,21 @@ const MulticolorControl =
 
 			this.root?.render(
 				<MulticolorForm
-					control={this as WpbfMulticolorControl}
 					container={this.container[0]}
-					choices={params.choices}
-					keys={Object.keys(params.choices)}
-					label={params.label}
-					description={params.description}
+					choices={this.params.choices}
+					keys={Object.keys(this.params.choices)}
+					label={this.params.label}
+					description={this.params.description}
 					useHueMode={useHueMode}
 					formComponent={formComponent}
 					pickerComponent={pickerComponent}
-					labelStyle={params.labelStyle}
-					colorSwatches={params.colorSwatches}
-					value={params.value}
-					default={params.default}
+					labelStyle={this.params.labelStyle}
+					colorSwatches={this.params.colorSwatches}
+					value={this.params.value}
+					default={this.params.default}
+					onChange={this.onChange}
+					onReset={this.onReset}
+					overrideUpdateComponentStateFn={this.overrideUpdateComponentStateFn}
 					setNotificationContainer={this.setNotificationContainer}
 				/>,
 			);
@@ -106,13 +99,11 @@ const MulticolorControl =
 		 * React is available to be used here instead of the window.wp.customize?.Element abstraction.
 		 */
 		ready: function ready() {
-			const control = this;
-
 			/**
 			 * Update component state when customizer setting changes.
 			 */
 			this.setting?.bind((val: WpbfMulticolorControlValue) => {
-				control.updateComponentState?.(val);
+				this.updateComponentState?.(val);
 			});
 		},
 
@@ -167,11 +158,15 @@ const MulticolorControl =
 			this.setting?.set(value);
 		},
 
-		// This method will be replaced in ColorForm component.
-		updateColorPickers: (val) => {},
+		/**
+		 * This method will be overriden by the rendered component via overrideUpdateComponentStateFn.
+		 */
+		updateComponentState: function (val) {},
 
-		updateComponentState: function (val) {
-			this.updateColorPickers?.(val);
+		overrideUpdateComponentStateFn: function overrideUpdateComponentStateFn(
+			fn,
+		) {
+			this.updateComponentState = fn;
 		},
 
 		/**

@@ -1,4 +1,3 @@
-import React from "react";
 import ColorPickerCirleTrigger from "./ColorPickerCircleTrigger";
 import ControlLabel from "./ControlLabel";
 import { hexColorFromHueModeValue } from "../utils/misc";

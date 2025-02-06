@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { colord } from "colord";
 import ColorPickerSwatches from "./components/ColorPickerSwatches";
 import ColorPickerInput from "./components/ColorPickerInput";
@@ -13,13 +13,12 @@ import {
 } from "./color-interface";
 import convertColorForInput from "./utils/convert-color-for-input";
 import convertColorForPicker from "./utils/convert-color-for-picker";
-import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 
 /**
  * The form component of Kirki React Colorful.
  */
 export default function ColorForm(props: {
-	control: AnyWpbfCustomizeControl;
+	type: string;
 	container: HTMLElement;
 	label: string;
 	description: string;
@@ -29,16 +28,18 @@ export default function ColorForm(props: {
 	colorSwatches: Array<string | { color: string } | undefined>;
 	value: WpbfColorControlValue;
 	default: WpbfColorControlValue;
-	setNotificationContainer?: any;
 	formComponent?: string;
 	removeHeader?: boolean;
 	isPopupOpen?: boolean;
 	useExternalPopupToggle?: boolean;
 	onChange?: (value: WpbfColorControlValue) => void;
 	onReset?: () => void;
+	overrideUpdateComponentStateFn?: (
+		fn: (val: WpbfColorControlValue) => void,
+	) => void;
+	setNotificationContainer?: any;
 }) {
 	const {
-		control,
 		container,
 		useHueMode,
 		pickerComponent,
@@ -66,7 +67,7 @@ export default function ColorForm(props: {
 	let currentPickerValue = pickerValue;
 
 	// This function will be called when this control's customizer value is changed.
-	control.updateColorPicker = function (value) {
+	function updateComponentState(value: WpbfColorControlValue) {
 		const valueForInput = convertColorForInput(
 			value,
 			useHueMode,
@@ -105,7 +106,9 @@ export default function ColorForm(props: {
 		if (shouldChangePickerValue) {
 			setPickerValue(valueForPicker);
 		}
-	};
+	}
+
+	props.overrideUpdateComponentStateFn?.(updateComponentState);
 
 	const initialColor =
 		"" !== props.default && "undefined" !== typeof props.default
@@ -128,7 +131,7 @@ export default function ColorForm(props: {
 	const [isPopupOpen, setIsPopupOpen] = useState(props.isPopupOpen ?? false);
 
 	// On multicolor control, listen to `value` && `isPopupOpen` properties change.
-	if (control.params && control.params.type === "wpbf-multicolor") {
+	if (props.type && props.type === "wpbf-multicolor") {
 		useEffect(() => {
 			setInputValue(
 				convertColorForInput(

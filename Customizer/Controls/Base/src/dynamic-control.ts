@@ -19,7 +19,7 @@ export default function setupDynamicControl(customizer: WpbfCustomize) {
 	customizer.wpbfDynamicControl = customizer.Control.extend<
 		WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>
 	>({
-		initialize: function (
+		initialize: function initialize(
 			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
 			id: string,
 			params: WpbfCustomizeControlParams<any>,
@@ -78,7 +78,7 @@ export default function setupDynamicControl(customizer: WpbfCustomize) {
 		 * This is copied from api.Control.prototype.initialize(). It
 		 * should be changed in Core to be applied once the control is embedded.
 		 */
-		_setUpSettingRootLinks: function (
+		_setUpSettingRootLinks: function _setUpSettingRootLinks(
 			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
 		) {
 			const control = this;
@@ -102,7 +102,7 @@ export default function setupDynamicControl(customizer: WpbfCustomize) {
 		/**
 		 * Add bidirectional data binding links between inputs and the setting properties.
 		 */
-		_setUpSettingPropertyLinks: function (
+		_setUpSettingPropertyLinks: function _setUpSettingPropertyLinks(
 			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
 		) {
 			const control = this;
@@ -156,25 +156,22 @@ export default function setupDynamicControl(customizer: WpbfCustomize) {
 		/**
 		 * @inheritdoc
 		 */
-		ready: function (
-			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
-		) {
-			const control = this;
+		ready: function ready() {
+			this._setUpSettingRootLinks?.();
+			this._setUpSettingPropertyLinks?.();
 
-			control._setUpSettingRootLinks?.();
-			control._setUpSettingPropertyLinks?.();
+			customizer.Control.prototype.ready.call(this);
 
-			customizer.Control.prototype.ready.call(control);
+			this.deferred?.embedded.done(() => {
+				this.initWpbfControl?.();
 
-			control.deferred.embedded.done(function () {
-				control.initWpbfControl?.();
 				window.wp.hooks.doAction(
 					"wpbf.dynamicControl.ready.deferred.embedded.done",
-					control,
+					this,
 				);
 			});
 
-			window.wp.hooks.doAction("wpbf.dynamicControl.ready.after", control);
+			window.wp.hooks.doAction("wpbf.dynamicControl.ready.after", this);
 		},
 
 		/**
@@ -184,32 +181,25 @@ export default function setupDynamicControl(customizer: WpbfCustomize) {
 		 * so that the control isn't embedded on load,
 		 * unless the containing section is already expanded.
 		 */
-		embed: function (
-			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
-		) {
-			const control = this;
-			let sectionId = control.section();
+		embed: function embed() {
+			let sectionId = this.section?.();
+			if (!sectionId) return;
 
-			if (!sectionId) {
-				return;
-			}
-
-			customizer.section(sectionId, function (section) {
+			customizer.section(sectionId, (section) => {
 				if (
 					"wpbf-expanded" === section.params.type ||
 					section.expanded() ||
-					customizer.settings.autofocus.control === control.id
+					customizer.settings.autofocus.control === this.id
 				) {
-					control.actuallyEmbed?.();
+					this.actuallyEmbed?.();
 				} else {
-					section.expanded.bind(function (expanded) {
-						if (expanded) {
-							control.actuallyEmbed?.();
-						}
+					section.expanded.bind((expanded) => {
+						if (expanded) this.actuallyEmbed?.();
 					});
 				}
 			});
-			window.wp.hooks.doAction("wpbf.dynamicControl.embed.after", control);
+
+			window.wp.hooks.doAction("wpbf.dynamicControl.embed.after", this);
 		},
 
 		/**
@@ -218,58 +208,53 @@ export default function setupDynamicControl(customizer: WpbfCustomize) {
 		 * This function is called in Section.onChangeExpanded() so the control
 		 * will only get embedded when the Section is first expanded.
 		 */
-		actuallyEmbed: function (
-			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
-		) {
-			const control = this;
-
-			if ("resolved" === control.deferred.embedded.state()) {
+		actuallyEmbed: function actuallyEmbed() {
+			if ("resolved" === this.deferred?.embedded?.state()) {
 				return;
 			}
-			control.renderContent();
-			control.deferred.embedded.resolve(); // This triggers control.ready().
-			window.wp.hooks.doAction(
-				"wpbf.dynamicControl.actuallyEmbed.after",
-				control,
-			);
+
+			this.renderContent?.();
+
+			// This triggers control.ready().
+			this.deferred?.embedded.resolve();
+
+			window.wp.hooks.doAction("wpbf.dynamicControl.actuallyEmbed.after", this);
 		},
 
 		/**
 		 * This is not working with autofocus.
 		 */
-		focus: function (
-			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
-			args: Record<string, any>,
-		) {
-			const control = this;
-
-			control.actuallyEmbed?.();
-			customizer.Control.prototype.focus.call(control, args);
-			window.wp.hooks.doAction("wpbf.dynamicControl.focus.after", control);
+		focus: function focus(args: Record<string, any>) {
+			this.actuallyEmbed?.();
+			customizer.Control.prototype.focus.call(this, args);
+			window.wp.hooks.doAction("wpbf.dynamicControl.focus.after", this);
 		},
 
 		/**
 		 * Additional actions that run on ready.
 		 */
-		initWpbfControl: function (
-			this: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
-			control?: WpbfCustomizeControl<any, WpbfCustomizeControlParams<any>>,
-		) {
-			control = control || this;
-
+		initWpbfControl: function initWpbfControl(control) {
 			window.wp.hooks.doAction("wpbf.dynamicControl.initWpbfControl", this);
 
 			// Save the value
-			control.container.on("change keyup paste click", "input", function () {
-				if (!control?.setting || typeof control?.setting !== "function") {
+			this.container?.on("change input paste click", "input", () => {
+				if (!this.setting || typeof this.setting !== "function") {
 					return;
 				}
 
-				control?.setting?.set(jQuery(this).val());
+				this.setting.set(jQuery(this).val());
 			});
 		},
 
-		findHtmlEl: function (elOrSelector, selector) {
+		destroy: function () {
+			this.container?.off("change input paste click", "input");
+		},
+
+		updateCustomizerSetting: function updateCustomizerSetting(val) {
+			this.setting?.set(val);
+		},
+
+		findHtmlEl: function findHtmlEl(elOrSelector, selector) {
 			if (!elOrSelector) return undefined;
 
 			if (typeof elOrSelector === "string") {
@@ -285,7 +270,7 @@ export default function setupDynamicControl(customizer: WpbfCustomize) {
 			return result instanceof HTMLElement ? result : undefined;
 		},
 
-		findHtmlEls: function (elOrSelector, selector) {
+		findHtmlEls: function findHtmlEls(elOrSelector, selector) {
 			if (!elOrSelector) return [];
 
 			if (typeof elOrSelector === "string") {

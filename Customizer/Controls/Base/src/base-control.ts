@@ -16,26 +16,23 @@ import { wpbfSetupTooltips } from "./tooltips";
  * @see https://github.com/xwp/wp-customize-posts
  */
 
-if (window.wp.customize) {
-	setupDynamicControl(window.wp.customize);
+(function (customizer) {
+	if (!customizer) return;
 
-	window.wp.customize.bind("ready", () => {
-		if (!window.wp.customize) return;
-		wpbfSetupTooltips(window.wp.customize);
+	setupDynamicControl(customizer);
+
+	customizer.bind("ready", () => {
+		wpbfSetupTooltips(customizer);
 	});
-}
 
-if (window.wpbfCustomizerControlDependencies) {
-	setupControlDependencies(window.wpbfCustomizerControlDependencies);
-}
-
-(function (api) {
-	if (!api) return;
+	if (window.wpbfCustomizerControlDependencies) {
+		setupControlDependencies(window.wpbfCustomizerControlDependencies);
+	}
 
 	/**
 	 * Set the value and trigger all bound callbacks.
 	 */
-	api.Value.prototype.set = function (to: any) {
+	customizer.Value.prototype.set = function (to: any) {
 		const from = this._value;
 
 		to = this._setter.apply(this, arguments);
@@ -76,7 +73,7 @@ if (window.wpbfCustomizerControlDependencies) {
 	/**
 	 * Get the value.
 	 */
-	api.Value.prototype.get = function () {
+	customizer.Value.prototype.get = function () {
 		/**
 		 * This was brought from Kirki.
 		 * But this is too much for now.

@@ -3,34 +3,28 @@ import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	MarginPaddingValue,
 	WpbfMarginPaddingControl,
-	WpbfMarginPaddingControlParams,
 } from "./margin-padding-interface";
 import { createRoot } from "react-dom/client";
 import { makeObjValueWithoutUnitFromJson } from "./margin-padding-util";
 
 export default function MarginPaddingControl(customizer: WpbfCustomize) {
 	return customizer.Control.extend<WpbfMarginPaddingControl>({
-		/**
-		 * Initialize.
-		 */
-		initialize: function (
-			this: WpbfMarginPaddingControl,
-			id: string,
-			params: WpbfMarginPaddingControlParams,
-		) {
-			const control = this;
-
+		initialize: function initialize(id, params) {
 			// Bind functions to this control context for passing as React props.
-			control.setNotificationContainer =
-				control.setNotificationContainer!.bind(control);
+			this.setNotificationContainer = this.setNotificationContainer?.bind(this);
+			this.overrideUpdateComponentStateFn =
+				this.overrideUpdateComponentStateFn?.bind(this);
+			this.updateCustomizerSetting = this.updateCustomizerSetting?.bind(this);
 
-			customizer.Control.prototype.initialize.call(control, id, params);
+			customizer.Control.prototype.initialize.call(this, id, params);
+
+			const control = this;
 
 			// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
 			function onRemoved(removedControl: AnyWpbfCustomizeControl) {
 				if (control === removedControl) {
-					control.destroy!();
-					control.container.remove();
+					control.destroy?.();
+					control.container?.remove();
 					customizer.control.unbind("removed", onRemoved);
 				}
 			}
@@ -43,14 +37,9 @@ export default function MarginPaddingControl(customizer: WpbfCustomize) {
 		 *
 		 * This is called when the React component is mounted.
 		 */
-		setNotificationContainer: function setNotificationContainer(
-			this: WpbfMarginPaddingControl,
-			element: HTMLElement,
-		) {
-			const control = this;
-
-			control.notifications.container = jQuery(element);
-			control.notifications.render();
+		setNotificationContainer: function setNotificationContainer(el) {
+			if (this.notifications) this.notifications.container = jQuery(el);
+			this.notifications?.render();
 		},
 
 		/**
@@ -58,13 +47,10 @@ export default function MarginPaddingControl(customizer: WpbfCustomize) {
 		 *
 		 * This is called from the Control#embed() method in the parent class.
 		 */
-		renderContent: function renderContent(this: WpbfMarginPaddingControl) {
-			const control = this;
-			const params = control.params;
-
+		renderContent: function renderContent() {
 			const isResponsive =
-				"responsive-margin" === params.subtype ||
-				"responsive-padding" === params.subtype;
+				"responsive-margin" === this.params?.subtype ||
+				"responsive-padding" === this.params?.subtype;
 
 			if (!this.root && this.container) {
 				this.root = createRoot(this.container[0]);
@@ -72,32 +58,33 @@ export default function MarginPaddingControl(customizer: WpbfCustomize) {
 
 			this.root?.render(
 				<MarginPaddingForm
-					type={params.type}
-					subtype={params.subtype}
-					label={params.label}
-					description={params.description}
-					setNotificationContainer={control.setNotificationContainer}
-					control={control}
-					customizerSetting={control.setting ?? undefined}
-					default={params.default}
-					defaultArray={params.defaultArray}
-					valueArray={params.valueArray}
-					unit={params.unit}
-					saveAsJson={params.saveAsJson}
-					dontSaveUnit={params.dontSaveUnit}
-					dimensions={params.dimensions}
-					devices={params.devices}
+					id={this.setting?.id ?? ""}
+					type={this.params?.type}
+					subtype={this.params?.subtype}
+					label={this.params?.label}
+					description={this.params?.description}
+					default={this.params?.default}
+					defaultArray={this.params?.defaultArray}
+					valueArray={this.params?.valueArray}
+					unit={this.params?.unit}
+					saveAsJson={this.params?.saveAsJson}
+					dontSaveUnit={this.params?.dontSaveUnit}
+					dimensions={this.params?.dimensions}
+					devices={this.params?.devices}
 					isResponsive={isResponsive}
+					updateCustomizerSetting={this.updateCustomizerSetting}
+					overrideUpdateComponentStateFn={this.overrideUpdateComponentStateFn}
+					setNotificationContainer={this.setNotificationContainer}
 				/>,
 			);
 
 			if (isResponsive) {
-				control.container.addClass("wpbf-customize-control-margin-padding");
-				control.container.data("control-subtype", params.subtype);
+				this.container?.addClass("wpbf-customize-control-margin-padding");
+				this.container?.data("control-subtype", this.params?.subtype);
 			}
 
-			if (params.allowCollapse) {
-				control.container.addClass("allowCollapse");
+			if (this.params?.allowCollapse) {
+				this.container?.addClass("allowCollapse");
 			}
 		},
 
@@ -106,26 +93,33 @@ export default function MarginPaddingControl(customizer: WpbfCustomize) {
 		 *
 		 * React is available to be used here instead of the customizer.Element abstraction.
 		 */
-		ready: function ready(this: WpbfMarginPaddingControl) {
-			const control = this;
-
-			/**
-			 * Update component value's state when customizer setting's value is changed.
-			 */
-			control.setting?.bind((val) => {
+		ready: function ready() {
+			// Update component value's state when customizer setting's value is changed.
+			this.setting?.bind((val) => {
 				const newVal =
 					typeof val === "string"
-						? makeObjValueWithoutUnitFromJson(control.params.dimensions, val)
+						? makeObjValueWithoutUnitFromJson(this.params?.dimensions, val)
 						: val;
 
-				control.updateComponentState!(newVal);
+				this.updateComponentState?.(newVal);
 			});
 		},
 
+		updateCustomizerSetting: function updateCustomizerSetting(val) {
+			if (val === undefined) return;
+			this.setting?.set(val);
+		},
+
 		/**
-		 * This method will be overridden by the rendered component.
+		 * This method will be overriden by the rendered component via overrideUpdateComponentStateFn.
 		 */
 		updateComponentState: (_val: MarginPaddingValue | string) => {},
+
+		overrideUpdateComponentStateFn: function overrideUpdateComponentStateFn(
+			fn,
+		) {
+			this.updateComponentState = fn;
+		},
 
 		/**
 		 * Handle removal/de-registration of the control.
@@ -134,14 +128,12 @@ export default function MarginPaddingControl(customizer: WpbfCustomize) {
 		 *
 		 * @link https://core.trac.wordpress.org/ticket/31334
 		 */
-		destroy: function destroy(this: WpbfMarginPaddingControl) {
+		destroy: function destroy() {
 			this.root?.unmount();
 			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
-			if (customizer.Control.prototype.destroy) {
-				customizer.Control.prototype.destroy.call(this);
-			}
+			customizer.Control.prototype.destroy?.call(this);
 		},
 	});
 }

@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ColorForm from "./ColorForm";
 import {
 	WpbfMulticolorControlValue,
-	WpbfMulticolorControl,
 	ColorControlLabelStyle,
 } from "./color-interface";
 import ControlLabel from "./components/ControlLabel";
@@ -12,7 +11,6 @@ import useFocusOutside from "./hooks/useFocusOutside";
 import useClickOutside from "./hooks/useClickOutside";
 
 export default function MulticolorForm(props: {
-	control: WpbfMulticolorControl;
 	container: HTMLElement;
 	choices: Record<string, string>;
 	keys: string[];
@@ -24,11 +22,15 @@ export default function MulticolorForm(props: {
 	colorSwatches: Array<string | { color: string } | undefined>;
 	value: WpbfMulticolorControlValue;
 	default: WpbfMulticolorControlValue;
-	setNotificationContainer: any;
 	formComponent?: string;
+	onChange?: (value: WpbfMulticolorControlValue) => void;
+	onReset?: () => void;
+	overrideUpdateComponentStateFn?: (
+		fn: (val: WpbfMulticolorControlValue) => void,
+	) => void;
+	setNotificationContainer?: any;
 }) {
 	const {
-		control,
 		container,
 		choices,
 		setNotificationContainer,
@@ -39,18 +41,18 @@ export default function MulticolorForm(props: {
 		description,
 	} = props;
 
-	const [value, setValue] = useState<WpbfMulticolorControlValue>(
-		props.value,
-	);
+	const [value, setValue] = useState<WpbfMulticolorControlValue>(props.value);
 
 	const [openedPopupKey, setOpenedPopupKey] = useState<string | undefined>(
 		undefined,
 	);
 
 	// This function will be called when this control's customizer value is changed.
-	control.updateColorPickers = function (value) {
+	function updateComponentState(value: WpbfMulticolorControlValue) {
 		setValue(value);
-	};
+	}
+
+	props.overrideUpdateComponentStateFn?.(updateComponentState);
 
 	function togglePopup(key: string) {
 		if (openedPopupKey) {
@@ -97,7 +99,7 @@ export default function MulticolorForm(props: {
 								ref={resetRef}
 								className={`wpbf-control-reset${openedPopupKey ? " is-shown" : ""}`}
 								title="Reset colors set"
-								onClick={() => control.onReset?.()}
+								onClick={() => props.onReset?.()}
 							>
 								<i className="dashicons dashicons-image-rotate"></i>
 							</button>
@@ -129,7 +131,7 @@ export default function MulticolorForm(props: {
 						return (
 							<ColorForm
 								key={`${key}-${i}`}
-								control={control}
+								type="wpbf-multicolor"
 								container={container}
 								label={props.label}
 								description={props.description}
@@ -148,7 +150,7 @@ export default function MulticolorForm(props: {
 									const val = { ...value };
 									val[key] = newValue;
 
-									control.onChange?.(val);
+									props.onChange?.(val);
 								}}
 							/>
 						);

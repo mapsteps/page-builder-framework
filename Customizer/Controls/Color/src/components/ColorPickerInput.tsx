@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { colorBgImgData } from "../utils/misc";
 
 export default function ColorPickerInput(props: {

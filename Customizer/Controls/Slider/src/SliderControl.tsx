@@ -80,7 +80,7 @@ export default function SliderControl(customizer: WpbfCustomize) {
 			});
 		},
 
-		updateCustomizerSetting: function (val) {
+		updateCustomizerSetting: function updateCustomizerSetting(val) {
 			if (val === undefined) return;
 			this.setting?.set(val);
 		},
@@ -90,8 +90,8 @@ export default function SliderControl(customizer: WpbfCustomize) {
 		 */
 		updateComponentState: function (val) {},
 
-		overrideUpdateComponentStateFn: function (
-			fn: (val: string | number) => void,
+		overrideUpdateComponentStateFn: function overrideUpdateComponentStateFn(
+			fn,
 		) {
 			this.updateComponentState = fn;
 		},
@@ -108,9 +108,7 @@ export default function SliderControl(customizer: WpbfCustomize) {
 			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
-			if (customizer.Control.prototype.destroy) {
-				customizer.Control.prototype.destroy.call(this);
-			}
+			customizer.Control.prototype.destroy?.call(this);
 		},
 	});
 }
