@@ -14,6 +14,8 @@ const MulticolorControl =
 			this.setNotificationContainer = this.setNotificationContainer?.bind(this);
 			this.overrideUpdateComponentStateFn =
 				this.overrideUpdateComponentStateFn?.bind(this);
+			this.onChange = this.onChange?.bind(this);
+			this.onReset = this.onReset?.bind(this);
 
 			window.wp.customize?.Control.prototype.initialize.call(this, id, params);
 
@@ -73,6 +75,7 @@ const MulticolorControl =
 
 			this.root?.render(
 				<MulticolorForm
+					id={this.setting?.id ?? ""}
 					container={this.container[0]}
 					choices={this.params.choices}
 					keys={Object.keys(this.params.choices)}

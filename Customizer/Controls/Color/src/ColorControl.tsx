@@ -10,6 +10,8 @@ const ColorControl = window.wp.customize?.Control.extend<WpbfColorControl>({
 		this.setNotificationContainer = this.setNotificationContainer?.bind(this);
 		this.overrideUpdateComponentStateFn =
 			this.overrideUpdateComponentStateFn?.bind(this);
+		this.onChange = this.onChange?.bind(this);
+		this.onReset = this.onReset?.bind(this);
 
 		window.wp.customize?.Control.prototype.initialize.call(this, id, params);
 

@@ -11,6 +11,7 @@ import useFocusOutside from "./hooks/useFocusOutside";
 import useClickOutside from "./hooks/useClickOutside";
 
 export default function MulticolorForm(props: {
+	id: string;
 	container: HTMLElement;
 	choices: Record<string, string>;
 	keys: string[];
