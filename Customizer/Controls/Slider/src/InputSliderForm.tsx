@@ -21,7 +21,6 @@ export default function InputSliderForm(props: {
 	let trigger = "";
 
 	function updateComponentState(val: string | number) {
-		console.log("InputSliderForm updateComponentState", val);
 		if ("slider" === trigger) {
 			setInputRefValue(makeValueForInput(val, props.min, props.max));
 		} else if ("input" === trigger) {
