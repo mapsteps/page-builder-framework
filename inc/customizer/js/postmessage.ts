@@ -714,7 +714,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		},
 	);
 
-	// Hamburger button color.
+	// Hamburger (filled) button color.
 	listenToCustomizerValueChange<string | number>(
 		"mobile_menu_hamburger_bg_color",
 		function (settingId, value) {
@@ -734,21 +734,27 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 					color: "#ffffff !important",
 					padding: "10px",
 					"line-height": 1,
-					"border-radius": borderRadius
-						? maybeAppendSuffix(borderRadius)
-						: undefined,
+					"border-radius": emptyNotZero(borderRadius)
+						? undefined
+						: maybeAppendSuffix(borderRadius),
 				},
 			});
 		},
 	);
 
-	// Hamburger border radius (filled).
+	// Hamburger (filled) button border radius.
 	listenToCustomizerValueChange<string | number>(
 		"mobile_menu_hamburger_border_radius",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-mobile-nav-item",
-				props: { "border-radius": maybeAppendSuffix(value) },
+				selector: ".wpbf-mobile-menu-toggle",
+				props: {
+					/**
+					 * Intentionally not checking for the value,
+					 * because we need to force overwrite the border-radius value set in "mobile_menu_hamburger_bg_color" block.
+					 */
+					"border-radius": maybeAppendSuffix(value),
+				},
 			});
 		},
 	);
