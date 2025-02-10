@@ -8,11 +8,9 @@ import { parseJsonOrUndefined } from "../../../Customizer/Controls/Generic/src/s
 import { MarginPaddingValue } from "../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
 import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/responsive-interface";
 
-(function (
-	$: JQueryStatic,
-	breakpoints: WpbfBreakpoints,
-	customizer?: WpbfCustomize,
-) {
+(function ($: JQueryStatic, customizer?: WpbfCustomize) {
+	const breakpoints = window.WpbfTheme.breakpoints;
+
 	const mediaQueries = {
 		tablet: "max-width: " + (breakpoints.desktop - 1).toString() + "px",
 		mobile: "max-width: " + (breakpoints.tablet - 1).toString() + "px",
@@ -2612,4 +2610,4 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			},
 		);
 	}
-})(jQuery, window.WpbfTheme.breakpoints, window.wp.customize);
+})(jQuery, window.wp.customize);
