@@ -96,3 +96,5 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/si
 
 // Mobile widget sections.
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/menu-trigger-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/button-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/mobile/button-2-section.php';

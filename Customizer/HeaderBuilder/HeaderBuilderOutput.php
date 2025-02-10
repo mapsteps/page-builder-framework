@@ -236,9 +236,120 @@ class HeaderBuilderOutput {
 
 	}
 
+	/**
+	 * An action to render mobile navigation.
+	 *
+	 * This action will be hooked to `wpbf_navigation` action hook.
+	 *
+	 * @see self::setup_hooks()
+	 */
 	public function do_mobile_navigation() {
 
-		//
+		$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
+
+		if ( ! empty( $row_1_columns ) && is_array( $row_1_columns ) ) {
+			$this->render_mobile_row( 'mobile_row_1', $row_1_columns );
+		}
+
+		$row_2_columns = isset( $this->mobile_columns['mobile_row_2'] ) ? $this->mobile_columns['mobile_row_2'] : array();
+
+		if ( ! empty( $row_2_columns ) && is_array( $row_2_columns ) ) {
+			$this->render_mobile_row( 'mobile_row_2', $row_2_columns );
+		}
+
+		$row_3_columns = isset( $this->mobile_columns['mobile_row_3'] ) ? $this->mobile_columns['mobile_row_3'] : array();
+
+		if ( ! empty( $row_3_columns ) && is_array( $row_3_columns ) ) {
+			$this->render_mobile_row( 'mobile_row_3', $row_3_columns );
+		}
+
+	}
+
+	/**
+	 * Render mobile header builder row.
+	 *
+	 * @param string $row_key The row key.
+	 * @param array  $columns The row columns.
+	 */
+	private function render_mobile_row( $row_key, $columns ) {
+
+		$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
+
+		$dimensions   = [ 'large', 'medium', 'small' ];
+		$visibilities = get_theme_mod( $row_id_prefix . 'visibility', null );
+		$visibilities = is_array( $visibilities ) ? $visibilities : [ 'medium', 'small' ];
+
+		// Lets only enable mobile for now.
+		$visibilities = [ 'medium', 'small' ];
+
+		$hidden_dimensions = array_diff( $dimensions, $visibilities );
+
+		$visibility_class = implode( ' ', array_map( function ( $dimension ) {
+			return 'wpbf-hidden-' . esc_attr( $dimension );
+		}, $hidden_dimensions ) );
+
+		$container_class = 'wpbf-container wpbf-container-center';
+
+		$row_class = ( 'mobile_row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
+
+		echo '<div class="' . esc_attr( $row_class ) . '">';
+
+		if ( 'mobile_row_1' !== $row_key ) {
+			echo '<div class="' . esc_attr( $container_class ) . '">';
+		}
+
+		echo '<div class="' . ( 'mobile_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
+
+		foreach ( $columns as $column_key => $widget_keys ) {
+
+			$column_class    = 'wpbf-flex wpbf-header-column';
+			$alignment_class = 'wpbf-content-center wpbf-items-center';
+			$column_position = '';
+
+			if ( false !== stripos( $column_key, '_start' ) ) {
+				$alignment_class = 'wpbf-content-start';
+				$column_position = 'left';
+			} elseif ( false !== stripos( $column_key, '_end' ) ) {
+				$alignment_class = 'wpbf-content-end';
+				$column_position = 'right';
+			}
+
+			// print( '<pre>' . print_r( $widget_keys, true ) . '</pre>' );
+
+			if (
+			in_array( 'mobile_menu_1', $widget_keys, true )
+			|| in_array( 'mobile_menu_2', $widget_keys, true )
+			|| in_array( 'mobile_html_1', $widget_keys, true )
+			|| in_array( 'mobile_html_2', $widget_keys, true )
+			|| in_array( 'mobile_button_1', $widget_keys, true )
+			|| in_array( 'mobile_button_2', $widget_keys, true )
+			|| in_array( 'mobile_search', $widget_keys, true )
+			|| in_array( 'mobile_logo', $widget_keys, true )
+			) {
+				$column_class .= ' wpbf-column-grow';
+			}
+
+			echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
+
+			foreach ( $widget_keys as $widget_key ) {
+
+				if ( empty( $widget_key ) ) {
+					continue;
+				}
+
+				wpbf_render_builder_widget( 'header_builder', $widget_key, $column_position );
+			}
+
+			echo '</div>';
+		}
+
+		echo '</div>';
+
+		if ( 'mobile_row_1' !== $row_key ) {
+			echo '</div>';
+		}
+
+		echo '</div>';
 
 	}
 

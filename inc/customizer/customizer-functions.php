@@ -486,8 +486,13 @@ function wpbf_render_builder_search_widget( $setting_group ) {
  */
 function wpbf_render_builder_button_widget( $setting_group ) {
 
-	$link_text = get_theme_mod( $setting_group . '_text', '' );
-	$link_url  = get_theme_mod( $setting_group . '_url', '' );
+	// Extract the last character from setting group.
+	$group_number = substr( $setting_group, -1 );
+
+	$default_text = 'Button ' . ( is_numeric( $group_number ) ? $group_number : '1' );
+
+	$link_text = get_theme_mod( $setting_group . '_text', $default_text );
+	$link_url  = get_theme_mod( $setting_group . '_url', get_site_url() );
 
 	if ( empty( $link_text ) && empty( $link_url ) ) {
 		return;

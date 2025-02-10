@@ -172,6 +172,110 @@ foreach ( $rows as $row_key => $columns ) {
 	}
 }
 
+
+$mobile_values = isset( $saved_values['mobile'] ) && is_array( $saved_values['mobile'] ) ? $saved_values['mobile'] : array();
+$mobile_rows   = isset( $mobile_values['rows'] ) && is_array( $mobile_values['rows'] ) ? $mobile_values['rows'] : array();
+$m_rows        = array();
+
+// Filter the saved rows.
+if ( is_array( $mobile_rows ) && ! empty( $mobile_rows ) ) {
+	foreach ( $mobile_rows as $row_key => $columns ) {
+		if ( empty( $row_key ) || empty( $columns ) ) {
+			continue;
+		}
+
+		foreach ( $columns as $column_key => $widget_keys ) {
+			if ( empty( $column_key ) || empty( $widget_keys ) ) {
+				continue;
+			}
+
+			if ( ! isset( $rows[ $row_key ] ) ) {
+				$m_rows[ $row_key ] = array();
+			}
+
+			if ( ! isset( $rows[ $row_key ][ $column_key ] ) ) {
+				$m_rows[ $row_key ][ $column_key ] = array();
+			}
+
+			foreach ( $widget_keys as $widget_key ) {
+				if ( empty( $widget_key ) ) {
+					continue;
+				}
+
+				$m_rows[ $row_key ][ $column_key ][] = $widget_key;
+			}
+		}
+	}
+}
+
+// Now loop through the filtered/validated rows.
+foreach ( $m_rows as $row_key => $columns ) {
+	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
+
+	if ( 'mobile_row_1' === $row_key ) {
+
+		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
+
+		$v_padding = wpbf_customize_str_value( $row_id_prefix . 'vertical_padding' );
+		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
+
+		wpbf_write_css( array(
+			'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content',
+			'props'    => array(
+				'padding-top'    => wpbf_maybe_append_suffix( $v_padding ),
+				'padding-bottom' => wpbf_maybe_append_suffix( $v_padding ),
+			),
+		) );
+
+		$font_size = wpbf_customize_str_value( $row_id_prefix . 'font_size' );
+		$font_size = '' === $font_size || '16' === $font_size ? '16px' : $font_size;
+
+		if ( $font_size ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
+				'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
+			) );
+		}
+
+		$accent_colors = wpbf_customize_array_value( $row_id_prefix . 'accent_colors' );
+
+		if ( ! empty( $accent_colors ) ) {
+			$default_color = ! empty( $accent_colors['default'] ) ? $accent_colors['default'] : '';
+			$hover_color   = ! empty( $accent_colors['hover'] ) ? $accent_colors['hover'] : '';
+
+			if ( $default_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a',
+					'props'    => array( 'color' => $default_color ),
+				) );
+			}
+
+			if ( $hover_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:focus',
+					'props'    => array( 'color' => $hover_color ),
+				) );
+			}
+		}
+
+		if ( $bg_color || $text_color ) {
+			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
+
+			if ( $bg_color ) {
+				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
+			}
+
+			if ( $text_color ) {
+				echo 'color: ' . esc_attr( $text_color ) . ';';
+			}
+
+			echo '}';
+		}
+
+	}
+}
+
 $devices = ( new ResponsiveUtil() )->devices();
 
 $header_builder_control_id_prefix = 'wpbf_header_builder_';
@@ -182,7 +286,7 @@ $header_builder_control_id_prefix = 'wpbf_header_builder_';
  * ----------------------------------------------------------------------
  */
 
-$button_keys = array( 'desktop_button_1', 'desktop_button_2' );
+$button_keys = array( 'desktop_button_1', 'desktop_button_2', 'mobile_button_1', 'mobile_button_2' );
 
 foreach ( $button_keys as $button_key ) {
 

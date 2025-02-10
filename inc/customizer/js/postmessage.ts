@@ -2527,6 +2527,18 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 	});
 
+	/* Header Builder */
+	// Top Row Background color.
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"wpbf_header_builder_mobile_row_1_bg_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-header-row-mobile_row_1",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
+
 	function listenToBuilderMulticolorControl(props: {
 		controlId: string;
 		cssSelector: string;
