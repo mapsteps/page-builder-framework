@@ -8,9 +8,11 @@ import { parseJsonOrUndefined } from "../../../Customizer/Controls/Generic/src/s
 import { MarginPaddingValue } from "../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
 import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/responsive-interface";
 
-(function ($: JQueryStatic) {
-	const breakpoints = window.WpbfTheme.breakpoints;
-
+(function (
+	$: JQueryStatic,
+	breakpoints: WpbfBreakpoints,
+	customizer?: WpbfCustomize,
+) {
 	const mediaQueries = {
 		tablet: "max-width: " + (breakpoints.desktop - 1).toString() + "px",
 		mobile: "max-width: " + (breakpoints.tablet - 1).toString() + "px",
@@ -89,9 +91,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	}
 
 	function headerBuilderEnabled() {
-		return window.wp.customize?.("wpbf_enable_header_builder").get()
-			? true
-			: false;
+		return customizer?.("wpbf_enable_header_builder").get() ? true : false;
 	}
 
 	/**
@@ -110,6 +110,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 		document.head.append(styleTag);
 		return styleTag;
+	}
+
+	function removeStyleTag(id: string) {
+		const styleTag = document.querySelector(`style[data-id="${id}"]`);
+		styleTag?.remove();
 	}
 
 	function writeCSS(
@@ -244,14 +249,11 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		settingId: string,
 		fn: (settingId: string, value: VT) => void,
 	) {
-		window.wp.customize?.(
-			settingId,
-			function (setting: WpbfCustomizeSetting<VT>) {
-				setting.bind(function (value) {
-					fn(settingId, value);
-				});
-			},
-		);
+		customizer?.(settingId, function (setting: WpbfCustomizeSetting<VT>) {
+			setting.bind(function (value) {
+				fn(settingId, value);
+			});
+		});
 	}
 
 	/* Layout */
@@ -712,6 +714,34 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		},
 	);
 
+	// Hamburger button color.
+	listenToCustomizerValueChange<string | number>(
+		"mobile_menu_hamburger_bg_color",
+		function (settingId, value) {
+			if (!value) {
+				removeStyleTag(settingId);
+				return;
+			}
+
+			const borderRadius = customizer?.(
+				"mobile_menu_hamburger_border_radius",
+			).get();
+
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu-toggle",
+				props: {
+					"background-color": toStringColor(value),
+					color: "#ffffff !important",
+					padding: "10px",
+					"line-height": 1,
+					"border-radius": borderRadius
+						? maybeAppendSuffix(borderRadius)
+						: undefined,
+				},
+			});
+		},
+	);
+
 	// Hamburger border radius (filled).
 	listenToCustomizerValueChange<string | number>(
 		"mobile_menu_hamburger_border_radius",
@@ -854,7 +884,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	listenToCustomizerValueChange<string | number>(
 		"mobile_sub_menu_indent",
 		function (settingId, value) {
-			const paddingVal = window.wp.customize?.("mobile_menu_padding").get() as
+			const paddingVal = customizer?.("mobile_menu_padding").get() as
 				| string
 				| MarginPaddingValue;
 
@@ -2236,7 +2266,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 		const visibilitySettingId = `${controlIdPrefix}visibility`;
 
-		window.wp.customize?.(
+		customizer?.(
 			visibilitySettingId,
 			(value: WpbfCustomizeSetting<WpbfCheckboxButtonsetControlValue>) => {
 				const availableSizes = ["large", "medium", "small"];
@@ -2498,7 +2528,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		cssSelector: string;
 		cssProps: string | string[];
 	}) {
-		window.wp.customize?.(
+		customizer?.(
 			props.controlId,
 			function (value: WpbfCustomizeSetting<Record<string, string>>) {
 				const styleTag = getStyleTag(props.controlId);
@@ -2540,7 +2570,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		cssProps: string | string[];
 		useValueSuffix?: boolean;
 	}) {
-		window.wp.customize?.(
+		customizer?.(
 			props.controlId,
 			function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
 				const styleTag = getStyleTag(props.controlId);
@@ -2576,4 +2606,4 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			},
 		);
 	}
-})(jQuery);
+})(jQuery, window.WpbfTheme.breakpoints, window.wp.customize);
