@@ -14,13 +14,14 @@ export default function InputSliderForm(props: {
 	description: string | undefined;
 	default: string | number;
 	value: string | number;
+	setNotificationContainer: any;
 	overrideUpdateComponentStateFn?: (fn: (val: string | number) => void) => void;
 	updateCustomizerSetting?: (val: string | number) => void;
-	setNotificationContainer: any;
 }) {
 	let trigger = "";
 
 	function updateComponentState(val: string | number) {
+		console.log("InputSliderForm updateComponentState", val);
 		if ("slider" === trigger) {
 			setInputRefValue(makeValueForInput(val, props.min, props.max));
 		} else if ("input" === trigger) {

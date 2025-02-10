@@ -60,8 +60,9 @@ export default function InputSliderControl(customizer: WpbfCustomize) {
 					description={this.params?.description}
 					default={this.params?.default ?? ""}
 					value={this.params?.value ?? ""}
-					overrideUpdateComponentStateFn={this.overrideUpdateComponentStateFn}
 					setNotificationContainer={this.setNotificationContainer}
+					overrideUpdateComponentStateFn={this.overrideUpdateComponentStateFn}
+					updateCustomizerSetting={this.updateCustomizerSetting}
 				/>,
 			);
 
