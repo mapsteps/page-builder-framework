@@ -13,7 +13,7 @@ function toBoolOrString(value: any) {
 	return String(value);
 }
 
-export function setupControlsMovement<SV>(props: {
+export function moveCustomizerControls<SV>(props: {
 	dependency: {
 		settingId: string;
 		moveForwardWhenValueIs: boolean | string | number;

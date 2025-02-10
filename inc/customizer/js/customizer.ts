@@ -1,4 +1,4 @@
-import { setupControlsMovement } from "../../../assets/js/utils/customizer-util";
+import { moveCustomizerControls } from "../../../assets/js/utils/customizer-util";
 import setupBuilderControlToggleBehavior from "./partials/setup-builder-control";
 
 window.wp.customize?.bind("ready", () => {
@@ -17,7 +17,7 @@ function setupCustomizer() {
 		listenDevicePreviewSwitch();
 		setupLogoContainerWidth();
 		setupBuilderControlToggleBehavior();
-		moveControls();
+		setupControlsMovement();
 	}
 
 	function listenDevicePreviewSwitch() {
@@ -66,8 +66,8 @@ function setupCustomizer() {
 			});
 	}
 
-	function moveControls() {
-		setupControlsMovement({
+	function setupControlsMovement() {
+		moveCustomizerControls({
 			dependency: {
 				settingId: "wpbf_enable_header_builder",
 				moveForwardWhenValueIs: true,

@@ -38,3 +38,18 @@ $partial_refresh_args = array(
 		return get_template_part( 'inc/template-parts/header' );
 	},
 );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'reveal_as' )
+	->type( 'radio-buttonset' )
+	->tab( 'general' )
+	->label( __( 'Reveal as', 'page-builder-framework' ) )
+	->defaultValue( 'none' )
+	->priority( 5 )
+	->choices( [
+		'dropdown'   => __( 'Dropdown', 'page-builder-framework' ),
+		'off-canvas' => __( 'Off-canvas', 'page-builder-framework' ),
+	] )
+	->defaultValue( 'dropdown' )
+	->transport( 'postMessage' )
+	->addToSection( $section_id );

@@ -236,6 +236,10 @@ class HeaderBuilderOutput {
 
 	}
 
-	public function do_mobile_navigation() {}
+	public function do_mobile_navigation() {
+
+		//
+
+	}
 
 }
