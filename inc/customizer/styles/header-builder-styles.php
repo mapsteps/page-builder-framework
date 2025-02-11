@@ -246,14 +246,103 @@ foreach ( $m_rows as $row_key => $columns ) {
 
 			if ( $default_color ) {
 				wpbf_write_css( array(
-					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a',
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2)',
 					'props'    => array( 'color' => $default_color ),
 				) );
 			}
 
 			if ( $hover_color ) {
 				wpbf_write_css( array(
-					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:focus',
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):focus',
+					'props'    => array( 'color' => $hover_color ),
+				) );
+			}
+		}
+
+		if ( $bg_color || $text_color ) {
+			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
+
+			if ( $bg_color ) {
+				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
+			}
+
+			if ( $text_color ) {
+				echo 'color: ' . esc_attr( $text_color ) . ';';
+			}
+
+			echo '}';
+		}
+
+	}
+
+	if ( 'mobile_row_2' === $row_key ) {
+
+		$bg_color  = wpbf_customize_str_value( 'mobile_menu_background_color' );
+		$v_padding = wpbf_customize_str_value( $row_id_prefix . 'vertical_padding' );
+		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
+
+		wpbf_write_css( array(
+			'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content',
+			'props'    => array(
+				'padding-top'    => wpbf_maybe_append_suffix( $v_padding ),
+				'padding-bottom' => wpbf_maybe_append_suffix( $v_padding ),
+			),
+		) );
+
+		if ( $bg_color ) {
+			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
+
+			if ( $bg_color ) {
+				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
+			}
+
+			echo '}';
+		}
+
+	}
+
+	if ( 'mobile_row_3' === $row_key ) {
+
+		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
+
+		$v_padding = wpbf_customize_str_value( $row_id_prefix . 'vertical_padding' );
+		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
+
+		wpbf_write_css( array(
+			'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content',
+			'props'    => array(
+				'padding-top'    => wpbf_maybe_append_suffix( $v_padding ),
+				'padding-bottom' => wpbf_maybe_append_suffix( $v_padding ),
+			),
+		) );
+
+		$font_size = wpbf_customize_str_value( $row_id_prefix . 'font_size' );
+		$font_size = '' === $font_size || '16' === $font_size ? '16px' : $font_size;
+
+		if ( $font_size ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
+				'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
+			) );
+		}
+
+		$accent_colors = wpbf_customize_array_value( $row_id_prefix . 'accent_colors' );
+
+		if ( ! empty( $accent_colors ) ) {
+			$default_color = ! empty( $accent_colors['default'] ) ? $accent_colors['default'] : '';
+			$hover_color   = ! empty( $accent_colors['hover'] ) ? $accent_colors['hover'] : '';
+
+			if ( $default_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2)',
+					'props'    => array( 'color' => $default_color ),
+				) );
+			}
+
+			if ( $hover_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):focus',
 					'props'    => array( 'color' => $hover_color ),
 				) );
 			}
@@ -345,4 +434,55 @@ foreach ( $button_keys as $button_key ) {
 		) );
 	}
 
+}
+
+
+// Mobile Header Builder Search Icon Styles.
+// Size.
+$control_id_prefix = $header_builder_control_id_prefix . 'mobile_search_';
+$icon_size         = wpbf_customize_array_value( $control_id_prefix . 'icon_size' );
+$icon_size         = '' === $icon_size || '16' === $icon_size ? '16px' : $icon_size;
+
+foreach ( $devices as $device ) {
+	if ( 'tablet' !== $device && 'mobile' !== $device ) {
+		continue;
+	}
+
+	$breakpoint_width = 'tablet' === $device ? $breakpoint_medium : $breakpoint_mobile;
+
+	$device_icon_size = isset( $icon_size[ $device ] ) && '' !== $icon_size[ $device ] ? $icon_size[ $device ] : null;
+
+	if ( is_null( $device_icon_size ) ) {
+		continue;
+	}
+
+	wpbf_write_css( array(
+		'media_query' => '@media screen and (max-width: ' . $breakpoint_width . ')',
+		'selector'    => '.wpbff-search',
+		'props'       => array(
+			'font-size' => $device_icon_size ? wpbf_maybe_append_suffix( $device_icon_size ) : null,
+		),
+	) );
+}
+
+// Color.
+$icon_color = wpbf_customize_array_value( $control_id_prefix . 'icon_color' );
+
+if ( ! empty( $icon_color ) ) {
+	$default_color = ! empty( $icon_color['default'] ) ? $icon_color['default'] : '';
+	$hover_color   = ! empty( $icon_color['hover'] ) ? $icon_color['hover'] : '';
+
+	if ( $default_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbff-search',
+			'props'    => array( 'color' => $default_color ),
+		) );
+	}
+
+	if ( $hover_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbff-search:hover, .wpbff-search:focus',
+			'props'    => array( 'color' => $hover_color ),
+		) );
+	}
 }

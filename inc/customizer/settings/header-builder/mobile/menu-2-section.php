@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$row_key = 'desktop_menu_2';
+$row_key = 'mobile_menu_2';
 
 $section_id = 'wpbf_header_builder_' . $row_key . '_section';
 

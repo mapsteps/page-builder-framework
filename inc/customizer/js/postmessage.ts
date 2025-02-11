@@ -2527,17 +2527,230 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 	});
 
-	/* Header Builder */
-	// Top Row Background color.
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"wpbf_header_builder_mobile_row_1_bg_color",
+	/* Mobile Header Builder */
+
+	// Search Icon Color.
+	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
+		`wpbf_header_builder_mobile_search_icon_color`,
 		function (settingId, value) {
+			const defaultColor = toStringColor(value?.default ?? ""); // Ensure a fallback
+			const hoverColor = toStringColor(value?.hover ?? "");
+
 			writeCSS(settingId, {
-				selector: ".wpbf-header-row-mobile_row_1",
-				props: { "background-color": toStringColor(value) },
+				blocks: [
+					{
+						selector: `.wpbff-search`,
+						props: { color: defaultColor },
+					},
+					{
+						selector: `.wpbff-search:hover, .wpbff-search:focus`,
+						props: { color: hoverColor },
+					},
+				],
 			});
 		},
 	);
+
+	// Search Icon Size.
+	listenToCustomizerValueChange<string | DevicesValue>(
+		"wpbf_header_builder_mobile_search_icon_size",
+		function (settingId, value) {
+			const obj = parseJsonOrUndefined<DevicesValue>(value); 
+
+			writeCSS(settingId + "-tablet", {
+				mediaQuery: `@media (${mediaQueries.tablet})`,
+				selector: ".wpbff-search",
+				props: { "font-size": maybeAppendSuffix(obj?.tablet) },
+			});
+
+			writeCSS(settingId + "-mobile", {
+				mediaQuery: `@media (${mediaQueries.mobile})`,
+				selector: ".wpbff-search",
+				props: { "font-size": maybeAppendSuffix(obj?.mobile) },
+			});
+		},
+	);
+
+	const mobileHeaderBuilderRows = [
+		"mobile_row_1",
+		"mobile_row_2",
+		"mobile_row_3",
+	];
+	mobileHeaderBuilderRows.forEach((rowKey) => {
+		const controlIdPrefix = `wpbf_header_builder_${rowKey}_`;
+
+		if (rowKey === "mobile_row_1") {
+			// vertical padding
+			listenToCustomizerValueChange<number | string>(
+				`${controlIdPrefix}vertical_padding`,
+				function (settingId, value) {
+					const selector = `.wpbf-header-row-${rowKey}`;
+					writeCSS(settingId, {
+						selector: selector,
+						props: {
+							"padding-top": maybeAppendSuffix(value),
+							"padding-bottom": maybeAppendSuffix(value),
+						},
+					});
+				},
+			);
+
+			// bg color
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				`${controlIdPrefix}bg_color`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { "background-color": toStringColor(value) },
+					});
+				},
+			);
+
+			// text color / font color
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				`${controlIdPrefix}text_color`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { color: toStringColor(value) },
+					});
+				},
+			);
+
+			// Accent colors
+			listenToCustomizerValueChange<WpbfMulticolorControlValue>(
+				`${controlIdPrefix}accent_colors`,
+				function (settingId, value) {
+					const defaultColor = toStringColor(value?.default ?? ""); // Ensure a fallback
+					const hoverColor = toStringColor(value?.hover ?? "");
+
+					writeCSS(settingId, {
+						blocks: [
+							{
+								selector: `.wpbf-header-row-${rowKey} a`,
+								props: { color: defaultColor },
+							},
+							{
+								selector: `.wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):hover, .wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):focus`,
+								props: { color: hoverColor },
+							},
+						],
+					});
+				},
+			);
+
+			// font size
+			listenToCustomizerValueChange<string | number>(
+				`${controlIdPrefix}font_size`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { "font-size": maybeAppendSuffix(value) },
+					});
+				},
+			);
+		}
+
+		if (rowKey === "mobile_row_2") {
+			// vertical padding
+			listenToCustomizerValueChange<number | string>(
+				`${controlIdPrefix}vertical_padding`,
+				function (settingId, value) {
+					const selector = `.wpbf-header-row-${rowKey}`;
+					writeCSS(settingId, {
+						selector: selector,
+						props: {
+							"padding-top": maybeAppendSuffix(value),
+							"padding-bottom": maybeAppendSuffix(value),
+						},
+					});
+				},
+			);
+
+			// bg color
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				`mobile_menu_background_color`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { "background-color": toStringColor(value) },
+					});
+				},
+			);
+		}
+
+		if (rowKey === "mobile_row_3") {
+			// vertical padding
+			listenToCustomizerValueChange<number | string>(
+				`${controlIdPrefix}vertical_padding`,
+				function (settingId, value) {
+					const selector = `.wpbf-header-row-${rowKey}`;
+					writeCSS(settingId, {
+						selector: selector,
+						props: {
+							"padding-top": maybeAppendSuffix(value),
+							"padding-bottom": maybeAppendSuffix(value),
+						},
+					});
+				},
+			);
+
+			// bg color
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				`${controlIdPrefix}bg_color`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { "background-color": toStringColor(value) },
+					});
+				},
+			);
+
+			// text color / font color
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				`${controlIdPrefix}text_color`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { color: toStringColor(value) },
+					});
+				},
+			);
+
+			// Accent colors
+			listenToCustomizerValueChange<WpbfMulticolorControlValue>(
+				`${controlIdPrefix}accent_colors`,
+				function (settingId, value) {
+					const defaultColor = toStringColor(value?.default ?? ""); // Ensure a fallback
+					const hoverColor = toStringColor(value?.hover ?? "");
+
+					writeCSS(settingId, {
+						blocks: [
+							{
+								selector: `.wpbf-header-row-${rowKey} a`,
+								props: { color: defaultColor },
+							},
+							{
+								selector: `.wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):hover, .wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):focus`,
+								props: { color: hoverColor },
+							},
+						],
+					});
+				},
+			);
+
+			// font size
+			listenToCustomizerValueChange<string | number>(
+				`${controlIdPrefix}font_size`,
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { "font-size": maybeAppendSuffix(value) },
+					});
+				},
+			);
+		}
+	});
 
 	function listenToBuilderMulticolorControl(props: {
 		controlId: string;

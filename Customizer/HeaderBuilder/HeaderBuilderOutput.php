@@ -244,7 +244,7 @@ class HeaderBuilderOutput {
 	 * @see self::setup_hooks()
 	 */
 	public function do_mobile_navigation() {
-
+		 
 		$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
 
 		if ( ! empty( $row_1_columns ) && is_array( $row_1_columns ) ) {
@@ -314,8 +314,6 @@ class HeaderBuilderOutput {
 				$column_position = 'right';
 			}
 
-			// print( '<pre>' . print_r( $widget_keys, true ) . '</pre>' );
-
 			if (
 			in_array( 'mobile_menu_1', $widget_keys, true )
 			|| in_array( 'mobile_menu_2', $widget_keys, true )
@@ -325,6 +323,7 @@ class HeaderBuilderOutput {
 			|| in_array( 'mobile_button_2', $widget_keys, true )
 			|| in_array( 'mobile_search', $widget_keys, true )
 			|| in_array( 'mobile_logo', $widget_keys, true )
+			|| in_array( 'mobile_menu_trigger', $widget_keys, true )
 			) {
 				$column_class .= ' wpbf-column-grow';
 			}

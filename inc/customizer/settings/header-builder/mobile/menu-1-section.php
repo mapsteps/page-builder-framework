@@ -1,6 +1,6 @@
 <?php
 /**
- * Header builder's menu 2 section.
+ * Header builder's menu 1 section.
  *
  * @package Page Builder Framework
  * @subpackage Customizer
@@ -8,14 +8,14 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$row_key = 'desktop_menu_2';
+$row_key = 'mobile_menu_1';
 
 $section_id = 'wpbf_header_builder_' . $row_key . '_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
 	->type( 'invisible' )
-	->title( __( 'Menu 2', 'page-builder-framework' ) )
+	->title( __( 'Menu 1', 'page-builder-framework' ) )
 	->tabs( [
 		'general' => [
 			'label' => esc_html__( 'General', 'page-builder-framework' ),
@@ -43,7 +43,7 @@ $partial_refresh_args = array(
 
 $menu_term_list = wp_get_nav_menus();
 
-$menu_choices = [];
+$menu_choices = [ '' => __( '— Select a Menu —', 'page-builder-framework' ) ];
 
 if ( ! empty( $menu_term_list ) ) {
 	foreach ( $menu_term_list as $menu_term ) {
