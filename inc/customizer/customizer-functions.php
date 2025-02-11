@@ -453,6 +453,9 @@ function wpbf_render_builder_widget( $builder_type, $widget_key, $column_positio
 		case 'mobile_html_2':
 			wpbf_render_builder_html_widget( $setting_group );
 			break;
+		case 'mobile_menu_trigger':
+			wpbf_render_builder_mobile_menu_trigger_widget( $setting_group, $column_position );
+			break;
 	}
 
 }
@@ -556,6 +559,29 @@ function wpbf_render_builder_menu_widget( $setting_group, $column_position = '' 
 		?>
 
 	</nav>
+
+	<?php
+}
+
+/**
+ * Render the builder menu widget.
+ *
+ * @param string $setting_group The setting group key.
+ * @param string $column_position The column position. Accepts 'left', 'center', 'right', or empty string.
+ */
+function wpbf_render_builder_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
+
+	$menu_text = get_theme_mod( $setting_group . '_text', 'Mobile menu' );
+	$style     = get_theme_mod( $setting_group . '_style', 'none' );
+ 
+	$menu_position_class = 'wpbf-menu-' . $column_position;
+	?>
+
+		<button id="wpbf-mobile-menu-toggle" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger <?php echo esc_attr( $menu_position_class ); ?>" aria-label="<?php echo wp_kses_post( $menu_text ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
+			<span class="screen-reader-text">
+				<?php echo wp_kses_post( $menu_text ); ?>
+			</span>
+		</button>
 
 	<?php
 }
