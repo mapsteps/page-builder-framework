@@ -1,3 +1,4 @@
+import { size } from "lodash";
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
 import { WpbfCheckboxButtonsetControlValue } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 import {
@@ -2528,6 +2529,27 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	});
 
 	/* Mobile Header Builder */
+	// mobile menu trigger color.
+		listenToCustomizerValueChange<WpbfColorControlValue>(
+			"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color",
+			function (settingId, value) {
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-toggle",
+					props: { color: toStringColor(value) },
+				});
+			},
+		);
+
+		// mobile menu trigger size.
+		listenToCustomizerValueChange<string | number>(
+			"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_size",
+			function (settingId, value) {
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-toggle",
+					props: { "font-size": maybeAppendSuffix(value) },
+				});
+			},
+		);
 
 	// Search Icon Color.
 	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
@@ -2627,7 +2649,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 					writeCSS(settingId, {
 						blocks: [
 							{
-								selector: `.wpbf-header-row-${rowKey} a`,
+								selector: `.wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2)`,
 								props: { color: defaultColor },
 							},
 							{
@@ -2669,7 +2691,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 			// bg color
 			listenToCustomizerValueChange<WpbfColorControlValue>(
-				`mobile_menu_background_color`,
+				`${controlIdPrefix}bg_color`,
 				function (settingId, value) {
 					writeCSS(settingId, {
 						selector: `.wpbf-header-row-${rowKey}`,
@@ -2727,7 +2749,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 					writeCSS(settingId, {
 						blocks: [
 							{
-								selector: `.wpbf-header-row-${rowKey} a`,
+								selector: `.wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2)`,
 								props: { color: defaultColor },
 							},
 							{
@@ -2750,6 +2772,41 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				},
 			);
 		}
+
+		// Mobile overlay color.
+		listenToCustomizerValueChange<WpbfColorControlValue>(
+			"mobile_menu_overlay_color",
+			function (settingId, value) {
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-overlay",
+					props: { "background-color": toStringColor(value) },
+				});
+			},
+		);
+
+		// Off-canvas menu width.
+		listenToCustomizerValueChange<string>(
+			"mobile_menu_width",
+			function (settingId, value) {
+				const mobileMenuType = customizer?.("mobile_menu_options").get();
+				const parsedValue = emptyNotZero(value)
+					? undefined
+					: maybeAppendSuffix(value);
+
+				if (mobileMenuType !== "menu-mobile-off-canvas" && parsedValue) {
+					removeStyleTag(settingId);
+					return;
+				}
+
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-off-canvas .wpbf-mobile-menu-container",
+					props: {
+						width: parsedValue,
+						right: "-" + parsedValue,
+					},
+				});
+			},
+		);
 	});
 
 	function listenToBuilderMulticolorControl(props: {

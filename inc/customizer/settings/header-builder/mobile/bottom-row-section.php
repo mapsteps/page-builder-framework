@@ -45,7 +45,6 @@ wpbf_customizer_field()
 	->addToSection( $section_id );
 
 /* Design Tab */
-
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'bg_color' )
 	->type( 'color' )

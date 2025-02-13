@@ -184,33 +184,6 @@ function setupCustomizer() {
 						},
 					],
 				},
-				{
-					from: "wpbf_mobile_menu_options",
-					to: "wpbf_header_builder_mobile_row_2_section",
-					controlsToMove: [
-						{
-							id: "mobile_menu_background_color",
-							prio: {
-								from: undefined,
-								to: 200,
-							},
-						},
-						{
-							id: "mobile_menu_hamburger_color",
-							prio: {
-								from: undefined,
-								to: 205,
-							},
-						},
-						{
-							id: "mobile_menu_hamburger_size",
-							prio: {
-								from: undefined,
-								to: 205,
-							},
-						},
-					],
-				},
 			],
 		});
 	}

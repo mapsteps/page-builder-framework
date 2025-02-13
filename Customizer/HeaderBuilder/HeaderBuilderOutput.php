@@ -244,7 +244,7 @@ class HeaderBuilderOutput {
 	 * @see self::setup_hooks()
 	 */
 	public function do_mobile_navigation() {
-		 
+
 		$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
 
 		if ( ! empty( $row_1_columns ) && is_array( $row_1_columns ) ) {
@@ -262,7 +262,6 @@ class HeaderBuilderOutput {
 		if ( ! empty( $row_3_columns ) && is_array( $row_3_columns ) ) {
 			$this->render_mobile_row( 'mobile_row_3', $row_3_columns );
 		}
-
 	}
 
 	/**

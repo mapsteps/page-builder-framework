@@ -571,19 +571,141 @@ function wpbf_render_builder_menu_widget( $setting_group, $column_position = '' 
  */
 function wpbf_render_builder_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
 
-	$menu_text = get_theme_mod( $setting_group . '_text', 'Mobile menu' );
-	$style     = get_theme_mod( $setting_group . '_style', 'none' );
- 
+	$icon  = get_theme_mod( $setting_group . '_icon', '' );
+	$label = get_theme_mod( $setting_group . '_text', 'Mobile menu' );
+	$style = get_theme_mod( $setting_group . '_style', 'none' );
+
+	// the icon and style is not working yet.
+	$svg = '<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-1">
+			<rect y="0.00" width="18" height="1.7" rx="1"></rect>
+			<rect y="6.15" width="18" height="1.7" rx="1"></rect>
+			<rect y="12.3" width="18" height="1.7" rx="1"></rect>
+		</svg>';
+
+	if ( 'variant-1' === $icon ) {
+
+		$icon = $svg;
+
+	} elseif ( 'variant-2' === $icon ) {
+
+		$icon = '<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-2">
+					<rect y="0.00" width="10" height="1.7" rx="1"></rect>
+					<rect y="6.15" width="18" height="1.7" rx="1"></rect>
+					<rect y="12.3" width="15" height="1.7" rx="1"></rect>
+				</svg>';
+
+	} elseif ( 'variant-3' === $icon ) {
+
+		$icon = '<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-3">
+					<rect y="0.00" x="6.00" width="12" height="1.7" rx="1"></rect>
+					<rect y="6.15" width="18" height="1.7" rx="1"></rect>
+					<rect y="12.3" width="12" height="1.7" rx="1"></rect>
+				</svg>';
+
+	}
+
 	$menu_position_class = 'wpbf-menu-' . $column_position;
+
+	if ( get_theme_mod( 'mobile_menu_overlay' ) ) {
+		echo '<div class="wpbf-mobile-menu-overlay"></div>';
+	}
 	?>
 
-		<button id="wpbf-mobile-menu-toggle" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger <?php echo esc_attr( $menu_position_class ); ?>" aria-label="<?php echo wp_kses_post( $menu_text ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
-			<span class="screen-reader-text">
-				<?php echo wp_kses_post( $menu_text ); ?>
-			</span>
-		</button>
+	<div class="wpbf-mobile-menu-off-canvas wpbf-hidden-large">
+
+		<div class="wpbf-mobile-nav-wrapper wpbf-container wpbf-container-center">	
+
+			<div class="wpbf-menu-toggle-container wpbf-1-3">
+
+				<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
+
+				<?php if ( wpbf_svg_enabled() ) { ?>
+
+					<button id="wpbf-mobile-menu-toggle" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo $menu_position_class; ?>" aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
+						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
+						<?php echo wpbf_svg( 'hamburger' ); ?>
+					</button>
+
+				<?php } else { ?>
+
+					<button id="wpbf-mobile-menu-toggle" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger <?php echo $menu_position_class; ?>" aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
+						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
+					</button>
+
+				<?php } ?>
+
+				<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
+
+			</div>
+
+		</div>
+
+		<div class="wpbf-mobile-menu-container">
+
+			<?php do_action( 'wpbf_before_mobile_menu' ); ?>
+
+			
+			<nav id="mobile-navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
+
+				<?php do_action( 'wpbf_mobile_menu_open' ); ?>
+
+				<?php wpbf_sidebar_mobile_nav_menu_widget(); ?>
+
+				<?php do_action( 'wpbf_mobile_menu_close' ); ?>
+
+			</nav>
+
+			<?php do_action( 'wpbf_after_mobile_menu' ); ?>
+
+			<?php if ( wpbf_svg_enabled() ) { ?>
+				<span class="wpbf-close">
+					<?php echo wpbf_svg( 'times' ); ?>
+				</span>
+			<?php } else { ?>
+				<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
+			<?php } ?>
+
+		</div>
+
+	</div>
+
 
 	<?php
+}
+
+/**
+ * Declare mobile menu's.
+ *
+ * Declare wp_nav_menu based on selected mobile menu variation.
+ */
+function wpbf_sidebar_mobile_nav_menu_widget() {
+
+	$saved_values  = get_theme_mod( 'wpbf_header_builder', array() );
+	$mobile_values = isset( $saved_values['mobile'] ) && is_array( $saved_values['mobile'] ) ? $saved_values['mobile'] : array();
+	$widget_keys   = isset( $mobile_values['sidebar'] ) && is_array( $mobile_values['sidebar'] ) ? $mobile_values['sidebar'] : array();
+
+	foreach ( $widget_keys as $widget_key ) {
+		if ( empty( $widget_key ) ) {
+			continue;
+		}
+
+		$menu_id = get_theme_mod( 'wpbf_header_builder_' . $widget_key . '_menu_id', '' );
+
+		if ( empty( $menu_id ) ) {
+			continue;
+		}
+
+		wp_nav_menu(
+			array(
+				'menu'        => $menu_id,
+				'container'   => false,
+				'menu_class'  => 'wpbf-mobile-menu',
+				'depth'       => 4,
+				'fallback_cb' => false,
+			)
+		);
+	}
+
 }
 
 /**
