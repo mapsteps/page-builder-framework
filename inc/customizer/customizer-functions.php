@@ -575,35 +575,6 @@ function wpbf_render_builder_mobile_menu_trigger_widget( $setting_group, $column
 	$label = get_theme_mod( $setting_group . '_text', 'Mobile menu' );
 	$style = get_theme_mod( $setting_group . '_style', 'none' );
 
-	// the icon and style is not working yet.
-	$svg = '<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-1">
-			<rect y="0.00" width="18" height="1.7" rx="1"></rect>
-			<rect y="6.15" width="18" height="1.7" rx="1"></rect>
-			<rect y="12.3" width="18" height="1.7" rx="1"></rect>
-		</svg>';
-
-	if ( 'variant-1' === $icon ) {
-
-		$icon = $svg;
-
-	} elseif ( 'variant-2' === $icon ) {
-
-		$icon = '<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-2">
-					<rect y="0.00" width="10" height="1.7" rx="1"></rect>
-					<rect y="6.15" width="18" height="1.7" rx="1"></rect>
-					<rect y="12.3" width="15" height="1.7" rx="1"></rect>
-				</svg>';
-
-	} elseif ( 'variant-3' === $icon ) {
-
-		$icon = '<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-3">
-					<rect y="0.00" x="6.00" width="12" height="1.7" rx="1"></rect>
-					<rect y="6.15" width="18" height="1.7" rx="1"></rect>
-					<rect y="12.3" width="12" height="1.7" rx="1"></rect>
-				</svg>';
-
-	}
-
 	$menu_position_class = 'wpbf-menu-' . $column_position;
 
 	if ( get_theme_mod( 'mobile_menu_overlay' ) ) {
@@ -618,21 +589,13 @@ function wpbf_render_builder_mobile_menu_trigger_widget( $setting_group, $column
 			<div class="wpbf-menu-toggle-container wpbf-1-3">
 
 				<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
-
-				<?php if ( wpbf_svg_enabled() ) { ?>
+ 
 
 					<button id="wpbf-mobile-menu-toggle" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo $menu_position_class; ?>" aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
 						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
-						<?php echo wpbf_svg( 'hamburger' ); ?>
+						<?php echo mobile_nav_menu_icon_svg( $icon, $style, $label ); ?>
 					</button>
-
-				<?php } else { ?>
-
-					<button id="wpbf-mobile-menu-toggle" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle wpbff wpbff-hamburger <?php echo $menu_position_class; ?>" aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
-						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
-					</button>
-
-				<?php } ?>
+ 
 
 				<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
 
@@ -705,6 +668,56 @@ function wpbf_sidebar_mobile_nav_menu_widget() {
 			)
 		);
 	}
+
+}
+
+/**
+ * Mobile navigation menu icon svg.
+ *
+ * @param string $icon The icon to call.
+ */
+function mobile_nav_menu_icon_svg( $icon, $style, $label ) {
+	$output = '';
+	if ( 'none' === $icon ) {
+		$output = $label;
+	}
+
+	if ( 'variant-1' === $icon ) {
+		$output = '<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-1">
+			<rect x="4" y="4" width="22" height="2" rx="1"/>
+			<rect x="4" y="12" width="22" height="2" rx="1"/>
+			<rect x="4" y="20" width="22" height="2" rx="1"/>
+		</svg>';
+	}
+
+	if ( 'variant-2' === $icon ) {
+		$output = '<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
+			<rect x="4" y="4" width="14" height="2" rx="1"/>
+			<rect x="4" y="12" width="24" height="2" rx="1"/>
+			<rect x="4" y="20" width="18" height="2" rx="1"/>
+		</svg>';
+	}
+
+	if ( 'variant-3' === $icon ) {
+		$output = '<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
+			<rect x="12" y="4" width="14" height="2" rx="1"/>
+			<rect x="4" y="12" width="22" height="2" rx="1"/>
+			<rect x="4" y="20" width="14" height="2" rx="1"/>
+		</svg>';
+	}
+
+	$classes = array(
+		'wpbf-icon',
+		'wpbf-icon-' . $icon,
+	);
+
+	$output = sprintf(
+		'<i class="%1$s">%2$s</i>',
+		implode( ' ', $classes ),
+		$output
+	);
+
+	return $output;
 
 }
 

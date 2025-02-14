@@ -2530,26 +2530,26 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 	/* Mobile Header Builder */
 	// mobile menu trigger color.
-		listenToCustomizerValueChange<WpbfColorControlValue>(
-			"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color",
-			function (settingId, value) {
-				writeCSS(settingId, {
-					selector: ".wpbf-mobile-menu-toggle",
-					props: { color: toStringColor(value) },
-				});
-			},
-		);
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu-toggle",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
-		// mobile menu trigger size.
-		listenToCustomizerValueChange<string | number>(
-			"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_size",
-			function (settingId, value) {
-				writeCSS(settingId, {
-					selector: ".wpbf-mobile-menu-toggle",
-					props: { "font-size": maybeAppendSuffix(value) },
-				});
-			},
-		);
+	// mobile menu trigger size.
+	listenToCustomizerValueChange<string | number>(
+		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu-toggle",
+				props: { "font-size": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	// Search Icon Color.
 	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
@@ -2577,7 +2577,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	listenToCustomizerValueChange<string | DevicesValue>(
 		"wpbf_header_builder_mobile_search_icon_size",
 		function (settingId, value) {
-			const obj = parseJsonOrUndefined<DevicesValue>(value); 
+			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
 			writeCSS(settingId + "-tablet", {
 				mediaQuery: `@media (${mediaQueries.tablet})`,
@@ -2808,6 +2808,43 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			},
 		);
 	});
+
+	const menuIcons = {
+		"none": `Menu`,
+		"variant-1": `
+        <svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-1">
+					<rect x="4" y="4" width="22" height="2" rx="1"/>
+					<rect x="4" y="12" width="22" height="2" rx="1"/>
+					<rect x="4" y="20" width="22" height="2" rx="1"/>
+			</svg>`,
+		"variant-2": `
+        <svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
+					<rect x="4" y="4" width="14" height="2" rx="1"/>
+					<rect x="4" y="12" width="24" height="2" rx="1"/>
+					<rect x="4" y="20" width="18" height="2" rx="1"/>
+			</svg>`,
+		"variant-3": `
+        <svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
+					<rect x="12" y="4" width="14" height="2" rx="1"/>
+					<rect x="4" y="12" width="22" height="2" rx="1"/>
+					<rect x="4" y="20" width="14" height="2" rx="1"/>
+			</svg>`,
+	};
+
+	const defaultIcon = "variant-3"; // Default icon
+
+	listenToCustomizerValueChange<string>(
+		"wpbf_header_builder_mobile_menu_trigger_icon",
+		function (settingId, value) {
+			const buttonIcon = document.querySelector("#wpbf-mobile-menu-toggle i");
+			const iconKey = value || defaultIcon; // Use default if value is empty
+
+			if (buttonIcon && menuIcons[iconKey]) {
+				buttonIcon.className = `wpbf-icon wpbf-icon-${iconKey}`;
+				buttonIcon.innerHTML = menuIcons[iconKey];
+			}
+		},
+	);
 
 	function listenToBuilderMulticolorControl(props: {
 		controlId: string;
