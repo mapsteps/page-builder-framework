@@ -729,14 +729,22 @@ function mobile_nav_menu_icon_svg( $icon, $style, $label ) {
 function wpbf_render_builder_html_widget( $setting_group ) {
 
 	$content = get_theme_mod( $setting_group . '_content', '' );
+
+	// Extract the last character from setting group.
+	$group_number = substr( $setting_group, -1 );
+
+	// Set default text if content is empty.
+	$default_text = 'Content for widget HTML ' . ( is_numeric( $group_number ) ? $group_number : '1' );
+
 	?>
 
 	<div class="wpbf-html-widget">
-		<?php echo wp_kses_post( $content ); ?>
+		<?php echo wp_kses_post( ! empty( $content ) ? $content : $default_text ); ?>
 	</div>
 
 	<?php
 }
+
 
 if ( ! function_exists( 'wpbf_header_builder_enabled' ) ) {
 	/**
