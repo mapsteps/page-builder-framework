@@ -564,7 +564,7 @@ function wpbf_render_builder_menu_widget( $setting_group, $column_position = '' 
 }
 
 /**
- * Render the builder menu widget.
+ * Render the builder menu trigger widget.
  *
  * @param string $setting_group The setting group key.
  * @param string $column_position The column position. Accepts 'left', 'center', 'right', or empty string.

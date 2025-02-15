@@ -214,9 +214,6 @@ foreach ( $m_rows as $row_key => $columns ) {
 
 	if ( 'mobile_row_1' === $row_key ) {
 
-		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
-		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
-
 		$v_padding = wpbf_customize_str_value( $row_id_prefix . 'vertical_padding' );
 		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
 
@@ -259,25 +256,27 @@ foreach ( $m_rows as $row_key => $columns ) {
 			}
 		}
 
+		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
+
 		if ( $bg_color || $text_color ) {
-			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
 
-			if ( $bg_color ) {
-				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
-			}
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
+				'props'    => array( 'background-color' => $bg_color ),
+			) );
 
-			if ( $text_color ) {
-				echo 'color: ' . esc_attr( $text_color ) . ';';
-			}
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ':not(.wpbf-close)',
+				'props'    => array( 'color' => $text_color ),
+			) );
 
-			echo '}';
 		}
 
 	}
 
 	if ( 'mobile_row_2' === $row_key ) {
 
-		$bg_color  = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
 		$v_padding = wpbf_customize_str_value( $row_id_prefix . 'vertical_padding' );
 		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
 
@@ -289,22 +288,20 @@ foreach ( $m_rows as $row_key => $columns ) {
 			),
 		) );
 
+		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+
 		if ( $bg_color ) {
-			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
 
-			if ( $bg_color ) {
-				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
-			}
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
+				'props'    => array( 'background-color' => $bg_color ),
+			) );
 
-			echo '}';
 		}
 
 	}
 
 	if ( 'mobile_row_3' === $row_key ) {
-
-		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
-		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
 
 		$v_padding = wpbf_customize_str_value( $row_id_prefix . 'vertical_padding' );
 		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
@@ -348,18 +345,21 @@ foreach ( $m_rows as $row_key => $columns ) {
 			}
 		}
 
+		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
+
 		if ( $bg_color || $text_color ) {
-			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
 
-			if ( $bg_color ) {
-				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
-			}
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
+				'props'    => array( 'background-color' => $bg_color ),
+			) );
 
-			if ( $text_color ) {
-				echo 'color: ' . esc_attr( $text_color ) . ';';
-			}
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ':not(.wpbf-close)',
+				'props'    => array( 'color' => $text_color ),
+			) );
 
-			echo '}';
 		}
 
 	}
@@ -437,8 +437,7 @@ foreach ( $button_keys as $button_key ) {
 }
 
 
-// Mobile Header Builder Search Icon Styles.
-// Size.
+// Mobile Header Builder: Search Icon Styles.
 $control_id_prefix = $header_builder_control_id_prefix . 'mobile_search_';
 $icon_size         = wpbf_customize_array_value( $control_id_prefix . 'icon_size' );
 $icon_size         = '' === $icon_size || '16' === $icon_size ? '16px' : $icon_size;
@@ -465,7 +464,7 @@ foreach ( $devices as $device ) {
 	) );
 }
 
-// Color.
+// Mobile Header Builder: Search Icon color.
 $icon_color = wpbf_customize_array_value( $control_id_prefix . 'icon_color' );
 
 if ( ! empty( $icon_color ) ) {
@@ -487,7 +486,7 @@ if ( ! empty( $icon_color ) ) {
 	}
 }
 
-
+// Mobile Header Builder: Sidebar Menu Reveal.
 $mobile_menu_options = wpbf_customize_str_value( 'wpbf_header_builder_mobile_sidebar_reveal_as', 'off-canvas' );
 if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) ) {
 
@@ -521,7 +520,7 @@ if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) )
 	}
 }
 
-
+// Mobile Header Builder: Menu Trigger Hamburger Icon Color.
 $mobile_menu_trigger_mobile_menu_hamburger_color = wpbf_customize_str_value( 'wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color' );
 $mobile_menu_trigger_mobile_menu_hamburger_size  = wpbf_customize_str_value( 'wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_size' );
 $mobile_menu_trigger_mobile_menu_hamburger_size  = '16' === $mobile_menu_trigger_mobile_menu_hamburger_size || '16px' === $mobile_menu_trigger_mobile_menu_hamburger_size ? '' : $mobile_menu_trigger_mobile_menu_hamburger_size;
@@ -535,6 +534,7 @@ if ( $mobile_menu_trigger_mobile_menu_hamburger_color ) {
 
 }
 
+// Mobile Header Builder: Menu Trigger Hamburger Icon Size.
 if ( $mobile_menu_trigger_mobile_menu_hamburger_size ) {
 
 	wpbf_write_css( array(

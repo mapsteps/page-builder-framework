@@ -33,6 +33,55 @@ function wpbf_strposa( $haystack, $needles, $offset = 0 ) {
 }
 
 /**
+ * Mobile header builder sticky rows.
+ *
+ * @param string $attributes The attributes.
+ */
+function mobile_header_builder_sticky_rows( $attributes = '' ) {
+
+	$mobile_header_builder = [
+		'wpbf_header_builder_mobile_row_1_sticky',
+		'wpbf_header_builder_mobile_row_2_sticky',
+	];
+
+	foreach ( $mobile_header_builder as $mobile_header_builder_sticky ) {
+
+		if ( 'wpbf_header_builder_mobile_row_1_sticky' === $mobile_header_builder_sticky ) {
+
+			if ( 'disable' !== get_theme_mod( $mobile_header_builder_sticky ) ) {
+
+				$attributes .= ' data-sticky="true"';
+				$attributes .= ' data-sticky-delay="300px"';
+				$attributes .= ' data-sticky-animation-duration="200"';
+				$attributes .= ' class="wpbf-mobile-row-1-sticky"';
+
+			} else {
+				$attributes .= ' data-sticky="false"';
+			}
+		}
+
+		if ( 'wpbf_header_builder_mobile_row_2_sticky' === $mobile_header_builder_sticky ) {
+
+			if ( 'disable' !== get_theme_mod( $mobile_header_builder_sticky ) ) {
+
+				$attributes .= ' data-sticky="true"';
+				$attributes .= ' data-sticky-delay="300px"';
+				$attributes .= ' data-sticky-animation-duration="200"';
+				$attributes .= ' class="wpbf-mobile-row-2-sticky"';
+
+			} else {
+				$attributes .= ' data-sticky="false"';
+			}
+
+		}
+	}
+
+	return $attributes; // ✅ Move return outside of the loop
+}
+add_filter( 'wpbf_navigation_attributes', 'mobile_header_builder_sticky_rows', 15 );
+
+
+/**
  * Pingback head link.
  *
  * Add Pingback head link if we're on singular and pings are open.
