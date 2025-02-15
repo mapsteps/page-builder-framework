@@ -53,7 +53,7 @@ class HeaderBuilderOutput {
 
 		// Unhook functions which are supposed to be used when header builder is disabled.
 		remove_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
-		remove_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile' );
+		remove_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile', 20 );
 
 		// Hook functions which are supposed to be used when header builder is enabled.
 		add_action( 'wpbf_navigation', [ $this, 'do_mobile_navigation' ] );
