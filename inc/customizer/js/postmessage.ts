@@ -1,4 +1,3 @@
-import { size } from "lodash";
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
 import { WpbfCheckboxButtonsetControlValue } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 import {
@@ -2851,11 +2850,18 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			const buttonIcon = document.querySelector("#wpbf-mobile-menu-toggle i");
 			const iconKey = value || defaultIcon;
 
-			if ( buttonIcon && menuIcons[iconKey] ) {
+			if (
+				iconKey !== "none" &&
+				iconKey !== "variant-1" &&
+				iconKey !== "variant-2" &&
+				iconKey !== "variant-3"
+			) {
+				return;
+			}
 
+			if (buttonIcon) {
 				buttonIcon.className = `wpbf-icon wpbf-icon-${iconKey}`;
 				buttonIcon.innerHTML = menuIcons[iconKey];
-
 			}
 		},
 	);
