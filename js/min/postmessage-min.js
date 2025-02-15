@@ -17,7 +17,7 @@
 								${o.cssSelector}${t} {
 									${"string"==typeof o.cssProps?`${o.cssProps}: ${e[r]};`:o.cssProps.map(o=>`${o}: ${e[r]};`).join("\n")}
 								}
-							`}}r.innerHTML=n})})}function g(o){r?.(o.controlId,function(e){let r=m(o.controlId);e.bind(e=>{if("string"==typeof e){r.innerHTML="";return}let t={};for(let r in e){if(!e.hasOwnProperty(r)||""===e[r])continue;let n=o.useValueSuffix?l(e[r])?e[r]:e[r]+"px":e[r];t[r]=n}!function(o,e,r,t){let n="string"==typeof o?m(o):o,c=Object.keys(window.WpbfTheme.breakpoints),i="";for(let o of c)t.hasOwnProperty(o)&&""!==t[o]&&(i+=`${e} {
-				${"string"==typeof r?`${r}: ${t[o]};`:r.map(e=>`${e}: ${t[o]};`).join("\n")}
-			}`);n.innerHTML=i}(r,o.cssSelector,o.cssProps,t)})})}d("wpbf_header_builder_mobile_menu_trigger_icon",function(o,e){let r=document.querySelector("#wpbf-mobile-menu-toggle i"),t=e||"variant-3";r&&_[t]&&(r.className=`wpbf-icon wpbf-icon-${t}`,r.innerHTML=_[t])})}(jQuery,window.wp.customize)}();
+							`}}r.innerHTML=n})})}function g(o){r?.(o.controlId,function(e){let r=m(o.controlId);e.bind(e=>{if("string"==typeof e){r.innerHTML="";return}let t={};for(let r in e){if(!e.hasOwnProperty(r)||""===e[r])continue;let n=o.useValueSuffix?l(e[r])?e[r]:e[r]+"px":e[r];t[r]=n}!function(o,e,r,t){let n="string"==typeof o?m(o):o,c=window.WpbfTheme.breakpoints,i="";for(let o in t){if(!t.hasOwnProperty(o)||""===t[o])continue;let n=`${e} { 
+            ${"string"==typeof r?`${r}: ${t[o]};`:r.map(e=>`${e}: ${t[o]};`).join("\n")}
+        }`;i+=(n="tablet"===o&&c.tablet?`@media (max-width: ${c.tablet}px) { ${n} }`:"mobile"===o&&c.mobile?`@media (max-width: ${c.mobile}px) { ${n} }`:`@media (max-width: ${c.desktop}px) { ${n} }`)+"\n"}n.innerHTML=i}(r,o.cssSelector,o.cssProps,t)})})}d("wpbf_header_builder_mobile_menu_trigger_icon",function(o,e){let r=document.querySelector("#wpbf-mobile-menu-toggle i"),t=e||"variant-1";r&&_[t]&&(r.className=`wpbf-icon wpbf-icon-${t}`,r.innerHTML=_[t])})}(jQuery,window.wp.customize)}();
 //# sourceMappingURL=postmessage-min.js.map

@@ -229,16 +229,27 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				? getStyleTag(styleTagOrId)
 				: styleTagOrId;
 
-		const devices = Object.keys(window.WpbfTheme.breakpoints);
+		const breakpoints = window.WpbfTheme.breakpoints;
 		let css = "";
 
-		for (const device of devices) {
+		for (const device in value) {
 			if (!value.hasOwnProperty(device)) continue;
 			if (value[device] === "") continue;
 
-			css += `${selector} {
-				${"string" === typeof rule ? `${rule}: ${value[device]};` : rule.map((rule) => `${rule}: ${value[device]};`).join("\n")}
-			}`;
+			let deviceCSS = `${selector} { 
+            ${typeof rule === "string" ? `${rule}: ${value[device]};` : rule.map((r) => `${r}: ${value[device]};`).join("\n")}
+        }`;
+
+			// Apply media queries based on the device.
+			if (device === "tablet" && breakpoints.tablet) {
+				deviceCSS = `@media (max-width: ${breakpoints.tablet}px) { ${deviceCSS} }`;
+			} else if (device === "mobile" && breakpoints.mobile) {
+				deviceCSS = `@media (max-width: ${breakpoints.mobile}px) { ${deviceCSS} }`;
+			} else {
+				deviceCSS = `@media (max-width: ${breakpoints.desktop}px) { ${deviceCSS} }`;
+			}
+
+			css += deviceCSS + "\n";
 		}
 
 		styleTag.innerHTML = css;
@@ -2832,17 +2843,19 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			</svg>`,
 	};
 
-	const defaultIcon = "variant-3"; // Default icon
+	const defaultIcon = "variant-1";
 
 	listenToCustomizerValueChange<string>(
 		"wpbf_header_builder_mobile_menu_trigger_icon",
 		function (settingId, value) {
 			const buttonIcon = document.querySelector("#wpbf-mobile-menu-toggle i");
-			const iconKey = value || defaultIcon; // Use default if value is empty
+			const iconKey = value || defaultIcon;
 
-			if (buttonIcon && menuIcons[iconKey]) {
+			if ( buttonIcon && menuIcons[iconKey] ) {
+
 				buttonIcon.className = `wpbf-icon wpbf-icon-${iconKey}`;
 				buttonIcon.innerHTML = menuIcons[iconKey];
+
 			}
 		},
 	);
