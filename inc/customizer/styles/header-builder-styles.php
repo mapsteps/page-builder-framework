@@ -288,7 +288,7 @@ foreach ( $m_rows as $row_key => $columns ) {
 			),
 		) );
 
-		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+		$bg_color = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
 
 		if ( $bg_color ) {
 

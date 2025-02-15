@@ -402,7 +402,7 @@ class HeaderBuilderOutput {
 				$this->render_html_widget( $setting_group );
 				break;
 			case 'mobile_menu_trigger':
-				$this->mobile_menu_trigger_svg( $setting_group );
+				$this->render_mobile_menu_trigger_widget( $setting_group, $column_position );
 				break;
 		}
 
@@ -433,19 +433,13 @@ class HeaderBuilderOutput {
 	/**
 	 * Mobile navigation menu SVG icon.
 	 *
-	 * @param string $icon The icon name.
+	 * @param string $icon_variant The icon variant. Accepts 'variant-1', 'variant-2', 'variant-3', or 'none'.
+	 * @return string The SVG icon.
 	 */
-	private function mobile_menu_trigger_svg( $icon ) {
+	private function mobile_menu_trigger_svg( $icon_variant ) {
 
-		$output = '';
-
-		if ( 'none' === $icon ) {
-			// todo: Get the label (if any) from the setting.
-			return $output;
-		}
-
-		if ( 'variant-1' === $icon ) {
-			$output = '
+		if ( 'variant-1' === $icon_variant ) {
+			return '
 			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-1">
 				<rect x="4" y="4" width="22" height="2" rx="1"/>
 				<rect x="4" y="12" width="22" height="2" rx="1"/>
@@ -454,8 +448,8 @@ class HeaderBuilderOutput {
 			';
 		}
 
-		if ( 'variant-2' === $icon ) {
-			$output = '
+		if ( 'variant-2' === $icon_variant ) {
+			return '
 			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
 				<rect x="4" y="4" width="14" height="2" rx="1"/>
 				<rect x="4" y="12" width="24" height="2" rx="1"/>
@@ -464,8 +458,8 @@ class HeaderBuilderOutput {
 			';
 		}
 
-		if ( 'variant-3' === $icon ) {
-			$output = '
+		if ( 'variant-3' === $icon_variant ) {
+			return '
 			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
 				<rect x="12" y="4" width="14" height="2" rx="1"/>
 				<rect x="4" y="12" width="22" height="2" rx="1"/>
@@ -474,18 +468,7 @@ class HeaderBuilderOutput {
 			';
 		}
 
-		$classes = array(
-			'wpbf-icon',
-			'wpbf-icon-' . $icon,
-		);
-
-		$output = sprintf(
-			'<i class="%1$s">%2$s</i>',
-			implode( ' ', $classes ),
-			$output
-		);
-
-		return $output;
+		return '';
 
 	}
 
@@ -497,9 +480,9 @@ class HeaderBuilderOutput {
 	 */
 	private function render_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
 
-		$icon  = get_theme_mod( $setting_group . '_icon', '' );
-		$label = get_theme_mod( $setting_group . '_text', 'Mobile menu' );
-		$style = get_theme_mod( $setting_group . '_style', 'none' );
+		$variant = wpbf_customize_str_value( $setting_group . '_icon', 'none' );
+		$label   = wpbf_customize_str_value( $setting_group . '_text', 'Mobile menu' );
+		$style   = wpbf_customize_str_value( $setting_group . '_style', '' );
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
 
@@ -508,52 +491,30 @@ class HeaderBuilderOutput {
 		}
 		?>
 
-		<div class="wpbf-mobile-menu-off-canvas wpbf-hidden-large">
+		<div class="wpbf-menu-toggle-container">
 
-			<div class="wpbf-mobile-nav-wrapper wpbf-container wpbf-container-center">	
+			<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
 
-				<div class="wpbf-menu-toggle-container wpbf-1-3">
+			<button
+				id="wpbf-mobile-menu-toggle"
+				class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?>"
+				aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>"
+				aria-controls="navigation"
+				aria-expanded="false"
+				aria-haspopup="true"
+			>
+				<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
 
-					<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
-	
+				<?php
+				if ( 'none' === $variant ) {
+					echo esc_html( $label );
+				} else {
+					echo $this->mobile_menu_trigger_svg( $variant );
+				}
+				?>
+			</button>
 
-						<button id="wpbf-mobile-menu-toggle" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo $menu_position_class; ?>" aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
-							<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
-							<?php echo mobile_nav_menu_icon_svg( $icon, $style, $label ); ?>
-						</button>
-	
-
-					<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
-
-				</div>
-
-			</div>
-
-			<div class="wpbf-mobile-menu-container">
-
-				<?php do_action( 'wpbf_before_mobile_menu' ); ?>
-
-				<nav id="mobile-navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
-
-					<?php do_action( 'wpbf_mobile_menu_open' ); ?>
-
-					<?php $this->render_mobile_menu_widget(); ?>
-
-					<?php do_action( 'wpbf_mobile_menu_close' ); ?>
-
-				</nav>
-
-				<?php do_action( 'wpbf_after_mobile_menu' ); ?>
-
-				<?php if ( wpbf_svg_enabled() ) { ?>
-					<span class="wpbf-close">
-						<?php echo wpbf_svg( 'times' ); ?>
-					</span>
-				<?php } else { ?>
-					<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
-				<?php } ?>
-
-			</div>
+			<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
 
 		</div>
 
