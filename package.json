@@ -109,7 +109,6 @@
   "scripts": {
     "wpbf": "node wpbf.mjs",
     "clean-cache": "shx rm -rf .parcel-cache",
-    "build-wp-theme": "zx ./wpbf.mjs --no-cache",
     "collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
     "build-control": "vite build --no-cache",
     "build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min --no-cache",
