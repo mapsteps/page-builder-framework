@@ -220,7 +220,7 @@ class HeaderBuilderOutput {
 					continue;
 				}
 
-				wpbf_render_builder_widget( 'header_builder', $widget_key, $column_position );
+				$this->render_widget( 'header_builder', $widget_key, $column_position );
 			}
 
 			echo '</div>';
@@ -335,7 +335,7 @@ class HeaderBuilderOutput {
 					continue;
 				}
 
-				wpbf_render_builder_widget( 'header_builder', $widget_key, $column_position );
+				$this->render_widget( 'header_builder', $widget_key, $column_position );
 			}
 
 			echo '</div>';
@@ -349,6 +349,348 @@ class HeaderBuilderOutput {
 
 		echo '</div>';
 
+	}
+
+	/**
+	 * Render builder widget for frontend.
+	 *
+	 * @param string $builder_type The builder type. Accepts 'header_builder' or 'footer_builder'.
+	 * @param string $widget_key The widget key.
+	 * @param string $column_position The column position.
+	 */
+	private function render_widget( $builder_type, $widget_key, $column_position = '' ) {
+
+		if ( empty( $widget_key ) ) {
+			return;
+		}
+
+		$setting_group = "wpbf_$builder_type" . '_' . $widget_key;
+
+		switch ( $widget_key ) {
+			case 'logo':
+			case 'desktop_logo':
+			case 'mobile_logo':
+				$this->render_logo_widget( $setting_group );
+				break;
+			case 'search':
+			case 'desktop_search':
+			case 'mobile_search':
+				$this->render_search_widget( $setting_group );
+				break;
+			case 'button_1':
+			case 'button_2':
+			case 'desktop_button_1':
+			case 'desktop_button_2':
+			case 'mobile_button_1':
+			case 'mobile_button_2':
+				$this->render_button_widget( $setting_group );
+				break;
+			case 'menu_1':
+			case 'menu_2':
+			case 'desktop_menu_1':
+			case 'desktop_menu_2':
+			case 'mobile_menu_1':
+			case 'mobile_menu_2':
+				$this->render_menu_widget( $setting_group, $column_position );
+				break;
+			case 'html_1':
+			case 'html_2':
+			case 'desktop_html_1':
+			case 'desktop_html_2':
+			case 'mobile_html_1':
+			case 'mobile_html_2':
+				$this->render_html_widget( $setting_group );
+				break;
+			case 'mobile_menu_trigger':
+				$this->mobile_menu_trigger_svg( $setting_group );
+				break;
+		}
+
+	}
+
+	/**
+	 * Render the builder logo widget.
+	 *
+	 * @param string $setting_group The setting group key.
+	 */
+	private function render_logo_widget( $setting_group ) {
+
+		get_template_part( 'inc/template-parts/logo/logo' );
+
+	}
+
+	/**
+	 * Render the builder search widget.
+	 *
+	 * @param string $setting_group The setting group key.
+	 */
+	private function render_search_widget( $setting_group ) {
+
+		echo wpbf_search_menu_item( false, false );
+
+	}
+
+	/**
+	 * Mobile navigation menu SVG icon.
+	 *
+	 * @param string $icon The icon name.
+	 */
+	private function mobile_menu_trigger_svg( $icon ) {
+
+		$output = '';
+
+		if ( 'none' === $icon ) {
+			// todo: Get the label (if any) from the setting.
+			return $output;
+		}
+
+		if ( 'variant-1' === $icon ) {
+			$output = '
+			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-1">
+				<rect x="4" y="4" width="22" height="2" rx="1"/>
+				<rect x="4" y="12" width="22" height="2" rx="1"/>
+				<rect x="4" y="20" width="22" height="2" rx="1"/>
+			</svg>
+			';
+		}
+
+		if ( 'variant-2' === $icon ) {
+			$output = '
+			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
+				<rect x="4" y="4" width="14" height="2" rx="1"/>
+				<rect x="4" y="12" width="24" height="2" rx="1"/>
+				<rect x="4" y="20" width="18" height="2" rx="1"/>
+			</svg>
+			';
+		}
+
+		if ( 'variant-3' === $icon ) {
+			$output = '
+			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
+				<rect x="12" y="4" width="14" height="2" rx="1"/>
+				<rect x="4" y="12" width="22" height="2" rx="1"/>
+				<rect x="4" y="20" width="14" height="2" rx="1"/>
+			</svg>
+			';
+		}
+
+		$classes = array(
+			'wpbf-icon',
+			'wpbf-icon-' . $icon,
+		);
+
+		$output = sprintf(
+			'<i class="%1$s">%2$s</i>',
+			implode( ' ', $classes ),
+			$output
+		);
+
+		return $output;
+
+	}
+
+	/**
+	 * Render the builder menu widget.
+	 *
+	 * @param string $setting_group The setting group key.
+	 * @param string $column_position The column position. Accepts 'left', 'center', 'right', or empty string.
+	 */
+	private function render_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
+
+		$icon  = get_theme_mod( $setting_group . '_icon', '' );
+		$label = get_theme_mod( $setting_group . '_text', 'Mobile menu' );
+		$style = get_theme_mod( $setting_group . '_style', 'none' );
+
+		$menu_position_class = 'wpbf-menu-' . $column_position;
+
+		if ( get_theme_mod( 'mobile_menu_overlay' ) ) {
+			echo '<div class="wpbf-mobile-menu-overlay"></div>';
+		}
+		?>
+
+		<div class="wpbf-mobile-menu-off-canvas wpbf-hidden-large">
+
+			<div class="wpbf-mobile-nav-wrapper wpbf-container wpbf-container-center">	
+
+				<div class="wpbf-menu-toggle-container wpbf-1-3">
+
+					<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
+	
+
+						<button id="wpbf-mobile-menu-toggle" class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo $menu_position_class; ?>" aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>" aria-controls="navigation" aria-expanded="false" aria-haspopup="true">
+							<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
+							<?php echo mobile_nav_menu_icon_svg( $icon, $style, $label ); ?>
+						</button>
+	
+
+					<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
+
+				</div>
+
+			</div>
+
+			<div class="wpbf-mobile-menu-container">
+
+				<?php do_action( 'wpbf_before_mobile_menu' ); ?>
+
+				<nav id="mobile-navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
+
+					<?php do_action( 'wpbf_mobile_menu_open' ); ?>
+
+					<?php $this->render_mobile_menu_widget(); ?>
+
+					<?php do_action( 'wpbf_mobile_menu_close' ); ?>
+
+				</nav>
+
+				<?php do_action( 'wpbf_after_mobile_menu' ); ?>
+
+				<?php if ( wpbf_svg_enabled() ) { ?>
+					<span class="wpbf-close">
+						<?php echo wpbf_svg( 'times' ); ?>
+					</span>
+				<?php } else { ?>
+					<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
+				<?php } ?>
+
+			</div>
+
+		</div>
+
+		<?php
+	}
+
+	/**
+	 * Render the builder button widget.
+	 *
+	 * @param string $setting_group The setting group key.
+	 */
+	private function render_button_widget( $setting_group ) {
+
+		// Extract the last character from setting group.
+		$group_number = substr( $setting_group, -1 );
+
+		$default_text = 'Button ' . ( is_numeric( $group_number ) ? $group_number : '1' );
+
+		$link_text = get_theme_mod( $setting_group . '_text', $default_text );
+		$link_url  = get_theme_mod( $setting_group . '_url', get_site_url() );
+
+		if ( empty( $link_text ) && empty( $link_url ) ) {
+			return;
+		}
+
+		$link_rel = '';
+
+		$link_rel_values = get_theme_mod( $setting_group . '_rel', [] );
+		$link_rel_values = ! is_array( $link_rel_values ) ? [] : $link_rel_values;
+
+		if ( ! empty( $link_rel_values ) ) {
+			$link_rel = implode( ' ', $link_rel_values );
+		}
+
+		$open_new_tab = get_theme_mod( $setting_group . '_new_tab', false );
+		$button_size  = get_theme_mod( $setting_group . '_size', '' );
+		$button_class = 'wpbf-button' . ( empty( $button_size ) ? '' : ' wpbf-button-' . $button_size ) . ' ' . $setting_group;
+		?>
+
+		<a
+			href="<?php echo esc_url( wpbf_parse_template_tags( $link_url ) ); ?>"
+			class="<?php echo esc_attr( $button_class ); ?>"
+			<?php echo esc_attr( empty( $open_new_tab ) ? '' : 'target="_blank"' ); ?>
+			<?php echo esc_attr( empty( $link_rel ) ? '' : ' rel="' . $link_rel . '"' ); ?>
+		>
+			<?php echo esc_html( $link_text ); ?>
+		</a>
+
+		<?php
+	}
+
+	/**
+	 * Render header builder's menu widget.
+	 *
+	 * @param string $setting_group The setting group key.
+	 * @param string $column_position The column position. Accepts 'left', 'center', 'right', or empty string.
+	 */
+	private function render_menu_widget( $setting_group, $column_position = '' ) {
+
+		$menu_id = get_theme_mod( $setting_group . '_menu_id', '' );
+
+		if ( empty( $menu_id ) ) {
+			return;
+		}
+
+		$menu_position_class = 'wpbf-menu-' . $column_position;
+		?>
+
+		<nav class="navigation wpbf-clearfix <?php echo esc_attr( $menu_position_class ); ?>" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="<?php _e( 'Site Navigation', 'page-builder-framework' ); ?>">
+
+			<?php
+			wp_nav_menu(
+				array(
+					'menu'        => $menu_id,
+					'container'   => false,
+					'menu_class'  => 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect(),
+					'depth'       => 4,
+					'fallback_cb' => false,
+				)
+			);
+			?>
+
+		</nav>
+
+		<?php
+	}
+
+	/**
+	 * Declare mobile menu's.
+	 *
+	 * Declare wp_nav_menu based on selected mobile menu variation.
+	 */
+	private function render_mobile_menu_widget() {
+
+		$saved_values  = get_theme_mod( 'wpbf_header_builder', array() );
+		$mobile_values = isset( $saved_values['mobile'] ) && is_array( $saved_values['mobile'] ) ? $saved_values['mobile'] : array();
+		$widget_keys   = isset( $mobile_values['sidebar'] ) && is_array( $mobile_values['sidebar'] ) ? $mobile_values['sidebar'] : array();
+
+		foreach ( $widget_keys as $widget_key ) {
+			if ( empty( $widget_key ) ) {
+				continue;
+			}
+
+			$menu_id = get_theme_mod( 'wpbf_header_builder_' . $widget_key . '_menu_id', '' );
+
+			if ( empty( $menu_id ) ) {
+				continue;
+			}
+
+			wp_nav_menu(
+				array(
+					'menu'        => $menu_id,
+					'container'   => false,
+					'menu_class'  => 'wpbf-mobile-menu',
+					'depth'       => 4,
+					'fallback_cb' => false,
+				)
+			);
+		}
+
+	}
+
+	/**
+	 * Render the builder html widget.
+	 *
+	 * @param string $setting_group The setting group key.
+	 */
+	private function render_html_widget( $setting_group ) {
+
+		$content = get_theme_mod( $setting_group . '_content', '' );
+		?>
+
+		<div class="wpbf-html-widget">
+			<?php echo wp_kses_post( $content ); ?>
+		</div>
+
+		<?php
 	}
 
 }

@@ -520,26 +520,3 @@ if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) )
 		) );
 	}
 }
-
-
-$mobile_menu_trigger_mobile_menu_hamburger_color = wpbf_customize_str_value( 'wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color' );
-$mobile_menu_trigger_mobile_menu_hamburger_size  = wpbf_customize_str_value( 'wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_size' );
-$mobile_menu_trigger_mobile_menu_hamburger_size  = '16' === $mobile_menu_trigger_mobile_menu_hamburger_size || '16px' === $mobile_menu_trigger_mobile_menu_hamburger_size ? '' : $mobile_menu_trigger_mobile_menu_hamburger_size;
-
-if ( $mobile_menu_trigger_mobile_menu_hamburger_color ) {
-
-	wpbf_write_css( array(
-		'selector' => '.wpbf-mobile-menu-toggle',
-		'props'    => array( 'color' => $mobile_menu_trigger_mobile_menu_hamburger_color ),
-	) );
-
-}
-
-if ( $mobile_menu_trigger_mobile_menu_hamburger_size ) {
-
-	wpbf_write_css( array(
-		'selector' => '.wpbf-mobile-menu-toggle',
-		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $mobile_menu_trigger_mobile_menu_hamburger_size ) ),
-	) );
-
-}

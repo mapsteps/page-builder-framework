@@ -2529,6 +2529,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	});
 
 	/* Mobile Header Builder */
+
 	// mobile menu trigger color.
 	listenToCustomizerValueChange<WpbfColorControlValue>(
 		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color",
@@ -2810,7 +2811,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	});
 
 	const menuIcons = {
-		"none": `Menu`,
+		none: `Menu`,
 		"variant-1": `
         <svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-1">
 					<rect x="4" y="4" width="22" height="2" rx="1"/>
