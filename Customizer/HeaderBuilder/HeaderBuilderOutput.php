@@ -29,6 +29,14 @@ class HeaderBuilderOutput {
 		$desktop_rows        = isset( $desktop_values['rows'] ) && is_array( $desktop_values['rows'] ) ? $desktop_values['rows'] : array();
 		$active_desktop_rows = $this->get_active_rows( $desktop_rows );
 
+		// Unhook functions which are supposed to be used when header builder is disabled.
+		remove_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
+		remove_action( 'wpbf_navigation', 'wpbf_menu' );
+
+		// Hook functions which are supposed to be used when header builder is enabled.
+		add_action( 'wpbf_pre_header', [ $this, 'do_desktop_pre_header' ] );
+		add_action( 'wpbf_navigation', [ $this, 'do_desktop_navigation' ] );
+
 		if ( ! empty( $active_desktop_rows ) ) {
 			foreach ( $active_desktop_rows as $desktop_row_key => $desktop_columns ) {
 				if ( empty( $desktop_row_key ) || empty( $desktop_columns ) ) {
@@ -37,19 +45,18 @@ class HeaderBuilderOutput {
 
 				$this->desktop_columns[ $desktop_row_key ] = $desktop_columns;
 			}
-
-			// Unhook functions which are supposed to be used when header builder is disabled.
-			remove_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
-			remove_action( 'wpbf_navigation', 'wpbf_menu' );
-
-			// Hook functions which are supposed to be used when header builder is enabled.
-			add_action( 'wpbf_pre_header', [ $this, 'do_desktop_pre_header' ] );
-			add_action( 'wpbf_navigation', [ $this, 'do_desktop_navigation' ] );
 		}
 
 		$mobile_values      = isset( $saved_values['mobile'] ) && is_array( $saved_values['mobile'] ) ? $saved_values['mobile'] : array();
 		$mobile_rows        = isset( $mobile_values['rows'] ) && is_array( $mobile_values['rows'] ) ? $mobile_values['rows'] : array();
 		$active_mobile_rows = $this->get_active_rows( $mobile_rows );
+
+		// Unhook functions which are supposed to be used when header builder is disabled.
+		remove_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
+		remove_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile' );
+
+		// Hook functions which are supposed to be used when header builder is enabled.
+		add_action( 'wpbf_navigation', [ $this, 'do_mobile_navigation' ] );
 
 		if ( ! empty( $active_mobile_rows ) ) {
 			foreach ( $active_mobile_rows as $mobile_row_key => $mobile_columns ) {
@@ -59,13 +66,6 @@ class HeaderBuilderOutput {
 
 				$this->mobile_columns[ $mobile_row_key ] = $mobile_columns;
 			}
-
-			// Unhook functions which are supposed to be used when header builder is disabled.
-			remove_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
-			remove_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile' );
-
-			// Hook functions which are supposed to be used when header builder is enabled.
-			add_action( 'wpbf_navigation', [ $this, 'do_mobile_navigation' ] );
 		}
 
 	}
