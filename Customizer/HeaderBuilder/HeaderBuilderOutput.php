@@ -19,6 +19,13 @@ class HeaderBuilderOutput {
 	private $mobile_columns = array();
 
 	/**
+	 * Associative array with sidebar widgets.
+	 *
+	 * @var array
+	 */
+	private $mobile_sidebar = array();
+
+	/**
 	 * Setup hooks to render header builder in front area.
 	 */
 	public function setup_hooks() {
@@ -50,6 +57,8 @@ class HeaderBuilderOutput {
 		$mobile_values      = isset( $saved_values['mobile'] ) && is_array( $saved_values['mobile'] ) ? $saved_values['mobile'] : array();
 		$mobile_rows        = isset( $mobile_values['rows'] ) && is_array( $mobile_values['rows'] ) ? $mobile_values['rows'] : array();
 		$active_mobile_rows = $this->get_active_rows( $mobile_rows );
+
+		$this->mobile_sidebar = isset( $mobile_values['sidebar'] ) && is_array( $mobile_values['sidebar'] ) ? $mobile_values['sidebar'] : array();
 
 		// Unhook functions which are supposed to be used when header builder is disabled.
 		remove_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
@@ -263,6 +272,7 @@ class HeaderBuilderOutput {
 		if ( ! empty( $row_3_columns ) && is_array( $row_3_columns ) ) {
 			$this->render_mobile_row( 'mobile_row_3', $row_3_columns );
 		}
+
 	}
 
 	/**
@@ -486,40 +496,46 @@ class HeaderBuilderOutput {
 		$style   = wpbf_customize_str_value( $setting_group . '_style', '' );
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
-
-		if ( get_theme_mod( 'mobile_menu_overlay' ) ) {
-			echo '<div class="wpbf-mobile-menu-overlay"></div>';
-		}
 		?>
 
-		<div class="wpbf-menu-toggle-container">
+		<div class="wpbf-mobile-menu-off-canvas wpbf-hidden-large">
+			<div class="wpbf-mobile-nav-wrapper wpbf-container wpbf-container-center">
+				<div class="wpbf-menu-toggle-container">
 
-			<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
+					<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
 
-			<button
-				id="wpbf-mobile-menu-toggle"
-				class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?>"
-				aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>"
-				aria-controls="navigation"
-				aria-expanded="false"
-				aria-haspopup="true"
-			>
-				<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
+					<button
+						id="wpbf-mobile-menu-toggle"
+						class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?>"
+						aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>"
+						aria-controls="navigation"
+						aria-expanded="false"
+						aria-haspopup="true"
+					>
+						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
 
-				<?php
-				if ( 'none' === $variant ) {
-					echo esc_html( $label );
-				} else {
-					echo $this->mobile_menu_trigger_svg( $variant );
-				}
-				?>
-			</button>
+						<?php
+						if ( 'none' === $variant ) {
+							echo esc_html( $label );
+						} else {
+							echo $this->mobile_menu_trigger_svg( $variant );
+						}
+						?>
+					</button>
 
-			<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
+					<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
+
+				</div>
+			</div>
+
+			<?php
+			if ( ! empty( $this->mobile_sidebar ) && is_array( $this->mobile_sidebar ) ) {
+				$this->render_mobile_sidebar( $this->mobile_sidebar );
+			}
+			?>
 
 		</div>
-
-		<?php
+			<?php
 	}
 
 	/**
@@ -604,38 +620,65 @@ class HeaderBuilderOutput {
 	}
 
 	/**
-	 * Declare mobile menu's.
+	 * Render header builder's mobile sidebar.
 	 *
 	 * Declare wp_nav_menu based on selected mobile menu variation.
 	 */
-	private function render_mobile_menu_widget() {
+	private function render_mobile_sidebar( $sidebar_widgets ) {
 
-		$saved_values  = get_theme_mod( 'wpbf_header_builder', array() );
-		$mobile_values = isset( $saved_values['mobile'] ) && is_array( $saved_values['mobile'] ) ? $saved_values['mobile'] : array();
-		$widget_keys   = isset( $mobile_values['sidebar'] ) && is_array( $mobile_values['sidebar'] ) ? $mobile_values['sidebar'] : array();
+		if ( empty( $sidebar_widgets ) || ! is_array( $sidebar_widgets ) ) {
+			return;
 
-		foreach ( $widget_keys as $widget_key ) {
-			if ( empty( $widget_key ) ) {
-				continue;
-			}
-
-			$menu_id = get_theme_mod( 'wpbf_header_builder_' . $widget_key . '_menu_id', '' );
-
-			if ( empty( $menu_id ) ) {
-				continue;
-			}
-
-			wp_nav_menu(
-				array(
-					'menu'        => $menu_id,
-					'container'   => false,
-					'menu_class'  => 'wpbf-mobile-menu',
-					'depth'       => 4,
-					'fallback_cb' => false,
-				)
-			);
 		}
 
+		if ( get_theme_mod( 'mobile_menu_overlay' ) ) {
+			echo '<div class="wpbf-mobile-menu-overlay"></div>';
+		}
+		?>
+
+			<div class="wpbf-mobile-menu-container">
+
+				<?php do_action( 'wpbf_before_mobile_menu' ); ?>
+
+				<nav id="mobile-navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-mobile-menu-toggle">
+
+					<?php do_action( 'wpbf_mobile_menu_open' ); ?>
+
+					<?php
+						$menu_id = get_theme_mod( 'wpbf_header_builder_' . $sidebar_widgets[0] . '_menu_id', '' );
+
+					if ( empty( $menu_id ) ) {
+						return;
+					}
+
+						wp_nav_menu(
+							array(
+								'menu'        => $menu_id,
+								'container'   => false,
+								'menu_class'  => 'wpbf-mobile-menu',
+								'depth'       => 4,
+								'fallback_cb' => false,
+							)
+						);
+					?>
+
+					<?php do_action( 'wpbf_mobile_menu_close' ); ?>
+
+				</nav>
+
+				<?php do_action( 'wpbf_after_mobile_menu' ); ?>
+
+				<?php if ( wpbf_svg_enabled() ) { ?>
+					<span class="wpbf-close">
+						<?php echo wpbf_svg( 'times' ); ?>
+					</span>
+				<?php } else { ?>
+					<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
+				<?php } ?>
+
+			</div>
+		
+		<?php
 	}
 
 	/**
