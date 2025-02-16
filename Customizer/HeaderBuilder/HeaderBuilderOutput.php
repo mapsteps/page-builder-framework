@@ -278,6 +278,10 @@ class HeaderBuilderOutput {
 			$this->render_mobile_row( 'mobile_row_3', $row_3_columns );
 		}
 
+		if ( ! empty( $this->mobile_offcanvas_widgets ) && is_array( $this->mobile_offcanvas_widgets ) ) {
+			$this->render_mobile_menu( $this->mobile_offcanvas_widgets );
+		}
+
 		echo '</div>';
 
 	}
@@ -505,44 +509,35 @@ class HeaderBuilderOutput {
 		$menu_position_class = 'wpbf-menu-' . $column_position;
 		?>
 
-		<div class="wpbf-mobile-menu-off-canvas wpbf-hidden-large">
-			<div class="wpbf-mobile-nav-wrapper wpbf-container wpbf-container-center">
-				<div class="wpbf-menu-toggle-container">
+		<div class="wpbf-menu-toggle-container">
 
-					<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
+			<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
 
-					<button
-						id="wpbf-mobile-menu-toggle"
-						class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?>"
-						aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>"
-						aria-controls="navigation"
-						aria-expanded="false"
-						aria-haspopup="true"
-					>
-						<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
+			<button
+				id="wpbf-mobile-menu-toggle"
+				class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?>"
+				aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>"
+				aria-controls="navigation"
+				aria-expanded="false"
+				aria-haspopup="true"
+			>
+				<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
 
-						<?php
-						if ( 'none' === $variant ) {
-							echo esc_html( $label );
-						} else {
-							echo $this->mobile_menu_trigger_svg( $variant );
-						}
-						?>
-					</button>
+				<?php
+				if ( 'none' === $variant ) {
+					echo esc_html( $label );
+				} else {
+					echo $this->mobile_menu_trigger_svg( $variant );
+				}
+				?>
+			</button>
 
-					<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
-
-				</div>
-			</div>
-
-			<?php
-			if ( ! empty( $this->mobile_offcanvas_widgets ) && is_array( $this->mobile_offcanvas_widgets ) ) {
-				$this->render_mobile_menu( $this->mobile_offcanvas_widgets );
-			}
-			?>
+			<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
 
 		</div>
-			<?php
+
+		<?php
+
 	}
 
 	/**
