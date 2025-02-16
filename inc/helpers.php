@@ -5,6 +5,8 @@
  * @package Page Builder Framework
  */
 
+use Mapsteps\Wpbf\Customizer\CustomizerStore;
+
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
@@ -1897,6 +1899,30 @@ if ( ! function_exists( 'wpbf_not_empty_allow_zero' ) ) {
 		}
 
 		return true;
+	}
+
+}
+
+if ( ! function_exists( 'wpbf_customize_control_value' ) ) {
+
+	/**
+	 * Get the value of a customizer setting.
+	 *
+	 * @param string $setting_id The setting id.
+	 * @param mixed  $default_value The default value.
+	 *
+	 * @return mixed
+	 */
+	function wpbf_customize_control_value( $setting_id, $default_value = '' ) {
+
+		$control_entity = CustomizerStore::findControl( $setting_id );
+
+		if ( is_null( $control_entity ) ) {
+			return get_theme_mod( $setting_id, $default_value );
+		}
+
+		return '';
+
 	}
 
 }

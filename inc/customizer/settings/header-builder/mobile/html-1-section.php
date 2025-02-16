@@ -37,7 +37,6 @@ wpbf_customizer_field()
 		$partial_refresh_key_prefix . 'icon_size' => $partial_refresh_args,
 	] )
 	->properties( array(
-		// Using the tiny mce argument to enable text color, bg color, aligment, and font size, and formats in the editor toolbar.
 		'tinymce' => array(
 			'toolbar1' => 'formatselect,styleselect,numlist,bullist,removeformat,bold,italic,underline,strikethrough,alignleft,aligncenter,alignright,link,unlink,forecolor,backcolor',
 		),

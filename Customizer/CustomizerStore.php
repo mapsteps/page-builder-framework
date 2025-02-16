@@ -126,4 +126,22 @@ final class CustomizerStore {
 
 	}
 
+	/**
+	 * Find a control by its control ID.
+	 *
+	 * @param string $control_id The control ID.
+	 * @return Control|null The control, or null if not found.
+	 */
+	public static function findControl( $control_id ) {
+
+		foreach ( self::$added_controls as $added_control ) {
+			if ( $added_control->id === $control_id ) {
+				return $added_control;
+			}
+		}
+
+		return null;
+
+	}
+
 }
