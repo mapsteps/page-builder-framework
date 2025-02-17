@@ -46,16 +46,42 @@ export default function setupjQueryMobileMenu($) {
 	 * It could be 'hamburger', 'default', or 'premium'.
 	 */
 	function setupMenuType() {
-		if (document.querySelector(".wpbf-mobile-menu-hamburger")) {
+		let hamburger = document.querySelector(".wpbf-mobile-menu-hamburger");
+
+		// Check for specific variants first
+		if (document.querySelector(".wpbf-mobile-menu-variant-1")) {
+			menuType = "variant-1";
+			return;
+		}
+
+		if (document.querySelector(".wpbf-mobile-menu-variant-2")) {
+			menuType = "variant-2";
+			return;
+		}
+
+		if (document.querySelector(".wpbf-mobile-menu-variant-3")) {
+			menuType = "variant-3";
+			return;
+		}
+
+		if (document.querySelector(".wpbf-mobile-menu-none")) {
+			menuType = "none";
+			return;
+		}
+
+		// If no variants, check for hamburger
+		if (hamburger) {
 			menuType = "hamburger";
 			return;
 		}
 
+		// Check for default menu
 		if (document.querySelector(".wpbf-mobile-menu-default")) {
 			menuType = "default";
 			return;
 		}
 
+		// If none of the above, set as premium
 		menuType = "premium";
 	}
 
@@ -178,7 +204,6 @@ export default function setupjQueryMobileMenu($) {
 	function openMobileMenu(menuType) {
 		if ("premium" === menuType) return;
 
-		// Toggle here is the mobile menu toggle button.
 		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
 		if (!toggle) return;
 
@@ -189,6 +214,34 @@ export default function setupjQueryMobileMenu($) {
 		if ("hamburger" === menuType) {
 			toggle.classList.remove("wpbff-hamburger");
 			toggle.classList.add("wpbff-times");
+		} else {
+			// Find existing SVG.
+			const svgIcon = toggle.querySelector("svg.ct-icon");
+			const mobileMenuText = toggle.querySelector(".mobile-menu-text");
+
+			const closeIconSvg = `
+            <svg class="ct-icon close-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <line x1="6" y1="6" x2="26" y2="26" stroke="currentColor" stroke-width="2"></line>
+                <line x1="6" y1="26" x2="26" y2="6" stroke="currentColor" stroke-width="2"></line>
+            </svg>`;
+
+			if (svgIcon) {
+				// Hide existing SVG.
+				svgIcon.style.display = "none";
+			}
+
+			if (mobileMenuText) {
+				// Hide existing mobileMenuText.
+				mobileMenuText.style.display = "none";
+			}
+
+			// Check if close icon is already inserted to avoid duplicates.
+			if (!toggle.querySelector(".close-icon")) {
+				toggle.insertAdjacentHTML("beforeend", closeIconSvg);
+			}
+
+			toggle.classList.remove("wpbff-hamburger");
+			toggle.classList.remove("wpbff-times");
 		}
 	}
 
@@ -205,7 +258,7 @@ export default function setupjQueryMobileMenu($) {
 		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
 		if (!toggle) return;
 
-		// Because this function is also being called directly in several places, then we need this checking.
+		// If the menu is not active, do nothing.
 		if (!toggle.classList.contains("active")) return;
 
 		$(".wpbf-mobile-menu-container").removeClass("active").stop().slideUp();
@@ -214,7 +267,26 @@ export default function setupjQueryMobileMenu($) {
 
 		if ("hamburger" === menuType) {
 			toggle.classList.remove("wpbff-times");
-			toggle.classList.add("wpbff-hamburger");
+			toggle.classList.add("wpbff-hamburger"); // Restore original state
+		} else {
+			// Find the close icon and remove it
+			const closeIcon = toggle.querySelector(".close-icon");
+			if (closeIcon) {
+				closeIcon.remove();
+			}
+
+			const mobileMenuText = toggle.querySelector(".mobile-menu-text");
+			if (mobileMenuText) {
+				mobileMenuText.style.display = "inline-block";
+			}
+
+			// Find the original menu SVG and make it visible again
+			const svgIcon = toggle.querySelector("svg.ct-icon");
+			if (svgIcon) {
+				svgIcon.style.display = "inline-block";
+			}
+
+			toggle.classList.remove("wpbff-times");
 		}
 	}
 

@@ -2847,7 +2847,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	listenToCustomizerValueChange<string>(
 		"wpbf_header_builder_mobile_menu_trigger_icon",
 		function (settingId, value) {
-			const buttonIcon = document.querySelector("#wpbf-mobile-menu-toggle i");
+			const buttonIcon = document.querySelector("#wpbf-mobile-menu-toggle");
 			const iconKey = value || defaultIcon;
 
 			if (
@@ -2860,8 +2860,22 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			}
 
 			if (buttonIcon) {
-				buttonIcon.className = `wpbf-icon wpbf-icon-${iconKey}`;
-				buttonIcon.innerHTML = menuIcons[iconKey];
+				// Find the existing SVG inside the button.
+				const existingSvg = buttonIcon.querySelector("svg.ct-icon");
+				var newSvg = menuIcons[iconKey];
+				const menuText = buttonIcon.querySelector(".mobile-menu-text");
+
+				// Replace the existing SVG with the new one.
+				if (existingSvg) {
+					if (newSvg === "Menu") {
+						newSvg = '<span class="mobile-menu-text">' + newSvg + '</span>';
+					}
+					existingSvg.outerHTML = newSvg;
+				} else {
+						menuText?.remove();		 
+						buttonIcon.insertAdjacentHTML("beforeend", newSvg);		 
+				}
+ 
 			}
 		},
 	);

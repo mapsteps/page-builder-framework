@@ -26,6 +26,14 @@ class HeaderBuilderOutput {
 	private $mobile_offcanvas_widgets = array();
 
 	/**
+	 * String sidebar menu variant.
+	 *
+	 * @var string
+	 */
+	private $display_as = '';
+
+
+	/**
 	 * Setup hooks to render header builder in front area.
 	 */
 	public function setup_hooks() {
@@ -255,8 +263,8 @@ class HeaderBuilderOutput {
 	 */
 	public function do_mobile_navigation() {
 
-		$display_as = get_theme_mod( 'wpbf_header_builder_mobile_sidebar_reveal_as', 'menu-mobile-hamburger' );
-		$display_as = 'off-canvas' !== $display_as ? 'dropdown' : $display_as;
+		$display_as       = get_theme_mod( 'wpbf_header_builder_mobile_sidebar_reveal_as', 'menu-mobile-hamburger' );
+		$this->display_as = 'off-canvas' !== $display_as ? 'dropdown' : $display_as;
 
 		echo '<div class="wpbf-hidden-large ' . ( 'off-canvas' === $display_as ? 'wpbf-mobile-menu-off-canvas' : 'wpbf-mobile-menu-hamburger' ) . '">';
 
@@ -503,10 +511,11 @@ class HeaderBuilderOutput {
 	private function render_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
 
 		$variant = wpbf_customize_str_value( $setting_group . '_icon', 'none' );
-		$label   = wpbf_customize_str_value( $setting_group . '_text', 'Mobile menu' );
+		$label   = wpbf_customize_str_value( $setting_group . '_text', 'Menu' );
 		$style   = wpbf_customize_str_value( $setting_group . '_style', '' );
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
+		$menu_variant_class  = 'wpbf-mobile-menu-' . $variant;
 		?>
 
 		<div class="wpbf-menu-toggle-container">
@@ -515,7 +524,7 @@ class HeaderBuilderOutput {
 
 			<button
 				id="wpbf-mobile-menu-toggle"
-				class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?>"
+				class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?> <?php echo esc_attr( $menu_variant_class ); ?>"
 				aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>"
 				aria-controls="navigation"
 				aria-expanded="false"
@@ -525,7 +534,7 @@ class HeaderBuilderOutput {
 
 				<?php
 				if ( 'none' === $variant ) {
-					echo esc_html( $label );
+					echo '<span class="mobile-menu-text">' . esc_html( $label ) . '</span>';
 				} else {
 					echo $this->mobile_menu_trigger_svg( $variant );
 				}
@@ -680,13 +689,17 @@ class HeaderBuilderOutput {
 
 			<?php do_action( 'wpbf_after_mobile_menu' ); ?>
 
-			<?php if ( wpbf_svg_enabled() ) { ?>
-				<span class="wpbf-close">
-					<?php echo wpbf_svg( 'times' ); ?>
-				</span>
-			<?php } else { ?>
-				<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
-			<?php } ?>
+			<?php if ( 'off-canvas' === $this->display_as ) : ?>
+
+				<?php if ( wpbf_svg_enabled() ) { ?>
+					<span class="wpbf-close">
+						<?php echo wpbf_svg( 'times' ); ?>
+					</span>
+				<?php } else { ?>
+					<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
+				<?php } ?>
+
+			<?php endif; ?>
 
 		</div>
 		
