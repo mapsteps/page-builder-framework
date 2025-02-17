@@ -2850,6 +2850,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			const buttonIcon = document.querySelector("#wpbf-mobile-menu-toggle");
 			const iconKey = value || defaultIcon;
 
+			// Check if iconKey is valid
 			if (
 				iconKey !== "none" &&
 				iconKey !== "variant-1" &&
@@ -2862,20 +2863,24 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			if (buttonIcon) {
 				// Find the existing SVG inside the button.
 				const existingSvg = buttonIcon.querySelector("svg.ct-icon");
-				var newSvg = menuIcons[iconKey];
+				let newSvg = menuIcons[iconKey]; // The new icon to use
 				const menuText = buttonIcon.querySelector(".mobile-menu-text");
 
-				// Replace the existing SVG with the new one.
+				// Remove the existing text element to prevent duplicates.
+				if (menuText) {
+					menuText.remove();
+				}
+
+				// If there is an existing SVG, replace it with the new one
 				if (existingSvg) {
 					if (newSvg === "Menu") {
-						newSvg = '<span class="mobile-menu-text">' + newSvg + '</span>';
+						newSvg = '<span class="mobile-menu-text">' + newSvg + "</span>";
 					}
 					existingSvg.outerHTML = newSvg;
 				} else {
-						menuText?.remove();		 
-						buttonIcon.insertAdjacentHTML("beforeend", newSvg);		 
+					// If no SVG is found, just add the new icon (and text, if needed)
+					buttonIcon.insertAdjacentHTML("beforeend", newSvg);
 				}
- 
 			}
 		},
 	);
