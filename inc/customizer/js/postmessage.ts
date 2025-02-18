@@ -2821,21 +2821,19 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		},
 	);
 
-	listenToCustomizerValueChange<string>(
+	let selectedMenuVariant = "";
+	let selectedMenuStyle = "simple";
+
+	listenToCustomizerValueChange(
 		"wpbf_header_builder_mobile_menu_trigger_icon",
 		function (settingId, value) {
 			const iconKey = value || "none";
 
-			// Check if iconKey is valid.
-			if (
-				iconKey !== "none" &&
-				iconKey !== "variant-1" &&
-				iconKey !== "variant-2" &&
-				iconKey !== "variant-3"
-			) {
+			if (!["none", "variant-1", "variant-2", "variant-3"].includes(iconKey)) {
 				return;
 			}
 
+			selectedMenuVariant = iconKey;
 			const triggerButton = document.querySelector("#wpbf-mobile-menu-toggle");
 
 			if (triggerButton) {
@@ -2843,21 +2841,80 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 					".menu-trigger-button-svg",
 				);
 
+				// Hide label if variant is set (not "none").
+				const menuLabel = triggerButton.querySelector(
+					".menu-trigger-button-text",
+				);
+				if (menuLabel) {
+					if (iconKey === "none") {
+						// Show label if variant is 'none'.
+						menuLabel.style.display = "inline";
+					} else {
+						// Hide label if variant is not 'none'.
+						menuLabel.style.display = "none";
+					}
+				}
+
 				if (iconKey === "none") {
-					if (existingSvg) triggerButton.removeChild(existingSvg);
+					if (existingSvg) existingSvg.remove();
 				} else {
 					let newSvg =
-						window.wpbfMenuTriggerButtonSvg &&
-						window.wpbfMenuTriggerButtonSvg[iconKey]
-							? window.wpbfMenuTriggerButtonSvg[iconKey]
-							: null;
+						window.wpbfMenuTriggerButtonSvg?.[iconKey]?.[selectedMenuStyle] ||
+						"";
 
-					if (existingSvg) {
-						if (newSvg) existingSvg.outerHTML = newSvg;
-					} else {
-						if (newSvg) {
+					if (newSvg) {
+						if (existingSvg) {
+							existingSvg.outerHTML = newSvg;
+						} else {
 							triggerButton.insertAdjacentHTML("afterbegin", newSvg);
 						}
+					}
+				}
+			}
+		},
+	);
+
+	listenToCustomizerValueChange(
+		"wpbf_header_builder_mobile_menu_trigger_style",
+		function (settingId, value) {
+			const iconStyleKey = value || "simple";
+
+			if (!["simple", "outline", "solid"].includes(iconStyleKey)) {
+				return;
+			}
+
+			selectedMenuStyle = iconStyleKey;
+			const triggerButton = document.querySelector("#wpbf-mobile-menu-toggle");
+
+			if (triggerButton) {
+				const existingSvg = triggerButton.querySelector(
+					".menu-trigger-button-svg",
+				);
+
+				// Hide label if a valid style is set (not "none").
+				const menuLabel = triggerButton.querySelector(
+					".menu-trigger-button-text",
+				);
+				if (menuLabel) {
+					if (selectedMenuVariant === "none" || !selectedMenuVariant) {
+						// Show label if variant is 'none' or unset.
+						menuLabel.style.display = "inline";
+					} else {
+						// Hide label if variant is set
+						menuLabel.style.display = "none";
+					}
+				}
+
+				let newSvg =
+					window.wpbfMenuTriggerButtonSvg?.[selectedMenuVariant]?.[
+						selectedMenuStyle
+					] || "";
+
+				if (newSvg) {
+					if (existingSvg) {
+						existingSvg.outerHTML = newSvg;
+					} else {
+						triggerButton.insertAdjacentHTML("afterbegin", newSvg);
 					}
 				}
 			}

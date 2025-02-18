@@ -317,11 +317,23 @@ function wpbf_customizer_preview_js() {
 
 	wp_add_inline_script(
 		'wpbf-postmessage',
-		'const wpbfMenuTriggerButtonSvg = ' . wp_json_encode( array(
-			'none'      => HeaderBuilderConfig::menuTriggerButtonSvg(),
-			'variant-1' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-1' ),
-			'variant-2' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-2' ),
-			'variant-3' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-3' ),
+		'window.wpbfMenuTriggerButtonSvg = ' . wp_json_encode( array(
+			'none'      => '',
+			'variant-1' => array(
+				'simple'  => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-1', 'simple' ),
+				'outline' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-1', 'outline' ),
+				'solid'   => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-1', 'solid' ),
+			),
+			'variant-2' => array(
+				'simple'  => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-2', 'simple' ),
+				'outline' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-2', 'outline' ),
+				'solid'   => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-2', 'solid' ),
+			),
+			'variant-3' => array(
+				'simple'  => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-3', 'simple' ),
+				'outline' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-3', 'outline' ),
+				'solid'   => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-3', 'solid' ),
+			),
 		) ),
 		'before'
 	);

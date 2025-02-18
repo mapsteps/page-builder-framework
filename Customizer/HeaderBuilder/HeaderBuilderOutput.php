@@ -506,7 +506,7 @@ class HeaderBuilderOutput {
 				<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
 
 				<?php
-				echo wp_kses( HeaderBuilderConfig::menuTriggerButtonSvg( $variant ), array(
+				echo wp_kses( HeaderBuilderConfig::menuTriggerButtonSvg( $variant, $style ), array(
 					'svg'  => array(
 						'class'        => true,
 						'width'        => true,
@@ -517,22 +517,25 @@ class HeaderBuilderOutput {
 						'data-variant' => true,
 					),
 					'rect' => array(
-						'x'      => true,
-						'y'      => true,
-						'width'  => true,
-						'height' => true,
-						'rx'     => true,
+						'x'            => true,
+						'y'            => true,
+						'width'        => true,
+						'height'       => true,
+						'rx'           => true,
+						'stroke'       => true,
+						'stroke-width' => true,
 					),
 					'path' => array(
 						'd'         => true,
-						'fill-rule' => true,
-						'clip-rule' => true,
+						'fill-rule' => false,
+						'clip-rule' => false,
 					),
 				) );
 
 				if ( ! empty( $label ) && 'none' !== $label ) {
 					echo '<span class="menu-trigger-button-text">' . esc_html( $label ) . '</span>';
 				}
+				 
 				?>
 			</button>
 
