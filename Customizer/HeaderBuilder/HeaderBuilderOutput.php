@@ -26,17 +26,19 @@ class HeaderBuilderOutput {
 	private $mobile_offcanvas_widgets = array();
 
 	/**
-	 * String sidebar menu variant.
+	 * The mobile menu type. Accepts 'hamburger' or 'off-canvas'.
 	 *
 	 * @var string
 	 */
-	private $display_as = '';
+	private $mobile_menu_type = '';
 
 
 	/**
 	 * Setup hooks to render header builder in front area.
 	 */
 	public function setup_hooks() {
+
+		add_filter( 'wpbf_navigation_classes', [ $this, 'add_navigation_classes' ] );
 
 		$saved_values = get_theme_mod( 'wpbf_header_builder', array() );
 
@@ -84,6 +86,18 @@ class HeaderBuilderOutput {
 				$this->mobile_columns[ $mobile_row_key ] = $mobile_columns;
 			}
 		}
+
+	}
+
+	/**
+	 * Append `use-header-builder` class to the navigation classes.
+	 *
+	 * @param string $classes The classes.
+	 * @return string The updated classes.
+	 */
+	public function add_navigation_classes( $classes ) {
+
+		return $classes . ' use-header-builder';
 
 	}
 
@@ -263,10 +277,11 @@ class HeaderBuilderOutput {
 	 */
 	public function do_mobile_navigation() {
 
-		$display_as       = get_theme_mod( 'wpbf_header_builder_mobile_sidebar_reveal_as', 'menu-mobile-hamburger' );
-		$this->display_as = 'off-canvas' !== $display_as ? 'dropdown' : $display_as;
+		$reveal_as = get_theme_mod( 'wpbf_header_builder_mobile_sidebar_reveal_as' );
 
-		echo '<div class="wpbf-hidden-large ' . ( 'off-canvas' === $display_as ? 'wpbf-mobile-menu-off-canvas' : 'wpbf-mobile-menu-hamburger' ) . '">';
+		$this->mobile_menu_type = 'off-canvas' !== $reveal_as ? 'dropdown' : $reveal_as;
+
+		echo '<div class="wpbf-hidden-large ' . ( 'off-canvas' === $this->mobile_menu_type ? 'wpbf-mobile-menu-off-canvas' : 'wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger' ) . '">';
 
 		$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
 
@@ -461,48 +476,6 @@ class HeaderBuilderOutput {
 	}
 
 	/**
-	 * Mobile navigation menu SVG icon.
-	 *
-	 * @param string $icon_variant The icon variant. Accepts 'variant-1', 'variant-2', 'variant-3', or 'none'.
-	 * @return string The SVG icon.
-	 */
-	private function mobile_menu_trigger_svg( $icon_variant ) {
-
-		if ( 'variant-1' === $icon_variant ) {
-			return '
-			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-1">
-				<rect x="4" y="4" width="22" height="2" rx="1"/>
-				<rect x="4" y="12" width="22" height="2" rx="1"/>
-				<rect x="4" y="20" width="22" height="2" rx="1"/>
-			</svg>
-			';
-		}
-
-		if ( 'variant-2' === $icon_variant ) {
-			return '
-			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
-				<rect x="4" y="4" width="14" height="2" rx="1"/>
-				<rect x="4" y="12" width="24" height="2" rx="1"/>
-				<rect x="4" y="20" width="18" height="2" rx="1"/>
-			</svg>
-			';
-		}
-
-		if ( 'variant-3' === $icon_variant ) {
-			return '
-			<svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
-				<rect x="12" y="4" width="14" height="2" rx="1"/>
-				<rect x="4" y="12" width="22" height="2" rx="1"/>
-				<rect x="4" y="20" width="14" height="2" rx="1"/>
-			</svg>
-			';
-		}
-
-		return '';
-
-	}
-
-	/**
 	 * Render the builder menu widget.
 	 *
 	 * @param string $setting_group The setting group key.
@@ -511,7 +484,7 @@ class HeaderBuilderOutput {
 	private function render_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
 
 		$variant = wpbf_customize_str_value( $setting_group . '_icon', 'none' );
-		$label   = wpbf_customize_str_value( $setting_group . '_text', 'Menu' );
+		$label   = wpbf_customize_str_value( $setting_group . '_text' );
 		$style   = wpbf_customize_str_value( $setting_group . '_style', '' );
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
@@ -533,10 +506,32 @@ class HeaderBuilderOutput {
 				<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
 
 				<?php
-				if ( 'none' === $variant ) {
-					echo '<span class="mobile-menu-text">' . esc_html( $label ) . '</span>';
-				} else {
-					echo $this->mobile_menu_trigger_svg( $variant );
+				echo wp_kses( HeaderBuilderConfig::menuTriggerButtonSvg( $variant ), array(
+					'svg'  => array(
+						'class'        => true,
+						'width'        => true,
+						'height'       => true,
+						'viewbox'      => true,
+						'fill'         => true,
+						'xmlns'        => true,
+						'data-variant' => true,
+					),
+					'rect' => array(
+						'x'      => true,
+						'y'      => true,
+						'width'  => true,
+						'height' => true,
+						'rx'     => true,
+					),
+					'path' => array(
+						'd'         => true,
+						'fill-rule' => true,
+						'clip-rule' => true,
+					),
+				) );
+
+				if ( ! empty( $label ) && 'none' !== $label ) {
+					echo '<span class="menu-trigger-button-text">' . esc_html( $label ) . '</span>';
 				}
 				?>
 			</button>
@@ -689,7 +684,7 @@ class HeaderBuilderOutput {
 
 			<?php do_action( 'wpbf_after_mobile_menu' ); ?>
 
-			<?php if ( 'off-canvas' === $this->display_as ) : ?>
+			<?php if ( 'off-canvas' === $this->mobile_menu_type ) : ?>
 
 				<?php if ( wpbf_svg_enabled() ) { ?>
 					<span class="wpbf-close">

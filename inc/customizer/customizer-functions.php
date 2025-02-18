@@ -15,6 +15,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
+use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderConfig;
 use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderOutput;
 
 /**
@@ -312,6 +313,17 @@ function wpbf_customizer_preview_js() {
 		),
 		WPBF_VERSION,
 		true
+	);
+
+	wp_add_inline_script(
+		'wpbf-postmessage',
+		'const wpbfMenuTriggerButtonSvg = ' . wp_json_encode( array(
+			'none'      => HeaderBuilderConfig::menuTriggerButtonSvg(),
+			'variant-1' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-1' ),
+			'variant-2' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-2' ),
+			'variant-3' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-3' ),
+		) ),
+		'before'
 	);
 
 }

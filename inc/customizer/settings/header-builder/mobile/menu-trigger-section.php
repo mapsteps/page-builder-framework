@@ -52,21 +52,21 @@ wpbf_customizer_field()
 		</svg>
 		',
 		'variant-1' => '
-		<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-1">
+		<svg class="menu-trigger-button-svg" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-1">
 			<rect y="0.00" width="18" height="1.7" rx="1"></rect>
 			<rect y="6.15" width="18" height="1.7" rx="1"></rect>
 			<rect y="12.3" width="18" height="1.7" rx="1"></rect>
 		</svg>
 		',
 		'variant-2' => '
-		<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-2">
+		<svg class="menu-trigger-button-svg" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-2">
 			<rect y="0.00" width="10" height="1.7" rx="1"></rect>
 			<rect y="6.15" width="18" height="1.7" rx="1"></rect>
 			<rect y="12.3" width="15" height="1.7" rx="1"></rect>
 		</svg>
 		',
 		'variant-3' => '
-		<svg class="ct-icon" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-3">
+		<svg class="menu-trigger-button-svg" width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true" data-variant="variant-3">
 			<rect y="0.00" x="6.00" width="12" height="1.7" rx="1"></rect>
 			<rect y="6.15" width="18" height="1.7" rx="1"></rect>
 			<rect y="12.3" width="12" height="1.7" rx="1"></rect>

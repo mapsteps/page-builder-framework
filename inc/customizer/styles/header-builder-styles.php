@@ -436,7 +436,6 @@ foreach ( $button_keys as $button_key ) {
 
 }
 
-
 // Mobile Header Builder: Search Icon Styles.
 $control_id_prefix = $header_builder_control_id_prefix . 'mobile_search_';
 $icon_size         = wpbf_customize_array_value( $control_id_prefix . 'icon_size' );
@@ -487,7 +486,8 @@ if ( ! empty( $icon_color ) ) {
 }
 
 // Mobile Header Builder: Sidebar Menu Reveal.
-$mobile_menu_options = wpbf_customize_str_value( 'wpbf_header_builder_mobile_sidebar_reveal_as', 'off-canvas' );
+$mobile_menu_options = wpbf_customize_str_value( 'wpbf_header_builder_mobile_sidebar_reveal_as', 'dropdown' );
+
 if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) ) {
 
 	$mobile_menu_width    = wpbf_customize_str_value( 'mobile_menu_width' );

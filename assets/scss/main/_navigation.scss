@@ -340,6 +340,11 @@
 	margin: 0;
 }
 
+.use-header-builder .wpbf-mobile-menu-toggle {
+	display: inline-flex;
+	align-items: center;
+}
+
 // SVG support (Hamburger)
 .wpbf-mobile-menu-hamburger {
 	.wpbf-mobile-menu-toggle {

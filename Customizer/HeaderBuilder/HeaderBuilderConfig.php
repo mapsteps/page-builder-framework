@@ -285,4 +285,46 @@ final class HeaderBuilderConfig {
 
 	}
 
+	/**
+	 * SVG icon for menu trigger button.
+	 *
+	 * @param string $icon_variant The icon variant. Accepts 'variant-1', 'variant-2', 'variant-3', 'none', or empty string.
+	 * @return string The SVG icon.
+	 */
+	public static function menuTriggerButtonSvg( $icon_variant = '' ) {
+
+		if ( 'variant-1' === $icon_variant ) {
+			return '
+			<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-1">
+				<rect x="4" y="4" width="22" height="2" rx="1"/>
+				<rect x="4" y="12" width="22" height="2" rx="1"/>
+				<rect x="4" y="20" width="22" height="2" rx="1"/>
+			</svg>
+			';
+		}
+
+		if ( 'variant-2' === $icon_variant ) {
+			return '
+			<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
+				<rect x="4" y="4" width="14" height="2" rx="1"/>
+				<rect x="4" y="12" width="24" height="2" rx="1"/>
+				<rect x="4" y="20" width="18" height="2" rx="1"/>
+			</svg>
+			';
+		}
+
+		if ( 'variant-3' === $icon_variant ) {
+			return '
+			<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
+				<rect x="12" y="4" width="14" height="2" rx="1"/>
+				<rect x="4" y="12" width="22" height="2" rx="1"/>
+				<rect x="4" y="20" width="14" height="2" rx="1"/>
+			</svg>
+			';
+		}
+
+		return '';
+
+	}
+
 }

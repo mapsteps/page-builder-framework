@@ -2538,30 +2538,6 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		});
 	});
 
-	/* Mobile Header Builder */
-
-	// mobile menu trigger color.
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-menu-toggle",
-				props: { color: toStringColor(value) },
-			});
-		},
-	);
-
-	// mobile menu trigger size.
-	listenToCustomizerValueChange<string | number>(
-		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_size",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-menu-toggle",
-				props: { "font-size": maybeAppendSuffix(value) },
-			});
-		},
-	);
-
 	// Search Icon Color.
 	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
 		`wpbf_header_builder_mobile_search_icon_color`,
@@ -2604,11 +2580,14 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		},
 	);
 
+	/* Mobile Header Builder */
+
 	const mobileHeaderBuilderRows = [
 		"mobile_row_1",
 		"mobile_row_2",
 		"mobile_row_3",
 	];
+
 	mobileHeaderBuilderRows.forEach((rowKey) => {
 		const controlIdPrefix = `wpbf_header_builder_${rowKey}_`;
 
@@ -2820,37 +2799,34 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 		);
 	});
 
-	const menuIcons = {
-		none: `Menu`,
-		"variant-1": `
-        <svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-1">
-					<rect x="4" y="4" width="22" height="2" rx="1"/>
-					<rect x="4" y="12" width="22" height="2" rx="1"/>
-					<rect x="4" y="20" width="22" height="2" rx="1"/>
-			</svg>`,
-		"variant-2": `
-        <svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
-					<rect x="4" y="4" width="14" height="2" rx="1"/>
-					<rect x="4" y="12" width="24" height="2" rx="1"/>
-					<rect x="4" y="20" width="18" height="2" rx="1"/>
-			</svg>`,
-		"variant-3": `
-        <svg class="ct-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
-					<rect x="12" y="4" width="14" height="2" rx="1"/>
-					<rect x="4" y="12" width="22" height="2" rx="1"/>
-					<rect x="4" y="20" width="14" height="2" rx="1"/>
-			</svg>`,
-	};
+	// Mobile menu trigger button's color.
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu-toggle",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
 
-	const defaultIcon = "variant-1";
+	// Mobile menu trigger button's size.
+	listenToCustomizerValueChange<string | number>(
+		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-menu-toggle",
+				props: { "font-size": maybeAppendSuffix(value) },
+			});
+		},
+	);
 
 	listenToCustomizerValueChange<string>(
 		"wpbf_header_builder_mobile_menu_trigger_icon",
 		function (settingId, value) {
-			const buttonIcon = document.querySelector("#wpbf-mobile-menu-toggle");
-			const iconKey = value || defaultIcon;
+			const iconKey = value || "none";
 
-			// Check if iconKey is valid
+			// Check if iconKey is valid.
 			if (
 				iconKey !== "none" &&
 				iconKey !== "variant-1" &&
@@ -2860,27 +2836,51 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				return;
 			}
 
-			if (buttonIcon) {
-				// Find the existing SVG inside the button.
-				const existingSvg = buttonIcon.querySelector("svg.ct-icon");
-				let newSvg = menuIcons[iconKey]; // The new icon to use
-				const menuText = buttonIcon.querySelector(".mobile-menu-text");
+			const triggerButton = document.querySelector("#wpbf-mobile-menu-toggle");
 
-				// Remove the existing text element to prevent duplicates.
-				if (menuText) {
-					menuText.remove();
-				}
+			if (triggerButton) {
+				const existingSvg = triggerButton.querySelector(
+					".menu-trigger-button-svg",
+				);
 
-				// If there is an existing SVG, replace it with the new one
-				if (existingSvg) {
-					if (newSvg === "Menu") {
-						newSvg = '<span class="mobile-menu-text">' + newSvg + "</span>";
-					}
-					existingSvg.outerHTML = newSvg;
+				if (iconKey === "none") {
+					if (existingSvg) triggerButton.removeChild(existingSvg);
 				} else {
-					// If no SVG is found, just add the new icon (and text, if needed)
-					buttonIcon.insertAdjacentHTML("beforeend", newSvg);
+					let newSvg =
+						window.wpbfMenuTriggerButtonSvg &&
+						window.wpbfMenuTriggerButtonSvg[iconKey]
+							? window.wpbfMenuTriggerButtonSvg[iconKey]
+							: null;
+
+					if (existingSvg) {
+						if (newSvg) existingSvg.outerHTML = newSvg;
+					} else {
+						if (newSvg) {
+							triggerButton.insertAdjacentHTML("afterbegin", newSvg);
+						}
+					}
 				}
+			}
+		},
+	);
+
+	listenToCustomizerValueChange<string>(
+		"wpbf_header_builder_mobile_menu_trigger_text",
+		function (settingId, value) {
+			const triggerButton = document.querySelector("#wpbf-mobile-menu-toggle");
+			if (!triggerButton) return;
+
+			const existingLabelSpan = triggerButton.querySelector(
+				".menu-trigger-button-text",
+			);
+
+			if (existingLabelSpan) {
+				existingLabelSpan.textContent = value;
+			} else {
+				const newLabelSpan = document.createElement("span");
+				newLabelSpan.classList.add("menu-trigger-button-text");
+				newLabelSpan.textContent = value;
+				triggerButton.appendChild(newLabelSpan);
 			}
 		},
 	);

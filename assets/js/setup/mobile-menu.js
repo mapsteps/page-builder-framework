@@ -9,6 +9,12 @@ export default function setupMobileMenu(utils) {
 	const dom = utils.dom;
 	const anim = utils.anim;
 
+	const headerBuilderEnabled = dom.findHtmlEl(
+		".wpbf-navigation.use-header-builder",
+	)
+		? true
+		: false;
+
 	let breakpoints = dom.getBreakpoints();
 
 	/**
@@ -46,46 +52,21 @@ export default function setupMobileMenu(utils) {
 	 * It could be 'hamburger', 'default', or 'premium'.
 	 */
 	function setupMenuType() {
-		// Check for variant menus first
-		let menu = document.querySelector(".wpbf-mobile-menu-variant-1");
-		if (menu) {
-			menuType = "variant-1";
+		if (headerBuilderEnabled && dom.findHtmlEl(".wpbf-mobile-menu-dropdown")) {
+			menuType = "dropdown";
 			return;
 		}
 
-		menu = document.querySelector(".wpbf-mobile-menu-variant-2");
-		if (menu) {
-			menuType = "variant-2";
-			return;
-		}
-
-		menu = document.querySelector(".wpbf-mobile-menu-variant-3");
-		if (menu) {
-			menuType = "variant-3";
-			return;
-		}
-
-		menu = document.querySelector(".wpbf-mobile-menu-none");
-		if (menu) {
-			menuType = "none";
-			return;
-		}
-
-		// Check for default menu type
-		menu = document.querySelector(".wpbf-mobile-menu-default");
-		if (menu) {
-			menuType = "default";
-			return;
-		}
-
-		// Finally, check for hamburger menu
-		menu = document.querySelector(".wpbf-mobile-menu-hamburger");
-		if (menu) {
+		if (dom.findHtmlEl(".wpbf-mobile-menu-hamburger")) {
 			menuType = "hamburger";
 			return;
 		}
 
-		// If no menus are found, fall back to premium
+		if (dom.findHtmlEl(".wpbf-mobile-menu-default")) {
+			menuType = "default";
+			return;
+		}
+
 		menuType = "premium";
 	}
 
@@ -167,9 +148,7 @@ export default function setupMobileMenu(utils) {
 			const windowHeight = document.documentElement.clientHeight;
 			const windowWidth = document.documentElement.clientWidth;
 
-			const mobileNavWrapper = document.querySelector(
-				".wpbf-mobile-nav-wrapper",
-			);
+			const mobileNavWrapper = dom.findHtmlEl(".wpbf-mobile-nav-wrapper");
 
 			const mobileNavWrapperHeight =
 				mobileNavWrapper && mobileNavWrapper instanceof HTMLElement
@@ -197,7 +176,7 @@ export default function setupMobileMenu(utils) {
 		if ("premium" === menuType) return;
 
 		// Toggle here is the mobile menu toggle button.
-		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
+		const toggle = dom.findHtmlEl("#wpbf-mobile-menu-toggle");
 		if (!toggle) return;
 
 		if (toggle.classList.contains("active")) {
@@ -240,7 +219,6 @@ export default function setupMobileMenu(utils) {
 		if (mobileMenu && !mobileMenu.classList.contains("active")) {
 			patchMobileNavOverflowY("hidden");
 
-			// Slide down the mobile menu (simulating slideDown behavior in vanilla JS).
 			anim.slideToggle({
 				el: mobileMenu,
 				direction: "down",
@@ -257,40 +235,28 @@ export default function setupMobileMenu(utils) {
 			toggle.setAttribute("aria-expanded", "true");
 
 			// Handle hamburger menu type
-			if ("hamburger" === menuType) {
-				toggle.classList.remove("wpbff-hamburger");
+			if ("hamburger" === menuType || "dropdown" === menuType) {
+				if (headerBuilderEnabled) {
+					const svgIcon = toggle.querySelector(".menu-trigger-button-svg");
+
+					if (svgIcon instanceof SVGElement) {
+						svgIcon.style.display = "none";
+					}
+
+					const mobileMenuText = toggle.querySelector(
+						".menu-trigger-button-text",
+					);
+
+					if (mobileMenuText instanceof HTMLElement) {
+						mobileMenuText.style.display = "none";
+					}
+
+					toggle.classList.add("wpbff");
+				} else {
+					toggle.classList.remove("wpbff-hamburger");
+				}
+
 				toggle.classList.add("wpbff-times");
-			} else {
-				// Handle other menu types (non-hamburger).
-				// Find existing SVG.
-				const svgIcon = toggle.querySelector("svg.ct-icon");
-				const closeIconSvg = `
-                <svg class="ct-icon close-icon" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="6" y1="6" x2="26" y2="26" stroke="currentColor" stroke-width="2"></line>
-                    <line x1="6" y1="26" x2="26" y2="6" stroke="currentColor" stroke-width="2"></line>
-                </svg>`;
-
-				// Hide the existing SVG icon (if present).
-				if (svgIcon) {
-					svgIcon.style.display = "none";
-				}
-
-				const mobileMenuText = toggle.querySelector(".mobile-menu-text");
-				if (mobileMenuText) {
-					mobileMenuText.style.display = "none";
-				}
-
-				if (svgIcon) {
-					svgIcon.style.display = "none";
-				}
-
-				// Check if the close icon is already inserted to avoid duplicates.
-				if (!toggle.querySelector(".close-icon")) {
-					toggle.insertAdjacentHTML("beforeend", closeIconSvg);
-				}
-
-				toggle.classList.remove("wpbff-hamburger");
-				toggle.classList.remove("wpbff-times");
 			}
 		}
 	}
@@ -306,16 +272,16 @@ export default function setupMobileMenu(utils) {
 
 		// Toggle here is the mobile menu toggle button.
 		const toggle = dom.findHtmlEl("#wpbf-mobile-menu-toggle");
+		if (!toggle) return;
 
 		// If toggle is not active, do nothing.
-		if (!toggle || !toggle.classList.contains("active")) return;
+		if (!toggle.classList.contains("active")) return;
 
 		const mobileMenu = dom.findHtmlEl(".wpbf-mobile-menu-container");
 
 		if (mobileMenu && mobileMenu.classList.contains("active")) {
 			patchMobileNavOverflowY("hidden");
 
-			// Slide up the mobile menu (simulating slideUp behavior in vanilla JS).
 			anim.slideToggle({
 				el: mobileMenu,
 				direction: "up",
@@ -326,59 +292,31 @@ export default function setupMobileMenu(utils) {
 			});
 		}
 
-		// Reset the toggle button state.
-		if (toggle) {
-			toggle.classList.remove("active");
-			toggle.setAttribute("aria-expanded", "false");
+		toggle.classList.remove("active");
+		toggle.setAttribute("aria-expanded", "false");
 
-			// Handle different menu types.
-			if ("hamburger" === menuType) {
-				toggle.classList.remove("wpbff-times");
-				toggle.classList.add("wpbff-hamburger");
+		if ("hamburger" === menuType || "dropdown" === menuType) {
+			if (headerBuilderEnabled) {
+				const mobileMenuText = toggle.querySelector(
+					".menu-trigger-button-text",
+				);
 
-				// Restore the original SVG (if any).
-				const svgIcon = toggle.querySelector("svg.ct-icon");
-				if (svgIcon) {
-					// Make the original SVG visible again.
-					svgIcon.style.display = "inline-block";
-				}
-
-				// Remove the close icon (if any).
-				const closeIcon = toggle.querySelector(".close-icon");
-				if (closeIcon) {
-					closeIcon.remove();
-				}
-			} else {
-				// Remove the close icon (if any) for non-hamburger variants.
-				const closeIcon = toggle.querySelector(".close-icon");
-				if (closeIcon) {
-					closeIcon.remove();
-				}
-
-				// Show the original SVG icon for non-hamburger menu types.
-				const svgIcon = toggle.querySelector("svg.ct-icon");
-				if (svgIcon) {
-					// Make it visible again.
-					svgIcon.style.display = "inline-block";
-				}
-
-				const mobileMenuText = toggle.querySelector(".mobile-menu-text");
-				if (mobileMenuText) {
-					// Make the original SVG visible again.
+				if (mobileMenuText instanceof HTMLElement) {
 					mobileMenuText.style.display = "inline-block";
 				}
 
-				toggle.classList.remove("wpbff-times");
+				const svgIcon = toggle.querySelector(".menu-trigger-button-svg");
 
-				// Handle different menu variants (variant-1, variant-2, variant-3).
-				if (menuType === "variant-1") {
-					toggle.classList.add("wpbff-variant-1");
-				} else if (menuType === "variant-2") {
-					toggle.classList.add("wpbff-variant-2");
-				} else if (menuType === "variant-3") {
-					toggle.classList.add("wpbff-variant-3");
+				if (svgIcon instanceof SVGElement) {
+					svgIcon.style.display = "inline-block";
 				}
+
+				toggle.classList.remove("wpbff");
+			} else {
+				toggle.classList.add("wpbff-hamburger");
 			}
+
+			toggle.classList.remove("wpbff-times");
 		}
 	}
 
