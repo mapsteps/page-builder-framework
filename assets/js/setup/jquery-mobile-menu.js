@@ -252,7 +252,10 @@ export default function setupjQueryMobileMenu($) {
 				);
 
 				if (mobileMenuText instanceof HTMLElement) {
-					mobileMenuText.style.display = "inline-block";
+					// Only change display if it doesn't have the 'wpbf-is-hidden' class.
+					if (!mobileMenuText.classList.contains("wpbf-is-hidden")) {
+						mobileMenuText.style.display = "inline-block";
+					}
 				}
 
 				const svgIcon = toggle.querySelector(".menu-trigger-button-svg");

@@ -302,7 +302,10 @@ export default function setupMobileMenu(utils) {
 				);
 
 				if (mobileMenuText instanceof HTMLElement) {
-					mobileMenuText.style.display = "inline-block";
+					// Check if the element has the 'wpbf-is-hidden' class.
+					if (!mobileMenuText.classList.contains("wpbf-is-hidden")) {
+							mobileMenuText.style.display = "inline-block";
+					}
 				}
 
 				const svgIcon = toggle.querySelector(".menu-trigger-button-svg");

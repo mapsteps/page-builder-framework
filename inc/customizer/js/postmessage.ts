@@ -2845,13 +2845,16 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				const menuLabel = triggerButton.querySelector(
 					".menu-trigger-button-text",
 				);
+
 				if (menuLabel) {
 					if (iconKey === "none") {
 						// Show label if variant is 'none'.
 						menuLabel.style.display = "inline";
+						menuLabel.classList.remove("wpbf-is-hidden");
 					} else {
 						// Hide label if variant is not 'none'.
 						menuLabel.style.display = "none";
+						menuLabel.classList.add("wpbf-is-hidden");
 					}
 				}
 
