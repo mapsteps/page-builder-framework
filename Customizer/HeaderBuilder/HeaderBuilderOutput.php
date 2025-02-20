@@ -483,7 +483,7 @@ class HeaderBuilderOutput {
 	 */
 	private function render_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
 
-		$variant = wpbf_customize_str_value( $setting_group . '_icon', 'none' );
+		$variant = wpbf_customize_str_value( $setting_group . '_icon', 'variant-1' );
 		$label   = wpbf_customize_str_value( $setting_group . '_text' );
 		$style   = wpbf_customize_str_value( $setting_group . '_style', '' );
 
