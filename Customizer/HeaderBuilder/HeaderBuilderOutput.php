@@ -489,7 +489,6 @@ class HeaderBuilderOutput {
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
 		$menu_variant_class  = 'wpbf-mobile-menu-' . $variant;
-		$menu_label_class    = ! empty( $variant ) && 'none' !== $variant ? ' wpbf-is-hidden' : '';
 		?>
 
 		<div class="wpbf-menu-toggle-container">
@@ -534,7 +533,7 @@ class HeaderBuilderOutput {
 				) );
 
 				if ( ! empty( $label ) ) {
-					echo '<span class="menu-trigger-button-text ' . $menu_label_class . '">' . esc_html( $label ) . '</span>';
+					echo '<span class="menu-trigger-button-text">' . esc_html( $label ) . '</span>';
 				}
 
 				?>
