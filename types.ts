@@ -117,9 +117,21 @@ declare global {
 		WpbfTheme: WpbfTheme;
 		wpbfMenuTriggerButtonSvg?: {
 			none: string;
-			"variant-1": string;
-			"variant-2": string;
-			"variant-3": string;
+			"variant-1": {
+				simple: string;
+				outline: string;
+				solid: string;
+			};
+			"variant-2": {
+				simple: string;
+				outline: string;
+				solid: string;
+			};
+			"variant-3": {
+				simple: string;
+				outline: string;
+				solid: string;
+			};
 		};
 		wpbf_infinte_scroll_object: {
 			next_Selector: string;
