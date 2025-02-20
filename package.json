@@ -122,7 +122,7 @@
     "build-postmessage": "shx rm -rf js/min/postmessage-min.js && shx rm -rf js/min/postmessage-min.js.map && parcel build inc/customizer/js/postmessage.ts --dist-dir js/min --no-cache",
     "build-customize-panels": "parcel build Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist --no-cache",
     "build-customize-sections": "shx rm -rf Customizer/Sections/dist && parcel build Customizer/Sections/src/sections.ts --dist-dir Customizer/Sections/dist --no-cache",
-    "build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-cache",
+    "build-base-control": "shx rm -rf Customizer/Controls/Base/dist && parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-cache",
     "build-checkbox-control": "parcel build Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist --no-cache",
     "build-color-control": "shx rm -rf Customizer/Controls/Color/dist && parcel build Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-cache",
     "build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-cache",
