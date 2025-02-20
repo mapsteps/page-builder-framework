@@ -2824,13 +2824,13 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	listenToCustomizerValueChange<string>(
 		"wpbf_header_builder_mobile_menu_trigger_icon",
 		function (settingId, value) {
-			const iconKey = value || "variant-1";
+			const iconVariant = value ? String(value) : "variant-1";
 
 			if (
-				iconKey !== "none" &&
-				iconKey !== "variant-1" &&
-				iconKey !== "variant-2" &&
-				iconKey !== "variant-3"
+				iconVariant !== "none" &&
+				iconVariant !== "variant-1" &&
+				iconVariant !== "variant-2" &&
+				iconVariant !== "variant-3"
 			) {
 				return;
 			}
@@ -2857,13 +2857,13 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				return;
 			}
 
-			if (iconKey === "none") {
+			if (iconVariant === "none") {
 				existingSvg?.remove();
 			} else {
 				const newSvg =
-					window.wpbfMenuTriggerButtonSvg?.[iconKey] &&
-					window.wpbfMenuTriggerButtonSvg[iconKey][buttonStyle]
-						? window.wpbfMenuTriggerButtonSvg[iconKey][buttonStyle]
+					window.wpbfMenuTriggerButtonSvg?.[iconVariant] &&
+					window.wpbfMenuTriggerButtonSvg[iconVariant][buttonStyle]
+						? window.wpbfMenuTriggerButtonSvg[iconVariant][buttonStyle]
 						: null;
 
 				if (newSvg) {
@@ -2897,28 +2897,28 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				".menu-trigger-button-svg",
 			);
 
-			const iconKeyVal = customizer?.(
+			const iconVariantVal = customizer?.(
 				"wpbf_header_builder_mobile_menu_trigger_style",
 			).get();
 
-			const iconKey = iconKeyVal ? String(iconKeyVal) : "variant-1";
+			const iconVariant = iconVariantVal ? String(iconVariantVal) : "variant-1";
 
 			if (
-				iconKey !== "none" &&
-				iconKey !== "variant-1" &&
-				iconKey !== "variant-2" &&
-				iconKey !== "variant-3"
+				iconVariant !== "none" &&
+				iconVariant !== "variant-1" &&
+				iconVariant !== "variant-2" &&
+				iconVariant !== "variant-3"
 			) {
 				return;
 			}
 
-			if (iconKey === "none") {
+			if (iconVariant === "none") {
 				existingSvg?.remove();
 			} else {
 				const newSvg =
-					window.wpbfMenuTriggerButtonSvg?.[iconKey] &&
-					window.wpbfMenuTriggerButtonSvg[iconKey][buttonStyle]
-						? window.wpbfMenuTriggerButtonSvg[iconKey][buttonStyle]
+					window.wpbfMenuTriggerButtonSvg?.[iconVariant] &&
+					window.wpbfMenuTriggerButtonSvg[iconVariant][buttonStyle]
+						? window.wpbfMenuTriggerButtonSvg[iconVariant][buttonStyle]
 						: null;
 
 				if (newSvg) {

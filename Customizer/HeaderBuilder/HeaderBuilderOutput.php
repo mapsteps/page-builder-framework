@@ -483,12 +483,12 @@ class HeaderBuilderOutput {
 	 */
 	private function render_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
 
-		$variant = wpbf_customize_str_value( $setting_group . '_icon', 'variant-1' );
-		$label   = wpbf_customize_str_value( $setting_group . '_text' );
-		$style   = wpbf_customize_str_value( $setting_group . '_style', '' );
+		$icon_variant = wpbf_customize_str_value( $setting_group . '_icon', 'variant-1' );
+		$button_label = wpbf_customize_str_value( $setting_group . '_text' );
+		$button_style = wpbf_customize_str_value( $setting_group . '_style', 'simple' );
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
-		$menu_variant_class  = 'wpbf-mobile-menu-' . $variant;
+		$menu_variant_class  = 'wpbf-mobile-menu-' . $icon_variant;
 		?>
 
 		<div class="wpbf-menu-toggle-container">
@@ -506,34 +506,37 @@ class HeaderBuilderOutput {
 				<span class="screen-reader-text"><?php _e( 'Menu Toggle', 'page-builder-framework' ); ?></span>
 
 				<?php
-				echo wp_kses( HeaderBuilderConfig::menuTriggerButtonSvg( $variant, $style ), array(
-					'svg'  => array(
-						'class'        => true,
-						'width'        => true,
-						'height'       => true,
-						'viewbox'      => true,
-						'fill'         => true,
-						'xmlns'        => true,
-						'data-variant' => true,
-					),
-					'rect' => array(
-						'x'            => true,
-						'y'            => true,
-						'width'        => true,
-						'height'       => true,
-						'rx'           => true,
-						'stroke'       => true,
-						'stroke-width' => true,
-					),
-					'path' => array(
-						'd'         => true,
-						'fill-rule' => false,
-						'clip-rule' => false,
-					),
-				) );
+				echo wp_kses(
+					HeaderBuilderConfig::menuTriggerButtonSvg( $icon_variant, $button_style ),
+					array(
+						'svg'  => array(
+							'class'        => true,
+							'width'        => true,
+							'height'       => true,
+							'viewbox'      => true,
+							'fill'         => true,
+							'xmlns'        => true,
+							'data-variant' => true,
+						),
+						'rect' => array(
+							'x'            => true,
+							'y'            => true,
+							'width'        => true,
+							'height'       => true,
+							'rx'           => true,
+							'stroke'       => true,
+							'stroke-width' => true,
+						),
+						'path' => array(
+							'd'         => true,
+							'fill-rule' => false,
+							'clip-rule' => false,
+						),
+					)
+				);
 
-				if ( ! empty( $label ) ) {
-					echo '<span class="menu-trigger-button-text">' . esc_html( $label ) . '</span>';
+				if ( ! empty( $button_label ) ) {
+					echo '<span class="menu-trigger-button-text">' . esc_html( $button_label ) . '</span>';
 				}
 
 				?>
