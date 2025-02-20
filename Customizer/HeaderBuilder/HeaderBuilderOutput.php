@@ -533,7 +533,7 @@ class HeaderBuilderOutput {
 					),
 				) );
 
-				if ( ! empty( $label ) && 'none' !== $label ) {
+				if ( ! empty( $label ) ) {
 					echo '<span class="menu-trigger-button-text ' . $menu_label_class . '">' . esc_html( $label ) . '</span>';
 				}
 
