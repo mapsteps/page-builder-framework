@@ -2824,10 +2824,10 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 	let selectedMenuVariant = "";
 	let selectedMenuStyle = "simple";
 
-	listenToCustomizerValueChange(
+	listenToCustomizerValueChange<string>(
 		"wpbf_header_builder_mobile_menu_trigger_icon",
 		function (settingId, value) {
-			const iconKey = value || "none";
+			const iconKey = value || "variant-1";
 
 			if (!["none", "variant-1", "variant-2", "variant-3"].includes(iconKey)) {
 				return;
@@ -2934,13 +2934,17 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				".menu-trigger-button-text",
 			);
 
-			if (existingLabelSpan) {
-				existingLabelSpan.textContent = value;
+			if (value.trim() === "") {
+				existingLabelSpan?.remove();
 			} else {
-				const newLabelSpan = document.createElement("span");
-				newLabelSpan.classList.add("menu-trigger-button-text");
-				newLabelSpan.textContent = value;
-				triggerButton.appendChild(newLabelSpan);
+				if (existingLabelSpan) {
+					existingLabelSpan.textContent = value;
+				} else {
+					const newLabelSpan = document.createElement("span");
+					newLabelSpan.classList.add("menu-trigger-button-text");
+					newLabelSpan.textContent = value;
+					triggerButton.appendChild(newLabelSpan);
+				}
 			}
 		},
 	);
