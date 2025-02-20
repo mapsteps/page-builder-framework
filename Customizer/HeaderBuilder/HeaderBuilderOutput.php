@@ -281,7 +281,7 @@ class HeaderBuilderOutput {
 
 		$this->mobile_menu_type = 'off-canvas' !== $reveal_as ? 'dropdown' : $reveal_as;
 
-		echo '<div class="wpbf-hidden-large ' . ( 'off-canvas' === $this->mobile_menu_type ? 'wpbf-mobile-menu-off-canvas' : 'wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger' ) . '">';
+		echo '<div class="wpbf-mobile-header-rows wpbf-hidden-large ' . ( 'off-canvas' === $this->mobile_menu_type ? 'wpbf-mobile-menu-off-canvas' : 'wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger' ) . '">';
 
 		$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
 

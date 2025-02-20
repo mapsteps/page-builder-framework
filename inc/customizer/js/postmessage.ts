@@ -2596,9 +2596,8 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			listenToCustomizerValueChange<number | string>(
 				`${controlIdPrefix}vertical_padding`,
 				function (settingId, value) {
-					const selector = `.wpbf-header-row-${rowKey}`;
 					writeCSS(settingId, {
-						selector: selector,
+						selector: ".mobile-header-rows .wpbf-inner-pre-header",
 						props: {
 							"padding-top": maybeAppendSuffix(value),
 							"padding-bottom": maybeAppendSuffix(value),

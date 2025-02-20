@@ -35,7 +35,7 @@ $saved_values   = wpbf_customize_array_value( 'wpbf_header_builder', array() );
 $desktop_values = isset( $saved_values['desktop'] ) && is_array( $saved_values['desktop'] ) ? $saved_values['desktop'] : array();
 $desktop_rows   = isset( $desktop_values['rows'] ) && is_array( $desktop_values['rows'] ) ? $desktop_values['rows'] : array();
 
-$rows = array();
+$parsed_desktop_rows = array();
 
 // Filter the saved rows.
 if ( is_array( $desktop_rows ) && ! empty( $desktop_rows ) ) {
@@ -49,12 +49,12 @@ if ( is_array( $desktop_rows ) && ! empty( $desktop_rows ) ) {
 				continue;
 			}
 
-			if ( ! isset( $rows[ $row_key ] ) ) {
-				$rows[ $row_key ] = array();
+			if ( ! isset( $parsed_desktop_rows[ $row_key ] ) ) {
+				$parsed_desktop_rows[ $row_key ] = array();
 			}
 
-			if ( ! isset( $rows[ $row_key ][ $column_key ] ) ) {
-				$rows[ $row_key ][ $column_key ] = array();
+			if ( ! isset( $parsed_desktop_rows[ $row_key ][ $column_key ] ) ) {
+				$parsed_desktop_rows[ $row_key ][ $column_key ] = array();
 			}
 
 			foreach ( $widget_keys as $widget_key ) {
@@ -62,14 +62,14 @@ if ( is_array( $desktop_rows ) && ! empty( $desktop_rows ) ) {
 					continue;
 				}
 
-				$rows[ $row_key ][ $column_key ][] = $widget_key;
+				$parsed_desktop_rows[ $row_key ][ $column_key ][] = $widget_key;
 			}
 		}
 	}
 }
 
 // Now loop through the filtered/validated rows.
-foreach ( $rows as $row_key => $columns ) {
+foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
 	/**
@@ -175,7 +175,8 @@ foreach ( $rows as $row_key => $columns ) {
 
 $mobile_values = isset( $saved_values['mobile'] ) && is_array( $saved_values['mobile'] ) ? $saved_values['mobile'] : array();
 $mobile_rows   = isset( $mobile_values['rows'] ) && is_array( $mobile_values['rows'] ) ? $mobile_values['rows'] : array();
-$m_rows        = array();
+
+$parsed_mobile_rows = array();
 
 // Filter the saved rows.
 if ( is_array( $mobile_rows ) && ! empty( $mobile_rows ) ) {
@@ -189,12 +190,12 @@ if ( is_array( $mobile_rows ) && ! empty( $mobile_rows ) ) {
 				continue;
 			}
 
-			if ( ! isset( $rows[ $row_key ] ) ) {
-				$m_rows[ $row_key ] = array();
+			if ( ! isset( $parsed_mobile_rows[ $row_key ] ) ) {
+				$parsed_mobile_rows[ $row_key ] = array();
 			}
 
-			if ( ! isset( $rows[ $row_key ][ $column_key ] ) ) {
-				$m_rows[ $row_key ][ $column_key ] = array();
+			if ( ! isset( $parsed_mobile_rows[ $row_key ][ $column_key ] ) ) {
+				$parsed_mobile_rows[ $row_key ][ $column_key ] = array();
 			}
 
 			foreach ( $widget_keys as $widget_key ) {
@@ -202,14 +203,14 @@ if ( is_array( $mobile_rows ) && ! empty( $mobile_rows ) ) {
 					continue;
 				}
 
-				$m_rows[ $row_key ][ $column_key ][] = $widget_key;
+				$parsed_mobile_rows[ $row_key ][ $column_key ][] = $widget_key;
 			}
 		}
 	}
 }
 
 // Now loop through the filtered/validated rows.
-foreach ( $m_rows as $row_key => $columns ) {
+foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
 
 	if ( 'mobile_row_1' === $row_key ) {
@@ -218,7 +219,7 @@ foreach ( $m_rows as $row_key => $columns ) {
 		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
 
 		wpbf_write_css( array(
-			'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' .wpbf-row-content',
+			'selector' => '.mobile-header-rows .wpbf-inner-pre-header',
 			'props'    => array(
 				'padding-top'    => wpbf_maybe_append_suffix( $v_padding ),
 				'padding-bottom' => wpbf_maybe_append_suffix( $v_padding ),
