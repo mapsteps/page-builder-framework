@@ -520,3 +520,47 @@ if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) )
 		) );
 	}
 }
+
+// mobile menu trigger button.
+$mobile_menu_trigger_style = wpbf_customize_str_value( 'wpbf_header_builder_mobile_menu_trigger_style' );
+$mobile_menu_trigger_style = '' === $mobile_menu_trigger_style ? 'simple' : $mobile_menu_trigger_style;
+
+if ( ! empty( $mobile_menu_trigger_style ) ) {
+
+	if ( 'outline' === $mobile_menu_trigger_style ) {
+
+		wpbf_write_css( array(
+			'selector' => '#wpbf-mobile-menu-toggle',
+			'props'    => array(
+				'background-color' => 'unset',
+				'border'           => '2px solid ' . wpbf_customize_str_value( 'mobile_menu_hamburger_color' ),
+			),
+		) );
+
+	}
+
+	if ( 'solid' === $mobile_menu_trigger_style ) {
+
+		wpbf_write_css( array(
+			'selector' => '#wpbf-mobile-menu-toggle',
+			'props'    => array(
+				'background-color' => wpbf_customize_str_value( 'mobile_menu_hamburger_bg_color' ),
+				'border'           => 'unset',
+			),
+		) );
+
+	}
+
+	if ( 'simple' === $mobile_menu_trigger_style ) {
+
+		wpbf_write_css( array(
+			'selector' => '#wpbf-mobile-menu-toggle',
+			'props'    => array(
+				'background-color' => 'unset',
+				'border'           => 'unset',
+			),
+		) );
+
+	}
+
+}

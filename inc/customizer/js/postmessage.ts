@@ -2811,7 +2811,7 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 	// Mobile menu trigger button's size.
 	listenToCustomizerValueChange<string | number>(
-		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_size",
+		"mobile_menu_hamburger_size",
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector: ".wpbf-mobile-menu-toggle",
@@ -2856,13 +2856,17 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 				return;
 			}
 
+			triggerButton.classList.remove("simple", "outline", "solid");
+
+			triggerButton.classList.add(buttonStyle);
+
 			if (iconVariant === "none") {
 				existingSvg?.remove();
 			} else {
 				const newSvg =
 					window.wpbfMenuTriggerButtonSvg?.[iconVariant] &&
-					window.wpbfMenuTriggerButtonSvg[iconVariant][buttonStyle]
-						? window.wpbfMenuTriggerButtonSvg[iconVariant][buttonStyle]
+					window.wpbfMenuTriggerButtonSvg[iconVariant]
+						? window.wpbfMenuTriggerButtonSvg[iconVariant]
 						: null;
 
 				if (newSvg) {
@@ -2892,42 +2896,44 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			const triggerButton = document.querySelector("#wpbf-mobile-menu-toggle");
 			if (!triggerButton) return;
 
-			const existingSvg = triggerButton.querySelector(
-				".menu-trigger-button-svg",
-			);
+			triggerButton.classList.remove("simple", "outline", "solid");
+			triggerButton.classList.add(buttonStyle);
 
-			const iconVariantVal = customizer?.(
-				"wpbf_header_builder_mobile_menu_trigger_style",
+			let props = {};
+			const menuButtonColor = customizer?.(
+				"mobile_menu_hamburger_bg_color",
 			).get();
 
-			const iconVariant = iconVariantVal ? String(iconVariantVal) : "variant-1";
+			const menuBorderColor = customizer?.("mobile_menu_hamburger_color").get();
 
-			if (
-				iconVariant !== "none" &&
-				iconVariant !== "variant-1" &&
-				iconVariant !== "variant-2" &&
-				iconVariant !== "variant-3"
-			) {
-				return;
+			if (buttonStyle === "solid") {
+				props = {
+					"background-color": toStringColor(menuButtonColor),
+					border: "unset",
+				};
 			}
 
-			if (iconVariant === "none") {
-				existingSvg?.remove();
-			} else {
-				const newSvg =
-					window.wpbfMenuTriggerButtonSvg?.[iconVariant] &&
-					window.wpbfMenuTriggerButtonSvg[iconVariant][buttonStyle]
-						? window.wpbfMenuTriggerButtonSvg[iconVariant][buttonStyle]
-						: null;
-
-				if (newSvg) {
-					if (existingSvg) {
-						existingSvg.outerHTML = newSvg;
-					} else {
-						triggerButton.insertAdjacentHTML("afterbegin", newSvg);
-					}
-				}
+			if (buttonStyle === "outline") {
+				props = {
+					"background-color": "unset",
+					border: "2px solid " + toStringColor(menuBorderColor),
+				};
 			}
+
+			if (buttonStyle === "simple") {
+				props = {
+					"background-color": "unset",
+					border: "unset",
+				};
+			}
+
+			writeCSS(settingId, {
+				selector: "#wpbf-mobile-menu-toggle",
+				props: props,
+			});
+
+			console.log(props);
+			
 		},
 	);
 
