@@ -2933,7 +2933,6 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 			});
 
 			console.log(props);
-			
 		},
 	);
 

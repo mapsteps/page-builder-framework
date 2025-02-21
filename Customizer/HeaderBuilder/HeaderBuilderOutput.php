@@ -485,7 +485,7 @@ class HeaderBuilderOutput {
 
 		$icon_variant = wpbf_customize_str_value( $setting_group . '_icon', 'variant-1' );
 		$button_label = wpbf_customize_str_value( $setting_group . '_text' );
-		$menu_toggle_class = wpbf_customize_str_value( $setting_group . '_style', 'simple' );
+		$button_style = wpbf_customize_str_value( $setting_group . '_style', 'simple' );
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
 		$menu_variant_class  = 'wpbf-mobile-menu-' . $icon_variant;
@@ -497,7 +497,7 @@ class HeaderBuilderOutput {
 
 			<button
 				id="wpbf-mobile-menu-toggle"
-				class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?> <?php echo esc_attr( $menu_variant_class ); ?> <?php echo esc_attr( $menu_toggle_class ); ?>"
+				class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?> <?php echo esc_attr( $menu_variant_class ); ?> <?php echo esc_attr( $button_style ); ?>"
 				aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>"
 				aria-controls="navigation"
 				aria-expanded="false"
@@ -519,11 +519,11 @@ class HeaderBuilderOutput {
 							'data-variant' => true,
 						),
 						'rect' => array(
-							'x'            => true,
-							'y'            => true,
-							'width'        => true,
-							'height'       => true,
-							'rx'           => true,
+							'x'      => true,
+							'y'      => true,
+							'width'  => true,
+							'height' => true,
+							'rx'     => true,
 						),
 					)
 				);
