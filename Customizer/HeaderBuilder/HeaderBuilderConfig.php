@@ -114,6 +114,10 @@ final class HeaderBuilderConfig {
 
 		return array(
 			'desktop' => array(
+				'sidebar' => array(
+					'key'   => 'desktop_sidebar',
+					'label' => __( 'Desktop Menu', 'page-builder-framework' ),
+				),
 				'rows' => array(
 					array(
 						'key'     => 'desktop_row_1',

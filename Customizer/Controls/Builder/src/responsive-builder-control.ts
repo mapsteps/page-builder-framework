@@ -199,7 +199,7 @@ import {
 					let $mobileBuilderRows: JQuery<HTMLElement> | undefined = undefined;
 
 					if (
-						device === "mobile" &&
+						(device === "mobile" || device === "desktop") &&
 						params.builder[device].availableSlots.sidebar
 					) {
 						$builderSlotsEl.addClass(`wpbf-flex wpbf-content-center`);
@@ -253,7 +253,7 @@ import {
 					if (!availableSlots.rows.length) continue;
 
 					const $rowsWrapper =
-						device === "mobile" && $mobileBuilderRows
+						(device === "mobile" || device === "desktop") && $mobileBuilderRows
 							? $mobileBuilderRows
 							: $builderSlotsEl;
 
@@ -764,7 +764,7 @@ import {
 					}
 
 					const newValue: ResponsiveBuilderValue = {
-						desktop: { rows: {} },
+						desktop: { sidebar: [], rows: {} },
 						mobile: { sidebar: [], rows: {} },
 					};
 
@@ -780,7 +780,7 @@ import {
 
 						if (!deviceBuilderPanel) return;
 
-						if (device === "mobile") {
+						if (device === "mobile" || device === "desktop") {
 							const sortableEl = this.findHtmlEl?.(
 								deviceBuilderPanel,
 								".builder-sidebar .active-widgets",
