@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$row_key = 'mobile_sidebar';
+$row_key = 'mobile_offcanvas';
 
 $section_id = 'wpbf_header_builder_' . $row_key . '_section';
 

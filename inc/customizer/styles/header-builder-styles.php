@@ -487,7 +487,7 @@ if ( ! empty( $icon_color ) ) {
 }
 
 // Mobile Header Builder: Sidebar Menu Reveal.
-$mobile_menu_options = wpbf_customize_str_value( 'wpbf_header_builder_mobile_sidebar_reveal_as', 'dropdown' );
+$mobile_menu_options = wpbf_customize_str_value( 'wpbf_header_builder_mobile_offcanvas_reveal_as', 'dropdown' );
 
 if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) ) {
 

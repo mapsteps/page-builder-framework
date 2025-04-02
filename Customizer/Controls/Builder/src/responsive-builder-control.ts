@@ -198,38 +198,38 @@ import {
 
 					let $mobileBuilderRows: JQuery<HTMLElement> | undefined = undefined;
 
-					if (params.builder[device].availableSlots.sidebar) {
+					if (params.builder[device].availableSlots.offcanvas) {
 						$builderSlotsEl.addClass(`wpbf-flex wpbf-content-center`);
 
-						const $builderSidebar = jQuery("<div></div>")
-							.addClass("builder-sidebar")
+						const $builderOffcanvas = jQuery("<div></div>")
+							.addClass("builder-offcanvas")
 							.appendTo($builderSlotsEl);
 
-						const $builderInnerSidebar = jQuery("<div></div>")
-							.addClass("builder-inner-sidebar sortable-group")
-							.appendTo($builderSidebar);
+						const $builderInnerOffcanvas = jQuery("<div></div>")
+							.addClass("builder-inner-offcanvas sortable-group")
+							.appendTo($builderOffcanvas);
 
 						// Build the row setting button.
 						jQuery("<button></button>")
 							.attr("type", "button")
 							.addClass("row-setting-button")
 							.html(
-								`<i class="dashicons dashicons-admin-generic"></i><span class="button-label">${params.builder[device].availableSlots.sidebar.label}</span>`,
+								`<i class="dashicons dashicons-admin-generic"></i><span class="button-label">${params.builder[device].availableSlots.offcanvas.label}</span>`,
 							)
 							.on("click", () =>
 								control.handleRowSettingClick?.(
-									params.builder[device].availableSlots.sidebar.key,
+									params.builder[device].availableSlots.offcanvas.key,
 								),
 							)
-							.appendTo($builderInnerSidebar);
+							.appendTo($builderInnerOffcanvas);
 
-						const $sidebarWidgetsEl = jQuery("<div></div>")
+						const $offcanvasWidgetsEl = jQuery("<div></div>")
 							.addClass("builder-widgets active-widgets dotted-border")
-							.appendTo($builderInnerSidebar);
+							.appendTo($builderInnerOffcanvas);
 
 						if (params.value) {
 							// Build the widget list based on `params.value`.
-							params.value[device].sidebar?.forEach((widgetKey) => {
+							params.value[device].offcanvas?.forEach((widgetKey) => {
 								const newWidgetItem = control.createWidgetItem?.(
 									widgetKey,
 									true,
@@ -237,7 +237,7 @@ import {
 								);
 								if (!newWidgetItem) return;
 
-								$sidebarWidgetsEl.append(newWidgetItem);
+								$offcanvasWidgetsEl.append(newWidgetItem);
 							});
 						}
 
@@ -760,8 +760,8 @@ import {
 					}
 
 					const newValue: ResponsiveBuilderValue = {
-						desktop: { sidebar: [], rows: {} },
-						mobile: { sidebar: [], rows: {} },
+						desktop: { offcanvas: [], rows: {} },
+						mobile: { offcanvas: [], rows: {} },
 					};
 
 					for (const device of allowedDevices) {
@@ -778,7 +778,7 @@ import {
 
 						const sortableEl = this.findHtmlEl?.(
 							deviceBuilderPanel,
-							".builder-sidebar .active-widgets",
+							".builder-offcanvas .active-widgets",
 						);
 
 						const widgetItems = this.findHtmlEls?.(sortableEl, ".widget-item");
@@ -795,11 +795,11 @@ import {
 							const widgetKey = widgetItem.dataset.widgetKey;
 							if (!widgetKey) return;
 
-							if (!newValue[device].sidebar) {
-								newValue[device].sidebar = [];
+							if (!newValue[device].offcanvas) {
+								newValue[device].offcanvas = [];
 							}
 
-							newValue[device].sidebar.push(widgetKey);
+							newValue[device].offcanvas.push(widgetKey);
 						});
 
 						const builderRows = this.findHtmlEls?.(

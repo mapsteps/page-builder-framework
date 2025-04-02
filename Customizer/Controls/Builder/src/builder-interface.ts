@@ -37,7 +37,7 @@ export interface WpbfBuilderControl
 export type ResponsiveBuilderValue =
 	| {
 			desktop: {
-				sidebar?: string[];
+				offcanvas?: string[];
 				rows: {
 					[rowKey: string]: {
 						[columnKey: string]: string[];
@@ -45,7 +45,7 @@ export type ResponsiveBuilderValue =
 				};
 			};
 			mobile: {
-				sidebar?: string[];
+				offcanvas?: string[];
 				rows: {
 					[rowKey: string]: {
 						[columnKey: string]: string[];
@@ -64,7 +64,7 @@ export interface WpbfResponsiveBuilderControlParams
 			availableWidgets: BuilderWidget[];
 			activeWidgetKeys: string[];
 			availableSlots: {
-				sidebar: {
+				offcanvas: {
 					key: string;
 					label: string;
 				};
@@ -75,7 +75,7 @@ export interface WpbfResponsiveBuilderControlParams
 			availableWidgets: BuilderWidget[];
 			activeWidgetKeys: string[];
 			availableSlots: {
-				sidebar: {
+				offcanvas: {
 					key: string;
 					label: string;
 				};

@@ -114,9 +114,9 @@ final class HeaderBuilderConfig {
 
 		return array(
 			'desktop' => array(
-				'sidebar' => array(
-					'key'   => 'desktop_sidebar',
-					'label' => __( 'Desktop Menu', 'page-builder-framework' ),
+				'offcanvas' => array(
+					'key'   => 'desktop_offcanvas',
+					'label' => __( 'Desktop Off-Canvas', 'page-builder-framework' ),
 				),
 				'rows' => array(
 					array(
@@ -200,8 +200,8 @@ final class HeaderBuilderConfig {
 				),
 			),
 			'mobile' => array(
-				'sidebar' => array(
-					'key'   => 'mobile_sidebar',
+				'offcanvas' => array(
+					'key'   => 'mobile_offcanvas',
 					'label' => __( 'Mobile Menu', 'page-builder-framework' ),
 				),
 				'rows' => array(

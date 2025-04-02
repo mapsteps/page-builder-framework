@@ -68,7 +68,7 @@ class HeaderBuilderOutput {
 		$mobile_rows        = isset( $mobile_values['rows'] ) && is_array( $mobile_values['rows'] ) ? $mobile_values['rows'] : array();
 		$active_mobile_rows = $this->get_active_rows( $mobile_rows );
 
-		$this->mobile_offcanvas_widgets = isset( $mobile_values['sidebar'] ) && is_array( $mobile_values['sidebar'] ) ? $mobile_values['sidebar'] : array();
+		$this->mobile_offcanvas_widgets = isset( $mobile_values['offcanvas'] ) && is_array( $mobile_values['offcanvas'] ) ? $mobile_values['offcanvas'] : array();
 
 		// Unhook functions which are supposed to be used when header builder is disabled.
 		remove_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
@@ -277,7 +277,7 @@ class HeaderBuilderOutput {
 	 */
 	public function do_mobile_navigation() {
 
-		$reveal_as = get_theme_mod( 'wpbf_header_builder_mobile_sidebar_reveal_as' );
+		$reveal_as = get_theme_mod( 'wpbf_header_builder_mobile_offcanvas_reveal_as' );
 
 		$this->mobile_menu_type = 'off-canvas' !== $reveal_as ? 'dropdown' : $reveal_as;
 
