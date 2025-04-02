@@ -34,6 +34,11 @@ final class HeaderBuilderConfig {
 					'section' => 'wpbf_header_builder_desktop_button_2_section',
 				),
 				array(
+					'key'     => 'desktop_menu_trigger',
+					'label'   => __( 'Menu Trigger', 'page-builder-framework' ),
+					'section' => 'wpbf_header_builder_desktop_menu_trigger_section',
+				),
+				array(
 					'key'     => 'desktop_menu_1',
 					'label'   => __( 'Menu 1', 'page-builder-framework' ),
 					'section' => 'wpbf_header_builder_desktop_menu_1_section',

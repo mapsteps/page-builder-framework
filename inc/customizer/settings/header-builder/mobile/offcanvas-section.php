@@ -1,6 +1,6 @@
 <?php
 /**
- * Header builder's main row section.
+ * Header builder's mobile offcanvas section.
  *
  * @package Page Builder Framework
  * @subpackage Customizer

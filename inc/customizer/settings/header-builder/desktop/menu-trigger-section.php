@@ -1,6 +1,6 @@
 <?php
 /**
- * Header builder's mobile menu trigger section.
+ * Header builder's desktop menu trigger section.
  *
  * @package Page Builder Framework
  * @subpackage Customizer
