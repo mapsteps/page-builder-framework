@@ -132,7 +132,7 @@ class ResponsiveBuilderControl extends BaseControl {
 					$this->active_widget_keys[ $device ] = [];
 				}
 
-				if ( 'mobile' === $device && isset( $device_value['sidebar'] ) && is_array( $device_value['sidebar'] ) ) {
+				if ( isset( $device_value['sidebar'] ) && is_array( $device_value['sidebar'] ) ) {
 					foreach ( $device_value['sidebar'] as $widget_key ) {
 						if ( empty( $widget_key ) || ! is_string( $widget_key ) ) {
 							continue;

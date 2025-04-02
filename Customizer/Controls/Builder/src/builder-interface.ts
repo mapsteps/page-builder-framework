@@ -37,7 +37,7 @@ export interface WpbfBuilderControl
 export type ResponsiveBuilderValue =
 	| {
 			desktop: {
-				sidebar: string[];
+				sidebar?: string[];
 				rows: {
 					[rowKey: string]: {
 						[columnKey: string]: string[];
@@ -45,7 +45,7 @@ export type ResponsiveBuilderValue =
 				};
 			};
 			mobile: {
-				sidebar: string[];
+				sidebar?: string[];
 				rows: {
 					[rowKey: string]: {
 						[columnKey: string]: string[];

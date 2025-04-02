@@ -198,10 +198,7 @@ import {
 
 					let $mobileBuilderRows: JQuery<HTMLElement> | undefined = undefined;
 
-					if (
-						(device === "mobile" || device === "desktop") &&
-						params.builder[device].availableSlots.sidebar
-					) {
+					if (params.builder[device].availableSlots.sidebar) {
 						$builderSlotsEl.addClass(`wpbf-flex wpbf-content-center`);
 
 						const $builderSidebar = jQuery("<div></div>")
@@ -232,7 +229,7 @@ import {
 
 						if (params.value) {
 							// Build the widget list based on `params.value`.
-							params.value[device].sidebar.forEach((widgetKey) => {
+							params.value[device].sidebar?.forEach((widgetKey) => {
 								const newWidgetItem = control.createWidgetItem?.(
 									widgetKey,
 									true,
@@ -252,10 +249,9 @@ import {
 					const availableSlots = params.builder[device].availableSlots;
 					if (!availableSlots.rows.length) continue;
 
-					const $rowsWrapper =
-						(device === "mobile" || device === "desktop") && $mobileBuilderRows
-							? $mobileBuilderRows
-							: $builderSlotsEl;
+					const $rowsWrapper = $mobileBuilderRows
+						? $mobileBuilderRows
+						: $builderSlotsEl;
 
 					availableSlots.rows.forEach((row) => {
 						// Build the row.
@@ -780,32 +776,31 @@ import {
 
 						if (!deviceBuilderPanel) return;
 
-						if (device === "mobile" || device === "desktop") {
-							const sortableEl = this.findHtmlEl?.(
-								deviceBuilderPanel,
-								".builder-sidebar .active-widgets",
-							);
+						const sortableEl = this.findHtmlEl?.(
+							deviceBuilderPanel,
+							".builder-sidebar .active-widgets",
+						);
 
-							const widgetItems = this.findHtmlEls?.(
-								sortableEl,
-								".widget-item",
-							);
+						const widgetItems = this.findHtmlEls?.(sortableEl, ".widget-item");
 
-							widgetItems?.forEach((widgetItem) => {
-								if (widgetItem.classList.contains("empty-widget-item")) {
-									return;
-								}
+						widgetItems?.forEach((widgetItem) => {
+							if (widgetItem.classList.contains("empty-widget-item")) {
+								return;
+							}
 
-								if (widgetItem.classList.contains("ui-sortable-placeholder")) {
-									return;
-								}
+							if (widgetItem.classList.contains("ui-sortable-placeholder")) {
+								return;
+							}
 
-								const widgetKey = widgetItem.dataset.widgetKey;
-								if (!widgetKey) return;
+							const widgetKey = widgetItem.dataset.widgetKey;
+							if (!widgetKey) return;
 
-								newValue[device].sidebar.push(widgetKey);
-							});
-						}
+							if (!newValue[device].sidebar) {
+								newValue[device].sidebar = [];
+							}
+
+							newValue[device].sidebar.push(widgetKey);
+						});
 
 						const builderRows = this.findHtmlEls?.(
 							deviceBuilderPanel,
