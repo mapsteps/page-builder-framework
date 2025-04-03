@@ -197,6 +197,19 @@ function wpbf_minify_css( $css ) {
 
 }
 
+if ( ! function_exists( 'wpbf_header_builder_enabled' ) ) {
+	/**
+	 * ----------------------------------------------------------------------
+	 * Header Builder Functions
+	 * ----------------------------------------------------------------------
+	 */
+	function wpbf_header_builder_enabled() {
+
+		return wpbf_customize_bool_value( 'wpbf_enable_header_builder' );
+
+	}
+}
+
 /**
  * Generate customizer CSS.
  *
@@ -406,27 +419,6 @@ function wpbf_global_typography_js_vars() {
 
 }
 add_action( 'customize_controls_enqueue_scripts', 'wpbf_global_typography_js_vars' );
-
-/**
- * ----------------------------------------------------------------------
- * Common Builder Functions
- *
- * These functions are used by both header builder and footer builder.
- * ----------------------------------------------------------------------
- */
-
-if ( ! function_exists( 'wpbf_header_builder_enabled' ) ) {
-	/**
-	 * ----------------------------------------------------------------------
-	 * Header Builder Functions
-	 * ----------------------------------------------------------------------
-	 */
-	function wpbf_header_builder_enabled() {
-
-		return wpbf_customize_bool_value( 'wpbf_enable_header_builder' );
-
-	}
-}
 
 /**
  * Setup hooks when header builder is enabled.
