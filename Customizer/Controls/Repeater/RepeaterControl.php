@@ -203,11 +203,7 @@ class RepeaterControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-repeater-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/repeater-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-				'wp-color-picker-alpha',
-			),
+			array( 'wp-color-picker-alpha', 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);
