@@ -27,10 +27,7 @@ class CheckboxControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-checkbox-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Checkbox/dist/checkbox-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-			),
+			array( 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);

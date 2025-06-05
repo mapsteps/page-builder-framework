@@ -129,10 +129,7 @@ class InputSliderControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-input-slider-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/input-slider-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-			),
+			array( 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);

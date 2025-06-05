@@ -146,10 +146,7 @@ class GenericControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-generic-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/generic-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-			),
+			array( 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);

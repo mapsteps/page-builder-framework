@@ -5,7 +5,10 @@
   "author": "David",
   "license": "GPL-3.0",
   "devDependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-react": "^7.27.1",
     "@parcel/config-default": "^2.15.2",
+    "@parcel/core": "^2.15.2",
     "@parcel/optimizer-data-url": "^2.15.2",
     "@parcel/transformer-inline-string": "^2.15.2",
     "@parcel/transformer-sass": "^2.15.2",
@@ -41,12 +44,22 @@
     "styled-jsx": "^5.1.7",
     "zx": "^8.5.5"
   },
+  "parcel": {
+    "transformers": {
+      "*.{js,jsx,ts,tsx}": {
+        "runtime": "automatic"
+      }
+    }
+  },
   "alias": {
     "react": {
       "global": "React"
     },
     "react-dom": {
       "global": "ReactDOM"
+    },
+    "react/jsx-runtime": {
+      "global": "ReactJSXRuntime"
     },
     "jquery": {
       "global": "jQuery"
@@ -78,16 +91,6 @@
   "parcelIgnore": [
     "img/.+"
   ],
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-react",
-        {
-          "runtime": "classic"
-        }
-      ]
-    ]
-  },
   "browserslist": [
     "> 0.5%",
     "last 2 versions",

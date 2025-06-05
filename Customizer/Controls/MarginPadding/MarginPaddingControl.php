@@ -212,10 +212,7 @@ class MarginPaddingControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-margin-padding-control',
 			WPBF_THEME_URI . '/Customizer/Controls/MarginPadding/dist/margin-padding-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-			),
+			array( 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);

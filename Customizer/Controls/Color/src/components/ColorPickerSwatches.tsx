@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ColorPickerSwatches(props: {
 	colors: Array<string | { color: string } | undefined>;
 	onClick: (color: string) => void;

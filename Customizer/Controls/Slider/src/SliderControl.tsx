@@ -3,8 +3,6 @@ import {
 	WpbfCustomize,
 } from "../../Base/src/interface";
 import { createRoot } from "react-dom/client";
-import React from "react";
-import ReactDOM from "react-dom";
 import SliderForm from "./SliderForm";
 import {
 	WpbfCustomizeSliderControl,
@@ -63,9 +61,12 @@ const SliderControl = wp.customize.Control.extend<WpbfCustomizeSliderControl>({
 	renderContent: function renderContent(this: WpbfCustomizeSliderControl) {
 		const control = this;
 		const params = control.params;
-		const root = createRoot(control.container[0]);
 
-		root.render(
+		if (!this.root && this.container) {
+			this.root = createRoot(this.container[0]);
+		}
+
+		this.root?.render(
 			<SliderForm
 				control={control}
 				customizerSetting={control.setting ?? undefined}
@@ -119,8 +120,8 @@ const SliderControl = wp.customize.Control.extend<WpbfCustomizeSliderControl>({
 	destroy: function destroy(this: WpbfCustomizeSliderControl) {
 		const control = this;
 
-		// Garbage collection: undo mounting that was done in the embed/renderContent method.
-		ReactDOM.unmountComponentAtNode(control.container[0]);
+		this.root?.unmount();
+		this.root = undefined;
 
 		// Call destroy method in parent if it exists (as of #31334).
 		if (wp.customize.Control.prototype.destroy) {

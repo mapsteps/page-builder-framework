@@ -8,8 +8,6 @@ import {
 	WpbfCustomizeMarginPaddingControl,
 	WpbfCustomizeMarginPaddingControlParams,
 } from "./interface";
-import ReactDOM from "react-dom";
-import React from "react";
 import { createRoot } from "react-dom/client";
 import { makeObjValueWithoutUnitFromJson } from "./margin-padding-util";
 
@@ -74,14 +72,17 @@ const KirkiMarginPaddingControl =
 			this: WpbfCustomizeMarginPaddingControl,
 		) {
 			const control = this;
-			const root = createRoot(control.container[0]);
 			const params = control.params;
 
 			const isResponsive =
 				"responsive-margin" === params.subtype ||
 				"responsive-padding" === params.subtype;
 
-			root.render(
+			if (!this.root && this.container) {
+				this.root = createRoot(this.container[0]);
+			}
+
+			this.root?.render(
 				<MarginPaddingForm
 					type={params.type}
 					subtype={params.subtype}
@@ -148,8 +149,8 @@ const KirkiMarginPaddingControl =
 		destroy: function destroy(this: WpbfCustomizeMarginPaddingControl) {
 			const control = this;
 
-			// Garbage collection: undo mounting that was done in the embed/renderContent method.
-			ReactDOM.unmountComponentAtNode(control.container[0]);
+			this.root?.unmount();
+			this.root = undefined;
 
 			// Call destroy method in parent if it exists (as of #31334).
 			if (wp.customize.Control.prototype.destroy) {

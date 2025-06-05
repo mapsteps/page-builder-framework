@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function DeviceButtons(props: { devices: string[] }) {
 	return (
 		<div className="wpbf-device-buttons">

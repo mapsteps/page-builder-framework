@@ -114,10 +114,7 @@ class ResponsiveGenericControl extends GenericControl {
 		wp_enqueue_script(
 			'wpbf-responsive-generic-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/responsive-generic-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-			),
+			array( 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);

@@ -8,7 +8,6 @@ import {
 	WpbfCustomizeColorControlValue,
 } from "./interface";
 import { ColorForm } from "./ColorForm";
-import React from "react";
 import { createRoot } from "react-dom/client";
 
 declare var wp: {

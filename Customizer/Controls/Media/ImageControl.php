@@ -116,10 +116,7 @@ class ImageControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-image-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Media/dist/image-control-min.js',
-			array(
-				'customize-controls',
-				'react-dom',
-			),
+			array( 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);
