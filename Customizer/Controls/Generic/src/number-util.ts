@@ -15,6 +15,22 @@ export function normalizeMaxValue(
 	return Math.max(min, max);
 }
 
+/**
+ * Check if the provided value is a numeric.
+ *
+ * Thanks to Dan (https://stackoverflow.com/users/17121/dan) for his answer on StackOverflow:
+ * @see https://stackoverflow.com/questions/175739/built-in-way-in-javascript-to-check-if-a-string-is-a-valid-number#answer-175787
+ */
+export function isNumeric(char: unknown): boolean {
+	// Number is a numeric.
+	if ("number" === typeof char) return true;
+
+	// We only process strings.
+	if ("string" !== typeof char) return false;
+
+	return !isNaN(parseFloat(char));
+}
+
 export function improperNumeric(value: any): boolean {
 	if (
 		(typeof value !== "string" && typeof value !== "number") ||

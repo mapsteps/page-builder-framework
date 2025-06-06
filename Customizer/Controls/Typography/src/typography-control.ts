@@ -14,6 +14,7 @@ import {
 	WpbfSelectControl,
 } from "../../Select/src/select-interface";
 import { WpbfAssocArrayControl } from "../../Generic/src/generic-interface";
+import { isNumeric } from "../../Generic/src/number-util";
 
 /**
  * These var declarations are for the global variables that are set in the PHP file.
@@ -102,6 +103,8 @@ function composeFontProperties(
 
 	const value = { ...val };
 
+	if ("font-backup" in value) delete value["font-backup"];
+
 	if ("undefined" === typeof value) return;
 	if ("string" !== typeof value["font-family"]) return;
 
@@ -112,8 +115,8 @@ function composeFontProperties(
 		value[triggerPropertyName] = triggerPropertyValue;
 	}
 
-	let variantValue =
-		"undefined" === typeof value.variant ? "regular" : value.variant;
+	let variantValue = !value.variant ? "regular" : value.variant;
+	value.variant = variantValue;
 
 	const maybeVariantControl = window.wp.customize?.control(id + "[variant]");
 
@@ -170,10 +173,12 @@ function composeFontProperties(
 	value["font-weight"] =
 		"regular" === variantValue || "italic" === variantValue
 			? 400
-			: parseInt(variantValue, 10);
+			: isNumeric(variantValue)
+				? parseInt(variantValue, 10)
+				: 400;
 
 	if (triggerChange) {
-		value["random"] = Date.now();
+		// value["random"] = Date.now();
 	}
 
 	control.setting.set(value);
