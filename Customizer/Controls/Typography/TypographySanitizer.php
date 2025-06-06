@@ -9,10 +9,12 @@ class TypographySanitizer {
 	/**
 	 * Sanitize the typography value.
 	 *
-	 * @param mixed $value The value to sanitize.
+	 * @param mixed       $value The value to sanitize.
+	 * @param string|null $setting_id The setting id.
+	 *
 	 * @return array
 	 */
-	public function sanitize( $value ) {
+	public function sanitize( $value, $setting_id = null ) {
 
 		if ( ! is_array( $value ) ) {
 			return [];
@@ -67,6 +69,10 @@ class TypographySanitizer {
 				default:
 					$value[ $key ] = sanitize_text_field( $value[ $key ] );
 			}
+		}
+
+		if ( isset( $value['random'] ) ) {
+			unset( $value['random'] );
 		}
 
 		return $value;
