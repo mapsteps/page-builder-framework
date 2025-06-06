@@ -46,8 +46,6 @@ wp.customize?.bind("ready", function () {
 function setupTypographyFields(customizer: WpbfCustomize) {
 	if (!Array.isArray(wpbfTypographyControlIds)) return;
 
-	alert("Alert id: 14");
-
 	wpbfTypographyControlIds.forEach((id) => {
 		if (!customizer.control(id)) return;
 
