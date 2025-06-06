@@ -220,11 +220,20 @@ class TypographyField extends BaseField {
 	}
 
 	/**
+	 * Sanitize the value.
+	 *
+	 * @param mixed $value The value to sanitize.
+	 *
+	 * @return array
+	 */
+	public function sanitizeCallback( $value ) {
+		return ( new TypographySanitizer() )->sanitize( $value, $this->control->id );
+	}
+
+	/**
 	 * Add the label and description using 'assoc-array' control.
 	 */
 	private function addLabelAndDescription() {
-
-		$sanitizer = new TypographySanitizer();
 
 		wpbf_customizer_field()
 			->id( $this->control->id )
@@ -235,8 +244,10 @@ class TypographyField extends BaseField {
 			->defaultValue( $this->default_value )
 			->capability( $this->control->capability )
 			->priority( $this->control->priority )
+			->transport( $this->transport )
 			->activeCallback( $this->active_callback_args )
-			->sanitizeCallback( [ $sanitizer, 'sanitize' ] )
+			->sanitizeCallback( [ $this, 'sanitizeCallback' ] )
+			->partialRefresh( $this->partial_refresh_args )
 			->tooltip( $this->control->tooltip )
 			->properties( [
 				'wrapper_attrs' => [
@@ -270,10 +281,10 @@ class TypographyField extends BaseField {
 			->defaultValue( $default_value )
 			->choices( $this->typography_choices->makeFontFamilyChoices( $this->fonts_arg ) )
 			->priority( $this->control->priority )
-			->transport( $this->transport )
+			// The main control will do the real work.
+			->transport( 'postMessage' )
 			->inputAttrs( $this->control->input_attrs )
 			->activeCallback( $this->active_callback_args )
-			->partialRefresh( $this->partial_refresh_args )
 			->properties( [
 				'wrapper_attrs' => [
 					'data-wpbf-typography-control' => $this->control->id,
@@ -281,7 +292,6 @@ class TypographyField extends BaseField {
 				],
 			] )
 			->addToSection( $this->control->section_id );
-
 	}
 
 	/**
@@ -312,10 +322,10 @@ class TypographyField extends BaseField {
 			->defaultValue( $font_variant )
 			->choices( $this->typography_choices->makeFontVariantChoices( $this->fonts_arg ) )
 			->priority( $this->control->priority )
-			->transport( $this->transport )
+			// The main control will do the real work.
+			->transport( 'postMessage' )
 			->inputAttrs( $this->control->input_attrs )
 			->activeCallback( $this->active_callback_args )
-			->partialRefresh( $this->partial_refresh_args )
 			->properties( [
 				'wrapper_attrs' => [
 					'data-wpbf-typography-control' => $this->control->id,

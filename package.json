@@ -150,10 +150,8 @@
     "build-section-tabs-control": "parcel build Customizer/Controls/Tabs/src/section-tabs-control.ts --dist-dir Customizer/Controls/Tabs/dist",
     "watch-sortable-control": "parcel watch Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist",
     "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist",
-    "watch-typography-control": "parcel watch Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist",
-    "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist",
-    "watch-typography-preview": "parcel watch Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist",
-    "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist"
+    "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist --no-cache",
+    "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist --no-cache"
   },
   "packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912"
 }

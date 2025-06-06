@@ -23,9 +23,10 @@ class AssocArrayField extends BaseField {
 	/**
 	 * Sanitize array recursively.
 	 *
-	 * @param array $arr The array to sanitize.
+	 * @param array  $arr The array to sanitize.
+	 * @param string $special_key Special key needle which value should be sanitized using `wp_kses_post`.
 	 */
-	public static function sanitize( $arr ) {
+	public static function sanitize( $arr, $special_key = '' ) {
 
 		$arr = empty( $arr ) || ! is_array( $arr ) ? [] : $arr;
 
@@ -43,7 +44,7 @@ class AssocArrayField extends BaseField {
 				continue;
 			}
 
-			$item = sanitize_text_field( $item );
+			$item = ! empty( $special_key ) && false !== stripos( $key, $special_key ) ? wp_kses_post( $item ) : sanitize_text_field( $item );
 			$item = is_numeric( $item ) ? absint( $item ) : $item;
 
 			$arr[ $key ] = $item;

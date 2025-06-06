@@ -46,21 +46,34 @@ class AssocArrayControl extends BaseControl {
 			return;
 		}
 
+		$this->setting->default = static::make_default_value( $this->setting );
+
+	}
+
+	/**
+	 * Make default value.
+	 *
+	 * @param WP_Customize_Setting $setting The setting object.
+	 *
+	 * @return array
+	 */
+	public static function make_default_value( $setting ) {
+
 		$default_value = [];
 
-		if ( ! empty( $this->setting->default ) ) {
-			if ( is_string( $this->setting->default ) ) {
-				$decoded = json_decode( $this->setting->default, true );
+		if ( ! empty( $setting->default ) ) {
+			if ( is_string( $setting->default ) ) {
+				$decoded = json_decode( $setting->default, true );
 
 				if ( is_array( $decoded ) ) {
 					$default_value = $decoded;
 				}
-			} elseif ( is_array( $this->setting->default ) ) {
-				$default_value = $this->setting->default;
+			} elseif ( is_array( $setting->default ) ) {
+				$default_value = $setting->default;
 			}
 		}
 
-		$this->setting->default = AssocArrayField::sanitize( $default_value );
+		return AssocArrayField::sanitize( $default_value, 'block_' );
 
 	}
 

@@ -28,7 +28,7 @@ class TypographySanitizer {
 
 				case 'variant':
 					// Use 'regular' instead of 400 for font-variant.
-					$value['variant'] = ( 400 === $val || '400' === $val ) ? 'regular' : $val;
+					$value['variant'] = 400 === $val || '400' === $val || empty( $val ) ? 'regular' : $val;
 
 					// Get font-weight from variant.
 					$value['font-weight'] = filter_var( $value['variant'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
@@ -73,6 +73,11 @@ class TypographySanitizer {
 
 		if ( isset( $value['random'] ) ) {
 			unset( $value['random'] );
+		}
+
+		// Not sure where does this came from, but some test sites have this key.
+		if ( isset( $value['font-backup'] ) ) {
+			unset( $value['font-backup'] );
 		}
 
 		return $value;
