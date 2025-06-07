@@ -32,11 +32,11 @@ final class GoogleFontsCache {
 	 */
 	public function __construct() {
 
-		$this->webfonts_json_filepath = __DIR__ . '/dist/webfonts.json';
+		$this->webfonts_json_filepath = __DIR__ . '/webfonts/webfonts.json';
 
-		$this->webfont_names_json_filepath = __DIR__ . '/dist/webfont-names.json';
+		$this->webfont_names_json_filepath = __DIR__ . '/webfonts/webfont-names.json';
 
-		$this->webfont_files_json_filepath = __DIR__ . '/dist/webfont-files.json';
+		$this->webfont_files_json_filepath = __DIR__ . '/webfonts/webfont-files.json';
 
 	}
 

@@ -2,7 +2,7 @@ import ky from "ky";
 import { promises as fs } from "fs";
 import manifest from "../../../../manifest.json" with { type: "json" };
 
-const distDir = "./Customizer/Controls/Typography/dist";
+const distDir = "./Customizer/Controls/Typography/webfonts";
 const alphaJsonFilePath = `${distDir}/webfonts-alpha.json`;
 const popularityJsonFilePath = `${distDir}/webfonts-popularity.json`;
 const trendingJsonFilePath = `${distDir}/webfonts-trending.json`;
