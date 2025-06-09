@@ -97,15 +97,17 @@ declare global {
 		url: WpbfUrl;
 	};
 
-	type wp = {
+	type Wp = {
 		hooks: Hooks;
 		customize?: WpbfCustomize;
 		media: any;
 	};
 
+	const wp: Wp;
+
 	interface Window {
 		ajaxurl?: string;
-		wp: wp;
+		wp: Wp;
 		WpbfObj: {
 			siteUrl: string;
 			ajaxurl: string;

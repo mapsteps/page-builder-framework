@@ -19,7 +19,9 @@
     "assets/js/*.js",
     "assets/**/*.ts",
     "inc/customizer/**/*.ts",
+    "build-scripts/*.mjs",
     "wpbf.mjs",
+    "vite.config.mjs",
     "types.ts"
   ],
   "exclude": [

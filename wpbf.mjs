@@ -11,12 +11,21 @@ import {
 	select,
 	spinner,
 } from "@clack/prompts";
-import { Parcel } from "@parcel/core";
-import { dirname } from "path";
+import { resolve, dirname } from "path";
+import { build } from "vite";
+import {
+	deleteIfDirExists,
+	getErrorMessage,
+	getViteConfig,
+	toPascalCase,
+} from "./build-scripts/build-utils.mjs";
 
 process.env.NODE_ENV = "production";
 process.env.context = "browser";
 process.env.sourceType = "script";
+
+const DELETE_DIST_DIR_BEFORE_BUILD = false;
+const ALLOWED_FILE_EXTENSIONS = ["scss", "js", "ts", "jsx", "tsx"];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -55,7 +64,7 @@ async function main() {
 	const selectedTask = await select({
 		message: "Please select a task.",
 		options: [
-			{ value: "build-wp-plugin", label: "Build WP plugin" },
+			{ value: "build-wp-theme", label: "Build WP theme" },
 			{ value: "build-customizer-control", label: "Build customizer control" },
 			{ value: "build-asset", label: "Build asset" },
 		],
@@ -66,37 +75,76 @@ async function main() {
 		process.exit(0);
 	}
 
-	if (selectedTask === "build-wp-plugin") {
-		loadingSpinner.start("Building WP plugin...");
-		buildWpPlugin();
+	if (selectedTask === "build-wp-theme") {
+		loadingSpinner.start("Building WP theme...");
+		buildWpTheme();
 		loadingSpinner.stop();
-	} else {
-		if (selectedTask === "build-customizer-control") {
-			const controlName = await text({
-				message: "Insert the customizer control namespace (e.g: slider):",
-			});
+	} else if (selectedTask === "build-customizer-control") {
+		const controlName = await text({
+			message: "Insert the customizer control namespace (e.g: slider):",
+		});
 
-			if (isCancel(controlName)) {
-				cancel("Build customizer control cancelled.");
-				process.exit(0);
-			}
+		if (isCancel(controlName)) {
+			cancel("Build customizer control cancelled.");
+			process.exit(0);
+		}
 
-			loadingSpinner.start(`Building customizer control: ${controlName}...`);
+		loadingSpinner.start(`Building customizer control: ${controlName}...`);
 
+		if (DELETE_DIST_DIR_BEFORE_BUILD) {
 			deleteIfDirExists(
-				path.join(
+				resolve(
 					__dirname,
 					`Customizer/Controls/${toPascalCase(controlName)}/dist`,
 				),
 			);
+		}
 
-			const response = await bundleCustomizerControl(controlName);
+		const response = await bundleCustomizerControl(controlName);
 
-			if (response.success) {
-				loadingSpinner.stop(response.message);
-			} else {
-				loadingSpinner.stop(response.message, 500);
-			}
+		if (response.success) {
+			loadingSpinner.stop(response.message);
+		} else {
+			loadingSpinner.stop(response.message, 500);
+		}
+	} else if (selectedTask === "build-asset") {
+		const filePath = await text({
+			message: "Insert the file path to build (e.g: assets/js/site.js):",
+		});
+
+		if (isCancel(filePath)) {
+			cancel("Build asset cancelled.");
+			process.exit(0);
+		}
+
+		if (!ALLOWED_FILE_EXTENSIONS.some((ext) => filePath.endsWith(`.${ext}`))) {
+			cancel(
+				`Invalid file extension. Allowed extensions: ${ALLOWED_FILE_EXTENSIONS.join(", ")}`,
+			);
+			process.exit(0);
+		}
+
+		const fileType = filePath.split(".").pop();
+
+		const outputDirFromUser = await text({
+			message:
+				"Insert the output directory path. If empty, it will use default location (js: js/min, scss: css/min).",
+		});
+
+		const outputDir = outputDirFromUser
+			? resolve(__dirname, String(outputDirFromUser))
+			: fileType === "scss"
+				? resolve(__dirname, "css/min")
+				: resolve(__dirname, "js/min");
+
+		loadingSpinner.start(`Building asset file: ${filePath}...`);
+
+		const response = await buildAsset(filePath, outputDir);
+
+		if (response.success) {
+			loadingSpinner.stop(response.message);
+		} else {
+			loadingSpinner.stop(response.message, 500);
 		}
 	}
 
@@ -104,22 +152,41 @@ async function main() {
 }
 
 /**
+ * Build an asset file.
+ *
+ * @param {string} filePath The file path to build.
+ * @param {string} outputDir The output directory path.
+ *
+ * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.}
+ */
+async function buildAsset(filePath, outputDir) {
+	try {
+		return await bundleViaViteAPI(filePath, outputDir);
+	} catch (err) {
+		return {
+			success: false,
+			message: getErrorMessage(err),
+		};
+	}
+}
+
+/**
  * Bundle the customizer control.
  *
  * @param {string} controlName The customizer control name. E.g: checkbox.
+ * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.}
  */
 async function bundleCustomizerControl(controlName) {
 	const pascalCaseControlName = toPascalCase(controlName);
 
 	const srcDir = `Customizer/Controls/${pascalCaseControlName}/src`;
-	const absSrcDir = path.join(__dirname, srcDir);
 
 	const distDir = `Customizer/Controls/${pascalCaseControlName}/dist`;
-	const absDistDir = path.join(__dirname, distDir);
+	const absDistDir = resolve(__dirname, distDir);
 
-	// Find files inside `srcDir` directory that suffixed with `-control.ts`.
+	// Find files inside `srcDir` directory that suffixed with `-control.ts` or `-control.tsx`.
 	const controlFiles = fs.readdirSync(srcDir).filter((file) => {
-		return file.endsWith("-control.ts");
+		return file.endsWith("-control.ts") || file.endsWith("-control.tsx");
 	});
 
 	if (controlFiles.length === 0) {
@@ -132,167 +199,64 @@ async function bundleCustomizerControl(controlName) {
 	/**
 	 * The entries to pass to Parcel.
 	 *
-	 * @type {string[]}
+	 * @type {import('rollup').InputOption}
 	 */
-	const entries = [];
+	const entries = {};
 
 	for (const controlFile of controlFiles) {
-		entries.push(path.join(srcDir, controlFile));
+		// Get the control file name without the "-control.ts" and "-control.tsx" suffixes.
+		const controlFileName = controlFile.replace(/-control\.tsx?$/, "");
 
-		// Get the control file name without the "-control.ts" suffix.
-		const controlFileName = controlFile.replace(/-control\.ts$/, "");
+		entries[`${controlFileName}-control`] = resolve(srcDir, controlFile);
 
 		// Check if ${controlFileName}-preview.ts exists in src directory.
-		const previewPath = path.join(srcDir, `${controlFileName}-preview.ts`);
+		const previewPath = resolve(srcDir, `${controlFileName}-preview.ts`);
 
 		if (fs.existsSync(previewPath)) {
-			entries.push(previewPath);
+			entries[`${controlFileName}-preview`] = previewPath;
+		}
+
+		// Check if ${controlFileName}-preview.tsx exists in src directory.
+		const previewPathTsx = resolve(srcDir, `${controlFileName}-preview.tsx`);
+
+		if (fs.existsSync(previewPathTsx)) {
+			entries[`${controlFileName}-preview`] = previewPathTsx;
 		}
 	}
 
-	// console.log("entries", entries);
-
 	try {
-		return await bundleViaAPI(entries, absDistDir);
+		return await bundleViaViteAPI(entries, absDistDir);
 	} catch (err) {
-		if (typeof err === "string") {
-			return {
-				success: false,
-				message: err,
-			};
-		}
-
-		if (err instanceof Error) {
-			return {
-				success: false,
-				message: err.message,
-			};
-		}
-
-		if (typeof err === "object" && err) {
-			if ("diagnostics" in err && Array.isArray(err.diagnostics)) {
-				let msg = "";
-
-				err.diagnostics.forEach((item) => {
-					msg += "Error: " + item.message + "\n";
-				});
-
-				// Remove trailing newline.
-				msg = msg.slice(0, -1);
-
-				return {
-					success: false,
-					message: msg,
-				};
-			}
-
-			if ("stderr" in err && err.stderr) {
-				return {
-					success: false,
-					message: err.stderr.toString(),
-				};
-			}
-
-			if ("stdout" in err && err.stdout) {
-				return {
-					success: false,
-					message: err.stdout.toString(),
-				};
-			}
-
-			console.log(err);
-
-			return {
-				success: false,
-				message: "An unknown error occurred during the build process.",
-			};
-		}
-
 		return {
 			success: false,
-			message: "Unknown error occurred.",
+			message: getErrorMessage(err),
 		};
 	}
 }
 
 /**
- * Bundle the customizer control using the Parcel API.
+ * Bundle the customizer control using the Vite API.
  *
- * @param {string[]} entries The entries to pass to Parcel.
+ * @param {import('rollup').InputOption} entries The entries to pass to Parcel.
  * @param {string} distDir The dist directory path.
+ *
  * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
  */
-async function bundleViaAPI(entries, distDir) {
-	const bundler = new Parcel({
-		entries: entries,
-		shouldDisableCache: true,
-		defaultConfig: "@parcel/config-default",
-		mode: "production",
-		env: {
-			NODE_ENV: "production",
-			context: "browser",
-			sourceType: "script",
-		},
-		defaultTargetOptions: {
-			shouldOptimize: true,
-			shouldScopeHoist: true,
-			isLibrary: false,
-			outputFormat: "global",
-			publicUrl: "./",
-			distDir: distDir,
-			engines: {
-				browsers: ["> 0.5%", "last 2 versions", "not dead"],
-			},
-		},
-		targets: {
-			default: {
-				context: "browser",
-				distDir: distDir,
-				optimize: true,
-				sourceMap: true,
-				includeNodeModules: true,
-			},
-		},
-		shouldContentHash: false,
-		shouldBuildLazily: false,
-		shouldBundleIncrementally: false,
-	});
+async function bundleViaViteAPI(entries, distDir) {
+	const startTime = Date.now();
 
-	const { bundleGraph, buildTime } = await bundler.run();
-	const bundles = bundleGraph.getBundles();
+	try {
+		await build(getViteConfig(entries, distDir));
 
-	return {
-		success: true,
-		message: `✨ Built ${bundles.length} bundles in ${buildTime}ms!`,
-	};
-}
+		const buildTime = Date.now() - startTime;
+		const bundleCount = Object.keys(entries).length;
 
-/**
- * Convert a string to PascalCase.
- *
- * @param {string} str The string to convert.
- * @returns {string} The converted string.
- */
-function toPascalCase(str) {
-	return (
-		str
-			// Split the string by spaces and hyphens.
-			.split(/[\s-]+/)
-			// Capitalize first letter of each word and make rest lowercase
-			.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-			// Join all words together
-			.join("")
-	);
-}
-
-/**
- * Delete the build directory if it exists.
- *
- * @param {string} dir The build directory path.
- */
-function deleteIfDirExists(dir) {
-	if (fs.existsSync(dir)) {
-		fs.rmSync(dir, { recursive: true });
+		return {
+			success: true,
+			message: `✨ Built ${bundleCount} bundles in ${buildTime}ms!`,
+		};
+	} catch (error) {
+		throw new Error(`Vite build failed: ${getErrorMessage(error)}`);
 	}
 }
 
@@ -360,7 +324,7 @@ function deleteMapFiles(dir) {
 	});
 }
 
-function buildWpPlugin() {
+function buildWpTheme() {
 	deleteIfDirExists(themeBuildDir);
 	fs.mkdirSync(themeBuildDir);
 

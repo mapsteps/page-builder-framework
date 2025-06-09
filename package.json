@@ -8,11 +8,6 @@
     "@babel/core": "^7.27.4",
     "@babel/preset-react": "^7.27.1",
     "@clack/prompts": "^0.9.1",
-    "@parcel/config-default": "^2.15.2",
-    "@parcel/core": "^2.15.2",
-    "@parcel/optimizer-data-url": "^2.15.2",
-    "@parcel/transformer-inline-string": "^2.15.2",
-    "@parcel/transformer-sass": "^2.15.2",
     "@types/fs-extra": "^11.0.4",
     "@types/jquery": "^3.5.32",
     "@types/jqueryui": "^1.12.24",
@@ -21,13 +16,11 @@
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@types/select2": "^4.0.63",
-    "parcel": "^2.15.2",
-    "parcel-namer-rewrite": "2.10.3-rc.2",
-    "parcel-resolver-ignore": "^2.2.0",
     "prettier": "^3.5.3",
     "process": "^0.11.10",
     "sass-embedded": "^1.89.1",
     "shx": "^0.3.4",
+    "terser": "^5.41.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "wordpress__customize-browser": "github:ultrafastcloud/wordpress__customize-browser"
@@ -52,13 +45,6 @@
     "styled-jsx": "^5.1.7",
     "vanjs-core": "^1.5.5",
     "zx": "^8.5.5"
-  },
-  "parcel": {
-    "transformers": {
-      "*.{js,jsx,ts,tsx}": {
-        "runtime": "automatic"
-      }
-    }
   },
   "alias": {
     "react": {
@@ -92,14 +78,6 @@
       "global": "Choices"
     }
   },
-  "parcel-namer-rewrite": {
-    "hashing": "never",
-    "silent": true,
-    "rules": {
-      "(.*).js": "$1-min.js",
-      "(.*).css": "$1-min.css"
-    }
-  },
   "parcelIgnore": [
     "img/.+"
   ],
@@ -110,39 +88,13 @@
   ],
   "scripts": {
     "wpbf": "node wpbf.mjs",
-    "clean-cache": "shx rm -rf .parcel-cache",
     "collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
-    "build-control": "vite build --no-cache",
-    "build-site-jquery": "shx rm -rf js/min/site-jquery-min.js && shx rm -rf js/min/site-jquery-min.js.map && parcel build assets/js/site-jquery.js --dist-dir js/min --no-cache",
-    "build-site-js": "shx rm -rf js/min/site-min.js && shx rm -rf js/min/site-min.js.map && parcel build assets/js/site.js --dist-dir js/min --no-cache",
-    "build-site-css": "shx rm -rf css/min/style-min.css && shx rm -rf css/min/style-min.css.map && parcel build assets/scss/style.scss --dist-dir css/min --no-cache",
-    "build-site": "pnpm build-site-js && pnpm build-site-jquery && pnpm build-site-css --no-cache",
-    "build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min --no-cache",
-    "build-individual-css": "parcel build \"assets/scss/!(style)*.scss\" --dist-dir css/min --no-cache",
-    "build-individual-assets": "pnpm build-individual-js && pnpm build-individual-css --no-cache",
-    "build-customizer": "shx rm -rf js/min/customizer-min.js && shx rm -rf js/min/customizer-min.js.map && parcel build inc/customizer/js/customizer.ts --dist-dir js/min --no-cache",
-    "build-postmessage": "shx rm -rf js/min/postmessage-min.js && shx rm -rf js/min/postmessage-min.js.map && parcel build inc/customizer/js/postmessage.ts --dist-dir js/min --no-cache",
-    "build-customize-panels": "parcel build Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist --no-cache",
-    "build-customize-sections": "shx rm -rf Customizer/Sections/dist && parcel build Customizer/Sections/src/sections.ts --dist-dir Customizer/Sections/dist --no-cache",
-    "build-base-control": "shx rm -rf Customizer/Controls/Base/dist && parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist --no-cache",
-    "build-checkbox-control": "parcel build Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist --no-cache",
-    "build-color-control": "shx rm -rf Customizer/Controls/Color/dist && parcel build Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist --no-cache",
-    "build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist --no-cache",
-    "build-editor-control": "parcel build Customizer/Controls/Editor/src/editor-control.ts --dist-dir Customizer/Controls/Editor/dist --no-cache",
-    "build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-cache",
-    "build-responsive-generic-control": "parcel build Customizer/Controls/Generic/src/responsive-generic-control.ts --dist-dir Customizer/Controls/Generic/dist --no-cache",
-    "build-assoc-array-control": "parcel build Customizer/Controls/Generic/src/assoc-array-control.ts --dist-dir Customizer/Controls/Generic/dist --no-cache",
-    "build-headline-control": "parcel build Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist --no-cache",
-    "build-image-control": "parcel build Customizer/Controls/Media/src/image-control.ts --dist-dir Customizer/Controls/Media/dist --no-cache",
-    "build-margin-padding-control": "shx rm -rf Customizer/Controls/MarginPadding/dist && parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist --no-cache",
-    "build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist --no-cache",
-    "build-responsive-control": "parcel build Customizer/Controls/Responsive/src/responsive-control.ts --dist-dir Customizer/Controls/Responsive/dist --no-cache",
-    "build-select-control": "shx rm -rf Customizer/Controls/Select/dist && parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist --no-cache",
-    "build-slider-control": "shx rm -rf Customizer/Controls/Slider/dist && parcel build Customizer/Controls/Slider/src/slider-control.ts Customizer/Controls/Slider/src/input-slider-control.ts Customizer/Controls/Slider/src/responsive-input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist --no-cache",
-    "build-repeater-control": "parcel build Customizer/Controls/Repeater/src/repeater-control.ts --dist-dir Customizer/Controls/Repeater/dist --no-cache",
-    "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist --no-cache",
-    "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist --no-cache",
-    "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist --no-cache",
-    "build-builder-control": "shx rm -rf Customizer/Controls/Builder/dist && parcel build Customizer/Controls/Builder/src/builder-control.ts Customizer/Controls/Builder/src/responsive-builder-control.ts --dist-dir Customizer/Controls/Builder/dist"
+    "build-control": "vite build --mode control",
+    "build-asset": "vite build --mode asset",
+    "build-control:watch": "vite build --watch",
+    "build-asset:watch": "vite build --watch",
+    "build-all-controls": "node build-scripts/build-all-controls.js",
+    "build-all-assets": "node build-scripts/build-all-assets.js",
+    "build-all": "npm run build-all-controls && npm run build-all-assets"
   }
 }
