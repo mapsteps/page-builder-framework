@@ -11,7 +11,6 @@ import {
 import { Setting } from "wordpress__customize-browser/Setting";
 import {
 	WpbfColorControl,
-	WpbfColorControlValue,
 	WpbfMulticolorControl,
 	WpbfMulticolorControlValue,
 } from "../../Color/src/color-interface";
@@ -59,6 +58,7 @@ import {
 	WpbfResponsiveBuilderControl,
 } from "../../Builder/src/builder-interface";
 import { WpbfImageControl } from "../../Media/src/image-interface";
+import { Preview } from "wordpress__customize-browser/Preview";
 
 declare global {
 	export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
@@ -95,6 +95,8 @@ declare global {
 		l10n: Record<string, string>;
 		previewer: Previewer<string>;
 		previewedDevice: Value<string>;
+		Preview: Preview;
+		preview?: Preview;
 		Control: WpbfCustomizeControl<any, any>;
 
 		// ! There's a mistake or missing part in this type definition.

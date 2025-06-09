@@ -7,6 +7,7 @@ import {
 import { parseJsonOrUndefined } from "../../../Customizer/Controls/Generic/src/string-util";
 import { MarginPaddingValue } from "../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
 import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/responsive-interface";
+import { proNotice } from "./partials/pro-notice";
 
 (function ($: JQueryStatic, customizer?: WpbfCustomize) {
 	const breakpoints = window.WpbfTheme.breakpoints;
@@ -253,6 +254,14 @@ import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/respon
 
 		styleTag.innerHTML = css;
 	}
+
+	window.wp.customize?.preview?.bind("pro_notice", function (action: string) {
+		if (action === "show") {
+			proNotice.show();
+		} else {
+			proNotice.hide();
+		}
+	});
 
 	function listenToCustomizerValueChange<VT>(
 		settingId: string,

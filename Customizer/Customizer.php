@@ -90,11 +90,38 @@ final class Customizer {
 	 */
 	public function customize_preview_init() {
 
+		wp_enqueue_style( 'wpbf-customize-preview', WPBF_THEME_URI . '/inc/customizer/css/customize-preview.css', array(), WPBF_VERSION );
+
 		$customizer_util = new CustomizerUtil();
 
 		foreach ( CustomizerStore::$added_controls as $control ) {
 			$customizer_util->enqueuePreviewScripts( $control );
 		}
+
+		add_action( 'body_open', array( $this, 'premium_add_on_notice' ) );
+
+	}
+
+	/**
+	 * Premium Add-On notice inside customize preview screen.
+	 *
+	 * @return void
+	 */
+	public function premium_add_on_notice() {
+
+		if ( wpbf_is_premium() ) {
+			return;
+		}
+		?>
+
+		<div class="wpbf-premium-notice">
+			<?php _e( 'This feature is available in Ultimate Dashboard PRO.', 'ultimate-dashboard' ); ?>
+			<a href="https://ultimatedashboard.io/docs/login-customizer/?utm_source=plugin&utm_medium=login_customizer_bar&utm_campaign=udb" class="wpbf-button wpbf-button-primary wpbf-premium-notice-button" target="_blank">
+				<?php _e( 'Get Ultimate Dashboard PRO', 'ultimate-dashboard' ); ?>
+			</a>
+		</div>
+
+		<?php
 
 	}
 

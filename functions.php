@@ -168,6 +168,7 @@ function wpbf_scripts() {
 		'var WpbfObj = {
 			siteUrl: "' . esc_url( site_url() ) . '",
 			ajaxurl: "' . admin_url( 'admin-ajax.php' ) . '"
+			isPremium: ' . wpbf_is_premium() . '
 		};',
 		'before'
 	);
