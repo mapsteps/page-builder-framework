@@ -69,11 +69,13 @@ export function getCommandArgValue(key) {
 /**
  * Get the base filename without extension to use it in output naming.
  *
- * @param {string} file
- * @returns {string}
+ * @param {string} filePath The file path.
+ * @returns {string} The filename without extension.
  */
-export function getFileNameWithoutExtension(file) {
-	return path.basename(file, path.extname(file));
+export function getFileNameWithoutExtension(filePath) {
+	const fileNameWithExt = path.basename(filePath);
+
+	return path.parse(fileNameWithExt).name;
 }
 
 /**
@@ -108,22 +110,35 @@ export function deleteIfDirExists(dir) {
 /**
  * Generate Vite configuration for building.
  *
- * @param {import('rollup').InputOption} entries
- * @param {string} distDir
+ * Unfortunately, multiple entries are not supported when "output.inlineDynamicImports" is true.
+ *
+ * Vite build will fail with:
+ * Invalid value for option "output.inlineDynamicImports" - multiple inputs are not supported when "output.inlineDynamicImports" is true.
+ *
+ * @see https://github.com/rollup/rollup/issues/5601
+ *
+ * @param {import('vite').Rollup.InputOption} entries The entry points for the build. Should be a string due to above issue.
+ * @param {string} distDir The output directory for the build.
  *
  * @returns {import('vite').UserConfig}
  */
 export function getViteConfig(entries, distDir) {
+	const keyName =
+		typeof entries === "string"
+			? getFileNameWithoutExtension(entries)
+			: undefined;
+
 	return {
+		logLevel: "info",
 		css: {
 			transformer: "lightningcss",
 			preprocessorOptions: {
 				scss: {
-					includePaths: [
-						"assets/scss", // For shared SCSS files
-						"Customizer/Controls", // For control-specific SCSS files
-						".", // Project root as fallback
-					],
+					// includePaths: [
+					// 	"assets/scss", // For shared SCSS files
+					// 	"Customizer/Controls", // For control-specific SCSS files
+					// 	".", // Project root as fallback
+					// ],
 					quietDeps: true,
 				},
 			},
@@ -131,9 +146,8 @@ export function getViteConfig(entries, distDir) {
 		build: {
 			target: "es2020",
 			outDir: distDir,
-			emptyOutDir: false,
-			// Ensure CSS is extracted to separate files
-			cssCodeSplit: true, // Changed to true for multiple entries
+			emptyOutDir: true,
+			cssCodeSplit: false,
 			minify: "terser",
 			sourcemap: true,
 
@@ -151,22 +165,38 @@ export function getViteConfig(entries, distDir) {
 					"@wordpress/hooks",
 					"choices.js",
 				],
+				/**
+				 * Unfortunately, multiple entries are not supported when "output.inlineDynamicImports" is true.
+				 *
+				 * Vite build failed:
+				 * Invalid value for option "output.inlineDynamicImports" - multiple inputs are not supported when "output.inlineDynamicImports" is true.
+				 *
+				 * @see https://github.com/rollup/rollup/issues/5601
+				 */
 				input: entries,
 				output: {
 					format: "iife",
-					// Custom naming for each entry.
+					// Inline dynamic imports to prevent JS code splitting
+					inlineDynamicImports: true,
+					// Custom naming for each entry
 					entryFileNames: (chunkInfo) => {
-						const fileName = getFileNameWithoutExtension(chunkInfo.name);
-						return `${fileName}-min.js`;
-					},
-					assetFileNames: (assetInfo) => {
-						console.log("assetInfo.names", assetInfo.names);
+						// console.log(`chunkInfo`, chunkInfo);
+						const isStyle = chunkInfo.facadeModuleId?.endsWith(".css");
 
-						if (assetInfo.name && path.extname(assetInfo.name) === ".css") {
-							return `${getFileNameWithoutExtension(assetInfo.name)}-min.css`;
+						return `${chunkInfo.name}-min.${isStyle ? "css" : "js"}`;
+					},
+					/**
+					 * Here, the CSS asset loses its original name.
+					 * Thus, we need to rename it to match the JS file.
+					 */
+					assetFileNames: (assetInfo) => {
+						// console.log("assetInfo", assetInfo);
+						const fileName = assetInfo.names[0];
+
+						if (fileName.endsWith(".css")) {
+							return `${keyName ? keyName : getFileNameWithoutExtension(fileName)}-min.css`;
 						}
 
-						// return assetInfo.name;
 						return "[name]-min.js";
 					},
 					globals: {

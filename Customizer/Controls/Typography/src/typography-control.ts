@@ -3,7 +3,6 @@ import {
 	AnyWpbfCustomizeControl,
 	WpbfCustomize,
 } from "../../Base/src/interface";
-import "./typography-control.scss";
 import {
 	FontProperties,
 	FontProperty,
@@ -19,6 +18,8 @@ import {
 } from "../../Select/src/interface";
 import { WpbfCustomizeAssocArrayControl } from "../../Generic/src/interface";
 import { isNumeric } from "../../Generic/src/number-util";
+
+import "./typography-control.scss";
 
 declare var wp: {
 	customize: WpbfCustomize;
