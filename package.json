@@ -1,6 +1,5 @@
 {
   "name": "page-builder-framework",
-  "version": "1.0.0",
   "description": "Page Builder Framework development tooling",
   "author": "David",
   "license": "GPL-3.0",
@@ -16,6 +15,7 @@
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@types/select2": "^4.0.63",
+    "lightningcss": "^1.30.1",
     "prettier": "^3.5.3",
     "process": "^0.11.10",
     "sass-embedded": "^1.89.1",

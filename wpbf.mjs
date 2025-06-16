@@ -199,7 +199,7 @@ async function bundleCustomizerControl(controlName) {
 	/**
 	 * The entries to pass to Parcel.
 	 *
-	 * @type {import('rollup').InputOption}
+	 * @type {import('vite').Rollup.InputOption}
 	 */
 	const entries = {};
 
@@ -207,7 +207,10 @@ async function bundleCustomizerControl(controlName) {
 		// Get the control file name without the "-control.ts" and "-control.tsx" suffixes.
 		const controlFileName = controlFile.replace(/-control\.tsx?$/, "");
 
-		entries[`${controlFileName}-control`] = resolve(srcDir, controlFile);
+		// Add the control file to the entries.
+		entries[
+			`${controlFileName}-control${controlFile.endsWith("-control.scss") ? "-style" : ""}`
+		] = resolve(srcDir, controlFile);
 
 		// Check if ${controlFileName}-preview.ts exists in src directory.
 		const previewPath = resolve(srcDir, `${controlFileName}-preview.ts`);
@@ -237,23 +240,33 @@ async function bundleCustomizerControl(controlName) {
 /**
  * Bundle the customizer control using the Vite API.
  *
- * @param {import('rollup').InputOption} entries The entries to pass to Parcel.
+ * @param {import('vite').Rollup.InputOption} entries The entries to pass to Parcel.
  * @param {string} distDir The dist directory path.
  *
  * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
  */
 async function bundleViaViteAPI(entries, distDir) {
-	const startTime = Date.now();
-
 	try {
-		await build(getViteConfig(entries, distDir));
-
-		const buildTime = Date.now() - startTime;
-		const bundleCount = Object.keys(entries).length;
+		/**
+		 * Unfortunately, multiple entries are not supported when "output.inlineDynamicImports" is true.
+		 *
+		 * Vite build failed:
+		 * Invalid value for option "output.inlineDynamicImports" - multiple inputs are not supported when "output.inlineDynamicImports" is true.
+		 *
+		 * So instead of executing `await build(getViteConfig(entries, distDir));`,
+		 * We need to loop the entries and build them individually.
+		 *
+		 * @see https://github.com/rollup/rollup/issues/5601
+		 */
+		await Promise.all(
+			Object.entries(entries).map(([entryKey, filePath]) => {
+				return build(getViteConfig(filePath, distDir));
+			}),
+		);
 
 		return {
 			success: true,
-			message: `✨ Built ${bundleCount} bundles in ${buildTime}ms!`,
+			message: `✨`,
 		};
 	} catch (error) {
 		throw new Error(`Vite build failed: ${getErrorMessage(error)}`);

@@ -1,5 +1,4 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
-import "./typography-control.scss";
 import {
 	FontProperties,
 	FontProperty,
@@ -15,6 +14,8 @@ import {
 } from "../../Select/src/select-interface";
 import { WpbfAssocArrayControl } from "../../Generic/src/generic-interface";
 import { isNumeric } from "../../Generic/src/number-util";
+
+import "./typography-control.scss";
 
 /**
  * These var declarations are for the global variables that are set in the PHP file.
