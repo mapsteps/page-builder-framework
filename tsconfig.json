@@ -17,8 +17,12 @@
   "include": [
     "Customizer/**/*.ts",
     "assets/js/*.js",
+    "assets/**/*.ts",
+    "inc/customizer/**/*.ts",
+    "build-scripts/*.mjs",
     "wpbf.mjs",
-    "types.js"
+    "vite.config.mjs",
+    "types.ts"
   ],
   "exclude": [
     "node_modules",

@@ -1,19 +1,36 @@
 #!/usr/bin/env zx
 
 import "zx/globals";
+import { fileURLToPath } from "url";
+import {
+	intro,
+	outro,
+	isCancel,
+	cancel,
+	text,
+	select,
+	spinner,
+} from "@clack/prompts";
+import { resolve, dirname } from "path";
+import { build } from "vite";
+import {
+	deleteIfDirExists,
+	getErrorMessage,
+	getViteConfig,
+	toPascalCase,
+} from "./build-scripts/build-utils.mjs";
+
+process.env.NODE_ENV = "production";
+process.env.context = "browser";
+process.env.sourceType = "script";
+
+const DELETE_DIST_DIR_BEFORE_BUILD = false;
+const ALLOWED_FILE_EXTENSIONS = ["scss", "js", "ts", "jsx", "tsx"];
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const themeBuildDir = "./build";
-
-/**
- * Delete the build directory if it exists.
- *
- * @param {string} dir The build directory path.
- */
-function deleteIfDirExists(dir) {
-	if (fs.existsSync(dir)) {
-		fs.rmSync(dir, { recursive: true });
-	}
-}
 
 const rootFilesAndDirsToSkip = [
 	".parcel-cache",
@@ -38,6 +55,210 @@ const rootFilesAndDirsToSkip = [
 	"types.js",
 	"wpbf.mjs",
 ];
+
+const loadingSpinner = spinner();
+
+async function main() {
+	intro(`Page Builder Framework`);
+
+	const selectedTask = await select({
+		message: "Please select a task.",
+		options: [
+			{ value: "build-wp-theme", label: "Build WP theme" },
+			{ value: "build-customizer-control", label: "Build customizer control" },
+			{ value: "build-asset", label: "Build asset" },
+		],
+	});
+
+	if (isCancel(selectedTask)) {
+		cancel("Task cancelled.");
+		process.exit(0);
+	}
+
+	if (selectedTask === "build-wp-theme") {
+		loadingSpinner.start("Building WP theme...");
+		buildWpTheme();
+		loadingSpinner.stop();
+	} else if (selectedTask === "build-customizer-control") {
+		const controlName = await text({
+			message: "Insert the customizer control namespace (e.g: slider):",
+		});
+
+		if (isCancel(controlName)) {
+			cancel("Build customizer control cancelled.");
+			process.exit(0);
+		}
+
+		loadingSpinner.start(`Building customizer control: ${controlName}...`);
+
+		if (DELETE_DIST_DIR_BEFORE_BUILD) {
+			deleteIfDirExists(
+				resolve(
+					__dirname,
+					`Customizer/Controls/${toPascalCase(controlName)}/dist`,
+				),
+			);
+		}
+
+		const response = await bundleCustomizerControl(controlName);
+
+		if (response.success) {
+			loadingSpinner.stop(response.message);
+		} else {
+			loadingSpinner.stop(response.message, 500);
+		}
+	} else if (selectedTask === "build-asset") {
+		const filePath = await text({
+			message: "Insert the file path to build (e.g: assets/js/site.js):",
+		});
+
+		if (isCancel(filePath)) {
+			cancel("Build asset cancelled.");
+			process.exit(0);
+		}
+
+		if (!ALLOWED_FILE_EXTENSIONS.some((ext) => filePath.endsWith(`.${ext}`))) {
+			cancel(
+				`Invalid file extension. Allowed extensions: ${ALLOWED_FILE_EXTENSIONS.join(", ")}`,
+			);
+			process.exit(0);
+		}
+
+		const fileType = filePath.split(".").pop();
+
+		const outputDirFromUser = await text({
+			message:
+				"Insert the output directory path. If empty, it will use default location (js: js/min, scss: css/min).",
+		});
+
+		const outputDir = outputDirFromUser
+			? resolve(__dirname, String(outputDirFromUser))
+			: fileType === "scss"
+				? resolve(__dirname, "css/min")
+				: resolve(__dirname, "js/min");
+
+		loadingSpinner.start(`Building asset file: ${filePath}...`);
+
+		const response = await buildAsset(filePath, outputDir);
+
+		if (response.success) {
+			loadingSpinner.stop(response.message);
+		} else {
+			loadingSpinner.stop(response.message, 500);
+		}
+	}
+
+	outro(`Done`);
+}
+
+/**
+ * Build an asset file.
+ *
+ * @param {string} filePath The file path to build.
+ * @param {string} outputDir The output directory path.
+ *
+ * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.}
+ */
+async function buildAsset(filePath, outputDir) {
+	try {
+		return await bundleViaViteAPI(filePath, outputDir);
+	} catch (err) {
+		return {
+			success: false,
+			message: getErrorMessage(err),
+		};
+	}
+}
+
+/**
+ * Bundle the customizer control.
+ *
+ * @param {string} controlName The customizer control name. E.g: checkbox.
+ * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.}
+ */
+async function bundleCustomizerControl(controlName) {
+	const pascalCaseControlName = toPascalCase(controlName);
+
+	const srcDir = `Customizer/Controls/${pascalCaseControlName}/src`;
+
+	const distDir = `Customizer/Controls/${pascalCaseControlName}/dist`;
+	const absDistDir = resolve(__dirname, distDir);
+
+	// Find files inside `srcDir` directory that suffixed with `-control.ts` or `-control.tsx`.
+	const controlFiles = fs.readdirSync(srcDir).filter((file) => {
+		return file.endsWith("-control.ts") || file.endsWith("-control.tsx");
+	});
+
+	if (controlFiles.length === 0) {
+		return {
+			success: false,
+			message: `No control files found in ${srcDir} directory.`,
+		};
+	}
+
+	/**
+	 * The entries to pass to Parcel.
+	 *
+	 * @type {import('rollup').InputOption}
+	 */
+	const entries = {};
+
+	for (const controlFile of controlFiles) {
+		// Get the control file name without the "-control.ts" and "-control.tsx" suffixes.
+		const controlFileName = controlFile.replace(/-control\.tsx?$/, "");
+
+		entries[`${controlFileName}-control`] = resolve(srcDir, controlFile);
+
+		// Check if ${controlFileName}-preview.ts exists in src directory.
+		const previewPath = resolve(srcDir, `${controlFileName}-preview.ts`);
+
+		if (fs.existsSync(previewPath)) {
+			entries[`${controlFileName}-preview`] = previewPath;
+		}
+
+		// Check if ${controlFileName}-preview.tsx exists in src directory.
+		const previewPathTsx = resolve(srcDir, `${controlFileName}-preview.tsx`);
+
+		if (fs.existsSync(previewPathTsx)) {
+			entries[`${controlFileName}-preview`] = previewPathTsx;
+		}
+	}
+
+	try {
+		return await bundleViaViteAPI(entries, absDistDir);
+	} catch (err) {
+		return {
+			success: false,
+			message: getErrorMessage(err),
+		};
+	}
+}
+
+/**
+ * Bundle the customizer control using the Vite API.
+ *
+ * @param {import('rollup').InputOption} entries The entries to pass to Parcel.
+ * @param {string} distDir The dist directory path.
+ *
+ * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
+ */
+async function bundleViaViteAPI(entries, distDir) {
+	const startTime = Date.now();
+
+	try {
+		await build(getViteConfig(entries, distDir));
+
+		const buildTime = Date.now() - startTime;
+		const bundleCount = Object.keys(entries).length;
+
+		return {
+			success: true,
+			message: `✨ Built ${bundleCount} bundles in ${buildTime}ms!`,
+		};
+	} catch (error) {
+		throw new Error(`Vite build failed: ${getErrorMessage(error)}`);
+	}
+}
 
 /**
  * Copy the files and directories from the source directory to the destination directory.
@@ -103,7 +324,7 @@ function deleteMapFiles(dir) {
 	});
 }
 
-function buildWpPlugin() {
+function buildWpTheme() {
 	deleteIfDirExists(themeBuildDir);
 	fs.mkdirSync(themeBuildDir);
 
@@ -115,4 +336,4 @@ function buildWpPlugin() {
 	deleteMapFiles(wpbfBuildDir);
 }
 
-buildWpPlugin();
+main();

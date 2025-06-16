@@ -1,29 +1,28 @@
 {
   "name": "page-builder-framework",
-  "version": "1.0.0",
   "description": "Page Builder Framework development tooling",
   "author": "David",
   "license": "GPL-3.0",
   "devDependencies": {
     "@babel/core": "^7.27.4",
     "@babel/preset-react": "^7.27.1",
-    "@parcel/config-default": "^2.15.2",
-    "@parcel/core": "^2.15.2",
-    "@parcel/optimizer-data-url": "^2.15.2",
-    "@parcel/transformer-inline-string": "^2.15.2",
-    "@parcel/transformer-sass": "^2.15.2",
+    "@clack/prompts": "^0.9.1",
+    "@types/fs-extra": "^11.0.4",
     "@types/jquery": "^3.5.32",
     "@types/jqueryui": "^1.12.24",
     "@types/lodash": "^4.17.17",
+    "@types/node": "^22.15.30",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@types/select2": "^4.0.63",
-    "parcel": "^2.15.2",
-    "parcel-namer-rewrite": "2.10.3-rc.2",
-    "parcel-resolver-ignore": "^2.2.0",
     "prettier": "^3.5.3",
+    "process": "^0.11.10",
+    "sass-embedded": "^1.89.1",
+    "shx": "^0.3.4",
+    "terser": "^5.41.0",
     "typescript": "^5.8.3",
-    "wordpress__customize-browser": "github:usefulteam/wordpress__customize-browser"
+    "vite": "^6.3.5",
+    "wordpress__customize-browser": "github:ultrafastcloud/wordpress__customize-browser"
   },
   "dependencies": {
     "@wordpress/components": "^29.11.0",
@@ -34,6 +33,7 @@
     "@wordpress/hooks": "^4.25.0",
     "@wordpress/i18n": "^5.25.0",
     "@wordpress/url": "^4.25.0",
+    "choices.js": "^11.1.0",
     "colord": "^2.9.3",
     "jquery": "^3.7.1",
     "ky": "^1.8.1",
@@ -42,14 +42,8 @@
     "react-colorful": "^5.6.1",
     "react-dom": "^18.3.1",
     "styled-jsx": "^5.1.7",
+    "vanjs-core": "^1.5.5",
     "zx": "^8.5.5"
-  },
-  "parcel": {
-    "transformers": {
-      "*.{js,jsx,ts,tsx}": {
-        "runtime": "automatic"
-      }
-    }
   },
   "alias": {
     "react": {
@@ -78,14 +72,9 @@
     },
     "@wordpress/hooks": {
       "global": "wp.hooks"
-    }
-  },
-  "parcel-namer-rewrite": {
-    "hashing": "never",
-    "silent": true,
-    "rules": {
-      "(.*).js": "$1-min.js",
-      "(.*).css": "$1-min.css"
+    },
+    "choices.js": {
+      "global": "Choices"
     }
   },
   "parcelIgnore": [
@@ -97,61 +86,15 @@
     "not dead"
   ],
   "scripts": {
-    "build-wp-theme": "zx ./wpbf.mjs",
+    "wpbf": "node wpbf.mjs",
     "collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
-    "build-site-jquery": "parcel build assets/js/site-jquery.js --dist-dir js/min",
-    "build-site-js": "parcel build assets/js/site.js --dist-dir js/min",
-    "build-site-css": "parcel build assets/scss/style.scss --dist-dir css/min",
-    "build-site": "pnpm build-site-js && pnpm build-site-jquery && pnpm build-site-css",
-    "build-individual-js": "parcel build \"assets/js/!(site|site-jquery)*.js\" --dist-dir js/min",
-    "build-individual-css": "parcel build \"assets/scss/!(style)*.scss\" --dist-dir css/min",
-    "build-individual-assets": "pnpm build-individual-js && pnpm build-individual-css",
-    "watch-customize-panels": "parcel watch Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist",
-    "build-customize-panels": "parcel build Customizer/Panels/src/panel-types.ts --dist-dir Customizer/Panels/dist",
-    "watch-customize-sections": "parcel watch Customizer/Sections/src/section-types.ts --dist-dir Customizer/Sections/dist",
-    "build-customize-sections": "parcel build Customizer/Sections/src/section-types.ts --dist-dir Customizer/Sections/dist",
-    "watch-base-control": "parcel watch Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist",
-    "build-base-control": "parcel build Customizer/Controls/Base/src/base-control.ts --dist-dir Customizer/Controls/Base/dist",
-    "watch-checkbox-control": "parcel watch Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist",
-    "build-checkbox-control": "parcel build Customizer/Controls/Checkbox/src/checkbox-control.ts --dist-dir Customizer/Controls/Checkbox/dist",
-    "watch-color-control": "parcel watch Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist",
-    "build-color-control": "parcel build Customizer/Controls/Color/src/color-control.ts Customizer/Controls/Color/src/color-preview.ts --dist-dir Customizer/Controls/Color/dist",
-    "watch-dimension-control": "parcel watch Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist",
-    "build-dimension-control": "parcel build Customizer/Controls/Dimension/src/dimension-control.ts --dist-dir Customizer/Controls/Dimension/dist",
-    "watch-editor-control": "parcel watch Customizer/Controls/Editor/src/editor-control.ts --dist-dir Customizer/Controls/Editor/dist",
-    "build-editor-control": "parcel build Customizer/Controls/Editor/src/editor-control.ts --dist-dir Customizer/Controls/Editor/dist",
-    "watch-generic-control": "parcel watch Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "build-generic-control": "parcel build Customizer/Controls/Generic/src/generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "watch-responsive-generic-control": "parcel watch Customizer/Controls/Generic/src/responsive-generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "build-responsive-generic-control": "parcel build Customizer/Controls/Generic/src/responsive-generic-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "watch-assoc-array-control": "parcel watch Customizer/Controls/Generic/src/assoc-array-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "build-assoc-array-control": "parcel build Customizer/Controls/Generic/src/assoc-array-control.ts --dist-dir Customizer/Controls/Generic/dist",
-    "watch-headline-control": "parcel watch Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist",
-    "build-headline-control": "parcel build Customizer/Controls/Headline/src/headline-control.scss Customizer/Controls/Headline/src/headline-toggle-control.scss --dist-dir Customizer/Controls/Headline/dist",
-    "watch-image-control": "parcel watch Customizer/Controls/Media/src/image-control.ts --dist-dir Customizer/Controls/Media/dist",
-    "build-image-control": "parcel build Customizer/Controls/Media/src/image-control.ts --dist-dir Customizer/Controls/Media/dist",
-    "watch-margin-padding-control": "parcel watch Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist",
-    "build-margin-padding-control": "parcel build Customizer/Controls/MarginPadding/src/margin-padding-control.ts Customizer/Controls/MarginPadding/src/margin-padding-preview.ts --dist-dir Customizer/Controls/MarginPadding/dist",
-    "watch-radio-control": "parcel watch Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist",
-    "build-radio-control": "parcel build Customizer/Controls/Radio/src/radio-control.ts --dist-dir Customizer/Controls/Radio/dist",
-    "watch-responsive-control": "parcel watch Customizer/Controls/Responsive/src/responsive-control.ts --dist-dir Customizer/Controls/Responsive/dist",
-    "build-responsive-control": "parcel build Customizer/Controls/Responsive/src/responsive-control.ts --dist-dir Customizer/Controls/Responsive/dist",
-    "watch-select-control": "parcel watch Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist",
-    "build-select-control": "parcel build Customizer/Controls/Select/src/select-control.ts --dist-dir Customizer/Controls/Select/dist",
-    "watch-slider-control": "parcel watch Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "build-slider-control": "parcel build Customizer/Controls/Slider/src/slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "watch-input-slider-control": "parcel watch Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "build-input-slider-control": "parcel build Customizer/Controls/Slider/src/input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "watch-responsive-input-slider-control": "parcel watch Customizer/Controls/Slider/src/responsive-input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "build-responsive-input-slider-control": "parcel build Customizer/Controls/Slider/src/responsive-input-slider-control.ts --dist-dir Customizer/Controls/Slider/dist",
-    "watch-repeater-control": "parcel watch Customizer/Controls/Repeater/src/repeater-control.ts --dist-dir Customizer/Controls/Repeater/dist",
-    "build-repeater-control": "parcel build Customizer/Controls/Repeater/src/repeater-control.ts --dist-dir Customizer/Controls/Repeater/dist",
-    "watch-section-tabs-control": "parcel watch Customizer/Controls/Tabs/src/section-tabs-control.ts --dist-dir Customizer/Controls/Tabs/dist",
-    "build-section-tabs-control": "parcel build Customizer/Controls/Tabs/src/section-tabs-control.ts --dist-dir Customizer/Controls/Tabs/dist",
-    "watch-sortable-control": "parcel watch Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist",
-    "build-sortable-control": "parcel build Customizer/Controls/Sortable/src/sortable-control.ts --dist-dir Customizer/Controls/Sortable/dist",
-    "build-typography-control": "parcel build Customizer/Controls/Typography/src/typography-control.ts --dist-dir Customizer/Controls/Typography/dist --no-cache",
-    "build-typography-preview": "parcel build Customizer/Controls/Typography/src/typography-preview.ts --dist-dir Customizer/Controls/Typography/dist --no-cache"
+    "build-control": "vite build --mode control",
+    "build-asset": "vite build --mode asset",
+    "build-control:watch": "vite build --watch",
+    "build-asset:watch": "vite build --watch",
+    "build-all-controls": "node build-scripts/build-all-controls.js",
+    "build-all-assets": "node build-scripts/build-all-assets.js",
+    "build-all": "npm run build-all-controls && npm run build-all-assets"
   },
-  "packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912"
+  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
 }
