@@ -169,7 +169,7 @@ function composeFontProperties(
 			}),
 		);
 		$variantSelectbox?.val(variantValue);
-		$variantSelectbox?.trigger("change");
+		value["variant"] = variantValue;
 	}
 
 	// Set the font-style value.
