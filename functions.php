@@ -25,9 +25,6 @@ define( 'WPBF_PREMIUM_MIN_VERSION', '2.10' );
  */
 function wpbf_theme_setup() {
 
-	// Init.
-	require_once WPBF_THEME_DIR . '/inc/init.php';
-
 	// Custom logo.
 	add_theme_support(
 		'custom-logo',
@@ -113,7 +110,7 @@ function wpbf_theme_setup() {
 	}
 
 }
-add_action( 'after_setup_theme', 'wpbf_theme_setup', 9 );
+add_action( 'after_setup_theme', 'wpbf_theme_setup' );
 
 /**
  * Theme init.
@@ -250,3 +247,6 @@ function wpbf_enqueue_admin_scripts() {
 
 }
 add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
+
+// Init.
+require_once WPBF_THEME_DIR . '/inc/init.php';
