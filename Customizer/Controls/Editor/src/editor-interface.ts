@@ -1,12 +1,12 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+} from "../../Base/src/base-interface";
 
-export interface WpbfCustomizeEditorControlParams
+export interface WpbfEditorControlParams
 	extends WpbfCustomizeControlParams<string> {
 	default: string;
 }
 
-export interface WpbfCustomizeEditorControl
-	extends WpbfCustomizeControl<string, WpbfCustomizeEditorControlParams> {}
+export interface WpbfEditorControl
+	extends WpbfCustomizeControl<string, WpbfEditorControlParams> {}

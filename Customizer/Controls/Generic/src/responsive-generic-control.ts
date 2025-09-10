@@ -1,6 +1,5 @@
-import { WpbfCustomize } from "../../Base/src/interface";
 import { encodeJsonOrDefault } from "./string-util";
-import { WpbfCustomizeResponsiveGenericControl } from "./interface";
+import { WpbfResponsiveGenericControl } from "./generic-interface";
 import {
 	limitNumber,
 	limitNumberWithUnit,
@@ -13,11 +12,11 @@ declare var wp: {
 };
 
 wp.customize.controlConstructor["wpbf-responsive-generic"] =
-	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeResponsiveGenericControl>(
+	wp.customize.wpbfDynamicControl.extend<WpbfResponsiveGenericControl>(
 		{
 			initWpbfControl: function (
-				this: WpbfCustomizeResponsiveGenericControl,
-				control?: WpbfCustomizeResponsiveGenericControl,
+				this: WpbfResponsiveGenericControl,
+				control?: WpbfResponsiveGenericControl,
 			) {
 				control = control || this;
 				const params = control.params;

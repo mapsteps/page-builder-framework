@@ -1,8 +1,4 @@
-import hooks from "@wordpress/hooks";
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomize,
-} from "../../Base/src/interface";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import {
 	FontProperties,
 	FontProperty,
@@ -11,20 +7,15 @@ import {
 	GoogleFontsCollection,
 	LabelValuePair,
 	WpbfCustomizeTypographyControlValue,
-} from "./interface";
+} from "./typography-interface";
 import {
 	SelectControlChoice,
-	WpbfCustomizeSelectControl,
-} from "../../Select/src/interface";
-import { WpbfCustomizeAssocArrayControl } from "../../Generic/src/interface";
+	WpbfSelectControl,
+} from "../../Select/src/select-interface";
+import { WpbfAssocArrayControl } from "../../Generic/src/generic-interface";
 import { isNumeric } from "../../Generic/src/number-util";
 
 import "./typography-control.scss";
-
-declare var wp: {
-	customize: WpbfCustomize;
-	hooks: typeof hooks;
-};
 
 /**
  * These var declarations are for the global variables that are set in the PHP file.
@@ -38,10 +29,9 @@ declare var wpbfFieldsFontVariants:
 	| Record<string, Record<string, LabelValuePair[]>>
 	| undefined;
 
-wp.customize?.bind("ready", function () {
-	if (!wp.customize) return;
-
-	setupTypographyFields(wp.customize);
+window.wp.customize?.bind("ready", function () {
+	if (!window.wp.customize) return;
+	setupTypographyFields(window.wp.customize);
 });
 
 function setupTypographyFields(customizer: WpbfCustomize) {
@@ -67,9 +57,9 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 
 	wpbfFontProperties.forEach((property) => {
 		const propertyControlId = `${typographyControlId}[${property}]`;
-		if (!wp.customize.control(propertyControlId)) return;
+		if (!window.wp.customize?.control(propertyControlId)) return;
 
-		wp.customize(propertyControlId, function (setting) {
+		window.wp.customize?.(propertyControlId, function (setting) {
 			setting.bind(function (value) {
 				composeFontProperties(
 					typographyControlId,
@@ -106,8 +96,8 @@ function composeFontProperties(
 	triggerPropertyValue?: string,
 	triggerChange?: boolean,
 ) {
-	const control: WpbfCustomizeAssocArrayControl | undefined =
-		wp.customize?.control(id);
+	const control: WpbfAssocArrayControl | undefined =
+		window.wp.customize?.control(id);
 	if (!control || !control.setting) return;
 
 	val = val || control.setting.get();
@@ -129,11 +119,12 @@ function composeFontProperties(
 	let variantValue = !value.variant ? "regular" : value.variant;
 	value.variant = variantValue;
 
-	const maybeVariantControl = wp.customize.control(id + "[variant]");
+	const maybeVariantControl = window.wp.customize?.control(id + "[variant]");
 
 	const variantControl =
-		maybeVariantControl && "wpbf-select" === maybeVariantControl.params.type
-			? (maybeVariantControl as WpbfCustomizeSelectControl)
+		maybeVariantControl &&
+		"wpbf-enhanced-select" === maybeVariantControl.params.type
+			? (maybeVariantControl as WpbfSelectControl)
 			: undefined;
 
 	if (
@@ -193,7 +184,7 @@ function composeFontProperties(
 
 	control.setting.set(value);
 
-	wp.hooks.addAction(
+	window.wp.hooks.addAction(
 		"wpbf.dynamicControl.initWpbfControl",
 		"wpbf",
 		function (controlInit: AnyWpbfCustomizeControl) {

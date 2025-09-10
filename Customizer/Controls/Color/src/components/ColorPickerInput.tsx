@@ -1,17 +1,20 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { colorBgImgData } from "../utils/misc";
 
-export type ColorPickerInputProps = {
+export default function ColorPickerInput(props: {
 	onChange: (color: string) => void;
-	color?: string;
 	pickerComponent: string;
 	useHueMode: boolean;
-};
+	color?: string | number;
+}) {
+	const { onChange, pickerComponent, useHueMode } = props;
+	const [value, setValue] = useState(() => props.color);
 
-export default function ColorPickerInput(props: ColorPickerInputProps) {
-	const { onChange, color = "" } = props;
-	const [value, setValue] = useState(() => color);
+	useEffect(() => {
+		setValue(props.color);
+	}, [props.color]);
 
-	const handleChange = useCallback(
+	const handleInputChange = useCallback(
 		(e: ChangeEvent) => {
 			const target = e.target as HTMLInputElement | undefined;
 			let val = target?.value ?? "";
@@ -34,19 +37,14 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 			);
 
 			if ("" === val || pattern.test(val)) {
-				onChange(val); // Run onChange handler passed by `KirkiReactColorfulForm` component.
+				// Run onChange handler passed by `ColorForm` component.
+				onChange(val);
 			}
 
 			setValue(val);
 		},
 		[onChange],
 	);
-
-	// Update the local state when `color` property value is changed.
-	useEffect(() => {
-		// We don't need to convert the color since it's already handled in parent component.
-		setValue(color);
-	}, [color]);
 
 	const pickersWithAlpha = [
 		"RgbaColorPicker",
@@ -57,14 +55,27 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 		"HsvaStringColorPicker",
 	];
 
-	const previewWrapperBgImg = pickersWithAlpha.includes(props.pickerComponent)
-		? 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAAHnlligAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHJJREFUeNpi+P///4EDBxiAGMgCCCAGFB5AADGCRBgYDh48CCRZIJS9vT2QBAggFBkmBiSAogxFBiCAoHogAKIKAlBUYTELAiAmEtABEECk20G6BOmuIl0CIMBQ/IEMkO0myiSSraaaBhZcbkUOs0HuBwDplz5uFJ3Z4gAAAABJRU5ErkJggg==")'
+	const previewWrapperBgImg = pickersWithAlpha.includes(pickerComponent)
+		? `url("${colorBgImgData}")`
 		: "none";
+
+	/**
+	 * Parse value to be used as background color.
+	 *
+	 * This is only used for non-hue mode.
+	 */
+	function parseBgColorValue() {
+		if (useHueMode || typeof value === "number") {
+			return "transparent";
+		}
+
+		return value ?? "transparent";
+	}
 
 	return (
 		<div className="wpbf-color-input-wrapper">
 			<div className="wpbf-color-input-control">
-				{!props.useHueMode && (
+				{!useHueMode && (
 					<div
 						className="wpbf-color-preview-wrapper"
 						style={{
@@ -75,17 +86,17 @@ export default function ColorPickerInput(props: ColorPickerInputProps) {
 							type="button"
 							className="wpbf-color-preview"
 							style={{
-								backgroundColor: value,
+								backgroundColor: parseBgColorValue(),
 							}}
 						></button>
 					</div>
 				)}
 				<input
 					type="text"
-					value={value}
+					value={value ?? ""}
 					className="wpbf-color-input"
 					spellCheck="false"
-					onChange={handleChange}
+					onChange={handleInputChange}
 				/>
 			</div>
 		</div>

@@ -1,7 +1,6 @@
 import "./sortable-control.scss";
 
-import { WpbfCustomize } from "../../Base/src/interface";
-import { WpbfCustomizeSortableControl } from "./interface";
+import { WpbfSortableControl } from "./sortable-interface";
 import _ from "lodash";
 
 declare var wp: {
@@ -9,8 +8,8 @@ declare var wp: {
 };
 
 wp.customize.controlConstructor["wpbf-sortable"] =
-	wp.customize.Control.extend<WpbfCustomizeSortableControl>({
-		ready: function (this: WpbfCustomizeSortableControl) {
+	wp.customize.Control.extend<WpbfSortableControl>({
+		ready: function (this: WpbfSortableControl) {
 			const control = this;
 
 			// Init sortable.
@@ -42,7 +41,7 @@ wp.customize.controlConstructor["wpbf-sortable"] =
 				});
 		},
 
-		getNewValues: function (this: WpbfCustomizeSortableControl) {
+		getNewValues: function (this: WpbfSortableControl) {
 			const control = this;
 			const items = control.container.find("li");
 			const newVal: any[] = [];

@@ -8,6 +8,12 @@ import { getBreakpoints } from "../utils/dom-util";
  * @param {JQueryStatic} $ - jQuery object.
  */
 export default function setupjQueryMobileMenu($) {
+	const headerBuilderEnabled = document.querySelector(
+		".wpbf-navigation.use-header-builder",
+	)
+		? true
+		: false;
+
 	let breakpoints = getBreakpoints();
 
 	/**
@@ -43,9 +49,17 @@ export default function setupjQueryMobileMenu($) {
 	 * Determine the menu type.
 	 *
 	 * This function will set the value of top level `menuType` variable.
-	 * It could be 'hamburger', 'default', or 'premium'.
+	 * It could be 'hamburger', 'dropdown , 'default', or 'premium'.
 	 */
 	function setupMenuType() {
+		if (
+			headerBuilderEnabled &&
+			document.querySelector(".wpbf-mobile-menu-dropdown")
+		) {
+			menuType = "dropdown";
+			return;
+		}
+
 		if (document.querySelector(".wpbf-mobile-menu-hamburger")) {
 			menuType = "hamburger";
 			return;
@@ -124,7 +138,7 @@ export default function setupjQueryMobileMenu($) {
 		});
 
 		// On window resize, if the window width is wider than desktop breakpoint, then hide the mobile menu.
-		$(window).resize(function () {
+		$(window).on("resize", function () {
 			const windowHeight = $(window).height();
 			const windowWidth = $(window).width();
 
@@ -186,8 +200,27 @@ export default function setupjQueryMobileMenu($) {
 		toggle.classList.add("active");
 		toggle.setAttribute("aria-expanded", "true");
 
-		if ("hamburger" === menuType) {
-			toggle.classList.remove("wpbff-hamburger");
+		if ("hamburger" === menuType || "dropdown" === menuType) {
+			if (headerBuilderEnabled) {
+				const svgIcon = toggle.querySelector(".menu-trigger-button-svg");
+
+				if (svgIcon instanceof SVGElement) {
+					svgIcon.style.display = "none";
+				}
+
+				const mobileMenuText = toggle.querySelector(
+					".menu-trigger-button-text",
+				);
+
+				if (mobileMenuText instanceof HTMLElement) {
+					mobileMenuText.style.display = "none";
+				}
+
+				toggle.classList.add("wpbff");
+			} else {
+				toggle.classList.remove("wpbff-hamburger");
+			}
+
 			toggle.classList.add("wpbff-times");
 		}
 	}
@@ -205,16 +238,38 @@ export default function setupjQueryMobileMenu($) {
 		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
 		if (!toggle) return;
 
-		// Because this function is also being called directly in several places, then we need this checking.
+		// If toggle is not active, do nothing.
 		if (!toggle.classList.contains("active")) return;
 
 		$(".wpbf-mobile-menu-container").removeClass("active").stop().slideUp();
 		toggle.classList.remove("active");
 		toggle.setAttribute("aria-expanded", "false");
 
-		if ("hamburger" === menuType) {
+		if ("hamburger" === menuType || "dropdown" === menuType) {
+			if (headerBuilderEnabled) {
+				const mobileMenuText = toggle.querySelector(
+					".menu-trigger-button-text",
+				);
+
+				if (mobileMenuText instanceof HTMLElement) {
+					// Only change display if it doesn't have the 'wpbf-is-hidden' class.
+					if (!mobileMenuText.classList.contains("wpbf-is-hidden")) {
+						mobileMenuText.style.display = "inline-block";
+					}
+				}
+
+				const svgIcon = toggle.querySelector(".menu-trigger-button-svg");
+
+				if (svgIcon instanceof SVGElement) {
+					svgIcon.style.display = "inline-block";
+				}
+
+				toggle.classList.remove("wpbff");
+			} else {
+				toggle.classList.add("wpbff-hamburger");
+			}
+
 			toggle.classList.remove("wpbff-times");
-			toggle.classList.add("wpbff-hamburger");
 		}
 	}
 
@@ -233,7 +288,7 @@ export default function setupjQueryMobileMenu($) {
 	 */
 	function setupMobileSubmenuToggle(menuType) {
 		const menuClass =
-			menuType === "hamburger"
+			menuType === "hamburger" || menuType === "dropdown"
 				? ".wpbf-mobile-menu-hamburger .wpbf-submenu-toggle"
 				: ".wpbf-mobile-menu-default .wpbf-submenu-toggle";
 

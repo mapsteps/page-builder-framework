@@ -116,7 +116,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -138,7 +138,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -158,7 +158,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -174,7 +174,7 @@ wpbf_customizer_field()
 	->priority( 6 )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -195,12 +195,12 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
 		array(
-			'id'       => 'page_boxed_box_shadow',
+			'setting'  => 'page_boxed_box_shadow',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -221,12 +221,12 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
 		array(
-			'id'       => 'page_boxed_box_shadow',
+			'setting'  => 'page_boxed_box_shadow',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -247,12 +247,12 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
 		array(
-			'id'       => 'page_boxed_box_shadow',
+			'setting'  => 'page_boxed_box_shadow',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -273,12 +273,12 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
 		array(
-			'id'       => 'page_boxed_box_shadow',
+			'setting'  => 'page_boxed_box_shadow',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -298,12 +298,12 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'page_boxed',
+			'setting'  => 'page_boxed',
 			'operator' => '==',
 			'value'    => true,
 		),
 		array(
-			'id'       => 'page_boxed_box_shadow',
+			'setting'  => 'page_boxed_box_shadow',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -346,7 +346,7 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( 'sidebar_gap' )
-	->type( 'select' )
+	->type( 'enhanced-select' )
 	->label( __( 'Gap', 'page-builder-framework' ) )
 	->priority( 2 )
 	->defaultValue( 'medium' )
@@ -374,7 +374,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'sidebar_position',
+			'setting'  => 'sidebar_position',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -490,7 +490,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -500,7 +500,7 @@ wpbf_customizer_field()
 // Breadcrumbs.
 wpbf_customizer_field()
 	->id( 'breadcrumbs' )
-	->type( 'select' )
+	->type( 'enhanced-select' )
 	->label( __( 'Display Breadcrumbs on', 'page-builder-framework' ) )
 	->defaultValue( array( 'archive', 'single' ) )
 	->priority( 2 )
@@ -518,7 +518,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => 1,
 		),
@@ -538,7 +538,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => 1,
 		),
@@ -554,7 +554,7 @@ wpbf_customizer_field()
 	->priority( 2 )
 	->activeCallback( [
 		array(
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -584,12 +584,12 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
 		array(
-			'id'       => 'breadcrumbs_position',
+			'setting'  => 'breadcrumbs_position',
 			'operator' => '==',
 			'value'    => 'header',
 		),
@@ -603,7 +603,7 @@ wpbf_customizer_field()
 	->priority( 2 )
 	->activeCallback( [
 		[
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => true,
 		],
@@ -622,12 +622,12 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		[
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => 1,
 		],
 		[
-			'id'       => 'breadcrumbs_position',
+			'setting'  => 'breadcrumbs_position',
 			'operator' => '==',
 			'value'    => 'header',
 		],
@@ -647,7 +647,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -666,7 +666,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -685,7 +685,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'breadcrumbs_toggle',
+			'setting'  => 'breadcrumbs_toggle',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -852,7 +852,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'id'       => 'button_border_width',
+			'setting'  => 'button_border_width',
 			'operator' => '!=',
 			'value'    => 0,
 		),
@@ -871,7 +871,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'button_border_width',
+			'setting'  => 'button_border_width',
 			'operator' => '!=',
 			'value'    => 0,
 		),
@@ -890,7 +890,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'button_border_width',
+			'setting'  => 'button_border_width',
 			'operator' => '!=',
 			'value'    => 0,
 		),
@@ -909,7 +909,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'button_border_width',
+			'setting'  => 'button_border_width',
 			'operator' => '!=',
 			'value'    => 0,
 		),
@@ -928,7 +928,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'button_border_width',
+			'setting'  => 'button_border_width',
 			'operator' => '!=',
 			'value'    => 0,
 		),
@@ -953,7 +953,7 @@ wpbf_customizer_field()
 	->priority( 0 )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -974,7 +974,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -995,7 +995,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1009,7 +1009,7 @@ wpbf_customizer_field()
 	->priority( 3 )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1029,7 +1029,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1049,7 +1049,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1070,7 +1070,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1089,7 +1089,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1110,7 +1110,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'layout_scrolltop',
+			'setting'  => 'layout_scrolltop',
 			'operator' => '==',
 			'value'    => true,
 		),

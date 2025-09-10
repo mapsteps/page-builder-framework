@@ -117,7 +117,9 @@ class SliderControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-slider-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control-min.js',
-			array( 'wpbf-base-control' ),
+			array(
+				'wpbf-base-control',
+			),
 			WPBF_VERSION,
 			false
 		);

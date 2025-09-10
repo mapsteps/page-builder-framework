@@ -1,6 +1,6 @@
 import "./dimension-control.scss";
-import { WpbfCustomize, WpbfCustomizeSetting } from "../../Base/src/interface";
-import { WpbfCustomizeDimensionControl } from "./interface";
+import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
+import { WpbfDimensionControl } from "./dimension-interface";
 
 declare var wp: {
 	customize: WpbfCustomize;
@@ -9,10 +9,10 @@ declare var wp: {
 declare var wpbfDimensionControlL10n: Record<string, string>;
 
 wp.customize.controlConstructor["wpbf-dimension"] =
-	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeDimensionControl>({
+	wp.customize.wpbfDynamicControl.extend<WpbfDimensionControl>({
 		initWpbfControl: function (
-			this: WpbfCustomizeDimensionControl,
-			control?: WpbfCustomizeDimensionControl,
+			this: WpbfDimensionControl,
+			control?: WpbfDimensionControl,
 		) {
 			control = control || this;
 			let value;
@@ -30,7 +30,7 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 		/**
 		 * Handles notifications.
 		 */
-		wpbfNotifications: function (this: WpbfCustomizeDimensionControl) {
+		wpbfNotifications: function (this: WpbfDimensionControl) {
 			let control = this;
 
 			const allowUnitless = control.params.allowUnitless;
@@ -59,7 +59,7 @@ wp.customize.controlConstructor["wpbf-dimension"] =
 		},
 
 		validateCssValue: function (value: string | number) {
-			const control = this as WpbfCustomizeDimensionControl;
+			const control = this as WpbfDimensionControl;
 			const validUnits = [
 				"fr",
 				"rem",

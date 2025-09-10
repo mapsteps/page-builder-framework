@@ -1,0 +1,67 @@
+.wpbf-tab-section {
+	.customize-section-description-container {
+		margin-bottom: 0;
+	}
+}
+
+.wpbf-tab {
+	list-style: none;
+	position: relative;
+	margin: 0;
+	padding: 0 0 12px;
+	left: -24px;
+	width: calc(100% + 48px);
+
+	.wpbf-tab-menu {
+		display: flex;
+		flex-wrap: wrap;
+		position: relative;
+		margin-bottom: 12px;
+		font-weight: 600;
+		font-size: 14px;
+		border-bottom: 1px solid #ddd;
+	}
+
+	.wpbf-tab-menu-item {
+		position: relative;
+		flex-grow: 1;
+
+		a {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding-left: 15px;
+			padding-right: 15px;
+			height: 50px;
+			position: relative;
+			border-bottom: 2px solid transparent;
+			text-decoration: none;
+
+			&:focus {
+				box-shadow: none;
+			}
+
+			&:active,
+			&:focus {
+				color: #2271b1;
+			}
+		}
+
+		&.is-active {
+			a {
+				border-color: #2271b1;
+			}
+		}
+	}
+}
+
+.wpbf-tab-item-hidden {
+	display: none !important;
+}
+
+// This is needed to fix show/hide conflict between field dependency behavior & tab switching behavior.
+.wpbf-tab-item-invisible {
+	opacity: 0;
+	height: 0;
+	overflow: hidden;
+}

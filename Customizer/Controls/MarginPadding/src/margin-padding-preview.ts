@@ -1,5 +1,5 @@
 import hooks from "@wordpress/hooks";
-import { MarginPaddingValue } from "./interface";
+import { MarginPaddingValue } from "./margin-padding-interface";
 
 declare var wp: {
 	hooks: typeof hooks;

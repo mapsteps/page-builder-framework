@@ -1,5 +1,4 @@
-import { WpbfCustomize } from "../../Base/src/interface";
-import { WpbfCustomizeGenericControl } from "./interface";
+import { WpbfGenericControl } from "./generic-interface";
 import {
 	limitNumber,
 	limitNumberWithUnit,
@@ -11,10 +10,10 @@ declare var wp: {
 };
 
 wp.customize.controlConstructor["wpbf-generic"] =
-	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeGenericControl>({
+	wp.customize.wpbfDynamicControl.extend<WpbfGenericControl>({
 		initWpbfControl: function (
-			this: WpbfCustomizeGenericControl,
-			control?: WpbfCustomizeGenericControl,
+			this: WpbfGenericControl,
+			control?: WpbfGenericControl,
 		) {
 			control = control || this;
 			const params = control.params;

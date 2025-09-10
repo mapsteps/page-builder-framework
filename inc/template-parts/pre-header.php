@@ -107,8 +107,8 @@ if ( ! $pre_header_layout || 'none' === $pre_header_layout ) {
 
 		<?php } ?>
 
-    </div>
+	</div>
 
-    <?php do_action( 'wpbf_after_pre_header' ); ?>
+	<?php do_action( 'wpbf_after_pre_header' ); ?>
 
 </div>

@@ -1,8 +1,7 @@
-@import "./vars";
-
 .wpbf-customize-control-toggle {
 	.wpbf-toggle {
 		display: flex;
+		align-items: baseline;
 		justify-content: space-between;
 
 		.wpbf-control-label {
@@ -10,8 +9,7 @@
 		}
 
 		.wpbf-control-form {
-			display: flex;
-			align-items: center;
+			position: relative;
 			text-align: right;
 			width: 20%;
 		}
@@ -30,7 +28,14 @@
 	}
 }
 
-.customize-control-wpbf-switch {
+.wpbf-customize-control-toggle:not(.wpbf-customize-control-headline-toggle) {
+	.wpbf-toggle .wpbf-toggle-switch-label {
+		// Add top: -2px because .customize-control-title has margin bottom 4px.
+		top: -2px;
+	}
+}
+
+.wpbf-customize-control-switch {
 	.wpbf-switch {
 		.wpbf-toggle-switch-label {
 			padding: 10px 0 12px 44px;
@@ -48,7 +53,6 @@
 		.toggle-on,
 		.toggle-off {
 			position: relative;
-			bottom: -2px;
 			padding-left: 5px;
 		}
 
@@ -78,8 +82,9 @@
 		outline: 0;
 		top: 50%;
 		transform: translate3d(0, -50%, 0);
-		transition: all 350ms cubic-bezier(0, 0.95, 0.38, 0.98),
-		background-color 150ms ease;
+		transition:
+			all 350ms cubic-bezier(0, 0.95, 0.38, 0.98),
+			background-color 150ms ease;
 	}
 
 	&::before {

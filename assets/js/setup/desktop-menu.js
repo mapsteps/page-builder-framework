@@ -1,28 +1,30 @@
-import { writeElStyle, getElStyleId } from "../utils/anim-util";
-import {
-	directQuerySelector,
-	forEachEl,
-	getAttrAsNumber,
-	isInsideCustomizer,
-	listenDocumentEvent,
-} from "../utils/dom-util";
-
 /**
  * This module is intended to handle the desktop menu JS functionality.
  *
  * Along with the site.js and mobile-menu.js, this file will be combined to site-min.js file.
+ *
+ * @param {WpbfUtils} utils - The WpbfUtils object.
  */
-export default function setupDesktopMenu() {
+export default function setupDesktopMenu(utils) {
+	const dom = utils.dom;
+	const anim = utils.anim;
+
+	const nav = dom.findHtmlEl(".wpbf-navigation");
+	if (!nav) return;
+
 	/**
 	 * The sub-menu animation duration.
 	 */
-	let duration = getAttrAsNumber(
+	let duration = dom.getAttrAsNumber(
 		".wpbf-navigation",
 		"data-sub-menu-animation-duration",
 	);
 
+	// Initialize the module.
+	init();
+
 	/**
-	 * Initialize the module, call the main functions.
+	 * Module initialization, call the main functions.
 	 *
 	 * This function is the only function that should be called on top level scope.
 	 * Other functions are called / hooked from this function.
@@ -35,7 +37,7 @@ export default function setupDesktopMenu() {
 		setupAccessibility();
 
 		// If we're inside customizer, then listen to the customizer's partial refresh.
-		if (isInsideCustomizer()) {
+		if (utils.isInsideCustomizer()) {
 			// @ts-ignore
 			wp.customize.bind("preview-ready", function () {
 				listenPartialRefresh();
@@ -48,7 +50,7 @@ export default function setupDesktopMenu() {
 	 */
 	function setupMenuItemSearchButton() {
 		// Expand search field on click.
-		listenDocumentEvent(
+		dom.listenDocumentEvent(
 			"click",
 			".wpbf-menu-item-search",
 			/**
@@ -108,7 +110,8 @@ export default function setupDesktopMenu() {
 
 		let itemWidth = 0;
 
-		forEachEl(".calculate-width", function (el) {
+		dom.forEachEl(".calculate-width", function (el) {
+			if (!(el instanceof HTMLElement)) return;
 			itemWidth += el.offsetWidth;
 		});
 
@@ -122,6 +125,7 @@ export default function setupDesktopMenu() {
 
 			const searchArea = menuItem.querySelector(".wpbf-menu-search");
 			const searchField = menuItem.querySelector("input[type=search]");
+			const animScope = "search-field-anim";
 
 			if (
 				searchArea &&
@@ -130,8 +134,9 @@ export default function setupDesktopMenu() {
 				searchField instanceof HTMLInputElement
 			) {
 				// The .is-expanded doesn't have the width, let's add it to the style block.
-				writeElStyle(
+				anim.writeElStyle(
 					searchArea,
+					animScope,
 					`
 					.wpbf-menu-item-search .wpbf-menu-search.display-block {display: block;}
 					.wpbf-menu-item-search .wpbf-menu-search.is-expanded {width: ${itemWidth}px;}
@@ -154,7 +159,7 @@ export default function setupDesktopMenu() {
 	 * Close search field functionality.
 	 */
 	function closeSearchField() {
-		forEachEl(".wpbf-menu-item-search", function (el) {
+		dom.forEachEl(".wpbf-menu-item-search", function (el) {
 			if (!el.classList.contains("active")) {
 				return;
 			}
@@ -191,7 +196,7 @@ export default function setupDesktopMenu() {
 				 * A lot of partial refresh registered to work on header area.
 				 * So it's better to not checking the "placement.partial.id".
 				 */
-				duration = getAttrAsNumber(
+				duration = dom.getAttrAsNumber(
 					".wpbf-navigation",
 					"data-sub-menu-animation-duration",
 				);
@@ -212,20 +217,23 @@ export default function setupDesktopMenu() {
 		).length;
 
 		let divided = totalMenuItems / 2;
+		// The vanilla version doesn't need the -1 here.
 		divided = Math.floor(divided);
-		divided = divided - 1;
 
 		// Place the logo in the center of the menu.
-		forEachEl(".wpbf-menu-centered .logo-container", function (el) {
+		dom.forEachEl(".wpbf-menu-centered .logo-container", function (el) {
 			const menuItem = document.querySelector(
 				".wpbf-navigation .wpbf-menu-centered .wpbf-menu > li:nth-child(" +
 					divided +
 					")",
 			);
 
-			if (menuItem && menuItem.parentNode) {
-				menuItem.parentNode.insertBefore(el, menuItem.nextSibling);
-				el.style.display = "block";
+			if (menuItem) {
+				menuItem.after(el);
+
+				if (el instanceof HTMLElement) {
+					el.style.display = "block";
+				}
 			}
 		});
 	}
@@ -234,31 +242,36 @@ export default function setupDesktopMenu() {
 	 * Setup sub-menu animation - second level.
 	 */
 	function setup2ndLevelSubmenuAnimation() {
-		listenDocumentEvent(
+		const selector =
+			"#navigation .wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children";
+		const animScope = "nested-submenu-anim";
+		const animClassName = "fade-anim";
+
+		dom.listenDocumentEvent(
 			"mouseenter",
-			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
+			selector,
 			/**
 			 *
 			 * @param {MouseEvent} e - The mouse event.
 			 * @this {HTMLElement}
 			 */
 			function (e) {
+				if (!nav) return;
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu || !(submenu instanceof HTMLElement)) return;
 				if (submenu.classList.contains("is-shown")) return;
 
-				const styleTagId = getElStyleId(submenu);
-				const submenuId = styleTagId.replace("wpbf-style-", "");
-
-				writeElStyle(
-					submenu,
+				anim.writeElStyle(
+					nav,
+					animScope,
 					`
-					#${submenuId}.display-block {display: block;}
-					#${submenuId}.is-shown {opacity: 1;}
-					#${submenuId} {opacity: 0; transition-duration: ${duration}ms;}
+					${selector} .sub-menu.${animClassName}.display-block {display: block;}
+					${selector} .sub-menu.${animClassName}.is-shown {opacity: 1;}
+					${selector} .sub-menu.${animClassName} {opacity: 0; transition: opacity ${duration}ms ease-in-out;}
 					`,
 				);
 
+				submenu.classList.add(animClassName);
 				submenu.classList.add("display-block");
 
 				setTimeout(function () {
@@ -267,9 +280,9 @@ export default function setupDesktopMenu() {
 			},
 		);
 
-		listenDocumentEvent(
+		dom.listenDocumentEvent(
 			"mouseleave",
-			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children",
+			selector,
 			/**
 			 * @this {HTMLElement}
 			 */
@@ -282,6 +295,7 @@ export default function setupDesktopMenu() {
 
 				setTimeout(function () {
 					submenu.classList.remove("display-block");
+					submenu.classList.remove(animClassName);
 				}, duration);
 			},
 		);
@@ -291,29 +305,33 @@ export default function setupDesktopMenu() {
 	 * Setup sub-menu animation - fade.
 	 */
 	function setupSubmenuFadeAnimation() {
-		listenDocumentEvent(
+		const selector = ".wpbf-sub-menu-animation-fade > .menu-item-has-children";
+		const animScope = "submenu-anim";
+		const animClassName = "fade-anim";
+
+		dom.listenDocumentEvent(
 			"mouseenter",
-			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
+			selector,
 			/**
 			 * @this {HTMLElement}
 			 */
 			function () {
+				if (!nav) return;
 				const submenu = this.querySelector(".sub-menu");
 				if (!submenu || !(submenu instanceof HTMLElement)) return;
 				if (submenu.classList.contains("is-shown")) return;
 
-				const styleTagId = getElStyleId(submenu);
-				const submenuId = styleTagId.replace("wpbf-style-", "");
-
-				writeElStyle(
-					submenu,
+				anim.writeElStyle(
+					nav,
+					animScope,
 					`
-					#${submenuId}.display-block {display:block;}
-					#${submenuId}.is-shown {opacity: 1;}
-					#${submenuId} {opacity: 0; transition: opacity ${duration}ms ease-in-out;}
+					${selector} > .sub-menu.${animClassName}.display-block {display:block;}
+					${selector} > .sub-menu.${animClassName}.is-shown {opacity: 1;}
+					${selector} > .sub-menu.${animClassName} {opacity: 0; transition: opacity ${duration}ms ease-in-out;}
 					`,
 				);
 
+				submenu.classList.add(animClassName);
 				submenu.classList.add("display-block");
 
 				setTimeout(function () {
@@ -322,9 +340,9 @@ export default function setupDesktopMenu() {
 			},
 		);
 
-		listenDocumentEvent(
+		dom.listenDocumentEvent(
 			"mouseleave",
-			".wpbf-sub-menu-animation-fade > .menu-item-has-children",
+			selector,
 			/**
 			 * @param {MouseEvent} e - The mouse event.
 			 * @this {HTMLElement}
@@ -338,6 +356,7 @@ export default function setupDesktopMenu() {
 
 				setTimeout(function () {
 					submenu.classList.remove("display-block");
+					submenu.classList.remove(animClassName);
 				}, duration);
 			},
 		);
@@ -352,7 +371,7 @@ export default function setupDesktopMenu() {
 	 */
 	function setupAccessibility() {
 		// Add aria-haspopup="true" to all sub-menu li's
-		forEachEl(".menu-item-has-children", function (el) {
+		dom.forEachEl(".menu-item-has-children", function (el) {
 			el.setAttribute("aria-haspopup", "true");
 		});
 
@@ -360,7 +379,7 @@ export default function setupDesktopMenu() {
 		document.body.addEventListener("mousedown", function () {
 			this.classList.add("using-mouse");
 
-			forEachEl(".menu-item-has-children", function (el) {
+			dom.forEachEl(".menu-item-has-children", function (el) {
 				el.classList.remove("wpbf-sub-menu-focus");
 			});
 		});
@@ -373,7 +392,7 @@ export default function setupDesktopMenu() {
 		/**
 		 * General logic for tab/hover navigation on desktop navigations that contain sub-menus.
 		 */
-		listenDocumentEvent(
+		dom.listenDocumentEvent(
 			"mouseenter",
 			// Apply only to sub-menus that are not triggered by tab navigation.
 			".wpbf-sub-menu > .menu-item-has-children:not(.wpbf-sub-menu-focus)",
@@ -385,11 +404,11 @@ export default function setupDesktopMenu() {
 				document.body.classList.add("using-mouse");
 
 				// Remove "wpbf-sub-menu-focus" class if tab-navigation was used earlier.
-				forEachEl(".menu-item-has-children", function (el) {
+				dom.forEachEl(".menu-item-has-children", function (el) {
 					el.classList.remove("wpbf-sub-menu-focus");
 				});
 
-				const link = directQuerySelector(this, "a");
+				const link = dom.directQuerySelector(this, "a");
 				if (link) link.focus();
 			},
 		);
@@ -398,7 +417,7 @@ export default function setupDesktopMenu() {
 		 * On mouseleave of tab navigation triggered sub-menu, let's remove the "wpbf-sub-menu-focus" class.
 		 * Fixes issue where sub-menu stayed open after switching from tab to mouse navigation.
 		 */
-		listenDocumentEvent(
+		dom.listenDocumentEvent(
 			"mouseleave",
 			".wpbf-sub-menu > .menu-item-has-children.wpbf-sub-menu-focus",
 			/**
@@ -410,7 +429,7 @@ export default function setupDesktopMenu() {
 		);
 
 		// Setup tab navigation.
-		listenDocumentEvent("focus", ".wpbf-sub-menu a", onNavLinkFocus);
+		dom.listenDocumentEvent("focus", ".wpbf-sub-menu a", onNavLinkFocus);
 	}
 
 	/**
@@ -423,14 +442,15 @@ export default function setupDesktopMenu() {
 		if (document.body.classList.contains("using-mouse")) return;
 
 		// Remove "wpbf-sub-menu-focus" class everywhere.
-		forEachEl(".wpbf-sub-menu > .menu-item-has-children", function (el) {
+		dom.forEachEl(".wpbf-sub-menu > .menu-item-has-children", function (el) {
 			el.classList.remove("wpbf-sub-menu-focus");
 		});
 
 		// Hide other sub-menus that could be open due to mouse hover interference.
-		forEachEl(
+		dom.forEachEl(
 			".wpbf-sub-menu > .menu-item-has-children > .sub-menu",
 			function (el) {
+				if (!(el instanceof HTMLElement)) return;
 				el.style.display = "none";
 			},
 		);
@@ -446,7 +466,4 @@ export default function setupDesktopMenu() {
 			menuItem = menuItem.parentNode;
 		}
 	}
-
-	// Run the module.
-	init();
 }

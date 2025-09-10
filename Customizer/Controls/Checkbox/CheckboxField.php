@@ -24,13 +24,6 @@ class CheckboxField extends BaseField {
 	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl';
 
 	/**
-	 * Positive values which will be treated as `true`.
-	 *
-	 * @var array $positive_values
-	 */
-	private $positive_values = [ true, 'true', 1, '1', 'on', 'On', 'ON' ];
-
-	/**
 	 * Filter the setting entity.
 	 *
 	 * Make sure the default value's data type is a boolean.
@@ -41,11 +34,7 @@ class CheckboxField extends BaseField {
 	 */
 	public function filterSettingEntity( $setting ) {
 
-		if ( ! $setting->default ) {
-			$setting->default = false;
-		} else {
-			$setting->default = in_array( $setting->default, $this->positive_values, true );
-		}
+		$setting->default = ( new CheckboxUtil() )->sanitize( $setting->default );
 
 		return $setting;
 
@@ -60,11 +49,7 @@ class CheckboxField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		if ( ! $value ) {
-			return false;
-		}
-
-		return in_array( $value, $this->positive_values, true );
+		return ( new CheckboxUtil() )->sanitize( $value );
 
 	}
 

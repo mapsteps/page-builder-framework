@@ -8,12 +8,15 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyChoices;
 use Mapsteps\Wpbf\Customizer\Customizer;
 use Mapsteps\Wpbf\Customizer\CustomizerControl;
 use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
+use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderConfig;
+use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderOutput;
 
 /**
  * Initialize Wpbf customizer.
@@ -194,14 +197,34 @@ function wpbf_minify_css( $css ) {
 
 }
 
+if ( ! function_exists( 'wpbf_header_builder_enabled' ) ) {
+	/**
+	 * ----------------------------------------------------------------------
+	 * Header Builder Functions
+	 * ----------------------------------------------------------------------
+	 */
+	function wpbf_header_builder_enabled() {
+
+		return wpbf_customize_bool_value( 'wpbf_enable_header_builder' );
+
+	}
+}
+
 /**
  * Generate customizer CSS.
+ *
+ * @param bool $run_once Whether to run the function only once.
+ * @return string The generated CSS.
  */
-function wpbf_generate_css() {
+function wpbf_generate_css( $run_once = false ) {
 
 	ob_start();
 
-	include get_template_directory() . '/inc/customizer/styles.php';
+	if ( $run_once ) {
+		require_once WPBF_THEME_DIR . '/inc/customizer/styles.php';
+	} else {
+		include WPBF_THEME_DIR . '/inc/customizer/styles.php';
+	}
 
 	return wpbf_minify_css( ob_get_clean() );
 
@@ -282,7 +305,7 @@ function wpbf_customizer_preview_css() {
 	}
 
 	echo '<style id="wpbf-customize-saved-styles">';
-	require WPBF_THEME_DIR . '/inc/customizer/styles.php';
+	echo wpbf_generate_css( true );
 	echo '</style>';
 
 }
@@ -295,13 +318,25 @@ function wpbf_customizer_preview_js() {
 
 	wp_enqueue_script(
 		'wpbf-postmessage',
-		get_template_directory_uri() . '/inc/customizer/js/postmessage.js',
+		WPBF_THEME_URI . '/js/min/postmessage-min.js',
 		array(
 			'jquery',
 			'customize-preview',
+			'wpbf-site',
 		),
 		WPBF_VERSION,
 		true
+	);
+
+	wp_add_inline_script(
+		'wpbf-postmessage',
+		'window.wpbfMenuTriggerButtonSvg = ' . wp_json_encode( array(
+			'none'      => '',
+			'variant-1' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-1' ),
+			'variant-2' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-2' ),
+			'variant-3' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-3' ),
+		) ),
+		'before'
 	);
 
 }
@@ -312,11 +347,11 @@ add_action( 'customize_preview_init', 'wpbf_customizer_preview_js' );
  */
 function wpbf_customizer_scripts_styles() {
 
-	wp_enqueue_style( 'wpbf-customizer', get_template_directory_uri() . '/inc/customizer/css/customizer.css', '', WPBF_VERSION );
-	wp_enqueue_script( 'wpbf-customizer', get_template_directory_uri() . '/inc/customizer/js/customizer.js', array( 'jquery' ), WPBF_VERSION, true );
+	wp_enqueue_style( 'wpbf-customizer', WPBF_THEME_URI . '/inc/customizer/css/customizer.css', '', WPBF_VERSION );
+	wp_enqueue_script( 'wpbf-customizer', WPBF_THEME_URI . '/js/min/customizer-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
-	wp_enqueue_style( 'responsive-controls', get_template_directory_uri() . '/inc/customizer/css/responsive-controls.css', '', WPBF_VERSION );
-	wp_enqueue_script( 'responsive-controls', get_template_directory_uri() . '/inc/customizer/js/responsive-controls.js', array( 'jquery' ), WPBF_VERSION, true );
+	wp_enqueue_style( 'responsive-controls', WPBF_THEME_URI . '/inc/customizer/css/responsive-controls.css', '', WPBF_VERSION );
+	wp_enqueue_script( 'responsive-controls', WPBF_THEME_URI . '/inc/customizer/js/responsive-controls.js', array( 'jquery' ), WPBF_VERSION, true );
 
 }
 add_action( 'customize_controls_print_styles', 'wpbf_customizer_scripts_styles' );
@@ -359,3 +394,45 @@ function wpbf_custom_default_fonts( $standard_fonts ) {
 
 }
 add_filter( 'wpbf_fonts_standard_fonts', 'wpbf_custom_default_fonts', 0 );
+
+/**
+ * Global Typography Fonts.
+ */
+function wpbf_global_typography_js_vars() {
+
+	$font_choices = wpbf_default_font_choices();
+
+	$fonts_arg = ! empty( $font_choices ) && is_array( $font_choices ) ? $font_choices : array();
+	$fonts_arg = ! empty( $fonts_arg['fonts'] ) && is_array( $fonts_arg['fonts'] ) ? $fonts_arg['fonts'] : array();
+
+	wp_localize_script(
+		'wpbf-select-control',
+		'wpbfGoogleFontFamilies',
+		( new TypographyChoices() )->makeFontFamilyChoices( $fonts_arg )
+	);
+
+	wp_localize_script(
+		'wpbf-select-control',
+		'wpbfGoogleFontVariants',
+		( new TypographyChoices() )->makeFontVariantChoices( $fonts_arg )
+	);
+
+}
+add_action( 'customize_controls_enqueue_scripts', 'wpbf_global_typography_js_vars' );
+
+/**
+ * Setup hooks when header builder is enabled.
+ *
+ * This function will be called directly in `template-parts/header.php` file.
+ *
+ * @see page-builder-framework/inc/template-parts/header.php
+ */
+function wpbf_header_builder_hooks() {
+
+	if ( ! wpbf_header_builder_enabled() ) {
+		return;
+	}
+
+	( new HeaderBuilderOutput() )->setup_hooks();
+
+}

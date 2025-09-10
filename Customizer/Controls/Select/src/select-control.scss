@@ -1,6 +1,55 @@
-.wpbf-customize-control-select {
+.wpbf-customize-control-enhanced-select {
 	input[autocomplete="off"] {
 		box-shadow: none;
+	}
+
+	.wpbf-control-form {
+		width: 100%;
+		text-align: left;
+	}
+
+	.wpbf-control-cols {
+		.wpbf-control-form {
+			// Because '.customize-control-title' has margin-bottom: 4px.
+			top: -2px;
+		}
+	}
+
+	.select2-container--default
+		.select2-selection--single
+		.select2-selection__rendered {
+		// Because it's parent has border top and bottom.
+		line-height: 26px;
+	}
+
+	.select2-container--default {
+		.select2-selection--multiple {
+			padding-top: 5px;
+			padding-bottom: 0;
+
+			.select2-search--inline {
+				display: inline-block;
+				position: relative;
+			}
+
+			.select2-search__field {
+				display: inline-block;
+				margin-top: 0;
+				margin-left: 5px;
+				height: 20px;
+				line-height: 20px;
+			}
+
+			.select2-selection__rendered {
+				display: inline;
+			}
+
+			.select2-selection__choice {
+				display: inline-block;
+				margin-top: 0;
+				margin-bottom: 5.5px;
+			}
+		}
 	}
 }
 
@@ -8,10 +57,21 @@
 	z-index: 500001;
 }
 
+.wpbf-control-form .select2-container {
+	max-width: 100%;
+}
+
+.wp-customizer > .select2-container .select2-search {
+	padding: 6px;
+}
+
 .wp-customizer > .select2-container .select2-search__field {
+	margin-left: 0;
+	margin-right: 0;
+	min-height: 20px;
 	line-height: normal;
 }
 
-.wpbf-control-form .select2-container {
-	max-width: 100%;
+.wp-customizer > .select2-container .select2-results__option {
+	margin-bottom: 0;
 }

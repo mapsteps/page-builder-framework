@@ -1,48 +1,32 @@
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomize,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
-import {
-	WpbfCustomizeColorControl,
-	WpbfCustomizeColorControlValue,
-} from "./interface";
-import { ColorForm } from "./ColorForm";
+import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
+import { WpbfColorControl, WpbfColorControlValue } from "./color-interface";
+import ColorForm from "./ColorForm";
 import { createRoot } from "react-dom/client";
+import convertColorForCustomizer from "./utils/convert-color-for-customizer";
 
-declare var wp: {
-	customize: WpbfCustomize;
-};
+const ColorControl = window.wp.customize?.Control.extend<WpbfColorControl>({
+	initialize: function initialize(id, params) {
+		// Bind functions to this control context for passing as React props.
+		this.setNotificationContainer = this.setNotificationContainer?.bind(this);
+		this.overrideUpdateComponentStateFn =
+			this.overrideUpdateComponentStateFn?.bind(this);
+		this.onChange = this.onChange?.bind(this);
+		this.onReset = this.onReset?.bind(this);
 
-const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
-	root: undefined,
+		window.wp.customize?.Control.prototype.initialize.call(this, id, params);
 
-	/**
-	 * Initialize.
-	 */
-	initialize: function (
-		this: WpbfCustomizeColorControl,
-		id: string,
-		params?: WpbfCustomizeControlParams<WpbfCustomizeColorControlValue>,
-	) {
 		const control = this;
 
-		// Bind functions to this control context for passing as React props.
-		control.setNotificationContainer =
-			control.setNotificationContainer?.bind(control);
-
-		wp.customize.Control.prototype.initialize.call(control, id, params);
-
 		// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
-		function onRemoved(removedControl: AnyWpbfCustomizeControl) {
+		function handleOnRemoved(removedControl: AnyWpbfCustomizeControl) {
 			if (control === removedControl) {
 				if (control.destroy) control.destroy();
-				control.container.remove();
-				wp.customize.control.unbind("removed", onRemoved);
+				control.container?.remove();
+				window.wp.customize?.control.unbind("removed", handleOnRemoved);
 			}
 		}
 
-		wp.customize.control.bind("removed", onRemoved);
+		window.wp.customize?.control.bind("removed", handleOnRemoved);
 	},
 
 	/**
@@ -50,10 +34,11 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 	 *
 	 * This is called when the React component is mounted.
 	 */
-	setNotificationContainer: function setNotificationContainer(el: HTMLElement) {
-		const control = this as WpbfCustomizeColorControl;
-		control.notifications.container = jQuery(el);
-		control.notifications.render();
+	setNotificationContainer: function setNotificationContainer(el) {
+		if (this.notifications) {
+			this.notifications.container = jQuery(el);
+			this.notifications.render();
+		}
 	},
 
 	/**
@@ -61,44 +46,46 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 	 *
 	 * This will be called from the Control#embed() method in the parent class.
 	 */
-	renderContent: function renderContent(this: WpbfCustomizeColorControl) {
-		const control = this;
-		const params = control.params;
-		const mode = params.mode;
-		const useHueMode = "hue" === mode;
-		const formComponent = params.formComponent;
+	renderContent: function renderContent() {
+		if (!this.params) return;
+		if (!this.container || !this.container.length) return;
 
-		let pickerComponent;
+		const mode = this.params.mode;
+		const useHueMode = "hue" === mode;
+		const formComponent = this.params.formComponent;
+
+		let pickerComponent = "";
 
 		if (formComponent) {
 			pickerComponent = formComponent;
 		} else {
 			pickerComponent =
-				mode === "alpha" || mode === "hue"
-					? "RgbaStringColorPicker"
-					: "HexColorPicker";
+				mode === "alpha" ? "RgbaStringColorPicker" : "HexColorPicker";
 		}
 
 		pickerComponent = useHueMode ? "HueColorPicker" : pickerComponent;
 
-		if (!control.root) {
-			control.root = createRoot(control.container[0]);
+		if (!this.root && this.container) {
+			this.root = createRoot(this.container[0]);
 		}
 
-		control.root.render(
+		this.root?.render(
 			<ColorForm
-				control={control}
-				label={params.label}
-				description={params.description}
-				customizerSetting={control.setting ?? undefined}
+				type={this.params?.type}
+				container={this.container[0]}
+				label={this.params.label}
+				description={this.params.description}
 				useHueMode={useHueMode}
 				formComponent={formComponent}
 				pickerComponent={pickerComponent}
-				labelStyle={params.labelStyle}
-				colorSwatches={params.colorSwatches}
-				value={control.params.value}
-				default={control.params.default}
-				setNotificationContainer={control.setNotificationContainer}
+				labelStyle={this.params.labelStyle}
+				colorSwatches={this.params.colorSwatches}
+				value={this.params.value}
+				default={this.params.default}
+				onChange={(value) => this.onChange?.(value)}
+				onReset={() => this.onReset?.()}
+				overrideUpdateComponentStateFn={this.overrideUpdateComponentStateFn}
+				setNotificationContainer={this.setNotificationContainer}
 			/>,
 		);
 	},
@@ -106,10 +93,10 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 	/**
 	 * After control has been first rendered, start re-rendering when setting changes.
 	 *
-	 * React is available to be used here instead of the wp.customize.Element abstraction.
+	 * React is available to be used here instead of the customizer.Element abstraction.
 	 */
 	ready: function ready() {
-		const control = this as WpbfCustomizeColorControl;
+		const control = this;
 
 		/**
 		 * Update component state when customizer setting changes.
@@ -126,18 +113,69 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 		 * When that happens, the "x" color picker becomes unresponsive and un-usable.
 		 *
 		 * How we fixed that:
-		 * - Provide a updateComponentState property to this file.
-		 * - Inside the component, assign the updateComponentState with a function to update some states.
-		 * - Then inside the binding below, call updateComponentState instead of re-rendering the component.
+		 * - Provide a updateColorPicker property to this file.
+		 * - Inside the component, assign the updateColorPicker with a function to update some states.
+		 * - Then inside the binding below, call updateColorPicker instead of re-rendering the component.
 		 *
 		 * The result: Even though the "x" color picker becomes very slow, it's still usable and responsive enough.
 		 */
-		control.setting?.bind((val: any) => {
-			if (control.updateComponentState) control.updateComponentState(val);
+		this.setting?.bind((val: WpbfColorControlValue) => {
+			control.updateComponentState?.(val);
 		});
 	},
 
-	updateComponentState: () => {},
+	updateCustomizerSetting: function updateCustomizerSetting(val) {
+		if (typeof val === "undefined") return;
+		const params = this.params;
+		if (!params) return;
+
+		const mode = params.mode;
+		const useHueMode = "hue" === mode;
+		const formComponent = params.formComponent;
+
+		let pickerComponent = "";
+
+		if (formComponent) {
+			pickerComponent = formComponent;
+		} else {
+			pickerComponent =
+				mode === "alpha" ? "RgbaStringColorPicker" : "HexColorPicker";
+		}
+
+		this.setting?.set(
+			convertColorForCustomizer(
+				val,
+				useHueMode,
+				pickerComponent,
+				formComponent,
+			),
+		);
+	},
+
+	onChange: function onChange(val) {
+		this.updateCustomizerSetting?.(val);
+	},
+
+	onReset: function onReset() {
+		const params = this.params;
+		if (!params) return;
+
+		const initialColor =
+			"" !== params.default && "undefined" !== typeof params.default
+				? params.default
+				: params.value;
+
+		this.updateCustomizerSetting?.(initialColor);
+	},
+
+	/**
+	 * This method will be overriden by the rendered component via overrideUpdateComponentStateFn.
+	 */
+	updateComponentState: function (val) {},
+
+	overrideUpdateComponentStateFn: function overrideUpdateComponentStateFn(fn) {
+		this.updateComponentState = fn;
+	},
 
 	/**
 	 * Handle removal/de-registration of the control.
@@ -145,17 +183,12 @@ const ColorControl = wp.customize.Control.extend<WpbfCustomizeColorControl>({
 	 * This is essentially the inverse of the Control#embed() method.
 	 */
 	destroy: function destroy() {
-		const control = this as WpbfCustomizeColorControl;
-
-		// Garbage collection: undo mounting that was done in the embed/renderContent method.
-		control.root?.unmount();
-		control.root = undefined;
+		this.root?.unmount();
+		this.root = undefined;
 
 		// Call destroy method in parent if it exists (as of #31334).
-		if (wp.customize.Control.prototype.destroy) {
-			wp.customize.Control.prototype.destroy.call(control);
-		}
+		window.wp.customize?.Control.prototype.destroy?.call(this);
 	},
-}) as WpbfCustomizeColorControl;
+});
 
 export default ColorControl;

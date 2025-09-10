@@ -51,6 +51,13 @@ final class CustomizerStore {
 	public static $added_sections = array();
 
 	/**
+	 * Added section dependencies.
+	 *
+	 * @var array
+	 */
+	public static $added_section_dependencies = array();
+
+	/**
 	 * Added controls.
 	 *
 	 * @var CustomizerControlEntity[]
@@ -78,13 +85,6 @@ final class CustomizerStore {
 	 * @var array
 	 */
 	public static $controls_using_content_template = array();
-
-	/**
-	 * Added section tabs.
-	 *
-	 * @var array
-	 */
-	public static $added_section_tabs = array();
 
 	/**
 	 * Find added setting by control id.
@@ -123,6 +123,24 @@ final class CustomizerStore {
 		}
 
 		return $partial_refreshes;
+
+	}
+
+	/**
+	 * Find a control by its control ID.
+	 *
+	 * @param string $control_id The control ID.
+	 * @return Control|null The control, or null if not found.
+	 */
+	public static function findControl( $control_id ) {
+
+		foreach ( self::$added_controls as $added_control ) {
+			if ( $added_control->id === $control_id ) {
+				return $added_control;
+			}
+		}
+
+		return null;
 
 	}
 

@@ -21,14 +21,14 @@ jQuery(document).ready(function ($) {
 	 * @param bool modifyOverlay Whether or not to modify the wp-full-overlay.
 	 */
 	function wpbfResponsivePreview(device) {
-		$(".wpbf-responsive-options button").removeClass("active");
-		$(".wpbf-responsive-options .preview-" + device).addClass("active");
-		$(".wpbf-control-device").removeClass("active");
-		$(".wpbf-control-" + device).addClass("active");
+		$(".wpbf-responsive-options button").removeClass("is-active");
+		$(".wpbf-responsive-options .preview-" + device).addClass("is-active");
+		$(".wpbf-control-device").removeClass("is-active");
+		$(".wpbf-control-" + device).addClass("is-active");
 	}
 
 	// Display desktop control by default.
-	$(".wpbf-control-desktop").addClass("active");
+	$(".wpbf-control-desktop").addClass("is-active");
 
 	// Loop through wpbf device buttons and assign the event.
 	$(document).on("click", ".wpbf-responsive-options button", function (e) {

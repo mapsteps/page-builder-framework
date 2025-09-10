@@ -47,6 +47,24 @@ class ColorField extends BaseField {
 	}
 
 	/**
+	 * Get the control instance.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
+	 * @param array                $control_args         Optional. Array of properties for the new Control object.
+	 *
+	 * @return ColorControl
+	 */
+	protected function controlInstance( $wp_customize_manager, $control_args = [] ) {
+
+		return new ColorControl(
+			$wp_customize_manager,
+			$this->control->id,
+			$control_args
+		);
+
+	}
+
+	/**
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
@@ -57,11 +75,7 @@ class ColorField extends BaseField {
 
 		$custom_props = $this->control->custom_properties;
 
-		$color_control = new ColorControl(
-			$wp_customize_manager,
-			$this->control->id,
-			$control_args
-		);
+		$color_control = $this->controlInstance( $wp_customize_manager, $control_args );
 
 		if ( isset( $custom_props['mode'] ) ) {
 			$color_control->mode = $custom_props['mode'];

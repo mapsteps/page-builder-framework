@@ -9,6 +9,7 @@ namespace Mapsteps\Wpbf\Customizer;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderStore;
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterSetting;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
@@ -42,12 +43,6 @@ final class Customizer {
 	 */
 	public function init() {
 
-		/**
-		 * Added with priority 5 to ensure that the 'section-tab' fields will be added
-		 * in the next priority where 'register_wpbf_customizer' is called.
-		 */
-		add_action( 'customize_register', array( $this, 'add_section_tabs' ), 5 );
-
 		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_tooltips' ) );
@@ -63,32 +58,6 @@ final class Customizer {
 	public function output() {
 
 		( new FontsOutput() )->init();
-
-	}
-
-	/**
-	 * Add section tabs by adding 'section-tab' fields.
-	 *
-	 * These 'section-tab' fields are added by hooking it to 'customize_register' action with priority 5.
-	 * The reason was to allow 'section-tab' fields to be added via Premium Add-On.
-	 * It's fine, because these fields are basically just a visual fields.
-	 *
-	 * @return void
-	 */
-	public function add_section_tabs() {
-
-		foreach ( CustomizerStore::$added_section_tabs as $section_id => $section_tabs ) {
-			if ( empty( $section_tabs ) ) {
-				continue;
-			}
-
-			wpbf_customizer_field()
-				->id( 'wpbf_section_tabs_' . $section_id )
-				->type( 'section-tabs' )
-				->priority( -1 )
-				->choices( $section_tabs )
-				->addToSection( $section_id );
-		}
 
 	}
 
@@ -109,7 +78,7 @@ final class Customizer {
 		$this->register_selective_refreshes( $wp_customize_manager );
 
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_panel_types' ) );
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_section_types' ) );
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_section_assets' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
 
 	}
@@ -121,11 +90,38 @@ final class Customizer {
 	 */
 	public function customize_preview_init() {
 
+		wp_enqueue_style( 'wpbf-customize-preview', WPBF_THEME_URI . '/inc/customizer/css/customize-preview.css', array(), WPBF_VERSION );
+
 		$customizer_util = new CustomizerUtil();
 
 		foreach ( CustomizerStore::$added_controls as $control ) {
 			$customizer_util->enqueuePreviewScripts( $control );
 		}
+
+		add_action( 'body_open', array( $this, 'premium_add_on_notice' ) );
+
+	}
+
+	/**
+	 * Premium Add-On notice inside customize preview screen.
+	 *
+	 * @return void
+	 */
+	public function premium_add_on_notice() {
+
+		if ( wpbf_is_premium() ) {
+			return;
+		}
+		?>
+
+		<div class="wpbf-premium-notice">
+			<?php _e( 'This feature is available in Ultimate Dashboard PRO.', 'ultimate-dashboard' ); ?>
+			<a href="https://ultimatedashboard.io/docs/login-customizer/?utm_source=plugin&utm_medium=login_customizer_bar&utm_campaign=udb" class="wpbf-button wpbf-button-primary wpbf-premium-notice-button" target="_blank">
+				<?php _e( 'Get Ultimate Dashboard PRO', 'ultimate-dashboard' ); ?>
+			</a>
+		</div>
+
+		<?php
 
 	}
 
@@ -207,7 +203,6 @@ final class Customizer {
 
 		foreach ( CustomizerStore::$added_panels as $panel ) {
 			$panel_args = array(
-				'type'            => $panel->type,
 				'title'           => $panel->title,
 				'description'     => $panel->description,
 				'capability'      => $panel->capability,
@@ -253,14 +248,25 @@ final class Customizer {
 			}
 
 			$props = $section->custom_properties;
-			$args  = wp_parse_args( $props, $section_args );
 
-			$wp_customize_manager->add_section( $this->customizer_util->getSectionInstance(
+			if ( ! empty( $section->tabs ) ) {
+				$props['tabs'] = $section->tabs;
+			}
+
+			$args = wp_parse_args( $props, $section_args );
+
+			$section_instance = $this->customizer_util->getSectionInstance(
 				$section->type,
 				$wp_customize_manager,
 				$section->id,
 				$args
-			) );
+			);
+
+			if ( property_exists( $section_instance, 'class_path' ) && ! empty( $section_instance->class_path ) ) {
+				$wp_customize_manager->register_section_type( $section_instance->class_path );
+			}
+
+			$wp_customize_manager->add_section( $section_instance );
 		}
 
 	}
@@ -278,17 +284,21 @@ final class Customizer {
 	}
 
 	/**
-	 * Enqueue custom section types.
+	 * Enqueue style & scripts related to customize sections.
 	 *
 	 * @return void
 	 */
-	public function enqueue_custom_section_types() {
+	public function enqueue_section_assets() {
 
 		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/section-types-min.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/sections-min.css', array(), WPBF_VERSION );
 
 		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/section-types-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
+		wp_enqueue_script( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/sections-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
+
+		wp_localize_script( 'wpbf-sections', 'wpbfCustomizerSectionDependencies', CustomizerStore::$added_section_dependencies );
+
+		wp_add_inline_script( 'wpbf-sections', 'window.WpbfCustomizeSection = {};', 'before' );
 
 	}
 
@@ -337,6 +347,10 @@ final class Customizer {
 				'invalid-value' => esc_html__( 'Invalid Value', 'page-builder-framework' ),
 			]
 		);
+
+		if ( is_array( BuilderStore::$added_control_ids ) ) {
+			wp_localize_script( 'wpbf-builder-control', 'wpbfBuilderControlIds', BuilderStore::$added_control_ids );
+		}
 
 	}
 

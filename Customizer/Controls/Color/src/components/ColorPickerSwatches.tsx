@@ -5,7 +5,9 @@ export default function ColorPickerSwatches(props: {
 	const { colors, onClick } = props;
 
 	return (
-		<div className="wpbf-color-swatches">
+		<div
+			className={`wpbf-color-swatches${colors && colors.length < 7 ? " no-stretch" : ""}`}
+		>
 			{colors.map((clr, index) => {
 				const color =
 					typeof clr === "string" ? clr : clr && clr.color ? clr.color : "";
@@ -18,7 +20,7 @@ export default function ColorPickerSwatches(props: {
 						data-wpbf-color={color}
 						style={{ backgroundColor: color }}
 						onClick={() => onClick(color)}
-					></button>
+					/>
 				);
 			})}
 		</div>

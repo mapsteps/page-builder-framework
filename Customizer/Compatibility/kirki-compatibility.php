@@ -205,9 +205,9 @@ if ( ! class_exists( '\Kirki' ) ) {
 			}
 
 			if ( isset( $choices['multiple'] ) ) {
-				$custom_props['is_multi'] = is_numeric( $choices['multiple'] ) && 1 < $choices['multiple'];
+				$custom_props['multiple'] = is_numeric( $choices['multiple'] ) && 1 < $choices['multiple'];
 
-				if ( $custom_props['is_multi'] ) {
+				if ( $custom_props['multiple'] ) {
 					$custom_props['max_selections'] = absint( $choices['multiple'] );
 				}
 
@@ -274,6 +274,10 @@ if ( ! class_exists( '\Kirki' ) ) {
 
 			if ( 'code_editor' === $type ) {
 				$type = 'code';
+			}
+
+			if ( 'select' === $type ) {
+				$type = 'enhanced-select';
 			}
 
 			if ( 'color' === $type ) {
@@ -365,7 +369,7 @@ if ( ! class_exists( '\Kirki' ) ) {
 						}
 
 						if ( isset( $field['choices']['multiple'] ) ) {
-							$custom_props['fields'][ $field_id ]['properties']['is_multi'] = 1 < $field['choices']['multiple'];
+							$custom_props['fields'][ $field_id ]['properties']['multiple'] = 1 < $field['choices']['multiple'];
 							unset( $field['choices']['multiple'] );
 						}
 					}

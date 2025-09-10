@@ -1,19 +1,36 @@
 import { colord } from "colord";
-import { ObjectColor } from "colord/types";
+import {
+	WpbfColorPickerValue,
+	WpbfColorControlValue,
+} from "../color-interface";
+import { parseHueModeValue } from "./misc";
 
 /**
  * Convert the value for the color picker.
  *
- * @param {string|ObjectColor} value - The value to be converted.
+ * @param {WpbfColorControlValue} value - The value to be converted.
  * @param {string} pickerComponent - The picker component name.
  *
- * @returns {string|ObjectColor} The converted value.
+ * @returns {WpbfColorPickerValue} The converted value.
  */
 export default function convertColorForPicker(
-	value: string | ObjectColor,
+	value: WpbfColorControlValue,
+	useHueMode: boolean,
 	pickerComponent: string,
-): string | ObjectColor {
+): WpbfColorPickerValue {
 	let convertedValue;
+
+	if (useHueMode) {
+		const hueValue = parseHueModeValue(value);
+
+		// Hard coded saturation and lightness when using hue mode.
+		return { h: hueValue, s: 100, l: 50 };
+	}
+
+	// If hudeMode is false, but value is a number, then hardcode the value to #000000.
+	if (typeof value === "number") {
+		value = "#000000";
+	}
 
 	switch (pickerComponent) {
 		case "HexColorPicker":

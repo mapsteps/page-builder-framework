@@ -43,11 +43,11 @@ class SelectControl extends BaseControl {
 	public $placeholder = '';
 
 	/**
-	 * Whether the select is clearable.
+	 * The layout style.
 	 *
-	 * @var bool
+	 * @var string
 	 */
-	public $clearable = false;
+	public $layout_style = 'default';
 
 	/**
 	 * Constructor.
@@ -65,7 +65,7 @@ class SelectControl extends BaseControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		$this->choices = ( new SelectChoices() )->toSelect2Format( $this->choices );
+		$this->choices = ( new SelectUtil() )->toSelect2Format( $this->choices );
 		$this->setSelectedOptions();
 
 	}
@@ -104,32 +104,7 @@ class SelectControl extends BaseControl {
 
 		parent::enqueue();
 
-		// Enqueue the styles.
-		wp_enqueue_style( 'select2', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select2.min.css', array(), WPBF_VERSION );
-		wp_enqueue_style( 'wpbf-select-control', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.css', array( 'select2' ), WPBF_VERSION );
-
-		$select2_src = WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select2.full.min.js';
-
-		// Enqueue the scripts.
-		wp_enqueue_script( 'select2', $select2_src, array( 'jquery' ), WPBF_VERSION, true );
-
-		if ( isset( wp_scripts()->registered ['select2'] ) ) {
-			if ( wp_scripts()->registered ['select2']->src !== $select2_src ) {
-				// In customizer, force change the select2 src to use our version.
-				wp_scripts()->registered ['select2']->src = $select2_src;
-			}
-		}
-
-		wp_enqueue_script(
-			'wpbf-select-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.js',
-			array(
-				'customize-controls',
-				'select2',
-			),
-			WPBF_VERSION,
-			false
-		);
+		wp_enqueue_style( 'wpbf-select-control', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.css', array( 'wpbf-base-control' ), WPBF_VERSION );
 
 	}
 
@@ -148,9 +123,7 @@ class SelectControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		// @link https://react-select.com/props
-		$this->json['isClearable'] = $this->clearable;
-		$this->json['isMulti']     = $this->multiple;
+		$this->json['multiple']    = $this->multiple;
 		$this->json['placeholder'] = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'page-builder-framework' );
 
 		// Will be a custom implementation, couldn't find an official prop to set this in react-select.
@@ -160,6 +133,107 @@ class SelectControl extends BaseControl {
 			// translators: %s is the limit of selection number.
 			'maxLimitReached' => sprintf( esc_html__( 'You can only select %s items', 'page-builder-framework' ), $this->max_selections ),
 		);
+
+		$this->json['layoutStyle'] = $this->layout_style;
+
+	}
+
+	/**
+	 * Render the control's content.
+	 *
+	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
+	 *
+	 * Control content can alternately be rendered in JS. See WP_Customize_Control::print_template().
+	 */
+	protected function render_content() {
+
+		$input_id         = '_customize-input-' . $this->id;
+		$description_id   = '_customize-description-' . $this->id;
+		$describedby_attr = ( ! empty( $this->description ) ) ? ' aria-describedby="' . esc_attr( $description_id ) . '" ' : '';
+
+		$label_template = '';
+
+		if ( ! empty( $this->label ) ) {
+			$label_template = '
+				<label class="customize-control-title" for="' . esc_attr( $input_id ) . '">
+					<span class="customize-control-title">
+					' . esc_html( $this->label ) . '
+					</span>
+				</label>
+			';
+		}
+
+		$label_description_template = '';
+
+		if ( ! empty( $this->description ) ) {
+			$label_description_template = '
+				<div class="customize-control-description description" id="' . esc_attr( $description_id ) . '">
+					' . wp_kses_post( $this->description ) . '
+				</div>
+			';
+		}
+
+		$header_template = '
+			<header class="wpbf-control-header">
+				' . $label_template . '
+				' . $label_description_template . '
+				<div class="customize-control-notifications-container"></div>
+			</header>
+		';
+
+		ob_start();
+		$this->build_options( $this->choices );
+		$select_opts_output = ob_get_clean();
+
+		$form_template = '
+			<div class="wpbf-control-form">
+				<select id="' . esc_attr( $input_id ) . '" ' . $describedby_attr . ' ' . $this->get_link() . '>
+					' . $select_opts_output . '
+				</select>
+			</div>
+		';
+
+		$template = $header_template . $form_template;
+
+		if ( 'horizontal' === $this->layout_style ) {
+			$template = sprintf(
+				'<div class="wpbf-control-cols">
+					<div class="wpbf-control-left-col wpbf-w50">%s</div>
+					<div class="wpbf-control-right-col wpbf-flex wpbf-content-end wpbf-w50">%s</div>
+				</div>',
+				$header_template,
+				$form_template
+			);
+		}
+
+		echo $template;
+
+	}
+
+	/**
+	 * Build the options.
+	 */
+	private function build_options() {
+
+		foreach ( $this->choices as $index => $choice ) {
+			$option_value = isset( $choice['id'] ) ? $choice['id'] : '';
+			$option_label = isset( $choice['text'] ) ? $choice['text'] : '';
+			$is_selected  = isset( $choice['selected'] ) && $choice['selected'];
+			$sub_options  = isset( $choice['children'] ) ? $choice['children'] : [];
+			?>
+
+			<?php if ( ! empty( $sub_options ) ) : ?>
+				<optgroup label="<?php echo esc_html( $option_label ); ?>">
+					<?php $this->build_options( $sub_options ); ?>
+				</optgroup>
+			<?php else : ?>
+				<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $is_selected, true ); ?>>
+					<?php echo esc_html( $option_label ); ?>
+				</option>
+			<?php endif; ?>
+
+			<?php
+		}
 
 	}
 

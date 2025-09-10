@@ -6,6 +6,8 @@
  * @subpackage Customizer
  */
 
+use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderStore;
+
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /* Panel */
@@ -13,6 +15,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 // Header.
 wpbf_customizer_panel()
 	->id( 'header_panel' )
+	->type( 'builder' )
 	->title( __( 'Header', 'page-builder-framework' ) )
 	->priority( 4 )
 	->add();
@@ -119,11 +122,6 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Column 1', 'page-builder-framework' ) )
 	->defaultValue( 'text' )
-	->choices( [
-		'text'    => __( 'Text', 'page-builder-framework' ),
-		'button'  => __( 'Button', 'page-builder-framework' ),
-		'primary' => __( 'Button (Primary)', 'page-builder-framework' ),
-	] )
 	->priority( 2 )
 	->choices( [
 		'none' => __( 'None', 'page-builder-framework' ),
@@ -132,7 +130,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -167,12 +165,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
 		array(
-			'id'       => 'pre_header_column_one_layout',
+			'setting'  => 'pre_header_column_one_layout',
 			'operator' => '==',
 			'value'    => 'text',
 		),
@@ -187,7 +185,7 @@ wpbf_customizer_field()
 	->priority( 2 )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
@@ -209,7 +207,7 @@ wpbf_customizer_field()
 	->priority( 2 )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
@@ -243,12 +241,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '==',
 			'value'    => 'two',
 		),
 		array(
-			'id'       => 'pre_header_column_two_layout',
+			'setting'  => 'pre_header_column_two_layout',
 			'operator' => '==',
 			'value'    => 'text',
 		),
@@ -263,7 +261,7 @@ wpbf_customizer_field()
 	->priority( 3 )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -281,7 +279,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -304,7 +302,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -325,7 +323,7 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -345,47 +343,31 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
 	] )
 	->addToSection( 'wpbf_pre_header_options' );
 
-// Accent color.
+// Accent colors.
 wpbf_customizer_field()
-	->id( 'pre_header_accent_color' )
-	->type( 'color' )
+	->id( 'pre_header_accent_colors' )
+	->type( 'multicolor' )
 	->tab( 'design' )
 	->label( __( 'Accent Color', 'page-builder-framework' ) )
 	->priority( 4 )
 	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
 	->properties( array(
 		'mode' => 'alpha',
 	) )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
-			'operator' => '!=',
-			'value'    => 'none',
-		),
-	] )
-	->addToSection( 'wpbf_pre_header_options' );
-
-// Accent color alt.
-wpbf_customizer_field()
-	->id( 'pre_header_accent_color_alt' )
-	->type( 'color' )
-	->tab( 'design' )
-	->label( __( 'Hover', 'page-builder-framework' ) )
-	->priority( 4 )
-	->transport( 'postMessage' )
-	->properties( array(
-		'mode' => 'alpha',
-	) )
-	->activeCallback( [
-		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -403,7 +385,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'pre_header_layout',
+			'setting'  => 'pre_header_layout',
 			'operator' => '!=',
 			'value'    => 'none',
 		),
@@ -425,7 +407,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '!=',
 			'value'    => '',
 		),
@@ -456,7 +438,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '!=',
 			'value'    => '',
 		),
@@ -483,7 +465,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -503,7 +485,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -524,7 +506,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -545,7 +527,7 @@ wpbf_customizer_field()
 	->priority( 14 )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -564,7 +546,7 @@ wpbf_customizer_field()
 	->priority( 20 )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
@@ -590,12 +572,12 @@ wpbf_customizer_field()
 	->priority( 20 )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'id'       => 'menu_logo_description',
+			'setting'  => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -624,12 +606,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'id'       => 'menu_logo_description',
+			'setting'  => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -645,12 +627,12 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '==',
 			'value'    => '',
 		),
 		array(
-			'id'       => 'menu_logo_description',
+			'setting'  => 'menu_logo_description',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -692,7 +674,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '!==',
 			'value'    => '',
 		),
@@ -708,7 +690,7 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
-			'id'       => 'custom_logo',
+			'setting'  => 'custom_logo',
 			'operator' => '!==',
 			'value'    => '',
 		),
@@ -874,12 +856,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'menu_position',
+			'setting'  => 'menu_position',
 			'operator' => '!=',
 			'value'    => 'menu-off-canvas',
 		),
 		array(
-			'id'       => 'menu_position',
+			'setting'  => 'menu_position',
 			'operator' => '!=',
 			'value'    => 'menu-off-canvas-left',
 		),
@@ -900,30 +882,21 @@ wpbf_customizer_field()
 	] )
 	->addToSection( 'wpbf_menu_options' );
 
-// Font color.
+// Font colors.
 wpbf_customizer_field()
-	->id( 'menu_font_color' )
-	->type( 'color' )
+	->id( 'menu_font_colors' )
+	->type( 'multicolor' )
 	->tab( 'design' )
-	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->label( __( 'Font Colors', 'page-builder-framework' ) )
 	->priority( 6 )
 	->transport( 'postMessage' )
-	->properties( [
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
 		'mode' => 'alpha',
-	] )
-	->addToSection( 'wpbf_menu_options' );
-
-// Font color alt.
-wpbf_customizer_field()
-	->id( 'menu_font_color_alt' )
-	->type( 'color' )
-	->tab( 'design' )
-	->label( __( 'Hover', 'page-builder-framework' ) )
-	->priority( 7 )
-	->transport( 'postMessage' )
-	->properties( [
-		'mode' => 'alpha',
-	] )
+	) )
 	->addToSection( 'wpbf_menu_options' );
 
 // Font size.
@@ -1133,7 +1106,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'sub_menu_separator',
+			'setting'  => 'sub_menu_separator',
 			'operator' => '==',
 			'value'    => true,
 		),
@@ -1194,7 +1167,7 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1210,7 +1183,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1234,7 +1207,7 @@ wpbf_customizer_field()
 	->priority( 1 )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => '!==',
 			'value'    => 'menu-mobile-default',
 		),
@@ -1270,7 +1243,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => '!=',
 			'value'    => 'menu-mobile-elementor',
 		),
@@ -1290,7 +1263,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1313,7 +1286,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1335,7 +1308,7 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
@@ -1358,12 +1331,12 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'id'       => 'mobile_menu_options',
+			'setting'  => 'mobile_menu_options',
 			'operator' => 'in',
 			'value'    => array( 'menu-mobile-hamburger', 'menu-mobile-off-canvas' ),
 		),
 		array(
-			'id'       => 'mobile_menu_hamburger_bg_color',
+			'setting'  => 'mobile_menu_hamburger_bg_color',
 			'operator' => '!=',
 			'value'    => false,
 		),

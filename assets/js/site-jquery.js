@@ -1,4 +1,4 @@
-/// <reference path="../../types.js"/>
+/// <reference path="../../global-types.js"/>
 
 import setupjQuerySite from "./setup/jquery-site-general";
 import setupjQueryDesktopMenu from "./setup/jquery-desktop-menu";

@@ -1,4 +1,4 @@
-import { getBreakpoints } from "../utils/dom-util";
+import { getBreakpoints, isInsideCustomizer } from "../utils/dom-util";
 
 /**
  * Set up site wide JS functionality.
@@ -6,17 +6,9 @@ import { getBreakpoints } from "../utils/dom-util";
  * This file will be imported from site-jquery.js file.
  *
  * @param {JQueryStatic} $ - jQuery object.
- * @return {LegacyWpbfTheme}
+ * @return {WpbfTheme}
  */
 export default function setupjQuerySite($) {
-	/**
-	 * Whether we're inside customizer or not.
-	 *
-	 * @type {boolean}
-	 */
-	// @ts-ignore
-	const isInsideCustomizer = window.wp && window.wp.customize ? true : false;
-
 	const breakpoints = getBreakpoints();
 
 	/**
@@ -153,7 +145,7 @@ export default function setupjQuerySite($) {
 	}
 
 	return {
-		isInsideCustomizer: isInsideCustomizer,
+		isInsideCustomizer: isInsideCustomizer(),
 		breakpoints: breakpoints,
 		activeBreakpoint: activeBreakpoint,
 	};
