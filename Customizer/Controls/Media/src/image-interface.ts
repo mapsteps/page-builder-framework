@@ -1,7 +1,7 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/base-interface";
+} from "../../Base/src/interface";
 
 export type WpbfCustomizeImageSrc = {
 	id: number;
@@ -10,15 +10,21 @@ export type WpbfCustomizeImageSrc = {
 	height: number;
 };
 
-export type WpbfImageControlValue = number | string | WpbfCustomizeImageSrc;
+export type WpbfCustomizeImageControlValue =
+	| number
+	| string
+	| WpbfCustomizeImageSrc;
 
-export interface WpbfImageControlParams
-	extends WpbfCustomizeControlParams<WpbfImageControlValue> {
+export interface WpbfCustomizeImageControlParams
+	extends WpbfCustomizeControlParams<WpbfCustomizeImageControlValue> {
 	labels: Record<string, string>;
 	saveAs: string;
 	valueSrc: WpbfCustomizeImageSrc;
 	defaultSrc: WpbfCustomizeImageSrc;
 }
 
-export interface WpbfImageControl
-	extends WpbfCustomizeControl<WpbfImageControlValue, WpbfImageControlParams> {}
+export interface WpbfCustomizeImageControl
+	extends WpbfCustomizeControl<
+		WpbfCustomizeImageControlValue,
+		WpbfCustomizeImageControlParams
+	> {}

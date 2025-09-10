@@ -1,17 +1,18 @@
 import { ChangeEvent, MouseEvent, useRef } from "react";
+import { WpbfCustomizeSetting } from "../../Base/src/interface";
+import { WpbfCustomizeSliderControl } from "./interface";
 
 export default function SliderForm(props: {
-	id: string;
-	min: number;
-	max: number;
-	step: number;
+	control: WpbfCustomizeSliderControl;
+	customizerSetting?: WpbfCustomizeSetting<string | number>;
+	setNotificationContainer?: any;
 	label?: string;
 	description?: string;
 	default?: string | number;
 	value?: string | number;
-	updateCustomizerSetting?: (val: string | number) => void;
-	overrideUpdateComponentStateFn?: (fn: (val: string | number) => void) => void;
-	setNotificationContainer?: any;
+	min: number;
+	max: number;
+	step: number;
 }) {
 	let trigger = "";
 
@@ -19,7 +20,7 @@ export default function SliderForm(props: {
 		useRef(null);
 	const valueRef: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
 
-	function updateComponentState(value: string | number) {
+	props.control.updateComponentState = (value) => {
 		const val = String(value);
 
 		if ("slider" === trigger) {
@@ -39,9 +40,7 @@ export default function SliderForm(props: {
 				sliderRef.current.value = val;
 			}
 		}
-	}
-
-	props.overrideUpdateComponentStateFn?.(updateComponentState);
+	};
 
 	function parseValue(value: string | number | undefined) {
 		const safeValue = "undefined" === typeof value ? 0 : value;
@@ -64,7 +63,7 @@ export default function SliderForm(props: {
 		const value = parseValue(target.value);
 
 		if ("input" === trigger) target.value = value.toString();
-		props.updateCustomizerSetting?.(value);
+		props.customizerSetting?.set(value);
 	}
 
 	function handleResetButtonClick(_e: MouseEvent) {
@@ -110,12 +109,12 @@ export default function SliderForm(props: {
 		const renderedValue = parseValue(sliderRef.current?.value);
 
 		if (sliderRef && sliderRef.current) {
-			props.updateCustomizerSetting?.(renderedValue);
+			props.customizerSetting?.set(renderedValue);
 		}
 	}
 
 	// Preparing for the template.
-	const fieldId = `wpbf-control-input-${props.id}`;
+	const fieldId = `wpbf-control-input-${props.customizerSetting?.id}`;
 	const value = parseValue(props.value);
 
 	return (

@@ -1,22 +1,21 @@
+import { animateScrollTop, hideElAfterDelay } from "../utils/anim-util";
+import {
+	forEachEl,
+	getBreakpoints,
+	listenDocumentEvent,
+} from "../utils/dom-util";
+
 /**
  * This module is intended to handle the site wide JS functionality.
  * Except for the desktop menu and mobile menu functionality.
  *
  * Along with the desktop-menu.js and mobile-menu.js, this file will be combined to site-min.js file.
- * 
- * @param {WpbfUtils} utils - The WpbfUtils object.
  */
-export default function setupSite(utils) {
-	const dom = utils.dom;
-	const anim = utils.anim;
-
-	const breakpoints = dom.getBreakpoints();
-
-	// Initialize the module.
-	init();
+export default function setupSite() {
+	const breakpoints = getBreakpoints();
 
 	/**
-	 * Module initialization, call the main functions.
+	 * Initialize the module, call the main functions.
 	 *
 	 * This function is the only function that should be called on top level scope.
 	 * Other functions are called / hooked from this function.
@@ -38,13 +37,12 @@ export default function setupSite(utils) {
 		// Executing various triggers on window load.
 		window.addEventListener("load", function () {
 			window.setTimeout(function () {
-				dom.forEachEl(".opacity", function (el) {
+				forEachEl(".opacity", function (el) {
 					el.classList.add("is-visible");
 				});
 			}, 200);
 
-			dom.forEachEl(".display-none", function (el) {
-				if (!(el instanceof HTMLElement)) return;
+			forEachEl(".display-none", function (el) {
 				el.style.display = "block";
 			});
 
@@ -99,7 +97,7 @@ export default function setupSite(utils) {
 		});
 
 		// Scroll to top functionality.
-		dom.listenDocumentEvent(
+		listenDocumentEvent(
 			"click",
 			".scrolltop",
 			/**
@@ -110,7 +108,7 @@ export default function setupSite(utils) {
 				document.body.tabIndex = -1;
 				document.body.focus();
 				this.blur();
-				anim.animateScrollTop(0, 500);
+				animateScrollTop(0, 500);
 			},
 		);
 	}
@@ -119,7 +117,7 @@ export default function setupSite(utils) {
 	 * Support for Contact Form 7.
 	 */
 	function wpcf7support() {
-		dom.forEachEl(".wpcf7-form-control-wrap", function (el) {
+		forEachEl(".wpcf7-form-control-wrap", function (el) {
 			el.addEventListener("mouseenter", function () {
 				const tooltips = el.querySelectorAll(".wpcf7-not-valid-tip");
 
@@ -128,7 +126,7 @@ export default function setupSite(utils) {
 					tooltip.classList.add("wpbf-fade-out");
 
 					if (tooltip instanceof HTMLElement) {
-						anim.hideElAfterDelay(tooltip, 400);
+						hideElAfterDelay(tooltip, 400);
 					}
 				});
 			});
@@ -158,4 +156,7 @@ export default function setupSite(utils) {
 			}
 		});
 	}
+
+	// Run the module.
+	init();
 }

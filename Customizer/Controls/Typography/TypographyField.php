@@ -272,39 +272,26 @@ class TypographyField extends BaseField {
 
 		$default_value = ! empty( $defaults['font-family'] ) && is_string( $defaults['font-family'] ) ? $defaults['font-family'] : '';
 
-		$properties = [
-			'wrapper_attrs' => [
-				'data-wpbf-typography-control' => $this->control->id,
-				'data-wpbf-typography-type'    => 'font-family',
-			],
-		];
-
-		$choices_global_var = $this->getFontChoicesGlobalVarName( 'families' );
-
-		if ( ! empty( $choices_global_var ) ) {
-			$properties['choices_global_var'] = $choices_global_var;
-		}
-
 		wpbf_customizer_field()
 			->id( $this->control->id . '[font-family]' )
-			->type( 'enhanced-select' )
+			->type( 'select' )
 			->label( __( 'Font Family', 'page-builder-framework' ) )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
 			->defaultValue( $default_value )
-			->choices(
-				empty( $choices_global_var )
-					? $this->typography_choices->makeFontFamilyChoices( $this->fonts_arg )
-					: array()
-			)
+			->choices( $this->typography_choices->makeFontFamilyChoices( $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			// The main control will do the real work.
 			->transport( 'postMessage' )
 			->inputAttrs( $this->control->input_attrs )
 			->activeCallback( $this->active_callback_args )
-			->properties( $properties )
+			->properties( [
+				'wrapper_attrs' => [
+					'data-wpbf-typography-control' => $this->control->id,
+					'data-wpbf-typography-type'    => 'font-family',
+				],
+			] )
 			->addToSection( $this->control->section_id );
-
 	}
 
 	/**
@@ -326,61 +313,26 @@ class TypographyField extends BaseField {
 			$font_variant = '400' === $font_weight ? 'regular' : $font_variant;
 		}
 
-		$properties = [
-			'wrapper_attrs' => [
-				'data-wpbf-typography-control' => $this->control->id,
-				'data-wpbf-typography-type'    => 'variant',
-			],
-		];
-
-		$choices_global_var = $this->getFontChoicesGlobalVarName( 'variants' );
-
-		if ( ! empty( $choices_global_var ) ) {
-			$properties['choices_global_var'] = $choices_global_var;
-		}
-
 		wpbf_customizer_field()
 			->id( $this->control->id . '[variant]' )
-			->type( 'enhanced-select' )
+			->type( 'select' )
 			->label( __( 'Font Variant', 'page-builder-framework' ) )
 			->tab( $this->tab )
 			->capability( $this->control->capability )
 			->defaultValue( $font_variant )
-			->choices(
-				empty( $choices_global_var )
-					? $this->typography_choices->makeFontVariantChoices( $this->fonts_arg )
-					: array()
-			)
+			->choices( $this->typography_choices->makeFontVariantChoices( $this->fonts_arg ) )
 			->priority( $this->control->priority )
 			// The main control will do the real work.
 			->transport( 'postMessage' )
 			->inputAttrs( $this->control->input_attrs )
 			->activeCallback( $this->active_callback_args )
-			->properties( $properties )
+			->properties( [
+				'wrapper_attrs' => [
+					'data-wpbf-typography-control' => $this->control->id,
+					'data-wpbf-typography-type'    => 'variant',
+				],
+			] )
 			->addToSection( $this->control->section_id );
-
-	}
-
-	/**
-	 * Get the choices global var name.
-	 *
-	 * @param string $key The fonts arg key (e.g. 'families', 'variants').
-	 * @return string|null
-	 */
-	private function getFontChoicesGlobalVarName( $key ) {
-
-		$props = $this->control->custom_properties;
-
-		$global_vars = ! empty( $props['choices_global_var'] ) && is_array( $props['choices_global_var'] ) ? $props['choices_global_var'] : [];
-		$global_vars = ! empty( $global_vars['fonts'] ) && is_array( $global_vars['fonts'] ) ? $global_vars['fonts'] : [];
-
-		$choices_global_var = null;
-
-		if ( ! empty( $global_vars[ $key ] ) && is_string( $global_vars[ $key ] ) ) {
-			$choices_global_var = $global_vars[ $key ];
-		}
-
-		return $choices_global_var;
 
 	}
 

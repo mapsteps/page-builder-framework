@@ -24,22 +24,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'constant'    => 'WPBF_PREMIUM_VERSION',
 				),
 				array(
-					'title'       => 'Swift SMTP',
-					'description' => __( 'Swift SMTP is a free & simple SMTP Plugin for WordPress.', 'page-builder-framework' ),
-					'banner'      => 'https://ps.w.org/welcome-email-editor/assets/banner-772x250.jpg',
-					'link'        => admin_url( 'plugin-install.php?s=Swift+SMTP&tab=search&type=term' ),
-					'repo'        => true,
-					'constant'    => 'WEED_PLUGIN_VERSION',
-				),
-				array(
-					'title'       => __( 'Ultimate Dashboard', 'page-builder-framework' ),
-					'description' => __( 'Ultimate Dashboard is the #1 plugin to customize your WordPress Dashboard.', 'page-builder-framework' ),
-					'banner'      => 'https://ps.w.org/ultimate-dashboard/assets/banner-772x250.jpg',
-					'link'        => admin_url( 'plugin-install.php?s=ultimate+dashboard&tab=search&type=term' ),
-					'repo'        => true,
-					'constant'    => 'ULTIMATE_DASHBOARD_PLUGIN_URL',
-				),
-				array(
 					'title'       => __( 'Better Admin Bar', 'page-builder-framework' ),
 					'description' => __( 'Quickly access all important areas of your WordPress website & provide your clients with the user experience they deserve.', 'page-builder-framework' ),
 					'banner'      => 'https://ps.w.org/better-admin-bar/assets/banner-772x250.jpg',
@@ -56,6 +40,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'constant'    => 'WP_VIDEO_POPUP_PLUGIN_VERSION',
 				),
 				array(
+					'title'       => __( 'Ultimate Dashboard', 'page-builder-framework' ),
+					'description' => __( 'Ultimate Dashboard is the #1 plugin to customize your WordPress Dashboard.', 'page-builder-framework' ),
+					'banner'      => 'https://ps.w.org/ultimate-dashboard/assets/banner-772x250.jpg',
+					'link'        => admin_url( 'plugin-install.php?s=ultimate+dashboard&tab=search&type=term' ),
+					'repo'        => true,
+					'constant'    => 'ULTIMATE_DASHBOARD_PLUGIN_URL',
+				),
+				array(
 					'title'       => __( 'Customizer Reset - Export & Import', 'page-builder-framework' ),
 					'description' => __( 'Reset, Export & Import your WordPress customizer settings with a simple click of a button.', 'page-builder-framework' ),
 					'banner'      => 'https://ps.w.org/customizer-reset/assets/banner-772x250.jpg',
@@ -70,6 +62,14 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 					'link'        => 'https://toolset.com/',
 					'repo'        => false,
 					'constant'    => 'WPV_VERSION',
+				),
+				array(
+					'title'       => 'Weglot',
+					'description' => __( 'The Weglot translation plugin gives you a reliable and easy way to take your WordPress website from local to global in minutes. No coding required and no developer time needed.', 'page-builder-framework' ),
+					'banner'      => 'https://ps.w.org/weglot/assets/banner-772x250.png',
+					'link'        => admin_url( 'plugin-install.php?s=weglot&tab=search&type=term' ),
+					'repo'        => true,
+					'constant'    => 'WEGLOT_VERSION',
 				),
 				array(
 					'title'       => __( 'WPML', 'page-builder-framework' ),

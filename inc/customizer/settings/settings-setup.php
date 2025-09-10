@@ -6,8 +6,6 @@
  * @subpackage Customizer
  */
 
-use Mapsteps\Wpbf\Customizer\CustomizerStore;
-
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**

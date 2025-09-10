@@ -19,14 +19,10 @@ export function encodeJsonOrDefault<T>(value: T): string {
  * @return {T | undefined} The parsed value or undefined if failed.
  */
 export function parseJsonOrUndefined<T>(
-	jsonStr: string | null | undefined | T,
+	jsonStr: string | null | undefined,
 ): T | undefined {
 	if ("" === jsonStr || !jsonStr) {
 		return undefined;
-	}
-
-	if (typeof jsonStr !== "string") {
-		return jsonStr;
 	}
 
 	try {

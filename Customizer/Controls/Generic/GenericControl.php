@@ -146,9 +146,7 @@ class GenericControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-generic-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/generic-control-min.js',
-			array(
-				'wpbf-base-control',
-			),
+			array( 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);
@@ -190,7 +188,8 @@ class GenericControl extends BaseControl {
 	 *
 	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
 	 *
-	 * Accepts one of this values: "number", "number-unit", "text", "textarea", "email", "password", "url", "hidden", and "content".
+	 * Supports basic input types `text`, `checkbox`, `textarea`, `radio`, `select` and `dropdown-pages`.
+	 * Additional input types such as `email`, `url`, `number`, `hidden` and `date` are supported implicitly.
 	 *
 	 * Control content can alternately be rendered in JS. See WP_Customize_Control::print_template().
 	 */

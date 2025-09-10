@@ -20,24 +20,6 @@ class ToggleField extends CheckboxField {
 	 */
 	public function addControl( $wp_customize_manager ) {
 
-		$props = $this->control->custom_properties;
-
-		if ( isset( $props['checkbox_type'] ) ) {
-			if ( isset( $props['wrapper_attrs'] ) && is_array( $props['wrapper_attrs'] ) ) {
-				if ( isset( $props['wrapper_attrs']['class'] ) ) {
-					$props['wrapper_attrs']['class'] .= ' wpbf-customize-control-switch';
-				} else {
-					$props['wrapper_attrs']['class'] = '{default_class} wpbf-customize-control-switch';
-				}
-			} else {
-				$props['wrapper_attrs'] = array(
-					'class' => '{default_class} wpbf-customize-control-switch',
-				);
-			}
-
-			$this->control->custom_properties = $props;
-		}
-
 		$control_args = $this->parseControlArgs();
 
 		$wp_customize_manager->add_control(

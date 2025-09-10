@@ -1,5 +1,3 @@
-import { isInsideCustomizer } from "../utils/dom-util";
-
 /**
  * Set up desktop menu JS functionality.
  *
@@ -8,6 +6,14 @@ import { isInsideCustomizer } from "../utils/dom-util";
  * @param {JQueryStatic} $ - jQuery object.
  */
 export default function setupjQueryDesktopMenu($) {
+	/**
+	 * Whether we're inside customizer or not.
+	 *
+	 * @type {boolean}
+	 */
+	// @ts-ignore
+	const isInsideCustomizer = window.WpbfTheme.isInsideCustomizer;
+
 	/**
 	 * The sub-menu animation duration.
 	 */
@@ -33,7 +39,7 @@ export default function setupjQueryDesktopMenu($) {
 		setupAccessibility();
 
 		// If we're inside customizer, then listen to the customizer's partial refresh.
-		if (isInsideCustomizer()) {
+		if (isInsideCustomizer) {
 			// @ts-ignore
 			window.wp.customize.bind("preview-ready", function () {
 				listenPartialRefresh();
@@ -88,7 +94,7 @@ export default function setupjQueryDesktopMenu($) {
 				.css({ display: "block" })
 				.animate({ width: itemWidth, opacity: "1" }, 200);
 
-			$("input[type=search]", this).val("").trigger("focus");
+			$("input[type=search]", this).val("").focus();
 		}
 	}
 

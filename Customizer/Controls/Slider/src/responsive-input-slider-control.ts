@@ -1,7 +1,10 @@
 import ResponsiveInputSliderControl from "./ResponsiveInputSliderControl";
+import { WpbfCustomize } from "../../Base/src/interface";
 
-if (window.wp.customize) {
-	// Register control type with Customizer.
-	window.wp.customize.controlConstructor["wpbf-responsive-input-slider"] =
-		ResponsiveInputSliderControl(window.wp.customize);
-}
+declare var wp: {
+	customize: WpbfCustomize;
+};
+
+// Register control type with Customizer.
+wp.customize.controlConstructor["wpbf-responsive-input-slider"] =
+	ResponsiveInputSliderControl;

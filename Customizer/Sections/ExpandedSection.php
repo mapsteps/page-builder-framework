@@ -2,7 +2,9 @@
 
 namespace Mapsteps\Wpbf\Customizer\Sections;
 
-class ExpandedSection extends BaseSection {
+use WP_Customize_Section;
+
+class ExpandedSection extends WP_Customize_Section {
 
 	/**
 	 * Type of this section.
@@ -10,14 +12,5 @@ class ExpandedSection extends BaseSection {
 	 * @var string
 	 */
 	public $type = 'wpbf-expanded';
-
-	/**
-	 * Path of the section class for this field.
-	 *
-	 * This property is required for the `WP_Customize_Section::render_template()` method to work.
-	 *
-	 * @var string
-	 */
-	public $class_path = '\Mapsteps\Wpbf\Customizer\Sections\ExpandedSection';
 
 }

@@ -1,29 +1,23 @@
-var t;window.wp.customize&&((t=window.wp.customize).controlConstructor["wpbf-enhanced-select"]=t.Control.extend({initialize:function(e,i){let o=this;t.Control.prototype.initialize.call(o,e,i),t.control.bind("removed",function e(i){o===i&&(o?.destroy?.(),o.container?.remove(),t.control.unbind("removed",e))})},setNotificationContainer:function(t){this.notifications&&(this.notifications.container=jQuery(t),this.notifications.render())},renderContent:function(){if(!this.params)return;let t=this.params,e=`
-				<label class="customize-control-title" for="wpbf-control-input-${this.id}">
-					<span className="customize-control-title">${t.label}</span>
-				</label>
-				`,i=`
-				<div class="customize-control-description description">
-					${t.description}
-				</div>
-				`,o=`
-				<header clas="wpbf-control-header">
-					${t.label?e:""}
-					${t.description?i:""}
-					<div class="customize-control-notifications-container"></div>
-				</header>
-				`,n=`
-				<div class="wpbf-control-form">
-					<select class="wpbf-select2"${t.multiple?" multiple":""}></select>
-				</div>
-				`,l=o+n;"horizontal"===t.layoutStyle&&(l=`
-					<div class="wpbf-control-cols">
-						<div class="wpbf-control-left-col wpbf-w50">
-							${o}
-						</div>
-						<div class="wpbf-control-right-col wpbf-flex wpbf-content-end wpbf-w50">
-							${n}
-						</div>
-					</div>
-					`),this.container?.html(l);let c=document.querySelector(`#customize-control-${this.id} .customize-control-notifications-container`);c&&c instanceof HTMLElement&&this.setNotificationContainer?.(c);let s=this.container?.find(".wpbf-select2");s?.on("change.select2",e=>{let i=s?.select2("data"),o=i?.map(t=>t.id),n=null;n=o?.length?t.multiple?o:o[0]:t.multiple?[]:"",this.setting?.set(n)});let r=t.choicesGlobalVar,a=r&&r in window?window[r]:void 0;if(a){let t=this.setting?.get(),e=Array.isArray(t)?t:[t];a.forEach((t,i)=>{t.id&&e.includes(t.id)&&(a[i].selected=!0),t.children&&t.children.length&&t.children.forEach((t,o)=>{t.id&&e.includes(t.id)&&a[i].children&&(a[i].children[o].selected=!0)})})}s?.select2({placeholder:t.placeholder,allowClear:t.clearable,multiple:t.multiple,maximumSelectionLength:t.multiple?t.maxSelections:void 0,data:a??t.choices})},ready:function(){this.setting?.bind(t=>{if(this.updateComponentState){let e=t;void 0===e&&(e=this.params?.multiple?[]:""),this.updateComponentState(e)}})},updateComponentState:function(t){let e=this.container?.find(".wpbf-select2");e?.val(t)},destroy:function(){let e=this.container?.find(".wpbf-select2");e?.off("change.select2"),e?.select2("destroy"),this.container?.html(""),t.Control.prototype.destroy&&t.Control.prototype.destroy.call(this)}}));
+!function(){let t=wp.customize.Control.extend({$selectbox:void 0,initialize:function(t,e){let o=this;wp.customize.Control.prototype.initialize.call(o,t,e),wp.customize.control.bind("removed",function t(e){o===e&&(o.destroy&&o.destroy(),o.container.remove(),wp.customize.control.unbind("removed",t))})},setNotificationContainer:function(t){this.notifications.container=jQuery(t),this.notifications.render()},renderContent:function(){let t=this,e=t.params,o=`
+		<header clas="wpbf-control-header">
+			${e.label?`<label
+						class="customize-control-title"
+						for=wpbf-control-input-${t.id}
+					>
+						<span className="customize-control-title">${e.label}</span>
+					</label>`:""}
+
+			${e.description?`<div
+						class="customize-control-description description"
+					>
+						${e.description}
+					</div>`:""}
+		</header>
+
+		<div class="customize-control-notifications-container"></div>
+
+		<div class="wpbf-control-form">
+			<select class="wpbf-select2"${e.isMulti?" multiple":""}></select>
+		</div>
+		`;t.container.html(o);let i=document.querySelector(`#customize-control-${t.id} .customize-control-notifications-container`);i&&i instanceof HTMLElement&&this.setNotificationContainer?.(i),this.$selectbox=t.container.find(".wpbf-control-form .wpbf-select2"),this.$selectbox.on("change.select2",o=>{let i=t.$selectbox?.select2("data"),n=i?.map(t=>t.id),l=null;l=n?.length?e.isMulti?n:n[0]:e.isMulti?[]:"",t.setting?.set(l)}),this.$selectbox.select2({placeholder:e.placeholder,allowClear:e.isClearable,multiple:e.isMulti,maximumSelectionLength:e.isMulti?e.maxSelections:void 0,data:e.choices})},ready:function(){let t=this;t.setting?.bind(e=>{if(t.updateComponentState){let o=e;void 0===o&&(o=t.params.isMulti?[]:""),t.updateComponentState(o)}})},updateComponentState:function(t){this.$selectbox?.val(t)},destroy:function(){this.$selectbox&&(this.$selectbox.off("change.select2"),this.$selectbox.select2("destroy"),this.$selectbox=void 0),this.container.html(""),wp.customize.Control.prototype.destroy&&wp.customize.Control.prototype.destroy.call(this)}});wp.customize.controlConstructor["wpbf-select"]=t}();
 //# sourceMappingURL=select-control-min.js.map

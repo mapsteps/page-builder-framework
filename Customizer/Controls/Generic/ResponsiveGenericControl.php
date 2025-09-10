@@ -114,9 +114,7 @@ class ResponsiveGenericControl extends GenericControl {
 		wp_enqueue_script(
 			'wpbf-responsive-generic-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/responsive-generic-control-min.js',
-			array(
-				'wpbf-base-control',
-			),
+			array( 'wpbf-base-control' ),
 			WPBF_VERSION,
 			false
 		);

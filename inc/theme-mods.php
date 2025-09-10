@@ -362,10 +362,7 @@ add_filter( 'wpbf_logo_mobile', 'wpbf_mobile_logo' );
 /**
  * Auto collapse mobile sub-menu navigation class.
  *
- * Add class to `.wpbf-navigation` if auto collapse sub-menu enabled.
- *
- * @param string $classes The classes.
- * @return string The updated classes.
+ * Add class to .wpbf-navigation if auto collapse sub-menu enabled.
  */
 function wpbf_mobile_sub_menu_auto_collapse_class( $classes ) {
 

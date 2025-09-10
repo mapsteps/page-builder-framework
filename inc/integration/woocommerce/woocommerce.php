@@ -67,16 +67,6 @@ function wpbf_woo_scripts() {
 	// WooCommerce smallscreen.
 	wp_enqueue_style( 'wpbf-woocommerce-smallscreen', get_template_directory_uri() . '/css/min/woocommerce-smallscreen-min.css', '', WPBF_VERSION );
 
-	/**
-	 * Triggering 'wc_fragment_refresh' via JS no longer work after WooCommerce 7.8.0
-	 * This 'wc-cart-fragments' enqueue fixed it.
-	 *
-	 * @see https://wordpress.org/support/topic/fragment-refresh-not-working/
-	 */
-	if ( ! wp_script_is( 'wc-cart-fragments', 'enqueued' ) && wp_script_is( 'wc-cart-fragments', 'registered' ) ) {
-		wp_enqueue_script( 'wc-cart-fragments' );
-	}
-
 	// WooCommerce.
 	wp_enqueue_script( 'wpbf-woocommerce', get_template_directory_uri() . '/assets/woocommerce/js/woocommerce.js', array( 'jquery' ), WPBF_VERSION, true );
 

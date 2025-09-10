@@ -1,86 +1,47 @@
-import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
-import { WpbfAssocArrayControl } from "./generic-interface";
+import { WpbfCustomize } from "../../Base/src/interface";
+import { WpbfCustomizeAssocArrayControl } from "./interface";
 
-if (window.wp.customize) {
-	setupAssocArrayControl(window.wp.customize);
-}
+declare var wp: {
+	customize: WpbfCustomize;
+};
 
-function setupAssocArrayControl(customizer: WpbfCustomize) {
-	customizer.controlConstructor["wpbf-assoc-array"] =
-		customizer.wpbfDynamicControl.extend<WpbfAssocArrayControl>({
-			initWpbfControl: function (
-				this: WpbfAssocArrayControl,
-				control?: WpbfAssocArrayControl,
-			) {
-				control = control || this;
-				if (!control) return;
+wp.customize.controlConstructor["wpbf-assoc-array"] =
+	wp.customize.wpbfDynamicControl.extend<WpbfCustomizeAssocArrayControl>({
+		initWpbfControl: function (
+			this: WpbfCustomizeAssocArrayControl,
+			control?: WpbfCustomizeAssocArrayControl,
+		) {
+			control = control || this;
+			const params = control.params;
 
-				control.setting?.bind((value: Record<string, any>) => {
-					control.updateComponentState?.(value);
-				});
+			if ("wpbf-assoc-array" !== params.type) {
+				return;
+			}
 
-				// The following should be eliminated with <https://core.trac.wordpress.org/ticket/31334>.
-				function onRemoved(removedControl: AnyWpbfCustomizeControl) {
-					if (control === removedControl) {
-						control?.destroy?.();
-						control.container?.remove();
-						customizer.control.unbind("removed", onRemoved);
-					}
-				}
+			/**
+			 * AssocArray control is a "one-way" control or like a read-only control.
+			 * Becase we only listen to customizer setting change event.
+			 * We don't need to listen to the input field change event because they are hidden fields.
+			 */
+			control.setting?.bind((value: Record<string, any>) => {
+				control.updateComponentState?.(value);
+			});
+		},
 
-				customizer.control.bind("removed", onRemoved);
-			},
+		updateComponentState: function (
+			this: WpbfCustomizeAssocArrayControl,
+			value: Record<string, any>,
+		) {
+			const fields = this.container[0].querySelectorAll(inputSelector);
+			if (!fields.length) return;
 
-			updateComponentState: function (
-				this: WpbfAssocArrayControl,
-				value: Record<string, any>,
-			) {
-				const fields = this.container[0].querySelectorAll(
-					".wpbf-control-form input[data-setting-prop]",
-				);
-				if (!fields.length) return;
+			fields.forEach((field) => {
+				if (!(field instanceof HTMLInputElement)) return;
+				const prop = field.dataset.settingProp;
+				if (!prop || !value[prop]) return;
+				field.value = value[prop];
+			});
+		},
+	});
 
-				fields.forEach((field) => {
-					if (!(field instanceof HTMLInputElement)) return;
-					const prop = field.dataset.settingProp;
-					if (!prop || !value[prop]) return;
-					field.value = value[prop];
-				});
-			},
-
-			ready: function () {
-				if (!this.container) return;
-
-				this.currentValue = this.setting?.get();
-
-				const fields = this.container[0].querySelectorAll(
-					"input[data-setting-prop]",
-				);
-
-				fields.forEach((field) => {
-					if (!(field instanceof HTMLInputElement)) return;
-
-					field.addEventListener("change", (e) => {
-						const values: Record<string, any> = {};
-
-						fields.forEach((field) => {
-							if (!(field instanceof HTMLInputElement)) return;
-							const prop = field.dataset.settingProp;
-							if (!prop) return;
-							values[prop] = field.value;
-						});
-
-						this.setting?.set(values);
-					});
-				});
-
-				const control = this;
-
-				this.setting?.bind((val) => {
-					control.updateComponentState?.(val);
-				});
-			},
-
-			destroy: function () {},
-		});
-}
+const inputSelector = ".wpbf-control-form input[data-setting-prop]";

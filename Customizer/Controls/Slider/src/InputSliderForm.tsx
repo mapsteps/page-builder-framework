@@ -1,26 +1,31 @@
 import { ChangeEvent, MouseEvent, useRef } from "react";
-import { makeValueForInput, makeValueForSlider } from "./slider-util";
+import { WpbfCustomizeSetting } from "../../Base/src/interface";
+import {
+	makeStringValue,
+	makeValueForInput,
+	makeValueForSlider,
+} from "./slider-util";
+import { WpbfCustomizeInputSliderControl } from "./interface";
 import {
 	limitNumber,
 	makeLimitedNumberUnitPair,
 } from "../../Generic/src/number-util";
 
 export default function InputSliderForm(props: {
-	id: string;
+	control: WpbfCustomizeInputSliderControl;
+	customizerSetting?: WpbfCustomizeSetting<string | number>;
+	setNotificationContainer: any;
+	label: string | undefined;
+	description: string | undefined;
 	min: number;
 	max: number;
 	step: number;
-	label: string | undefined;
-	description: string | undefined;
 	default: string | number;
 	value: string | number;
-	setNotificationContainer: any;
-	overrideUpdateComponentStateFn?: (fn: (val: string | number) => void) => void;
-	updateCustomizerSetting?: (val: string | number) => void;
 }) {
 	let trigger = "";
 
-	function updateComponentState(val: string | number) {
+	props.control.updateComponentState = (val) => {
 		if ("slider" === trigger) {
 			setInputRefValue(makeValueForInput(val, props.min, props.max));
 		} else if ("input" === trigger) {
@@ -29,14 +34,12 @@ export default function InputSliderForm(props: {
 			setSliderRefValue(val);
 			setInputRefValue(val);
 		}
-	}
-
-	props.overrideUpdateComponentStateFn?.(updateComponentState);
+	};
 
 	function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
 		trigger = "input";
 
-		props.updateCustomizerSetting?.(
+		props.customizerSetting?.set(
 			makeValueForInput(e.target.value, props.min, props.max),
 		);
 	}
@@ -60,17 +63,17 @@ export default function InputSliderForm(props: {
 		);
 
 		const valueForInput = String(limitedValue) + numberValuePair.unit;
-		props.updateCustomizerSetting?.(valueForInput);
+		props.customizerSetting?.set(valueForInput);
 	}
 
 	function setInputRefValue(value: string | number) {
 		if (!inputRef || !inputRef.current) return;
-		inputRef.current.value = String(value);
+		inputRef.current.value = makeStringValue(value);
 	}
 
 	function setSliderRefValue(value: string | number) {
 		if (!sliderRef || !sliderRef.current) return;
-		sliderRef.current.value = String(value);
+		sliderRef.current.value = makeStringValue(value);
 	}
 
 	function handleResetButtonClick(e: MouseEvent) {
@@ -90,11 +93,11 @@ export default function InputSliderForm(props: {
 		trigger = "reset";
 
 		if (!sliderRef || !sliderRef.current) return;
-		props.updateCustomizerSetting?.(sliderRef.current.value);
+		props.customizerSetting?.set(sliderRef.current.value);
 	}
 
 	// Preparing for the template.
-	const fieldId = `wpbf-control-input-${props.id}`;
+	const fieldId = `wpbf-control-input-${props.customizerSetting?.id}`;
 	const sliderValue = makeValueForSlider(props.value, props.min, props.max);
 	const inputValue = makeValueForInput(props.value, props.min, props.max);
 

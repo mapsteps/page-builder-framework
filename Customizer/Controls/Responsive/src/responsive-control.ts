@@ -1,4 +1,5 @@
 import { forEachEl } from "../../../../assets/js/utils/dom-util";
+import { WpbfCustomize } from "../../Base/src/interface";
 import "./responsive-control.scss";
 
 declare var wp: {
@@ -45,8 +46,6 @@ function listenDevicePreviewSwitch() {
  */
 function switchPreviewButtons(device: string) {
 	forEachEl(".wpbf-device-buttons .wpbf-device-button", function (el) {
-		if (!(el instanceof HTMLButtonElement)) return;
-
 		if (device === el.dataset.wpbfDevice) {
 			el.classList.add("is-active");
 		} else {
@@ -55,8 +54,6 @@ function switchPreviewButtons(device: string) {
 	});
 
 	forEachEl(".wpbf-control-device", function (el) {
-		if (!(el instanceof HTMLButtonElement)) return;
-
 		if (device === el.dataset.wpbfDevice) {
 			el.classList.add("is-active");
 		} else {
@@ -66,8 +63,6 @@ function switchPreviewButtons(device: string) {
 
 	// Switch the label to target first input field in current device mode.
 	forEachEl(".wpbf-customize-control-responsive", function (el) {
-		if (!(el instanceof HTMLButtonElement)) return;
-
 		const setting = el.dataset.wpbfSetting;
 		const id = `${setting ?? ""}-${device}`;
 		const label = el.querySelector("label.customize-control-label");

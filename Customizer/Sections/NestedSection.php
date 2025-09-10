@@ -3,8 +3,9 @@
 namespace Mapsteps\Wpbf\Customizer\Sections;
 
 use WP_Customize_Manager;
+use WP_Customize_Section;
 
-class NestedSection extends BaseSection {
+class NestedSection extends WP_Customize_Section {
 
 	/**
 	 * Type of this section.
@@ -12,15 +13,6 @@ class NestedSection extends BaseSection {
 	 * @var string
 	 */
 	public $type = 'wpbf-nested';
-
-	/**
-	 * Path of the section class for this field.
-	 *
-	 * This property is required for the `WP_Customize_Section::render_template()` method to work.
-	 *
-	 * @var string
-	 */
-	public $class_path = '\Mapsteps\Wpbf\Customizer\Sections\NestedSection';
 
 	/**
 	 * Parent section id.

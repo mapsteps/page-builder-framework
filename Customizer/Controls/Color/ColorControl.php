@@ -93,7 +93,11 @@ class ColorControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		$this->set_value_json();
+		$this->json['value'] = empty( $this->value() ) ? '' : ( 'hue' === $this->mode ? absint( $this->value() ) : $this->value() );
+
+		if ( is_string( $this->json['value'] ) ) {
+			$this->json['value'] = strtolower( $this->json['value'] );
+		}
 
 		$this->json['mode'] = $this->mode;
 
@@ -103,19 +107,6 @@ class ColorControl extends BaseControl {
 
 		if ( ! empty( $this->form_component ) ) {
 			$this->json['formComponent'] = $this->form_component;
-		}
-
-	}
-
-	/**
-	 * Set the value to JSON.
-	 */
-	protected function set_value_json() {
-
-		$this->json['value'] = empty( $this->value() ) ? '' : ( 'hue' === $this->mode ? absint( $this->value() ) : $this->value() );
-
-		if ( is_string( $this->json['value'] ) ) {
-			$this->json['value'] = strtolower( $this->json['value'] );
 		}
 
 	}

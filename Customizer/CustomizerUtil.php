@@ -8,14 +8,10 @@
 namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderField;
-use Mapsteps\Wpbf\Customizer\Controls\Builder\ResponsiveBuilderField;
-use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Code\CodeField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
-use Mapsteps\Wpbf\Customizer\Controls\Color\MulticolorField;
 use Mapsteps\Wpbf\Customizer\Controls\Custom\CustomField;
 use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Editor\EditorField;
@@ -33,19 +29,16 @@ use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterField;
-use Mapsteps\Wpbf\Customizer\Controls\Select\EnhancedSelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
+use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyField;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
-use Mapsteps\Wpbf\Customizer\Panels\BuilderPanel;
 use Mapsteps\Wpbf\Customizer\Panels\NestedPanel;
-use Mapsteps\Wpbf\Customizer\Sections\BaseSection;
 use Mapsteps\Wpbf\Customizer\Sections\ExpandedSection;
-use Mapsteps\Wpbf\Customizer\Sections\InvisibleSection;
 use Mapsteps\Wpbf\Customizer\Sections\LinkSection;
 use Mapsteps\Wpbf\Customizer\Sections\NestedSection;
 use Mapsteps\Wpbf\Customizer\Sections\OuterSection;
@@ -63,14 +56,14 @@ class CustomizerUtil {
 	 *
 	 * @var string[]
 	 */
-	public $available_panel_types = [ 'default', 'nested', 'builder' ];
+	public $available_panel_types = [ 'default', 'nested' ];
 
 	/**
 	 * Available section types.
 	 *
 	 * @var string[]
 	 */
-	public $available_section_types = [ 'default', 'expanded', 'link', 'nested', 'outer', 'invisible' ];
+	public $available_section_types = [ 'default', 'expanded', 'link', 'nested', 'outer' ];
 
 	/**
 	 * The available fields.
@@ -81,12 +74,10 @@ class CustomizerUtil {
 	 */
 	public $available_fields = array(
 		'checkbox',
-		'checkbox-buttonset',
 		'toggle',
 		'custom',
 		'code',
 		'color',
-		'multicolor',
 		'dimension',
 		'divider',
 		'headline',
@@ -101,16 +92,14 @@ class CustomizerUtil {
 		'radio',
 		'radio-buttonset',
 		'radio-image',
-		'enhanced-select',
 		'select',
 		'slider',
 		'input-slider',
 		'repeater',
 		'responsive-input-slider',
+		'section-tabs',
 		'sortable',
 		'typography',
-		'builder',
-		'responsive-builder',
 		'upload',
 	);
 
@@ -160,11 +149,11 @@ class CustomizerUtil {
 	 * @param string               $id The panel id.
 	 * @param array                $args The panel arguments.
 	 *
-	 * @return WP_Customize_Panel|NestedPanel|BuilderPanel
+	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection
 	 */
 	public function getPanelInstance( $panel_type, $wp_customer_manager, $id, $args ) {
 
-		if ( empty( $panel_type ) || ! in_array( $panel_type, $this->available_panel_types, true ) ) {
+		if ( empty( $panel_type ) || ! in_array( $panel_type, $this->available_section_types, true ) ) {
 			$panel_type = 'default';
 		}
 
@@ -175,8 +164,6 @@ class CustomizerUtil {
 		switch ( $panel_type ) {
 			case 'nested':
 				return new NestedPanel( $wp_customer_manager, $id, $args );
-			case 'builder':
-				return new BuilderPanel( $wp_customer_manager, $id, $args );
 			default:
 				return new WP_Customize_Panel( $wp_customer_manager, $id, $args );
 		}
@@ -187,13 +174,13 @@ class CustomizerUtil {
 	 * Get section instance by type.
 	 *
 	 * @param string               $section_type Type of the section.
-	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.
+	 * @param WP_Customize_Manager $wp_customer_manager The customizer manager object.
 	 * @param string               $id The section id.
 	 * @param array                $args The section arguments.
 	 *
-	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection|InvisibleSection
+	 * @return WP_Customize_Section|ExpandedSection|LinkSection|NestedSection|OuterSection
 	 */
-	public function getSectionInstance( $section_type, $wp_customize_manager, $id, $args ) {
+	public function getSectionInstance( $section_type, $wp_customer_manager, $id, $args ) {
 
 		if ( empty( $section_type ) || ! in_array( $section_type, $this->available_section_types, true ) ) {
 			$section_type = 'default';
@@ -205,17 +192,15 @@ class CustomizerUtil {
 
 		switch ( $section_type ) {
 			case 'expanded':
-				return new ExpandedSection( $wp_customize_manager, $id, $args );
+				return new ExpandedSection( $wp_customer_manager, $id, $args );
 			case 'link':
-				return new LinkSection( $wp_customize_manager, $id, $args );
+				return new LinkSection( $wp_customer_manager, $id, $args );
 			case 'nested':
-				return new NestedSection( $wp_customize_manager, $id, $args );
+				return new NestedSection( $wp_customer_manager, $id, $args );
 			case 'outer':
-				return new OuterSection( $wp_customize_manager, $id, $args );
-			case 'invisible':
-				return new InvisibleSection( $wp_customize_manager, $id, $args );
+				return new OuterSection( $wp_customer_manager, $id, $args );
 			default:
-				return new BaseSection( $wp_customize_manager, $id, $args );
+				return new WP_Customize_Section( $wp_customer_manager, $id, $args );
 		}
 
 	}
@@ -279,9 +264,6 @@ class CustomizerUtil {
 			case 'checkbox':
 				$field = new CheckboxField( $control_entity );
 				break;
-			case 'checkbox-buttonset':
-				$field = new CheckboxButtonsetField( $control_entity );
-				break;
 			case 'toggle':
 				$field = new ToggleField( $control_entity );
 				break;
@@ -293,9 +275,6 @@ class CustomizerUtil {
 				break;
 			case 'color':
 				$field = new ColorField( $control_entity );
-				break;
-			case 'multicolor':
-				$field = new MulticolorField( $control_entity );
 				break;
 			case 'divider':
 				$field = new DividerField( $control_entity );
@@ -342,9 +321,6 @@ class CustomizerUtil {
 			case 'radio-image':
 				$field = new RadioImageField( $control_entity );
 				break;
-			case 'enhanced-select':
-				$field = new EnhancedSelectField( $control_entity );
-				break;
 			case 'select':
 				$field = new SelectField( $control_entity );
 				break;
@@ -360,17 +336,14 @@ class CustomizerUtil {
 			case 'responsive-input-slider':
 				$field = new ResponsiveInputSliderField( $control_entity );
 				break;
+			case 'section-tabs':
+				$field = new SectionTabsField( $control_entity );
+				break;
 			case 'sortable':
 				$field = new SortableField( $control_entity );
 				break;
 			case 'typography':
 				$field = new TypographyField( $control_entity );
-				break;
-			case 'builder':
-				$field = new BuilderField( $control_entity );
-				break;
-			case 'responsive-builder':
-				$field = new ResponsiveBuilderField( $control_entity );
 				break;
 			case 'upload':
 				$field = new UploadField( $control_entity );

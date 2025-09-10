@@ -108,11 +108,6 @@
 	}
 }
 
-// When inside header builder.
-.wpbf-header-column .wpbf-menu-item-search .wpbf-menu-search {
-	right: -20px;
-}
-
 /* Menu */
 
 // Animation
@@ -149,6 +144,16 @@
 			z-index: 111;
 			background: #fff;
 			@include box-shadow(0px 0px 10px 0px rgba(#000, 0.15));
+		}
+	}
+}
+
+// Default sub menus (excluding mega menu) - VanillaJS helper
+.wpbf-vanilla .wpbf-sub-menu {
+	> .menu-item-has-children:not(.wpbf-mega-menu) .menu-item-has-children {
+		> .sub-menu {
+			// The old jQuery-based code had default jQuery animate duration (400ms).
+			transition: opacity 0.4s ease-in-out;
 		}
 	}
 }
@@ -340,11 +345,6 @@
 	margin: 0;
 }
 
-.use-header-builder .wpbf-mobile-menu-toggle {
-	display: inline-flex;
-	align-items: center;
-}
-
 // SVG support (Hamburger)
 .wpbf-mobile-menu-hamburger {
 	.wpbf-mobile-menu-toggle {
@@ -389,6 +389,12 @@
 	}
 }
 
+/* Mobile menu - VanillaJS helper */
+.wpbf-vanilla .wpbf-mobile-menu-container {
+	// The old jQuery-based code had default fade animation duration (400ms).
+	transition: height 0.4s ease-in-out;
+}
+
 /* Mobile menu */
 .wpbf-mobile-menu-container {
 	display: none;
@@ -404,21 +410,17 @@
 .wpbf-mobile-menu {
 	margin: 0;
 	padding: 0;
-	z-index: 111;
-
 	li {
 		list-style: none;
 	}
-
+	z-index: 111;
 	a {
 		display: block;
 		padding: $padding-small $padding;
 	}
-
 	.menu-item {
 		border-top: 1px solid $base-color;
 	}
-
 	> .menu-item:last-child {
 		border-bottom: 1px solid $base-color;
 	}
@@ -429,6 +431,10 @@
 	margin: 0;
 	padding: 0;
 	display: none;
+
+	&.wpbf-slide-anim {
+		@include transition(height 0.4s ease-in-out);
+	}
 }
 
 .wpbf-mobile-menu .menu-item-has-children {
@@ -567,19 +573,5 @@
 	}
 	button {
 		display: none;
-	}
-}
-
-/* Header Builder */
-.wpbf-row-content {
-	width: 100%;
-}
-
-.wpbf-header-column {
-	flex-grow: 0;
-	flex-shrink: 0;
-
-	&.wpbf-column-grow {
-		flex-grow: 1;
 	}
 }

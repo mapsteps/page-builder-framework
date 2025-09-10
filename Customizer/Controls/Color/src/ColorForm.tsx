@@ -1,227 +1,410 @@
-import { useEffect, useRef, useState } from "react";
-import { colord } from "colord";
+import { useRef, useState } from "react";
+import {
+	HexColorPicker,
+	HslaColorPicker,
+	HslaStringColorPicker,
+	HslColorPicker,
+	HslStringColorPicker,
+	HsvaColorPicker,
+	HsvaStringColorPicker,
+	HsvColorPicker,
+	HsvStringColorPicker,
+	RgbaColorPicker,
+	RgbaStringColorPicker,
+	RgbColorPicker,
+	RgbStringColorPicker,
+} from "react-colorful";
+import {
+	colord,
+	HslaColor,
+	HslColor,
+	HsvaColor,
+	HsvColor,
+	RgbaColor,
+	RgbColor,
+} from "colord";
 import ColorPickerSwatches from "./components/ColorPickerSwatches";
 import ColorPickerInput from "./components/ColorPickerInput";
+import convertColorForInput from "./utils/convert-color-for-input";
+import convertColorForCustomizer from "./utils/convert-color-for-customizer";
+import convertColorForPicker from "./utils/convert-color-for-picker";
 import useWindowResize from "./hooks/useWindowResize";
 import useFocusOutside from "./hooks/useFocusOutside";
 import useClickOutside from "./hooks/useClickOutside";
-import ColorPickerComponent from "./components/ColorPickerComponent";
-import ControlHeader from "./components/ControlHeader";
-import {
-	ColorControlLabelStyle,
-	WpbfColorControlValue,
-} from "./color-interface";
-import convertColorForInput from "./utils/convert-color-for-input";
-import convertColorForPicker from "./utils/convert-color-for-picker";
+import ColorPickerCircle from "./components/ColorPickerCircle";
+import jQuery from "jquery";
+import { WpbfCustomizeColorControl } from "./interface";
+import { WpbfCustomizeSetting } from "../../Base/src/interface";
+import { ObjectColor } from "colord/types";
+
+// Declare global extends jQuery to have wp property.
+declare global {
+	interface JQueryStatic {
+		wp: any;
+	}
+}
 
 /**
  * The form component of Kirki React Colorful.
  */
-export default function ColorForm(props: {
-	type: string;
-	container: HTMLElement;
+export function ColorForm(props: {
+	control: WpbfCustomizeColorControl;
 	label: string;
 	description: string;
+	customizerSetting?: WpbfCustomizeSetting<any>;
 	useHueMode: boolean;
 	pickerComponent: string;
-	labelStyle: ColorControlLabelStyle;
+	labelStyle: string;
 	colorSwatches: Array<string | { color: string } | undefined>;
-	value: WpbfColorControlValue;
-	default: WpbfColorControlValue;
+	value: string | ObjectColor | number;
+	default: string | ObjectColor | number;
+	setNotificationContainer: any;
 	formComponent?: string;
-	removeHeader?: boolean;
-	isPopupOpen?: boolean;
-	useExternalPopupToggle?: boolean;
-	onChange?: (value: WpbfColorControlValue) => void;
-	onReset?: () => void;
-	overrideUpdateComponentStateFn?: (
-		fn: (val: WpbfColorControlValue) => void,
-	) => void;
-	setNotificationContainer?: any;
+	onChange?: (color: string | ObjectColor) => void;
 }) {
 	const {
-		container,
+		control,
+		customizerSetting,
 		useHueMode,
 		pickerComponent,
-		formComponent,
-		label,
-		description,
 		labelStyle,
-		useExternalPopupToggle,
 	} = props;
 
-	const [inputValue, setInputValue] = useState(() => {
-		return convertColorForInput(
-			props.value,
-			useHueMode,
+	const parseEmptyValue = () => (useHueMode ? 0 : "#000000");
+
+	function parseHueModeValue(hueValue: any) {
+		hueValue = hueValue || parseEmptyValue();
+		hueValue = hueValue < 0 ? 0 : hueValue;
+
+		return hueValue > 360 ? 360 : hueValue;
+	}
+
+	function parseInputValue(value: any) {
+		if ("" === value) return "";
+
+		return useHueMode
+			? parseHueModeValue(value)
+			: convertColorForInput(
+					value,
+					pickerComponent,
+					props.formComponent,
+				).replace(";", "");
+	}
+
+	function parseCustomizerValue(value: any) {
+		if ("" === value) return "";
+
+		return convertColorForCustomizer(
+			value,
 			pickerComponent,
-			formComponent,
+			props.formComponent,
 		);
+	}
+
+	function parsePickerValue(value: any) {
+		value = value || parseEmptyValue();
+
+		// Hard coded saturation and lightness when using hue mode.
+		return useHueMode
+			? { h: value, s: 100, l: 50 }
+			: convertColorForPicker(value, pickerComponent);
+	}
+
+	const [inputValue, setInputValue] = useState(() => {
+		return parseInputValue(props.value);
 	});
 
 	const [pickerValue, setPickerValue] = useState(() => {
-		return convertColorForPicker(props.value, useHueMode, pickerComponent);
+		return parsePickerValue(props.value);
 	});
 
 	let currentInputValue = inputValue;
 	let currentPickerValue = pickerValue;
 
 	// This function will be called when this control's customizer value is changed.
-	function updateComponentState(value: WpbfColorControlValue) {
-		const valueForInput = convertColorForInput(
-			value,
-			useHueMode,
-			pickerComponent,
-			formComponent,
-		);
-
-		let shouldChangeInputValue = false;
+	control.updateComponentState = (value: any) => {
+		const valueForInput = parseInputValue(value);
+		let changeInputValue: boolean;
 
 		if (typeof valueForInput === "string" || useHueMode) {
-			shouldChangeInputValue = valueForInput !== inputValue;
+			changeInputValue = valueForInput !== inputValue;
 		} else {
-			shouldChangeInputValue =
+			changeInputValue =
 				JSON.stringify(valueForInput) !== JSON.stringify(currentInputValue);
 		}
 
-		if (shouldChangeInputValue) {
-			setInputValue(valueForInput);
-		}
+		if (changeInputValue) setInputValue(valueForInput);
 
-		const valueForPicker = convertColorForPicker(
-			value,
-			useHueMode,
-			pickerComponent,
-		);
-
-		let shouldChangePickerValue: boolean;
+		const valueForPicker = parsePickerValue(value);
+		let changePickerValue: boolean;
 
 		if (typeof valueForPicker === "string" || useHueMode) {
-			shouldChangePickerValue = valueForPicker !== pickerValue;
+			changePickerValue = valueForPicker !== pickerValue;
 		} else {
-			shouldChangePickerValue =
+			changePickerValue =
 				JSON.stringify(valueForPicker) !== JSON.stringify(currentPickerValue);
 		}
 
-		if (shouldChangePickerValue) {
-			setPickerValue(valueForPicker);
-		}
-	}
+		if (changePickerValue) setPickerValue(valueForPicker);
+	};
 
-	props.overrideUpdateComponentStateFn?.(updateComponentState);
+	const saveToCustomizer = (value: any) => {
+		if (useHueMode) {
+			/**
+			 * When using hue mode, the pickerComponent is HslColorPicker.
+			 * If there is value.h, then value is set from the picker.
+			 * Otherwise, value is set from the input or the customizer.
+			 */
+			value = value.h || 0 === value.h ? value.h : value;
+			value = parseHueModeValue(value);
+		} else {
+			value = parseCustomizerValue(value);
+		}
+
+		customizerSetting?.set(value);
+	};
 
 	const initialColor =
 		"" !== props.default && "undefined" !== typeof props.default
 			? props.default
 			: props.value;
 
-	function handleWindowResize() {
+	/**
+	 * Function to run on picker change.
+	 *
+	 * @param {string|Object} color The value returned by the picker. It can be a string or a color object.
+	 */
+	const handlePickerChange = (color: any) => {
+		if (props.onChange) props.onChange(color);
+		currentPickerValue = color;
+		saveToCustomizer(color);
+	};
+
+	const handleInputChange = (value: any) => {
+		currentInputValue = value;
+		saveToCustomizer(value);
+	};
+
+	const handleReset = () => {
+		if (!initialColor) {
+			currentInputValue = "";
+			currentPickerValue = "";
+		}
+
+		saveToCustomizer(initialColor);
+	};
+
+	const handleSwatchesClick = (swatchColor: any) => {
+		saveToCustomizer(swatchColor);
+	};
+
+	const handleWindowResize = () => {
 		setPickerContainerStyle(getPickerContainerStyle());
-	}
+	};
 
-	// Reference to the form div.
-	const formRef = useRef<HTMLDivElement | null>(null);
+	let controlLabel = (
+		<span
+			className="customize-control-title"
+			dangerouslySetInnerHTML={{ __html: props.label }}
+		/>
+	);
 
-	// Reference to the color picker popup.
-	const pickerRef = useRef<HTMLDivElement | null>(null);
+	let controlDescription = (
+		<span
+			className="description customize-control-description"
+			dangerouslySetInnerHTML={{ __html: props.description }}
+		></span>
+	);
 
-	// Reference to the reset button.
-	const resetRef = useRef<HTMLButtonElement | null>(null);
+	controlLabel = (
+		<label className="wpbf-control-label">
+			{props.label ? controlLabel : ""}
+			{props.description ? controlDescription : ""}
+		</label>
+	);
 
-	const [isPopupOpen, setIsPopupOpen] = useState(props.isPopupOpen ?? false);
+	controlLabel = props.label || props.description ? controlLabel : <></>;
 
-	// On multicolor control, listen to `value` && `isPopupOpen` properties change.
-	if (props.type && props.type === "wpbf-multicolor") {
-		useEffect(() => {
-			setInputValue(
-				convertColorForInput(
-					props.value,
-					useHueMode,
-					pickerComponent,
-					formComponent,
-				),
-			);
+	const formRef = useRef(null); // Reference to the form div.
+	const pickerRef = useRef(null); // Reference to the picker popup.
+	const resetRef = useRef(null); // Reference to the picker popup.
 
-			setPickerValue(
-				convertColorForPicker(props.value, useHueMode, pickerComponent),
-			);
-		}, [props.value]);
+	const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-		useEffect(() => {
-			setIsPopupOpen(props.isPopupOpen ?? false);
-		}, [props.isPopupOpen]);
-	}
+	const usePositionFixed = "default" !== labelStyle;
 
 	const [pickerContainerStyle, setPickerContainerStyle] = useState({});
 
 	const getPickerContainerStyle = () => {
 		let pickerContainerStyle: Record<string, any> = {};
 
-		if ("default" === labelStyle) {
-			return pickerContainerStyle;
-		}
+		if (!usePositionFixed) return pickerContainerStyle;
 
 		const rawPadding = window.getComputedStyle(
-			container.parentNode as HTMLElement,
+			control.container[0].parentNode as HTMLElement,
 		).paddingLeft;
 
 		const padding = parseInt(rawPadding, 10) * 2;
 
 		pickerContainerStyle.width =
-			(container.parentNode as HTMLElement).getBoundingClientRect().width -
-			padding;
+			(control.container[0].parentNode as HTMLElement).getBoundingClientRect()
+				.width - padding;
 
-		const controlLeftOffset = (container.offsetLeft - 9) * -1;
+		const controlLeftOffset = (control.container[0].offsetLeft - 9) * -1;
 
 		pickerContainerStyle.left = controlLeftOffset + "px";
 
 		return pickerContainerStyle;
 	};
 
-	function convertInputValueTo6Digits() {
-		if (
-			typeof inputValue === "string" &&
-			4 === inputValue.length &&
-			inputValue.includes("#")
-		) {
+	const convertInputValueTo6Digits = () => {
+		if (4 === inputValue.length && inputValue.includes("#")) {
 			setInputValue(colord(inputValue).toHex());
 		}
-	}
+	};
 
-	function togglePopup() {
-		if (useExternalPopupToggle) return;
-
-		if (isPopupOpen) {
-			closePopup();
+	const togglePicker = () => {
+		if (isPickerOpen) {
+			closePicker();
 		} else {
-			openPopup();
+			openPicker();
 		}
-	}
+	};
 
-	function openPopup() {
-		if (isPopupOpen) return;
+	const openPicker = () => {
+		if (isPickerOpen) return;
 
 		setPickerContainerStyle(getPickerContainerStyle());
 		convertInputValueTo6Digits();
-		setIsPopupOpen(true);
-	}
+		setIsPickerOpen(true);
+	};
 
-	function closePopup() {
-		if (!isPopupOpen) return;
+	const closePicker = () => {
+		if (!isPickerOpen) return;
 
-		setIsPopupOpen(false);
+		setIsPickerOpen(false);
 		setTimeout(convertInputValueTo6Digits, 200);
+	};
+
+	function renderColorPickerComponent() {
+		// We can't just render `pickerComponent` directly, we need these lines so that the compiler will import them.
+		switch (pickerComponent) {
+			case "HexColorPicker":
+				return (
+					<HexColorPicker
+						color={pickerValue as string}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "RgbColorPicker":
+				return (
+					<RgbColorPicker
+						color={pickerValue as RgbColor}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "RgbStringColorPicker":
+				return (
+					<RgbStringColorPicker
+						color={pickerValue as string}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "RgbaColorPicker":
+				return (
+					<RgbaColorPicker
+						color={pickerValue as RgbaColor}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "RgbaStringColorPicker":
+				return (
+					<RgbaStringColorPicker
+						color={pickerValue as string}
+						onChange={handlePickerChange}
+					/>
+				);
+			// We treat HueColorPicker (hue mode) as HslColorPicker.
+			case "HueColorPicker":
+				return (
+					<HslColorPicker
+						color={pickerValue as HslColor}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "HslColorPicker":
+				return (
+					<HslColorPicker
+						color={pickerValue as HslColor}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "HslStringColorPicker":
+				return (
+					<HslStringColorPicker
+						color={pickerValue as string}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "HslaColorPicker":
+				return (
+					<HslaColorPicker
+						color={pickerValue as HslaColor}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "HslaStringColorPicker":
+				return (
+					<HslaStringColorPicker
+						color={pickerValue as string}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "HsvColorPicker":
+				return (
+					<HsvColorPicker
+						color={pickerValue as HsvColor}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "HsvStringColorPicker":
+				return (
+					<HsvStringColorPicker
+						color={pickerValue as string}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "HsvaColorPicker":
+				return (
+					<HsvaColorPicker
+						color={pickerValue as HsvaColor}
+						onChange={handlePickerChange}
+					/>
+				);
+			case "HsvaStringColorPicker":
+				return (
+					<HsvaStringColorPicker
+						color={pickerValue as string}
+						onChange={handlePickerChange}
+					/>
+				);
+			default:
+				return (
+					<HexColorPicker
+						color={pickerValue as string}
+						onChange={handlePickerChange}
+					/>
+				);
+		}
 	}
 
 	useWindowResize(handleWindowResize);
 
-	if (!useExternalPopupToggle) {
-		// Handle outside focus to close the picker popup.
-		useFocusOutside(formRef, closePopup);
+	// Handle outside focus to close the picker popup.
+	useFocusOutside(formRef, closePicker);
 
-		// Handle outside click to close the picker popup.
-		useClickOutside(pickerRef, resetRef, closePopup);
-	}
+	// Handle outside click to close the picker popup.
+	useClickOutside(pickerRef, resetRef, closePicker);
 
 	let colorSwatches = props.colorSwatches;
 
@@ -243,67 +426,110 @@ export default function ColorForm(props: {
 		}
 	}
 
+	const controlHeader = (
+		<>
+			{controlLabel}
+			<div
+				className="customize-control-notifications-container"
+				ref={props.setNotificationContainer}
+			/>
+		</>
+	);
+
+	let formClassName = useHueMode
+		? "wpbf-control-form use-hue-mode"
+		: "wpbf-control-form";
+
+	formClassName += " has-" + labelStyle + "-label-style";
+
+	let pickerContainerClassName = isPickerOpen
+		? pickerComponent + " colorPickerContainer is-open"
+		: pickerComponent + " colorPickerContainer";
+
+	const pickerTrigger = (
+		<>
+			<button
+				type="button"
+				ref={resetRef}
+				className="wpbf-control-reset"
+				onClick={handleReset}
+				style={{ display: isPickerOpen ? "flex" : "none" }}
+			>
+				<i className="dashicons dashicons-image-rotate"></i>
+			</button>
+
+			<ColorPickerCircle
+				pickerComponent={pickerComponent}
+				useHueMode={useHueMode}
+				color={
+					!useHueMode
+						? inputValue
+						: colord({ h: inputValue, s: 100, l: 50 }).toHex()
+				}
+				isPickerOpen={isPickerOpen}
+				togglePickerHandler={togglePicker}
+			/>
+		</>
+	);
+
+	let pickerHeader;
+
+	switch (labelStyle) {
+		case "tooltip":
+			pickerHeader = (
+				<>
+					{pickerTrigger}
+					{!isPickerOpen && (
+						<div className="wpbf-label-tooltip">{controlHeader}</div>
+					)}
+				</>
+			);
+			break;
+
+		case "top":
+			pickerHeader = (
+				<>
+					{controlHeader}
+					{pickerTrigger}
+				</>
+			);
+			break;
+
+		default:
+			pickerHeader = (
+				<>
+					<div className="wpbf-control-cols">
+						<div className="wpbf-control-left-col">{controlHeader}</div>
+						<div className="wpbf-control-right-col">{pickerTrigger}</div>
+					</div>
+				</>
+			);
+			break;
+	}
+
 	return (
 		<>
-			<div
-				className={`wpbf-control-form ${useHueMode ? "use-hue-mode" : ""} has-${labelStyle}-label-style`}
-				ref={formRef}
-				tabIndex={1}
-			>
-				{!props.removeHeader && (
-					<ControlHeader
-						label={label}
-						description={description}
-						labelStyle={labelStyle}
-						pickerComponent={pickerComponent}
-						useHueMode={useHueMode}
-						inputValue={inputValue}
-						isPopupOpen={isPopupOpen}
-						togglePicker={togglePopup}
-						resetRef={resetRef}
-						onResetButtonClick={() => {
-							if (!initialColor) {
-								currentInputValue = "";
-								currentPickerValue = "";
-							}
-
-							props.onReset?.();
-						}}
-						setNotificationContainer={props.setNotificationContainer}
-					/>
-				)}
-
+			<div className={formClassName} ref={formRef} tabIndex={1}>
+				{pickerHeader}
 				<div
 					ref={pickerRef}
-					className={`${pickerComponent} colorPickerContainer ${isPopupOpen ? "is-open" : ""}`}
+					className={pickerContainerClassName}
 					style={pickerContainerStyle}
 				>
 					{!useHueMode && (
 						<ColorPickerSwatches
 							colors={colorSwatches}
-							onClick={(color) => {
-								props.onChange?.(color);
-							}}
+							onClick={handleSwatchesClick}
 						/>
 					)}
 
-					<ColorPickerComponent
-						pickerComponent={pickerComponent}
-						value={pickerValue}
-						onChange={(color) => {
-							currentPickerValue = color;
-							props.onChange?.(color);
-						}}
-					/>
+					{renderColorPickerComponent()}
 
 					<ColorPickerInput
 						pickerComponent={pickerComponent}
 						useHueMode={useHueMode}
 						color={inputValue}
-						onChange={(value) => {
-							currentInputValue = value;
-							props.onChange?.(value);
-						}}
+						onChange={handleInputChange}
 					/>
 				</div>
 			</div>

@@ -22,11 +22,11 @@ final class CustomizerSection {
 	private $section;
 
 	/**
-	 * Field's dependencies.
+	 * Tabs for the section.
 	 *
 	 * @var array
 	 */
-	private $section_dependencies = [];
+	private $section_tabs = [];
 
 	/**
 	 * Construct the class.
@@ -162,26 +162,15 @@ final class CustomizerSection {
 	 * Callback will be called with one parameter which is the instance of WP_Customize_Section.
 	 * It should return boolean to indicate whether the section is active or not.
 	 *
-	 * @param callable|array $active_callback Section active callback.
+	 * @param callable $active_callback Section active callback.
 	 *
 	 * @return $this
 	 */
 	public function activeCallback( $active_callback ) {
 
-		if ( empty( $active_callback ) ) {
-			return $this;
-		}
-
-		if ( is_callable( $active_callback ) ) {
+		if ( ! empty( $active_callback ) && is_callable( $active_callback ) ) {
 			$this->section->active_callback = $active_callback;
-			return $this;
 		}
-
-		if ( ! is_array( $active_callback ) ) {
-			return $this;
-		}
-
-		$this->section_dependencies = $active_callback;
 
 		return $this;
 
@@ -195,7 +184,7 @@ final class CustomizerSection {
 	public function tabs( $tabs ) {
 
 		if ( ! empty( $tabs ) && is_array( $tabs ) ) {
-			$this->section->tabs = $tabs;
+			$this->section_tabs = $tabs;
 		}
 
 		return $this;
@@ -226,7 +215,6 @@ final class CustomizerSection {
 	 */
 	public function add() {
 
-		$this->addSectionDependency();
 		return $this->addToPanel( '' );
 
 	}
@@ -244,22 +232,11 @@ final class CustomizerSection {
 
 		CustomizerStore::$added_sections[] = $this->section;
 
-		$this->addSectionDependency();
-
-		return $this->section;
-
-	}
-
-	/**
-	 * Add section dependency.
-	 */
-	private function addSectionDependency() {
-
-		if ( empty( $this->section_dependencies ) ) {
-			return;
+		if ( ! empty( $this->section_tabs ) ) {
+			CustomizerStore::$added_section_tabs[ $this->section->id ] = $this->section_tabs;
 		}
 
-		CustomizerStore::$added_section_dependencies[ $this->section->id ] = $this->section_dependencies;
+		return $this->section;
 
 	}
 

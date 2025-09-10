@@ -25,9 +25,6 @@ define( 'WPBF_PREMIUM_MIN_VERSION', '2.10' );
  */
 function wpbf_theme_setup() {
 
-	// Init.
-	require_once WPBF_THEME_DIR . '/inc/init.php';
-
 	// Custom logo.
 	add_theme_support(
 		'custom-logo',
@@ -113,7 +110,7 @@ function wpbf_theme_setup() {
 	}
 
 }
-add_action( 'after_setup_theme', 'wpbf_theme_setup', 9 );
+add_action( 'after_setup_theme', 'wpbf_theme_setup' );
 
 /**
  * Theme init.
@@ -159,16 +156,13 @@ function wpbf_scripts() {
 	if ( wp_script_is( 'jquery', 'enqueued' ) ) {
 		wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-jquery-min.js', array( 'jquery' ), WPBF_VERSION, true );
 	} else {
-		wp_enqueue_script( 'wpbf-utils', get_template_directory_uri() . '/js/min/wpbf-utils.js', array(), WPBF_VERSION, true );
-		wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-min.js', array( 'wpbf-utils' ), WPBF_VERSION, true );
+		wp_enqueue_script( 'wpbf-site', get_template_directory_uri() . '/js/min/site-min.js', array(), WPBF_VERSION, true );
 	}
 
 	wp_add_inline_script(
 		'wpbf-site',
 		'var WpbfObj = {
-			siteUrl: "' . esc_url( site_url() ) . '",
 			ajaxurl: "' . admin_url( 'admin-ajax.php' ) . '"
-			isPremium: ' . wpbf_is_premium() . '
 		};',
 		'before'
 	);
@@ -253,3 +247,6 @@ function wpbf_enqueue_admin_scripts() {
 
 }
 add_action( 'admin_enqueue_scripts', 'wpbf_enqueue_admin_scripts' );
+
+// Init.
+require_once WPBF_THEME_DIR . '/inc/init.php';

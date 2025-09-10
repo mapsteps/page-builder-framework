@@ -58,14 +58,22 @@
 		transition: transform 0.3s;
 	}
 
+	.wpbf-control-cols {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
 	.wpbf-control-left-col {
 		display: flex;
 		align-items: center;
 		width: 75%;
+		padding-right: 13px;
 	}
 
 	.wpbf-control-right-col {
 		width: 25%;
+		text-align: right;
 	}
 
 	.wpbf-control-input:focus {

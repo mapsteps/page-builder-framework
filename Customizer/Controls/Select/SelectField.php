@@ -18,19 +18,30 @@ class SelectField extends BaseField {
 	/**
 	 * Setting's sanitize callback.
 	 *
-	 * @param string|string[] $value The value to sanitize.
+	 * @param string $value The value to sanitize.
 	 *
 	 * @return string|string[]
 	 */
 	public function sanitizeCallback( $value ) {
 
+		if ( ! is_array( $value ) ) {
+			return sanitize_text_field( $value );
+		}
+
+		$total_values   = count( $value );
 		$max_selections = -1;
 
 		if ( isset( $this->control->custom_properties['max_selections'] ) ) {
 			$max_selections = (int) $this->control->custom_properties['max_selections'];
 		}
 
-		return ( new SelectUtil() )->sanitize( $value, $max_selections );
+		if ( $total_values > $max_selections ) {
+			$value = array_slice( $value, 0, $max_selections );
+		}
+
+		$values = array_map( 'sanitize_text_field', $value );
+
+		return array_values( $values );
 
 	}
 
@@ -63,8 +74,8 @@ class SelectField extends BaseField {
 			$select_control->placeholder = $custom_props['placeholder'];
 		}
 
-		if ( isset( $custom_props['layout_style'] ) ) {
-			$select_control->layout_style = $custom_props['layout_style'];
+		if ( isset( $custom_props['clearable'] ) ) {
+			$select_control->clearable = $custom_props['clearable'];
 		}
 
 		$wp_customize_manager->add_control( $select_control );

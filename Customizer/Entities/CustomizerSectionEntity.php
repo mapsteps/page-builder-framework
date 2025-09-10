@@ -84,17 +84,11 @@ class CustomizerSectionEntity {
 	public $active_callback = '';
 
 	/**
-	 * Tabs for the section.
-	 *
-	 * @var array
-	 */
-	public $tabs = array();
-
-	/**
 	 * Custom properties which are not provided by WP_Customize_Section by default.
 	 *
 	 * @var array
 	 */
 	public $custom_properties = array();
+
 
 }

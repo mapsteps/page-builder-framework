@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { WpbfCustomizeSetting } from "../../Base/src/interface";
 import {
 	MarginPaddingDimension,
 	MarginPaddingDimensionValuePair,
 	MarginPaddingValue,
-} from "./margin-padding-interface";
+	WpbfCustomizeMarginPaddingControl,
+} from "./interface";
 import {
 	makeObjValueWithoutUnit,
 	makeObjValueWithoutUnitFromJson,
@@ -13,11 +15,14 @@ import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import { encodeJsonOrDefault } from "../../Generic/src/string-util";
 
 export default function MarginPaddingForm(props: {
-	id: string;
 	type: string;
 	subtype: string;
 	label?: string;
 	description?: string;
+	// setNotificationContainer: (el: HTMLElement) => void;
+	setNotificationContainer: any;
+	control: WpbfCustomizeMarginPaddingControl;
+	customizerSetting?: WpbfCustomizeSetting<MarginPaddingValue | string>;
 	default?: any;
 	defaultArray: MarginPaddingValue;
 	valueArray: MarginPaddingValue;
@@ -27,11 +32,6 @@ export default function MarginPaddingForm(props: {
 	dimensions: string[];
 	devices?: string[] | undefined;
 	isResponsive: boolean;
-	updateCustomizerSetting?: (val: string | MarginPaddingValue) => void;
-	overrideUpdateComponentStateFn?: (
-		fn: (val: string | MarginPaddingValue) => void,
-	) => void;
-	setNotificationContainer?: any;
 }) {
 	const [inputValues, setInputValues] = useState(() => {
 		return props.valueArray;
@@ -40,16 +40,14 @@ export default function MarginPaddingForm(props: {
 	const defaultDefined =
 		"" !== props.default && "undefined" !== typeof props.default;
 
-	function updateComponentState(val: string | MarginPaddingValue) {
+	props.control.updateComponentState = (val) => {
 		const newVal =
 			typeof val === "string"
 				? makeObjValueWithoutUnitFromJson(props.dimensions, val)
 				: makeObjValueWithoutUnit(props.dimensions, val);
 
 		setInputValues(newVal);
-	}
-
-	props.overrideUpdateComponentStateFn?.(updateComponentState);
+	};
 
 	function handleInputChange(
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -120,13 +118,13 @@ export default function MarginPaddingForm(props: {
 		 * The "saveAsJson" option is used to support PBF's old "responsive_padding" control.
 		 */
 		if (props.saveAsJson) {
-			props.updateCustomizerSetting?.(
+			props.customizerSetting?.set(
 				encodeJsonOrDefault<MarginPaddingValue>(val),
 			);
 			return;
 		}
 
-		props.updateCustomizerSetting?.(newVal);
+		props.customizerSetting?.set(newVal);
 	}
 
 	function makeMappable(device?: string) {
@@ -177,7 +175,7 @@ export default function MarginPaddingForm(props: {
 						<div className="wpbf-control-fields">
 							{group.map((item, i) => {
 								const inputClassName = `wpbf-control-input wpbf-control-input${device ? `-${device}` : ""}-${item.dimension}`;
-								const inputId = `_customize-input-${props.id}${device ? `-${device}` : ""}-${item.dimension}`;
+								const inputId = `_customize-input-${props.control.id}${device ? `-${device}` : ""}-${item.dimension}`;
 								const label = device
 									? item.dimension.replace(device + "_", "")
 									: item.dimension;

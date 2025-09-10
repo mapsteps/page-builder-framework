@@ -1,27 +1,44 @@
-/// <reference path="../../global-types.js"/>
+/// <reference path="../../types.js"/>
 
 import setupDesktopMenu from "./setup/desktop-menu";
 import setupMobileMenu from "./setup/mobile-menu";
 import setupSite from "./setup/site-general";
+import {
+	getBreakpoints,
+	forEachEl,
+	getActiveBreakpoint,
+	getAttr,
+	getAttrAsNumber,
+	isInsideCustomizer,
+	listenDocumentEvent,
+} from "./utils/dom-util";
 
-/**
- * @type {WpbfUtils} utils
- */
-// @ts-ignore
-const utils = window.WpbfUtils;
+function init() {
+	setupSite();
+	setupDesktopMenu();
+	setupMobileMenu();
+}
 
 init();
 
-function init() {
-	setupSite(utils);
-	setupDesktopMenu(utils);
-	setupMobileMenu(utils);
-}
+// Export `Wpbf` object to `window`.
+// @ts-ignore
+window["Wpbf"] = {
+	site: {
+		getBreakpoints: getBreakpoints,
+		getActiveBreakpoint: getActiveBreakpoint,
+		isInsideCustomizer: isInsideCustomizer,
+		forEachEl: forEachEl,
+		listenDocumentEvent: listenDocumentEvent,
+		getAttr: getAttr,
+		getAttrAsNumber: getAttrAsNumber,
+	},
+};
 
+// Export `WpbfTheme` object to `window` for backwards compatibility.
 // @ts-ignore
 window["WpbfTheme"] = {
-	// For backwards compatibility.
-	breakpoints: utils.dom.getBreakpoints(),
-	activeBreakpoint: utils.dom.getActiveBreakpoint(),
-	isInsideCustomizer: utils.isInsideCustomizer(),
+	breakpoints: getBreakpoints(),
+	activeBreakpoint: getActiveBreakpoint(),
+	isInsideCustomizer: isInsideCustomizer(),
 };

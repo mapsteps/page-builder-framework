@@ -1,8 +1,9 @@
 import "./repeater-control.scss";
 
+import { WpbfCustomize } from "../../Base/src/interface";
 import {
 	RepeaterImageSelectOptions,
-	WpbfRepeaterControl,
+	WpbfCustomizeRepeaterControl,
 	WpbfRepeaterRow,
 } from "./repeater-interface";
 import RepeaterRow from "./repeater-row";
@@ -14,9 +15,9 @@ declare var wp: {
 };
 
 wp.customize.controlConstructor["wpbf-repeater"] =
-	wp.customize.Control.extend<WpbfRepeaterControl>({
+	wp.customize.Control.extend<WpbfCustomizeRepeaterControl>({
 		// When we're finished loading continue processing
-		ready: function (this: WpbfRepeaterControl): void {
+		ready: function (this: WpbfCustomizeRepeaterControl): void {
 			this.initWpbfControl?.();
 		},
 
@@ -31,8 +32,8 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		repeaterTemplate: undefined,
 
 		initWpbfControl: function (
-			this: WpbfRepeaterControl,
-			ctrl?: WpbfRepeaterControl,
+			this: WpbfCustomizeRepeaterControl,
+			ctrl?: WpbfCustomizeRepeaterControl,
 		) {
 			const control = ctrl || this;
 
@@ -228,7 +229,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * Create a media modal select frame, and store it so the instance can be reused when needed.
 		 * This is mostly a copy/paste of Core api.CroppedImageControl in /wp-admin/js/customize-control.js
 		 */
-		initCropperFrame: function (this: WpbfRepeaterControl): void {
+		initCropperFrame: function (this: WpbfCustomizeRepeaterControl): void {
 			// We get the field id from which this was called.
 			const currentFieldId = this.$thisButton
 				?.siblings("input.hidden-field")
@@ -298,7 +299,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * state if the image isn't the right size.
 		 */
 
-		onSelectForCrop: function (this: WpbfRepeaterControl) {
+		onSelectForCrop: function (this: WpbfCustomizeRepeaterControl) {
 			const attachment = this.frame.state().get("selection").first().toJSON();
 
 			if (
@@ -333,7 +334,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {object} - Options.
 		 */
 		calculateImageSelectOptions: function (
-			this: WpbfRepeaterControl,
+			this: WpbfCustomizeRepeaterControl,
 			attachment: any,
 			controller: any,
 		): object {
@@ -498,7 +499,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			this.frame.close();
 		},
 
-		getMimeType: function (this: WpbfRepeaterControl) {
+		getMimeType: function (this: WpbfCustomizeRepeaterControl) {
 			// We get the field id from which this was called
 			const currentFieldId = this.$thisButton
 				?.siblings("input.hidden-field")
@@ -596,7 +597,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		setValue: function (
-			this: WpbfRepeaterControl,
+			this: WpbfCustomizeRepeaterControl,
 			newValue: Record<string, any>,
 			refresh?: boolean,
 			filtering?: boolean,
@@ -643,7 +644,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {WpbfRepeaterRow|undefined} - Returns the new row.
 		 */
 		addRow: function (
-			this: WpbfRepeaterControl,
+			this: WpbfCustomizeRepeaterControl,
 			data?: Record<string, Record<string, any>>,
 		): WpbfRepeaterRow | undefined {
 			const control = this;
@@ -822,7 +823,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		updateField: function (
-			this: WpbfRepeaterControl,
+			this: WpbfCustomizeRepeaterControl,
 			e: JQuery.TriggeredEvent,
 			rowIndex: number,
 			fieldId: string,
@@ -866,7 +867,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 *
 		 * @returns {void}
 		 */
-		initColorPicker: function (this: WpbfRepeaterControl): void {
+		initColorPicker: function (this: WpbfCustomizeRepeaterControl): void {
 			const control = this;
 			const colorPicker = control.container?.find(".wpbf-classic-color-picker");
 			const fieldId = colorPicker?.data("field");
@@ -921,7 +922,7 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 		 * @returns {void}
 		 */
 		initSelect: function (
-			this: WpbfRepeaterControl,
+			this: WpbfCustomizeRepeaterControl,
 			theNewRow: WpbfRepeaterRow,
 			data?: Record<string, any>,
 		): void {

@@ -1,73 +1,69 @@
 import _ from "lodash";
 import {
-	WpbfControlDependencies,
+	WpbfControlDependency,
+	WpbfCustomize,
 	WpbfReversedControlDependencies,
 	WpbfReversedControlDependency,
-} from "./base-interface";
+} from "./interface";
+import hooks from "@wordpress/hooks";
 
-export default function setupControlDependencies(
-	globalControlDependencies: WpbfControlDependencies,
-) {
-	if (!window.wp.customize) return;
+declare var wp: {
+	customize: WpbfCustomize;
+	hooks: typeof hooks;
+};
+
+declare var wpbfCustomizerControlDependencies: Record<
+	string,
+	WpbfControlDependency[]
+>;
+
+export default function setupControlDependencies() {
 	const reversedControlDependencies: WpbfReversedControlDependencies = {};
 
-	for (const dependantControlId in globalControlDependencies) {
-		if (!globalControlDependencies.hasOwnProperty(dependantControlId)) {
+	for (const controlId in wpbfCustomizerControlDependencies) {
+		if (!wpbfCustomizerControlDependencies.hasOwnProperty(controlId)) {
 			continue;
 		}
 
-		const controlDependencies = globalControlDependencies[dependantControlId];
+		const controlDependencies = wpbfCustomizerControlDependencies[controlId];
 
 		for (const dependency of controlDependencies) {
-			let dependencySettingId = dependency.setting;
-
-			// Backwards compatibility.
-			if (!dependencySettingId && dependency.id) {
-				dependencySettingId = dependency.id;
+			if (!reversedControlDependencies[dependency.id]) {
+				reversedControlDependencies[dependency.id] = [];
 			}
 
-			if (!dependencySettingId) {
-				continue;
-			}
-
-			if (!reversedControlDependencies[dependencySettingId]) {
-				reversedControlDependencies[dependencySettingId] = [];
-			}
-
-			reversedControlDependencies[dependencySettingId].push({
-				dependantControlId: dependantControlId,
+			reversedControlDependencies[dependency.id].push({
+				dependantControlId: controlId,
 				operator: dependency.operator,
 				value: dependency.value,
 			});
 		}
 	}
 
-	const customizer = window.wp.customize;
-
-	customizer.bind("ready", function () {
-		for (const dependencySettingId in reversedControlDependencies) {
-			if (!reversedControlDependencies.hasOwnProperty(dependencySettingId)) {
+	wp.customize.bind("ready", function () {
+		for (const controlId in reversedControlDependencies) {
+			if (!reversedControlDependencies.hasOwnProperty(controlId)) {
 				continue;
 			}
 
-			listenDependencyControl(dependencySettingId);
+			listenDependencyControl(controlId);
 		}
 	});
 
-	function listenDependencyControl(dependencySettingId: string) {
-		customizer(dependencySettingId, function (setting) {
-			const rules = reversedControlDependencies[dependencySettingId];
+	function listenDependencyControl(dependencyControlId: string) {
+		wp.customize(dependencyControlId, function (setting) {
+			const rules = reversedControlDependencies[dependencyControlId];
 
-			handleRulesCondition(dependencySettingId, setting.get(), rules);
+			handleRulesCondition(dependencyControlId, setting.get(), rules);
 
 			setting.bind(function (newValue: string) {
-				handleRulesCondition(dependencySettingId, newValue, rules);
+				handleRulesCondition(dependencyControlId, newValue, rules);
 			});
 		});
 	}
 
 	function handleRulesCondition(
-		dependencySettingId: string,
+		dependencyControlId: string,
 		newValue: string,
 		rules: WpbfReversedControlDependency[],
 	) {
@@ -79,39 +75,28 @@ export default function setupControlDependencies(
 			);
 
 			if (!isDependencySatisfied) {
-				hideControl(ruleSet.dependantControlId);
+				wp.customize.control(ruleSet.dependantControlId)?.toggle(false);
 				continue;
 			}
 
 			const dependantDependencies =
-				globalControlDependencies[ruleSet.dependantControlId];
+				wpbfCustomizerControlDependencies[ruleSet.dependantControlId];
 
 			if (dependantDependencies.length < 2) {
-				showControl(ruleSet.dependantControlId);
+				wp.customize.control(ruleSet.dependantControlId)?.toggle(true);
 				continue;
 			}
 
 			let otherRulesSatisfied = true;
 
 			for (const dependantDependency of dependantDependencies) {
-				let dependantDependencySettingId = dependantDependency.setting;
-
-				// Backwards compatibility.
-				if (!dependantDependencySettingId && dependantDependency.id) {
-					dependantDependencySettingId = dependantDependency.id;
-				}
-
-				if (!dependantDependencySettingId) {
+				if (dependantDependency.id === dependencyControlId) {
 					continue;
 				}
 
-				if (dependantDependencySettingId === dependencySettingId) {
-					continue;
-				}
-
-				const dependantDependencyValue = customizer(
-					dependantDependencySettingId,
-				).get();
+				const dependantDependencyValue = wp
+					.customize(dependantDependency.id)
+					.get();
 
 				if (
 					!isRuleSatisfied(
@@ -126,142 +111,101 @@ export default function setupControlDependencies(
 			}
 
 			if (!otherRulesSatisfied) {
-				hideControl(ruleSet.dependantControlId);
+				wp.customize.control(ruleSet.dependantControlId)?.toggle(false);
 			} else {
-				showControl(ruleSet.dependantControlId);
+				wp.customize.control(ruleSet.dependantControlId)?.toggle(true);
 			}
 		}
 	}
 
-	function hideControl(controlId: string) {
-		if (insideInactiveTab(customizer.control(controlId)?.container[0])) {
-			customizer
-				.control(controlId)
-				?.container.removeClass("wpbf-tab-item-hidden");
+	function isRuleSatisfied(
+		actualValue: any,
+		operator: string,
+		expectedValue: any,
+	): boolean {
+		operator = operator.trim().toLowerCase();
 
-			customizer
-				.control(controlId)
-				?.container.addClass("wpbf-tab-item-invisible");
+		switch (operator) {
+			case "==":
+				return actualValue == expectedValue;
+			case "===":
+				return actualValue === expectedValue;
+			case "!=":
+				return actualValue != expectedValue;
+			case "!==":
+				return actualValue !== expectedValue;
+			case ">":
+				return actualValue > expectedValue;
+			case ">=":
+				return actualValue >= expectedValue;
+			case "<":
+				return actualValue < expectedValue;
+			case "<=":
+				return actualValue <= expectedValue;
+			case "in":
+				return compareInOperator(actualValue, expectedValue);
+			case "not in":
+				return !compareInOperator(actualValue, expectedValue);
 		}
 
-		customizer.control(controlId)?.onChangeActive(false, {
-			completeCallback: () => {
-				if (
-					customizer
-						.control(controlId)
-						?.container.hasClass("wpbf-tab-item-invisible")
-				) {
-					customizer
-						.control(controlId)
-						?.container.removeClass("wpbf-tab-item-invisible");
+		return false;
+	}
 
-					customizer
-						.control(controlId)
-						?.container.addClass("wpbf-tab-item-hidden");
+	function compareInOperator(actualValue: any, expectedValue: any): boolean {
+		if (Array.isArray(expectedValue)) {
+			const expectedValueArray: any[] = expectedValue;
+			let found = false;
+
+			if (Array.isArray(actualValue)) {
+				const actualValueArray: any[] = actualValue;
+
+				for (let i = 0; i < actualValueArray.length; ++i) {
+					if (expectedValueArray.includes(actualValueArray[i])) {
+						found = true;
+						break;
+					}
 				}
-			},
-		});
-	}
+			} else {
+				if (expectedValueArray.includes(actualValue)) {
+					found = true;
+				}
+			}
 
-	function showControl(controlId: string) {
-		customizer.control(controlId)?.onChangeActive(true, {});
-	}
-}
-
-function insideInactiveTab(el: HTMLElement | undefined | null) {
-	if (!el) return false;
-	if (!el.dataset.wpbfParentTabId) return false;
-	if (!el.classList.contains("wpbf-tab-item-hidden")) return false;
-	return true;
-}
-
-export function isRuleSatisfied(
-	actualValue: any,
-	operator: string,
-	expectedValue: any,
-): boolean {
-	operator = operator.trim().toLowerCase();
-
-	switch (operator) {
-		case "==":
-			return actualValue == expectedValue;
-		case "===":
-			return actualValue === expectedValue;
-		case "!=":
-			return actualValue != expectedValue;
-		case "!==":
-			return actualValue !== expectedValue;
-		case ">":
-			return actualValue > expectedValue;
-		case ">=":
-			return actualValue >= expectedValue;
-		case "<":
-			return actualValue < expectedValue;
-		case "<=":
-			return actualValue <= expectedValue;
-		case "in":
-			return compareInOperator(actualValue, expectedValue);
-		case "not in":
-			return !compareInOperator(actualValue, expectedValue);
-	}
-
-	return false;
-}
-
-function compareInOperator(actualValue: any, expectedValue: any): boolean {
-	if (Array.isArray(expectedValue)) {
-		const expectedValueArray: any[] = expectedValue;
-		let found = false;
+			return found;
+		}
 
 		if (Array.isArray(actualValue)) {
 			const actualValueArray: any[] = actualValue;
-
-			for (let i = 0; i < actualValueArray.length; ++i) {
-				if (expectedValueArray.includes(actualValueArray[i])) {
-					found = true;
-					break;
-				}
-			}
-		} else {
-			if (expectedValueArray.includes(actualValue)) {
-				found = true;
-			}
+			return actualValueArray.includes(expectedValue);
 		}
 
-		return found;
-	}
+		if (_.isObject(actualValue)) {
+			const actualValueObj: Record<string, any> = actualValue;
 
-	if (Array.isArray(actualValue)) {
-		const actualValueArray: any[] = actualValue;
-		return actualValueArray.includes(expectedValue);
-	}
-
-	if (_.isObject(actualValue)) {
-		const actualValueObj: Record<string, any> = actualValue;
-
-		if (!_.isUndefined(actualValueObj[expectedValue])) {
-			return true;
-		}
-
-		for (const prop in actualValueObj) {
-			if (!actualValueObj.hasOwnProperty(prop)) continue;
-
-			if (actualValueObj[prop] === expectedValue) {
+			if (!_.isUndefined(actualValueObj[expectedValue])) {
 				return true;
 			}
+
+			for (const prop in actualValueObj) {
+				if (!actualValueObj.hasOwnProperty(prop)) continue;
+
+				if (actualValueObj[prop] === expectedValue) {
+					return true;
+				}
+			}
 		}
-	}
 
-	if ("string" === typeof actualValue) {
-		if ("string" === typeof expectedValue) {
-			return (
-				-1 < expectedValue.indexOf(actualValue) &&
-				-1 < actualValue.indexOf(expectedValue)
-			);
+		if ("string" === typeof actualValue) {
+			if ("string" === typeof expectedValue) {
+				return (
+					-1 < expectedValue.indexOf(actualValue) &&
+					-1 < actualValue.indexOf(expectedValue)
+				);
+			}
+
+			return -1 < expectedValue.indexOf(actualValue);
 		}
 
-		return -1 < expectedValue.indexOf(actualValue);
+		return false;
 	}
-
-	return false;
 }

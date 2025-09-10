@@ -1,7 +1,10 @@
 import "./input-slider-control.scss";
 import InputSliderControl from "./InputSliderControl";
+import { WpbfCustomize } from "../../Base/src/interface";
 
-if (window.wp.customize) {
-	window.wp.customize.controlConstructor["wpbf-input-slider"] =
-		InputSliderControl(window.wp.customize);
-}
+declare var wp: {
+	customize: WpbfCustomize;
+};
+
+// Register control type with Customizer.
+wp.customize.controlConstructor["wpbf-input-slider"] = InputSliderControl;

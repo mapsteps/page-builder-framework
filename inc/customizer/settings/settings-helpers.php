@@ -66,21 +66,3 @@ function wpbf_default_font_choices() {
 		'fonts' => apply_filters( 'wpbf_kirki_font_choices', array() ),
 	);
 }
-
-/**
- * Typography field properties.
- *
- * @return array The typography field properties.
- */
-function wpbf_typography_field_properties() {
-
-	return array(
-		'choices_global_var' => array(
-			'fonts' => array(
-				'families' => 'wpbfGoogleFontFamilies',
-				'variants' => 'wpbfGoogleFontVariants',
-			),
-		),
-	);
-
-}

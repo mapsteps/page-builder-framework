@@ -1,7 +1,7 @@
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
-} from "../../Base/src/base-interface";
+} from "../../Base/src/interface";
 
 /**
  * The setting value returned via PHP will be associative array
@@ -12,9 +12,9 @@ import {
  * But the control.setting.get() in JS will return string
  * because it will be taken from the linked (hidden) setting field.
  */
-export type WpbfRepeaterControlValue = Record<string, any>[] | string;
+export type WpbfCustomizeRepeaterValue = Record<string, any>[] | string;
 
-export interface WpbfRepeaterControlParams
+export interface WpbfCustomizeRepeaterControlParams
 	extends WpbfCustomizeControlParams<Record<string, any>[]> {
 	fields: Record<string, Record<string, any>>;
 	rowLabel: Record<string, string>;
@@ -22,10 +22,10 @@ export interface WpbfRepeaterControlParams
 	limit: number | boolean;
 }
 
-export interface WpbfRepeaterControl
+export interface WpbfCustomizeRepeaterControl
 	extends WpbfCustomizeControl<
-		WpbfRepeaterControlValue,
-		WpbfRepeaterControlParams
+		WpbfCustomizeRepeaterValue,
+		WpbfCustomizeRepeaterControlParams
 	> {
 	rows?: WpbfRepeaterRow[];
 }

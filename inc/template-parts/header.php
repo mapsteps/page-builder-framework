@@ -10,10 +10,6 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-wpbf_header_builder_hooks();
-
-do_action( 'wpbf_after_header_builder_hooks' );
-
 ?>
 
 <header id="header" class="wpbf-page-header" itemscope="itemscope" itemtype="https://schema.org/WPHeader">

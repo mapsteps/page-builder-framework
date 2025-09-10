@@ -1,4 +1,4 @@
-import { DevicesValue } from "../../Responsive/src/responsive-interface";
+import { DevicesValue } from "../../Responsive/src/interface";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
 import { makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
 
@@ -66,6 +66,19 @@ export function makeValueForSlider(
 	const valueObject = makeLimitedNumberUnitPair(value, min, max);
 
 	return "" === valueObject.number ? min : valueObject.number;
+}
+
+/**
+ * Make a string value from a string or number.
+ *
+ * @export
+ *
+ * @param {(string | number)} value - The value to convert.
+ *
+ * @return {string} The string value.
+ */
+export function makeStringValue(value: string | number): string {
+	return "string" === typeof value ? value : value.toString();
 }
 
 /**

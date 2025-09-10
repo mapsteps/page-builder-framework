@@ -1,8 +1,18 @@
+import {
+	WpbfCustomize,
+	WpbfCustomizeSection,
+} from "../../Controls/Base/src/interface";
+import "./section-types.scss";
 import _ from "lodash";
-import { WpbfCustomizeSection } from "../../Controls/Base/src/base-interface";
 
-export function setupSectionTypes(customizer: WpbfCustomize) {
-	customizer.section.each(function (section: WpbfCustomizeSection) {
+declare var wp: {
+	customize: WpbfCustomize;
+};
+
+wp.customize.bind("ready", setupSections);
+
+function setupSections() {
+	wp.customize.section.each(function (section: WpbfCustomizeSection) {
 		const panel = jQuery("#sub-accordion-section-" + section.id);
 		const sectionItem = jQuery("#accordion-section-" + section.id);
 
@@ -16,25 +26,25 @@ export function setupSectionTypes(customizer: WpbfCustomize) {
 	/**
 	 * See https://github.com/justintadlock/trt-customizer-pro
 	 */
-	customizer.sectionConstructor["wpbf-link"] = customizer.Section.extend({
+	wp.customize.sectionConstructor["wpbf-link"] = wp.customize.Section.extend({
 		attachEvents: function () {},
 		isContextuallyActive: function () {
 			return true;
 		},
 	});
 
-	setupSectionsReflow(customizer);
+	setupSectionsReflow();
 }
 
 /**
  * @see https://wordpress.stackexchange.com/a/256103/17078
  */
-function setupSectionsReflow(customizer: WpbfCustomize) {
-	customizer.bind("pane-contents-reflowed", function () {
+function setupSectionsReflow() {
+	wp.customize.bind("pane-contents-reflowed", function () {
 		const nestedSections: WpbfCustomizeSection[] = [];
 
 		// Reflow Sections.
-		customizer.section.each(function (section: WpbfCustomizeSection) {
+		wp.customize.section.each(function (section: WpbfCustomizeSection) {
 			if ("wpbf-nested" !== section.params.type || !section.params.parentId) {
 				return;
 			}
@@ -42,7 +52,7 @@ function setupSectionsReflow(customizer: WpbfCustomize) {
 			nestedSections.push(section);
 		});
 
-		nestedSections.sort(customizer.utils.prioritySort).reverse();
+		nestedSections.sort(wp.customize.utils.prioritySort).reverse();
 
 		jQuery.each(nestedSections, function (i, nestedSection) {
 			if (!nestedSection.headContainer) return;
@@ -58,14 +68,14 @@ function setupSectionsReflow(customizer: WpbfCustomize) {
 	});
 
 	// Extend Section.
-	const _sectionEmbed = customizer.Section.prototype.embed;
+	const _sectionEmbed = wp.customize.Section.prototype.embed;
 
 	const _sectionIsContextuallyActive =
-		customizer.Section.prototype.isContextuallyActive;
+		wp.customize.Section.prototype.isContextuallyActive;
 
-	const _sectionAttachEvents = customizer.Section.prototype.attachEvents;
+	const _sectionAttachEvents = wp.customize.Section.prototype.attachEvents;
 
-	customizer.Section = customizer.Section.extend({
+	wp.customize.Section = wp.customize.Section.extend({
 		attachEvents: function (this: WpbfCustomizeSection) {
 			const section = this;
 
@@ -78,7 +88,7 @@ function setupSectionsReflow(customizer: WpbfCustomize) {
 
 			section.expanded.bind(function (expanded: boolean) {
 				if (!section.params.parentId) return;
-				const parent = customizer.section(section.params.parentId);
+				const parent = wp.customize.section(section.params.parentId);
 
 				if (expanded) {
 					parent.contentContainer?.addClass("current-section-parent");
@@ -91,7 +101,7 @@ function setupSectionsReflow(customizer: WpbfCustomize) {
 				?.find(".customize-section-back")
 				.off("click keydown")
 				.on("click keydown", function (event) {
-					if (customizer.utils.isKeydownButNotEnterEvent(event)) {
+					if (wp.customize.utils.isKeydownButNotEnterEvent(event)) {
 						return;
 					}
 
@@ -102,7 +112,9 @@ function setupSectionsReflow(customizer: WpbfCustomize) {
 
 					if (section.expanded()) {
 						// wp.customize.section(section.params.section).expand();
-						customizer.section(section.params.parentId).expand(section.params);
+						wp.customize
+							.section(section.params.parentId)
+							.expand(section.params);
 					}
 				});
 		},
@@ -136,7 +148,9 @@ function setupSectionsReflow(customizer: WpbfCustomize) {
 			let activeCount = 0;
 			const children = section._children("section", "control");
 
-			customizer.section.each(function (iteratedSection: WpbfCustomizeSection) {
+			wp.customize.section.each(function (
+				iteratedSection: WpbfCustomizeSection,
+			) {
 				if (!iteratedSection.params.parentId) return;
 
 				if (iteratedSection.params.parentId !== section.id) {
@@ -146,7 +160,7 @@ function setupSectionsReflow(customizer: WpbfCustomize) {
 				children.push(iteratedSection);
 			});
 
-			children.sort(customizer.utils.prioritySort);
+			children.sort(wp.customize.utils.prioritySort);
 
 			_(children).each(function (child) {
 				if ("undefined" !== typeof child.isContextuallyActive) {

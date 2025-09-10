@@ -1,6 +1,6 @@
 import { limitNumber, makeNumberUnitPair } from "../../Generic/src/number-util";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
-import { DevicesValue } from "./responsive-interface";
+import { DevicesValue } from "./interface";
 
 /**
  * Make an empty `DevicesValue` object.
