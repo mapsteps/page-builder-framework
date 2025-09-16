@@ -22,7 +22,7 @@
     "shx": "^0.3.4",
     "terser": "^5.44.0",
     "typescript": "^5.9.2",
-    "vite": "^6.3.6",
+    "vite": "^7.1.5",
     "wordpress__customize-browser": "github:ultrafastcloud/wordpress__customize-browser"
   },
   "dependencies": {

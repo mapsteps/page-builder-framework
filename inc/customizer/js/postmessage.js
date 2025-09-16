@@ -912,6 +912,9 @@
 		var styleTag = setupStyleTag('blog_pagination_font_size');
 
 		value.bind(function (newval) {
+			console.log(`newval is ${newval} and typeof newval is ${typeof newval}`);
+			if (!newval && newval != 0) return;
+
 			var suffix = $.isNumeric(newval) ? 'px' : '';
 			styleTag.innerHTML = '.pagination .page-numbers {font-size: ' + newval + suffix + ';}';
 		});
