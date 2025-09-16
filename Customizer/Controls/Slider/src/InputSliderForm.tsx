@@ -31,7 +31,7 @@ export default function InputSliderForm(props: {
 		} else if ("input" === trigger) {
 			setSliderRefValue(makeValueForSlider(val, props.min, props.max));
 		} else if ("reset" === trigger) {
-			setSliderRefValue(val);
+			setSliderRefValue(val === "" ? props.min : val);
 			setInputRefValue(val);
 		}
 	};
@@ -77,23 +77,21 @@ export default function InputSliderForm(props: {
 	}
 
 	function handleResetButtonClick(e: MouseEvent) {
+		let valueToSave: string | number = "";
+
 		if ("" !== props.default && "undefined" !== typeof props.default) {
-			setSliderRefValue(props.default);
-			setInputRefValue(props.default);
+			valueToSave = props.default;
 		} else {
 			if ("" !== props.value) {
-				setSliderRefValue(props.value);
-				setInputRefValue(props.value);
+				valueToSave = props.value;
 			} else {
-				setSliderRefValue(props.min);
-				setInputRefValue("");
+				valueToSave = "";
 			}
 		}
 
 		trigger = "reset";
 
-		if (!sliderRef || !sliderRef.current) return;
-		props.customizerSetting?.set(sliderRef.current.value);
+		props.customizerSetting?.set(valueToSave);
 	}
 
 	// Preparing for the template.
