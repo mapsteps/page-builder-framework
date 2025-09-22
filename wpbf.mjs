@@ -228,7 +228,7 @@ async function bundleCustomizerControl(controlName) {
 	}
 
 	try {
-		return await bundleViaViteAPI(entries, absDistDir);
+		return await bundleViaViteAPI(entries, absDistDir, true);
 	} catch (err) {
 		return {
 			success: false,
@@ -240,13 +240,23 @@ async function bundleCustomizerControl(controlName) {
 /**
  * Bundle the customizer control using the Vite API.
  *
- * @param {import('vite').Rollup.InputOption} entries The entries to pass to Parcel.
+ * @param {import('vite').Rollup.InputOption} entries The entries to pass to Vite.
  * @param {string} distDir The dist directory path.
+ * @param {boolean} clearDistDir Whether to clear the dist directory before building.
  *
  * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
  */
-async function bundleViaViteAPI(entries, distDir) {
+async function bundleViaViteAPI(entries, distDir, clearDistDir = false) {
 	try {
+		if (typeof entries === "string") {
+			await build(getViteConfig(entries, distDir, clearDistDir));
+
+			return {
+				success: true,
+				message: `✨`,
+			};
+		}
+
 		/**
 		 * Unfortunately, multiple entries are not supported when "output.inlineDynamicImports" is true.
 		 *

@@ -32,11 +32,19 @@ require_once WPBF_THEME_DIR . '/inc/helpers.php';
 // Customizer functions.
 require_once WPBF_THEME_DIR . '/inc/customizer/customizer-functions.php';
 
-// Customizer settings.
-require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
+/**
+ * Render customizer settings.
+ */
+function wpbf_do_customizer_settings() {
 
-// Init customizer.
-wpbf_customizer_init();
+	// Customizer settings.
+	require_once WPBF_THEME_DIR . '/inc/customizer/customizer-settings.php';
+
+	// Init customizer.
+	wpbf_customizer_init();
+
+}
+add_action( 'after_setup_theme', 'wpbf_do_customizer_settings' );
 
 // Output the customizer.
 wpbf_customizer_output();

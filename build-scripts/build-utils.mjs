@@ -119,10 +119,11 @@ export function deleteIfDirExists(dir) {
  *
  * @param {import('vite').Rollup.InputOption} entries The entry points for the build. Should be a string due to above issue.
  * @param {string} distDir The output directory for the build.
+ * @param {boolean} clearDistDir Whether to clear the dist directory before building.
  *
  * @returns {import('vite').UserConfig}
  */
-export function getViteConfig(entries, distDir) {
+export function getViteConfig(entries, distDir, clearDistDir = false) {
 	const keyName =
 		typeof entries === "string"
 			? getFileNameWithoutExtension(entries)
@@ -146,7 +147,7 @@ export function getViteConfig(entries, distDir) {
 		build: {
 			target: "es2020",
 			outDir: distDir,
-			emptyOutDir: true,
+			emptyOutDir: clearDistDir,
 			cssCodeSplit: false,
 			minify: "terser",
 			sourcemap: true,
