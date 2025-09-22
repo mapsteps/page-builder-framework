@@ -88,8 +88,7 @@ export default function InputSliderForm(props: {
 
 		trigger = "reset";
 
-		if (!sliderRef || !sliderRef.current) return;
-		props.updateCustomizerSetting?.(sliderRef.current.value);
+		props.updateCustomizerSetting?.(valueToSave);
 	}
 
 	// Preparing for the template.
