@@ -46,7 +46,7 @@ class HeaderBuilderOutput {
 		$desktop_rows        = isset( $desktop_values['rows'] ) && is_array( $desktop_values['rows'] ) ? $desktop_values['rows'] : array();
 		$active_desktop_rows = $this->get_active_rows( $desktop_rows );
 
-		// Unhook functions which are supposed to be used when header builder is disabled.
+		// Unhook functions which are supposed to be used in other places when header builder is disabled.
 		remove_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
 		remove_action( 'wpbf_navigation', 'wpbf_menu' );
 
@@ -70,7 +70,7 @@ class HeaderBuilderOutput {
 
 		$this->mobile_offcanvas_widgets = isset( $mobile_values['offcanvas'] ) && is_array( $mobile_values['offcanvas'] ) ? $mobile_values['offcanvas'] : array();
 
-		// Unhook functions which are supposed to be used when header builder is disabled.
+		// Unhook functions which are supposed to be used in other places when header builder is disabled.
 		remove_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
 		remove_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile', 20 );
 
