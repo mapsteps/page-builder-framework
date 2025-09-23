@@ -13,8 +13,9 @@ import { proNotice } from "./partials/pro-notice";
 	const breakpoints = window.WpbfTheme.breakpoints;
 
 	const mediaQueries = {
-		tablet: "max-width: " + (breakpoints.desktop - 1).toString() + "px",
 		mobile: "max-width: " + (breakpoints.tablet - 1).toString() + "px",
+		tablet: "max-width: " + (breakpoints.desktop - 1).toString() + "px",
+		desktop: "min-width: " + breakpoints.desktop.toString() + "px",
 	};
 
 	function toNumberValue(value: string | number): number {
@@ -241,12 +242,12 @@ import { proNotice } from "./partials/pro-notice";
         }`;
 
 			// Apply media queries based on the device.
-			if (device === "tablet" && breakpoints.tablet) {
-				deviceCSS = `@media (max-width: ${breakpoints.tablet}px) { ${deviceCSS} }`;
-			} else if (device === "mobile" && breakpoints.mobile) {
-				deviceCSS = `@media (max-width: ${breakpoints.mobile}px) { ${deviceCSS} }`;
-			} else {
-				deviceCSS = `@media (max-width: ${breakpoints.desktop}px) { ${deviceCSS} }`;
+			if (device === "mobile" && breakpoints.mobile) {
+				deviceCSS = `@media (${mediaQueries.mobile}) { ${deviceCSS} }`;
+			} else if (device === "tablet" && breakpoints.tablet) {
+				deviceCSS = `@media (${mediaQueries.tablet}) { ${deviceCSS} }`;
+			} else if (device === "desktop" && breakpoints.desktop) {
+				deviceCSS = `@media (${mediaQueries.desktop}) { ${deviceCSS} }`;
 			}
 
 			css += deviceCSS + "\n";
@@ -2940,8 +2941,6 @@ import { proNotice } from "./partials/pro-notice";
 				selector: "#wpbf-mobile-menu-toggle",
 				props: props,
 			});
-
-			console.log(props);
 		},
 	);
 
