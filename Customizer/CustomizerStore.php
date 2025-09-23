@@ -9,6 +9,7 @@ use Mapsteps\Wpbf\Customizer\Entities\CustomizerPanelEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSectionEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
+use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderOutput;
 
 /**
  * Singleton class to store customizer data.
@@ -85,6 +86,28 @@ final class CustomizerStore {
 	 * @var array
 	 */
 	public static $controls_using_content_template = array();
+
+	/**
+	 * Header builder output instance.
+	 *
+	 * @var HeaderBuilderOutput
+	 */
+	private static $header_builder_output_instance;
+
+	/**
+	 * Get header builder output instance.
+	 *
+	 * @return HeaderBuilderOutput
+	 */
+	public static function headerBuilderOutputInstance() {
+
+		if ( ! self::$header_builder_output_instance ) {
+			self::$header_builder_output_instance = new HeaderBuilderOutput();
+		}
+
+		return self::$header_builder_output_instance;
+
+	}
 
 	/**
 	 * Find added setting by control id.

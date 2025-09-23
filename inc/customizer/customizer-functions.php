@@ -15,6 +15,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
+use Mapsteps\Wpbf\Customizer\CustomizerStore;
 use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderConfig;
 use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderOutput;
 
@@ -433,6 +434,6 @@ function wpbf_header_builder_hooks() {
 		return;
 	}
 
-	( new HeaderBuilderOutput() )->setup_hooks();
+	CustomizerStore::headerBuilderOutputInstance()->setup_hooks();
 
 }
