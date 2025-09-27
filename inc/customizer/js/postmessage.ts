@@ -2782,30 +2782,6 @@ import { proNotice } from "./partials/pro-notice";
 				});
 			},
 		);
-
-		// Off-canvas menu width.
-		listenToCustomizerValueChange<string>(
-			"mobile_menu_width",
-			function (settingId, value) {
-				const mobileMenuType = customizer?.("mobile_menu_options").get();
-				const parsedValue = emptyNotZero(value)
-					? undefined
-					: maybeAppendSuffix(value);
-
-				if (mobileMenuType !== "menu-mobile-off-canvas" && parsedValue) {
-					removeStyleTag(settingId);
-					return;
-				}
-
-				writeCSS(settingId, {
-					selector: ".wpbf-mobile-menu-off-canvas .wpbf-mobile-menu-container",
-					props: {
-						width: parsedValue,
-						right: "-" + parsedValue,
-					},
-				});
-			},
-		);
 	});
 
 	function listenToMenuTriggerValueChange(device: "desktop" | "mobile") {
