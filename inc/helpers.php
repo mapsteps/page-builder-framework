@@ -1544,7 +1544,6 @@ function wpbf_mobile_sub_menu_indicators( $item_output, $item, $depth, $args ) {
 
 	if (
 		'mobile_menu' === $args->theme_location
-		|| 'desktop_full_screen_menu' === $args->theme_location
 		|| 'desktop_off_canvas_menu' === $args->theme_location
 		|| ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ), true ) && 'main_menu' === $args->theme_location )
 	) {

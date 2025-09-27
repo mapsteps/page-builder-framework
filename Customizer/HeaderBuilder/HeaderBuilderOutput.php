@@ -649,7 +649,7 @@ class HeaderBuilderOutput {
 			'menu'        => $menu_id,
 			'container'   => false,
 			'menu_class'  => $menu_container_class,
-			'depth'       => 4,
+			'depth'       => 'desktop_full_screen_menu' === $placement ? 1 : 4,
 			'fallback_cb' => false,
 		);
 
