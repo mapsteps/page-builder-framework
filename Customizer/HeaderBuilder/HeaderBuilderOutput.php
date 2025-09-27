@@ -621,7 +621,7 @@ class HeaderBuilderOutput {
 	 *
 	 * @param string $setting_group The setting group key.
 	 * @param string $placement     The placement position.
-	 *                              Accepts 'left', 'center', 'right', 'desktop_full_screen_menu', 'desktop_off_canvas_menu', 'header-builder-mobile-menu', or empty string.
+	 *                              Accepts 'left', 'center', 'right', 'desktop_full_screen_menu', 'desktop_off_canvas_menu', 'mobile_menu', or empty string.
 	 */
 	private function render_menu_widget( $setting_group, $placement = '' ) {
 
@@ -631,7 +631,7 @@ class HeaderBuilderOutput {
 			return;
 		}
 
-		if ( 'header-builder-mobile-menu' !== $placement && 'desktop_full_screen_menu' !== $placement && 'desktop_off_canvas_menu' !== $placement ) {
+		if ( 'mobile_menu' !== $placement && 'desktop_full_screen_menu' !== $placement && 'desktop_off_canvas_menu' !== $placement ) {
 			$menu_position_class = 'wpbf-menu-' . $placement;
 
 			echo '<nav class="navigation wpbf-clearfix ' . esc_attr( $menu_position_class ) . '" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="' . __( 'Site Navigation', 'page-builder-framework' ) . '">';
@@ -641,7 +641,7 @@ class HeaderBuilderOutput {
 
 		if ( 'desktop_full_screen_menu' === $placement || 'desktop_off_canvas_menu' === $placement ) {
 			$menu_container_class = 'wpbf-menu';
-		} elseif ( 'header-builder-mobile-menu' === $placement ) {
+		} elseif ( 'mobile_menu' === $placement ) {
 			$menu_container_class = 'wpbf-mobile-menu';
 		}
 
@@ -653,13 +653,13 @@ class HeaderBuilderOutput {
 			'fallback_cb' => false,
 		);
 
-		if ( 'header-builder-mobile-menu' === $placement || 'desktop_full_screen_menu' === $placement || 'desktop_off_canvas_menu' === $placement ) {
+		if ( 'mobile_menu' === $placement || 'desktop_full_screen_menu' === $placement || 'desktop_off_canvas_menu' === $placement ) {
 			$nav_menu_args['theme_location'] = $placement;
 		}
 
 		wp_nav_menu( $nav_menu_args );
 
-		if ( 'header-builder-mobile-menu' !== $placement && 'desktop_full_screen_menu' !== $placement && 'desktop_off_canvas_menu' !== $placement ) {
+		if ( 'mobile_menu' !== $placement && 'desktop_full_screen_menu' !== $placement && 'desktop_off_canvas_menu' !== $placement ) {
 			echo '</nav>';
 		}
 	}
@@ -787,7 +787,7 @@ class HeaderBuilderOutput {
 						continue;
 					}
 
-					$this->render_widget( 'header_builder', $widget_key, 'header-builder-mobile-menu' );
+					$this->render_widget( 'header_builder', $widget_key, 'mobile_menu' );
 				}
 				?>
 
