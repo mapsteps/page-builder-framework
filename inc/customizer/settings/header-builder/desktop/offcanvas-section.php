@@ -47,8 +47,8 @@ wpbf_customizer_field()
 	->defaultValue( 'none' )
 	->priority( 5 )
 	->choices( [
-		'off-canvas' => __( 'Off-canvas', 'page-builder-framework' ),
-		'fullscreen' => __( 'Full screen', 'page-builder-framework' ),
+		'off-canvas'  => __( 'Off-canvas', 'page-builder-framework' ),
+		'full-screen' => __( 'Full screen', 'page-builder-framework' ),
 	] )
 	->defaultValue( 'off-canvas' )
 	->transport( 'postMessage' )

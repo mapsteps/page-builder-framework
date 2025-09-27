@@ -437,7 +437,12 @@ foreach ( $button_keys as $button_key ) {
 
 }
 
-// Mobile Header Builder: Search Icon Styles.
+/**
+ * ----------------------------------------------------------------------
+ * Mobile Header Builder: Search Icon Styles.
+ * ----------------------------------------------------------------------
+ */
+
 $control_id_prefix = $header_builder_control_id_prefix . 'mobile_search_';
 $icon_size         = wpbf_customize_array_value( $control_id_prefix . 'icon_size' );
 $icon_size         = '' === $icon_size || '16' === $icon_size ? '16px' : $icon_size;
@@ -464,7 +469,11 @@ foreach ( $devices as $device ) {
 	) );
 }
 
-// Mobile Header Builder: Search Icon color.
+/**
+ * ----------------------------------------------------------------------
+ * Mobile Header Builder: Search Icon color.
+ * ----------------------------------------------------------------------
+ */
 $icon_color = wpbf_customize_array_value( $control_id_prefix . 'icon_color' );
 
 if ( ! empty( $icon_color ) ) {
@@ -486,7 +495,17 @@ if ( ! empty( $icon_color ) ) {
 	}
 }
 
-// Mobile Header Builder: Sidebar Menu Reveal.
+$header_builder_devices = [ 'desktop', 'mobile' ];
+
+foreach ( $header_builder_devices as $header_builder_device ) {
+	//
+}
+
+/**
+ * ----------------------------------------------------------------------
+ * Mobile Header Builder: Sidebar Menu Reveal.
+ * ----------------------------------------------------------------------
+ */
 $mobile_menu_options = wpbf_customize_str_value( 'wpbf_header_builder_mobile_offcanvas_reveal_as', 'dropdown' );
 
 if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) ) {
@@ -521,7 +540,11 @@ if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) )
 	}
 }
 
-// mobile menu trigger button.
+/**
+ * ----------------------------------------------------------------------
+ * Mobile Header Builder: Sidebar Menu Trigger Button.
+ * ----------------------------------------------------------------------
+ */
 $mobile_menu_trigger_style = wpbf_customize_str_value( 'wpbf_header_builder_mobile_menu_trigger_style' );
 $mobile_menu_trigger_style = '' === $mobile_menu_trigger_style ? 'simple' : $mobile_menu_trigger_style;
 

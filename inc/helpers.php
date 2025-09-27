@@ -1489,7 +1489,7 @@ add_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
  */
 function wpbf_is_off_canvas_menu() {
 
-	if ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left', 'menu-full-screen' ) ) ) {
+	if ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left', 'menu-full-screen' ), true ) ) {
 		return true;
 	} else {
 		return false;

@@ -620,7 +620,8 @@ class HeaderBuilderOutput {
 	 * Render header builder's menu widget.
 	 *
 	 * @param string $setting_group The setting group key.
-	 * @param string $placement The placement position. Accepts 'left', 'center', 'right', 'header-builder-desktop-menu', 'header-builder-mobile-menu', or empty string.
+	 * @param string $placement     The placement position.
+	 *                              Accepts 'left', 'center', 'right', 'desktop_full_screen_menu', 'desktop_off_canvas_menu', 'header-builder-mobile-menu', or empty string.
 	 */
 	private function render_menu_widget( $setting_group, $placement = '' ) {
 
@@ -630,7 +631,7 @@ class HeaderBuilderOutput {
 			return;
 		}
 
-		if ( 'header-builder-mobile-menu' !== $placement && 'header-builder-desktop-menu' !== $placement ) {
+		if ( 'header-builder-mobile-menu' !== $placement && 'desktop_full_screen_menu' !== $placement && 'desktop_off_canvas_menu' !== $placement ) {
 			$menu_position_class = 'wpbf-menu-' . $placement;
 
 			echo '<nav class="navigation wpbf-clearfix ' . esc_attr( $menu_position_class ) . '" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="' . __( 'Site Navigation', 'page-builder-framework' ) . '">';
@@ -638,7 +639,7 @@ class HeaderBuilderOutput {
 
 		$menu_container_class = 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect();
 
-		if ( 'header-builder-desktop-menu' === $placement ) {
+		if ( 'desktop_full_screen_menu' === $placement || 'desktop_off_canvas_menu' === $placement ) {
 			$menu_container_class = 'wpbf-menu';
 		} elseif ( 'header-builder-mobile-menu' === $placement ) {
 			$menu_container_class = 'wpbf-mobile-menu';
@@ -652,15 +653,13 @@ class HeaderBuilderOutput {
 			'fallback_cb' => false,
 		);
 
-		if ( 'header-builder-mobile-menu' === $placement ) {
-			$nav_menu_args['theme_location'] = 'header_builder_mobile_menu';
-		} elseif ( 'header-builder-desktop-menu' === $placement ) {
-			$nav_menu_args['theme_location'] = 'header_builder_desktop_menu';
+		if ( 'header-builder-mobile-menu' === $placement || 'desktop_full_screen_menu' === $placement || 'desktop_off_canvas_menu' === $placement ) {
+			$nav_menu_args['theme_location'] = $placement;
 		}
 
 		wp_nav_menu( $nav_menu_args );
 
-		if ( 'header-builder-mobile-menu' !== $placement && 'header-builder-desktop-menu' !== $placement ) {
+		if ( 'header-builder-mobile-menu' !== $placement && 'desktop_full_screen_menu' !== $placement && 'desktop_off_canvas_menu' !== $placement ) {
 			echo '</nav>';
 		}
 	}
@@ -702,13 +701,13 @@ class HeaderBuilderOutput {
 		$reveal_as = get_theme_mod( 'wpbf_header_builder_desktop_offcanvas_reveal_as' );
 
 		/**
-		 * The desktop menu type. Accepts 'fullscreen' or 'off-canvas'.
+		 * The desktop menu type. Accepts 'full-screen' or 'off-canvas'.
 		 *
 		 * @var string
 		 */
-		$menu_type = 'fullscreen' === $reveal_as ? 'fullscreen' : 'off-canvas';
+		$menu_type = 'full-screen' === $reveal_as ? 'full-screen' : 'off-canvas';
 
-		$wrapper_class = 'fullscreen' === $menu_type ? 'wpbf-menu-full-screen wpbf-visible-large' : 'wpbf-menu-off-canvas wpbf-menu-off-canvas-right wpbf-visible-large';
+		$wrapper_class = 'full-screen' === $menu_type ? 'wpbf-menu-full-screen wpbf-visible-large' : 'wpbf-menu-off-canvas wpbf-menu-off-canvas-right wpbf-visible-large';
 		?>
 
 		<div class="<?php echo esc_attr( $wrapper_class ); ?>">
@@ -726,7 +725,12 @@ class HeaderBuilderOutput {
 						continue;
 					}
 
-					$this->render_widget( 'header_builder', $widget_key, 'header-builder-desktop-menu' );
+					if ( 'full-screen' === $menu_type ) {
+						$this->render_widget( 'header_builder', $widget_key, 'desktop_full_screen_menu' );
+					} else {
+						$this->render_widget( 'header_builder', $widget_key, 'desktop_off_canvas_menu' );
+					}
+
 				}
 
 				do_action( 'wpbf_main_menu_close' );
