@@ -12,6 +12,13 @@ class HeaderBuilderOutput {
 	private $desktop_columns = array();
 
 	/**
+	 * Associative array with sidebar widgets.
+	 *
+	 * @var array
+	 */
+	private $desktop_offcanvas_widgets = array();
+
+	/**
 	 * Associative array with row_key as key and columns as value.
 	 *
 	 * @var array
@@ -24,13 +31,6 @@ class HeaderBuilderOutput {
 	 * @var array
 	 */
 	private $mobile_offcanvas_widgets = array();
-
-	/**
-	 * The mobile menu type. Accepts 'hamburger' or 'off-canvas'.
-	 *
-	 * @var string
-	 */
-	private $mobile_menu_type = '';
 
 
 	/**
@@ -45,6 +45,8 @@ class HeaderBuilderOutput {
 		$desktop_values      = isset( $saved_values['desktop'] ) && is_array( $saved_values['desktop'] ) ? $saved_values['desktop'] : array();
 		$desktop_rows        = isset( $desktop_values['rows'] ) && is_array( $desktop_values['rows'] ) ? $desktop_values['rows'] : array();
 		$active_desktop_rows = $this->get_active_rows( $desktop_rows );
+
+		$this->desktop_offcanvas_widgets = isset( $desktop_values['offcanvas'] ) && is_array( $desktop_values['offcanvas'] ) ? $desktop_values['offcanvas'] : array();
 
 		// Unhook functions which are supposed to be used in other places when header builder is disabled.
 		remove_action( 'wpbf_pre_header', 'wpbf_do_pre_header' );
@@ -186,6 +188,10 @@ class HeaderBuilderOutput {
 			$this->render_desktop_row( 'desktop_row_3', $row_3_columns );
 		}
 
+		if ( ! empty( $this->desktop_offcanvas_widgets ) && is_array( $this->desktop_offcanvas_widgets ) ) {
+			$this->render_desktop_menu( $this->desktop_offcanvas_widgets );
+		}
+
 	}
 
 	/**
@@ -241,6 +247,7 @@ class HeaderBuilderOutput {
 			|| in_array( 'desktop_menu_2', $widget_keys, true )
 			|| in_array( 'desktop_html_1', $widget_keys, true )
 			|| in_array( 'desktop_html_2', $widget_keys, true )
+			|| in_array( 'desktop_menu_trigger', $widget_keys, true )
 			) {
 				$column_class .= ' wpbf-column-grow';
 			}
@@ -279,9 +286,14 @@ class HeaderBuilderOutput {
 
 		$reveal_as = get_theme_mod( 'wpbf_header_builder_mobile_offcanvas_reveal_as' );
 
-		$this->mobile_menu_type = 'off-canvas' !== $reveal_as ? 'dropdown' : $reveal_as;
+		/**
+		 * The mobile menu type. Accepts 'dropdown' or 'off-canvas'.
+		 *
+		 * @var string
+		 */
+		$menu_type = 'off-canvas' === $reveal_as ? 'off-canvas' : 'dropdown';
 
-		echo '<div class="wpbf-mobile-header-rows wpbf-hidden-large ' . ( 'off-canvas' === $this->mobile_menu_type ? 'wpbf-mobile-menu-off-canvas' : 'wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger' ) . '">';
+		echo '<div class="wpbf-mobile-header-rows wpbf-hidden-large ' . ( 'off-canvas' === $menu_type ? 'wpbf-mobile-menu-off-canvas' : 'wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger' ) . '">';
 
 		$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
 
@@ -302,7 +314,7 @@ class HeaderBuilderOutput {
 		}
 
 		if ( ! empty( $this->mobile_offcanvas_widgets ) && is_array( $this->mobile_offcanvas_widgets ) ) {
-			$this->render_mobile_menu( $this->mobile_offcanvas_widgets );
+			$this->render_mobile_menu( $this->mobile_offcanvas_widgets, $menu_type );
 		}
 
 		echo '</div>';
@@ -446,8 +458,11 @@ class HeaderBuilderOutput {
 			case 'mobile_html_2':
 				$this->render_html_widget( $setting_group );
 				break;
+			case 'desktop_menu_trigger':
+				$this->render_menu_trigger_button_widget( 'desktop', $setting_group, $column_position );
+				break;
 			case 'mobile_menu_trigger':
-				$this->render_mobile_menu_trigger_widget( $setting_group, $column_position );
+				$this->render_menu_trigger_button_widget( 'mobile', $setting_group, $column_position );
 				break;
 		}
 
@@ -476,29 +491,36 @@ class HeaderBuilderOutput {
 	}
 
 	/**
-	 * Render the builder menu widget.
+	 * Render the builder menu trigger button widget.
 	 *
+	 * @param string $device The device type. Accepts 'desktop' or 'mobile'.
 	 * @param string $setting_group The setting group key.
 	 * @param string $column_position The column position. Accepts 'left', 'center', 'right', or empty string.
 	 */
-	private function render_mobile_menu_trigger_widget( $setting_group, $column_position = '' ) {
+	private function render_menu_trigger_button_widget( $device, $setting_group, $column_position = '' ) {
 
 		$icon_variant = wpbf_customize_str_value( $setting_group . '_icon', 'variant-1' );
 		$button_label = wpbf_customize_str_value( $setting_group . '_text' );
 		$button_style = wpbf_customize_str_value( $setting_group . '_style', 'simple' );
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
-		$menu_variant_class  = 'wpbf-mobile-menu-' . $icon_variant;
+		$menu_variant_class  = 'wpbf-' . ( 'mobile' === $device ? 'mobile-' : '' ) . 'menu-' . $icon_variant;
 		?>
 
 		<div class="wpbf-menu-toggle-container">
 
-			<?php do_action( 'wpbf_before_mobile_toggle' ); ?>
+			<?php
+			if ( 'mobile' === $device ) {
+				do_action( 'wpbf_before_mobile_toggle' );
+			} else {
+				do_action( 'wpbf_before_menu_toggle' );
+			}
+			?>
 
 			<button
-				id="wpbf-mobile-menu-toggle"
-				class="wpbf-mobile-nav-item wpbf-mobile-menu-toggle <?php echo esc_attr( $menu_position_class ); ?> <?php echo esc_attr( $menu_variant_class ); ?> <?php echo esc_attr( $button_style ); ?>"
-				aria-label="<?php _e( 'Mobile Site Navigation', 'page-builder-framework' ); ?>"
+				id="wpbf-<?php echo esc_attr( 'mobile' === $device ? 'mobile-' : '' ); ?>menu-toggle"
+				class="wpbf-<?php echo esc_attr( 'mobile' === $device ? 'mobile-' : '' ); ?>nav-item wpbf-<?php echo esc_attr( 'mobile' === $device ? 'mobile-' : '' ); ?>menu-toggle <?php echo esc_attr( $menu_position_class ); ?> <?php echo esc_attr( $menu_variant_class ); ?> <?php echo esc_attr( $button_style ); ?>"
+				aria-label="<?php echo esc_attr( 'mobile' === $device ? __( 'Mobile', 'page-builder-framework' ) : '' ); ?> <?php _e( 'Site Navigation', 'page-builder-framework' ); ?>"
 				aria-controls="navigation"
 				aria-expanded="false"
 				aria-haspopup="true"
@@ -535,7 +557,13 @@ class HeaderBuilderOutput {
 				?>
 			</button>
 
-			<?php do_action( 'wpbf_after_mobile_toggle' ); ?>
+			<?php
+			if ( 'mobile' === $device ) {
+				do_action( 'wpbf_after_mobile_toggle' );
+			} else {
+				do_action( 'wpbf_after_menu_toggle' );
+			}
+			?>
 
 		</div>
 
@@ -592,7 +620,7 @@ class HeaderBuilderOutput {
 	 * Render header builder's menu widget.
 	 *
 	 * @param string $setting_group The setting group key.
-	 * @param string $placement The placement position. Accepts 'left', 'center', 'right', 'mobile-menu', or empty string.
+	 * @param string $placement The placement position. Accepts 'left', 'center', 'right', 'header-builder-desktop-menu', 'header-builder-mobile-menu', or empty string.
 	 */
 	private function render_menu_widget( $setting_group, $placement = '' ) {
 
@@ -602,23 +630,37 @@ class HeaderBuilderOutput {
 			return;
 		}
 
-		if ( 'mobile-menu' !== $placement ) {
+		if ( 'header-builder-mobile-menu' !== $placement && 'header-builder-desktop-menu' !== $placement ) {
 			$menu_position_class = 'wpbf-menu-' . $placement;
 
 			echo '<nav class="navigation wpbf-clearfix ' . esc_attr( $menu_position_class ) . '" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="' . __( 'Site Navigation', 'page-builder-framework' ) . '">';
 		}
 
-		wp_nav_menu( array(
+		$menu_container_class = 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect();
+
+		if ( 'header-builder-desktop-menu' === $placement ) {
+			$menu_container_class = 'wpbf-menu';
+		} elseif ( 'header-builder-mobile-menu' === $placement ) {
+			$menu_container_class = 'wpbf-mobile-menu';
+		}
+
+		$nav_menu_args = array(
 			'menu'        => $menu_id,
 			'container'   => false,
-			'menu_class'  => 'mobile-menu' === $placement
-							? 'wpbf-mobile-menu'
-							: 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect(),
+			'menu_class'  => $menu_container_class,
 			'depth'       => 4,
 			'fallback_cb' => false,
-		) );
+		);
 
-		if ( 'mobile-menu' !== $placement ) {
+		if ( 'header-builder-mobile-menu' === $placement ) {
+			$nav_menu_args['theme_location'] = 'header_builder_mobile_menu';
+		} elseif ( 'header-builder-desktop-menu' === $placement ) {
+			$nav_menu_args['theme_location'] = 'header_builder_desktop_menu';
+		}
+
+		wp_nav_menu( $nav_menu_args );
+
+		if ( 'header-builder-mobile-menu' !== $placement && 'header-builder-desktop-menu' !== $placement ) {
 			echo '</nav>';
 		}
 	}
@@ -641,13 +683,81 @@ class HeaderBuilderOutput {
 	}
 
 	/**
-	 * Render header builder's mobile menu.
+	 * Render header builder's desktop menu.
 	 *
 	 * Declare wp_nav_menu based on selected mobile menu variation.
 	 *
 	 * @param array $widget_keys The off-canvas widget keys.
 	 */
-	private function render_mobile_menu( $widget_keys ) {
+	private function render_desktop_menu( $widget_keys ) {
+
+		if ( empty( $widget_keys ) || ! is_array( $widget_keys ) ) {
+			return;
+		}
+
+		if ( get_theme_mod( 'menu_overlay' ) ) {
+			echo '<div class="wpbf-menu-overlay"></div>';
+		}
+
+		$reveal_as = get_theme_mod( 'wpbf_header_builder_desktop_offcanvas_reveal_as' );
+
+		/**
+		 * The desktop menu type. Accepts 'fullscreen' or 'off-canvas'.
+		 *
+		 * @var string
+		 */
+		$menu_type = 'fullscreen' === $reveal_as ? 'fullscreen' : 'off-canvas';
+
+		$wrapper_class = 'fullscreen' === $menu_type ? 'wpbf-menu-full-screen wpbf-visible-large' : 'wpbf-menu-off-canvas wpbf-menu-off-canvas-right wpbf-visible-large';
+		?>
+
+		<div class="<?php echo esc_attr( $wrapper_class ); ?>">
+
+			<?php do_action( 'wpbf_before_main_menu' ); ?>
+
+			<nav id="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-labelledby="wpbf-menu-toggle">
+
+				<?php
+				do_action( 'wpbf_main_menu_open' );
+
+				foreach ( $widget_keys as $widget_key ) {
+
+					if ( empty( $widget_key ) ) {
+						continue;
+					}
+
+					$this->render_widget( 'header_builder', $widget_key, 'header-builder-desktop-menu' );
+				}
+
+				do_action( 'wpbf_main_menu_close' );
+				?>
+
+			</nav>
+
+			<?php do_action( 'wpbf_after_main_menu' ); ?>
+
+			<?php if ( wpbf_svg_enabled() ) : ?>
+				<span class="wpbf-close">
+					<?php echo wpbf_svg( 'times' ); ?>
+				</span>
+			<?php else : ?>
+				<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
+			<?php endif; ?>
+
+		</div>
+		
+		<?php
+	}
+
+	/**
+	 * Render header builder's mobile menu.
+	 *
+	 * Declare wp_nav_menu based on selected mobile menu variation.
+	 *
+	 * @param array  $widget_keys The off-canvas widget keys.
+	 * @param string $menu_type The mobile menu type. Accepts "off-canvas" or "dropdown".
+	 */
+	private function render_mobile_menu( $widget_keys, $menu_type ) {
 
 		if ( empty( $widget_keys ) || ! is_array( $widget_keys ) ) {
 			return;
@@ -673,7 +783,7 @@ class HeaderBuilderOutput {
 						continue;
 					}
 
-					$this->render_widget( 'header_builder', $widget_key, 'mobile-menu' );
+					$this->render_widget( 'header_builder', $widget_key, 'header-builder-mobile-menu' );
 				}
 				?>
 
@@ -683,7 +793,7 @@ class HeaderBuilderOutput {
 
 			<?php do_action( 'wpbf_after_mobile_menu' ); ?>
 
-			<?php if ( 'off-canvas' === $this->mobile_menu_type ) : ?>
+			<?php if ( 'off-canvas' === $menu_type ) : ?>
 
 				<?php if ( wpbf_svg_enabled() ) { ?>
 					<span class="wpbf-close">

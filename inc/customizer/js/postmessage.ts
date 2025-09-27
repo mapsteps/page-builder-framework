@@ -2808,166 +2808,193 @@ import { proNotice } from "./partials/pro-notice";
 		);
 	});
 
-	// Mobile menu trigger button's color.
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"wpbf_header_builder_mobile_menu_trigger_mobile_menu_hamburger_color",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-menu-toggle",
-				props: { color: toStringColor(value) },
-			});
-		},
-	);
-
-	// Mobile menu trigger button's size.
-	listenToCustomizerValueChange<string | number>(
-		"mobile_menu_hamburger_size",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-menu-toggle",
-				props: { "font-size": maybeAppendSuffix(value) },
-			});
-		},
-	);
-
-	listenToCustomizerValueChange<string>(
-		"wpbf_header_builder_mobile_menu_trigger_icon",
-		function (settingId, value) {
-			const iconVariant = value ? String(value) : "variant-1";
-
-			if (
-				iconVariant !== "none" &&
-				iconVariant !== "variant-1" &&
-				iconVariant !== "variant-2" &&
-				iconVariant !== "variant-3"
-			) {
-				return;
-			}
-
-			const triggerButton = document.querySelector("#wpbf-mobile-menu-toggle");
-			if (!triggerButton) return;
-
-			const existingSvg = triggerButton.querySelector(
-				".menu-trigger-button-svg",
+	function listenToMenuTriggerValueChange(device: "desktop" | "mobile") {
+		/**
+		 * The mobile menu trigger button's color already handled in "mobile_menu_hamburger_color" control.
+		 * The mobile menu trigger button's icon size already handled in "mobile_menu_hamburger_size" control.
+		 */
+		if (device === "desktop") {
+			// Menu trigger button icon's color.
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				"wpbf_header_builder_desktop_menu_trigger_icon_color",
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: ".wpbf-menu-toggle",
+						props: { color: toStringColor(value) },
+					});
+				},
 			);
 
-			const buttonStyleVal = customizer?.(
-				"wpbf_header_builder_mobile_menu_trigger_style",
-			).get();
+			// Menu trigger button icon's size.
+			listenToCustomizerValueChange<string | number>(
+				"wpbf_header_builder_desktop_menu_trigger_icon_size",
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: ".wpbf-menu-toggle",
+						props: { "font-size": maybeAppendSuffix(value) },
+					});
+				},
+			);
+		}
 
-			const buttonStyle =
-				"" === buttonStyleVal ? "simple" : String(buttonStyleVal);
+		listenToCustomizerValueChange<string>(
+			"wpbf_header_builder_" + device + "_menu_trigger_icon",
+			function (settingId, value) {
+				const iconVariant = value ? String(value) : "variant-1";
 
-			if (
-				buttonStyle !== "simple" &&
-				buttonStyle !== "outline" &&
-				buttonStyle !== "solid"
-			) {
-				return;
-			}
+				if (
+					iconVariant !== "none" &&
+					iconVariant !== "variant-1" &&
+					iconVariant !== "variant-2" &&
+					iconVariant !== "variant-3"
+				) {
+					return;
+				}
 
-			triggerButton.classList.remove("simple", "outline", "solid");
+				const triggerButton = document.querySelector(
+					"#wpbf-mobile-menu-toggle",
+				);
+				if (!triggerButton) return;
 
-			triggerButton.classList.add(buttonStyle);
+				const existingSvg = triggerButton.querySelector(
+					".menu-trigger-button-svg",
+				);
 
-			if (iconVariant === "none") {
-				existingSvg?.remove();
-			} else {
-				const newSvg =
-					window.wpbfMenuTriggerButtonSvg?.[iconVariant] &&
-					window.wpbfMenuTriggerButtonSvg[iconVariant]
-						? window.wpbfMenuTriggerButtonSvg[iconVariant]
-						: null;
+				const buttonStyleVal = customizer?.(
+					"wpbf_header_builder_" + device + "_menu_trigger_style",
+				).get();
 
-				if (newSvg) {
-					if (existingSvg) {
-						existingSvg.outerHTML = newSvg;
-					} else {
-						triggerButton.insertAdjacentHTML("afterbegin", newSvg);
+				const buttonStyle =
+					"" === buttonStyleVal ? "simple" : String(buttonStyleVal);
+
+				if (
+					buttonStyle !== "simple" &&
+					buttonStyle !== "outline" &&
+					buttonStyle !== "solid"
+				) {
+					return;
+				}
+
+				triggerButton.classList.remove("simple", "outline", "solid");
+
+				triggerButton.classList.add(buttonStyle);
+
+				if (iconVariant === "none") {
+					existingSvg?.remove();
+				} else {
+					const newSvg =
+						window.wpbfMenuTriggerButtonSvg?.[iconVariant] &&
+						window.wpbfMenuTriggerButtonSvg[iconVariant]
+							? window.wpbfMenuTriggerButtonSvg[iconVariant]
+							: null;
+
+					if (newSvg) {
+						if (existingSvg) {
+							existingSvg.outerHTML = newSvg;
+						} else {
+							triggerButton.insertAdjacentHTML("afterbegin", newSvg);
+						}
 					}
 				}
-			}
-		},
-	);
+			},
+		);
 
-	listenToCustomizerValueChange(
-		"wpbf_header_builder_mobile_menu_trigger_style",
-		function (settingId, value) {
-			const buttonStyle = value ? String(value) : "simple";
+		listenToCustomizerValueChange(
+			"wpbf_header_builder_" + device + "_menu_trigger_style",
+			function (settingId, value) {
+				const buttonStyle = value ? String(value) : "simple";
 
-			if (
-				buttonStyle !== "simple" &&
-				buttonStyle !== "outline" &&
-				buttonStyle !== "solid"
-			) {
-				return;
-			}
-
-			const triggerButton = document.querySelector("#wpbf-mobile-menu-toggle");
-			if (!triggerButton) return;
-
-			triggerButton.classList.remove("simple", "outline", "solid");
-			triggerButton.classList.add(buttonStyle);
-
-			let props = {};
-			const menuButtonColor = customizer?.(
-				"mobile_menu_hamburger_bg_color",
-			).get();
-
-			const menuBorderColor = customizer?.("mobile_menu_hamburger_color").get();
-
-			if (buttonStyle === "solid") {
-				props = {
-					"background-color": toStringColor(menuButtonColor),
-					border: "unset",
-				};
-			}
-
-			if (buttonStyle === "outline") {
-				props = {
-					"background-color": "unset",
-					border: "2px solid " + toStringColor(menuBorderColor),
-				};
-			}
-
-			if (buttonStyle === "simple") {
-				props = {
-					"background-color": "unset",
-					border: "unset",
-				};
-			}
-
-			writeCSS(settingId, {
-				selector: "#wpbf-mobile-menu-toggle",
-				props: props,
-			});
-		},
-	);
-
-	listenToCustomizerValueChange<string>(
-		"wpbf_header_builder_mobile_menu_trigger_text",
-		function (settingId, value) {
-			const triggerButton = document.querySelector("#wpbf-mobile-menu-toggle");
-			if (!triggerButton) return;
-
-			const existingLabelSpan = triggerButton.querySelector(
-				".menu-trigger-button-text",
-			);
-
-			if (value.trim() === "") {
-				existingLabelSpan?.remove();
-			} else {
-				if (existingLabelSpan) {
-					existingLabelSpan.textContent = value;
-				} else {
-					const newLabelSpan = document.createElement("span");
-					newLabelSpan.classList.add("menu-trigger-button-text");
-					newLabelSpan.textContent = value;
-					triggerButton.appendChild(newLabelSpan);
+				if (
+					buttonStyle !== "simple" &&
+					buttonStyle !== "outline" &&
+					buttonStyle !== "solid"
+				) {
+					return;
 				}
-			}
-		},
-	);
+
+				const triggerButton = document.querySelector(
+					device === "mobile"
+						? "#wpbf-mobile-menu-toggle"
+						: "#wpbf-menu-toggle",
+				);
+
+				if (!triggerButton) return;
+
+				triggerButton.classList.remove("simple", "outline", "solid");
+				triggerButton.classList.add(buttonStyle);
+
+				let props = {};
+				const menuButtonColor = customizer?.(
+					"wpbf_header_builder_" + device + "_menu_trigger_bg_color",
+				).get();
+
+				const menuBorderColor = customizer?.(
+					"wpbf_header_builder_" + device + "_menu_trigger_color",
+				).get();
+
+				if (buttonStyle === "solid") {
+					props = {
+						"background-color": toStringColor(menuButtonColor),
+						border: "unset",
+					};
+				}
+
+				if (buttonStyle === "outline") {
+					props = {
+						"background-color": "unset",
+						border: "2px solid " + toStringColor(menuBorderColor),
+					};
+				}
+
+				if (buttonStyle === "simple") {
+					props = {
+						"background-color": "unset",
+						border: "unset",
+					};
+				}
+
+				writeCSS(settingId, {
+					selector:
+						device === "mobile"
+							? "#wpbf-mobile-menu-toggle"
+							: "#wpbf-menu-toggle",
+					props: props,
+				});
+			},
+		);
+
+		listenToCustomizerValueChange<string>(
+			"wpbf_header_builder_" + device + "_menu_trigger_text",
+			function (settingId, value) {
+				const triggerButton = document.querySelector(
+					device === "mobile"
+						? "#wpbf-mobile-menu-toggle"
+						: "#wpbf-menu-toggle",
+				);
+				if (!triggerButton) return;
+
+				const existingLabelSpan = triggerButton.querySelector(
+					".menu-trigger-button-text",
+				);
+
+				if (value.trim() === "") {
+					existingLabelSpan?.remove();
+				} else {
+					if (existingLabelSpan) {
+						existingLabelSpan.textContent = value;
+					} else {
+						const newLabelSpan = document.createElement("span");
+						newLabelSpan.classList.add("menu-trigger-button-text");
+						newLabelSpan.textContent = value;
+						triggerButton.appendChild(newLabelSpan);
+					}
+				}
+			},
+		);
+	}
+
+	listenToMenuTriggerValueChange("mobile");
+	listenToMenuTriggerValueChange("desktop");
 
 	function listenToBuilderMulticolorControl(props: {
 		controlId: string;

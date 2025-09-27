@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$section_id = 'wpbf_header_builder_mobile_menu_trigger_section';
+$section_id = 'wpbf_header_builder_desktop_menu_trigger_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
@@ -25,7 +25,7 @@ wpbf_customizer_section()
 	->priority( 3 )
 	->addToPanel( 'header_panel' );
 
-$control_id_prefix = 'wpbf_header_builder_mobile_menu_trigger_';
+$control_id_prefix = 'wpbf_header_builder_desktop_menu_trigger_';
 
 /* General Tab */
 
@@ -102,4 +102,35 @@ wpbf_customizer_field()
 		'solid'   => 'Solid',
 	] )
 	->transport( 'postMessage' )
+	->addToSection( $section_id );
+
+/* Design Tab */
+
+// Icon color.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'icon_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Icon Color', 'page-builder-framework' ) )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( $section_id );
+
+// Icon size.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'icon_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Icon Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( 4 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	] )
 	->addToSection( $section_id );

@@ -78,8 +78,10 @@ wpbf_customizer_field()
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/top-row-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/main-row-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/bottom-row-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/offcanvas-section.php';
 
 // Desktop widget sections.
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/menu-trigger-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/search-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/button-1-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/header-builder/desktop/button-2-section.php';

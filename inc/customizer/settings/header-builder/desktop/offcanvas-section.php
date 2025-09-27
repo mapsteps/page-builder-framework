@@ -47,9 +47,9 @@ wpbf_customizer_field()
 	->defaultValue( 'none' )
 	->priority( 5 )
 	->choices( [
-		'dropdown'   => __( 'Dropdown', 'page-builder-framework' ),
 		'off-canvas' => __( 'Off-canvas', 'page-builder-framework' ),
+		'fullscreen' => __( 'Full screen', 'page-builder-framework' ),
 	] )
-	->defaultValue( 'dropdown' )
+	->defaultValue( 'off-canvas' )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );

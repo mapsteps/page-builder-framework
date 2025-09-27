@@ -1542,7 +1542,12 @@ add_filter( 'nav_menu_item_title', 'wpbf_sub_menu_indicators', 10, 4 );
  */
 function wpbf_mobile_sub_menu_indicators( $item_output, $item, $depth, $args ) {
 
-	if ( 'mobile_menu' === $args->theme_location || ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ) ) && 'main_menu' === $args->theme_location ) ) {
+	if (
+		'mobile_menu' === $args->theme_location
+		|| 'header_builder_mobile_menu' === $args->theme_location
+		|| 'header_builder_desktop_menu' === $args->theme_location
+		|| ( in_array( get_theme_mod( 'menu_position' ), array( 'menu-off-canvas', 'menu-off-canvas-left' ), true ) && 'main_menu' === $args->theme_location )
+	) {
 
 		if ( isset( $item->classes ) && in_array( 'menu-item-has-children', $item->classes, true ) ) {
 
