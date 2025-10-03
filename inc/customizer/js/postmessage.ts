@@ -94,6 +94,27 @@ import { proNotice } from "./partials/pro-notice";
 		return customizer?.("wpbf_enable_header_builder").get() ? true : false;
 	}
 
+	// Mobile menu trigger handlers
+	listenToCustomizerValueChange<string | number>(
+		"wpbf_header_builder_mobile_menu_trigger_icon_size",
+		(settingId, to) => {
+			writeCSS(settingId, {
+				selector: ".wpbf-menu-toggle",
+				props: { "font-size": maybeAppendSuffix(to) }
+			});
+		}
+	);
+
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"wpbf_header_builder_mobile_menu_trigger_color",
+		(settingId, to) => {
+			writeCSS(settingId, {
+				selector: ".wpbf-menu-toggle",
+				props: { color: toStringColor(to) }
+			});
+		}
+	);
+
 	/**
 	 * Get style tag element based on control id.
 	 *

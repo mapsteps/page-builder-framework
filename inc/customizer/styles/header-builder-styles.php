@@ -27,6 +27,23 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
  * ----------------------------------------------------------------------
+ * Header Builder Mobile Menu Trigger Styles
+ * ----------------------------------------------------------------------
+ */
+
+$menu_trigger_icon_size = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_icon_size' );
+$menu_trigger_color = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_color' );
+
+if ( $menu_trigger_icon_size ) {
+	echo '.wpbf-menu-toggle { font-size: ' . esc_attr( $menu_trigger_icon_size ) . 'px; }';
+}
+
+if ( $menu_trigger_color ) {
+	echo '.wpbf-menu-toggle { color: ' . esc_attr( $menu_trigger_color ) . '; }';
+}
+
+/**
+ * ----------------------------------------------------------------------
  * Header Rows Styles
  * ----------------------------------------------------------------------
  */
