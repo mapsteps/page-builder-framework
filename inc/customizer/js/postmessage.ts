@@ -2899,27 +2899,52 @@ import { proNotice } from "./partials/pro-notice";
 				triggerButton.classList.remove("simple", "outline", "solid");
 				triggerButton.classList.add(buttonStyle);
 
-				let props = {};
-				const menuButtonColor = customizer?.(
-					"wpbf_header_builder_" + device + "_menu_trigger_bg_color",
-				).get();
+				let props: Record<string, string | number | undefined> = {};
 
-				const menuBorderColor = customizer?.(
-					"wpbf_header_builder_" + device + "_menu_trigger_color",
-				).get();
+				const menuButtonColor: string | undefined = customizer?.(
+					device === "mobile"
+						? "mobile_menu_hamburger_bg_color"
+						: "wpbf_header_builder_" + device + "_menu_trigger_bg_color",
+				)?.get();
+
+				const menuBorderColor: string | undefined = customizer?.(
+					device === "mobile"
+						? "mobile_menu_hamburger_color"
+						: "wpbf_header_builder_" + device + "_menu_trigger_icon_color",
+				)?.get();
+
+				const menuBorderRadius: string | undefined = customizer?.(
+					device === "mobile"
+						? "mobile_menu_hamburger_border_radius"
+						: "wpbf_header_builder_" + device + "_menu_trigger_border_radius",
+				)?.get();
 
 				if (buttonStyle === "solid") {
 					props = {
-						"background-color": toStringColor(menuButtonColor),
 						border: "unset",
 					};
+
+					if (menuButtonColor) {
+						props["background-color"] = toStringColor(menuButtonColor);
+					}
+
+					if (menuBorderRadius) {
+						props["border-radius"] = maybeAppendSuffix(menuBorderRadius);
+					}
 				}
 
 				if (buttonStyle === "outline") {
 					props = {
 						"background-color": "unset",
-						border: "2px solid " + toStringColor(menuBorderColor),
 					};
+
+					if (menuBorderColor) {
+						props["border"] = "2px solid " + toStringColor(menuBorderColor);
+					}
+
+					if (menuBorderRadius) {
+						props["border-radius"] = maybeAppendSuffix(menuBorderRadius);
+					}
 				}
 
 				if (buttonStyle === "simple") {

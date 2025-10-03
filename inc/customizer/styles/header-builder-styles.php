@@ -496,96 +496,100 @@ if ( ! empty( $icon_color ) ) {
 }
 
 // $header_builder_devices = [ 'desktop', 'mobile' ];
-$header_builder_devices = [ 'mobile' ];
+$header_builder_devices = [ 'desktop', 'mobile' ];
 
 foreach ( $header_builder_devices as $header_builder_device ) {
 	/**
 	 * ----------------------------------------------------------------------
-	 * Mobile Header Builder: Triggered Menu Reveal.
+	 * Triggered Menu Reveal.
 	 * ----------------------------------------------------------------------
 	 */
-	$mobile_menu_options = wpbf_customize_str_value(
+	$menu_options = wpbf_customize_str_value(
 		'wpbf_header_builder_' . $header_builder_device . '_offcanvas_reveal_as',
 		'mobile' === $header_builder_device ? 'dropdown' : 'off-canvas'
 	);
 
-	if ( in_array( $mobile_menu_options, array( 'off-canvas', 'dropdown' ), true ) ) {
+	if ( in_array( $menu_options, array( 'off-canvas', 'dropdown' ), true ) ) {
 
-		$mobile_menu_width    = wpbf_customize_str_value( 'mobile_menu_width' );
-		$mobile_menu_width    = '320' === $mobile_menu_width || '320px' === $mobile_menu_width ? '' : $mobile_menu_width;
-		$mobile_menu_bg_color = wpbf_customize_str_value( 'mobile_menu_bg_color' );
+		$menu_width    = wpbf_customize_str_value( 'mobile_menu_width' );
+		$menu_width    = '320' === $menu_width || '320px' === $menu_width ? '' : $menu_width;
+		$menu_bg_color = wpbf_customize_str_value( 'mobile_menu_bg_color' );
 
-		if ( $mobile_menu_width || $mobile_menu_bg_color ) {
+		if ( $menu_width || $menu_bg_color ) {
 			wpbf_write_css( array(
 				'selector' => '.wpbf-mobile-menu-off-canvas .wpbf-mobile-menu-container',
 				'props'    => array(
-					'width'            => $mobile_menu_width ? wpbf_maybe_append_suffix( $mobile_menu_width ) : null,
-					'right'            => $mobile_menu_width ? '-' . wpbf_maybe_append_suffix( $mobile_menu_width ) : null,
-					'background-color' => $mobile_menu_bg_color ? $mobile_menu_bg_color : null,
+					'width'            => $menu_width ? wpbf_maybe_append_suffix( $menu_width ) : null,
+					'right'            => $menu_width ? '-' . wpbf_maybe_append_suffix( $menu_width ) : null,
+					'background-color' => $menu_bg_color ? $menu_bg_color : null,
 				),
 			) );
 		}
 
-		$mobile_menu_overlay = wpbf_customize_bool_value( 'mobile_menu_overlay' );
+		$menu_overlay = wpbf_customize_bool_value( 'mobile_menu_overlay' );
 
-		$mobile_menu_overlay_color = wpbf_customize_str_value( 'mobile_menu_overlay_color' );
-		$mobile_menu_overlay_color = 'rgba(0,0,0,0.5)' === $mobile_menu_overlay_color || 'rgba(0, 0, 0, 0.5)' === $mobile_menu_overlay_color ? '' : $mobile_menu_overlay_color;
+		$menu_overlay_color = wpbf_customize_str_value( 'mobile_menu_overlay_color' );
+		$menu_overlay_color = 'rgba(0,0,0,0.5)' === $menu_overlay_color || 'rgba(0, 0, 0, 0.5)' === $menu_overlay_color ? '' : $menu_overlay_color;
 
-		if ( $mobile_menu_overlay && $mobile_menu_overlay_color ) {
+		if ( $menu_overlay && $menu_overlay_color ) {
 			wpbf_write_css( array(
 				'selector' => '.wpbf-mobile-menu-overlay',
 				'props'    => array(
-					'background-color' => $mobile_menu_overlay_color ? $mobile_menu_overlay_color : null,
+					'background-color' => $menu_overlay_color ? $menu_overlay_color : null,
 				),
 			) );
 		}
 	}
-}
 
-/**
- * ----------------------------------------------------------------------
- * Mobile Header Builder: Sidebar Menu Trigger Button.
- * ----------------------------------------------------------------------
- */
-$mobile_menu_trigger_style = wpbf_customize_str_value( 'wpbf_header_builder_mobile_menu_trigger_style' );
-$mobile_menu_trigger_style = '' === $mobile_menu_trigger_style ? 'simple' : $mobile_menu_trigger_style;
+	/**
+	 * ----------------------------------------------------------------------
+	 * Trigger Button Style.
+	 * ----------------------------------------------------------------------
+	 */
+	$menu_trigger_style = wpbf_customize_str_value( 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_style' );
+	$menu_trigger_style = '' === $menu_trigger_style ? 'simple' : $menu_trigger_style;
 
-if ( ! empty( $mobile_menu_trigger_style ) ) {
+	if ( ! empty( $menu_trigger_style ) ) {
 
-	if ( 'outline' === $mobile_menu_trigger_style ) {
+		if ( 'outline' === $menu_trigger_style ) {
 
-		wpbf_write_css( array(
-			'selector' => '#wpbf-mobile-menu-toggle',
-			'props'    => array(
-				'background-color' => 'unset',
-				'border'           => '2px solid ' . wpbf_customize_str_value( 'mobile_menu_hamburger_color' ),
-			),
-		) );
+			$menu_trigger_border_key = 'mobile' === $header_builder_device ? 'mobile_menu_hamburger_color' : 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_icon_color';
+
+			wpbf_write_css( array(
+				'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
+				'props'    => array(
+					'background-color' => 'unset',
+					'border'           => '2px solid ' . wpbf_customize_str_value( $menu_trigger_border_key ),
+				),
+			) );
+
+		}
+
+		if ( 'solid' === $menu_trigger_style ) {
+
+			$menu_trigger_bg_key = 'mobile' === $header_builder_device ? 'mobile_menu_hamburger_bg_color' : 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_bg_color';
+
+			wpbf_write_css( array(
+				'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
+				'props'    => array(
+					'background-color' => wpbf_customize_str_value( $menu_trigger_bg_key ),
+					'border'           => 'unset',
+				),
+			) );
+
+		}
+
+		if ( 'simple' === $menu_trigger_style ) {
+
+			wpbf_write_css( array(
+				'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
+				'props'    => array(
+					'background-color' => 'unset',
+					'border'           => 'unset',
+				),
+			) );
+
+		}
 
 	}
-
-	if ( 'solid' === $mobile_menu_trigger_style ) {
-
-		wpbf_write_css( array(
-			'selector' => '#wpbf-mobile-menu-toggle',
-			'props'    => array(
-				'background-color' => wpbf_customize_str_value( 'mobile_menu_hamburger_bg_color' ),
-				'border'           => 'unset',
-			),
-		) );
-
-	}
-
-	if ( 'simple' === $mobile_menu_trigger_style ) {
-
-		wpbf_write_css( array(
-			'selector' => '#wpbf-mobile-menu-toggle',
-			'props'    => array(
-				'background-color' => 'unset',
-				'border'           => 'unset',
-			),
-		) );
-
-	}
-
 }

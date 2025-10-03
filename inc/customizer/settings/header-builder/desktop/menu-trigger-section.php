@@ -22,7 +22,6 @@ wpbf_customizer_section()
 			'label' => esc_html__( 'Design', 'page-builder-framework' ),
 		],
 	] )
-	->priority( 3 )
 	->addToPanel( 'header_panel' );
 
 $control_id_prefix = 'wpbf_header_builder_desktop_menu_trigger_';
@@ -35,7 +34,6 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Icon', 'page-builder-framework' ) )
 	->defaultValue( 'none' )
-	->priority( 1 )
 	->choices( [
 		'none'      => '
 		<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -106,16 +104,46 @@ wpbf_customizer_field()
 
 /* Design Tab */
 
+// Button background color.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Button Background Color', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		array(
+			'setting'  => $control_id_prefix . 'icon',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+		array(
+			'setting'  => $control_id_prefix . 'style',
+			'operator' => '==',
+			'value'    => 'solid',
+		),
+	] )
+	->addToSection( $section_id );
+
 // Icon color.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'icon_color' )
 	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Icon Color', 'page-builder-framework' ) )
-	->priority( 4 )
 	->transport( 'postMessage' )
 	->properties( [
 		'mode' => 'alpha',
+	] )
+	->activeCallback( [
+		array(
+			'setting'  => $control_id_prefix . 'icon',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
 	] )
 	->addToSection( $section_id );
 
@@ -126,11 +154,45 @@ wpbf_customizer_field()
 	->tab( 'design' )
 	->label( __( 'Icon Size', 'page-builder-framework' ) )
 	->defaultValue( '16px' )
-	->priority( 4 )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
 		'max'  => 50,
 		'step' => 1,
+	] )
+	->activeCallback( [
+		array(
+			'setting'  => $control_id_prefix . 'icon',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	] )
+	->addToSection( $section_id );
+
+// Border radius.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'border_radius' )
+	->type( 'slider' )
+	->tab( 'design' )
+	->label( __( 'Button Border Radius', 'page-builder-framework' ) )
+	->defaultValue( 0 )
+	->priority( 5 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 50,
+		'step' => 1,
+	] )
+	->activeCallback( [
+		array(
+			'setting'  => $control_id_prefix . 'icon',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+		array(
+			'setting'  => $control_id_prefix . 'style',
+			'operator' => '!=',
+			'value'    => 'simple',
+		),
 	] )
 	->addToSection( $section_id );

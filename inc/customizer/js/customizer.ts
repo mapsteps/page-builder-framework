@@ -202,6 +202,17 @@ function setupCustomizer() {
 								to: 205,
 							},
 						},
+						{
+							id: "mobile_menu_hamburger_border_radius",
+							prio: {
+								from: undefined,
+								to: 210,
+							},
+							label: {
+								from: undefined,
+								to: "Button Border Radius",
+							},
+						},
 					],
 				},
 			],
