@@ -2847,6 +2847,7 @@ import { proNotice } from "./partials/pro-notice";
 			);
 		}
 
+		// Menu trigger icon
 		listenToCustomizerValueChange<string>(
 			"wpbf_header_builder_" + device + "_menu_trigger_icon",
 			function (settingId, value) {
@@ -2862,7 +2863,9 @@ import { proNotice } from "./partials/pro-notice";
 				}
 
 				const triggerButton = document.querySelector(
-					"#wpbf-mobile-menu-toggle",
+					device === "mobile"
+						? "#wpbf-mobile-menu-toggle"
+						: "#wpbf-menu-toggle",
 				);
 				if (!triggerButton) return;
 
