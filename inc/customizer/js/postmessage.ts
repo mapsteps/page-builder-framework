@@ -2947,7 +2947,7 @@ import { proNotice } from "./partials/pro-notice";
 				const menuBorderColor: string | undefined = customizer?.(
 					device === "mobile"
 						? "mobile_menu_hamburger_color"
-						: "wpbf_header_builder_" + device + "_menu_trigger_icon_color",
+						: "wpbf_header_builder_" + device + "_menu_trigger_bg_color",
 				)?.get();
 
 				const menuBorderRadius: string | undefined = customizer?.(

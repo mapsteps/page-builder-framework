@@ -122,8 +122,8 @@ wpbf_customizer_field()
 		),
 		array(
 			'setting'  => $control_id_prefix . 'style',
-			'operator' => '==',
-			'value'    => 'solid',
+			'operator' => '!=',
+			'value'    => '',
 		),
 	] )
 	->addToSection( $section_id );
@@ -192,7 +192,7 @@ wpbf_customizer_field()
 		array(
 			'setting'  => $control_id_prefix . 'style',
 			'operator' => '!=',
-			'value'    => 'simple',
+			'value'    => '',
 		),
 	] )
 	->addToSection( $section_id );

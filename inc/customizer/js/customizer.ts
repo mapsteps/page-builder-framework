@@ -1,5 +1,6 @@
 import { moveCustomizerControls } from "../../../assets/js/utils/customizer-util";
 import setupBuilderControlToggleBehavior from "./partials/setup-builder-control";
+import setupMenuTriggerLabels from "./partials/setup-menu-trigger-labels";
 
 window.wp.customize?.bind("ready", () => {
 	setTimeout(() => {
@@ -19,6 +20,7 @@ function setupCustomizer() {
 		setupBuilderControlToggleBehavior();
 		setupControlsMovement();
 		setupMobileMenuTriggerSection();
+		setupMenuTriggerLabels();
 	}
 
 	function listenDevicePreviewSwitch() {
@@ -43,12 +45,12 @@ function setupCustomizer() {
 			"wpbf_header_builder_mobile_menu_trigger_text",
 			"wpbf_header_builder_mobile_menu_trigger_style",
 			"wpbf_header_builder_mobile_menu_trigger_icon_size",
-			"wpbf_header_builder_mobile_menu_trigger_color"
+			"wpbf_header_builder_mobile_menu_trigger_color",
 		];
 
-		controls.forEach(id => {
-			window.wp.customize?.(id, function(value: any) {
-				value.bind(function(to: any) {
+		controls.forEach((id) => {
+			window.wp.customize?.(id, function (value: any) {
+				value.bind(function (to: any) {
 					window.wp.customize?.previewer?.refresh();
 				});
 			});
