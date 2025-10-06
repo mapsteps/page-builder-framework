@@ -100,9 +100,9 @@ import { proNotice } from "./partials/pro-notice";
 		(settingId, to) => {
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-toggle",
-				props: { "font-size": maybeAppendSuffix(to) }
+				props: { "font-size": maybeAppendSuffix(to) },
 			});
-		}
+		},
 	);
 
 	listenToCustomizerValueChange<WpbfColorControlValue>(
@@ -110,9 +110,9 @@ import { proNotice } from "./partials/pro-notice";
 		(settingId, to) => {
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-toggle",
-				props: { color: toStringColor(to) }
+				props: { color: toStringColor(to) },
 			});
-		}
+		},
 	);
 
 	/**
@@ -2807,10 +2807,23 @@ import { proNotice } from "./partials/pro-notice";
 
 	function listenToMenuTriggerValueChange(device: "desktop" | "mobile") {
 		/**
-		 * The mobile menu trigger button's color already handled in "mobile_menu_hamburger_color" control.
-		 * The mobile menu trigger button's icon size already handled in "mobile_menu_hamburger_size" control.
+		 * Some of controls are desktop only because  their mobile version are already defined in old controls.
+		 * - The mobile menu trigger button's border radius already handled in "mobile_menu_hamburger_border_radius" control.
+		 * - The mobile menu trigger button's color already handled in "mobile_menu_hamburger_color" control.
+		 * - The mobile menu trigger button's icon size already handled in "mobile_menu_hamburger_size" control.
 		 */
 		if (device === "desktop") {
+			// Menu trigger button's border radius.
+			listenToCustomizerValueChange<string | number>(
+				"wpbf_header_builder_desktop_menu_trigger_border_radius",
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: ".wpbf-menu-toggle",
+						props: { "border-radius": maybeAppendSuffix(value) },
+					});
+				},
+			);
+
 			// Menu trigger button icon's color.
 			listenToCustomizerValueChange<WpbfColorControlValue>(
 				"wpbf_header_builder_desktop_menu_trigger_icon_color",
