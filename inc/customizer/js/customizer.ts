@@ -19,7 +19,6 @@ function setupCustomizer() {
 		setupLogoContainerWidth();
 		setupBuilderControlToggleBehavior();
 		setupControlsMovement();
-		setupMobileMenuTriggerSection();
 		setupMenuTriggerLabels();
 	}
 
@@ -36,24 +35,6 @@ function setupCustomizer() {
 			document.body.classList.remove(`wpbf-mobile-preview`);
 
 			document.body.classList.add(`wpbf-${device}-preview`);
-		});
-	}
-
-	function setupMobileMenuTriggerSection() {
-		const controls = [
-			"wpbf_header_builder_mobile_menu_trigger_icon",
-			"wpbf_header_builder_mobile_menu_trigger_text",
-			"wpbf_header_builder_mobile_menu_trigger_style",
-			"wpbf_header_builder_mobile_menu_trigger_icon_size",
-			"wpbf_header_builder_mobile_menu_trigger_color",
-		];
-
-		controls.forEach((id) => {
-			window.wp.customize?.(id, function (value: any) {
-				value.bind(function (to: any) {
-					window.wp.customize?.previewer?.refresh();
-				});
-			});
 		});
 	}
 

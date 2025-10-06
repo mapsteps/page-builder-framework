@@ -94,27 +94,6 @@ import { proNotice } from "./partials/pro-notice";
 		return customizer?.("wpbf_enable_header_builder").get() ? true : false;
 	}
 
-	// Mobile menu trigger handlers
-	listenToCustomizerValueChange<string | number>(
-		"wpbf_header_builder_mobile_menu_trigger_icon_size",
-		(settingId, to) => {
-			writeCSS(settingId, {
-				selector: ".wpbf-menu-toggle",
-				props: { "font-size": maybeAppendSuffix(to) },
-			});
-		},
-	);
-
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"wpbf_header_builder_mobile_menu_trigger_color",
-		(settingId, to) => {
-			writeCSS(settingId, {
-				selector: ".wpbf-menu-toggle",
-				props: { color: toStringColor(to) },
-			});
-		},
-	);
-
 	/**
 	 * Get style tag element based on control id.
 	 *
@@ -2990,6 +2969,36 @@ import { proNotice } from "./partials/pro-notice";
 						border: "unset",
 					};
 				}
+
+				writeCSS(settingId, {
+					selector:
+						device === "mobile"
+							? "#wpbf-mobile-menu-toggle"
+							: "#wpbf-menu-toggle",
+					props: props,
+				});
+			},
+		);
+
+		listenToCustomizerValueChange(
+			device + "_menu_hamburger_border_radius",
+			function (settingId, value) {
+				const borderRadius = value ? String(value) : "0";
+
+				let props: Record<string, string | number | undefined> = {};
+
+				const menuBorderColor: string | undefined = customizer?.("mobile_menu_hamburger_color")?.get();
+ 
+					props = {
+						"background-color": "unset",
+					};
+
+					if (menuBorderColor) {
+						props["border"] = "2px solid " + toStringColor(menuBorderColor);
+					}
+ 
+					props["border-radius"] = maybeAppendSuffix(borderRadius);
+				 
 
 				writeCSS(settingId, {
 					selector:
