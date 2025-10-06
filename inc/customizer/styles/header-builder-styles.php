@@ -33,6 +33,10 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 $menu_trigger_icon_size = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_icon_size' );
 $menu_trigger_color = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_color' );
+$menu_trigger_style = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_style', '' );
+$menu_trigger_border_radius = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_border_radius', get_theme_mod( 'mobile_menu_hamburger_border_radius', '0' ) );
+
+// die($menu_trigger_border_radius);
 
 if ( $menu_trigger_icon_size ) {
 	echo '.wpbf-menu-toggle { font-size: ' . esc_attr( $menu_trigger_icon_size ) . 'px; }';
@@ -40,6 +44,9 @@ if ( $menu_trigger_icon_size ) {
 
 if ( $menu_trigger_color ) {
 	echo '.wpbf-menu-toggle { color: ' . esc_attr( $menu_trigger_color ) . '; }';
+	if ( 'outline' === $menu_trigger_style ) {
+		echo '.wpbf-menu-toggle.outline { border-color: ' . esc_attr( $menu_trigger_color ) . '; }';
+	}
 }
 
 /**
@@ -577,6 +584,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 				'props'    => array(
 					'background-color' => 'unset',
 					'border'           => '2px solid ' . wpbf_customize_str_value( $menu_trigger_border_key ),
+					'border-radius'    => $menu_trigger_border_radius ? wpbf_maybe_append_suffix( $menu_trigger_border_radius ) : null,
 				),
 			) );
 
