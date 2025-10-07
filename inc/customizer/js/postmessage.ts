@@ -2980,36 +2980,6 @@ import { proNotice } from "./partials/pro-notice";
 			},
 		);
 
-		listenToCustomizerValueChange(
-			device + "_menu_hamburger_border_radius",
-			function (settingId, value) {
-				const borderRadius = value ? String(value) : "0";
-
-				let props: Record<string, string | number | undefined> = {};
-
-				const menuBorderColor: string | undefined = customizer?.("mobile_menu_hamburger_color")?.get();
- 
-					props = {
-						"background-color": "unset",
-					};
-
-					if (menuBorderColor) {
-						props["border"] = "2px solid " + toStringColor(menuBorderColor);
-					}
- 
-					props["border-radius"] = maybeAppendSuffix(borderRadius);
-				 
-
-				writeCSS(settingId, {
-					selector:
-						device === "mobile"
-							? "#wpbf-mobile-menu-toggle"
-							: "#wpbf-menu-toggle",
-					props: props,
-				});
-			},
-		);
-
 		listenToCustomizerValueChange<string>(
 			"wpbf_header_builder_" + device + "_menu_trigger_text",
 			function (settingId, value) {
