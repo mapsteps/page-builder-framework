@@ -43,9 +43,9 @@ function updateMenuTriggerBgColorLabel(controlId: string, buttonStyle: string) {
 		if (!control || !control.params) return;
 
 		if (buttonStyle === "solid") {
-			control.params.label = "Button Background Color";
+			control.params.label = "Background Color";
 		} else if (buttonStyle === "outline") {
-			control.params.label = "Button Border Color";
+			control.params.label = "Border Color";
 		}
 
 		// Trigger a re-render of the control label if needed
