@@ -160,6 +160,12 @@ wpbf_customizer_field()
 	->type( 'padding' )
 	->tab( 'design' )
 	->label( __( 'Padding', 'page-builder-framework' ) )
+	->defaultValue( array(
+		'top'    => 5,
+		'right'  => 5,
+		'bottom' => 5,
+		'left'   => 5,
+	) )
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(

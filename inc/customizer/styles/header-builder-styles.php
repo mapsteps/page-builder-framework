@@ -580,7 +580,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 			$menu_trigger_border_key = 'mobile' === $header_builder_device ? 'mobile_menu_hamburger_color' : 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_icon_color';
 
 			wpbf_write_css( array(
-				'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
+				'selector' => 'mobile' === $header_builder_device ? '.wpbf-mobile-menu-toggle' : '.wpbf-menu-toggle',
 				'props'    => array(
 					'background-color' => 'unset',
 					'border'           => '2px solid ' . wpbf_customize_str_value( $menu_trigger_border_key ),
@@ -595,7 +595,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 			$menu_trigger_bg_key = 'mobile' === $header_builder_device ? 'mobile_menu_hamburger_bg_color' : 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_bg_color';
 
 			wpbf_write_css( array(
-				'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
+				'selector' => 'mobile' === $header_builder_device ? '.wpbf-mobile-menu-toggle' : '.wpbf-menu-toggle',
 				'props'    => array(
 					'background-color' => wpbf_customize_str_value( $menu_trigger_bg_key ),
 					'border'           => 'unset',
@@ -611,10 +611,10 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 		 */
 
 		$button_padding = wpbf_customize_array_value( 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_padding', [
-			'top'    => 10,
-			'right'  => 10,
-			'bottom' => 10,
-			'left'   => 10,
+			'top'    => 5,
+			'right'  => 5,
+			'bottom' => 5,
+			'left'   => 5,
 		] );
 
 		$button_top_padding    = wpbf_get_theme_mod_value( $button_padding, 'top' );
@@ -625,7 +625,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 		if ( $button_top_padding || $button_right_padding || $button_bottom_padding || $button_left_padding ) {
 
 			wpbf_write_css( array(
-				'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
+				'selector' => 'mobile' === $header_builder_device ? '.wpbf-mobile-menu-toggle' : '.wpbf-menu-toggle',
 				'props'    => array(
 					'padding-top'    => $button_top_padding ? wpbf_maybe_append_suffix( $button_top_padding ) : null,
 					'padding-right'  => $button_right_padding ? wpbf_maybe_append_suffix( $button_right_padding ) : null,
@@ -649,7 +649,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 			if ( $button_border_radius ) {
 				wpbf_write_css( array(
-					'selector' => '#wpbf-menu-toggle',
+					'selector' => '.wpbf-menu-toggle',
 					'props'    => array(
 						'border-radius' => $button_border_radius ? wpbf_maybe_append_suffix( $button_border_radius ) : null,
 					),
@@ -660,7 +660,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 	} else {
 
 		wpbf_write_css( array(
-			'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
+			'selector' => 'mobile' === $header_builder_device ? '.wpbf-mobile-menu-toggle' : '.wpbf-menu-toggle',
 			'props'    => array(
 				'background-color' => 'unset',
 				'border'           => 'unset',

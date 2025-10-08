@@ -2787,6 +2787,8 @@ import { proNotice } from "./partials/pro-notice";
 	function listenToMenuTriggerValueChange(device: "desktop" | "mobile") {
 		/**
 		 * Some of controls are desktop only because  their mobile version are already defined in old controls.
+		 *
+		 * List of controls for mobile version which already handled in other places:
 		 * - The mobile menu trigger button's border radius already handled in "mobile_menu_hamburger_border_radius" control.
 		 * - The mobile menu trigger button's color already handled in "mobile_menu_hamburger_color" control.
 		 * - The mobile menu trigger button's icon size already handled in "mobile_menu_hamburger_size" control.
@@ -2843,8 +2845,8 @@ import { proNotice } from "./partials/pro-notice";
 
 				const triggerButton = document.querySelector(
 					device === "mobile"
-						? "#wpbf-mobile-menu-toggle"
-						: "#wpbf-menu-toggle",
+						? ".wpbf-mobile-menu-toggle"
+						: ".wpbf-menu-toggle",
 				);
 				if (!triggerButton) return;
 
@@ -2906,8 +2908,8 @@ import { proNotice } from "./partials/pro-notice";
 
 				const triggerButton = document.querySelector(
 					device === "mobile"
-						? "#wpbf-mobile-menu-toggle"
-						: "#wpbf-menu-toggle",
+						? ".wpbf-mobile-menu-toggle"
+						: ".wpbf-menu-toggle",
 				);
 
 				if (!triggerButton) return;
@@ -2915,7 +2917,15 @@ import { proNotice } from "./partials/pro-notice";
 				triggerButton.classList.remove("simple", "outline", "solid");
 				triggerButton.classList.add(buttonStyle);
 
-				let props: Record<string, string | number | undefined> = {};
+				const props: Record<string, string | number | undefined> = {};
+
+				const menuButtonPaddingValue: MarginPaddingValue = customizer?.(
+					`wpbf_header_builder_${device}_menu_trigger_padding`,
+				)?.get();
+
+				const menuButtonPadding = parseJsonOrUndefined<MarginPaddingValue>(
+					menuButtonPaddingValue,
+				);
 
 				const menuButtonColor: string | undefined = customizer?.(
 					device === "mobile"
@@ -2935,58 +2945,62 @@ import { proNotice } from "./partials/pro-notice";
 						: "wpbf_header_builder_" + device + "_menu_trigger_border_radius",
 				)?.get();
 
-				if (buttonStyle === "solid") {
-					props = {
-						border: "unset",
-					};
-
-					if (menuButtonColor) {
-						props["background-color"] = toStringColor(menuButtonColor);
+				if (buttonStyle === "solid" || buttonStyle === "outline") {
+					if (menuButtonPadding) {
+						props["padding-top"] = maybeAppendSuffix(menuButtonPadding?.top);
+						props["padding-right"] = maybeAppendSuffix(
+							menuButtonPadding?.right,
+						);
+						props["padding-bottom"] = maybeAppendSuffix(
+							menuButtonPadding?.bottom,
+						);
+						props["padding-left"] = maybeAppendSuffix(menuButtonPadding?.left);
 					}
 
-					if (menuBorderRadius) {
-						props["border-radius"] = maybeAppendSuffix(menuBorderRadius);
+					if (buttonStyle === "solid") {
+						props["border"] = "unset";
+
+						if (menuButtonColor) {
+							props["background-color"] = toStringColor(menuButtonColor);
+						}
+
+						if (menuBorderRadius) {
+							props["border-radius"] = maybeAppendSuffix(menuBorderRadius);
+						}
+					} else if (buttonStyle === "outline") {
+						props["background-color"] = "unset";
+
+						if (menuBorderColor) {
+							props["border"] = "2px solid " + toStringColor(menuBorderColor);
+						}
+
+						if (menuBorderRadius) {
+							props["border-radius"] = maybeAppendSuffix(menuBorderRadius);
+						}
 					}
-				}
-
-				if (buttonStyle === "outline") {
-					props = {
-						"background-color": "unset",
-					};
-
-					if (menuBorderColor) {
-						props["border"] = "2px solid " + toStringColor(menuBorderColor);
-					}
-
-					if (menuBorderRadius) {
-						props["border-radius"] = maybeAppendSuffix(menuBorderRadius);
-					}
-				}
-
-				if (buttonStyle === "simple") {
-					props = {
-						"background-color": "unset",
-						border: "unset",
-					};
+				} else {
+					props["background-color"] = "unset";
+					props["border"] = "unset";
 				}
 
 				writeCSS(settingId, {
 					selector:
 						device === "mobile"
-							? "#wpbf-mobile-menu-toggle"
-							: "#wpbf-menu-toggle",
+							? ".wpbf-mobile-menu-toggle"
+							: ".wpbf-menu-toggle",
 					props: props,
 				});
 			},
 		);
 
+		// Menu trigger button's text.
 		listenToCustomizerValueChange<string>(
 			"wpbf_header_builder_" + device + "_menu_trigger_text",
 			function (settingId, value) {
 				const triggerButton = document.querySelector(
 					device === "mobile"
-						? "#wpbf-mobile-menu-toggle"
-						: "#wpbf-menu-toggle",
+						? ".wpbf-mobile-menu-toggle"
+						: ".wpbf-menu-toggle",
 				);
 				if (!triggerButton) return;
 
@@ -3006,6 +3020,25 @@ import { proNotice } from "./partials/pro-notice";
 						triggerButton.appendChild(newLabelSpan);
 					}
 				}
+			},
+		);
+
+		// Menu trigger button's padding.
+		listenToCustomizerValueChange<MarginPaddingValue | string>(
+			`wpbf_header_builder_${device}_menu_trigger_padding`,
+			function (settingId, value) {
+				const obj =
+					parseJsonOrUndefined<Record<string, number | string>>(value);
+
+				writeCSS(settingId, {
+					selector: ".wpbf-menu-toggle",
+					props: {
+						"padding-top": maybeAppendSuffix(obj?.top),
+						"padding-right": maybeAppendSuffix(obj?.right),
+						"padding-bottom": maybeAppendSuffix(obj?.bottom),
+						"padding-left": maybeAppendSuffix(obj?.left),
+					},
+				});
 			},
 		);
 	}
