@@ -636,6 +636,27 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 		}
 
+		/**
+		 * ----------------------------------------------------------------------
+		 * Trigger Button Border Radius.
+		 *
+		 * Desktop only, because the mobile version already handled in "styles.php"
+		 * in "mobile_menu_hamburger_border_radius" control.
+		 * ----------------------------------------------------------------------
+		 */
+		if ( 'desktop' === $header_builder_device ) {
+			$button_border_radius = wpbf_customize_str_value( 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_border_radius' );
+
+			if ( $button_border_radius ) {
+				wpbf_write_css( array(
+					'selector' => '#wpbf-menu-toggle',
+					'props'    => array(
+						'border-radius' => $button_border_radius ? wpbf_maybe_append_suffix( $button_border_radius ) : null,
+					),
+				) );
+			}
+		}
+
 	} else {
 
 		wpbf_write_css( array(
