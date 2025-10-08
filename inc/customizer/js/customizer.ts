@@ -217,6 +217,40 @@ function setupCustomizer() {
 						},
 					],
 				},
+				{
+					from: "wpbf_mobile_menu_options",
+					to: "wpbf_header_builder_mobile_offcanvas_section",
+					controlsToMove: [
+						{
+							id: "mobile_menu_bg_color",
+							prio: {
+								from: undefined,
+								to: 200,
+							},
+						},
+						{
+							id: "mobile_menu_font_color",
+							prio: {
+								from: undefined,
+								to: 205,
+							},
+						},
+						{
+							id: "mobile_menu_font_size",
+							prio: {
+								from: undefined,
+								to: 210,
+							},
+						},
+						{
+							id: "mobile_menu_border_color",
+							prio: {
+								from: undefined,
+								to: 220,
+							},
+						},
+					],
+				},
 			],
 		});
 	}
