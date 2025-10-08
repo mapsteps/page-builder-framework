@@ -2784,50 +2784,17 @@ import { proNotice } from "./partials/pro-notice";
 		);
 	});
 
+	/**
+	 * Some of controls are desktop only because  their mobile version are already defined in old controls.
+	 *
+	 * List of controls for mobile version which already handled in other places:
+	 * - The mobile menu trigger button's border radius already handled in "mobile_menu_hamburger_border_radius" control.
+	 * - The mobile menu trigger button's color already handled in "mobile_menu_hamburger_color" control.
+	 * - The mobile menu trigger button's icon size already handled in "mobile_menu_hamburger_size" control.
+	 *
+	 * @param {"desktop"|"mobile"} device The device key.
+	 */
 	function listenToMenuTriggerValueChange(device: "desktop" | "mobile") {
-		/**
-		 * Some of controls are desktop only because  their mobile version are already defined in old controls.
-		 *
-		 * List of controls for mobile version which already handled in other places:
-		 * - The mobile menu trigger button's border radius already handled in "mobile_menu_hamburger_border_radius" control.
-		 * - The mobile menu trigger button's color already handled in "mobile_menu_hamburger_color" control.
-		 * - The mobile menu trigger button's icon size already handled in "mobile_menu_hamburger_size" control.
-		 */
-		if (device === "desktop") {
-			// Menu trigger button's border radius.
-			listenToCustomizerValueChange<string | number>(
-				"wpbf_header_builder_desktop_menu_trigger_border_radius",
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: ".wpbf-menu-toggle",
-						props: { "border-radius": maybeAppendSuffix(value) },
-					});
-				},
-			);
-
-			// Menu trigger button icon's color.
-			listenToCustomizerValueChange<WpbfColorControlValue>(
-				"wpbf_header_builder_desktop_menu_trigger_icon_color",
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: ".wpbf-menu-toggle",
-						props: { color: toStringColor(value) },
-					});
-				},
-			);
-
-			// Menu trigger button icon's size.
-			listenToCustomizerValueChange<string | number>(
-				"wpbf_header_builder_desktop_menu_trigger_icon_size",
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: ".wpbf-menu-toggle",
-						props: { "font-size": maybeAppendSuffix(value) },
-					});
-				},
-			);
-		}
-
 		// Menu trigger icon
 		listenToCustomizerValueChange<string>(
 			"wpbf_header_builder_" + device + "_menu_trigger_icon",
@@ -3041,6 +3008,41 @@ import { proNotice } from "./partials/pro-notice";
 				});
 			},
 		);
+
+		if (device === "desktop") {
+			// Menu trigger button's border radius.
+			listenToCustomizerValueChange<string | number>(
+				"wpbf_header_builder_desktop_menu_trigger_border_radius",
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: ".wpbf-menu-toggle",
+						props: { "border-radius": maybeAppendSuffix(value) },
+					});
+				},
+			);
+
+			// Menu trigger button icon's color.
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				"wpbf_header_builder_desktop_menu_trigger_icon_color",
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: ".wpbf-menu-toggle",
+						props: { color: toStringColor(value) },
+					});
+				},
+			);
+
+			// Menu trigger button icon's size.
+			listenToCustomizerValueChange<string | number>(
+				"wpbf_header_builder_desktop_menu_trigger_icon_size",
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: ".wpbf-menu-toggle",
+						props: { "font-size": maybeAppendSuffix(value) },
+					});
+				},
+			);
+		}
 	}
 
 	listenToMenuTriggerValueChange("mobile");
