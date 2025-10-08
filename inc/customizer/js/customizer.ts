@@ -212,7 +212,7 @@ function setupCustomizer() {
 							},
 							label: {
 								from: undefined,
-								to: "Button Border Radius",
+								to: "Border Radius",
 							},
 						},
 					],
