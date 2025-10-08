@@ -1870,8 +1870,6 @@ if ( wpbf_not_empty_allow_zero( $menu_font_size ) ) {
 // Sub menu.
 $sub_menu_text_alignment = wpbf_customize_str_value( 'sub_menu_text_alignment' );
 
-
-
 $sub_menu_padding = wpbf_customize_array_value( 'sub_menu_padding' );
 
 $sub_menu_padding_top      = wpbf_get_theme_mod_value( $sub_menu_padding, 'top', 10 );

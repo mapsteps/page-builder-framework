@@ -31,9 +31,9 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  * ----------------------------------------------------------------------
  */
 
-$menu_trigger_icon_size = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_icon_size' );
-$menu_trigger_color = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_color' );
-$menu_trigger_style = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_style', '' );
+$menu_trigger_icon_size     = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_icon_size' );
+$menu_trigger_color         = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_color' );
+$menu_trigger_style         = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_style', '' );
 $menu_trigger_border_radius = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_border_radius', get_theme_mod( 'mobile_menu_hamburger_border_radius', '0' ) );
 
 // die($menu_trigger_border_radius);
@@ -604,17 +604,47 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 		}
 
-		if ( 'simple' === $menu_trigger_style ) {
+		/**
+		 * ----------------------------------------------------------------------
+		 * Trigger Button Padding.
+		 * ----------------------------------------------------------------------
+		 */
+
+		$button_padding = wpbf_customize_array_value( 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_padding', [
+			'top'    => 10,
+			'right'  => 10,
+			'bottom' => 10,
+			'left'   => 10,
+		] );
+
+		$button_top_padding    = wpbf_get_theme_mod_value( $button_padding, 'top' );
+		$button_right_padding  = wpbf_get_theme_mod_value( $button_padding, 'right' );
+		$button_bottom_padding = wpbf_get_theme_mod_value( $button_padding, 'bottom' );
+		$button_left_padding   = wpbf_get_theme_mod_value( $button_padding, 'left' );
+
+		if ( $button_top_padding || $button_right_padding || $button_bottom_padding || $button_left_padding ) {
 
 			wpbf_write_css( array(
 				'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
 				'props'    => array(
-					'background-color' => 'unset',
-					'border'           => 'unset',
+					'padding-top'    => $button_top_padding ? wpbf_maybe_append_suffix( $button_top_padding ) : null,
+					'padding-right'  => $button_right_padding ? wpbf_maybe_append_suffix( $button_right_padding ) : null,
+					'padding-bottom' => $button_bottom_padding ? wpbf_maybe_append_suffix( $button_bottom_padding ) : null,
+					'padding-left'   => $button_left_padding ? wpbf_maybe_append_suffix( $button_left_padding ) : null,
 				),
 			) );
 
 		}
+
+	} else {
+
+		wpbf_write_css( array(
+			'selector' => 'mobile' === $header_builder_device ? '#wpbf-mobile-menu-toggle' : '#wpbf-menu-toggle',
+			'props'    => array(
+				'background-color' => 'unset',
+				'border'           => 'unset',
+			),
+		) );
 
 	}
 }

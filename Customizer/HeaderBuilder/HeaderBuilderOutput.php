@@ -505,6 +505,7 @@ class HeaderBuilderOutput {
 
 		$menu_position_class = 'wpbf-menu-' . $column_position;
 		$menu_variant_class  = 'wpbf-' . ( 'mobile' === $device ? 'mobile-' : '' ) . 'menu-' . $icon_variant;
+		$nav_item_class      = 'wpbf-' . esc_attr( 'mobile' === $device ? 'mobile-' : '' ) . 'nav-item';
 		?>
 
 		<div class="wpbf-menu-toggle-container">
@@ -519,7 +520,7 @@ class HeaderBuilderOutput {
 
 			<button
 				id="wpbf-<?php echo esc_attr( 'mobile' === $device ? 'mobile-' : '' ); ?>menu-toggle"
-				class="wpbf-<?php echo esc_attr( 'mobile' === $device ? 'mobile-' : '' ); ?>nav-item wpbf-<?php echo esc_attr( 'mobile' === $device ? 'mobile-' : '' ); ?>menu-toggle <?php echo esc_attr( $menu_position_class ); ?> <?php echo esc_attr( $menu_variant_class ); ?> <?php echo esc_attr( $button_style ); ?>"
+				class="<?php echo esc_attr( $nav_item_class ); ?> wpbf-<?php echo esc_attr( 'mobile' === $device ? 'mobile-' : '' ); ?>menu-toggle <?php echo esc_attr( $menu_position_class ); ?> <?php echo esc_attr( $menu_variant_class ); ?> <?php echo esc_attr( $button_style ); ?>"
 				aria-label="<?php echo esc_attr( 'mobile' === $device ? __( 'Mobile', 'page-builder-framework' ) : '' ); ?> <?php _e( 'Site Navigation', 'page-builder-framework' ); ?>"
 				aria-controls="navigation"
 				aria-expanded="false"
