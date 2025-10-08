@@ -2010,7 +2010,11 @@ if ( ! function_exists( 'wpbf_customize_array_value' ) ) {
 		}
 
 		if ( ! is_array( $value ) ) {
-			return array();
+			if ( empty( $default_value ) ) {
+				return array();
+			}
+
+			return $default_value;
 		}
 
 		return $value;
