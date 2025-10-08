@@ -124,6 +124,28 @@ wpbf_customizer_field()
 	] )
 	->addToSection( $section_id );
 
+// Padding.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'padding' )
+	->type( 'padding' )
+	->tab( 'design' )
+	->label( __( 'Padding', 'page-builder-framework' ) )
+	->defaultValue( array(
+		'top'    => 5,
+		'right'  => 5,
+		'bottom' => 5,
+		'left'   => 5,
+	) )
+	->transport( 'postMessage' )
+	->activeCallback( [
+		array(
+			'setting'  => $control_id_prefix . 'style',
+			'operator' => '!=',
+			'value'    => '',
+		),
+	] )
+	->addToSection( $section_id );
+
 $menu_trigger_style = wpbf_customize_str_value( $control_id_prefix . 'style' );
 
 // Button background color.
@@ -146,28 +168,6 @@ wpbf_customizer_field()
 			'operator' => '!=',
 			'value'    => 'none',
 		),
-		array(
-			'setting'  => $control_id_prefix . 'style',
-			'operator' => '!=',
-			'value'    => '',
-		),
-	] )
-	->addToSection( $section_id );
-
-// Padding.
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'padding' )
-	->type( 'padding' )
-	->tab( 'design' )
-	->label( __( 'Padding', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'top'    => 5,
-		'right'  => 5,
-		'bottom' => 5,
-		'left'   => 5,
-	) )
-	->transport( 'postMessage' )
-	->activeCallback( [
 		array(
 			'setting'  => $control_id_prefix . 'style',
 			'operator' => '!=',
