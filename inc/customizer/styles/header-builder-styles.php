@@ -243,7 +243,7 @@ foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
 
 		wpbf_write_css( array(
-			'selector' => '.mobile-header-rows .wpbf-inner-pre-header',
+			'selector' => '.wpbf-mobile-header-rows .wpbf-inner-pre-header',
 			'props'    => array(
 				'padding-top'    => wpbf_maybe_append_suffix( $v_padding ),
 				'padding-bottom' => wpbf_maybe_append_suffix( $v_padding ),

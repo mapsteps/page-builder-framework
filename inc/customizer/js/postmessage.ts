@@ -2607,7 +2607,7 @@ import { proNotice } from "./partials/pro-notice";
 				`${controlIdPrefix}vertical_padding`,
 				function (settingId, value) {
 					writeCSS(settingId, {
-						selector: ".mobile-header-rows .wpbf-inner-pre-header",
+						selector: ".wpbf-mobile-header-rows .wpbf-inner-pre-header",
 						props: {
 							"padding-top": maybeAppendSuffix(value),
 							"padding-bottom": maybeAppendSuffix(value),
