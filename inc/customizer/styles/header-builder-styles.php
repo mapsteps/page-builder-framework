@@ -591,6 +591,10 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 	$menu_trigger_props['font-size'] = wpbf_maybe_append_suffix( $menu_trigger_icon_size );
 
+	if ( $menu_trigger_icon_color ) {
+		$menu_trigger_props['color'] = $menu_trigger_icon_color;
+	}
+
 	// If the menu trigger style is either 'outlined' or 'solid'.
 	if ( ! empty( $menu_trigger_style ) ) {
 		if ( $menu_trigger_button_border_radius ) {
