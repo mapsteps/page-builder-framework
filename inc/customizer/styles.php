@@ -1287,7 +1287,7 @@ foreach ( $singles as $single ) {
 	}
 
 	// General Layout Settings.
-	/*
+	/**
 	$content_alignment = wpbf_customize_str_value( $single . '_post_content_alignment', 'left' );
 
 	if ( $content_alignment ) {
@@ -2092,23 +2092,20 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 	$mobile_menu_hamburger_size  = '16' === $mobile_menu_hamburger_size || '16px' === $mobile_menu_hamburger_size ? '' : $mobile_menu_hamburger_size;
 
 	if ( $mobile_menu_hamburger_color || $mobile_menu_hamburger_size ) {
-
-		wpbf_write_css( array(
-			'selector' => '.wpbf-mobile-nav-item',
-			'props'    => array(
-				'color'     => $mobile_menu_hamburger_color ? $mobile_menu_hamburger_color : null,
-				'font-size' => $mobile_menu_hamburger_size ? wpbf_maybe_append_suffix( $mobile_menu_hamburger_size ) : null,
-			),
-		) );
+		$hamburger_props = array();
 
 		if ( $mobile_menu_hamburger_color ) {
-
-			wpbf_write_css( array(
-				'selector' => '.wpbf-mobile-nav-item a',
-				'props'    => array( 'color' => $mobile_menu_hamburger_color ),
-			) );
-
+			$hamburger_props['color'] = $mobile_menu_hamburger_color;
 		}
+
+		if ( $mobile_menu_hamburger_size ) {
+			$hamburger_props['font-size'] = wpbf_maybe_append_suffix( $mobile_menu_hamburger_size );
+		}
+
+		wpbf_write_css( array(
+			'selector' => '.wpbf-mobile-menu-toggle',
+			'props'    => $hamburger_props,
+		) );
 	}
 
 	$mobile_menu_hamburger_bg_color = wpbf_customize_str_value( 'mobile_menu_hamburger_bg_color' );
@@ -2121,6 +2118,7 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 			'selector' => '.wpbf-mobile-menu-toggle',
 			'props'    => array(
 				'background-color' => $mobile_menu_hamburger_bg_color,
+				'font-size'        => $mobile_menu_hamburger_size ? wpbf_maybe_append_suffix( $mobile_menu_hamburger_size ) : null,
 				'color'            => '#ffffff !important',
 				'padding'          => '10px',
 				'line-height'      => '1',
