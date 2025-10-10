@@ -701,14 +701,22 @@ class HeaderBuilderOutput {
 
 		$reveal_as = get_theme_mod( 'wpbf_header_builder_desktop_offcanvas_reveal_as' );
 
+		$supported_reveal_as = [ 'full-screen', 'off-canvas', 'off-canvas-left' ];
+
 		/**
 		 * The desktop menu type. Accepts 'full-screen' or 'off-canvas'.
 		 *
 		 * @var string
 		 */
-		$menu_type = 'full-screen' === $reveal_as ? 'full-screen' : 'off-canvas';
+		$menu_type = in_array( $reveal_as, $supported_reveal_as, true ) ? $reveal_as : 'full-screen';
 
-		$wrapper_class = 'full-screen' === $menu_type ? 'wpbf-menu-full-screen wpbf-visible-large' : 'wpbf-menu-off-canvas wpbf-menu-off-canvas-right wpbf-visible-large';
+		$wrapper_class = 'wpbf-menu-off-canvas wpbf-menu-off-canvas-right wpbf-visible-large';
+
+		if ( 'full-screen' === $menu_type ) {
+			$wrapper_class = 'wpbf-menu-full-screen wpbf-visible-large';
+		} elseif ( 'off-canvas-left' === $menu_type ) {
+			$wrapper_class = 'wpbf-menu-off-canvas wpbf-menu-off-canvas-left wpbf-visible-large';
+		}
 		?>
 
 		<div class="<?php echo esc_attr( $wrapper_class ); ?>">

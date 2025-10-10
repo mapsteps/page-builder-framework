@@ -44,12 +44,29 @@ wpbf_customizer_field()
 	->type( 'radio-buttonset' )
 	->tab( 'general' )
 	->label( __( 'Reveal as', 'page-builder-framework' ) )
-	->defaultValue( 'none' )
+	->defaultValue( 'off-canvas' )
 	->priority( 5 )
 	->choices( [
-		'off-canvas'  => __( 'Off-canvas', 'page-builder-framework' ),
-		'full-screen' => __( 'Full screen', 'page-builder-framework' ),
+		'off-canvas'      => __( 'Off-canvas (Right)', 'page-builder-framework' ),
+		'off-canvas-left' => __( 'Off-canvas (Left)', 'page-builder-framework' ),
+		'full-screen'     => __( 'Full screen', 'page-builder-framework' ),
 	] )
 	->defaultValue( 'off-canvas' )
-	->transport( 'postMessage' )
+	->transport( 'auto' )
+	->partialRefresh( [
+		'headerbuilder_toggle_header' => array(
+			'container_inclusive' => true,
+			'selector'            => '#header',
+			'render_callback'     => function () {
+				return get_template_part( 'inc/template-parts/header' );
+			},
+		),
+		'headerbuilder_toggle_style' => array(
+			'container_inclusive' => false,
+			'selector'            => '#wpbf-customize-saved-styles',
+			'render_callback'     => function () {
+				return wpbf_generate_css();
+			},
+		),
+	] )
 	->addToSection( $section_id );
