@@ -41,7 +41,7 @@ $partial_refresh_args = array(
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'reveal_as' )
-	->type( 'radio-buttonset' )
+	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Reveal as', 'page-builder-framework' ) )
 	->defaultValue( 'off-canvas' )
