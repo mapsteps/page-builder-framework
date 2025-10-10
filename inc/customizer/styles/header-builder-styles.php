@@ -26,8 +26,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  */
 
 
-$menu_trigger_color = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_color' );
-$menu_trigger_style = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_style', '' );
+// $menu_trigger_color = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_color' );
+// $menu_trigger_style = get_theme_mod( 'wpbf_header_builder_mobile_menu_trigger_style', '' );
 
 // if ( $menu_trigger_color ) {
 // echo '.wpbf-menu-toggle { color: ' . esc_attr( $menu_trigger_color ) . '; }';
@@ -591,8 +591,9 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 	$menu_trigger_props['font-size'] = wpbf_maybe_append_suffix( $menu_trigger_icon_size );
 
+	// Icon color (mobile uses mobile_menu_hamburger_color). Make sure we emit it.
 	if ( $menu_trigger_icon_color ) {
-		$menu_trigger_props['color'] = $menu_trigger_icon_color;
+		$menu_trigger_props['color'] = $menu_trigger_icon_color . "!important";
 	}
 
 	// If the menu trigger style is either 'outlined' or 'solid'.
@@ -611,6 +612,9 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 				$menu_trigger_props['background-color'] = $menu_trigger_button_color;
 				$menu_trigger_props['border']           = 'unset';
 			}
+		} else {
+			$menu_trigger_props['background-color'] = 'unset';
+			$menu_trigger_props['border']           = 'unset';
 		}
 
 		$button_padding = wpbf_customize_array_value( 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_padding', [
@@ -646,8 +650,8 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 	} else {
 
-		$menu_trigger_props['background-color'] = 'unset';
-		$menu_trigger_props['border']           = 'unset';
+		$menu_trigger_props['background-color'] = 'unset !important';
+		$menu_trigger_props['border']           = 'unset !important';
 
 	}
 

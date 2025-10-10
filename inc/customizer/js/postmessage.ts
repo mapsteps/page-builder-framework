@@ -709,18 +709,7 @@ import { proNotice } from "./partials/pro-notice";
 				props: { "background-color": toStringColor(value) },
 			});
 		},
-	);
-
-	// Icon color.
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"mobile_menu_hamburger_color",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a",
-				props: { color: toStringColor(value) },
-			});
-		},
-	);
+	); 
 
 	// Hamburger size.
 	listenToCustomizerValueChange<string | number>(
@@ -750,7 +739,7 @@ import { proNotice } from "./partials/pro-notice";
 				selector: ".wpbf-mobile-menu-toggle",
 				props: {
 					"background-color": toStringColor(value),
-					color: "#ffffff !important",
+					color: "#ffffff",
 					padding: "10px",
 					"line-height": 1,
 					"border-radius": emptyNotZero(borderRadius)
@@ -838,7 +827,7 @@ import { proNotice } from "./partials/pro-notice";
 			writeCSS(settingId, {
 				selector:
 					".wpbf-mobile-menu a:hover, .wpbf-mobile-menu > .current-menu-item > a",
-				props: { color: toStringColor(value) + "!important" },
+				props: { color: toStringColor(value)},
 			});
 		},
 	);
@@ -968,7 +957,7 @@ import { proNotice } from "./partials/pro-notice";
 			writeCSS(settingId, {
 				selector:
 					".wpbf-mobile-menu .sub-menu a:hover, .wpbf-mobile-menu .sub-menu > .current-menu-item > a",
-				props: { color: toStringColor(value) + "!important" },
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
@@ -3060,6 +3049,70 @@ import { proNotice } from "./partials/pro-notice";
 				},
 			);
 		}
+
+
+		if (device === "mobile") {
+			// Mobile-specific listeners for menu trigger controls.
+
+			// Icon color.
+			listenToCustomizerValueChange<WpbfColorControlValue>(
+				"mobile_menu_hamburger_color",
+				function (settingId, value) {
+					writeCSS(settingId, {
+						selector: ".wpbf-mobile-nav-item",
+						props: { color: toStringColor(value) + " !important" },
+					});
+				},
+			);
+
+			// Border radius (force overwrite to ensure bg block can be overridden).
+			// listenToCustomizerValueChange<string | number>(
+			// 	"mobile_menu_hamburger_border_radius",
+			// 	function (settingId, value) {
+			// 		writeCSS(settingId, {
+			// 			selector: ".wpbf-mobile-nav-item",
+			// 			props: { "border-radius": maybeAppendSuffix(value) },
+			// 		});
+			// 	},
+			// );
+
+			// Background / border color.
+			// listenToCustomizerValueChange<WpbfColorControlValue>(
+			// 	"mobile_menu_hamburger_bg_color",
+			// 	function (settingId, value) {
+			// 		const buttonStyle = customizer?.(
+			// 			"wpbf_header_builder_mobile_menu_trigger_style",
+			// 		)?.get();
+
+			// 		if (buttonStyle !== "solid" && buttonStyle !== "outline") return;
+
+			// 		writeCSS(settingId, {
+			// 			selector: ".wpbf-mobile-menu-toggle",
+			// 			props: {
+			// 				"background-color":
+			// 					buttonStyle === "solid" ? toStringColor(value) : "unset",
+			// 				border:
+			// 					buttonStyle === "solid"
+			// 						? "unset"
+			// 						: "2px solid " + toStringColor(value),
+			// 			},
+			// 		});
+			// 	},
+			// );
+
+			// Icon size.
+			// listenToCustomizerValueChange<string | number>(
+			// 	"mobile_menu_hamburger_size",
+			// 	function (settingId, value) {
+			// 		writeCSS(settingId, {
+			// 			selector: ".wpbf-mobile-menu-toggle",
+			// 			props: { "font-size": maybeAppendSuffix(value) },
+			// 		});
+			// 	},
+			// );
+		}
+
+
 	}
 
 	listenToMenuTriggerValueChange("mobile");

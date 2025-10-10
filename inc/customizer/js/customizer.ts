@@ -20,7 +20,7 @@ function setupCustomizer() {
 		setupBuilderControlToggleBehavior();
 		setupControlsMovement();
 		setupMenuTriggerLabels();
-	}
+	} 
 
 	function listenDevicePreviewSwitch() {
 		const previewedDevice = window.wp.customize?.previewedDevice.get();
@@ -190,29 +190,38 @@ function setupCustomizer() {
 					from: "wpbf_mobile_menu_options",
 					to: "wpbf_header_builder_mobile_menu_trigger_section",
 					controlsToMove: [
+						// Button related controls first (Button Settings group)
 						{
-							id: "mobile_menu_hamburger_color",
+							id: "mobile_menu_hamburger_bg_color",
 							prio: {
 								from: undefined,
-								to: 200,
-							},
-						},
-						{
-							id: "mobile_menu_hamburger_size",
-							prio: {
-								from: undefined,
-								to: 205,
+								to: 210,
 							},
 						},
 						{
 							id: "mobile_menu_hamburger_border_radius",
 							prio: {
 								from: undefined,
-								to: 210,
+								to: 215,
 							},
 							label: {
 								from: undefined,
 								to: "Border Radius",
+							},
+						},
+						// Icon related controls after (Icon Settings group)
+						{
+							id: "mobile_menu_hamburger_color",
+							prio: {
+								from: undefined,
+								to: 300,
+							},
+						},
+						{
+							id: "mobile_menu_hamburger_size",
+							prio: {
+								from: undefined,
+								to: 305,
 							},
 						},
 					],
@@ -222,31 +231,38 @@ function setupCustomizer() {
 					to: "wpbf_header_builder_mobile_offcanvas_section",
 					controlsToMove: [
 						{
-							id: "mobile_menu_bg_color",
+							id: "mobile_menu_item_settings_headline",
 							prio: {
 								from: undefined,
 								to: 200,
 							},
 						},
 						{
-							id: "mobile_menu_font_color",
+							id: "mobile_menu_bg_color",
 							prio: {
 								from: undefined,
 								to: 205,
 							},
 						},
 						{
-							id: "mobile_menu_font_size",
+							id: "mobile_menu_font_color",
 							prio: {
 								from: undefined,
 								to: 210,
 							},
 						},
 						{
-							id: "mobile_menu_border_color",
+							id: "mobile_menu_font_size",
 							prio: {
 								from: undefined,
 								to: 220,
+							},
+						},
+						{
+							id: "mobile_menu_border_color",
+							prio: {
+								from: undefined,
+								to: 230,
 							},
 						},
 					],

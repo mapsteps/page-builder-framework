@@ -103,3 +103,74 @@ wpbf_customizer_field()
 	] )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
+
+/* Design Tab */
+
+// Button separator.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'button_separator' )
+	->type( 'headline' )
+	->tab( 'design' )
+	->label( __( 'Button Settings', 'page-builder-framework' ) )
+	->priority( 190 )
+	->activeCallback( [
+		array(
+			'setting'  => $control_id_prefix . 'icon',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+		array(
+			'setting'  => $control_id_prefix . 'style',
+			'operator' => 'in',
+			'value'    => array( 'outline', 'solid' ),
+		),
+	] )
+	->addToSection( $section_id );
+
+// Padding.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'padding' )
+	->type( 'padding' )
+	->tab( 'design' )
+	->label( __( 'Padding', 'page-builder-framework' ) )
+	->priority( 200 )
+	->defaultValue( array(
+		'top'    => 10,
+		'right'  => 10,
+		'bottom' => 10,
+		'left'   => 10,
+	) )
+	->transport( 'postMessage' )
+	->activeCallback( [
+		array(
+			'setting'  => $control_id_prefix . 'style',
+			'operator' => 'in',
+			'value'    => array( 'outline', 'solid' ),
+		),
+		array(
+			'setting'  => $control_id_prefix . 'icon',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	] )
+	->addToSection( $section_id );
+
+// Border radius is added automatically by customizer.ts for mobile; headline above groups button settings.
+
+// Icon separator.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'icon_separator' )
+	->type( 'headline' )
+	->tab( 'design' )
+	->label( __( 'Icon Settings', 'page-builder-framework' ) )
+	->priority( 290 )
+	->activeCallback( [
+		array(
+			'setting'  => $control_id_prefix . 'icon',
+			'operator' => '!=',
+			'value'    => 'none',
+		),
+	] )
+	->addToSection( $section_id );
+
+// Icon color and size are added automatically by customizer.ts for mobile; headline above groups icon settings.
