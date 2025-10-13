@@ -1,6 +1,7 @@
 import { setupControlsMovement } from "./customizer-parts/setup-controls-movement";
 import setupBuilderControlToggleBehavior from "./customizer-parts/setup-builder-control";
 import setupMenuTriggerLabels from "./customizer-parts/setup-menu-trigger-labels";
+import { setupConditionalControls } from "./customizer-parts/setup-conditional-controls";
 
 window.wp.customize?.bind("ready", () => {
 	setTimeout(() => {
@@ -19,6 +20,7 @@ function setupCustomizer() {
 		setupLogoContainerWidth();
 		setupBuilderControlToggleBehavior();
 		setupControlsMovement();
+		setupConditionalControls();
 		setupMenuTriggerLabels();
 	}
 

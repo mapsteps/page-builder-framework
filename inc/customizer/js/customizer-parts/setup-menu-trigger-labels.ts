@@ -8,8 +8,6 @@
 export default function setupMenuTriggerLabels() {
 	setupMenuTriggerLabelsByDevice("desktop");
 	setupMenuTriggerLabelsByDevice("mobile");
-
-	setupMobileMenuTriggerVisibility();
 }
 
 /**
@@ -38,7 +36,7 @@ function setupMenuTriggerLabelsByDevice(device: "desktop" | "mobile") {
 	// Set initial label based on current value (always run to ensure label sync)
 	const initialStyle = window.wp.customize?.(styleControlId)?.get() || "";
 	updateMenuTriggerBgColorLabel(bgColorControlId, initialStyle, device);
-	// apply initial color as well
+
 	const initialColor = window.wp.customize?.(bgColorControlId)?.get();
 	applyMenuTriggerColorToPreview(device, initialStyle, initialColor);
 
@@ -126,44 +124,4 @@ function applyMenuTriggerColorToPreview(
 	} catch (e) {
 		// ignore errors interacting with iframe
 	}
-}
-
-/**
- * Show/hide mobile-specific menu trigger controls based on selected style.
- * Ensures controls defined elsewhere (moved into the builder) are hidden for 'simple'.
- */
-function setupMobileMenuTriggerVisibility() {
-	const styleSettingId = "wpbf_header_builder_mobile_menu_trigger_style";
-	const controlsToToggle = [
-		"mobile_menu_hamburger_bg_color",
-		"mobile_menu_hamburger_border_radius",
-		"wpbf_header_builder_mobile_menu_trigger_button_separator",
-		"wpbf_header_builder_mobile_menu_trigger_padding",
-	];
-
-	function applyVisibility(buttonStyle: string) {
-		const shouldShow = buttonStyle === "outline" || buttonStyle === "solid";
-
-		controlsToToggle.forEach((controlId) => {
-			try {
-				window.wp.customize?.control(controlId, function (control) {
-					if (!control || !control.container) return;
-					control.container.toggle(!!shouldShow);
-				});
-			} catch (e) {
-				// ignore if control doesn't exist yet
-			}
-		});
-	}
-
-	// Bind to changes
-	window.wp.customize?.(styleSettingId, function (setting) {
-		setting.bind(function (val: string) {
-			applyVisibility(val);
-		});
-	});
-
-	// Initial apply (call even when initial is empty string to hide controls for 'simple')
-	const initial = window.wp.customize?.(styleSettingId)?.get();
-	applyVisibility(typeof initial !== "undefined" ? initial : "");
 }
