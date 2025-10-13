@@ -1,9 +1,5 @@
 /**
- * Setup dynamic label changes for menu trigger background color control.
- *
- * This changes the label based on the button style:
- * - "solid" style: "Button Background Color"
- * - "outline" style: "Button Border Color"
+ * Setup dynamic label changes for some customizer controls.
  */
 export default function setupLabelChanges() {
 	setupMenuTriggerLabelsByDevice("desktop");
@@ -41,6 +37,10 @@ function setupMenuTriggerLabelsByDevice(device: "desktop" | "mobile") {
 
 /**
  * Update the label of menu trigger background color control.
+ *
+ * This changes the label based on the button style:
+ * - "solid" style: "Button Background Color"
+ * - "outline" style: "Button Border Color"
  *
  * @param {string} controlId - The control ID.
  * @param {string} buttonStyle - The button style value.
