@@ -1,6 +1,6 @@
 import { setupControlsMovement } from "./customizer-parts/setup-controls-movement";
 import setupBuilderControlToggleBehavior from "./customizer-parts/setup-builder-control";
-import setupMenuTriggerLabels from "./customizer-parts/setup-menu-trigger-labels";
+import setupLabelChanges from "./customizer-parts/setup-label-changes";
 import { setupConditionalControls } from "./customizer-parts/setup-conditional-controls";
 
 window.wp.customize?.bind("ready", () => {
@@ -21,7 +21,7 @@ function setupCustomizer() {
 		setupBuilderControlToggleBehavior();
 		setupControlsMovement();
 		setupConditionalControls();
-		setupMenuTriggerLabels();
+		setupLabelChanges();
 	}
 
 	function listenDevicePreviewSwitch() {

@@ -5,7 +5,7 @@
  * - "solid" style: "Button Background Color"
  * - "outline" style: "Button Border Color"
  */
-export default function setupMenuTriggerLabels() {
+export default function setupLabelChanges() {
 	setupMenuTriggerLabelsByDevice("desktop");
 	setupMenuTriggerLabelsByDevice("mobile");
 }
