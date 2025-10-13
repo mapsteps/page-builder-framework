@@ -7,7 +7,7 @@ import {
 import { parseJsonOrUndefined } from "../../../Customizer/Controls/Generic/src/string-util";
 import { MarginPaddingValue } from "../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
 import { DevicesValue } from "../../../Customizer/Controls/Responsive/src/responsive-interface";
-import { proNotice } from "./partials/pro-notice";
+import { proNotice } from "./postmessage-parts/pro-notice";
 
 (function ($: JQueryStatic, customizer?: WpbfCustomize) {
 	const breakpoints = window.WpbfTheme.breakpoints;
@@ -709,7 +709,7 @@ import { proNotice } from "./partials/pro-notice";
 				props: { "background-color": toStringColor(value) },
 			});
 		},
-	); 
+	);
 
 	// Hamburger size.
 	listenToCustomizerValueChange<string | number>(
@@ -827,7 +827,7 @@ import { proNotice } from "./partials/pro-notice";
 			writeCSS(settingId, {
 				selector:
 					".wpbf-mobile-menu a:hover, .wpbf-mobile-menu > .current-menu-item > a",
-				props: { color: toStringColor(value)},
+				props: { color: toStringColor(value) },
 			});
 		},
 	);
@@ -3050,7 +3050,6 @@ import { proNotice } from "./partials/pro-notice";
 			);
 		}
 
-
 		if (device === "mobile") {
 			// Mobile-specific listeners for menu trigger controls.
 
@@ -3111,8 +3110,6 @@ import { proNotice } from "./partials/pro-notice";
 			// 	},
 			// );
 		}
-
-
 	}
 
 	listenToMenuTriggerValueChange("mobile");

@@ -1,6 +1,6 @@
 import { moveCustomizerControls } from "../../../assets/js/utils/customizer-util";
-import setupBuilderControlToggleBehavior from "./partials/setup-builder-control";
-import setupMenuTriggerLabels from "./partials/setup-menu-trigger-labels";
+import setupBuilderControlToggleBehavior from "./customizer-parts/setup-builder-control";
+import setupMenuTriggerLabels from "./customizer-parts/setup-menu-trigger-labels";
 
 window.wp.customize?.bind("ready", () => {
 	setTimeout(() => {
