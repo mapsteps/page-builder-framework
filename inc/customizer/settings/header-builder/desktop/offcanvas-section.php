@@ -54,18 +54,11 @@ wpbf_customizer_field()
 	->defaultValue( 'off-canvas' )
 	->transport( 'auto' )
 	->partialRefresh( [
-		'headerbuilder_toggle_header' => array(
+		'headerbuilder_reveal_as' => array(
 			'container_inclusive' => true,
 			'selector'            => '#header',
 			'render_callback'     => function () {
 				return get_template_part( 'inc/template-parts/header' );
-			},
-		),
-		'headerbuilder_toggle_style' => array(
-			'container_inclusive' => false,
-			'selector'            => '#wpbf-customize-saved-styles',
-			'render_callback'     => function () {
-				return wpbf_generate_css();
 			},
 		),
 	] )
