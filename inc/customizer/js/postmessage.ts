@@ -711,6 +711,17 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		},
 	);
 
+	// Icon color.
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"mobile_menu_hamburger_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
+
 	// Hamburger size.
 	listenToCustomizerValueChange<string | number>(
 		"mobile_menu_hamburger_size",
@@ -3048,67 +3059,6 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 					});
 				},
 			);
-		}
-
-		if (device === "mobile") {
-			// Mobile-specific listeners for menu trigger controls.
-
-			// Icon color.
-			listenToCustomizerValueChange<WpbfColorControlValue>(
-				"mobile_menu_hamburger_color",
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: ".wpbf-mobile-nav-item",
-						props: { color: toStringColor(value) + " !important" },
-					});
-				},
-			);
-
-			// Border radius (force overwrite to ensure bg block can be overridden).
-			// listenToCustomizerValueChange<string | number>(
-			// 	"mobile_menu_hamburger_border_radius",
-			// 	function (settingId, value) {
-			// 		writeCSS(settingId, {
-			// 			selector: ".wpbf-mobile-nav-item",
-			// 			props: { "border-radius": maybeAppendSuffix(value) },
-			// 		});
-			// 	},
-			// );
-
-			// Background / border color.
-			// listenToCustomizerValueChange<WpbfColorControlValue>(
-			// 	"mobile_menu_hamburger_bg_color",
-			// 	function (settingId, value) {
-			// 		const buttonStyle = customizer?.(
-			// 			"wpbf_header_builder_mobile_menu_trigger_style",
-			// 		)?.get();
-
-			// 		if (buttonStyle !== "solid" && buttonStyle !== "outline") return;
-
-			// 		writeCSS(settingId, {
-			// 			selector: ".wpbf-mobile-menu-toggle",
-			// 			props: {
-			// 				"background-color":
-			// 					buttonStyle === "solid" ? toStringColor(value) : "unset",
-			// 				border:
-			// 					buttonStyle === "solid"
-			// 						? "unset"
-			// 						: "2px solid " + toStringColor(value),
-			// 			},
-			// 		});
-			// 	},
-			// );
-
-			// Icon size.
-			// listenToCustomizerValueChange<string | number>(
-			// 	"mobile_menu_hamburger_size",
-			// 	function (settingId, value) {
-			// 		writeCSS(settingId, {
-			// 			selector: ".wpbf-mobile-menu-toggle",
-			// 			props: { "font-size": maybeAppendSuffix(value) },
-			// 		});
-			// 	},
-			// );
 		}
 	}
 
