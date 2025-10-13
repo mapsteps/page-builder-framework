@@ -351,9 +351,6 @@ function wpbf_customizer_scripts_styles() {
 	wp_enqueue_style( 'wpbf-customizer', WPBF_THEME_URI . '/inc/customizer/css/customizer.css', '', WPBF_VERSION );
 	wp_enqueue_script( 'wpbf-customizer', WPBF_THEME_URI . '/js/min/customizer-min.js', array( 'jquery' ), WPBF_VERSION, true );
 
-	wp_enqueue_style( 'responsive-controls', WPBF_THEME_URI . '/inc/customizer/css/responsive-controls.css', '', WPBF_VERSION );
-	wp_enqueue_script( 'responsive-controls', WPBF_THEME_URI . '/inc/customizer/js/responsive-controls.js', array( 'jquery' ), WPBF_VERSION, true );
-
 }
 add_action( 'customize_controls_print_styles', 'wpbf_customizer_scripts_styles' );
 

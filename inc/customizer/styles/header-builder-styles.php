@@ -593,7 +593,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 	// Icon color (mobile uses mobile_menu_hamburger_color). Make sure we emit it.
 	if ( $menu_trigger_icon_color ) {
-		$menu_trigger_props['color'] = $menu_trigger_icon_color . "!important";
+		$menu_trigger_props['color'] = $menu_trigger_icon_color . '!important';
 	}
 
 	// If the menu trigger style is either 'outlined' or 'solid'.
