@@ -20,7 +20,7 @@ function setupCustomizer() {
 		setupBuilderControlToggleBehavior();
 		setupControlsMovement();
 		setupMenuTriggerLabels();
-	} 
+	}
 
 	function listenDevicePreviewSwitch() {
 		const previewedDevice = window.wp.customize?.previewedDevice.get();
@@ -157,12 +157,6 @@ function setupCustomizer() {
 								to: 15,
 							},
 						},
-					],
-				},
-				{
-					from: "wpbf_menu_options",
-					to: "wpbf_header_builder_desktop_row_2_section",
-					controlsToMove: [
 						{
 							id: "menu_bg_color",
 							prio: {
