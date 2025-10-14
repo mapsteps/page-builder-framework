@@ -62,3 +62,13 @@ wpbf_customizer_field()
 		$partial_refresh_key_prefix . 'visibility' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
+
+/* Design Tab */
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'menu_item_settings_headline' )
+	->type( 'headline' )
+	->tab( 'design' )
+	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
+	->priority( 7 )
+	->addToSection( $section_id );
