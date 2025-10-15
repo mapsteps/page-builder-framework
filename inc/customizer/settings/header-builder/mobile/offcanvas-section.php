@@ -51,7 +51,5 @@ wpbf_customizer_field()
 		'off-canvas' => __( 'Off-canvas', 'page-builder-framework' ),
 	] )
 	->defaultValue( 'dropdown' )
-	->partialRefresh( [
-		$partial_refresh_key_prefix . 'reveal_as' => $partial_refresh_args,
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
