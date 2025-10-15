@@ -167,7 +167,7 @@ export function setupControlsMovement() {
 			},
 			{
 				from: "wpbf_mobile_menu_options",
-				to: "wpbf_header_builder_mobile_menu_1_section",
+				to: "wpbf_header_builder_mobile_offcanvas_section",
 				controlsToMove: [
 					{
 						id: "mobile_menu_bg_color",
