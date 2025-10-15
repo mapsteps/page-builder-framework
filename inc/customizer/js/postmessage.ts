@@ -2880,21 +2880,27 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 				// Reset menu active state
 				document.body.classList.remove('wpbf-mobile-menu-active');
 
-				// Get the close button element
-				const closeButton = document.querySelector('.wpbf-close') as HTMLElement;
+				// Get the close button element (make sure we get the one inside mobile menu)
+				const closeButton = document.querySelector('.wpbf-mobile-menu-container .wpbf-close') as HTMLElement;
 				
 				// Apply appropriate classes based on selected menu type
 				if (value === 'off-canvas') {
 					// Off-canvas mode only needs the off-canvas class
 					mobileHeaderRows.classList.add('wpbf-mobile-menu-off-canvas');
 					// Show close button for off-canvas
-					if (closeButton) closeButton.style.display = 'block';
+					if (closeButton) {
+						closeButton.style.display = 'flex';  // Using flex instead of block for proper alignment
+						closeButton.style.visibility = 'visible';  // Ensure visibility
+					}
 				} else {
 					// Dropdown mode requires both dropdown and hamburger classes
 					mobileHeaderRows.classList.add('wpbf-mobile-menu-dropdown');
 					mobileHeaderRows.classList.add('wpbf-mobile-menu-hamburger');
 					// Hide close button for dropdown
-					if (closeButton) closeButton.style.display = 'none';
+					if (closeButton) {
+						closeButton.style.display = 'none';
+						closeButton.style.visibility = 'hidden';  // Double ensure it's hidden
+					}
 				}
 
 				// Reset mobile menu container states and styles
