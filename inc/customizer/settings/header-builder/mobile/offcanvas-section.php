@@ -53,3 +53,12 @@ wpbf_customizer_field()
 	->defaultValue( 'dropdown' )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
+
+	/* Design Tab */
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'menu_item_settings_headline' )
+	->type( 'headline' )
+	->tab( 'design' )
+	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
+	->priority( 6 )
+	->addToSection( $section_id );
