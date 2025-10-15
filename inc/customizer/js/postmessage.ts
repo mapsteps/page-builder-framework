@@ -95,6 +95,57 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 	}
 
 	/**
+	 * Handle mobile menu resize events.
+	 * Adjusts the mobile menu height based on viewport and wrapper dimensions.
+	 */
+	function handleMobileMenuResize() {
+		const windowHeight = document.documentElement.clientHeight;
+		const mobileNavWrapper = document.querySelector('.wpbf-mobile-nav-wrapper');
+		
+		if (!mobileNavWrapper) return;
+		
+		const wrapperHeight = mobileNavWrapper instanceof HTMLElement ? mobileNavWrapper.offsetHeight : 0;
+		const activeNav = document.querySelector('.wpbf-mobile-menu-container.active nav');
+		
+		if (activeNav instanceof HTMLElement) {
+			activeNav.style.maxHeight = (windowHeight - wrapperHeight) + 'px';
+		}
+	}
+
+	/**
+	 * Handle mobile menu toggle clicks.
+	 * Controls the opening and closing of the mobile menu.
+	 */
+	function handleMobileMenuToggle(this: HTMLElement) {
+		const isActive = this.classList.contains('active');
+		const container = document.querySelector('.wpbf-mobile-menu-container');
+		
+		if (!container) return;
+
+		if (isActive) {
+			// Close menu
+			this.classList.remove('active');
+			container.classList.remove('active');
+			document.body.classList.remove('wpbf-mobile-menu-active');
+			
+			if (container instanceof HTMLElement) {
+				container.style.display = '';
+				container.style.height = '';
+			}
+		} else {
+			// Open menu
+			this.classList.add('active');
+			container.classList.add('active');
+			document.body.classList.add('wpbf-mobile-menu-active');
+			
+			if (container instanceof HTMLElement) {
+				container.style.display = 'block';
+				handleMobileMenuResize();
+			}
+		}
+	}
+
+	/**
 	 * Get style tag element based on control id.
 	 *
 	 * @param {string} id The style data id.
@@ -2796,6 +2847,95 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 	 *
 	 * @param {"desktop"|"mobile"} device The target device type.
 	 */
+	/**
+	 * Handle menu reveal type changes in the customizer.
+	 * This allows instant preview when switching between dropdown and off-canvas modes.
+	 * 
+	 * @param {"mobile"} device The target device type.
+	 */
+	function listenToRevealTypeValueChange(device: "mobile") {
+		listenToCustomizerValueChange<string>(
+			`wpbf_header_builder_${device}_offcanvas_reveal_as`,
+			function (settingId, value) {
+				if (!headerBuilderEnabled()) return;
+
+				// Find the mobile header rows container element
+				const mobileHeaderRows = document.querySelector('.wpbf-mobile-header-rows');
+				if (!mobileHeaderRows) return;
+
+				// Remove all existing menu type classes to start fresh
+				mobileHeaderRows.classList.remove(
+					'wpbf-mobile-menu-default',
+					'wpbf-mobile-menu-off-canvas',
+					'wpbf-mobile-menu-dropdown',
+					'wpbf-mobile-menu-hamburger'
+				);
+
+				// Reset toggle button state if it was active
+				const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
+				if (toggle?.classList.contains('active')) {
+					toggle.classList.remove('active');
+				}
+
+				// Reset menu active state
+				document.body.classList.remove('wpbf-mobile-menu-active');
+
+				// Apply appropriate classes based on selected menu type
+				if (value === 'off-canvas') {
+					// Off-canvas mode only needs the off-canvas class
+					mobileHeaderRows.classList.add('wpbf-mobile-menu-off-canvas');
+				} else {
+					// Dropdown mode requires both dropdown and hamburger classes
+					mobileHeaderRows.classList.add('wpbf-mobile-menu-dropdown');
+					mobileHeaderRows.classList.add('wpbf-mobile-menu-hamburger');
+				}
+
+				// Reset mobile menu container states and styles
+				const mobileMenuContainer = document.querySelector('.wpbf-mobile-menu-container');
+				if (mobileMenuContainer instanceof HTMLElement) {
+					mobileMenuContainer.classList.remove('active');
+					mobileMenuContainer.style.display = '';
+					mobileMenuContainer.style.height = '';
+					mobileMenuContainer.style.overflowY = '';
+				}
+
+				// Handle specific off-canvas mode requirements
+				if (value === 'off-canvas') {
+					// Reset navigation styles for off-canvas mode
+					const nav = mobileMenuContainer?.querySelector('nav');
+					if (nav instanceof HTMLElement) {
+						nav.style.height = '';
+						nav.style.maxHeight = '';
+						nav.style.overflowY = '';
+					}
+
+					// Create off-canvas container if it doesn't exist
+					if (!document.querySelector('.wpbf-mobile-menu-off-canvas-container')) {
+						const offCanvasContainer = document.createElement('div');
+						offCanvasContainer.className = 'wpbf-mobile-menu-off-canvas-container';
+						
+						// Move existing menu into the off-canvas container
+						const existingMenu = mobileMenuContainer;
+						if (existingMenu && existingMenu.parentNode) {
+							existingMenu.parentNode.insertBefore(offCanvasContainer, existingMenu);
+							offCanvasContainer.appendChild(existingMenu);
+						}
+					}
+				} else {
+					// For dropdown mode, move menu back to its original position
+					const offCanvasContainer = document.querySelector('.wpbf-mobile-menu-off-canvas-container');
+					const mobileMenu = offCanvasContainer?.querySelector('.wpbf-mobile-menu-container');
+					
+					if (offCanvasContainer && mobileMenu) {
+						// Remove the off-canvas container and restore menu position
+						offCanvasContainer.parentNode?.insertBefore(mobileMenu, offCanvasContainer);
+						offCanvasContainer.remove();
+					}
+				}
+			}
+		);
+	}
+
 	function listenToMenuTriggerValueChange(device: "desktop" | "mobile") {
 		// Menu trigger icon.
 		listenToCustomizerValueChange<string>(
@@ -3064,6 +3204,9 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 
 	listenToMenuTriggerValueChange("mobile");
 	listenToMenuTriggerValueChange("desktop");
+	
+	// Initialize reveal type listener for mobile menu
+	listenToRevealTypeValueChange("mobile");
 
 	function listenToBuilderMulticolorControl(props: {
 		controlId: string;
@@ -3149,88 +3292,11 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		);
 	}
 
-	// Handle mobile menu reveal type changes
-	function handleMobileMenuResize() {
-		const windowHeight = document.documentElement.clientHeight;
-		const mobileNavWrapper = document.querySelector('.wpbf-mobile-nav-wrapper');
-		
-		if (!mobileNavWrapper) return;
-		
-		const wrapperHeight = mobileNavWrapper instanceof HTMLElement ? mobileNavWrapper.offsetHeight : 0;
-		const activeNav = document.querySelector('.wpbf-mobile-menu-container.active nav');
-		
-		if (activeNav instanceof HTMLElement) {
-			activeNav.style.maxHeight = (windowHeight - wrapperHeight) + 'px';
-		}
-	}
-
-	function handleMobileMenuToggle(this: HTMLElement) {
-		const isActive = this.classList.contains('active');
-		const container = document.querySelector('.wpbf-mobile-menu-container');
-		
-		if (!container) return;
-
-		if (isActive) {
-			// Close menu
-			this.classList.remove('active');
-			container.classList.remove('active');
-			document.body.classList.remove('wpbf-mobile-menu-active');
-			
-			if (container instanceof HTMLElement) {
-				container.style.display = '';
-				container.style.height = '';
-			}
-		} else {
-			// Open menu
-			this.classList.add('active');
-			container.classList.add('active');
-			document.body.classList.add('wpbf-mobile-menu-active');
-			
-			if (container instanceof HTMLElement) {
-				container.style.display = 'block';
-				handleMobileMenuResize();
-			}
-		}
-	}
-
-	/**
-	 * Handle mobile menu reveal type changes in the customizer.
-	 * This allows instant preview when switching between dropdown and off-canvas modes.
-	 */
-	listenToCustomizerValueChange<string>(
-		'wpbf_header_builder_mobile_offcanvas_reveal_as',
-		function (settingId, value) {
-			if (!headerBuilderEnabled()) return;
-
-			// Find the mobile header rows container element
-			const mobileHeaderRows = document.querySelector('.wpbf-mobile-header-rows');
-			if (!mobileHeaderRows) return;
-
-			// Remove all existing menu type classes to start fresh
-			mobileHeaderRows.classList.remove(
-				'wpbf-mobile-menu-default',
-				'wpbf-mobile-menu-off-canvas',
-				'wpbf-mobile-menu-dropdown',
-				'wpbf-mobile-menu-hamburger'
-			);
-
-			// Reset toggle button state if it was active
-			const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
-			if (toggle?.classList.contains('active')) {
-				toggle.classList.remove('active');
-			}
-
-			// Reset menu active state
-			document.body.classList.remove('wpbf-mobile-menu-active');
-
-			// Apply appropriate classes based on selected menu type
-			if (value === 'off-canvas') {
-				// Off-canvas mode only needs the off-canvas class
-				mobileHeaderRows.classList.add('wpbf-mobile-menu-off-canvas');
-			} else {
-				// Dropdown mode requires both dropdown and hamburger classes
-				mobileHeaderRows.classList.add('wpbf-mobile-menu-dropdown');
-				mobileHeaderRows.classList.add('wpbf-mobile-menu-hamburger');
+	function listenToBuilderMulticolorControl(props: {
+		controlId: string;
+		cssSelector: string;
+		cssProps: string | string[];
+	}) {
 			}
 
 			// Reset mobile menu container states and styles
@@ -3243,53 +3309,5 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 			}
 
 			// Handle specific off-canvas mode requirements
-			if (value === 'off-canvas') {
-				// Reset navigation styles for off-canvas mode
-				const nav = mobileMenuContainer?.querySelector('nav');
-				if (nav instanceof HTMLElement) {
-					nav.style.height = '';
-					nav.style.maxHeight = '';
-					nav.style.overflowY = '';
-				}
-
-				// Create off-canvas container if it doesn't exist
-				if (!document.querySelector('.wpbf-mobile-menu-off-canvas-container')) {
-					const offCanvasContainer = document.createElement('div');
-					offCanvasContainer.className = 'wpbf-mobile-menu-off-canvas-container';
-					
-					// Move existing menu into the off-canvas container
-					const existingMenu = mobileMenuContainer;
-					if (existingMenu && existingMenu.parentNode) {
-						existingMenu.parentNode.insertBefore(offCanvasContainer, existingMenu);
-						offCanvasContainer.appendChild(existingMenu);
-					}
-				}
-			} else {
-				// For dropdown mode, move menu back to its original position
-				const offCanvasContainer = document.querySelector('.wpbf-mobile-menu-off-canvas-container');
-				const mobileMenu = offCanvasContainer?.querySelector('.wpbf-mobile-menu-container');
-				
-				if (offCanvasContainer && mobileMenu) {
-					// Remove the off-canvas container and restore menu position
-					offCanvasContainer.parentNode?.insertBefore(mobileMenu, offCanvasContainer);
-					offCanvasContainer.remove();
-				}
-			}
-
-			// Re-initialize listeners
-			if (window.WpbfUtils?.dom) {
-				const utils = window.WpbfUtils;
-
-				// Setup resize listener untuk mengatur height
-				window.removeEventListener('resize', handleMobileMenuResize);
-				window.addEventListener('resize', handleMobileMenuResize);
-
-				// Re-attach click listeners
-				utils.dom.forEachEl('.wpbf-mobile-menu-toggle', function(toggle) {
-					toggle.removeEventListener('click', handleMobileMenuToggle);
-					toggle.addEventListener('click', handleMobileMenuToggle);
-				});
-			}
-		}
-	);
+	// Builder multicolor control functions below
 })(jQuery, window.wp.customize);
