@@ -2880,14 +2880,21 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 				// Reset menu active state
 				document.body.classList.remove('wpbf-mobile-menu-active');
 
+				// Get the close button element
+				const closeButton = document.querySelector('.wpbf-close') as HTMLElement;
+				
 				// Apply appropriate classes based on selected menu type
 				if (value === 'off-canvas') {
 					// Off-canvas mode only needs the off-canvas class
 					mobileHeaderRows.classList.add('wpbf-mobile-menu-off-canvas');
+					// Show close button for off-canvas
+					if (closeButton) closeButton.style.display = 'block';
 				} else {
 					// Dropdown mode requires both dropdown and hamburger classes
 					mobileHeaderRows.classList.add('wpbf-mobile-menu-dropdown');
 					mobileHeaderRows.classList.add('wpbf-mobile-menu-hamburger');
+					// Hide close button for dropdown
+					if (closeButton) closeButton.style.display = 'none';
 				}
 
 				// Reset mobile menu container states and styles
@@ -3292,22 +3299,5 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		);
 	}
 
-	function listenToBuilderMulticolorControl(props: {
-		controlId: string;
-		cssSelector: string;
-		cssProps: string | string[];
-	}) {
-			}
-
-			// Reset mobile menu container states and styles
-			const mobileMenuContainer = document.querySelector('.wpbf-mobile-menu-container');
-			if (mobileMenuContainer instanceof HTMLElement) {
-				mobileMenuContainer.classList.remove('active');
-				mobileMenuContainer.style.display = '';
-				mobileMenuContainer.style.height = '';
-				mobileMenuContainer.style.overflowY = '';
-			}
-
-			// Handle specific off-canvas mode requirements
-	// Builder multicolor control functions below
+	// End of customizer controls
 })(jQuery, window.wp.customize);
