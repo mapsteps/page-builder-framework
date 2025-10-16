@@ -659,4 +659,27 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 		'selector' => 'mobile' === $header_builder_device ? '.wpbf-mobile-menu-toggle' : '.wpbf-menu-toggle',
 		'props'    => $menu_trigger_props,
 	) );
+
+	/**
+	 * ----------------------------------------------------------------------
+	 * Menu 1 & Menu 2.
+	 *
+	 * The following controls are already handled elsewhere in styles.php:
+	 * - Menu 1 (desktop) padding → handled by "menu_padding".
+	 * - Menu 1 (mobile) padding → handled by "mobile_menu_padding".
+	 * ----------------------------------------------------------------------
+	 */
+
+	if ( 'desktop' === $header_builder_device ) {
+		$menu_2_padding = wpbf_customize_str_value( 'wpbf_header_builder_' . $header_builder_device . '_menu_2_menu_padding' );
+		$menu_2_padding = '20' === $menu_2_padding || '' === $menu_2_padding ? '20px' : $menu_2_padding;
+
+		wpbf_write_css( array(
+			'selector' => '.wpbf-menu.desktop_menu_2 > .menu-item > a',
+			'props'    => array(
+				'padding-left'  => wpbf_maybe_append_suffix( $menu_2_padding ),
+				'padding-right' => wpbf_maybe_append_suffix( $menu_2_padding ),
+			),
+		) );
+	}
 }

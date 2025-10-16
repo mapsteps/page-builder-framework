@@ -8,9 +8,9 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$row_key = 'desktop_menu_2';
+$widget_key = 'desktop_menu_2';
 
-$section_id = 'wpbf_header_builder_' . $row_key . '_section';
+$section_id = 'wpbf_header_builder_' . $widget_key . '_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
@@ -27,9 +27,9 @@ wpbf_customizer_section()
 	->priority( 3 )
 	->addToPanel( 'header_panel' );
 
-$control_id_prefix = 'wpbf_header_builder_' . $row_key . '_';
+$control_id_prefix = 'wpbf_header_builder_' . $widget_key . '_';
 
-$partial_refresh_key_prefix = 'headerbuilder_' . $row_key . '_';
+$partial_refresh_key_prefix = 'headerbuilder_' . $widget_key . '_';
 
 $partial_refresh_args = array(
 	'container_inclusive' => true,
@@ -60,5 +60,22 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->partialRefresh( [
 		$partial_refresh_key_prefix . 'visibility' => $partial_refresh_args,
+	] )
+	->addToSection( $section_id );
+
+/* Design Tab */
+
+// Padding.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'menu_padding' )
+	->type( 'slider' )
+	->tab( 'design' )
+	->label( __( 'Menu Item Spacing', 'page-builder-framework' ) )
+	->defaultValue( 20 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 5,
+		'max'  => 40,
+		'step' => 1,
 	] )
 	->addToSection( $section_id );

@@ -1,5 +1,11 @@
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
 
+export function headerBuilderEnabled() {
+	return window.wp.customize?.("wpbf_enable_header_builder").get()
+		? true
+		: false;
+}
+
 export type ControlToMove = {
 	id: string;
 	label?: { from: string | undefined; to: string };

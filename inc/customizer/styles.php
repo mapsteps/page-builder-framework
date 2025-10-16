@@ -1791,14 +1791,14 @@ $menu_padding = '20' === $menu_padding || '20px' === $menu_padding ? '' : $menu_
 if ( $menu_padding ) {
 
 	wpbf_write_css( array(
-		'selector' => '.wpbf-navigation .wpbf-menu > .menu-item > a',
+		'selector' => $header_builder_enabled ? '.wpbf-menu.desktop_menu_1 > .menu-item > a' : '.wpbf-menu > .menu-item > a',
 		'props'    => array(
 			'padding-left'  => wpbf_maybe_append_suffix( $menu_padding ),
 			'padding-right' => wpbf_maybe_append_suffix( $menu_padding ),
 		),
 	) );
 
-	if ( 'menu-centered' === $menu_position ) {
+	if ( ! $header_builder_enabled && 'menu-centered' === $menu_position ) {
 
 		wpbf_write_css( array(
 			'selector' => '.wpbf-menu-centered .logo-container',

@@ -1,3 +1,4 @@
+import { headerBuilderEnabled } from "../../../assets/js/utils/customizer-util";
 import { WpbfCustomizeSetting } from "../../../Customizer/Controls/Base/src/base-interface";
 import { WpbfCheckboxButtonsetControlValue } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 import {
@@ -90,25 +91,26 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		return parsedValue;
 	}
 
-	function headerBuilderEnabled() {
-		return customizer?.("wpbf_enable_header_builder").get() ? true : false;
-	}
-
 	/**
 	 * Handle mobile menu resize events.
 	 * Adjusts the mobile menu height based on viewport and wrapper dimensions.
 	 */
 	function handleMobileMenuResize() {
 		const windowHeight = document.documentElement.clientHeight;
-		const mobileNavWrapper = document.querySelector('.wpbf-mobile-nav-wrapper');
-		
+		const mobileNavWrapper = document.querySelector(".wpbf-mobile-nav-wrapper");
+
 		if (!mobileNavWrapper) return;
-		
-		const wrapperHeight = mobileNavWrapper instanceof HTMLElement ? mobileNavWrapper.offsetHeight : 0;
-		const activeNav = document.querySelector('.wpbf-mobile-menu-container.active nav');
-		
+
+		const wrapperHeight =
+			mobileNavWrapper instanceof HTMLElement
+				? mobileNavWrapper.offsetHeight
+				: 0;
+		const activeNav = document.querySelector(
+			".wpbf-mobile-menu-container.active nav",
+		);
+
 		if (activeNav instanceof HTMLElement) {
-			activeNav.style.maxHeight = (windowHeight - wrapperHeight) + 'px';
+			activeNav.style.maxHeight = windowHeight - wrapperHeight + "px";
 		}
 	}
 
@@ -117,29 +119,29 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 	 * Controls the opening and closing of the mobile menu.
 	 */
 	function handleMobileMenuToggle(this: HTMLElement) {
-		const isActive = this.classList.contains('active');
-		const container = document.querySelector('.wpbf-mobile-menu-container');
-		
+		const isActive = this.classList.contains("active");
+		const container = document.querySelector(".wpbf-mobile-menu-container");
+
 		if (!container) return;
 
 		if (isActive) {
 			// Close menu
-			this.classList.remove('active');
-			container.classList.remove('active');
-			document.body.classList.remove('wpbf-mobile-menu-active');
-			
+			this.classList.remove("active");
+			container.classList.remove("active");
+			document.body.classList.remove("wpbf-mobile-menu-active");
+
 			if (container instanceof HTMLElement) {
-				container.style.display = '';
-				container.style.height = '';
+				container.style.display = "";
+				container.style.height = "";
 			}
 		} else {
 			// Open menu
-			this.classList.add('active');
-			container.classList.add('active');
-			document.body.classList.add('wpbf-mobile-menu-active');
-			
+			this.classList.add("active");
+			container.classList.add("active");
+			document.body.classList.add("wpbf-mobile-menu-active");
+
 			if (container instanceof HTMLElement) {
-				container.style.display = 'block';
+				container.style.display = "block";
 				handleMobileMenuResize();
 			}
 		}
@@ -556,7 +558,9 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		"menu_padding",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-navigation .wpbf-menu > .menu-item > a",
+				selector: headerBuilderEnabled()
+					? ".wpbf-menu.desktop_menu_1 > .menu-item > a"
+					: ".wpbf-menu > .menu-item > a",
 				props: {
 					"padding-left": maybeAppendSuffix(value),
 					"padding-right": maybeAppendSuffix(value),
@@ -2835,6 +2839,141 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		);
 	});
 
+	// Desktop menu 2 padding.
+	listenToCustomizerValueChange<number | string>(
+		"wpbf_header_builder_desktop_menu_2_menu_padding",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-menu.desktop_menu_2 > .menu-item > a",
+				props: {
+					"padding-left": maybeAppendSuffix(value),
+					"padding-right": maybeAppendSuffix(value),
+				},
+			});
+		},
+	);
+
+	/**
+	 * Handle menu reveal type changes in the customizer.
+	 * This allows instant preview when switching between dropdown and off-canvas modes.
+	 *
+	 * @param {"mobile"} device The target device type.
+	 */
+	function listenToRevealTypeValueChange(device: "mobile") {
+		listenToCustomizerValueChange<string>(
+			`wpbf_header_builder_${device}_offcanvas_reveal_as`,
+			function (settingId, value) {
+				if (!headerBuilderEnabled()) return;
+
+				// Find the mobile header rows container element
+				const mobileHeaderRows = document.querySelector(
+					".wpbf-mobile-header-rows",
+				);
+				if (!mobileHeaderRows) return;
+
+				// Remove all existing menu type classes to start fresh
+				mobileHeaderRows.classList.remove(
+					"wpbf-mobile-menu-default",
+					"wpbf-mobile-menu-off-canvas",
+					"wpbf-mobile-menu-dropdown",
+					"wpbf-mobile-menu-hamburger",
+				);
+
+				// Reset toggle button state if it was active
+				const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
+				if (toggle?.classList.contains("active")) {
+					toggle.classList.remove("active");
+				}
+
+				// Reset menu active state
+				document.body.classList.remove("wpbf-mobile-menu-active");
+
+				// Get the close button element (make sure we get the one inside mobile menu)
+				const closeButton = document.querySelector(
+					".wpbf-mobile-menu-container .wpbf-close",
+				) as HTMLElement;
+
+				// Apply appropriate classes based on selected menu type
+				if (value === "off-canvas") {
+					// Off-canvas mode only needs the off-canvas class
+					mobileHeaderRows.classList.add("wpbf-mobile-menu-off-canvas");
+					// Show close button for off-canvas
+					if (closeButton) {
+						closeButton.style.display = "flex"; // Using flex instead of block for proper alignment
+						closeButton.style.visibility = "visible"; // Ensure visibility
+					}
+				} else {
+					// Dropdown mode requires both dropdown and hamburger classes
+					mobileHeaderRows.classList.add("wpbf-mobile-menu-dropdown");
+					mobileHeaderRows.classList.add("wpbf-mobile-menu-hamburger");
+					// Hide close button for dropdown
+					if (closeButton) {
+						closeButton.style.display = "none";
+						closeButton.style.visibility = "hidden"; // Double ensure it's hidden
+					}
+				}
+
+				// Reset mobile menu container states and styles
+				const mobileMenuContainer = document.querySelector(
+					".wpbf-mobile-menu-container",
+				);
+				if (mobileMenuContainer instanceof HTMLElement) {
+					mobileMenuContainer.classList.remove("active");
+					mobileMenuContainer.style.display = "";
+					mobileMenuContainer.style.height = "";
+					mobileMenuContainer.style.overflowY = "";
+				}
+
+				// Handle specific off-canvas mode requirements
+				if (value === "off-canvas") {
+					// Reset navigation styles for off-canvas mode
+					const nav = mobileMenuContainer?.querySelector("nav");
+					if (nav instanceof HTMLElement) {
+						nav.style.height = "";
+						nav.style.maxHeight = "";
+						nav.style.overflowY = "";
+					}
+
+					// Create off-canvas container if it doesn't exist
+					if (
+						!document.querySelector(".wpbf-mobile-menu-off-canvas-container")
+					) {
+						const offCanvasContainer = document.createElement("div");
+						offCanvasContainer.className =
+							"wpbf-mobile-menu-off-canvas-container";
+
+						// Move existing menu into the off-canvas container
+						const existingMenu = mobileMenuContainer;
+						if (existingMenu && existingMenu.parentNode) {
+							existingMenu.parentNode.insertBefore(
+								offCanvasContainer,
+								existingMenu,
+							);
+							offCanvasContainer.appendChild(existingMenu);
+						}
+					}
+				} else {
+					// For dropdown mode, move menu back to its original position
+					const offCanvasContainer = document.querySelector(
+						".wpbf-mobile-menu-off-canvas-container",
+					);
+					const mobileMenu = offCanvasContainer?.querySelector(
+						".wpbf-mobile-menu-container",
+					);
+
+					if (offCanvasContainer && mobileMenu) {
+						// Remove the off-canvas container and restore menu position
+						offCanvasContainer.parentNode?.insertBefore(
+							mobileMenu,
+							offCanvasContainer,
+						);
+						offCanvasContainer.remove();
+					}
+				}
+			},
+		);
+	}
+
 	/**
 	 * Some controls are defined only for the desktop version,
 	 * because the mobile equivalents already existed before header builder feature was introduced.
@@ -2847,108 +2986,6 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 	 *
 	 * @param {"desktop"|"mobile"} device The target device type.
 	 */
-	/**
-	 * Handle menu reveal type changes in the customizer.
-	 * This allows instant preview when switching between dropdown and off-canvas modes.
-	 * 
-	 * @param {"mobile"} device The target device type.
-	 */
-	function listenToRevealTypeValueChange(device: "mobile") {
-		listenToCustomizerValueChange<string>(
-			`wpbf_header_builder_${device}_offcanvas_reveal_as`,
-			function (settingId, value) {
-				if (!headerBuilderEnabled()) return;
-
-				// Find the mobile header rows container element
-				const mobileHeaderRows = document.querySelector('.wpbf-mobile-header-rows');
-				if (!mobileHeaderRows) return;
-
-				// Remove all existing menu type classes to start fresh
-				mobileHeaderRows.classList.remove(
-					'wpbf-mobile-menu-default',
-					'wpbf-mobile-menu-off-canvas',
-					'wpbf-mobile-menu-dropdown',
-					'wpbf-mobile-menu-hamburger'
-				);
-
-				// Reset toggle button state if it was active
-				const toggle = document.querySelector('#wpbf-mobile-menu-toggle');
-				if (toggle?.classList.contains('active')) {
-					toggle.classList.remove('active');
-				}
-
-				// Reset menu active state
-				document.body.classList.remove('wpbf-mobile-menu-active');
-
-				// Get the close button element (make sure we get the one inside mobile menu)
-				const closeButton = document.querySelector('.wpbf-mobile-menu-container .wpbf-close') as HTMLElement;
-				
-				// Apply appropriate classes based on selected menu type
-				if (value === 'off-canvas') {
-					// Off-canvas mode only needs the off-canvas class
-					mobileHeaderRows.classList.add('wpbf-mobile-menu-off-canvas');
-					// Show close button for off-canvas
-					if (closeButton) {
-						closeButton.style.display = 'flex';  // Using flex instead of block for proper alignment
-						closeButton.style.visibility = 'visible';  // Ensure visibility
-					}
-				} else {
-					// Dropdown mode requires both dropdown and hamburger classes
-					mobileHeaderRows.classList.add('wpbf-mobile-menu-dropdown');
-					mobileHeaderRows.classList.add('wpbf-mobile-menu-hamburger');
-					// Hide close button for dropdown
-					if (closeButton) {
-						closeButton.style.display = 'none';
-						closeButton.style.visibility = 'hidden';  // Double ensure it's hidden
-					}
-				}
-
-				// Reset mobile menu container states and styles
-				const mobileMenuContainer = document.querySelector('.wpbf-mobile-menu-container');
-				if (mobileMenuContainer instanceof HTMLElement) {
-					mobileMenuContainer.classList.remove('active');
-					mobileMenuContainer.style.display = '';
-					mobileMenuContainer.style.height = '';
-					mobileMenuContainer.style.overflowY = '';
-				}
-
-				// Handle specific off-canvas mode requirements
-				if (value === 'off-canvas') {
-					// Reset navigation styles for off-canvas mode
-					const nav = mobileMenuContainer?.querySelector('nav');
-					if (nav instanceof HTMLElement) {
-						nav.style.height = '';
-						nav.style.maxHeight = '';
-						nav.style.overflowY = '';
-					}
-
-					// Create off-canvas container if it doesn't exist
-					if (!document.querySelector('.wpbf-mobile-menu-off-canvas-container')) {
-						const offCanvasContainer = document.createElement('div');
-						offCanvasContainer.className = 'wpbf-mobile-menu-off-canvas-container';
-						
-						// Move existing menu into the off-canvas container
-						const existingMenu = mobileMenuContainer;
-						if (existingMenu && existingMenu.parentNode) {
-							existingMenu.parentNode.insertBefore(offCanvasContainer, existingMenu);
-							offCanvasContainer.appendChild(existingMenu);
-						}
-					}
-				} else {
-					// For dropdown mode, move menu back to its original position
-					const offCanvasContainer = document.querySelector('.wpbf-mobile-menu-off-canvas-container');
-					const mobileMenu = offCanvasContainer?.querySelector('.wpbf-mobile-menu-container');
-					
-					if (offCanvasContainer && mobileMenu) {
-						// Remove the off-canvas container and restore menu position
-						offCanvasContainer.parentNode?.insertBefore(mobileMenu, offCanvasContainer);
-						offCanvasContainer.remove();
-					}
-				}
-			}
-		);
-	}
-
 	function listenToMenuTriggerValueChange(device: "desktop" | "mobile") {
 		// Menu trigger icon.
 		listenToCustomizerValueChange<string>(
@@ -3215,11 +3252,9 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		}
 	}
 
+	listenToRevealTypeValueChange("mobile");
 	listenToMenuTriggerValueChange("mobile");
 	listenToMenuTriggerValueChange("desktop");
-	
-	// Initialize reveal type listener for mobile menu
-	listenToRevealTypeValueChange("mobile");
 
 	function listenToBuilderMulticolorControl(props: {
 		controlId: string;

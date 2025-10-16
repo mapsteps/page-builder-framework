@@ -448,7 +448,7 @@ class HeaderBuilderOutput {
 			case 'desktop_menu_2':
 			case 'mobile_menu_1':
 			case 'mobile_menu_2':
-				$this->render_menu_widget( $setting_group, $column_position );
+				$this->render_menu_widget( $widget_key, $setting_group, $column_position );
 				break;
 			case 'html_1':
 			case 'html_2':
@@ -620,11 +620,12 @@ class HeaderBuilderOutput {
 	/**
 	 * Render header builder's menu widget.
 	 *
+	 * @param string $widget_key    The widget key.
 	 * @param string $setting_group The setting group key.
 	 * @param string $placement     The placement position.
 	 *                              Accepts 'left', 'center', 'right', 'desktop_full_screen_menu', 'desktop_off_canvas_menu', 'mobile_menu', or empty string.
 	 */
-	private function render_menu_widget( $setting_group, $placement = '' ) {
+	private function render_menu_widget( $widget_key, $setting_group, $placement = '' ) {
 
 		$menu_id = get_theme_mod( $setting_group . '_menu_id', '' );
 
@@ -638,7 +639,7 @@ class HeaderBuilderOutput {
 			echo '<nav class="navigation wpbf-clearfix ' . esc_attr( $menu_position_class ) . '" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="' . __( 'Site Navigation', 'page-builder-framework' ) . '">';
 		}
 
-		$menu_container_class = 'wpbf-menu wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect();
+		$menu_container_class = 'wpbf-menu ' . $widget_key . ' wpbf-sub-menu' . wpbf_sub_menu_alignment() . wpbf_sub_menu_animation() . wpbf_menu_hover_effect();
 
 		if ( 'desktop_full_screen_menu' === $placement || 'desktop_off_canvas_menu' === $placement ) {
 			$menu_container_class = 'wpbf-menu';

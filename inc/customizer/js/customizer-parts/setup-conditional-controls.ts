@@ -1,3 +1,5 @@
+import { WpbfCheckboxControl } from "../../../../Customizer/Controls/Checkbox/src/checkbox-interface";
+
 /**
  * Initializes additional visibility conditions for Customizer controls
  * that are not covered by their default `active_callback` settings.
@@ -16,7 +18,41 @@ export function setupConditionalControls() {
 	init();
 
 	function init() {
+		listenToHeaderBuilderToggleValue();
 		setupMobileMenuTriggerVisibility();
+	}
+
+	/**
+	 * Listen to the toggle control's value change.
+	 */
+	function listenToHeaderBuilderToggleValue() {
+		wp.customize?.control(
+			"wpbf_header_builder_enabled",
+			(control: WpbfCheckboxControl | undefined) => {
+				if (!control) return;
+
+				if (control.setting?.get()) {
+					setupDesktopMenuPaddingVisibility(control, true);
+				}
+
+				control.setting?.bind(function (enabled) {
+					/**
+					 * Only handle when the header builder is enabled.
+					 * When disabled, it will be handled by its default active callback rules.
+					 */
+					if (enabled) {
+						setupDesktopMenuPaddingVisibility(control, enabled);
+					}
+				});
+			},
+		);
+	}
+
+	function setupDesktopMenuPaddingVisibility(
+		control: WpbfCheckboxControl,
+		enabled?: boolean,
+	) {
+		control.container.toggle(!!enabled);
 	}
 
 	/**
