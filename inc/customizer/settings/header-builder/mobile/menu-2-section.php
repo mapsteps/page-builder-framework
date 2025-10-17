@@ -63,12 +63,17 @@ wpbf_customizer_field()
 	] )
 	->addToSection( $section_id );
 
-/* Design Tab */
-
+// Padding.
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'menu_item_settings_headline' )
-	->type( 'headline' )
-	->tab( 'design' )
-	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
-	->priority( 7 )
+	->id( $control_id_prefix . 'menu_padding' )
+	->type( 'padding' )
+	->tab( 'general' )
+	->label( __( 'Padding', 'page-builder-framework' ) )
+	->defaultValue( array(
+		'top'    => 10,
+		'right'  => 20,
+		'bottom' => 10,
+		'left'   => 20,
+	) )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );

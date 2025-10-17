@@ -682,4 +682,23 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 			),
 		) );
 	}
+
+	if ( 'mobile' === $header_builder_device ) {
+		$menu_2_padding                 = json_decode( get_theme_mod( 'mobile_menu_padding' ), true );
+		
+		$menu_2_padding_top             = wpbf_get_theme_mod_value( $mobile_menu_padding, 'top', 10 );
+		$menu_2_padding_right           = wpbf_get_theme_mod_value( $menu_2_padding, 'right', 20 );
+		$menu_2_padding_bottom          = wpbf_get_theme_mod_value( $menu_2_padding, 'bottom', 10 );
+		$menu_2_padding_left            = wpbf_get_theme_mod_value( $menu_2_padding, 'left', 20 );
+
+		wpbf_write_css( array(
+			'selector' => '.wpbf-menu.mobile_menu_2 > .menu-item > a',
+			'props'    => array(
+				'padding-top'    => wpbf_maybe_append_suffix( $menu_2_padding_top ),
+				'padding-right'  => wpbf_maybe_append_suffix( $menu_2_padding_right ),
+				'padding-bottom' => wpbf_maybe_append_suffix( $menu_2_padding_bottom ),
+				'padding-left'   => wpbf_maybe_append_suffix( $menu_2_padding_left ),
+			),
+		) );
+	}
 }

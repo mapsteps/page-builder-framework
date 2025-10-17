@@ -44,7 +44,6 @@ wpbf_customizer_field()
 	->type( 'radio-buttonset' )
 	->tab( 'general' )
 	->label( __( 'Reveal as', 'page-builder-framework' ) )
-	->defaultValue( 'none' )
 	->priority( 5 )
 	->choices( [
 		'dropdown'   => __( 'Dropdown', 'page-builder-framework' ),
@@ -54,11 +53,14 @@ wpbf_customizer_field()
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
-	/* Design Tab */
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'menu_item_settings_headline' )
+	->id( $control_id_prefix . 'menu_item_settings_headline_design' )
 	->type( 'headline' )
 	->tab( 'design' )
 	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
 	->priority( 6 )
+	->activeCallback( function() use ( $control_id_prefix ) {
+		$reveal_as = get_theme_mod( $control_id_prefix . 'reveal_as', 'dropdown' );
+		return in_array( $reveal_as, ['dropdown', 'off-canvas'] );
+	} )
 	->addToSection( $section_id );

@@ -218,11 +218,17 @@ export function setupControlsMovement() {
 							to: 14,
 						},
 					},
+				],
+			},
+			{
+				from: "wpbf_mobile_menu_options",
+				to: "wpbf_header_builder_mobile_menu_1_section",
+				controlsToMove: [
 					{
 						id: "mobile_menu_padding",
 						prio: {
 							from: undefined,
-							to: 15,
+							to: 8,
 						},
 					},
 				],

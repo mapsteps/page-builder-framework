@@ -63,12 +63,12 @@ wpbf_customizer_field()
 	] )
 	->addToSection( $section_id );
 
-/* Design Tab */
+	/* Design Tab */
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'menu_item_settings_headline' )
 	->type( 'headline' )
-	->tab( 'design' )
+	->tab( 'general' )
 	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
 	->priority( 7 )
 	->addToSection( $section_id );
