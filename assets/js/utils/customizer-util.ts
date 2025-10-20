@@ -10,6 +10,7 @@ export type ControlToMove = {
 	id: string;
 	label?: { from: string | undefined; to: string };
 	prio?: { from: number | undefined; to: number };
+	maintainActiveState?: boolean;
 };
 
 function toBoolOrString(value: any) {
@@ -125,7 +126,7 @@ export function moveCustomizerControls<SV>(props: {
 						);
 				}
 
-				if (moveForward) {
+				if (moveForward && !controlObj.maintainActiveState) {
 					control.onChangeActive(true, {});
 				}
 

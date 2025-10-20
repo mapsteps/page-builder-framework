@@ -78,7 +78,7 @@ function mobile_header_builder_sticky_rows( $attributes = '' ) {
 		}
 	}
 
-	return $attributes; // ✅ Move return outside of the loop
+	return $attributes;
 }
 add_filter( 'wpbf_navigation_attributes', 'mobile_header_builder_sticky_rows', 15 );
 
