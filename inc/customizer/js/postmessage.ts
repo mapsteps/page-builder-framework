@@ -2854,33 +2854,18 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 	);
 
 		// Mobile menu 2 padding.
-	listenToCustomizerValueChange<string>(
+	listenToCustomizerValueChange<MarginPaddingValue | string>(
 		"wpbf_header_builder_mobile_menu_2_menu_padding",
 		function (settingId, value) {
-			const obj = parseJsonOrUndefined<MarginPaddingValue>(value);
-			
-			if (!obj) {
-				// Handle simple value (for backward compatibility)
-				writeCSS(settingId, {
-					selector: ".wpbf-menu.mobile_menu_2 > .menu-item > a",
-					props: {
-						"padding-top": maybeAppendSuffix(value as string),
-						"padding-right": maybeAppendSuffix(value as string),
-						"padding-bottom": maybeAppendSuffix(value as string),
-						"padding-left": maybeAppendSuffix(value as string),
-					},
-				});
-				return;
-			}
+			const obj = parseJsonOrUndefined<Record<string, string | number>>(value);
 
-			// Handle MarginPaddingValue object
 			writeCSS(settingId, {
 				selector: ".wpbf-menu.mobile_menu_2 > .menu-item > a",
 				props: {
-					"padding-top": maybeAppendSuffix(obj.top.toString()),
-					"padding-right": maybeAppendSuffix(obj.right.toString()),
-					"padding-bottom": maybeAppendSuffix(obj.bottom.toString()),
-					"padding-left": maybeAppendSuffix(obj.left.toString()),
+					"padding-top": maybeAppendSuffix(obj?.top),
+					"padding-right": maybeAppendSuffix(obj?.right),
+					"padding-bottom": maybeAppendSuffix(obj?.bottom),
+					"padding-left": maybeAppendSuffix(obj?.left),
 				},
 			});
 		},
