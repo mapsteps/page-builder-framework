@@ -167,6 +167,32 @@ if ( empty( $executed_backwards_compat['menu_font_colors'] ) ) {
 	$executed_backwards_compat['menu_font_colors'] = 1;
 }
 
+// Merge `mobile_menu_font_color` and `mobile_menu_font_color_alt` to `mobile_menu_font_colors`.
+if ( empty( $executed_backwards_compat['mobile_menu_font_colors'] ) ) {
+	$mobile_menu_font_color     = get_theme_mod( 'mobile_menu_font_color' );
+	$mobile_menu_font_color_alt = get_theme_mod( 'mobile_menu_font_color_alt' );
+
+	// Delete the old theme mods regardless of their emptyness.
+	remove_theme_mod( 'mobile_menu_font_color' );
+	remove_theme_mod( 'mobile_menu_font_color_alt' );
+
+	if ( $mobile_menu_font_color || $mobile_menu_font_color_alt ) {
+		$mobile_menu_font_colors = array();
+
+		if ( $mobile_menu_font_color ) {
+			$mobile_menu_font_colors['default'] = $mobile_menu_font_color;
+		}
+
+		if ( $mobile_menu_font_color_alt ) {
+			$mobile_menu_font_colors['hover'] = $mobile_menu_font_color_alt;
+		}
+
+		set_theme_mod( 'mobile_menu_font_colors', $mobile_menu_font_colors );
+	}
+
+	$executed_backwards_compat['mobile_menu_font_colors'] = 1;
+}
+
 /**
  * Convert individual responsive controls.
  *

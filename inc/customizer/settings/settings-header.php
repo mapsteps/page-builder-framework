@@ -1394,30 +1394,21 @@ wpbf_customizer_field()
 	] )
 	->addToSection( 'wpbf_mobile_menu_options' );
 
-// Font color.
+// Font colors.
 wpbf_customizer_field()
-	->id( 'mobile_menu_font_color' )
-	->type( 'color' )
+	->id( 'mobile_menu_font_colors' )
+	->type( 'multicolor' )
 	->tab( 'design' )
-	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->label( __( 'Font Colors', 'page-builder-framework' ) )
 	->priority( 11 )
 	->transport( 'postMessage' )
-	->properties( [
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
 		'mode' => 'alpha',
-	] )
-	->addToSection( 'wpbf_mobile_menu_options' );
-
-// Font color hover.
-wpbf_customizer_field()
-	->id( 'mobile_menu_font_color_alt' )
-	->type( 'color' )
-	->tab( 'design' )
-	->label( __( 'Hover', 'page-builder-framework' ) )
-	->priority( 12 )
-	->transport( 'postMessage' )
-	->properties( [
-		'mode' => 'alpha',
-	] )
+	) )
 	->addToSection( 'wpbf_mobile_menu_options' );
 
 // Divider color.

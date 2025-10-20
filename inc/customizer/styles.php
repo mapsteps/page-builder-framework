@@ -2033,33 +2033,39 @@ if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padd
 
 }
 
-$mobile_menu_font_color = wpbf_customize_str_value( 'mobile_menu_font_color' );
+$mobile_menu_font_colors = wpbf_customize_array_value( 'mobile_menu_font_colors', array() );
+$mobile_menu_font_colors = ! is_array( $mobile_menu_font_colors ) ? array() : $mobile_menu_font_colors;
 
-if ( $mobile_menu_font_color ) {
+if ( ! empty( $mobile_menu_font_colors ) ) {
 
-	wpbf_write_css( array(
-		'selector' => '.wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close',
-		'props'    => array( 'color' => $mobile_menu_font_color ),
-	) );
+	$mobile_menu_font_color_default = ! empty( $mobile_menu_font_colors['default'] ) && is_string( $mobile_menu_font_colors['default'] ) ? $mobile_menu_font_colors['default'] : null;
+	$mobile_menu_font_color_hover   = ! empty( $mobile_menu_font_colors['hover'] ) && is_string( $mobile_menu_font_colors['hover'] ) ? $mobile_menu_font_colors['hover'] : null;
 
-}
+	if ( $mobile_menu_font_color_default ) {
 
-$mobile_menu_font_color_alt = wpbf_customize_str_value( 'mobile_menu_font_color_alt' );
+		wpbf_write_css( array(
+			'selector' => '.wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close',
+			'props'    => array( 'color' => $mobile_menu_font_color_default ),
+		) );
 
-if ( $mobile_menu_font_color_alt ) {
+	}
 
-	wpbf_write_css( array(
-		'blocks' => array(
-			array(
-				'selector' => '.wpbf-mobile-menu a:hover',
-				'props'    => array( 'color' => $mobile_menu_font_color_alt ),
+	if ( $mobile_menu_font_color_hover ) {
+
+		wpbf_write_css( array(
+			'blocks' => array(
+				array(
+					'selector' => '.wpbf-mobile-menu a:hover',
+					'props'    => array( 'color' => $mobile_menu_font_color_hover ),
+				),
+				array(
+					'selector' => '.wpbf-mobile-menu > .current-menu-item > a',
+					'props'    => array( 'color' => $mobile_menu_font_color_hover . '!important' ),
+				),
 			),
-			array(
-				'selector' => '.wpbf-mobile-menu > .current-menu-item > a',
-				'props'    => array( 'color' => $mobile_menu_font_color_alt . '!important' ),
-			),
-		),
-	) );
+		) );
+
+	}
 
 }
 

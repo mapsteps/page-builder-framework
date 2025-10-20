@@ -874,26 +874,32 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		},
 	);
 
-	// Menu item font color.
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"mobile_menu_font_color",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector:
-					".wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close",
-				props: { color: toStringColor(value) },
-			});
-		},
-	);
+	// Menu item font colors.
+	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
+		"mobile_menu_font_colors",
+		(settingId, value) => {
+			const rawDefaultColor = value.default ?? "";
+			const defaultColor = toStringColor(rawDefaultColor);
 
-	// Menu item font color hover.
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"mobile_menu_font_color_alt",
-		function (settingId, value) {
+			const rawHoverColor = value.hover ?? "";
+			const hoverColor = toStringColor(rawHoverColor);
+
 			writeCSS(settingId, {
-				selector:
-					".wpbf-mobile-menu a:hover, .wpbf-mobile-menu > .current-menu-item > a",
-				props: { color: toStringColor(value) },
+				blocks: [
+					{
+						selector:
+							".wpbf-mobile-menu a, .wpbf-mobile-menu-container .wpbf-close",
+						props: { color: defaultColor },
+					},
+					{
+						selector: ".wpbf-mobile-menu a:hover",
+						props: { color: hoverColor },
+					},
+					{
+						selector: ".wpbf-mobile-menu > .current-menu-item > a",
+						props: { color: `${hoverColor}!important` },
+					},
+				],
 			});
 		},
 	);
