@@ -43,7 +43,7 @@ $partial_refresh_args = array(
 
 $menu_term_list = wp_get_nav_menus();
 
-$menu_choices = [];
+$menu_choices = [ '' => __( '— Select a Menu —', 'page-builder-framework' ) ];
 
 if ( ! empty( $menu_term_list ) ) {
 	foreach ( $menu_term_list as $menu_term ) {

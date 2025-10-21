@@ -43,7 +43,7 @@ $partial_refresh_args = array(
 
 $menu_term_list = wp_get_nav_menus();
 
-$menu_choices = [];
+$menu_choices = [ '' => __( '— Select a Menu —', 'page-builder-framework' ) ];
 
 if ( ! empty( $menu_term_list ) ) {
 	foreach ( $menu_term_list as $menu_term ) {
@@ -63,11 +63,22 @@ wpbf_customizer_field()
 	] )
 	->addToSection( $section_id );
 
+/* Design Tab */
+
+// Menu item settings headline.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'menu_item_settings_headline' )
+	->type( 'headline' )
+	->tab( 'design' )
+	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
+	->priority( 7 )
+	->addToSection( $section_id );
+
 // Padding.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'menu_padding' )
 	->type( 'padding' )
-	->tab( 'general' )
+	->tab( 'design' )
 	->label( __( 'Padding', 'page-builder-framework' ) )
 	->defaultValue( array(
 		'top'    => 10,
