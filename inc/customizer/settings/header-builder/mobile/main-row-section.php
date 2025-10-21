@@ -56,3 +56,46 @@ wpbf_customizer_field()
 		'mode' => 'alpha',
 	] )
 	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'text_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 205 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'accent_colors' )
+	->type( 'multicolor' )
+	->tab( 'design' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->priority( 210 )
+	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( 215 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 1,
+		'max'  => 100,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );

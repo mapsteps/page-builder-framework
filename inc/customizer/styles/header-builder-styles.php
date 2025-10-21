@@ -300,13 +300,50 @@ foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 			),
 		) );
 
-		$bg_color = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+		$font_size = wpbf_customize_str_value( $row_id_prefix . 'font_size' );
+		$font_size = '' === $font_size || '16' === $font_size ? '16px' : $font_size;
 
-		if ( $bg_color ) {
+		if ( $font_size ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
+				'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
+			) );
+		}
+
+		$accent_colors = wpbf_customize_array_value( $row_id_prefix . 'accent_colors' );
+
+		if ( ! empty( $accent_colors ) ) {
+			$default_color = ! empty( $accent_colors['default'] ) ? $accent_colors['default'] : '';
+			$hover_color   = ! empty( $accent_colors['hover'] ) ? $accent_colors['hover'] : '';
+
+			if ( $default_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2)',
+					'props'    => array( 'color' => $default_color ),
+				) );
+			}
+
+			if ( $hover_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):focus',
+					'props'    => array( 'color' => $hover_color ),
+				) );
+			}
+		}
+
+		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
+		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
+
+		if ( $bg_color || $text_color ) {
 
 			wpbf_write_css( array(
 				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
 				'props'    => array( 'background-color' => $bg_color ),
+			) );
+
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ':not(.wpbf-close)',
+				'props'    => array( 'color' => $text_color ),
 			) );
 
 		}
