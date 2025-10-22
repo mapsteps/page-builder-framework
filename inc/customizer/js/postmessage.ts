@@ -771,7 +771,7 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		"mobile_menu_hamburger_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a",
+				selector: ".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a, .wpbf-mobile-menu-toggle svg, .wpbf-mobile-menu-toggle svg path",
 				props: { color: toStringColor(value) },
 			});
 		},
