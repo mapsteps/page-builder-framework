@@ -771,7 +771,8 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		"mobile_menu_hamburger_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a, .wpbf-mobile-menu-toggle svg, .wpbf-mobile-menu-toggle svg path",
+				selector:
+					".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a, .wpbf-mobile-menu-toggle svg, .wpbf-mobile-menu-toggle svg path",
 				props: { color: toStringColor(value) },
 			});
 		},
@@ -2903,40 +2904,38 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		},
 	);
 
-		// Mobile menu 2 padding.
+	// Mobile menu 2 padding.
 	listenToCustomizerValueChange<string>(
 		"wpbf_header_builder_mobile_menu_2_menu_padding",
 		function (settingId, value) {
-				const obj = parseJsonOrUndefined<MarginPaddingValue>(value);
-			
-				if (!obj) {
-					// Handle simple value (for backward compatibility)
-					writeCSS(settingId, {
-						selector: ".wpbf-menu.mobile_menu_2 > .menu-item > a",
-						props: {
-							"padding-top": maybeAppendSuffix(value as string),
-							"padding-right": maybeAppendSuffix(value as string),
-							"padding-bottom": maybeAppendSuffix(value as string),
-							"padding-left": maybeAppendSuffix(value as string),
-						},
-					});
-					return;
-				}
+			const obj = parseJsonOrUndefined<MarginPaddingValue>(value);
 
-				// Handle MarginPaddingValue object
+			if (!obj) {
+				// Handle simple value (for backward compatibility)
 				writeCSS(settingId, {
 					selector: ".wpbf-menu.mobile_menu_2 > .menu-item > a",
 					props: {
-						"padding-top": maybeAppendSuffix(obj.top.toString()),
-						"padding-right": maybeAppendSuffix(obj.right.toString()),
-						"padding-bottom": maybeAppendSuffix(obj.bottom.toString()),
-						"padding-left": maybeAppendSuffix(obj.left.toString()),
+						"padding-top": maybeAppendSuffix(value as string),
+						"padding-right": maybeAppendSuffix(value as string),
+						"padding-bottom": maybeAppendSuffix(value as string),
+						"padding-left": maybeAppendSuffix(value as string),
 					},
 				});
+				return;
 			}
-	);
 
-	/**
+			// Handle MarginPaddingValue object
+			writeCSS(settingId, {
+				selector: ".wpbf-menu.mobile_menu_2 > .menu-item > a",
+				props: {
+					"padding-top": maybeAppendSuffix(obj.top.toString()),
+					"padding-right": maybeAppendSuffix(obj.right.toString()),
+					"padding-bottom": maybeAppendSuffix(obj.bottom.toString()),
+					"padding-left": maybeAppendSuffix(obj.left.toString()),
+				},
+			});
+		},
+	); /**
 	 * Handle menu reveal type changes in the customizer.
 	 * This allows instant preview when switching between dropdown and off-canvas modes.
 	 *
@@ -2964,9 +2963,7 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 	 */
 	function handleMobileRevealTypeChange(value: string) {
 		// Find the mobile header rows container element
-		const mobileHeaderRows = document.querySelector(
-			".wpbf-mobile-header-rows",
-		);
+		const mobileHeaderRows = document.querySelector(".wpbf-mobile-header-rows");
 		if (!mobileHeaderRows) return;
 
 		// Remove all existing menu type classes to start fresh
@@ -3033,12 +3030,9 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 			}
 
 			// Create off-canvas container if it doesn't exist
-			if (
-				!document.querySelector(".wpbf-mobile-menu-off-canvas-container")
-			) {
+			if (!document.querySelector(".wpbf-mobile-menu-off-canvas-container")) {
 				const offCanvasContainer = document.createElement("div");
-				offCanvasContainer.className =
-					"wpbf-mobile-menu-off-canvas-container";
+				offCanvasContainer.className = "wpbf-mobile-menu-off-canvas-container";
 
 				// Move existing menu into the off-canvas container
 				const existingMenu = mobileMenuContainer;
@@ -3373,7 +3367,7 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 				"wpbf_header_builder_desktop_menu_trigger_icon_color",
 				function (settingId, value) {
 					const colorValue = toStringColor(value);
-					
+
 					writeCSS(settingId, {
 						selector: ".wpbf-menu-toggle",
 						props: { color: colorValue ? colorValue + " !important" : "" },
