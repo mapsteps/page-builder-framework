@@ -227,39 +227,65 @@ class HeaderBuilderOutput {
 			echo '<div class="' . esc_attr( $container_class ) . '">';
 		}
 
-		echo '<div class="' . ( 'desktop_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
+		// Count non-empty columns to determine row alignment
+		$non_empty_columns = array_filter( $columns, function( $widget_keys ) {
+			return ! empty( $widget_keys );
+		} );
 
-		foreach ( $columns as $column_key => $widget_keys ) {
+		$column_count = count( $non_empty_columns );
+		$row_alignment_class = 'wpbf-content-center'; // Default to center
+
+		// Since we always render all 5 columns, we don't need special alignment
+		// The flexbox layout will handle positioning naturally based on column content
+
+		echo '<div class="' . ( 'desktop_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center ' . esc_attr( $row_alignment_class ) . '">';
+
+		// Always render all 5 columns to maintain proper positioning
+		$all_column_keys = array( 'column_1_start', 'column_1_end', 'column_2', 'column_3_start', 'column_3_end' );
+		
+		foreach ( $all_column_keys as $column_key ) {
+			$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
+			
 			$column_class    = 'wpbf-flex wpbf-header-column';
 			$alignment_class = 'wpbf-content-center wpbf-items-center';
 			$column_position = '';
 
-			if ( false !== stripos( $column_key, '_start' ) ) {
+			// Set alignment based on column key
+			if ( 'column_1_start' === $column_key ) {
 				$alignment_class = 'wpbf-content-start';
 				$column_position = 'left';
-			} elseif ( false !== stripos( $column_key, '_end' ) ) {
+			} elseif ( 'column_3_end' === $column_key ) {
 				$alignment_class = 'wpbf-content-end';
 				$column_position = 'right';
 			}
 
+			// Add empty class if column has no widgets
+			if ( empty( $widget_keys ) ) {
+				$column_class .= ' wpbf-column-empty';
+			}
+
 			if (
-			in_array( 'desktop_menu_1', $widget_keys, true )
-			|| in_array( 'desktop_menu_2', $widget_keys, true )
-			|| in_array( 'desktop_html_1', $widget_keys, true )
-			|| in_array( 'desktop_html_2', $widget_keys, true )
-			|| in_array( 'desktop_menu_trigger', $widget_keys, true )
+			! empty( $widget_keys ) && (
+				in_array( 'desktop_menu_1', $widget_keys, true )
+				|| in_array( 'desktop_menu_2', $widget_keys, true )
+				|| in_array( 'desktop_html_1', $widget_keys, true )
+				|| in_array( 'desktop_html_2', $widget_keys, true )
+				|| in_array( 'desktop_menu_trigger', $widget_keys, true )
+			)
 			) {
 				$column_class .= ' wpbf-column-grow';
 			}
 
 			echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
 
-			foreach ( $widget_keys as $widget_key ) {
-				if ( empty( $widget_key ) ) {
-					continue;
-				}
+			if ( ! empty( $widget_keys ) ) {
+				foreach ( $widget_keys as $widget_key ) {
+					if ( empty( $widget_key ) ) {
+						continue;
+					}
 
-				$this->render_widget( 'header_builder', $widget_key, $column_position );
+					$this->render_widget( 'header_builder', $widget_key, $column_position );
+				}
 			}
 
 			echo '</div>';
@@ -354,45 +380,70 @@ class HeaderBuilderOutput {
 			echo '<div class="' . esc_attr( $container_class ) . '">';
 		}
 
-		echo '<div class="' . ( 'mobile_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center wpbf-content-center">';
+		// Count non-empty columns to determine row alignment
+		$non_empty_columns = array_filter( $columns, function( $widget_keys ) {
+			return ! empty( $widget_keys );
+		} );
 
-		foreach ( $columns as $column_key => $widget_keys ) {
+		$column_count = count( $non_empty_columns );
+		$row_alignment_class = 'wpbf-content-center'; // Default to center
+
+		// Since we always render all 5 columns, we don't need special alignment
+		// The flexbox layout will handle positioning naturally based on column content
+
+		echo '<div class="' . ( 'mobile_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center ' . esc_attr( $row_alignment_class ) . '">';
+
+		// Always render all 5 columns to maintain proper positioning
+		$all_column_keys = array( 'column_1_start', 'column_1_end', 'column_2', 'column_3_start', 'column_3_end' );
+		
+		foreach ( $all_column_keys as $column_key ) {
+			$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
 
 			$column_class    = 'wpbf-flex wpbf-header-column';
 			$alignment_class = 'wpbf-content-center wpbf-items-center';
 			$column_position = '';
 
-			if ( false !== stripos( $column_key, '_start' ) ) {
+			// Set alignment based on column key
+			if ( 'column_1_start' === $column_key ) {
 				$alignment_class = 'wpbf-content-start';
 				$column_position = 'left';
-			} elseif ( false !== stripos( $column_key, '_end' ) ) {
+			} elseif ( 'column_3_end' === $column_key ) {
 				$alignment_class = 'wpbf-content-end';
 				$column_position = 'right';
 			}
 
+			// Add empty class if column has no widgets
+			if ( empty( $widget_keys ) ) {
+				$column_class .= ' wpbf-column-empty';
+			}
+
 			if (
-			in_array( 'mobile_menu_1', $widget_keys, true )
-			|| in_array( 'mobile_menu_2', $widget_keys, true )
-			|| in_array( 'mobile_html_1', $widget_keys, true )
-			|| in_array( 'mobile_html_2', $widget_keys, true )
-			|| in_array( 'mobile_button_1', $widget_keys, true )
-			|| in_array( 'mobile_button_2', $widget_keys, true )
-			|| in_array( 'mobile_search', $widget_keys, true )
-			|| in_array( 'mobile_logo', $widget_keys, true )
-			|| in_array( 'mobile_menu_trigger', $widget_keys, true )
+			! empty( $widget_keys ) && (
+				in_array( 'mobile_menu_1', $widget_keys, true )
+				|| in_array( 'mobile_menu_2', $widget_keys, true )
+				|| in_array( 'mobile_html_1', $widget_keys, true )
+				|| in_array( 'mobile_html_2', $widget_keys, true )
+				|| in_array( 'mobile_button_1', $widget_keys, true )
+				|| in_array( 'mobile_button_2', $widget_keys, true )
+				|| in_array( 'mobile_search', $widget_keys, true )
+				|| in_array( 'mobile_logo', $widget_keys, true )
+				|| in_array( 'mobile_menu_trigger', $widget_keys, true )
+			)
 			) {
 				$column_class .= ' wpbf-column-grow';
 			}
 
 			echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
 
-			foreach ( $widget_keys as $widget_key ) {
+			if ( ! empty( $widget_keys ) ) {
+				foreach ( $widget_keys as $widget_key ) {
 
-				if ( empty( $widget_key ) ) {
-					continue;
+					if ( empty( $widget_key ) ) {
+						continue;
+					}
+
+					$this->render_widget( 'header_builder', $widget_key, $column_position );
 				}
-
-				$this->render_widget( 'header_builder', $widget_key, $column_position );
 			}
 
 			echo '</div>';

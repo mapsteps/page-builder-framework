@@ -576,13 +576,21 @@
 /* Header Builder */
 .wpbf-row-content {
 	width: 100%;
+	display: flex;
+	align-items: center;
 }
 
 .wpbf-header-column {
-	flex-grow: 0;
-	flex-shrink: 0;
+	flex: 1 1 0;
+	min-width: 0;
 
 	&.wpbf-column-grow {
 		flex-grow: 1;
+	}
+
+	&.wpbf-column-empty {
+		// Empty columns should still take equal space to maintain proper positioning
+		flex: 1 1 0;
+		min-width: 0;
 	}
 }

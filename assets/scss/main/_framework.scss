@@ -392,6 +392,10 @@ table thead th,
 	justify-content: flex-end;
 }
 
+.wpbf-content-space-between {
+	justify-content: space-between !important;
+}
+
 // xLarge gutter
 .wpbf-grid-xlarge {
 	margin-left: (-$grid-xlarge);
