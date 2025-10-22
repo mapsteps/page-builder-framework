@@ -44,7 +44,6 @@ wpbf_customizer_field()
 	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Reveal as', 'page-builder-framework' ) )
-	->defaultValue( 'off-canvas' )
 	->priority( 5 )
 	->choices( [
 		'off-canvas'      => __( 'Off-canvas (Right)', 'page-builder-framework' ),
@@ -52,14 +51,5 @@ wpbf_customizer_field()
 		'full-screen'     => __( 'Full screen', 'page-builder-framework' ),
 	] )
 	->defaultValue( 'off-canvas' )
-	->transport( 'auto' )
-	->partialRefresh( [
-		'headerbuilder_reveal_as' => array(
-			'container_inclusive' => true,
-			'selector'            => '#header',
-			'render_callback'     => function () {
-				return get_template_part( 'inc/template-parts/header' );
-			},
-		),
-	] )
+	->transport( 'postMessage' )
 	->addToSection( $section_id );
