@@ -629,8 +629,12 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 	$menu_trigger_props['font-size'] = wpbf_maybe_append_suffix( $menu_trigger_icon_size );
 
 	// Icon color (mobile uses mobile_menu_hamburger_color). Make sure we emit it.
+	// For solid style with background color, default to white if no custom color is set.
 	if ( $menu_trigger_icon_color ) {
 		$menu_trigger_props['color'] = $menu_trigger_icon_color . '!important';
+	} elseif ( 'solid' === $menu_trigger_style && $menu_trigger_button_color ) {
+		// Default to white for solid style when user hasn't set a custom icon color.
+		$menu_trigger_props['color'] = '#ffffff !important';
 	}
 
 	// If the menu trigger style is either 'outlined' or 'solid'.

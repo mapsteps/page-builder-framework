@@ -3372,9 +3372,11 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 			listenToCustomizerValueChange<WpbfColorControlValue>(
 				"wpbf_header_builder_desktop_menu_trigger_icon_color",
 				function (settingId, value) {
+					const colorValue = toStringColor(value);
+					
 					writeCSS(settingId, {
 						selector: ".wpbf-menu-toggle",
-						props: { color: toStringColor(value) },
+						props: { color: colorValue ? colorValue + " !important" : "" },
 					});
 				},
 			);
