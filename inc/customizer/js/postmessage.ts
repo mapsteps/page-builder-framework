@@ -3026,9 +3026,13 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		document.body.classList.remove("wpbf-mobile-menu-active");
 
 		// Remove mobile menu overlay if present
-		const mobileOverlay = document.querySelector(".wpbf-mobile-menu-overlay");
+		const mobileOverlay = document.querySelector(
+			".wpbf-mobile-menu-overlay",
+		) as HTMLElement;
 		if (mobileOverlay) {
 			mobileOverlay.classList.remove("active");
+			mobileOverlay.style.display = "";
+			mobileOverlay.style.opacity = "";
 		}
 
 		// Get the close button element (make sure we get the one inside mobile menu)
