@@ -2975,13 +2975,53 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		);
 
 		// Reset toggle button state if it was active
-		const toggle = document.querySelector("#wpbf-mobile-menu-toggle");
+		const toggle = document.querySelector(
+			"#wpbf-mobile-menu-toggle",
+		) as HTMLElement;
+
 		if (toggle?.classList.contains("active")) {
 			toggle.classList.remove("active");
+			toggle.setAttribute("aria-expanded", "false");
+
+			// Reset toggle button icon back to hamburger
+			const headerBuilderEnabled = !!document.querySelector(
+				".wpbf-navigation.use-header-builder",
+			);
+
+			if (headerBuilderEnabled) {
+				const mobileMenuText = toggle.querySelector(
+					".menu-trigger-button-text",
+				);
+
+				if (mobileMenuText instanceof HTMLElement) {
+					// Check if the element has the 'wpbf-is-hidden' class.
+					if (!mobileMenuText.classList.contains("wpbf-is-hidden")) {
+						mobileMenuText.style.display = "inline-block";
+					}
+				}
+
+				const svgIcon = toggle.querySelector(".menu-trigger-button-svg");
+
+				if (svgIcon instanceof SVGElement) {
+					svgIcon.style.display = "inline-block";
+				}
+
+				toggle.classList.remove("wpbff");
+			} else {
+				toggle.classList.add("wpbff-hamburger");
+			}
+
+			toggle.classList.remove("wpbff-times");
 		}
 
 		// Reset menu active state
 		document.body.classList.remove("wpbf-mobile-menu-active");
+
+		// Remove mobile menu overlay if present
+		const mobileOverlay = document.querySelector(".wpbf-mobile-menu-overlay");
+		if (mobileOverlay) {
+			mobileOverlay.classList.remove("active");
+		}
 
 		// Get the close button element (make sure we get the one inside mobile menu)
 		const closeButton = document.querySelector(
