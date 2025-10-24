@@ -21,6 +21,7 @@ export function setupConditionalControls() {
 		listenToHeaderBuilderToggleValue();
 		setupMobileMenuTriggerVisibility();
 		setupMobileMenuWidthVisibility();
+		setupMobileMenuOverlayVisibility();
 	}
 
 	/**
@@ -113,6 +114,44 @@ export function setupConditionalControls() {
 			} catch (e) {
 				// ignore if control doesn't exist yet
 			}
+		}
+
+		// Bind to changes
+		window.wp.customize?.(revealAsSettingId, function (setting) {
+			setting.bind(function (val: string) {
+				applyVisibility(val);
+			});
+		});
+
+		// Initial apply
+		const initial = window.wp.customize?.(revealAsSettingId)?.get();
+		applyVisibility(typeof initial !== "undefined" ? initial : "dropdown");
+	}
+
+	/**
+	 * Toggles visibility of mobile menu overlay controls based on the selected reveal type.
+	 * Only show when reveal type is 'off-canvas'.
+	 */
+	function setupMobileMenuOverlayVisibility() {
+		const revealAsSettingId = "wpbf_header_builder_mobile_offcanvas_reveal_as";
+		const controlsToToggle = [
+			"mobile_menu_overlay",
+			"mobile_menu_overlay_color",
+		];
+
+		function applyVisibility(revealType: string) {
+			const shouldShow = revealType === "off-canvas";
+
+			controlsToToggle.forEach((controlId) => {
+				try {
+					window.wp.customize?.control(controlId, function (control) {
+						if (!control || !control.container) return;
+						control.container.toggle(!!shouldShow);
+					});
+				} catch (e) {
+					// ignore if control doesn't exist yet
+				}
+			});
 		}
 
 		// Bind to changes
