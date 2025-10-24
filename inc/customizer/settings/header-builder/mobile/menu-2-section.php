@@ -69,16 +69,16 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'menu_item_settings_headline' )
 	->type( 'headline' )
-	->tab( 'design' )
+	->tab( 'general' )
 	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
-	->priority( 7 )
+	->priority( 10 )
 	->addToSection( $section_id );
 
 // Padding.
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'menu_padding' )
 	->type( 'padding' )
-	->tab( 'design' )
+	->tab( 'general' )
 	->label( __( 'Padding', 'page-builder-framework' ) )
 	->defaultValue( array(
 		'top'    => 10,

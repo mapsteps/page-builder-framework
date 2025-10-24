@@ -221,7 +221,7 @@ export function setupControlsMovement() {
 						id: "mobile_menu_padding",
 						prio: {
 							from: undefined,
-							to: 8,
+							to: 50,
 						},
 					},
 				],

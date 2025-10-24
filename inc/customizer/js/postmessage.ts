@@ -842,7 +842,7 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 
 			writeCSS(settingId, {
 				selector:
-					".wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle",
+					".wpbf-mobile-menu.mobile_menu_1 a, .wpbf-mobile-menu.mobile_menu_1 .menu-item-has-children .wpbf-submenu-toggle",
 				props: {
 					"padding-top": maybeAppendSuffix(obj?.top),
 					"padding-right": maybeAppendSuffix(obj?.right),
@@ -2924,9 +2924,9 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 				return;
 			}
 
-			// Handle MarginPaddingValue object
 			writeCSS(settingId, {
-				selector: ".wpbf-menu.mobile_menu_2 > .menu-item > a",
+				selector:
+					".wpbf-menu.mobile_menu_2 > .menu-item > a, .wpbf-mobile-menu.mobile_menu_2 > .menu-item > a",
 				props: {
 					"padding-top": maybeAppendSuffix(obj.top.toString()),
 					"padding-right": maybeAppendSuffix(obj.right.toString()),

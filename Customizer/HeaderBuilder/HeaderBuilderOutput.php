@@ -695,7 +695,7 @@ class HeaderBuilderOutput {
 		if ( 'desktop_full_screen_menu' === $placement || 'desktop_off_canvas_menu' === $placement ) {
 			$menu_container_class = 'wpbf-menu';
 		} elseif ( 'mobile_menu' === $placement ) {
-			$menu_container_class = 'wpbf-mobile-menu';
+			$menu_container_class = 'wpbf-mobile-menu ' . $widget_key;
 		}
 
 		$nav_menu_args = array(

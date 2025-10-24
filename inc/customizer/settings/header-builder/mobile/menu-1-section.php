@@ -70,5 +70,5 @@ wpbf_customizer_field()
 	->type( 'headline' )
 	->tab( 'general' )
 	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
-	->priority( 7 )
+	->priority( 10 )
 	->addToSection( $section_id );

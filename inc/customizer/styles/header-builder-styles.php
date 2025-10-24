@@ -724,27 +724,5 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 		) );
 	}
 
-	if ( 'mobile' === $header_builder_device ) {
-		$menu_2_padding = wpbf_customize_array_value( 'wpbf_header_builder_mobile_menu_2_menu_padding', array(
-			'top'    => 10,
-			'right'  => 20,
-			'bottom' => 10,
-			'left'   => 20,
-		) );
-
-		$menu_2_padding_top    = wpbf_get_theme_mod_value( $menu_2_padding, 'top', 10 );
-		$menu_2_padding_right  = wpbf_get_theme_mod_value( $menu_2_padding, 'right', 20 );
-		$menu_2_padding_bottom = wpbf_get_theme_mod_value( $menu_2_padding, 'bottom', 10 );
-		$menu_2_padding_left   = wpbf_get_theme_mod_value( $menu_2_padding, 'left', 20 );
-
-		wpbf_write_css( array(
-			'selector' => '.wpbf-menu.mobile_menu_2 > .menu-item > a',
-			'props'    => array(
-				'padding-top'    => wpbf_maybe_append_suffix( $menu_2_padding_top ),
-				'padding-right'  => wpbf_maybe_append_suffix( $menu_2_padding_right ),
-				'padding-bottom' => wpbf_maybe_append_suffix( $menu_2_padding_bottom ),
-				'padding-left'   => wpbf_maybe_append_suffix( $menu_2_padding_left ),
-			),
-		) );
-	}
+	// Mobile menu 2 padding is now handled in styles.php to be consistent with mobile menu 1 pattern.
 }

@@ -2022,7 +2022,7 @@ $mobile_menu_padding_left   = wpbf_get_theme_mod_value( $mobile_menu_padding, 'l
 if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padding_bottom || $mobile_menu_padding_left ) {
 
 	wpbf_write_css( array(
-		'selector' => '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle',
+		'selector' => '.wpbf-mobile-menu.mobile_menu_1 a, .wpbf-mobile-menu.mobile_menu_1 .menu-item-has-children .wpbf-submenu-toggle',
 		'props'    => array(
 			'padding-top'    => $mobile_menu_padding_top ? wpbf_maybe_append_suffix( $mobile_menu_padding_top ) : null,
 			'padding-right'  => $mobile_menu_padding_right ? wpbf_maybe_append_suffix( $mobile_menu_padding_right ) : null,
@@ -2031,6 +2031,35 @@ if ( $mobile_menu_padding_top || $mobile_menu_padding_right || $mobile_menu_padd
 		),
 	) );
 
+}
+
+// Mobile Menu 2 Padding (Header Builder).
+if ( $header_builder_enabled ) {
+	$mobile_menu_2_padding = wpbf_customize_array_value( 'wpbf_header_builder_mobile_menu_2_menu_padding', array(
+		'top'    => 10,
+		'right'  => 20,
+		'bottom' => 10,
+		'left'   => 20,
+	) );
+
+	$mobile_menu_2_padding_top    = wpbf_get_theme_mod_value( $mobile_menu_2_padding, 'top', 10 );
+	$mobile_menu_2_padding_right  = wpbf_get_theme_mod_value( $mobile_menu_2_padding, 'right', 20 );
+	$mobile_menu_2_padding_bottom = wpbf_get_theme_mod_value( $mobile_menu_2_padding, 'bottom', 10 );
+	$mobile_menu_2_padding_left   = wpbf_get_theme_mod_value( $mobile_menu_2_padding, 'left', 20 );
+
+	if ( $mobile_menu_2_padding_top || $mobile_menu_2_padding_right || $mobile_menu_2_padding_bottom || $mobile_menu_2_padding_left ) {
+
+		wpbf_write_css( array(
+			'selector' => '.wpbf-mobile-menu.mobile_menu_2 a, .wpbf-mobile-menu.mobile_menu_2 .menu-item-has-children .wpbf-submenu-toggle',
+			'props'    => array(
+				'padding-top'    => $mobile_menu_2_padding_top ? wpbf_maybe_append_suffix( $mobile_menu_2_padding_top ) : null,
+				'padding-right'  => $mobile_menu_2_padding_right ? wpbf_maybe_append_suffix( $mobile_menu_2_padding_right ) : null,
+				'padding-bottom' => $mobile_menu_2_padding_bottom ? wpbf_maybe_append_suffix( $mobile_menu_2_padding_bottom ) : null,
+				'padding-left'   => $mobile_menu_2_padding_left ? wpbf_maybe_append_suffix( $mobile_menu_2_padding_left ) : null,
+			),
+		) );
+
+	}
 }
 
 $mobile_menu_font_colors = wpbf_customize_array_value( 'mobile_menu_font_colors', array() );
