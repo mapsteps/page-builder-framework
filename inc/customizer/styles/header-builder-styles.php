@@ -563,13 +563,24 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 		$menu_width    = '320' === $menu_width || '320px' === $menu_width ? '' : $menu_width;
 		$menu_bg_color = wpbf_customize_str_value( 'mobile_menu_bg_color' );
 
-		if ( $menu_width || $menu_bg_color ) {
+		// For off-canvas type, apply width, position, and background color to the container.
+		if ( 'off-canvas' === $menu_options && ( $menu_width || $menu_bg_color ) ) {
 			wpbf_write_css( array(
 				'selector' => '.wpbf-mobile-menu-off-canvas .wpbf-mobile-menu-container',
 				'props'    => array(
 					'width'            => $menu_width ? wpbf_maybe_append_suffix( $menu_width ) : null,
 					'right'            => $menu_width ? '-' . wpbf_maybe_append_suffix( $menu_width ) : null,
 					'background-color' => $menu_bg_color ? $menu_bg_color : null,
+				),
+			) );
+		}
+
+		// For dropdown type, apply background color to the container.
+		if ( 'dropdown' === $menu_options && $menu_bg_color ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-mobile-menu-dropdown .wpbf-mobile-menu-container',
+				'props'    => array(
+					'background-color' => $menu_bg_color,
 				),
 			) );
 		}

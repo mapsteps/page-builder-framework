@@ -858,8 +858,16 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		"mobile_menu_bg_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-mobile-menu > .menu-item a",
-				props: { "background-color": toStringColor(value) },
+				blocks: [
+					{
+						selector: ".wpbf-mobile-menu > .menu-item a",
+						props: { "background-color": toStringColor(value) },
+					},
+					{
+						selector: ".wpbf-mobile-menu-dropdown .wpbf-mobile-menu-container",
+						props: { "background-color": toStringColor(value) },
+					},
+				],
 			});
 		},
 	);
