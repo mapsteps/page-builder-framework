@@ -322,6 +322,13 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		fn: (settingId: string, value: VT) => void,
 	) {
 		customizer?.(settingId, function (setting: WpbfCustomizeSetting<VT>) {
+			// Apply initial value when customizer opens
+			const initialValue = setting.get();
+			if (initialValue !== undefined && initialValue !== null) {
+				fn(settingId, initialValue);
+			}
+			
+			// Listen to value changes
 			setting.bind(function (value) {
 				fn(settingId, value);
 			});
