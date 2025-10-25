@@ -327,7 +327,7 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 			if (initialValue !== undefined && initialValue !== null) {
 				fn(settingId, initialValue);
 			}
-			
+
 			// Listen to value changes
 			setting.bind(function (value) {
 				fn(settingId, value);
