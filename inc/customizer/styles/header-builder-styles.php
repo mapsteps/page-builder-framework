@@ -736,4 +736,117 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 	}
 
 	// Mobile menu 2 padding is now handled in styles.php to be consistent with mobile menu 1 pattern.
+
+	/**
+	 * ----------------------------------------------------------------------
+	 * Desktop Off Canvas Section.
+	 * ----------------------------------------------------------------------
+	 */
+
+	if ( 'desktop' === $header_builder_device ) {
+		// Get the reveal_as setting for desktop off-canvas.
+		$desktop_reveal_as = wpbf_customize_str_value(
+			'wpbf_header_builder_desktop_offcanvas_reveal_as',
+			'off-canvas'
+		);
+
+		// Apply styles for both 'off-canvas' (right) and 'off-canvas-left' (left).
+		if ( 'off-canvas' === $desktop_reveal_as || 'off-canvas-left' === $desktop_reveal_as ) {
+			// Off canvas width.
+			$menu_off_canvas_width = wpbf_customize_str_value( 'menu_off_canvas_width' );
+			$menu_off_canvas_width = '400' === $menu_off_canvas_width || '400px' === $menu_off_canvas_width ? '' : $menu_off_canvas_width;
+
+			if ( $menu_off_canvas_width ) {
+				if ( 'off-canvas-left' === $desktop_reveal_as ) {
+					wpbf_write_css( array(
+						'blocks' => array(
+							array(
+								'selector' => '.wpbf-menu-off-canvas-right',
+								'props'    => array(
+									'width' => wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+									'right' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+								),
+							),
+							array(
+								'selector' => '.wpbf-push-menu-right.active',
+								'props'    => array(
+									'left' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+								),
+							),
+							array(
+								'selector' => '.wpbf-push-menu-right.active .wpbf-navigation-active',
+								'props'    => array(
+									'left' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ) . ' !important',
+								),
+							),
+						),
+					) );
+				} elseif ( 'off-canvas' === $desktop_reveal_as ) {
+					// Right position (default)
+					wpbf_write_css( array(
+						'blocks' => array(
+							array(
+								'selector' => '.wpbf-menu-off-canvas-left',
+								'props'    => array(
+									'width' => wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+									'left'  => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+								),
+							),
+							array(
+								'selector' => '.wpbf-push-menu-left.active',
+								'props'    => array(
+									'left' => wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+								),
+							),
+							array(
+								'selector' => '.wpbf-push-menu-left.active .wpbf-navigation-active',
+								'props'    => array(
+									'left' => wpbf_maybe_append_suffix( $menu_off_canvas_width ) . ' !important',
+								),
+							),
+						),
+					) );
+				}
+			}
+
+			// Off canvas background color.
+			$menu_off_canvas_bg_color = wpbf_customize_str_value( 'menu_off_canvas_bg_color' );
+			$menu_off_canvas_bg_color = '#ffffff' === $menu_off_canvas_bg_color ? '' : $menu_off_canvas_bg_color;
+
+			if ( $menu_off_canvas_bg_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-menu-off-canvas, .wpbf-menu-full-screen',
+					'props'    => array(
+						'background-color' => $menu_off_canvas_bg_color,
+					),
+				) );
+			}
+
+			// Off canvas submenu arrow color.
+			$menu_off_canvas_submenu_arrow_color = wpbf_customize_str_value( 'menu_off_canvas_submenu_arrow_color' );
+
+			if ( $menu_off_canvas_submenu_arrow_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-menu-off-canvas .wpbf-submenu-toggle',
+					'props'    => array(
+						'color' => $menu_off_canvas_submenu_arrow_color,
+					),
+				) );
+			}
+
+			// Off canvas overlay color.
+			$menu_overlay       = wpbf_customize_bool_value( 'menu_overlay' );
+			$menu_overlay_color = wpbf_customize_str_value( 'menu_overlay_color' );
+			$menu_overlay_color = 'rgba(0,0,0,.5)' === $menu_overlay_color || 'rgba(0, 0, 0,.5)' === $menu_overlay_color ? '' : $menu_overlay_color;
+
+			if ( $menu_overlay && $menu_overlay_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-menu-overlay',
+					'props'    => array(
+						'background-color' => $menu_overlay_color,
+					),
+				) );
+			}
+		}
+	}
 }

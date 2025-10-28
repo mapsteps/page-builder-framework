@@ -2950,7 +2950,268 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 				},
 			});
 		},
-	); /**
+	);
+
+	/**
+	 * Desktop Off-Canvas Menu Controls.
+	 * These listeners handle live preview for desktop off-canvas menu settings.
+	 */
+
+	// Desktop off-canvas menu width.
+	listenToCustomizerValueChange<number | string>(
+		"menu_off_canvas_width",
+		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
+			const revealAs = customizer?.(
+				"wpbf_header_builder_desktop_offcanvas_reveal_as",
+			).get();
+
+			// Support both 'off-canvas' (right) and 'off-canvas-left' (left)
+			if ("off-canvas" !== revealAs && "off-canvas-left" !== revealAs) {
+				return;
+			}
+
+			// Use revealAs to determine left/right (not menu_position)
+			if ("off-canvas-left" === revealAs) {
+				// Left position
+				writeCSS(settingId, {
+					blocks: [
+						{
+							selector: ".wpbf-menu-off-canvas-left",
+							props: {
+								width: maybeAppendSuffix(value),
+								left: "-" + maybeAppendSuffix(value),
+							},
+						},
+						{
+							selector: ".wpbf-push-menu-left.active",
+							props: {
+								left: maybeAppendSuffix(value),
+							},
+						},
+						{
+							selector: ".wpbf-push-menu-left.active .wpbf-navigation-active",
+							props: {
+								left: maybeAppendSuffix(value) + " !important",
+							},
+						},
+					],
+				});
+			} else {
+				// Right position (default 'off-canvas')
+				writeCSS(settingId, {
+					blocks: [
+						{
+							selector: ".wpbf-menu-off-canvas-right",
+							props: {
+								width: maybeAppendSuffix(value),
+								right: "-" + maybeAppendSuffix(value),
+							},
+						},
+						{
+							selector: ".wpbf-push-menu-right.active",
+							props: {
+								left: "-" + maybeAppendSuffix(value),
+							},
+						},
+						{
+							selector: ".wpbf-push-menu-right.active .wpbf-navigation-active",
+							props: {
+								left: "-" + maybeAppendSuffix(value) + " !important",
+							},
+						},
+					],
+				});
+			}
+		},
+	);
+
+	// Desktop off-canvas push menu toggle.
+	listenToCustomizerValueChange<boolean>(
+		"menu_off_canvas_push",
+		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
+			const revealAs = customizer?.(
+				"wpbf_header_builder_desktop_offcanvas_reveal_as",
+			).get();
+
+			// Support both 'off-canvas' (right) and 'off-canvas-left' (left)
+			if ("off-canvas" !== revealAs && "off-canvas-left" !== revealAs) {
+				return;
+			}
+
+			// Use revealAs to determine left/right
+			if (value && "off-canvas-left" === revealAs) {
+				$("body")
+					.addClass("wpbf-push-menu-left")
+					.removeClass("wpbf-push-menu-right");
+			} else if (value && "off-canvas" === revealAs) {
+				$("body")
+					.addClass("wpbf-push-menu-right")
+					.removeClass("wpbf-push-menu-left");
+			} else {
+				$("body").removeClass("wpbf-push-menu-right wpbf-push-menu-left");
+			}
+		},
+	);
+
+	// Desktop off-canvas background color.
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"menu_off_canvas_bg_color",
+		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
+			const revealAs = customizer?.(
+				"wpbf_header_builder_desktop_offcanvas_reveal_as",
+			).get();
+
+			// Support both 'off-canvas' and 'off-canvas-left'
+			if ("off-canvas" !== revealAs && "off-canvas-left" !== revealAs) {
+				return;
+			}
+
+			writeCSS(settingId, {
+				selector: ".wpbf-menu-off-canvas, .wpbf-menu-full-screen",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
+
+	// Desktop off-canvas submenu arrow color.
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"menu_off_canvas_submenu_arrow_color",
+		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
+			const revealAs = customizer?.(
+				"wpbf_header_builder_desktop_offcanvas_reveal_as",
+			).get();
+
+			// Support both 'off-canvas' and 'off-canvas-left'
+			if ("off-canvas" !== revealAs && "off-canvas-left" !== revealAs) {
+				return;
+			}
+
+			writeCSS(settingId, {
+				selector: ".wpbf-menu-off-canvas .wpbf-submenu-toggle",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
+
+	// Desktop off-canvas overlay color.
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"menu_overlay_color",
+		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
+			const revealAs = customizer?.(
+				"wpbf_header_builder_desktop_offcanvas_reveal_as",
+			).get();
+
+			// Support both 'off-canvas' and 'off-canvas-left'
+			if ("off-canvas" !== revealAs && "off-canvas-left" !== revealAs) {
+				return;
+			}
+
+			writeCSS(settingId, {
+				selector: ".wpbf-menu-overlay",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
+
+	// Desktop off-canvas reveal_as change (for width and push menu update when switching left/right).
+	listenToCustomizerValueChange<string>(
+		"wpbf_header_builder_desktop_offcanvas_reveal_as",
+		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
+			// Support both 'off-canvas' (right) and 'off-canvas-left' (left)
+			if ("off-canvas" !== value && "off-canvas-left" !== value) {
+				return;
+			}
+
+			const menuWidth = customizer?.("menu_off_canvas_width").get();
+			const isPushMenu = customizer?.("menu_off_canvas_push").get();
+
+			// Update width CSS based on position
+			if ("off-canvas-left" === value) {
+				// Left position
+				writeCSS("menu_off_canvas_width", {
+					blocks: [
+						{
+							selector: ".wpbf-menu-off-canvas-left",
+							props: {
+								width: maybeAppendSuffix(menuWidth),
+								left: "-" + maybeAppendSuffix(menuWidth),
+							},
+						},
+						{
+							selector: ".wpbf-push-menu-left.active",
+							props: {
+								left: maybeAppendSuffix(menuWidth),
+							},
+						},
+						{
+							selector: ".wpbf-push-menu-left.active .wpbf-navigation-active",
+							props: {
+								left: maybeAppendSuffix(menuWidth) + " !important",
+							},
+						},
+					],
+				});
+
+				// Clear right styles
+				writeCSS("menu_off_canvas_width_right", { blocks: [] });
+			} else {
+				// Right position (default 'off-canvas')
+				writeCSS("menu_off_canvas_width", {
+					blocks: [
+						{
+							selector: ".wpbf-menu-off-canvas-right",
+							props: {
+								width: maybeAppendSuffix(menuWidth),
+								right: "-" + maybeAppendSuffix(menuWidth),
+							},
+						},
+						{
+							selector: ".wpbf-push-menu-right.active",
+							props: {
+								left: "-" + maybeAppendSuffix(menuWidth),
+							},
+						},
+						{
+							selector: ".wpbf-push-menu-right.active .wpbf-navigation-active",
+							props: {
+								left: "-" + maybeAppendSuffix(menuWidth) + " !important",
+							},
+						},
+					],
+				});
+
+				// Clear left styles
+				writeCSS("menu_off_canvas_width_left", { blocks: [] });
+			}
+
+			// Update push menu body classes
+			if (isPushMenu) {
+				if ("off-canvas-left" === value) {
+					$("body")
+						.addClass("wpbf-push-menu-left")
+						.removeClass("wpbf-push-menu-right");
+				} else {
+					$("body")
+						.addClass("wpbf-push-menu-right")
+						.removeClass("wpbf-push-menu-left");
+				}
+			}
+		},
+	);
+
+	/**
 	 * Handle menu reveal type changes in the customizer.
 	 * This allows instant preview when switching between dropdown and off-canvas modes.
 	 *
