@@ -22,6 +22,8 @@ export function setupConditionalControls() {
 		setupMobileMenuTriggerVisibility();
 		setupMobileMenuWidthVisibility();
 		setupMobileMenuOverlayVisibility();
+		setupMobileMenuOverlayColorVisibility();
+		setupDesktopMenuOverlayColorVisibility();
 	}
 
 	/**
@@ -134,24 +136,19 @@ export function setupConditionalControls() {
 	 */
 	function setupMobileMenuOverlayVisibility() {
 		const revealAsSettingId = "wpbf_header_builder_mobile_offcanvas_reveal_as";
-		const controlsToToggle = [
-			"mobile_menu_overlay",
-			"mobile_menu_overlay_color",
-		];
+		const controlIdToToggle = "mobile_menu_overlay";
 
 		function applyVisibility(revealType: string) {
 			const shouldShow = revealType === "off-canvas";
 
-			controlsToToggle.forEach((controlId) => {
-				try {
-					window.wp.customize?.control(controlId, function (control) {
-						if (!control || !control.container) return;
-						control.container.toggle(!!shouldShow);
-					});
-				} catch (e) {
-					// ignore if control doesn't exist yet
-				}
-			});
+			try {
+				window.wp.customize?.control(controlIdToToggle, function (control) {
+					if (!control || !control.container) return;
+					control.container.toggle(!!shouldShow);
+				});
+			} catch (e) {
+				// ignore if control doesn't exist yet
+			}
 		}
 
 		// Bind to changes
@@ -164,5 +161,81 @@ export function setupConditionalControls() {
 		// Initial apply
 		const initial = window.wp.customize?.(revealAsSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "dropdown");
+	}
+
+	/**
+	 * Toggles visibility of mobile menu overlay color control based on:
+	 * 1. The selected reveal type (must be 'off-canvas')
+	 * 2. The mobile_menu_overlay toggle (must be enabled)
+	 */
+	function setupMobileMenuOverlayColorVisibility() {
+		const revealAsSettingId = "wpbf_header_builder_mobile_offcanvas_reveal_as";
+		const overlayToggleSettingId = "mobile_menu_overlay";
+		const controlIdToToggle = "mobile_menu_overlay_color";
+
+		function applyVisibility() {
+			const revealType = window.wp.customize?.(revealAsSettingId)?.get();
+			const overlayEnabled = window.wp.customize?.(overlayToggleSettingId)?.get();
+
+			const isOffCanvas = revealType === "off-canvas";
+			const shouldShow = isOffCanvas && overlayEnabled;
+
+			try {
+				window.wp.customize?.control(controlIdToToggle, function (control) {
+					if (!control || !control.container) return;
+					control.container.toggle(!!shouldShow);
+				});
+			} catch (e) {
+				// ignore if control doesn't exist yet
+			}
+		}
+
+		// Bind to reveal type changes
+		window.wp.customize?.(revealAsSettingId, function (setting) {
+			setting.bind(function () {
+				applyVisibility();
+			});
+		});
+
+		// Bind to overlay toggle changes
+		window.wp.customize?.(overlayToggleSettingId, function (setting) {
+			setting.bind(function () {
+				applyVisibility();
+			});
+		});
+
+		// Initial apply
+		applyVisibility();
+	}
+
+	/**
+	 * Toggles visibility of desktop menu overlay color control based on the menu_overlay toggle.
+	 * Only show when menu_overlay is enabled.
+	 */
+	function setupDesktopMenuOverlayColorVisibility() {
+		const overlayToggleSettingId = "menu_overlay";
+		const controlIdToToggle = "menu_overlay_color";
+
+		function applyVisibility(overlayEnabled: boolean) {
+			try {
+				window.wp.customize?.control(controlIdToToggle, function (control) {
+					if (!control || !control.container) return;
+					control.container.toggle(!!overlayEnabled);
+				});
+			} catch (e) {
+				// ignore if control doesn't exist yet
+			}
+		}
+
+		// Bind to overlay toggle changes
+		window.wp.customize?.(overlayToggleSettingId, function (setting) {
+			setting.bind(function (val: boolean) {
+				applyVisibility(val);
+			});
+		});
+
+		// Initial apply
+		const initial = window.wp.customize?.(overlayToggleSettingId)?.get();
+		applyVisibility(typeof initial !== "undefined" ? initial : false);
 	}
 }
