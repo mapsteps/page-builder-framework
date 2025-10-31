@@ -800,6 +800,32 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 	listenToCustomizerValueChange<string | number>(
 		"mobile_menu_hamburger_bg_color",
 		function (settingId, value) {
+			// Check the menu trigger style first
+			const menuTriggerStyle = customizer?.(
+				"wpbf_header_builder_mobile_menu_trigger_style",
+			)?.get();
+
+			const buttonStyle = menuTriggerStyle && String(menuTriggerStyle).trim() !== "" 
+				? String(menuTriggerStyle) 
+				: "simple";
+
+			// Only apply if style is solid or outline
+			if (buttonStyle !== "solid" && buttonStyle !== "outline") {
+				// Reset styles for simple
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-toggle",
+					props: {
+						"background-color": "unset !important",
+						color: "unset",
+						padding: "unset",
+						"line-height": "unset",
+						border: "unset !important",
+						"border-radius": "unset",
+					},
+				});
+				return;
+			}
+
 			if (!value) {
 				removeStyleTag(settingId);
 				return;
@@ -809,18 +835,36 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 				"mobile_menu_hamburger_border_radius",
 			).get();
 
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-menu-toggle",
-				props: {
-					"background-color": toStringColor(value),
-					color: "#ffffff",
-					padding: "10px",
-					"line-height": 1,
-					"border-radius": emptyNotZero(borderRadius)
-						? undefined
-						: maybeAppendSuffix(borderRadius),
-				},
-			});
+			// Apply different styles based on button style
+			if (buttonStyle === "solid") {
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-toggle",
+					props: {
+						"background-color": toStringColor(value) + " !important",
+						color: "#ffffff",
+						padding: "10px",
+						"line-height": 1,
+						border: "unset !important",
+						"border-radius": emptyNotZero(borderRadius)
+							? undefined
+							: maybeAppendSuffix(borderRadius),
+					},
+				});
+			} else if (buttonStyle === "outline") {
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-toggle",
+					props: {
+						"background-color": "unset !important",
+						border: "2px solid " + toStringColor(value) + " !important",
+						color: toStringColor(value),
+						padding: "10px",
+						"line-height": 1,
+						"border-radius": emptyNotZero(borderRadius)
+							? undefined
+							: maybeAppendSuffix(borderRadius),
+					},
+				});
+			}
 		},
 	);
 
@@ -828,6 +872,26 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 	listenToCustomizerValueChange<string | number>(
 		"mobile_menu_hamburger_border_radius",
 		function (settingId, value) {
+			// Check the menu trigger style first
+			const menuTriggerStyle = customizer?.(
+				"wpbf_header_builder_mobile_menu_trigger_style",
+			)?.get();
+
+			const buttonStyle = menuTriggerStyle && String(menuTriggerStyle).trim() !== "" 
+				? String(menuTriggerStyle) 
+				: "simple";
+
+			// Only apply if style is solid or outline
+			if (buttonStyle !== "solid" && buttonStyle !== "outline") {
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-toggle",
+					props: {
+						"border-radius": "unset !important",
+					},
+				});
+				return;
+			}
+
 			writeCSS(settingId, {
 				selector: ".wpbf-mobile-menu-toggle",
 				props: {
@@ -3542,10 +3606,11 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 		);
 
 		// Menu trigger style.
-		listenToCustomizerValueChange(
+		listenToCustomizerValueChange<string>(
 			"wpbf_header_builder_" + device + "_menu_trigger_style",
 			function (settingId, value) {
-				const buttonStyle = value ? String(value) : "simple";
+				// Handle empty string as 'simple'
+				const buttonStyle = value && String(value).trim() !== "" ? String(value) : "simple";
 
 				if (
 					buttonStyle !== "simple" &&
@@ -3563,72 +3628,76 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 
 				if (!triggerButton) return;
 
+				// Update button classes
 				triggerButton.classList.remove("simple", "outline", "solid");
 				triggerButton.classList.add(buttonStyle);
 
-				const props: Record<string, string | number | undefined> = {};
-
-				const menuButtonPaddingValue: MarginPaddingValue = customizer?.(
-					`wpbf_header_builder_${device}_menu_trigger_padding`,
-				)?.get();
-
-				const menuButtonColor: string | undefined = customizer?.(
-					device === "mobile"
-						? "mobile_menu_hamburger_bg_color"
-						: "wpbf_header_builder_" + device + "_menu_trigger_bg_color",
-				)?.get();
-
-				if (buttonStyle === "solid" || buttonStyle === "outline") {
-					const menuButtonPadding = parseJsonOrUndefined<MarginPaddingValue>(
-						menuButtonPaddingValue,
-					);
-
-					if (menuButtonPadding) {
-						props["padding-top"] = maybeAppendSuffix(menuButtonPadding?.top);
-						props["padding-right"] = maybeAppendSuffix(
-							menuButtonPadding?.right,
-						);
-						props["padding-bottom"] = maybeAppendSuffix(
-							menuButtonPadding?.bottom,
-						);
-						props["padding-left"] = maybeAppendSuffix(menuButtonPadding?.left);
-					}
-
-					const menuBorderRadius: string | undefined = customizer?.(
-						device === "mobile"
-							? "mobile_menu_hamburger_border_radius"
-							: "wpbf_header_builder_" + device + "_menu_trigger_border_radius",
-					)?.get();
-
-					if (menuBorderRadius) {
-						props["border-radius"] = maybeAppendSuffix(menuBorderRadius);
-					}
-
-					if (buttonStyle === "solid") {
-						props["border"] = "unset";
-
-						if (menuButtonColor) {
-							props["background-color"] = toStringColor(menuButtonColor);
+				// Re-trigger individual control listeners to apply styles based on new button style
+				// This approach is similar to how icon variant listener works
+				if (device === "mobile") {
+					// For mobile, trigger the old control listeners
+					const bgColor = customizer?.("mobile_menu_hamburger_bg_color")?.get();
+					const borderRadius = customizer?.("mobile_menu_hamburger_border_radius")?.get();
+					
+					// Re-apply background/border color
+					if (bgColor !== undefined) {
+						const bgColorSetting = customizer?.("mobile_menu_hamburger_bg_color");
+						if (bgColorSetting) {
+							// Temporarily store the value
+							const tempValue = bgColor;
+							// Trigger change by setting to different value first, then back
+							bgColorSetting.set("");
+							bgColorSetting.set(tempValue);
 						}
-					} else if (buttonStyle === "outline") {
-						props["background-color"] = "unset";
-
-						if (menuButtonColor) {
-							props["border"] = "2px solid " + toStringColor(menuButtonColor);
+					}
+					
+					// Re-apply border radius
+					if (borderRadius !== undefined) {
+						const borderRadiusSetting = customizer?.("mobile_menu_hamburger_border_radius");
+						if (borderRadiusSetting) {
+							// Temporarily store the value
+							const tempValue = borderRadius;
+							// Trigger change by setting to different value first, then back
+							borderRadiusSetting.set(0);
+							borderRadiusSetting.set(tempValue);
 						}
 					}
 				} else {
-					props["background-color"] = "unset";
-					props["border"] = "unset";
+					// For desktop, trigger the new control listeners
+					const bgColor = customizer?.("wpbf_header_builder_desktop_menu_trigger_bg_color")?.get();
+					const borderRadius = customizer?.("wpbf_header_builder_desktop_menu_trigger_border_radius")?.get();
+					const padding = customizer?.("wpbf_header_builder_desktop_menu_trigger_padding")?.get();
+					
+					// Re-apply background/border color
+					if (bgColor !== undefined) {
+						const bgColorSetting = customizer?.("wpbf_header_builder_desktop_menu_trigger_bg_color");
+						if (bgColorSetting) {
+							const tempValue = bgColor;
+							bgColorSetting.set("");
+							bgColorSetting.set(tempValue);
+						}
+					}
+					
+					// Re-apply border radius
+					if (borderRadius !== undefined) {
+						const borderRadiusSetting = customizer?.("wpbf_header_builder_desktop_menu_trigger_border_radius");
+						if (borderRadiusSetting) {
+							const tempValue = borderRadius;
+							borderRadiusSetting.set(0);
+							borderRadiusSetting.set(tempValue);
+						}
+					}
+					
+					// Re-apply padding
+					if (padding !== undefined) {
+						const paddingSetting = customizer?.("wpbf_header_builder_desktop_menu_trigger_padding");
+						if (paddingSetting) {
+							const tempValue = padding;
+							paddingSetting.set("");
+							paddingSetting.set(tempValue);
+						}
+					}
 				}
-
-				writeCSS(settingId, {
-					selector:
-						device === "mobile"
-							? ".wpbf-mobile-menu-toggle"
-							: ".wpbf-menu-toggle",
-					props: props,
-				});
 			},
 		);
 
@@ -3669,8 +3738,35 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 				const obj =
 					parseJsonOrUndefined<Record<string, number | string>>(value);
 
+				// Only apply padding if style is solid or outline
+				const buttonStyle = customizer?.(
+					`wpbf_header_builder_${device}_menu_trigger_style`,
+				)?.get();
+
+				const buttonStyleStr = buttonStyle && String(buttonStyle).trim() !== "" ? String(buttonStyle) : "simple";
+
+				// Only apply padding for solid and outline styles
+				if (buttonStyleStr !== "solid" && buttonStyleStr !== "outline") {
+					writeCSS(settingId, {
+						selector:
+							device === "mobile"
+								? ".wpbf-mobile-menu-toggle"
+								: ".wpbf-menu-toggle",
+						props: {
+							"padding-top": "unset",
+							"padding-right": "unset",
+							"padding-bottom": "unset",
+							"padding-left": "unset",
+						},
+					});
+					return;
+				}
+
 				writeCSS(settingId, {
-					selector: ".wpbf-menu-toggle",
+					selector:
+						device === "mobile"
+							? ".wpbf-mobile-menu-toggle"
+							: ".wpbf-menu-toggle",
 					props: {
 						"padding-top": maybeAppendSuffix(obj?.top),
 						"padding-right": maybeAppendSuffix(obj?.right),
@@ -3699,6 +3795,21 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 			listenToCustomizerValueChange<string | number>(
 				"wpbf_header_builder_desktop_menu_trigger_border_radius",
 				function (settingId, value) {
+					// Only apply border radius if style is solid or outline
+					const buttonStyle = customizer?.(
+						"wpbf_header_builder_desktop_menu_trigger_style",
+					)?.get();
+
+					const buttonStyleStr = buttonStyle && String(buttonStyle).trim() !== "" ? String(buttonStyle) : "simple";
+
+					if (buttonStyleStr !== "solid" && buttonStyleStr !== "outline") {
+						writeCSS(settingId, {
+							selector: ".wpbf-menu-toggle",
+							props: { "border-radius": "unset !important" },
+						});
+						return;
+					}
+
 					writeCSS(settingId, {
 						selector: ".wpbf-menu-toggle",
 						props: { "border-radius": maybeAppendSuffix(value) },
@@ -3714,17 +3825,28 @@ import { proNotice } from "./postmessage-parts/pro-notice";
 						"wpbf_header_builder_desktop_menu_trigger_style",
 					)?.get();
 
-					if (buttonStyle !== "solid" && buttonStyle !== "outline") return;
+					const buttonStyleStr = buttonStyle && String(buttonStyle).trim() !== "" ? String(buttonStyle) : "simple";
+
+					if (buttonStyleStr !== "solid" && buttonStyleStr !== "outline") {
+						writeCSS(settingId, {
+							selector: ".wpbf-menu-toggle",
+							props: {
+								"background-color": "unset !important",
+								border: "unset !important",
+							},
+						});
+						return;
+					}
 
 					writeCSS(settingId, {
 						selector: ".wpbf-menu-toggle",
 						props: {
 							"background-color":
-								buttonStyle === "solid" ? toStringColor(value) : "unset",
+								buttonStyleStr === "solid" ? toStringColor(value) + " !important" : "unset !important",
 							border:
-								buttonStyle === "solid"
-									? "unset"
-									: "2px solid " + toStringColor(value),
+								buttonStyleStr === "solid"
+									? "unset !important"
+									: "2px solid " + toStringColor(value) + " !important",
 						},
 					});
 				},
