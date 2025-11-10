@@ -648,6 +648,7 @@ $previous_bfcm_dismissal_option_keys = [
 	'wpbf_bfcm_notice_dismissed',
 	'wpbf_bfcm_notice_dismissed_2022',
 	'wpbf_bfcm_notice_dismissed_2023',
+	'wpbf_bfcm_notice_dismissed_2024',
 ];
 
 // Clean up previous BFCM admin notice dismissal options.
