@@ -169,50 +169,50 @@ export function setupControlsMovement() {
 				from: "wpbf_mobile_menu_options",
 				to: "wpbf_header_builder_mobile_offcanvas_section",
 				controlsToMove: [
-				{
-					id: "mobile_menu_bg_color",
-					prio: {
-						from: undefined,
-						to: 8,
+					{
+						id: "mobile_menu_bg_color",
+						prio: {
+							from: undefined,
+							to: 8,
+						},
 					},
-				},
-				{
-					id: "mobile_menu_bg_color_alt",
-					prio: {
-						from: undefined,
-						to: 9,
+					{
+						id: "mobile_menu_bg_color_alt",
+						prio: {
+							from: undefined,
+							to: 9,
+						},
 					},
-				},
-				{
-					id: "mobile_menu_font_colors",
-					prio: {
-						from: undefined,
-						to: 10,
+					{
+						id: "mobile_menu_font_colors",
+						prio: {
+							from: undefined,
+							to: 10,
+						},
 					},
-				},
-				{
-					id: "mobile_menu_border_color",
-					prio: {
-						from: undefined,
-						to: 11,
+					{
+						id: "mobile_menu_border_color",
+						prio: {
+							from: undefined,
+							to: 11,
+						},
 					},
-				},
-				{
-					id: "mobile_menu_submenu_arrow_color",
-					prio: {
-						from: undefined,
-						to: 12,
+					{
+						id: "mobile_menu_submenu_arrow_color",
+						prio: {
+							from: undefined,
+							to: 12,
+						},
 					},
-				},
-				{
-					id: "mobile_menu_font_size",
-					prio: {
-						from: undefined,
-						to: 13,
+					{
+						id: "mobile_menu_font_size",
+						prio: {
+							from: undefined,
+							to: 13,
+						},
 					},
-				},
-			],
-		},
+				],
+			},
 			{
 				from: "wpbf_mobile_menu_options",
 				to: "wpbf_header_builder_mobile_menu_1_section",

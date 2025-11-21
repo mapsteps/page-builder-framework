@@ -176,7 +176,9 @@ export function setupConditionalControls() {
 
 		function applyVisibility() {
 			const revealType = window.wp.customize?.(revealAsSettingId)?.get();
-			const overlayEnabled = window.wp.customize?.(overlayToggleSettingId)?.get();
+			const overlayEnabled = window.wp
+				.customize?.(overlayToggleSettingId)
+				?.get();
 
 			const isOffCanvas = revealType === "off-canvas";
 			const shouldShow = isOffCanvas && overlayEnabled;
@@ -219,7 +221,10 @@ export function setupConditionalControls() {
 
 		function applyVisibility(revealType: string) {
 			// treat any off-canvas variant as visible
-			const shouldShow = revealType === "off-canvas" || revealType === "off-canvas-left" || revealType === "off-canvas-right";
+			const shouldShow =
+				revealType === "off-canvas" ||
+				revealType === "off-canvas-left" ||
+				revealType === "off-canvas-right";
 
 			try {
 				window.wp.customize?.control(controlIdToToggle, function (control) {
@@ -255,9 +260,14 @@ export function setupConditionalControls() {
 
 		function applyVisibility() {
 			const revealType = window.wp.customize?.(revealAsSettingId)?.get();
-			const overlayEnabled = window.wp.customize?.(overlayToggleSettingId)?.get();
+			const overlayEnabled = window.wp
+				.customize?.(overlayToggleSettingId)
+				?.get();
 
-			const isOffCanvas = revealType === "off-canvas" || revealType === "off-canvas-left" || revealType === "off-canvas-right";
+			const isOffCanvas =
+				revealType === "off-canvas" ||
+				revealType === "off-canvas-left" ||
+				revealType === "off-canvas-right";
 			const shouldShow = !!isOffCanvas && !!overlayEnabled;
 
 			try {
