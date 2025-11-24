@@ -1,97 +1,97 @@
 {
-  "name": "page-builder-framework",
-  "description": "Page Builder Framework development tooling",
-  "author": "David",
-  "license": "GPL-3.0",
-  "devDependencies": {
-    "@babel/core": "^7.28.4",
-    "@babel/preset-react": "^7.27.1",
-    "@clack/prompts": "^0.9.1",
-    "@types/fs-extra": "^11.0.4",
-    "@types/jquery": "^3.5.33",
-    "@types/jqueryui": "^1.12.24",
-    "@types/lodash": "^4.17.20",
-    "@types/node": "^24.7.2",
-    "@types/react": "^18.3.26",
-    "@types/react-dom": "^18.3.7",
-    "@types/select2": "^4.0.63",
-    "lightningcss": "^1.30.2",
-    "prettier": "^3.6.2",
-    "process": "^0.11.10",
-    "sass-embedded": "^1.93.2",
-    "shx": "^0.3.4",
-    "terser": "^5.44.0",
-    "typescript": "^5.9.3",
-    "vite": "^7.1.9",
-    "wordpress__customize-browser": "github:ultrafastwork/wordpress__customize-browser"
-  },
-  "dependencies": {
-    "@wordpress/components": "^29.12.0",
-    "@wordpress/core-data": "^7.32.0",
-    "@wordpress/data": "^10.32.0",
-    "@wordpress/editor": "^14.32.0",
-    "@wordpress/element": "^6.32.0",
-    "@wordpress/hooks": "^4.32.0",
-    "@wordpress/i18n": "^5.26.0",
-    "@wordpress/url": "^4.32.0",
-    "choices.js": "^11.1.0",
-    "colord": "^2.9.3",
-    "jquery": "^3.7.1",
-    "ky": "^1.11.0",
-    "lodash": "^4.17.21",
-    "react": "^18.3.1",
-    "react-colorful": "^5.6.1",
-    "react-dom": "^18.3.1",
-    "styled-jsx": "^5.1.7",
-    "vanjs-core": "^1.6.0",
-    "zx": "^8.8.4"
-  },
-  "alias": {
-    "react": {
-      "global": "React"
-    },
-    "react-dom": {
-      "global": "ReactDOM"
-    },
-    "react/jsx-runtime": {
-      "global": "ReactJSXRuntime"
-    },
-    "jquery": {
-      "global": "jQuery"
-    },
-    "wp": {
-      "global": "wp"
-    },
-    "lodash": {
-      "global": "_"
-    },
-    "@wordpress/editor": {
-      "global": "wp.editor"
-    },
-    "@wordpress/i18n": {
-      "global": "wp.i18n"
-    },
-    "@wordpress/hooks": {
-      "global": "wp.hooks"
-    },
-    "choices.js": {
-      "global": "Choices"
-    }
-  },
-  "browserslist": [
-    "> 0.5%",
-    "last 2 versions",
-    "not dead"
-  ],
-  "scripts": {
-    "wpbf": "node wpbf.mjs",
-    "collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
-    "build-control": "vite build --mode control",
-    "build-asset": "vite build --mode asset",
-    "build-control:watch": "vite build --watch",
-    "build-asset:watch": "vite build --watch",
-    "build-all-controls": "node build-scripts/build-all-controls.js",
-    "build-all-assets": "node build-scripts/build-all-assets.js",
-    "build-all": "npm run build-all-controls && npm run build-all-assets"
-  }
+	"name": "page-builder-framework",
+	"description": "Page Builder Framework development tooling",
+	"author": "David",
+	"license": "GPL-3.0",
+	"devDependencies": {
+		"@babel/core": "^7.28.5",
+		"@babel/preset-react": "^7.28.5",
+		"@clack/prompts": "^0.9.1",
+		"@types/fs-extra": "^11.0.4",
+		"@types/jquery": "^3.5.33",
+		"@types/jqueryui": "^1.12.24",
+		"@types/lodash": "^4.17.21",
+		"@types/node": "^24.10.1",
+		"@types/react": "^18.3.27",
+		"@types/react-dom": "^18.3.7",
+		"@types/select2": "^4.0.63",
+		"lightningcss": "^1.30.2",
+		"prettier": "^3.6.2",
+		"process": "^0.11.10",
+		"sass-embedded": "^1.93.3",
+		"shx": "^0.3.4",
+		"terser": "^5.44.1",
+		"typescript": "^5.9.3",
+		"vite": "^7.2.4",
+		"wordpress__customize-browser": "github:ultrafastwork/wordpress__customize-browser"
+	},
+	"dependencies": {
+		"@wordpress/components": "^29.12.0",
+		"@wordpress/core-data": "^7.35.0",
+		"@wordpress/data": "^10.35.0",
+		"@wordpress/editor": "^14.35.0",
+		"@wordpress/element": "^6.35.0",
+		"@wordpress/hooks": "^4.35.0",
+		"@wordpress/i18n": "^5.26.0",
+		"@wordpress/url": "^4.35.0",
+		"choices.js": "^11.1.0",
+		"colord": "^2.9.3",
+		"jquery": "^3.7.1",
+		"ky": "^1.14.0",
+		"lodash": "^4.17.21",
+		"react": "^18.3.1",
+		"react-colorful": "^5.6.1",
+		"react-dom": "^18.3.1",
+		"styled-jsx": "^5.1.7",
+		"vanjs-core": "^1.6.0",
+		"zx": "^8.8.5"
+	},
+	"alias": {
+		"react": {
+			"global": "React"
+		},
+		"react-dom": {
+			"global": "ReactDOM"
+		},
+		"react/jsx-runtime": {
+			"global": "ReactJSXRuntime"
+		},
+		"jquery": {
+			"global": "jQuery"
+		},
+		"wp": {
+			"global": "wp"
+		},
+		"lodash": {
+			"global": "_"
+		},
+		"@wordpress/editor": {
+			"global": "wp.editor"
+		},
+		"@wordpress/i18n": {
+			"global": "wp.i18n"
+		},
+		"@wordpress/hooks": {
+			"global": "wp.hooks"
+		},
+		"choices.js": {
+			"global": "Choices"
+		}
+	},
+	"browserslist": [
+		"> 0.5%",
+		"last 2 versions",
+		"not dead"
+	],
+	"scripts": {
+		"wpbf": "node wpbf.mjs",
+		"collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
+		"build-control": "node build-scripts/build-control.mjs",
+		"build-asset": "node build-scripts/build-asset.mjs",
+		"build-control:watch": "node build-scripts/build-control.mjs --watch",
+		"build-asset:watch": "node build-scripts/build-asset.mjs --watch",
+		"build-all-controls": "node build-scripts/build-all-controls.mjs",
+		"build-all-assets": "node build-scripts/build-all-assets.mjs",
+		"build-all": "npm run build-all-controls && npm run build-all-assets"
+	}
 }

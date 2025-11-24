@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { readdirSync, existsSync } from "fs";
+import { readdirSync, existsSync, lstatSync } from "fs";
 import { resolve } from "path";
 import { getErrorMessage } from "./build-utils.mjs";
 
@@ -24,6 +24,25 @@ for (const assetDir of assetDirs) {
 		continue;
 	}
 
+	const stat = lstatSync(fullPath);
+
+	if (stat.isFile()) {
+		const file = assetDir.split("/").pop() || "";
+		const name = file
+			.replace(/\.tsx?$/, "")
+			.replace(/\.js$/, "")
+			.replace(/\.scss$/, "");
+
+		assetBuilds.push({
+			name,
+			path: assetDir,
+			file,
+		});
+		continue;
+	}
+
+	if (!stat.isDirectory()) continue;
+
 	const files = readdirSync(fullPath);
 	const tsFiles = files.filter((file) => {
 		return (
@@ -43,7 +62,7 @@ for (const assetDir of assetDirs) {
 
 		assetBuilds.push({
 			name,
-			path: assetDir,
+			path: `${assetDir}/${file}`,
 			file,
 		});
 	}
@@ -56,15 +75,15 @@ if (assetBuilds.length === 0) {
 
 console.log(`Found ${assetBuilds.length} asset files:`);
 
-assetBuilds.forEach(({ name, path, file }) => {
-	console.log(`  - ${name} (${path}/${file})`);
+assetBuilds.forEach(({ name, path }) => {
+	console.log(`  - ${name} (${path})`);
 });
 
 for (const { name, path } of assetBuilds) {
 	console.log(`\nBuilding ${name} from ${path}...`);
 
 	try {
-		execSync(`pnpm build-control --name=${name} --path=${path}`, {
+		execSync(`pnpm build-asset --path=${path}`, {
 			stdio: "inherit",
 			cwd: process.cwd(),
 		});

@@ -1,9 +1,11 @@
+import path from "path";
+import fs from "fs";
+
 /**
  * Get error message from unknown error type.
- *
- * @param {unknown} err
  * @returns {string}
  */
+/** @param {unknown} err */
 export function getErrorMessage(err) {
 	if (err instanceof Error) {
 		return err.message;
@@ -17,6 +19,7 @@ export function getErrorMessage(err) {
 		if ("diagnostics" in err && Array.isArray(err.diagnostics)) {
 			let msg = "";
 
+			/** @param {{message: string}} item */
 			err.diagnostics.forEach((item) => {
 				msg += "Error: " + item.message + "\n";
 			});
