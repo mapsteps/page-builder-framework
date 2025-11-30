@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState, useEffect } from "react";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import {
 	makeDevicesValue,
@@ -8,6 +8,8 @@ import {
 import { DevicesValue } from "../../Responsive/src/responsive-interface";
 import { encodeJsonOrDefault } from "../../Generic/src/string-util";
 import { makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
+
+declare var wp: { customize: WpbfCustomize };
 
 export default function ResponsiveInputSliderForm(props: {
 	id: string;
@@ -36,6 +38,32 @@ export default function ResponsiveInputSliderForm(props: {
 	const [actualValue, setActualValue] = useState(
 		makeDevicesValue(props.devices, props.value, props.min, props.max),
 	);
+
+	// Track the active device based on wp.customize.previewedDevice
+	const [activeDevice, setActiveDevice] = useState(
+		typeof wp !== "undefined" && wp.customize?.previewedDevice?.get()
+			? wp.customize.previewedDevice.get()
+			: props.devices[0],
+	);
+
+	// Listen to preview device changes
+	useEffect(() => {
+		if (typeof wp === "undefined" || !wp.customize?.previewedDevice) {
+			return;
+		}
+
+		const callback = (device: string) => {
+			if (props.devices.includes(device)) {
+				setActiveDevice(device);
+			}
+		};
+
+		wp.customize.previewedDevice.bind(callback);
+
+		return () => {
+			wp.customize.previewedDevice.unbind(callback);
+		};
+	}, [props.devices]);
 
 	/**
 	 * This function will be called when the value from the customizer setting changes.
@@ -159,7 +187,7 @@ export default function ResponsiveInputSliderForm(props: {
 
 			<div className="wpbf-control-form">
 				{props.devices.map((device, deviceIndex) => {
-					const isActive = 0 === deviceIndex;
+					const isActive = device === activeDevice;
 
 					return (
 						<div

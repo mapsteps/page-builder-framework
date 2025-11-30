@@ -4,13 +4,13 @@ import {
 	maybeAppendSuffix,
 	toStringColor,
 } from "../customizer-util";
-import { WpbfColorControlValue } from "../../../../Customizer/Controls/Color/src/color-interface";
 import { headerBuilderEnabled } from "../../../../assets/js/utils/customizer-util";
+import { WpbfColorControlValue } from "../../../../Customizer/Controls/Color/src/color-interface";
 
 export default function offCanvasSetup(customizer?: WpbfCustomize) {
 	// Hamburger size.
 	listenToCustomizerValueChange<string | number>(
-		"off_canvas_hamburger_size",
+		"menu_off_canvas_hamburger_size",
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-toggle",
@@ -21,7 +21,7 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 
 	// Hamburger color.
 	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"off_canvas_hamburger_color",
+		"menu_off_canvas_hamburger_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-toggle",
@@ -30,28 +30,80 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 		},
 	);
 
+	// Push menu toggle.
+	listenToCustomizerValueChange<boolean>(
+		"menu_off_canvas_push",
+		function (settingId, value) {
+			// Only run if header builder is enabled (Premium handles Legacy)
+			if (!headerBuilderEnabled()) return;
+
+			const menuPosition = window.wp.customize?.("menu_position")?.get();
+			const body = document.body;
+
+			// Remove existing classes first to be safe
+			body.classList.remove("wpbf-push-menu-left", "wpbf-push-menu-right");
+
+			if (value) {
+				if (menuPosition === "menu-off-canvas-left") {
+					body.classList.add("wpbf-push-menu-left");
+				} else {
+					body.classList.add("wpbf-push-menu-right");
+				}
+			}
+		},
+	);
+
 	// Menu width.
 	listenToCustomizerValueChange<string | number>(
-		"off_canvas_width",
+		"menu_off_canvas_width",
 		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-off-canvas-menu",
-				props: { width: maybeAppendSuffix(value) },
-			});
-
-			writeCSS(settingId + "-push", {
-				selector:
-					".wpbf-off-canvas-menu.wpbf-off-canvas-menu-push.active ~ .wpbf-inner-body, .wpbf-off-canvas-menu.wpbf-off-canvas-menu-push.active ~ .wpbf-fixed-header",
+			// Width for right-positioned off-canvas (default)
+			writeCSS(settingId + "-left", {
+				selector: ".wpbf-menu-off-canvas-left",
 				props: {
-					transform: `translateX(-${maybeAppendSuffix(value)})`,
+					width: maybeAppendSuffix(value),
+					left: `-${maybeAppendSuffix(value)}`,
 				},
 			});
 
-			writeCSS(settingId + "-push-left", {
-				selector:
-					".wpbf-off-canvas-menu.wpbf-off-canvas-menu-left.wpbf-off-canvas-menu-push.active ~ .wpbf-inner-body, .wpbf-off-canvas-menu.wpbf-off-canvas-menu-left.wpbf-off-canvas-menu-push.active ~ .wpbf-fixed-header",
+			// Width for left-positioned off-canvas
+			writeCSS(settingId + "-right", {
+				selector: ".wpbf-menu-off-canvas-right",
 				props: {
-					transform: `translateX(${maybeAppendSuffix(value)})`,
+					width: maybeAppendSuffix(value),
+					right: `-${maybeAppendSuffix(value)}`,
+				},
+			});
+
+			// Push effect for left-positioned off-canvas (pushes body to the right)
+			writeCSS(settingId + "-push-left", {
+				selector: ".wpbf-push-menu-left.active",
+				props: {
+					left: maybeAppendSuffix(value),
+				},
+			});
+
+			// Push effect for left-positioned off-canvas (navigation)
+			writeCSS(settingId + "-push-left-nav", {
+				selector: ".wpbf-push-menu-left.active .wpbf-navigation-active",
+				props: {
+					left: `${maybeAppendSuffix(value)} !important`,
+				},
+			});
+
+			// Push effect for right-positioned off-canvas (pushes body to the left)
+			writeCSS(settingId + "-push-right", {
+				selector: ".wpbf-push-menu-right.active",
+				props: {
+					left: `-${maybeAppendSuffix(value)}`,
+				},
+			});
+
+			// Push effect for right-positioned off-canvas (navigation)
+			writeCSS(settingId + "-push-right-nav", {
+				selector: ".wpbf-push-menu-right.active .wpbf-navigation-active",
+				props: {
+					left: `-${maybeAppendSuffix(value)} !important`,
 				},
 			});
 		},
@@ -59,10 +111,10 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 
 	// Menu padding.
 	listenToCustomizerValueChange<string | number>(
-		"off_canvas_padding",
+		"menu_off_canvas_padding",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-off-canvas-menu .wpbf-mobile-menu",
+				selector: ".wpbf-menu-off-canvas .wpbf-mobile-menu",
 				props: {
 					"padding-top": maybeAppendSuffix(value),
 					"padding-right": maybeAppendSuffix(value),
@@ -75,10 +127,10 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 
 	// Background color.
 	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"off_canvas_bg_color",
+		"menu_off_canvas_bg_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-off-canvas-menu",
+				selector: ".wpbf-menu-off-canvas, .wpbf-menu-full-screen",
 				props: { "background-color": toStringColor(value) },
 			});
 		},
@@ -86,10 +138,10 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 
 	// Font size.
 	listenToCustomizerValueChange<string | number>(
-		"off_canvas_font_size",
+		"menu_off_canvas_font_size",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-off-canvas-menu .wpbf-mobile-menu a",
+				selector: ".wpbf-menu-off-canvas .wpbf-mobile-menu a",
 				props: { "font-size": maybeAppendSuffix(value) },
 			});
 		},
@@ -97,11 +149,11 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 
 	// Font color.
 	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"off_canvas_font_color",
+		"menu_off_canvas_font_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector:
-					".wpbf-off-canvas-menu .wpbf-mobile-menu a, .wpbf-off-canvas-menu .wpbf-close",
+					".wpbf-menu-off-canvas .wpbf-mobile-menu a, .wpbf-menu-off-canvas .wpbf-close",
 				props: { color: toStringColor(value) },
 			});
 		},
@@ -109,10 +161,10 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 
 	// Font color hover.
 	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"off_canvas_font_color_alt",
+		"menu_off_canvas_font_color_alt",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-off-canvas-menu .wpbf-mobile-menu a:hover",
+				selector: ".wpbf-menu-off-canvas .wpbf-mobile-menu a:hover",
 				props: { color: toStringColor(value) },
 			});
 		},

@@ -12,6 +12,7 @@ import {
 	WpbfColorControlValue,
 	WpbfMulticolorControlValue,
 } from "../../../../Customizer/Controls/Color/src/color-interface";
+import { headerBuilderEnabled } from "../../../../assets/js/utils/customizer-util";
 
 export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 	// Height.
@@ -103,13 +104,17 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 			).get();
 
 			// Apply different styles based on button style
+			// When header builder is enabled, don't hardcode padding - let the dedicated padding control handle it
+			const isHeaderBuilderEnabled = headerBuilderEnabled();
+
 			if (buttonStyle === "solid") {
 				writeCSS(settingId, {
 					selector: ".wpbf-mobile-menu-toggle",
 					props: {
 						"background-color": toStringColor(value) + " !important",
 						color: "#ffffff",
-						padding: "10px",
+						// Only hardcode padding for legacy (non-header-builder) mode
+						padding: isHeaderBuilderEnabled ? undefined : "10px",
 						"line-height": 1,
 						border: "unset !important",
 						"border-radius": emptyNotZero(borderRadius)
@@ -124,7 +129,8 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 						"background-color": "unset !important",
 						border: "2px solid " + toStringColor(value) + " !important",
 						color: toStringColor(value),
-						padding: "10px",
+						// Only hardcode padding for legacy (non-header-builder) mode
+						padding: isHeaderBuilderEnabled ? undefined : "10px",
 						"line-height": 1,
 						"border-radius": emptyNotZero(borderRadius)
 							? undefined

@@ -375,23 +375,36 @@ export function listenToBuilderResponsiveControl(props: {
 		function (setting: WpbfCustomizeSetting<string | DevicesValue>) {
 			const styleTag = getStyleTag(props.controlId);
 
-			setting.bind((values) => {
-				if ("string" === typeof values) {
-					styleTag.innerHTML = "";
-					return;
+			// Function to process and apply values
+			const applyValues = (values: string | DevicesValue) => {
+				let valuesObj: DevicesValue = values as DevicesValue;
+
+				if (typeof values === "string") {
+					try {
+						const parsed = JSON.parse(values);
+						if (parsed && typeof parsed === "object") {
+							valuesObj = parsed;
+						} else {
+							styleTag.innerHTML = "";
+							return;
+						}
+					} catch (e) {
+						styleTag.innerHTML = "";
+						return;
+					}
 				}
 
 				const validatedValues: DevicesValue = {};
 
-				for (const device in values) {
-					if (!values.hasOwnProperty(device)) continue;
-					if (values[device] === "") continue;
+				for (const device in valuesObj) {
+					if (!valuesObj.hasOwnProperty(device)) continue;
+					if (valuesObj[device] === "") continue;
 
-					const deviceValue = props.useValueSuffix
-						? valueHasUnit(values[device])
-							? values[device]
-							: values[device] + "px"
-						: values[device];
+					let deviceValue = props.useValueSuffix
+						? valueHasUnit(valuesObj[device])
+							? valuesObj[device]
+							: valuesObj[device] + "px"
+						: valuesObj[device];
 
 					validatedValues[device] = deviceValue;
 				}
@@ -402,6 +415,17 @@ export function listenToBuilderResponsiveControl(props: {
 					props.cssProps,
 					validatedValues,
 				);
+			};
+
+			// Apply initial value when customizer opens
+			const initialValue = setting.get();
+			if (initialValue !== undefined && initialValue !== null) {
+				applyValues(initialValue);
+			}
+
+			// Listen to value changes
+			setting.bind((values) => {
+				applyValues(values);
 			});
 		},
 	);
