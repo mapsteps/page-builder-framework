@@ -120,39 +120,8 @@ export default function mobileHeaderBuilderSetup() {
 		},
 	);
 
-	// Search icon settings.
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"wpbf_header_builder_mobile_search_icon_color",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-header-search-icon svg",
-				props: { color: toStringColor(value) },
-			});
-		},
-	);
-
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"wpbf_header_builder_mobile_search_icon_color_alt",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-header-search-icon:hover svg",
-				props: { color: toStringColor(value) },
-			});
-		},
-	);
-
-	listenToCustomizerValueChange<string | number>(
-		"wpbf_header_builder_mobile_search_icon_size",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-mobile-header-search-icon svg",
-				props: {
-					width: maybeAppendSuffix(value),
-					height: maybeAppendSuffix(value),
-				},
-			});
-		},
-	);
+	// Note: Search icon settings (color, size) are handled in header-builder-search.ts
+	// using the correct .wpbff-search selector and multicolor control type.
 
 	// Menu trigger settings.
 	listenToCustomizerValueChange<string | number>(
