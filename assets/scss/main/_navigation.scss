@@ -581,16 +581,40 @@
 }
 
 .wpbf-header-column {
-	flex: 1 1 0;
+	// Default: auto-width based on content, don't grow or shrink
+	flex: 0 0 auto;
 	min-width: 0;
 
 	&.wpbf-column-grow {
-		flex-grow: 1;
+		// Columns with menu, html, etc. can grow to fill remaining space
+		flex: 1 1 auto;
 	}
 
 	&.wpbf-column-empty {
-		// Empty columns should still take equal space to maintain proper positioning
-		flex: 1 1 0;
-		min-width: 0;
+		// Empty columns should take no space
+		flex: 0 0 0;
+	}
+
+	// Menu inside header builder columns - horizontal layout
+	.wpbf-menu {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+
+		> .menu-item {
+			float: none; // Override float-based layout
+			flex-shrink: 0;
+		}
+	}
+
+	// Logo inside header builder - flexible size
+	.wpbf-logo {
+		display: flex;
+		align-items: center;
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
 	}
 }
