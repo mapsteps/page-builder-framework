@@ -451,7 +451,7 @@ class RepeaterControl extends BaseControl {
 	
 								<div class="actions">
 									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"><?php esc_html_e( 'Remove', 'page-builder-framework' ); ?></button>
-									<button type="button" class="button upload-button" data-label=" <?php esc_attr_e( 'Add Image', 'page-builder-framework' ); ?>" data-alt-label="<?php echo esc_attr_e( 'Change Image', 'page-builder-framework' ); ?>" >
+									<button type="button" class="button upload-button" data-label=" <?php esc_attr_e( 'Add Image', 'page-builder-framework' ); ?>" data-alt-label="<?php esc_attr_e( 'Change Image', 'page-builder-framework' ); ?>" >
 										<# if ( field.default ) { #>
 											<?php esc_html_e( 'Change Image', 'page-builder-framework' ); ?>
 										<# } else { #>
