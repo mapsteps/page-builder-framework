@@ -93,9 +93,9 @@ wpbf_customizer_field()
 	->label( __( 'Button Size', 'page-builder-framework' ) )
 	->defaultValue( '' )
 	->choices( array(
-		'default' => __( 'Default', 'page-builder-framework' ),
-		'small'   => __( 'Small', 'page-builder-framework' ),
-		'large'   => __( 'Large', 'page-builder-framework' ),
+		''      => __( 'Default', 'page-builder-framework' ),
+		'small' => __( 'Small', 'page-builder-framework' ),
+		'large' => __( 'Large', 'page-builder-framework' ),
 	) )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
