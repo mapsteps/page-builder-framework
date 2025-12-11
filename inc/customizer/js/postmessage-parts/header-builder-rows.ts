@@ -97,22 +97,26 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 				},
 			);
 
-			listenToCustomizerValueChange<string | number>(
-				`${controlIdPrefix}font_size`,
-				(settingId, value) => {
-					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: { "font-size": maybeAppendSuffix(value) },
-					});
-				},
-			);
-
 			listenToCustomizerValueChange<WpbfColorControlValue>(
 				`${controlIdPrefix}bg_color`,
 				function (settingId, value) {
 					writeCSS(settingId, {
 						selector: `.wpbf-header-row-${rowKey}`,
 						props: { "background-color": toStringColor(value) },
+					});
+				},
+			);
+		}
+
+		// Font size for desktop_row_2 and desktop_row_3.
+		// Row 1 uses existing `pre_header_font_size` setting.
+		if (rowKey === "desktop_row_2" || rowKey === "desktop_row_3") {
+			listenToCustomizerValueChange<string | number>(
+				`${controlIdPrefix}font_size`,
+				(settingId, value) => {
+					writeCSS(settingId, {
+						selector: `.wpbf-header-row-${rowKey}`,
+						props: { "font-size": maybeAppendSuffix(value) },
 					});
 				},
 			);

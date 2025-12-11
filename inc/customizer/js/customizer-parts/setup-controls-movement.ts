@@ -103,13 +103,6 @@ export function setupControlsMovement() {
 							to: 205,
 						},
 					},
-					{
-						id: "menu_font_size",
-						prio: {
-							from: undefined,
-							to: 210,
-						},
-					},
 				],
 			},
 			{

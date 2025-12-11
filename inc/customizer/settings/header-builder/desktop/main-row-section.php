@@ -58,3 +58,20 @@ wpbf_customizer_field()
 	->priority( 5 )
 	->addToSection( $section_id );
 */
+
+/* Design Tab */
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->priority( 215 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 1,
+		'max'  => 100,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );

@@ -105,16 +105,6 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 			),
 		) );
 
-		$font_size = wpbf_customize_str_value( $row_id_prefix . 'font_size' );
-		$font_size = '' === $font_size || '16' === $font_size ? '16px' : $font_size;
-
-		if ( $font_size ) {
-			wpbf_write_css( array(
-				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
-				'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
-			) );
-		}
-
 		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
 		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
 
@@ -151,6 +141,19 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 					'props'    => array( 'color' => $hover_color ),
 				) );
 			}
+		}
+	}
+
+	// Font size for desktop_row_2 and desktop_row_3.
+	// Row 1 uses existing `pre_header_font_size` setting.
+	if ( 'desktop_row_2' === $row_key || 'desktop_row_3' === $row_key ) {
+		$font_size = wpbf_customize_str_value( $row_id_prefix . 'font_size' );
+
+		if ( $font_size && '16px' !== $font_size && '16' !== $font_size ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ),
+				'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
+			) );
 		}
 	}
 }
