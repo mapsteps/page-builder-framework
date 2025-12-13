@@ -227,16 +227,9 @@ class HeaderBuilderOutput {
 			echo '<div class="' . esc_attr( $container_class ) . '">';
 		}
 
-		// Count non-empty columns to determine row alignment
-		$non_empty_columns = array_filter( $columns, function( $widget_keys ) {
-			return ! empty( $widget_keys );
-		} );
-
-		$column_count = count( $non_empty_columns );
-		$row_alignment_class = 'wpbf-content-center'; // Default to center
-
-		// Since we always render all 5 columns, we don't need special alignment
-		// The flexbox layout will handle positioning naturally based on column content
+		// Use space-between to distribute columns across the row
+		// This ensures left columns stay left, center stays center, and right columns stay right
+		$row_alignment_class = 'wpbf-content-space-between';
 
 		echo '<div class="' . ( 'desktop_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center ' . esc_attr( $row_alignment_class ) . '">';
 
@@ -380,16 +373,9 @@ class HeaderBuilderOutput {
 			echo '<div class="' . esc_attr( $container_class ) . '">';
 		}
 
-		// Count non-empty columns to determine row alignment
-		$non_empty_columns = array_filter( $columns, function( $widget_keys ) {
-			return ! empty( $widget_keys );
-		} );
-
-		$column_count = count( $non_empty_columns );
-		$row_alignment_class = 'wpbf-content-center'; // Default to center
-
-		// Since we always render all 5 columns, we don't need special alignment
-		// The flexbox layout will handle positioning naturally based on column content
+		// Use space-between to distribute columns across the row
+		// This ensures left columns stay left, center stays center, and right columns stay right
+		$row_alignment_class = 'wpbf-content-space-between';
 
 		echo '<div class="' . ( 'mobile_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center ' . esc_attr( $row_alignment_class ) . '">';
 
