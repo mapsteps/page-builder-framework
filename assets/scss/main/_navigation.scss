@@ -588,11 +588,26 @@
 	&.wpbf-column-grow {
 		// Columns with menu, html, etc. can grow to fill remaining space
 		flex: 1 1 auto;
+
+		// When column grows and has end alignment, ensure content aligns to the right
+		&.wpbf-content-end {
+			.navigation {
+				margin-left: auto;
+			}
+		}
+
+		// When column grows and has start alignment, ensure content aligns to the left
+		&.wpbf-content-start {
+			.navigation {
+				margin-right: auto;
+			}
+		}
 	}
 
 	&.wpbf-column-empty {
-		// Empty columns should take no space
-		flex: 0 0 0;
+		// Empty columns should grow to fill space proportionally
+		// This ensures proper spacing when content columns are not adjacent
+		flex: 1 1 0;
 	}
 
 	// Menu inside header builder columns - horizontal layout
