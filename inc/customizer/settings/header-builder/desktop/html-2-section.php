@@ -36,4 +36,9 @@ wpbf_customizer_field()
 	->partialRefresh( [
 		$partial_refresh_key_prefix . 'icon_size' => $partial_refresh_args,
 	] )
+	->properties( array(
+		'tinymce' => array(
+			'toolbar1' => 'formatselect,styleselect,numlist,bullist,removeformat,bold,italic,underline,strikethrough,alignleft,aligncenter,alignright,link,unlink,forecolor,backcolor',
+		),
+	) )
 	->addToSection( $section_id );
