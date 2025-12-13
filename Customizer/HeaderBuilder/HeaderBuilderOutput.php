@@ -233,52 +233,65 @@ class HeaderBuilderOutput {
 
 		echo '<div class="' . ( 'desktop_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center ' . esc_attr( $row_alignment_class ) . '">';
 
-		// Always render all 5 columns to maintain proper positioning
-		$all_column_keys = array( 'column_1_start', 'column_1_end', 'column_2', 'column_3_start', 'column_3_end' );
-		
-		foreach ( $all_column_keys as $column_key ) {
-			$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
-			
-			$column_class    = 'wpbf-flex wpbf-header-column';
-			$alignment_class = 'wpbf-content-center wpbf-items-center';
-			$column_position = '';
+		// Define zones: left (columns 1), center (column 2), right (columns 3).
+		// Wrapping left and right in zone containers ensures equal width zones for true centering.
+		$zones = array(
+			'left'   => array( 'column_1_start', 'column_1_end' ),
+			'center' => array( 'column_2' ),
+			'right'  => array( 'column_3_start', 'column_3_end' ),
+		);
 
-			// Set alignment based on column key
-			if ( 'column_1_start' === $column_key ) {
-				$alignment_class = 'wpbf-content-start';
-				$column_position = 'left';
-			} elseif ( 'column_3_end' === $column_key ) {
-				$alignment_class = 'wpbf-content-end';
-				$column_position = 'right';
+		foreach ( $zones as $zone_key => $zone_columns ) {
+			$zone_class = 'wpbf-header-zone wpbf-header-zone-' . $zone_key;
+
+			// Left and right zones get equal flex basis for true centering.
+			// Center zone stays auto-width.
+			if ( 'center' !== $zone_key ) {
+				$zone_class .= ' wpbf-zone-grow';
 			}
 
-			// Add empty class if column has no widgets
-			if ( empty( $widget_keys ) ) {
-				$column_class .= ' wpbf-column-empty';
-			}
+			echo '<div class="' . esc_attr( $zone_class ) . '">';
 
-			if (
-			! empty( $widget_keys ) && (
-				in_array( 'desktop_menu_1', $widget_keys, true )
-				|| in_array( 'desktop_menu_2', $widget_keys, true )
-				|| in_array( 'desktop_html_1', $widget_keys, true )
-				|| in_array( 'desktop_html_2', $widget_keys, true )
-				|| in_array( 'desktop_menu_trigger', $widget_keys, true )
-			)
-			) {
-				$column_class .= ' wpbf-column-grow';
-			}
+			foreach ( $zone_columns as $column_key ) {
+				$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
 
-			echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
+				$column_class    = 'wpbf-flex wpbf-header-column';
+				$alignment_class = 'wpbf-content-center wpbf-items-center';
+				$column_position = '';
 
-			if ( ! empty( $widget_keys ) ) {
-				foreach ( $widget_keys as $widget_key ) {
-					if ( empty( $widget_key ) ) {
-						continue;
-					}
-
-					$this->render_widget( 'header_builder', $widget_key, $column_position );
+				// Set alignment based on column key.
+				if ( 'column_1_start' === $column_key ) {
+					$alignment_class = 'wpbf-content-start';
+					$column_position = 'left';
+				} elseif ( 'column_1_end' === $column_key ) {
+					$alignment_class = 'wpbf-content-end';
+					$column_position = 'left';
+				} elseif ( 'column_3_start' === $column_key ) {
+					$alignment_class = 'wpbf-content-start';
+					$column_position = 'right';
+				} elseif ( 'column_3_end' === $column_key ) {
+					$alignment_class = 'wpbf-content-end';
+					$column_position = 'right';
 				}
+
+				// Add empty class if column has no widgets.
+				if ( empty( $widget_keys ) ) {
+					$column_class .= ' wpbf-column-empty';
+				}
+
+				echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
+
+				if ( ! empty( $widget_keys ) ) {
+					foreach ( $widget_keys as $widget_key ) {
+						if ( empty( $widget_key ) ) {
+							continue;
+						}
+
+						$this->render_widget( 'header_builder', $widget_key, $column_position );
+					}
+				}
+
+				echo '</div>';
 			}
 
 			echo '</div>';
@@ -389,7 +402,7 @@ class HeaderBuilderOutput {
 			$alignment_class = 'wpbf-content-center wpbf-items-center';
 			$column_position = '';
 
-			// Set alignment based on column key
+			// Set alignment based on column key.
 			if ( 'column_1_start' === $column_key ) {
 				$alignment_class = 'wpbf-content-start';
 				$column_position = 'left';
@@ -398,24 +411,14 @@ class HeaderBuilderOutput {
 				$column_position = 'right';
 			}
 
-			// Add empty class if column has no widgets
+			// Add empty class if column has no widgets.
 			if ( empty( $widget_keys ) ) {
 				$column_class .= ' wpbf-column-empty';
 			}
 
-			if (
-			! empty( $widget_keys ) && (
-				in_array( 'mobile_menu_1', $widget_keys, true )
-				|| in_array( 'mobile_menu_2', $widget_keys, true )
-				|| in_array( 'mobile_html_1', $widget_keys, true )
-				|| in_array( 'mobile_html_2', $widget_keys, true )
-				|| in_array( 'mobile_button_1', $widget_keys, true )
-				|| in_array( 'mobile_button_2', $widget_keys, true )
-				|| in_array( 'mobile_search', $widget_keys, true )
-				|| in_array( 'mobile_logo', $widget_keys, true )
-				|| in_array( 'mobile_menu_trigger', $widget_keys, true )
-			)
-			) {
+			// Apply grow class to ALL columns with widgets for equal distribution.
+			// This ensures center column stays truly centered regardless of widget types.
+			if ( ! empty( $widget_keys ) ) {
 				$column_class .= ' wpbf-column-grow';
 			}
 

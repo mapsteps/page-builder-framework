@@ -580,6 +580,46 @@
 	align-items: center;
 }
 
+// Zone containers for true centering.
+// Left and right zones have equal flex basis, ensuring center is always truly centered.
+.wpbf-header-zone {
+	display: flex;
+	align-items: center;
+
+	&.wpbf-zone-grow {
+		// Equal flex basis (0) ensures left and right zones are always equal width.
+		flex: 1 1 0;
+		min-width: 0;
+
+		// Columns within grow zones should fill available space.
+		.wpbf-header-column {
+			flex: 1 1 0;
+			min-width: 0;
+
+			&.wpbf-column-empty {
+				// Empty columns collapse to zero within zones.
+				flex: 0 0 0;
+			}
+		}
+	}
+
+	// Left zone: align content to the start.
+	&.wpbf-header-zone-left {
+		justify-content: flex-start;
+	}
+
+	// Center zone: auto-width, no grow.
+	&.wpbf-header-zone-center {
+		flex: 0 0 auto;
+		justify-content: center;
+	}
+
+	// Right zone: align content to the end.
+	&.wpbf-header-zone-right {
+		justify-content: flex-end;
+	}
+}
+
 .wpbf-header-column {
 	// Default: auto-width based on content, don't grow or shrink
 	flex: 0 0 auto;
