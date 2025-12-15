@@ -25,7 +25,7 @@ export default function mobileHeaderBuilderRowsSetup() {
 			// vertical padding
 			listenToCustomizerValueChange<number | string>(
 				`${controlIdPrefix}vertical_padding`,
-				function (settingId, value) {
+				function (settingId: string, value: number | string) {
 					writeCSS(settingId, {
 						selector: ".wpbf-mobile-header-rows .wpbf-inner-pre-header",
 						props: {
@@ -39,7 +39,7 @@ export default function mobileHeaderBuilderRowsSetup() {
 			// bg color
 			listenToCustomizerValueChange<WpbfColorControlValue>(
 				`${controlIdPrefix}bg_color`,
-				function (settingId, value) {
+				function (settingId: string, value: WpbfColorControlValue) {
 					writeCSS(settingId, {
 						selector: `.wpbf-header-row-${rowKey}`,
 						props: { "background-color": toStringColor(value) },
@@ -50,7 +50,7 @@ export default function mobileHeaderBuilderRowsSetup() {
 			// text color / font color
 			listenToCustomizerValueChange<WpbfColorControlValue>(
 				`${controlIdPrefix}text_color`,
-				function (settingId, value) {
+				function (settingId: string, value: WpbfColorControlValue) {
 					writeCSS(settingId, {
 						selector: `.wpbf-header-row-${rowKey}`,
 						props: { color: toStringColor(value) },
@@ -61,7 +61,7 @@ export default function mobileHeaderBuilderRowsSetup() {
 			// Accent colors
 			listenToCustomizerValueChange<WpbfMulticolorControlValue>(
 				`${controlIdPrefix}accent_colors`,
-				function (settingId, value) {
+				function (settingId: string, value: WpbfMulticolorControlValue) {
 					const defaultColor = toStringColor(value?.default ?? "");
 					const hoverColor = toStringColor(value?.hover ?? "");
 
@@ -83,20 +83,18 @@ export default function mobileHeaderBuilderRowsSetup() {
 			// font size
 			listenToCustomizerValueChange<string | number>(
 				`${controlIdPrefix}font_size`,
-				function (settingId, value) {
+				function (settingId: string, value: string | number) {
 					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
+						selector: `.wpbf-header-row-${rowKey}, .wpbf-header-row-${rowKey} .wpbf-mobile-menu a, .wpbf-header-row-${rowKey} .wpbf-menu a`,
 						props: { "font-size": maybeAppendSuffix(value) },
 					});
 				},
 			);
-		}
 
-		if (rowKey === "mobile_row_2") {
 			// vertical padding
 			listenToCustomizerValueChange<number | string>(
 				`${controlIdPrefix}vertical_padding`,
-				function (settingId, value) {
+				function (settingId: string, value: number | string) {
 					const selector = `.wpbf-header-row-${rowKey}`;
 					writeCSS(settingId, {
 						selector: selector,
@@ -104,133 +102,6 @@ export default function mobileHeaderBuilderRowsSetup() {
 							"padding-top": maybeAppendSuffix(value),
 							"padding-bottom": maybeAppendSuffix(value),
 						},
-					});
-				},
-			);
-
-			// bg color
-			listenToCustomizerValueChange<WpbfColorControlValue>(
-				`${controlIdPrefix}bg_color`,
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: { "background-color": toStringColor(value) },
-					});
-				},
-			);
-
-			// text color / font color
-			listenToCustomizerValueChange<WpbfColorControlValue>(
-				`${controlIdPrefix}text_color`,
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: { color: toStringColor(value) },
-					});
-				},
-			);
-
-			// Accent colors
-			listenToCustomizerValueChange<WpbfMulticolorControlValue>(
-				`${controlIdPrefix}accent_colors`,
-				function (settingId, value) {
-					const defaultColor = toStringColor(value?.default ?? "");
-					const hoverColor = toStringColor(value?.hover ?? "");
-
-					writeCSS(settingId, {
-						blocks: [
-							{
-								selector: `.wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2)`,
-								props: { color: defaultColor },
-							},
-							{
-								selector: `.wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):hover, .wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):focus`,
-								props: { color: hoverColor },
-							},
-						],
-					});
-				},
-			);
-
-			// font size
-			listenToCustomizerValueChange<string | number>(
-				`${controlIdPrefix}font_size`,
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: { "font-size": maybeAppendSuffix(value) },
-					});
-				},
-			);
-		}
-
-		if (rowKey === "mobile_row_3") {
-			// vertical padding
-			listenToCustomizerValueChange<number | string>(
-				`${controlIdPrefix}vertical_padding`,
-				function (settingId, value) {
-					const selector = `.wpbf-header-row-${rowKey}`;
-					writeCSS(settingId, {
-						selector: selector,
-						props: {
-							"padding-top": maybeAppendSuffix(value),
-							"padding-bottom": maybeAppendSuffix(value),
-						},
-					});
-				},
-			);
-
-			// bg color
-			listenToCustomizerValueChange<WpbfColorControlValue>(
-				`${controlIdPrefix}bg_color`,
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: { "background-color": toStringColor(value) },
-					});
-				},
-			);
-
-			// text color / font color
-			listenToCustomizerValueChange<WpbfColorControlValue>(
-				`${controlIdPrefix}text_color`,
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: { color: toStringColor(value) },
-					});
-				},
-			);
-
-			// Accent colors
-			listenToCustomizerValueChange<WpbfMulticolorControlValue>(
-				`${controlIdPrefix}accent_colors`,
-				function (settingId, value) {
-					const defaultColor = toStringColor(value?.default ?? "");
-					const hoverColor = toStringColor(value?.hover ?? "");
-
-					writeCSS(settingId, {
-						blocks: [
-							{
-								selector: `.wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2)`,
-								props: { color: defaultColor },
-							},
-							{
-								selector: `.wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):hover, .wpbf-header-row-${rowKey} a:not(.wpbf_header_builder_mobile_button_1):not(.wpbf_header_builder_mobile_button_2):focus`,
-								props: { color: hoverColor },
-							},
-						],
-					});
-				},
-			);
-
-			// font size
-			listenToCustomizerValueChange<string | number>(
-				`${controlIdPrefix}font_size`,
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: { "font-size": maybeAppendSuffix(value) },
 					});
 				},
 			);
@@ -239,7 +110,7 @@ export default function mobileHeaderBuilderRowsSetup() {
 		// Mobile overlay color.
 		listenToCustomizerValueChange<WpbfColorControlValue>(
 			"mobile_menu_overlay_color",
-			function (settingId, value) {
+			function (settingId: string, value: WpbfColorControlValue) {
 				writeCSS(settingId, {
 					selector: ".wpbf-mobile-menu-overlay",
 					props: { "background-color": toStringColor(value) },
@@ -251,7 +122,7 @@ export default function mobileHeaderBuilderRowsSetup() {
 	// Desktop menu 2 padding.
 	listenToCustomizerValueChange<number | string>(
 		"wpbf_header_builder_desktop_menu_2_menu_padding",
-		function (settingId, value) {
+		function (settingId: string, value: number | string) {
 			writeCSS(settingId, {
 				selector: ".wpbf-menu.desktop_menu_2 > .menu-item > a",
 				props: {
@@ -262,10 +133,23 @@ export default function mobileHeaderBuilderRowsSetup() {
 		},
 	);
 
+	// Desktop menu 2 font size.
+	listenToCustomizerValueChange<number | string>(
+		"wpbf_header_builder_desktop_menu_2_menu_font_size",
+		function (settingId: string, value: number | string) {
+			writeCSS(settingId, {
+				selector: ".wpbf-menu.desktop_menu_2 > .menu-item > a",
+				props: {
+					"font-size": maybeAppendSuffix(value),
+				},
+			});
+		},
+	);
+
 	// Mobile menu 2 padding.
 	listenToCustomizerValueChange<string>(
 		"wpbf_header_builder_mobile_menu_2_menu_padding",
-		function (settingId, value) {
+		function (settingId: string, value: string) {
 			const obj = parseJsonOrUndefined<MarginPaddingValue>(value);
 
 			if (!obj) {

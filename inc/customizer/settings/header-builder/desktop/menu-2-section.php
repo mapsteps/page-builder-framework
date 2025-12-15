@@ -79,3 +79,18 @@ wpbf_customizer_field()
 		'step' => 1,
 	] )
 	->addToSection( $section_id );
+
+// Font size.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'menu_font_size' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Font Size', 'page-builder-framework' ) )
+	->defaultValue( '16px' )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 100,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );

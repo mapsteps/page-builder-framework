@@ -109,9 +109,11 @@ export default function navigationSetup() {
 		"menu_font_size",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a",
+				selector: headerBuilderEnabled()
+					? ".wpbf-menu.desktop_menu_1 > .menu-item > a"
+					: ".wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a",
 				props: {
-					fontSize: maybeAppendSuffix(value),
+					"font-size": maybeAppendSuffix(value),
 				},
 			});
 		},

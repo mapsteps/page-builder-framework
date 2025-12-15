@@ -4,11 +4,12 @@ import {
 	maybeAppendSuffix,
 	toStringColor,
 } from "../customizer-util";
-import { WpbfCheckboxButtonsetControlValue } from "../../../Customizer/Controls/Checkbox/src/checkbox-interface";
+import { WpbfCustomizeSetting } from "../../../../Customizer/Controls/Base/src/base-interface";
+import { WpbfCheckboxButtonsetControlValue } from "../../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 import {
 	WpbfColorControlValue,
 	WpbfMulticolorControlValue,
-} from "../../../Customizer/Controls/Color/src/color-interface";
+} from "../../../../Customizer/Controls/Color/src/color-interface";
 
 export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 	const headerBuilderRows = ["desktop_row_1", "desktop_row_2", "desktop_row_3"];
@@ -23,7 +24,7 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 			(value: WpbfCustomizeSetting<WpbfCheckboxButtonsetControlValue>) => {
 				const availableSizes = ["large", "medium", "small"];
 
-				value.bind(function (newValue) {
+				value.bind(function (newValue: WpbfCheckboxButtonsetControlValue) {
 					if (!newValue || !Array.isArray(newValue)) return;
 
 					const selector =

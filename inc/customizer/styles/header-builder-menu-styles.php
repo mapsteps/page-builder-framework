@@ -198,6 +198,19 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 				'padding-right' => wpbf_maybe_append_suffix( $menu_2_padding ),
 			),
 		) );
+
+		// Font Size.
+		$menu_2_font_size = wpbf_customize_str_value( 'wpbf_header_builder_' . $header_builder_device . '_menu_2_menu_font_size' );
+		$menu_2_font_size = '16' === $menu_2_font_size || '16px' === $menu_2_font_size ? '' : $menu_2_font_size;
+
+		if ( $menu_2_font_size ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-menu.desktop_menu_2 > .menu-item > a',
+				'props'    => array(
+					'font-size' => wpbf_maybe_append_suffix( $menu_2_font_size ),
+				),
+			) );
+		}
 	}
 
 	// Mobile menu 2 padding is now handled in styles.php to be consistent with mobile menu 1 pattern.
@@ -247,7 +260,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 						),
 					) );
 				} elseif ( 'off-canvas' === $desktop_reveal_as ) {
-					// Right position (default)
+					// Right position (default).
 					wpbf_write_css( array(
 						'blocks' => array(
 							array(

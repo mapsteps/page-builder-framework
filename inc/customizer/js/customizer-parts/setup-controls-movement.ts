@@ -116,6 +116,13 @@ export function setupControlsMovement() {
 							to: 10,
 						},
 					},
+					{
+						id: "menu_font_size",
+						prio: {
+							from: undefined,
+							to: 12,
+						},
+					},
 				],
 			},
 			{

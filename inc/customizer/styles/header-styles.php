@@ -379,7 +379,7 @@ $menu_font_size = wpbf_customize_str_value( 'menu_font_size' );
 if ( wpbf_not_empty_allow_zero( $menu_font_size ) ) {
 
 	wpbf_write_css( array(
-		'selector' => '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a',
+		'selector' => $header_builder_enabled ? '.wpbf-menu.desktop_menu_1 > .menu-item > a' : '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a',
 		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $menu_font_size ) ),
 	) );
 
