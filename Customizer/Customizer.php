@@ -323,7 +323,7 @@ final class Customizer {
 			}
 		}
 
-		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerTooltips', $tooltips );
+		wp_localize_script( 'wpbf-controls-bundle', 'wpbfCustomizerTooltips', $tooltips );
 
 	}
 
@@ -335,11 +335,11 @@ final class Customizer {
 	public function js_vars_for_controls() {
 
 		if ( is_array( TypographyStore::$added_control_ids ) ) {
-			wp_localize_script( 'wpbf-typography-control', 'wpbfTypographyControlIds', TypographyStore::$added_control_ids );
+			wp_localize_script( 'wpbf-controls-bundle', 'wpbfTypographyControlIds', TypographyStore::$added_control_ids );
 		}
 
 		wp_localize_script(
-			'wpbf-dimension-control',
+			'wpbf-controls-bundle',
 			'wpbfDimensionControlL10n',
 			[
 				'invalid-value' => esc_html__( 'Invalid Value', 'page-builder-framework' ),
@@ -347,7 +347,7 @@ final class Customizer {
 		);
 
 		if ( is_array( BuilderStore::$added_control_ids ) ) {
-			wp_localize_script( 'wpbf-builder-control', 'wpbfBuilderControlIds', BuilderStore::$added_control_ids );
+			wp_localize_script( 'wpbf-controls-bundle', 'wpbfBuilderControlIds', BuilderStore::$added_control_ids );
 		}
 
 	}
