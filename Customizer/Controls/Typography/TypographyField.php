@@ -3,6 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
+use Mapsteps\Wpbf\Customizer\Controls\Bundle\ControlsBundleLoader;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 
@@ -97,25 +98,24 @@ class TypographyField extends BaseField {
 
 	/**
 	 * Enqueue styles & scripts on 'customize_controls_enqueue_scripts' action.
+	 *
+	 * Assets are now loaded via the controls bundle.
 	 */
 	public function enqueueControlScripts() {
 
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-typography-control', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-typography-control', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-control-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
+		// Enqueue the bundled control assets.
+		( new ControlsBundleLoader() )->enqueue();
 
 		// JS object inside this block will only be printed once.
 		if ( ! TypographyStore::$control_vars_printed ) {
-			wp_localize_script( 'wpbf-typography-control', 'wpbfFontVariantOptions', [
+			wp_localize_script( 'wpbf-controls-bundle', 'wpbfFontVariantOptions', [
 				'standard' => FontsStore::$standard_font_variant_options,
 				'complete' => FontsStore::$complete_font_variant_options,
 			] );
 
-			wp_localize_script( 'wpbf-typography-control', 'wpbfFontProperties', $this->font_properties );
-			wp_localize_script( 'wpbf-typography-control', 'wpbfGoogleFonts', ( new GoogleFontsUtil() )->getCollections() );
-			wp_add_inline_script( 'wpbf-typography-control', 'const wpbfFieldsFontVariants = {};', 'before' );
+			wp_localize_script( 'wpbf-controls-bundle', 'wpbfFontProperties', $this->font_properties );
+			wp_localize_script( 'wpbf-controls-bundle', 'wpbfGoogleFonts', ( new GoogleFontsUtil() )->getCollections() );
+			wp_add_inline_script( 'wpbf-controls-bundle', 'const wpbfFieldsFontVariants = {};', 'before' );
 
 			TypographyStore::$control_vars_printed = true;
 		}
@@ -129,7 +129,7 @@ class TypographyField extends BaseField {
 
 		// JS object here will be printed for each field.
 		wp_add_inline_script(
-			'wpbf-typography-control',
+			'wpbf-controls-bundle',
 			'wpbfFieldsFontVariants.' . $field_variant_key . ' = ' . wp_json_encode( $field_variant_values ) . ';',
 			'before'
 		);
@@ -138,15 +138,17 @@ class TypographyField extends BaseField {
 
 	/**
 	 * Enqueue styles & scripts on 'customize_preview_init' action.
+	 *
+	 * Assets are now loaded via the controls bundle.
 	 */
 	public function enqueuePreviewScripts() {
 
-		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-typography-preview', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-preview-min.js', array( 'customize-preview' ), WPBF_VERSION, false );
+		// Enqueue the bundled preview assets.
+		( new ControlsBundleLoader() )->enqueuePreview();
 
 		// JS object inside this block will only be printed once.
 		if ( ! TypographyStore::$preview_vars_printed ) {
-			wp_localize_script( 'wpbf-typography-preview', 'wpbfGoogleFontNames', FontsStore::$google_font_names );
+			wp_localize_script( 'wpbf-controls-preview-bundle', 'wpbfGoogleFontNames', FontsStore::$google_font_names );
 
 			TypographyStore::$preview_vars_printed = true;
 		}
