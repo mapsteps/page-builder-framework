@@ -76,32 +76,18 @@ class BuilderControl extends BaseControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Most assets are now loaded via the controls bundle.
+	 * jQuery UI dependencies are kept separate as they are WordPress core assets.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
 
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-builder-control', WPBF_THEME_URI . '/Customizer/Controls/Builder/dist/builder-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue jQuery UI scripts.
+		// Enqueue jQuery UI scripts (not bundled - core dependencies).
 		wp_enqueue_script( 'jquery-ui-draggable' );
 		wp_enqueue_script( 'jquery-ui-droppable' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-builder-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Builder/dist/builder-control-min.js',
-			array(
-				'customize-controls',
-				'jquery-ui-draggable',
-				'jquery-ui-droppable',
-				'jquery-ui-sortable',
-			),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 

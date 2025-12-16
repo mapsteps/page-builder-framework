@@ -1,0 +1,40 @@
+/**
+ * Customizer Controls Bundle Styles
+ *
+ * This file imports all customizer control styles to create a single bundled CSS output.
+ * This reduces HTTP requests from ~17 individual CSS files to just 1 bundled file.
+ *
+ * @package Wpbf
+ */
+
+// Base control styles (must be first)
+@import "../../Base/src/base-control";
+
+// Responsive control styles
+@import "../../Responsive/src/responsive-control";
+
+// Individual control styles (alphabetical order)
+@import "../../Checkbox/src/checkbox-control";
+@import "../../Color/src/color-control";
+@import "../../Dimension/src/dimension-control";
+@import "../../Editor/src/editor-control";
+
+// Headline control styles
+@import "../../Headline/src/headline-control";
+@import "../../Headline/src/headline-toggle-control";
+
+// More individual control styles
+@import "../../MarginPadding/src/margin-padding-control";
+@import "../../Radio/src/radio-control";
+@import "../../Repeater/src/repeater-control";
+@import "../../Select/src/select-control";
+
+// Slider control styles
+@import "../../Slider/src/slider-control";
+@import "../../Slider/src/input-slider-control";
+
+@import "../../Sortable/src/sortable-control";
+@import "../../Typography/src/typography-control";
+
+// Builder control styles
+@import "../../Builder/src/builder-control";

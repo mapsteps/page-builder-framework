@@ -10,6 +10,7 @@ namespace Mapsteps\Wpbf\Customizer;
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 use Mapsteps\Wpbf\Customizer\Controls\Builder\BuilderStore;
+use Mapsteps\Wpbf\Customizer\Controls\Bundle\ControlsBundleLoader;
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterSetting;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
@@ -92,11 +93,8 @@ final class Customizer {
 
 		wp_enqueue_style( 'wpbf-customize-preview', WPBF_THEME_URI . '/inc/customizer/css/customize-preview.css', array(), WPBF_VERSION );
 
-		$customizer_util = new CustomizerUtil();
-
-		foreach ( CustomizerStore::$added_controls as $control ) {
-			$customizer_util->enqueuePreviewScripts( $control );
-		}
+		// Enqueue bundled preview scripts.
+		( new ControlsBundleLoader() )->enqueuePreview();
 
 		add_action( 'body_open', array( $this, 'premium_add_on_notice' ) );
 

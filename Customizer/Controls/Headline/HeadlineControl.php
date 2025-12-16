@@ -15,13 +15,13 @@ class HeadlineControl extends BaseControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Assets are now loaded via the controls bundle.
+	 * This method is kept for backwards compatibility.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-headline-control', WPBF_THEME_URI . '/Customizer/Controls/Headline/dist/headline-control-min.css', array(), WPBF_VERSION );
 
 	}
 

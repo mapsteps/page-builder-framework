@@ -188,25 +188,17 @@ class RepeaterControl extends BaseControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Most assets are now loaded via the controls bundle.
+	 * Color picker dependencies are kept separate as they are WordPress core assets.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
 
-		// Enqueue the styles.
+		// Enqueue WordPress color picker (not bundled - core dependency).
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_style( 'wpbf-repeater-control', WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/repeater-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
 		wp_enqueue_script( 'wp-color-picker-alpha', WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/wp-color-picker-alpha.min.js', array( 'jquery', 'customize-base', 'wp-color-picker' ), WPBF_VERSION, false );
-
-		wp_enqueue_script(
-			'wpbf-repeater-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/repeater-control-min.js',
-			array( 'wp-color-picker-alpha', 'wpbf-base-control' ),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 

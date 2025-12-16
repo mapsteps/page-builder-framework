@@ -38,13 +38,13 @@ class HeadlineToggleControl extends ToggleControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Assets are now loaded via the controls bundle.
+	 * This method is kept for backwards compatibility.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-headline-toggle-control', WPBF_THEME_URI . '/Customizer/Controls/Headline/dist/headline-toggle-control-min.css', array(), WPBF_VERSION );
 
 	}
 

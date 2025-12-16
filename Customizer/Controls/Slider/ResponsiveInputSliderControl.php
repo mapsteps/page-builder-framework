@@ -83,21 +83,13 @@ class ResponsiveInputSliderControl extends InputSliderControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Assets are now loaded via the controls bundle.
+	 * This method is kept for backwards compatibility.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-responsive-input-slider-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/responsive-input-slider-control-min.js',
-			array(
-				'wpbf-base-control',
-			),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 

@@ -15,24 +15,13 @@ class RadioControl extends BaseControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Assets are now loaded via the controls bundle.
+	 * This method is kept for backwards compatibility.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-radio-control', WPBF_THEME_URI . '/Customizer/Controls/Radio/dist/radio-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-radio-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Radio/dist/radio-control-min.js',
-			array(
-				'wpbf-base-control',
-			),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 

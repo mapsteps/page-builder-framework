@@ -123,18 +123,19 @@ class EnhancedSelectControl extends BaseControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Most assets are now loaded via the controls bundle.
+	 * Select2 library is kept separate as per project requirements.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
 
-		// Enqueue the styles.
+		// Enqueue select2 library (kept separate - not bundled).
 		wp_enqueue_style( 'select2', WPBF_THEME_URI . '/css/min/select2.min.css', array(), WPBF_VERSION );
-		wp_enqueue_style( 'wpbf-select-control', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.css', array( 'select2' ), WPBF_VERSION );
 
 		$select2_src = WPBF_THEME_URI . '/js/min/select2.full.min.js';
 
-		// Enqueue the scripts.
 		wp_enqueue_script( 'select2', $select2_src, array( 'jquery' ), WPBF_VERSION, true );
 
 		if ( isset( wp_scripts()->registered ['select2'] ) ) {
@@ -143,17 +144,6 @@ class EnhancedSelectControl extends BaseControl {
 				wp_scripts()->registered ['select2']->src = $select2_src;
 			}
 		}
-
-		wp_enqueue_script(
-			'wpbf-select-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.js',
-			array(
-				'select2',
-				'wpbf-base-control',
-			),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 

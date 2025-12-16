@@ -105,21 +105,13 @@ class ResponsiveGenericControl extends GenericControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Assets are now loaded via the controls bundle.
+	 * This method is kept for backwards compatibility.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-responsive-generic-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/responsive-generic-control-min.js',
-			array(
-				'wpbf-base-control',
-			),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 

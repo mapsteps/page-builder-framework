@@ -55,24 +55,13 @@ class EditorControl extends BaseControl {
 
 	/**
 	 * Enqueue control related scripts/styles.
+	 *
+	 * Assets are now loaded via the controls bundle.
+	 * This method is kept for backwards compatibility.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-editor-control', WPBF_THEME_URI . '/Customizer/Controls/Editor/dist/editor-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-editor-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Editor/dist/editor-control-min.js',
-			array(
-				'wpbf-base-control',
-			),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 
