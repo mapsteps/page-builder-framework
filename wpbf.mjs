@@ -13,6 +13,7 @@ import {
 } from "@clack/prompts";
 import { resolve, dirname } from "path";
 import { build } from "vite";
+import { execSync } from "child_process";
 import {
 	deleteIfDirExists,
 	getErrorMessage,
@@ -24,7 +25,6 @@ process.env.NODE_ENV = "production";
 process.env.context = "browser";
 process.env.sourceType = "script";
 
-const DELETE_DIST_DIR_BEFORE_BUILD = false;
 const ALLOWED_FILE_EXTENSIONS = ["scss", "js", "ts", "jsx", "tsx"];
 
 const __filename = fileURLToPath(import.meta.url);
@@ -33,27 +33,41 @@ const __dirname = dirname(__filename);
 const themeBuildDir = "./build";
 
 const rootFilesAndDirsToSkip = [
+	// Directories
+	".git",
 	".parcel-cache",
-	"node_modules",
 	"build",
+	"build-scripts",
+	"node_modules",
+
+	// Dotfiles
 	".babelrc",
 	".editorconfig",
-	".git",
+	".eslintrc.json",
 	".gitattributes",
 	".gitignore",
 	".npmrc",
 	".parcelrc",
 	".prettierrc",
-	".eslintrc.json",
-	"manifest.json",
+
+	// Package management
+	"composer.json",
+	"composer.lock",
 	"package.json",
 	"package-lock.json",
-	"phpcs.xml",
 	"pnpm-lock.yaml",
-	"readme.md",
+	"pnpm-workspace.yaml",
+
+	// Build tooling
+	"manifest.json",
 	"tsconfig.json",
-	"types.js",
+	"vite.config.mjs",
 	"wpbf.mjs",
+
+	// Dev files
+	"phpcs.xml",
+	"readme.md",
+	"types.ts",
 ];
 
 const loadingSpinner = spinner();
@@ -64,9 +78,9 @@ async function main() {
 	const selectedTask = await select({
 		message: "Please select a task.",
 		options: [
-			{ value: "build-wp-theme", label: "Build WP theme" },
-			{ value: "build-customizer-control", label: "Build customizer control" },
-			{ value: "build-asset", label: "Build asset" },
+			{ value: "build-wp-theme", label: "Build WP Theme (production package)" },
+			{ value: "build-asset", label: "Build Asset (compile single JS/SCSS file)" },
+			{ value: "build-controls-bundle", label: "Build Controls Bundle (customizer controls)" },
 		],
 	});
 
@@ -78,30 +92,10 @@ async function main() {
 	if (selectedTask === "build-wp-theme") {
 		loadingSpinner.start("Building WP theme...");
 		buildWpTheme();
-		loadingSpinner.stop();
-	} else if (selectedTask === "build-customizer-control") {
-		const controlName = await text({
-			message: "Insert the customizer control namespace (e.g: slider):",
-		});
-
-		if (isCancel(controlName)) {
-			cancel("Build customizer control cancelled.");
-			process.exit(0);
-		}
-
-		loadingSpinner.start(`Building customizer control: ${controlName}...`);
-
-		if (DELETE_DIST_DIR_BEFORE_BUILD) {
-			deleteIfDirExists(
-				resolve(
-					__dirname,
-					`Customizer/Controls/${toPascalCase(controlName)}/dist`,
-				),
-			);
-		}
-
-		const response = await bundleCustomizerControl(controlName);
-
+		loadingSpinner.stop("WP theme built successfully.");
+	} else if (selectedTask === "build-controls-bundle") {
+		loadingSpinner.start("Building customizer controls bundle...");
+		const response = await buildControlsBundle();
 		if (response.success) {
 			loadingSpinner.stop(response.message);
 		} else {
@@ -357,6 +351,50 @@ function buildWpTheme() {
 
 	copyFilesAndDir(".", wpbfBuildDir);
 	deleteMapFiles(wpbfBuildDir);
+}
+
+/**
+ * Build the customizer controls bundle.
+ *
+ * @returns {Promise<{success: boolean, message: string}>} The result of the bundling process.
+ */
+async function buildControlsBundle() {
+	const bundleSrcDir = resolve(__dirname, "Customizer/Controls/Bundle/src");
+	const bundleDistDir = resolve(__dirname, "Customizer/Controls/Bundle/dist");
+
+	const entries = [
+		{
+			name: "controls-bundle",
+			path: resolve(bundleSrcDir, "controls-bundle.ts"),
+		},
+		{
+			name: "controls-preview-bundle",
+			path: resolve(bundleSrcDir, "controls-preview-bundle.ts"),
+		},
+	];
+
+	try {
+		for (const entry of entries) {
+			execSync("vite build", {
+				stdio: "inherit",
+				env: {
+					...process.env,
+					ENTRY_PATH: entry.path,
+					OUTPUT_DIR: bundleDistDir,
+				},
+			});
+		}
+
+		return {
+			success: true,
+			message: "Controls bundle built successfully.",
+		};
+	} catch (error) {
+		return {
+			success: false,
+			message: getErrorMessage(error),
+		};
+	}
 }
 
 main();

@@ -83,6 +83,7 @@
 	],
 	"scripts": {
 		"wpbf": "node wpbf.mjs",
+		"build-wp-theme": "node build-scripts/build-wp-theme.mjs",
 		"collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
 		"build-asset": "node build-scripts/build-asset.mjs",
 		"build-asset:watch": "node build-scripts/build-asset.mjs --watch",
