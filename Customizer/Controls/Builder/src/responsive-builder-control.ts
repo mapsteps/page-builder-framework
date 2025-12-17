@@ -698,8 +698,9 @@ import {
 				const control = this;
 				const emptyWidgetListClass = "empty-widget-list";
 
-				jQuery(".active-widgets").sortable({
-					connectWith: ".active-widgets",
+				// Exclude premium-locked dropzones from sortable connections.
+				jQuery(".active-widgets:not(.wpbf-premium-locked-dropzone)").sortable({
+					connectWith: ".active-widgets:not(.wpbf-premium-locked-dropzone)",
 					placeholder: "widget-item",
 					start: function (e, ui) {
 						document.body.classList.add("is-sorting-widget");
