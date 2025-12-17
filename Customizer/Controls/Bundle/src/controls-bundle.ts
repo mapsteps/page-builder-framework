@@ -7,6 +7,9 @@
  * @package Wpbf
  */
 
+// Import bundled SCSS styles
+import "./controls-bundle.scss";
+
 // Base control (must be first - other controls depend on it)
 import "../../Base/src/base-control";
 
