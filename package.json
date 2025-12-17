@@ -86,13 +86,13 @@
 	"scripts": {
 		"wpbf": "node wpbf.mjs",
 		"collect-google-fonts": "node Customizer/Controls/Typography/src/collect-google-fonts.mjs",
-		"build-control": "node build-scripts/build-control.mjs",
 		"build-asset": "node build-scripts/build-asset.mjs",
-		"build-control:watch": "node build-scripts/build-control.mjs --watch",
 		"build-asset:watch": "node build-scripts/build-asset.mjs --watch",
+		"build-control": "node build-scripts/build-control.mjs",
+		"build-control:watch": "node build-scripts/build-control.mjs --watch",
+		"build-controls-bundle": "node build-scripts/build-controls-bundle.mjs",
 		"build-all-controls": "node build-scripts/build-all-controls.mjs",
 		"build-all-assets": "node build-scripts/build-all-assets.mjs",
-		"build-controls-bundle": "node build-scripts/build-controls-bundle.mjs",
 		"build-all": "npm run build-all-controls && npm run build-all-assets && npm run build-controls-bundle"
 	}
 }
