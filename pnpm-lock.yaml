@@ -62,6 +62,9 @@ importers:
       vanjs-core:
         specifier: ^1.6.0
         version: 1.6.0
+      zx:
+        specifier: ^8.8.5
+        version: 8.8.5
     devDependencies:
       '@clack/prompts':
         specifier: ^0.9.1
@@ -2478,6 +2481,11 @@ packages:
   yjs@13.6.27:
     resolution: {integrity: sha512-OIDwaflOaq4wC6YlPBy2L6ceKeKuF7DeTxx+jPzv1FHn9tCZ0ZwSRnUBxD05E3yed46fv/FWJbvR+Ud7x0L7zw==}
     engines: {node: '>=16.0.0', npm: '>=8.0.0'}
+
+  zx@8.8.5:
+    resolution: {integrity: sha512-SNgDF5L0gfN7FwVOdEFguY3orU5AkfFZm9B5YSHog/UDHv+lvmd82ZAsOenOkQixigwH2+yyH198AwNdKhj+RA==}
+    engines: {node: '>= 12.17.0'}
+    hasBin: true
 
 snapshots:
 
@@ -5160,3 +5168,5 @@ snapshots:
   yjs@13.6.27:
     dependencies:
       lib0: 0.2.115
+
+  zx@8.8.5: {}
