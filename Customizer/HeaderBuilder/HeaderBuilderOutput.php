@@ -189,7 +189,21 @@ class HeaderBuilderOutput {
 		}
 
 		if ( ! empty( $this->desktop_offcanvas_widgets ) && is_array( $this->desktop_offcanvas_widgets ) ) {
-			$this->render_desktop_menu( $this->desktop_offcanvas_widgets );
+			/**
+			 * Filter to allow Premium Add-On to handle desktop offcanvas rendering.
+			 *
+			 * Desktop Off-Canvas is a premium feature.
+			 * When Premium Add-On is active, it will handle the rendering.
+			 * When Premium Add-On is not active, the offcanvas will not be rendered.
+			 *
+			 * @param bool  $render_offcanvas Whether to render the offcanvas in the theme. Default false.
+			 * @param array $widget_keys      The offcanvas widget keys.
+			 */
+			$render_offcanvas = apply_filters( 'wpbf_header_builder_render_desktop_offcanvas', false, $this->desktop_offcanvas_widgets );
+
+			if ( $render_offcanvas ) {
+				$this->render_desktop_menu( $this->desktop_offcanvas_widgets );
+			}
 		}
 
 	}
