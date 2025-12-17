@@ -1,7 +1,4 @@
-import {
-	handleMobileMenuResize,
-	handleMobileMenuToggle,
-} from "./customizer-util";
+import { handleMobileMenuResize } from "./customizer-util";
 import layoutSetup from "./postmessage-parts/layout";
 import typographySetup from "./postmessage-parts/typography";
 import fourZeroFourSetup from "./postmessage-parts/404";
@@ -34,11 +31,8 @@ import menuTriggersSetup from "./postmessage-parts/menu-triggers";
 	// Mobile menu resize.
 	window.addEventListener("resize", handleMobileMenuResize);
 
-	// Mobile menu toggle.
-	const mobileMenuToggle = document.querySelector(".wpbf-mobile-menu-toggle");
-	if (mobileMenuToggle) {
-		mobileMenuToggle.addEventListener("click", handleMobileMenuToggle);
-	}
+	// Note: Mobile menu toggle click is handled by site.js (mobile-menu.js).
+	// We don't add a duplicate handler here to avoid the menu toggling twice.
 
 	layoutSetup($);
 	typographySetup();

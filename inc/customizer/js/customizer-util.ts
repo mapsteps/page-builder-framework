@@ -106,38 +106,6 @@ export function handleMobileMenuResize() {
 	}
 }
 
-/**
- * Handle mobile menu toggle clicks.
- * Controls the opening and closing of the mobile menu.
- */
-export function handleMobileMenuToggle(this: HTMLElement) {
-	const isActive = this.classList.contains("active");
-	const container = document.querySelector(".wpbf-mobile-menu-container");
-
-	if (!container) return;
-
-	if (isActive) {
-		// Close menu
-		this.classList.remove("active");
-		container.classList.remove("active");
-		document.body.classList.remove("wpbf-mobile-menu-active");
-
-		if (container instanceof HTMLElement) {
-			container.style.display = "";
-			container.style.height = "";
-		}
-	} else {
-		// Open menu
-		this.classList.add("active");
-		container.classList.add("active");
-		document.body.classList.add("wpbf-mobile-menu-active");
-
-		if (container instanceof HTMLElement) {
-			container.style.display = "block";
-			handleMobileMenuResize();
-		}
-	}
-}
 
 /**
  * Get style tag element based on control id.

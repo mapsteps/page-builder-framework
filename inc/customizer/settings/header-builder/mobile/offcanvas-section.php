@@ -45,22 +45,45 @@ wpbf_customizer_field()
 	->tab( 'general' )
 	->label( __( 'Reveal as', 'page-builder-framework' ) )
 	->priority( 5 )
-	->choices( [
-		'dropdown'   => __( 'Dropdown', 'page-builder-framework' ),
-		'off-canvas' => __( 'Off-canvas', 'page-builder-framework' ),
-	] )
+	->choices( apply_filters(
+		'wpbf_header_builder_mobile_offcanvas_reveal_as_choices',
+		[
+			'dropdown' => __( 'Dropdown', 'page-builder-framework' ),
+		]
+	) )
 	->defaultValue( 'dropdown' )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
+
+// Mobile Off-Canvas is a premium feature.
+// Show premium notice if Premium Add-On is not active.
+if ( ! wpbf_is_premium() ) {
+
+	$premium_ad_link = sprintf(
+		'<p>%1$s</p><p><a href="%2$s" target="_blank" class="button">%3$s</a></p>',
+		__( 'Mobile Off-Canvas is a Premium feature. Upgrade to the Premium Add-On to unlock this feature and many more.', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_header_builder&utm_campaign=wpbf#premium' ),
+		__( 'Learn More', 'page-builder-framework' )
+	);
+
+	wpbf_customizer_field()
+		->id( $control_id_prefix . 'premium_notice' )
+		->type( 'custom' )
+		->tab( 'general' )
+		->defaultValue( '<div class="wpbf-premium-notice">' . $premium_ad_link . '</div>' )
+		->priority( 6 )
+		->addToSection( $section_id );
+
+}
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'menu_item_settings_headline_design' )
 	->type( 'headline' )
 	->tab( 'design' )
 	->label( __( 'Menu Item Settings', 'page-builder-framework' ) )
-	->priority( 6 )
-	->activeCallback( function() use ( $control_id_prefix ) {
+	->priority( 10 )
+	->activeCallback( function () use ( $control_id_prefix ) {
 		$reveal_as = get_theme_mod( $control_id_prefix . 'reveal_as', 'dropdown' );
-		return in_array( $reveal_as, ['dropdown', 'off-canvas'] );
+		return in_array( $reveal_as, [ 'dropdown', 'off-canvas' ], true );
 	} )
 	->addToSection( $section_id );

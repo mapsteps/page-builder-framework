@@ -126,7 +126,7 @@ export function setupConditionalControls() {
 			});
 		});
 
-		// Initial apply
+		// Initial apply.
 		const initial = window.wp.customize?.(revealAsSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "dropdown");
 	}
@@ -159,7 +159,7 @@ export function setupConditionalControls() {
 			});
 		});
 
-		// Initial apply
+		// Initial apply.
 		const initial = window.wp.customize?.(revealAsSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "dropdown");
 	}

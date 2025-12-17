@@ -330,16 +330,31 @@ class HeaderBuilderOutput {
 	 */
 	public function do_mobile_navigation() {
 
-		$reveal_as = get_theme_mod( 'wpbf_header_builder_mobile_offcanvas_reveal_as' );
+		$reveal_as = get_theme_mod( 'wpbf_header_builder_mobile_offcanvas_reveal_as', 'dropdown' );
 
 		/**
-		 * The mobile menu type. Accepts 'dropdown' or 'off-canvas'.
+		 * The mobile menu type.
+		 * In the theme, only 'dropdown' is supported.
+		 * Premium Add-On can filter this to enable 'off-canvas'.
 		 *
 		 * @var string
 		 */
-		$menu_type = 'off-canvas' === $reveal_as ? 'off-canvas' : 'dropdown';
+		$menu_type = apply_filters( 'wpbf_header_builder_mobile_menu_type', 'dropdown', $reveal_as );
 
-		echo '<div class="wpbf-mobile-header-rows wpbf-hidden-large ' . ( 'off-canvas' === $menu_type ? 'wpbf-mobile-menu-off-canvas' : 'wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger' ) . '">';
+		/**
+		 * Filter the mobile header rows CSS classes.
+		 * Premium Add-On can add 'wpbf-mobile-menu-off-canvas' class when off-canvas is selected.
+		 *
+		 * @param string $classes   The CSS classes.
+		 * @param string $menu_type The mobile menu type.
+		 */
+		$mobile_header_classes = apply_filters(
+			'wpbf_header_builder_mobile_header_classes',
+			'wpbf-mobile-header-rows wpbf-hidden-large wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger',
+			$menu_type
+		);
+
+		echo '<div class="' . esc_attr( $mobile_header_classes ) . '">';
 
 		$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
 
@@ -861,17 +876,15 @@ class HeaderBuilderOutput {
 
 			<?php do_action( 'wpbf_after_mobile_menu' ); ?>
 
-			<?php if ( 'off-canvas' === $menu_type ) : ?>
-
-				<?php if ( wpbf_svg_enabled() ) { ?>
-					<span class="wpbf-close">
-						<?php echo wpbf_svg( 'times' ); ?>
-					</span>
-				<?php } else { ?>
-					<i class="wpbf-close wpbff wpbff-times" aria-hidden="true"></i>
-				<?php } ?>
-
-			<?php endif; ?>
+			<?php
+			/**
+			 * Action to render the mobile menu close button.
+			 * Premium Add-On hooks here to render the close button for off-canvas menu.
+			 *
+			 * @param string $menu_type The mobile menu type.
+			 */
+			do_action( 'wpbf_header_builder_mobile_menu_close_button', $menu_type );
+			?>
 
 		</div>
 		

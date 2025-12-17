@@ -19,29 +19,15 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 	$menu_options = wpbf_customize_str_value(
 		'wpbf_header_builder_' . $header_builder_device . '_offcanvas_reveal_as',
-		'mobile' === $header_builder_device ? 'dropdown' : 'off-canvas'
+		'mobile' === $header_builder_device ? 'default' : 'off-canvas'
 	);
 
-	if ( in_array( $menu_options, array( 'off-canvas', 'dropdown' ), true ) ) {
+	if ( in_array( $menu_options, array( 'default', 'dropdown' ), true ) ) {
 
-		$menu_width    = wpbf_customize_str_value( 'mobile_menu_width' );
-		$menu_width    = '320' === $menu_width || '320px' === $menu_width ? '' : $menu_width;
 		$menu_bg_color = wpbf_customize_str_value( 'mobile_menu_bg_color' );
 
-		// For off-canvas type, apply width, position, and background color to the container.
-		if ( 'off-canvas' === $menu_options && ( $menu_width || $menu_bg_color ) ) {
-			wpbf_write_css( array(
-				'selector' => '.wpbf-mobile-menu-off-canvas .wpbf-mobile-menu-container',
-				'props'    => array(
-					'width'            => $menu_width ? wpbf_maybe_append_suffix( $menu_width ) : null,
-					'right'            => $menu_width ? '-' . wpbf_maybe_append_suffix( $menu_width ) : null,
-					'background-color' => $menu_bg_color ? $menu_bg_color : null,
-				),
-			) );
-		}
-
-		// For dropdown type, apply background color to the container.
-		if ( 'dropdown' === $menu_options && $menu_bg_color ) {
+		// For dropdown type (including default/empty), apply background color to the container.
+		if ( $menu_bg_color ) {
 			wpbf_write_css( array(
 				'selector' => '.wpbf-mobile-menu-dropdown .wpbf-mobile-menu-container',
 				'props'    => array(
@@ -49,21 +35,16 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 				),
 			) );
 		}
-
-		$menu_overlay = wpbf_customize_bool_value( 'mobile_menu_overlay' );
-
-		$menu_overlay_color = wpbf_customize_str_value( 'mobile_menu_overlay_color' );
-		$menu_overlay_color = 'rgba(0,0,0,0.5)' === $menu_overlay_color || 'rgba(0, 0, 0, 0.5)' === $menu_overlay_color ? '' : $menu_overlay_color;
-
-		if ( $menu_overlay && $menu_overlay_color ) {
-			wpbf_write_css( array(
-				'selector' => '.wpbf-mobile-menu-overlay',
-				'props'    => array(
-					'background-color' => $menu_overlay_color ? $menu_overlay_color : null,
-				),
-			) );
-		}
 	}
+
+	/**
+	 * Action to output off-canvas specific styles.
+	 * Premium Add-On hooks here to output off-canvas menu styles.
+	 *
+	 * @param string $menu_options The menu options value.
+	 * @param string $header_builder_device The device type ('desktop' or 'mobile').
+	 */
+	do_action( 'wpbf_header_builder_mobile_menu_styles', $menu_options, $header_builder_device );
 
 	/**
 	 * ----------------------------------------------------------------------

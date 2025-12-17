@@ -92,6 +92,8 @@
 		"build-controls-bundle": "node build-scripts/build-controls-bundle.mjs",
 		"build-all-controls": "node build-scripts/build-all-controls.mjs",
 		"build-all-assets": "node build-scripts/build-all-assets.mjs",
-		"build-all": "npm run build-all-controls && npm run build-all-assets && npm run build-controls-bundle"
+		"build-all": "npm run build-all-controls && npm run build-all-assets && npm run build-controls-bundle",
+		"build-postmessage": "node build-scripts/build-asset.mjs --path=inc/customizer/js/postmessage.ts",
+		"build-customizer": "node build-scripts/build-asset.mjs --path=inc/customizer/js/customizer.ts"
 	}
 }
