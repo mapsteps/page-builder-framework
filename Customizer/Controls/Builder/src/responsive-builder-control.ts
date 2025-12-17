@@ -205,6 +205,14 @@ import {
 							.addClass("builder-offcanvas")
 							.appendTo($builderSlotsEl);
 
+						// Check if this is a premium-locked offcanvas (desktop only when not premium).
+						const isLockedOffcanvas =
+							device === "desktop" && !params.isPremium;
+
+						if (isLockedOffcanvas) {
+							$builderOffcanvas.addClass("wpbf-premium-locked");
+						}
+
 						const $builderInnerOffcanvas = jQuery("<div></div>")
 							.addClass("builder-inner-offcanvas sortable-group")
 							.appendTo($builderOffcanvas);
@@ -227,7 +235,22 @@ import {
 							.addClass("builder-widgets active-widgets dotted-border")
 							.appendTo($builderInnerOffcanvas);
 
-						if (params.value) {
+						// Add premium overlay for locked desktop offcanvas.
+						if (isLockedOffcanvas) {
+							$offcanvasWidgetsEl.addClass("wpbf-premium-locked-dropzone");
+
+							jQuery("<div></div>")
+								.addClass("wpbf-premium-overlay")
+								.html(
+									`<div class="wpbf-premium-overlay-content">
+										<span class="dashicons dashicons-lock"></span>
+										<p>Premium Feature</p>
+									</div>`,
+								)
+								.appendTo($offcanvasWidgetsEl);
+						}
+
+						if (params.value && !isLockedOffcanvas) {
 							// Build the widget list based on `params.value`.
 							params.value[device].offcanvas?.forEach((widgetKey) => {
 								const newWidgetItem = control.createWidgetItem?.(
@@ -498,9 +521,16 @@ import {
 				const control = this;
 
 				builderDropZones.forEach((dropZone) => {
+					// Skip premium-locked dropzones.
+					const isLockedDropzone =
+						dropZone.classList.contains("wpbf-premium-locked-dropzone");
+
 					dropZone.addEventListener("dragenter", (e) => {
 						if (!(e instanceof DragEvent)) return;
 						e.preventDefault();
+
+						// Don't show dragover state for locked dropzones.
+						if (isLockedDropzone) return;
 
 						dropZone.classList.add("dragover");
 					});
@@ -522,6 +552,9 @@ import {
 						e.preventDefault();
 
 						dropZone.classList.remove("dragover");
+
+						// Block drops on premium-locked dropzones.
+						if (isLockedDropzone) return;
 
 						const widgetItem = control.getWidgetItemFromDraggableData?.(e);
 						if (!widgetItem) return;

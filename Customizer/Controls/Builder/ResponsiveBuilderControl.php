@@ -183,6 +183,8 @@ class ResponsiveBuilderControl extends BaseControl {
 			],
 		];
 
+		$this->json['isPremium'] = wpbf_is_premium();
+
 	}
 
 	/**

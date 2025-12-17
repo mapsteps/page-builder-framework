@@ -39,17 +39,23 @@ $partial_refresh_args = array(
 	},
 );
 
-wpbf_customizer_field()
-	->id( $control_id_prefix . 'reveal_as' )
-	->type( 'select' )
-	->tab( 'general' )
-	->label( __( 'Reveal as', 'page-builder-framework' ) )
-	->priority( 5 )
-	->choices( [
-		'off-canvas'      => __( 'Off-canvas (Right)', 'page-builder-framework' ),
-		'off-canvas-left' => __( 'Off-canvas (Left)', 'page-builder-framework' ),
-		'full-screen'     => __( 'Full screen', 'page-builder-framework' ),
-	] )
-	->defaultValue( 'off-canvas' )
-	->transport( 'postMessage' )
-	->addToSection( $section_id );
+// Desktop Off-Canvas is a premium feature.
+// Show premium notice if Premium Add-On is not active.
+if ( ! wpbf_is_premium() ) {
+
+	$premium_ad_link = sprintf(
+		'<p>%1$s</p><p><a href="%2$s" target="_blank" class="button">%3$s</a></p>',
+		__( 'Desktop Off-Canvas is a Premium feature. Upgrade to the Premium Add-On to unlock this feature and many more.', 'page-builder-framework' ),
+		esc_url( 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=customizer_header_builder&utm_campaign=wpbf#premium' ),
+		__( 'Learn More', 'page-builder-framework' )
+	);
+
+	wpbf_customizer_field()
+		->id( $control_id_prefix . 'premium_notice' )
+		->type( 'custom' )
+		->tab( 'general' )
+		->defaultValue( '<div class="wpbf-premium-notice">' . $premium_ad_link . '</div>' )
+		->priority( 5 )
+		->addToSection( $section_id );
+
+}

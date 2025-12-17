@@ -475,6 +475,50 @@
 			display: flex;
 			margin: 0 0 10px;
 		}
+
+		// Premium locked state for desktop offcanvas.
+		&.wpbf-premium-locked {
+			.wpbf-premium-locked-dropzone {
+				position: relative;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: not-allowed;
+
+				&.dragover {
+					background-color: transparent;
+				}
+			}
+
+			.wpbf-premium-overlay {
+				position: absolute;
+				inset: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: rgba(249, 249, 249, 0.95);
+				border-radius: 0 0 5px 5px;
+				z-index: 10;
+			}
+
+			.wpbf-premium-overlay-content {
+				text-align: center;
+				padding: 15px;
+
+				.dashicons-lock {
+					width: 24px;
+					height: 24px;
+					font-size: 24px;
+					color: #999;
+				}
+
+				p {
+					margin: 8px 0 0;
+					font-size: 11px;
+					color: #666;
+				}
+			}
+		}
 	}
 }
 

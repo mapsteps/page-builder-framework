@@ -193,3 +193,41 @@
 .wpbf-hidden {
 	display: none;
 }
+
+// Premium notice styles for upsell banners in customizer sections.
+.wpbf-premium-notice {
+	padding: 15px;
+	background-color: #f0f6fc;
+	border: 1px solid #c3c4c7;
+	border-left: 4px solid #2271b1;
+	border-radius: 4px;
+
+	p {
+		margin: 0 0 12px;
+		color: #1d2327;
+		font-size: 13px;
+		line-height: 1.5;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.button {
+		display: inline-block;
+		padding: 6px 12px;
+		background-color: #2271b1;
+		color: #fff;
+		text-decoration: none;
+		border-radius: 3px;
+		font-size: 13px;
+		line-height: 1.5;
+		transition: background-color 0.2s;
+
+		&:hover,
+		&:focus {
+			background-color: #135e96;
+			color: #fff;
+		}
+	}
+}

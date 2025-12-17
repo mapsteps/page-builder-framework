@@ -59,6 +59,7 @@ export type ResponsiveBuilderValue =
 
 export interface WpbfResponsiveBuilderControlParams
 	extends WpbfCustomizeControlParams<ResponsiveBuilderValue> {
+	isPremium: boolean;
 	builder: {
 		desktop: {
 			availableWidgets: BuilderWidget[];
