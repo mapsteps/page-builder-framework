@@ -348,6 +348,12 @@
 	column-gap: 3px;
 }
 
+.use-header-builder .wpbf-nav-item.wpbf-menu-item-search,
+.use-header-builder .wpbf-mobile-nav-item.wpbf-menu-item-search {
+	display: inline-flex;
+	align-items: center;
+}
+
 // SVG support (Hamburger)
 .wpbf-mobile-menu-hamburger {
 	.wpbf-mobile-menu-toggle {
