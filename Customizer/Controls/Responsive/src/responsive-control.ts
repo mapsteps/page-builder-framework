@@ -1,5 +1,4 @@
 import { forEachEl } from "../../../../assets/js/utils/dom-util";
-import "./responsive-control.scss";
 
 declare var wp: {
 	customize: WpbfCustomize;

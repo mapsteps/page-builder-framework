@@ -1,4 +1,3 @@
-import "./builder-control.scss";
 import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
 
 (function () {

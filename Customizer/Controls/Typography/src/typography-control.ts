@@ -15,8 +15,6 @@ import {
 import { WpbfAssocArrayControl } from "../../Generic/src/generic-interface";
 import { isNumeric } from "../../Generic/src/number-util";
 
-import "./typography-control.scss";
-
 /**
  * These var declarations are for the global variables that are set in the PHP file.
  * That means, the `undefined` union has to be added to the declaration to be safer.

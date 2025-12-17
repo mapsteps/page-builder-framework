@@ -1,4 +1,3 @@
-import "./slider-control.scss";
 import SliderControl from "./SliderControl";
 
 if (window.wp.customize) {

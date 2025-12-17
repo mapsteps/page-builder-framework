@@ -1,4 +1,3 @@
-import "./margin-padding-control.scss";
 import MarginPaddingControl from "./MarginPaddingControl";
 
 if (window.wp.customize) {

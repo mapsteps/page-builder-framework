@@ -1,4 +1,3 @@
-import "./dimension-control.scss";
 import { WpbfCustomizeSetting } from "../../Base/src/base-interface";
 import { WpbfDimensionControl } from "./dimension-interface";
 

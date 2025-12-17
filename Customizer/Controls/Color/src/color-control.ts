@@ -1,4 +1,3 @@
-import "./color-control.scss";
 import ColorControl from "./ColorControl";
 import MulticolorControl from "./MulticolorControl";
 

@@ -1,8 +1,6 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
 import { SelectControlChoice, WpbfSelectControl } from "./select-interface";
 
-import "./select-control.scss";
-
 if (window.wp.customize) {
 	setupSelectControl(window.wp.customize);
 }

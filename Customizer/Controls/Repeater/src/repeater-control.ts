@@ -1,5 +1,3 @@
-import "./repeater-control.scss";
-
 import {
 	RepeaterImageSelectOptions,
 	WpbfRepeaterControl,

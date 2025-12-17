@@ -1,4 +1,3 @@
-import "./input-slider-control.scss";
 import InputSliderControl from "./InputSliderControl";
 
 if (window.wp.customize) {

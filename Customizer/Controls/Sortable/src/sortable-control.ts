@@ -1,5 +1,3 @@
-import "./sortable-control.scss";
-
 import { WpbfSortableControl } from "./sortable-interface";
 import _ from "lodash";
 

@@ -1,5 +1,3 @@
-import "./radio-control.scss";
-
 declare var wp: {
 	customize: WpbfCustomize;
 };

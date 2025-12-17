@@ -1,4 +1,3 @@
-import "./checkbox-control.scss";
 import {
 	WpbfCheckboxButtonsetControl,
 	WpbfCheckboxControl,

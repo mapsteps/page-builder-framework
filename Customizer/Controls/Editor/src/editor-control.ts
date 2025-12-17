@@ -1,4 +1,3 @@
-import "./editor-control.scss";
 import { WpbfEditorControl } from "./editor-interface";
 
 declare var wp: {
