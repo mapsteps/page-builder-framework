@@ -32,6 +32,116 @@ const __dirname = dirname(__filename);
 
 const themeBuildDir = "./build";
 
+// Asset presets for quick building
+const ASSET_PRESETS = [
+	// --- Admin / Customizer ---
+	{ value: "__sep_admin__", label: "─── Admin / Customizer ───", isSeparator: true },
+	{
+		value: "customizer",
+		label: "Customizer",
+		hint: "Customizer panel scripts",
+		path: "inc/customizer/js/customizer.ts",
+		output: "js/min",
+	},
+	{
+		value: "postmessage",
+		label: "PostMessage",
+		hint: "Customizer live preview",
+		path: "inc/customizer/js/postmessage.ts",
+		output: "js/min",
+	},
+	{
+		value: "theme-settings",
+		label: "Theme settings",
+		hint: "Admin settings page",
+		path: "assets/js/theme-settings.js",
+		output: "js/min",
+	},
+	{
+		value: "edit-post",
+		label: "Edit post",
+		hint: "Block editor scripts",
+		path: "assets/js/edit-post.js",
+		output: "js/min",
+	},
+	{
+		value: "activation-notice",
+		label: "Activation notice",
+		hint: "Admin activation notice",
+		path: "assets/js/activation-notice.js",
+		output: "js/min",
+	},
+
+	// --- Frontend ---
+	{ value: "__sep_frontend__", label: "─── Frontend ───", isSeparator: true },
+	{
+		value: "site-js",
+		label: "Site JS",
+		hint: "Vanilla JS",
+		path: "assets/js/site.js",
+		output: "js/min",
+	},
+	{
+		value: "site-jquery",
+		label: "Site jQuery",
+		hint: "jQuery",
+		path: "assets/js/site-jquery.js",
+		output: "js/min",
+	},
+	{
+		value: "post-list",
+		label: "Post list",
+		hint: "Post list scripts",
+		path: "assets/js/post-list.js",
+		output: "js/min",
+	},
+
+	// --- Styles ---
+	{ value: "__sep_styles__", label: "─── Styles ───", isSeparator: true },
+	{
+		value: "style",
+		label: "Style",
+		hint: "Main theme styles",
+		path: "assets/scss/style.scss",
+		output: "css/min",
+	},
+	{
+		value: "responsive",
+		label: "Responsive",
+		hint: "Responsive styles",
+		path: "assets/scss/responsive.scss",
+		output: "css/min",
+	},
+	{
+		value: "rtl",
+		label: "RTL",
+		hint: "Right-to-left styles",
+		path: "assets/scss/rtl.scss",
+		output: "css/min",
+	},
+	{
+		value: "admin-rtl",
+		label: "Admin RTL",
+		hint: "Admin right-to-left styles",
+		path: "assets/scss/admin-rtl.scss",
+		output: "css/min",
+	},
+	{
+		value: "edit-post-css",
+		label: "Edit post CSS",
+		hint: "Block editor styles",
+		path: "assets/scss/edit-post.scss",
+		output: "css/min",
+	},
+	{
+		value: "iconfont",
+		label: "Iconfont",
+		hint: "Icon font styles",
+		path: "assets/scss/iconfont.scss",
+		output: "css/min",
+	},
+];
+
 const rootFilesAndDirsToSkip = [
 	// Directories
 	".git",
@@ -75,70 +185,146 @@ const loadingSpinner = spinner();
 async function main() {
 	intro(`Page Builder Framework`);
 
-	const selectedTask = await select({
-		message: "Please select a task.",
-		options: [
-			{ value: "build-wp-theme", label: "Build WP Theme (production package)" },
-			{ value: "build-asset", label: "Build Asset (compile single JS/SCSS file)" },
-			{ value: "build-controls-bundle", label: "Build Controls Bundle (customizer controls)" },
-		],
-	});
+	let continueMainLoop = true;
 
-	if (isCancel(selectedTask)) {
-		cancel("Task cancelled.");
-		process.exit(0);
-	}
-
-	if (selectedTask === "build-wp-theme") {
-		loadingSpinner.start("Building WP theme...");
-		buildWpTheme();
-		loadingSpinner.stop("WP theme built successfully.");
-	} else if (selectedTask === "build-controls-bundle") {
-		loadingSpinner.start("Building customizer controls bundle...");
-		const response = await buildControlsBundle();
-		if (response.success) {
-			loadingSpinner.stop(response.message);
-		} else {
-			loadingSpinner.stop(response.message, 500);
-		}
-	} else if (selectedTask === "build-asset") {
-		const filePath = await text({
-			message: "Insert the file path to build (e.g: assets/js/site.js):",
+	while (continueMainLoop) {
+		const selectedTask = await select({
+			message: "Please select a task.",
+			options: [
+				{
+					value: "build-preset",
+					label: "Build preset asset (select from common assets)",
+				},
+				{
+					value: "build-custom",
+					label: "Build custom asset (enter file path manually)",
+				},
+				{
+					value: "build-controls-bundle",
+					label: "Build controls bundle (customizer controls)",
+				},
+				{
+					value: "build-wp-theme",
+					label: "Build WP theme (production package)",
+				},
+				{
+					value: "exit",
+					label: "Exit",
+				},
+			],
 		});
 
-		if (isCancel(filePath)) {
-			cancel("Build asset cancelled.");
-			process.exit(0);
+		if (isCancel(selectedTask) || selectedTask === "exit") {
+			continueMainLoop = false;
+			break;
 		}
 
-		if (!ALLOWED_FILE_EXTENSIONS.some((ext) => filePath.endsWith(`.${ext}`))) {
-			cancel(
-				`Invalid file extension. Allowed extensions: ${ALLOWED_FILE_EXTENSIONS.join(", ")}`,
-			);
-			process.exit(0);
-		}
+		if (selectedTask === "build-wp-theme") {
+			loadingSpinner.start("Building WP theme...");
+			buildWpTheme();
+			loadingSpinner.stop("WP theme built successfully.");
+		} else if (selectedTask === "build-controls-bundle") {
+			loadingSpinner.start("Building customizer controls bundle...");
+			const response = await buildControlsBundle();
+			if (response.success) {
+				loadingSpinner.stop(response.message);
+			} else {
+				loadingSpinner.stop(response.message, 500);
+			}
+		} else if (selectedTask === "build-preset") {
+			let continuePresetLoop = true;
 
-		const fileType = filePath.split(".").pop();
+			while (continuePresetLoop) {
+				const presetOptions = [
+					...ASSET_PRESETS.map((preset) =>
+						preset.isSeparator
+							? { value: preset.value, label: preset.label, disabled: true }
+							: { value: preset.value, label: preset.label, hint: preset.hint },
+					),
+					{ value: "__sep_nav__", label: "───", disabled: true },
+					{ value: "__back__", label: "← Back" },
+					{ value: "__exit__", label: "Exit" },
+				];
 
-		const outputDirFromUser = await text({
-			message:
-				"Insert the output directory path. If empty, it will use default location (js: js/min, scss: css/min).",
-		});
+				const selectedPreset = await select({
+					message: "Select an asset to build:",
+					options: presetOptions,
+				});
 
-		const outputDir = outputDirFromUser
-			? resolve(__dirname, String(outputDirFromUser))
-			: fileType === "scss"
-				? resolve(__dirname, "css/min")
-				: resolve(__dirname, "js/min");
+				if (isCancel(selectedPreset) || selectedPreset === "__back__") {
+					continuePresetLoop = false;
+					break;
+				}
 
-		loadingSpinner.start(`Building asset file: ${filePath}...`);
+				if (selectedPreset === "__exit__") {
+					continuePresetLoop = false;
+					continueMainLoop = false;
+					break;
+				}
 
-		const response = await buildAsset(filePath, outputDir);
+				// Skip if separator was selected
+				if (String(selectedPreset).startsWith("__sep_")) {
+					continue;
+				}
 
-		if (response.success) {
-			loadingSpinner.stop(response.message);
-		} else {
-			loadingSpinner.stop(response.message, 500);
+				const preset = ASSET_PRESETS.find((p) => p.value === selectedPreset);
+
+				if (!preset) {
+					cancel("Invalid preset selected.");
+					process.exit(1);
+				}
+
+				const outputDir = resolve(__dirname, preset.output);
+
+				loadingSpinner.start(`Building ${preset.label}...`);
+
+				const response = await buildAsset(preset.path, outputDir);
+
+				if (response.success) {
+					loadingSpinner.stop(response.message);
+				} else {
+					loadingSpinner.stop(response.message, 500);
+				}
+			}
+		} else if (selectedTask === "build-custom") {
+			const filePath = await text({
+				message:
+					"Insert the file path to build (e.g: assets/js/site.js or assets/scss/style.scss):",
+			});
+
+			if (isCancel(filePath)) {
+				continue;
+			}
+
+			if (!ALLOWED_FILE_EXTENSIONS.some((ext) => filePath.endsWith(`.${ext}`))) {
+				cancel(
+					`Invalid file extension. Allowed extensions: ${ALLOWED_FILE_EXTENSIONS.join(", ")}`,
+				);
+				process.exit(0);
+			}
+
+			const fileType = filePath.split(".").pop();
+
+			const outputDirFromUser = await text({
+				message:
+					"Insert the output directory path. If empty, it will use default location (js: js/min, scss: css/min).",
+			});
+
+			const outputDir = outputDirFromUser
+				? resolve(__dirname, String(outputDirFromUser))
+				: fileType === "scss"
+					? resolve(__dirname, "css/min")
+					: resolve(__dirname, "js/min");
+
+			loadingSpinner.start(`Building asset file: ${filePath}...`);
+
+			const response = await buildAsset(filePath, outputDir);
+
+			if (response.success) {
+				loadingSpinner.stop(response.message);
+			} else {
+				loadingSpinner.stop(response.message, 500);
+			}
 		}
 	}
 
