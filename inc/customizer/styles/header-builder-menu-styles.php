@@ -110,7 +110,10 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 				$menu_trigger_props['background-color'] = $menu_trigger_button_color;
 				$menu_trigger_props['border']           = 'unset';
 			}
-		} else {
+		} elseif ( wpbf_header_builder_enabled() ) {
+			// Only reset styles for "simple" style when header builder is enabled.
+			// When header builder is disabled, the legacy controls (mobile_menu_hamburger_bg_color, etc.)
+			// in header-styles.php should handle the styling without being overridden.
 			$menu_trigger_props['background-color'] = 'unset';
 			$menu_trigger_props['border']           = 'unset';
 		}

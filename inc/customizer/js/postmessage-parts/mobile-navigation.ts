@@ -67,31 +67,38 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 	listenToCustomizerValueChange<string | number>(
 		"mobile_menu_hamburger_bg_color",
 		function (settingId, value) {
-			// Check the menu trigger style first
-			const menuTriggerStyle = customizer?.(
-				"wpbf_header_builder_mobile_menu_trigger_style",
-			)?.get();
+			const isHeaderBuilderEnabled = headerBuilderEnabled();
 
-			const buttonStyle =
-				menuTriggerStyle && String(menuTriggerStyle).trim() !== ""
-					? String(menuTriggerStyle)
-					: "simple";
+			// When header builder is disabled, this control acts as a simple "solid" button style.
+			// When header builder is enabled, respect the menu trigger style setting.
+			let buttonStyle = "solid"; // Default for legacy (non-header-builder) mode
 
-			// Only apply if style is solid or outline
-			if (buttonStyle !== "solid" && buttonStyle !== "outline") {
-				// Reset styles for simple
-				writeCSS(settingId, {
-					selector: ".wpbf-mobile-menu-toggle",
-					props: {
-						"background-color": "unset !important",
-						color: "unset",
-						padding: "unset",
-						"line-height": "unset",
-						border: "unset !important",
-						"border-radius": "unset",
-					},
-				});
-				return;
+			if (isHeaderBuilderEnabled) {
+				const menuTriggerStyle = customizer?.(
+					"wpbf_header_builder_mobile_menu_trigger_style",
+				)?.get();
+
+				buttonStyle =
+					menuTriggerStyle && String(menuTriggerStyle).trim() !== ""
+						? String(menuTriggerStyle)
+						: "simple";
+
+				// Only apply if style is solid or outline (header builder mode)
+				if (buttonStyle !== "solid" && buttonStyle !== "outline") {
+					// Reset styles for simple
+					writeCSS(settingId, {
+						selector: ".wpbf-mobile-menu-toggle",
+						props: {
+							"background-color": "unset !important",
+							color: "unset",
+							padding: "unset",
+							"line-height": "unset",
+							border: "unset !important",
+							"border-radius": "unset",
+						},
+					});
+					return;
+				}
 			}
 
 			if (!value) {
@@ -102,10 +109,6 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 			const borderRadius = customizer?.(
 				"mobile_menu_hamburger_border_radius",
 			).get();
-
-			// Apply different styles based on button style
-			// When header builder is enabled, don't hardcode padding - let the dedicated padding control handle it
-			const isHeaderBuilderEnabled = headerBuilderEnabled();
 
 			if (buttonStyle === "solid") {
 				writeCSS(settingId, {
@@ -145,25 +148,32 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 	listenToCustomizerValueChange<string | number>(
 		"mobile_menu_hamburger_border_radius",
 		function (settingId, value) {
-			// Check the menu trigger style first
-			const menuTriggerStyle = customizer?.(
-				"wpbf_header_builder_mobile_menu_trigger_style",
-			)?.get();
+			const isHeaderBuilderEnabled = headerBuilderEnabled();
 
-			const buttonStyle =
-				menuTriggerStyle && String(menuTriggerStyle).trim() !== ""
-					? String(menuTriggerStyle)
-					: "simple";
+			// When header builder is disabled, always apply border radius (legacy behavior).
+			// When header builder is enabled, respect the menu trigger style setting.
+			let buttonStyle = "solid"; // Default for legacy (non-header-builder) mode
 
-			// Only apply if style is solid or outline
-			if (buttonStyle !== "solid" && buttonStyle !== "outline") {
-				writeCSS(settingId, {
-					selector: ".wpbf-mobile-menu-toggle",
-					props: {
-						"border-radius": "unset !important",
-					},
-				});
-				return;
+			if (isHeaderBuilderEnabled) {
+				const menuTriggerStyle = customizer?.(
+					"wpbf_header_builder_mobile_menu_trigger_style",
+				)?.get();
+
+				buttonStyle =
+					menuTriggerStyle && String(menuTriggerStyle).trim() !== ""
+						? String(menuTriggerStyle)
+						: "simple";
+
+				// Only apply if style is solid or outline (header builder mode)
+				if (buttonStyle !== "solid" && buttonStyle !== "outline") {
+					writeCSS(settingId, {
+						selector: ".wpbf-mobile-menu-toggle",
+						props: {
+							"border-radius": "unset !important",
+						},
+					});
+					return;
+				}
 			}
 
 			writeCSS(settingId, {

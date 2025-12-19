@@ -7,6 +7,7 @@ import {
 import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
 import { WpbfColorControlValue } from "../../../../Customizer/Controls/Color/src/color-interface";
 import { MarginPaddingValue } from "../../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
+import { headerBuilderEnabled } from "../../../../assets/js/utils/customizer-util";
 
 /**
  * Setup menu trigger controls for header builder.
@@ -36,6 +37,12 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 		listenToCustomizerValueChange<string>(
 			"wpbf_header_builder_" + device + "_menu_trigger_icon",
 			function (settingId, value) {
+				// Only apply when header builder is enabled.
+				// This prevents inserting header builder SVG into non-header-builder mobile menu toggle.
+				if (!headerBuilderEnabled()) {
+					return;
+				}
+
 				const iconVariant = value ? String(value) : "variant-1";
 
 				if (
@@ -101,6 +108,12 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 		listenToCustomizerValueChange<string>(
 			"wpbf_header_builder_" + device + "_menu_trigger_style",
 			function (settingId, value) {
+				// Only apply when header builder is enabled.
+				// This prevents modifying non-header-builder mobile menu toggle.
+				if (!headerBuilderEnabled()) {
+					return;
+				}
+
 				// Handle empty string as 'simple'
 				const buttonStyle =
 					value && String(value).trim() !== "" ? String(value) : "simple";
@@ -216,6 +229,11 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 		listenToCustomizerValueChange<string>(
 			"wpbf_header_builder_" + device + "_menu_trigger_text",
 			function (settingId, value) {
+				// Only apply when header builder is enabled.
+				if (!headerBuilderEnabled()) {
+					return;
+				}
+
 				const triggerButton = document.querySelector(
 					device === "mobile"
 						? ".wpbf-mobile-menu-toggle"
@@ -246,6 +264,11 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 		listenToCustomizerValueChange<MarginPaddingValue | string>(
 			`wpbf_header_builder_${device}_menu_trigger_padding`,
 			function (settingId, value) {
+				// Only apply when header builder is enabled.
+				if (!headerBuilderEnabled()) {
+					return;
+				}
+
 				const obj =
 					parseJsonOrUndefined<Record<string, number | string>>(value);
 
