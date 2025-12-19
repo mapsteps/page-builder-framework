@@ -113,12 +113,24 @@ export function setupConditionalControls() {
 	/**
 	 * Toggles visibility of mobile menu width control based on the selected reveal type.
 	 * Only show when reveal type is 'off-canvas'.
+	 * Only applies when header builder is enabled.
 	 */
 	function setupMobileMenuWidthVisibility() {
+		const headerBuilderSettingId = "wpbf_enable_header_builder";
 		const revealAsSettingId = "wpbf_header_builder_mobile_offcanvas_reveal_as";
 		const controlIdToToggle = "mobile_menu_width";
 
 		function applyVisibility(revealType: string) {
+			// Only apply this JS visibility logic when header builder is enabled.
+			// When disabled, let the PHP activeCallback handle visibility.
+			const isHeaderBuilderEnabled = window.wp
+				.customize?.(headerBuilderSettingId)
+				?.get();
+
+			if (!isHeaderBuilderEnabled) {
+				return;
+			}
+
 			const shouldShow = revealType === "off-canvas";
 
 			try {
@@ -146,12 +158,24 @@ export function setupConditionalControls() {
 	/**
 	 * Toggles visibility of mobile menu overlay controls based on the selected reveal type.
 	 * Only show when reveal type is 'off-canvas'.
+	 * Only applies when header builder is enabled.
 	 */
 	function setupMobileMenuOverlayVisibility() {
+		const headerBuilderSettingId = "wpbf_enable_header_builder";
 		const revealAsSettingId = "wpbf_header_builder_mobile_offcanvas_reveal_as";
 		const controlIdToToggle = "mobile_menu_overlay";
 
 		function applyVisibility(revealType: string) {
+			// Only apply this JS visibility logic when header builder is enabled.
+			// When disabled, let the PHP activeCallback handle visibility.
+			const isHeaderBuilderEnabled = window.wp
+				.customize?.(headerBuilderSettingId)
+				?.get();
+
+			if (!isHeaderBuilderEnabled) {
+				return;
+			}
+
 			const shouldShow = revealType === "off-canvas";
 
 			try {
@@ -180,13 +204,25 @@ export function setupConditionalControls() {
 	 * Toggles visibility of mobile menu overlay color control based on:
 	 * 1. The selected reveal type (must be 'off-canvas')
 	 * 2. The mobile_menu_overlay toggle (must be enabled)
+	 * Only applies when header builder is enabled.
 	 */
 	function setupMobileMenuOverlayColorVisibility() {
+		const headerBuilderSettingId = "wpbf_enable_header_builder";
 		const revealAsSettingId = "wpbf_header_builder_mobile_offcanvas_reveal_as";
 		const overlayToggleSettingId = "mobile_menu_overlay";
 		const controlIdToToggle = "mobile_menu_overlay_color";
 
 		function applyVisibility() {
+			// Only apply this JS visibility logic when header builder is enabled.
+			// When disabled, let the PHP activeCallback handle visibility.
+			const isHeaderBuilderEnabled = window.wp
+				.customize?.(headerBuilderSettingId)
+				?.get();
+
+			if (!isHeaderBuilderEnabled) {
+				return;
+			}
+
 			const revealType = window.wp.customize?.(revealAsSettingId)?.get();
 			const overlayEnabled = window.wp
 				.customize?.(overlayToggleSettingId)
