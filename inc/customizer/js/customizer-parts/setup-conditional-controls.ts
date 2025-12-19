@@ -62,8 +62,10 @@ export function setupConditionalControls() {
 
 	/**
 	 * Toggles visibility of mobile menu trigger controls based on the selected menu style.
+	 * Only applies when header builder is enabled.
 	 */
 	function setupMobileMenuTriggerVisibility() {
+		const headerBuilderSettingId = "wpbf_enable_header_builder";
 		const styleSettingId = "wpbf_header_builder_mobile_menu_trigger_style";
 
 		const controlsToToggle = [
@@ -72,6 +74,16 @@ export function setupConditionalControls() {
 		];
 
 		function applyVisibility(buttonStyle: string) {
+			// Only apply this JS visibility logic when header builder is enabled.
+			// When disabled, let the PHP activeCallback handle visibility.
+			const isHeaderBuilderEnabled = window.wp
+				.customize?.(headerBuilderSettingId)
+				?.get();
+
+			if (!isHeaderBuilderEnabled) {
+				return;
+			}
+
 			const shouldShow = buttonStyle === "outline" || buttonStyle === "solid";
 
 			controlsToToggle.forEach((controlId) => {

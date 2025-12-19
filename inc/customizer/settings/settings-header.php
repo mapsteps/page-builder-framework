@@ -1333,7 +1333,7 @@ wpbf_customizer_field()
 		array(
 			'setting'  => 'mobile_menu_hamburger_bg_color',
 			'operator' => '!=',
-			'value'    => false,
+			'value'    => '',
 		),
 	] )
 	->addToSection( 'wpbf_mobile_menu_options' );
