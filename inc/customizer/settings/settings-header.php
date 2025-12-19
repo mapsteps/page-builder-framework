@@ -854,13 +854,6 @@ wpbf_customizer_field()
 		'max'  => 40,
 		'step' => 1,
 	] )
-	->activeCallback( [
-		array(
-			'setting'  => 'menu_position',
-			'operator' => 'not in',
-			'value'    => array( 'menu-off-canvas', 'menu-off-canvas-left' ),
-		),
-	] )
 	->addToSection( 'wpbf_menu_options' );
 
 // Background color.
