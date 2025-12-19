@@ -376,7 +376,7 @@ final class Customizer {
 	 */
 	public function register_control_dependencies() {
 
-		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerControlDependencies', CustomizerStore::$added_control_dependencies );
+		wp_localize_script( 'wpbf-controls-bundle', 'wpbfCustomizerControlDependencies', CustomizerStore::$added_control_dependencies );
 
 	}
 
