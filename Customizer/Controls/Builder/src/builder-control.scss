@@ -8,7 +8,7 @@
 
 .customize-pane-child.control-panel-wpbf-builder {
 	&.builder-is-shown
-		> .control-subsection:not(.builder-control-section):not(#accordion-section-wpbf_sub_menu_options):not(#accordion-section-wpbf_mobile_sub_menu_options)
+		> .control-subsection:not(.builder-control-section):not(#accordion-section-wpbf_sub_menu_options):not(#accordion-section-wpbf_mobile_sub_menu_options):not(#accordion-section-wpbf_sticky_menu_options)
 		> .accordion-section-title {
 		display: none;
 	}
