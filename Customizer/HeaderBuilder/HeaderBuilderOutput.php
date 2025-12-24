@@ -280,6 +280,9 @@ class HeaderBuilderOutput {
 				} elseif ( 'column_1_end' === $column_key ) {
 					$alignment_class = 'wpbf-content-end';
 					$column_position = 'left';
+				} elseif ( 'column_2' === $column_key ) {
+					$alignment_class = 'wpbf-content-center';
+					$column_position = 'center';
 				} elseif ( 'column_3_start' === $column_key ) {
 					$alignment_class = 'wpbf-content-start';
 					$column_position = 'right';
@@ -435,6 +438,9 @@ class HeaderBuilderOutput {
 			if ( 'column_1_start' === $column_key ) {
 				$alignment_class = 'wpbf-content-start';
 				$column_position = 'left';
+			} elseif ( 'column_2' === $column_key ) {
+				$alignment_class = 'wpbf-content-center';
+				$column_position = 'center';
 			} elseif ( 'column_3_end' === $column_key ) {
 				$alignment_class = 'wpbf-content-end';
 				$column_position = 'right';
@@ -703,7 +709,8 @@ class HeaderBuilderOutput {
 		}
 
 		if ( 'mobile_menu' !== $placement && 'desktop_full_screen_menu' !== $placement && 'desktop_off_canvas_menu' !== $placement ) {
-			$menu_position_class = 'wpbf-menu-' . $placement;
+			// Align with existing CSS class naming: use "wpbf-menu-centered" when placement is center.
+			$menu_position_class = 'center' === $placement ? 'wpbf-menu-centered' : 'wpbf-menu-' . $placement;
 
 			echo '<nav class="navigation wpbf-clearfix ' . esc_attr( $menu_position_class ) . '" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="' . __( 'Site Navigation', 'page-builder-framework' ) . '">';
 		}
