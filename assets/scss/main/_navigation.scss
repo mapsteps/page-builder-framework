@@ -113,6 +113,13 @@
 	right: -20px;
 }
 
+// When search is in left-aligned zone or start-aligned column, expand to the right instead of left.
+.wpbf-header-zone-left .wpbf-menu-item-search .wpbf-menu-search,
+.wpbf-content-start .wpbf-menu-item-search .wpbf-menu-search {
+	right: auto;
+	left: 0;
+}
+
 /* Menu */
 
 // Animation

@@ -44,10 +44,15 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 	listenToCustomizerValueChange<WpbfColorControlValue>(
 		"mobile_menu_hamburger_color",
 		function (settingId, value) {
+			const colorValue = toStringColor(value);
 			writeCSS(settingId, {
 				selector:
-					".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a, .wpbf-mobile-menu-toggle svg, .wpbf-mobile-menu-toggle svg path",
-				props: { color: toStringColor(value) },
+					".wpbf-mobile-nav-item, .wpbf-mobile-nav-item a, .wpbf-mobile-menu-toggle, .wpbf-mobile-menu-toggle.wpbff, .wpbf-mobile-menu-toggle svg, .wpbf-mobile-menu-toggle svg path",
+				props: {
+					color: colorValue + " !important",
+					fill: colorValue,
+					stroke: colorValue,
+				},
 			});
 		},
 	);

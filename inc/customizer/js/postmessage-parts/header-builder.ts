@@ -5,11 +5,9 @@ import {
 	toStringColor,
 	listenToBuilderResponsiveControl,
 	WpbfCheckboxButtonsetResponsiveValue,
+	mediaQueries,
 } from "../customizer-util";
-import {
-	WpbfColorControlValue,
-	WpbfMulticolorControlValue,
-} from "../../../../Customizer/Controls/Color/src/color-interface";
+import { WpbfMulticolorControlValue } from "../../../../Customizer/Controls/Color/src/color-interface";
 
 export default function headerBuilderSetup() {
 	// Row visibility.
@@ -120,37 +118,42 @@ export default function headerBuilderSetup() {
 		},
 	);
 
-	// Search icon settings.
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"wpbf_header_builder_search_icon_color",
+	// Desktop search icon settings.
+	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
+		"wpbf_header_builder_desktop_search_icon_color",
 		function (settingId, value) {
+			const defaultColor = toStringColor(value?.default ?? "");
+			const hoverColor = toStringColor(value?.hover ?? "");
+
+			// Use desktop media query to scope to desktop viewport only
 			writeCSS(settingId, {
-				selector: ".wpbf-header-search-icon svg",
-				props: { color: toStringColor(value) },
+				mediaQuery: `@media (${mediaQueries.desktop})`,
+				blocks: [
+					{
+						selector:
+							".wpbf-menu-item-search svg, .wpbf-menu-item-search .wpbff",
+						props: {
+							color: defaultColor + " !important",
+							fill: defaultColor + " !important",
+						},
+					},
+					{
+						selector:
+							".wpbf-menu-item-search:hover svg, .wpbf-menu-item-search:focus svg, .wpbf-menu-item-search:hover .wpbff, .wpbf-menu-item-search:focus .wpbff",
+						props: {
+							color: hoverColor + " !important",
+							fill: hoverColor + " !important",
+						},
+					},
+				],
 			});
 		},
 	);
 
-	listenToCustomizerValueChange<WpbfColorControlValue>(
-		"wpbf_header_builder_search_icon_color_alt",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-header-search-icon:hover svg",
-				props: { color: toStringColor(value) },
-			});
-		},
-	);
-
-	listenToCustomizerValueChange<string | number>(
-		"wpbf_header_builder_search_icon_size",
-		function (settingId, value) {
-			writeCSS(settingId, {
-				selector: ".wpbf-header-search-icon svg",
-				props: {
-					width: maybeAppendSuffix(value),
-					height: maybeAppendSuffix(value),
-				},
-			});
-		},
-	);
+	listenToBuilderResponsiveControl({
+		controlId: "wpbf_header_builder_desktop_search_icon_size",
+		cssSelector: ".wpbf-menu-item-search svg, .wpbf-menu-item-search .wpbff",
+		cssProps: ["width", "height", "font-size"],
+		useValueSuffix: true,
+	});
 }
