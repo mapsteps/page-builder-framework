@@ -8,7 +8,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
 use Mapsteps\Wpbf\Customizer\Controls\Bundle\ControlsBundleLoader;
-use Mapsteps\Wpbf\Customizer\Controls\Responsive\ResponsiveUtil;
 use WP_Customize_Control;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
