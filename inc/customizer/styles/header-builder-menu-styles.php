@@ -220,31 +220,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 			if ( $menu_off_canvas_width ) {
 				if ( 'off-canvas-left' === $desktop_reveal_as ) {
-					wpbf_write_css( array(
-						'blocks' => array(
-							array(
-								'selector' => '.wpbf-menu-off-canvas-right',
-								'props'    => array(
-									'width' => wpbf_maybe_append_suffix( $menu_off_canvas_width ),
-									'right' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ),
-								),
-							),
-							array(
-								'selector' => '.wpbf-push-menu-right.active',
-								'props'    => array(
-									'left' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ),
-								),
-							),
-							array(
-								'selector' => '.wpbf-push-menu-right.active .wpbf-navigation-active',
-								'props'    => array(
-									'left' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ) . ' !important',
-								),
-							),
-						),
-					) );
-				} elseif ( 'off-canvas' === $desktop_reveal_as ) {
-					// Right position (default).
+					// Left position - menu slides in from left, push content to right.
 					wpbf_write_css( array(
 						'blocks' => array(
 							array(
@@ -264,6 +240,31 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 								'selector' => '.wpbf-push-menu-left.active .wpbf-navigation-active',
 								'props'    => array(
 									'left' => wpbf_maybe_append_suffix( $menu_off_canvas_width ) . ' !important',
+								),
+							),
+						),
+					) );
+				} elseif ( 'off-canvas' === $desktop_reveal_as ) {
+					// Right position (default) - menu slides in from right, push content to left.
+					wpbf_write_css( array(
+						'blocks' => array(
+							array(
+								'selector' => '.wpbf-menu-off-canvas-right',
+								'props'    => array(
+									'width' => wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+									'right' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+								),
+							),
+							array(
+								'selector' => '.wpbf-push-menu-right.active',
+								'props'    => array(
+									'left' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ),
+								),
+							),
+							array(
+								'selector' => '.wpbf-push-menu-right.active .wpbf-navigation-active',
+								'props'    => array(
+									'left' => '-' . wpbf_maybe_append_suffix( $menu_off_canvas_width ) . ' !important',
 								),
 							),
 						),

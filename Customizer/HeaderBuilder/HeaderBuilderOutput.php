@@ -426,7 +426,7 @@ class HeaderBuilderOutput {
 
 		// Always render all 5 columns to maintain proper positioning
 		$all_column_keys = array( 'column_1_start', 'column_1_end', 'column_2', 'column_3_start', 'column_3_end' );
-		
+
 		foreach ( $all_column_keys as $column_key ) {
 			$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
 
@@ -776,7 +776,7 @@ class HeaderBuilderOutput {
 			echo '<div class="wpbf-menu-overlay"></div>';
 		}
 
-		$reveal_as = get_theme_mod( 'wpbf_header_builder_desktop_offcanvas_reveal_as' );
+		$reveal_as = get_theme_mod( 'wpbf_header_builder_desktop_offcanvas_reveal_as', 'off-canvas' );
 
 		$supported_reveal_as = [ 'full-screen', 'off-canvas', 'off-canvas-left' ];
 

@@ -168,6 +168,20 @@ export default function headerBuilderRevealSetup() {
 		) as HTMLElement;
 		if (!desktopMenuContainer) return;
 
+		// Update push menu body classes based on reveal type
+		const isPushMenu = window.wp.customize?.("menu_off_canvas_push")?.get();
+		document.body.classList.remove(
+			"wpbf-push-menu-left",
+			"wpbf-push-menu-right",
+		);
+		if (isPushMenu) {
+			if (value === "off-canvas-left") {
+				document.body.classList.add("wpbf-push-menu-left");
+			} else if (value === "off-canvas" || !value) {
+				document.body.classList.add("wpbf-push-menu-right");
+			}
+		}
+
 		// Reset toggle button state if it was active
 		const toggle = document.querySelector("#wpbf-menu-toggle");
 		if (toggle?.classList.contains("active")) {

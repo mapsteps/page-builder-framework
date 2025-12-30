@@ -37,16 +37,19 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 			// Only run if header builder is enabled (Premium handles Legacy)
 			if (!headerBuilderEnabled()) return;
 
-			const menuPosition = window.wp.customize?.("menu_position")?.get();
+			// In Header Builder mode, use reveal_as setting instead of legacy menu_position
+			const revealAs = window.wp
+				.customize?.("wpbf_header_builder_desktop_offcanvas_reveal_as")
+				?.get();
 			const body = document.body;
 
 			// Remove existing classes first to be safe
 			body.classList.remove("wpbf-push-menu-left", "wpbf-push-menu-right");
 
 			if (value) {
-				if (menuPosition === "menu-off-canvas-left") {
+				if (revealAs === "off-canvas-left") {
 					body.classList.add("wpbf-push-menu-left");
-				} else {
+				} else if (revealAs === "off-canvas" || !revealAs) {
 					body.classList.add("wpbf-push-menu-right");
 				}
 			}
