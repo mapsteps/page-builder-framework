@@ -115,11 +115,6 @@ class TypographyField extends BaseField {
 
 			wp_localize_script( 'wpbf-controls-bundle', 'wpbfFontProperties', $this->font_properties );
 			wp_localize_script( 'wpbf-controls-bundle', 'wpbfGoogleFonts', ( new GoogleFontsUtil() )->getCollections() );
-
-			// Create wpbfGoogleFontFamilies with Select2-formatted data for font family dropdowns.
-			// This uses makeFontFamilyChoices to format the data properly with Standard Fonts and Google Fonts groups.
-			wp_localize_script( 'wpbf-controls-bundle', 'wpbfGoogleFontFamilies', $this->typography_choices->makeFontFamilyChoices( [] ) );
-
 			wp_add_inline_script( 'wpbf-controls-bundle', 'const wpbfFieldsFontVariants = {};', 'before' );
 
 			TypographyStore::$control_vars_printed = true;

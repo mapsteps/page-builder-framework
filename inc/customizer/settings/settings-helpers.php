@@ -74,13 +74,9 @@ function wpbf_default_font_choices() {
  */
 function wpbf_typography_field_properties() {
 
-	return array(
-		'choices_global_var' => array(
-			'fonts' => array(
-				'families' => 'wpbfGoogleFontFamilies',
-				'variants' => 'wpbfGoogleFontVariants',
-			),
-		),
-	);
+	// NOTE: choices_global_var was added but never fully implemented.
+	// The global variables 'wpbfGoogleFontFamilies' and 'wpbfGoogleFontVariants' don't exist.
+	// Removing this configuration reverts to the working approach where choices are passed directly.
+	return array();
 
 }
