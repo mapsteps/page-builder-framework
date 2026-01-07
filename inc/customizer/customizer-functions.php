@@ -522,13 +522,13 @@ function wpbf_global_typography_js_vars() {
 	$fonts_arg = ! empty( $fonts_arg['fonts'] ) && is_array( $fonts_arg['fonts'] ) ? $fonts_arg['fonts'] : array();
 
 	wp_localize_script(
-		'wpbf-select-control',
+		'wpbf-controls-bundle',
 		'wpbfGoogleFontFamilies',
 		( new TypographyChoices() )->makeFontFamilyChoices( $fonts_arg )
 	);
 
 	wp_localize_script(
-		'wpbf-select-control',
+		'wpbf-controls-bundle',
 		'wpbfGoogleFontVariants',
 		( new TypographyChoices() )->makeFontVariantChoices( $fonts_arg )
 	);
