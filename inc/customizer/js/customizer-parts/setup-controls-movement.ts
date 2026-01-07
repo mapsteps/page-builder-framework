@@ -1,6 +1,7 @@
 import { moveCustomizerControls } from "../../../../assets/js/utils/customizer-util";
 
 export function setupControlsMovement() {
+	// Header builder controls movement.
 	moveCustomizerControls({
 		dependency: {
 			settingId: "wpbf_enable_header_builder",
@@ -222,6 +223,79 @@ export function setupControlsMovement() {
 						prio: {
 							from: undefined,
 							to: 50,
+						},
+					},
+				],
+			},
+		],
+	});
+
+	// Footer builder controls movement.
+	moveCustomizerControls({
+		dependency: {
+			settingId: "wpbf_enable_footer_builder",
+			moveForwardWhenValueIs: true,
+		},
+		sections: [
+			{
+				from: "wpbf_footer_options",
+				to: "wpbf_footer_builder_desktop_row_2_section",
+				controlsToMove: [
+					{
+						id: "footer_width",
+						label: {
+							from: undefined,
+							to: "Container Width",
+						},
+						prio: {
+							from: undefined,
+							to: 10,
+						},
+					},
+					{
+						id: "footer_height",
+						label: {
+							from: undefined,
+							to: "Vertical Padding",
+						},
+						prio: {
+							from: undefined,
+							to: 15,
+						},
+					},
+					{
+						id: "footer_bg_color",
+						prio: {
+							from: undefined,
+							to: 200,
+						},
+					},
+					{
+						id: "footer_font_color",
+						prio: {
+							from: undefined,
+							to: 205,
+						},
+					},
+					{
+						id: "footer_accent_color",
+						prio: {
+							from: undefined,
+							to: 210,
+						},
+					},
+					{
+						id: "footer_accent_color_alt",
+						prio: {
+							from: undefined,
+							to: 215,
+						},
+					},
+					{
+						id: "footer_font_size",
+						prio: {
+							from: undefined,
+							to: 220,
 						},
 					},
 				],
