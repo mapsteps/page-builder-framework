@@ -199,6 +199,30 @@ class FooterBuilderOutput {
 	 */
 	private function render_row( $row_key, $columns ) {
 
+		/**
+		 * Filter to allow premium plugin to override entire row content.
+		 *
+		 * When custom content is provided, the row will render with the custom content
+		 * instead of the normal column/widget structure. This is used by wpbf-premium
+		 * for "Custom Content" controls that allow page builder template shortcodes.
+		 *
+		 * @param string $custom_content The custom content to render. Empty string to use default rendering.
+		 * @param string $row_key        The row key (e.g., 'desktop_row_1', 'mobile_row_2').
+		 */
+		$custom_content = apply_filters( 'wpbf_footer_builder_row_content', '', $row_key );
+
+		if ( ! empty( $custom_content ) ) {
+			$row_class = 'wpbf-footer-row wpbf-footer-row-' . esc_attr( $row_key );
+
+			echo '<div class="' . esc_attr( $row_class ) . '">';
+			echo '<div class="wpbf-container wpbf-container-center">';
+			echo do_shortcode( $custom_content );
+			echo '</div>';
+			echo '</div>';
+
+			return;
+		}
+
 		$container_class = 'wpbf-container wpbf-container-center';
 
 		$row_class = 'wpbf-footer-row wpbf-footer-row-' . esc_attr( $row_key );
