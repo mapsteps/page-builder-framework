@@ -26,6 +26,7 @@ import headerBuilderSearchSetup from "./postmessage-parts/header-builder-search"
 import mobileHeaderBuilderRowsSetup from "./postmessage-parts/mobile-header-builder-rows";
 import headerBuilderRevealSetup from "./postmessage-parts/header-builder-reveal";
 import menuTriggersSetup from "./postmessage-parts/menu-triggers";
+import footerBuilderRowsSetup from "./postmessage-parts/footer-builder-rows";
 
 (function ($: JQueryStatic, customizer?: WpbfCustomize) {
 	// Mobile menu resize.
@@ -60,6 +61,7 @@ import menuTriggersSetup from "./postmessage-parts/menu-triggers";
 	mobileHeaderBuilderRowsSetup();
 	headerBuilderRevealSetup();
 	menuTriggersSetup(customizer);
+	footerBuilderRowsSetup();
 	window.wp.customize?.preview?.bind("pro_notice", function (action: string) {
 		if (action === "show") {
 			proNotice.show();
