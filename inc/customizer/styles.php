@@ -72,4 +72,8 @@ require_once WPBF_THEME_DIR . '/inc/customizer/styles/header-builder-styles.php'
 // Footer.
 require_once WPBF_THEME_DIR . '/inc/customizer/styles/footer-styles.php';
 
+
+// Footer Builder.
+require_once WPBF_THEME_DIR . '/inc/customizer/styles/footer-builder-styles.php';
+
 do_action( 'wpbf_after_customizer_css' );
