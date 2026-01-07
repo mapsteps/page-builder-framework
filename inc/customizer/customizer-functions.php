@@ -16,6 +16,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
+use Mapsteps\Wpbf\Customizer\FooterBuilder\FooterBuilderOutput;
 use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderConfig;
 use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderOutput;
 
@@ -111,6 +112,21 @@ if ( ! function_exists( 'wpbf_header_builder_enabled' ) ) {
 	function wpbf_header_builder_enabled() {
 
 		return wpbf_customize_bool_value( 'wpbf_enable_header_builder' );
+
+	}
+
+}
+
+if ( ! function_exists( 'wpbf_footer_builder_enabled' ) ) {
+
+	/**
+	 * ----------------------------------------------------------------------
+	 * Footer Builder Functions
+	 * ----------------------------------------------------------------------
+	 */
+	function wpbf_footer_builder_enabled() {
+
+		return wpbf_customize_bool_value( 'wpbf_enable_footer_builder' );
 
 	}
 
@@ -550,5 +566,22 @@ function wpbf_header_builder_hooks() {
 	}
 
 	CustomizerStore::headerBuilderOutputInstance()->setup_hooks();
+
+}
+
+/**
+ * Setup hooks when footer builder is enabled.
+ *
+ * This function will be called directly in `template-parts/footer.php` file.
+ *
+ * @see page-builder-framework/inc/template-parts/footer.php
+ */
+function wpbf_footer_builder_hooks() {
+
+	if ( ! wpbf_footer_builder_enabled() ) {
+		return;
+	}
+
+	CustomizerStore::footerBuilderOutputInstance()->setup_hooks();
 
 }

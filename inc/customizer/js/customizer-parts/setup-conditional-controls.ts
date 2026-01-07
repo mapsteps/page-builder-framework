@@ -19,6 +19,7 @@ export function setupConditionalControls() {
 
 	function init() {
 		listenToHeaderBuilderToggleValue();
+		listenToFooterBuilderToggleValue();
 		setupMobileMenuTriggerVisibility();
 		setupMobileMenuWidthVisibility();
 		setupMobileMenuOverlayVisibility();
@@ -28,7 +29,7 @@ export function setupConditionalControls() {
 	}
 
 	/**
-	 * Listen to the toggle control's value change.
+	 * Listen to the header builder toggle control's value change.
 	 */
 	function listenToHeaderBuilderToggleValue() {
 		wp.customize?.control(
@@ -58,6 +59,55 @@ export function setupConditionalControls() {
 		enabled?: boolean,
 	) {
 		control.container.toggle(!!enabled);
+	}
+
+	/**
+	 * Listen to the footer builder toggle control's value change.
+	 * When footer builder is enabled, hide the old footer settings.
+	 */
+	function listenToFooterBuilderToggleValue() {
+		const footerBuilderSettingId = "wpbf_enable_footer_builder";
+
+		// Controls to hide when footer builder is enabled.
+		const footerControlsToToggle = [
+			"footer_layout",
+			"footer_column_one_layout",
+			"footer_column_one",
+			"footer_column_two_separator",
+			"footer_column_two_layout",
+			"footer_column_two",
+			"footer_width",
+			"footer_height",
+			"footer_bg_color",
+			"footer_font_color",
+			"footer_accent_color",
+			"footer_accent_color_alt",
+			"footer_font_size",
+		];
+
+		function applyFooterControlsVisibility(enabled: boolean) {
+			footerControlsToToggle.forEach((controlId) => {
+				try {
+					window.wp.customize?.control(controlId, function (control) {
+						if (!control || !control.container) return;
+						control.container.toggle(!enabled);
+					});
+				} catch (e) {
+					// ignore if control doesn't exist yet
+				}
+			});
+		}
+
+		// Bind to changes
+		window.wp.customize?.(footerBuilderSettingId, function (setting) {
+			setting.bind(function (val: boolean) {
+				applyFooterControlsVisibility(val);
+			});
+		});
+
+		// Initial apply
+		const initial = window.wp.customize?.(footerBuilderSettingId)?.get();
+		applyFooterControlsVisibility(!!initial);
 	}
 
 	/**

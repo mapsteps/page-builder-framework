@@ -9,6 +9,7 @@ use Mapsteps\Wpbf\Customizer\Entities\CustomizerPanelEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSectionEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
+use Mapsteps\Wpbf\Customizer\FooterBuilder\FooterBuilderOutput;
 use Mapsteps\Wpbf\Customizer\HeaderBuilder\HeaderBuilderOutput;
 
 /**
@@ -95,6 +96,13 @@ final class CustomizerStore {
 	private static $header_builder_output_instance;
 
 	/**
+	 * Footer builder output instance.
+	 *
+	 * @var FooterBuilderOutput
+	 */
+	private static $footer_builder_output_instance;
+
+	/**
 	 * Get header builder output instance.
 	 *
 	 * @return HeaderBuilderOutput
@@ -106,6 +114,21 @@ final class CustomizerStore {
 		}
 
 		return self::$header_builder_output_instance;
+
+	}
+
+	/**
+	 * Get footer builder output instance.
+	 *
+	 * @return FooterBuilderOutput
+	 */
+	public static function footerBuilderOutputInstance() {
+
+		if ( ! self::$footer_builder_output_instance ) {
+			self::$footer_builder_output_instance = new FooterBuilderOutput();
+		}
+
+		return self::$footer_builder_output_instance;
 
 	}
 

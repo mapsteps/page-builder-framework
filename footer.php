@@ -9,6 +9,8 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+		wpbf_footer_builder_hooks();
+
 		do_action( 'wpbf_before_footer' );
 
 		do_action( 'wpbf_footer' );
