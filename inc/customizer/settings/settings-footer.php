@@ -13,6 +13,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 // Footer.
 wpbf_customizer_panel()
 	->id( 'footer_panel' )
+	->type( 'builder' )
 	->title( __( 'Footer', 'page-builder-framework' ) )
 	->priority( 5 )
 	->add();
