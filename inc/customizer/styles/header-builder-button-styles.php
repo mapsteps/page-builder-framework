@@ -49,6 +49,52 @@ foreach ( $button_keys as $button_key ) {
 		),
 	) );
 
+	// Sticky navigation styles - only retrieve these once per loop iteration, not in nested conditions.
+	$cta_button_sticky_background_color     = wpbf_customize_str_value( 'cta_button_sticky_background_color' );
+	$cta_button_sticky_background_color_alt = wpbf_customize_str_value( 'cta_button_sticky_background_color_alt' );
+	$cta_button_sticky_font_color           = wpbf_customize_str_value( 'cta_button_sticky_font_color' );
+	$cta_button_sticky_font_color_alt       = wpbf_customize_str_value( 'cta_button_sticky_font_color_alt' );
+
+	// Apply sticky navigation colors when sticky header is active.
+	if ( $cta_button_sticky_background_color || $cta_button_sticky_font_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-navigation-active ' . $selector,
+			'props'    => array(
+				'background-color' => $cta_button_sticky_background_color ? $cta_button_sticky_background_color : null,
+				'color'            => $cta_button_sticky_font_color ? $cta_button_sticky_font_color : null,
+			),
+		) );
+
+		if ( ! $cta_button_sticky_font_color_alt ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-navigation-active ' . $selector . ':hover',
+				'props'    => array(
+					'color' => $cta_button_sticky_font_color ? $cta_button_sticky_font_color : null,
+				),
+			) );
+		}
+
+		if ( ! $cta_button_sticky_background_color_alt ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-navigation-active ' . $selector . ':hover',
+				'props'    => array(
+					'background-color' => $cta_button_sticky_background_color ? $cta_button_sticky_background_color : null,
+				),
+			) );
+		}
+	}
+
+	if ( $cta_button_sticky_background_color_alt || $cta_button_sticky_font_color_alt ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-navigation-active ' . $selector . ':hover',
+			'props'    => array(
+				'background-color' => $cta_button_sticky_background_color_alt ? $cta_button_sticky_background_color_alt : null,
+				'color'            => $cta_button_sticky_font_color_alt ? $cta_button_sticky_font_color_alt : null,
+			),
+		) );
+	}
+
+
 	foreach ( $devices as $device ) {
 		if ( 'tablet' !== $device && 'mobile' !== $device ) {
 			continue;
