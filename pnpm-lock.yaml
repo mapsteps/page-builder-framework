@@ -119,7 +119,7 @@ importers:
         version: 7.3.0(@types/node@24.10.4)(lightningcss@1.30.2)(sass-embedded@1.97.2)(sass@1.97.2)(terser@5.44.1)
       wordpress__customize-browser:
         specifier: github:ultrafastwork/wordpress__customize-browser
-        version: '@types/wordpress__customize-browser@https://codeload.github.com/ultrafastwork/wordpress__customize-browser/tar.gz/0b0a21b207362d12f84472df6781e188736685eb'
+        version: '@types/wordpress__customize-browser@https://codeload.github.com/ultrafastwork/wordpress__customize-browser/tar.gz/f07f515e15d1835142f8dec2e3e696fce48f1162'
 
 packages:
 
@@ -982,8 +982,8 @@ packages:
   '@types/sizzle@2.3.10':
     resolution: {integrity: sha512-TC0dmN0K8YcWEAEfiPi5gJP14eJe30TTGjkvek3iM/1NdHHsdCA/Td6GvNndMOo/iSnIsZ4HuuhrYPDAmbxzww==}
 
-  '@types/wordpress__customize-browser@https://codeload.github.com/ultrafastwork/wordpress__customize-browser/tar.gz/0b0a21b207362d12f84472df6781e188736685eb':
-    resolution: {tarball: https://codeload.github.com/ultrafastwork/wordpress__customize-browser/tar.gz/0b0a21b207362d12f84472df6781e188736685eb}
+  '@types/wordpress__customize-browser@https://codeload.github.com/ultrafastwork/wordpress__customize-browser/tar.gz/f07f515e15d1835142f8dec2e3e696fce48f1162':
+    resolution: {tarball: https://codeload.github.com/ultrafastwork/wordpress__customize-browser/tar.gz/f07f515e15d1835142f8dec2e3e696fce48f1162}
     version: 5.5.5
 
   '@use-gesture/core@10.3.1':
@@ -3261,7 +3261,7 @@ snapshots:
 
   '@types/sizzle@2.3.10': {}
 
-  '@types/wordpress__customize-browser@https://codeload.github.com/ultrafastwork/wordpress__customize-browser/tar.gz/0b0a21b207362d12f84472df6781e188736685eb':
+  '@types/wordpress__customize-browser@https://codeload.github.com/ultrafastwork/wordpress__customize-browser/tar.gz/f07f515e15d1835142f8dec2e3e696fce48f1162':
     dependencies:
       '@types/jquery': 3.5.33
 
