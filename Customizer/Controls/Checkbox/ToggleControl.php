@@ -74,7 +74,7 @@ class ToggleControl extends CheckboxControl {
 	protected function content_template() {
 		?>
 
-		<div class="wpbf-{{ data.checkboxType }}-control wpbf-{{ data.checkboxType }}">
+		<div class="{{ data.checkboxType }}-control wpbf-{{ data.checkboxType }}">
 			<# if ( data.label || data.description ) { #>
 			<div class="wpbf-control-label">
 				<# if ( data.label ) { #>

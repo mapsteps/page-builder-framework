@@ -25,13 +25,13 @@ class ToggleField extends CheckboxField {
 		if ( isset( $props['checkbox_type'] ) ) {
 			if ( isset( $props['wrapper_attrs'] ) && is_array( $props['wrapper_attrs'] ) ) {
 				if ( isset( $props['wrapper_attrs']['class'] ) ) {
-					$props['wrapper_attrs']['class'] .= ' wpbf-customize-control-switch';
+					$props['wrapper_attrs']['class'] .= ' switch-control';
 				} else {
-					$props['wrapper_attrs']['class'] = '{default_class} wpbf-customize-control-switch';
+					$props['wrapper_attrs']['class'] = '{default_class} switch-control';
 				}
 			} else {
 				$props['wrapper_attrs'] = array(
-					'class' => '{default_class} wpbf-customize-control-switch',
+					'class' => '{default_class} switch-control',
 				);
 			}
 

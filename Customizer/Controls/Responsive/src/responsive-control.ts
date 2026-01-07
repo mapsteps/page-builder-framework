@@ -64,7 +64,7 @@ function switchPreviewButtons(device: string) {
 	});
 
 	// Switch the label to target first input field in current device mode.
-	forEachEl(".wpbf-customize-control-responsive", function (el) {
+	forEachEl(".responsive-control", function (el) {
 		if (!(el instanceof HTMLButtonElement)) return;
 
 		const setting = el.dataset.wpbfSetting;

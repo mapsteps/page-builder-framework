@@ -84,7 +84,7 @@ class ResponsiveGenericControl extends GenericControl {
 
 		$this->setting->default = $this->save_as_json ? wp_json_encode( $this->default_array ) : $this->default_array;
 
-		$extra_classname = 'wpbf-customize-control-generic wpbf-customize-control-responsive';
+		$extra_classname = 'generic-control responsive-control';
 
 		if ( ! empty( $this->wrapper_attrs['class'] ) ) {
 			$existing_classname = $this->wrapper_attrs['class'];

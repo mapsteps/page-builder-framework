@@ -79,7 +79,7 @@ export default function MarginPaddingControl(customizer: WpbfCustomize) {
 			);
 
 			if (isResponsive) {
-				this.container?.addClass("wpbf-customize-control-margin-padding");
+				this.container?.addClass("margin-padding-control");
 				this.container?.data("control-subtype", this.params?.subtype);
 			}
 

@@ -1,4 +1,4 @@
-.wpbf-customize-control-responsive {
+.responsive-control {
 	position: relative;
 
 	.wpbf-control-header {
@@ -55,7 +55,7 @@
 		}
 	}
 
-	&.wpbf-customize-control-switch {
+	&.switch-control {
 		top: -5px;
 
 		.wpbf-switch {
@@ -71,10 +71,10 @@
 	}
 }
 
-.wpbf-customize-control-responsive-horizontal {
+.responsive-horizontal-control {
 	margin-bottom: -35px;
 
-	&.wpbf-customize-control-color {
+	&.color-control {
 		margin-bottom: -30px;
 
 		.wpbf-trigger-circle-wrapper {
@@ -82,7 +82,7 @@
 		}
 	}
 
-	&.wpbf-customize-control-checkbox {
+	&.checkbox-control {
 		display: flex;
 		justify-content: flex-end;
 		top: 9px;
@@ -92,7 +92,7 @@
 		}
 	}
 
-	&.wpbf-customize-control-toggle {
+	&.toggle-control {
 		top: 14px;
 
 		.wpbf-toggle {

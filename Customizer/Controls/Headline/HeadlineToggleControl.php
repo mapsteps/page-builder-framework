@@ -23,7 +23,7 @@ class HeadlineToggleControl extends ToggleControl {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		$headline_toggle_classname = 'wpbf-customize-control-headline-toggle';
+		$headline_toggle_classname = 'headline-toggle-control';
 
 		if ( ! empty( $this->wrapper_attrs['class'] ) ) {
 			$existing_classname = $this->wrapper_attrs['class'];

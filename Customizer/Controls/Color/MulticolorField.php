@@ -48,9 +48,9 @@ class MulticolorField extends ColorField {
 		$wrapper_attrs = isset( $control_args['wrapper_attrs'] ) && is_array( $control_args['wrapper_attrs'] ) ? $control_args['wrapper_attrs'] : [];
 
 		if ( isset( $wrapper_attrs['class'] ) ) {
-			$wrapper_attrs['class'] .= ' wpbf-customize-control-color';
+			$wrapper_attrs['class'] .= ' color-control';
 		} else {
-			$wrapper_attrs['class'] = '{default_class} wpbf-customize-control-color';
+			$wrapper_attrs['class'] = '{default_class} color-control';
 		}
 
 		$control = new MulticolorControl(

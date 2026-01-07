@@ -1,4 +1,4 @@
-.wpbf-customize-control-toggle {
+.toggle-control {
 	.wpbf-toggle {
 		display: flex;
 		align-items: baseline;
@@ -28,14 +28,14 @@
 	}
 }
 
-.wpbf-customize-control-toggle:not(.wpbf-customize-control-headline-toggle) {
+.toggle-control:not(.headline-toggle-control) {
 	.wpbf-toggle .wpbf-toggle-switch-label {
 		// Add top: -2px because .customize-control-title has margin bottom 4px.
 		top: -2px;
 	}
 }
 
-.wpbf-customize-control-switch {
+.switch-control {
 	.wpbf-switch {
 		.wpbf-toggle-switch-label {
 			padding: 10px 0 12px 44px;

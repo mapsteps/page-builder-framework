@@ -1,43 +1,43 @@
-.wpbf-customize-control-repeater {
+.repeater-control {
 	position: relative;
 }
 
-.wpbf-customize-control-repeater .repeater-fields .repeater-row {
+.repeater-control .repeater-fields .repeater-row {
 	border: 1px solid #e5e5e5;
 	margin-top: 0.5rem;
 	background: #eee;
 	position: relative;
 }
 
-.wpbf-customize-control-repeater .repeater-fields .repeater-row.minimized {
+.repeater-control .repeater-fields .repeater-row.minimized {
 	border: 1px solid #dfdfdf;
 	padding: 0;
 }
 
-.wpbf-customize-control-repeater .repeater-fields .repeater-row.minimized:hover {
+.repeater-control .repeater-fields .repeater-row.minimized:hover {
 	border: 1px solid #e5e5e5;
 }
 
-.wpbf-customize-control-repeater
+.repeater-control
 	.repeater-fields
 	.repeater-row.minimized
 	.repeater-row-content {
 	display: none;
 }
 
-.wpbf-customize-control-repeater .repeater-fields .repeater-row label {
+.repeater-control .repeater-fields .repeater-row label {
 	margin-bottom: 12px;
 	clear: both;
 }
 
-.wpbf-customize-control-repeater
+.repeater-control
 	.repeater-fields
 	.repeater-row
 	.repeater-field.repeater-field- {
 	display: none;
 }
 
-.wpbf-customize-control-repeater
+.repeater-control
 	.repeater-fields
 	.repeater-row
 	.repeater-field.repeater-field-radio-image
@@ -45,7 +45,7 @@
 	display: none;
 }
 
-.wpbf-customize-control-repeater
+.repeater-control
 	.repeater-fields
 	.repeater-row
 	.repeater-field.repeater-field-radio-image
@@ -54,7 +54,7 @@
 	border: 1px solid transparent;
 }
 
-.wpbf-customize-control-repeater
+.repeater-control
 	.repeater-fields
 	.repeater-row
 	.repeater-field.repeater-field-radio-image
@@ -66,7 +66,7 @@
 	border: 1px solid #3498db;
 }
 
-.wpbf-customize-control-repeater
+.repeater-control
 	.repeater-fields
 	.repeater-row
 	.repeater-field:last-child {
@@ -74,16 +74,16 @@
 	padding-bottom: 0;
 }
 
-.wpbf-customize-control-repeater button.repeater-add {
+.repeater-control button.repeater-add {
 	margin-top: 1rem;
 }
 
-.wpbf-customize-control-repeater .repeater-row-content {
+.repeater-control .repeater-row-content {
 	padding: 10px 15px;
 	background: #fff;
 }
 
-.wpbf-customize-control-repeater .repeater-field {
+.repeater-control .repeater-field {
 	margin-bottom: 12px;
 	width: 100%;
 	clear: both;
@@ -91,41 +91,41 @@
 	border-bottom: 1px dotted #ccc;
 }
 
-.wpbf-customize-control-repeater .repeater-field .customize-control-title {
+.repeater-control .repeater-field .customize-control-title {
 	font-size: 13px;
 	line-height: initial;
 }
 
-.wpbf-customize-control-repeater .repeater-field .customize-control-description {
+.repeater-control .repeater-field .customize-control-description {
 	font-size: 13px;
 	line-height: initial;
 }
 
-.wpbf-customize-control-repeater .repeater-field.repeater-field-hidden {
+.repeater-control .repeater-field.repeater-field-hidden {
 	margin: 0;
 	padding: 0;
 	border: 0;
 }
 
-.wpbf-customize-control-repeater .repeater-field-select select {
+.repeater-control .repeater-field-select select {
 	margin-left: 0;
 }
 
-.wpbf-customize-control-repeater .repeater-field-checkbox label {
+.repeater-control .repeater-field-checkbox label {
 	line-height: 28px;
 }
 
-.wpbf-customize-control-repeater .repeater-field-checkbox input {
+.repeater-control .repeater-field-checkbox input {
 	line-height: 28px;
 	margin-right: 5px;
 }
 
-.wpbf-customize-control-repeater .repeater-field-textarea textarea {
+.repeater-control .repeater-field-textarea textarea {
 	width: 100%;
 	resize: vertical;
 }
 
-.wpbf-customize-control-repeater .repeater-row-header {
+.repeater-control .repeater-row-header {
 	background: white;
 	border-bottom: 1px solid #dfdfdf;
 	position: relative;
@@ -137,11 +137,11 @@
 	word-wrap: break-word;
 }
 
-.wpbf-customize-control-repeater .repeater-row-header:hover {
+.repeater-control .repeater-row-header:hover {
 	cursor: move;
 }
 
-.wpbf-customize-control-repeater .repeater-row-header .dashicons {
+.repeater-control .repeater-row-header .dashicons {
 	font-size: 18px;
 	position: absolute;
 	right: 12px;
@@ -149,7 +149,7 @@
 	color: #a0a5aa;
 }
 
-.wpbf-customize-control-repeater .repeater-row-label {
+.repeater-control .repeater-row-label {
 	font-size: 13px;
 	font-weight: 600;
 	line-height: 20px;
@@ -159,20 +159,20 @@
 	height: 18px;
 }
 
-.wpbf-customize-control-repeater .repeater-row-remove {
+.repeater-control .repeater-row-remove {
 	color: #a00;
 }
 
-.wpbf-customize-control-repeater .repeater-row-remove:hover {
+.repeater-control .repeater-row-remove:hover {
 	color: #f00;
 }
 
-.wpbf-customize-control-repeater .repeater-minimize {
+.repeater-control .repeater-minimize {
 	line-height: 36px;
 }
 
-.wpbf-customize-control-repeater .remove-button,
-.wpbf-customize-control-repeater .upload-button {
+.repeater-control .remove-button,
+.repeater-control .upload-button {
 	width: 48%;
 }
 

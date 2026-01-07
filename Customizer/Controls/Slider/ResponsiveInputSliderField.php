@@ -73,9 +73,9 @@ class ResponsiveInputSliderField extends InputSliderField {
 		}
 
 		if ( empty( $control_args['wrapper_attrs']['class'] ) ) {
-			$control_args['wrapper_attrs']['class'] = '{default_class} wpbf-customize-control-responsive';
+			$control_args['wrapper_attrs']['class'] = '{default_class} responsive-control';
 		} else {
-			$control_args['wrapper_attrs']['class'] .= ' wpbf-customize-control-responsive';
+			$control_args['wrapper_attrs']['class'] .= ' responsive-control';
 		}
 
 		$control_args['save_as_json'] = ! empty( $control_args['save_as_json'] ) && is_bool( $control_args['save_as_json'] ) ? true : false;

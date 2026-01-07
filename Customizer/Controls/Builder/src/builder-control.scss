@@ -14,8 +14,8 @@
 	}
 
 	&:not(.builder-is-shown) {
-		.wpbf-customize-control-builder,
-		.wpbf-customize-control-responsive-builder {
+		.builder-control,
+		.responsive-builder-control {
 			display: none;
 		}
 	}
@@ -41,8 +41,8 @@
 	}
 }
 
-.wpbf-customize-control-builder,
-.wpbf-customize-control-responsive-builder {
+.builder-control,
+.responsive-builder-control {
 	.wpbf-control-header {
 		padding: 0 5px;
 	}
@@ -523,7 +523,7 @@
 }
 
 .wpbf-desktop-preview {
-	.wpbf-customize-control-responsive-builder {
+	.responsive-builder-control {
 		[data-device="desktop"] {
 			display: block;
 		}
@@ -550,7 +550,7 @@
 
 .wpbf-tablet-preview,
 .wpbf-mobile-preview {
-	.wpbf-customize-control-responsive-builder {
+	.responsive-builder-control {
 		[data-device="desktop"] {
 			display: none;
 		}

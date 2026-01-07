@@ -164,7 +164,7 @@ class BaseControl extends WP_Customize_Control {
 		$type_class = str_replace( 'wpbf-', '', $this->type );
 
 		$id    = 'customize-control-' . str_replace( array( '[', ']' ), array( '-', '' ), $this->id );
-		$class = 'customize-control wpbf-customize-control wpbf-customize-control-' . $type_class;
+		$class = 'customize-control wpbf-customize-control ' . $type_class . '-control';
 		$gap   = isset( $this->wrapper_opts['gap'] ) ? $this->wrapper_opts['gap'] : 'default';
 		$tag   = isset( $this->wrapper_opts['tag'] ) ? $this->wrapper_opts['tag'] : 'li';
 

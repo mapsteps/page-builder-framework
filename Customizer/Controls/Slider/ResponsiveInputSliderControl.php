@@ -68,7 +68,7 @@ class ResponsiveInputSliderControl extends InputSliderControl {
 
 		$this->setting->default = $this->save_as_json ? wp_json_encode( $default_array ) : $default_array;
 
-		$input_slider_classname = 'wpbf-customize-control-input-slider';
+		$input_slider_classname = 'input-slider-control';
 
 		if ( ! empty( $this->wrapper_attrs['class'] ) ) {
 			$existing_classname = $this->wrapper_attrs['class'];
