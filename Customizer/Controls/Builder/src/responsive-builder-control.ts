@@ -372,8 +372,11 @@ import {
 			},
 
 			handleRowSettingClick: function (rowKey) {
+				const controlId = this.params?.id;
+				if (!controlId) return;
+
 				customizer?.section(
-					`wpbf_header_builder_${rowKey}_section`,
+					`${controlId}_${rowKey}_section`,
 					function (section) {
 						section.expand(section.params);
 					},
@@ -381,8 +384,11 @@ import {
 			},
 
 			bindCustomizeSection: function (rowKey) {
+				const controlId = this.params?.id;
+				if (!controlId) return;
+
 				customizer?.section(
-					`wpbf_header_builder_${rowKey}_section`,
+					`${controlId}_${rowKey}_section`,
 					function (section) {
 						section.expanded.bind(function (expanded) {
 							const row = document.querySelector(
@@ -698,9 +704,16 @@ import {
 				const control = this;
 				const emptyWidgetListClass = "empty-widget-list";
 
-				// Exclude premium-locked dropzones from sortable connections.
-				jQuery(".active-widgets:not(.wpbf-premium-locked-dropzone)").sortable({
-					connectWith: ".active-widgets:not(.wpbf-premium-locked-dropzone)",
+				if (!this.builderPanel) return;
+				const $builderPanel = jQuery(this.builderPanel);
+
+				// Scope sortable to this specific builder panel only.
+				const $activeWidgets = $builderPanel.find(
+					".active-widgets:not(.wpbf-premium-locked-dropzone)",
+				);
+
+				$activeWidgets.sortable({
+					connectWith: $activeWidgets,
 					placeholder: "widget-item",
 					start: function (e, ui) {
 						document.body.classList.add("is-sorting-widget");
@@ -723,7 +736,7 @@ import {
 					},
 				});
 
-				jQuery(".builder-column.column-middle").on(
+				$builderPanel.find(".builder-column.column-middle").on(
 					"sortover",
 					function (e, ui) {
 						const target = e.target;
@@ -731,9 +744,11 @@ import {
 					},
 				);
 
-				jQuery(".builder-column.column-middle").on("sortout", function (e, ui) {
-					control.checkSortableContent?.(e.target);
-				});
+				$builderPanel
+					.find(".builder-column.column-middle")
+					.on("sortout", function (e, ui) {
+						control.checkSortableContent?.(e.target);
+					});
 			},
 
 			handleDeleteActiveWidget: function (activeWidgetEl, availableWidgetEl) {

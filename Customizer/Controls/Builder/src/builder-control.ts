@@ -241,8 +241,11 @@ import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
 			},
 
 			handleRowSettingClick: function (rowKey) {
+				const controlId = this.params?.id;
+				if (!controlId) return;
+
 				window.wp.customize?.section(
-					`wpbf_header_builder_${rowKey}_section`,
+					`${controlId}_${rowKey}_section`,
 					function (section) {
 						section.expand(section.params);
 					},
@@ -250,8 +253,11 @@ import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
 			},
 
 			bindCustomizeSection: function (rowKey) {
+				const controlId = this.params?.id;
+				if (!controlId) return;
+
 				window.wp.customize?.section(
-					`wpbf_header_builder_${rowKey}_section`,
+					`${controlId}_${rowKey}_section`,
 					function (section) {
 						section.expanded.bind(function (expanded) {
 							const row = document.querySelector(
@@ -546,9 +552,14 @@ import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
 				if (!control.availableWidgetsPanel || !control.builderPanel) return;
 
 				const emptyWidgetListClass = "empty-widget-list";
+				const $builderPanel = jQuery(control.builderPanel);
 
-				jQuery(".sortable-widgets").sortable({
-					connectWith: ".builder-column",
+				// Scope sortable to this specific builder panel only.
+				const $sortableWidgets = $builderPanel.find(".sortable-widgets");
+				const $builderColumns = $builderPanel.find(".builder-column");
+
+				$sortableWidgets.sortable({
+					connectWith: $builderColumns,
 					placeholder: "widget-item",
 					start: function (e, ui) {
 						document.body.classList.add("is-sorting-widget");
@@ -571,7 +582,7 @@ import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
 					},
 				});
 
-				jQuery(".builder-column.column-middle").on(
+				$builderPanel.find(".builder-column.column-middle").on(
 					"sortover",
 					function (e, ui) {
 						const target = e.target;
@@ -579,9 +590,11 @@ import { BuilderValue, WpbfBuilderControl } from "./builder-interface";
 					},
 				);
 
-				jQuery(".builder-column.column-middle").on("sortout", function (e, ui) {
-					control.checkSortableContent?.(e.target);
-				});
+				$builderPanel
+					.find(".builder-column.column-middle")
+					.on("sortout", function (e, ui) {
+						control.checkSortableContent?.(e.target);
+					});
 			},
 
 			handleDeleteActiveWidget: function (activeWidgetEl, availableWidgetEl) {
