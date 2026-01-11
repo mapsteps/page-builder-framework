@@ -65,7 +65,7 @@ export interface WpbfResponsiveBuilderControlParams
 			availableWidgets: BuilderWidget[];
 			activeWidgetKeys: string[];
 			availableSlots: {
-				offcanvas: {
+				offcanvas?: {
 					key: string;
 					label: string;
 				};
@@ -76,7 +76,7 @@ export interface WpbfResponsiveBuilderControlParams
 			availableWidgets: BuilderWidget[];
 			activeWidgetKeys: string[];
 			availableSlots: {
-				offcanvas: {
+				offcanvas?: {
 					key: string;
 					label: string;
 				};

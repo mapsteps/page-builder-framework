@@ -8,6 +8,9 @@
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
+?>
+
+		<?php
 
 		wpbf_footer_builder_hooks();
 

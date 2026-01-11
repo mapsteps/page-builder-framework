@@ -34,6 +34,9 @@ wpbf_customizer_field()
 			'container_inclusive' => true,
 			'selector'            => '#footer',
 			'render_callback'     => function () {
+				if ( wpbf_footer_builder_enabled() ) {
+					return get_template_part( 'inc/template-parts/footer-builder' );
+				}
 				return get_template_part( 'inc/template-parts/footer' );
 			},
 		),
@@ -61,7 +64,7 @@ wpbf_customizer_field()
 			'container_inclusive' => true,
 			'selector'            => '#footer',
 			'render_callback'     => function () {
-				return get_template_part( 'inc/template-parts/footer' );
+				return get_template_part( 'inc/template-parts/footer-builder' );
 			},
 		),
 		'footerbuilder_style' => array(

@@ -58,8 +58,11 @@ class FooterBuilderOutput {
 		// Unhook default footer functions.
 		remove_action( 'wpbf_footer', 'wpbf_do_footer' );
 
-		// Hook footer builder output.
-		add_action( 'wpbf_footer', [ $this, 'do_footer_output' ] );
+		// Hook footer builder template.
+		add_action( 'wpbf_footer', [ $this, 'do_footer_template' ] );
+
+		// Hook footer builder content.
+		add_action( 'wpbf_footer_builder_content', [ $this, 'do_footer_content' ] );
 
 	}
 
@@ -113,13 +116,27 @@ class FooterBuilderOutput {
 	}
 
 	/**
-	 * An action to render footer builder output.
+	 * An action to render footer builder template.
 	 *
 	 * This action will be hooked to `wpbf_footer` action hook.
+	 * The template contains the <footer id="footer"> wrapper which is required for partialRefresh.
 	 *
 	 * @see self::setup_hooks()
 	 */
-	public function do_footer_output() {
+	public function do_footer_template() {
+
+		get_template_part( 'inc/template-parts/footer-builder' );
+
+	}
+
+	/**
+	 * An action to render footer builder content.
+	 *
+	 * This action will be hooked to `wpbf_footer_builder_content` action hook.
+	 *
+	 * @see self::setup_hooks()
+	 */
+	public function do_footer_content() {
 
 		echo '<div class="wpbf-footer-builder">';
 
