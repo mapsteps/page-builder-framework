@@ -8,10 +8,13 @@ import { headerBuilderEnabled } from "../../../../assets/js/utils/customizer-uti
 import { WpbfColorControlValue } from "../../../../Customizer/Controls/Color/src/color-interface";
 
 export default function offCanvasSetup(customizer?: WpbfCustomize) {
-	// Hamburger size.
+	// Hamburger size (Header Builder mode only).
 	listenToCustomizerValueChange<string | number>(
 		"menu_off_canvas_hamburger_size",
 		function (settingId, value) {
+			// Only run if header builder is enabled (Premium handles Legacy)
+			if (!headerBuilderEnabled()) return;
+
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-toggle",
 				props: { "font-size": maybeAppendSuffix(value) },
@@ -19,10 +22,13 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 		},
 	);
 
-	// Hamburger color.
+	// Hamburger color (Header Builder mode only).
 	listenToCustomizerValueChange<WpbfColorControlValue>(
 		"menu_off_canvas_hamburger_color",
 		function (settingId, value) {
+			// Only run if header builder is enabled (Premium handles Legacy)
+			if (!headerBuilderEnabled()) return;
+
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-toggle",
 				props: { color: toStringColor(value) },
@@ -56,10 +62,13 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 		},
 	);
 
-	// Menu width.
+	// Menu width (Header Builder mode only).
 	listenToCustomizerValueChange<string | number>(
 		"menu_off_canvas_width",
 		function (settingId, value) {
+			// Only run if header builder is enabled (Premium handles Legacy)
+			if (!headerBuilderEnabled()) return;
+
 			// Width for right-positioned off-canvas (default)
 			writeCSS(settingId + "-left", {
 				selector: ".wpbf-menu-off-canvas-left",
@@ -112,10 +121,13 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 		},
 	);
 
-	// Menu padding.
+	// Menu padding (Header Builder mode only).
 	listenToCustomizerValueChange<string | number>(
 		"menu_off_canvas_padding",
 		function (settingId, value) {
+			// Only run if header builder is enabled (Premium handles Legacy)
+			if (!headerBuilderEnabled()) return;
+
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-off-canvas .wpbf-mobile-menu",
 				props: {
@@ -139,10 +151,13 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 		},
 	);
 
-	// Font size.
+	// Font size (Header Builder mode only).
 	listenToCustomizerValueChange<string | number>(
 		"menu_off_canvas_font_size",
 		function (settingId, value) {
+			// Only run if header builder is enabled (Premium handles Legacy)
+			if (!headerBuilderEnabled()) return;
+
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-off-canvas .wpbf-mobile-menu a",
 				props: { "font-size": maybeAppendSuffix(value) },
@@ -150,10 +165,13 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 		},
 	);
 
-	// Font color.
+	// Font color (Header Builder mode only).
 	listenToCustomizerValueChange<WpbfColorControlValue>(
 		"menu_off_canvas_font_color",
 		function (settingId, value) {
+			// Only run if header builder is enabled (Premium handles Legacy)
+			if (!headerBuilderEnabled()) return;
+
 			writeCSS(settingId, {
 				selector:
 					".wpbf-menu-off-canvas .wpbf-mobile-menu a, .wpbf-menu-off-canvas .wpbf-close",
@@ -162,10 +180,13 @@ export default function offCanvasSetup(customizer?: WpbfCustomize) {
 		},
 	);
 
-	// Font color hover.
+	// Font color hover (Header Builder mode only).
 	listenToCustomizerValueChange<WpbfColorControlValue>(
 		"menu_off_canvas_font_color_alt",
 		function (settingId, value) {
+			// Only run if header builder is enabled (Premium handles Legacy)
+			if (!headerBuilderEnabled()) return;
+
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-off-canvas .wpbf-mobile-menu a:hover",
 				props: { color: toStringColor(value) },

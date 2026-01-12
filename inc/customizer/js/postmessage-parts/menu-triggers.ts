@@ -397,10 +397,14 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 				},
 			);
 
-			// Menu trigger button icon's size.
+			// Menu trigger button icon's size (Header Builder mode only).
 			listenToCustomizerValueChange<string | number>(
 				"wpbf_header_builder_desktop_menu_trigger_icon_size",
 				function (settingId, value) {
+					// Only apply when Header Builder is enabled.
+					// When disabled, premium plugin handles via menu_off_canvas_hamburger_size.
+					if (!headerBuilderEnabled()) return;
+
 					writeCSS(settingId, {
 						selector: ".wpbf-menu-toggle",
 						props: { "font-size": maybeAppendSuffix(value) },

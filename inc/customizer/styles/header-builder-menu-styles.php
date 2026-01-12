@@ -83,7 +83,12 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 		'mobile' === $header_builder_device ? 'mobile_menu_hamburger_size' : 'wpbf_header_builder_desktop_menu_trigger_icon_size', '16px'
 	);
 
-	$menu_trigger_props['font-size'] = wpbf_maybe_append_suffix( $menu_trigger_icon_size );
+	// For desktop, only output font-size when Header Builder is enabled.
+	// When Header Builder is disabled, the premium plugin's off-canvas-menu-styles.php
+	// handles the font-size for .wpbf-menu-toggle via menu_off_canvas_hamburger_size.
+	if ( 'mobile' === $header_builder_device || wpbf_header_builder_enabled() ) {
+		$menu_trigger_props['font-size'] = wpbf_maybe_append_suffix( $menu_trigger_icon_size );
+	}
 
 	// Icon color (mobile uses mobile_menu_hamburger_color). Make sure we emit it.
 	// For solid style with background color, default to white if no custom color is set.
