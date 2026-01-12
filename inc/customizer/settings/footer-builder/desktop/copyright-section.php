@@ -25,7 +25,7 @@ $partial_refresh_args = array(
 	'container_inclusive' => true,
 	'selector'            => '#footer',
 	'render_callback'     => function () {
-		return get_template_part( 'inc/template-parts/footer' );
+		return get_template_part( 'inc/template-parts/footer-builder' );
 	},
 );
 
