@@ -1954,7 +1954,7 @@ if ( ! function_exists( 'wpbf_write_css' ) ) {
 
 		if ( ! empty( $blocks ) ) {
 			if ( $media_query ) {
-				echo esc_html( $media_query ) . ' {';
+				echo wp_strip_all_tags( $media_query ) . ' {';
 			}
 
 			foreach ( $blocks as $block ) {
@@ -1969,7 +1969,7 @@ if ( ! function_exists( 'wpbf_write_css' ) ) {
 					continue;
 				}
 
-				echo esc_html( $block_selector ) . ' {';
+				echo wp_strip_all_tags( $block_selector ) . ' {';
 
 				foreach ( $block_props as $css_prop => $css_value ) {
 					// The `is_null()` check is needed to skip empty values (has to be exactly `null`).
@@ -2003,10 +2003,10 @@ if ( ! function_exists( 'wpbf_write_css' ) ) {
 		}
 
 		if ( $media_query ) {
-			echo esc_html( $media_query ) . ' {';
+			echo wp_strip_all_tags( $media_query ) . ' {';
 		}
 
-		echo esc_html( $selector ) . ' {';
+		echo wp_strip_all_tags( $selector ) . ' {';
 
 		foreach ( $props as $css_prop => $css_value ) {
 			// The `is_null()` check is needed to skip empty values (has to be exactly `null`).

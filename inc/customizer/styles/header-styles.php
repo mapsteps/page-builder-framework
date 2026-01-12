@@ -376,10 +376,26 @@ if ( ! empty( $menu_font_colors ) ) {
 
 $menu_font_size = wpbf_customize_str_value( 'menu_font_size' );
 
-if ( wpbf_not_empty_allow_zero( $menu_font_size ) ) {
+/**
+ * When header builder is enabled, always output menu font size (default 16px).
+ *
+ * Normally we skip outputting CSS for default values as an optimization.
+ * However, with header builder, the row's font-size setting cascades to child elements.
+ * If the menu font size is at default and we skip it, the menu inherits the row's font size
+ * instead of using its own value. By always outputting the menu font size when header builder
+ * is enabled, we ensure menu widgets maintain their intended font size regardless of row settings.
+ */
+if ( $header_builder_enabled ) {
+	$menu_font_size = wpbf_not_empty_allow_zero( $menu_font_size ) ? $menu_font_size : '16px';
 
 	wpbf_write_css( array(
-		'selector' => $header_builder_enabled ? '.wpbf-menu.desktop_menu_1 > .menu-item > a' : '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a',
+		'selector' => '.wpbf-menu.desktop_menu_1 > .menu-item > a',
+		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $menu_font_size ) ),
+	) );
+} elseif ( wpbf_not_empty_allow_zero( $menu_font_size ) ) {
+
+	wpbf_write_css( array(
+		'selector' => '.wpbf-navigation .wpbf-menu a, .wpbf-mobile-menu a',
 		'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $menu_font_size ) ),
 	) );
 
