@@ -38,3 +38,16 @@ wpbf_customizer_field()
 		$partial_refresh_key_prefix . 'image' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'width' )
+	->type( 'slider' )
+	->label( __( 'Logo Width', 'page-builder-framework' ) )
+	->priority( 10 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 500,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );

@@ -324,7 +324,7 @@ class FooterBuilderOutput {
 			case 'desktop_html_2':
 			case 'mobile_html_1':
 			case 'mobile_html_2':
-				$this->render_html_widget( $setting_group );
+				$this->render_html_widget( $widget_key, $setting_group );
 				break;
 			case 'desktop_social':
 			case 'mobile_social':
@@ -399,14 +399,18 @@ class FooterBuilderOutput {
 	/**
 	 * Render the builder html widget.
 	 *
+	 * @param string $widget_key    The widget key (e.g., 'desktop_html_1').
 	 * @param string $setting_group The setting group key.
 	 */
-	private function render_html_widget( $setting_group ) {
+	private function render_html_widget( $widget_key, $setting_group ) {
 
 		$content = wpbf_customize_str_value( $setting_group . '_content', '' );
+
+		// Add unique class for postMessage live preview targeting.
+		$widget_class = 'wpbf-footer-html-widget wpbf_footer_builder_' . esc_attr( $widget_key );
 		?>
 
-		<div class="wpbf-footer-html-widget">
+		<div class="<?php echo esc_attr( $widget_class ); ?>">
 			<?php echo wp_kses_post( $content ); ?>
 		</div>
 

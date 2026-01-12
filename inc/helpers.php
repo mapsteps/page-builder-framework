@@ -1878,8 +1878,17 @@ function wpbf_parse_template_tags( $value ) {
 		return $value;
 	}
 
-	$find = array( '{site_url}' );
-	$rep  = array( site_url() );
+	$find = array(
+		'{site_url}',
+		'[year]',
+		'[blogname]',
+	);
+
+	$rep = array(
+		site_url(),
+		gmdate( 'Y' ),
+		get_bloginfo( 'name' ),
+	);
 
 	return str_replace( $find, $rep, $value );
 

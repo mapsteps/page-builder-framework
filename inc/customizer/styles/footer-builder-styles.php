@@ -56,11 +56,9 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_footer_builder_' . $row_key . '_';
 
 	/**
-	 * Row 1 (Top) and Row 3 (Bottom) are NEW rows with their own controls.
-	 * Row 2 (Main Row) uses moved controls from existing footer settings,
-	 * which already have CSS output in the existing footer styles.
+	 * All desktop rows (Top, Main, Bottom) now have their own controls.
 	 */
-	if ( 'desktop_row_1' === $row_key || 'desktop_row_3' === $row_key ) {
+	if ( 'desktop_row_1' === $row_key || 'desktop_row_2' === $row_key || 'desktop_row_3' === $row_key ) {
 		$max_width = wpbf_customize_str_value( $row_id_prefix . 'max_width' );
 		$max_width = '' === $max_width || '1200' === $max_width || '1200px' === $max_width ? null : $max_width;
 
@@ -172,9 +170,10 @@ foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 	$row_id_prefix = 'wpbf_footer_builder_' . $row_key . '_';
 
 	/**
+	 * All mobile rows (Top, Main, Bottom) now have their own controls.
 	 * Mobile rows don't have max_width control (following header builder pattern).
 	 */
-	if ( 'mobile_row_1' === $row_key || 'mobile_row_3' === $row_key ) {
+	if ( 'mobile_row_1' === $row_key || 'mobile_row_2' === $row_key || 'mobile_row_3' === $row_key ) {
 		$v_padding = wpbf_customize_str_value( $row_id_prefix . 'vertical_padding' );
 		$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
 
@@ -231,4 +230,30 @@ foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 			) );
 		}
 	}
+}
+
+/**
+ * ----------------------------------------------------------------------
+ * Footer Builder Logo Widget Styles
+ * ----------------------------------------------------------------------
+ */
+
+// Desktop logo width.
+$desktop_logo_width = wpbf_customize_str_value( 'wpbf_footer_builder_desktop_logo_width' );
+
+if ( $desktop_logo_width ) {
+	wpbf_write_css( array(
+		'selector' => '.wpbf-footer-desktop .wpbf-footer-logo img',
+		'props'    => array( 'width' => wpbf_maybe_append_suffix( $desktop_logo_width ) ),
+	) );
+}
+
+// Mobile logo width.
+$mobile_logo_width = wpbf_customize_str_value( 'wpbf_footer_builder_mobile_logo_width' );
+
+if ( $mobile_logo_width ) {
+	wpbf_write_css( array(
+		'selector' => '.wpbf-footer-mobile .wpbf-footer-logo img',
+		'props'    => array( 'width' => wpbf_maybe_append_suffix( $mobile_logo_width ) ),
+	) );
 }

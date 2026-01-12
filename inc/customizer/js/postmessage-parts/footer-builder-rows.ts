@@ -10,16 +10,13 @@ import {
 } from "../../../../Customizer/Controls/Color/src/color-interface";
 
 export default function footerBuilderRowsSetup() {
-	const footerBuilderDesktopRows = ["desktop_row_1", "desktop_row_3"];
-	const footerBuilderMobileRows = ["mobile_row_1", "mobile_row_3"];
+	const footerBuilderDesktopRows = ["desktop_row_1", "desktop_row_2", "desktop_row_3"];
+	const footerBuilderMobileRows = ["mobile_row_1", "mobile_row_2", "mobile_row_3"];
 
 	/**
 	 * Desktop rows postmessage handlers.
 	 *
-	 * Row 2 (Main Row) uses moved controls from existing footer settings,
-	 * which already have postmessage handlers in footer.ts.
-	 *
-	 * Row 1 (Top) and Row 3 (Bottom) are NEW rows with their own controls.
+	 * All rows (Top, Main, Bottom) now have their own controls.
 	 */
 	footerBuilderDesktopRows.forEach((rowKey) => {
 		const controlIdPrefix = `wpbf_footer_builder_${rowKey}_`;
@@ -185,6 +182,58 @@ export default function footerBuilderRowsSetup() {
 					selector: `.wpbf-footer-row-${rowKey}`,
 					props: { "font-size": maybeAppendSuffix(value) },
 				});
+			},
+		);
+	});
+
+	/**
+	 * Logo widget postmessage handlers.
+	 */
+
+	// Desktop logo width
+	listenToCustomizerValueChange<string | number>(
+		"wpbf_footer_builder_desktop_logo_width",
+		(settingId, value) => {
+			writeCSS(settingId, {
+				selector: ".wpbf-footer-desktop .wpbf-footer-logo img",
+				props: { width: maybeAppendSuffix(value) },
+			});
+		},
+	);
+
+	// Mobile logo width
+	listenToCustomizerValueChange<string | number>(
+		"wpbf_footer_builder_mobile_logo_width",
+		(settingId, value) => {
+			writeCSS(settingId, {
+				selector: ".wpbf-footer-mobile .wpbf-footer-logo img",
+				props: { width: maybeAppendSuffix(value) },
+			});
+		},
+	);
+
+	/**
+	 * HTML widget postmessage handlers.
+	 *
+	 * These handlers update the HTML widget content directly via postMessage
+	 * instead of using partialRefresh, which would reload the entire footer.
+	 */
+	const footerBuilderHtmlWidgetKeys = [
+		"desktop_html_1",
+		"desktop_html_2",
+		"mobile_html_1",
+		"mobile_html_2",
+	];
+
+	footerBuilderHtmlWidgetKeys.forEach((widgetKey) => {
+		const controlIdPrefix = `wpbf_footer_builder_${widgetKey}`;
+
+		listenToCustomizerValueChange<string>(
+			`${controlIdPrefix}_content`,
+			function (settingId, value) {
+				const widget = document.querySelector(`.${controlIdPrefix}`);
+				if (!(widget instanceof HTMLElement)) return;
+				widget.innerHTML = value;
 			},
 		);
 	});
