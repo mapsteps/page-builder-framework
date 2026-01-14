@@ -257,3 +257,31 @@ if ( $mobile_logo_width ) {
 		'props'    => array( 'width' => wpbf_maybe_append_suffix( $mobile_logo_width ) ),
 	) );
 }
+
+/**
+ * ----------------------------------------------------------------------
+ * Footer Builder HTML Widget Styles
+ * ----------------------------------------------------------------------
+ */
+
+// Reset margin-bottom on last element for proper vertical centering.
+wpbf_write_css( array(
+	'selector' => '.wpbf-footer-html-widget p:last-child, .wpbf-footer-html-widget > *:last-child',
+	'props'    => array( 'margin-bottom' => '0' ),
+) );
+
+/**
+ * ----------------------------------------------------------------------
+ * Footer Builder Social Icons Widget Styles
+ * ----------------------------------------------------------------------
+ */
+
+// Add spacing between social icons using flexbox gap.
+wpbf_write_css( array(
+	'selector' => '.wpbf-footer-social',
+	'props'    => array(
+		'display'   => 'flex',
+		'flex-wrap' => 'wrap',
+		'gap'       => '10px',
+	),
+) );
