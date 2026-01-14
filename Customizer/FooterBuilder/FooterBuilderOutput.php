@@ -378,6 +378,9 @@ class FooterBuilderOutput {
 
 		$widget_title = get_theme_mod( $setting_group . '_widget_title', '' );
 
+		// Wrapper div to ensure title and nav stack vertically within flex column.
+		echo '<div class="wpbf-footer-menu-widget">';
+
 		if ( ! empty( $widget_title ) ) {
 			$title_class = 'wpbf-footer-widget-title wpbf-footer-widget-title-' . esc_attr( $widget_key );
 			echo '<h4 class="' . esc_attr( $title_class ) . '">' . esc_html( $widget_title ) . '</h4>';
@@ -400,6 +403,7 @@ class FooterBuilderOutput {
 		wp_nav_menu( $nav_menu_args );
 
 		echo '</nav>';
+		echo '</div>';
 
 	}
 
@@ -413,15 +417,18 @@ class FooterBuilderOutput {
 
 		$widget_title = get_theme_mod( $setting_group . '_widget_title', '' );
 
+		// Add unique class for postMessage live preview targeting.
+		$widget_class = 'wpbf-footer-html-widget wpbf_footer_builder_' . esc_attr( $widget_key );
+
+		// Wrapper div to ensure title and content stack vertically within flex column.
+		echo '<div class="wpbf-footer-html-widget-wrapper">';
+
 		if ( ! empty( $widget_title ) ) {
 			$title_class = 'wpbf-footer-widget-title wpbf-footer-widget-title-' . esc_attr( $widget_key );
 			echo '<h4 class="' . esc_attr( $title_class ) . '">' . esc_html( $widget_title ) . '</h4>';
 		}
 
 		$content = wpbf_customize_str_value( $setting_group . '_content', '' );
-
-		// Add unique class for postMessage live preview targeting.
-		$widget_class = 'wpbf-footer-html-widget wpbf_footer_builder_' . esc_attr( $widget_key );
 		?>
 
 		<div class="<?php echo esc_attr( $widget_class ); ?>">
@@ -429,6 +436,7 @@ class FooterBuilderOutput {
 		</div>
 
 		<?php
+		echo '</div>';
 	}
 
 	/**
