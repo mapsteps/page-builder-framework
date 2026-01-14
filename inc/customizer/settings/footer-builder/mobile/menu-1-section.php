@@ -41,6 +41,19 @@ $partial_refresh_args = array(
 
 /* General Tab */
 
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'widget_title' )
+	->type( 'text' )
+	->tab( 'general' )
+	->label( __( 'Widget Title', 'page-builder-framework' ) )
+	->defaultValue( '' )
+	->priority( 1 )
+	->transport( 'postMessage' )
+	->partialRefresh( [
+		$partial_refresh_key_prefix . 'widget_title' => $partial_refresh_args,
+	] )
+	->addToSection( $section_id );
+
 $menu_term_list = wp_get_nav_menus();
 
 $menu_choices = [ '' => __( '— Select a Menu —', 'page-builder-framework' ) ];

@@ -376,6 +376,13 @@ class FooterBuilderOutput {
 			return;
 		}
 
+		$widget_title = get_theme_mod( $setting_group . '_widget_title', '' );
+
+		if ( ! empty( $widget_title ) ) {
+			$title_class = 'wpbf-footer-widget-title wpbf-footer-widget-title-' . esc_attr( $widget_key );
+			echo '<h4 class="' . esc_attr( $title_class ) . '">' . esc_html( $widget_title ) . '</h4>';
+		}
+
 		$menu_position_class = 'center' === $placement ? 'wpbf-menu-centered' : 'wpbf-menu-' . $placement;
 
 		echo '<nav class="wpbf-footer-nav wpbf-clearfix ' . esc_attr( $menu_position_class ) . '" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" aria-label="' . esc_attr__( 'Footer Navigation', 'page-builder-framework' ) . '">';
@@ -403,6 +410,13 @@ class FooterBuilderOutput {
 	 * @param string $setting_group The setting group key.
 	 */
 	private function render_html_widget( $widget_key, $setting_group ) {
+
+		$widget_title = get_theme_mod( $setting_group . '_widget_title', '' );
+
+		if ( ! empty( $widget_title ) ) {
+			$title_class = 'wpbf-footer-widget-title wpbf-footer-widget-title-' . esc_attr( $widget_key );
+			echo '<h4 class="' . esc_attr( $title_class ) . '">' . esc_html( $widget_title ) . '</h4>';
+		}
 
 		$content = wpbf_customize_str_value( $setting_group . '_content', '' );
 

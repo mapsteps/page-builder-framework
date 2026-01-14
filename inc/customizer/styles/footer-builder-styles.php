@@ -272,6 +272,23 @@ wpbf_write_css( array(
 
 /**
  * ----------------------------------------------------------------------
+ * Footer Builder Widget Title Styles
+ * ----------------------------------------------------------------------
+ *
+ * Base styles for widget titles displayed above Menu and HTML widgets.
+ */
+
+wpbf_write_css( array(
+	'selector' => '.wpbf-footer-widget-title',
+	'props'    => array(
+		'margin'      => '0 0 15px 0',
+		'font-size'   => '16px',
+		'font-weight' => '600',
+	),
+) );
+
+/**
+ * ----------------------------------------------------------------------
  * Footer Builder Social Icons Widget Styles
  * ----------------------------------------------------------------------
  */

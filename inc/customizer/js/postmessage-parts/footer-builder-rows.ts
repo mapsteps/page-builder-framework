@@ -237,4 +237,38 @@ export default function footerBuilderRowsSetup() {
 			},
 		);
 	});
+
+	/**
+	 * Widget title postmessage handlers.
+	 *
+	 * These handlers update the widget title text directly via postMessage
+	 * for instant preview without page refresh.
+	 */
+	const footerBuilderWidgetTitleKeys = [
+		"desktop_menu_1",
+		"desktop_menu_2",
+		"desktop_html_1",
+		"desktop_html_2",
+		"mobile_menu_1",
+		"mobile_menu_2",
+		"mobile_html_1",
+		"mobile_html_2",
+	];
+
+	footerBuilderWidgetTitleKeys.forEach((widgetKey) => {
+		const controlIdPrefix = `wpbf_footer_builder_${widgetKey}`;
+
+		listenToCustomizerValueChange<string>(
+			`${controlIdPrefix}_widget_title`,
+			function (settingId, value) {
+				const titleElement = document.querySelector(
+					`.wpbf-footer-widget-title-${widgetKey}`,
+				);
+				if (titleElement instanceof HTMLElement) {
+					titleElement.textContent = value;
+					titleElement.style.display = value ? "" : "none";
+				}
+			},
+		);
+	});
 }

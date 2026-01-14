@@ -19,6 +19,26 @@ wpbf_customizer_section()
 
 $control_id_prefix = 'wpbf_footer_builder_desktop_html_2_';
 
+$partial_refresh_args = array(
+	'container_inclusive' => true,
+	'selector'            => '#footer',
+	'render_callback'     => function () {
+		return get_template_part( 'inc/template-parts/footer-builder' );
+	},
+);
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'widget_title' )
+	->type( 'text' )
+	->label( __( 'Widget Title', 'page-builder-framework' ) )
+	->defaultValue( '' )
+	->priority( 1 )
+	->transport( 'postMessage' )
+	->partialRefresh( [
+		'footerbuilder_desktop_html_2_widget_title' => $partial_refresh_args,
+	] )
+	->addToSection( $section_id );
+
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'content' )
 	->type( 'editor' )
