@@ -92,11 +92,16 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 
 	// Icon color (mobile uses mobile_menu_hamburger_color). Make sure we emit it.
 	// For solid style with background color, default to white if no custom color is set.
-	if ( $menu_trigger_icon_color ) {
-		$menu_trigger_props['color'] = $menu_trigger_icon_color . '!important';
-	} elseif ( 'solid' === $menu_trigger_style && $menu_trigger_button_color ) {
-		// Default to white for solid style when user hasn't set a custom icon color.
-		$menu_trigger_props['color'] = '#ffffff !important';
+	// For desktop, only output color when Header Builder is enabled.
+	// When Header Builder is disabled, the premium plugin's off-canvas-menu-styles.php
+	// handles the color for .wpbf-menu-toggle via menu_off_canvas_hamburger_color.
+	if ( 'mobile' === $header_builder_device || wpbf_header_builder_enabled() ) {
+		if ( $menu_trigger_icon_color ) {
+			$menu_trigger_props['color'] = $menu_trigger_icon_color . '!important';
+		} elseif ( 'solid' === $menu_trigger_style && $menu_trigger_button_color ) {
+			// Default to white for solid style when user hasn't set a custom icon color.
+			$menu_trigger_props['color'] = '#ffffff !important';
+		}
 	}
 
 	// If the menu trigger style is either 'outlined' or 'solid'.
