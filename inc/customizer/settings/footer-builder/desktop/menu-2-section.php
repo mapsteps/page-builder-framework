@@ -62,3 +62,37 @@ wpbf_customizer_field()
 		$partial_refresh_key_prefix . 'menu_id' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'item_spacing' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Item Spacing', 'page-builder-framework' ) )
+	->description( __( 'Vertical spacing between menu items.', 'page-builder-framework' ) )
+	->defaultValue( 5 )
+	->priority( 15 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 30,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );
+
+/* Design Tab */
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'link_colors' )
+	->type( 'multicolor' )
+	->tab( 'design' )
+	->label( __( 'Link Color', 'page-builder-framework' ) )
+	->priority( 200 )
+	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( $section_id );

@@ -285,3 +285,202 @@ wpbf_write_css( array(
 		'gap'       => '10px',
 	),
 ) );
+
+/**
+ * ----------------------------------------------------------------------
+ * Footer Builder Row Alignment
+ * ----------------------------------------------------------------------
+ *
+ * Override the default vertical centering (align-items: center) for footer rows.
+ * Footer content should be top-aligned, not vertically centered.
+ * This is scoped to .wpbf-footer-builder to avoid affecting Header Builder.
+ */
+
+wpbf_write_css( array(
+	'selector' => '.wpbf-footer-builder .wpbf-row-content',
+	'props'    => array( 'align-items' => 'flex-start' ),
+) );
+
+/**
+ * ----------------------------------------------------------------------
+ * Footer Builder Menu Widget Styles
+ * ----------------------------------------------------------------------
+ *
+ * Base styles for .wpbf-footer-menu to display as a vertical link list.
+ * Uses isolated class to avoid affecting Header Builder's .wpbf-menu.
+ */
+
+wpbf_write_css( array(
+	'selector' => '.wpbf-footer-menu',
+	'props'    => array(
+		'list-style' => 'none',
+		'margin'     => '0',
+		'padding'    => '0',
+	),
+) );
+
+wpbf_write_css( array(
+	'selector' => '.wpbf-footer-menu li',
+	'props'    => array(
+		'margin'  => '0',
+		'padding' => '0',
+	),
+) );
+
+wpbf_write_css( array(
+	'selector' => '.wpbf-footer-menu a',
+	'props'    => array(
+		'display'         => 'block',
+		'padding'         => '5px 0',
+		'text-decoration' => 'none',
+	),
+) );
+
+wpbf_write_css( array(
+	'selector' => '.wpbf-footer-menu a:hover, .wpbf-footer-menu a:focus',
+	'props'    => array( 'text-decoration' => 'underline' ),
+) );
+
+/**
+ * ----------------------------------------------------------------------
+ * Footer Builder Menu Widget Customizer Styles
+ * ----------------------------------------------------------------------
+ *
+ * Dynamic styles from customizer settings for Menu 1 and Menu 2 widgets.
+ */
+
+// Desktop Menu 1 styles.
+$menu_1_item_spacing = wpbf_customize_str_value( 'wpbf_footer_builder_desktop_menu_1_item_spacing' );
+
+if ( $menu_1_item_spacing && '5' !== $menu_1_item_spacing ) {
+	wpbf_write_css( array(
+		'selector' => '.wpbf-footer-menu.desktop_menu_1 a',
+		'props'    => array(
+			'padding-top'    => wpbf_maybe_append_suffix( $menu_1_item_spacing ),
+			'padding-bottom' => wpbf_maybe_append_suffix( $menu_1_item_spacing ),
+		),
+	) );
+}
+
+$menu_1_colors = wpbf_customize_array_value( 'wpbf_footer_builder_desktop_menu_1_link_colors' );
+
+if ( ! empty( $menu_1_colors ) ) {
+	$menu_1_default_color = ! empty( $menu_1_colors['default'] ) ? $menu_1_colors['default'] : '';
+	$menu_1_hover_color   = ! empty( $menu_1_colors['hover'] ) ? $menu_1_colors['hover'] : '';
+
+	if ( $menu_1_default_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-footer-menu.desktop_menu_1 a',
+			'props'    => array( 'color' => $menu_1_default_color ),
+		) );
+	}
+
+	if ( $menu_1_hover_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-footer-menu.desktop_menu_1 a:hover, .wpbf-footer-menu.desktop_menu_1 a:focus',
+			'props'    => array( 'color' => $menu_1_hover_color ),
+		) );
+	}
+}
+
+// Desktop Menu 2 styles.
+$menu_2_item_spacing = wpbf_customize_str_value( 'wpbf_footer_builder_desktop_menu_2_item_spacing' );
+
+if ( $menu_2_item_spacing && '5' !== $menu_2_item_spacing ) {
+	wpbf_write_css( array(
+		'selector' => '.wpbf-footer-menu.desktop_menu_2 a',
+		'props'    => array(
+			'padding-top'    => wpbf_maybe_append_suffix( $menu_2_item_spacing ),
+			'padding-bottom' => wpbf_maybe_append_suffix( $menu_2_item_spacing ),
+		),
+	) );
+}
+
+$menu_2_colors = wpbf_customize_array_value( 'wpbf_footer_builder_desktop_menu_2_link_colors' );
+
+if ( ! empty( $menu_2_colors ) ) {
+	$menu_2_default_color = ! empty( $menu_2_colors['default'] ) ? $menu_2_colors['default'] : '';
+	$menu_2_hover_color   = ! empty( $menu_2_colors['hover'] ) ? $menu_2_colors['hover'] : '';
+
+	if ( $menu_2_default_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-footer-menu.desktop_menu_2 a',
+			'props'    => array( 'color' => $menu_2_default_color ),
+		) );
+	}
+
+	if ( $menu_2_hover_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-footer-menu.desktop_menu_2 a:hover, .wpbf-footer-menu.desktop_menu_2 a:focus',
+			'props'    => array( 'color' => $menu_2_hover_color ),
+		) );
+	}
+}
+
+// Mobile Menu 1 styles.
+$mobile_menu_1_item_spacing = wpbf_customize_str_value( 'wpbf_footer_builder_mobile_menu_1_item_spacing' );
+
+if ( $mobile_menu_1_item_spacing && '5' !== $mobile_menu_1_item_spacing ) {
+	wpbf_write_css( array(
+		'selector' => '.wpbf-footer-menu.mobile_menu_1 a',
+		'props'    => array(
+			'padding-top'    => wpbf_maybe_append_suffix( $mobile_menu_1_item_spacing ),
+			'padding-bottom' => wpbf_maybe_append_suffix( $mobile_menu_1_item_spacing ),
+		),
+	) );
+}
+
+$mobile_menu_1_colors = wpbf_customize_array_value( 'wpbf_footer_builder_mobile_menu_1_link_colors' );
+
+if ( ! empty( $mobile_menu_1_colors ) ) {
+	$mobile_menu_1_default_color = ! empty( $mobile_menu_1_colors['default'] ) ? $mobile_menu_1_colors['default'] : '';
+	$mobile_menu_1_hover_color   = ! empty( $mobile_menu_1_colors['hover'] ) ? $mobile_menu_1_colors['hover'] : '';
+
+	if ( $mobile_menu_1_default_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-footer-menu.mobile_menu_1 a',
+			'props'    => array( 'color' => $mobile_menu_1_default_color ),
+		) );
+	}
+
+	if ( $mobile_menu_1_hover_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-footer-menu.mobile_menu_1 a:hover, .wpbf-footer-menu.mobile_menu_1 a:focus',
+			'props'    => array( 'color' => $mobile_menu_1_hover_color ),
+		) );
+	}
+}
+
+// Mobile Menu 2 styles.
+$mobile_menu_2_item_spacing = wpbf_customize_str_value( 'wpbf_footer_builder_mobile_menu_2_item_spacing' );
+
+if ( $mobile_menu_2_item_spacing && '5' !== $mobile_menu_2_item_spacing ) {
+	wpbf_write_css( array(
+		'selector' => '.wpbf-footer-menu.mobile_menu_2 a',
+		'props'    => array(
+			'padding-top'    => wpbf_maybe_append_suffix( $mobile_menu_2_item_spacing ),
+			'padding-bottom' => wpbf_maybe_append_suffix( $mobile_menu_2_item_spacing ),
+		),
+	) );
+}
+
+$mobile_menu_2_colors = wpbf_customize_array_value( 'wpbf_footer_builder_mobile_menu_2_link_colors' );
+
+if ( ! empty( $mobile_menu_2_colors ) ) {
+	$mobile_menu_2_default_color = ! empty( $mobile_menu_2_colors['default'] ) ? $mobile_menu_2_colors['default'] : '';
+	$mobile_menu_2_hover_color   = ! empty( $mobile_menu_2_colors['hover'] ) ? $mobile_menu_2_colors['hover'] : '';
+
+	if ( $mobile_menu_2_default_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-footer-menu.mobile_menu_2 a',
+			'props'    => array( 'color' => $mobile_menu_2_default_color ),
+		) );
+	}
+
+	if ( $mobile_menu_2_hover_color ) {
+		wpbf_write_css( array(
+			'selector' => '.wpbf-footer-menu.mobile_menu_2 a:hover, .wpbf-footer-menu.mobile_menu_2 a:focus',
+			'props'    => array( 'color' => $mobile_menu_2_hover_color ),
+		) );
+	}
+}
