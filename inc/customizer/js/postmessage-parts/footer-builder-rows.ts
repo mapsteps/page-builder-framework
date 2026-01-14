@@ -146,17 +146,12 @@ export default function footerBuilderRowsSetup() {
 				],
 			});
 
-			const widthNum =
-				typeof borderWidth === "number"
-					? borderWidth
-					: parseInt(String(borderWidth), 10) || 0;
-
-			if (widthNum > 0) {
+			if (borderStyle && borderStyle !== "none" && borderWidth) {
 				writeCSS(`${settingIdBase}_applied`, {
 					selector,
 					props: {
 						"border-top-width": maybeAppendSuffix(borderWidth),
-						"border-top-style": borderStyle || "solid",
+						"border-top-style": borderStyle,
 						"border-top-color": borderColor
 							? toStringColor(borderColor)
 							: "currentColor",
@@ -312,17 +307,12 @@ export default function footerBuilderRowsSetup() {
 				],
 			});
 
-			const widthNum =
-				typeof borderWidth === "number"
-					? borderWidth
-					: parseInt(String(borderWidth), 10) || 0;
-
-			if (widthNum > 0) {
+			if (borderStyle && borderStyle !== "none" && borderWidth) {
 				writeCSS(`${settingIdBase}_applied`, {
 					selector,
 					props: {
 						"border-top-width": maybeAppendSuffix(borderWidth),
-						"border-top-style": borderStyle || "solid",
+						"border-top-style": borderStyle,
 						"border-top-color": borderColor
 							? toStringColor(borderColor)
 							: "currentColor",
