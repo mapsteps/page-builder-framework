@@ -134,15 +134,18 @@ wpbf_customizer_field()
 	->type( 'select' )
 	->tab( 'design' )
 	->label( __( 'Border Top Style', 'page-builder-framework' ) )
-	->defaultValue( 'none' )
+	->defaultValue( 'solid' )
 	->priority( 225 )
 	->transport( 'postMessage' )
 	->choices( [
-		'none'   => __( 'None', 'page-builder-framework' ),
 		'solid'  => __( 'Solid', 'page-builder-framework' ),
 		'dashed' => __( 'Dashed', 'page-builder-framework' ),
 		'dotted' => __( 'Dotted', 'page-builder-framework' ),
 	] )
+	->activeCallback( function () use ( $control_id_prefix ) {
+		$width = get_theme_mod( $control_id_prefix . 'border_top_width', '' );
+		return ! empty( $width ) && intval( $width ) > 0;
+	} )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -155,6 +158,10 @@ wpbf_customizer_field()
 	->properties( [
 		'mode' => 'alpha',
 	] )
+	->activeCallback( function () use ( $control_id_prefix ) {
+		$width = get_theme_mod( $control_id_prefix . 'border_top_width', '' );
+		return ! empty( $width ) && intval( $width ) > 0;
+	} )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
@@ -169,4 +176,8 @@ wpbf_customizer_field()
 		'container' => __( 'Container', 'page-builder-framework' ),
 		'fullwidth' => __( 'Fullwidth', 'page-builder-framework' ),
 	] )
+	->activeCallback( function () use ( $control_id_prefix ) {
+		$width = get_theme_mod( $control_id_prefix . 'border_top_width', '' );
+		return ! empty( $width ) && intval( $width ) > 0;
+	} )
 	->addToSection( $section_id );
