@@ -93,6 +93,7 @@
 		"build-all-controls": "node build-scripts/build-all-controls.mjs",
 		"build-all-assets": "node build-scripts/build-all-assets.mjs",
 		"build-all": "pnpm build-all-controls && pnpm build-all-assets && pnpm build-controls-bundle",
+		"build-style": "pnpm build-asset --path=assets/scss/style.scss && shx rm -f css/min/style-min.js css/min/style-min.js.map",
 		"build-postmessage": "node build-scripts/build-asset.mjs --path=inc/customizer/js/postmessage.ts",
 		"build-customizer": "node build-scripts/build-asset.mjs --path=inc/customizer/js/customizer.ts"
 	}
