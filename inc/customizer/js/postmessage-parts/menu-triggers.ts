@@ -316,10 +316,18 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 		);
 
 		if (device === "desktop") {
-			// Menu trigger button icon's color.
+			// Menu trigger button icon's color (Header Builder mode only).
 			listenToCustomizerValueChange<WpbfColorControlValue>(
 				"wpbf_header_builder_desktop_menu_trigger_icon_color",
 				function (settingId, value) {
+					// Only apply when Header Builder is enabled.
+					// When disabled, premium plugin handles via menu_off_canvas_hamburger_color.
+					if (!headerBuilderEnabled()) {
+						// Remove any existing style tag to prevent overriding premium plugin's styles.
+						removeStyleTag(settingId);
+						return;
+					}
+
 					const colorValue = toStringColor(value);
 
 					writeCSS(settingId, {
@@ -422,15 +430,16 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 	listenToMenuTriggerValueChange("mobile");
 	listenToMenuTriggerValueChange("desktop");
 
-	// Listen to header builder toggle to clean up desktop icon size style tag.
+	// Listen to header builder toggle to clean up desktop menu trigger style tags.
 	// When header builder is disabled mid-session, we need to remove the theme's
-	// style tag so it doesn't override the premium plugin's menu_off_canvas_hamburger_size.
+	// style tags so they don't override the premium plugin's menu_off_canvas_hamburger_* styles.
 	listenToCustomizerValueChange<boolean>(
 		"wpbf_enable_header_builder",
 		function (settingId, value) {
 			if (!value) {
-				// Header builder is disabled - remove the desktop icon size style tag.
+				// Header builder is disabled - remove the desktop menu trigger style tags.
 				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_icon_size");
+				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_icon_color");
 			}
 		},
 	);
