@@ -103,6 +103,86 @@ export default function footerBuilderRowsSetup() {
 				});
 			},
 		);
+
+		// Border top - helper function to get current scope and update CSS
+		const updateBorderTop = (settingIdBase: string) => {
+			const borderWidth = window.wp?.customize?.(
+				`${controlIdPrefix}border_top_width`,
+			)?.get() as string | number | undefined;
+			const borderStyle = window.wp?.customize?.(
+				`${controlIdPrefix}border_top_style`,
+			)?.get() as string | undefined;
+			const borderColor = window.wp?.customize?.(
+				`${controlIdPrefix}border_top_color`,
+			)?.get() as string | undefined;
+			const borderScope = window.wp?.customize?.(
+				`${controlIdPrefix}border_top_scope`,
+			)?.get() as string | undefined;
+
+			const selector =
+				borderScope === "fullwidth"
+					? `.wpbf-footer-row-${rowKey}`
+					: `.wpbf-footer-row-${rowKey} .wpbf-container`;
+
+			// Clear border for both selectors first, then apply to the correct one
+			writeCSS(`${settingIdBase}_combined`, {
+				blocks: [
+					{
+						selector: `.wpbf-footer-row-${rowKey}`,
+						props: {
+							"border-top-width": "",
+							"border-top-style": "",
+							"border-top-color": "",
+						},
+					},
+					{
+						selector: `.wpbf-footer-row-${rowKey} .wpbf-container`,
+						props: {
+							"border-top-width": "",
+							"border-top-style": "",
+							"border-top-color": "",
+						},
+					},
+				],
+			});
+
+			if (borderStyle && borderStyle !== "none" && borderWidth) {
+				writeCSS(`${settingIdBase}_applied`, {
+					selector,
+					props: {
+						"border-top-width": maybeAppendSuffix(borderWidth),
+						"border-top-style": borderStyle,
+						"border-top-color": borderColor
+							? toStringColor(borderColor)
+							: "currentColor",
+					},
+				});
+			}
+		};
+
+		// Border top width
+		listenToCustomizerValueChange<string | number>(
+			`${controlIdPrefix}border_top_width`,
+			() => updateBorderTop(`${controlIdPrefix}border_top`),
+		);
+
+		// Border top style
+		listenToCustomizerValueChange<string>(
+			`${controlIdPrefix}border_top_style`,
+			() => updateBorderTop(`${controlIdPrefix}border_top`),
+		);
+
+		// Border top color
+		listenToCustomizerValueChange<WpbfColorControlValue>(
+			`${controlIdPrefix}border_top_color`,
+			() => updateBorderTop(`${controlIdPrefix}border_top`),
+		);
+
+		// Border top scope
+		listenToCustomizerValueChange<string>(
+			`${controlIdPrefix}border_top_scope`,
+			() => updateBorderTop(`${controlIdPrefix}border_top`),
+		);
 	});
 
 	/**
@@ -183,6 +263,86 @@ export default function footerBuilderRowsSetup() {
 					props: { "font-size": maybeAppendSuffix(value) },
 				});
 			},
+		);
+
+		// Border top - helper function to get current scope and update CSS
+		const updateBorderTop = (settingIdBase: string) => {
+			const borderWidth = window.wp?.customize?.(
+				`${controlIdPrefix}border_top_width`,
+			)?.get() as string | number | undefined;
+			const borderStyle = window.wp?.customize?.(
+				`${controlIdPrefix}border_top_style`,
+			)?.get() as string | undefined;
+			const borderColor = window.wp?.customize?.(
+				`${controlIdPrefix}border_top_color`,
+			)?.get() as string | undefined;
+			const borderScope = window.wp?.customize?.(
+				`${controlIdPrefix}border_top_scope`,
+			)?.get() as string | undefined;
+
+			const selector =
+				borderScope === "fullwidth"
+					? `.wpbf-footer-row-${rowKey}`
+					: `.wpbf-footer-row-${rowKey} .wpbf-container`;
+
+			// Clear border for both selectors first, then apply to the correct one
+			writeCSS(`${settingIdBase}_combined`, {
+				blocks: [
+					{
+						selector: `.wpbf-footer-row-${rowKey}`,
+						props: {
+							"border-top-width": "",
+							"border-top-style": "",
+							"border-top-color": "",
+						},
+					},
+					{
+						selector: `.wpbf-footer-row-${rowKey} .wpbf-container`,
+						props: {
+							"border-top-width": "",
+							"border-top-style": "",
+							"border-top-color": "",
+						},
+					},
+				],
+			});
+
+			if (borderStyle && borderStyle !== "none" && borderWidth) {
+				writeCSS(`${settingIdBase}_applied`, {
+					selector,
+					props: {
+						"border-top-width": maybeAppendSuffix(borderWidth),
+						"border-top-style": borderStyle,
+						"border-top-color": borderColor
+							? toStringColor(borderColor)
+							: "currentColor",
+					},
+				});
+			}
+		};
+
+		// Border top width
+		listenToCustomizerValueChange<string | number>(
+			`${controlIdPrefix}border_top_width`,
+			() => updateBorderTop(`${controlIdPrefix}border_top`),
+		);
+
+		// Border top style
+		listenToCustomizerValueChange<string>(
+			`${controlIdPrefix}border_top_style`,
+			() => updateBorderTop(`${controlIdPrefix}border_top`),
+		);
+
+		// Border top color
+		listenToCustomizerValueChange<WpbfColorControlValue>(
+			`${controlIdPrefix}border_top_color`,
+			() => updateBorderTop(`${controlIdPrefix}border_top`),
+		);
+
+		// Border top scope
+		listenToCustomizerValueChange<string>(
+			`${controlIdPrefix}border_top_scope`,
+			() => updateBorderTop(`${controlIdPrefix}border_top`),
 		);
 	});
 

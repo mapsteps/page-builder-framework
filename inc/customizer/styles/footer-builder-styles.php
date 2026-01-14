@@ -126,6 +126,28 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 				'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
 			) );
 		}
+
+		// Border Top.
+		$border_top_width = wpbf_customize_str_value( $row_id_prefix . 'border_top_width' );
+		$border_top_style = wpbf_customize_str_value( $row_id_prefix . 'border_top_style' );
+		$border_top_color = wpbf_customize_str_value( $row_id_prefix . 'border_top_color' );
+		$border_top_scope = wpbf_customize_str_value( $row_id_prefix . 'border_top_scope' );
+
+		// Only output border if style is not 'none' and width is set.
+		if ( $border_top_style && 'none' !== $border_top_style && $border_top_width ) {
+			$border_selector = 'fullwidth' === $border_top_scope
+				? '.wpbf-footer-row-' . esc_attr( $row_key )
+				: '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-container';
+
+			wpbf_write_css( array(
+				'selector' => $border_selector,
+				'props'    => array(
+					'border-top-width' => wpbf_maybe_append_suffix( $border_top_width ),
+					'border-top-style' => $border_top_style,
+					'border-top-color' => $border_top_color ? $border_top_color : 'currentColor',
+				),
+			) );
+		}
 	}
 }
 
@@ -227,6 +249,28 @@ foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 			wpbf_write_css( array(
 				'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ),
 				'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
+			) );
+		}
+
+		// Border Top.
+		$border_top_width = wpbf_customize_str_value( $row_id_prefix . 'border_top_width' );
+		$border_top_style = wpbf_customize_str_value( $row_id_prefix . 'border_top_style' );
+		$border_top_color = wpbf_customize_str_value( $row_id_prefix . 'border_top_color' );
+		$border_top_scope = wpbf_customize_str_value( $row_id_prefix . 'border_top_scope' );
+
+		// Only output border if style is not 'none' and width is set.
+		if ( $border_top_style && 'none' !== $border_top_style && $border_top_width ) {
+			$border_selector = 'fullwidth' === $border_top_scope
+				? '.wpbf-footer-row-' . esc_attr( $row_key )
+				: '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-container';
+
+			wpbf_write_css( array(
+				'selector' => $border_selector,
+				'props'    => array(
+					'border-top-width' => wpbf_maybe_append_suffix( $border_top_width ),
+					'border-top-style' => $border_top_style,
+					'border-top-color' => $border_top_color ? $border_top_color : 'currentColor',
+				),
 			) );
 		}
 	}
