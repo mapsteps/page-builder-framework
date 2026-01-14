@@ -21,10 +21,6 @@ auth.json
 .idea/
 
 # developer specific
-david-gulpfile.js
-david-package.json
-bagus-gulpfile.js
-bagus-package.json
 manifest.json
 
 # project specific
