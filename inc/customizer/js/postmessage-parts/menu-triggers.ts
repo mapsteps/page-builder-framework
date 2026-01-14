@@ -3,6 +3,7 @@ import {
 	writeCSS,
 	maybeAppendSuffix,
 	toStringColor,
+	removeStyleTag,
 } from "../customizer-util";
 import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
 import { WpbfColorControlValue } from "../../../../Customizer/Controls/Color/src/color-interface";
@@ -403,7 +404,11 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 				function (settingId, value) {
 					// Only apply when Header Builder is enabled.
 					// When disabled, premium plugin handles via menu_off_canvas_hamburger_size.
-					if (!headerBuilderEnabled()) return;
+					if (!headerBuilderEnabled()) {
+						// Remove any existing style tag to prevent overriding premium plugin's styles.
+						removeStyleTag(settingId);
+						return;
+					}
 
 					writeCSS(settingId, {
 						selector: ".wpbf-menu-toggle",
@@ -416,4 +421,17 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 
 	listenToMenuTriggerValueChange("mobile");
 	listenToMenuTriggerValueChange("desktop");
+
+	// Listen to header builder toggle to clean up desktop icon size style tag.
+	// When header builder is disabled mid-session, we need to remove the theme's
+	// style tag so it doesn't override the premium plugin's menu_off_canvas_hamburger_size.
+	listenToCustomizerValueChange<boolean>(
+		"wpbf_enable_header_builder",
+		function (settingId, value) {
+			if (!value) {
+				// Header builder is disabled - remove the desktop icon size style tag.
+				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_icon_size");
+			}
+		},
+	);
 }
