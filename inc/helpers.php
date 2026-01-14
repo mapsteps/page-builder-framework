@@ -1878,16 +1878,28 @@ function wpbf_parse_template_tags( $value ) {
 		return $value;
 	}
 
+	$theme_author = apply_filters(
+		'wpbf_theme_author',
+		array(
+			'name' => __( 'Page Builder Framework', 'page-builder-framework' ),
+			'url'  => 'https://wp-pagebuilderframework.com/',
+		)
+	);
+
+	$theme_author_output = '<a rel="nofollow" href="' . esc_url( $theme_author['url'] ) . '">' . esc_html( $theme_author['name'] ) . '</a>';
+
 	$find = array(
 		'{site_url}',
 		'[year]',
 		'[blogname]',
+		'[theme_author]',
 	);
 
 	$rep = array(
 		site_url(),
 		gmdate( 'Y' ),
 		get_bloginfo( 'name' ),
+		$theme_author_output,
 	);
 
 	return str_replace( $find, $rep, $value );

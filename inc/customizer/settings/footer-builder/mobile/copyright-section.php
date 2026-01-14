@@ -33,7 +33,7 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'text' )
 	->type( 'textarea' )
 	->label( __( 'Copyright Text', 'page-builder-framework' ) )
-	->description( __( 'Use [year] for current year, [blogname] for site name.', 'page-builder-framework' ) )
+	->description( __( 'Use [year] for current year, [blogname] for site name, [theme_author] for theme author.', 'page-builder-framework' ) )
 	->defaultValue( __( '© [year] [blogname]. All rights reserved.', 'page-builder-framework' ) )
 	->transport( 'postMessage' )
 	->partialRefresh( [
