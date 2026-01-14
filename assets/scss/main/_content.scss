@@ -595,6 +595,10 @@ div.aligncenter {
 }
 
 .wpbf-html-widget {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
 	p:last-child {
 		margin-bottom: 0;
 	}
