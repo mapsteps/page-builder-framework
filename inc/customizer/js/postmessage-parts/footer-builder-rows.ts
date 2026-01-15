@@ -157,6 +157,16 @@ export default function footerBuilderRowsSetup() {
 							: "currentColor",
 					},
 				});
+			} else {
+				// Clear the applied styles when border is removed
+				writeCSS(`${settingIdBase}_applied`, {
+					selector,
+					props: {
+						"border-top-width": "",
+						"border-top-style": "",
+						"border-top-color": "",
+					},
+				});
 			}
 		};
 
@@ -316,6 +326,16 @@ export default function footerBuilderRowsSetup() {
 						"border-top-color": borderColor
 							? toStringColor(borderColor)
 							: "currentColor",
+					},
+				});
+			} else {
+				// Clear the applied styles when border is removed
+				writeCSS(`${settingIdBase}_applied`, {
+					selector,
+					props: {
+						"border-top-width": "",
+						"border-top-style": "",
+						"border-top-color": "",
 					},
 				});
 			}
