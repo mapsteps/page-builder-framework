@@ -130,17 +130,13 @@ export default function footerBuilderRowsSetup() {
 					{
 						selector: `.wpbf-footer-row-${rowKey}`,
 						props: {
-							"border-top-width": "",
-							"border-top-style": "",
-							"border-top-color": "",
+							"border-top-style": "none",
 						},
 					},
 					{
 						selector: `.wpbf-footer-row-${rowKey} .wpbf-container`,
 						props: {
-							"border-top-width": "",
-							"border-top-style": "",
-							"border-top-color": "",
+							"border-top-style": "none",
 						},
 					},
 				],
@@ -162,9 +158,7 @@ export default function footerBuilderRowsSetup() {
 				writeCSS(`${settingIdBase}_applied`, {
 					selector,
 					props: {
-						"border-top-width": "",
-						"border-top-style": "",
-						"border-top-color": "",
+						"border-top-style": "none",
 					},
 				});
 			}
@@ -301,17 +295,13 @@ export default function footerBuilderRowsSetup() {
 					{
 						selector: `.wpbf-footer-row-${rowKey}`,
 						props: {
-							"border-top-width": "",
-							"border-top-style": "",
-							"border-top-color": "",
+							"border-top-style": "none",
 						},
 					},
 					{
 						selector: `.wpbf-footer-row-${rowKey} .wpbf-container`,
 						props: {
-							"border-top-width": "",
-							"border-top-style": "",
-							"border-top-color": "",
+							"border-top-style": "none",
 						},
 					},
 				],
@@ -333,9 +323,7 @@ export default function footerBuilderRowsSetup() {
 				writeCSS(`${settingIdBase}_applied`, {
 					selector,
 					props: {
-						"border-top-width": "",
-						"border-top-style": "",
-						"border-top-color": "",
+						"border-top-style": "none",
 					},
 				});
 			}
