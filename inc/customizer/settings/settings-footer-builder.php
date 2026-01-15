@@ -21,6 +21,7 @@ wpbf_customizer_field()
 	->id( 'wpbf_enable_footer_builder' )
 	->type( 'headline-toggle' )
 	->label( __( 'Footer Builder', 'page-builder-framework' ) )
+	->priority( 1 )
 	->defaultValue( false )
 	->transport( 'auto' )
 	->properties([
@@ -54,6 +55,7 @@ wpbf_customizer_field()
 	->id( 'wpbf_footer_builder' )
 	->type( 'responsive-builder' )
 	->description( __( 'Drag and drop widgets to build your site footer.', 'page-builder-framework' ) )
+	->priority( 10 )
 	->transport( 'auto' )
 	->properties( array(
 		'available_widgets' => FooterBuilderConfig::availableWidgets(),
