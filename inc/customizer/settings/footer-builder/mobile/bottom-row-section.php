@@ -113,29 +113,23 @@ wpbf_customizer_field()
 	] )
 	->addToSection( $section_id );
 
-/* Border Top Controls */
+/* Top Separator */
 
 wpbf_customizer_field()
-	->id( $control_id_prefix . 'border_top_width' )
-	->type( 'input-slider' )
+	->id( $control_id_prefix . 'top_separator_headline' )
+	->type( 'headline' )
 	->tab( 'design' )
-	->label( __( 'Border Top Width', 'page-builder-framework' ) )
-	->priority( 220 )
-	->transport( 'postMessage' )
-	->properties( [
-		'min'  => 0,
-		'max'  => 20,
-		'step' => 1,
-	] )
+	->label( __( 'Top Separator', 'page-builder-framework' ) )
+	->priority( 218 )
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'border_top_style' )
 	->type( 'select' )
 	->tab( 'design' )
-	->label( __( 'Border Top Style', 'page-builder-framework' ) )
+	->label( __( 'Separator Style', 'page-builder-framework' ) )
 	->defaultValue( 'none' )
-	->priority( 225 )
+	->priority( 220 )
 	->transport( 'postMessage' )
 	->choices( [
 		'none'   => __( 'None', 'page-builder-framework' ),
@@ -143,11 +137,25 @@ wpbf_customizer_field()
 		'dashed' => __( 'Dashed', 'page-builder-framework' ),
 		'dotted' => __( 'Dotted', 'page-builder-framework' ),
 	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'border_top_width' )
+	->type( 'input-slider' )
+	->tab( 'design' )
+	->label( __( 'Separator Width', 'page-builder-framework' ) )
+	->priority( 225 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 20,
+		'step' => 1,
+	] )
 	->activeCallback( [
 		array(
-			'setting'  => $control_id_prefix . 'border_top_width',
-			'operator' => '>',
-			'value'    => 0,
+			'setting'  => $control_id_prefix . 'border_top_style',
+			'operator' => '!==',
+			'value'    => 'none',
 		),
 	] )
 	->addToSection( $section_id );
@@ -156,7 +164,7 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'border_top_color' )
 	->type( 'color' )
 	->tab( 'design' )
-	->label( __( 'Border Top Color', 'page-builder-framework' ) )
+	->label( __( 'Separator Color', 'page-builder-framework' ) )
 	->priority( 230 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -164,9 +172,9 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => $control_id_prefix . 'border_top_width',
-			'operator' => '>',
-			'value'    => 0,
+			'setting'  => $control_id_prefix . 'border_top_style',
+			'operator' => '!==',
+			'value'    => 'none',
 		),
 	] )
 	->addToSection( $section_id );
@@ -175,7 +183,7 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'border_top_scope' )
 	->type( 'select' )
 	->tab( 'design' )
-	->label( __( 'Border Top Scope', 'page-builder-framework' ) )
+	->label( __( 'Separator Scope', 'page-builder-framework' ) )
 	->defaultValue( 'container' )
 	->priority( 235 )
 	->transport( 'postMessage' )
@@ -185,9 +193,9 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		array(
-			'setting'  => $control_id_prefix . 'border_top_width',
-			'operator' => '>',
-			'value'    => 0,
+			'setting'  => $control_id_prefix . 'border_top_style',
+			'operator' => '!==',
+			'value'    => 'none',
 		),
 	] )
 	->addToSection( $section_id );
