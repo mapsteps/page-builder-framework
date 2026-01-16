@@ -223,45 +223,41 @@ export function writeCSS(
 }
 
 /**
- * Write responsive CSS.
+ * Write responsive CSS into a single style tag with media queries.
+ * Consolidates desktop/tablet/mobile values into one style element.
  *
- * @param {HTMLStyleElement} styleTagOrId - The style tag element or the style tag id.
- * @param {string} selector - The CSS selector.
- * @param {string|string[]} rule - The CSS rule.
- * @param {Record<string, any>} value - The responsive CSS value.
+ * @param styleTagOrId - The style tag element or the style tag id.
+ * @param selector - The CSS selector.
+ * @param rule - The CSS property or array of properties.
+ * @param value - Object with desktop/tablet/mobile values.
  */
 export function writeResponsiveCSS(
 	styleTagOrId: HTMLStyleElement | string,
 	selector: string,
 	rule: string | string[],
-	value: Record<string, any>,
+	value: Record<string, string | number | undefined>,
 ) {
 	const styleTag =
 		typeof styleTagOrId === "string" ? getStyleTag(styleTagOrId) : styleTagOrId;
 
-	const breakpoints = window.WpbfTheme.breakpoints;
-	const mediaQueries = {
-		mobile: "max-width: " + (breakpoints.tablet - 1).toString() + "px",
-		tablet: "max-width: " + (breakpoints.desktop - 1).toString() + "px",
-		desktop: "min-width: " + breakpoints.desktop.toString() + "px",
-	};
 	let css = "";
 
 	for (const device in value) {
 		if (!value.hasOwnProperty(device)) continue;
-		if (value[device] === "") continue;
+		if (value[device] === undefined || value[device] === "") continue;
 
-		let deviceCSS = `${selector} { 
-		${typeof rule === "string" ? `${rule}: ${value[device]};` : rule.map((r) => `${r}: ${value[device]};`).join("\n")}
-	}`;
+		const deviceValue = value[device];
+		const rules =
+			typeof rule === "string"
+				? `${rule}: ${deviceValue};`
+				: rule.map((r) => `${r}: ${deviceValue};`).join(" ");
 
-		// Apply media queries based on the device.
-		if (device === "mobile" && breakpoints.mobile) {
+		let deviceCSS = `${selector} { ${rules} }`;
+
+		if (device === "mobile") {
 			deviceCSS = `@media (${mediaQueries.mobile}) { ${deviceCSS} }`;
-		} else if (device === "tablet" && breakpoints.tablet) {
+		} else if (device === "tablet") {
 			deviceCSS = `@media (${mediaQueries.tablet}) { ${deviceCSS} }`;
-		} else if (device === "desktop" && breakpoints.desktop) {
-			deviceCSS = `@media (${mediaQueries.desktop}) { ${deviceCSS} }`;
 		}
 
 		css += deviceCSS + "\n";
@@ -404,3 +400,65 @@ export type WpbfCheckboxButtonsetResponsiveValue = {
 	tablet?: boolean;
 	mobile?: boolean;
 };
+
+/**
+ * Write responsive CSS with per-breakpoint selectors into a single style tag.
+ * Use this when different breakpoints need different selectors.
+ *
+ * @param styleTagOrId - The style tag element or the style tag id.
+ * @param config - Object with desktop/tablet/mobile configurations.
+ */
+export function writeResponsiveCSSMultiSelector(
+	styleTagOrId: HTMLStyleElement | string,
+	config: {
+		desktop?: { selector: string; props: Record<string, string | number | undefined> };
+		tablet?: { selector: string; props: Record<string, string | number | undefined> };
+		mobile?: { selector: string; props: Record<string, string | number | undefined> };
+	},
+) {
+	const styleTag =
+		typeof styleTagOrId === "string" ? getStyleTag(styleTagOrId) : styleTagOrId;
+
+	let css = "";
+
+	// Desktop (no media query needed - base styles)
+	if (config.desktop) {
+		const { selector, props } = config.desktop;
+		const propsStr = Object.entries(props)
+			.filter(([, v]) => v !== undefined && v !== "")
+			.map(([k, v]) => `${k}: ${v};`)
+			.join(" ");
+
+		if (propsStr) {
+			css += `${selector} { ${propsStr} }\n`;
+		}
+	}
+
+	// Tablet
+	if (config.tablet) {
+		const { selector, props } = config.tablet;
+		const propsStr = Object.entries(props)
+			.filter(([, v]) => v !== undefined && v !== "")
+			.map(([k, v]) => `${k}: ${v};`)
+			.join(" ");
+
+		if (propsStr) {
+			css += `@media (${mediaQueries.tablet}) { ${selector} { ${propsStr} } }\n`;
+		}
+	}
+
+	// Mobile
+	if (config.mobile) {
+		const { selector, props } = config.mobile;
+		const propsStr = Object.entries(props)
+			.filter(([, v]) => v !== undefined && v !== "")
+			.map(([k, v]) => `${k}: ${v};`)
+			.join(" ");
+
+		if (propsStr) {
+			css += `@media (${mediaQueries.mobile}) { ${selector} { ${propsStr} } }\n`;
+		}
+	}
+
+	styleTag.innerHTML = css;
+}
