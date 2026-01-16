@@ -38,6 +38,18 @@ function setupTypographyFields(customizer: WpbfCustomize) {
 	wpbfTypographyControlIds.forEach((id) => {
 		if (!customizer.control(id)) return;
 
+		// Register hook once per typography control (not on every font change).
+		window.wp.hooks.addAction(
+			"wpbf.dynamicControl.initWpbfControl",
+			"wpbf/typography/" + id,
+			function (controlInit: AnyWpbfCustomizeControl) {
+				const variantControlId = id + "[variant]";
+				if (variantControlId === controlInit.id) {
+					// Variant control initialized.
+				}
+			},
+		);
+
 		customizer(id, function (setting) {
 			composeFontProperties(id, undefined, undefined, undefined);
 
@@ -181,15 +193,6 @@ function composeFontProperties(
 	}
 
 	control.setting.set(value);
-
-	window.wp.hooks.addAction(
-		"wpbf.dynamicControl.initWpbfControl",
-		"wpbf",
-		function (controlInit: AnyWpbfCustomizeControl) {
-			if (variantControl && id + "[variant]" === controlInit.id) {
-			}
-		},
-	);
 }
 
 function collectVariantChoices(
