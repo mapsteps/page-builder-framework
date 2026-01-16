@@ -17,11 +17,29 @@ function setupCustomizer() {
 
 	function init() {
 		listenDevicePreviewSwitch();
+		listenSectionExpansion();
 		setupLogoContainerWidth();
 		setupBuilderControlToggleBehavior();
 		setupControlsMovement();
 		setupConditionalControls();
 		setupLabelChanges();
+	}
+
+	/**
+	 * Listen for section expansion and notify preview iframe.
+	 * This enables lazy postMessage handler registration.
+	 */
+	function listenSectionExpansion() {
+		const customizer = window.wp.customize;
+		if (!customizer) return;
+
+		customizer.section.each((section: WpbfCustomizeSection) => {
+			section.expanded.bind((expanded: boolean) => {
+				if (expanded) {
+					customizer.previewer?.send("wpbf-section-expanded", section.id);
+				}
+			});
+		});
 	}
 
 	function listenDevicePreviewSwitch() {
