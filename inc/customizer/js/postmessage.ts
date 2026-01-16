@@ -51,7 +51,9 @@ import footerBuilderButtonsSetup from "./postmessage-parts/footer-builder-button
 	buttonsSetup();
 	breadcrumbsSetup();
 	footerSetup();
-	woocommerceSetup();
+	if (window.wpbfIsWooActive) {
+		woocommerceSetup();
+	}
 	eddSetup();
 	headerBuilderSetup();
 	mobileHeaderBuilderSetup();

@@ -470,7 +470,8 @@ function wpbf_customizer_preview_js() {
 			'variant-1' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-1' ),
 			'variant-2' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-2' ),
 			'variant-3' => HeaderBuilderConfig::menuTriggerButtonSvg( 'variant-3' ),
-		) ),
+		) ) . ';' .
+		'window.wpbfIsWooActive = ' . ( class_exists( 'WooCommerce' ) ? 'true' : 'false' ) . ';',
 		'before'
 	);
 

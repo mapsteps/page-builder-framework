@@ -135,6 +135,7 @@ declare global {
 		wpbfCustomizerControlDependencies?: WpbfControlDependencies;
 		wpbfCustomizerSectionDependencies?: WpbfControlDependencies;
 		wpbfBuilderControlIds?: string[];
+		wpbfIsWooActive?: boolean;
 		[key: string]: any;
 	}
 
