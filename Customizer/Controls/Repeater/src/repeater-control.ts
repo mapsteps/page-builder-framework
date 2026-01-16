@@ -15,6 +15,18 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 	wp.customize.Control.extend<WpbfRepeaterControl>({
 		// When we're finished loading continue processing
 		ready: function (this: WpbfRepeaterControl): void {
+			const control = this;
+
+			// Handle control removal - trigger destroy when control is removed.
+			function handleOnRemoved(removedControl: WpbfRepeaterControl) {
+				if (control === removedControl) {
+					if (control.destroy) control.destroy();
+					control.container?.remove();
+					wp.customize.control.unbind("removed", handleOnRemoved);
+				}
+			}
+			wp.customize.control.bind("removed", handleOnRemoved);
+
 			this.initWpbfControl?.();
 		},
 
@@ -949,5 +961,56 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 					jQuery(this).val();
 				control.setValue?.(currentSettings);
 			});
+		},
+
+		/**
+		 * Handle removal/de-registration of the control.
+		 * Cleans up jQuery Sortable, event handlers, wp.media frame,
+		 * color pickers, and row objects.
+		 *
+		 * @returns {void}
+		 */
+		destroy: function (this: WpbfRepeaterControl): void {
+			// Destroy jQuery Sortable on the repeater fields container.
+			if (this.repeaterFieldsContainer?.data("ui-sortable")) {
+				this.repeaterFieldsContainer.sortable("destroy");
+			}
+
+			// Unbind all container events (handles lines 68-127, 940).
+			this.container?.off();
+
+			// Destroy wp.media frame if it exists.
+			if (this.frame) {
+				this.frame.off();
+				this.frame.dispose?.();
+				this.frame = undefined;
+			}
+
+			// Destroy color pickers.
+			this.container?.find(".wpbf-classic-color-picker").each(function () {
+				const $picker = jQuery(this);
+				if ($picker.data("wpColorPicker")) {
+					($picker as any).wpColorPicker("destroy");
+				}
+			});
+
+			// Clean up row objects - unbind event handlers and clear references.
+			if (this.rows) {
+				for (const index in this.rows) {
+					const row = this.rows[index];
+					if (row) {
+						row.container?.off();
+						row.header?.off();
+					}
+				}
+				this.rows = [];
+			}
+
+			// Clear memoized template function.
+			this.repeaterTemplate = undefined;
+
+			// Clear other references.
+			this.settingField = undefined;
+			this.repeaterFieldsContainer = undefined;
 		},
 	});
