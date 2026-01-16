@@ -10,6 +10,16 @@ wp.customize.controlConstructor["wpbf-sortable"] =
 		ready: function (this: WpbfSortableControl) {
 			const control = this;
 
+			// Handle control removal - trigger destroy when control is removed.
+			function handleOnRemoved(removedControl: WpbfSortableControl) {
+				if (control === removedControl) {
+					if (control.destroy) control.destroy();
+					control.container?.remove();
+					wp.customize.control.unbind("removed", handleOnRemoved);
+				}
+			}
+			wp.customize.control.bind("removed", handleOnRemoved);
+
 			// Init sortable.
 			jQuery(control.container.find("ul.sortable").first())
 				.sortable({
@@ -51,5 +61,22 @@ wp.customize.controlConstructor["wpbf-sortable"] =
 			});
 
 			return newVal;
+		},
+
+		/**
+		 * Handle removal/de-registration of the control.
+		 * Cleans up jQuery Sortable instance and event handlers.
+		 *
+		 * @returns {void}
+		 */
+		destroy: function (this: WpbfSortableControl): void {
+			// Destroy jQuery Sortable on the sortable list.
+			const $sortable = this.container?.find("ul.sortable");
+			if ($sortable?.data("ui-sortable")) {
+				$sortable.sortable("destroy");
+			}
+
+			// Unbind all container events.
+			this.container?.off();
 		},
 	});
