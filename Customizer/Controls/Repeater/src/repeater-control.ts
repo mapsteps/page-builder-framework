@@ -30,6 +30,13 @@ wp.customize.controlConstructor["wpbf-repeater"] =
 			this.initWpbfControl?.();
 		},
 
+		/**
+		 * Re-initialize the control after being destroyed.
+		 */
+		reinitialize: function (this: WpbfRepeaterControl): void {
+			this.initWpbfControl?.();
+		},
+
 		rows: [],
 
 		currentIndex: 0,
