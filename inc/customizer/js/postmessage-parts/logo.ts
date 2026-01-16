@@ -1,6 +1,7 @@
 import {
 	listenToCustomizerValueChange,
 	writeCSS,
+	writeResponsiveCSSMultiSelector,
 	maybeAppendSuffix,
 	toStringColor,
 	toNumberValue,
@@ -17,23 +18,19 @@ export default function logoSetup() {
 		function (settingId, value) {
 			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
-			writeCSS(settingId + "-desktop", {
-				selector: ".wpbf-logo img, .wpbf-mobile-logo img",
-				props: {
-					width: maybeAppendSuffix(obj?.desktop),
+			writeResponsiveCSSMultiSelector(settingId, {
+				desktop: {
+					selector: ".wpbf-logo img, .wpbf-mobile-logo img",
+					props: { width: maybeAppendSuffix(obj?.desktop) },
 				},
-			});
-
-			writeCSS(settingId + "-tablet", {
-				mediaQuery: `@media (${mediaQueries.tablet})`,
-				selector: ".wpbf-mobile-logo img",
-				props: { width: maybeAppendSuffix(obj?.tablet) },
-			});
-
-			writeCSS(settingId + "-mobile", {
-				mediaQuery: `@media (${mediaQueries.mobile})`,
-				selector: ".wpbf-mobile-logo img",
-				props: { width: maybeAppendSuffix(obj?.mobile) },
+				tablet: {
+					selector: ".wpbf-mobile-logo img",
+					props: { width: maybeAppendSuffix(obj?.tablet) },
+				},
+				mobile: {
+					selector: ".wpbf-mobile-logo img",
+					props: { width: maybeAppendSuffix(obj?.mobile) },
+				},
 			});
 		},
 	);
@@ -44,23 +41,19 @@ export default function logoSetup() {
 		function (settingId, value) {
 			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
-			writeCSS(settingId + "-desktop", {
-				selector: ".wpbf-logo a, .wpbf-mobile-logo a",
-				props: {
-					"font-size": maybeAppendSuffix(obj?.desktop),
+			writeResponsiveCSSMultiSelector(settingId, {
+				desktop: {
+					selector: ".wpbf-logo a, .wpbf-mobile-logo a",
+					props: { "font-size": maybeAppendSuffix(obj?.desktop) },
 				},
-			});
-
-			writeCSS(settingId + "-tablet", {
-				mediaQuery: `@media (${mediaQueries.tablet})`,
-				selector: ".wpbf-mobile-logo a",
-				props: { "font-size": maybeAppendSuffix(obj?.tablet) },
-			});
-
-			writeCSS(settingId + "-mobile", {
-				mediaQuery: `@media (${mediaQueries.mobile})`,
-				selector: ".wpbf-mobile-logo a",
-				props: { "font-size": maybeAppendSuffix(obj?.mobile) },
+				tablet: {
+					selector: ".wpbf-mobile-logo a",
+					props: { "font-size": maybeAppendSuffix(obj?.tablet) },
+				},
+				mobile: {
+					selector: ".wpbf-mobile-logo a",
+					props: { "font-size": maybeAppendSuffix(obj?.mobile) },
+				},
 			});
 		},
 	);

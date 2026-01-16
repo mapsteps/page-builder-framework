@@ -2,9 +2,9 @@ import {
 	listenToCustomizerValueChange,
 	emptyNotZero,
 	writeCSS,
+	writeResponsiveCSSMultiSelector,
 	maybeAppendSuffix,
 	toStringColor,
-	mediaQueries,
 } from "../customizer-util";
 import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
 import { MarginPaddingValue } from "../../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
@@ -32,35 +32,33 @@ export default function layoutSetup($: JQueryStatic) {
 		function (settingId, value) {
 			const obj = parseJsonOrUndefined<MarginPaddingValue>(value);
 
-			writeCSS(settingId + "-desktop", {
-				selector: "#inner-content",
-				props: {
-					"padding-top": maybeAppendSuffix(obj?.desktop_top),
-					"padding-right": maybeAppendSuffix(obj?.desktop_right),
-					"padding-bottom": maybeAppendSuffix(obj?.desktop_bottom),
-					"padding-left": maybeAppendSuffix(obj?.desktop_left),
+			writeResponsiveCSSMultiSelector(settingId, {
+				desktop: {
+					selector: "#inner-content",
+					props: {
+						"padding-top": maybeAppendSuffix(obj?.desktop_top),
+						"padding-right": maybeAppendSuffix(obj?.desktop_right),
+						"padding-bottom": maybeAppendSuffix(obj?.desktop_bottom),
+						"padding-left": maybeAppendSuffix(obj?.desktop_left),
+					},
 				},
-			});
-
-			writeCSS(settingId + "-tablet", {
-				mediaQuery: `@media (${mediaQueries.tablet})`,
-				selector: "#inner-content",
-				props: {
-					"padding-top": maybeAppendSuffix(obj?.tablet_top),
-					"padding-right": maybeAppendSuffix(obj?.tablet_right),
-					"padding-bottom": maybeAppendSuffix(obj?.tablet_bottom),
-					"padding-left": maybeAppendSuffix(obj?.tablet_left),
+				tablet: {
+					selector: "#inner-content",
+					props: {
+						"padding-top": maybeAppendSuffix(obj?.tablet_top),
+						"padding-right": maybeAppendSuffix(obj?.tablet_right),
+						"padding-bottom": maybeAppendSuffix(obj?.tablet_bottom),
+						"padding-left": maybeAppendSuffix(obj?.tablet_left),
+					},
 				},
-			});
-
-			writeCSS(settingId + "-mobile", {
-				mediaQuery: `@media (${mediaQueries.mobile})`,
-				selector: "#inner-content",
-				props: {
-					"padding-top": maybeAppendSuffix(obj?.mobile_top),
-					"padding-right": maybeAppendSuffix(obj?.mobile_right),
-					"padding-bottom": maybeAppendSuffix(obj?.mobile_bottom),
-					"padding-left": maybeAppendSuffix(obj?.mobile_left),
+				mobile: {
+					selector: "#inner-content",
+					props: {
+						"padding-top": maybeAppendSuffix(obj?.mobile_top),
+						"padding-right": maybeAppendSuffix(obj?.mobile_right),
+						"padding-bottom": maybeAppendSuffix(obj?.mobile_bottom),
+						"padding-left": maybeAppendSuffix(obj?.mobile_left),
+					},
 				},
 			});
 		},

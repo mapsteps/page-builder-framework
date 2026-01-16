@@ -1,9 +1,9 @@
 import {
 	listenToCustomizerValueChange,
 	writeCSS,
+	writeResponsiveCSSMultiSelector,
 	maybeAppendSuffix,
 	toStringColor,
-	mediaQueries,
 } from "../customizer-util";
 import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
 import { DevicesValue } from "../../../../Customizer/Controls/Responsive/src/responsive-interface";
@@ -16,23 +16,19 @@ export default function taglineSetup() {
 		function (settingId, value) {
 			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
-			writeCSS(settingId + "-desktop", {
-				selector: ".wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline",
-				props: {
-					"font-size": maybeAppendSuffix(obj?.desktop),
+			writeResponsiveCSSMultiSelector(settingId, {
+				desktop: {
+					selector: ".wpbf-logo .wpbf-tagline, .wpbf-mobile-logo .wpbf-tagline",
+					props: { "font-size": maybeAppendSuffix(obj?.desktop) },
 				},
-			});
-
-			writeCSS(settingId + "-tablet", {
-				mediaQuery: `@media (${mediaQueries.tablet})`,
-				selector: ".wpbf-mobile-logo .wpbf-tagline",
-				props: { "font-size": maybeAppendSuffix(obj?.tablet) },
-			});
-
-			writeCSS(settingId + "-mobile", {
-				mediaQuery: `@media (${mediaQueries.mobile})`,
-				selector: ".wpbf-mobile-logo .wpbf-tagline",
-				props: { "font-size": maybeAppendSuffix(obj?.mobile) },
+				tablet: {
+					selector: ".wpbf-mobile-logo .wpbf-tagline",
+					props: { "font-size": maybeAppendSuffix(obj?.tablet) },
+				},
+				mobile: {
+					selector: ".wpbf-mobile-logo .wpbf-tagline",
+					props: { "font-size": maybeAppendSuffix(obj?.mobile) },
+				},
 			});
 		},
 	);
