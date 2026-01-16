@@ -1,6 +1,6 @@
 <?php
 /**
- * Header Builder Button Styles
+ * Footer Builder Button Styles
  *
  * @package Page Builder Framework
  * @subpackage Customizer
@@ -10,24 +10,25 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 /**
  * ----------------------------------------------------------------------
- * Button Widget Styles
+ * Footer Button Widget Styles
  * ----------------------------------------------------------------------
  */
 
-$button_keys = array( 'desktop_button_1', 'desktop_button_2', 'mobile_button_1', 'mobile_button_2' );
+$footer_button_keys = array( 'desktop_button_1', 'desktop_button_2', 'mobile_button_1', 'mobile_button_2' );
 
-foreach ( $button_keys as $button_key ) {
+foreach ( $footer_button_keys as $button_key ) {
 
-	$selector = '.wpbf-button.' . $header_builder_control_id_prefix . $button_key;
+	$control_id_prefix = 'wpbf_footer_builder_' . $button_key . '_';
+	$selector          = '.wpbf-button.wpbf_footer_builder_' . $button_key;
 
-	$responsive_border_radius = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_border_radius' );
-	$responsive_border_width  = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_border_width' );
-	$button_border_style      = wpbf_customize_str_value( $header_builder_control_id_prefix . $button_key . '_border_style' );
+	$responsive_border_radius = wpbf_customize_array_value( $control_id_prefix . 'border_radius' );
+	$responsive_border_width  = wpbf_customize_array_value( $control_id_prefix . 'border_width' );
+	$button_border_style      = wpbf_customize_str_value( $control_id_prefix . 'border_style' );
 	$button_border_style      = ! empty( $button_border_style ) ? $button_border_style : 'none';
-	$button_border_colors     = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_border_color' );
-	$button_bg_colors         = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_bg_color' );
-	$button_text_colors       = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_text_color' );
-	$button_margin            = wpbf_customize_array_value( $header_builder_control_id_prefix . $button_key . '_margin' );
+	$button_border_colors     = wpbf_customize_array_value( $control_id_prefix . 'border_color' );
+	$button_bg_colors         = wpbf_customize_array_value( $control_id_prefix . 'bg_color' );
+	$button_text_colors       = wpbf_customize_array_value( $control_id_prefix . 'text_color' );
+	$button_margin            = wpbf_customize_array_value( $control_id_prefix . 'margin' );
 
 	wpbf_write_css( array(
 		'selector' => $selector,
@@ -54,52 +55,7 @@ foreach ( $button_keys as $button_key ) {
 		),
 	) );
 
-	// Sticky navigation styles - only retrieve these once per loop iteration, not in nested conditions.
-	$cta_button_sticky_background_color     = wpbf_customize_str_value( 'cta_button_sticky_background_color' );
-	$cta_button_sticky_background_color_alt = wpbf_customize_str_value( 'cta_button_sticky_background_color_alt' );
-	$cta_button_sticky_font_color           = wpbf_customize_str_value( 'cta_button_sticky_font_color' );
-	$cta_button_sticky_font_color_alt       = wpbf_customize_str_value( 'cta_button_sticky_font_color_alt' );
-
-	// Apply sticky navigation colors when sticky header is active.
-	if ( $cta_button_sticky_background_color || $cta_button_sticky_font_color ) {
-		wpbf_write_css( array(
-			'selector' => '.wpbf-navigation-active ' . $selector,
-			'props'    => array(
-				'background-color' => $cta_button_sticky_background_color ? $cta_button_sticky_background_color : null,
-				'color'            => $cta_button_sticky_font_color ? $cta_button_sticky_font_color : null,
-			),
-		) );
-
-		if ( ! $cta_button_sticky_font_color_alt ) {
-			wpbf_write_css( array(
-				'selector' => '.wpbf-navigation-active ' . $selector . ':hover',
-				'props'    => array(
-					'color' => $cta_button_sticky_font_color ? $cta_button_sticky_font_color : null,
-				),
-			) );
-		}
-
-		if ( ! $cta_button_sticky_background_color_alt ) {
-			wpbf_write_css( array(
-				'selector' => '.wpbf-navigation-active ' . $selector . ':hover',
-				'props'    => array(
-					'background-color' => $cta_button_sticky_background_color ? $cta_button_sticky_background_color : null,
-				),
-			) );
-		}
-	}
-
-	if ( $cta_button_sticky_background_color_alt || $cta_button_sticky_font_color_alt ) {
-		wpbf_write_css( array(
-			'selector' => '.wpbf-navigation-active ' . $selector . ':hover',
-			'props'    => array(
-				'background-color' => $cta_button_sticky_background_color_alt ? $cta_button_sticky_background_color_alt : null,
-				'color'            => $cta_button_sticky_font_color_alt ? $cta_button_sticky_font_color_alt : null,
-			),
-		) );
-	}
-
-
+	// Responsive styles for border radius and width (tablet/mobile).
 	foreach ( $devices as $device ) {
 		if ( 'tablet' !== $device && 'mobile' !== $device ) {
 			continue;

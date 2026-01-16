@@ -1,6 +1,6 @@
 <?php
 /**
- * Header builder's button 2 section.
+ * Footer builder's mobile button 1 section.
  *
  * @package Page Builder Framework
  * @subpackage Customizer
@@ -8,12 +8,12 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$section_id = 'wpbf_header_builder_mobile_button_2_section';
+$section_id = 'wpbf_footer_builder_mobile_button_1_section';
 
 wpbf_customizer_section()
 	->id( $section_id )
 	->type( 'invisible' )
-	->title( __( 'Mobile Button 2', 'page-builder-framework' ) )
+	->title( __( 'Mobile Button 1', 'page-builder-framework' ) )
 	->tabs( [
 		'general' => [
 			'label' => esc_html__( 'General', 'page-builder-framework' ),
@@ -23,19 +23,9 @@ wpbf_customizer_section()
 		],
 	] )
 	->priority( 3 )
-	->addToPanel( 'header_panel' );
+	->addToPanel( 'footer_panel' );
 
-$control_id_prefix = 'wpbf_header_builder_mobile_button_2_';
-
-$partial_refresh_key_prefix = 'headerbuilder_mobile_button_2_';
-
-$partial_refresh_args = array(
-	'container_inclusive' => true,
-	'selector'            => '#header',
-	'render_callback'     => function () {
-		return get_template_part( 'inc/template-parts/header' );
-	},
-);
+$control_id_prefix = 'wpbf_footer_builder_mobile_button_1_';
 
 /* General Tab */
 
@@ -59,7 +49,7 @@ wpbf_customizer_field()
 	->type( 'text' )
 	->tab( 'general' )
 	->label( __( 'Link Text', 'page-builder-framework' ) )
-	->defaultValue( 'Button 2' )
+	->defaultValue( 'Button 1' )
 	->transport( 'postMessage' )
 	->addToSection( $section_id );
 
@@ -115,7 +105,6 @@ wpbf_customizer_field()
 	->type( 'responsive-input-slider' )
 	->tab( 'design' )
 	->label( __( 'Border Radius', 'page-builder-framework' ) )
-	->defaultValue( 4 )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,

@@ -334,6 +334,12 @@ class FooterBuilderOutput {
 			case 'mobile_copyright':
 				$this->render_copyright_widget( $setting_group );
 				break;
+			case 'desktop_button_1':
+			case 'desktop_button_2':
+			case 'mobile_button_1':
+			case 'mobile_button_2':
+				$this->render_button_widget( $setting_group );
+				break;
 		}
 
 	}
@@ -528,6 +534,51 @@ class FooterBuilderOutput {
 		echo wp_kses_post( $text );
 		echo '</div>';
 
+	}
+
+	/**
+	 * Render the builder button widget.
+	 *
+	 * @param string $setting_group The setting group key.
+	 */
+	private function render_button_widget( $setting_group ) {
+
+		// Extract the last character from setting group.
+		$group_number = substr( $setting_group, -1 );
+
+		$default_text = 'Button ' . ( is_numeric( $group_number ) ? $group_number : '1' );
+
+		$link_text = get_theme_mod( $setting_group . '_text', $default_text );
+		$link_url  = get_theme_mod( $setting_group . '_url', get_site_url() );
+
+		if ( empty( $link_text ) && empty( $link_url ) ) {
+			return;
+		}
+
+		$link_rel = '';
+
+		$link_rel_values = get_theme_mod( $setting_group . '_rel', [] );
+		$link_rel_values = ! is_array( $link_rel_values ) ? [] : $link_rel_values;
+
+		if ( ! empty( $link_rel_values ) ) {
+			$link_rel = implode( ' ', $link_rel_values );
+		}
+
+		$open_new_tab = get_theme_mod( $setting_group . '_new_tab', false );
+		$button_size  = get_theme_mod( $setting_group . '_size', '' );
+		$button_class = 'wpbf-button' . ( empty( $button_size ) ? '' : ' wpbf-button-' . $button_size ) . ' ' . $setting_group;
+		?>
+
+		<a
+			href="<?php echo esc_url( wpbf_parse_template_tags( $link_url ) ); ?>"
+			class="<?php echo esc_attr( $button_class ); ?>"
+			<?php echo esc_attr( empty( $open_new_tab ) ? '' : 'target="_blank"' ); ?>
+			<?php echo esc_attr( empty( $link_rel ) ? '' : ' rel="' . $link_rel . '"' ); ?>
+		>
+			<?php echo esc_html( $link_text ); ?>
+		</a>
+
+		<?php
 	}
 
 }

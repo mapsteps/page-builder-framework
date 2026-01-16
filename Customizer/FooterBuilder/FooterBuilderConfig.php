@@ -48,6 +48,16 @@ final class FooterBuilderConfig {
 					'label'   => __( 'Copyright', 'page-builder-framework' ),
 					'section' => 'wpbf_footer_builder_desktop_copyright_section',
 				),
+				array(
+					'key'     => 'desktop_button_1',
+					'label'   => __( 'Button 1', 'page-builder-framework' ),
+					'section' => 'wpbf_footer_builder_desktop_button_1_section',
+				),
+				array(
+					'key'     => 'desktop_button_2',
+					'label'   => __( 'Button 2', 'page-builder-framework' ),
+					'section' => 'wpbf_footer_builder_desktop_button_2_section',
+				),
 			),
 			'mobile' => array(
 				array(
@@ -84,6 +94,16 @@ final class FooterBuilderConfig {
 					'key'     => 'mobile_copyright',
 					'label'   => __( 'Copyright', 'page-builder-framework' ),
 					'section' => 'wpbf_footer_builder_mobile_copyright_section',
+				),
+				array(
+					'key'     => 'mobile_button_1',
+					'label'   => __( 'Button 1', 'page-builder-framework' ),
+					'section' => 'wpbf_footer_builder_mobile_button_1_section',
+				),
+				array(
+					'key'     => 'mobile_button_2',
+					'label'   => __( 'Button 2', 'page-builder-framework' ),
+					'section' => 'wpbf_footer_builder_mobile_button_2_section',
 				),
 			),
 		);

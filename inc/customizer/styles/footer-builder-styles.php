@@ -545,3 +545,6 @@ if ( ! empty( $mobile_menu_2_colors ) ) {
 		) );
 	}
 }
+
+// Footer Button Styles.
+require_once WPBF_THEME_DIR . '/inc/customizer/styles/footer-builder-button-styles.php';

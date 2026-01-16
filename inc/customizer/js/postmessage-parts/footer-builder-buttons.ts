@@ -6,16 +6,16 @@ import {
 	listenToBuilderMulticolorControl,
 } from "../customizer-util";
 
-export default function headerBuilderButtonsSetup() {
-	const headerBuilderButtonKeys = [
+export default function footerBuilderButtonsSetup() {
+	const footerBuilderButtonKeys = [
 		"desktop_button_1",
 		"desktop_button_2",
 		"mobile_button_1",
 		"mobile_button_2",
 	];
 
-	headerBuilderButtonKeys.forEach((buttonKey) => {
-		const controlIdPrefix = `wpbf_header_builder_${buttonKey}`;
+	footerBuilderButtonKeys.forEach((buttonKey) => {
+		const controlIdPrefix = `wpbf_footer_builder_${buttonKey}`;
 
 		listenToCustomizerValueChange<boolean>(
 			controlIdPrefix + "_new_tab",
@@ -80,7 +80,7 @@ export default function headerBuilderButtonsSetup() {
 			},
 		);
 
-		// Listen to the header builder's border radius control.
+		// Listen to the footer builder's border radius control.
 		listenToBuilderResponsiveControl({
 			controlId: `${controlIdPrefix}_border_radius`,
 			cssSelector: `.wpbf-button.${controlIdPrefix}`,
@@ -88,7 +88,7 @@ export default function headerBuilderButtonsSetup() {
 			useValueSuffix: true,
 		});
 
-		// Listen to the header builder's border width control.
+		// Listen to the footer builder's border width control.
 		listenToBuilderResponsiveControl({
 			controlId: `${controlIdPrefix}_border_width`,
 			cssSelector: `.wpbf-button.${controlIdPrefix}`,
@@ -96,7 +96,7 @@ export default function headerBuilderButtonsSetup() {
 			useValueSuffix: true,
 		});
 
-		// Listen to the header builder's border style control.
+		// Listen to the footer builder's border style control.
 		listenToCustomizerValueChange<string>(
 			`${controlIdPrefix}_border_style`,
 			function (settingId, value) {
@@ -107,28 +107,28 @@ export default function headerBuilderButtonsSetup() {
 			},
 		);
 
-		// Listen to the header builder's border color control.
+		// Listen to the footer builder's border color control.
 		listenToBuilderMulticolorControl({
 			controlId: `${controlIdPrefix}_border_color`,
 			cssSelector: `.wpbf-button.${controlIdPrefix}`,
 			cssProps: "border-color",
 		});
 
-		// Listen to the header builder's background color control.
+		// Listen to the footer builder's background color control.
 		listenToBuilderMulticolorControl({
 			controlId: `${controlIdPrefix}_bg_color`,
 			cssSelector: `.wpbf-button.${controlIdPrefix}`,
 			cssProps: "background-color",
 		});
 
-		// Listen to the header builder's text color control.
+		// Listen to the footer builder's text color control.
 		listenToBuilderMulticolorControl({
 			controlId: `${controlIdPrefix}_text_color`,
 			cssSelector: `.wpbf-button.${controlIdPrefix}`,
 			cssProps: "color",
 		});
 
-		// Listen to the header builder's margin control.
+		// Listen to the footer builder's margin control.
 		listenToCustomizerValueChange<Record<string, string>>(
 			`${controlIdPrefix}_margin`,
 			function (settingId, value) {

@@ -92,6 +92,8 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/desktop/h
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/desktop/html-2-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/desktop/social-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/desktop/copyright-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/desktop/button-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/desktop/button-2-section.php';
 
 // Mobile row sections.
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/mobile/top-row-section.php';
@@ -106,3 +108,5 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/mobile/ht
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/mobile/html-2-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/mobile/social-section.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/mobile/copyright-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/mobile/button-1-section.php';
+require_once WPBF_THEME_DIR . '/inc/customizer/settings/footer-builder/mobile/button-2-section.php';
