@@ -214,7 +214,7 @@ import {
 		 * will only get embedded when the Section is first expanded.
 		 */
 		actuallyEmbed: function actuallyEmbed() {
-			if ("resolved" === this.deferred?.embedded?.state()) {
+			if (this.isEmbedded) {
 				return;
 			}
 
@@ -222,6 +222,7 @@ import {
 
 			// This triggers control.ready().
 			this.deferred?.embedded.resolve();
+			this.isEmbedded = true;
 
 			window.wp.hooks.doAction("wpbf.dynamicControl.actuallyEmbed.after", this);
 		},
@@ -251,6 +252,7 @@ import {
 
 		destroy: function () {
 			this.container?.off("change input paste click", "input");
+			this.isEmbedded = false;
 		},
 
 		updateCustomizerSetting: function updateCustomizerSetting(val) {

@@ -271,6 +271,7 @@ export interface WpbfCustomizeControl<SV, CP> {
 	_setUpSettingPropertyLinks?: () => void;
 	initWpbfControl?: (control?: WpbfCustomizeControl<SV, CP>) => void;
 	actuallyEmbed?: () => void;
+	isEmbedded?: boolean;
 
 	// Specific to PBF's checkbox-buttonset control.
 	currentValue?: SV;
