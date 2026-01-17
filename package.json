@@ -23,7 +23,7 @@
     "terser": "^5.44.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.5",
-    "wordpress__customize-browser": "github:ultrafastcloud/wordpress__customize-browser"
+    "wordpress__customize-browser": "github:ultrafastwork/wordpress__customize-browser"
   },
   "dependencies": {
     "@wordpress/components": "^29.12.0",
