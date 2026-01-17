@@ -660,6 +660,10 @@ foreach ( $previous_bfcm_dismissal_option_keys as $dismissal_option_key ) {
 	}
 }
 
+if ( $bfcm2024 ) {
+	delete_option( 'wpbf_bfcm_notice_dismissed_2024' );
+}
+
 /**
  * Remove previously saved option that fixed an issue with fonts not being downloaded by Kirki.
  * Since we no longer use Kirki, this is safe to be deleted.
