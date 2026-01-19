@@ -1,5 +1,6 @@
 import { AnyWpbfCustomizeControl } from "../../Base/src/base-interface";
-import { SelectControlChoice, WpbfSelectControl } from "./select-interface";
+import { WpbfSelectControl } from "./select-interface";
+import { createSharedFontDataAdapter } from "./shared-font-data-adapter";
 
 if (window.wp.customize) {
 	setupSelectControl(window.wp.customize);
@@ -119,43 +120,63 @@ function setupSelectControl(customizer: WpbfCustomize) {
 
 				const choicesGlobalVar = params.choicesGlobalVar;
 
-				const choicesFromGlobalVar =
-					choicesGlobalVar && choicesGlobalVar in window
-						? (window[choicesGlobalVar] as SelectControlChoice[])
-						: undefined;
+				// Check if we should use the shared data adapter (for global font data)
+				const hasGlobalData =
+					choicesGlobalVar && choicesGlobalVar in window;
 
-				if (choicesFromGlobalVar) {
+				if (hasGlobalData) {
+					// Use custom adapter that shares global data without copying
 					const value = this.setting?.get();
-					const values = !Array.isArray(value) ? [value] : value;
+					const selectedValues = !Array.isArray(value)
+						? value
+							? [value]
+							: []
+						: value;
 
-					choicesFromGlobalVar.forEach((choice, index) => {
-						if (choice.id && values.includes(choice.id)) {
-							choicesFromGlobalVar[index].selected = true;
-						}
+					const SharedAdapter = createSharedFontDataAdapter(
+						choicesGlobalVar,
+						selectedValues,
+					);
 
-						if (choice.children && choice.children.length) {
-							choice.children.forEach((child, childIndex) => {
-								if (child.id && values.includes(child.id)) {
-									if (choicesFromGlobalVar[index].children) {
-										choicesFromGlobalVar[index].children[childIndex].selected =
-											true;
-									}
-								}
-							});
-						}
+					if (SharedAdapter) {
+						$selectbox?.select2({
+							placeholder: params.placeholder,
+							allowClear: params.clearable,
+							multiple: params.multiple,
+							maximumSelectionLength: params.multiple
+								? params.maxSelections
+								: undefined,
+							dataAdapter: SharedAdapter,
+						});
+					} else {
+						// Fallback to standard behavior if adapter creation failed
+						console.warn(
+							"SharedFontDataAdapter creation failed, using default",
+						);
+						$selectbox?.select2({
+							placeholder: params.placeholder,
+							allowClear: params.clearable,
+							multiple: params.multiple,
+							maximumSelectionLength: params.multiple
+								? params.maxSelections
+								: undefined,
+							// @ts-ignore
+							data: (window as any)[choicesGlobalVar] ?? params.choices,
+						});
+					}
+				} else {
+					// Standard behavior for non-global data
+					$selectbox?.select2({
+						placeholder: params.placeholder,
+						allowClear: params.clearable,
+						multiple: params.multiple,
+						maximumSelectionLength: params.multiple
+							? params.maxSelections
+							: undefined,
+						// @ts-ignore
+						data: params.choices,
 					});
 				}
-
-				$selectbox?.select2({
-					placeholder: params.placeholder,
-					allowClear: params.clearable,
-					multiple: params.multiple,
-					maximumSelectionLength: params.multiple
-						? params.maxSelections
-						: undefined,
-					// @ts-ignore - In a grouped option, id can be omitted, but Select2's types requires id to be a string|number -_-.
-					data: choicesFromGlobalVar ?? params.choices,
-				});
 			},
 
 			/**
