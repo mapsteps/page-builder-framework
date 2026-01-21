@@ -2,6 +2,7 @@ import { setupControlsMovement } from "./customizer-parts/setup-controls-movemen
 import setupBuilderControlToggleBehavior from "./customizer-parts/setup-builder-control";
 import setupLabelChanges from "./customizer-parts/setup-label-changes";
 import { setupConditionalControls } from "./customizer-parts/setup-conditional-controls";
+import { AnyWpbfCustomizeControl } from "../../../Customizer/Controls/Base/src/base-interface";
 
 window.wp.customize?.bind("ready", () => {
 	setTimeout(() => {
@@ -17,11 +18,88 @@ function setupCustomizer() {
 
 	function init() {
 		listenDevicePreviewSwitch();
+		listenSectionExpansion();
+		listenSectionCollapse();
 		setupLogoContainerWidth();
 		setupBuilderControlToggleBehavior();
 		setupControlsMovement();
 		setupConditionalControls();
 		setupLabelChanges();
+	}
+
+	/**
+	 * Listen for section expansion and notify preview iframe.
+	 * This enables lazy postMessage handler registration.
+	 */
+	function listenSectionExpansion() {
+		const customizer = window.wp.customize;
+		if (!customizer) return;
+
+		customizer.section.each((section: WpbfCustomizeSection) => {
+			section.expanded.bind((expanded: boolean) => {
+				if (expanded) {
+					customizer.previewer?.send("wpbf-section-expanded", section.id);
+				}
+			});
+		});
+	}
+
+	/**
+	 * Listen for section collapse and cleanup controls to free memory.
+	 * Uses debounce to avoid cleanup during rapid section switching.
+	 */
+	function listenSectionCollapse() {
+		const customizer = window.wp.customize;
+		if (!customizer) return;
+
+		// Map to store debounced cleanup timeouts per section.
+		const collapseDebounceMap = new Map<
+			string,
+			ReturnType<typeof setTimeout>
+		>();
+
+		customizer.section.each((section: WpbfCustomizeSection) => {
+			section.expanded.bind((expanded: boolean) => {
+				// Clear any pending cleanup for this section.
+				const existingTimeout = collapseDebounceMap.get(section.id);
+				if (existingTimeout) {
+					clearTimeout(existingTimeout);
+					collapseDebounceMap.delete(section.id);
+				}
+
+				if (!expanded) {
+					// Debounce cleanup to avoid rapid section switching issues.
+					const timeout = setTimeout(() => {
+						cleanupSectionControls(section.id);
+						collapseDebounceMap.delete(section.id);
+					}, 500);
+					collapseDebounceMap.set(section.id, timeout);
+				}
+			});
+		});
+
+		/**
+		 * Cleanup controls belonging to a section.
+		 * Calls destroy() on each control and resets isEmbedded flag.
+		 */
+		function cleanupSectionControls(sectionId: string) {
+			customizer.control.each(
+				(control: AnyWpbfCustomizeControl | undefined) => {
+					if (!control) return;
+					if (control.section?.() !== sectionId) return;
+
+					// Call destroy if available.
+					if (typeof control.destroy === "function") {
+						control.destroy();
+					}
+
+					// Reset embed state to allow re-initialization.
+					if (control.isEmbedded !== undefined) {
+						control.isEmbedded = false;
+					}
+				},
+			);
+		}
 	}
 
 	function listenDevicePreviewSwitch() {

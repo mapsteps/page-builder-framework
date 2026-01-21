@@ -214,16 +214,41 @@ import {
 		 * will only get embedded when the Section is first expanded.
 		 */
 		actuallyEmbed: function actuallyEmbed() {
-			if ("resolved" === this.deferred?.embedded?.state()) {
+			// Already embedded - skip.
+			if (this.isEmbedded) {
 				return;
 			}
 
+			// Check if this is a re-embed (was previously embedded then destroyed).
+			const isReembed = this.wasEmbedded === true;
+
+			if (isReembed) {
+				// Re-embed: call reinitialize instead of full init flow.
+				this.reinitialize?.();
+				this.isEmbedded = true;
+				window.wp.hooks.doAction("wpbf.dynamicControl.actuallyEmbed.reembed", this);
+				return;
+			}
+
+			// First embed: full initialization flow.
 			this.renderContent?.();
 
 			// This triggers control.ready().
 			this.deferred?.embedded.resolve();
+			this.isEmbedded = true;
+			this.wasEmbedded = true;
 
 			window.wp.hooks.doAction("wpbf.dynamicControl.actuallyEmbed.after", this);
+		},
+
+		/**
+		 * Re-initialize the control after being destroyed.
+		 * Override this in controls that need custom re-initialization.
+		 */
+		reinitialize: function reinitialize() {
+			this.renderContent?.();
+			this.initWpbfControl?.();
+			window.wp.hooks.doAction("wpbf.dynamicControl.reinitialize.after", this);
 		},
 
 		/**
@@ -251,6 +276,7 @@ import {
 
 		destroy: function () {
 			this.container?.off("change input paste click", "input");
+			this.isEmbedded = false;
 		},
 
 		updateCustomizerSetting: function updateCustomizerSetting(val) {
