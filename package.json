@@ -40,7 +40,6 @@
 		"react": "^18.3.1",
 		"react-colorful": "^5.6.1",
 		"react-dom": "^18.3.1",
-		"select2": "4.1.0-rc.0",
 		"styled-jsx": "^5.1.7",
 		"vanjs-core": "^1.6.0",
 		"zx": "^8.8.5"

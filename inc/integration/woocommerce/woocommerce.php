@@ -88,7 +88,8 @@ function wpbf_woo_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_woo_scripts', 10 );
 
-// WooCommerce customizer settings is moved to inc/customizer/customizer-settings.php to prevent early translation loading (WordPress 6.7.0+).
+// WooCommerce customizer settings.
+require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-customizer-settings.php';
 
 // WooCommerce functions.
 require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-functions.php';
