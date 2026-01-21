@@ -20,17 +20,7 @@ wp.customize.controlConstructor["wpbf-sortable"] =
 			}
 			wp.customize.control.bind("removed", handleOnRemoved);
 
-			// Initialize sortable.
-			this.initSortable?.();
-		},
-
-		/**
-		 * Initialize the sortable functionality.
-		 * Extracted for reuse in reinitialize().
-		 */
-		initSortable: function (this: WpbfSortableControl): void {
-			const control = this;
-
+			// Init sortable.
 			jQuery(control.container.find("ul.sortable").first())
 				.sortable({
 					// Update value when we stop sorting.
@@ -57,13 +47,6 @@ wp.customize.controlConstructor["wpbf-sortable"] =
 					// Update value on click.
 					control.setting?.set(control.getNewValues!());
 				});
-		},
-
-		/**
-		 * Re-initialize the control after being destroyed.
-		 */
-		reinitialize: function (this: WpbfSortableControl): void {
-			this.initSortable?.();
 		},
 
 		getNewValues: function (this: WpbfSortableControl) {

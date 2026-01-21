@@ -1,10 +1,4 @@
-import {
-	handleMobileMenuResize,
-	registerSectionHandler,
-	registerPanelHandler,
-	initializeSectionHandler,
-	initializePanelHandlers,
-} from "./customizer-util";
+import { handleMobileMenuResize } from "./customizer-util";
 import layoutSetup from "./postmessage-parts/layout";
 import typographySetup from "./postmessage-parts/typography";
 import fourZeroFourSetup from "./postmessage-parts/404";
@@ -39,98 +33,40 @@ import footerBuilderButtonsSetup from "./postmessage-parts/footer-builder-button
 	// Mobile menu resize.
 	window.addEventListener("resize", handleMobileMenuResize);
 
-	// ========================================
-	// EAGER REGISTRATION
-	// These handlers are always needed at load
-	// ========================================
+	// Note: Mobile menu toggle click is handled by site.js (mobile-menu.js).
+	// We don't add a duplicate handler here to avoid the menu toggling twice.
 
 	layoutSetup($);
 	typographySetup();
+	fourZeroFourSetup($);
+	navigationSetup();
+	subMenuSetup();
+	mobileNavigationSetup(customizer!);
+	mobileSubMenuSetup($, customizer!);
 	logoSetup();
 	taglineSetup();
-
-	// ========================================
-	// LAZY REGISTRATION SETUP
-	// Map sections to their handler functions
-	// ========================================
-
-	// Footer sections
-	registerSectionHandler("wpbf_footer_options", footerSetup);
-	registerSectionHandler("wpbf_404_options", () => fourZeroFourSetup($));
-
-	// Navigation sections
-	registerSectionHandler("wpbf_menu_options", navigationSetup);
-	registerSectionHandler("wpbf_sub_menu_options", subMenuSetup);
-	registerSectionHandler("wpbf_mobile_menu_options", () => {
-		mobileNavigationSetup(customizer!);
-		mobileSubMenuSetup($, customizer!);
-	});
-
-	// Pre-header
-	registerSectionHandler("wpbf_pre_header_options", preHeaderSetup);
-
-	// Blog
-	registerSectionHandler("wpbf_blog_settings", blogPaginationSetup);
-
-	// Sidebar
-	registerSectionHandler("wpbf_sidebar_options", sidebarSetup);
-
-	// Buttons
-	registerSectionHandler("wpbf_button_options", buttonsSetup);
-
-	// Breadcrumbs
-	registerSectionHandler("wpbf_breadcrumb_settings", breadcrumbsSetup);
-
-	// WooCommerce - only if active
+	preHeaderSetup();
+	blogPaginationSetup();
+	sidebarSetup();
+	buttonsSetup();
+	breadcrumbsSetup();
+	footerSetup();
 	if (window.wpbfIsWooActive) {
-		// WooCommerce has many sections in the woocommerce panel
-		registerPanelHandler("woocommerce", woocommerceSetup);
+		woocommerceSetup();
 	}
-
-	// EDD
-	registerPanelHandler("edd", eddSetup);
-
-	// Header Builder sections - register to header_panel
-	registerPanelHandler("header_panel", () => {
-		headerBuilderSetup();
-		mobileHeaderBuilderSetup();
-		offCanvasSetup(customizer);
-		headerBuilderRowsSetup(customizer!);
-		headerBuilderButtonsSetup();
-		headerBuilderSearchSetup();
-		mobileHeaderBuilderRowsSetup();
-		headerBuilderRevealSetup();
-		menuTriggersSetup(customizer);
-	});
-
-	// Footer Builder sections - register to footer_panel
-	registerPanelHandler("footer_panel", () => {
-		footerBuilderRowsSetup();
-		footerBuilderButtonsSetup();
-	});
-
-	// ========================================
-	// LISTEN FOR SECTION EXPANSION
-	// ========================================
-
-	customizer?.preview?.bind(
-		"wpbf-section-expanded",
-		function (sectionId: string) {
-			// Initialize specific section handler
-			initializeSectionHandler(sectionId);
-
-			// Also check if this section belongs to a panel that has handlers
-			customizer?.section?.(sectionId, function (section: WpbfCustomizeSection) {
-				const panelId = section.params?.panel;
-				if (panelId) {
-					initializePanelHandlers(panelId);
-				}
-			});
-		},
-	);
-
-	// Pro notice handler
-	customizer?.preview?.bind("pro_notice", function (action: string) {
+	eddSetup();
+	headerBuilderSetup();
+	mobileHeaderBuilderSetup();
+	offCanvasSetup(customizer);
+	headerBuilderRowsSetup(customizer!);
+	headerBuilderButtonsSetup();
+	headerBuilderSearchSetup();
+	mobileHeaderBuilderRowsSetup();
+	headerBuilderRevealSetup();
+	menuTriggersSetup(customizer);
+	footerBuilderRowsSetup();
+	footerBuilderButtonsSetup();
+	window.wp.customize?.preview?.bind("pro_notice", function (action: string) {
 		if (action === "show") {
 			proNotice.show();
 		} else {
