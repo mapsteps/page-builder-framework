@@ -76,6 +76,52 @@ function is_mobile_row_sticky( $row_key ) {
 	return (bool) get_theme_mod( $settings[ $row_key ]['desktop'], false );
 }
 
+/**
+ * Header builder sticky navigation attributes.
+ *
+ * Adds data-sticky attributes to the navigation wrapper when header builder is enabled.
+ * This is needed because the premium plugin's wpbf_sticky_navigation_attributes() returns
+ * early when header builder is enabled, expecting this function to handle sticky attributes.
+ *
+ * Sticky is enabled if either:
+ * - Desktop: menu_sticky or pre_header_sticky is enabled
+ * - Mobile: any mobile row has sticky enabled (via is_mobile_row_sticky)
+ *
+ * @param string $attributes The existing attributes.
+ *
+ * @return string The modified attributes.
+ */
+function header_builder_sticky_navigation_attributes( $attributes = '' ) {
+
+	// Only run when header builder is enabled.
+	if ( ! function_exists( 'wpbf_header_builder_enabled' ) || ! wpbf_header_builder_enabled() ) {
+		return $attributes;
+	}
+
+	// Check desktop sticky settings.
+	$menu_sticky       = get_theme_mod( 'menu_sticky', false );
+	$pre_header_sticky = get_theme_mod( 'pre_header_sticky', false );
+
+	// Check mobile sticky settings.
+	$mobile_row_1_sticky = is_mobile_row_sticky( 'mobile_row_1' );
+	$mobile_row_2_sticky = is_mobile_row_sticky( 'mobile_row_2' );
+
+	// If any sticky setting is enabled (desktop or mobile), add the sticky attributes.
+	if ( $menu_sticky || $pre_header_sticky || $mobile_row_1_sticky || $mobile_row_2_sticky ) {
+		$menu_active_delay              = get_theme_mod( 'menu_active_delay' );
+		$menu_active_animation          = get_theme_mod( 'menu_active_animation' );
+		$menu_active_animation_duration = get_theme_mod( 'menu_active_animation_duration' );
+
+		$attributes .= ' data-sticky="true"';
+		$attributes .= $menu_active_delay ? ' data-sticky-delay="' . esc_attr( $menu_active_delay ) . '"' : ' data-sticky-delay="300px"';
+		$attributes .= $menu_active_animation ? ' data-sticky-animation="' . esc_attr( $menu_active_animation ) . '"' : '';
+		$attributes .= $menu_active_animation_duration ? ' data-sticky-animation-duration="' . esc_attr( $menu_active_animation_duration ) . '"' : ' data-sticky-animation-duration="200"';
+	}
+
+	return $attributes;
+}
+add_filter( 'wpbf_navigation_attributes', 'header_builder_sticky_navigation_attributes', 15 );
+
 
 /**
  * Pingback head link.
