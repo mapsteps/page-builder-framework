@@ -22,6 +22,8 @@ do_action( 'wpbf_after_header_builder_hooks' );
 
 	<?php do_action( 'wpbf_pre_header' ); ?>
 
+	<?php do_action( 'wpbf_mobile_pre_navigation' ); ?>
+
 	<div class="<?php wpbf_navigation_classes(); ?>" <?php wpbf_navigation_attributes(); ?>>
 
 		<?php do_action( 'wpbf_before_main_navigation' ); ?>

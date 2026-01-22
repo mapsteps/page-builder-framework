@@ -77,6 +77,7 @@ class HeaderBuilderOutput {
 		remove_action( 'wpbf_before_mobile_toggle', 'wpbf_search_menu_icon_mobile', 20 );
 
 		// Hook functions which are supposed to be used when header builder is enabled.
+		add_action( 'wpbf_mobile_pre_navigation', [ $this, 'do_mobile_pre_navigation' ] );
 		add_action( 'wpbf_mobile_navigation', [ $this, 'do_mobile_navigation' ] );
 
 		if ( ! empty( $active_mobile_rows ) ) {
@@ -325,13 +326,35 @@ class HeaderBuilderOutput {
 	}
 
 	/**
-	 * An action to render mobile navigation.
+	 * An action to render non-sticky mobile rows.
 	 *
-	 * This action will be hooked to `wpbf_navigation` action hook.
+	 * This action will be hooked to `wpbf_mobile_pre_navigation` action hook,
+	 * which is OUTSIDE the `.wpbf-navigation` wrapper.
 	 *
 	 * @see self::setup_hooks()
 	 */
-	public function do_mobile_navigation() {
+	public function do_mobile_pre_navigation() {
+
+		// Check if any non-sticky rows exist.
+		$non_sticky_rows = [];
+
+		if ( ! is_mobile_row_sticky( 'mobile_row_1' ) ) {
+			$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
+			if ( ! empty( $row_1_columns ) && is_array( $row_1_columns ) ) {
+				$non_sticky_rows['mobile_row_1'] = $row_1_columns;
+			}
+		}
+
+		if ( ! is_mobile_row_sticky( 'mobile_row_2' ) ) {
+			$row_2_columns = isset( $this->mobile_columns['mobile_row_2'] ) ? $this->mobile_columns['mobile_row_2'] : array();
+			if ( ! empty( $row_2_columns ) && is_array( $row_2_columns ) ) {
+				$non_sticky_rows['mobile_row_2'] = $row_2_columns;
+			}
+		}
+
+		if ( empty( $non_sticky_rows ) ) {
+			return;
+		}
 
 		$reveal_as = get_theme_mod( 'wpbf_header_builder_mobile_offcanvas_reveal_as', 'dropdown' );
 
@@ -357,20 +380,80 @@ class HeaderBuilderOutput {
 			$menu_type
 		);
 
+		echo '<div class="' . esc_attr( $mobile_header_classes ) . ' wpbf-mobile-non-sticky-rows">';
+
+		foreach ( $non_sticky_rows as $row_key => $columns ) {
+			$this->render_mobile_row( $row_key, $columns );
+		}
+
+		echo '</div>';
+
+	}
+
+	/**
+	 * An action to render sticky mobile rows.
+	 *
+	 * This action will be hooked to `wpbf_mobile_navigation` action hook,
+	 * which is INSIDE the `.wpbf-navigation` wrapper for sticky behavior.
+	 *
+	 * @see self::setup_hooks()
+	 */
+	public function do_mobile_navigation() {
+
+		// Collect sticky rows.
+		$sticky_rows = [];
+
+		if ( is_mobile_row_sticky( 'mobile_row_1' ) ) {
+			$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
+			if ( ! empty( $row_1_columns ) && is_array( $row_1_columns ) ) {
+				$sticky_rows['mobile_row_1'] = $row_1_columns;
+			}
+		}
+
+		if ( is_mobile_row_sticky( 'mobile_row_2' ) ) {
+			$row_2_columns = isset( $this->mobile_columns['mobile_row_2'] ) ? $this->mobile_columns['mobile_row_2'] : array();
+			if ( ! empty( $row_2_columns ) && is_array( $row_2_columns ) ) {
+				$sticky_rows['mobile_row_2'] = $row_2_columns;
+			}
+		}
+
+		$reveal_as = get_theme_mod( 'wpbf_header_builder_mobile_offcanvas_reveal_as', 'dropdown' );
+
+		/**
+		 * The mobile menu type.
+		 * In the theme, only 'dropdown' is supported.
+		 * Premium Add-On can filter this to enable 'off-canvas'.
+		 *
+		 * @var string
+		 */
+		$menu_type = apply_filters( 'wpbf_header_builder_mobile_menu_type', 'dropdown', $reveal_as );
+
+		// If no sticky rows and no offcanvas widgets, don't render the wrapper.
+		if ( empty( $sticky_rows ) && empty( $this->mobile_offcanvas_widgets ) ) {
+			return;
+		}
+
+		/**
+		 * Filter the mobile header rows CSS classes.
+		 * Premium Add-On can add 'wpbf-mobile-menu-off-canvas' class when off-canvas is selected.
+		 *
+		 * @param string $classes   The CSS classes.
+		 * @param string $menu_type The mobile menu type.
+		 */
+		$mobile_header_classes = apply_filters(
+			'wpbf_header_builder_mobile_header_classes',
+			'wpbf-mobile-header-rows wpbf-hidden-large wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger',
+			$menu_type
+		);
+
 		echo '<div class="' . esc_attr( $mobile_header_classes ) . '">';
 
-		$row_1_columns = isset( $this->mobile_columns['mobile_row_1'] ) ? $this->mobile_columns['mobile_row_1'] : array();
-
-		if ( ! empty( $row_1_columns ) && is_array( $row_1_columns ) ) {
-			$this->render_mobile_row( 'mobile_row_1', $row_1_columns );
+		// Row 3 doesn't have sticky support, so we don't check it.
+		foreach ( $sticky_rows as $row_key => $columns ) {
+			$this->render_mobile_row( $row_key, $columns );
 		}
 
-		$row_2_columns = isset( $this->mobile_columns['mobile_row_2'] ) ? $this->mobile_columns['mobile_row_2'] : array();
-
-		if ( ! empty( $row_2_columns ) && is_array( $row_2_columns ) ) {
-			$this->render_mobile_row( 'mobile_row_2', $row_2_columns );
-		}
-
+		// Always render row 3 here (it has no sticky support).
 		$row_3_columns = isset( $this->mobile_columns['mobile_row_3'] ) ? $this->mobile_columns['mobile_row_3'] : array();
 
 		if ( ! empty( $row_3_columns ) && is_array( $row_3_columns ) ) {

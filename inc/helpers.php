@@ -35,52 +35,46 @@ function wpbf_strposa( $haystack, $needles, $offset = 0 ) {
 }
 
 /**
- * Mobile header builder sticky rows.
+ * Check if a mobile header builder row should be sticky.
  *
- * @param string $attributes The attributes.
+ * Mobile rows can inherit their sticky state from their corresponding desktop rows:
+ * - mobile_row_1 inherits from pre_header_sticky (desktop row 1)
+ * - mobile_row_2 inherits from menu_sticky (desktop row 2)
+ *
+ * @param string $row_key The mobile row key (mobile_row_1 or mobile_row_2).
+ *
+ * @return bool True if the row should be sticky, false otherwise.
  */
-function mobile_header_builder_sticky_rows( $attributes = '' ) {
+function is_mobile_row_sticky( $row_key ) {
 
-	$mobile_header_builder = [
-		'wpbf_header_builder_mobile_row_1_sticky',
-		'wpbf_header_builder_mobile_row_2_sticky',
+	$settings = [
+		'mobile_row_1' => [
+			'setting' => 'wpbf_header_builder_mobile_row_1_sticky',
+			'desktop' => 'pre_header_sticky',
+		],
+		'mobile_row_2' => [
+			'setting' => 'wpbf_header_builder_mobile_row_2_sticky',
+			'desktop' => 'menu_sticky',
+		],
 	];
 
-	foreach ( $mobile_header_builder as $mobile_header_builder_sticky ) {
-
-		if ( 'wpbf_header_builder_mobile_row_1_sticky' === $mobile_header_builder_sticky ) {
-
-			if ( 'disable' !== get_theme_mod( $mobile_header_builder_sticky ) ) {
-
-				$attributes .= ' data-sticky="true"';
-				$attributes .= ' data-sticky-delay="300px"';
-				$attributes .= ' data-sticky-animation-duration="200"';
-				$attributes .= ' class="wpbf-mobile-row-1-sticky"';
-
-			} else {
-				$attributes .= ' data-sticky="false"';
-			}
-		}
-
-		if ( 'wpbf_header_builder_mobile_row_2_sticky' === $mobile_header_builder_sticky ) {
-
-			if ( 'disable' !== get_theme_mod( $mobile_header_builder_sticky ) ) {
-
-				$attributes .= ' data-sticky="true"';
-				$attributes .= ' data-sticky-delay="300px"';
-				$attributes .= ' data-sticky-animation-duration="200"';
-				$attributes .= ' class="wpbf-mobile-row-2-sticky"';
-
-			} else {
-				$attributes .= ' data-sticky="false"';
-			}
-
-		}
+	if ( ! isset( $settings[ $row_key ] ) ) {
+		return false;
 	}
 
-	return $attributes;
+	$value = get_theme_mod( $settings[ $row_key ]['setting'], 'inherit' );
+
+	if ( 'enable' === $value ) {
+		return true;
+	}
+
+	if ( 'disable' === $value ) {
+		return false;
+	}
+
+	// 'inherit' - check desktop setting.
+	return (bool) get_theme_mod( $settings[ $row_key ]['desktop'], false );
 }
-add_filter( 'wpbf_navigation_attributes', 'mobile_header_builder_sticky_rows', 15 );
 
 
 /**
