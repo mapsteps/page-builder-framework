@@ -103,6 +103,10 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 205,
 						},
+						label: {
+							from: undefined,
+							to: "Menu Font Colors",
+						},
 					},
 				],
 			},

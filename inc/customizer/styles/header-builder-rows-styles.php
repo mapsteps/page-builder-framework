@@ -144,6 +144,18 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 		}
 	}
 
+	// Text color for desktop_row_2.
+	if ( 'desktop_row_2' === $row_key ) {
+		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
+
+		if ( $text_color ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ', .wpbf-header-row-' . esc_attr( $row_key ) . ' .widget_custom_html, .wpbf-header-row-' . esc_attr( $row_key ) . ' .textwidget',
+				'props'    => array( 'color' => $text_color ),
+			) );
+		}
+	}
+
 	// Font size for desktop_row_2 and desktop_row_3.
 	// Row 1 uses existing `pre_header_font_size` setting.
 	if ( 'desktop_row_2' === $row_key || 'desktop_row_3' === $row_key ) {

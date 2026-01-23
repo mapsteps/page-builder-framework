@@ -126,8 +126,14 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 		listenToCustomizerValueChange<WpbfColorControlValue>(
 			`${controlIdPrefix}text_color`,
 			function (settingId, value) {
+				let selector = `.wpbf-header-row-${rowKey}`;
+
+				if (rowKey === "desktop_row_2") {
+					selector += `, .wpbf-header-row-${rowKey} .widget_custom_html, .wpbf-header-row-${rowKey} .textwidget`;
+				}
+
 				writeCSS(settingId, {
-					selector: `.wpbf-header-row-${rowKey}`,
+					selector: selector,
 					props: { color: toStringColor(value) },
 				});
 			},

@@ -62,6 +62,18 @@ wpbf_customizer_field()
 /* Design Tab */
 
 wpbf_customizer_field()
+	->id( $control_id_prefix . 'text_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Font Color', 'page-builder-framework' ) )
+	->priority( 205 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
 	->id( $control_id_prefix . 'font_size' )
 	->type( 'input-slider' )
 	->tab( 'design' )
