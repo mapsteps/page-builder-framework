@@ -11,54 +11,59 @@ final class HeaderBuilderConfig {
 	 */
 	public static function availableWidgets() {
 
-		return array(
-			'desktop' => array(
-				array(
-					'key'     => 'desktop_logo',
-					'label'   => __( 'Logo', 'page-builder-framework' ),
-					'section' => 'title_tagline',
-				),
-				array(
-					'key'     => 'desktop_search',
-					'label'   => __( 'Search', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_desktop_search_section',
-				),
-				array(
-					'key'     => 'desktop_button_1',
-					'label'   => __( 'Button 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_desktop_button_1_section',
-				),
-				array(
-					'key'     => 'desktop_button_2',
-					'label'   => __( 'Button 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_desktop_button_2_section',
-				),
-				array(
-					'key'     => 'desktop_menu_trigger',
-					'label'   => __( 'Menu Trigger', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_desktop_menu_trigger_section',
-				),
-				array(
-					'key'     => 'desktop_menu_1',
-					'label'   => __( 'Menu 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_desktop_menu_1_section',
-				),
-				array(
-					'key'     => 'desktop_menu_2',
-					'label'   => __( 'Menu 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_desktop_menu_2_section',
-				),
-				array(
-					'key'     => 'desktop_html_1',
-					'label'   => __( 'HTML 1', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_desktop_html_1_section',
-				),
-				array(
-					'key'     => 'desktop_html_2',
-					'label'   => __( 'HTML 2', 'page-builder-framework' ),
-					'section' => 'wpbf_header_builder_desktop_html_2_section',
-				),
+		$desktop_widgets = array(
+			array(
+				'key'     => 'desktop_logo',
+				'label'   => __( 'Logo', 'page-builder-framework' ),
+				'section' => 'title_tagline',
 			),
+			array(
+				'key'     => 'desktop_search',
+				'label'   => __( 'Search', 'page-builder-framework' ),
+				'section' => 'wpbf_header_builder_desktop_search_section',
+			),
+			array(
+				'key'     => 'desktop_button_1',
+				'label'   => __( 'Button 1', 'page-builder-framework' ),
+				'section' => 'wpbf_header_builder_desktop_button_1_section',
+			),
+			array(
+				'key'     => 'desktop_button_2',
+				'label'   => __( 'Button 2', 'page-builder-framework' ),
+				'section' => 'wpbf_header_builder_desktop_button_2_section',
+			),
+			array(
+				'key'     => 'desktop_menu_1',
+				'label'   => __( 'Menu 1', 'page-builder-framework' ),
+				'section' => 'wpbf_header_builder_desktop_menu_1_section',
+			),
+			array(
+				'key'     => 'desktop_menu_2',
+				'label'   => __( 'Menu 2', 'page-builder-framework' ),
+				'section' => 'wpbf_header_builder_desktop_menu_2_section',
+			),
+			array(
+				'key'     => 'desktop_html_1',
+				'label'   => __( 'HTML 1', 'page-builder-framework' ),
+				'section' => 'wpbf_header_builder_desktop_html_1_section',
+			),
+			array(
+				'key'     => 'desktop_html_2',
+				'label'   => __( 'HTML 2', 'page-builder-framework' ),
+				'section' => 'wpbf_header_builder_desktop_html_2_section',
+			),
+		);
+
+		if ( wpbf_is_premium() ) {
+			$desktop_widgets[] = array(
+				'key'     => 'desktop_menu_trigger',
+				'label'   => __( 'Menu Trigger', 'page-builder-framework' ),
+				'section' => 'wpbf_header_builder_desktop_menu_trigger_section',
+			);
+		}
+
+		return array(
+			'desktop' => $desktop_widgets,
 			'mobile' => array(
 				array(
 					'key'     => 'mobile_logo',
