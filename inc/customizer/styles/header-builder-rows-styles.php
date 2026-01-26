@@ -144,15 +144,23 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 		}
 	}
 
-	// Text color and accent colors for desktop_row_2.
+	// Background color, text color, and accent colors for desktop_row_2.
 	if ( 'desktop_row_2' === $row_key ) {
+		$bg_color   = wpbf_customize_str_value( $row_id_prefix . 'bg_color' );
 		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
 
-		if ( $text_color ) {
-			wpbf_write_css( array(
-				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ', .wpbf-header-row-' . esc_attr( $row_key ) . ' .widget_custom_html, .wpbf-header-row-' . esc_attr( $row_key ) . ' .textwidget',
-				'props'    => array( 'color' => $text_color ),
-			) );
+		if ( $bg_color || $text_color ) {
+			echo '.wpbf-header-row-' . esc_attr( $row_key ) . ' {';
+
+			if ( $bg_color ) {
+				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
+			}
+
+			if ( $text_color ) {
+				echo 'color: ' . esc_attr( $text_color ) . ';';
+			}
+
+			echo '}';
 		}
 
 		$accent_colors = wpbf_customize_array_value( $row_id_prefix . 'accent_colors' );

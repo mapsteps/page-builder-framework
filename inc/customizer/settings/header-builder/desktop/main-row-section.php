@@ -62,6 +62,18 @@ wpbf_customizer_field()
 /* Design Tab */
 
 wpbf_customizer_field()
+	->id( $control_id_prefix . 'bg_color' )
+	->type( 'color' )
+	->tab( 'design' )
+	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->priority( 200 )
+	->transport( 'postMessage' )
+	->properties( [
+		'mode' => 'alpha',
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
 	->id( $control_id_prefix . 'text_color' )
 	->type( 'color' )
 	->tab( 'design' )
