@@ -58,3 +58,15 @@ wpbf_customizer_field()
 		'mode' => 'alpha',
 	] )
 	->addToSection( $section_id );
+
+	wpbf_customizer_field()
+	->id( $control_id_prefix . 'margin' )
+	->type( 'margin-padding' )
+	->tab( 'design' )
+	->label( __( 'Margin', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
+	->properties( [
+		'subtype'        => 'margin',
+		'dont_save_unit' => true,
+	] )
+	->addToSection( $section_id );

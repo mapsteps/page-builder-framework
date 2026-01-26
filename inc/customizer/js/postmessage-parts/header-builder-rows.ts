@@ -97,17 +97,18 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 					});
 				},
 			);
-
-			listenToCustomizerValueChange<WpbfColorControlValue>(
-				`${controlIdPrefix}bg_color`,
-				function (settingId, value) {
-					writeCSS(settingId, {
-						selector: `.wpbf-header-row-${rowKey}`,
-						props: { "background-color": toStringColor(value) },
-					});
-				},
-			);
 		}
+
+		// Background color for desktop_row_1 and desktop_row_2 and desktop_row_3.
+		listenToCustomizerValueChange<WpbfColorControlValue>(
+			`${controlIdPrefix}bg_color`,
+			function (settingId, value) {
+				writeCSS(settingId, {
+					selector: `.wpbf-header-row-${rowKey}`,
+					props: { "background-color": toStringColor(value) },
+				});
+			},
+		);
 
 		// Font size for desktop_row_2 and desktop_row_3.
 		// Row 1 uses existing `pre_header_font_size` setting.

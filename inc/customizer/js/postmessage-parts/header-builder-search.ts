@@ -53,4 +53,36 @@ export default function headerBuilderSearchSetup() {
 			});
 		},
 	);
+
+	// Search Margin (desktop).
+	listenToCustomizerValueChange<Record<string, string>>(
+		`wpbf_header_builder_desktop_search_margin`,
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbff-search",
+				props: {
+					"margin-top": value?.top ? `${value.top}px` : null,
+					"margin-right": value?.right ? `${value.right}px` : null,
+					"margin-bottom": value?.bottom ? `${value.bottom}px` : null,
+					"margin-left": value?.left ? `${value.left}px` : null,
+				},
+			});
+		},
+	);
+
+	// Search Margin (mobile).
+	listenToCustomizerValueChange<Record<string, string>>(
+		`wpbf_header_builder_mobile_search_margin`,
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbff-search",
+				props: {
+					"margin-top": value?.top ? `${value.top}px` : null,
+					"margin-right": value?.right ? `${value.right}px` : null,
+					"margin-bottom": value?.bottom ? `${value.bottom}px` : null,
+					"margin-left": value?.left ? `${value.left}px` : null,
+				},
+			});
+		},
+	);
 }

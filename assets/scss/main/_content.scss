@@ -431,7 +431,7 @@ body {
 	button {
 		@include vertical-align($position: absolute);
 		right: 12px;
-		transform: translateY(-90%);
+		transform: translateY(-50%);
 		cursor: pointer;
 		padding: 10px;
 
