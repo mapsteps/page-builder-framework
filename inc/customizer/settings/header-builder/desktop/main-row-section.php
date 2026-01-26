@@ -74,6 +74,22 @@ wpbf_customizer_field()
 	->addToSection( $section_id );
 
 wpbf_customizer_field()
+	->id( $control_id_prefix . 'accent_colors' )
+	->type( 'multicolor' )
+	->tab( 'design' )
+	->label( __( 'Accent Color', 'page-builder-framework' ) )
+	->priority( 210 )
+	->transport( 'postMessage' )
+	->choices( array(
+		'default' => __( 'Default', 'page-builder-framework' ),
+		'hover'   => __( 'Hover', 'page-builder-framework' ),
+	) )
+	->properties( array(
+		'mode' => 'alpha',
+	) )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
 	->id( $control_id_prefix . 'font_size' )
 	->type( 'input-slider' )
 	->tab( 'design' )

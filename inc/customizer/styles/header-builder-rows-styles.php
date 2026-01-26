@@ -144,7 +144,7 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 		}
 	}
 
-	// Text color for desktop_row_2.
+	// Text color and accent colors for desktop_row_2.
 	if ( 'desktop_row_2' === $row_key ) {
 		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
 
@@ -153,6 +153,27 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 				'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ', .wpbf-header-row-' . esc_attr( $row_key ) . ' .widget_custom_html, .wpbf-header-row-' . esc_attr( $row_key ) . ' .textwidget',
 				'props'    => array( 'color' => $text_color ),
 			) );
+		}
+
+		$accent_colors = wpbf_customize_array_value( $row_id_prefix . 'accent_colors' );
+
+		if ( ! empty( $accent_colors ) ) {
+			$default_color = ! empty( $accent_colors['default'] ) ? $accent_colors['default'] : '';
+			$hover_color   = ! empty( $accent_colors['hover'] ) ? $accent_colors['hover'] : '';
+
+			if ( $default_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a',
+					'props'    => array( 'color' => $default_color ),
+				) );
+			}
+
+			if ( $hover_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-header-row-' . esc_attr( $row_key ) . ' a:hover, .wpbf-header-row-' . esc_attr( $row_key ) . ' a:focus',
+					'props'    => array( 'color' => $hover_color ),
+				) );
+			}
 		}
 	}
 
