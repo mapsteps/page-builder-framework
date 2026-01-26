@@ -90,24 +90,6 @@ export function setupControlsMovement() {
 							to: 15,
 						},
 					},
-					{
-						id: "menu_bg_color",
-						prio: {
-							from: undefined,
-							to: 200,
-						},
-					},
-					{
-						id: "menu_font_colors",
-						prio: {
-							from: undefined,
-							to: 205,
-						},
-						label: {
-							from: undefined,
-							to: "Menu Font Colors",
-						},
-					},
 				],
 			},
 			{
