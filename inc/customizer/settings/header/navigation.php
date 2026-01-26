@@ -129,6 +129,12 @@ wpbf_customizer_field()
 	->properties( [
 		'mode' => 'alpha',
 	] )
+	->activeCallback( [
+		[
+			'id'       => 'wpbf_header_builder',
+			'operator' => 'empty',
+		],
+	] )
 	->addToSection( 'wpbf_menu_options' );
 
 // Font colors.
@@ -146,6 +152,12 @@ wpbf_customizer_field()
 	->properties( array(
 		'mode' => 'alpha',
 	) )
+	->activeCallback( [
+		[
+			'id'       => 'wpbf_header_builder',
+			'operator' => 'empty',
+		],
+	] )
 	->addToSection( 'wpbf_menu_options' );
 
 // Font size.
