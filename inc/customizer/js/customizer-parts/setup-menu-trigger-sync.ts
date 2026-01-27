@@ -30,10 +30,27 @@ export function setupMenuTriggerSync() {
 		?.get();
 
 	if (!isHeaderBuilderEnabled) {
+		// Still listen for when it gets enabled.
+		listenToHeaderBuilderToggle();
 		return;
 	}
 
 	init();
+
+	/**
+	 * Listen only to header builder toggle (for when initially disabled).
+	 */
+	function listenToHeaderBuilderToggle() {
+		window.wp.customize?.("wpbf_enable_header_builder", function (setting) {
+			setting.bind(function (enabled: boolean) {
+				if (enabled) {
+					window.setTimeout(() => {
+						init();
+					}, 500);
+				}
+			});
+		});
+	}
 
 	function init() {
 		listenToHeaderBuilderChanges();
@@ -211,8 +228,8 @@ export function setupMenuTriggerSync() {
 			const existingWarning = container.querySelector(`.${WARNING_CLASS}`);
 			if (existingWarning) return;
 
-			const warningEl = document.createElement("div");
-			warningEl.className = `${WARNING_CLASS} ${WARNING_CLASS}--${options.type}`;
+			const warningEl = document.createElement("li");
+			warningEl.className = `${WARNING_CLASS} ${WARNING_CLASS}--${options.type} customize-control`;
 			warningEl.innerHTML = `
 				<div class="wpbf-sync-warning__content">
 					<span class="dashicons dashicons-warning"></span>
@@ -231,13 +248,22 @@ export function setupMenuTriggerSync() {
 				});
 			}
 
-			// Insert at the top of the section content.
+			// Insert after the section description container (which contains title and tabs).
 			const sectionContent = container.querySelector(
-				".customize-section-content, .accordion-section-content",
+				".accordion-section-content",
 			);
 
 			if (sectionContent) {
-				sectionContent.insertBefore(warningEl, sectionContent.firstChild);
+				const descContainer = sectionContent.querySelector(
+					".customize-section-description-container",
+				);
+				if (descContainer && descContainer.nextSibling) {
+					sectionContent.insertBefore(warningEl, descContainer.nextSibling);
+				} else if (descContainer) {
+					sectionContent.appendChild(warningEl);
+				} else {
+					sectionContent.insertBefore(warningEl, sectionContent.firstChild);
+				}
 			}
 		});
 	}
@@ -256,7 +282,7 @@ export function setupMenuTriggerSync() {
 	function focusOnMobileMenuArea() {
 		// Expand the Mobile Menu section.
 		window.wp.customize?.section(OFFCANVAS_SECTION_ID, function (section) {
-			section.expand(section.params);
+			section.expand({});
 		});
 
 		// Highlight the offcanvas drop zone in the builder panel.
@@ -295,7 +321,7 @@ export function setupMenuTriggerSync() {
 	function focusOnTriggerWidget() {
 		// Expand the Menu Trigger section.
 		window.wp.customize?.section(TRIGGER_SECTION_ID, function (section) {
-			section.expand(section.params);
+			section.expand({});
 		});
 
 		// Highlight the trigger widget in the available widgets panel.
