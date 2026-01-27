@@ -103,8 +103,13 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 		listenToCustomizerValueChange<WpbfColorControlValue>(
 			`${controlIdPrefix}bg_color`,
 			function (settingId, value) {
+				const selector =
+					rowKey === "desktop_row_1"
+						? ".wpbf-pre-header"
+						: `.wpbf-header-row-${rowKey}`;
+
 				writeCSS(settingId, {
-					selector: `.wpbf-header-row-${rowKey}`,
+					selector: selector,
 					props: { "background-color": toStringColor(value) },
 				});
 			},
@@ -127,7 +132,10 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 		listenToCustomizerValueChange<WpbfColorControlValue>(
 			`${controlIdPrefix}text_color`,
 			function (settingId, value) {
-				let selector = `.wpbf-header-row-${rowKey}`;
+				let selector =
+					rowKey === "desktop_row_1"
+						? ".wpbf-pre-header"
+						: `.wpbf-header-row-${rowKey}`;
 
 				if (rowKey === "desktop_row_2") {
 					selector += `, .wpbf-header-row-${rowKey} .widget_custom_html, .wpbf-header-row-${rowKey} .textwidget`;
@@ -149,17 +157,32 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 				const rawHoverColor = value.hover ?? "";
 				const hoverColor = toStringColor(rawHoverColor);
 
+				const rowSelector =
+					rowKey === "desktop_row_1"
+						? ".wpbf-pre-header"
+						: `.wpbf-header-row-${rowKey}`;
+
+				const blocks: any[] = [
+					{
+						selector: `${rowSelector} a:not(.wpbf-button)`,
+						props: { color: defaultColor + " !important" },
+					},
+					{
+						selector: `${rowSelector} a:not(.wpbf-button):hover, ${rowSelector} a:not(.wpbf-button):focus`,
+						props: { color: hoverColor + " !important" },
+					},
+				];
+
+				if (rowKey === "desktop_row_1") {
+					blocks.push({
+						selector:
+							".wpbf-pre-header .wpbf-menu > .current-menu-item > a:not(.wpbf-button)",
+						props: { color: hoverColor + " !important" },
+					});
+				}
+
 				writeCSS(settingId, {
-					blocks: [
-						{
-							selector: `.wpbf-header-row-${rowKey} a`,
-							props: { color: defaultColor },
-						},
-						{
-							selector: `.wpbf-header-row-${rowKey} a:hover, .wpbf-header-row-${rowKey} a:focus`,
-							props: { color: hoverColor },
-						},
-					],
+					blocks: blocks,
 				});
 			},
 		);
