@@ -188,7 +188,7 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 					 * Intentionally not checking for the value,
 					 * because we need to force overwrite the border-radius value set in "mobile_menu_hamburger_bg_color" block.
 					 */
-					"border-radius": maybeAppendSuffix(value),
+					"border-radius": maybeAppendSuffix(value) + " !important",
 				},
 			});
 		},
