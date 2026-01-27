@@ -430,14 +430,14 @@ body {
 .searchform {
 	button {
 		@include vertical-align($position: absolute);
-		right: 12px;
+		right: 10px;
 		transform: translateY(-50%);
 		cursor: pointer;
 		padding: 10px;
 
-		.wpbf-icon svg {
-			top: 0;
-		}
+		// .wpbf-icon svg {
+		// 	top: 0;
+		// }
 	}
 }
 

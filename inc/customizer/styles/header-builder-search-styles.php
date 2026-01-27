@@ -164,3 +164,16 @@ if ( ! empty( $margin ) ) {
 	}
 
 }
+
+/**
+ * ----------------------------------------------------------------------
+ * Search Icon Alignment Fix.
+ * ----------------------------------------------------------------------
+ */
+wpbf_write_css( array(
+	'media_query' => '@media screen and (max-width: ' . $breakpoint_medium . ')',
+	'selector'    => '.wpbf-menu-item-search.active .searchform button',
+	'props'       => array(
+		'transform' => 'translateY(-85%)',
+	),
+) );
