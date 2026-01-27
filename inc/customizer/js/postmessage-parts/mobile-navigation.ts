@@ -103,6 +103,13 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 						},
 					});
 					return;
+				} else {
+					writeCSS(settingId, {
+						selector: ".wpbf-mobile-menu-toggle",
+						props: {
+							padding: "10px !important",
+						},
+					});
 				}
 			}
 
@@ -122,7 +129,7 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 						"background-color": toStringColor(value) + " !important",
 						color: "#ffffff",
 						// Only hardcode padding for legacy (non-header-builder) mode
-						padding: isHeaderBuilderEnabled ? undefined : "10px",
+						padding: isHeaderBuilderEnabled ? undefined : "10px !important",
 						"line-height": 1,
 						border: "unset !important",
 						"border-radius": emptyNotZero(borderRadius)
@@ -138,7 +145,7 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 						border: "2px solid " + toStringColor(value) + " !important",
 						color: toStringColor(value),
 						// Only hardcode padding for legacy (non-header-builder) mode
-						padding: isHeaderBuilderEnabled ? undefined : "10px",
+						padding: isHeaderBuilderEnabled ? undefined : "10px !important",
 						"line-height": 1,
 						"border-radius": emptyNotZero(borderRadius)
 							? undefined
@@ -191,6 +198,30 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 					"border-radius": maybeAppendSuffix(value) + " !important",
 				},
 			});
+		},
+	);
+
+	// Mobile Menu Trigger Button Style
+	listenToCustomizerValueChange<string | number>(
+		"wpbf_header_builder_mobile_menu_trigger_style",
+		function (settingId, value) {
+			console.log(value);
+
+			if (value === "solid" || value === "outline") {
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-toggle",
+					props: {
+						padding: "10px !important",
+					},
+				});
+			} else {
+				writeCSS(settingId, {
+					selector: ".wpbf-mobile-menu-toggle",
+					props: {
+						padding: "0",
+					},
+				});
+			}
 		},
 	);
 
