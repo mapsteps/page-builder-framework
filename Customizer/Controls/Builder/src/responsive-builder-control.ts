@@ -198,7 +198,9 @@ import {
 
 					let $mobileBuilderRows: JQuery<HTMLElement> | undefined = undefined;
 
-					if (params.builder[device].availableSlots.offcanvas) {
+					const offcanvasSlot = params.builder[device].availableSlots.offcanvas;
+
+					if (offcanvasSlot) {
 						$builderSlotsEl.addClass(`wpbf-flex wpbf-content-center`);
 
 						const $builderOffcanvas = jQuery("<div></div>")
@@ -222,12 +224,10 @@ import {
 							.attr("type", "button")
 							.addClass("row-setting-button")
 							.html(
-								`<i class="dashicons dashicons-admin-generic"></i><span class="button-label">${params.builder[device].availableSlots.offcanvas.label}</span>`,
+								`<i class="dashicons dashicons-admin-generic"></i><span class="button-label">${offcanvasSlot.label}</span>`,
 							)
 							.on("click", () =>
-								control.handleRowSettingClick?.(
-									params.builder[device].availableSlots.offcanvas.key,
-								),
+								control.handleRowSettingClick?.(offcanvasSlot.key),
 							)
 							.appendTo($builderInnerOffcanvas);
 
@@ -378,12 +378,15 @@ import {
 				customizer?.section(
 					`${controlId}_${rowKey}_section`,
 					function (section) {
-						section.expand(section.params);
+						section.expand(section.params as any);
 					},
 				);
 			},
 
-			openWidgetSettings: function (widgetKey, device) {
+			openWidgetSettings: function (
+				widgetKey: string,
+				device: "desktop" | "mobile",
+			) {
 				if (!widgetKey || !device) return;
 
 				const widgetData = this.findWidgetByKey?.(widgetKey, device);
@@ -392,7 +395,7 @@ import {
 				const connectedSection = customizer?.section(widgetData.section);
 				if (!connectedSection || !connectedSection.params) return;
 
-				connectedSection.expand(connectedSection.params);
+				connectedSection.expand(connectedSection.params as any);
 			},
 
 			bindCustomizeSection: function (rowKey) {
@@ -431,7 +434,7 @@ import {
 				const connectedSection = customizer?.section(widgetData.section);
 				if (!connectedSection || !connectedSection.params) return;
 
-				connectedSection.expand(connectedSection.params);
+				connectedSection.expand(connectedSection.params as any);
 			},
 
 			initDraggable: function () {
