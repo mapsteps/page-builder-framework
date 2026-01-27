@@ -134,12 +134,6 @@ export default function setupjQueryMobileMenu($) {
 		 */
 		$(document).on("click", ".wpbf-mobile-menu-toggle", function () {
 			setupMenuType();
-
-			// Check if mobile menu is empty (Ghost Trigger scenario).
-			if (headerBuilderEnabled && isMobileMenuEmpty()) {
-				notifyCustomizerOfEmptyMenu();
-			}
-
 			toggleMobileMenu(menuType);
 		});
 
@@ -374,32 +368,4 @@ export default function setupjQueryMobileMenu($) {
 		});
 	}
 
-	/**
-	 * Check if the mobile menu container is empty (no menu widgets).
-	 * This is used to detect the "Ghost Trigger" scenario.
-	 *
-	 * @returns {boolean} True if the mobile menu is empty.
-	 */
-	function isMobileMenuEmpty() {
-		const $mobileMenuContainer = $(".wpbf-mobile-menu-container");
-		if (!$mobileMenuContainer.length) return true;
-
-		// Check for actual menu content (not just the container).
-		const $mobileMenu = $mobileMenuContainer.find(".wpbf-mobile-menu");
-		if (!$mobileMenu.length) return true;
-
-		// Check if the menu has any menu items.
-		return $mobileMenu.find(".menu-item").length === 0;
-	}
-
-	/**
-	 * Notify the Customizer that the mobile menu is empty.
-	 * This triggers the Ghost Trigger warning in the sidebar.
-	 */
-	function notifyCustomizerOfEmptyMenu() {
-		// Only send message if we're in the Customizer preview.
-		if (typeof wp !== "undefined" && wp.customize && wp.customize.preview) {
-			wp.customize.preview.send("wpbf-mobile-menu-empty-click", {});
-		}
-	}
 }

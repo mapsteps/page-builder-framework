@@ -50,7 +50,6 @@ export function setupMenuTriggerSync() {
 
 	function init() {
 		listenToHeaderBuilderChanges();
-		listenToPreviewMessages();
 
 		// Initial validation after a short delay to ensure builder panel is ready.
 		window.setTimeout(() => {
@@ -80,19 +79,6 @@ export function setupMenuTriggerSync() {
 				}
 			});
 		});
-	}
-
-	/**
-	 * Listen to messages from the preview iframe.
-	 */
-	function listenToPreviewMessages() {
-		window.wp.customize?.previewer.bind(
-			"wpbf-mobile-menu-empty-click",
-			function () {
-				// User clicked a ghost trigger - pulse the Mobile Menu area.
-				pulseHighlight(getMobileMenuArea());
-			},
-		);
 	}
 
 	/**
@@ -211,18 +197,5 @@ export function setupMenuTriggerSync() {
 		document.querySelectorAll(`.${MISSING_TRIGGER_CLASS}`).forEach((el) => {
 			el.classList.remove(MISSING_TRIGGER_CLASS);
 		});
-	}
-
-	/**
-	 * Add a pulse highlight effect to an element.
-	 */
-	function pulseHighlight(element: Element | null) {
-		if (!element) return;
-
-		element.classList.add("wpbf-sync-pulse");
-
-		window.setTimeout(() => {
-			element.classList.remove("wpbf-sync-pulse");
-		}, 2000);
 	}
 }
