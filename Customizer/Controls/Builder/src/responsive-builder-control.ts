@@ -383,6 +383,18 @@ import {
 				);
 			},
 
+			openWidgetSettings: function (widgetKey, device) {
+				if (!widgetKey || !device) return;
+
+				const widgetData = this.findWidgetByKey?.(widgetKey, device);
+				if (!widgetData || !widgetData.section) return;
+
+				const connectedSection = customizer?.section(widgetData.section);
+				if (!connectedSection || !connectedSection.params) return;
+
+				connectedSection.expand(connectedSection.params);
+			},
+
 			bindCustomizeSection: function (rowKey) {
 				const controlId = this.params?.id;
 				if (!controlId) return;
@@ -612,6 +624,11 @@ import {
 						widgetItem.classList.add("disabled");
 						control.draggableData = undefined;
 						control.updateCustomizerSetting?.();
+
+						// Auto-open widget settings section after a short delay.
+						window.setTimeout(() => {
+							control.openWidgetSettings?.(widgetKey, device);
+						}, 300);
 					});
 				});
 			},
