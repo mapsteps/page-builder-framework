@@ -350,6 +350,18 @@ final class Customizer {
 			wp_localize_script( 'wpbf-controls-bundle', 'wpbfBuilderControlIds', BuilderStore::$added_control_ids );
 		}
 
+		// Menu Trigger Sync localization.
+		wp_localize_script(
+			'wpbf-controls-bundle',
+			'wpbfMenuTriggerSyncL10n',
+			[
+				'ghostTriggerWarning'   => esc_html__( 'The Menu Trigger is active, but the Mobile Menu area is empty. Add a Menu widget to the Mobile Menu area.', 'page-builder-framework' ),
+				'missingTriggerWarning' => esc_html__( 'The Mobile Menu has content, but no Menu Trigger is placed in the header rows. Add a Menu Trigger widget to make the menu accessible.', 'page-builder-framework' ),
+				'setupMobileMenu'       => esc_html__( 'Setup Mobile Menu', 'page-builder-framework' ),
+				'addMenuTrigger'        => esc_html__( 'Add Menu Trigger', 'page-builder-framework' ),
+			]
+		);
+
 	}
 
 	/**

@@ -2,6 +2,7 @@ import { setupControlsMovement } from "./customizer-parts/setup-controls-movemen
 import setupBuilderControlToggleBehavior from "./customizer-parts/setup-builder-control";
 import setupLabelChanges from "./customizer-parts/setup-label-changes";
 import { setupConditionalControls } from "./customizer-parts/setup-conditional-controls";
+import { setupMenuTriggerSync } from "./customizer-parts/setup-menu-trigger-sync";
 
 window.wp.customize?.bind("ready", () => {
 	setTimeout(() => {
@@ -22,6 +23,7 @@ function setupCustomizer() {
 		setupControlsMovement();
 		setupConditionalControls();
 		setupLabelChanges();
+		setupMenuTriggerSync();
 	}
 
 	function listenDevicePreviewSwitch() {

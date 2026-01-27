@@ -63,3 +63,58 @@
 #accordion-section-wpbf_single_options h3 {
 	border-top: 1px solid #dcdcde;
 }
+
+/* Menu Trigger Sync Warning Notices */
+.wpbf-sync-warning {
+	background: #fff8e5;
+	border-left: 4px solid #ffb900;
+	padding: 12px;
+	margin: 12px 0;
+	border-radius: 2px;
+}
+
+.wpbf-sync-warning__content {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.wpbf-sync-warning__content .dashicons {
+	color: #ffb900;
+	flex-shrink: 0;
+	margin-top: 2px;
+}
+
+.wpbf-sync-warning__content p {
+	margin: 0;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #1e1e1e;
+}
+
+.wpbf-sync-warning__button {
+	width: 100%;
+	text-align: center;
+}
+
+/* Builder Panel Highlighting */
+.wpbf-sync-highlight {
+	animation: wpbf-sync-pulse 0.5s ease-in-out 3;
+	box-shadow: 0 0 0 3px #007cba !important;
+}
+
+@keyframes wpbf-sync-pulse {
+	0%, 100% {
+		box-shadow: 0 0 0 3px #007cba;
+	}
+	50% {
+		box-shadow: 0 0 0 6px rgba(0, 124, 186, 0.5);
+	}
+}
+
+/* Highlight available widget item */
+.available-widgets-panel .widget-item.wpbf-sync-highlight {
+	background: #e5f5fa;
+	border-color: #007cba;
+}
