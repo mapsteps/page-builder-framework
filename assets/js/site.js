@@ -1,5 +1,3 @@
-/// <reference path="../../global-types.js"/>
-
 import setupDesktopMenu from "./setup/desktop-menu";
 import setupMobileMenu from "./setup/mobile-menu";
 import setupSite from "./setup/site-general";

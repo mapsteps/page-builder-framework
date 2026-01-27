@@ -499,7 +499,7 @@ export default function setupMobileMenu(utils) {
 	function notifyCustomizerOfEmptyMenu() {
 		// Only send message if we're in the Customizer preview.
 		if (typeof wp !== "undefined" && wp.customize && wp.customize.preview) {
-			wp.customize.preview.send("wpbf-mobile-menu-empty-click");
+			wp.customize.preview.send("wpbf-mobile-menu-empty-click", {});
 		}
 	}
 }
