@@ -167,7 +167,7 @@ if ( ! empty( $margin ) ) {
 
 /**
  * ----------------------------------------------------------------------
- * Search Icon Alignment Fix.
+ * Search Icon Alignment Fix for Mobile.
  * ----------------------------------------------------------------------
  */
 wpbf_write_css( array(
