@@ -2,6 +2,7 @@ import {
 	ResponsiveBuilderValue,
 	WpbfResponsiveBuilderControl,
 } from "./builder-interface";
+import { Container_Arguments } from "wordpress__customize-browser/Container";
 
 (function (customizer: WpbfCustomize | undefined) {
 	const allowedDevices = ["desktop", "mobile"];
@@ -378,7 +379,7 @@ import {
 				customizer?.section(
 					`${controlId}_${rowKey}_section`,
 					function (section) {
-						section.expand(section.params as any);
+						section.expand(section.params as Container_Arguments);
 					},
 				);
 			},
@@ -395,7 +396,7 @@ import {
 				const connectedSection = customizer?.section(widgetData.section);
 				if (!connectedSection || !connectedSection.params) return;
 
-				connectedSection.expand(connectedSection.params as any);
+				connectedSection.expand(connectedSection.params as Container_Arguments);
 			},
 
 			bindCustomizeSection: function (rowKey) {
@@ -434,7 +435,7 @@ import {
 				const connectedSection = customizer?.section(widgetData.section);
 				if (!connectedSection || !connectedSection.params) return;
 
-				connectedSection.expand(connectedSection.params as any);
+				connectedSection.expand(connectedSection.params as Container_Arguments);
 			},
 
 			initDraggable: function () {
