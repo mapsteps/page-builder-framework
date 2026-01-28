@@ -205,7 +205,6 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 	listenToCustomizerValueChange<string | number>(
 		"wpbf_header_builder_mobile_menu_trigger_style",
 		function (settingId, value) {
-			console.log(value);
 
 			if (value === "solid" || value === "outline") {
 				writeCSS(settingId, {

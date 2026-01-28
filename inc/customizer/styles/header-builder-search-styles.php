@@ -177,3 +177,15 @@ wpbf_write_css( array(
 		'transform' => 'translateY(-85%)',
 	),
 ) );
+
+/**
+ * ----------------------------------------------------------------------
+ * Search Icon Alignment Fix for Desktop.
+ * ----------------------------------------------------------------------
+ */
+wpbf_write_css( array(
+	'selector' => '.wpbf-menu-item-search.active .searchform button',
+	'props'    => array(
+		'transform' => 'translateY(-85%)',
+	),
+) );
