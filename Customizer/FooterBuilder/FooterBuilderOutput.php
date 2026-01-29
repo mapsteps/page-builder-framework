@@ -423,6 +423,25 @@ class FooterBuilderOutput {
 
 		$widget_title = get_theme_mod( $setting_group . '_widget_title', '' );
 
+		$default_content = '';
+
+		if ( false !== strpos( $widget_key, 'html_1' ) ) {
+			$default_content = __( 'Content for widget HTML 1', 'page-builder-framework' );
+		} elseif ( false !== strpos( $widget_key, 'html_2' ) ) {
+			$default_content = __( 'Content for widget HTML 2', 'page-builder-framework' );
+		}
+
+		$content = wpbf_customize_str_value( $setting_group . '_content', $default_content );
+
+		// Return early if both title and content are empty.
+		if ( empty( $widget_title ) && empty( $content ) ) {
+			return;
+		}
+
+		// Content should be parsed for template tags and shortcodes.
+		$content = wpbf_parse_template_tags( $content );
+		$content = do_shortcode( $content );
+
 		// Add unique class for postMessage live preview targeting.
 		$widget_class = 'wpbf-footer-html-widget wpbf_footer_builder_' . esc_attr( $widget_key );
 
@@ -433,8 +452,6 @@ class FooterBuilderOutput {
 			$title_class = 'wpbf-footer-widget-title wpbf-footer-widget-title-' . esc_attr( $widget_key );
 			echo '<h4 class="' . esc_attr( $title_class ) . '">' . esc_html( $widget_title ) . '</h4>';
 		}
-
-		$content = wpbf_customize_str_value( $setting_group . '_content', '' );
 		?>
 
 		<div class="<?php echo esc_attr( $widget_class ); ?>">
