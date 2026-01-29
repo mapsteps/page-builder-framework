@@ -167,9 +167,11 @@ if ( ! empty( $margin ) ) {
 
 /**
  * ----------------------------------------------------------------------
- * Search Icon Alignment Fix for Mobile.
+ * Search Icon Alignment Fix.
  * ----------------------------------------------------------------------
  */
+
+// Mobile/Tablet: Different alignment adjustment for smaller screens.
 wpbf_write_css( array(
 	'media_query' => '@media screen and (max-width: ' . $breakpoint_medium . ')',
 	'selector'    => '.wpbf-menu-item-search.active .searchform button',
@@ -178,14 +180,13 @@ wpbf_write_css( array(
 	),
 ) );
 
-/**
- * ----------------------------------------------------------------------
- * Search Icon Alignment Fix for Desktop.
- * ----------------------------------------------------------------------
- */
-wpbf_write_css( array(
-	'selector' => '.wpbf-menu-item-search.active .searchform button',
-	'props'    => array(
-		'transform' => 'translateY(-85%)',
-	),
-) );
+// Desktop: Apply alignment fix only in customizer preview.
+if ( is_customize_preview() ) {
+	wpbf_write_css( array(
+		'media_query' => '@media screen and (min-width: 1024px)',
+		'selector'    => '.wpbf-menu-item-search.active .searchform button',
+		'props'       => array(
+			'transform' => 'translateY(-85%)',
+		),
+	) );
+}
