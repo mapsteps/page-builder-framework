@@ -10,8 +10,16 @@ import {
 } from "../../../../Customizer/Controls/Color/src/color-interface";
 
 export default function footerBuilderRowsSetup() {
-	const footerBuilderDesktopRows = ["desktop_row_1", "desktop_row_2", "desktop_row_3"];
-	const footerBuilderMobileRows = ["mobile_row_1", "mobile_row_2", "mobile_row_3"];
+	const footerBuilderDesktopRows = [
+		"desktop_row_1",
+		"desktop_row_2",
+		"desktop_row_3",
+	];
+	const footerBuilderMobileRows = [
+		"mobile_row_1",
+		"mobile_row_2",
+		"mobile_row_3",
+	];
 
 	/**
 	 * Desktop rows postmessage handlers.
@@ -106,18 +114,18 @@ export default function footerBuilderRowsSetup() {
 
 		// Border top - helper function to get current scope and update CSS
 		const updateBorderTop = (settingIdBase: string) => {
-			const borderWidth = window.wp?.customize?.(
-				`${controlIdPrefix}border_top_width`,
-			)?.get() as string | number | undefined;
-			const borderStyle = window.wp?.customize?.(
-				`${controlIdPrefix}border_top_style`,
-			)?.get() as string | undefined;
-			const borderColor = window.wp?.customize?.(
-				`${controlIdPrefix}border_top_color`,
-			)?.get() as string | undefined;
-			const borderScope = window.wp?.customize?.(
-				`${controlIdPrefix}border_top_scope`,
-			)?.get() as string | undefined;
+			const borderWidth = window.wp
+				?.customize?.(`${controlIdPrefix}border_top_width`)
+				?.get() as string | number | undefined;
+			const borderStyle = window.wp
+				?.customize?.(`${controlIdPrefix}border_top_style`)
+				?.get() as string | undefined;
+			const borderColor = window.wp
+				?.customize?.(`${controlIdPrefix}border_top_color`)
+				?.get() as string | undefined;
+			const borderScope = window.wp
+				?.customize?.(`${controlIdPrefix}border_top_scope`)
+				?.get() as string | undefined;
 
 			const selector =
 				borderScope === "fullwidth"
@@ -271,18 +279,18 @@ export default function footerBuilderRowsSetup() {
 
 		// Border top - helper function to get current scope and update CSS
 		const updateBorderTop = (settingIdBase: string) => {
-			const borderWidth = window.wp?.customize?.(
-				`${controlIdPrefix}border_top_width`,
-			)?.get() as string | number | undefined;
-			const borderStyle = window.wp?.customize?.(
-				`${controlIdPrefix}border_top_style`,
-			)?.get() as string | undefined;
-			const borderColor = window.wp?.customize?.(
-				`${controlIdPrefix}border_top_color`,
-			)?.get() as string | undefined;
-			const borderScope = window.wp?.customize?.(
-				`${controlIdPrefix}border_top_scope`,
-			)?.get() as string | undefined;
+			const borderWidth = window.wp
+				?.customize?.(`${controlIdPrefix}border_top_width`)
+				?.get() as string | number | undefined;
+			const borderStyle = window.wp
+				?.customize?.(`${controlIdPrefix}border_top_style`)
+				?.get() as string | undefined;
+			const borderColor = window.wp
+				?.customize?.(`${controlIdPrefix}border_top_color`)
+				?.get() as string | undefined;
+			const borderScope = window.wp
+				?.customize?.(`${controlIdPrefix}border_top_scope`)
+				?.get() as string | undefined;
 
 			const selector =
 				borderScope === "fullwidth"
@@ -436,6 +444,59 @@ export default function footerBuilderRowsSetup() {
 					titleElement.textContent = value;
 					titleElement.style.display = value ? "" : "none";
 				}
+			},
+		);
+	});
+
+	/**
+	 * Menu widget postmessage handlers.
+	 */
+	const footerBuilderMenuWidgetKeys = [
+		"desktop_menu_1",
+		"desktop_menu_2",
+		"mobile_menu_1",
+		"mobile_menu_2",
+	];
+
+	footerBuilderMenuWidgetKeys.forEach((widgetKey) => {
+		const controlIdPrefix = `wpbf_footer_builder_${widgetKey}_`;
+
+		// Item spacing
+		listenToCustomizerValueChange<string | number>(
+			`${controlIdPrefix}item_spacing`,
+			(settingId, value) => {
+				writeCSS(settingId, {
+					selector: `.wpbf-footer-menu.${widgetKey} a`,
+					props: {
+						"padding-top": maybeAppendSuffix(value),
+						"padding-bottom": maybeAppendSuffix(value),
+					},
+				});
+			},
+		);
+
+		// Link colors
+		listenToCustomizerValueChange<WpbfMulticolorControlValue>(
+			`${controlIdPrefix}link_colors`,
+			(settingId, value) => {
+				const rawDefaultColor = value.default ?? "";
+				const defaultColor = toStringColor(rawDefaultColor);
+
+				const rawHoverColor = value.hover ?? "";
+				const hoverColor = toStringColor(rawHoverColor);
+
+				writeCSS(settingId, {
+					blocks: [
+						{
+							selector: `.wpbf-footer-menu.${widgetKey} a`,
+							props: { color: defaultColor },
+						},
+						{
+							selector: `.wpbf-footer-menu.${widgetKey} a:hover, .wpbf-footer-menu.${widgetKey} a:focus`,
+							props: { color: hoverColor },
+						},
+					],
+				});
 			},
 		);
 	});
