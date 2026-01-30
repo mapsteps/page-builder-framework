@@ -66,6 +66,7 @@ wpbf_customizer_field()
 	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
+	->defaultValue( '#f5f5f7' )
 	->priority( 200 )
 	->transport( 'postMessage' )
 	->properties( [
