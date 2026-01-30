@@ -30,7 +30,7 @@ wpbf_customizer_field()
 			'container_inclusive' => true,
 			'selector'            => '.article-meta',
 			'render_callback'     => function () {
-				return wpbf_article_meta();
+				wpbf_article_meta();
 			},
 		),
 	] )
@@ -48,7 +48,7 @@ wpbf_customizer_field()
 			'container_inclusive' => true,
 			'selector'            => '.article-meta',
 			'render_callback'     => function () {
-				return wpbf_article_meta();
+				wpbf_article_meta();
 			},
 		),
 	] )
@@ -66,15 +66,6 @@ wpbf_customizer_field()
 			'setting'  => 'blog_sortable_meta',
 			'operator' => 'in',
 			'value'    => 'author',
-		),
-	] )
-	->partialRefresh( [
-		'metaavatar' => array(
-			'container_inclusive' => true,
-			'selector'            => '.article-meta',
-			'render_callback'     => function () {
-				return wpbf_article_meta();
-			},
 		),
 	] )
 	->addToSection( 'wpbf_blog_settings' );
