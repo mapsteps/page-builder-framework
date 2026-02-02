@@ -22,8 +22,3 @@ require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-header-builder.
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-header.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-footer-builder.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/settings/settings-footer.php';
-
-// WooCommerce customizer settings.
-if ( class_exists( 'WooCommerce' ) ) {
-	require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-customizer-settings.php';
-}

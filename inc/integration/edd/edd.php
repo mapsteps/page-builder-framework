@@ -29,8 +29,16 @@ function wpbf_edd_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'wpbf_edd_scripts', 10 );
 
-// EDD customizer settings.
-require_once WPBF_THEME_DIR . '/inc/integration/edd/edd-customizer-settings.php';
+/**
+ * Render EDD customizer settings.
+ */
+function wpbf_do_edd_customizer_settings() {
+
+	// EDD Customizer settings.
+	require_once WPBF_THEME_DIR . '/inc/integration/edd/edd-customizer-settings.php';
+
+}
+add_action( 'after_setup_theme', 'wpbf_do_edd_customizer_settings' );
 
 // EDD functions.
 require_once WPBF_THEME_DIR . '/inc/integration/edd/edd-functions.php';
