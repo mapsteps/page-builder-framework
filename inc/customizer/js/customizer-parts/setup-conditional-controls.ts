@@ -33,7 +33,7 @@ export function setupConditionalControls() {
 	 */
 	function listenToHeaderBuilderToggleValue() {
 		wp.customize?.control(
-			"wpbf_header_builder_enabled",
+			"wpbf_enable_header_builder",
 			(control: WpbfCheckboxControl | undefined) => {
 				if (!control) return;
 

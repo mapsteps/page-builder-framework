@@ -131,8 +131,9 @@ wpbf_customizer_field()
 	] )
 	->activeCallback( [
 		[
-			'id'       => 'wpbf_header_builder',
-			'operator' => 'empty',
+			'id'       => 'wpbf_enable_header_builder',
+			'operator' => '==',
+			'value'    => false,
 		],
 	] )
 	->addToSection( 'wpbf_menu_options' );
@@ -154,8 +155,9 @@ wpbf_customizer_field()
 	) )
 	->activeCallback( [
 		[
-			'id'       => 'wpbf_header_builder',
-			'operator' => 'empty',
+			'id'       => 'wpbf_enable_header_builder',
+			'operator' => '==',
+			'value'    => false,
 		],
 	] )
 	->addToSection( 'wpbf_menu_options' );
