@@ -52,7 +52,50 @@ export default function setupControlDependencies(
 
 			listenDependencyControl(dependencySettingId);
 		}
+
+		// Re-evaluate dependencies when a control is embedded (deferred embedding).
+		window.wp.hooks.addAction(
+			"wpbf.dynamicControl.actuallyEmbed.after",
+			"wpbf/controlDependencies",
+			(control: { id: string }) => {
+				if (!control?.id) return;
+				if (!globalControlDependencies[control.id]) return;
+
+				reevaluateControlDependencies(control.id);
+			},
+		);
 	});
+
+	function reevaluateControlDependencies(controlId: string) {
+		const dependencies = globalControlDependencies[controlId];
+		if (!dependencies || dependencies.length === 0) return;
+
+		let allSatisfied = true;
+
+		for (const dependency of dependencies) {
+			let dependencySettingId = dependency.setting;
+
+			// Backwards compatibility.
+			if (!dependencySettingId && dependency.id) {
+				dependencySettingId = dependency.id;
+			}
+
+			if (!dependencySettingId) continue;
+
+			const settingValue = customizer(dependencySettingId)?.get();
+
+			if (!isRuleSatisfied(settingValue, dependency.operator, dependency.value)) {
+				allSatisfied = false;
+				break;
+			}
+		}
+
+		if (allSatisfied) {
+			showControl(controlId);
+		} else {
+			hideControl(controlId);
+		}
+	}
 
 	function listenDependencyControl(dependencySettingId: string) {
 		customizer(dependencySettingId, function (setting) {
