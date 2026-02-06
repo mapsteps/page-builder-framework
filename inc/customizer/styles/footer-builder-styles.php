@@ -84,17 +84,13 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 		$text_color = wpbf_customize_str_value( $row_id_prefix . 'text_color' );
 
 		if ( $bg_color || $text_color ) {
-			echo '.wpbf-footer-row-' . esc_attr( $row_key ) . ' {';
-
-			if ( $bg_color ) {
-				echo 'background-color: ' . esc_attr( $bg_color ) . ';';
-			}
-
-			if ( $text_color ) {
-				echo 'color: ' . esc_attr( $text_color ) . ';';
-			}
-
-			echo '}';
+			wpbf_write_css( array(
+				'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ),
+				'props'    => array(
+					'background-color' => $bg_color ? $bg_color : null,
+					'color'            => $text_color ? $text_color : null,
+				),
+			) );
 		}
 
 		$accent_colors = wpbf_customize_array_value( $row_id_prefix . 'accent_colors' );
@@ -213,12 +209,10 @@ foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 		if ( $bg_color || $text_color ) {
 			wpbf_write_css( array(
 				'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ),
-				'props'    => array( 'background-color' => $bg_color ),
-			) );
-
-			wpbf_write_css( array(
-				'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ),
-				'props'    => array( 'color' => $text_color ),
+				'props'    => array(
+					'background-color' => $bg_color ? $bg_color : null,
+					'color'            => $text_color ? $text_color : null,
+				),
 			) );
 		}
 

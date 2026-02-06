@@ -26,7 +26,7 @@ if ( $scrolltop ) {
 		) );
 
 		wpbf_write_css( array(
-			'media_query' => '@media screen and (max-width: ' . $breakpoint_medium . ')',
+			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ')',
 			'selector'    => '.scrolltop',
 			'props'       => array(
 				'left'   => '10px',

@@ -100,7 +100,7 @@ if ( $button_primary_bg_color || $button_primary_text_color ) {
 
 }
 
-if ( $button_primary_bg_color_alt || $button_primary_bg_color_alt ) {
+if ( $button_primary_bg_color_alt || $button_primary_text_color_alt ) {
 
 	wpbf_write_css( array(
 		'selector' => '.wpbf-button-primary:hover',

@@ -14,9 +14,6 @@ $blog_pagination_font_size        = wpbf_customize_str_value( 'blog_pagination_f
 $blog_pagination_background_color = wpbf_customize_str_value( 'blog_pagination_background_color' );
 $blog_pagination_font_color       = wpbf_customize_str_value( 'blog_pagination_font_color' );
 
-// ? Why does this exist? It's not being used anywhere in this file.
-$blog_pagination_background_color_next_prev = wpbf_customize_str_value( 'blog_pagination_background_color_next_prev' );
-
 if ( $blog_pagination_border_radius || $blog_pagination_font_size || $blog_pagination_background_color || $blog_pagination_font_color ) {
 
 	wpbf_write_css( array(

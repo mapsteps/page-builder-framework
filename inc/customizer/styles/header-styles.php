@@ -326,7 +326,7 @@ if ( $menu_padding ) {
 	}
 }
 
-if ( ! wpbf_header_builder_enabled() ) {
+if ( ! $header_builder_enabled ) {
 	$menu_bg_color = wpbf_customize_str_value( 'menu_bg_color' );
 	$menu_bg_color = '#f5f5f7' === $menu_bg_color ? '' : $menu_bg_color;
 
@@ -340,7 +340,7 @@ if ( ! wpbf_header_builder_enabled() ) {
 	}
 }
 
-if ( ! wpbf_header_builder_enabled() ) {
+if ( ! $header_builder_enabled ) {
 	$menu_font_colors = wpbf_customize_array_value( 'menu_font_colors', array() );
 	$menu_font_colors = ! is_array( $menu_font_colors ) ? array() : $menu_font_colors;
 

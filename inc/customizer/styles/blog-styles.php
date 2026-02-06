@@ -275,7 +275,7 @@ foreach ( $archives as $archive ) {
 				if ( $boxed_padding_top_mobile ) {
 
 					$margin_block_2 = array(
-						'selector' => '.wpbf-' . $archive . '-content  .wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child',
+						'selector' => '.wpbf-' . $archive . '-content .wpbf-post-style-boxed.stretched .article-header > .wpbf-post-image-wrapper:first-child',
 						'props'    => array(
 							'margin-top'    => '-' . wpbf_maybe_append_suffix( $boxed_padding_top_mobile ),
 							'margin-bottom' => wpbf_maybe_append_suffix( $boxed_padding_top_mobile ),

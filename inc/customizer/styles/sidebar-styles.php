@@ -1,6 +1,6 @@
 <?php
 /**
- * Sidebar, breadcrumbs, and pagination customizer styles.
+ * Sidebar customizer styles.
  *
  * @package Page Builder Framework
  * @subpackage Customizer

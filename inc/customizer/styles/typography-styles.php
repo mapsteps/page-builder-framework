@@ -109,10 +109,10 @@ if ( $page_h2_font_toggle && $page_h2_font_setting ) {
 }
 
 // H3 font settings.
-$page_h3_font_setting = wpbf_customize_bool_value( 'page_h3_toggle' );
-$page_h3_font_family  = wpbf_customize_array_value( 'page_h3_font_family' );
+$page_h3_font_toggle  = wpbf_customize_bool_value( 'page_h3_toggle' );
+$page_h3_font_setting = wpbf_customize_array_value( 'page_h3_font_family' );
 
-if ( $page_h3_font_setting && $page_h3_font_family ) {
+if ( $page_h3_font_toggle && $page_h3_font_setting ) {
 
 	wpbf_write_css( array(
 		'selector' => 'h3',
