@@ -57,12 +57,20 @@
 		transition: transform 0.3s;
 	}
 
+	.wpbf-control-cols {
+		justify-content: flex-start;
+	}
+
 	.wpbf-control-left-col {
-		width: 91%;
+		flex: 1;
+		min-width: 0;
+		padding-right: 8px;
 	}
 
 	.wpbf-control-right-col {
-		width: 9%;
+		flex: none;
+		width: auto;
+		text-align: left;
 	}
 
 	.wpbf-control-fields {
@@ -72,6 +80,10 @@
 	.wpbf-control-field {
 		padding-right: 5px;
 		width: 25%;
+
+		&:last-child {
+			padding-right: 0;
+		}
 	}
 
 	.wpbf-control-input {
