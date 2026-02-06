@@ -161,7 +161,7 @@ if ( $custom_logo_id ) {
 
 		wpbf_write_css( array(
 			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_desktop ) . ')',
-			'selector'    => '.wpbf-mobile-logo img',
+			'selector'    => '.wpbf-logo img, .wpbf-mobile-logo img',
 			'props'       => array(
 				'width' => wpbf_maybe_append_suffix( $menu_logo_size_tablet ),
 			),
@@ -175,7 +175,7 @@ if ( $custom_logo_id ) {
 
 		wpbf_write_css( array(
 			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ')',
-			'selector'    => '.wpbf-mobile-logo img',
+			'selector'    => '.wpbf-logo img, .wpbf-mobile-logo img',
 			'props'       => array(
 				'width' => wpbf_maybe_append_suffix( $menu_logo_size_mobile ),
 			),

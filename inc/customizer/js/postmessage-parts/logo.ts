@@ -24,11 +24,11 @@ export default function logoSetup() {
 					props: { width: maybeAppendSuffix(obj?.desktop) },
 				},
 				tablet: {
-					selector: ".wpbf-mobile-logo img",
+					selector: ".wpbf-logo img, .wpbf-mobile-logo img",
 					props: { width: maybeAppendSuffix(obj?.tablet) },
 				},
 				mobile: {
-					selector: ".wpbf-mobile-logo img",
+					selector: ".wpbf-logo img, .wpbf-mobile-logo img",
 					props: { width: maybeAppendSuffix(obj?.mobile) },
 				},
 			});
