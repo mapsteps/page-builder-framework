@@ -50,7 +50,7 @@ if ( $scrolltop ) {
 	}
 
 	$scrolltop_bg_color = wpbf_customize_str_value( 'scrolltop_bg_color' );
-	$scrolltop_bg_color = 'rgba(62,67,73,0.5)' === $scrolltop_bg_color || 'rgba(62, 67, 73, 0.5)' === $scrolltop_bg_color ? '' : $scrolltop_bg_color;
+	$scrolltop_bg_color = wpbf_is_default_color( $scrolltop_bg_color, 'rgba(62,67,73,0.5)' ) ? '' : $scrolltop_bg_color;
 
 	$scrolltop_border_radius = wpbf_customize_str_value( 'scrolltop_border_radius' );
 
@@ -79,7 +79,7 @@ if ( $scrolltop ) {
 	}
 
 	$scrolltop_bg_color_alt = wpbf_customize_str_value( 'scrolltop_bg_color_alt' );
-	$scrolltop_bg_color_alt = 'rgba(62,67,73,0.7)' === $scrolltop_bg_color_alt || 'rgba(62, 67, 73, 0.7)' === $scrolltop_bg_color_alt ? '' : $scrolltop_bg_color_alt;
+	$scrolltop_bg_color_alt = wpbf_is_default_color( $scrolltop_bg_color_alt, 'rgba(62,67,73,0.7)' ) ? '' : $scrolltop_bg_color_alt;
 
 	$scrolltop_icon_color_alt = wpbf_customize_str_value( 'scrolltop_icon_color_alt' );
 

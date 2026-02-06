@@ -312,7 +312,7 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 			// Off canvas overlay color.
 			$menu_overlay       = wpbf_customize_bool_value( 'menu_overlay' );
 			$menu_overlay_color = wpbf_customize_str_value( 'menu_overlay_color' );
-			$menu_overlay_color = 'rgba(0,0,0,.5)' === $menu_overlay_color || 'rgba(0, 0, 0,.5)' === $menu_overlay_color ? '' : $menu_overlay_color;
+			$menu_overlay_color = wpbf_is_default_color( $menu_overlay_color, 'rgba(0,0,0,.5)' ) ? '' : $menu_overlay_color;
 
 			if ( $menu_overlay && $menu_overlay_color ) {
 				wpbf_write_css( array(

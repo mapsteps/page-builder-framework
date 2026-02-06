@@ -1968,6 +1968,35 @@ if ( ! function_exists( 'wpbf_not_empty_allow_zero' ) ) {
 
 }
 
+if ( ! function_exists( 'wpbf_is_default_color' ) ) {
+
+	/**
+	 * Check if a color value matches a default color value.
+	 *
+	 * Normalizes both values before comparison to handle format variations
+	 * in rgba strings (e.g. spaces after commas, leading zeros in decimals).
+	 *
+	 * @param string $value The color value to check.
+	 * @param string $default_value The default color value to compare against.
+	 *
+	 * @return bool Whether the value matches the default.
+	 */
+	function wpbf_is_default_color( $value, $default_value ) {
+		$normalize = function ( $str ) {
+			// Remove all spaces.
+			$str = str_replace( ' ', '', $str );
+
+			// Normalize leading zeros in decimals (e.g. 0.5 -> .5).
+			$str = preg_replace( '/(?<!\d)0+\./', '.', $str );
+
+			return strtolower( $str );
+		};
+
+		return $normalize( $value ) === $normalize( $default_value );
+	}
+
+}
+
 if ( ! function_exists( 'wpbf_maybe_append_suffix' ) ) {
 
 	/**
