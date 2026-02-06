@@ -91,7 +91,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( $control_id_prefix . 'style' )
 	->type( 'radio-buttonset' )
-	->tab( 'general' )
+	->tab( 'design' )
 	->label( __( 'Style', 'page-builder-framework' ) )
 	->defaultValue( '' )
 	->choices( [
