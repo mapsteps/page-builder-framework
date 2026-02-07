@@ -90,21 +90,6 @@ export default function mobileHeaderBuilderRowsSetup() {
 					});
 				},
 			);
-
-			// vertical padding
-			listenToCustomizerValueChange<number | string>(
-				`${controlIdPrefix}vertical_padding`,
-				function (settingId: string, value: number | string) {
-					const selector = `.wpbf-header-row-${rowKey}`;
-					writeCSS(settingId, {
-						selector: selector,
-						props: {
-							"padding-top": maybeAppendSuffix(value),
-							"padding-bottom": maybeAppendSuffix(value),
-						},
-					});
-				},
-			);
 		}
 
 		if (rowKey === "mobile_row_2") {
