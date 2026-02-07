@@ -355,9 +355,10 @@
 	column-gap: 3px;
 }
 
-.menu-trigger-button-svg {
+.menu-trigger-button-text {
+	line-height: 1;
+	bottom: 2px;
 	position: relative;
-	top: 0.2em;
 }
 
 .use-header-builder .wpbf-nav-item.wpbf-menu-item-search,

@@ -64,7 +64,7 @@ final class HeaderBuilderConfig {
 
 		return array(
 			'desktop' => $desktop_widgets,
-			'mobile' => array(
+			'mobile'  => array(
 				array(
 					'key'     => 'mobile_logo',
 					'label'   => __( 'Logo', 'page-builder-framework' ),
@@ -310,22 +310,22 @@ final class HeaderBuilderConfig {
 
 		$menu_icon_variants = array(
 			'variant-1' =>
-				'<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" 	data-variant="variant-1">
-						<rect x="4" y="4" width="25" height="3" rx="1"/>
-						<rect x="4" y="12" width="25" height="3" rx="1"/>
-						<rect x="4" y="20" width="25" height="3" rx="1"/>
+				'<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg" 	data-variant="variant-1">
+						<rect x="4" y="6" width="25" height="3" rx="1"/>
+						<rect x="4" y="14" width="25" height="3" rx="1"/>
+						<rect x="4" y="22" width="25" height="3" rx="1"/>
 					</svg>',
 			'variant-2' =>
-				'<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
-						<rect x="4" y="4" width="17" height="3" rx="1"/>
-						<rect x="4" y="12" width="27" height="3" rx="1"/>
-						<rect x="4" y="20" width="21" height="3" rx="1"/>
+				'<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-2">
+						<rect x="4" y="6" width="17" height="3" rx="1"/>
+						<rect x="4" y="14" width="27" height="3" rx="1"/>
+						<rect x="4" y="22" width="21" height="3" rx="1"/>
 					</svg>',
 			'variant-3' =>
-				'<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
-						<rect x="12" y="4" width="17" height="3" rx="1"/>
-						<rect x="4" y="12" width="25" height="3" rx="1"/>
-						<rect x="4" y="20" width="17" height="3" rx="1"/>
+				'<svg class="menu-trigger-button-svg" width="1em" height="1em" viewBox="0 0 32 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-variant="variant-3">
+						<rect x="12" y="6" width="17" height="3" rx="1"/>
+						<rect x="4" y="14" width="25" height="3" rx="1"/>
+						<rect x="4" y="22" width="17" height="3" rx="1"/>
 					</svg>',
 		);
 
