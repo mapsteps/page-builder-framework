@@ -96,20 +96,12 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 						props: {
 							"background-color": "unset !important",
 							color: "unset",
-							padding: "unset",
 							"line-height": "unset",
 							border: "unset !important",
 							"border-radius": "unset",
 						},
 					});
 					return;
-				} else {
-					writeCSS(settingId, {
-						selector: ".wpbf-mobile-menu-toggle",
-						props: {
-							padding: "10px !important",
-						},
-					});
 				}
 			}
 
@@ -198,29 +190,6 @@ export default function mobileNavigationSetup(customizer: WpbfCustomize) {
 					"border-radius": maybeAppendSuffix(value) + " !important",
 				},
 			});
-		},
-	);
-
-	// Mobile Menu Trigger Button Style
-	listenToCustomizerValueChange<string | number>(
-		"wpbf_header_builder_mobile_menu_trigger_style",
-		function (settingId, value) {
-
-			if (value === "solid" || value === "outline") {
-				writeCSS(settingId, {
-					selector: ".wpbf-mobile-menu-toggle",
-					props: {
-						padding: "10px !important",
-					},
-				});
-			} else {
-				writeCSS(settingId, {
-					selector: ".wpbf-mobile-menu-toggle",
-					props: {
-						padding: "0",
-					},
-				});
-			}
 		},
 	);
 
