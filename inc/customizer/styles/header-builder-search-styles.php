@@ -129,6 +129,34 @@ if ( ! empty( $icon_color ) ) {
 	}
 }
 
+/**
+ * ----------------------------------------------------------------------
+ * Desktop Header Builder: Search Icon size.
+ * ----------------------------------------------------------------------
+ */
+$icon_size = wpbf_customize_array_value( $control_id_prefix . 'icon_size' );
+$icon_size = '' === $icon_size || '16' === $icon_size ? '16px' : $icon_size;
+
+foreach ( $devices as $device ) {
+	if ( 'desktop' !== $device ) {
+		continue;
+	}
+
+	$device_icon_size = isset( $icon_size[ $device ] ) && '' !== $icon_size[ $device ] ? $icon_size[ $device ] : null;
+
+	if ( is_null( $device_icon_size ) ) {
+		continue;
+	}
+
+	wpbf_write_css( array(
+		'selector' => '.wpbff-search',
+		'props'    => array(
+			'font-size' => $device_icon_size ? wpbf_maybe_append_suffix( $device_icon_size ) : null,
+		),
+	) );
+}
+
+
 // Mobile Header Search.
 $control_id_prefix = $header_builder_control_id_prefix . 'mobile_search_';
 $margin            = wpbf_customize_array_value( $control_id_prefix . 'margin', $default_margin );
@@ -163,30 +191,4 @@ if ( ! empty( $margin ) ) {
 		) );
 	}
 
-}
-
-/**
- * ----------------------------------------------------------------------
- * Search Icon Alignment Fix.
- * ----------------------------------------------------------------------
- */
-
-// Mobile/Tablet: Different alignment adjustment for smaller screens.
-wpbf_write_css( array(
-	'media_query' => '@media screen and (max-width: ' . $breakpoint_medium . ')',
-	'selector'    => '.wpbf-menu-item-search.active .searchform button',
-	'props'       => array(
-		'transform' => 'translateY(-85%)',
-	),
-) );
-
-// Desktop: Apply alignment fix only in customizer preview.
-if ( is_customize_preview() ) {
-	wpbf_write_css( array(
-		'media_query' => '@media screen and (min-width: 1024px)',
-		'selector'    => '.wpbf-menu-item-search.active .searchform button',
-		'props'       => array(
-			'transform' => 'translateY(-85%)',
-		),
-	) );
 }
