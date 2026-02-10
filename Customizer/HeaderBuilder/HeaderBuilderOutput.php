@@ -157,7 +157,7 @@ class HeaderBuilderOutput {
 		}
 		?>
 
-		<div id="pre-header" class="wpbf-pre-header">
+		<div id="pre-header" class="wpbf-pre-header use-header-builder">
 			<?php
 			do_action( 'wpbf_before_pre_header' );
 			$this->render_desktop_row( 'desktop_row_1', $pre_header_columns );
@@ -376,7 +376,7 @@ class HeaderBuilderOutput {
 		 */
 		$mobile_header_classes = apply_filters(
 			'wpbf_header_builder_mobile_header_classes',
-			'wpbf-mobile-header-rows wpbf-hidden-large wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger',
+			'wpbf-mobile-header-rows wpbf-hidden-large wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger use-header-builder',
 			$menu_type
 		);
 
@@ -442,7 +442,7 @@ class HeaderBuilderOutput {
 		 */
 		$mobile_header_classes = apply_filters(
 			'wpbf_header_builder_mobile_header_classes',
-			'wpbf-mobile-header-rows wpbf-hidden-large wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger',
+			'wpbf-mobile-header-rows wpbf-hidden-large wpbf-mobile-menu-dropdown wpbf-mobile-menu-hamburger use-header-builder',
 			$menu_type
 		);
 

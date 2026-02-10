@@ -326,6 +326,7 @@
 
 .wpbf-menu-toggle-container {
 	text-align: right;
+	line-height: 1;
 }
 
 .wpbf-menu-left .wpbf-menu-toggle-container {
@@ -357,14 +358,9 @@
 .use-header-builder .wpbf-menu-toggle {
 	display: inline-flex;
 	align-items: center;
-	line-height: 1.4;
-	column-gap: 3px;
-}
-
-.menu-trigger-button-text {
+	justify-content: center;
 	line-height: 1;
-	bottom: 2px;
-	position: relative;
+	column-gap: 3px;
 }
 
 .use-header-builder .wpbf-nav-item.wpbf-menu-item-search,
