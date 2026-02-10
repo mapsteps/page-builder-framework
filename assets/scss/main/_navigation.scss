@@ -363,6 +363,28 @@
 	column-gap: 3px;
 }
 
+.use-header-builder .wpbf-mobile-menu-toggle {
+	.menu-trigger-button-svg {
+		position: relative;
+		top: -1px;
+	}
+
+	.menu-trigger-button-text {
+		top: -0.5px;
+	}
+}
+
+.use-header-builder .wpbf-menu-toggle {
+	.menu-trigger-button-svg {
+		position: relative;
+		top: -1px;
+	}
+
+	.menu-trigger-button-text {
+		top: -0.5px;
+	}
+}
+
 .menu-trigger-button-text {
 	position: relative;
 	top: 1px;
