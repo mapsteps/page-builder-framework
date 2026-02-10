@@ -66,7 +66,9 @@ require_once WPBF_THEME_DIR . '/inc/customizer/styles/blog-styles.php';
 require_once WPBF_THEME_DIR . '/inc/customizer/styles/header-styles.php';
 
 
-require_once WPBF_THEME_DIR . '/inc/customizer/styles/header-builder-styles.php';
+if ( $header_builder_enabled ) {
+	require_once WPBF_THEME_DIR . '/inc/customizer/styles/header-builder-styles.php';
+}
 
 
 // Footer.

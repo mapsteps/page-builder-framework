@@ -68,17 +68,17 @@
 .wpbf-vanilla .wpbf-menu-item-search {
 	.wpbf-menu-search {
 		// The old jQuery-based code had a 250ms transition duration when collapsing.
-		transition:
-			width 0.25s ease-in-out,
-			opacity 0.25s ease-in-out;
+		transition: 
+			width .25s ease-in-out,
+			opacity .25s ease-in-out;
 
 		// The width property will be set via JS.
 		&.is-expanded {
 			opacity: 1;
 			// The old jQuery-based code had a 200ms transition duration when expanding.
-			transition:
-				width 0.2s ease-in-out,
-				opacity 0.2s ease-in-out;
+			transition: 
+				width .2s ease-in-out,
+				opacity .2s ease-in-out;
 		}
 	}
 }
