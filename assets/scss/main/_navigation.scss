@@ -104,6 +104,12 @@
 
 		input[type="search"] {
 			height: 50px;
+
+			// Hide the clear button (X) in WebKit browsers
+			&::-webkit-search-cancel-button {
+				-webkit-appearance: none;
+				appearance: none;
+			}
 		}
 	}
 }
