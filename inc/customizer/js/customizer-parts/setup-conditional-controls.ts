@@ -26,10 +26,13 @@ export function setupConditionalControls() {
 		setupMobileMenuOverlayColorVisibility();
 		setupDesktopMenuOverlayVisibility();
 		setupDesktopMenuOverlayColorVisibility();
+		setupDesktopOffCanvasWidthVisibility();
+		setupDesktopOffCanvasPushVisibility();
 	}
 
 	/**
 	 * Listen to the header builder toggle control's value change.
+
 	 */
 	function listenToHeaderBuilderToggleValue() {
 		wp.customize?.control(
@@ -395,4 +398,71 @@ export function setupConditionalControls() {
 		// Initial apply
 		applyVisibility();
 	}
+
+	/**
+	 * Toggles visibility of desktop off-canvas width control based on the selected reveal type.
+	 */
+	function setupDesktopOffCanvasWidthVisibility() {
+		const revealAsSettingId = "wpbf_header_builder_desktop_offcanvas_reveal_as";
+		const controlIdToToggle = "menu_off_canvas_width";
+
+		function applyVisibility(revealType: string) {
+			const shouldShow =
+				revealType === "off-canvas" || revealType === "off-canvas-left";
+
+			try {
+				window.wp.customize?.control(controlIdToToggle, function (control) {
+					if (!control || !control.container) return;
+					control.container.toggle(!!shouldShow);
+				});
+			} catch (e) {
+				// ignore if control doesn't exist yet
+			}
+		}
+
+		// Bind to changes
+		window.wp.customize?.(revealAsSettingId, function (setting) {
+			setting.bind(function (val: string) {
+				applyVisibility(val);
+			});
+		});
+
+		// Initial apply
+		const initial = window.wp.customize?.(revealAsSettingId)?.get();
+		applyVisibility(typeof initial !== "undefined" ? initial : "off-canvas");
+	}
+
+	/**
+	 * Toggles visibility of desktop off-canvas push control based on the selected reveal type.
+	 */
+	function setupDesktopOffCanvasPushVisibility() {
+		const revealAsSettingId = "wpbf_header_builder_desktop_offcanvas_reveal_as";
+		const controlIdToToggle = "menu_off_canvas_push";
+
+		function applyVisibility(revealType: string) {
+			const shouldShow =
+				revealType === "off-canvas" || revealType === "off-canvas-left";
+
+			try {
+				window.wp.customize?.control(controlIdToToggle, function (control) {
+					if (!control || !control.container) return;
+					control.container.toggle(!!shouldShow);
+				});
+			} catch (e) {
+				// ignore if control doesn't exist yet
+			}
+		}
+
+		// Bind to changes
+		window.wp.customize?.(revealAsSettingId, function (setting) {
+			setting.bind(function (val: string) {
+				applyVisibility(val);
+			});
+		});
+
+		// Initial apply
+		const initial = window.wp.customize?.(revealAsSettingId)?.get();
+		applyVisibility(typeof initial !== "undefined" ? initial : "off-canvas");
+	}
 }
+
