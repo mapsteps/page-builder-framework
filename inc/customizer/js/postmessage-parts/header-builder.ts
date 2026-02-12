@@ -7,6 +7,7 @@ import {
 	WpbfCheckboxButtonsetResponsiveValue,
 	mediaQueries,
 } from "../customizer-util";
+import { headerBuilderEnabled } from "../../../../assets/js/utils/customizer-util";
 import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
 import { WpbfMulticolorControlValue } from "../../../../Customizer/Controls/Color/src/color-interface";
 import { DevicesValue } from "../../../../Customizer/Controls/Responsive/src/responsive-interface";
@@ -124,6 +125,8 @@ export default function headerBuilderSetup() {
 	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
 		"wpbf_header_builder_desktop_search_icon_color",
 		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
 			const defaultColor = toStringColor(value?.default ?? "");
 			const hoverColor = toStringColor(value?.hover ?? "");
 
@@ -156,11 +159,13 @@ export default function headerBuilderSetup() {
 	listenToCustomizerValueChange<string | DevicesValue>(
 		"wpbf_header_builder_desktop_search_icon_size",
 		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
 			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
 			writeCSS(settingId, {
 				mediaQuery: `@media (${mediaQueries.desktop})`,
-				selector: ".wpbff-search",
+				selector: ".use-header-builder .wpbff-search",
 				props: {
 					"font-size": maybeAppendSuffix(obj?.desktop) + " !important",
 				},

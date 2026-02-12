@@ -5,6 +5,7 @@ import {
 	maybeAppendSuffix,
 	mediaQueries,
 } from "../customizer-util";
+import { headerBuilderEnabled } from "../../../../assets/js/utils/customizer-util";
 import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
 import { WpbfMulticolorControlValue } from "../../../../Customizer/Controls/Color/src/color-interface";
 import { DevicesValue } from "../../../../Customizer/Controls/Responsive/src/responsive-interface";
@@ -14,6 +15,8 @@ export default function headerBuilderSearchSetup() {
 	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
 		`wpbf_header_builder_mobile_search_icon_color`,
 		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
 			const defaultColor = toStringColor(value?.default ?? "");
 			const hoverColor = toStringColor(value?.hover ?? "");
 
@@ -38,6 +41,8 @@ export default function headerBuilderSearchSetup() {
 	listenToCustomizerValueChange<string | DevicesValue>(
 		"wpbf_header_builder_mobile_search_icon_size",
 		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
 			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
 			writeCSS(settingId + "-tablet", {
@@ -58,6 +63,8 @@ export default function headerBuilderSearchSetup() {
 	listenToCustomizerValueChange<Record<string, string>>(
 		`wpbf_header_builder_desktop_search_margin`,
 		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-item-search",
 				props: {
@@ -74,6 +81,8 @@ export default function headerBuilderSearchSetup() {
 	listenToCustomizerValueChange<Record<string, string>>(
 		`wpbf_header_builder_mobile_search_margin`,
 		function (settingId, value) {
+			if (!headerBuilderEnabled()) return;
+
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-item-search",
 				props: {
