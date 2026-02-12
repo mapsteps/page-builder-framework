@@ -234,7 +234,7 @@ class HeaderBuilderOutput {
 
 		$container_class = 'wpbf-container wpbf-container-center';
 
-		$row_class = ( 'desktop_row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
+		$row_class = ( 'desktop_row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class ) . ' use-header-builder';
 
 		echo '<div class="' . esc_attr( $row_class ) . '">';
 
@@ -493,7 +493,7 @@ class HeaderBuilderOutput {
 
 		$container_class = 'wpbf-container wpbf-container-center';
 
-		$row_class = ( 'mobile_row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class );
+		$row_class = ( 'mobile_row_1' === $row_key ? "wpbf-inner-pre-header $container_class " : '' ) . 'wpbf-header-row wpbf-header-row-' . esc_attr( $row_key ) . ' ' . esc_attr( $visibility_class ) . ' use-header-builder';
 
 		echo '<div class="' . esc_attr( $row_class ) . '">';
 
