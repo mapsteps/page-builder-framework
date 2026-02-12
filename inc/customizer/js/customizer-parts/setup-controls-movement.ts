@@ -22,6 +22,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 10,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "pre_header_height",
@@ -33,6 +34,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 15,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "pre_header_bg_color",
@@ -40,6 +42,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 200,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "pre_header_font_color",
@@ -47,6 +50,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 205,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "pre_header_accent_colors",
@@ -54,6 +58,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 210,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "pre_header_font_size",
@@ -61,6 +66,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 220,
 						},
+						maintainActiveState: true,
 					},
 				],
 			},
@@ -123,6 +129,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 210,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "mobile_menu_hamburger_border_radius",
@@ -134,6 +141,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: "Border Radius",
 						},
+						maintainActiveState: true,
 					},
 					// Icon related controls after (Icon Settings group)
 					{
@@ -142,6 +150,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 300,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "mobile_menu_hamburger_size",
@@ -149,6 +158,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 305,
 						},
+						maintainActiveState: true,
 					},
 				],
 			},
@@ -237,6 +247,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 10,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "footer_height",
@@ -248,6 +259,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 15,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "footer_bg_color",
@@ -255,6 +267,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 200,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "footer_font_color",
@@ -262,6 +275,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 205,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "footer_accent_color",
@@ -269,6 +283,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 210,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "footer_accent_color_alt",
@@ -276,6 +291,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 215,
 						},
+						maintainActiveState: true,
 					},
 					{
 						id: "footer_font_size",
@@ -283,6 +299,7 @@ export function setupControlsMovement() {
 							from: undefined,
 							to: 220,
 						},
+						maintainActiveState: true,
 					},
 				],
 			},
