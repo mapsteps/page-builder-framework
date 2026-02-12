@@ -91,7 +91,7 @@ if ( ! empty( $margin ) ) {
 	// Desktop.
 	if ( ! empty( $margin ) ) {
 		wpbf_write_css( array(
-			'selector' => '.wpbff-search',
+			'selector' => '.wpbf-menu-item-search',
 			'props'    => array(
 				'margin-top'    => ! empty( $margin['top'] ) ? wpbf_maybe_append_suffix( $margin['top'] ) : null,
 				'margin-right'  => ! empty( $margin['right'] ) ? wpbf_maybe_append_suffix( $margin['right'] ) : null,
@@ -139,7 +139,7 @@ if ( ! empty( $margin ) ) {
 	if ( ! empty( $margin ) ) {
 		wpbf_write_css( array(
 			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_medium ) . ')',
-			'selector'    => '.wpbff-search',
+			'selector'    => '.wpbf-menu-item-search',
 			'props'       => array(
 				'margin-top'    => ! empty( $margin['top'] ) ? wpbf_maybe_append_suffix( $margin['top'] ) : null,
 				'margin-right'  => ! empty( $margin['right'] ) ? wpbf_maybe_append_suffix( $margin['right'] ) : null,
@@ -153,7 +153,7 @@ if ( ! empty( $margin ) ) {
 	if ( ! empty( $margin ) ) {
 		wpbf_write_css( array(
 			'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ')',
-			'selector'    => '.wpbff-search',
+			'selector'    => '.wpbf-menu-item-search',
 			'props'       => array(
 				'margin-top'    => ! empty( $margin['top'] ) ? wpbf_maybe_append_suffix( $margin['top'] ) : null,
 				'margin-right'  => ! empty( $margin['right'] ) ? wpbf_maybe_append_suffix( $margin['right'] ) : null,

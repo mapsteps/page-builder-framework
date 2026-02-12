@@ -59,7 +59,7 @@ export default function headerBuilderSearchSetup() {
 		`wpbf_header_builder_desktop_search_margin`,
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbff-search",
+				selector: ".wpbf-menu-item-search",
 				props: {
 					"margin-top": value?.top ? `${value.top}px` : null,
 					"margin-right": value?.right ? `${value.right}px` : null,
@@ -75,7 +75,7 @@ export default function headerBuilderSearchSetup() {
 		`wpbf_header_builder_mobile_search_margin`,
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbff-search",
+				selector: ".wpbf-menu-item-search",
 				props: {
 					"margin-top": value?.top ? `${value.top}px` : null,
 					"margin-right": value?.right ? `${value.right}px` : null,
