@@ -155,6 +155,22 @@ wpbf_customizer_field()
 	] )
 	->addToSection( $section_id );
 
+// Margin.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'margin' )
+	->type( 'padding' )
+	->tab( 'design' )
+	->label( __( 'Margin', 'page-builder-framework' ) )
+	->priority( 210 )
+	->defaultValue( array(
+		'top'    => 0,
+		'right'  => 0,
+		'bottom' => 0,
+		'left'   => 0,
+	) )
+	->transport( 'postMessage' )
+	->addToSection( $section_id );
+
 // Border radius is added automatically by customizer.ts for mobile; headline above groups button settings.
 
 // Icon separator.

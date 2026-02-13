@@ -159,6 +159,37 @@ foreach ( $header_builder_devices as $header_builder_device ) {
 			$menu_trigger_props['padding-left'] = wpbf_maybe_append_suffix( $button_left_padding );
 		}
 
+		$button_margin = wpbf_customize_array_value( 'wpbf_header_builder_' . $header_builder_device . '_menu_trigger_margin', [
+			'top'    => 0,
+			'right'  => 0,
+			'bottom' => 0,
+			'left'   => 0,
+		] );
+
+		$button_top_margin = wpbf_get_theme_mod_value( $button_margin, 'top' );
+
+		if ( $button_top_margin ) {
+			$menu_trigger_props['margin-top'] = wpbf_maybe_append_suffix( $button_top_margin );
+		}
+
+		$button_right_margin = wpbf_get_theme_mod_value( $button_margin, 'right' );
+
+		if ( $button_right_margin ) {
+			$menu_trigger_props['margin-right'] = wpbf_maybe_append_suffix( $button_right_margin );
+		}
+
+		$button_bottom_margin = wpbf_get_theme_mod_value( $button_margin, 'bottom' );
+
+		if ( $button_bottom_margin ) {
+			$menu_trigger_props['margin-bottom'] = wpbf_maybe_append_suffix( $button_bottom_margin );
+		}
+
+		$button_left_margin = wpbf_get_theme_mod_value( $button_margin, 'left' );
+
+		if ( $button_left_margin ) {
+			$menu_trigger_props['margin-left'] = wpbf_maybe_append_suffix( $button_left_margin );
+		}
+
 	} else {
 
 		$menu_trigger_props['background-color'] = 'unset !important';

@@ -22,7 +22,7 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 	 * - Icon selection (variant-1, variant-2, variant-3, none)
 	 * - Button styles (simple, solid, outline)
 	 * - Text labels
-	 * - Padding
+	 * - Margin
 	 * - Desktop-specific: icon color, border radius, background/border color, icon size
 	 *
 	 * Note for mobile triggers:
@@ -211,7 +211,7 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 						}
 					}
 
-					// Re-apply padding
+					// Re-apply margin
 					if (padding !== undefined) {
 						const paddingSetting = customizer?.(
 							"wpbf_header_builder_desktop_menu_trigger_padding",
@@ -310,6 +310,33 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 						"padding-right": maybeAppendSuffix(obj?.right),
 						"padding-bottom": maybeAppendSuffix(obj?.bottom),
 						"padding-left": maybeAppendSuffix(obj?.left),
+					},
+				});
+			},
+		);
+
+		// Menu trigger button's margin.
+		listenToCustomizerValueChange<MarginPaddingValue | string>(
+			`wpbf_header_builder_${device}_menu_trigger_margin`,
+			function (settingId, value) {
+				// Only apply when header builder is enabled.
+				if (!headerBuilderEnabled()) {
+					return;
+				}
+
+				const obj =
+					parseJsonOrUndefined<Record<string, number | string>>(value);
+
+				writeCSS(settingId, {
+					selector:
+						device === "mobile"
+							? ".wpbf-mobile-menu-toggle"
+							: ".wpbf-menu-toggle",
+					props: {
+						"margin-top": maybeAppendSuffix(obj?.top),
+						"margin-right": maybeAppendSuffix(obj?.right),
+						"margin-bottom": maybeAppendSuffix(obj?.bottom),
+						"margin-left": maybeAppendSuffix(obj?.left),
 					},
 				});
 			},

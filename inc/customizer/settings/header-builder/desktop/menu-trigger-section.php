@@ -146,6 +146,21 @@ wpbf_customizer_field()
 	] )
 	->addToSection( $section_id );
 
+// Margin.
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'margin' )
+	->type( 'padding' )
+	->tab( 'design' )
+	->label( __( 'Margin', 'page-builder-framework' ) )
+	->defaultValue( array(
+		'top'    => 0,
+		'right'  => 0,
+		'bottom' => 0,
+		'left'   => 0,
+	) )
+	->transport( 'postMessage' )
+	->addToSection( $section_id );
+
 $menu_trigger_style = wpbf_customize_str_value( $control_id_prefix . 'style' );
 
 // Button background color.
