@@ -138,13 +138,15 @@
 
 /* Version */
 .heatbox-wrap .version {
-	font-size: 50%;
+	font-size: 45%;
 	opacity: 0.6;
 	font-weight: 600;
 	background: #ccc;
 	border-radius: 5px;
 	padding: 5px 12px;
 	line-height: 1;
+	vertical-align: middle;
+	margin: 0 5px;
 }
 
 /* 2 Column Layout - Wrapper */
@@ -170,6 +172,7 @@
 	.heatbox-sidebar {
 		width: 100%;
 	}
+
 	.heatbox-main {
 		margin-right: 0;
 	}
@@ -236,6 +239,25 @@
 	margin-bottom: 20px;
 }
 
+/* Loading Button */
+@-webkit-keyframes heatboxLoadingSpinner {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}
+
+@keyframes heatboxLoadingSpinner {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}
+
 /* Buttons */
 .heatbox-wrap .button-larger {
 	padding: 5px 20px;
@@ -244,6 +266,29 @@
 .heatbox-wrap .button-full {
 	width: 100%;
 	text-align: center;
+}
+
+.heatbox-wrap .button.is-loading {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: transparent !important;
+	pointer-events: none;
+}
+
+.heatbox-wrap .button.is-loading::after {
+	content: "";
+	position: absolute;
+	width: 1em;
+	display: block;
+	height: 1em;
+	border: 2px solid #dbdbdb;
+	/* border: 2px solid $accent-color; */
+	border-color: transparent transparent #fff #fff !important;
+	/* border-color: transparent transparent $accent-color $accent-color !important; */
+	border-radius: 290486px;
+	-webkit-animation: heatboxLoadingSpinner 0.5s infinite linear;
+	animation: heatboxLoadingSpinner 0.5s infinite linear;
 }
 
 /* Settings */
@@ -286,6 +331,11 @@
 	display: inline-block;
 	position: relative;
 	cursor: pointer;
+}
+
+.heatbox .radio-label {
+	padding-left: 30px;
+	margin-right: 25px;
 }
 
 .heatbox .label input {
@@ -339,6 +389,7 @@
 	display: block;
 }
 
+.heatbox .radio-label,
 .heatbox .checkbox-label {
 	padding-left: 30px;
 }
@@ -418,20 +469,20 @@
 }
 
 /* Toggle switch */
-.heatbox .toggle-switch {
+.heatbox-wrap .toggle-switch {
 	position: relative;
 	display: inline-block;
 	width: 36px;
 	height: 20px;
 }
 
-.heatbox .toggle-switch input {
+.heatbox-wrap .toggle-switch input {
 	opacity: 0;
 	width: 0;
 	height: 0;
 }
 
-.heatbox .toggle-switch .switch-track {
+.heatbox-wrap .toggle-switch .switch-track {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -443,7 +494,7 @@
 	transition: background-color 0.3s;
 }
 
-.heatbox .switch-thumb {
+.heatbox-wrap .switch-thumb {
 	position: absolute;
 	top: 2px;
 	left: 2px;
@@ -454,15 +505,54 @@
 	transition: transform 0.3s;
 }
 
-.heatbox .toggle-switch input:checked + .switch-track {
+.heatbox-wrap .toggle-switch input:checked + .switch-track {
 	background-color: #5bcb86;
 }
 
-.heatbox .toggle-switch input:checked + .switch-track .switch-thumb {
+.heatbox-wrap .toggle-switch input:checked + .switch-track .switch-thumb {
 	transform: translateX(16px);
 }
 
 /* Tags / chips */
+.tags-heatbox .action-status {
+	height: auto;
+}
+
+.tags-heatbox .tags-wrapper {
+	line-height: 1.8;
+}
+
+.tags-heatbox h2 {
+	position: relative;
+}
+
+.tags-heatbox h2 .action-status {
+	display: inline-block;
+	position: absolute;
+	right: 20px;
+	top: 50%;
+	padding: 10px;
+	height: 30px;
+	line-height: 10px;
+	font-size: 11px;
+	color: #fff;
+	background-color: #444;
+	border-radius: 4px;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-50%);
+	transition: all 0.3s ease-in-out;
+}
+
+.tags-heatbox h2 .action-status.is-shown {
+	opacity: 1;
+	visibility: visible;
+}
+
+.tags-heatbox .heatbox-content p:last-child {
+	margin-bottom: 0;
+}
+
 .heatbox .tags-wrapper code {
 	display: inline-block;
 	margin-bottom: 5px;
@@ -524,6 +614,11 @@
 .heatbox-tooltip.has-image .tooltip-content span {
 	width: 65%;
 	padding: 20px;
+}
+
+/* Footer */
+.heatbox-footer .button .dashicons {
+	line-height: 1;
 }
 
 /* Misc */
