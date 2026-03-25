@@ -167,6 +167,13 @@ export function setupControlsMovement() {
 				to: "wpbf_header_builder_mobile_offcanvas_section",
 				controlsToMove: [
 					{
+						id: "mobile_menu_item_settings_headline",
+						prio: {
+							from: undefined,
+							to: 5,
+						},
+					},
+					{
 						id: "mobile_menu_bg_color",
 						prio: {
 							from: undefined,
