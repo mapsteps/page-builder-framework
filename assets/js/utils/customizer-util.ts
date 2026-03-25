@@ -10,6 +10,13 @@ export type ControlToMove = {
 	id: string;
 	label?: { from: string | undefined; to: string };
 	prio?: { from: number | undefined; to: number };
+
+	/**
+	 * Optional flag that controls active‑state handling when moving controls.
+	 *
+	 * If set to `false` (or omitted), the control will be forced to be active/visible when moved.
+	 * If set to `true`, the control will keep its current active state.
+	 */
 	maintainActiveState?: boolean;
 };
 
