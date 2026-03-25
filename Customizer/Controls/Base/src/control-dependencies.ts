@@ -64,6 +64,19 @@ export default function setupControlDependencies(
 				reevaluateControlDependencies(control.id);
 			},
 		);
+
+		// Re-evaluate dependencies when a control is moved across sections.
+		window.wp.hooks.addFilter(
+			"wpbf.controlDependencies.reevaluate",
+			"wpbf/controlDependencies",
+			(handled: boolean, controlId: string) => {
+				if (!controlId) return handled;
+				if (!globalControlDependencies[controlId]) return handled;
+
+				reevaluateControlDependencies(controlId);
+				return true;
+			},
+		);
 	});
 
 	function reevaluateControlDependencies(controlId: string) {

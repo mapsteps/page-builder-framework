@@ -133,7 +133,15 @@ export function moveCustomizerControls<SV>(props: {
 						);
 				}
 
-				if (moveForward && !controlObj.maintainActiveState) {
+				// Re-evaluate control dependencies after moving.
+				const handled = window.wp.hooks.applyFilters(
+					"wpbf.controlDependencies.reevaluate",
+					false,
+					controlObj.id,
+				);
+
+				// If no dependencies handled this control, use the maintainActiveState fallback.
+				if (!handled && moveForward && !controlObj.maintainActiveState) {
 					control.onChangeActive(true, {});
 				}
 
