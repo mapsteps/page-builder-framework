@@ -133,16 +133,25 @@ export function moveCustomizerControls<SV>(props: {
 						);
 				}
 
-				// Re-evaluate control dependencies after moving.
-				const handled = window.wp.hooks.applyFilters(
-					"wpbf.controlDependencies.reevaluate",
-					false,
-					controlObj.id,
-				);
-
-				// If no dependencies handled this control, use the maintainActiveState fallback.
-				if (!handled && moveForward && !controlObj.maintainActiveState) {
-					control.onChangeActive(true, {});
+				if (moveForward) {
+					// If the control should not maintain its active state, activate it.
+					if (!controlObj.maintainActiveState) {
+						control.onChangeActive(true, {});
+					} else {
+						// Otherwise, re-evaluate its dependencies.
+						window.wp.hooks.applyFilters(
+							"wpbf.controlDependencies.reevaluate",
+							false,
+							controlObj.id,
+						);
+					}
+				} else {
+					// When moving backward, always re-evaluate dependencies.
+					window.wp.hooks.applyFilters(
+						"wpbf.controlDependencies.reevaluate",
+						false,
+						controlObj.id,
+					);
 				}
 
 				const sectionId = moveForward ? sectionObj.to : sectionObj.from;
