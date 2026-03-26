@@ -14,8 +14,9 @@ export type ControlToMove = {
 	/**
 	 * Optional flag that controls active‑state handling when moving controls.
 	 *
-	 * If set to `false` (or omitted), the control will be forced to be active/visible when moved.
 	 * If set to `true`, the control will keep its current active state.
+	 * If set to `false`, the control will be forced to be active/visible when moved.
+	 * If omitted, the script won't handle the active state at all (allowing other script to handle).
 	 */
 	maintainActiveState?: boolean;
 };
@@ -134,16 +135,19 @@ export function moveCustomizerControls<SV>(props: {
 				}
 
 				if (moveForward) {
-					// If the control should not maintain its active state, activate it.
-					if (!controlObj.maintainActiveState) {
-						control.onChangeActive(true, {});
-					} else {
-						// Otherwise, re-evaluate its dependencies.
-						window.wp.hooks.applyFilters(
-							"wpbf.controlDependencies.reevaluate",
-							false,
-							controlObj.id,
-						);
+					// Only handle active state if the flag is explicitly set.
+					if (typeof controlObj.maintainActiveState !== "undefined") {
+						// If the control should not maintain its active state, activate it.
+						if (!controlObj.maintainActiveState) {
+							control.onChangeActive(true, {});
+						} else {
+							// Otherwise, re-evaluate its dependencies.
+							window.wp.hooks.applyFilters(
+								"wpbf.controlDependencies.reevaluate",
+								false,
+								controlObj.id,
+							);
+						}
 					}
 				} else {
 					// When moving backward, always re-evaluate dependencies.
