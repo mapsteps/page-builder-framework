@@ -20,7 +20,6 @@ export function setupConditionalControls() {
 		listenToHeaderBuilderToggleValue();
 		listenToFooterBuilderToggleValue();
 		setupMobileMenuTriggerVisibility();
-		setupMobileMenuOverlayColorVisibility();
 		setupDesktopMenuOverlayVisibility();
 		setupDesktopMenuOverlayColorVisibility();
 		setupDesktopOffCanvasWidthVisibility();
@@ -158,65 +157,6 @@ export function setupConditionalControls() {
 		// Initial apply (call even when initial is empty string to hide controls for 'simple')
 		const initial = window.wp.customize?.(styleSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "");
-	}
-
-	/**
-	 * Toggles visibility of mobile menu overlay color control based on:
-	 * 1. The selected reveal type (must be 'off-canvas')
-	 * 2. The mobile_menu_overlay toggle (must be enabled)
-	 * Only applies when header builder is enabled.
-	 */
-	function setupMobileMenuOverlayColorVisibility() {
-		const headerBuilderSettingId = "wpbf_enable_header_builder";
-		const revealAsSettingId = "wpbf_header_builder_mobile_offcanvas_reveal_as";
-		const overlayToggleSettingId = "mobile_menu_overlay";
-		const controlIdToToggle = "mobile_menu_overlay_color";
-
-		function applyVisibility() {
-			// Only apply this JS visibility logic when header builder is enabled.
-			// When disabled, let the PHP activeCallback handle visibility.
-			const isHeaderBuilderEnabled = window.wp
-				.customize?.(headerBuilderSettingId)
-				?.get();
-
-			if (!isHeaderBuilderEnabled) {
-				return;
-			}
-
-			const revealType = window.wp.customize?.(revealAsSettingId)?.get();
-			const overlayEnabled = window.wp
-				.customize?.(overlayToggleSettingId)
-				?.get();
-
-			const isOffCanvas = revealType === "off-canvas";
-			const shouldShow = isOffCanvas && overlayEnabled;
-
-			try {
-				window.wp.customize?.control(controlIdToToggle, function (control) {
-					if (!control || !control.container) return;
-					control.container.toggle(!!shouldShow);
-				});
-			} catch (e) {
-				// ignore if control doesn't exist yet
-			}
-		}
-
-		// Bind to reveal type changes
-		window.wp.customize?.(revealAsSettingId, function (setting) {
-			setting.bind(function () {
-				applyVisibility();
-			});
-		});
-
-		// Bind to overlay toggle changes
-		window.wp.customize?.(overlayToggleSettingId, function (setting) {
-			setting.bind(function () {
-				applyVisibility();
-			});
-		});
-
-		// Initial apply
-		applyVisibility();
 	}
 
 	/**
