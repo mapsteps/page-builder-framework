@@ -5,10 +5,9 @@ import { WpbfCheckboxControl } from "../../../../Customizer/Controls/Checkbox/sr
  * that are not covered by their default `active_callback` settings.
  *
  * Use case:
- * When the header builder is enabled, some existing controls are moved
- * into header builder sections. These controls already have their own
- * `active_callback` logic, but in some cases we need to apply extra
- * or different visibility conditions beyond those defaults.
+ * When the header builder is enabled, some existing controls are moved into header builder sections.
+ * These controls already have their own `active_callback` logic,
+ * but in some cases we need to apply extra or different visibility conditions beyond those defaults.
  *
  * This function allows defining such custom conditional behaviors.
  *
@@ -21,7 +20,6 @@ export function setupConditionalControls() {
 		listenToHeaderBuilderToggleValue();
 		listenToFooterBuilderToggleValue();
 		setupMobileMenuTriggerVisibility();
-		setupMobileMenuWidthVisibility();
 		setupMobileMenuOverlayVisibility();
 		setupMobileMenuOverlayColorVisibility();
 		setupDesktopMenuOverlayVisibility();
@@ -161,51 +159,6 @@ export function setupConditionalControls() {
 		// Initial apply (call even when initial is empty string to hide controls for 'simple')
 		const initial = window.wp.customize?.(styleSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "");
-	}
-
-	/**
-	 * Toggles visibility of mobile menu width control based on the selected reveal type.
-	 * Only show when reveal type is 'off-canvas'.
-	 * Only applies when header builder is enabled.
-	 */
-	function setupMobileMenuWidthVisibility() {
-		const headerBuilderSettingId = "wpbf_enable_header_builder";
-		const revealAsSettingId = "wpbf_header_builder_mobile_offcanvas_reveal_as";
-		const controlIdToToggle = "mobile_menu_width";
-
-		function applyVisibility(revealType: string) {
-			// Only apply this JS visibility logic when header builder is enabled.
-			// When disabled, let the PHP activeCallback handle visibility.
-			const isHeaderBuilderEnabled = window.wp
-				.customize?.(headerBuilderSettingId)
-				?.get();
-
-			if (!isHeaderBuilderEnabled) {
-				return;
-			}
-
-			const shouldShow = revealType === "off-canvas";
-
-			try {
-				window.wp.customize?.control(controlIdToToggle, function (control) {
-					if (!control || !control.container) return;
-					control.container.toggle(!!shouldShow);
-				});
-			} catch (e) {
-				// ignore if control doesn't exist yet
-			}
-		}
-
-		// Bind to changes
-		window.wp.customize?.(revealAsSettingId, function (setting) {
-			setting.bind(function (val: string) {
-				applyVisibility(val);
-			});
-		});
-
-		// Initial apply.
-		const initial = window.wp.customize?.(revealAsSettingId)?.get();
-		applyVisibility(typeof initial !== "undefined" ? initial : "dropdown");
 	}
 
 	/**
@@ -465,4 +418,3 @@ export function setupConditionalControls() {
 		applyVisibility(typeof initial !== "undefined" ? initial : "off-canvas");
 	}
 }
-
