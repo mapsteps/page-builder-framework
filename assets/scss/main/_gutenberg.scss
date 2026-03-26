@@ -158,6 +158,10 @@
 .widget_block {
 	ol, ul {
 		padding: 0;
+
+		&.wp-block-list {
+			padding-left: $padding;
+		}
 	}
 	// Remove group block styles if we're in the sidebar.
 	.wp-block-group {

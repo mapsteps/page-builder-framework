@@ -384,7 +384,7 @@ body {
 }
 
 /* Sidebar */
-.widget:not(.widget_text) {
+.widget:not(.widget_text):not(.widget_block):not(.widget_custom_html) {
 	ul {
 		margin: 0;
 		padding: 0;
