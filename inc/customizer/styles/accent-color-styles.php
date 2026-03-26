@@ -48,7 +48,7 @@ if ( $page_accent_color_alt ) {
 
 	wpbf_write_css( array(
 		'selector' => '.wpbf-menu > .current-menu-item > a',
-		'props'    => array( 'color' => $page_accent_color_alt . '!important' ),
+		'props'    => array( 'color' => $page_accent_color_alt ),
 	) );
 
 }

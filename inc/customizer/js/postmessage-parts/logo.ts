@@ -63,7 +63,7 @@ export default function logoSetup() {
 		"menu_logo_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-logo a, .wpbf-mobile-logo a",
+				selector: ".wpbf-logo .site-title a, .wpbf-mobile-logo .site-title a",
 				props: { color: toStringColor(value) },
 			});
 		},
@@ -74,7 +74,8 @@ export default function logoSetup() {
 		"menu_logo_color_alt",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-logo a:hover, .wpbf-mobile-logo a:hover",
+				selector:
+					".wpbf-logo .site-title a:hover, .wpbf-mobile-logo .site-title a:hover",
 				props: { color: toStringColor(value) },
 			});
 		},

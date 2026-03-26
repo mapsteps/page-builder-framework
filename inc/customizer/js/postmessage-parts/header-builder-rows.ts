@@ -165,11 +165,11 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 				const blocks: any[] = [
 					{
 						selector: `${rowSelector} a:not(.wpbf-button)`,
-						props: { color: defaultColor + " !important" },
+						props: { color: defaultColor },
 					},
 					{
 						selector: `${rowSelector} a:not(.wpbf-button):hover, ${rowSelector} a:not(.wpbf-button):focus`,
-						props: { color: hoverColor + " !important" },
+						props: { color: hoverColor },
 					},
 				];
 
@@ -177,7 +177,7 @@ export default function headerBuilderRowsSetup(customizer: WpbfCustomize) {
 					blocks.push({
 						selector:
 							".wpbf-pre-header .wpbf-menu > .current-menu-item > a:not(.wpbf-button)",
-						props: { color: hoverColor + " !important" },
+						props: { color: hoverColor },
 					});
 				}
 
