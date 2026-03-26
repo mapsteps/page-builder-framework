@@ -389,30 +389,10 @@ export default function footerBuilderRowsSetup() {
 	);
 
 	/**
-	 * HTML widget postmessage handlers.
-	 *
-	 * These handlers update the HTML widget content directly via postMessage
-	 * instead of using partialRefresh, which would reload the entire footer.
+	 * HTML widget content is handled via partialRefresh (server-side)
+	 * to support shortcode processing (e.g., [social]).
+	 * No client-side postMessage handler is needed for content.
 	 */
-	const footerBuilderHtmlWidgetKeys = [
-		"desktop_html_1",
-		"desktop_html_2",
-		"mobile_html_1",
-		"mobile_html_2",
-	];
-
-	footerBuilderHtmlWidgetKeys.forEach((widgetKey) => {
-		const controlIdPrefix = `wpbf_footer_builder_${widgetKey}`;
-
-		listenToCustomizerValueChange<string>(
-			`${controlIdPrefix}_content`,
-			function (settingId, value) {
-				const widget = document.querySelector(`.${controlIdPrefix}`);
-				if (!(widget instanceof HTMLElement)) return;
-				widget.innerHTML = value;
-			},
-		);
-	});
 
 	/**
 	 * Widget title postmessage handlers.

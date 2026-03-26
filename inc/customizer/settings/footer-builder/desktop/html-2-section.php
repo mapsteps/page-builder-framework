@@ -43,7 +43,9 @@ wpbf_customizer_field()
 	->id( $control_id_prefix . 'content' )
 	->type( 'editor' )
 	->defaultValue( __( 'Content for widget HTML 2', 'page-builder-framework' ) )
-	->transport( 'postMessage' )
+	->partialRefresh( [
+		'footerbuilder_desktop_html_2_content' => $partial_refresh_args,
+	] )
 	->properties( array(
 		'tinymce' => array(
 			'toolbar1' => 'formatselect,styleselect,numlist,bullist,removeformat,bold,italic,underline,strikethrough,alignleft,aligncenter,alignright,link,unlink,forecolor,backcolor',

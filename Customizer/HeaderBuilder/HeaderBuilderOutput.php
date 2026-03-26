@@ -833,6 +833,9 @@ class HeaderBuilderOutput {
 	private function render_html_widget( $setting_group ) {
 
 		$content = wpbf_customize_str_value( $setting_group . '_content', '' );
+
+		// Content should be parsed for template tags and shortcodes.
+		$content = do_shortcode( $content );
 		?>
 
 		<div class="wpbf-html-widget">
