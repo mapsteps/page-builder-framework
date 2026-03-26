@@ -36,7 +36,7 @@ export default function eddSetup() {
 	listenToCustomizerValueChange<string | number>(
 		"button_border_radius",
 		function (settingId, value) {
-			writeCSS(settingId, {
+			writeCSS(settingId + "_edd", {
 				selector: ".edd-submit",
 				props: { "border-radius": maybeAppendSuffix(value) },
 			});

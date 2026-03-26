@@ -15,7 +15,7 @@ export default function woocommerceSetup() {
 	listenToCustomizerValueChange<string | number>(
 		"button_border_radius",
 		function (settingId, value) {
-			writeCSS(settingId, {
+			writeCSS(settingId + "_woo", {
 				selector: ".woocommerce a.button, .woocommerce button.button",
 				props: { "border-radius": maybeAppendSuffix(value) },
 			});
