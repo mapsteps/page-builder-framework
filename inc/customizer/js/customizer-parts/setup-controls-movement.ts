@@ -1,7 +1,11 @@
 import { moveCustomizerControls } from "../../../../assets/js/utils/customizer-util";
 
 export function setupControlsMovement() {
-	// Header builder controls movement.
+	setupHeaderBuilderControlsMovement();
+	setupFooterBuilderControlsMovement();
+}
+
+function setupHeaderBuilderControlsMovement() {
 	moveCustomizerControls({
 		dependency: {
 			settingId: "wpbf_enable_header_builder",
@@ -232,8 +236,9 @@ export function setupControlsMovement() {
 			},
 		],
 	});
+}
 
-	// Footer builder controls movement.
+function setupFooterBuilderControlsMovement() {
 	moveCustomizerControls({
 		dependency: {
 			settingId: "wpbf_enable_footer_builder",
