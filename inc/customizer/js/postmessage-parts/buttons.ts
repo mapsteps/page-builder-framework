@@ -13,7 +13,7 @@ export default function buttonsSetup() {
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector:
-					'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+					'.wpbf-button, input[type="submit"]',
 				props: { "background-color": toStringColor(value) },
 			});
 		},
@@ -25,7 +25,7 @@ export default function buttonsSetup() {
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector:
-					'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
+					'.wpbf-button:hover, input[type="submit"]:hover',
 				props: { "background-color": toStringColor(value) },
 			});
 		},
@@ -37,7 +37,7 @@ export default function buttonsSetup() {
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector:
-					'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+					'.wpbf-button, input[type="submit"]',
 				props: { color: toStringColor(value) },
 			});
 		},
@@ -49,7 +49,7 @@ export default function buttonsSetup() {
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector:
-					'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
+					'.wpbf-button:hover, input[type="submit"]:hover',
 				props: { color: toStringColor(value) },
 			});
 		},
@@ -192,7 +192,7 @@ export default function buttonsSetup() {
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector:
-					'.wpbf-button:not(.wpbf-button-primary), input[type="submit"]',
+					'.wpbf-button, input[type="submit"]',
 				props: { "border-color": toStringColor(value) },
 			});
 		},
@@ -204,7 +204,7 @@ export default function buttonsSetup() {
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector:
-					'.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover',
+					'.wpbf-button:hover, input[type="submit"]:hover',
 				props: { "border-color": toStringColor(value) },
 			});
 		},

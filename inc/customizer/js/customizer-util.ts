@@ -298,7 +298,7 @@ export function listenToBuilderMulticolorControl(props: {
 			const styleTag = getStyleTag(props.controlId);
 			const states = ["default", "hover", "active", "focus"];
 
-			value.bind((newValue) => {
+			const applyValue = (newValue: Record<string, string>) => {
 				if (!newValue) {
 					styleTag.innerHTML = "";
 					return;
@@ -323,6 +323,17 @@ export function listenToBuilderMulticolorControl(props: {
 				}
 
 				styleTag.innerHTML = css;
+			};
+
+			// Apply initial value when customizer opens
+			const initialValue = value.get();
+			if (initialValue !== undefined && initialValue !== null) {
+				applyValue(initialValue);
+			}
+
+			// Listen to value changes
+			value.bind((newValue) => {
+				applyValue(newValue);
 			});
 		},
 	);
