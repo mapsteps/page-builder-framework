@@ -26,7 +26,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 10,
 						},
-						maintainActiveState: true,
+						maintainActiveState: false,
 					},
 					{
 						id: "pre_header_height",
@@ -38,7 +38,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 15,
 						},
-						maintainActiveState: true,
+						maintainActiveState: false,
 					},
 					{
 						id: "pre_header_bg_color",
@@ -46,7 +46,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 200,
 						},
-						maintainActiveState: true,
+						maintainActiveState: false,
 					},
 					{
 						id: "pre_header_font_color",
@@ -54,7 +54,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 205,
 						},
-						maintainActiveState: true,
+						maintainActiveState: false,
 					},
 					{
 						id: "pre_header_accent_colors",
@@ -62,7 +62,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 210,
 						},
-						maintainActiveState: true,
+						maintainActiveState: false,
 					},
 					{
 						id: "pre_header_font_size",
@@ -70,7 +70,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 220,
 						},
-						maintainActiveState: true,
+						maintainActiveState: false,
 					},
 				],
 			},
@@ -133,7 +133,6 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 210,
 						},
-						maintainActiveState: true,
 					},
 					{
 						id: "mobile_menu_hamburger_border_radius",
@@ -145,7 +144,6 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: "Border Radius",
 						},
-						maintainActiveState: true,
 					},
 					// Icon related controls after (Icon Settings group)
 					{
