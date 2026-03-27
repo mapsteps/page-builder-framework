@@ -41,6 +41,7 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 				// Only apply when header builder is enabled.
 				// This prevents inserting header builder SVG into non-header-builder mobile menu toggle.
 				if (!headerBuilderEnabled()) {
+					removeStyleTag(settingId);
 					return;
 				}
 
@@ -112,6 +113,7 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 				// Only apply when header builder is enabled.
 				// This prevents modifying non-header-builder mobile menu toggle.
 				if (!headerBuilderEnabled()) {
+					removeStyleTag(settingId);
 					return;
 				}
 
@@ -232,6 +234,7 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 			function (settingId, value) {
 				// Only apply when header builder is enabled.
 				if (!headerBuilderEnabled()) {
+					removeStyleTag(settingId);
 					return;
 				}
 
@@ -267,6 +270,7 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 			function (settingId, value) {
 				// Only apply when header builder is enabled.
 				if (!headerBuilderEnabled()) {
+					removeStyleTag(settingId);
 					return;
 				}
 
@@ -321,6 +325,7 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 			function (settingId, value) {
 				// Only apply when header builder is enabled.
 				if (!headerBuilderEnabled()) {
+					removeStyleTag(settingId);
 					return;
 				}
 
@@ -368,6 +373,11 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 			listenToCustomizerValueChange<string | number>(
 				"wpbf_header_builder_desktop_menu_trigger_border_radius",
 				function (settingId, value) {
+
+					if (!headerBuilderEnabled()) {
+						removeStyleTag(settingId);
+						return;
+					}
 					// Only apply border radius if style is solid or outline
 					const buttonStyle = customizer?.(
 						"wpbf_header_builder_desktop_menu_trigger_style",
@@ -397,6 +407,11 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 			listenToCustomizerValueChange<WpbfColorControlValue>(
 				"wpbf_header_builder_desktop_menu_trigger_bg_color",
 				function (settingId, value) {
+
+					if (!headerBuilderEnabled()) {
+						removeStyleTag(settingId);
+						return;
+					}
 					const buttonStyle = customizer?.(
 						"wpbf_header_builder_desktop_menu_trigger_style",
 					)?.get();
@@ -467,6 +482,10 @@ export default function menuTriggersSetup(customizer?: WpbfCustomize) {
 				// Header builder is disabled - remove the desktop menu trigger style tags.
 				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_icon_size");
 				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_icon_color");
+				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_bg_color");
+				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_border_radius");
+				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_padding");
+				removeStyleTag("wpbf_header_builder_desktop_menu_trigger_margin");
 			}
 		},
 	);

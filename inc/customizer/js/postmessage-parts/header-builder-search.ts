@@ -4,6 +4,7 @@ import {
 	toStringColor,
 	maybeAppendSuffix,
 	mediaQueries,
+	removeStyleTag,
 } from "../customizer-util";
 import { headerBuilderEnabled } from "../../../../assets/js/utils/customizer-util";
 import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
@@ -15,7 +16,10 @@ export default function headerBuilderSearchSetup() {
 	listenToCustomizerValueChange<WpbfMulticolorControlValue>(
 		`wpbf_header_builder_mobile_search_icon_color`,
 		function (settingId, value) {
-			if (!headerBuilderEnabled()) return;
+			if (!headerBuilderEnabled()) {
+				removeStyleTag(settingId);
+				return;
+			}
 
 			const defaultColor = toStringColor(value?.default ?? "");
 			const hoverColor = toStringColor(value?.hover ?? "");
@@ -41,7 +45,10 @@ export default function headerBuilderSearchSetup() {
 	listenToCustomizerValueChange<string | DevicesValue>(
 		"wpbf_header_builder_mobile_search_icon_size",
 		function (settingId, value) {
-			if (!headerBuilderEnabled()) return;
+			if (!headerBuilderEnabled()) {
+				removeStyleTag(settingId);
+				return;
+			}
 
 			const obj = parseJsonOrUndefined<DevicesValue>(value);
 
@@ -63,7 +70,10 @@ export default function headerBuilderSearchSetup() {
 	listenToCustomizerValueChange<Record<string, string>>(
 		`wpbf_header_builder_desktop_search_margin`,
 		function (settingId, value) {
-			if (!headerBuilderEnabled()) return;
+			if (!headerBuilderEnabled()) {
+				removeStyleTag(settingId);
+				return;
+			}
 
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-item-search",
@@ -81,7 +91,10 @@ export default function headerBuilderSearchSetup() {
 	listenToCustomizerValueChange<Record<string, string>>(
 		`wpbf_header_builder_mobile_search_margin`,
 		function (settingId, value) {
-			if (!headerBuilderEnabled()) return;
+			if (!headerBuilderEnabled()) {
+				removeStyleTag(settingId);
+				return;
+			}
 
 			writeCSS(settingId, {
 				selector: ".wpbf-menu-item-search",

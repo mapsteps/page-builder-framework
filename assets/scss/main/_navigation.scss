@@ -119,9 +119,10 @@
 	right: -20px !important;
 }
 
-// When search is in left-aligned zone or start-aligned column, expand to the right instead of left.
+// When search is in left-aligned zone, start-aligned column, or left menu, expand to the right instead of left.
 .wpbf-header-zone-left .wpbf-menu-item-search .wpbf-menu-search,
-.wpbf-content-start .wpbf-menu-item-search .wpbf-menu-search {
+.wpbf-content-start .wpbf-menu-item-search .wpbf-menu-search,
+.wpbf-menu-left .wpbf-menu-item-search .wpbf-menu-search {
 	right: auto;
 	left: 0;
 }
@@ -328,10 +329,14 @@
 	text-align: right;
 	line-height: 1;
 	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
 
 .wpbf-menu-left .wpbf-menu-toggle-container {
 	text-align: left;
+	justify-content: flex-start;
+	gap: 15px;
 }
 
 // Toggle & nav menu items
