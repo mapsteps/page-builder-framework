@@ -12,13 +12,9 @@ export type ControlToMove = {
 	prio?: { from: number | undefined; to: number };
 
 	/**
-	 * Optional flag that controls active‑state handling when moving controls.
-	 *
-	 * If set to `true`, the control will keep its current active state.
-	 * If set to `false`, the control will be forced to be active/visible when moved.
-	 * If omitted, the script won't handle the active state at all (allowing other script to handle).
+	 * Whether to directly set the control's visibility as active when it's moved forward.
 	 */
-	maintainActiveState?: boolean;
+	activate?: boolean;
 };
 
 function toBoolOrString(value: any) {
@@ -134,28 +130,15 @@ export function moveCustomizerControls<SV>(props: {
 						);
 				}
 
-				if (moveForward) {
-					// Only handle active state if the flag is explicitly set.
-					if (typeof controlObj.maintainActiveState !== "undefined") {
-						// If the control should not maintain its active state, activate it.
-						if (!controlObj.maintainActiveState) {
-							control.onChangeActive(true, {});
-						} else {
-							// Otherwise, re-evaluate its dependencies.
-							window.wp.hooks.applyFilters(
-								"wpbf.controlDependencies.reevaluate",
-								false,
-								controlObj.id,
-							);
-						}
-					}
-				} else {
-					// When moving backward, always re-evaluate dependencies.
-					window.wp.hooks.applyFilters(
-						"wpbf.controlDependencies.reevaluate",
-						false,
-						controlObj.id,
-					);
+				// Always re-evaluate activeCallback's dependencies condition.
+				window.wp.hooks.applyFilters(
+					"wpbf.controlDependencies.reevaluate",
+					false,
+					controlObj.id,
+				);
+
+				if (moveForward && controlObj.activate) {
+					control.onChangeActive(true, {});
 				}
 
 				const sectionId = moveForward ? sectionObj.to : sectionObj.from;

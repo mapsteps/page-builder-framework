@@ -1,3 +1,4 @@
+import { WpbfCustomizeSetting } from "../../../../Customizer/Controls/Base/src/base-interface";
 import { WpbfCheckboxControl } from "../../../../Customizer/Controls/Checkbox/src/checkbox-interface";
 
 /**
@@ -14,11 +15,15 @@ import { WpbfCheckboxControl } from "../../../../Customizer/Controls/Checkbox/sr
  * @export
  */
 export function setupConditionalControls() {
+	const headerBuilderSettingId = "wpbf_enable_header_builder";
+
 	init();
 
 	function init() {
-		listenToHeaderBuilderToggleValue();
-		listenToFooterBuilderToggleValue();
+		listenToHeaderBuilderToggle();
+		listenToFooterBuilderToggle();
+		listenToMobileMenuTriggerIcon();
+
 		setupMobileMenuTriggerVisibility();
 		setupDesktopMenuOverlayVisibility();
 		setupDesktopMenuOverlayColorVisibility();
@@ -30,7 +35,7 @@ export function setupConditionalControls() {
 	 * Listen to the header builder toggle control's value change.
 
 	 */
-	function listenToHeaderBuilderToggleValue() {
+	function listenToHeaderBuilderToggle() {
 		wp.customize?.control(
 			"wpbf_enable_header_builder",
 			(control: WpbfCheckboxControl | undefined) => {
@@ -47,6 +52,7 @@ export function setupConditionalControls() {
 					 */
 					if (enabled) {
 						setupDesktopMenuPaddingVisibility(control, enabled);
+						listenToMobileMenuTriggerIcon(true);
 					}
 				});
 			},
@@ -64,7 +70,7 @@ export function setupConditionalControls() {
 	 * Listen to the footer builder toggle control's value change.
 	 * When footer builder is enabled, hide the old footer settings.
 	 */
-	function listenToFooterBuilderToggleValue() {
+	function listenToFooterBuilderToggle() {
 		const footerBuilderSettingId = "wpbf_enable_footer_builder";
 
 		// Controls to hide when footer builder is enabled.
@@ -87,7 +93,7 @@ export function setupConditionalControls() {
 		function applyFooterControlsVisibility(enabled: boolean) {
 			footerControlsToToggle.forEach((controlId) => {
 				try {
-					window.wp.customize?.control(controlId, function (control) {
+					wp.customize?.control(controlId, function (control) {
 						if (!control || !control.container) return;
 						control.container.toggle(!enabled);
 					});
@@ -98,15 +104,72 @@ export function setupConditionalControls() {
 		}
 
 		// Bind to changes
-		window.wp.customize?.(footerBuilderSettingId, function (setting) {
+		wp.customize?.(footerBuilderSettingId, function (setting) {
 			setting.bind(function (val: boolean) {
 				applyFooterControlsVisibility(val);
 			});
 		});
 
 		// Initial apply
-		const initial = window.wp.customize?.(footerBuilderSettingId)?.get();
+		const initial = wp.customize?.(footerBuilderSettingId)?.get();
 		applyFooterControlsVisibility(!!initial);
+	}
+
+	function listenToMobileMenuTriggerIcon(avoidBinding?: boolean) {
+		const controlsToToggle = [
+			"mobile_menu_hamburger_color",
+			"mobile_menu_hamburger_size",
+		];
+
+		const settingId = "wpbf_header_builder_mobile_menu_trigger_icon";
+		const initialValue = wp.customize?.(settingId)?.get();
+
+		toggleControlsVisibility(
+			typeof initialValue === "string" ? initialValue : "variant-1",
+			controlsToToggle,
+		);
+
+		if (!avoidBinding) {
+			wp.customize?.(
+				settingId,
+				function (setting: WpbfCustomizeSetting<string | undefined>) {
+					setting.bind(function (val) {
+						toggleControlsVisibility(val || "variant-1", controlsToToggle);
+					});
+				},
+			);
+		}
+
+		function toggleControlsVisibility(
+			currentValue: string,
+			controlsToToggle: string[],
+		) {
+			const headerBuilderEnabled = wp
+				.customize?.(headerBuilderSettingId)
+				?.get();
+
+			/**
+			 * Only apply this JS visibility logic when header builder is enabled.
+			 * When disabled, let the visibility handled by activeCallback in control-dependencies.ts.
+			 */
+			if (!headerBuilderEnabled) {
+				return;
+			}
+
+			const shouldShow = currentValue !== "none";
+
+			for (const controlToToggle of controlsToToggle) {
+				try {
+					wp.customize?.control(controlToToggle, function (control) {
+						if (!control || !control.container) return;
+
+						control.container.toggle(!!shouldShow);
+					});
+				} catch (e) {
+					// ignore if control doesn't exist yet
+				}
+			}
+		}
 	}
 
 	/**
@@ -125,7 +188,7 @@ export function setupConditionalControls() {
 		function applyVisibility(buttonStyle: string) {
 			// Only apply this JS visibility logic when header builder is enabled.
 			// When disabled, let the PHP activeCallback handle visibility.
-			const isHeaderBuilderEnabled = window.wp
+			const isHeaderBuilderEnabled = wp
 				.customize?.(headerBuilderSettingId)
 				?.get();
 
@@ -137,7 +200,7 @@ export function setupConditionalControls() {
 
 			controlsToToggle.forEach((controlId) => {
 				try {
-					window.wp.customize?.control(controlId, function (control) {
+					wp.customize?.control(controlId, function (control) {
 						if (!control || !control.container) return;
 						control.container.toggle(!!shouldShow);
 					});
@@ -148,14 +211,14 @@ export function setupConditionalControls() {
 		}
 
 		// Bind to changes
-		window.wp.customize?.(styleSettingId, function (setting) {
+		wp.customize?.(styleSettingId, function (setting) {
 			setting.bind(function (val: string) {
 				applyVisibility(val);
 			});
 		});
 
 		// Initial apply (call even when initial is empty string to hide controls for 'simple')
-		const initial = window.wp.customize?.(styleSettingId)?.get();
+		const initial = wp.customize?.(styleSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "");
 	}
 
@@ -175,7 +238,7 @@ export function setupConditionalControls() {
 				revealType === "off-canvas-right";
 
 			try {
-				window.wp.customize?.control(controlIdToToggle, function (control) {
+				wp.customize?.control(controlIdToToggle, function (control) {
 					if (!control || !control.container) return;
 					control.container.toggle(!!shouldShow);
 				});
@@ -185,14 +248,14 @@ export function setupConditionalControls() {
 		}
 
 		// Bind to changes
-		window.wp.customize?.(revealAsSettingId, function (setting) {
+		wp.customize?.(revealAsSettingId, function (setting) {
 			setting.bind(function (val: string) {
 				applyVisibility(val);
 			});
 		});
 
 		// Initial apply
-		const initial = window.wp.customize?.(revealAsSettingId)?.get();
+		const initial = wp.customize?.(revealAsSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "dropdown");
 	}
 
@@ -207,10 +270,8 @@ export function setupConditionalControls() {
 		const controlIdToToggle = "menu_overlay_color";
 
 		function applyVisibility() {
-			const revealType = window.wp.customize?.(revealAsSettingId)?.get();
-			const overlayEnabled = window.wp
-				.customize?.(overlayToggleSettingId)
-				?.get();
+			const revealType = wp.customize?.(revealAsSettingId)?.get();
+			const overlayEnabled = wp.customize?.(overlayToggleSettingId)?.get();
 
 			const isOffCanvas =
 				revealType === "off-canvas" ||
@@ -219,7 +280,7 @@ export function setupConditionalControls() {
 			const shouldShow = !!isOffCanvas && !!overlayEnabled;
 
 			try {
-				window.wp.customize?.control(controlIdToToggle, function (control) {
+				wp.customize?.control(controlIdToToggle, function (control) {
 					if (!control || !control.container) return;
 					control.container.toggle(!!shouldShow);
 				});
@@ -229,14 +290,14 @@ export function setupConditionalControls() {
 		}
 
 		// Bind to reveal type changes
-		window.wp.customize?.(revealAsSettingId, function (setting) {
+		wp.customize?.(revealAsSettingId, function (setting) {
 			setting.bind(function () {
 				applyVisibility();
 			});
 		});
 
 		// Bind to overlay toggle changes
-		window.wp.customize?.(overlayToggleSettingId, function (setting) {
+		wp.customize?.(overlayToggleSettingId, function (setting) {
 			setting.bind(function () {
 				applyVisibility();
 			});
@@ -258,7 +319,7 @@ export function setupConditionalControls() {
 				revealType === "off-canvas" || revealType === "off-canvas-left";
 
 			try {
-				window.wp.customize?.control(controlIdToToggle, function (control) {
+				wp.customize?.control(controlIdToToggle, function (control) {
 					if (!control || !control.container) return;
 					control.container.toggle(!!shouldShow);
 				});
@@ -268,14 +329,14 @@ export function setupConditionalControls() {
 		}
 
 		// Bind to changes
-		window.wp.customize?.(revealAsSettingId, function (setting) {
+		wp.customize?.(revealAsSettingId, function (setting) {
 			setting.bind(function (val: string) {
 				applyVisibility(val);
 			});
 		});
 
 		// Initial apply
-		const initial = window.wp.customize?.(revealAsSettingId)?.get();
+		const initial = wp.customize?.(revealAsSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "off-canvas");
 	}
 
@@ -291,7 +352,7 @@ export function setupConditionalControls() {
 				revealType === "off-canvas" || revealType === "off-canvas-left";
 
 			try {
-				window.wp.customize?.control(controlIdToToggle, function (control) {
+				wp.customize?.control(controlIdToToggle, function (control) {
 					if (!control || !control.container) return;
 					control.container.toggle(!!shouldShow);
 				});
@@ -301,14 +362,14 @@ export function setupConditionalControls() {
 		}
 
 		// Bind to changes
-		window.wp.customize?.(revealAsSettingId, function (setting) {
+		wp.customize?.(revealAsSettingId, function (setting) {
 			setting.bind(function (val: string) {
 				applyVisibility(val);
 			});
 		});
 
 		// Initial apply
-		const initial = window.wp.customize?.(revealAsSettingId)?.get();
+		const initial = wp.customize?.(revealAsSettingId)?.get();
 		applyVisibility(typeof initial !== "undefined" ? initial : "off-canvas");
 	}
 }

@@ -26,7 +26,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 10,
 						},
-						maintainActiveState: false,
+						activate: true,
 					},
 					{
 						id: "pre_header_height",
@@ -38,7 +38,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 15,
 						},
-						maintainActiveState: false,
+						activate: true,
 					},
 					{
 						id: "pre_header_bg_color",
@@ -46,7 +46,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 200,
 						},
-						maintainActiveState: false,
+						activate: true,
 					},
 					{
 						id: "pre_header_font_color",
@@ -54,7 +54,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 205,
 						},
-						maintainActiveState: false,
+						activate: true,
 					},
 					{
 						id: "pre_header_accent_colors",
@@ -62,7 +62,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 210,
 						},
-						maintainActiveState: false,
+						activate: true,
 					},
 					{
 						id: "pre_header_font_size",
@@ -70,7 +70,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 220,
 						},
-						maintainActiveState: false,
+						activate: true,
 					},
 				],
 			},
@@ -88,6 +88,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 10,
 						},
+						activate: true,
 					},
 					{
 						id: "menu_height",
@@ -99,6 +100,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 15,
 						},
+						activate: true,
 					},
 				],
 			},
@@ -112,6 +114,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 10,
 						},
+						activate: true,
 					},
 					{
 						id: "menu_font_size",
@@ -119,6 +122,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 12,
 						},
+						activate: true,
 					},
 				],
 			},
@@ -133,6 +137,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 210,
 						},
+						activate: true,
 					},
 					{
 						id: "mobile_menu_hamburger_border_radius",
@@ -144,6 +149,7 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: "Border Radius",
 						},
+						activate: true,
 					},
 					// Icon related controls after (Icon Settings group)
 					{
@@ -152,7 +158,6 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 300,
 						},
-						maintainActiveState: true,
 					},
 					{
 						id: "mobile_menu_hamburger_size",
@@ -160,7 +165,6 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 305,
 						},
-						maintainActiveState: true,
 					},
 				],
 			},
@@ -257,7 +261,7 @@ function setupFooterBuilderControlsMovement() {
 							from: undefined,
 							to: 10,
 						},
-						maintainActiveState: true,
+						activate: true,
 					},
 					{
 						id: "footer_height",
@@ -269,7 +273,7 @@ function setupFooterBuilderControlsMovement() {
 							from: undefined,
 							to: 15,
 						},
-						maintainActiveState: true,
+						activate: true,
 					},
 					{
 						id: "footer_bg_color",
@@ -277,7 +281,7 @@ function setupFooterBuilderControlsMovement() {
 							from: undefined,
 							to: 200,
 						},
-						maintainActiveState: true,
+						activate: true,
 					},
 					{
 						id: "footer_font_color",
@@ -285,7 +289,7 @@ function setupFooterBuilderControlsMovement() {
 							from: undefined,
 							to: 205,
 						},
-						maintainActiveState: true,
+						activate: true,
 					},
 					{
 						id: "footer_accent_color",
@@ -293,7 +297,7 @@ function setupFooterBuilderControlsMovement() {
 							from: undefined,
 							to: 210,
 						},
-						maintainActiveState: true,
+						activate: true,
 					},
 					{
 						id: "footer_accent_color_alt",
@@ -301,7 +305,7 @@ function setupFooterBuilderControlsMovement() {
 							from: undefined,
 							to: 215,
 						},
-						maintainActiveState: true,
+						activate: true,
 					},
 					{
 						id: "footer_font_size",
@@ -309,7 +313,7 @@ function setupFooterBuilderControlsMovement() {
 							from: undefined,
 							to: 220,
 						},
-						maintainActiveState: true,
+						activate: true,
 					},
 				],
 			},
