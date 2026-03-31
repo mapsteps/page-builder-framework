@@ -2,6 +2,7 @@ import {
 	listenToCustomizerValueChange,
 	emptyNotZero,
 	writeCSS,
+	removeStyleTag,
 	writeResponsiveCSSMultiSelector,
 	maybeAppendSuffix,
 	toStringColor,
@@ -90,9 +91,15 @@ export default function layoutSetup($: JQueryStatic) {
 	);
 
 	// Boxed background color.
+	// Only apply .wpbf-page background when boxed layout is enabled.
 	listenToCustomizerValueChange<WpbfColorControlValue>(
 		"page_boxed_background",
 		function (settingId, value) {
+			const isBoxed = window.wp.customize?.("page_boxed")?.get();
+			if (!isBoxed) {
+				removeStyleTag(settingId);
+				return;
+			}
 			writeCSS(settingId, {
 				selector: ".wpbf-page",
 				props: { "background-color": toStringColor(value) },
