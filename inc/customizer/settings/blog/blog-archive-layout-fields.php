@@ -187,6 +187,7 @@ foreach ( $archives as $archive ) {
 			'save_as_json'   => true,
 			'dont_save_unit' => true,
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Space between.
@@ -201,6 +202,7 @@ foreach ( $archives as $archive ) {
 			'step' => 1,
 		] )
 		->priority( 30 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	/* All Layouts */
@@ -217,6 +219,7 @@ foreach ( $archives as $archive ) {
 			'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
 		] )
 		->priority( 40 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Background color.
@@ -236,6 +239,7 @@ foreach ( $archives as $archive ) {
 				'value'    => 'boxed',
 			),
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Accent color.
@@ -247,6 +251,7 @@ foreach ( $archives as $archive ) {
 		->properties( [
 			'mode' => 'alpha',
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Hover.
@@ -258,6 +263,7 @@ foreach ( $archives as $archive ) {
 		->properties( [
 			'mode' => 'alpha',
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Title size.
@@ -271,6 +277,7 @@ foreach ( $archives as $archive ) {
 			'step' => 1,
 		] )
 		->priority( 80 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Font size.
@@ -284,6 +291,7 @@ foreach ( $archives as $archive ) {
 			'step' => 1,
 		] )
 		->priority( 90 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	/* Beside */

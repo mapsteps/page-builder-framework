@@ -5,6 +5,7 @@ import {
 	writeResponsiveCSSMultiSelector,
 	maybeAppendSuffix,
 	toStringColor,
+	listenToBuilderResponsiveControl,
 } from "../customizer-util";
 import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
 import { MarginPaddingValue } from "../../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
@@ -164,6 +165,112 @@ export default function layoutSetup($: JQueryStatic) {
 			writeCSS(settingId, {
 				selector: ".scrolltop",
 				props: { borderRadius: maybeAppendSuffix(value) },
+			});
+		},
+	);
+
+	// Archive layouts.
+	// Boxed Padding
+	listenToBuilderResponsiveControl({
+		controlId: "archive_boxed_padding",
+		cssSelector: ".wpbf-archive-content .wpbf-post-style-boxed",
+		cssProps: ["padding-top", "padding-right", "padding-bottom", "padding-left"],
+		useValueSuffix: true,
+	});
+
+	// Background Color
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"archive_post_background_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-archive-content .wpbf-post-style-boxed",
+				props: { "background-color": toStringColor(value) },
+			});
+		},
+	);
+
+	// Space Between
+	listenToCustomizerValueChange<string | number>(
+		"archive_post_space_between",
+		function (settingId, value) {
+			let marginValue = maybeAppendSuffix(value);
+			marginValue = marginValue === "20px" ? undefined : marginValue;
+
+			writeCSS(settingId, {
+				selector: ".wpbf-archive-content .wpbf-post-style-plain",
+				props: {
+					"margin-bottom": marginValue,
+					"padding-bottom": marginValue,
+				},
+			});
+
+			writeCSS(settingId + "_boxed", {
+				selector: ".wpbf-archive-content .wpbf-post-style-boxed",
+				props: {
+					"margin-bottom": marginValue,
+				},
+			});
+
+			writeCSS(settingId + "_grid", {
+				selector: ".wpbf-archive-content .wpbf-post-grid .wpbf-article-wrapper",
+				props: {
+					"margin-bottom": marginValue,
+				},
+			});
+		},
+	);
+
+	// Content Alignment
+	listenToCustomizerValueChange<string | number>(
+		"archive_post_content_alignment",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-archive-content .wpbf-post",
+				props: { "text-align": value },
+			});
+		},
+	);
+
+	// Accent Color
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"archive_post_accent_color",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-archive-content .wpbf-post a:not(.wpbf-read-more)",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
+
+	// Accent Color Alt
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"archive_post_accent_color_alt",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-archive-content .wpbf-post a:not(.wpbf-read-more):hover",
+				props: { color: toStringColor(value) },
+			});
+		},
+	);
+
+	// Title Size
+	listenToCustomizerValueChange<string | number>(
+		"archive_post_title_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-archive-content .wpbf-post .entry-title",
+				props: { "font-size": maybeAppendSuffix(value) },
+			});
+		},
+	);
+
+	// Font Size
+	listenToCustomizerValueChange<string | number>(
+		"archive_post_font_size",
+		function (settingId, value) {
+			writeCSS(settingId, {
+				selector: ".wpbf-archive-content .wpbf-post .entry-summary",
+				props: { "font-size": maybeAppendSuffix(value) },
 			});
 		},
 	);

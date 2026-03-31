@@ -17,35 +17,35 @@ foreach ( $archives as $archive ) {
 	// Custom width.
 	$custom_width = wpbf_customize_str_value( $archive . '_custom_width' );
 
-	if ( ! $custom_width ) {
-		continue;
-	}
+	if ( $custom_width ) {
 
-	if ( 'archive' === $archive ) {
-		// All archives.
+		if ( 'archive' === $archive ) {
+			// All archives.
 
-		wpbf_write_css( array(
-			'selector' => '.blog #inner-content, .search #inner-content, .' . $archive . ' #inner-content',
-			'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $custom_width ) ),
-		) );
+			wpbf_write_css( array(
+				'selector' => '.blog #inner-content, .search #inner-content, .' . $archive . ' #inner-content',
+				'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $custom_width ) ),
+			) );
 
-	} elseif ( strpos( $archive, '-' ) ) {
-		// Custom post type archives & taxonomies.
+		} elseif ( strpos( $archive, '-' ) ) {
+			// Custom post type archives & taxonomies.
 
-		$cpt = substr( $archive, 0, strpos( $archive, '-' ) );
+			$cpt = substr( $archive, 0, strpos( $archive, '-' ) );
 
-		wpbf_write_css( array(
-			'selector' => '.tax-' . $cpt . '_category #inner-content, .tax-' . $cpt . '_tag #inner-content, .post-type-archive-' . $cpt . ' #inner-content',
-			'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $custom_width ) ),
-		) );
+			wpbf_write_css( array(
+				'selector' => '.tax-' . $cpt . '_category #inner-content, .tax-' . $cpt . '_tag #inner-content, .post-type-archive-' . $cpt . ' #inner-content',
+				'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $custom_width ) ),
+			) );
 
-	} else {
-		// Other archives.
+		} else {
+			// Other archives.
 
-		wpbf_write_css( array(
-			'selector' => '.' . $archive . ' #inner-content',
-			'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $custom_width ) ),
-		) );
+			wpbf_write_css( array(
+				'selector' => '.' . $archive . ' #inner-content',
+				'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $custom_width ) ),
+			) );
+
+		}
 
 	}
 
