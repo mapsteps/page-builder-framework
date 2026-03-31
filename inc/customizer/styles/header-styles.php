@@ -668,7 +668,7 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 		$hamburger_props = array();
 
 		if ( $mobile_menu_hamburger_color ) {
-			$hamburger_props['color'] = $mobile_menu_hamburger_color;
+			$hamburger_props['color'] = $mobile_menu_hamburger_color . ' !important';
 		}
 
 		if ( $mobile_menu_hamburger_size ) {
@@ -692,7 +692,7 @@ if ( in_array( $mobile_menu_options, array( 'menu-mobile-hamburger', 'menu-mobil
 			'props'    => array(
 				'background-color' => $mobile_menu_hamburger_bg_color,
 				'font-size'        => $mobile_menu_hamburger_size ? wpbf_maybe_append_suffix( $mobile_menu_hamburger_size ) : null,
-				'color'            => '#ffffff !important',
+				'color'            => '#ffffff',
 				'padding'          => '10px',
 				'line-height'      => '1',
 				'border-radius'    => $mobile_menu_hamburger_border_radius ? wpbf_maybe_append_suffix( $mobile_menu_hamburger_border_radius ) : null,
