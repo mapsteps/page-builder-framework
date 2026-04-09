@@ -64,7 +64,7 @@ export default function logoSetup() {
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector: ".wpbf-logo .site-title a, .wpbf-mobile-logo .site-title a",
-				props: { color: toStringColor(value) },
+				props: { color: toStringColor(value) + ' !important' },
 			});
 		},
 	);
@@ -76,7 +76,7 @@ export default function logoSetup() {
 			writeCSS(settingId, {
 				selector:
 					".wpbf-logo .site-title a:hover, .wpbf-mobile-logo .site-title a:hover",
-				props: { color: toStringColor(value) },
+				props: { color: toStringColor(value) + ' !important' },
 			});
 		},
 	);

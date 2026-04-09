@@ -80,7 +80,7 @@ if ( ! $custom_logo_id ) {
 
 		wpbf_write_css( array(
 			'selector' => '.wpbf-logo .site-title a, .wpbf-mobile-logo .site-title a',
-			'props'    => array( 'color' => $menu_logo_color ),
+			'props'    => array( 'color' => $menu_logo_color . ' !important' ),
 		) );
 
 	}
@@ -91,7 +91,7 @@ if ( ! $custom_logo_id ) {
 
 		wpbf_write_css( array(
 			'selector' => '.wpbf-logo .site-title a:hover, .wpbf-mobile-logo .site-title a:hover',
-			'props'    => array( 'color' => $menu_logo_color_alt ),
+			'props'    => array( 'color' => $menu_logo_color_alt . ' !important' ),
 		) );
 
 	}
