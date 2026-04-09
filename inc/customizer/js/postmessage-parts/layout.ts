@@ -107,6 +107,31 @@ export default function layoutSetup($: JQueryStatic) {
 		},
 	);
 
+	// Boxed box shadow color.
+	// Only apply .wpbf-page box shadow when boxed layout is enabled.
+	listenToCustomizerValueChange<WpbfColorControlValue>(
+		"page_boxed_box_shadow_color",
+		function (settingId, value) {
+			const isBoxed = window.wp.customize?.("page_boxed")?.get();
+			if (!isBoxed) {
+				removeStyleTag(settingId);
+				return;
+			}
+
+			const page_boxed_box_shadow_horizontal = window.wp.customize?.("page_boxed_box_shadow_horizontal")?.get();
+			const page_boxed_box_shadow_vertical = window.wp.customize?.("page_boxed_box_shadow_vertical")?.get();
+			const page_boxed_box_shadow_blur = window.wp.customize?.("page_boxed_box_shadow_blur")?.get();
+			const page_boxed_box_shadow_spread = window.wp.customize?.("page_boxed_box_shadow_spread")?.get();
+
+			writeCSS(settingId, {
+				selector: "#container",
+				props: {
+					"box-shadow": `${page_boxed_box_shadow_horizontal}px ${page_boxed_box_shadow_vertical}px ${page_boxed_box_shadow_blur}px ${page_boxed_box_shadow_spread}px ${toStringColor(value)}`,
+				},
+			});
+		},
+	);
+
 	// ScrollTop position.
 	listenToCustomizerValueChange<string>(
 		"scrolltop_position",
