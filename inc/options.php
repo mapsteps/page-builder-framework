@@ -228,7 +228,7 @@ function wpbf_save_metadata( $post_id, $post, $update ) {
 		}
 
 		if ( isset( $_POST['wpbf_options']['custom_width_value'] ) ) {
-			$checked['custom_width_value'] = $_POST['wpbf_options']['custom_width_value'];
+			$checked['custom_width_value'] = sanitize_text_field( $_POST['wpbf_options']['custom_width_value'] );
 		}
 
 		if ( in_array( 'layout-global', $_POST['wpbf_options'], true ) ) {
