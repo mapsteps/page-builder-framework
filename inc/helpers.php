@@ -592,7 +592,7 @@ function wpbf_inner_content( $echo = true ) {
 		// Check if template is set to custom width.
 		$custom_width       = in_array( 'custom-width', $options, true );
 		$custom_width_value = isset( $options['custom_width_value'] ) ? $options['custom_width_value'] : '';
-		$custom_width       = $custom_width && $custom_width_value ? ' style="max-width: ' . $custom_width_value . '"' : '';
+		$custom_width       = $custom_width && $custom_width_value ? ' style="max-width: ' . esc_attr( $custom_width_value ) . '"' : '';
 
 		// Construct inner content wrapper.
 		$inner_content = $fullwidth ? '' : apply_filters( 'wpbf_inner_content', '<div id="inner-content" class="wpbf-container wpbf-container-center wpbf-padding-medium"' . $custom_width . '>' );
