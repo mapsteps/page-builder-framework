@@ -1,11 +1,11 @@
 init();
 
 function init() {
-	const layoutOption = document.querySelector(".wpbf-layout-option");
+	const layoutOptions = document.querySelectorAll(".wpbf-layout-option");
 
-	if (layoutOption) {
+	layoutOptions.forEach(function (layoutOption) {
 		layoutOption.addEventListener("change", onLayoutTypeChange);
-	}
+	});
 }
 
 function onLayoutTypeChange() {
