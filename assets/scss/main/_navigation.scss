@@ -636,6 +636,11 @@
 		flex: 1 1 0;
 		min-width: 0;
 
+		// Empty zones collapse to give more space to zones with content.
+		&.wpbf-zone-empty {
+			flex: 0 0 0;
+		}
+
 		// Columns within grow zones should fill available space.
 		.wpbf-header-column {
 			flex: 1 1 0;
@@ -644,6 +649,17 @@
 			&.wpbf-column-empty {
 				// Empty columns collapse to zero within zones.
 				flex: 0 0 0;
+			}
+
+			// When a column has a menu, it should expand to fill available space.
+			// Non-menu columns in the same zone will shrink to their content size.
+			&.wpbf-col-has-menu {
+				flex: 1 1 auto;
+			}
+
+			// Non-menu columns should shrink-to-fit when a menu column exists in the same zone.
+			&:not(.wpbf-col-has-menu):not(.wpbf-column-empty) {
+				flex: 0 0 auto;
 			}
 		}
 	}
@@ -669,6 +685,11 @@
 	// Default: auto-width based on content, don't grow or shrink
 	flex: 0 0 auto;
 	min-width: 0;
+
+	// Prevent widgets from wrapping within the same column.
+	// This keeps Logo + Menu on the same line when placed in the same column.
+	// Note: .wpbf-flex has flex-wrap: wrap by default, we override it here.
+	flex-wrap: nowrap;
 
 	&.wpbf-column-grow {
 		// Columns with menu, html, etc. can grow to fill remaining space
