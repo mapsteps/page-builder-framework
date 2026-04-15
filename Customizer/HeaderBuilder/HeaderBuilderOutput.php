@@ -323,6 +323,9 @@ class HeaderBuilderOutput {
 			'right'  => array( 'column_3_start', 'column_3_end' ),
 		);
 
+		// Check if center zone has widgets - needed to determine if empty left/right zones can collapse.
+		$center_has_widgets = $this->zone_has_widgets( $zones['center'], $columns );
+
 		foreach ( $zones as $zone_key => $zone_columns ) {
 			$zone_class = 'wpbf-header-zone wpbf-header-zone-' . $zone_key;
 
@@ -333,9 +336,10 @@ class HeaderBuilderOutput {
 
 				/*
 				 * Add empty class if zone has no widgets in any of its columns.
-				 * This allows empty zones to collapse and give more space to zones with content.
+				 * Only collapse empty zones when center is also empty, otherwise
+				 * we need equal left/right zones for true centering.
 				 */
-				if ( ! $this->zone_has_widgets( $zone_columns, $columns ) ) {
+				if ( ! $center_has_widgets && ! $this->zone_has_widgets( $zone_columns, $columns ) ) {
 					$zone_class .= ' wpbf-zone-empty';
 				}
 			}
