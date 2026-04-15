@@ -209,6 +209,71 @@ class FooterBuilderOutput {
 	}
 
 	/**
+	 * Check if a widget key represents a menu widget.
+	 *
+	 * @param string $widget_key The widget key to check.
+	 *
+	 * @return bool True if the widget is a menu widget, false otherwise.
+	 */
+	private function is_menu_widget( $widget_key ) {
+
+		$menu_widgets = array(
+			'desktop_menu_1',
+			'desktop_menu_2',
+			'mobile_menu_1',
+			'mobile_menu_2',
+		);
+
+		return in_array( $widget_key, $menu_widgets, true );
+
+	}
+
+	/**
+	 * Check if a zone has any widgets.
+	 *
+	 * @param array $zone_columns Array of column keys in the zone.
+	 * @param array $columns      Array of all columns with their widget keys.
+	 *
+	 * @return bool True if zone has at least one widget, false if empty.
+	 */
+	private function zone_has_widgets( $zone_columns, $columns ) {
+
+		foreach ( $zone_columns as $column_key ) {
+			$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
+
+			if ( ! empty( $widget_keys ) ) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Check if a column contains any menu widgets.
+	 *
+	 * @param array $widget_keys Array of widget keys in the column.
+	 *
+	 * @return bool True if column contains at least one menu widget, false otherwise.
+	 */
+	private function column_has_menu( $widget_keys ) {
+
+		if ( empty( $widget_keys ) ) {
+			return false;
+		}
+
+		foreach ( $widget_keys as $widget_key ) {
+			if ( $this->is_menu_widget( $widget_key ) ) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Render footer builder row.
 	 *
 	 * @param string $row_key The row key.
@@ -234,11 +299,24 @@ class FooterBuilderOutput {
 			'right'  => array( 'column_3_start', 'column_3_end' ),
 		);
 
+		// Check if center zone has widgets - needed to determine if empty left/right zones can collapse.
+		$center_has_widgets = $this->zone_has_widgets( $zones['center'], $columns );
+
 		foreach ( $zones as $zone_key => $zone_columns ) {
-			$zone_class = 'wpbf-footer-zone wpbf-footer-zone-' . $zone_key;
+			// Use shared class names with header builder for consistent CSS behavior.
+			$zone_class = 'wpbf-header-zone wpbf-header-zone-' . $zone_key;
 
 			if ( 'center' !== $zone_key ) {
 				$zone_class .= ' wpbf-zone-grow';
+
+				/*
+				 * Add empty class if zone has no widgets in any of its columns.
+				 * Only collapse empty zones when center is also empty, otherwise
+				 * we need equal left/right zones for true centering.
+				 */
+				if ( ! $center_has_widgets && ! $this->zone_has_widgets( $zone_columns, $columns ) ) {
+					$zone_class .= ' wpbf-zone-empty';
+				}
 			}
 
 			echo '<div class="' . esc_attr( $zone_class ) . '">';
@@ -246,7 +324,8 @@ class FooterBuilderOutput {
 			foreach ( $zone_columns as $column_key ) {
 				$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
 
-				$column_class    = 'wpbf-flex wpbf-footer-column';
+				// Use shared class names with header builder for consistent CSS behavior.
+				$column_class    = 'wpbf-flex wpbf-header-column';
 				$alignment_class = 'wpbf-content-center wpbf-items-center';
 				$column_position = '';
 
@@ -269,6 +348,14 @@ class FooterBuilderOutput {
 
 				if ( empty( $widget_keys ) ) {
 					$column_class .= ' wpbf-column-empty';
+				}
+
+				/*
+				 * Add menu class if column contains a menu widget.
+				 * This allows CSS to give menu columns priority for available space.
+				 */
+				if ( $this->column_has_menu( $widget_keys ) ) {
+					$column_class .= ' wpbf-col-has-menu';
 				}
 
 				echo '<div class="' . esc_attr( "$column_class $alignment_class" ) . '">';
