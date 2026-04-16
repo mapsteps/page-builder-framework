@@ -277,6 +277,28 @@ class HeaderBuilderOutput {
 	}
 
 	/**
+	 * Check if a zone contains any menu widgets.
+	 *
+	 * @param array $zone_columns Array of column keys in the zone.
+	 * @param array $columns      Array of all columns with their widget keys.
+	 *
+	 * @return bool True if zone contains at least one menu widget, false otherwise.
+	 */
+	private function zone_has_menu( $zone_columns, $columns ) {
+
+		foreach ( $zone_columns as $column_key ) {
+			$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
+
+			if ( $this->column_has_menu( $widget_keys ) ) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Render desktop header builder row.
 	 *
 	 * @param string $row_key The row key.
@@ -341,6 +363,11 @@ class HeaderBuilderOutput {
 				 */
 				if ( ! $center_has_widgets && ! $this->zone_has_widgets( $zone_columns, $columns ) ) {
 					$zone_class .= ' wpbf-zone-empty';
+				}
+
+				// Add menu class if zone contains a menu widget.
+				if ( $this->zone_has_menu( $zone_columns, $columns ) ) {
+					$zone_class .= ' wpbf-zone-has-menu';
 				}
 			}
 

@@ -650,16 +650,20 @@
 				// Empty columns collapse to zero within zones.
 				flex: 0 0 0;
 			}
+		}
 
-			// When a column has a menu, it should expand to fill available space.
-			// Non-menu columns in the same zone will shrink to their content size.
-			&.wpbf-col-has-menu {
-				flex: 1 1 auto;
-			}
+		// When zone has a menu, menu columns expand and non-menu columns shrink-to-fit.
+		&.wpbf-zone-has-menu {
+			.wpbf-header-column {
+				// Menu columns expand to fill available space.
+				&.wpbf-col-has-menu {
+					flex: 1 1 auto;
+				}
 
-			// Non-menu columns should shrink-to-fit when a menu column exists in the same zone.
-			&:not(.wpbf-col-has-menu):not(.wpbf-column-empty) {
-				flex: 0 0 auto;
+				// Non-menu columns shrink to their content size.
+				&:not(.wpbf-col-has-menu):not(.wpbf-column-empty) {
+					flex: 0 0 auto;
+				}
 			}
 		}
 	}
