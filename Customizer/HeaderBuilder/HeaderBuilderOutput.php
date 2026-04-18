@@ -299,6 +299,36 @@ class HeaderBuilderOutput {
 	}
 
 	/**
+	 * Check if a zone has widgets in both start and end columns.
+	 *
+	 * This is used to determine if a zone should prevent other zones from collapsing.
+	 * When a zone has widgets in both start and end positions, it indicates the user
+	 * wants content distributed across the zone, so other zones should maintain their
+	 * width for proper spacing.
+	 *
+	 * @param array $zone_columns Array of column keys in the zone.
+	 * @param array $columns      Array of all columns with their widget keys.
+	 *
+	 * @return bool True if zone has widgets in both start and end columns.
+	 */
+	private function zone_has_start_and_end( $zone_columns, $columns ) {
+
+		// Only applies to zones with start/end columns (left and right zones).
+		if ( count( $zone_columns ) !== 2 ) {
+			return false;
+		}
+
+		$start_column = $zone_columns[0];
+		$end_column   = $zone_columns[1];
+
+		$start_has_widgets = isset( $columns[ $start_column ] ) && ! empty( $columns[ $start_column ] );
+		$end_has_widgets   = isset( $columns[ $end_column ] ) && ! empty( $columns[ $end_column ] );
+
+		return $start_has_widgets && $end_has_widgets;
+
+	}
+
+	/**
 	 * Render desktop header builder row.
 	 *
 	 * @param string $row_key The row key.
@@ -331,11 +361,11 @@ class HeaderBuilderOutput {
 			echo '<div class="' . esc_attr( $container_class ) . '">';
 		}
 
-		// Use space-between to distribute columns across the row
-		// This ensures left columns stay left, center stays center, and right columns stay right
-		$row_alignment_class = 'wpbf-content-space-between';
-
-		echo '<div class="' . ( 'desktop_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center ' . esc_attr( $row_alignment_class ) . '">';
+		/*
+		 * Desktop rows use zone containers (left, center, right) which handle
+		 * distribution via flex-grow. No need for space-between here.
+		 */
+		echo '<div class="' . ( 'desktop_row_1' === $row_key ? 'wpbf-inner-pre-header-content ' : '' ) . 'wpbf-row-content wpbf-flex wpbf-items-center">';
 
 		// Define zones: left (columns 1), center (column 2), right (columns 3).
 		// Wrapping left and right in zone containers ensures equal width zones for true centering.
@@ -345,8 +375,16 @@ class HeaderBuilderOutput {
 			'right'  => array( 'column_3_start', 'column_3_end' ),
 		);
 
-		// Check if center zone has widgets - needed to determine if empty left/right zones can collapse.
-		$center_has_widgets = $this->zone_has_widgets( $zones['center'], $columns );
+		/*
+		 * Determine if empty zones should collapse.
+		 * Empty zones should NOT collapse when:
+		 * 1. Center zone has widgets (need equal left/right for true centering).
+		 * 2. Any zone has widgets in both start AND end columns (user wants distribution).
+		 */
+		$center_has_widgets    = $this->zone_has_widgets( $zones['center'], $columns );
+		$left_has_start_end    = $this->zone_has_start_and_end( $zones['left'], $columns );
+		$right_has_start_end   = $this->zone_has_start_and_end( $zones['right'], $columns );
+		$prevent_zone_collapse = $center_has_widgets || $left_has_start_end || $right_has_start_end;
 
 		foreach ( $zones as $zone_key => $zone_columns ) {
 			$zone_class = 'wpbf-header-zone wpbf-header-zone-' . $zone_key;
@@ -358,10 +396,9 @@ class HeaderBuilderOutput {
 
 				/*
 				 * Add empty class if zone has no widgets in any of its columns.
-				 * Only collapse empty zones when center is also empty, otherwise
-				 * we need equal left/right zones for true centering.
+				 * Only collapse when no condition prevents it.
 				 */
-				if ( ! $center_has_widgets && ! $this->zone_has_widgets( $zone_columns, $columns ) ) {
+				if ( ! $prevent_zone_collapse && ! $this->zone_has_widgets( $zone_columns, $columns ) ) {
 					$zone_class .= ' wpbf-zone-empty';
 				}
 
