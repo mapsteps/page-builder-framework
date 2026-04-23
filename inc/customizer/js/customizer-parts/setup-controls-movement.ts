@@ -2,6 +2,7 @@ import { moveCustomizerControls } from "../../../../assets/js/utils/customizer-u
 
 export function setupControlsMovement() {
 	setupHeaderBuilderControlsMovement();
+	setupFooterBuilderControlsMovement();
 }
 
 function setupHeaderBuilderControlsMovement() {
@@ -232,6 +233,87 @@ function setupHeaderBuilderControlsMovement() {
 							from: undefined,
 							to: 50,
 						},
+					},
+				],
+			},
+		],
+	});
+}
+
+function setupFooterBuilderControlsMovement() {
+	moveCustomizerControls({
+		dependency: {
+			settingId: "wpbf_enable_footer_builder",
+			moveForwardWhenValueIs: true,
+		},
+		sections: [
+			{
+				from: "wpbf_footer_options",
+				to: "wpbf_footer_builder_desktop_row_2_section",
+				controlsToMove: [
+					{
+						id: "footer_width",
+						label: {
+							from: undefined,
+							to: "Container Width",
+						},
+						prio: {
+							from: undefined,
+							to: 10,
+						},
+						activate: true,
+					},
+					{
+						id: "footer_height",
+						label: {
+							from: undefined,
+							to: "Vertical Padding",
+						},
+						prio: {
+							from: undefined,
+							to: 15,
+						},
+						activate: true,
+					},
+					{
+						id: "footer_bg_color",
+						prio: {
+							from: undefined,
+							to: 200,
+						},
+						activate: true,
+					},
+					{
+						id: "footer_font_color",
+						prio: {
+							from: undefined,
+							to: 205,
+						},
+						activate: true,
+					},
+					{
+						id: "footer_accent_color",
+						prio: {
+							from: undefined,
+							to: 210,
+						},
+						activate: true,
+					},
+					{
+						id: "footer_accent_color_alt",
+						prio: {
+							from: undefined,
+							to: 215,
+						},
+						activate: true,
+					},
+					{
+						id: "footer_font_size",
+						prio: {
+							from: undefined,
+							to: 220,
+						},
+						activate: true,
 					},
 				],
 			},
