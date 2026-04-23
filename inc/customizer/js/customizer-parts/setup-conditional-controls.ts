@@ -77,13 +77,6 @@ export function setupConditionalControls() {
 			"footer_column_two_separator",
 			"footer_column_two_layout",
 			"footer_column_two",
-			"footer_width",
-			"footer_height",
-			"footer_bg_color",
-			"footer_font_color",
-			"footer_accent_color",
-			"footer_accent_color_alt",
-			"footer_font_size",
 		];
 
 		function applyFooterControlsVisibility(enabled: boolean) {
