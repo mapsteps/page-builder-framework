@@ -40,7 +40,21 @@ $partial_refresh_args = array(
 );
 
 /* General Tab */
-
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'vertical_padding' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Vertical Padding', 'page-builder-framework' ) )
+	->defaultValue( 15 )
+	->priority( 10 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 80,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );
+	
 /* Design Tab */
 
 wpbf_customizer_field()
