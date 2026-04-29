@@ -59,8 +59,82 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 	 * All desktop rows (Top, Main, Bottom) now have their own controls.
 	 */
 	if ( 'desktop_row_1' === $row_key || 'desktop_row_2' === $row_key || 'desktop_row_3' === $row_key ) {
-		$max_width = wpbf_customize_str_value( $row_id_prefix . 'max_width' );
-		$max_width = '' === $max_width || '1200' === $max_width || '1200px' === $max_width ? null : $max_width;
+		if ( 'desktop_row_2' === $row_key ) {
+			$max_width = wpbf_customize_str_value( 'footer_width' );
+			$max_width = '' === $max_width || '1200' === $max_width || '1200px' === $max_width ? null : $max_width;
+	
+			if ( $max_width ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-container',
+					'props'    => array( 'max-width' => wpbf_maybe_append_suffix( $max_width ) ),
+				) );
+			}
+	
+			$v_padding = wpbf_customize_str_value( 'footer_height' );
+			$v_padding = '' === $v_padding || '15' === $v_padding ? '15px' : $v_padding;
+	
+			wpbf_write_css( array(
+				'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-row-content',
+				'props'    => array(
+					'padding-top'    => wpbf_maybe_append_suffix( $v_padding ),
+					'padding-bottom' => wpbf_maybe_append_suffix( $v_padding ),
+				),
+			) );
+	
+			$bg_color   = wpbf_customize_str_value( 'footer_bg_color' );
+			$text_color = wpbf_customize_str_value( 'footer_font_color' );
+	
+			if ( $bg_color || $text_color ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ),
+					'props'    => array(
+						'background-color' => $bg_color ? $bg_color : null,
+						'color'            => $text_color ? $text_color : null,
+					),
+				) );
+			}
+	
+			$accent_colors = array(
+				'default' => wpbf_customize_str_value( 'footer_accent_color' ),
+				'hover'   => wpbf_customize_str_value( 'footer_accent_color_alt' ),
+			);
+	
+			if ( ! empty( $accent_colors ) ) {
+				$default_color = ! empty( $accent_colors['default'] ) ? $accent_colors['default'] : '';
+				$hover_color   = ! empty( $accent_colors['hover'] ) ? $accent_colors['hover'] : '';
+	
+				if ( $default_color ) {
+					wpbf_write_css( array(
+						'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' a',
+						'props'    => array( 'color' => $default_color ),
+					) );
+				}
+	
+				if ( $hover_color ) {
+					wpbf_write_css( array(
+						'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' a:hover, .wpbf-footer-row-' . esc_attr( $row_key ) . ' a:focus',
+						'props'    => array( 'color' => $hover_color ),
+					) );
+				}
+			}
+	
+			$font_size = wpbf_customize_str_value( 'footer_font_size' );
+	
+			if ( $font_size && '16px' !== $font_size && '16' !== $font_size ) {
+				wpbf_write_css( array(
+					'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ),
+					'props'    => array( 'font-size' => wpbf_maybe_append_suffix( $font_size ) ),
+				) );
+			}
+	
+			// Border Top.
+			$border_top_width = wpbf_customize_str_value( $row_id_prefix . 'border_top_width' );
+			$border_top_style = wpbf_customize_str_value( $row_id_prefix . 'border_top_style' );
+			$border_top_color = wpbf_customize_str_value( $row_id_prefix . 'border_top_color' );
+			$border_top_scope = wpbf_customize_str_value( $row_id_prefix . 'border_top_scope' );
+		} else {
+			$max_width = wpbf_customize_str_value( $row_id_prefix . 'max_width' );
+			$max_width = '' === $max_width || '1200' === $max_width || '1200px' === $max_width ? null : $max_width;
 
 		if ( $max_width ) {
 			wpbf_write_css( array(
@@ -123,11 +197,12 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 			) );
 		}
 
-		// Border Top.
-		$border_top_width = wpbf_customize_str_value( $row_id_prefix . 'border_top_width' );
-		$border_top_style = wpbf_customize_str_value( $row_id_prefix . 'border_top_style' );
-		$border_top_color = wpbf_customize_str_value( $row_id_prefix . 'border_top_color' );
-		$border_top_scope = wpbf_customize_str_value( $row_id_prefix . 'border_top_scope' );
+			// Border Top.
+			$border_top_width = wpbf_customize_str_value( $row_id_prefix . 'border_top_width' );
+			$border_top_style = wpbf_customize_str_value( $row_id_prefix . 'border_top_style' );
+			$border_top_color = wpbf_customize_str_value( $row_id_prefix . 'border_top_color' );
+			$border_top_scope = wpbf_customize_str_value( $row_id_prefix . 'border_top_scope' );
+		}
 
 		// Only output border if style is not 'none' and width is set.
 		if ( $border_top_style && 'none' !== $border_top_style && $border_top_width ) {

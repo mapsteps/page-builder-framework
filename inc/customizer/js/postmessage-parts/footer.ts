@@ -15,7 +15,7 @@ export default function footerSetup() {
 			value = emptyNotZero(value) ? "1200px" : value;
 
 			writeCSS(settingId, {
-				selector: ".wpbf-inner-footer",
+				selector: ".wpbf-inner-footer, .wpbf-footer-row-desktop_row_2 .wpbf-container",
 				props: { "max-width": maybeAppendSuffix(value) },
 			});
 		},
@@ -26,7 +26,7 @@ export default function footerSetup() {
 		"footer_height",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-inner-footer",
+				selector: ".wpbf-inner-footer, .wpbf-footer-row-desktop_row_2 .wpbf-row-content",
 				props: {
 					"padding-top": maybeAppendSuffix(value),
 					"padding-bottom": maybeAppendSuffix(value),
@@ -40,7 +40,7 @@ export default function footerSetup() {
 		"footer_bg_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-page-footer",
+				selector: ".wpbf-page-footer, .wpbf-footer-row-desktop_row_2",
 				props: { "background-color": toStringColor(value) },
 			});
 		},
@@ -51,7 +51,7 @@ export default function footerSetup() {
 		"footer_font_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-inner-footer",
+				selector: ".wpbf-inner-footer, .wpbf-footer-row-desktop_row_2",
 				props: { color: toStringColor(value) },
 			});
 		},
@@ -62,7 +62,7 @@ export default function footerSetup() {
 		"footer_accent_color",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-inner-footer a",
+				selector: ".wpbf-inner-footer a, .wpbf-footer-row-desktop_row_2 a",
 				props: { color: toStringColor(value) },
 			});
 		},
@@ -74,7 +74,7 @@ export default function footerSetup() {
 		function (settingId, value) {
 			writeCSS(settingId, {
 				selector:
-					".wpbf-inner-footer a:hover, .wpbf-inner-footer .wpbf-menu > .current-menu-item > a",
+					".wpbf-inner-footer a:hover, .wpbf-inner-footer .wpbf-menu > .current-menu-item > a, .wpbf-footer-row-desktop_row_2 a:hover, .wpbf-footer-row-desktop_row_2 a:focus",
 				props: { color: toStringColor(value) },
 			});
 		},
@@ -85,7 +85,7 @@ export default function footerSetup() {
 		"footer_font_size",
 		function (settingId, value) {
 			writeCSS(settingId, {
-				selector: ".wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu",
+				selector: ".wpbf-inner-footer, .wpbf-inner-footer .wpbf-menu, .wpbf-footer-row-desktop_row_2",
 				props: {
 					"font-size": maybeAppendSuffix(value),
 				},

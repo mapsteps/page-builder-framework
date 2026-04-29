@@ -311,7 +311,7 @@ function setupFooterBuilderControlsMovement() {
 						id: "footer_font_size",
 						prio: {
 							from: undefined,
-							to: 220,
+							to: 217,
 						},
 						activate: true,
 					},
