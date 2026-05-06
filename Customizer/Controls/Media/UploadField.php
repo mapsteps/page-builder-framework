@@ -33,7 +33,7 @@ class UploadField extends BaseField {
 
 		$util    = $this->getUtilInstance();
 		$props   = $this->control->custom_properties;
-		$save_as = $props['save_as'] ?: $util->default_save_as;
+		$save_as = isset( $props['save_as'] ) ? $props['save_as'] : $util->default_save_as;
 
 		return ( new MediaSanitizer() )->sanitize( $value, $util, $save_as );
 
