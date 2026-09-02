@@ -428,7 +428,7 @@ wpbf_write_css( array(
  */
 
 wpbf_write_css( array(
-	'selector' => '.wpbf-footer-builder .wpbf-row-content',
+	'selector' => '.wpbf-footer-builder .wpbf-row-content, .wpbf-footer-builder .wpbf-builder-zone',
 	'props'    => array( 'align-items' => 'flex-start' ),
 ) );
 

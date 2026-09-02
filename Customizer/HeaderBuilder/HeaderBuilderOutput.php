@@ -387,7 +387,7 @@ class HeaderBuilderOutput {
 		$prevent_zone_collapse = $center_has_widgets || $left_has_start_end || $right_has_start_end;
 
 		foreach ( $zones as $zone_key => $zone_columns ) {
-			$zone_class = 'wpbf-header-zone wpbf-header-zone-' . $zone_key;
+			$zone_class = 'wpbf-builder-zone wpbf-zone-' . $zone_key;
 
 			// Left and right zones get equal flex basis for true centering.
 			// Center zone stays auto-width.
@@ -413,7 +413,7 @@ class HeaderBuilderOutput {
 			foreach ( $zone_columns as $column_key ) {
 				$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
 
-				$column_class    = 'wpbf-flex wpbf-header-column';
+				$column_class    = 'wpbf-flex wpbf-builder-column';
 				$alignment_class = 'wpbf-content-center wpbf-items-center';
 				$column_position = '';
 
@@ -664,7 +664,7 @@ class HeaderBuilderOutput {
 		foreach ( $all_column_keys as $column_key ) {
 			$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
 
-			$column_class    = 'wpbf-flex wpbf-header-column';
+			$column_class    = 'wpbf-flex wpbf-builder-column';
 			$alignment_class = 'wpbf-content-center wpbf-items-center';
 			$column_position = '';
 

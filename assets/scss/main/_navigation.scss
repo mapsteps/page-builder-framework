@@ -114,13 +114,13 @@
 	}
 }
 
-// When inside header builder.
-.wpbf-header-column .wpbf-menu-item-search .wpbf-menu-search {
+// When inside builder column.
+.wpbf-builder-column .wpbf-menu-item-search .wpbf-menu-search {
 	right: -20px !important;
 }
 
 // When search is in left-aligned zone, start-aligned column, or left menu, expand to the right instead of left.
-.wpbf-header-zone-left .wpbf-menu-item-search .wpbf-menu-search,
+.wpbf-zone-left .wpbf-menu-item-search .wpbf-menu-search,
 .wpbf-content-start .wpbf-menu-item-search .wpbf-menu-search,
 .wpbf-menu-left .wpbf-menu-item-search .wpbf-menu-search {
 	right: auto;
@@ -618,16 +618,24 @@
 	}
 }
 
-/* Header Builder */
+/* Builder Grid (Shared by Header and Footer Builders) */
 .wpbf-row-content {
 	width: 100%;
 	display: flex;
 	align-items: center;
 }
 
+// Footer builder rows and zones are top-aligned by default.
+.wpbf-footer-builder {
+	.wpbf-row-content,
+	.wpbf-builder-zone {
+		align-items: flex-start;
+	}
+}
+
 // Zone containers for true centering.
 // Left and right zones have equal flex basis, ensuring center is always truly centered.
-.wpbf-header-zone {
+.wpbf-builder-zone {
 	display: flex;
 	align-items: center;
 
@@ -642,7 +650,7 @@
 		}
 
 		// Columns within grow zones should fill available space.
-		.wpbf-header-column {
+		.wpbf-builder-column {
 			flex: 1 1 0;
 			min-width: 0;
 
@@ -654,7 +662,7 @@
 
 		// When zone has a menu, menu columns expand and non-menu columns shrink-to-fit.
 		&.wpbf-zone-has-menu {
-			.wpbf-header-column {
+			.wpbf-builder-column {
 				// Menu columns expand to fill available space.
 				&.wpbf-col-has-menu {
 					flex: 1 1 auto;
@@ -669,23 +677,23 @@
 	}
 
 	// Left zone: align content to the start.
-	&.wpbf-header-zone-left {
+	&.wpbf-zone-left {
 		justify-content: flex-start;
 	}
 
 	// Center zone: auto-width, no grow.
-	&.wpbf-header-zone-center {
+	&.wpbf-zone-center {
 		flex: 0 0 auto;
 		justify-content: center;
 	}
 
 	// Right zone: align content to the end.
-	&.wpbf-header-zone-right {
+	&.wpbf-zone-right {
 		justify-content: flex-end;
 	}
 }
 
-.wpbf-header-column {
+.wpbf-builder-column {
 	// Default: auto-width based on content, don't grow or shrink
 	flex: 0 0 auto;
 	min-width: 0;
@@ -720,7 +728,7 @@
 		flex: 1 1 0;
 	}
 
-	// Menu inside header builder columns - horizontal layout
+	// Menu inside builder columns - horizontal layout
 	.wpbf-menu {
 		display: flex;
 		flex-wrap: nowrap;
@@ -732,7 +740,7 @@
 		}
 	}
 
-	// Logo inside header builder - flexible size
+	// Logo inside builder columns - flexible size
 	.wpbf-logo {
 		display: flex;
 		align-items: center;

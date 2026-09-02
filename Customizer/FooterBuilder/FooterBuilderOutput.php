@@ -344,7 +344,7 @@ class FooterBuilderOutput {
 		 * Footer rows use zone containers (left, center, right) which handle
 		 * distribution via flex-grow. No need for space-between here.
 		 */
-		echo '<div class="wpbf-row-content wpbf-flex wpbf-items-center">';
+		echo '<div class="wpbf-row-content wpbf-flex">';
 
 		// Define zones: left (columns 1), center (column 2), right (columns 3).
 		$zones = array(
@@ -365,8 +365,7 @@ class FooterBuilderOutput {
 		$prevent_zone_collapse = $center_has_widgets || $left_has_start_end || $right_has_start_end;
 
 		foreach ( $zones as $zone_key => $zone_columns ) {
-			// Use shared class names with header builder for consistent CSS behavior.
-			$zone_class = 'wpbf-header-zone wpbf-header-zone-' . $zone_key;
+			$zone_class = 'wpbf-builder-zone wpbf-zone-' . $zone_key;
 
 			if ( 'center' !== $zone_key ) {
 				$zone_class .= ' wpbf-zone-grow';
@@ -390,9 +389,8 @@ class FooterBuilderOutput {
 			foreach ( $zone_columns as $column_key ) {
 				$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
 
-				// Use shared class names with header builder for consistent CSS behavior.
-				$column_class    = 'wpbf-flex wpbf-header-column';
-				$alignment_class = 'wpbf-content-center wpbf-items-center';
+				$column_class    = 'wpbf-flex wpbf-builder-column';
+				$alignment_class = 'wpbf-content-center';
 				$column_position = '';
 
 				if ( 'column_1_start' === $column_key ) {
