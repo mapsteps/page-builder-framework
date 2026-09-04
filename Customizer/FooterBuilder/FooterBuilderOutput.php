@@ -389,7 +389,7 @@ class FooterBuilderOutput {
 			foreach ( $zone_columns as $column_key ) {
 				$widget_keys = isset( $columns[ $column_key ] ) ? $columns[ $column_key ] : array();
 
-				$column_class    = 'wpbf-flex wpbf-builder-column';
+				$column_class    = 'wpbf-flex wpbf-builder-column wpbf-builder-column-' . esc_attr( $column_key );
 				$alignment_class = 'wpbf-content-center';
 				$column_position = '';
 
@@ -408,6 +408,22 @@ class FooterBuilderOutput {
 				} elseif ( 'column_3_end' === $column_key ) {
 					$alignment_class = 'wpbf-content-end';
 					$column_position = 'right';
+				}
+
+				// Check for row-level or per-column custom alignment override.
+				$row_alignment    = get_theme_mod( 'wpbf_footer_builder_' . $row_key . '_columns_alignment', 'default' );
+				$column_alignment = get_theme_mod( 'wpbf_footer_builder_' . $row_key . '_' . $column_key . '_align', 'default' );
+
+				$effective_alignment = 'default' !== $column_alignment ? $column_alignment : $row_alignment;
+
+				if ( 'start' === $effective_alignment || 'left' === $effective_alignment || 'flex-start' === $effective_alignment ) {
+					$alignment_class = 'wpbf-content-start';
+				} elseif ( 'center' === $effective_alignment ) {
+					$alignment_class = 'wpbf-content-center';
+				} elseif ( 'end' === $effective_alignment || 'right' === $effective_alignment || 'flex-end' === $effective_alignment ) {
+					$alignment_class = 'wpbf-content-end';
+				} elseif ( 'space-between' === $effective_alignment ) {
+					$alignment_class = 'wpbf-content-space-between';
 				}
 
 				if ( empty( $widget_keys ) ) {
@@ -536,7 +552,7 @@ class FooterBuilderOutput {
 		$widget_title = get_theme_mod( $setting_group . '_widget_title', '' );
 
 		// Wrapper div to ensure title and nav stack vertically within flex column.
-		echo '<div class="wpbf-footer-menu-widget">';
+		echo '<div class="wpbf-footer-menu-widget wpbf-footer-menu-widget-' . esc_attr( $widget_key ) . '">';
 
 		if ( ! empty( $widget_title ) ) {
 			$title_class = 'wpbf-footer-widget-title wpbf-footer-widget-title-' . esc_attr( $widget_key );
@@ -597,7 +613,7 @@ class FooterBuilderOutput {
 		$widget_class = 'wpbf-footer-html-widget wpbf_footer_builder_' . esc_attr( $widget_key );
 
 		// Wrapper div to ensure title and content stack vertically within flex column.
-		echo '<div class="wpbf-footer-html-widget-wrapper">';
+		echo '<div class="wpbf-footer-html-widget-wrapper wpbf-footer-html-widget-wrapper-' . esc_attr( $widget_key ) . '">';
 
 		if ( ! empty( $widget_title ) ) {
 			$title_class = 'wpbf-footer-widget-title wpbf-footer-widget-title-' . esc_attr( $widget_key );
@@ -661,7 +677,7 @@ class FooterBuilderOutput {
 			return;
 		}
 
-		echo '<div class="wpbf-footer-social">';
+		echo '<div class="wpbf-footer-social ' . esc_attr( $setting_group ) . '">';
 
 		foreach ( $social_links as $key => $social ) {
 			if ( empty( $social['url'] ) ) {
@@ -698,7 +714,7 @@ class FooterBuilderOutput {
 
 		$text = wpbf_parse_template_tags( $text );
 
-		echo '<div class="wpbf-footer-copyright">';
+		echo '<div class="wpbf-footer-copyright ' . esc_attr( $setting_group ) . '">';
 		echo wp_kses_post( $text );
 		echo '</div>';
 

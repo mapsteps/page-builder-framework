@@ -3,11 +3,14 @@ import {
 	writeCSS,
 	maybeAppendSuffix,
 	toStringColor,
+	writeResponsiveCSSMultiSelector,
 } from "../customizer-util";
+import { parseJsonOrUndefined } from "../../../../Customizer/Controls/Generic/src/string-util";
 import {
 	WpbfColorControlValue,
 	WpbfMulticolorControlValue,
 } from "../../../../Customizer/Controls/Color/src/color-interface";
+import { MarginPaddingValue } from "../../../../Customizer/Controls/MarginPadding/src/margin-padding-interface";
 
 export default function footerBuilderRowsSetup() {
 	const footerBuilderDesktopRows = [
@@ -53,6 +56,68 @@ export default function footerBuilderRowsSetup() {
 				});
 			},
 		);
+
+		// Column gap
+		listenToCustomizerValueChange<string | number>(
+			`${controlIdPrefix}column_gap`,
+			function (settingId, value) {
+				writeCSS(settingId, {
+					selector: `.wpbf-footer-row-${rowKey} .wpbf-row-content, .wpbf-footer-row-${rowKey} .wpbf-builder-zone`,
+					props: {
+						gap: maybeAppendSuffix(value),
+					},
+				});
+			},
+		);
+
+		// Column alignment (per-column)
+		const columnKeys = [
+			"column_1_start",
+			"column_1_end",
+			"column_2",
+			"column_3_start",
+			"column_3_end",
+		];
+
+		columnKeys.forEach((columnKey) => {
+			listenToCustomizerValueChange<string>(
+				`${controlIdPrefix}${columnKey}_align`,
+				function (settingId, value) {
+					if (!value || value === "default") {
+						writeCSS(settingId, {
+							selector: `.wpbf-footer-row-${rowKey} .wpbf-builder-column-${columnKey}`,
+							props: {
+								"justify-content": "",
+								"text-align": "",
+							},
+						});
+						return;
+					}
+
+					let justify = "flex-start";
+					let textAlign = "left";
+
+					if (value === "center") {
+						justify = "center";
+						textAlign = "center";
+					} else if (value === "end" || value === "right") {
+						justify = "flex-end";
+						textAlign = "right";
+					} else if (value === "space-between") {
+						justify = "space-between";
+						textAlign = "inherit";
+					}
+
+					writeCSS(settingId, {
+						selector: `.wpbf-footer-row-${rowKey} .wpbf-builder-column-${columnKey}`,
+						props: {
+							"justify-content": justify,
+							"text-align": textAlign,
+						},
+					});
+				},
+			);
+		});
 
 		// Background color
 		listenToCustomizerValueChange<WpbfColorControlValue>(
@@ -218,6 +283,68 @@ export default function footerBuilderRowsSetup() {
 				});
 			},
 		);
+
+		// Column gap
+		listenToCustomizerValueChange<string | number>(
+			`${controlIdPrefix}column_gap`,
+			function (settingId, value) {
+				writeCSS(settingId, {
+					selector: `.wpbf-footer-row-${rowKey} .wpbf-row-content, .wpbf-footer-row-${rowKey} .wpbf-builder-zone`,
+					props: {
+						gap: maybeAppendSuffix(value),
+					},
+				});
+			},
+		);
+
+		// Column alignment (per-column)
+		const columnKeys = [
+			"column_1_start",
+			"column_1_end",
+			"column_2",
+			"column_3_start",
+			"column_3_end",
+		];
+
+		columnKeys.forEach((columnKey) => {
+			listenToCustomizerValueChange<string>(
+				`${controlIdPrefix}${columnKey}_align`,
+				function (settingId, value) {
+					if (!value || value === "default") {
+						writeCSS(settingId, {
+							selector: `.wpbf-footer-row-${rowKey} .wpbf-builder-column-${columnKey}`,
+							props: {
+								"justify-content": "",
+								"text-align": "",
+							},
+						});
+						return;
+					}
+
+					let justify = "flex-start";
+					let textAlign = "left";
+
+					if (value === "center") {
+						justify = "center";
+						textAlign = "center";
+					} else if (value === "end" || value === "right") {
+						justify = "flex-end";
+						textAlign = "right";
+					} else if (value === "space-between") {
+						justify = "space-between";
+						textAlign = "inherit";
+					}
+
+					writeCSS(settingId, {
+						selector: `.wpbf-footer-row-${rowKey} .wpbf-builder-column-${columnKey}`,
+						props: {
+							"justify-content": justify,
+							"text-align": textAlign,
+						},
+					});
+				},
+			);
+		});
 
 		// Background color
 		listenToCustomizerValueChange<WpbfColorControlValue>(
@@ -476,6 +603,63 @@ export default function footerBuilderRowsSetup() {
 							props: { color: hoverColor },
 						},
 					],
+				});
+			},
+		);
+	});
+
+	/**
+	 * Widget responsive padding postmessage handlers.
+	 */
+	const widgetPaddingConfigs: { settingId: string; selector: string }[] = [
+		{ settingId: "wpbf_footer_builder_desktop_menu_1_padding", selector: ".wpbf-footer-menu-widget-desktop_menu_1" },
+		{ settingId: "wpbf_footer_builder_desktop_menu_2_padding", selector: ".wpbf-footer-menu-widget-desktop_menu_2" },
+		{ settingId: "wpbf_footer_builder_mobile_menu_1_padding", selector: ".wpbf-footer-menu-widget-mobile_menu_1" },
+		{ settingId: "wpbf_footer_builder_mobile_menu_2_padding", selector: ".wpbf-footer-menu-widget-mobile_menu_2" },
+		{ settingId: "wpbf_footer_builder_desktop_html_1_padding", selector: ".wpbf-footer-html-widget-wrapper-desktop_html_1" },
+		{ settingId: "wpbf_footer_builder_desktop_html_2_padding", selector: ".wpbf-footer-html-widget-wrapper-desktop_html_2" },
+		{ settingId: "wpbf_footer_builder_mobile_html_1_padding", selector: ".wpbf-footer-html-widget-wrapper-mobile_html_1" },
+		{ settingId: "wpbf_footer_builder_mobile_html_2_padding", selector: ".wpbf-footer-html-widget-wrapper-mobile_html_2" },
+		{ settingId: "wpbf_footer_builder_desktop_social_padding", selector: ".wpbf-footer-social.wpbf_footer_builder_desktop_social" },
+		{ settingId: "wpbf_footer_builder_mobile_social_padding", selector: ".wpbf-footer-social.wpbf_footer_builder_mobile_social" },
+		{ settingId: "wpbf_footer_builder_desktop_copyright_padding", selector: ".wpbf-footer-copyright.wpbf_footer_builder_desktop_copyright" },
+		{ settingId: "wpbf_footer_builder_mobile_copyright_padding", selector: ".wpbf-footer-copyright.wpbf_footer_builder_mobile_copyright" },
+	];
+
+	widgetPaddingConfigs.forEach(({ settingId, selector }) => {
+		listenToCustomizerValueChange<string | MarginPaddingValue>(
+			settingId,
+			function (id, value) {
+				const obj = parseJsonOrUndefined<MarginPaddingValue>(value);
+
+				writeResponsiveCSSMultiSelector(id, {
+					desktop: {
+						selector,
+						props: {
+							"padding-top": maybeAppendSuffix(obj?.desktop_top),
+							"padding-right": maybeAppendSuffix(obj?.desktop_right),
+							"padding-bottom": maybeAppendSuffix(obj?.desktop_bottom),
+							"padding-left": maybeAppendSuffix(obj?.desktop_left),
+						},
+					},
+					tablet: {
+						selector,
+						props: {
+							"padding-top": maybeAppendSuffix(obj?.tablet_top),
+							"padding-right": maybeAppendSuffix(obj?.tablet_right),
+							"padding-bottom": maybeAppendSuffix(obj?.tablet_bottom),
+							"padding-left": maybeAppendSuffix(obj?.tablet_left),
+						},
+					},
+					mobile: {
+						selector,
+						props: {
+							"padding-top": maybeAppendSuffix(obj?.mobile_top),
+							"padding-right": maybeAppendSuffix(obj?.mobile_right),
+							"padding-bottom": maybeAppendSuffix(obj?.mobile_bottom),
+							"padding-left": maybeAppendSuffix(obj?.mobile_left),
+						},
+					},
 				});
 			},
 		);

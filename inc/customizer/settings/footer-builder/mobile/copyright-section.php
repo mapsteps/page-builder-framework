@@ -40,3 +40,15 @@ wpbf_customizer_field()
 		$partial_refresh_key_prefix . 'text' => $partial_refresh_args,
 	] )
 	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'padding' )
+	->type( 'responsive-padding' )
+	->label( __( 'Padding', 'page-builder-framework' ) )
+	->priority( 10 )
+	->transport( 'postMessage' )
+	->properties( [
+		'save_as_json'   => true,
+		'dont_save_unit' => true,
+	] )
+	->addToSection( $section_id );

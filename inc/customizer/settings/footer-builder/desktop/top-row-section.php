@@ -66,6 +66,114 @@ wpbf_customizer_field()
 	] )
 	->addToSection( $section_id );
 
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'column_gap' )
+	->type( 'slider' )
+	->tab( 'general' )
+	->label( __( 'Column Gap', 'page-builder-framework' ) )
+	->defaultValue( 20 )
+	->priority( 16 )
+	->transport( 'postMessage' )
+	->properties( [
+		'min'  => 0,
+		'max'  => 80,
+		'step' => 1,
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'columns_alignment_headline' )
+	->type( 'headline' )
+	->tab( 'general' )
+	->label( __( 'Column Alignment', 'page-builder-framework' ) )
+	->priority( 18 )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'column_1_start_align' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Column 1 Start (Left)', 'page-builder-framework' ) )
+	->defaultValue( 'default' )
+	->priority( 20 )
+	->transport( 'postMessage' )
+	->choices( [
+		'default'       => __( 'Default', 'page-builder-framework' ),
+		'start'         => __( 'Left', 'page-builder-framework' ),
+		'center'        => __( 'Center', 'page-builder-framework' ),
+		'end'           => __( 'Right', 'page-builder-framework' ),
+		'space-between' => __( 'Space Between', 'page-builder-framework' ),
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'column_1_end_align' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Column 1 End (Left)', 'page-builder-framework' ) )
+	->defaultValue( 'default' )
+	->priority( 22 )
+	->transport( 'postMessage' )
+	->choices( [
+		'default'       => __( 'Default', 'page-builder-framework' ),
+		'start'         => __( 'Left', 'page-builder-framework' ),
+		'center'        => __( 'Center', 'page-builder-framework' ),
+		'end'           => __( 'Right', 'page-builder-framework' ),
+		'space-between' => __( 'Space Between', 'page-builder-framework' ),
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'column_2_align' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Column 2 (Center)', 'page-builder-framework' ) )
+	->defaultValue( 'default' )
+	->priority( 24 )
+	->transport( 'postMessage' )
+	->choices( [
+		'default'       => __( 'Default', 'page-builder-framework' ),
+		'start'         => __( 'Left', 'page-builder-framework' ),
+		'center'        => __( 'Center', 'page-builder-framework' ),
+		'end'           => __( 'Right', 'page-builder-framework' ),
+		'space-between' => __( 'Space Between', 'page-builder-framework' ),
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'column_3_start_align' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Column 3 Start (Right)', 'page-builder-framework' ) )
+	->defaultValue( 'default' )
+	->priority( 26 )
+	->transport( 'postMessage' )
+	->choices( [
+		'default'       => __( 'Default', 'page-builder-framework' ),
+		'start'         => __( 'Left', 'page-builder-framework' ),
+		'center'        => __( 'Center', 'page-builder-framework' ),
+		'end'           => __( 'Right', 'page-builder-framework' ),
+		'space-between' => __( 'Space Between', 'page-builder-framework' ),
+	] )
+	->addToSection( $section_id );
+
+wpbf_customizer_field()
+	->id( $control_id_prefix . 'column_3_end_align' )
+	->type( 'select' )
+	->tab( 'general' )
+	->label( __( 'Column 3 End (Right)', 'page-builder-framework' ) )
+	->defaultValue( 'default' )
+	->priority( 28 )
+	->transport( 'postMessage' )
+	->choices( [
+		'default'       => __( 'Default', 'page-builder-framework' ),
+		'start'         => __( 'Left', 'page-builder-framework' ),
+		'center'        => __( 'Center', 'page-builder-framework' ),
+		'end'           => __( 'Right', 'page-builder-framework' ),
+		'space-between' => __( 'Space Between', 'page-builder-framework' ),
+	] )
+	->addToSection( $section_id );
+
 /* Design Tab */
 
 wpbf_customizer_field()

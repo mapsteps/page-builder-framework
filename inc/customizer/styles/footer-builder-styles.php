@@ -204,6 +204,48 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 			$border_top_scope = wpbf_customize_str_value( $row_id_prefix . 'border_top_scope' );
 		}
 
+		// Column Gap.
+		$column_gap = wpbf_customize_str_value( $row_id_prefix . 'column_gap' );
+		$column_gap = '' === $column_gap || '20' === $column_gap || '20px' === $column_gap ? '20px' : $column_gap;
+
+		if ( $column_gap ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-row-content, .wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-builder-zone',
+				'props'    => array(
+					'gap' => wpbf_maybe_append_suffix( $column_gap ),
+				),
+			) );
+		}
+
+		// Column Alignment (per-column).
+		$column_keys = array( 'column_1_start', 'column_1_end', 'column_2', 'column_3_start', 'column_3_end' );
+		foreach ( $column_keys as $col_key ) {
+			$col_align = wpbf_customize_str_value( $row_id_prefix . $col_key . '_align' );
+			if ( $col_align && 'default' !== $col_align ) {
+				$justify    = 'flex-start';
+				$text_align = 'left';
+
+				if ( 'center' === $col_align ) {
+					$justify    = 'center';
+					$text_align = 'center';
+				} elseif ( 'end' === $col_align || 'right' === $col_align ) {
+					$justify    = 'flex-end';
+					$text_align = 'right';
+				} elseif ( 'space-between' === $col_align ) {
+					$justify    = 'space-between';
+					$text_align = 'inherit';
+				}
+
+				wpbf_write_css( array(
+					'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-builder-column-' . esc_attr( $col_key ),
+					'props'    => array(
+						'justify-content' => $justify,
+						'text-align'      => $text_align,
+					),
+				) );
+			}
+		}
+
 		// Only output border if style is not 'none' and width is set.
 		if ( $border_top_style && 'none' !== $border_top_style && $border_top_width ) {
 			$border_selector = 'fullwidth' === $border_top_scope
@@ -326,6 +368,48 @@ foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 		$border_top_style = wpbf_customize_str_value( $row_id_prefix . 'border_top_style' );
 		$border_top_color = wpbf_customize_str_value( $row_id_prefix . 'border_top_color' );
 		$border_top_scope = wpbf_customize_str_value( $row_id_prefix . 'border_top_scope' );
+
+		// Column Gap.
+		$column_gap = wpbf_customize_str_value( $row_id_prefix . 'column_gap' );
+		$column_gap = '' === $column_gap || '20' === $column_gap || '20px' === $column_gap ? '20px' : $column_gap;
+
+		if ( $column_gap ) {
+			wpbf_write_css( array(
+				'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-row-content, .wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-builder-zone',
+				'props'    => array(
+					'gap' => wpbf_maybe_append_suffix( $column_gap ),
+				),
+			) );
+		}
+
+		// Column Alignment (per-column).
+		$column_keys = array( 'column_1_start', 'column_1_end', 'column_2', 'column_3_start', 'column_3_end' );
+		foreach ( $column_keys as $col_key ) {
+			$col_align = wpbf_customize_str_value( $row_id_prefix . $col_key . '_align' );
+			if ( $col_align && 'default' !== $col_align ) {
+				$justify    = 'flex-start';
+				$text_align = 'left';
+
+				if ( 'center' === $col_align ) {
+					$justify    = 'center';
+					$text_align = 'center';
+				} elseif ( 'end' === $col_align || 'right' === $col_align ) {
+					$justify    = 'flex-end';
+					$text_align = 'right';
+				} elseif ( 'space-between' === $col_align ) {
+					$justify    = 'space-between';
+					$text_align = 'inherit';
+				}
+
+				wpbf_write_css( array(
+					'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-builder-column-' . esc_attr( $col_key ),
+					'props'    => array(
+						'justify-content' => $justify,
+						'text-align'      => $text_align,
+					),
+				) );
+			}
+		}
 
 		// Only output border if style is not 'none' and width is set.
 		if ( $border_top_style && 'none' !== $border_top_style && $border_top_width ) {
@@ -615,6 +699,105 @@ if ( ! empty( $mobile_menu_2_colors ) ) {
 		) );
 	}
 }
+
+/**
+ * ----------------------------------------------------------------------
+ * Footer Builder Widget Responsive Padding Styles
+ * ----------------------------------------------------------------------
+ */
+if ( ! function_exists( 'wpbf_generate_footer_widget_padding_css' ) ) {
+	/**
+	 * Helper function to generate responsive padding CSS for footer widgets.
+	 *
+	 * @param string $setting_id The setting ID.
+	 * @param string $selector   The CSS selector.
+	 */
+	function wpbf_generate_footer_widget_padding_css( $setting_id, $selector ) {
+		$padding = wpbf_customize_array_value( $setting_id );
+
+		if ( empty( $padding ) || ! is_array( $padding ) ) {
+			return;
+		}
+
+		$breakpoint_mobile_int  = function_exists( 'wpbf_breakpoint_mobile' ) ? wpbf_breakpoint_mobile() : 480;
+		$breakpoint_desktop_int = function_exists( 'wpbf_breakpoint_desktop' ) ? wpbf_breakpoint_desktop() : 1024;
+		$breakpoint_mobile      = $breakpoint_mobile_int . 'px';
+		$breakpoint_desktop     = $breakpoint_desktop_int . 'px';
+
+		$desktop_top    = wpbf_get_theme_mod_value( $padding, 'desktop_top' );
+		$desktop_right  = wpbf_get_theme_mod_value( $padding, 'desktop_right' );
+		$desktop_bottom = wpbf_get_theme_mod_value( $padding, 'desktop_bottom' );
+		$desktop_left   = wpbf_get_theme_mod_value( $padding, 'desktop_left' );
+
+		if ( is_numeric( $desktop_top ) || is_numeric( $desktop_right ) || is_numeric( $desktop_bottom ) || is_numeric( $desktop_left ) ) {
+			wpbf_write_css( array(
+				'selector' => $selector,
+				'props'    => array(
+					'padding-top'    => is_numeric( $desktop_top ) ? wpbf_maybe_append_suffix( $desktop_top ) : null,
+					'padding-right'  => is_numeric( $desktop_right ) ? wpbf_maybe_append_suffix( $desktop_right ) : null,
+					'padding-bottom' => is_numeric( $desktop_bottom ) ? wpbf_maybe_append_suffix( $desktop_bottom ) : null,
+					'padding-left'   => is_numeric( $desktop_left ) ? wpbf_maybe_append_suffix( $desktop_left ) : null,
+				),
+			) );
+		}
+
+		$tablet_top    = wpbf_get_theme_mod_value( $padding, 'tablet_top' );
+		$tablet_right  = wpbf_get_theme_mod_value( $padding, 'tablet_right' );
+		$tablet_bottom = wpbf_get_theme_mod_value( $padding, 'tablet_bottom' );
+		$tablet_left   = wpbf_get_theme_mod_value( $padding, 'tablet_left' );
+
+		if ( is_numeric( $tablet_top ) || is_numeric( $tablet_right ) || is_numeric( $tablet_bottom ) || is_numeric( $tablet_left ) ) {
+			wpbf_write_css( array(
+				'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_desktop ) . ')',
+				'selector'    => $selector,
+				'props'       => array(
+					'padding-top'    => is_numeric( $tablet_top ) ? wpbf_maybe_append_suffix( $tablet_top ) : null,
+					'padding-right'  => is_numeric( $tablet_right ) ? wpbf_maybe_append_suffix( $tablet_right ) : null,
+					'padding-bottom' => is_numeric( $tablet_bottom ) ? wpbf_maybe_append_suffix( $tablet_bottom ) : null,
+					'padding-left'   => is_numeric( $tablet_left ) ? wpbf_maybe_append_suffix( $tablet_left ) : null,
+				),
+			) );
+		}
+
+		$mobile_top    = wpbf_get_theme_mod_value( $padding, 'mobile_top' );
+		$mobile_right  = wpbf_get_theme_mod_value( $padding, 'mobile_right' );
+		$mobile_bottom = wpbf_get_theme_mod_value( $padding, 'mobile_bottom' );
+		$mobile_left   = wpbf_get_theme_mod_value( $padding, 'mobile_left' );
+
+		if ( is_numeric( $mobile_top ) || is_numeric( $mobile_right ) || is_numeric( $mobile_bottom ) || is_numeric( $mobile_left ) ) {
+			wpbf_write_css( array(
+				'media_query' => '@media screen and (max-width: ' . esc_attr( $breakpoint_mobile ) . ')',
+				'selector'    => $selector,
+				'props'       => array(
+					'padding-top'    => is_numeric( $mobile_top ) ? wpbf_maybe_append_suffix( $mobile_top ) : null,
+					'padding-right'  => is_numeric( $mobile_right ) ? wpbf_maybe_append_suffix( $mobile_right ) : null,
+					'padding-bottom' => is_numeric( $mobile_bottom ) ? wpbf_maybe_append_suffix( $mobile_bottom ) : null,
+					'padding-left'   => is_numeric( $mobile_left ) ? wpbf_maybe_append_suffix( $mobile_left ) : null,
+				),
+			) );
+		}
+	}
+}
+
+// Menu widget padding.
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_desktop_menu_1_padding', '.wpbf-footer-menu-widget-desktop_menu_1' );
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_desktop_menu_2_padding', '.wpbf-footer-menu-widget-desktop_menu_2' );
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_mobile_menu_1_padding', '.wpbf-footer-menu-widget-mobile_menu_1' );
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_mobile_menu_2_padding', '.wpbf-footer-menu-widget-mobile_menu_2' );
+
+// HTML widget padding.
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_desktop_html_1_padding', '.wpbf-footer-html-widget-wrapper-desktop_html_1' );
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_desktop_html_2_padding', '.wpbf-footer-html-widget-wrapper-desktop_html_2' );
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_mobile_html_1_padding', '.wpbf-footer-html-widget-wrapper-mobile_html_1' );
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_mobile_html_2_padding', '.wpbf-footer-html-widget-wrapper-mobile_html_2' );
+
+// Social icons padding.
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_desktop_social_padding', '.wpbf-footer-social.wpbf_footer_builder_desktop_social' );
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_mobile_social_padding', '.wpbf-footer-social.wpbf_footer_builder_mobile_social' );
+
+// Copyright padding.
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_desktop_copyright_padding', '.wpbf-footer-copyright.wpbf_footer_builder_desktop_copyright' );
+wpbf_generate_footer_widget_padding_css( 'wpbf_footer_builder_mobile_copyright_padding', '.wpbf-footer-copyright.wpbf_footer_builder_mobile_copyright' );
 
 // Footer Button Styles.
 require_once WPBF_THEME_DIR . '/inc/customizer/styles/footer-builder-button-styles.php';
