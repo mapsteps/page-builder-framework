@@ -88,31 +88,25 @@ export default function footerBuilderRowsSetup() {
 							selector: `.wpbf-footer-row-${rowKey} .wpbf-builder-column-${columnKey}`,
 							props: {
 								"justify-content": "",
-								"text-align": "",
 							},
 						});
 						return;
 					}
 
 					let justify = "flex-start";
-					let textAlign = "left";
 
 					if (value === "center") {
 						justify = "center";
-						textAlign = "center";
 					} else if (value === "end" || value === "right") {
 						justify = "flex-end";
-						textAlign = "right";
 					} else if (value === "space-between") {
 						justify = "space-between";
-						textAlign = "inherit";
 					}
 
 					writeCSS(settingId, {
 						selector: `.wpbf-footer-row-${rowKey} .wpbf-builder-column-${columnKey}`,
 						props: {
 							"justify-content": justify,
-							"text-align": textAlign,
 						},
 					});
 				},
@@ -315,31 +309,25 @@ export default function footerBuilderRowsSetup() {
 							selector: `.wpbf-footer-row-${rowKey} .wpbf-builder-column-${columnKey}`,
 							props: {
 								"justify-content": "",
-								"text-align": "",
 							},
 						});
 						return;
 					}
 
 					let justify = "flex-start";
-					let textAlign = "left";
 
 					if (value === "center") {
 						justify = "center";
-						textAlign = "center";
 					} else if (value === "end" || value === "right") {
 						justify = "flex-end";
-						textAlign = "right";
 					} else if (value === "space-between") {
 						justify = "space-between";
-						textAlign = "inherit";
 					}
 
 					writeCSS(settingId, {
 						selector: `.wpbf-footer-row-${rowKey} .wpbf-builder-column-${columnKey}`,
 						props: {
 							"justify-content": justify,
-							"text-align": textAlign,
 						},
 					});
 				},

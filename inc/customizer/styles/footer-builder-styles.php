@@ -222,25 +222,20 @@ foreach ( $parsed_desktop_rows as $row_key => $columns ) {
 		foreach ( $column_keys as $col_key ) {
 			$col_align = wpbf_customize_str_value( $row_id_prefix . $col_key . '_align' );
 			if ( $col_align && 'default' !== $col_align ) {
-				$justify    = 'flex-start';
-				$text_align = 'left';
+				$justify = 'flex-start';
 
 				if ( 'center' === $col_align ) {
-					$justify    = 'center';
-					$text_align = 'center';
+					$justify = 'center';
 				} elseif ( 'end' === $col_align || 'right' === $col_align ) {
-					$justify    = 'flex-end';
-					$text_align = 'right';
+					$justify = 'flex-end';
 				} elseif ( 'space-between' === $col_align ) {
-					$justify    = 'space-between';
-					$text_align = 'inherit';
+					$justify = 'space-between';
 				}
 
 				wpbf_write_css( array(
 					'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-builder-column-' . esc_attr( $col_key ),
 					'props'    => array(
 						'justify-content' => $justify,
-						'text-align'      => $text_align,
 					),
 				) );
 			}
@@ -387,25 +382,20 @@ foreach ( $parsed_mobile_rows as $row_key => $columns ) {
 		foreach ( $column_keys as $col_key ) {
 			$col_align = wpbf_customize_str_value( $row_id_prefix . $col_key . '_align' );
 			if ( $col_align && 'default' !== $col_align ) {
-				$justify    = 'flex-start';
-				$text_align = 'left';
+				$justify = 'flex-start';
 
 				if ( 'center' === $col_align ) {
-					$justify    = 'center';
-					$text_align = 'center';
+					$justify = 'center';
 				} elseif ( 'end' === $col_align || 'right' === $col_align ) {
-					$justify    = 'flex-end';
-					$text_align = 'right';
+					$justify = 'flex-end';
 				} elseif ( 'space-between' === $col_align ) {
-					$justify    = 'space-between';
-					$text_align = 'inherit';
+					$justify = 'space-between';
 				}
 
 				wpbf_write_css( array(
 					'selector' => '.wpbf-footer-row-' . esc_attr( $row_key ) . ' .wpbf-builder-column-' . esc_attr( $col_key ),
 					'props'    => array(
 						'justify-content' => $justify,
-						'text-align'      => $text_align,
 					),
 				) );
 			}
