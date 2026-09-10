@@ -78,7 +78,9 @@ export default function setupjQuerySite($) {
 		document.body.classList.remove("wpbf-is-tablet");
 		document.body.classList.remove("wpbf-is-mobile");
 
-		document.body.classList.add(bodyClass);
+		if (bodyClass) {
+			document.body.classList.add(bodyClass);
+		}
 	}
 
 	/**
