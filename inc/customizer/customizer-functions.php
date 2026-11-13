@@ -236,7 +236,7 @@ function wpbf_create_customizer_css_file() {
 	}
 
 	// Create wpbf-customizer-styles.css file if it doesn't exist, otherwise attempt to update it.
-	if ( ! file_exists( $pbf_dir . 'page-builder-framework/wpbf-customizer-styles.css' ) ) {
+	if ( ! file_exists( $pbf_dir . 'wpbf-customizer-styles.css' ) ) {
 		$wp_filesystem->put_contents( $pbf_dir . 'wpbf-customizer-styles.css', $css, 0644 );
 	} elseif ( $css !== $wp_filesystem->get_contents( $pbf_dir . 'wpbf-customizer-styles.css' ) ) {
 		// Override the file only if changes were made in the customizer.
