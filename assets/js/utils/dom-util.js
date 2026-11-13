@@ -50,18 +50,26 @@ export function listenDocumentEvent(eventType, selector, handler) {
 	}
 
 	document.addEventListener(eventName, function (e) {
-		if (!e.target) return;
-		if (!(e.target instanceof HTMLElement)) return;
+		/**
+		 * Use `Element` instead of `HTMLElement` here.
+		 * When an SVG icon (e.g. the hamburger icon or the sub-menu arrow) is clicked,
+		 * `e.target` is an `SVGElement` (svg, path, etc.) which is not an `HTMLElement`.
+		 * Bailing out here would make clicks on the icon itself do nothing.
+		 */
+		if (!e.target || !(e.target instanceof Element)) return;
+
+		/** @type {Element} */
 		let target = e.target;
 
 		if (selector) {
 			const closestTarget = e.target.closest(selector);
 			if (!closestTarget) return;
 
-			if (closestTarget instanceof HTMLElement) {
-				target = closestTarget;
-			}
+			target = closestTarget;
 		}
+
+		// The handlers expect an HTMLElement as `this`.
+		if (!(target instanceof HTMLElement)) return;
 
 		if (target && eventName === "mouseout") {
 			if (
