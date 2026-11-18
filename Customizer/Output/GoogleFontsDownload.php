@@ -418,6 +418,10 @@ class GoogleFontsDownload {
 				// Get the font-file url inside of current @font-face declaration by detecting src: url(...) inside of it.
 				preg_match_all( '/url\(.*?\)/i', $content, $font_file_url_matches );
 
+				if ( empty( $font_file_url_matches[0][0] ) ) {
+					return $content;
+				}
+
 				$font_file_url_declaration = $font_file_url_matches[0][0];
 
 				$font_file_url = str_replace( 'url(', '', $font_file_url_declaration );
@@ -464,25 +468,22 @@ class GoogleFontsDownload {
 
 		$font_face_declarations = '';
 
-		$font_weight = $font_variant;
+		// Variants are named like Google's: "regular", "italic", "700", "700italic".
+		$is_italic   = false !== strpos( $font_variant, 'italic' );
+		$font_weight = str_replace( array( 'regular', 'italic' ), '', $font_variant );
+		$font_weight = '' === $font_weight ? '400' : $font_weight;
+		$font_style  = $is_italic ? 'italic' : 'normal';
 
-		if ( 'italic' === $font_variant ) {
-			$font_weight = '400';
-		} elseif ( 'regular' === $font_variant ) {
-			$font_weight = '400';
-		}
+		preg_match_all( '/@font-face\s*{[^}]*}/is', $css_content, $blocks );
 
-		$pattern = "/@font-face\s*{[^}]*font-family:\s*['\"]?" . $font_family . "['\"]?[^}]*font-weight:\s*" . $font_weight . '[^}]*}/is';
+		foreach ( $blocks[0] as $block ) {
+			$is_family = preg_match( "/font-family:\s*['\"]?" . preg_quote( $font_family, '/' ) . "['\"]?\s*;/i", $block );
+			$is_weight = preg_match( '/font-weight:\s*' . preg_quote( $font_weight, '/' ) . '\s*;/i', $block );
+			$is_style  = preg_match( '/font-style:\s*' . $font_style . '\s*;/i', $block );
 
-		// Find all matches from the CSS content.
-		preg_match_all( $pattern, $css_content, $matches );
-
-		if ( empty( $matches[0] ) ) {
-			return $font_face_declarations;
-		}
-
-		foreach ( $matches[0] as $font_face_declaration ) {
-			$font_face_declarations .= $font_face_declaration . "\n";
+			if ( $is_family && $is_weight && $is_style ) {
+				$font_face_declarations .= $block . "\n";
+			}
 		}
 
 		return $font_face_declarations;
