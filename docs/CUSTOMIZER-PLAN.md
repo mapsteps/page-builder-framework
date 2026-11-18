@@ -2,7 +2,9 @@
 
 Goal: rebuild the Customizer engine and its controls once, properly, so it never needs another pass. Based on a full read of the engine core, all controls and the Kirki layer (November 18, 2026); every point below was checked in the code.
 
-## Where it stands
+**Status: done** (steps 1–9, November 18–19, 2026). Summary at the end of step 9; everything left open is collected under "For later" at the end.
+
+## Where it stood
 
 The engine (written December 2023) copies Kirki's way of building options and ports Kirki's controls. It works, but:
 
@@ -174,9 +176,49 @@ Checks for every step: `python bin/snapshot/snapshot.py take/diff` (pages), `nod
    - **Lesson:** a mu-plugin can't add a `query` filter through `$GLOBALS['wp_filter']['query'][10][]` (that works only before WordPress loads, as the dev scripts do); use `add_filter()`. The first old-Premium run wasn't write-blocked because of it and left a CSS cache entry for its own fingerprint (same CSS); removed again.
    - **Hand-over for step 9:** the Kirki file needs `phpcs:disable` for four sniffs (one file with several namespaces and classes is the point); the folder's other files are on the list as before. Also noticed: `inc/backwards-compatibility.php` keeps a commented-out "page boxed padding" conversion ("remains here for the future"); `inc/settings/compatibility-notice.php` and `settings-compatibility.php` print translated HTML with `_e()` (lint errors, pre-existing; `wp_kses_post( __() )` would fix it without touching the strings).
    - **For later (not this module):** Premium's own `inc/backwards-compatibility.php` runs its checks on every request too (Premium pass: same record-"done" pattern). On pbf.local the "update Premium" notice shows on every admin page except the Dashboard; the theme doesn't hide it there (checked), so it's something on that site; not looked into. pbf.local's theme mods hold a leftover `blog_author: 'show'` (old setting, harmless; the migration only acts on 'hide').
-9. **Finish:** the Customizer folder lint-clean, dead classes removed, `PREMIUM-DEPENDENCIES.md` updated (incl. removing two false entries: `enqueue`, `init`).
+9. **Finish:** the Customizer folder lint-clean, dead classes removed, `PREMIUM-DEPENDENCIES.md` updated (incl. removing two false entries: `enqueue`, `init`). **Done November 19, 2026** (3 commits + this note).
+   - **Lint:** `phpcs.xml` skips `node_modules`, so `composer lint` runs through the whole theme again (27 s). `Customizer/`, `inc/customizer/settings/`, `inc/customizer/customizer-*.php`, `inc/customizer/styles/` and `bin/` are clean (CRLF notice only); the rest of the theme is left to its modules (see "For later"). Fixes: commented-out code in `CodeControl`, the typography checker's unused `$setting_id` parameter dropped, `CustomizerControl::sanitizeCallback()` / `sanitizeJsCallback()` kept as documented no-ops (public builder), the Customizer's "Compatibility Warning" texts printed with `wp_kses_post( __() )` instead of `_e()` (same strings and output).
+   - **Dead code removed** (each checked unused in the theme, Premium and `wpbf-child`, incl. string callbacks and hooks, and absent from `bin/premium-deps.json`): `NumberUtil::makeSureValueWithOrWithoutUnit()` / `makeSureValueWithoutUnit()`, `FontsUtil::getAllFonts()` (and with it the `wpbf_all_fonts` filter, which never fired: nothing called it) / `getStandardVariantOptions()` / `getCompleteVariants()` / `getCompleteVariantOptions()`, `TypographyField::addDivider()`, `CustomizerStore::findPartialRefreshesByControlId()`, `Registry::built()`, the font download's unused woff user agent, an unused import in `ResponsiveUtil`, `dashToPascalCase()` / `getCommandArgValue()` in `build-utils.mjs`. No orphan source files (all reached by the bundle or SCSS imports). Kept on purpose: public functions (`wpbf_customizer_setting()`, `wpbf_customizer_control()`, `wpbf_create_customizer_css_file()`, `wpbf_is_numeric_sanitization_helper()`), the builder classes' methods, core overrides (`render_template`, `content_template`), `SliderControl::$default_min/max` (the old slider classes had them), `CustomizerUtil::$available_panel_types` (see "For later").
+   - **Premium list:** `enqueue` and `init` were Premium's Elementor CSS file and EDD updater, not builder calls: removed (18 builder methods). Rechecked against Premium: control types, sections/panels, theme settings, hooks and handles unchanged by steps 1–8; Premium uses no Customizer class, control handle or `wpbf_mod()`. `PREMIUM-DEPENDENCIES.md`: the builder records calls; notes for the Premium pass (Kirki safety net, CSS cache fingerprint filter, the twice-defined `wpbf_do_customizer_links()`).
+   - **Checks:** `pnpm install --frozen-lockfile` + `pnpm build`: bundle byte-identical; `tsc --noEmit` clean; page snapshot: all 233 pages identical, `css-compare` 0 differences; Customizer check: 722/722 controls, preview CSS 49/49, round trips as after 7d, nothing changed on open, no JS errors or failed requests, database unchanged; Premium check 194 OK (the two false entries gone); schema check 276 OK; whole-theme lint runs through, nothing in the folders above. Someone was editing in the Customizer on pbf.local during the runs (a boxed-layout draft): the snapshot noticed its rows, the check blocked its own dismiss request, so that draft was left alone.
 
-## Later (agreed, not scheduled yet)
+**The Customizer module is done** (November 19, 2026). For users: the Customizer opens faster and without false "unsaved changes", every control follows resets and changes made elsewhere, and transparent colors, multi-selects and repeater rows no longer lose data on save. For visitors: CSS and Google Fonts are built once when settings change instead of on every page view (steps 4, 5 and 8 each made page views 3–23 ms faster, and they use about half the memory), and fonts are never downloaded during a visit. For developers: one definition per option (`Customizer/Schema/`, `wpbf_mod()`), one control bundle with a reproducible `pnpm build`, CSS written once with `wpbf_css()` for both the front end and the live preview. Premium 2.10+ works unchanged; older Premium doesn't crash.
+
+## For later (collected from all steps)
+
+Everything the steps above left open, in one place, sorted by the module that should pick it up. Details are in the step named in brackets.
+
+**Each area module (header, blog, footer, WooCommerce, EDD, …)**
+- Move the area's CSS to `inc/customizer/styles/<area>.php` with `wpbf_css()`; recipe in step 6 ("For the next area modules"). Clean the area's files for lint while there (the whole-theme lint run lists 537 errors / 88 warnings in 70 files, none in `Customizer/`; `inc/customizer/styles.php` alone has 108 / 15).
+- 12 "is it the default?" checks compare text to a number and never match (their CSS prints at the default too): `{archive}_post_space_between`, `{archive}_post_image_width`, `pre_header_height`, `menu_logo_container_width`, `mobile_menu_logo_container_width`, `menu_height`, `menu_padding`, `sub_menu_width`, `mobile_menu_height`, `footer_height`, `woocommerce_single_image_width`, `woocommerce_loop_image_width` (3). `wpbf_css()` fixes them on the way.
+- Custom widths (pre header, navigation, footer, WooCommerce, archive/post) drop an explicitly chosen 1200px when the page width differs (`=== '1200px'` checks) (3).
+- Mobile logo area width: preview 66%, live 66.666% when nothing is saved (3).
+- Output code reads options nobody registers: `blog_pagination_background_color_next_prev`, `page_background_*` (6), `mobile_sub_menu_border_color`, `mobile_menu_padding_left`, `menu_custom`, `{single}_post_content_alignment`, `edd_menu_item_icon`. LifterLMS's settings file isn't loaded and `lifterlms-styles-backup.php` is unused (3).
+- Footer column texts: the schema has them untranslated, as the footer prints them; translating them is a possible change (3).
+
+**Assets module**
+- `wpbf.mjs` still builds the theme's own assets and zip (and is the last user of most `build-scripts/build-utils.mjs` helpers) (2, 9).
+- `inc/customizer/{js,css}/customizer.*` could join the control bundle (7d).
+
+**Premium pass**
+- Premium's own `inc/backwards-compatibility.php` runs its checks on every request: same "record done" pattern as step 8 (8).
+- Premium's settings files still load on every request (its code) (4).
+- The Gutenberg editor styles read Premium's typography options with their own hard-coded fallbacks (3).
+- Notes in `PREMIUM-DEPENDENCIES.md` ("Notes for the Premium pass").
+
+**Settings module**
+- `inc/settings/compatibility-notice.php` prints translated HTML with `_e()` (lint errors); `wp_kses_post( __() )` fixes it without touching the strings, as done for the Customizer's copy in step 9 (8).
+- On pbf.local the "update Premium" notice doesn't show on the Dashboard; the theme doesn't hide it there, so it's that site (not looked into) (8).
+
+**Customizer follow-ups (small, need a decision or a reason to touch)**
+- The code control ignores its `language` argument, so Premium's five HTML code fields get no highlighting; fixing it also turns on HTMLHint warnings: decide with the user (7b).
+- Generic and editor fields' cleaning crashes (PHP TypeError) when a crafted save sends an array; responsive generic numbers are saved as text ("3") (7b).
+- The font family list is sent once per typography field: 13 × ~88 KB = 1.1 MB of the 2.66 MB Customizer page; sending it once would halve the page (7d).
+- After resetting a typography setting, its font family select can disagree with it (7d). Sortable doesn't follow changes made elsewhere (7b). Color fields show `transparent` / `var(...)` as `#000000` in the text field; hue mode ignores typed numbers (7c). Kirki-style grouped select choices are dropped (never worked, nobody uses them) (7d).
+- `CustomizerUtil` checks panel types against the list of section types (`available_panel_types` is unused), so a panel of type `expanded`, `link` or `outer` is accepted; making it strict could drop a panel someone declared that way (9).
+- `inc/backwards-compatibility.php` keeps a commented-out "page boxed padding" conversion; pbf.local holds a leftover `blog_author: 'show'` (harmless) (8).
+
+**Agreed with the user, not scheduled yet**
 
 1. **Leaner Google Fonts CSS** (user, November 18, 2026: "add this to our list for things to do later"). Today every chosen weight prints one `@font-face` rule per alphabet Google offers (7: Latin, Latin extended, Cyrillic + extended, Greek + extended, Vietnamese). On pbf.local that's 27 rules / 8.7 KB (under 1 KB compressed) where 4 rules / 1.4 KB would do. Suggested:
    - **A. Only the alphabets the site needs**, picked from the site language (English/German/French → Latin; Russian → + Cyrillic; Vietnamese → + Vietnamese …), plus a filter to add more. Risk: text in another alphabet than the site language falls back to the fallback font.
