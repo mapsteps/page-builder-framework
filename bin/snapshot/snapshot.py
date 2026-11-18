@@ -149,6 +149,7 @@ def take(name):
     shutil.rmtree(target, ignore_errors=True)
     os.makedirs(target)
 
+    db_before = db_state()
     login = subprocess.run(PHP + [os.path.join(HERE, 'login.php'), WP_ROOT, 'create'], capture_output=True, text=True).stdout
     cookie, token = login.strip().split('\n')
     shutil.copy(os.path.join(HERE, 'mu-plugin.php'), MU)
@@ -171,6 +172,20 @@ def take(name):
             msgs = sorted(set(re.sub(r'^\[[^\]]+\] ', '', l) for l in f.read().splitlines() if l.startswith('[')))
     open(os.path.join(target, '_php-errors.txt'), 'w', encoding='utf-8').write('\n'.join(msgs))
     print('%s: %d pages, %d broken %s, %d PHP log messages' % (name, len(os.listdir(target)) - 1, len(bad), bad, len(msgs)))
+    warn_if_db_changed(db_before)
+
+
+def db_state():
+    """Counts and highest ids of the content tables (posts, meta, comments)."""
+    return subprocess.run(PHP + [os.path.join(HERE, 'login.php'), WP_ROOT, 'dbstate'], capture_output=True, text=True).stdout.strip()
+
+
+def warn_if_db_changed(before):
+    after = db_state()
+    if after != before:
+        print('WARNING: content tables changed during the run (someone else working on the site, or the run wrote something):')
+        print('  before', before)
+        print('  after ', after)
 
 
 def compare(a, b):

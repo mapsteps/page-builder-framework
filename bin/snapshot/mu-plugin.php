@@ -1,16 +1,43 @@
 <?php
 /**
- * Snapshot helper (dev only, never shipped). snapshot.py copies this file to
- * wp-content/mu-plugins/zz-test-snapshot.php for the run and deletes it afterwards.
+ * Snapshot helper (dev only, never shipped). snapshot.py and customizer-check.mjs copy this file to
+ * wp-content/mu-plugins/zz-test-snapshot.php for the run and delete it afterwards.
  *
- * Only acts on requests with ?zz_snap=<variant>. Never writes to the database:
- * - zz_snap=live keeps the saved settings, any other variant swaps in the settings from variants.json.
- * - zz_nopremium=1 switches the Premium Add-On off for that request.
+ * Never writes to the database. Acts only on requests with one of these parameters:
+ * - zz_nolock=1 (Customizer check): opening the editor or the Customizer leaves no post locks or dismissed drafts behind.
+ * - zz_snap=<variant> (page snapshots): same, plus PHP warnings are logged, nonces stay the same within a run, and
+ *   zz_snap=live keeps the saved settings while any other variant swaps in the settings from output/variants.json;
+ *   zz_nopremium=1 switches the Premium Add-On off for that request.
  *
  * @package Page Builder Framework
  */
 
 // phpcs:disable -- Dev tool.
+
+if ( ! isset( $_GET['zz_snap'] ) && ! isset( $_GET['zz_nolock'] ) ) {
+	return;
+}
+
+// Opening an editor or the Customizer must not leave anything behind (post locks, dismissed Customizer drafts).
+foreach ( array( 'add_post_metadata', 'update_post_metadata' ) as $zz_hook ) {
+	add_filter(
+		$zz_hook,
+		function ( $check, $object_id, $meta_key ) {
+			return in_array( $meta_key, array( '_edit_lock', '_edit_last', '_customize_restore_dismissed' ), true ) ? true : $check;
+		},
+		10,
+		3
+	);
+}
+
+// The Dashboard's Quick Draft widget creates an empty draft post when there is none.
+add_action(
+	'wp_dashboard_setup',
+	function () {
+		remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' );
+	},
+	999
+);
 
 if ( ! isset( $_GET['zz_snap'] ) ) {
 	return;
@@ -50,7 +77,7 @@ if ( 'live' !== $zz_variant ) {
 	);
 }
 
-// Stable nonces within a run.
+// Stable nonces within a run (only valid for snapshot requests).
 add_filter(
 	'nonce_life',
 	function () {
