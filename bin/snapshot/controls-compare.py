@@ -14,7 +14,7 @@ import re
 import sys
 from html.parser import HTMLParser
 
-BOOL = {'checked', 'disabled', 'selected', 'readonly', 'hidefocus'}
+BOOL = {'checked', 'disabled', 'selected', 'readonly', 'hidefocus', 'multiple'}
 
 
 class Canon(HTMLParser):

@@ -45,8 +45,11 @@ $types = array(
 	'wpbf-checkbox', 'wpbf-toggle', 'wpbf-radio', 'wpbf-radio-buttonset', 'wpbf-radio-image', 'wpbf-generic',
 	'wpbf-responsive-generic', 'wpbf-dimension', 'wpbf-margin-padding', 'wpbf-responsive-margin-padding',
 	'wpbf-editor', 'wpbf-image', 'wpbf-headline', 'wpbf-divider', 'wpbf-custom', 'wpbf-section-tabs', 'wpbf-sortable',
-	'code_editor', 'wpbf-upload', 'upload', 'media',
+	'code_editor', 'wpbf-upload', 'upload', 'media', 'wpbf-color', 'wpbf-assoc-array', 'wpbf-repeater',
 );
+
+// Typography's font family / variant selects (the select family itself is 7d's).
+$typography_parts = '/\[(font-family|variant)\]$/';
 
 $inputs = array(
 	true, false, 1, 0, '1', '0', '', 'on', 'off', 'true', 'false', 'yes', null, array(), '12', '12px', '-5', '1.5em', '3.',
@@ -59,12 +62,20 @@ $inputs = array(
 	'{"desktop_top":5,"tablet_left":"7px","mobile_bottom":"x"}',
 	array( 'id' => 5, 'url' => 'http://pbf.local/x.png', 'width' => 10, 'height' => 20 ),
 	array( 'b', 'a', '<i>c</i>' ),
+	// 7c: colors, typography, repeater.
+	'transparent', 'rgba(0,0,0,0)', 'rgba(10, 20, 30, 0.5)', 'var(--x)', '#abcd', '#FFF', '#12345678', 'rgb(1,2,3)',
+	'hsla(200, 50%, 40%, 0.7)', 'red', 120, array( 'r' => 1, 'g' => 2, 'b' => 3, 'a' => 0.5 ),
+	array( 'font-family' => 'Roboto', 'variant' => '700italic', 'font-size' => '<b>14px</b>', 'random' => 3, 'color' => 'transparent' ),
+	array( 'font-family' => 'Helvetica, Arial, sans-serif', 'variant' => '400', 'text-transform' => 'bogus' ),
+	rawurlencode( '[{"font_name":"A <b>b</b>","font_css_name":"a","font_variants":["regular","700"],"font_woff":"12"},null]' ),
+	str_replace( '%2C', ',', rawurlencode( '[{"zz_text":"x","zz_select":"b","zz_multi":["a"],"zz_upload":"","zz_checkbox":"1","zz_color":"rgba(0,0,0,0)","bogus":1}]' ) ),
+	array( array( 'zz_text' => '<script>x</script>', 'font_name' => 'n', 'zz_number' => '5' ) ),
 );
 
 $out = array();
 
 foreach ( $manager->controls() as $control ) {
-	if ( ! in_array( $control->type, $types, true ) ) {
+	if ( ! in_array( $control->type, $types, true ) && ! preg_match( $typography_parts, $control->id ) ) {
 		continue;
 	}
 

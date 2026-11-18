@@ -61,6 +61,42 @@ function zz_test_7b_fields() {
 	wpbf_customizer_field()->id( 'zz_test_editor' )->type( 'editor' )->label( 'zz Editor' )->defaultValue( '<p>zz</p>' )->addToSection( $s );
 	wpbf_customizer_field()->id( 'zz_test_sortable' )->type( 'sortable' )->label( 'zz Sortable' )->defaultValue( array( 'b', 'a' ) )->choices( array( 'a' => 'A', 'b' => 'B', 'c' => 'C' ) )->addToSection( $s );
 
+	// 7c: color variants, typography, repeater with every sub-field type.
+	wpbf_customizer_field()->id( 'zz_test_color' )->type( 'color' )->label( 'zz Color' )->description( 'zz color <b>desc</b>' )->defaultValue( '#123ABC' )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_short' )->type( 'color' )->label( 'zz Color short' )->defaultValue( '#abc' )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_alpha' )->type( 'color' )->label( 'zz Color alpha' )->defaultValue( 'rgba(10, 20, 30, 0.5)' )->properties( array( 'mode' => 'alpha' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_transparent' )->type( 'color' )->label( 'zz Color transparent' )->defaultValue( 'transparent' )->properties( array( 'mode' => 'alpha' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_var' )->type( 'color' )->label( 'zz Color var' )->defaultValue( 'var(--zz-color)' )->properties( array( 'mode' => 'alpha' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_empty' )->type( 'color' )->label( 'zz Color empty' )->defaultValue( '' )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_hue' )->type( 'color' )->label( 'zz Color hue' )->defaultValue( 120 )->properties( array( 'mode' => 'hue' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_top' )->type( 'color' )->label( 'zz Color top' )->defaultValue( '#ff0000' )->properties( array( 'label_style' => 'top', 'color_swatches' => array( '#111111', '#222222' ) ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_tooltip' )->type( 'color' )->label( 'zz Color tooltip' )->defaultValue( '#00ff00' )->properties( array( 'label_style' => 'tooltip', 'swatches' => array( '#333333' ) ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_rgba_object' )->type( 'color' )->label( 'zz Color rgba object' )->defaultValue( array( 'r' => 1, 'g' => 2, 'b' => 3, 'a' => 0.5 ) )->properties( array( 'form_component' => 'RgbaColorPicker' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_color_hsla' )->type( 'color' )->label( 'zz Color hsla' )->defaultValue( 'hsla(200, 50%, 40%, 0.7)' )->properties( array( 'form_component' => 'HslaStringColorPicker' ) )->addToSection( $s );
+
+	wpbf_customizer_field()->id( 'zz_test_typography' )->type( 'typography' )->label( 'zz Typography' )->description( 'zz typo desc' )->defaultValue( array( 'font-family' => 'Roboto', 'variant' => '700' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_typography_label' )->type( 'typography' )->label( 'zz Typography label only' )->defaultValue( array( 'font-size' => '14px' ) )->addToSection( $s );
+
+	wpbf_customizer_field()->id( 'zz_test_repeater' )->type( 'repeater' )->label( 'zz Repeater' )->description( 'zz rep desc' )
+		->defaultValue( array( array( 'zz_text' => 'Row "one"', 'zz_select' => 'b', 'zz_multi' => array( 'a', 'c' ), 'zz_upload' => false, 'zz_checkbox' => true, 'zz_textarea' => "t\nx", 'zz_color' => '#ff0000', 'zz_radio' => 'y' ) ) )
+		->properties( array(
+			'row_label'    => array( 'type' => 'field', 'value' => 'zz row', 'field' => 'zz_text' ),
+			'button_label' => 'zz add',
+			'limit'        => 3,
+			'fields'       => array(
+				'zz_text'     => array( 'type' => 'text', 'label' => 'zz Text', 'description' => 'zz text desc' ),
+				'zz_select'   => array( 'type' => 'select', 'label' => 'zz Select', 'choices' => array( 'a' => 'A', 'b' => 'B' ) ),
+				'zz_multi'    => array( 'type' => 'select', 'label' => 'zz Multi', 'multiple' => 3, 'choices' => array( 'a' => 'A', 'b' => 'B', 'c' => 'C' ) ),
+				'zz_upload'   => array( 'type' => 'upload', 'label' => 'zz Upload', 'mime_type' => array() ),
+				'zz_number'   => array( 'type' => 'number', 'label' => 'zz Number' ),
+				'zz_checkbox' => array( 'type' => 'checkbox', 'label' => 'zz Checkbox' ),
+				'zz_textarea' => array( 'type' => 'textarea', 'label' => 'zz Textarea' ),
+				'zz_color'    => array( 'type' => 'color', 'label' => 'zz Color' ),
+				'zz_radio'    => array( 'type' => 'radio', 'label' => 'zz Radio', 'choices' => array( 'x' => 'X', 'y' => 'Y' ) ),
+			),
+		) )
+		->addToSection( $s );
+
 }
 
 if ( did_action( 'after_setup_theme' ) ) {

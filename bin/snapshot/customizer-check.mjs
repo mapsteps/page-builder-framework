@@ -128,6 +128,12 @@ try {
 			await sleep(300);
 			if (await evaluate("!!(window.wp && wp.customize && wp.customize.state && wp.customize.state('processing') && document.body && document.body.classList.contains('ready') && 'complete' === document.readyState)")) break;
 		}
+		// Let the preview finish loading too: Local serves one PHP request at a time, so a preview still loading would
+		// hold up the next open's page (and its times) with --timing.
+		for (let i = 0; i < 100; i++) {
+			if (await evaluate("(() => { try { const w = wp.customize.previewer.preview && wp.customize.previewer.preview.targetWindow(); return !!w && 'complete' === w.document.readyState && !wp.customize.previewer.loading; } catch (e) { return false; } })()")) break;
+			await sleep(300);
+		}
 		return await evaluate(`(() => {
 			const nav = performance.getEntriesByType('navigation')[0];
 			const all = performance.getEntriesByType('resource');
@@ -140,6 +146,9 @@ try {
 				themeKB: kb(sum(theme)),
 				htmlKB: kb(nav.decodedBodySize),
 				totalKB: kb(sum(all) + nav.decodedBodySize),
+				responseEndMs: Math.round(nav.responseEnd),
+				domInteractiveMs: Math.round(nav.domInteractive),
+				domContentLoadedStartMs: Math.round(nav.domContentLoadedEventStart),
 				domContentLoadedMs: Math.round(nav.domContentLoadedEventEnd),
 				loadMs: Math.round(nav.loadEventEnd),
 				readyMs: window.__zzReadyMs || null,
@@ -154,10 +163,13 @@ try {
 		loads.push(metrics);
 	}
 	const median = (key) => { const v = loads.map((l) => l[key]).sort((a, b) => a - b); return v[Math.floor(v.length / 2)]; };
-	const load = { ...loads[loads.length - 1], runs: timingRuns, domContentLoadedMs: median("domContentLoadedMs"), loadMs: median("loadMs"), readyMs: median("readyMs") };
+	const load = { ...loads[loads.length - 1], runs: timingRuns, responseEndMs: median("responseEndMs"), domInteractiveMs: median("domInteractiveMs"), domContentLoadedStartMs: median("domContentLoadedStartMs"), domContentLoadedMs: median("domContentLoadedMs"), loadMs: median("loadMs"), readyMs: median("readyMs") };
 
 	const result = await evaluate(`(async () => {
 		const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+		// Settings changed just by opening the Customizer (a control writing its setting on load).
+		const changedOnLoad = Object.keys(wp.customize.dirtyValues ? wp.customize.dirtyValues({ unsaved: true }) : {});
+		const savedOnLoad = wp.customize.state('saved').get();
 		const sections = [];
 		wp.customize.section.each((s) => sections.push(s));
 		// --layout: each control's rendered boxes (every element's position and size inside the control, while its section is
@@ -210,9 +222,19 @@ try {
 			'wpbf-responsive-margin-padding': null,
 			'wpbf-image': null,
 			'wpbf-editor': '<p>zz-test</p>',
+			'wpbf-assoc-array': null,
+			'wpbf-repeater': null,
+			// 7c: color variants of the zz-test fields (when they're there): value set, what the control shows.
+			'zz_test_color_alpha': ['rgba(1, 2, 3, 0.4)', 'rgba(1, 2, 3, 0.4)'],
+			'zz_test_color_transparent': ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)'],
+			'zz_test_color_hue': [200, '200'],
+			'zz_test_color_hsla': ['hsla(10, 20%, 30%, 0.5)', 'hsla(10, 20%, 30%, 0.5)'],
+			'zz_test_color_rgba_object': [{ r: 9, g: 8, b: 7, a: 0.5 }, 'rgba(9, 8, 7, 0.5)'],
 		};
 		for (const [type, value] of Object.entries(tries)) {
-			const control = firstOf(type);
+			const byId = 0 === type.indexOf('zz_test_');
+			const control = byId ? wp.customize.control(type) : firstOf(type);
+			if (byId && !control) continue;
 			if (!control) { roundTrips[type] = 'no control'; continue; }
 			const setting = control.setting;
 			const original = setting.get();
@@ -245,10 +267,27 @@ try {
 				next = 'array' === control.params.saveAs ? { id: 0, url, width: 0, height: 0 } : url;
 			}
 			if (type === 'wpbf-editor') look = 'zz-test';
+			if (byId) [next, look] = value;
+			// Typography (the assoc-array holds the whole value): another font family; the control shows it.
+			if (type === 'wpbf-assoc-array') {
+				next = { ...original, 'font-family': 'zz-test' };
+				look = 'zz-test';
+			}
+			// Repeater: the first row's first text field changed, in the format the setting uses (URI-encoded JSON text).
+			if (type === 'wpbf-repeater') {
+				const rows = 'string' === typeof original ? JSON.parse(decodeURI(original || '[]')) : JSON.parse(JSON.stringify(original || []));
+				const textField = Object.keys(control.params.fields).find((f) => 'text' === control.params.fields[f].type);
+				if (!rows.length) rows.push({});
+				rows[0][textField] = 'zz-test';
+				next = encodeURI(JSON.stringify(rows));
+				look = 'zz-test';
+			}
 			setting.set(next);
 			await sleep(400);
-			const html = control.container[0].innerHTML;
-			const inputs = [...control.container[0].querySelectorAll('input, select, textarea')].map((i) => i.type === 'checkbox' ? String(i.checked) : i.type === 'radio' ? (i.checked ? i.value : '') : i.value);
+			// The repeater's rows only (its hidden input holds the setting's text).
+			const scope = type === 'wpbf-repeater' ? control.container[0].querySelector('.repeater-fields') : control.container[0];
+			const html = scope.innerHTML;
+			const inputs = [...scope.querySelectorAll('input, select, textarea')].map((i) => i.type === 'checkbox' ? String(i.checked) : i.type === 'radio' ? (i.checked ? i.value : '') : i.value);
 			const shown = type.startsWith('wpbf-radio') ? inputs.includes(String(look)) : inputs.some((v) => String(v).toLowerCase().includes(String(look).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(look).toLowerCase());
 			setting.set(original);
 			await sleep(200);
@@ -312,6 +351,8 @@ try {
 			select2: document.querySelectorAll('.select2-container').length,
 			sliders: document.querySelectorAll('input[type=range]').length,
 			roundTrips,
+			changedOnLoad,
+			savedOnLoad,
 			unsavedChanges: Object.keys(wp.customize.dirtyValues ? wp.customize.dirtyValues({ unsaved: true }) : {}).length,
 			markup,
 			layout,
