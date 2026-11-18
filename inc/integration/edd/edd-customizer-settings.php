@@ -38,9 +38,7 @@ wpbf_customizer_section()
 // Shop sidebar layout.
 wpbf_customizer_field()
 	->id( 'edd_sidebar_layout' )
-	->type( 'select' )
 	->label( __( 'Shop Page Sidebar', 'page-builder-framework' ) )
-	->defaultValue( 'global' )
 	->priority( 0 )
 	->choices( array(
 		'global' => __( 'Inherit Global Settings', 'page-builder-framework' ),
@@ -53,9 +51,7 @@ wpbf_customizer_field()
 // Product sidebar layout.
 wpbf_customizer_field()
 	->id( 'edd_single_sidebar_layout' )
-	->type( 'select' )
 	->label( __( 'Product Page Sidebar', 'page-builder-framework' ) )
-	->defaultValue( 'global' )
 	->priority( 0 )
 	->choices( array(
 		'global' => __( 'Inherit Global Settings', 'page-builder-framework' ),
@@ -70,10 +66,8 @@ wpbf_customizer_field()
 // Hide from non-EDD pages.
 wpbf_customizer_field()
 	->id( 'edd_menu_item_hide_if_not_edd' )
-	->type( 'toggle' )
 	->label( __( 'Hide from non-Shop Pages', 'page-builder-framework' ) )
 	->description( __( 'Display Menu Item only on EDD related pages.', 'page-builder-framework' ) )
-	->defaultValue( 0 )
 	->priority( 5 )
 	->addToSection( 'wpbf_edd_menu_item_options' );
 
@@ -87,10 +81,8 @@ wpbf_customizer_field()
 // Menu item.
 wpbf_customizer_field()
 	->id( 'edd_menu_item_desktop' )
-	->type( 'select' )
 	->label( __( 'Visibility (Desktop)', 'page-builder-framework' ) )
 	->description( __( 'Add a Cart Icon to your Main Navigation.', 'page-builder-framework' ) )
-	->defaultValue( 'show' )
 	->priority( 10 )
 	->choices( array(
 		'show' => __( 'Show', 'page-builder-framework' ),
@@ -110,9 +102,7 @@ wpbf_customizer_field()
 // Menu item color.
 wpbf_customizer_field()
 	->id( 'edd_menu_item_desktop_color' )
-	->type( 'color' )
 	->label( __( 'Color', 'page-builder-framework' ) )
-	->defaultValue( '' )
 	->priority( 11 )
 	->transport( 'postMessage' )
 	->activeCallback( array(
@@ -142,10 +132,8 @@ wpbf_customizer_field()
 // Mobile menu item.
 wpbf_customizer_field()
 	->id( 'edd_menu_item_mobile' )
-	->type( 'select' )
 	->label( __( 'Visibility (Mobile)', 'page-builder-framework' ) )
 	->description( __( 'Add a Cart Icon to your Mobile Navigation.', 'page-builder-framework' ) )
-	->defaultValue( 'show' )
 	->priority( 13 )
 	->choices( array(
 		'show' => __( 'Show', 'page-builder-framework' ),
@@ -165,9 +153,7 @@ wpbf_customizer_field()
 // Menu item color.
 wpbf_customizer_field()
 	->id( 'edd_menu_item_mobile_color' )
-	->type( 'color' )
 	->label( __( 'Color', 'page-builder-framework' ) )
-	->defaultValue( '' )
 	->priority( 14 )
 	->transport( 'postMessage' )
 	->activeCallback( array(
@@ -197,9 +183,7 @@ wpbf_customizer_field()
 // Menu item count.
 wpbf_customizer_field()
 	->id( 'edd_menu_item_count' )
-	->type( 'select' )
 	->label( __( 'Count', 'page-builder-framework' ) )
-	->defaultValue( 'show' )
 	->priority( 16 )
 	->choices( array(
 		'show' => __( 'Show', 'page-builder-framework' ),

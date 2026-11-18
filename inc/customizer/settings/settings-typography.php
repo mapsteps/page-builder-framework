@@ -101,20 +101,13 @@ wpbf_customizer_section()
 // Text font toggle.
 wpbf_customizer_field()
 	->id( 'page_font_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_font_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'page_font_family' )
-	->type( 'typography' )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => 'regular',
-	) )
 	->priority( 1 )
 	->activeCallback( array(
 		array(
@@ -136,9 +129,7 @@ wpbf_customizer_field()
 // Color.
 wpbf_customizer_field()
 	->id( 'page_font_color' )
-	->type( 'color' )
 	->label( __( 'Color', 'page-builder-framework' ) )
-	->defaultValue( '#6d7680' )
 	->priority( 2 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -149,9 +140,7 @@ wpbf_customizer_field()
 // Accent color.
 wpbf_customizer_field()
 	->id( 'page_accent_color' )
-	->type( 'color' )
 	->label( __( 'Accent Color', 'page-builder-framework' ) )
-	->defaultValue( '#3ba9d2' )
 	->priority( 4 )
 	->properties( [
 		'mode' => 'alpha',
@@ -161,9 +150,7 @@ wpbf_customizer_field()
 // Accent color alt.
 wpbf_customizer_field()
 	->id( 'page_accent_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
-	->defaultValue( '#79c4e0' )
 	->priority( 4 )
 	->properties( [
 		'mode' => 'alpha',
@@ -193,22 +180,14 @@ if ( ! wpbf_is_premium() ) {
 // Title font toggle.
 wpbf_customizer_field()
 	->id( 'menu_logo_font_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Title - Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_title_tagline_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'menu_logo_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
-		'subsets'     => array( 'latin-ext' ),
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
@@ -230,22 +209,14 @@ wpbf_customizer_field()
 // Title font toggle.
 wpbf_customizer_field()
 	->id( 'menu_logo_description_toggle' )
-	->type( 'toggle' )
 	->label( esc_html__( 'Tagline - Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 3 )
 	->addToSection( 'wpbf_title_tagline_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'menu_logo_description_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
-		'subsets'     => array( 'latin-ext' ),
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 4 )
 	->activeCallback( array(
@@ -263,21 +234,14 @@ wpbf_customizer_field()
 // Menu font toggle.
 wpbf_customizer_field()
 	->id( 'menu_font_family_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_menu_font_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'menu_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => 'regular',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
@@ -312,21 +276,14 @@ if ( ! wpbf_is_premium() ) {
 // Sub Menu font toggle.
 wpbf_customizer_field()
 	->id( 'sub_menu_font_family_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_sub_menu_font_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'sub_menu_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => 'regular',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
@@ -361,22 +318,15 @@ if ( ! wpbf_is_premium() ) {
 // Toggle.
 wpbf_customizer_field()
 	->id( 'page_h1_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
 	->description( __( 'The settings below will apply to all headlines if not configured individually.', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_h1_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'page_h1_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
@@ -411,21 +361,14 @@ if ( ! wpbf_is_premium() ) {
 // Toggle.
 wpbf_customizer_field()
 	->id( 'page_h2_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_h2_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'page_h2_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
@@ -460,21 +403,14 @@ if ( ! wpbf_is_premium() ) {
 // Toggle.
 wpbf_customizer_field()
 	->id( 'page_h3_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_h3_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'page_h3_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
@@ -509,21 +445,14 @@ if ( ! wpbf_is_premium() ) {
 // Toggle.
 wpbf_customizer_field()
 	->id( 'page_h4_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_h4_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'page_h4_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
@@ -558,21 +487,14 @@ if ( ! wpbf_is_premium() ) {
 // Toggle.
 wpbf_customizer_field()
 	->id( 'page_h5_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_h5_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'page_h5_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->activeCallback( array(
 		array(
@@ -607,21 +529,14 @@ if ( ! wpbf_is_premium() ) {
 // Toggle.
 wpbf_customizer_field()
 	->id( 'page_h6_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_h6_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'page_h6_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => '700',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(
@@ -656,21 +571,14 @@ if ( ! wpbf_is_premium() ) {
 // Toggle.
 wpbf_customizer_field()
 	->id( 'footer_font_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Font Settings', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_footer_font_options' );
 
 // Font family.
 wpbf_customizer_field()
 	->id( 'footer_font_family' )
-	->type( 'typography' )
 	->label( __( 'Font Family', 'page-builder-framework' ) )
-	->defaultValue( array(
-		'font-family' => 'Helvetica, Arial, sans-serif',
-		'variant'     => 'regular',
-	) )
 	->properties( wpbf_default_font_choices() )
 	->priority( 1 )
 	->activeCallback( array(

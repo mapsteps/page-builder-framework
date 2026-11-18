@@ -14,6 +14,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
+use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
 
 /**
  * Initialize Wpbf customizer.
@@ -85,6 +86,41 @@ function wpbf_customizer_control() {
 function wpbf_customizer_field() {
 
 	return new CustomizerField();
+
+}
+
+/**
+ * Read a Customizer option: the saved value, or its default if nothing is saved.
+ *
+ * The value comes back ready to use: options saved as JSON text as arrays, toggles as true/false,
+ * sliders and numbers as int or float. Defaults come from the option schema (Customizer/Schema), or for
+ * fields registered by Premium, child themes and plugins, from the default they declared. In the Customizer
+ * preview it returns the previewed value, like get_theme_mod().
+ *
+ * @param string $id The option id.
+ *
+ * @return mixed The value. False for unknown options that aren't saved (like get_theme_mod()).
+ */
+function wpbf_mod( $id ) {
+
+	static $not_saved = null;
+
+	if ( null === $not_saved ) {
+		$not_saved = new stdClass();
+	}
+
+	$entry = OptionSchema::find( $id );
+	$value = get_theme_mod( $id, $not_saved );
+
+	if ( null === $entry ) {
+		return $not_saved === $value ? false : $value;
+	}
+
+	if ( $not_saved === $value ) {
+		return OptionSchema::defaultValue( $entry );
+	}
+
+	return OptionSchema::typed( $entry, $value );
 
 }
 

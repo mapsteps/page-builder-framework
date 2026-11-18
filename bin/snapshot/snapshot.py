@@ -64,6 +64,13 @@ def norm(t):
 
 def build_variants():
     """Every setting registered with wpbf_customizer_field() gets a value per variant (4 combinations)."""
+    # The theme's settings files leave the type to the option schema (Customizer/Schema/*.php).
+    schema_types = {}
+    schema_dir = os.path.join(THEME, 'Customizer', 'Schema')
+    for f in os.listdir(schema_dir):
+        if f.endswith('.php'):
+            s = open(os.path.join(schema_dir, f), encoding='utf-8').read()
+            schema_types.update(re.findall(r"^\t'([a-z0-9_]+)'\s*=> array\(\s*'type'\s*=> '([a-z\-]+)'", s, re.M))
     fields = {}
     for root in (THEME, PREMIUM):
         for d, dirs, fs in os.walk(root):
@@ -77,11 +84,12 @@ def build_variants():
                     chunk = head if '->addToSection' in head else chunk[:3000]
                     m = re.search(r"->id\(\s*'([a-z0-9_]+)'\s*\)", chunk)
                     t = re.search(r"->type\(\s*'([a-z\-]+)'\s*\)", chunk)
+                    t = t.group(1) if t else (schema_types.get(m.group(1)) if m else None)
                     if not m or not t:
                         continue
                     ch = re.search(r"->choices\(\s*(?:\[|array\()(.*?)(?:\]|\))\s*\)", chunk, re.S)
                     fields[m.group(1)] = {
-                        'type': t.group(1),
+                        'type': t,
                         'choices': re.findall(r"'([A-Za-z0-9_\-]+)'\s*=>", ch.group(1)) if ch else [],
                         'multiple': bool(re.search(r"'multiple'\s*=>\s*(true|[2-9]|\d\d)", chunk)),
                     }

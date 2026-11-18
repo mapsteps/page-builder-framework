@@ -66,7 +66,6 @@ wpbf_customizer_section()
 // Max width.
 wpbf_customizer_field()
 	->id( 'page_max_width' )
-	->type( 'dimension' )
 	->label( __( 'Page Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 	->priority( 0 )
@@ -76,18 +75,10 @@ wpbf_customizer_field()
 // Padding.
 wpbf_customizer_field()
 	->id( 'page_padding' )
-	->type( 'responsive-padding' )
 	->label( __( 'Page Padding', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
-	->defaultValue( array(
-		'desktop_top'    => 40,
-		'desktop_right'  => 20,
-		'desktop_bottom' => 40,
-		'desktop_left'   => 20,
-	) )
 	->properties( [
-		'save_as_json'   => true,
 		'dont_save_unit' => true,
 	] )
 	->addToSection( 'wpbf_page_options' );
@@ -95,19 +86,15 @@ wpbf_customizer_field()
 // Boxed.
 wpbf_customizer_field()
 	->id( 'page_boxed' )
-	->type( 'headline-toggle' )
 	->label( __( 'Boxed Layout', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 2 )
 	->addToSection( 'wpbf_page_options' );
 
 // Boxed margin.
 wpbf_customizer_field()
 	->id( 'page_boxed_margin' )
-	->type( 'slider' )
 	->label( __( 'Margin', 'page-builder-framework' ) )
 	->priority( 3 )
-	->defaultValue( 0 )
 	->transport( 'postMessage' )
 	->properties( array(
 		'min'  => 0,
@@ -126,10 +113,8 @@ wpbf_customizer_field()
 // Boxed padding.
 wpbf_customizer_field()
 	->id( 'page_boxed_padding' )
-	->type( 'slider' )
 	->label( __( 'Padding', 'page-builder-framework' ) )
 	->priority( 4 )
-	->defaultValue( 20 )
 	->transport( 'postMessage' )
 	->properties( array(
 		'min'  => 20,
@@ -148,9 +133,7 @@ wpbf_customizer_field()
 // Background color.
 wpbf_customizer_field()
 	->id( 'page_boxed_background' )
-	->type( 'color' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( '#ffffff' )
 	->priority( 5 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -168,9 +151,7 @@ wpbf_customizer_field()
 // Box shadow.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow' )
-	->type( 'headline-toggle' )
 	->label( __( 'Box Shadow', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 6 )
 	->activeCallback( [
 		array(
@@ -184,10 +165,8 @@ wpbf_customizer_field()
 // Box shadow blur.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_blur' )
-	->type( 'slider' )
 	->label( __( 'Blur', 'page-builder-framework' ) )
 	->priority( 7 )
-	->defaultValue( 25 )
 	->properties( array(
 		'min'  => 0,
 		'max'  => 100,
@@ -210,10 +189,8 @@ wpbf_customizer_field()
 // Box shadow spread.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_spread' )
-	->type( 'slider' )
 	->label( __( 'Spread', 'page-builder-framework' ) )
 	->priority( 8 )
-	->defaultValue( 0 )
 	->properties( array(
 		'min'  => - 100,
 		'max'  => 100,
@@ -236,10 +213,8 @@ wpbf_customizer_field()
 // Box shadow horizontal.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_horizontal' )
-	->type( 'slider' )
 	->label( __( 'Horizontal', 'page-builder-framework' ) )
 	->priority( 9 )
-	->defaultValue( 0 )
 	->properties( array(
 		'min'  => - 100,
 		'max'  => 100,
@@ -262,10 +237,8 @@ wpbf_customizer_field()
 // Box shadow vertical.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_vertical' )
-	->type( 'slider' )
 	->label( __( 'Vertical', 'page-builder-framework' ) )
 	->priority( 10 )
-	->defaultValue( 0 )
 	->properties( array(
 		'min'  => - 100,
 		'max'  => 100,
@@ -288,9 +261,7 @@ wpbf_customizer_field()
 // Box shadow color.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_color' )
-	->type( 'color' )
 	->label( __( 'Color', 'page-builder-framework' ) )
-	->defaultValue( 'rgba(0,0,0,.15)' )
 	->priority( 11 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -333,10 +304,8 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( 'sidebar_position' )
-	->type( 'select' )
 	->label( __( 'Position (Global)', 'page-builder-framework' ) )
 	->priority( 1 )
-	->defaultValue( 'right' )
 	->choices( array(
 		'right' => __( 'Right', 'page-builder-framework' ),
 		'left'  => __( 'Left', 'page-builder-framework' ),
@@ -346,10 +315,8 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( 'sidebar_gap' )
-	->type( 'select' )
 	->label( __( 'Gap', 'page-builder-framework' ) )
 	->priority( 2 )
-	->defaultValue( 'medium' )
 	->choices( array(
 		'divider'  => __( 'Divider', 'page-builder-framework' ),
 		'xlarge'   => __( 'xLarge', 'page-builder-framework' ),
@@ -362,11 +329,9 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( 'sidebar_width' )
-	->type( 'slider' )
 	->transport( 'postMessage' )
 	->label( __( 'Width', 'page-builder-framework' ) )
 	->priority( 2 )
-	->defaultValue( 33.3 )
 	->properties( array(
 		'min'  => 20,
 		'max'  => 40,
@@ -392,25 +357,9 @@ wpbf_customizer_field()
 // Padding.
 wpbf_customizer_field()
 	->id( 'sidebar_widget_padding' )
-	->type( 'responsive-padding' )
 	->label( __( 'Padding', 'page-builder-framework' ) )
 	->priority( 3 )
-	->defaultValue( array(
-		'desktop_top'    => 20,
-		'desktop_right'  => 20,
-		'desktop_bottom' => 20,
-		'desktop_left'   => 20,
-		'tablet_top'     => 20,
-		'tablet_right'   => 20,
-		'tablet_bottom'  => 20,
-		'tablet_left'    => 20,
-		'mobile_top'     => 20,
-		'mobile_right'   => 20,
-		'mobile_bottom'  => 20,
-		'mobile_left'    => 20,
-	) )
 	->properties( [
-		'save_as_json'   => true,
 		'dont_save_unit' => true,
 	] )
 	->addToSection( 'wpbf_sidebar_options' );
@@ -418,9 +367,7 @@ wpbf_customizer_field()
 // Color.
 wpbf_customizer_field()
 	->id( 'sidebar_bg_color' )
-	->type( 'color' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( '#f5f5f7' )
 	->priority( 4 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -433,9 +380,7 @@ wpbf_customizer_field()
 // 404 title.
 wpbf_customizer_field()
 	->id( '404_headline' )
-	->type( 'text' )
 	->label( __( 'Title', 'page-builder-framework' ) )
-	->defaultValue( __( "404 - This page couldn't be found.", 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
 	->addToSection( 'wpbf_404_options' );
@@ -443,9 +388,7 @@ wpbf_customizer_field()
 // 404 text.
 wpbf_customizer_field()
 	->id( '404_text' )
-	->type( 'text' )
 	->label( __( 'Text', 'page-builder-framework' ) )
-	->defaultValue( __( "Oops! We're sorry, this page couldn't be found!", 'page-builder-framework' ) )
 	->priority( 2 )
 	->transport( 'postMessage' )
 	->addToSection( 'wpbf_404_options' );
@@ -453,9 +396,7 @@ wpbf_customizer_field()
 // Search form.
 wpbf_customizer_field()
 	->id( '404_search_form' )
-	->type( 'select' )
 	->label( __( 'Search Form', 'page-builder-framework' ) )
-	->defaultValue( 'show' )
 	->priority( 3 )
 	->choices( array(
 		'show' => __( 'Show', 'page-builder-framework' ),
@@ -477,9 +418,7 @@ wpbf_customizer_field()
 // Toggle.
 wpbf_customizer_field()
 	->id( 'breadcrumbs_toggle' )
-	->type( 'toggle' )
 	->label( __( 'Breadcrumbs', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 1 )
 	->addToSection( 'wpbf_breadcrumb_settings' );
 
@@ -500,9 +439,7 @@ wpbf_customizer_field()
 // Breadcrumbs.
 wpbf_customizer_field()
 	->id( 'breadcrumbs' )
-	->type( 'select' )
 	->label( __( 'Display Breadcrumbs on', 'page-builder-framework' ) )
-	->defaultValue( array( 'archive', 'single' ) )
 	->priority( 2 )
 	->choices( array(
 		'front_page' => __( 'Front Page', 'page-builder-framework' ),
@@ -528,9 +465,7 @@ wpbf_customizer_field()
 // Position.
 wpbf_customizer_field()
 	->id( 'breadcrumbs_position' )
-	->type( 'select' )
 	->label( __( 'Position', 'page-builder-framework' ) )
-	->defaultValue( 'content' )
 	->priority( 2 )
 	->choices( array(
 		'content' => __( 'Before Content', 'page-builder-framework' ),
@@ -548,9 +483,7 @@ wpbf_customizer_field()
 // Separator.
 wpbf_customizer_field()
 	->id( 'breadcrumbs_separator' )
-	->type( 'text' )
 	->label( __( 'Separator', 'page-builder-framework' ) )
-	->defaultValue( '/' )
 	->priority( 2 )
 	->activeCallback( [
 		array(
@@ -573,9 +506,7 @@ wpbf_customizer_field()
 // Alignment.
 wpbf_customizer_field()
 	->id( 'breadcrumbs_alignment' )
-	->type( 'radio-image' )
 	->label( __( 'Alignment', 'page-builder-framework' ) )
-	->defaultValue( 'left' )
 	->priority( 2 )
 	->choices( array(
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
@@ -612,9 +543,7 @@ wpbf_customizer_field()
 
 wpbf_customizer_field()
 	->id( 'breadcrumbs_background_color' )
-	->type( 'color' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( '#dedee5' )
 	->priority( 2 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -638,7 +567,6 @@ wpbf_customizer_field()
 // Font color.
 wpbf_customizer_field()
 	->id( 'breadcrumbs_font_color' )
-	->type( 'color' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->priority( 2 )
 	->transport( 'postMessage' )
@@ -657,7 +585,6 @@ wpbf_customizer_field()
 // Accent color.
 wpbf_customizer_field()
 	->id( 'breadcrumbs_accent_color' )
-	->type( 'color' )
 	->label( __( 'Accent Color', 'page-builder-framework' ) )
 	->priority( 2 )
 	->transport( 'postMessage' )
@@ -676,7 +603,6 @@ wpbf_customizer_field()
 // Accent color hover.
 wpbf_customizer_field()
 	->id( 'breadcrumbs_accent_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 2 )
 	->transport( 'postMessage' )
@@ -706,7 +632,6 @@ wpbf_customizer_field()
 // Background color.
 wpbf_customizer_field()
 	->id( 'button_bg_color' )
-	->type( 'color' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -718,7 +643,6 @@ wpbf_customizer_field()
 // Background color alt.
 wpbf_customizer_field()
 	->id( 'button_bg_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -730,7 +654,6 @@ wpbf_customizer_field()
 // Text color.
 wpbf_customizer_field()
 	->id( 'button_text_color' )
-	->type( 'color' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -742,7 +665,6 @@ wpbf_customizer_field()
 // Text color alt.
 wpbf_customizer_field()
 	->id( 'button_text_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -763,7 +685,6 @@ wpbf_customizer_field()
 // Primary background color.
 wpbf_customizer_field()
 	->id( 'button_primary_bg_color' )
-	->type( 'color' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -775,7 +696,6 @@ wpbf_customizer_field()
 // Primary background color alt.
 wpbf_customizer_field()
 	->id( 'button_primary_bg_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -787,7 +707,6 @@ wpbf_customizer_field()
 // Primary text color.
 wpbf_customizer_field()
 	->id( 'button_primary_text_color' )
-	->type( 'color' )
 	->label( __( 'Primary Font Color', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -799,7 +718,6 @@ wpbf_customizer_field()
 // Primary text color alt.
 wpbf_customizer_field()
 	->id( 'button_primary_text_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -818,9 +736,7 @@ wpbf_customizer_field()
 // Border radius.
 wpbf_customizer_field()
 	->id( 'button_border_radius' )
-	->type( 'slider' )
 	->label( __( 'Border Radius', 'page-builder-framework' ) )
-	->defaultValue( 0 )
 	->priority( 1 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -833,9 +749,7 @@ wpbf_customizer_field()
 // Border width.
 wpbf_customizer_field()
 	->id( 'button_border_width' )
-	->type( 'slider' )
 	->label( __( 'Border Width', 'page-builder-framework' ) )
-	->defaultValue( 0 )
 	->priority( 1 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -862,7 +776,6 @@ wpbf_customizer_field()
 // Border color.
 wpbf_customizer_field()
 	->id( 'button_border_color' )
-	->type( 'color' )
 	->label( __( 'Border Color', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -881,7 +794,6 @@ wpbf_customizer_field()
 // Border color alt.
 wpbf_customizer_field()
 	->id( 'button_border_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -900,7 +812,6 @@ wpbf_customizer_field()
 // Primary border color.
 wpbf_customizer_field()
 	->id( 'button_primary_border_color' )
-	->type( 'color' )
 	->label( __( 'Primary Border Color', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -919,7 +830,6 @@ wpbf_customizer_field()
 // Primary border color alt.
 wpbf_customizer_field()
 	->id( 'button_primary_border_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 1 )
 	->transport( 'postMessage' )
@@ -940,9 +850,7 @@ wpbf_customizer_field()
 // Toggle.
 wpbf_customizer_field()
 	->id( 'layout_scrolltop' )
-	->type( 'toggle' )
 	->label( __( 'Scroll to Top Button', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 0 )
 	->addToSection( 'wpbf_scrolltop_options' );
 
@@ -963,9 +871,7 @@ wpbf_customizer_field()
 // Alignment.
 wpbf_customizer_field()
 	->id( 'scrolltop_position' )
-	->type( 'radio-image' )
 	->label( __( 'Alignment', 'page-builder-framework' ) )
-	->defaultValue( 'right' )
 	->priority( 1 )
 	->transport( 'postMessage' )
 	->choices( array(
@@ -984,9 +890,7 @@ wpbf_customizer_field()
 // Show after.
 wpbf_customizer_field()
 	->id( 'scrolltop_value' )
-	->type( 'slider' )
 	->label( __( 'Show after (px)', 'page-builder-framework' ) )
-	->defaultValue( 400 )
 	->priority( 2 )
 	->properties( array(
 		'min'  => 50,
@@ -1019,9 +923,7 @@ wpbf_customizer_field()
 // Background color.
 wpbf_customizer_field()
 	->id( 'scrolltop_bg_color' )
-	->type( 'color' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( 'rgba(62,67,73,0.5)' )
 	->priority( 4 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -1039,9 +941,7 @@ wpbf_customizer_field()
 // Background color hover.
 wpbf_customizer_field()
 	->id( 'scrolltop_bg_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
-	->defaultValue( 'rgba(62,67,73,0.7)' )
 	->priority( 5 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -1060,9 +960,7 @@ wpbf_customizer_field()
 // Icon color.
 wpbf_customizer_field()
 	->id( 'scrolltop_icon_color' )
-	->type( 'color' )
 	->label( __( 'Icon Color', 'page-builder-framework' ) )
-	->defaultValue( '#ffffff' )
 	->priority( 6 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -1080,7 +978,6 @@ wpbf_customizer_field()
 // Icon color hover.
 wpbf_customizer_field()
 	->id( 'scrolltop_icon_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 7 )
 	->transport( 'postMessage' )
@@ -1099,9 +996,7 @@ wpbf_customizer_field()
 // Border radius.
 wpbf_customizer_field()
 	->id( 'scrolltop_border_radius' )
-	->type( 'slider' )
 	->label( __( 'Border Radius', 'page-builder-framework' ) )
-	->defaultValue( 0 )
 	->priority( 8 )
 	->properties( array(
 		'min'  => 0,

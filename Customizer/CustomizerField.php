@@ -8,6 +8,7 @@
 namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
+use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
 
 /**
  * Class to add Wpbf customizer control & setting.
@@ -85,6 +86,18 @@ final class CustomizerField {
 		$this->setting_id = $id;
 		$this->setting_instance->id( $id );
 		$this->control_instance->id( $id );
+
+		// Theme options take type, default and stored format from the schema. Calls after id() can still override them.
+		$entry = OptionSchema::get( $id );
+
+		if ( null !== $entry ) {
+			$this->type( $entry['type'] );
+			$this->defaultValue( OptionSchema::defaultValue( $entry ) );
+
+			if ( ! empty( $entry['json'] ) ) {
+				$this->custom_properties['save_as_json'] = true;
+			}
+		}
 
 		return $this;
 
@@ -472,6 +485,14 @@ final class CustomizerField {
 		if ( ! empty( $this->custom_properties ) ) {
 			$this->control_instance->customProperties( $this->custom_properties );
 		}
+
+		// Fields outside the schema (Premium, child themes, plugins): remember what they declared, for wpbf_mod().
+		OptionSchema::record(
+			$this->setting_id,
+			$this->control_instance->control->type,
+			$this->setting_instance->setting->default,
+			! empty( $this->custom_properties['save_as_json'] )
+		);
 
 		if ( $field->is_wrapper_field ) {
 			$this->control_instance->control->section_id = $section_id;

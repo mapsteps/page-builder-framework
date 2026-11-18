@@ -46,10 +46,8 @@ wpbf_customizer_section()
 // Layout.
 wpbf_customizer_field()
 	->id( 'footer_layout' )
-	->type( 'radio-buttonset' )
 	->tab( 'general' )
 	->label( __( 'Footer', 'page-builder-framework' ) )
-	->defaultValue( 'two' )
 	->priority( 1 )
 	->choices( [
 		'none' => __( 'None', 'page-builder-framework' ),
@@ -70,10 +68,8 @@ wpbf_customizer_field()
 // Column one layout.
 wpbf_customizer_field()
 	->id( 'footer_column_one_layout' )
-	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Column 1', 'page-builder-framework' ) )
-	->defaultValue( 'text' )
 	->choices( [
 		'text'    => __( 'Text', 'page-builder-framework' ),
 		'button'  => __( 'Button', 'page-builder-framework' ),
@@ -106,10 +102,8 @@ wpbf_customizer_field()
 // Column one.
 wpbf_customizer_field()
 	->id( 'footer_column_one' )
-	->type( 'textarea' )
 	->tab( 'general' )
 	->label( __( 'Text', 'page-builder-framework' ) )
-	->defaultValue( __( '&copy; [year] - [blogname] | All rights reserved', 'page-builder-framework' ) )
 	->priority( 2 )
 	->partialRefresh( [
 		'footercolumnonecontent' => array(
@@ -151,10 +145,8 @@ wpbf_customizer_field()
 // Column two layout.
 wpbf_customizer_field()
 	->id( 'footer_column_two_layout' )
-	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Column 2', 'page-builder-framework' ) )
-	->defaultValue( 'text' )
 	->choices( [
 		'none' => __( 'None', 'page-builder-framework' ),
 		'text' => __( 'Text', 'page-builder-framework' ),
@@ -182,10 +174,8 @@ wpbf_customizer_field()
 // Column two.
 wpbf_customizer_field()
 	->id( 'footer_column_two' )
-	->type( 'textarea' )
 	->tab( 'general' )
 	->label( __( 'Text', 'page-builder-framework' ) )
-	->defaultValue( __( 'Powered by [theme_author]', 'page-builder-framework' ) )
 	->priority( 3 )
 	->partialRefresh( [
 		'footercolumntwocontent' => array(
@@ -212,7 +202,6 @@ wpbf_customizer_field()
 // Width.
 wpbf_customizer_field()
 	->id( 'footer_width' )
-	->type( 'dimension' )
 	->tab( 'general' )
 	->label( __( 'Footer Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
@@ -230,11 +219,9 @@ wpbf_customizer_field()
 // Footer height.
 wpbf_customizer_field()
 	->id( 'footer_height' )
-	->type( 'slider' )
 	->tab( 'general' )
 	->label( __( 'Height', 'page-builder-framework' ) )
 	->priority( 6 )
-	->defaultValue( 20 )
 	->transport( 'postMessage' )
 	->properties( array(
 		'min'  => 1,
@@ -253,10 +240,8 @@ wpbf_customizer_field()
 // Background color.
 wpbf_customizer_field()
 	->id( 'footer_bg_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( '#f5f5f7' )
 	->priority( 7 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -274,7 +259,6 @@ wpbf_customizer_field()
 // Font color.
 wpbf_customizer_field()
 	->id( 'footer_font_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->priority( 8 )
@@ -294,7 +278,6 @@ wpbf_customizer_field()
 // Accent color.
 wpbf_customizer_field()
 	->id( 'footer_accent_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Accent Color', 'page-builder-framework' ) )
 	->priority( 9 )
@@ -314,7 +297,6 @@ wpbf_customizer_field()
 // Accent color alt.
 wpbf_customizer_field()
 	->id( 'footer_accent_color_alt' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 10 )
@@ -334,11 +316,9 @@ wpbf_customizer_field()
 // Font size.
 wpbf_customizer_field()
 	->id( 'footer_font_size' )
-	->type( 'input-slider' )
 	->tab( 'design' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->priority( 11 )
-	->defaultValue( '14px' )
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(

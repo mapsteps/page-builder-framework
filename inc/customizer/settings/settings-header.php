@@ -91,10 +91,8 @@ wpbf_customizer_section()
 // Pre header layout.
 wpbf_customizer_field()
 	->id( 'pre_header_layout' )
-	->type( 'radio-buttonset' )
 	->tab( 'general' )
 	->label( __( 'Layout', 'page-builder-framework' ) )
-	->defaultValue( 'none' )
 	->priority( 1 )
 	->choices( [
 		'none' => __( 'None', 'page-builder-framework' ),
@@ -115,10 +113,8 @@ wpbf_customizer_field()
 // Column one layout.
 wpbf_customizer_field()
 	->id( 'pre_header_column_one_layout' )
-	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Column 1', 'page-builder-framework' ) )
-	->defaultValue( 'text' )
 	->choices( [
 		'text'    => __( 'Text', 'page-builder-framework' ),
 		'button'  => __( 'Button', 'page-builder-framework' ),
@@ -152,10 +148,8 @@ wpbf_customizer_field()
 // Column one.
 wpbf_customizer_field()
 	->id( 'pre_header_column_one' )
-	->type( 'textarea' )
 	->tab( 'general' )
 	->label( __( 'Text', 'page-builder-framework' ) )
-	->defaultValue( __( 'Column 1', 'page-builder-framework' ) )
 	->priority( 2 )
 	->partialRefresh( [
 		'preheadercolumnonecontent' => array(
@@ -197,10 +191,8 @@ wpbf_customizer_field()
 // Column two layout.
 wpbf_customizer_field()
 	->id( 'pre_header_column_two_layout' )
-	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Column 2', 'page-builder-framework' ) )
-	->defaultValue( 'text' )
 	->choices( [
 		'none' => __( 'None', 'page-builder-framework' ),
 		'text' => __( 'Text', 'page-builder-framework' ),
@@ -228,10 +220,8 @@ wpbf_customizer_field()
 // Column two.
 wpbf_customizer_field()
 	->id( 'pre_header_column_two' )
-	->type( 'textarea' )
 	->tab( 'general' )
 	->label( __( 'Text', 'page-builder-framework' ) )
-	->defaultValue( __( 'Column 2', 'page-builder-framework' ) )
 	->priority( 2 )
 	->partialRefresh( [
 		'preheadercolumntwocontent' => array(
@@ -273,7 +263,6 @@ wpbf_customizer_field()
 // Width.
 wpbf_customizer_field()
 	->id( 'pre_header_width' )
-	->type( 'dimension' )
 	->tab( 'general' )
 	->label( __( 'Pre Header Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
@@ -291,11 +280,9 @@ wpbf_customizer_field()
 // Height.
 wpbf_customizer_field()
 	->id( 'pre_header_height' )
-	->type( 'slider' )
 	->tab( 'general' )
 	->label( __( 'Height', 'page-builder-framework' ) )
 	->priority( 3 )
-	->defaultValue( 10 )
 	->transport( 'postMessage' )
 	->properties( array(
 		'min'  => 1,
@@ -314,10 +301,8 @@ wpbf_customizer_field()
 // Background color.
 wpbf_customizer_field()
 	->id( 'pre_header_bg_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( '#ffffff' )
 	->priority( 4 )
 	->transport( 'postMessage' )
 	->properties( array(
@@ -335,7 +320,6 @@ wpbf_customizer_field()
 // Font color.
 wpbf_customizer_field()
 	->id( 'pre_header_font_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->priority( 4 )
@@ -355,7 +339,6 @@ wpbf_customizer_field()
 // Accent color.
 wpbf_customizer_field()
 	->id( 'pre_header_accent_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Accent Color', 'page-builder-framework' ) )
 	->priority( 4 )
@@ -375,7 +358,6 @@ wpbf_customizer_field()
 // Accent color alt.
 wpbf_customizer_field()
 	->id( 'pre_header_accent_color_alt' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 4 )
@@ -395,11 +377,9 @@ wpbf_customizer_field()
 // Font size.
 wpbf_customizer_field()
 	->id( 'pre_header_font_size' )
-	->type( 'input-slider' )
 	->tab( 'design' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->priority( 4 )
-	->defaultValue( '14px' )
 	->transport( 'postMessage' )
 	->activeCallback( [
 		array(
@@ -420,7 +400,6 @@ wpbf_customizer_field()
 // Mobile logo.
 wpbf_customizer_field()
 	->id( 'menu_mobile_logo' )
-	->type( 'image' )
 	->label( __( 'Mobile Logo', 'page-builder-framework' ) )
 	->priority( 1 )
 	->activeCallback( [
@@ -444,7 +423,6 @@ wpbf_customizer_field()
 // Size.
 wpbf_customizer_field()
 	->id( 'menu_logo_size' )
-	->type( 'responsive-input-slider' )
 	->label( __( 'Logo Width', 'page-builder-framework' ) )
 	->priority( 2 )
 	->transport( 'postMessage' )
@@ -452,7 +430,6 @@ wpbf_customizer_field()
 		'min'          => 0,
 		'max'          => 500,
 		'step'         => 1,
-		'save_as_json' => true,
 	] )
 	->activeCallback( [
 		array(
@@ -473,7 +450,6 @@ wpbf_customizer_field()
 // Color.
 wpbf_customizer_field()
 	->id( 'menu_logo_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Color', 'page-builder-framework' ) )
 	->priority( 11 )
@@ -493,7 +469,6 @@ wpbf_customizer_field()
 // Hover color.
 wpbf_customizer_field()
 	->id( 'menu_logo_color_alt' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 12 )
@@ -513,15 +488,9 @@ wpbf_customizer_field()
 // Font size.
 wpbf_customizer_field()
 	->id( 'menu_logo_font_size' )
-	->type( 'responsive-input-slider' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->priority( 13 )
 	->transport( 'postMessage' )
-	->defaultValue( [
-		'desktop' => '22px',
-		'tablet'  => '',
-		'mobile'  => '',
-	] )
 	->activeCallback( [
 		array(
 			'id'       => 'custom_logo',
@@ -533,7 +502,6 @@ wpbf_customizer_field()
 		'min'          => 0,
 		'max'          => 50,
 		'step'         => 1,
-		'save_as_json' => true,
 	] )
 	->addToSection( 'title_tagline' );
 
@@ -557,10 +525,8 @@ wpbf_customizer_field()
 // Toggle.
 wpbf_customizer_field()
 	->id( 'menu_logo_description' )
-	->type( 'toggle' )
 	->tab( 'general' )
 	->label( __( 'Display Tagline', 'page-builder-framework' ) )
-	->defaultValue( 0 )
 	->priority( 20 )
 	->activeCallback( [
 		array(
@@ -583,10 +549,8 @@ wpbf_customizer_field()
 // Mobile toggle.
 wpbf_customizer_field()
 	->id( 'menu_logo_description_mobile' )
-	->type( 'toggle' )
 	->tab( 'general' )
 	->label( __( 'Display Tagline on Mobile', 'page-builder-framework' ) )
-	->defaultValue( 0 )
 	->priority( 20 )
 	->activeCallback( [
 		array(
@@ -614,7 +578,6 @@ wpbf_customizer_field()
 // Color.
 wpbf_customizer_field()
 	->id( 'menu_logo_description_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Color', 'page-builder-framework' ) )
 	->priority( 22 )
@@ -639,7 +602,6 @@ wpbf_customizer_field()
 // Font size.
 wpbf_customizer_field()
 	->id( 'menu_logo_description_font_size' )
-	->type( 'responsive-input-slider' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->priority( 23 )
 	->transport( 'postMessage' )
@@ -659,7 +621,6 @@ wpbf_customizer_field()
 		'min'          => 0,
 		'max'          => 50,
 		'step'         => 1,
-		'save_as_json' => true,
 	] )
 	->addToSection( 'title_tagline' );
 
@@ -675,7 +636,6 @@ wpbf_customizer_field()
 // Logo URL.
 wpbf_customizer_field()
 	->id( 'menu_logo_url' )
-	->type( 'url' )
 	->tab( 'general' )
 	->label( __( 'Custom Logo URL', 'page-builder-framework' ) )
 	->priority( 30 )
@@ -685,7 +645,6 @@ wpbf_customizer_field()
 // Alt tag.
 wpbf_customizer_field()
 	->id( 'menu_logo_alt' )
-	->type( 'text' )
 	->tab( 'general' )
 	->label( __( 'Custom "alt" Tag', 'page-builder-framework' ) )
 	->priority( 31 )
@@ -702,7 +661,6 @@ wpbf_customizer_field()
 // Title tag.
 wpbf_customizer_field()
 	->id( 'menu_logo_title' )
-	->type( 'text' )
 	->label( __( 'Custom "title" Tag', 'page-builder-framework' ) )
 	->priority( 32 )
 	->transport( 'postMessage' )
@@ -727,11 +685,9 @@ wpbf_customizer_field()
 // Container width.
 wpbf_customizer_field()
 	->id( 'menu_logo_container_width' )
-	->type( 'slider' )
 	->tab( 'general' )
 	->label( __( 'Logo Container Width', 'page-builder-framework' ) )
 	->description( __( 'Defines the space in % the logo area takes in the navigation.', 'page-builder-framework' ) )
-	->defaultValue( 25 )
 	->priority( 40 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -744,11 +700,9 @@ wpbf_customizer_field()
 // Mobile container width.
 wpbf_customizer_field()
 	->id( 'mobile_menu_logo_container_width' )
-	->type( 'slider' )
 	->tab( 'general' )
 	->label( __( 'Logo Container Width (Mobile)', 'page-builder-framework' ) )
 	->description( __( 'Defines the space in % the logo area takes in the navigation.', 'page-builder-framework' ) )
-	->defaultValue( 66 )
 	->priority( 41 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -780,10 +734,8 @@ $menu_position_choices = apply_filters(
 // Variations.
 wpbf_customizer_field()
 	->id( 'menu_position' )
-	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Menu', 'page-builder-framework' ) )
-	->defaultValue( 'menu-right' )
 	->priority( 0 )
 	->choices( $menu_position_choices )
 	->partialRefresh( [
@@ -808,7 +760,6 @@ wpbf_customizer_field()
 // Search icon.
 wpbf_customizer_field()
 	->id( 'menu_search_icon' )
-	->type( 'toggle' )
 	->tab( 'general' )
 	->label( __( 'Search Icon', 'page-builder-framework' ) )
 	->priority( 1 )
@@ -834,7 +785,6 @@ wpbf_customizer_field()
 // Width.
 wpbf_customizer_field()
 	->id( 'menu_width' )
-	->type( 'dimension' )
 	->tab( 'general' )
 	->label( __( 'Navigation Width', 'page-builder-framework' ) )
 	->description( __( 'Default: 1200px', 'page-builder-framework' ) )
@@ -845,10 +795,8 @@ wpbf_customizer_field()
 // Height.
 wpbf_customizer_field()
 	->id( 'menu_height' )
-	->type( 'slider' )
 	->tab( 'general' )
 	->label( __( 'Menu Height', 'page-builder-framework' ) )
-	->defaultValue( 20 )
 	->priority( 3 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -861,10 +809,8 @@ wpbf_customizer_field()
 // Padding.
 wpbf_customizer_field()
 	->id( 'menu_padding' )
-	->type( 'slider' )
 	->tab( 'design' )
 	->label( __( 'Menu Item Spacing', 'page-builder-framework' ) )
-	->defaultValue( 20 )
 	->priority( 4 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -889,10 +835,8 @@ wpbf_customizer_field()
 // Background color.
 wpbf_customizer_field()
 	->id( 'menu_bg_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( '#f5f5f7' )
 	->priority( 5 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -903,7 +847,6 @@ wpbf_customizer_field()
 // Font color.
 wpbf_customizer_field()
 	->id( 'menu_font_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->priority( 6 )
@@ -916,7 +859,6 @@ wpbf_customizer_field()
 // Font color alt.
 wpbf_customizer_field()
 	->id( 'menu_font_color_alt' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 7 )
@@ -929,11 +871,9 @@ wpbf_customizer_field()
 // Font size.
 wpbf_customizer_field()
 	->id( 'menu_font_size' )
-	->type( 'input-slider' )
 	->tab( 'design' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->priority( 7 )
-	->defaultValue( '16px' )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 0,
@@ -965,10 +905,8 @@ if ( ! wpbf_is_premium() ) {
 // Width.
 wpbf_customizer_field()
 	->id( 'sub_menu_width' )
-	->type( 'slider' )
 	->tab( 'general' )
 	->label( __( 'Sub Menu Width', 'page-builder-framework' ) )
-	->defaultValue( 220 )
 	->priority( 0 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -981,10 +919,8 @@ wpbf_customizer_field()
 // Alignment.
 wpbf_customizer_field()
 	->id( 'sub_menu_alignment' )
-	->type( 'radio-image' )
 	->tab( 'general' )
 	->label( __( 'Sub Menu Alignment', 'page-builder-framework' ) )
-	->defaultValue( 'left' )
 	->choices( [
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
@@ -1006,10 +942,8 @@ wpbf_customizer_field()
 // Text alignment.
 wpbf_customizer_field()
 	->id( 'sub_menu_text_alignment' )
-	->type( 'radio-image' )
 	->tab( 'general' )
 	->label( __( 'Text Alignment', 'page-builder-framework' ) )
-	->defaultValue( 'left' )
 	->choices( [
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',
@@ -1022,19 +956,11 @@ wpbf_customizer_field()
 // Padding.
 wpbf_customizer_field()
 	->id( 'sub_menu_padding' )
-	->type( 'padding' )
 	->tab( 'general' )
 	->label( __( 'Menu Item Padding', 'page-builder-framework' ) )
 	->priority( 3 )
 	->transport( 'postMessage' )
-	->defaultValue( [
-		'top'    => 10,
-		'right'  => 20,
-		'bottom' => 10,
-		'left'   => 20,
-	] )
 	->properties( [
-		'save_as_json'   => true,
 		'dont_save_unit' => true,
 	] )
 	->addToSection( 'wpbf_sub_menu_options' );
@@ -1042,10 +968,8 @@ wpbf_customizer_field()
 // Background color.
 wpbf_customizer_field()
 	->id( 'sub_menu_bg_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( '#ffffff' )
 	->priority( 4 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1056,10 +980,8 @@ wpbf_customizer_field()
 // Background color alt.
 wpbf_customizer_field()
 	->id( 'sub_menu_bg_color_alt' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
-	->defaultValue( '#ffffff' )
 	->priority( 5 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1070,7 +992,6 @@ wpbf_customizer_field()
 // Accent color.
 wpbf_customizer_field()
 	->id( 'sub_menu_accent_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->priority( 6 )
@@ -1083,7 +1004,6 @@ wpbf_customizer_field()
 // Accent color alt.
 wpbf_customizer_field()
 	->id( 'sub_menu_accent_color_alt' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 7 )
@@ -1097,7 +1017,6 @@ wpbf_customizer_field()
 // Font size.
 wpbf_customizer_field()
 	->id( 'sub_menu_font_size' )
-	->type( 'input-slider' )
 	->tab( 'design' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->priority( 8 )
@@ -1112,20 +1031,16 @@ wpbf_customizer_field()
 // Separator toggle.
 wpbf_customizer_field()
 	->id( 'sub_menu_separator' )
-	->type( 'headline-toggle' )
 	->tab( 'design' )
 	->label( __( 'Sub Menu Separator', 'page-builder-framework' ) )
-	->defaultValue( false )
 	->priority( 9 )
 	->addToSection( 'wpbf_sub_menu_options' );
 
 // Separator color.
 wpbf_customizer_field()
 	->id( 'sub_menu_separator_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Color', 'page-builder-framework' ) )
-	->defaultValue( '#f5f5f7' )
 	->priority( 10 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1169,10 +1084,8 @@ $mobile_menu_choices = array(
 // Variations.
 wpbf_customizer_field()
 	->id( 'mobile_menu_options' )
-	->type( 'select' )
 	->tab( 'general' )
 	->label( __( 'Menu', 'page-builder-framework' ) )
-	->defaultValue( 'menu-mobile-hamburger' )
 	->priority( 1 )
 	->choices( apply_filters( 'wpbf_mobile_menu_options', $mobile_menu_choices ) )
 	->partialRefresh( [
@@ -1204,7 +1117,6 @@ wpbf_customizer_field()
 // Mobile search icon.
 wpbf_customizer_field()
 	->id( 'mobile_menu_search_icon' )
-	->type( 'toggle' )
 	->tab( 'general' )
 	->label( __( 'Search Icon', 'page-builder-framework' ) )
 	->priority( 1 )
@@ -1244,10 +1156,8 @@ wpbf_customizer_field()
 // Height.
 wpbf_customizer_field()
 	->id( 'mobile_menu_height' )
-	->type( 'slider' )
 	->tab( 'general' )
 	->label( __( 'Height', 'page-builder-framework' ) )
-	->defaultValue( 20 )
 	->priority( 2 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1260,7 +1170,6 @@ wpbf_customizer_field()
 // Background color.
 wpbf_customizer_field()
 	->id( 'mobile_menu_background_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->priority( 3 )
@@ -1280,7 +1189,6 @@ wpbf_customizer_field()
 // Icon color.
 wpbf_customizer_field()
 	->id( 'mobile_menu_hamburger_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Icon Color', 'page-builder-framework' ) )
 	->priority( 4 )
@@ -1300,10 +1208,8 @@ wpbf_customizer_field()
 // Hamburger size.
 wpbf_customizer_field()
 	->id( 'mobile_menu_hamburger_size' )
-	->type( 'input-slider' )
 	->tab( 'design' )
 	->label( __( 'Icon Size', 'page-builder-framework' ) )
-	->defaultValue( '16px' )
 	->priority( 4 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1324,7 +1230,6 @@ wpbf_customizer_field()
 // Hamburger background color.
 wpbf_customizer_field()
 	->id( 'mobile_menu_hamburger_bg_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hamburger Icon Button', 'page-builder-framework' ) )
 	->tooltip( __( 'Define a background color & turn the hamburger icon into a button.', 'page-builder-framework' ) )
@@ -1345,10 +1250,8 @@ wpbf_customizer_field()
 // Border radius.
 wpbf_customizer_field()
 	->id( 'mobile_menu_hamburger_border_radius' )
-	->type( 'slider' )
 	->tab( 'design' )
 	->label( __( 'Border Radius', 'page-builder-framework' ) )
-	->defaultValue( 0 )
 	->priority( 5 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1381,19 +1284,11 @@ wpbf_customizer_field()
 // Padding.
 wpbf_customizer_field()
 	->id( 'mobile_menu_padding' )
-	->type( 'padding' )
 	->tab( 'general' )
 	->label( __( 'Padding', 'page-builder-framework' ) )
 	->priority( 8 )
 	->transport( 'postMessage' )
-	->defaultValue( [
-		'top'    => 10,
-		'right'  => 20,
-		'bottom' => 10,
-		'left'   => 20,
-	] )
 	->properties( [
-		'save_as_json'   => true,
 		'dont_save_unit' => true,
 	] )
 	->addToSection( 'wpbf_mobile_menu_options' );
@@ -1401,10 +1296,8 @@ wpbf_customizer_field()
 // Menu item background color.
 wpbf_customizer_field()
 	->id( 'mobile_menu_bg_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
-	->defaultValue( '#ffffff' )
 	->priority( 9 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1415,10 +1308,8 @@ wpbf_customizer_field()
 // Menu item background color alt.
 wpbf_customizer_field()
 	->id( 'mobile_menu_bg_color_alt' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
-	->defaultValue( '#ffffff' )
 	->priority( 10 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1429,7 +1320,6 @@ wpbf_customizer_field()
 // Font color.
 wpbf_customizer_field()
 	->id( 'mobile_menu_font_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->priority( 11 )
@@ -1442,7 +1332,6 @@ wpbf_customizer_field()
 // Font color hover.
 wpbf_customizer_field()
 	->id( 'mobile_menu_font_color_alt' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 12 )
@@ -1455,10 +1344,8 @@ wpbf_customizer_field()
 // Divider color.
 wpbf_customizer_field()
 	->id( 'mobile_menu_border_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Divider Color', 'page-builder-framework' ) )
-	->defaultValue( '#d9d9e0' )
 	->priority( 13 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1469,7 +1356,6 @@ wpbf_customizer_field()
 // Sub menu arrow color.
 wpbf_customizer_field()
 	->id( 'mobile_menu_submenu_arrow_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Sub Menu Arrow Color', 'page-builder-framework' ) )
 	->priority( 14 )
@@ -1482,10 +1368,8 @@ wpbf_customizer_field()
 // Font size.
 wpbf_customizer_field()
 	->id( 'mobile_menu_font_size' )
-	->type( 'input-slider' )
 	->tab( 'design' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
-	->defaultValue( '16px' )
 	->priority( 15 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1518,7 +1402,6 @@ if ( ! wpbf_is_premium() ) {
 // Auto collapse other sub-menu when a sub-menu is expanded.
 wpbf_customizer_field()
 	->id( 'mobile_sub_menu_auto_collapse' )
-	->type( 'toggle' )
 	->tab( 'general' )
 	->label( __( 'Auto Collapse', 'page-builder-framework' ) )
 	->description( __( 'Auto collapse open sub-menu if other sub-menu is being opened.', 'page-builder-framework' ) )
@@ -1529,10 +1412,8 @@ wpbf_customizer_field()
 // Indent.
 wpbf_customizer_field()
 	->id( 'mobile_sub_menu_indent' )
-	->type( 'slider' )
 	->tab( 'general' )
 	->label( __( 'Indent', 'page-builder-framework' ) )
-	->defaultValue( 0 )
 	->priority( 2 )
 	->transport( 'postMessage' )
 	->properties( [
@@ -1552,7 +1433,6 @@ wpbf_customizer_field()
 // Menu item background color.
 wpbf_customizer_field()
 	->id( 'mobile_sub_menu_bg_color' )
-	->type( 'color' )
 	->tab( 'design' )
 	->label( __( 'Background Color', 'page-builder-framework' ) )
 	->priority( 3 )
@@ -1565,7 +1445,6 @@ wpbf_customizer_field()
 // Menu item background color alt.
 wpbf_customizer_field()
 	->id( 'mobile_sub_menu_bg_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 4 )
 	->transport( 'postMessage' )
@@ -1577,7 +1456,6 @@ wpbf_customizer_field()
 // Font color.
 wpbf_customizer_field()
 	->id( 'mobile_sub_menu_font_color' )
-	->type( 'color' )
 	->label( __( 'Font Color', 'page-builder-framework' ) )
 	->priority( 5 )
 	->transport( 'postMessage' )
@@ -1589,7 +1467,6 @@ wpbf_customizer_field()
 // Font color hover.
 wpbf_customizer_field()
 	->id( 'mobile_sub_menu_font_color_alt' )
-	->type( 'color' )
 	->label( __( 'Hover', 'page-builder-framework' ) )
 	->priority( 6 )
 	->transport( 'postMessage' )
@@ -1601,7 +1478,6 @@ wpbf_customizer_field()
 // Sub menu arrow color.
 wpbf_customizer_field()
 	->id( 'mobile_sub_menu_arrow_color' )
-	->type( 'color' )
 	->label( __( 'Sub Menu Arrow Color', 'page-builder-framework' ) )
 	->priority( 8 )
 	->transport( 'postMessage' )
@@ -1613,7 +1489,6 @@ wpbf_customizer_field()
 // Font size.
 wpbf_customizer_field()
 	->id( 'mobile_sub_menu_font_size' )
-	->type( 'input-slider' )
 	->label( __( 'Font Size', 'page-builder-framework' ) )
 	->priority( 9 )
 	->transport( 'postMessage' )
