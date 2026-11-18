@@ -88,7 +88,7 @@ Each step is one or more commits on the `redo` branch. After every step: snapsho
 ## Decisions for the user
 
 1. **Old Premium (2.9 and older):** keep the safety net frozen + a clearer "update Premium" notice (recommended), or stop supporting it.
-2. **How CSS is written (affects every module after this one):**
-   - **A, recommended:** most options are simple ("this color → this property on these elements"). Their CSS rule moves into the option's definition in the schema. The front-end CSS and the instant live preview are both generated from it. The 141 hand-written preview bindings and most of the 2,585-line CSS file disappear. The few options with complicated CSS (several options combined) keep PHP code, and their preview asks PHP for the updated CSS (short delay).
+2. **How CSS is written (affects every module after this one): decided A (November 18, 2026).** Keeps the old styles.php rule: CSS is only printed when an option is set and differs from its default (that check now comes from the schema's one default). Rules that depend on several options stay hand-written PHP.
+   - **A, chosen:** most options are simple ("this color → this property on these elements"). Their CSS rule moves into the option's definition in the schema. The front-end CSS and the instant live preview are both generated from it. The 141 hand-written preview bindings and most of the 2,585-line CSS file disappear. The few options with complicated CSS (several options combined) keep PHP code, and their preview asks PHP for the updated CSS (short delay).
    - **B:** keep writing CSS by hand in PHP per area, and let the preview always ask PHP for the CSS on each change. Simpler to switch to, but every change in the preview shows after a short delay, and the CSS file stays large.
 3. **Minimum WordPress version:** the theme declares none today (WordPress.org requires "Requires at least"). Setting 6.6 lets us drop the bundled React copies.
