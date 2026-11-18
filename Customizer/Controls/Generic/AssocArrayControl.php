@@ -16,13 +16,6 @@ class AssocArrayControl extends BaseControl {
 	public $type = 'wpbf-assoc-array';
 
 	/**
-	 * Whether to use $args['settings'] to construct the input fields.
-	 *
-	 * @var bool
-	 */
-	protected $use_settings = false;
-
-	/**
 	 * Constructor.
 	 *
 	 * Supplied `$args` override class property defaults.
@@ -37,10 +30,6 @@ class AssocArrayControl extends BaseControl {
 	public function __construct( $wp_customize_manager, $id, $args = array() ) {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
-
-		if ( ! empty( $args['settings'] ) && is_array( $args['settings'] ) ) {
-			$this->use_settings = true;
-		}
 
 		if ( ! ( $this->setting instanceof WP_Customize_Setting ) ) {
 			return;
@@ -88,7 +77,7 @@ class AssocArrayControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-assoc-array-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/assoc-array-control-min.js',
-			array( 'wpbf-base-control' ),
+			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
 			WPBF_VERSION,
 			false
 		);
@@ -96,77 +85,9 @@ class AssocArrayControl extends BaseControl {
 	}
 
 	/**
-	 * Render the control's content.
-	 *
-	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
-	 *
-	 * Supports basic input types `text`, `checkbox`, `textarea`, `radio`, `select` and `dropdown-pages`.
-	 * Additional input types such as `email`, `url`, `number`, `hidden` and `date` are supported implicitly.
-	 *
-	 * Control content can alternately be rendered in JS. See WP_Customize_Control::print_template().
+	 * The form (label, description, the value's parts) is rendered in the browser (assoc-array-control.tsx).
 	 */
 	protected function render_content() {
-		?>
-
-		<?php if ( $this->label || $this->description ) : ?>
-			<div class="customize-control-label">
-				<?php if ( $this->label ) : ?>
-					<label class="customize-control-title" for="_customize-input-<?php echo esc_attr( $this->id ); ?>">
-						<?php echo esc_html( $this->label ); ?>
-					</label>
-				<?php endif; ?>
-
-				<?php if ( $this->description ) : ?>
-					<span class="description customize-control-description">
-						<?php echo wp_kses_post( $this->description ); ?>
-					</span>
-				<?php endif; ?>
-
-			</div>
-		<?php endif; ?>
-
-		<div class="customize-control-notifications-container"></div>
-
-		<div class="wpbf-control-form">
-
-			<?php
-			if ( $this->use_settings && is_array( $this->settings ) ) {
-				foreach ( $this->settings as $setting_key => $linked_setting ) {
-					if ( ! ( $linked_setting instanceof WP_Customize_Setting ) ) {
-						continue;
-					}
-					?>
-
-					<input
-						type="hidden"
-						id="_customize-input-<?php echo esc_attr( $this->id ); ?>_<?php echo esc_attr( $setting_key ); ?>"
-						value="<?php echo esc_attr( $linked_setting->value() ); ?>"
-						data-setting-prop="<?php echo esc_attr( $setting_key ); ?>"
-						<?php $this->link( $setting_key ); ?>
-					>
-
-					<?php
-				}
-			} elseif ( ! $this->use_settings && is_array( $this->value() ) ) {
-				foreach ( $this->value() as $key => $value ) {
-					?>
-
-					<input
-						type="hidden"
-						id="_customize-input-<?php echo esc_attr( $this->id ); ?>_<?php echo esc_attr( $key ); ?>"
-						value="<?php echo esc_attr( $value ); ?>"
-						data-setting-prop="<?php echo esc_attr( $key ); ?>"
-						data-customize-setting-link="<?php echo esc_attr( $this->id . "[$key]" ); ?>"
-					>
-
-					<?php
-				}
-			}
-			?>
-
-		</div>
-
-		<?php
 	}
 
 }

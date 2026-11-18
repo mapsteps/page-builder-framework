@@ -1,8 +1,4 @@
-import hooks from "@wordpress/hooks";
-import {
-	AnyWpbfCustomizeControl,
-	WpbfCustomize,
-} from "../../Base/src/interface";
+import { WpbfCustomize } from "../../Base/src/interface";
 import {
 	FontProperties,
 	FontProperty,
@@ -23,7 +19,6 @@ import "./typography-control.scss";
 
 declare var wp: {
 	customize: WpbfCustomize;
-	hooks: typeof hooks;
 };
 
 /**
@@ -76,7 +71,6 @@ function listenFontPropertyFieldsChange(typographyControlId: string) {
 					undefined,
 					property,
 					value,
-					true,
 				);
 			});
 		});
@@ -104,7 +98,6 @@ function composeFontProperties(
 	val?: WpbfCustomizeTypographyControlValue,
 	triggerPropertyName?: FontProperty,
 	triggerPropertyValue?: string,
-	triggerChange?: boolean,
 ) {
 	const control: WpbfCustomizeAssocArrayControl | undefined =
 		wp.customize?.control(id);
@@ -187,20 +180,7 @@ function composeFontProperties(
 				? parseInt(variantValue, 10)
 				: 400;
 
-	if (triggerChange) {
-		// value["random"] = Date.now();
-	}
-
 	control.setting.set(value);
-
-	wp.hooks.addAction(
-		"wpbf.dynamicControl.initWpbfControl",
-		"wpbf",
-		function (controlInit: AnyWpbfCustomizeControl) {
-			if (variantControl && id + "[variant]" === controlInit.id) {
-			}
-		},
-	);
 }
 
 function collectVariantChoices(
