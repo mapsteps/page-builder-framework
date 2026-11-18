@@ -113,9 +113,10 @@ try {
 	// Premium breakpoints that differ from the defaults for every request of the run (see mu-plugin.php).
 	await send("Network.setCookie", { name: "zz_breakpoints", value: "1", domain: "pbf.local", path: "/" });
 	await send("Page.enable");
-	// When the Customizer is ready to use (core adds "ready" to the body once every control is set up).
+	// When the Customizer is ready to use (core adds "ready" to the body once every control is set up). The resource list
+	// is enlarged: the Customizer loads more than the browser's default 250 files, and the theme's files come late.
 	await send("Page.addScriptToEvaluateOnNewDocument", {
-		source: `new MutationObserver((list, observer) => { if (document.body && document.body.classList.contains('ready')) { window.__zzReadyMs = Math.round(performance.now()); observer.disconnect(); } }).observe(document, { subtree: true, attributes: true, attributeFilter: ['class'] });`,
+		source: `performance.setResourceTimingBufferSize(5000); new MutationObserver((list, observer) => { if (document.body && document.body.classList.contains('ready')) { window.__zzReadyMs = Math.round(performance.now()); observer.disconnect(); } }).observe(document, { subtree: true, attributes: true, attributeFilter: ['class'] });`,
 	});
 
 	// Open the Customizer and wait until it's ready; returns the load cost of the page itself: theme script and style
