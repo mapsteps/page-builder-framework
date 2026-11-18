@@ -128,7 +128,7 @@ export default function ImageForm({ control }: Props) {
 						onClick={() => setValue(saved(EMPTY))}
 					>
 						{params.labels.remove}
-					</button>
+					</button>{" "}
 
 					{params.defaultSrc.url && (
 						<button
@@ -138,7 +138,7 @@ export default function ImageForm({ control }: Props) {
 						>
 							{params.labels.default}
 						</button>
-					)}
+					)}{" "}
 
 					<button
 						type="button"

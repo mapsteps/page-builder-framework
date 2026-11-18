@@ -169,7 +169,7 @@ try {
 			const r = (n) => Math.round(n * 10) / 10;
 			layout[c.id] = [el, ...el.querySelectorAll('*')].filter((n) => !n.closest('.mce-tinymce, .tooltip-content')).map((n) => {
 				const b = n.getBoundingClientRect();
-				return n.tagName.toLowerCase() + (n.className && 'string' === typeof n.className ? '.' + n.className.trim().split(/\s+/).sort().join('.') : '') + ' ' + [r(b.left - box.left), r(b.top - box.top), r(b.width), r(b.height)].join(',');
+				return n.tagName.toLowerCase() + (n.className && 'string' === typeof n.className ? '.' + n.className.trim().split(/\\s+/).sort().join('.') : '') + ' ' + [r(b.left - box.left), r(b.top - box.top), r(b.width), r(b.height)].join(',');
 			});
 		});
 		for (const s of sections) { s.expand({ duration: 0 }); await sleep(120); if (${process.argv.includes("--layout")}) { await sleep(200); measure(s); } }

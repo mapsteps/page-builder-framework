@@ -92,8 +92,7 @@ function List({ control, isChecked, onChange }: LayoutProps) {
 							data-id={params.id}
 							checked={isChecked(key)}
 							onChange={onChange}
-						/>
-
+						/>{" "}
 						{Array.isArray(choice) ? (
 							<>
 								{asHtml(choice[0])}

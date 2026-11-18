@@ -43,10 +43,8 @@ export default function CheckboxForm({ control }: Props) {
 				aria-describedby={params.description ? `_customize-description-${params.id}` : undefined}
 				checked={!!value}
 				onChange={onChange}
-			/>
-
-			<label htmlFor={inputId} dangerouslySetInnerHTML={{ __html: params.label ?? "" }} />
-
+			/>{" "}
+			<label htmlFor={inputId} dangerouslySetInnerHTML={{ __html: params.label ?? "" }} />{" "}
 			{params.description && (
 				<span
 					id={`_customize-description-${params.id}`}
@@ -85,7 +83,7 @@ function Toggle(props: Props & { checked: boolean; valueAttr: string; onChange: 
 							<label
 								className="customize-control-title"
 								htmlFor={inputId}
-								dangerouslySetInnerHTML={{ __html: params.label }}
+								dangerouslySetInnerHTML={{ __html: ` ${params.label} ` }}
 							/>
 						)}
 
@@ -115,8 +113,8 @@ function Toggle(props: Props & { checked: boolean; valueAttr: string; onChange: 
 					<label className="wpbf-toggle-switch-label" htmlFor={inputId}>
 						{"switch" === kind && (
 							<>
-								<span className="toggle-on">{choices.on || params.defaultChoices?.on}</span>
-								<span className="toggle-off">{choices.off || params.defaultChoices?.off}</span>
+								<span className="toggle-on"> {choices.on || params.defaultChoices?.on} </span>{" "}
+								<span className="toggle-off"> {choices.off || params.defaultChoices?.off} </span>
 							</>
 						)}
 					</label>

@@ -125,7 +125,7 @@ function Generic({ control, value, setValue, typedText }: PartProps) {
 				<div className="customize-control-label">
 					{params.label && (
 						<label className="customize-control-title" htmlFor={id}>
-							{params.label}
+							{` ${params.label} `}
 						</label>
 					)}
 
@@ -196,7 +196,7 @@ function ResponsiveGeneric({ control, value, setValue, typedText }: PartProps) {
 			<header className="wpbf-control-header">
 				{params.label && (
 					<label className="customize-control-title" htmlFor={`_customize-input-${params.id}-${firstDevice}`}>
-						{params.label}
+						{` ${params.label} `}
 					</label>
 				)}
 
