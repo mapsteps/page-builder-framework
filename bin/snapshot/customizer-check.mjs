@@ -250,7 +250,9 @@ try {
 			const setting = control.setting;
 			const original = setting.get();
 			let next = value;
-			if (type === 'wpbf-select' || type.startsWith('wpbf-radio')) next = Object.keys(control.params.choices || {}).find((k) => k !== original) ?? original;
+			if (type.startsWith('wpbf-radio')) next = Object.keys(control.params.choices || {}).find((k) => k !== original) ?? original;
+			// Selects have their choices as a list of { id, text } (and groups of them).
+			if (type === 'wpbf-select') next = (control.params.choices || []).flatMap((ch) => ch.children ? ch.children : [ch]).map((ch) => String(ch.id)).find((k) => k !== original) ?? original;
 			if (type === 'wpbf-toggle' || type === 'wpbf-checkbox') next = !original;
 			if (type === 'wpbf-generic') next = 'zz-test';
 			// A value inside the slider's range (one outside shows as the limit).
@@ -301,10 +303,32 @@ try {
 			const inputs = [...scope.querySelectorAll('input, select, textarea')].map((i) => i.type === 'checkbox' ? String(i.checked) : i.type === 'radio' ? (i.checked ? i.value : '') : i.value);
 			// Selects: the chosen option's text must show (select2 kept showing the old one).
 			const selectLabel = type === 'wpbf-select' ? ((control.params.choices || []).flatMap((ch) => ch.children ? ch.children : [ch]).find((ch) => String(ch.id) === String(next)) || {}).text : null;
+			const shownText = type === 'wpbf-select' ? selectShown(control) : undefined;
 			const shown = type === 'wpbf-select' ? selectShown(control) === selectLabel : type.startsWith('wpbf-radio') ? inputs.includes(String(look)) : inputs.some((v) => String(v).toLowerCase().includes(String(look).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(look).toLowerCase());
 			setting.set(original);
 			await sleep(200);
-			roundTrips[type] = { id: control.id, setTo: next, shownInControl: shown, ...(type === 'wpbf-select' ? { shownText: selectShown(control) } : {}), restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
+			roundTrips[type] = { id: control.id, setTo: next, shownInControl: shown, ...(type === 'wpbf-select' ? { shownText } : {}), restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
+		}
+
+		// 7d: typography font family / variant changes, one after the other: the typography value composed from them, and
+		// the variant select's options, shown variant and visibility (to compare select2 and the select form).
+		const typographySteps = {};
+		for (const tid of ['page_font_family', 'menu_font_family', 'zz_test_typography']) {
+			const fam = wp.customize(tid + '[font-family]'), vari = wp.customize(tid + '[variant]'), typo = wp.customize(tid);
+			const vc = wp.customize.control(tid + '[variant]');
+			if (!fam || !vari || !typo || !vc) continue;
+			const original = { fam: fam.get(), vari: vari.get(), typo: typo.get() };
+			const variantChoices = () => vc.choicesValue ? vc.choicesValue.get().map((c) => String(c.id)) : [...vc.container[0].querySelectorAll('select option')].map((o) => o.value);
+			const steps = [['fam', 'Roboto'], ['vari', '700italic'], ['vari', '300'], ['fam', 'Helvetica, Arial, sans-serif'], ['vari', 'italic'], ['fam', 'Open Sans'], ['fam', 'zz-unknown-font'], ['vari', '900'], ['fam', 'Inter']];
+			const out = [{ step: 'open', typo: typo.get(), variantActive: vc.active(), variantShown: selectShown(vc), variantChoices: variantChoices() }];
+			for (const [which, v] of steps) {
+				('fam' === which ? fam : vari).set(v);
+				await sleep(200);
+				out.push({ step: which + '=' + v, typo: typo.get(), variantActive: vc.active(), variantShown: selectShown(vc), variantChoices: variantChoices() });
+			}
+			fam.set(original.fam); vari.set(original.vari); typo.set(original.typo);
+			await sleep(200);
+			typographySteps[tid] = out;
 		}
 
 		// Preview CSS: set options in the Customizer, wait for the preview, and compare the preview's CSS of each area
@@ -361,9 +385,10 @@ try {
 			byType,
 			emptyControls: empty.slice(0, 30),
 			reactColorPickers: document.querySelectorAll('.react-colorful').length,
-			select2: document.querySelectorAll('.select2-container').length,
+			select2: document.querySelectorAll('.select2-container').length, selectForms: document.querySelectorAll('.wpbf-select').length,
 			sliders: document.querySelectorAll('input[type=range]').length,
 			selects,
+			typographySteps,
 			roundTrips,
 			changedOnLoad,
 			savedOnLoad,
