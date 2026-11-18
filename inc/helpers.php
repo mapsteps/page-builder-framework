@@ -755,7 +755,7 @@ function wpbf_scrolltop() {
 
 	if ( get_theme_mod( 'layout_scrolltop' ) ) {
 
-		$scrolltop = get_theme_mod( 'scrolltop_value', 400 );
+		$scrolltop = wpbf_mod( 'scrolltop_value' );
 
 		if ( wpbf_svg_enabled() ) {
 			$icon = wpbf_svg( 'arrow-up' );
@@ -1103,15 +1103,15 @@ add_action( 'wpbf_sidebar_left', 'wpbf_do_sidebar_left' );
 function wpbf_sidebar_layout() {
 
 	// Set default sidebar position.
-	$sidebar = get_theme_mod( 'sidebar_position', 'right' );
+	$sidebar = wpbf_mod( 'sidebar_position' );
 
-	$archive_sidebar_position = get_theme_mod( 'archive_sidebar_layout', 'global' );
+	$archive_sidebar_position = wpbf_mod( 'archive_sidebar_layout' );
 	$sidebar                  = 'global' !== $archive_sidebar_position ? $archive_sidebar_position : $sidebar;
 
 	if ( is_singular() && ! is_page() ) {
 
 		$single_sidebar_position        = get_post_meta( get_the_ID(), 'wpbf_sidebar_position', true );
-		$single_sidebar_position_global = get_theme_mod( 'single_sidebar_layout', 'global' );
+		$single_sidebar_position_global = wpbf_mod( 'single_sidebar_layout' );
 
 		$sidebar = 'global' !== $single_sidebar_position_global ? $single_sidebar_position_global : $sidebar;
 		$sidebar = $single_sidebar_position && 'global' !== $single_sidebar_position ? $single_sidebar_position : $sidebar;
@@ -1121,7 +1121,7 @@ function wpbf_sidebar_layout() {
 	if ( is_page() ) {
 
 		$single_sidebar_position        = get_post_meta( get_the_ID(), 'wpbf_sidebar_position', true );
-		$single_sidebar_position_global = get_theme_mod( 'single_sidebar_layout', 'global' );
+		$single_sidebar_position_global = wpbf_mod( 'single_sidebar_layout' );
 
 		// By default there is no sidebar on pages.
 		$sidebar = 'none';
@@ -1152,7 +1152,7 @@ function wpbf_sidebar_layout() {
  */
 function wpbf_article_meta() {
 
-	$blog_meta = get_theme_mod( 'blog_sortable_meta', array( 'author', 'date' ) );
+	$blog_meta = wpbf_mod( 'blog_sortable_meta' );
 
 	if ( is_array( $blog_meta ) && ! empty( $blog_meta ) ) {
 
@@ -1258,12 +1258,12 @@ add_action( 'wpbf_comments_meta', 'wpbf_do_comments_meta' );
  */
 function wpbf_blog_layout() {
 
-	$template_parts_header  = get_theme_mod( 'archive_sortable_header', array( 'title', 'meta', 'featured' ) );
-	$template_parts_content = get_theme_mod( 'archive_sortable_content', array( 'excerpt' ) );
-	$template_parts_footer  = get_theme_mod( 'archive_sortable_footer', array( 'readmore', 'categories' ) );
-	$blog_layout            = get_theme_mod( 'archive_layout', 'default' );
-	$style                  = get_theme_mod( 'archive_post_style', 'plain' );
-	$stretched              = get_theme_mod( 'archive_boxed_image_streched', false );
+	$template_parts_header  = wpbf_mod( 'archive_sortable_header' );
+	$template_parts_content = wpbf_mod( 'archive_sortable_content' );
+	$template_parts_footer  = wpbf_mod( 'archive_sortable_footer' );
+	$blog_layout            = wpbf_mod( 'archive_layout' );
+	$style                  = wpbf_mod( 'archive_post_style' );
+	$stretched              = wpbf_mod( 'archive_boxed_image_streched' );
 
 	if ( 'beside' !== $blog_layout && 'boxed' === $style && $stretched ) {
 		$style .= ' stretched';
@@ -1289,11 +1289,11 @@ function wpbf_blog_layout() {
  */
 function wpbf_post_layout() {
 
-	$template_parts_header = get_theme_mod( 'single_sortable_header', array( 'title', 'meta', 'featured' ) );
-	$template_parts_footer = get_theme_mod( 'single_sortable_footer', array( 'categories' ) );
+	$template_parts_header = wpbf_mod( 'single_sortable_header' );
+	$template_parts_footer = wpbf_mod( 'single_sortable_footer' );
 	$post_layout           = 'default';
-	$style                 = get_theme_mod( 'single_post_style', 'plain' );
-	$style                .= get_theme_mod( 'single_boxed_image_stretched', false ) ? ' stretched' : '';
+	$style                 = wpbf_mod( 'single_post_style' );
+	$style                .= wpbf_mod( 'single_boxed_image_stretched' ) ? ' stretched' : '';
 
 	return apply_filters(
 		'wpbf_post_layout',
@@ -1386,7 +1386,7 @@ add_action( 'wpbf_main_menu', 'wpbf_nav_menu' );
 function wpbf_mobile_nav_menu() {
 
 	$custom_menu   = get_theme_mod( 'menu_custom' );
-	$menu_position = get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
+	$menu_position = wpbf_mod( 'mobile_menu_options' );
 
 	if ( $custom_menu ) {
 
@@ -1415,7 +1415,7 @@ add_action( 'wpbf_mobile_menu', 'wpbf_mobile_nav_menu' );
  * Render main menu based on selected menu variation.
  */
 function wpbf_menu() {
-	get_template_part( 'inc/template-parts/navigation/' . apply_filters( 'wpbf_menu_variation', get_theme_mod( 'menu_position', 'menu-right' ) ) );
+	get_template_part( 'inc/template-parts/navigation/' . apply_filters( 'wpbf_menu_variation', wpbf_mod( 'menu_position' ) ) );
 }
 add_action( 'wpbf_navigation', 'wpbf_menu' );
 
@@ -1425,7 +1425,7 @@ add_action( 'wpbf_navigation', 'wpbf_menu' );
  * Render mobile menu based on selected mobile menu variation.
  */
 function wpbf_mobile_menu() {
-	get_template_part( 'inc/template-parts/navigation/' . apply_filters( 'wpbf_mobile_menu_variation', get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' ) ) );
+	get_template_part( 'inc/template-parts/navigation/' . apply_filters( 'wpbf_mobile_menu_variation', wpbf_mod( 'mobile_menu_options' ) ) );
 }
 add_action( 'wpbf_mobile_navigation', 'wpbf_mobile_menu' );
 
@@ -1525,7 +1525,7 @@ add_filter( 'walker_nav_menu_start_el', 'wpbf_mobile_sub_menu_indicators', 10, 4
  */
 function wpbf_sub_menu_alignment() {
 
-	$sub_menu_alignment = get_theme_mod( 'sub_menu_alignment', 'left' );
+	$sub_menu_alignment = wpbf_mod( 'sub_menu_alignment' );
 
 	return ' wpbf-sub-menu-align-' . $sub_menu_alignment;
 

@@ -39,7 +39,7 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 	}
 
 	$breadcrumbs          = array( 'archive', 'single', 'search', '404', 'page', 'front_page' );
-	$included_breadcrumbs = get_theme_mod( 'breadcrumbs', array( 'archive', 'single' ) );
+	$included_breadcrumbs = wpbf_mod( 'breadcrumbs' );
 	$excluded_breadcrumbs = array_diff( $breadcrumbs, $included_breadcrumbs );
 
 	if ( is_array( $excluded_breadcrumbs ) && ! empty( $excluded_breadcrumbs ) ) {
@@ -134,7 +134,7 @@ function wpbf_do_breadcrumbs( $args = array() ) {
  */
 function wpbf_breadcrumbs_content() {
 
-	if ( 'content' === get_theme_mod( 'breadcrumbs_position', 'content' ) ) {
+	if ( 'content' === wpbf_mod( 'breadcrumbs_position' ) ) {
 
 		wpbf_do_breadcrumbs();
 

@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-$grid_gap = get_theme_mod( 'sidebar_gap', 'medium' );
+$grid_gap = wpbf_mod( 'sidebar_gap' );
 
 get_header();
 

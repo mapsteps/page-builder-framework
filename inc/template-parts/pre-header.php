@@ -13,10 +13,10 @@ $layout                       = 'one' === $pre_header_layout ? ' wpbf-pre-header
 $inner_layout                 = 'one' === $pre_header_layout ? 'wpbf-inner-pre-header-content' : 'wpbf-inner-pre-header-left';
 $pre_header_hook_open         = 'one' === $pre_header_layout ? 'wpbf_pre_header_open' : 'wpbf_pre_header_left_open';
 $pre_header_hook_close        = 'one' === $pre_header_layout ? 'wpbf_pre_header_close' : 'wpbf_pre_header_left_close';
-$pre_header_column_one        = get_theme_mod( 'pre_header_column_one', __( 'Column 1', 'page-builder-framework' ) );
-$pre_header_column_two        = get_theme_mod( 'pre_header_column_two', __( 'Column 2', 'page-builder-framework' ) );
-$pre_header_column_one_layout = get_theme_mod( 'pre_header_column_one_layout', 'text' );
-$pre_header_column_two_layout = get_theme_mod( 'pre_header_column_two_layout', 'text' );
+$pre_header_column_one        = wpbf_mod( 'pre_header_column_one' );
+$pre_header_column_two        = wpbf_mod( 'pre_header_column_two' );
+$pre_header_column_one_layout = wpbf_mod( 'pre_header_column_one_layout' );
+$pre_header_column_two_layout = wpbf_mod( 'pre_header_column_two_layout' );
 
 // Stop here if pre header is disabled or not set.
 if ( ! $pre_header_layout || 'none' === $pre_header_layout ) {

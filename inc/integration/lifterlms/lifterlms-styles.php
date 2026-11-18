@@ -13,8 +13,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 function wpbf_do_lifterlms_customizer_css() {
 
-	$accent_color     = get_theme_mod( 'page_accent_color', '#3ba9d2' );
-	$accent_color_alt = get_theme_mod( 'page_accent_color_alt', '#79c4e0' );
+	$accent_color     = wpbf_mod( 'page_accent_color' );
+	$accent_color_alt = wpbf_mod( 'page_accent_color_alt' );
 
 	$primary = $accent_color === '#3ba9d2' ? 'var(--accent-color)' : $accent_color;
 	$action  = $accent_color === '#3ba9d2' ? 'var(--accent-color)' : $accent_color;

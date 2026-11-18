@@ -119,7 +119,7 @@ add_filter( 'wpbf_do_sidebar', 'wpbf_woo_sidebars' );
  */
 function wpbf_woo_output_content_wrapper() {
 
-	$grid_gap = get_theme_mod( 'sidebar_gap', 'medium' );
+	$grid_gap = wpbf_mod( 'sidebar_gap' );
 
 	echo '<div id="content">';
 
@@ -175,7 +175,7 @@ function wpbf_woo_sidebar_layout( $sidebar ) {
 
 	if ( is_product() ) {
 
-		$sidebar = get_theme_mod( 'woocommerce_single_sidebar_layout', 'none' );
+		$sidebar = wpbf_mod( 'woocommerce_single_sidebar_layout' );
 
 		$id               = get_the_ID();
 		$sidebar_position = get_post_meta( $id, 'wpbf_sidebar_position', true );
@@ -185,7 +185,7 @@ function wpbf_woo_sidebar_layout( $sidebar ) {
 		}
 	} elseif ( is_shop() || is_product_category() || is_product_taxonomy() ) {
 
-		$sidebar = get_theme_mod( 'woocommerce_sidebar_layout', 'none' );
+		$sidebar = wpbf_mod( 'woocommerce_sidebar_layout' );
 
 	}
 
@@ -246,7 +246,7 @@ function wpbf_woo_product_loop_start( $start ) {
 	$desktop_breakpoint = wpbf_get_theme_mod_value( $products_per_row, 'desktop', 4, true );
 	$tablet_breakpoint  = wpbf_get_theme_mod_value( $products_per_row, 'tablet', 3, true );
 	$mobile_breakpoint  = wpbf_get_theme_mod_value( $products_per_row, 'mobile', 1, true );
-	$grid_gap           = get_theme_mod( 'woocommerce_loop_grid_gap', 'large' );
+	$grid_gap           = wpbf_mod( 'woocommerce_loop_grid_gap' );
 
 	return '<ul class="wpbf-grid wpbf-grid-' . esc_attr( $grid_gap ) . ' wpbf-grid-1-' . esc_attr( $mobile_breakpoint ) . ' wpbf-grid-small-1-' . esc_attr( $tablet_breakpoint ) . ' wpbf-grid-large-1-' . esc_attr( $desktop_breakpoint ) . ' products' . $elementor_support . ' columns-' . esc_attr( $desktop_breakpoint ) . '">';
 
@@ -452,7 +452,7 @@ function wpbf_woo_loop_short_description() {
  */
 function wpbf_woo_loop_content() {
 
-	$content = get_theme_mod( 'woocommerce_loop_sortable_content', array( 'category', 'title', 'price', 'add_to_cart' ) );
+	$content = wpbf_mod( 'woocommerce_loop_sortable_content' );
 
 	if ( is_array( $content ) && ! empty( $content ) ) {
 
@@ -746,7 +746,7 @@ function wpbf_woo_after_quantity_input_field() {
  * Add WooCommerce increase decrease button.
  */
 function wpbf_woo_qty_increase_decrease_button() {
-	if ( 'hide' === get_theme_mod( 'woocommerce_quantity_buttons', 'show' ) ) {
+	if ( 'hide' === wpbf_mod( 'woocommerce_quantity_buttons' ) ) {
 		return;
 	}
 
@@ -768,7 +768,7 @@ function wpbf_woo_nested_category_layout_classes( $classes ) {
 	$desktop_breakpoint = wpbf_get_theme_mod_value( $products_per_row, 'desktop', 4, true );
 	$tablet_breakpoint  = wpbf_get_theme_mod_value( $products_per_row, 'tablet', 3, true );
 	$mobile_breakpoint  = wpbf_get_theme_mod_value( $products_per_row, 'mobile', 1, true );
-	$grid_gap           = get_theme_mod( 'woocommerce_loop_grid_gap', 'large' );
+	$grid_gap           = wpbf_mod( 'woocommerce_loop_grid_gap' );
 
 	$classes[] = 'wpbf-grid wpbf-grid-' . esc_attr( $grid_gap ) . ' wpbf-grid-1-' . esc_attr( $mobile_breakpoint ) . ' wpbf-grid-small-1-' . esc_attr( $tablet_breakpoint ) . ' wpbf-grid-large-1-' . esc_attr( $desktop_breakpoint );
 

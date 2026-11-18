@@ -57,7 +57,7 @@ $content_width          = $single_custom_width ? $single_custom_width : $page_wi
 $page_width_int         = strpos( $content_width, 'px' ) !== false ? (int) $content_width : false;
 $background_color       = get_theme_mod( 'background_color' );
 $page_boxed             = get_theme_mod( 'page_boxed' );
-$page_boxed_background  = get_theme_mod( 'page_boxed_background', '#ffffff' );
+$page_boxed_background  = wpbf_mod( 'page_boxed_background' );
 $page_accent_color      = get_theme_mod( 'page_accent_color' );
 $page_accent_color_alt  = get_theme_mod( 'page_accent_color_alt' );
 $page_bold_color        = get_theme_mod( 'page_bold_color' );

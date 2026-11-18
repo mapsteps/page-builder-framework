@@ -347,13 +347,13 @@ $page_width                   = ( $val = get_theme_mod( 'page_max_width' ) ) ===
 $page_boxed                   = get_theme_mod( 'page_boxed' );
 $page_boxed_padding           = ( $val = get_theme_mod( 'page_boxed_padding' ) ) === '20' ? false : $val;
 $page_boxed_margin            = get_theme_mod( 'page_boxed_margin' );
-$page_boxed_background        = get_theme_mod( 'page_boxed_background', '#ffffff' );
+$page_boxed_background        = wpbf_mod( 'page_boxed_background' );
 $page_boxed_shadow            = get_theme_mod( 'page_boxed_box_shadow' );
 $page_boxed_shadow_horizontal = ( $val = get_theme_mod( 'page_boxed_box_shadow_horizontal' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_vertical   = ( $val = get_theme_mod( 'page_boxed_box_shadow_vertical' ) ) ? $val . 'px' : '0px';
 $page_boxed_shadow_blur       = ( $val = get_theme_mod( 'page_boxed_box_shadow_blur' ) ) ? $val . 'px' : '25px';
 $page_boxed_shadow_spread     = ( $val = get_theme_mod( 'page_boxed_box_shadow_spread' ) ) ? $val . 'px' : '0px';
-$page_boxed_shadow_color      = get_theme_mod( 'page_boxed_box_shadow_color', 'rgba(0,0,0,.15)' );
+$page_boxed_shadow_color      = wpbf_mod( 'page_boxed_box_shadow_color' );
 $page_padding                 = json_decode( get_theme_mod( 'page_padding' ), true );
 $page_padding_top_desktop     = wpbf_get_theme_mod_value( $page_padding, 'desktop_top' );
 $page_padding_right_desktop   = wpbf_get_theme_mod_value( $page_padding, 'desktop_right' );
@@ -561,7 +561,7 @@ if ( $page_boxed ) {
 
 // ScrollTop.
 $scrolltop                = get_theme_mod( 'layout_scrolltop' );
-$scrolltop_position       = get_theme_mod( 'scrolltop_position', 'right' );
+$scrolltop_position       = wpbf_mod( 'scrolltop_position' );
 $scrolltop_bg_color       = ( $val = get_theme_mod( 'scrolltop_bg_color' ) ) === 'rgba(62,67,73,0.5)' ? false : $val;
 $scrolltop_bg_color_alt   = ( $val = get_theme_mod( 'scrolltop_bg_color_alt' ) ) === 'rgba(62,67,73,0.7)' ? false : $val;
 $scrolltop_icon_color     = ( $val = get_theme_mod( 'scrolltop_icon_color' ) ) === '#ffffff' ? false : $val;
@@ -1015,7 +1015,7 @@ if ( $sidebar_width ) {
 }
 
 // Breadcrumbs.
-$breadcrumbs_alignment        = get_theme_mod( 'breadcrumbs_alignment', 'left' );
+$breadcrumbs_alignment        = wpbf_mod( 'breadcrumbs_alignment' );
 $breadcrumbs_background_color = ( $val = get_theme_mod( 'breadcrumbs_background_color' ) ) === '#dedee5' ? false : $val;
 $breadcrumbs_font_color       = get_theme_mod( 'breadcrumbs_font_color' );
 $breadcrumbs_accent_color     = get_theme_mod( 'breadcrumbs_accent_color' );
@@ -1168,14 +1168,14 @@ foreach ( $archives as $archive ) {
 	}
 
 	$layout            = get_theme_mod( $archive . '_layout' );
-	$style             = get_theme_mod( $archive . '_post_style', 'plain' );
-	$content_alignment = get_theme_mod( $archive . '_post_content_alignment', 'left' );
+	$style             = wpbf_mod( $archive . '_post_style' );
+	$content_alignment = wpbf_mod( $archive . '_post_content_alignment' );
 	$accent_color      = get_theme_mod( $archive . '_post_accent_color' );
 	$accent_color_alt  = get_theme_mod( $archive . '_post_accent_color_alt' );
 	$space_between     = ( $val = get_theme_mod( $archive . '_post_space_between' ) ) === '20' ? false : $val;
 	$title_size        = get_theme_mod( $archive . '_post_title_size' );
 	$font_size         = get_theme_mod( $archive . '_post_font_size' );
-	$stretched         = get_theme_mod( $archive . '_boxed_image_streched', false );
+	$stretched         = wpbf_mod( $archive . '_boxed_image_streched' );
 
 	// General layout settings.
 	if ( $content_alignment ) {
@@ -1431,7 +1431,7 @@ foreach ( $archives as $archive ) {
 	if ( 'beside' === $layout ) {
 
 		$image_width     = ( $val = get_theme_mod( $archive . '_post_image_width' ) ) === '40' ? false : $val;
-		$image_alignment = get_theme_mod( $archive . '_post_image_alignment', 'left' );
+		$image_alignment = wpbf_mod( $archive . '_post_image_alignment' );
 
 		if ( $image_width ) {
 
@@ -1547,7 +1547,7 @@ foreach ( $singles as $single ) {
 
 		}
 
-		$stretched                    = get_theme_mod( $single . '_boxed_image_stretched', false );
+		$stretched                    = wpbf_mod( $single . '_boxed_image_stretched' );
 		$boxed_padding                = json_decode( get_theme_mod( $single . '_boxed_padding' ), true );
 		$boxed_padding_top_desktop    = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_top' );
 		$boxed_padding_right_desktop  = wpbf_get_theme_mod_value( $boxed_padding, 'desktop_right' );
@@ -2188,7 +2188,7 @@ $mobile_menu_padding_left            = wpbf_get_theme_mod_value( $mobile_menu_pa
 $mobile_menu_font_color              = get_theme_mod( 'mobile_menu_font_color' );
 $mobile_menu_font_color_alt          = get_theme_mod( 'mobile_menu_font_color_alt' );
 $mobile_menu_border_color            = ( $val = get_theme_mod( 'mobile_menu_border_color' ) ) === '#d9d9e0' ? false : $val;
-$mobile_menu_options                 = get_theme_mod( 'mobile_menu_options', 'menu-mobile-hamburger' );
+$mobile_menu_options                 = wpbf_mod( 'mobile_menu_options' );
 $mobile_menu_hamburger_color         = get_theme_mod( 'mobile_menu_hamburger_color' );
 $mobile_menu_hamburger_size          = ( $val = get_theme_mod( 'mobile_menu_hamburger_size' ) ) === '16px' ? false : $val;
 $mobile_menu_hamburger_border_radius = get_theme_mod( 'mobile_menu_hamburger_border_radius' );
