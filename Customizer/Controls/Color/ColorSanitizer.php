@@ -89,53 +89,54 @@ class ColorSanitizer {
 	 */
 	private function sanitizeColorString( $value ) {
 
-		$value = strtolower( $value );
+		$value = strtolower( trim( $value ) );
 
-		/**
-		 * This pattern will check and match 3/6/8-character hex, rgb, rgba, hsl, hsla, hsv, and hsva colors.
-		 *
-		 * RGB regex:
-		 *
-		 * @link https://stackoverflow.com/questions/9585973/javascript-regular-expression-for-rgb-values#answer-9586045
-		 *
-		 * For testing it, you can use these links:
-		 *
-		 * @link https://regex101.com/
-		 * @link https://regexr.com/
-		 * @link https://www.regextester.com/
-		 *
-		 * How to test it?
-		 *
-		 * Paste the following code to the test field (of course without the asterisks and spaces in front of them):
-		 * rgba(255, 255, 0, 0.9)
-		 * rgb(255, 255, 0)
-		 * #ff0
-		 * #ffff00
-		 * hsl(150, 25%, 25%)
-		 * hsla(250, 25%, 25%, 0.7)
-		 * hsv(125, 15%, 30%)
-		 * hsva(125, 15%, 30%, 0.5)
-		 *
-		 * And then paste the regex `$pattern` below (without the single quote's start and end) to the regular expression box.
-		 * Set the flag to use "global" and "multiline".
-		 */
-		$pattern = '/^(#[\da-f]{3}|#[\da-f]{6}|#[\da-f]{8}|rgba\(((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*,\s*){2}((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*)(,\s*(0\.\d+|1))\)|rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)|hsla\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)(,\s*(0\.\d+|1))\)|hsl\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)\)|hsva\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)(,\s*(0\.\d+|1))\)|hsv\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)\))$/';
+		if ( 'transparent' === $value || 'currentcolor' === $value ) {
+			return $value;
+		}
 
-		preg_match( $pattern, $value, $matches );
+		// Hex: #rgb, #rgba, #rrggbb, #rrggbbaa.
+		if ( preg_match( '/^#([\da-f]{3}|[\da-f]{4}|[\da-f]{6}|[\da-f]{8})$/', $value ) ) {
+			return $value;
+		}
 
-		// Return the 1st match found.
-		if ( isset( $matches[0] ) ) {
-			if ( is_string( $matches[0] ) ) {
-				return $matches[0];
+		// CSS variable, e.g. var(--accent).
+		if ( preg_match( '/^var\(\s*--[a-z0-9_-]+\s*\)$/', $value ) ) {
+			return $value;
+		}
+
+		// rgb(a), hsl(a), hsv(a): comma or space separated, optional alpha (also after a slash).
+		if ( ! preg_match( '/^(rgba?|hsla?|hsva?)\(\s*([\d.%\s,\/deg]*?)\s*\)$/', $value, $matches ) ) {
+			return '';
+		}
+
+		$parts = preg_split( '/\s*[,\/]\s*|\s+/', $matches[2] );
+
+		if ( 3 !== count( $parts ) && 4 !== count( $parts ) ) {
+			return '';
+		}
+
+		$is_rgb = 0 === strpos( $matches[1], 'rgb' );
+
+		foreach ( $parts as $index => $part ) {
+			if ( 3 === $index ) {
+				$max = '%' === substr( $part, -1 ) ? 100 : 1;
+			} elseif ( $is_rgb ) {
+				$max = '%' === substr( $part, -1 ) ? 100 : 255;
+			} else {
+				$max = 0 === $index ? 360 : 100;
 			}
 
-			if ( is_array( $matches[0] ) && isset( $matches[0][0] ) ) {
-				return $matches[0][0];
+			$number = 0 === $index && ! $is_rgb ? preg_replace( '/deg$/', '', $part ) : $part;
+			$number = '%' === substr( $number, -1 ) ? substr( $number, 0, -1 ) : $number;
+
+			if ( ! preg_match( '/^(\d+(\.\d+)?|\.\d+)$/', $number ) || (float) $number > $max ) {
+				return '';
 			}
 		}
 
-		// If no match was found, return an empty string.
-		return '';
+		return $value;
+
 	}
 
 }

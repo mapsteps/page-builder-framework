@@ -25,8 +25,8 @@ class RepeaterSanitizer {
 			$value = json_decode( $value, true );
 		}
 
-		// Nothing to sanitize if we don't have fields.
-		if ( empty( $fields ) || ! is_array( $fields ) ) {
+		// Nothing to sanitize if we don't have fields or rows.
+		if ( empty( $fields ) || ! is_array( $fields ) || ! is_array( $value ) ) {
 			return [];
 		}
 
@@ -46,13 +46,12 @@ class RepeaterSanitizer {
 					unset( $value[ $row_id ][ $subfield_id ] );
 				}
 
-				// Get the subfield-type.
-				if ( ! isset( $fields[ $subfield_id ]['type'] ) ) {
+				if ( ! isset( $fields[ $subfield_id ] ) ) {
 					continue;
 				}
 
 				$subfield      = $fields[ $subfield_id ];
-				$subfield_type = $subfield['type'];
+				$subfield_type = isset( $subfield['type'] ) ? $subfield['type'] : '';
 
 				// Allow using a sanitize-callback on a per-field basis.
 				if ( isset( $fields[ $subfield_id ]['sanitize_callback'] ) ) {
@@ -94,29 +93,15 @@ class RepeaterSanitizer {
 						case 'checkbox':
 							$subfield_value = (bool) $subfield_value;
 							break;
-						case 'select':
-							if ( isset( $fields[ $subfield_id ]['multiple'] ) ) {
-								if ( true === $fields[ $subfield_id ]['multiple'] ) {
-									$multiple = 2;
-								}
-								$multiple = (int) $fields[ $subfield_id ]['multiple'];
-								if ( 1 < $multiple ) {
-									$subfield_value = (array) $subfield_value;
-									foreach ( $subfield_value as $sub_subfield_key => $sub_subfield_value ) {
-										$subfield_value[ $sub_subfield_key ] = sanitize_text_field( $sub_subfield_value );
-									}
-								} else {
-									$subfield_value = sanitize_text_field( $subfield_value );
-								}
-							}
-							break;
-						case 'radio':
-						case 'radio-image':
-							$subfield_value = sanitize_text_field( $subfield_value );
-							break;
 						case 'textarea':
-							$subfield_value = html_entity_decode( wp_kses_post( $subfield_value ) );
-
+							$subfield_value = wp_kses_post( $subfield_value );
+							break;
+						case 'number':
+							$subfield_value = is_numeric( $subfield_value ) ? $subfield_value + 0 : '';
+							break;
+						default:
+							// Select (single or multiple), radio and any other type: plain text, also inside arrays.
+							$subfield_value = is_array( $subfield_value ) ? array_map( 'sanitize_text_field', array_filter( $subfield_value, 'is_scalar' ) ) : sanitize_text_field( $subfield_value );
 					}
 				}
 

@@ -35,7 +35,8 @@ class SelectField extends BaseField {
 			$max_selections = (int) $this->control->custom_properties['max_selections'];
 		}
 
-		if ( $total_values > $max_selections ) {
+		// No limit (or -1) means no limit.
+		if ( $max_selections > 0 && $total_values > $max_selections ) {
 			$value = array_slice( $value, 0, $max_selections );
 		}
 

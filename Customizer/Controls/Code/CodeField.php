@@ -25,8 +25,8 @@ class CodeField extends BaseField {
 	/**
 	 * Setting's sanitize callback.
 	 *
-	 * Code fields should not be filtered by default.
-	 * Their values usually contain CSS/JS and it it the responsibility of the theme/plugin that registers this field to properly sanitize the value.
+	 * Code is saved as entered by users who may add any HTML (the "unfiltered_html" capability, e.g. admins on a single site).
+	 * Everyone else gets the same treatment as in WordPress' Custom HTML widget: scripts and unsafe markup are removed.
 	 *
 	 * @param string $value The value to sanitize.
 	 *
@@ -34,7 +34,15 @@ class CodeField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		return $value;
+		if ( ! is_string( $value ) ) {
+			return '';
+		}
+
+		if ( current_user_can( 'unfiltered_html' ) ) {
+			return $value;
+		}
+
+		return wp_kses_post( $value );
 
 	}
 

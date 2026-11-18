@@ -32,7 +32,7 @@ class RadioField extends BaseField {
 	 */
 	public function sanitizeCallback( $value ) {
 
-		if ( ! isset( $this->control->choices[ $value ] ) ) {
+		if ( ! is_scalar( $value ) || ! isset( $this->control->choices[ $value ] ) ) {
 			$setting_entity = CustomizerStore::findSettingByControlId( $this->control->id );
 
 			return $setting_entity ? $setting_entity->default : '';
