@@ -67,7 +67,9 @@ The option *definitions* for the header, blog, footer and so on move into `Schem
 
 Each step is one or more commits on the `redo` branch. After every step: snapshot before/after, lint, Premium check, and for control changes a real check in the Customizer (open, change, save, reload).
 
-1. **Fix what loses data or is unsafe** (small, separate fixes before any restructuring):
+Checks for every step: `python bin/snapshot/snapshot.py take/diff` (pages), `node bin/snapshot/customizer-check.mjs` (Customizer opens, every control renders, no JS errors or failed requests), `php bin/check-premium-deps.php`, lint.
+
+1. **Fix what loses data or is unsafe** (small, separate fixes before any restructuring). **Done November 18, 2026** (5 commits). Left for later steps: the select control's markup typos (TS, needs the build from step 2), font download retries/back-off and the empty font style tag (step 5), file-mode CSS regenerating on every request (step 5).
    - color checker keeps transparent / `var()` / 4-digit hex
    - multi-select keeps every choice when there's no limit
    - repeater checker: no more `html_entity_decode`, every sub-field type checked
@@ -87,8 +89,8 @@ Each step is one or more commits on the `redo` branch. After every step: snapsho
 
 ## Decisions for the user
 
-1. **Old Premium (2.9 and older):** keep the safety net frozen + a clearer "update Premium" notice (recommended), or stop supporting it.
+1. **Old Premium (2.9 and older): decided (November 18, 2026):** keep the safety net frozen + a clearer "update Premium" notice. Blocking it isn't possible cleanly (plugins load before the theme), would take features off live sites of customers who can't renew, and a theme switching off plugins wouldn't pass WordPress.org review. Compatibility is promised for Premium 2.10+ only; older versions just must not crash.
 2. **How CSS is written (affects every module after this one): decided A (November 18, 2026).** Keeps the old styles.php rule: CSS is only printed when an option is set and differs from its default (that check now comes from the schema's one default). Rules that depend on several options stay hand-written PHP.
    - **A, chosen:** most options are simple ("this color → this property on these elements"). Their CSS rule moves into the option's definition in the schema. The front-end CSS and the instant live preview are both generated from it. The 141 hand-written preview bindings and most of the 2,585-line CSS file disappear. The few options with complicated CSS (several options combined) keep PHP code, and their preview asks PHP for the updated CSS (short delay).
    - **B:** keep writing CSS by hand in PHP per area, and let the preview always ask PHP for the CSS on each change. Simpler to switch to, but every change in the preview shows after a short delay, and the CSS file stays large.
-3. **Minimum WordPress version:** the theme declares none today (WordPress.org requires "Requires at least"). Setting 6.6 lets us drop the bundled React copies.
+3. **Minimum WordPress version: decided 6.6 (November 18, 2026).** Lets us use WordPress' own React (bundled copies removed in step 1).
