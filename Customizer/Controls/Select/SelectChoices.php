@@ -13,7 +13,7 @@ class SelectChoices {
 	 * Format the 'choices' args for 'select' control.
 	 *
 	 * For the usage, it accepts format like in Kirki, Select2 or ReactSelect.
-	 * It will then be converted to Select2 format.
+	 * It will then be converted to Select2's format, which the select form reads ({ id, text }, groups as { text, children }).
 	 *
 	 * @see https://github.com/themeum/kirki/issues/1120#issuecomment-304480821 for Kirki's format.
 	 * @see https://select2.org/data-sources/formats for Select2's format.

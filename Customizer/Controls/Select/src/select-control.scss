@@ -1,17 +1,308 @@
-.wpbf-customize-control-select {
-	input[autocomplete="off"] {
-		box-shadow: none;
+/*
+ * The select form (SelectForm.tsx). Looks like select2's default theme, which it replaces: same sizes, borders and
+ * colors. The list opens inside the control (select2 put it at the end of the page) and over the controls below it.
+ */
+.wpbf-select {
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+	color: #444;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	button {
+		font: inherit;
 	}
 }
 
-.wp-customizer > .select2-container {
-	z-index: 500001;
+/* One choice: a button showing the chosen option. */
+.wpbf-select-single .wpbf-select-selection {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 28px;
+	margin: 0;
+	padding: 0 20px 0 8px;
+	background-color: #fff;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	color: #444;
+	line-height: 26px;
+	text-align: left;
+	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
+
+	.wpbf-select-value,
+	.wpbf-select-placeholder {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.wpbf-select-placeholder {
+		color: #999;
+	}
 }
 
-.wp-customizer > .select2-container .select2-search__field {
-	line-height: normal;
+.wpbf-select-single.is-clearable .wpbf-select-selection {
+	padding-right: 40px;
 }
 
-.wpbf-control-form .select2-container {
+.wpbf-select-arrow {
+	position: absolute;
+	top: 0;
+	right: 1px;
+	width: 20px;
+	height: 26px;
+
+	b {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 0;
+		height: 0;
+		margin-top: -2px;
+		margin-left: -4px;
+		border-color: #888 transparent transparent transparent;
+		border-style: solid;
+		border-width: 5px 4px 0 4px;
+	}
+}
+
+.wpbf-select.is-open .wpbf-select-arrow b {
+	border-color: transparent transparent #888 transparent;
+	border-width: 0 4px 5px 4px;
+}
+
+/* Several choices: chips and an inline search field. */
+.wpbf-select-multiple .wpbf-select-selection {
+	position: relative;
+	min-height: 32px;
+	padding: 0 5px 5px 0;
+	background-color: #fff;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	cursor: text;
+}
+
+.wpbf-select-multiple.is-clearable .wpbf-select-selection {
+	padding-right: 25px;
+}
+
+.wpbf-select-multiple:focus-within .wpbf-select-selection {
+	border-color: #000;
+}
+
+.wpbf-select-chips {
+	display: block;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	> li {
+		margin-bottom: 0;
+	}
+}
+
+.wpbf-select-chip {
+	display: inline-block;
+	position: relative;
 	max-width: 100%;
+	margin: 5px 0 0 5px;
+	padding: 0 0 0 20px;
+	background-color: #e4e4e4;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	vertical-align: bottom;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 18px;
+}
+
+.wpbf-select-chip-text {
+	padding: 0 5px 0 2px;
+	cursor: default;
+}
+
+.wpbf-select-chip-remove {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	padding: 0 4px;
+	background-color: transparent;
+	border: none;
+	border-right: 1px solid #aaa;
+	border-radius: 4px 0 0 4px;
+	color: #999;
+	font-weight: bold;
+	line-height: 1;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		background-color: #f1f1f1;
+		color: #333;
+		outline: none;
+	}
+}
+
+.wpbf-select-inline-search {
+	display: inline-block;
+	max-width: 100%;
+	vertical-align: bottom;
+
+	.wpbf-select-search {
+		width: auto;
+		min-width: 3em;
+		max-width: 100%;
+		height: 18px;
+		min-height: 0;
+		margin: 5px 0 0 5px;
+		padding: 0;
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		outline: 0;
+		box-shadow: none;
+		font-size: 100%;
+		line-height: 18px;
+		vertical-align: bottom;
+		-webkit-appearance: textfield;
+	}
+}
+
+.wpbf-select-multiple .wpbf-select-chips:only-child .wpbf-select-inline-search,
+.wpbf-select-multiple .wpbf-select-inline-search:first-child {
+	width: 100%;
+
+	.wpbf-select-search {
+		width: 100%;
+	}
+}
+
+/* Clear button (clearable selects). */
+.wpbf-select-clear {
+	position: absolute;
+	top: 1px;
+	right: 20px;
+	height: 26px;
+	padding: 0 4px;
+	background-color: transparent;
+	border: none;
+	color: #444;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.wpbf-select-multiple .wpbf-select-clear {
+	top: 5px;
+	right: 10px;
+	height: 20px;
+	padding: 1px;
+}
+
+/* The open list. */
+.wpbf-select-dropdown {
+	position: absolute;
+	left: 0;
+	z-index: 100;
+	width: 100%;
+	background-color: #fff;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+}
+
+.wpbf-select.is-below .wpbf-select-dropdown {
+	top: 100%;
+	border-top: none;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.wpbf-select.is-above .wpbf-select-dropdown {
+	bottom: 100%;
+	border-bottom: none;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.wpbf-select.is-below .wpbf-select-selection {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.wpbf-select.is-above .wpbf-select-selection {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.wpbf-select-search-box {
+	padding: 4px;
+
+	.wpbf-select-search {
+		width: 100%;
+		min-height: 0;
+		padding: 4px;
+		border: 1px solid #aaa;
+		border-radius: 0;
+		box-shadow: none;
+		line-height: normal;
+
+		&::-webkit-search-cancel-button {
+			-webkit-appearance: none;
+		}
+	}
+}
+
+.wpbf-select-options {
+	max-height: 200px;
+	margin: 0;
+	padding: 0;
+	overflow-y: auto;
+	list-style: none;
+
+	> li {
+		margin: 0;
+		padding: 6px;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+}
+
+.wpbf-select-option {
+	cursor: pointer;
+
+	&.is-nested {
+		padding-left: 1em;
+	}
+
+	&.is-selected {
+		background-color: #ddd;
+	}
+
+	&.is-highlighted {
+		background-color: #5897fb;
+		color: #fff;
+	}
+
+	&.is-disabled {
+		color: #999;
+		cursor: default;
+	}
+}
+
+.wpbf-select-group {
+	cursor: default;
+}
+
+.wpbf-select-message {
+	cursor: default;
 }

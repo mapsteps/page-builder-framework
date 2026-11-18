@@ -98,30 +98,6 @@ class SelectControl extends BaseControl {
 	}
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'select2', WPBF_THEME_URI . '/Customizer/Controls/Select/vendor/select2.min.css', array(), WPBF_VERSION );
-
-		$select2_src = WPBF_THEME_URI . '/Customizer/Controls/Select/vendor/select2.full.min.js';
-
-		// Enqueue the scripts.
-		wp_enqueue_script( 'select2', $select2_src, array( 'jquery' ), WPBF_VERSION, true );
-
-		if ( isset( wp_scripts()->registered ['select2'] ) ) {
-			if ( wp_scripts()->registered ['select2']->src !== $select2_src ) {
-				// In customizer, force change the select2 src to use our version.
-				wp_scripts()->registered ['select2']->src = $select2_src;
-			}
-		}
-
-	}
-
-	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
 	public function to_json() {
@@ -136,17 +112,20 @@ class SelectControl extends BaseControl {
 			$this->json['description'] = html_entity_decode( $this->json['description'] );
 		}
 
-		// @link https://react-select.com/props
 		$this->json['isClearable'] = $this->clearable;
 		$this->json['isMulti']     = $this->multiple;
 		$this->json['placeholder'] = ( $this->placeholder ) ? $this->placeholder : esc_html__( 'Select...', 'page-builder-framework' );
 
-		// Will be a custom implementation, couldn't find an official prop to set this in react-select.
+		// Most choices of a multiple select (-1 or 0: no limit).
 		$this->json['maxSelections'] = $this->max_selections;
 
+		// Shown as text by the select form (React escapes them).
 		$this->json['messages'] = array(
 			// translators: %s is the limit of selection number.
-			'maxLimitReached' => sprintf( esc_html__( 'You can only select %s items', 'page-builder-framework' ), $this->max_selections ),
+			'maxLimitReached' => sprintf( __( 'You can only select %s items', 'page-builder-framework' ), $this->max_selections ),
+			'noResults'       => __( 'No results found', 'page-builder-framework' ),
+			'clear'           => __( 'Remove all items', 'page-builder-framework' ),
+			'remove'          => __( 'Remove item', 'page-builder-framework' ),
 		);
 
 	}

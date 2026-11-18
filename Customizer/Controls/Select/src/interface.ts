@@ -1,3 +1,4 @@
+import { Value } from "wordpress__customize-browser/Value";
 import {
 	WpbfCustomizeControl,
 	WpbfCustomizeControlParams,
@@ -31,10 +32,18 @@ export interface SelectControlParams
 	maxSelections: number;
 	messages: {
 		maxLimitReached: string;
+		noResults?: string;
+		clear?: string;
+		remove?: string;
 	};
 }
 
 export interface WpbfCustomizeSelectControl
 	extends WpbfCustomizeControl<SelectControlValue, SelectControlParams> {
-	updateComponentState?: (value: SelectControlValue) => void;
+	/** The options shown (params.choices, or what setChoices() put there). */
+	choicesValue?: Value<SelectControlChoices>;
+	/** The value shown: follows the setting; showValue() sets it without the setting. */
+	shownValue?: Value<SelectControlValue>;
+	setChoices?: (choices: SelectControlChoices) => void;
+	showValue?: (value: SelectControlValue) => void;
 }

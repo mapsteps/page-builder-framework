@@ -4,10 +4,7 @@ import {
 	HandleSettingValiditiesArgs,
 	RequestChangesetUpdateOptions,
 } from "wordpress__customize-browser/Customize";
-import {
-	SelectControlValue,
-	WpbfCustomizeSelectControl,
-} from "../../Select/src/interface";
+import { WpbfCustomizeSelectControl } from "../../Select/src/interface";
 import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interface";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
@@ -219,10 +216,6 @@ export interface WpbfCustomizeControl<SV, CP> {
 
 	// Specific to PBF's React base (react-base.tsx).
 	actuallyEmbed?: () => void;
-
-	// Specific to PBF's select control.
-	$selectbox?: JQuery;
-	doSelectAction?: (action: string, value: SelectControlValue) => void;
 
 	// Specific to PBF's sortable control.
 	getNewValues?: () => any[];
