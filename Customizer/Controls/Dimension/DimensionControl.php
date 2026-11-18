@@ -4,6 +4,11 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Dimension;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
 
+/**
+ * Dimension control: a text field for a CSS size ("20px", "50%", "auto" …), warns about values that aren't one.
+ *
+ * The form renders with React (DimensionForm.tsx).
+ */
 class DimensionControl extends BaseControl {
 
 	/**
@@ -41,7 +46,7 @@ class DimensionControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-dimension-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Dimension/dist/dimension-control-min.js',
-			array( 'wpbf-base-control' ),
+			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
 			WPBF_VERSION,
 			false
 		);
@@ -68,42 +73,6 @@ class DimensionControl extends BaseControl {
 
 		$this->json['allowUnitless'] = $this->allow_unitless;
 
-	}
-
-	/**
-	 * An Underscore (JS) template for this control's content (but not its container).
-	 *
-	 * Class variables for this control class are available in the `data` JS object;
-	 * export custom variables by overriding WP_Customize_Control::to_json().
-	 *
-	 * @see WP_Customize_Control::print_template()
-	 */
-	protected function content_template() {
-		?>
-
-		<div class="wpbf-control-form <# if ('bottom' === data.labelPosition) { #>has-label-bottom<# } #>">
-			<# if ( 'top' === data.labelPosition ) { #>
-			<label class="wpbf-control-label" for="{{ data.inputId }}">
-				<# if ( data.label ) { #><span class="customize-control-title">{{{ data.label }}}</span><# } #>
-				<# if ( data.description ) { #><span class="description customize-control-description">{{{ data.description }}}</span><#
-				} #>
-			</label>
-			<# } #>
-
-			<div class="wpbf-input-control">
-				<# var val = ( data.value && _.isString( data.value ) ) ? data.value.replace( '%%', '%' ) : ''; #>
-				<input id="{{ data.inputId }}" {{{ data.inputAttrs }}} type="text" value="{{ val }}"
-						class="{{ data.inputClass }}"/>
-			</div>
-
-			<# if ( 'bottom' === data.labelPosition ) { #>
-			<label class="wpbf-control-label" for="{{ data.inputId }}">
-				<# if ( data.label ) { #>{{{ data.label }}} <# } #>
-			</label>
-			<# } #>
-		</div>
-
-		<?php
 	}
 
 }

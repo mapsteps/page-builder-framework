@@ -1,17 +1,13 @@
-import {
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "../../Base/src/interface";
 
-export interface WpbfCustomizeDimensionControlParams
-	extends WpbfCustomizeControlParams<string | number> {
+// A CSS size as typed ("20px", "50%", "auto" …).
+export type DimensionValue = string | number;
+
+export interface WpbfCustomizeDimensionControlParams extends WpbfCustomizeControlParams<DimensionValue> {
 	inputClass: string;
 	labelPosition: string;
 	allowUnitless: boolean;
 }
 
 export interface WpbfCustomizeDimensionControl
-	extends WpbfCustomizeControl<
-		string | number,
-		WpbfCustomizeDimensionControlParams
-	> {}
+	extends WpbfCustomizeControl<DimensionValue, WpbfCustomizeDimensionControlParams> {}

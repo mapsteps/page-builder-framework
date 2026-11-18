@@ -67,7 +67,7 @@ class EditorControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-editor-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Editor/dist/editor-control-min.js',
-			array( 'wpbf-base-control' ),
+			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
 			WPBF_VERSION,
 			false
 		);
@@ -84,26 +84,6 @@ class EditorControl extends BaseControl {
 		$this->json['tinymce']   = $this->tinymce;
 		$this->json['quicktags'] = $this->quicktags;
 
-	}
-
-	/**
-	 * An Underscore (JS) template for this control's content (but not its container).
-	 *
-	 * Class variables for this control class are available in the `data` JS object;
-	 * export custom variables by overriding WP_Customize_Control::to_json().
-	 *
-	 * @see WP_Customize_Control::print_template()
-	 */
-	protected function content_template() {
-		?>
-
-		<label>
-			<# if ( data.label ) { #><span class="customize-control-title">{{{ data.label }}}</span><# } #>
-			<# if ( data.description ) { #><span class="description customize-control-description">{{{ data.description }}}</span><# } #>
-		</label>
-		<textarea id="wpbf-editor-{{{ data.id.replace( '[', '' ).replace( ']', '' ) }}}" {{{ data.inputAttrs }}} {{{ data.link }}}>{{ data.value }}</textarea>
-
-		<?php
 	}
 
 }

@@ -1,274 +1,149 @@
-import { useRef, useState } from "react";
-import { WpbfCustomizeSetting } from "../../Base/src/interface";
+/**
+ * The form of the margin/padding types (one control, see margin-padding-control.tsx):
+ *
+ * - wpbf-margin-padding: a number field per side (top, right, bottom, left, or the sides given).
+ * - wpbf-responsive-margin-padding: the same per device (desktop_top … mobile_left).
+ *
+ * Saves an object with the unit on each side ("10px"), or without it (`dontSaveUnit`), or as JSON text
+ * (`saveAsJson`, as the theme's padding options do). Keeps the markup of the old form.
+ */
+import type { ChangeEvent } from "react";
 import {
-	MarginPaddingDimension,
-	MarginPaddingDimensionValuePair,
-	MarginPaddingValue,
-	WpbfCustomizeMarginPaddingControl,
-} from "./interface";
-import {
-	makeObjValueWithoutUnit,
-	makeObjValueWithoutUnitFromJson,
-	makeObjValueWithUnit,
-} from "./margin-padding-util";
+	isSet,
+	Notifications,
+	ReactControlFormProps,
+	usePreviewedDevice,
+	useSettingValue,
+} from "../../Base/src/react-base";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import { encodeJsonOrDefault } from "../../Generic/src/string-util";
+import { MarginPaddingSettingValue, MarginPaddingValue, WpbfCustomizeMarginPaddingControlParams } from "./interface";
+import { makeFieldValues, makeObjValueWithoutUnit, makeObjValueWithUnit } from "./margin-padding-util";
 
-export default function MarginPaddingForm(props: {
-	type: string;
-	subtype: string;
-	label?: string;
-	description?: string;
-	// setNotificationContainer: (el: HTMLElement) => void;
-	setNotificationContainer: any;
-	control: WpbfCustomizeMarginPaddingControl;
-	customizerSetting?: WpbfCustomizeSetting<MarginPaddingValue | string>;
-	default?: any;
-	defaultArray: MarginPaddingValue;
-	valueArray: MarginPaddingValue;
-	unit: string;
-	saveAsJson: boolean;
-	dontSaveUnit: boolean;
-	dimensions: string[];
-	devices?: string[] | undefined;
-	isResponsive: boolean;
-}) {
-	const [inputValues, setInputValues] = useState(() => {
-		return props.valueArray;
-	});
+type Props = ReactControlFormProps<MarginPaddingSettingValue, WpbfCustomizeMarginPaddingControlParams>;
 
-	const defaultDefined =
-		"" !== props.default && "undefined" !== typeof props.default;
+export default function MarginPaddingForm({ control }: Props) {
+	const params = control.params;
+	const [value, setValue] = useSettingValue(control, params.value);
+	const isResponsive = "wpbf-responsive-margin-padding" === params.type;
+	const devices = isResponsive ? (params.devices ?? []) : [];
+	const activeDevice = usePreviewedDevice(devices);
 
-	props.control.updateComponentState = (val) => {
-		const newVal =
-			typeof val === "string"
-				? makeObjValueWithoutUnitFromJson(props.dimensions, val)
-				: makeObjValueWithoutUnit(props.dimensions, val);
+	// The field values: as PHP prepared them, until the value changes.
+	const fields: MarginPaddingValue =
+		value === params.value ? params.valueArray : makeFieldValues(params.dimensions, value);
 
-		setInputValues(newVal);
+	const save = (values: MarginPaddingValue) => {
+		if (params.saveAsJson) {
+			// As typed (fields left alone keep their numbers).
+			setValue(encodeJsonOrDefault<MarginPaddingValue>(values));
+		} else if (params.dontSaveUnit) {
+			setValue(makeObjValueWithoutUnit(params.dimensions, values));
+		} else {
+			setValue(makeObjValueWithUnit(params.dimensions, params.unit, values));
+		}
 	};
 
-	function handleInputChange(
-		e: React.ChangeEvent<HTMLInputElement>,
-		dimension: string,
-	) {
-		if (!props.dimensions.includes(dimension)) {
-			return;
-		}
+	const onType = (dimension: string, e: ChangeEvent<HTMLInputElement>) => {
+		if (!params.dimensions.includes(dimension) || !fields.hasOwnProperty(dimension)) return;
 
-		if (!e.target) return;
+		save({ ...fields, [dimension]: e.target.value });
+	};
 
-		const values = { ...inputValues };
-		if (!values.hasOwnProperty(dimension)) return;
-
-		/**
-		 * On input change, the value comes from a number field.
-		 * That means we can just use its value without the need to parse it.
-		 */
-		values[dimension as MarginPaddingDimension] = e.target.value;
-
-		setInputValues(values);
-		saveToCustomizerSetting(values);
-	}
-
-	function handleResetButtonClick(
-		_e: React.MouseEvent<HTMLButtonElement>,
-		device?: string,
-	) {
-		const defaultValues = defaultDefined
-			? props.defaultArray
-			: props.valueArray;
+	// Reset the sides of a device (all sides without devices) to the default, or to the value the Customizer opened
+	// with when there's no default.
+	const reset = (device: string) => {
+		const defaults = isSet(params.default) ? params.defaultArray : params.valueArray;
 
 		if (!device) {
-			saveToCustomizerSetting(defaultValues);
+			save(defaults);
 			return;
 		}
 
-		const existingValues = { ...inputValues };
+		const values = { ...fields };
 
-		for (const dimension in existingValues) {
-			if (!existingValues.hasOwnProperty(dimension)) {
-				continue;
+		for (const dimension in values) {
+			if (dimension.includes(device + "_") && defaults.hasOwnProperty(dimension)) {
+				values[dimension] = defaults[dimension];
 			}
-
-			const hasDeviceStr = dimension.includes(device + "_");
-			if (!hasDeviceStr) continue;
-
-			if (!defaultValues.hasOwnProperty(dimension)) {
-				continue;
-			}
-
-			existingValues[dimension as MarginPaddingDimension] =
-				defaultValues[dimension as MarginPaddingDimension];
 		}
 
-		saveToCustomizerSetting(existingValues);
-	}
+		save(values);
+	};
 
-	function saveToCustomizerSetting(val: MarginPaddingValue) {
-		/**
-		 * The "dontSaveUnit" option is used to support PBF's old "responsive_padding" control.
-		 */
-		const newVal = props.dontSaveUnit
-			? makeObjValueWithoutUnit(props.dimensions, val)
-			: makeObjValueWithUnit(props.dimensions, props.unit, val);
+	const renderFields = (device: string) => (
+		<>
+			<button type="button" className="wpbf-control-reset" onClick={() => reset(device)}>
+				<i className="dashicons dashicons-image-rotate"></i>
+			</button>
 
-		/**
-		 * The "saveAsJson" option is used to support PBF's old "responsive_padding" control.
-		 */
-		if (props.saveAsJson) {
-			props.customizerSetting?.set(
-				encodeJsonOrDefault<MarginPaddingValue>(val),
-			);
-			return;
-		}
-
-		props.customizerSetting?.set(newVal);
-	}
-
-	function makeMappable(device?: string) {
-		const items: MarginPaddingDimensionValuePair[] = [];
-
-		for (const dimension in inputValues) {
-			if (!inputValues.hasOwnProperty(dimension)) {
-				continue;
-			}
-
-			if (!device) {
-				items.push({
-					dimension: dimension as MarginPaddingDimension,
-					value: inputValues[dimension as MarginPaddingDimension],
-				});
-
-				continue;
-			}
-
-			const hasDeviceStr = dimension.includes(device + "_");
-			if (!hasDeviceStr) continue;
-
-			items.push({
-				dimension: dimension as MarginPaddingDimension,
-				value: inputValues[dimension as MarginPaddingDimension],
-			});
-		}
-
-		return items;
-	}
-
-	function renderFields(
-		device: string,
-		group: MarginPaddingDimensionValuePair[],
-	) {
-		return (
-			<>
-				<button
-					type="button"
-					className="wpbf-control-reset"
-					onClick={(e) => handleResetButtonClick(e, device)}
-				>
-					<i className="dashicons dashicons-image-rotate"></i>
-				</button>
-
-				<div className="wpbf-control-cols">
-					<div className="wpbf-control-left-col">
-						<div className="wpbf-control-fields">
-							{group.map((item, i) => {
-								const inputClassName = `wpbf-control-input wpbf-control-input${device ? `-${device}` : ""}-${item.dimension}`;
-								const inputId = `_customize-input-${props.control.id}${device ? `-${device}` : ""}-${item.dimension}`;
-								const label = device
-									? item.dimension.replace(device + "_", "")
-									: item.dimension;
+			<div className="wpbf-control-cols">
+				<div className="wpbf-control-left-col">
+					<div className="wpbf-control-fields">
+						{Object.keys(fields)
+							.filter((dimension) => !device || dimension.includes(device + "_"))
+							.map((dimension) => {
+								const fieldValue = fields[dimension];
+								const inputId = `_customize-input-${control.id}${device ? `-${device}` : ""}-${dimension}`;
 
 								return (
-									<div className="wpbf-control-field" key={i}>
+									<div className="wpbf-control-field" key={dimension}>
 										<input
 											id={inputId}
 											type="number"
-											value={item.value || 0 === item.value ? item.value : ""}
-											className={inputClassName}
-											onChange={(e) => handleInputChange(e, item.dimension)}
+											value={fieldValue || 0 === fieldValue ? fieldValue : ""}
+											className={`wpbf-control-input wpbf-control-input${device ? `-${device}` : ""}-${dimension}`}
+											onChange={(e) => onType(dimension, e)}
 										/>
 										<label className="wpbf-control-sublabel" htmlFor={inputId}>
-											{label}
+											{device ? dimension.replace(device + "_", "") : dimension}
 										</label>
 									</div>
 								);
 							})}
-						</div>
-					</div>
-					<div className="wpbf-control-right-col">
-						<span ref={unitRef} className="wpbf-control-unit">
-							{props.unit}
-						</span>
 					</div>
 				</div>
-			</>
-		);
-	}
-
-	function renderFieldGroups() {
-		if (!props.isResponsive || !props.devices || !props.devices.length) {
-			return renderFields("", makeMappable());
-		}
-
-		return (
-			<>
-				{props.devices.map((device, index) => {
-					const isActive = 0 === index;
-
-					return (
-						<div
-							className={`wpbf-control-device wpbf-control-${device} ${isActive ? "is-active" : ""}`}
-							data-wpbf-device={device}
-							key={index}
-						>
-							{renderFields(device, makeMappable(device))}
-						</div>
-					);
-				})}
-			</>
-		);
-	}
-
-	function renderDeviceButtons() {
-		if (!props.isResponsive || !props.devices || !props.devices.length) {
-			return <></>;
-		}
-
-		return <DeviceButtons devices={props.devices} />;
-	}
-
-	const unitRef = useRef(null);
+				<div className="wpbf-control-right-col">
+					<span className="wpbf-control-unit">{params.unit}</span>
+				</div>
+			</div>
+		</>
+	);
 
 	return (
 		<>
 			<header className="wpbf-control-header">
-				{props.label && (
-					<label
-						className="customize-control-title"
-						htmlFor={`wpbf-control-input-${props.type}-top`}
-					>
-						<span className="customize-control-title">{props.label}</span>
+				{params.label && (
+					<label className="customize-control-title" htmlFor={`wpbf-control-input-${params.type}-top`}>
+						<span className="customize-control-title">{params.label}</span>
 					</label>
 				)}
 
-				{renderDeviceButtons()}
+				{isResponsive && devices.length > 0 && <DeviceButtons devices={devices} active={activeDevice} />}
 			</header>
 
-			{props.description && (
+			{params.description && (
 				<span
 					className="customize-control-description description"
-					dangerouslySetInnerHTML={{ __html: props.description }}
+					dangerouslySetInnerHTML={{ __html: params.description }}
 				/>
 			)}
 
-			<div
-				className="customize-control-notifications-container"
-				ref={props.setNotificationContainer}
-			/>
+			<Notifications control={control} />
 
-			<div className="wpbf-control-form">{renderFieldGroups()}</div>
+			<div className="wpbf-control-form">
+				{isResponsive && devices.length > 0
+					? devices.map((device) => (
+							<div
+								className={`wpbf-control-device wpbf-control-${device} ${device === activeDevice ? "is-active" : ""}`}
+								data-wpbf-device={device}
+								key={device}
+							>
+								{renderFields(device)}
+							</div>
+						))
+					: renderFields("")}
+			</div>
 		</>
 	);
 }

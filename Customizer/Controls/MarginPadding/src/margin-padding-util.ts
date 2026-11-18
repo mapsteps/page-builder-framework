@@ -1,6 +1,6 @@
-import { makeNumberUnitPair } from "../../Generic/src/number-util";
+import { getUnit, makeNumberUnitPair } from "../../Generic/src/number-util";
 import { parseJsonOrUndefined } from "../../Generic/src/string-util";
-import { MarginPaddingDimension, MarginPaddingValue } from "./interface";
+import { MarginPaddingDimension, MarginPaddingSettingValue, MarginPaddingValue } from "./interface";
 
 /**
  * Make a value for an input number field in margin/padding control.
@@ -54,9 +54,9 @@ export function makeObjValueWithoutUnit(
 ): MarginPaddingValue {
 	const newValue: Record<string, number | string> = {};
 
+	// Empty sides stay empty (they used to get the side's name, e.g. "top", which the saved value never has).
 	for (let i = 0; i < dimensions.length; i++) {
-		const dimension = dimensions[i];
-		newValue[dimension] = dimensions[i];
+		newValue[dimensions[i]] = "";
 	}
 
 	for (const position in value) {
@@ -95,9 +95,9 @@ export function makeObjValueWithUnit(
 ): MarginPaddingValue {
 	const newValue: Record<string, number | string> = {};
 
+	// Empty sides stay empty (they used to get the side's name, e.g. "top", which the saved value never has).
 	for (let i = 0; i < dimensions.length; i++) {
-		const dimension = dimensions[i];
-		newValue[dimension] = dimensions[i];
+		newValue[dimensions[i]] = "";
 	}
 
 	for (const position in value) {
@@ -118,17 +118,35 @@ export function makeObjValueWithUnit(
 	return newValue as MarginPaddingValue;
 }
 
-export function makeObjValueWithoutUnitFromJson(
-	dimensions: string[],
-	jsonStr: string | null | undefined,
-): MarginPaddingValue {
-	const value = parseJsonOrUndefined<MarginPaddingValue>(jsonStr);
+/**
+ * The field values of a setting value (object or JSON text): one per dimension, in the dimensions' order.
+ *
+ * Numbers stay numbers and text without a unit stays as it is (so a JSON value is handed on the way it was typed);
+ * a unit is taken off ("10px" shows as 10); anything empty is "".
+ *
+ * @param {string[]} dimensions - The allowed dimensions.
+ * @param {MarginPaddingSettingValue} value - The setting value.
+ *
+ * @return {MarginPaddingValue}
+ */
+export function makeFieldValues(dimensions: string[], value: MarginPaddingSettingValue): MarginPaddingValue {
+	const object =
+		"string" === typeof value ? parseJsonOrUndefined<Record<string, unknown>>(value) : (value as Record<string, unknown>);
+	const fields = makeEmptyValueObj(dimensions);
 
-	if (!value) {
-		return makeEmptyValueObj(dimensions);
+	if (!object || "object" !== typeof object) return fields;
+
+	for (const dimension of dimensions) {
+		const side = object[dimension];
+
+		if ("number" === typeof side) {
+			fields[dimension] = side;
+		} else if ("string" === typeof side && "" !== side) {
+			fields[dimension] = getUnit(side) ? makeMarginPaddingFieldValue(side) : side;
+		}
 	}
 
-	return makeObjValueWithoutUnit(dimensions, value);
+	return fields;
 }
 
 export function makeEmptyValueObj(dimensions: string[]): MarginPaddingValue {

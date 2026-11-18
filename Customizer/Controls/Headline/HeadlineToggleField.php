@@ -2,17 +2,13 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Headline;
 
-use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
+use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
 use WP_Customize_Manager;
 
-class HeadlineToggleField extends ToggleField {
-
-	/**
-	 * Path of the control class for this field.
-	 *
-	 * @var string
-	 */
-	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleControl';
+/**
+ * The field of the headline toggle: a toggle with the headline look.
+ */
+class HeadlineToggleField extends CheckboxField {
 
 	/**
 	 * Add control to the customizer.
@@ -21,7 +17,8 @@ class HeadlineToggleField extends ToggleField {
 	 */
 	public function addControl( $wp_customize_manager ) {
 
-		$control_args = $this->parseControlArgs();
+		$control_args         = $this->parseControlArgs();
+		$control_args['type'] = 'wpbf-toggle';
 
 		$wp_customize_manager->add_control(
 			new HeadlineToggleControl(

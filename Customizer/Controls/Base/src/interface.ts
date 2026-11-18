@@ -16,11 +16,7 @@ import { WpbfCustomizeSliderControl } from "../../Slider/src/interface";
 import { WpbfCustomizeSortableControl } from "../../Sortable/src/interface";
 import { Section_Constructor } from "wordpress__customize-browser/Section_Constructor";
 import { Section } from "wordpress__customize-browser/Section";
-import {
-	WpbfCustomizeAssocArrayControl,
-	WpbfCustomizeGenericControl,
-	WpbfCustomizeResponsiveGenericControl,
-} from "../../Generic/src/interface";
+import { WpbfCustomizeAssocArrayControl, WpbfCustomizeGenericControl } from "../../Generic/src/interface";
 import {
 	Container_Arguments,
 	Container_Deferred,
@@ -38,6 +34,7 @@ import { Notification } from "wordpress__customize-browser/Notification";
 import { Root } from "react-dom/client";
 import { WpbfCustomizeCheckboxControl } from "../../Checkbox/src/interface";
 import { WpbfCustomizeEditorControl } from "../../Editor/src/editor-interface";
+import { WpbfCustomizeImageControl } from "../../Media/src/image-interface";
 import {
 	WpbfCustomizeRepeaterControl,
 	WpbfRepeaterRow,
@@ -304,7 +301,8 @@ export interface WpbfCustomizeControlParams<SV> {
 	choices: Record<string, any> | any[];
 	link: string;
 	id: string;
-	inputAttrs: Record<string, number | string>;
+	// The input_attrs as an attribute string (`name="value" `…), as PHP prints them.
+	inputAttrs: string;
 	inputId: string;
 	wrapperAttrs: Record<string, number | string>;
 	allowCollapse: boolean;
@@ -317,12 +315,9 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-dimension": WpbfCustomizeDimensionControl;
 	"wpbf-editor": WpbfCustomizeEditorControl;
 	"wpbf-generic": WpbfCustomizeGenericControl;
-	"wpbf-responsive-generic": WpbfCustomizeResponsiveGenericControl;
+	"wpbf-responsive-generic": WpbfCustomizeGenericControl;
 	"wpbf-assoc-array": WpbfCustomizeAssocArrayControl;
-	"wpbf-image": WpbfCustomizeControl<
-		number | string | object,
-		WpbfCustomizeControlParams<number | string | object>
-	>;
+	"wpbf-image": WpbfCustomizeImageControl;
 	"wpbf-margin-padding": WpbfCustomizeMarginPaddingControl;
 	"wpbf-responsive-margin-padding": WpbfCustomizeMarginPaddingControl;
 	"wpbf-radio": {};

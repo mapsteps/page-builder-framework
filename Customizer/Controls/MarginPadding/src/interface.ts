@@ -1,29 +1,29 @@
-import {
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "../../Base/src/interface";
 
 export type MarginPaddingDimension = "top" | "right" | "bottom" | "left";
 
+// One value per side (e.g. top or, responsive, desktop_top): a number, text ("10", "10px"), or "" when empty.
 export interface MarginPaddingValue {
-	top: number | string;
-	right: number | string;
-	bottom: number | string;
-	left: number | string;
-
 	[dimension: string]: number | string;
 }
 
-export interface MarginPaddingDimensionValuePair {
-	dimension: string;
-	value: string | number;
+// The setting value: the sides as an object, or the same object as JSON text (`saveAsJson`).
+export type MarginPaddingSettingValue = MarginPaddingValue | string;
+
+export interface WpbfCustomizeMarginPaddingControlParams extends WpbfCustomizeControlParams<MarginPaddingSettingValue> {
+	type: "wpbf-margin-padding" | "wpbf-responsive-margin-padding";
+	subtype: string;
+	valueArray: MarginPaddingValue;
+	defaultArray: MarginPaddingValue;
+	unit: string;
+	dimensions: string[];
+	saveAsJson: boolean;
+	dontSaveUnit: boolean;
+
+	// Responsive type only.
+	devices?: string[];
 }
 
-export interface WpbfCustomizeMarginPaddingControlParams
-	extends WpbfCustomizeControlParams<MarginPaddingValue | string> {}
-
+// The control of both margin/padding types.
 export interface WpbfCustomizeMarginPaddingControl
-	extends WpbfCustomizeControl<
-		MarginPaddingValue | string,
-		WpbfCustomizeMarginPaddingControlParams
-	> {}
+	extends WpbfCustomizeControl<MarginPaddingSettingValue, WpbfCustomizeMarginPaddingControlParams> {}

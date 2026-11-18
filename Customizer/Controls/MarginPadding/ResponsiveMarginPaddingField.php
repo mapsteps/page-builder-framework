@@ -43,10 +43,11 @@ class ResponsiveMarginPaddingField extends MarginPaddingField {
 			$control_args['wrapper_attrs'] = [];
 		}
 
+		// The margin/padding styles apply to the responsive type too.
 		if ( empty( $control_args['wrapper_attrs']['class'] ) ) {
-			$control_args['wrapper_attrs']['class'] = '{default_class} wpbf-customize-control-responsive';
+			$control_args['wrapper_attrs']['class'] = '{default_class} wpbf-customize-control-responsive wpbf-customize-control-margin-padding';
 		} else {
-			$control_args['wrapper_attrs']['class'] .= ' wpbf-customize-control-responsive';
+			$control_args['wrapper_attrs']['class'] .= ' wpbf-customize-control-responsive wpbf-customize-control-margin-padding';
 		}
 
 		$control = new ResponsiveMarginPaddingControl( $wp_customize_manager, $control_id, $control_args );

@@ -1,17 +1,14 @@
-import {
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "../../Base/src/interface";
 import { DevicesValue } from "../../Responsive/src/interface";
 
-export interface WpbfCustomizeGenericControl
-	extends WpbfCustomizeControl<
-		string | number,
-		WpbfCustomizeGenericControlParams
-	> {}
+/**
+ * The setting value of the generic types: text or a number, or for the responsive type one value per device
+ * (an object, or the same object as JSON text when the field saves as JSON).
+ */
+export type GenericSettingValue = string | number | DevicesValue;
 
-export interface WpbfCustomizeGenericControlParams
-	extends WpbfCustomizeControlParams<string | number> {
+export interface WpbfCustomizeGenericControlParams extends WpbfCustomizeControlParams<GenericSettingValue> {
+	type: "wpbf-generic" | "wpbf-responsive-generic";
 	subtype: string;
 	inputTag: string;
 	inputType?: string;
@@ -19,25 +16,19 @@ export interface WpbfCustomizeGenericControlParams
 	max?: number | null;
 	step?: number | null;
 	rows?: number;
+
+	// Responsive type only.
+	defaultArray?: DevicesValue;
+	valueArray?: DevicesValue;
+	devices?: string[];
+	deviceIcons?: Record<string, string>;
+	saveAsJson?: boolean;
 }
 
-export interface WpbfCustomizeResponsiveGenericControl
-	extends WpbfCustomizeControl<
-		DevicesValue | string,
-		WpbfCustomizeResponsiveGenericControlParams
-	> {}
+// The control of both generic types.
+export interface WpbfCustomizeGenericControl
+	extends WpbfCustomizeControl<GenericSettingValue, WpbfCustomizeGenericControlParams> {}
 
-export interface WpbfCustomizeResponsiveGenericControlParams
-	extends WpbfCustomizeGenericControlParams {
-	defaultArray: DevicesValue;
-	valueArray: DevicesValue;
-	devices: string[];
-	deviceIcons: Record<string, string>;
-	saveAsJson: boolean;
-}
+export interface AssocArrayControlParams extends WpbfCustomizeControlParams<Record<string, any>> {}
 
-export interface AssocArrayControlParams
-	extends WpbfCustomizeControlParams<Record<string, any>> {}
-
-export interface WpbfCustomizeAssocArrayControl
-	extends WpbfCustomizeControl<Record<string, any>, AssocArrayControlParams> {}
+export interface WpbfCustomizeAssocArrayControl extends WpbfCustomizeControl<Record<string, any>, AssocArrayControlParams> {}

@@ -5,22 +5,10 @@ namespace Mapsteps\Wpbf\Customizer\Controls\Dimension;
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use WP_Customize_Manager;
 
+/**
+ * The field of the dimension type.
+ */
 class DimensionField extends BaseField {
-
-	/**
-	 * Whether the control of this field renders its content
-	 * using Underscore.js template inside of `content_template` method.
-	 *
-	 * @var bool
-	 */
-	public $use_content_template = true;
-
-	/**
-	 * Path of the control class for this field.
-	 *
-	 * @var string
-	 */
-	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionControl';
 
 	/**
 	 * Add control to the customizer.

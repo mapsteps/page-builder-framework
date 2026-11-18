@@ -2,10 +2,20 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Headline;
 
-use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleControl;
+use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxControl;
 use WP_Customize_Manager;
 
-class HeadlineToggleControl extends ToggleControl {
+/**
+ * A toggle (wpbf-toggle) styled as a section headline.
+ */
+class HeadlineToggleControl extends CheckboxControl {
+
+	/**
+	 * Control's type.
+	 *
+	 * @var string
+	 */
+	public $type = 'wpbf-toggle';
 
 	/**
 	 * Constructor.

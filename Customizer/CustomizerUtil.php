@@ -9,7 +9,6 @@ namespace Mapsteps\Wpbf\Customizer;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
 use Mapsteps\Wpbf\Customizer\Controls\Checkbox\CheckboxField;
-use Mapsteps\Wpbf\Customizer\Controls\Checkbox\ToggleField;
 use Mapsteps\Wpbf\Customizer\Controls\Code\CodeField;
 use Mapsteps\Wpbf\Customizer\Controls\Color\ColorField;
 use Mapsteps\Wpbf\Customizer\Controls\Custom\CustomField;
@@ -17,7 +16,6 @@ use Mapsteps\Wpbf\Customizer\Controls\Dimension\DimensionField;
 use Mapsteps\Wpbf\Customizer\Controls\Editor\EditorField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\AssocArrayField;
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericField;
-use Mapsteps\Wpbf\Customizer\Controls\Generic\ResponsiveGenericField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\DividerField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineField;
 use Mapsteps\Wpbf\Customizer\Controls\Headline\HeadlineToggleField;
@@ -25,9 +23,7 @@ use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\MarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\MarginPadding\ResponsiveMarginPaddingField;
 use Mapsteps\Wpbf\Customizer\Controls\Media\ImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Media\UploadField;
-use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioButtonsetField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
-use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
@@ -245,10 +241,8 @@ class CustomizerUtil {
 
 		switch ( $control_type ) {
 			case 'checkbox':
-				$field = new CheckboxField( $control_entity );
-				break;
 			case 'toggle':
-				$field = new ToggleField( $control_entity );
+				$field = new CheckboxField( $control_entity );
 				break;
 			case 'custom':
 				$field = new CustomField( $control_entity );
@@ -269,10 +263,8 @@ class CustomizerUtil {
 				$field = new EditorField( $control_entity );
 				break;
 			case 'generic':
-				$field = new GenericField( $control_entity );
-				break;
 			case 'responsive-generic':
-				$field = new ResponsiveGenericField( $control_entity );
+				$field = new GenericField( $control_entity );
 				break;
 			case 'assoc-array':
 				$field = new AssocArrayField( $control_entity );
@@ -293,16 +285,9 @@ class CustomizerUtil {
 				$field = new ResponsiveMarginPaddingField( $control_entity );
 				break;
 			case 'radio':
-				$field = new RadioField( $control_entity );
-				break;
 			case 'radio-buttonset':
-				$field = new RadioButtonsetField( $control_entity );
-				break;
 			case 'radio-image':
-				$field = new RadioImageField( $control_entity );
-				break;
-			case 'radio-image':
-				$field = new RadioImageField( $control_entity );
+				$field = new RadioField( $control_entity );
 				break;
 			case 'select':
 				$field = new SelectField( $control_entity );

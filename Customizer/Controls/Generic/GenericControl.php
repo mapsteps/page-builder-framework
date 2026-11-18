@@ -1,11 +1,23 @@
 <?php
+/**
+ * Generic control.
+ *
+ * @package Wpbf
+ */
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Generic;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
+use Mapsteps\Wpbf\Customizer\Controls\Responsive\ResponsiveUtil;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
 
+/**
+ * One control for the generic types: wpbf-generic (one field) and wpbf-responsive-generic (one field per device).
+ *
+ * The field is a text, number, number-unit, textarea, email, password, url, hidden or content field (`subtype`).
+ * The type comes from `$args['type']` (default wpbf-generic); the form renders with React (GenericForm.tsx).
+ */
 class GenericControl extends BaseControl {
 
 	/**
@@ -60,29 +72,54 @@ class GenericControl extends BaseControl {
 	public $step = 1;
 
 	/**
-	 * Instance of `NumberUtil` class.
+	 * Responsive only: the devices.
 	 *
-	 * @var NumberUtil
+	 * @var string[]
 	 */
-	protected $number_util;
+	protected $devices = [];
+
+	/**
+	 * Responsive only: the device icons.
+	 *
+	 * @var array
+	 */
+	protected $device_icons = [];
+
+	/**
+	 * Responsive only: whether the value is saved as a JSON encoded string.
+	 *
+	 * @var bool
+	 */
+	protected $save_as_json = false;
+
+	/**
+	 * Responsive only: the default value per device.
+	 *
+	 * @var array
+	 */
+	protected $default_array = [];
+
+	/**
+	 * Responsive only: the value per device.
+	 *
+	 * @var array
+	 */
+	protected $value_array = [];
 
 	/**
 	 * Constructor.
 	 *
-	 * Supplied `$args` override class property defaults.
-	 *
-	 * If `$args['settings']` is not defined, use the `$id` as the setting ID.
-	 *
 	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
 	 * @param string               $id                   Control ID.
-	 * @param array                $args                 Optional. Array of properties for the new Control object.
-	 *                                                   Default empty array.
+	 * @param array                $args                 Control arguments, incl. `type`, `subtype`, `min`, `max`, `step`,
+	 *                                                   `rows`, and for the responsive type `devices`, `device_icons`
+	 *                                                   and `save_as_json`.
 	 */
 	public function __construct( $wp_customize_manager, $id, $args = array() ) {
 
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		$this->number_util = new NumberUtil();
+		$number_util = new NumberUtil();
 
 		// Already sanitized in `addControl` method in `GenericField` class.
 		if ( ! empty( $args['subtype'] ) ) {
@@ -94,15 +131,9 @@ class GenericControl extends BaseControl {
 		}
 
 		if ( 'number' === $this->subtype || 'number-unit' === $this->subtype ) {
-			if ( isset( $args['min'] ) && is_numeric( $args['min'] ) ) {
-				$this->min = (float) $args['min'];
-			}
-
-			if ( isset( $args['max'] ) && is_numeric( $args['max'] ) ) {
-				$this->max = (float) $args['max'];
-			}
-
-			$this->max = $this->number_util->normalizeMaxValue( $this->min, $this->max );
+			$this->min = isset( $args['min'] ) && is_numeric( $args['min'] ) ? (float) $args['min'] : null;
+			$this->max = isset( $args['max'] ) && is_numeric( $args['max'] ) ? (float) $args['max'] : null;
+			$this->max = $number_util->normalizeMaxValue( $this->min, $this->max );
 
 			if ( isset( $args['step'] ) && is_numeric( $args['step'] ) ) {
 				$this->step = (float) $args['step'];
@@ -113,25 +144,59 @@ class GenericControl extends BaseControl {
 			}
 		}
 
-		$this->customConstructor( $args );
+		if ( $this->isResponsive() ) {
+			$this->setUpResponsive( $args );
+		} elseif ( $this->setting instanceof WP_Customize_Setting ) {
+			$this->setting->default = ( new GenericSanitizer() )->sanitize( $this->subtype, $this->setting->default, $this->min, $this->max );
+		}
 
 	}
 
 	/**
-	 * Custom constructor that could be different with other controls that extend this control.
+	 * Whether this is the responsive type.
+	 *
+	 * @return bool
+	 */
+	protected function isResponsive() {
+
+		return 'wpbf-responsive-generic' === $this->type;
+
+	}
+
+	/**
+	 * The responsive type's devices, value per device, default and wrapper classes.
 	 *
 	 * @param array $args The control arguments.
 	 */
-	protected function customConstructor( $args ) {
+	protected function setUpResponsive( $args ) {
 
-		if ( $this->setting instanceof WP_Customize_Setting ) {
-			$this->setting->default = ( new GenericSanitizer() )->sanitize(
-				$this->subtype,
-				$this->setting->default,
-				$this->min,
-				$this->max
-			);
+		$responsive_util = new ResponsiveUtil();
+
+		$this->devices      = ! empty( $args['devices'] ) && is_array( $args['devices'] ) ? $args['devices'] : $responsive_util->default_devices;
+		$this->device_icons = ! empty( $args['device_icons'] ) && is_array( $args['device_icons'] ) ? $args['device_icons'] : $responsive_util->default_device_icons;
+		$this->save_as_json = ! empty( $args['save_as_json'] ) && is_bool( $args['save_as_json'] );
+
+		if ( ! ( $this->setting instanceof WP_Customize_Setting ) ) {
+			return;
 		}
+
+		$has_actual_value = $this->value() ? true : false;
+
+		$this->default_array = $responsive_util->toArrayValue( $this->devices, $this->subtype, $this->setting->default, $this->min, $this->max );
+
+		$this->setting->default = $this->save_as_json ? wp_json_encode( $this->default_array ) : $this->default_array;
+
+		$extra_classname = 'wpbf-customize-control-generic wpbf-customize-control-responsive';
+
+		if ( ! empty( $this->wrapper_attrs['class'] ) ) {
+			$existing_classname = str_ireplace( '{default_class}', '', $this->wrapper_attrs['class'] );
+
+			$this->wrapper_attrs['class'] = '{default_class} ' . $existing_classname . ' ' . $extra_classname;
+		} else {
+			$this->wrapper_attrs['class'] = '{default_class} ' . $extra_classname;
+		}
+
+		$this->value_array = $has_actual_value ? $responsive_util->toArrayValue( $this->devices, $this->subtype, $this->value(), $this->min, $this->max ) : $this->default_array;
 
 	}
 
@@ -142,11 +207,10 @@ class GenericControl extends BaseControl {
 
 		parent::enqueue();
 
-		// Enqueue the scripts.
 		wp_enqueue_script(
 			'wpbf-generic-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/generic-control-min.js',
-			array( 'wpbf-base-control' ),
+			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
 			WPBF_VERSION,
 			false
 		);
@@ -181,80 +245,14 @@ class GenericControl extends BaseControl {
 			$this->json['rows'] = $this->rows;
 		}
 
-	}
-
-	/**
-	 * Render the control's content.
-	 *
-	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
-	 *
-	 * Supports basic input types `text`, `checkbox`, `textarea`, `radio`, `select` and `dropdown-pages`.
-	 * Additional input types such as `email`, `url`, `number`, `hidden` and `date` are supported implicitly.
-	 *
-	 * Control content can alternately be rendered in JS. See WP_Customize_Control::print_template().
-	 */
-	protected function render_content() {
-
-		$input_tag  = 'textarea' === $this->subtype || 'content' === $this->subtype ? 'textarea' : 'input';
-		$input_type = 'text';
-
-		if ( 'textarea' !== $this->subtype && 'content' !== $this->subtype ) {
-			$input_type = 'number-unit' === $this->subtype ? 'text' : $this->subtype;
+		if ( $this->isResponsive() ) {
+			$this->json['defaultArray'] = $this->default_array;
+			$this->json['valueArray']   = $this->value_array;
+			$this->json['devices']      = $this->devices;
+			$this->json['deviceIcons']  = $this->device_icons;
+			$this->json['saveAsJson']   = $this->save_as_json;
 		}
-		?>
 
-		<?php if ( $this->label || $this->description ) : ?>
-			<div class="customize-control-label">
-				<?php if ( $this->label ) : ?>
-					<label class="customize-control-title" for="_customize-input-<?php echo esc_attr( $this->id ); ?>">
-						<?php echo esc_html( $this->label ); ?>
-					</label>
-				<?php endif; ?>
-
-				<?php if ( $this->description ) : ?>
-					<span class="description customize-control-description">
-						<?php echo wp_kses_post( $this->description ); ?>
-					</span>
-				<?php endif; ?>
-
-			</div>
-		<?php endif; ?>
-
-		<div class="customize-control-notifications-container"></div>
-
-		<div class="wpbf-control-form">
-			<?php if ( 'textarea' === $input_tag ) : ?>
-				<textarea
-					<?php $this->link(); ?>
-					<?php $this->input_attrs(); ?>
-					id="_customize-input-<?php echo esc_attr( $this->id ); ?>"
-					rows="<?php echo esc_attr( $this->rows ); ?>"><?php echo esc_textarea( $this->value() ); ?></textarea>
-			<?php else : ?>
-				<input
-					<?php
-					$this->link();
-					$this->input_attrs();
-					?>
-					type="<?php echo esc_attr( $input_type ); ?>"
-					id="_customize-input-<?php echo esc_attr( $this->id ); ?>"
-					value="<?php echo esc_attr( $this->value() ); ?>"
-					
-					<?php if ( 'number' === $input_type ) : ?>
-						<?php if ( null !== $this->min ) : ?>
-							min="<?php echo esc_attr( $this->min ); ?>"
-						<?php endif; ?>
-
-						<?php if ( null !== $this->max ) : ?>
-							max="<?php echo esc_attr( $this->max ); ?>"
-						<?php endif; ?>
-
-						step="<?php echo esc_attr( $this->step ); ?>"
-					<?php endif; ?>
-				>
-			<?php endif; ?>
-		</div>
-
-		<?php
 	}
 
 }

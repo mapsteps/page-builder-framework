@@ -116,12 +116,10 @@ class ImageControl extends BaseControl {
 		wp_enqueue_script(
 			'wpbf-image-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Media/dist/image-control-min.js',
-			array( 'wpbf-base-control' ),
+			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
 			WPBF_VERSION,
 			false
 		);
-
-		wp_set_script_translations( 'wpbf-control-image', 'wpbf' );
 
 	}
 
@@ -137,57 +135,6 @@ class ImageControl extends BaseControl {
 		$this->json['defaultSrc'] = $this->default_src;
 		$this->json['valueSrc']   = $this->image_util->unknownToSrcArray( $this->value() );
 
-	}
-
-	/**
-	 * An Underscore (JS) template for this control's content (but not its container).
-	 *
-	 * Class variables for this control class are available in the `data` JS object;
-	 * export custom variables by overriding WP_Customize_Control::to_json().
-	 *
-	 * @see WP_Customize_Control::print_template()
-	 */
-	protected function content_template() {
-		?>
-
-		<label>
-			<span class="customize-control-title">{{{ data.label }}}</span>
-			<# if ( data.description ) { #>
-				<span class="description customize-control-description">{{{ data.description }}}</span>
-			<# } #>
-		</label>
-
-		<div class="attachment-media-view">
-			<div class="thumbnail thumbnail-image<# if ( !data.valueSrc.url ) { #> hidden <# } #>">
-				<# if ( data.valueSrc.url ) { #>
-					<img class="attachment-thumb" src="{{ data.valueSrc.url }}"/>
-				<# } #>
-			</div>
-
-			<button type="button" class="upload-button button-add-media<# if ( data.valueSrc.url ) { #> hidden <# } #>">
-				<# if ( data.labels.placeholder ) { #>
-					{{ data.labels.placeholder }}
-				<# } #>
-			</button>
-
-			<div class="actions">
-				<button type="button" class="button remove-button<# if ( !data.valueSrc.url ) { #> hidden <# } #>">
-					{{ data.labels.remove }}
-				</button>
-
-				<# if ( data.defaultSrc.url ) { #>
-					<button type="button" class="button default-button<# if ( data.defaultSrc.url === data.valueSrc.url ) { #> hidden <# } #>">
-						{{ data.labels.default }}
-					</button>
-				<# } #>
-
-				<button type="button" class="button change-button<# if ( !data.valueSrc.url ) { #> hidden <# } #>">
-					{{ data.labels.change }}
-				</button>
-			</div>
-		</div>
-
-		<?php
 	}
 
 }

@@ -1,7 +1,4 @@
-import {
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "../../Base/src/interface";
 
 export type WpbfCustomizeImageSrc = {
 	id: number;
@@ -10,21 +7,15 @@ export type WpbfCustomizeImageSrc = {
 	height: number;
 };
 
-export type WpbfCustomizeImageControlValue =
-	| number
-	| string
-	| WpbfCustomizeImageSrc;
+// The setting value, depending on `saveAs`: the image URL, its attachment id, or all of WpbfCustomizeImageSrc.
+export type WpbfCustomizeImageControlValue = number | string | WpbfCustomizeImageSrc;
 
-export interface WpbfCustomizeImageControlParams
-	extends WpbfCustomizeControlParams<WpbfCustomizeImageControlValue> {
+export interface WpbfCustomizeImageControlParams extends WpbfCustomizeControlParams<WpbfCustomizeImageControlValue> {
 	labels: Record<string, string>;
-	saveAs: string;
+	saveAs: "url" | "id" | "array";
 	valueSrc: WpbfCustomizeImageSrc;
 	defaultSrc: WpbfCustomizeImageSrc;
 }
 
 export interface WpbfCustomizeImageControl
-	extends WpbfCustomizeControl<
-		WpbfCustomizeImageControlValue,
-		WpbfCustomizeImageControlParams
-	> {}
+	extends WpbfCustomizeControl<WpbfCustomizeImageControlValue, WpbfCustomizeImageControlParams> {}

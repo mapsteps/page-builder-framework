@@ -1,9 +1,21 @@
 <?php
+/**
+ * Checkbox control.
+ *
+ * @package Wpbf
+ */
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Checkbox;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
+use WP_Customize_Manager;
 
+/**
+ * One control for the checkbox types: wpbf-checkbox (a plain checkbox) and wpbf-toggle (a toggle, or with
+ * `checkbox_type` "switch" a switch with on/off labels).
+ *
+ * The type comes from `$args['type']` (default wpbf-checkbox); the form picks its layout from it (CheckboxForm.tsx).
+ */
 class CheckboxControl extends BaseControl {
 
 	/**
@@ -14,20 +26,49 @@ class CheckboxControl extends BaseControl {
 	public $type = 'wpbf-checkbox';
 
 	/**
+	 * The toggle's look: 'toggle' or 'switch'.
+	 *
+	 * @var string
+	 */
+	protected $checkbox_type = 'toggle';
+
+	/**
+	 * Allowed checkbox types.
+	 *
+	 * @var string[]
+	 */
+	protected $allowed_checkbox_types = [ 'toggle', 'switch' ];
+
+	/**
+	 * Constructor.
+	 *
+	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
+	 * @param string               $id                   Control ID.
+	 * @param array                $args                 Control arguments, incl. `type` and for toggles `checkbox_type`.
+	 */
+	public function __construct( $wp_customize_manager, $id, $args = array() ) {
+
+		parent::__construct( $wp_customize_manager, $id, $args );
+
+		if ( ! empty( $args['checkbox_type'] ) && in_array( $args['checkbox_type'], $this->allowed_checkbox_types, true ) ) {
+			$this->checkbox_type = $args['checkbox_type'];
+		}
+
+	}
+
+	/**
 	 * Enqueue control related scripts/styles.
 	 */
 	public function enqueue() {
 
 		parent::enqueue();
 
-		// Enqueue the styles.
 		wp_enqueue_style( 'wpbf-checkbox-control', WPBF_THEME_URI . '/Customizer/Controls/Checkbox/dist/checkbox-control-min.css', array(), WPBF_VERSION );
 
-		// Enqueue the scripts.
 		wp_enqueue_script(
 			'wpbf-checkbox-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Checkbox/dist/checkbox-control-min.js',
-			array( 'wpbf-base-control' ),
+			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
 			WPBF_VERSION,
 			false
 		);
@@ -35,32 +76,23 @@ class CheckboxControl extends BaseControl {
 	}
 
 	/**
-	 * An Underscore (JS) template for this control's content (but not its container).
-	 *
-	 * Class variables for this control class are available in the `data` JS object;
-	 * export custom variables by overriding WP_Customize_Control::to_json().
-	 *
-	 * @see WP_Customize_Control::print_template()
+	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
-	protected function content_template() {
-		?>
+	public function to_json() {
 
-		<input
-			id="_customize-input-{{ data.id }}"
-			type="checkbox"
-			value="{{ data.value }}"
-			{{{ data.link }}}
-		<# if ( data.description ) { #>aria-describedby="_customize-description-{{ data.id }}"<# } #>
-		<# if ( data.value ) { #>checked="checked"<# } #>
-		>
+		parent::to_json();
 
-		<label for="_customize-input-{{ data.id }}">{{{ data.label }}}</label>
+		if ( 'wpbf-toggle' !== $this->type ) {
+			return;
+		}
 
-		<# if ( data.description ) { #>
-		<span id="_customize-description-{{ data.id }}" class="description customize-control-description">{{{ data.description }}}</span>
-		<# } #>
+		$this->json['checkboxType'] = $this->checkbox_type;
 
-		<?php
+		$this->json['defaultChoices'] = [
+			'on'  => __( 'On', 'page-builder-framework' ),
+			'off' => __( 'Off', 'page-builder-framework' ),
+		];
+
 	}
 
 }

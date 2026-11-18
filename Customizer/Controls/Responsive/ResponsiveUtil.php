@@ -26,21 +26,13 @@ class ResponsiveUtil {
 	];
 
 	/**
-	 * Enqueue responsive control's assets.
+	 * Enqueue responsive control's styles.
+	 *
+	 * Each responsive control follows and switches the previewed device itself (DeviceButtons, usePreviewedDevice).
 	 */
 	public function enqueueAssets() {
 
-		// Enqueue the styles.
 		wp_enqueue_style( 'wpbf-responsive-control', WPBF_THEME_URI . '/Customizer/Controls/Responsive/dist/responsive-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-responsive-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Responsive/dist/responsive-control-min.js',
-			array( 'wpbf-base-control' ),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 

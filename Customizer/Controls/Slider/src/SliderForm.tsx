@@ -8,7 +8,13 @@
  * Each type keeps its markup and the exact values it hands to the setting (the live preview reads them).
  */
 import type { ChangeEvent } from "react";
-import { Notifications, ReactControlFormProps, useSettingValue, useTypedText } from "../../Base/src/react-base";
+import {
+	Notifications,
+	ReactControlFormProps,
+	usePreviewedDevice,
+	useSettingValue,
+	useTypedText,
+} from "../../Base/src/react-base";
 import DeviceButtons from "../../Responsive/src/DeviceButtons";
 import { DevicesValue } from "../../Responsive/src/interface";
 import { limitNumber, makeLimitedNumberUnitPair } from "../../Generic/src/number-util";
@@ -237,6 +243,7 @@ function ResponsiveSlider({ control, value, setValue, typedText }: PartProps<Sli
 	const devices = control.params.devices ?? [];
 	const [textFor, rememberText, forgetText] = typedText;
 	const current = makeDevicesValue(devices, value as string | DevicesValue, min, max);
+	const activeDevice = usePreviewedDevice(devices);
 
 	const save = (device: string, deviceValue: SliderValue) => {
 		const devicesValue = { ...current, [device]: deviceValue };
@@ -277,7 +284,7 @@ function ResponsiveSlider({ control, value, setValue, typedText }: PartProps<Sli
 					</label>
 				)}
 
-				<DeviceButtons devices={devices} />
+				<DeviceButtons devices={devices} active={activeDevice} />
 			</header>
 
 			{description && (
@@ -290,9 +297,9 @@ function ResponsiveSlider({ control, value, setValue, typedText }: PartProps<Sli
 			<Notifications control={control} />
 
 			<div className="wpbf-control-form">
-				{devices.map((device, deviceIndex) => (
+				{devices.map((device) => (
 					<div
-						className={`wpbf-control-device wpbf-control-${device} ${0 === deviceIndex ? "is-active" : ""}`}
+						className={`wpbf-control-device wpbf-control-${device} ${device === activeDevice ? "is-active" : ""}`}
 						data-wpbf-device={device}
 						key={device}
 					>

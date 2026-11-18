@@ -7,11 +7,11 @@ use WP_Customize_Manager;
 class ImageField extends UploadField {
 
 	/**
-	 * Path of the control class for this field.
+	 * The image control renders with React (ImageForm.tsx), not with a template.
 	 *
-	 * @var string
+	 * @var bool
 	 */
-	public $control_class_path = '\Mapsteps\Wpbf\Customizer\Controls\Media\ImageControl';
+	public $use_content_template = false;
 
 	/**
 	 * Get utility instance.
