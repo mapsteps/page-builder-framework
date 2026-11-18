@@ -75,14 +75,12 @@ class BaseControl extends WP_Customize_Control {
 	 */
 	public function enqueue() {
 
-		// React, ReactDOM and the JSX runtime come with WordPress (6.6+).
-
 		// Enqueue the styles.
 		wp_enqueue_style( 'wpbf-base-control', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control-min.css', array(), WPBF_VERSION );
 		( new ResponsiveUtil() )->enqueueAssets();
 
 		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-base-control', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control-min.js', array( 'jquery', 'react', 'react-dom', 'react-jsx-runtime', 'customize-controls' ), WPBF_VERSION, false );
+		wp_enqueue_script( 'wpbf-base-control', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control-min.js', array( 'jquery', 'customize-controls' ), WPBF_VERSION, false );
 
 	}
 

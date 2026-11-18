@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from "@wordpress/element";
 
 /**
  * Code was taken and then modified from https://codesandbox.io/s/opmco?file=/src/useClickOutside.js:0-1192

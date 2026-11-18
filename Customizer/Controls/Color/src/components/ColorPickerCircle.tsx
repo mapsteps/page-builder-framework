@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "@wordpress/element";
 
 export type ColorPickerCircleProps = {
 	pickerComponent?: any;

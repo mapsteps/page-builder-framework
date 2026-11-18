@@ -1,4 +1,5 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
+import { useCallback, useEffect, useState } from "@wordpress/element";
 
 export type ColorPickerInputProps = {
 	onChange: (color: string) => void;

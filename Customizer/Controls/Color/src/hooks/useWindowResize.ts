@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from "@wordpress/element";
 
 export default function useWindowResize(handler: any) {
 	useEffect(() => {

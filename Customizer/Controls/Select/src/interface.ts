@@ -35,4 +35,6 @@ export interface SelectControlParams
 }
 
 export interface WpbfCustomizeSelectControl
-	extends WpbfCustomizeControl<SelectControlValue, SelectControlParams> {}
+	extends WpbfCustomizeControl<SelectControlValue, SelectControlParams> {
+	updateComponentState?: (value: SelectControlValue) => void;
+}

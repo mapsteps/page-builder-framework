@@ -67,11 +67,18 @@ class ColorControl extends BaseControl {
 		// Enqueue the styles.
 		wp_enqueue_style( 'wpbf-color-control', WPBF_THEME_URI . '/Customizer/Controls/Color/dist/color-control-min.css', array(), WPBF_VERSION );
 
-		// Enqueue the scripts.
+		/*
+		 * The picker reads the swatches third parties set on wpColorPicker (Premium's color palette is added to the
+		 * 'wp-color-picker' script). Core loads it for its background color control already; this keeps it when that
+		 * control is removed.
+		 */
+		wp_enqueue_script( 'wp-color-picker' );
+
+		// Enqueue the scripts (react-colorful uses React directly, the form wp.element).
 		wp_enqueue_script(
 			'wpbf-color-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Color/dist/color-control-min.js',
-			array( 'wpbf-base-control' ),
+			array( 'wpbf-base-control', 'react', 'wp-element', 'react-jsx-runtime' ),
 			WPBF_VERSION,
 			false
 		);
