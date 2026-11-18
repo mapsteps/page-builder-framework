@@ -3,7 +3,6 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Responsive;
 
 use Mapsteps\Wpbf\Customizer\Controls\Generic\GenericSanitizer;
-use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 
 class ResponsiveUtil {
 

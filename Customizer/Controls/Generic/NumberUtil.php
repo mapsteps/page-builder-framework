@@ -167,46 +167,6 @@ class NumberUtil {
 	}
 
 	/**
-	 * Parse a value and make sure it's properly formatted either with or without unit.
-	 *
-	 * If without unit, it should be formatted as `float` or `int`.
-	 * Otherwise, it should be string.
-	 *
-	 * @param mixed $value The value to parse.
-	 *
-	 * @return string|float|int The returned value can be either `int`, `float`, empty string, or concatenation between value and unit.
-	 */
-	public function makeSureValueWithOrWithoutUnit( $value ) {
-
-		$number_and_unit = $this->makeNumberUnitPair( $value );
-
-		$number = $number_and_unit['number'];
-		$unit   = $number_and_unit['unit'];
-
-		if ( ! $unit || '' === $number ) {
-			return $number;
-		}
-
-		return $number . $unit;
-
-	}
-
-	/**
-	 * Parse a value and make sure it's without unit.
-	 *
-	 * @param mixed $value The value to parse.
-	 *
-	 * @return float|int|string The returned value can be either `int`, `float` or empty string.
-	 */
-	public function makeSureValueWithoutUnit( $value ) {
-
-		$number_and_unit = $this->makeNumberUnitPair( $value );
-
-		return $number_and_unit['number'];
-
-	}
-
-	/**
 	 * Parse a value and make sure it's a number.
 	 *
 	 * @param mixed $value The value to parse.

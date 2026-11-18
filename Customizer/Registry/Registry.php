@@ -73,15 +73,4 @@ final class Registry {
 
 	}
 
-	/**
-	 * Whether the registry has been built.
-	 *
-	 * @return bool
-	 */
-	public static function built() {
-
-		return self::$built;
-
-	}
-
 }

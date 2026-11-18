@@ -317,25 +317,4 @@ class TypographyField extends BaseField {
 
 	}
 
-	/**
-	 * Add the divider as the last field (currently not used).
-	 */
-	private function addDivider() {
-
-		wpbf_customizer_field()
-			->id( $this->control->id . '_separator' )
-			->type( 'divider' )
-			->tab( $this->tab )
-			->capability( $this->control->capability )
-			->priority( $this->control->priority )
-			->activeCallback( $this->active_callback_args )
-			->properties( [
-				'wrapper_attrs' => [
-					'gap' => 'small',
-				],
-			] )
-			->addToSection( $this->control->section_id );
-
-	}
-
 }

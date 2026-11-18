@@ -49,19 +49,6 @@ final class FontsUtil {
 	}
 
 	/**
-	 * Get all fonts.
-	 *
-	 * @return array Merged array of standard fonts and Google Fonts.
-	 */
-	public function getAllFonts() {
-
-		$all_fonts = array_merge( $this->getStandardFonts(), $this->getGoogleFonts() );
-
-		return apply_filters( 'wpbf_all_fonts', $all_fonts );
-
-	}
-
-	/**
 	 * Check if a font family is a Google Font.
 	 *
 	 * @param string $font_family Font family to check.
@@ -85,43 +72,6 @@ final class FontsUtil {
 	public function getStandardVariants() {
 
 		return FontsStore::$standard_font_variants;
-
-	}
-
-	/**
-	 * Get array of value & label pairs from standard font variants.
-	 *
-	 * Can be used for select fields.
-	 *
-	 * @return array Array of value & label pairs from standard font variants.
-	 */
-	public function getStandardVariantOptions() {
-
-		return FontsStore::$standard_font_variant_options;
-
-	}
-
-	/**
-	 * Get complete font variants.
-	 *
-	 * @return array Array of 'variant' => 'label' pairs. E.g: `[ '300italic' => '300 Italic' ]`.
-	 */
-	public function getCompleteVariants() {
-
-		return FontsStore::$complete_font_variants;
-
-	}
-
-	/**
-	 * Get array of value & label pairs from complete font variants.
-	 *
-	 * Can be used for select fields.
-	 *
-	 * @return array Array of value & label pairs from complete font variants.
-	 */
-	public function getCompleteVariantOptions() {
-
-		return FontsStore::$complete_font_variant_options;
 
 	}
 

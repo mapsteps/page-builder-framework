@@ -41,35 +41,6 @@ export function getErrorMessage(err) {
 }
 
 /**
- * Convert a string from dash-case to PascalCase.
- *
- * @param {string} str
- * @returns {string}
- */
-export function dashToPascalCase(str) {
-	if (str.includes("-")) {
-		return str.replace(/(^\w|-\w)/g, (c) => c.replace("-", "").toUpperCase());
-	}
-
-	return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-/**
- * Get the value of a command-line argument like --key=value
- * @param {string} key - The argument key, without "--"
- * @returns {string|undefined} - The value if present, `true` if passed without value, or `undefined` if not passed
- */
-export function getCommandArgValue(key) {
-	const prefix = `--${key}=`;
-	for (const arg of process.argv.slice(2)) {
-		if (arg.startsWith(prefix)) {
-			return arg.slice(prefix.length);
-		}
-	}
-	return undefined;
-}
-
-/**
  * Get the base filename without extension to use it in output naming.
  *
  * @param {string} filePath The file path.

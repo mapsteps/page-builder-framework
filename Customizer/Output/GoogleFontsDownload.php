@@ -14,16 +14,6 @@ class GoogleFontsDownload {
 	private $api_url = 'https://fonts.googleapis.com/css2';
 
 	/**
-	 * The user-agent to download woff fonts.
-	 *
-	 * The default user-agent is the only one compatible with woff (not woff2)
-	 * which also supports unicode ranges.
-	 *
-	 * @var string
-	 */
-	private $woff_user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8';
-
-	/**
 	 * The user-agent to download woff2 fonts.
 	 *
 	 * @var string
