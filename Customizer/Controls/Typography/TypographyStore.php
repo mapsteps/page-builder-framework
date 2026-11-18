@@ -12,13 +12,6 @@ final class TypographyStore {
 	public static $control_vars_printed = false;
 
 	/**
-	 * Whether the global JS objects for typography preview has been printed.
-	 *
-	 * @var bool
-	 */
-	public static $preview_vars_printed = false;
-
-	/**
 	 * Added typography control ids.
 	 *
 	 * @var string[]

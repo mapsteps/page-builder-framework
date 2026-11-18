@@ -137,23 +137,6 @@ class TypographyField extends BaseField {
 	}
 
 	/**
-	 * Enqueue styles & scripts on 'customize_preview_init' action.
-	 */
-	public function enqueuePreviewScripts() {
-
-		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-typography-preview', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-preview-min.js', array( 'customize-preview' ), WPBF_VERSION, false );
-
-		// JS object inside this block will only be printed once.
-		if ( ! TypographyStore::$preview_vars_printed ) {
-			wp_localize_script( 'wpbf-typography-preview', 'wpbfGoogleFontNames', FontsStore::$google_font_names );
-
-			TypographyStore::$preview_vars_printed = true;
-		}
-
-	}
-
-	/**
 	 * Prepare PHP array to be used as JS object.
 	 *
 	 * @see See https://developer.wordpress.org/reference/classes/wp_scripts/localize/

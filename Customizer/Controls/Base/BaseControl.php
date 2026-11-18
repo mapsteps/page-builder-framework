@@ -56,13 +56,6 @@ class BaseControl extends WP_Customize_Control {
 	public $allow_collapse = false;
 
 	/**
-	 * React version.
-	 *
-	 * @var string
-	 */
-	private $react_version = '18.3.1';
-
-	/**
 	 * Constructor.
 	 *
 	 * Supplied `$args` override class property defaults.
@@ -96,37 +89,7 @@ class BaseControl extends WP_Customize_Control {
 	 */
 	public function enqueue() {
 
-		$react_version = $this->react_version;
-
-		if ( ! wp_script_is( 'react', 'registered' ) ) {
-			wp_register_script(
-				'react',
-				WPBF_THEME_URI . '/Customizer/Controls/Base/libs/react.min.js',
-				array(),
-				$react_version,
-				true
-			);
-		}
-
-		if ( ! wp_script_is( 'react-dom', 'registered' ) ) {
-			wp_register_script(
-				'react-dom',
-				WPBF_THEME_URI . '/Customizer/Controls/Base/libs/react.dom-min.js',
-				array( 'react' ),
-				$react_version,
-				true
-			);
-		}
-
-		if ( ! wp_script_is( 'react-jsx-runtime', 'registered' ) ) {
-			wp_register_script(
-				'react-jsx-runtime',
-				WPBF_THEME_URI . '/Customizer/Controls/Base/libs/react-jsx-runtime.min.js',
-				array( 'react' ),
-				$react_version,
-				true
-			);
-		}
+		// React, ReactDOM and the JSX runtime come with WordPress (6.6+).
 
 		// Enqueue the styles.
 		wp_enqueue_style( 'wpbf-base-control', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control-min.css', array(), WPBF_VERSION );

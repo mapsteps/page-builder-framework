@@ -46,7 +46,7 @@ class CustomControl extends BaseControl {
 			 */
 			?>
 			{{{ data.value }}}
-		</label>
+		</div>
 
 		<?php
 	}
