@@ -7,6 +7,8 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
+use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
+
 /**
  * Excerpt length.
  *
@@ -385,8 +387,9 @@ function wpbf_theme_color_meta() {
 		$theme_color = $accent_color_global;
 	}
 
-	// If accent color is set (which is more specific), let's apply this instead.
-	if ( $accent_color ) {
+	// If accent color is set (which is more specific), let's apply this instead. Only when it differs from the default,
+	// like the accent color CSS (the Customizer preview hands over the default for unsaved options).
+	if ( $accent_color && OptionSchema::defaultValue( OptionSchema::get( 'page_accent_color' ) ) !== $accent_color ) {
 		$theme_color = $accent_color;
 	}
 
