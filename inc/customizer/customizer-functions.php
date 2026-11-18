@@ -14,6 +14,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
+use Mapsteps\Wpbf\Customizer\Output\CustomizerCss;
 use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
 
 /**
@@ -243,7 +244,10 @@ function wpbf_generate_css() {
 }
 
 /**
- * Create wpbf-customizer-styles.css file.
+ * Write the wpbf-customizer-styles.css file ("file" CSS mode) with the current CSS.
+ *
+ * Not hooked any more: the file is written when the CSS changes (see Customizer/Output/CustomizerCss.php).
+ * Kept for code that calls it.
  */
 function wpbf_create_customizer_css_file() {
 
@@ -256,56 +260,35 @@ function wpbf_create_customizer_css_file() {
 		return;
 	}
 
-	global $wp_filesystem;
-
-	if ( ! $wp_filesystem ) {
-		if ( ! function_exists( 'WP_Filesystem' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/file.php';
-		}
-	}
-
-	WP_Filesystem();
-
-	$upload_dir = wp_upload_dir();
-	$pbf_dir    = trailingslashit( $upload_dir['basedir'] ) . 'page-builder-framework/';
-	$css        = wpbf_generate_css();
-
-	// Create page-builder-framework folder if it doesn't exist.
-	if ( ! file_exists( $pbf_dir ) ) {
-		$wp_filesystem->mkdir( $pbf_dir );
-	}
-
-	// Create wpbf-customizer-styles.css file if it doesn't exist, otherwise attempt to update it.
-	if ( ! file_exists( $pbf_dir . 'wpbf-customizer-styles.css' ) ) {
-		$wp_filesystem->put_contents( $pbf_dir . 'wpbf-customizer-styles.css', $css, 0644 );
-	} elseif ( $css !== $wp_filesystem->get_contents( $pbf_dir . 'wpbf-customizer-styles.css' ) ) {
-		// Override the file only if changes were made in the customizer.
-		$wp_filesystem->put_contents( $pbf_dir . 'wpbf-customizer-styles.css', $css, 0644 );
-	}
+	CustomizerCss::writeFile( CustomizerCss::current()['css'] );
 
 }
-add_action( 'wp_loaded', 'wpbf_create_customizer_css_file' );
 
 /**
  * Enqueue customizer CSS.
+ *
+ * The CSS comes from the cache (built when settings change). The Customizer preview prints its live CSS itself
+ * (wpbf_customizer_preview_css()), so it's left out here.
  */
 function wpbf_customizer_frontend_scripts() {
+
+	if ( is_customize_preview() ) {
+		return;
+	}
 
 	$css_output = apply_filters( 'wpbf_css_output', 'inline' );
 
 	if ( 'inline' === $css_output ) {
 
-		$inline_styles = wpbf_generate_css();
-		wp_add_inline_style( apply_filters( 'wpbf_add_inline_style', 'wpbf-style' ), $inline_styles );
+		wp_add_inline_style( apply_filters( 'wpbf_add_inline_style', 'wpbf-style' ), CustomizerCss::current()['css'] );
 
 	} elseif ( 'file' === $css_output ) {
 
-		$upload_dir = wp_upload_dir();
-		$file_path  = $upload_dir['basedir'] . '/page-builder-framework/wpbf-customizer-styles.css';
-		$file_url   = $upload_dir['baseurl'] . '/page-builder-framework/wpbf-customizer-styles.css';
+		// Makes sure the file holds the current CSS (written only when it changed).
+		CustomizerCss::current();
 
-		if ( file_exists( $file_path ) ) {
-			wp_enqueue_style( 'wpbf-customizer', $file_url, '', filemtime( $file_path ) );
+		if ( file_exists( CustomizerCss::filePath() ) ) {
+			wp_enqueue_style( 'wpbf-customizer', CustomizerCss::fileUrl(), '', filemtime( CustomizerCss::filePath() ) );
 		}
 	}
 

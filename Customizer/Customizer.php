@@ -11,6 +11,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterSetting;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
+use Mapsteps\Wpbf\Customizer\Output\CustomizerCss;
 use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
 use Mapsteps\Wpbf\Customizer\Registry\Registry;
 use WP_Customize_Manager;
@@ -76,6 +77,7 @@ final class Customizer {
 	public function output() {
 
 		( new FontsOutput() )->init();
+		CustomizerCss::init();
 
 	}
 

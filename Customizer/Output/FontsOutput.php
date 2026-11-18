@@ -26,6 +26,13 @@ class FontsOutput {
 	private $min_fonts_system_version = '2.11.0.8';
 
 	/**
+	 * The option listing fonts whose download failed, with the time of their next try.
+	 *
+	 * @var string
+	 */
+	const FAILED_OPTION = 'wpbf_google_fonts_failed';
+
+	/**
 	 * The font variants a typography option can hold (the keys of FontsStore's complete variants).
 	 *
 	 * @var string[]
@@ -81,9 +88,15 @@ class FontsOutput {
 	/**
 	 * Generate Google Fonts CSS.
 	 *
+	 * Fonts that aren't downloaded yet are downloaded only when $download is true (cache refresh on cron, Customizer
+	 * preview). Otherwise a refresh is scheduled for them. Fonts whose download failed are retried after a pause that
+	 * grows with each failure (see FAILED_OPTION).
+	 *
+	 * @param bool $download Whether missing fonts may be downloaded now.
+	 *
 	 * @return string
 	 */
-	public function generateGoogleFontsCss() {
+	public function generateGoogleFontsCss( $download = true ) {
 
 		/**
 		 * An associative array of Google fonts to use in frontend.
@@ -114,8 +127,16 @@ class FontsOutput {
 
 		$existing_downloaded_css = $this->fonts_util->getDownloadedGoogleFontsCss();
 
+		$google_fonts_to_download = $this->withoutPausedFonts( $google_fonts_to_download );
+
+		if ( ! empty( $google_fonts_to_download ) && ! $download ) {
+			CustomizerCss::scheduleRefresh();
+			$google_fonts_to_download = [];
+		}
+
 		if ( ! empty( $google_fonts_to_download ) ) {
 			( new GoogleFontsDownload() )->download( $google_fonts_to_download );
+			$this->recordFailures( $google_fonts_to_download );
 
 			// Get the updated downloaded CSS.
 			$existing_downloaded_css = $this->fonts_util->getDownloadedGoogleFontsCss();
@@ -164,9 +185,118 @@ class FontsOutput {
 	 * Output the generated Google Fonts CSS as inline CSS.
 	 */
 	public function inlineGoogleFontsCss() {
+
+		// The preview shows unsaved choices: built live. Page views use the cache.
+		$css = CustomizerCss::enabled() ? CustomizerCss::current()['fonts'] : wpbf_minify_css( $this->generateGoogleFontsCss() );
+
+		if ( '' === $css ) {
+			return;
+		}
+
 		?>
-		<style class="wpbf-google-fonts"><?php echo wpbf_minify_css( $this->generateGoogleFontsCss() ); ?></style>
+		<style class="wpbf-google-fonts"><?php echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Font-face rules built from Google's stylesheet. ?></style>
 		<?php
+
+	}
+
+	/**
+	 * Leave out fonts whose download failed recently.
+	 *
+	 * @param array $font_families Font family => variants to download.
+	 *
+	 * @return array The fonts that may be downloaded now.
+	 */
+	private function withoutPausedFonts( $font_families ) {
+
+		$failed = $this->failedFonts();
+
+		foreach ( $font_families as $font_family => $variants ) {
+			foreach ( $variants as $i => $variant ) {
+				$key = $this->fontKey( $font_family, $variant );
+
+				if ( isset( $failed[ $key ]['next'] ) && $failed[ $key ]['next'] > time() ) {
+					unset( $font_families[ $font_family ][ $i ] );
+				}
+			}
+
+			if ( empty( $font_families[ $font_family ] ) ) {
+				unset( $font_families[ $font_family ] );
+			} else {
+				$font_families[ $font_family ] = array_values( $font_families[ $font_family ] );
+			}
+		}
+
+		return $font_families;
+
+	}
+
+	/**
+	 * After a download, remember which fonts failed and when to try them again (1 hour, then 4 times longer each time,
+	 * at most a week), and schedule that retry. Fonts that arrived are forgotten.
+	 *
+	 * @param array $font_families Font family => variants that were downloaded.
+	 */
+	private function recordFailures( $font_families ) {
+
+		$downloaded = $this->fonts_util->getDownloadedGoogleFontsCss();
+		$failed     = $this->failedFonts();
+		$before     = $failed;
+
+		foreach ( $font_families as $font_family => $variants ) {
+			$slug = $this->fonts_util->slugifyFontFamily( $font_family );
+
+			foreach ( $variants as $variant ) {
+				$key          = $this->fontKey( $font_family, $variant );
+				$variant_name = '400' === $variant ? 'regular' : $variant;
+
+				if ( ! empty( $downloaded[ $slug . '_' . $variant_name ] ) ) {
+					unset( $failed[ $key ] );
+					continue;
+				}
+
+				$tries          = isset( $failed[ $key ]['tries'] ) ? (int) $failed[ $key ]['tries'] + 1 : 1;
+				$failed[ $key ] = array(
+					'tries' => $tries,
+					'next'  => time() + min( WEEK_IN_SECONDS, HOUR_IN_SECONDS * pow( 4, min( $tries, 6 ) - 1 ) ),
+				);
+			}
+		}
+
+		if ( $failed !== $before ) {
+			update_option( self::FAILED_OPTION, $failed, false );
+		}
+
+		if ( ! empty( $failed ) ) {
+			CustomizerCss::scheduleRefresh( max( 0, min( wp_list_pluck( $failed, 'next' ) ) - time() ) );
+		}
+
+	}
+
+	/**
+	 * Fonts whose download failed: key => [ 'tries' => count, 'next' => timestamp of the next try ].
+	 *
+	 * @return array
+	 */
+	private function failedFonts() {
+
+		$failed = get_option( self::FAILED_OPTION, array() );
+
+		return is_array( $failed ) ? $failed : array();
+
+	}
+
+	/**
+	 * The key of a font variant in the failure list.
+	 *
+	 * @param string $font_family The font family.
+	 * @param string $variant The variant.
+	 *
+	 * @return string
+	 */
+	private function fontKey( $font_family, $variant ) {
+
+		return $this->fonts_util->slugifyFontFamily( $font_family ) . '_' . ( '400' === $variant ? 'regular' : $variant );
+
 	}
 
 	/**

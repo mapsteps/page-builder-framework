@@ -30,6 +30,9 @@ foreach ( array( 'add_post_metadata', 'update_post_metadata' ) as $zz_hook ) {
 	);
 }
 
+// The Customizer CSS cache (and its file, its refresh schedule) is read but never written by these runs.
+add_filter( 'wpbf_customizer_css_store', '__return_false' );
+
 // The Dashboard's Quick Draft widget creates an empty draft post when there is none.
 add_action(
 	'wp_dashboard_setup',
