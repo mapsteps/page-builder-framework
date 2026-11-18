@@ -78,7 +78,8 @@ Checks for every step: `python bin/snapshot/snapshot.py take/diff` (pages), `nod
    - "file" CSS mode: written on save, never from the preview
    - broken paths (typography preview, React)
    - Kirki layer: missing old types, falsy defaults, the do-nothing alias file
-2. **Build setup:** one config, one non-interactive `pnpm build`, unused packages and Parcel leftovers removed, vendor libraries out of `dist/`. Rebuild every control and check the output is equivalent to today's files before going on.
+2. **Done November 18, 2026.** Notes for later steps: `color-preview` and `margin-padding-preview` hook into a filter nothing applies (dead, drop in step 7); `tsc --noEmit` reports 13 type errors in the control sources (fix in step 7); `wpbf.mjs` still builds the theme's own assets and zip until the assets module.
+   **Build setup:** one config, one non-interactive `pnpm build`, unused packages and Parcel leftovers removed, vendor libraries out of `dist/`. Rebuild every control and check the output is equivalent to today's files before going on.
 3. **Option schema + `wpbf_mod()`:** collect every option's default into `Schema/` (taken from today's registration and output code; where they disagree, the value visitors see today wins). Registration reads defaults from the schema. The snapshot's "defaults" run must stay identical.
 4. **Lazy engine:** settings files and controls only load on `customize_register`; the font list and typography ids come from the schema. Front-end requests stop building the registry.
 5. **CSS and fonts on save:** CSS generated once on save and cached (inline mode prints the cache, file mode writes the file); fonts downloaded on save. The preview generates live, once (today it prints the CSS twice).
