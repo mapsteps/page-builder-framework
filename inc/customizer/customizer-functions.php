@@ -94,7 +94,6 @@ require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-control-base-comp
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-fields-compatibility.php';
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-unsupported-fields-compatibility.php';
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-pro-fields-compatibility.php';
-require_once WPBF_THEME_DIR . '/Customizer/Compatibility/kirki-class-aliases.php';
 require_once WPBF_THEME_DIR . '/Customizer/Compatibility/wpbf-old-controls-compatibility.php';
 
 if ( ! function_exists( 'wpbf_get_theme_mod_value' ) ) {

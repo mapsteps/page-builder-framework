@@ -24,13 +24,17 @@ if ( ! function_exists( 'wpbf_kirki_sanitize_helper' ) ) {
 
 		return function ( $value ) use ( $callback ) {
 
-			if ( ! empty( $value ) ) {
-				$value = json_decode( trim( $value ), true );
-				$value = array_map( $callback, $value );
-				$value = wp_json_encode( $value );
+			if ( empty( $value ) ) {
+				return $value;
 			}
 
-			return $value;
+			$value = is_string( $value ) ? json_decode( trim( $value ), true ) : $value;
+
+			if ( ! is_array( $value ) ) {
+				return '';
+			}
+
+			return wp_json_encode( array_map( $callback, $value ) );
 
 		};
 

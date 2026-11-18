@@ -222,8 +222,9 @@ if ( ! class_exists( ( '\Kirki\Field\Generic' ) ) ) {
 				$field_args['input_attrs'] = [];
 			}
 
+			// min/max/step stay in the choices (\Kirki::add_field turns them into the field's properties), everything else becomes an input attribute.
 			foreach ( $choices as $key => $value ) {
-				if ( 'min' === $key || 'max' === $key && 'step' === $key ) {
+				if ( in_array( $key, array( 'min', 'max', 'step' ), true ) ) {
 					continue;
 				}
 
@@ -231,7 +232,7 @@ if ( ! class_exists( ( '\Kirki\Field\Generic' ) ) ) {
 				unset( $choices[ $key ] );
 			}
 
-			$field_args['choices'] = array_values( $choices );
+			$field_args['choices'] = $choices;
 
 			// Help free up memory.
 			unset( $choices );

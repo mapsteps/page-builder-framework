@@ -167,9 +167,9 @@ if ( ! class_exists( '\Kirki' ) ) {
 			$section           = ! empty( $field_args['section'] ) ? $field_args['section'] : '';
 			$label             = ! empty( $field_args['label'] ) ? $field_args['label'] : '';
 			$description       = ! empty( $field_args['description'] ) ? $field_args['description'] : '';
-			$default           = ! empty( $field_args['default'] ) ? $field_args['default'] : '';
+			$default           = isset( $field_args['default'] ) ? $field_args['default'] : ''; // Keeps 0, '0' and false.
 			$choices           = ! empty( $field_args['choices'] ) && is_array( $field_args['choices'] ) ? $field_args['choices'] : array();
-			$priority          = ! empty( $field_args['priority'] ) ? $field_args['priority'] : 10;
+			$priority          = isset( $field_args['priority'] ) && is_numeric( $field_args['priority'] ) ? (int) $field_args['priority'] : 10;
 			$transport         = ! empty( $field_args['transport'] ) ? $field_args['transport'] : '';
 			$tooltip           = ! empty( $field_args['tooltip'] ) ? $field_args['tooltip'] : '';
 			$active_callback   = ! empty( $field_args['active_callback'] ) && is_array( $field_args['active_callback'] ) ? $field_args['active_callback'] : [];
@@ -251,17 +251,28 @@ if ( ! class_exists( '\Kirki' ) ) {
 			}
 
 			if ( ! empty( $active_callback ) && is_array( $active_callback ) ) {
-				$active_callback = array_map( function ( $dependency_arg ) {
-					if ( empty( $dependency_arg ) || ! is_array( $dependency_arg ) ) {
-						return [];
-					}
+				// Kirki rules: "setting" + "value", "operator" optional (defaults to "==").
+				// Rules without a setting (incl. Kirki's nested "OR" groups, which the engine doesn't support) are left out.
+				$active_callback = array_values(
+					array_filter(
+						array_map(
+							function ( $dependency_arg ) {
+								if ( ! is_array( $dependency_arg ) || empty( $dependency_arg['setting'] ) || ! array_key_exists( 'value', $dependency_arg ) ) {
+									return [];
+								}
 
-					return [
-						'id'       => $dependency_arg['setting'],
-						'operator' => $dependency_arg['operator'],
-						'value'    => $dependency_arg['value'],
-					];
-				}, $active_callback );
+								return [
+									'id'       => $dependency_arg['setting'],
+									'operator' => ! empty( $dependency_arg['operator'] ) ? $dependency_arg['operator'] : '==',
+									'value'    => $dependency_arg['value'],
+								];
+							},
+							$active_callback
+						)
+					)
+				);
+			} elseif ( ! empty( $field_args['active_callback'] ) && is_callable( $field_args['active_callback'] ) ) {
+				$active_callback = $field_args['active_callback'];
 			}
 
 			// Kirki's field types compatibility.
@@ -427,6 +438,15 @@ if ( ! class_exists( '\Kirki' ) ) {
 			// Other PBF's field types compatibility.
 			if ( 'input_slider' === $type ) {
 				$type = 'input-slider';
+			}
+
+			// Old type names (e.g. Premium 2.9 and older).
+			if ( 'radio_buttonset' === $type ) {
+				$type = 'radio-buttonset';
+			}
+
+			if ( 'link' === $type ) {
+				$type = 'url';
 			}
 
 			wpbf_customizer_field()
