@@ -164,8 +164,8 @@ try {
 			const el = c.container && c.container[0];
 			const hasContent = el && el.innerHTML.trim().length > 0 && el.querySelectorAll('*').length > 0;
 			if (hasContent) byType[t].rendered++; else empty.push(c.id);
-			// Rendered markup per control (whitespace collapsed), to compare two runs.
-			if (el && t && 0 === t.indexOf('wpbf-')) markup[c.id] = el.innerHTML.replace(/\\s+/g, ' ').trim();
+			// Rendered markup per control (whitespace and select2's random ids collapsed), to compare two runs.
+			if (el && t && 0 === t.indexOf('wpbf-')) markup[c.id] = el.innerHTML.replace(/\\s+/g, ' ').replace(/select2-data-\\d+-\\w+/g, 'select2-data').replace(/select2-\\w+-(container|results)/g, 'select2-$1').replace(/choice-\\w{4}-/g, 'choice-').trim();
 		});
 
 		// Round trips on the React and select controls: a value set on the setting must show up in the control, and back.
@@ -189,6 +189,8 @@ try {
 			if (type === 'wpbf-select') next = Object.keys(control.params.choices || {}).find((k) => k !== original) ?? original;
 			if (type === 'wpbf-toggle') next = !original;
 			if (type === 'wpbf-generic') next = 'zz-test';
+			// A value inside the slider's range (one outside shows as the limit).
+			if (type === 'wpbf-slider') next = Math.min(control.params.max, control.params.min + 7 * control.params.step);
 			// Responsive sliders: 17 on the first device, in the format the setting uses (JSON text or object).
 			let look = next;
 			if (type === 'wpbf-responsive-input-slider') {
