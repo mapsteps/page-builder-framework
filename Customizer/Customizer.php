@@ -47,6 +47,9 @@ final class Customizer {
 		// Build everything declared so far (theme, Premium, child themes), before anything below reads the registry.
 		add_action( 'customize_register', array( Registry::class, 'build' ), 1 );
 
+		// Every control, panel and section type is in one script and one stylesheet, registered before anything hands it data.
+		add_action( 'customize_controls_enqueue_scripts', array( CustomizerAssets::class, 'enqueue' ), 1 );
+
 		/**
 		 * Added with priority 5 to ensure that the 'section-tab' fields will be added
 		 * in the next priority where 'register_wpbf_customizer' is called.
@@ -122,8 +125,6 @@ final class Customizer {
 		$this->register_controls( $wp_customize_manager );
 		$this->register_selective_refreshes( $wp_customize_manager );
 
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_panel_types' ) );
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_section_types' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
 
 	}
@@ -265,33 +266,6 @@ final class Customizer {
 	}
 
 	/**
-	 * Enqueue custom panel types.
-	 *
-	 * @return void
-	 */
-	public function enqueue_custom_panel_types() {
-
-		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-panels', WPBF_THEME_URI . '/Customizer/Panels/dist/panel-types-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
-
-	}
-
-	/**
-	 * Enqueue custom section types.
-	 *
-	 * @return void
-	 */
-	public function enqueue_custom_section_types() {
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/section-types-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-sections', WPBF_THEME_URI . '/Customizer/Sections/dist/section-types-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
-
-	}
-
-	/**
 	 * Register control's tooltips.
 	 *
 	 * @return void
@@ -314,7 +288,7 @@ final class Customizer {
 			}
 		}
 
-		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerTooltips', $tooltips );
+		wp_localize_script( CustomizerAssets::HANDLE, 'wpbfCustomizerTooltips', $tooltips );
 
 	}
 
@@ -326,11 +300,11 @@ final class Customizer {
 	public function js_vars_for_controls() {
 
 		if ( is_array( TypographyStore::$added_control_ids ) ) {
-			wp_localize_script( 'wpbf-typography-control', 'wpbfTypographyControlIds', TypographyStore::$added_control_ids );
+			wp_localize_script( CustomizerAssets::HANDLE, 'wpbfTypographyControlIds', TypographyStore::$added_control_ids );
 		}
 
 		wp_localize_script(
-			'wpbf-dimension-control',
+			CustomizerAssets::HANDLE,
 			'wpbfDimensionControlL10n',
 			[
 				'invalid-value' => esc_html__( 'Invalid Value', 'page-builder-framework' ),
@@ -363,7 +337,7 @@ final class Customizer {
 	 */
 	public function register_control_dependencies() {
 
-		wp_localize_script( 'wpbf-base-control', 'wpbfCustomizerControlDependencies', CustomizerStore::$added_control_dependencies );
+		wp_localize_script( CustomizerAssets::HANDLE, 'wpbfCustomizerControlDependencies', CustomizerStore::$added_control_dependencies );
 
 	}
 

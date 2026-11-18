@@ -106,7 +106,6 @@ class SelectControl extends BaseControl {
 
 		// Enqueue the styles.
 		wp_enqueue_style( 'select2', WPBF_THEME_URI . '/Customizer/Controls/Select/vendor/select2.min.css', array(), WPBF_VERSION );
-		wp_enqueue_style( 'wpbf-select-control', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.css', array( 'select2' ), WPBF_VERSION );
 
 		$select2_src = WPBF_THEME_URI . '/Customizer/Controls/Select/vendor/select2.full.min.js';
 
@@ -119,17 +118,6 @@ class SelectControl extends BaseControl {
 				wp_scripts()->registered ['select2']->src = $select2_src;
 			}
 		}
-
-		wp_enqueue_script(
-			'wpbf-select-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.js',
-			array(
-				'customize-controls',
-				'select2',
-			),
-			WPBF_VERSION,
-			false
-		);
 
 	}
 

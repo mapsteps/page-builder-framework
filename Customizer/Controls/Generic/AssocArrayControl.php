@@ -67,24 +67,6 @@ class AssocArrayControl extends BaseControl {
 	}
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-assoc-array-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/assoc-array-control-min.js',
-			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
-			WPBF_VERSION,
-			false
-		);
-
-	}
-
-	/**
 	 * The form (label, description, the value's parts) is rendered in the browser (assoc-array-control.tsx).
 	 */
 	protected function render_content() {

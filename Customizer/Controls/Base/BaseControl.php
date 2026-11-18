@@ -7,7 +7,7 @@
 
 namespace Mapsteps\Wpbf\Customizer\Controls\Base;
 
-use Mapsteps\Wpbf\Customizer\Controls\Responsive\ResponsiveUtil;
+use Mapsteps\Wpbf\Customizer\CustomizerAssets;
 use WP_Customize_Control;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
@@ -71,16 +71,11 @@ class BaseControl extends WP_Customize_Control {
 	}
 
 	/**
-	 * Enqueue control related scripts/styles.
+	 * Enqueue control related scripts/styles: every control type is in one script and one stylesheet.
 	 */
 	public function enqueue() {
 
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-base-control', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control-min.css', array(), WPBF_VERSION );
-		( new ResponsiveUtil() )->enqueueAssets();
-
-		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-base-control', WPBF_THEME_URI . '/Customizer/Controls/Base/dist/base-control-min.js', array( 'jquery', 'customize-controls' ), WPBF_VERSION, false );
+		CustomizerAssets::enqueue();
 
 	}
 

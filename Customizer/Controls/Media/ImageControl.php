@@ -106,24 +106,6 @@ class ImageControl extends BaseControl {
 	}
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-image-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Media/dist/image-control-min.js',
-			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
-			WPBF_VERSION,
-			false
-		);
-
-	}
-
-	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
 	public function to_json() {

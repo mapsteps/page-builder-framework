@@ -163,27 +163,6 @@ class RepeaterControl extends BaseControl {
 	}
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-repeater-control', WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/repeater-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts (rows are reordered with jQuery UI's sortable).
-		wp_enqueue_script(
-			'wpbf-repeater-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/repeater-control-min.js',
-			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime', 'jquery-ui-sortable' ),
-			WPBF_VERSION,
-			false
-		);
-
-	}
-
-	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
 	public function to_json() {

@@ -3,6 +3,7 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Typography;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
+use Mapsteps\Wpbf\Customizer\CustomizerAssets;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerControlEntity;
 use Mapsteps\Wpbf\Customizer\Entities\CustomizerSettingEntity;
 
@@ -100,22 +101,19 @@ class TypographyField extends BaseField {
 	 */
 	public function enqueueControlScripts() {
 
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-typography-control', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script( 'wpbf-typography-control', WPBF_THEME_URI . '/Customizer/Controls/Typography/dist/typography-control-min.js', array( 'customize-controls' ), WPBF_VERSION, false );
+		// The typography script is part of the controls' script.
+		CustomizerAssets::enqueue();
 
 		// JS object inside this block will only be printed once.
 		if ( ! TypographyStore::$control_vars_printed ) {
-			wp_localize_script( 'wpbf-typography-control', 'wpbfFontVariantOptions', [
+			wp_localize_script( CustomizerAssets::HANDLE, 'wpbfFontVariantOptions', [
 				'standard' => FontsStore::$standard_font_variant_options,
 				'complete' => FontsStore::$complete_font_variant_options,
 			] );
 
-			wp_localize_script( 'wpbf-typography-control', 'wpbfFontProperties', $this->font_properties );
-			wp_localize_script( 'wpbf-typography-control', 'wpbfGoogleFonts', ( new GoogleFontsUtil() )->getCollections() );
-			wp_add_inline_script( 'wpbf-typography-control', 'const wpbfFieldsFontVariants = {};', 'before' );
+			wp_localize_script( CustomizerAssets::HANDLE, 'wpbfFontProperties', $this->font_properties );
+			wp_localize_script( CustomizerAssets::HANDLE, 'wpbfGoogleFonts', ( new GoogleFontsUtil() )->getCollections() );
+			wp_add_inline_script( CustomizerAssets::HANDLE, 'const wpbfFieldsFontVariants = {};', 'before' );
 
 			TypographyStore::$control_vars_printed = true;
 		}
@@ -129,7 +127,7 @@ class TypographyField extends BaseField {
 
 		// JS object here will be printed for each field.
 		wp_add_inline_script(
-			'wpbf-typography-control',
+			CustomizerAssets::HANDLE,
 			'wpbfFieldsFontVariants.' . $field_variant_key . ' = ' . wp_json_encode( $field_variant_values ) . ';',
 			'before'
 		);

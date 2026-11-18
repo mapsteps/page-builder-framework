@@ -33,27 +33,6 @@ class DimensionControl extends BaseControl {
 	public $allow_unitless = true;
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-dimension-control', WPBF_THEME_URI . '/Customizer/Controls/Dimension/dist/dimension-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-dimension-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Dimension/dist/dimension-control-min.js',
-			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
-			WPBF_VERSION,
-			false
-		);
-
-	}
-
-	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
 	public function to_json() {

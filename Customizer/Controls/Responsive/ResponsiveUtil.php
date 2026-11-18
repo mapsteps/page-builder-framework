@@ -26,17 +26,6 @@ class ResponsiveUtil {
 	];
 
 	/**
-	 * Enqueue responsive control's styles.
-	 *
-	 * Each responsive control follows and switches the previewed device itself (DeviceButtons, usePreviewedDevice).
-	 */
-	public function enqueueAssets() {
-
-		wp_enqueue_style( 'wpbf-responsive-control', WPBF_THEME_URI . '/Customizer/Controls/Responsive/dist/responsive-control-min.css', array(), WPBF_VERSION );
-
-	}
-
-	/**
 	 * Make empty value based on devices.
 	 *
 	 * @param string[] $devices The allowed devices.

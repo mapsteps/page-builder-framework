@@ -116,25 +116,6 @@ class SliderControl extends BaseControl {
 	}
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		wp_enqueue_style( 'wpbf-slider-control', WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control-min.css', array(), WPBF_VERSION );
-
-		wp_enqueue_script(
-			'wpbf-slider-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control-min.js',
-			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
-			WPBF_VERSION,
-			false
-		);
-
-	}
-
-	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
 	public function to_json() {

@@ -14,27 +14,6 @@ class SortableControl extends BaseControl {
 	public $type = 'wpbf-sortable';
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-sortable-control', WPBF_THEME_URI . '/Customizer/Controls/Sortable/dist/sortable-control-min.css', array(), WPBF_VERSION );
-
-		// Enqueue the scripts.
-		wp_enqueue_script(
-			'wpbf-sortable-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Sortable/dist/sortable-control-min.js',
-			array( 'wpbf-base-control' ),
-			WPBF_VERSION,
-			false
-		);
-
-	}
-
-	/**
 	 * An Underscore (JS) template for this control's content (but not its container).
 	 *
 	 * Class variables for this control class are available in the `data` JS object;

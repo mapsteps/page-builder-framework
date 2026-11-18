@@ -14,18 +14,6 @@ class HeadlineControl extends BaseControl {
 	public $type = 'wpbf-headline';
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		// Enqueue the styles.
-		wp_enqueue_style( 'wpbf-headline-control', WPBF_THEME_URI . '/Customizer/Controls/Headline/dist/headline-control-min.css', array(), WPBF_VERSION );
-
-	}
-
-	/**
 	 * Render the control's content.
 	 *
 	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.

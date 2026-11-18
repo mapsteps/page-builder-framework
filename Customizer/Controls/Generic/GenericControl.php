@@ -201,23 +201,6 @@ class GenericControl extends BaseControl {
 	}
 
 	/**
-	 * Enqueue control related scripts/styles.
-	 */
-	public function enqueue() {
-
-		parent::enqueue();
-
-		wp_enqueue_script(
-			'wpbf-generic-control',
-			WPBF_THEME_URI . '/Customizer/Controls/Generic/dist/generic-control-min.js',
-			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
-			WPBF_VERSION,
-			false
-		);
-
-	}
-
-	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
 	public function to_json() {
