@@ -63,4 +63,23 @@ class UploadControl extends WP_Customize_Media_Control {
 
 	}
 
+	/**
+	 * Enqueue control related scripts/styles.
+	 *
+	 * The upload control is core's media control (template, params) under its own type name: give the type core's
+	 * media control script too (without it, its buttons did nothing).
+	 */
+	public function enqueue() {
+
+		parent::enqueue();
+
+		static $added = false;
+
+		if ( ! $added ) {
+			wp_add_inline_script( 'customize-controls', 'wp.customize.controlConstructor["wpbf-upload"] = wp.customize.MediaControl;' );
+			$added = true;
+		}
+
+	}
+
 }
