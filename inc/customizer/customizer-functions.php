@@ -216,6 +216,11 @@ function wpbf_create_customizer_css_file() {
 		return;
 	}
 
+	// Never write unsaved Customizer changes into the file every visitor gets.
+	if ( is_customize_preview() ) {
+		return;
+	}
+
 	global $wp_filesystem;
 
 	if ( ! $wp_filesystem ) {
