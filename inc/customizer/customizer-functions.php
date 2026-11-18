@@ -14,6 +14,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerField;
 use Mapsteps\Wpbf\Customizer\CustomizerPanel;
 use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
+use Mapsteps\Wpbf\Customizer\Output\CssRules;
 use Mapsteps\Wpbf\Customizer\Output\CustomizerCss;
 use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
 
@@ -231,6 +232,34 @@ function wpbf_minify_css( $css ) {
 }
 
 /**
+ * Write one Customizer CSS block from option values (see inc/customizer/styles/general.php for how to use it).
+ *
+ * Prints the block when its options are set and differ from their defaults. In the Customizer preview, changes to
+ * these options show instantly.
+ *
+ * @param string $selector     The CSS selector.
+ * @param array  $declarations Property => value. Values hold option values as {option_id} or {option_id.key}.
+ * @param array  $args         'media' (breakpoint name like 'max-desktop', or a media query), 'always' (print even at
+ *                             the defaults), 'when' (an option that must be on).
+ */
+function wpbf_css( $selector, $declarations, $args = array() ) {
+
+	CssRules::rule( $selector, $declarations, $args );
+
+}
+
+/**
+ * Print an area's Customizer CSS (inc/customizer/styles/<area>.php).
+ *
+ * @param string $area The area name.
+ */
+function wpbf_css_area( $area ) {
+
+	CssRules::area( $area );
+
+}
+
+/**
  * Generate customizer CSS.
  */
 function wpbf_generate_css() {
@@ -304,12 +333,64 @@ function wpbf_customizer_preview_css() {
 		return;
 	}
 
-	echo '<style id="wpbf-customize-saved-styles">';
+	// Areas written with wpbf_css() get their own style tag, redrawn by preview-css.js.
+	CssRules::startSplit();
 	require WPBF_THEME_DIR . '/inc/customizer/styles.php';
-	echo '</style>';
+	$segments = CssRules::endSplit();
+
+	$plain = 0;
+	$areas = array();
+
+	foreach ( $segments as $segment ) {
+		if ( is_array( $segment ) ) {
+			echo '<style id="wpbf-css-' . esc_attr( $segment['area'] ) . '">' . $segment['css'] . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput -- CSS, values escaped when written.
+
+			$areas[ $segment['area'] ] = array_diff_key( $segment, array_flip( array( 'area', 'css' ) ) );
+			continue;
+		}
+
+		echo '<style id="wpbf-customize-saved-styles' . ( $plain ? '-' . ( $plain + 1 ) : '' ) . '">' . $segment . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput -- CSS.
+		++$plain;
+	}
+
+	wp_add_inline_script( 'wpbf-preview-css', 'window.wpbfCssAreas = ' . wp_json_encode( $areas, JSON_HEX_TAG ) . ';', 'before' );
 
 }
 add_action( 'wp_head', 'wpbf_customizer_preview_css', 999 );
+
+/**
+ * Selective refresh partials for the areas written with wpbf_css(): the preview asks PHP for an area's CSS again
+ * when an option it reads outside wpbf_css() changes (see inc/customizer/js/preview-css.js).
+ *
+ * @param WP_Customize_Manager $wp_customize The Customizer.
+ */
+function wpbf_customizer_css_partials( $wp_customize ) {
+
+	if ( ! isset( $wp_customize->selective_refresh ) ) {
+		return;
+	}
+
+	foreach ( CssRules::AREAS as $area ) {
+		$wp_customize->selective_refresh->add_partial(
+			'wpbf_css_' . $area,
+			array(
+				'type'                => 'wpbf_css',
+				'selector'            => '#wpbf-css-' . $area,
+				'settings'            => array(),
+				'capability'          => 'edit_theme_options',
+				'container_inclusive' => false,
+				'render_callback'     => function () use ( $area ) {
+					$data = CssRules::record( $area );
+					unset( $data['css'] );
+
+					return $data;
+				},
+			)
+		);
+	}
+
+}
+add_action( 'customize_register', 'wpbf_customizer_css_partials' );
 
 /**
  * Post message.
@@ -322,6 +403,17 @@ function wpbf_customizer_preview_js() {
 		array(
 			'jquery',
 			'customize-preview',
+		),
+		WPBF_VERSION,
+		true
+	);
+
+	wp_enqueue_script(
+		'wpbf-preview-css',
+		get_template_directory_uri() . '/inc/customizer/js/preview-css.js',
+		array(
+			'customize-preview',
+			'customize-selective-refresh',
 		),
 		WPBF_VERSION,
 		true

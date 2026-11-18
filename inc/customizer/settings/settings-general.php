@@ -151,6 +151,7 @@ wpbf_customizer_field()
 // Box shadow.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow' )
+	->transport( 'postMessage' )
 	->label( __( 'Box Shadow', 'page-builder-framework' ) )
 	->priority( 6 )
 	->activeCallback( [
@@ -165,6 +166,7 @@ wpbf_customizer_field()
 // Box shadow blur.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_blur' )
+	->transport( 'postMessage' )
 	->label( __( 'Blur', 'page-builder-framework' ) )
 	->priority( 7 )
 	->properties( array(
@@ -189,6 +191,7 @@ wpbf_customizer_field()
 // Box shadow spread.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_spread' )
+	->transport( 'postMessage' )
 	->label( __( 'Spread', 'page-builder-framework' ) )
 	->priority( 8 )
 	->properties( array(
@@ -213,6 +216,7 @@ wpbf_customizer_field()
 // Box shadow horizontal.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_horizontal' )
+	->transport( 'postMessage' )
 	->label( __( 'Horizontal', 'page-builder-framework' ) )
 	->priority( 9 )
 	->properties( array(
@@ -237,6 +241,7 @@ wpbf_customizer_field()
 // Box shadow vertical.
 wpbf_customizer_field()
 	->id( 'page_boxed_box_shadow_vertical' )
+	->transport( 'postMessage' )
 	->label( __( 'Vertical', 'page-builder-framework' ) )
 	->priority( 10 )
 	->properties( array(
@@ -357,6 +362,7 @@ wpbf_customizer_field()
 // Padding.
 wpbf_customizer_field()
 	->id( 'sidebar_widget_padding' )
+	->transport( 'postMessage' )
 	->label( __( 'Padding', 'page-builder-framework' ) )
 	->priority( 3 )
 	->properties( [
@@ -506,6 +512,7 @@ wpbf_customizer_field()
 // Alignment.
 wpbf_customizer_field()
 	->id( 'breadcrumbs_alignment' )
+	->transport( 'postMessage' )
 	->label( __( 'Alignment', 'page-builder-framework' ) )
 	->priority( 2 )
 	->choices( array(
@@ -996,6 +1003,7 @@ wpbf_customizer_field()
 // Border radius.
 wpbf_customizer_field()
 	->id( 'scrolltop_border_radius' )
+	->transport( 'postMessage' )
 	->label( __( 'Border Radius', 'page-builder-framework' ) )
 	->priority( 8 )
 	->properties( array(
