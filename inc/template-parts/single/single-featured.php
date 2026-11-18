@@ -29,15 +29,20 @@ if ( apply_filters( 'wpbf_remove_featured_image', false ) ) {
 	return;
 }
 
-$class = "post";
+$class = 'post';
 
 // change class if we're on a page.
 if ( is_page() ) {
-	$class = "page";
+	$class = 'page';
 }
 
 ?>
 
 <div class="wpbf-<?php echo $class; ?>-image-wrapper">
-	<?php the_post_thumbnail( apply_filters( 'wpbf_single_post_thumbnail_size', 'full' ), array( 'class' => 'wpbf-' . $class . '-image', 'itemprop' => 'image' ) ); ?>
+	<?php
+	the_post_thumbnail( apply_filters( 'wpbf_single_post_thumbnail_size', 'full' ), array(
+		'class'    => 'wpbf-' . $class . '-image',
+		'itemprop' => 'image',
+	) );
+	?>
 </div>

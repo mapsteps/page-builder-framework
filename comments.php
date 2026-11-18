@@ -47,7 +47,7 @@ if ( post_password_required() ) {
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
 		<nav class="wpbf-comment-nav wpbf-clearfix" aria-label="<?php _e( 'Comments Navigation', 'page-builder-framework' ); ?>">
-			<span class="screen-reader-text"><?php _e( 'Comments Navigation', 'page-builder-framework' ) ?></span>
+			<span class="screen-reader-text"><?php _e( 'Comments Navigation', 'page-builder-framework' ); ?></span>
 			<div class="previous"><?php previous_comments_link( __( '&larr; Older Comments', 'page-builder-framework' ) ); ?></div>
 			<div class="next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'page-builder-framework' ) ); ?></div>
 		</nav>
@@ -56,7 +56,7 @@ if ( post_password_required() ) {
 	</section>
 
 	<?php if ( ! comments_open() ) : ?>
-	<p class="no-comments"><?php _e( 'Comments are closed.' , 'page-builder-framework' ); ?></p>
+	<p class="no-comments"><?php _e( 'Comments are closed.', 'page-builder-framework' ); ?></p>
 	<?php endif; ?>
 
 	<?php do_action( 'wpbf_after_comments' ); ?>

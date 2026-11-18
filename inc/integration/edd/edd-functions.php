@@ -152,7 +152,7 @@ add_filter( 'wpbf_sidebar_layout', 'wpbf_edd_sidebar_layout' );
 function wpbf_edd_menu_item( $markup = 'li' ) {
 
 	if ( wpbf_svg_enabled() ) {
-		$icon = apply_filters( 'wpbf_edd_menu_item_icon', wpbf_svg( 'cart' )  );
+		$icon = apply_filters( 'wpbf_edd_menu_item_icon', wpbf_svg( 'cart' ) );
 	} else {
 		$icon = apply_filters( 'wpbf_edd_menu_item_icon', '<i class="wpbff wpbff-' . esc_attr( get_theme_mod( 'edd_menu_item_icon', 'cart' ) ) . '"></i>' );
 	}

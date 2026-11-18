@@ -19,7 +19,7 @@ get_header();
 
 	<?php if ( ! is_singular( array( 'elementor_library', 'et_pb_layout', 'wpbf_hooks' ) ) ) : ?>
 
-	<?php wpbf_inner_content(); ?>
+		<?php wpbf_inner_content(); ?>
 
 		<?php do_action( 'wpbf_inner_content_open' ); ?>
 
@@ -33,11 +33,18 @@ get_header();
 
 				<?php do_action( 'wpbf_before_article' ); ?>
 
-				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+				<?php
+				if ( have_posts() ) :
+					while ( have_posts() ) :
+						the_post();
+						?>
 
-				<?php get_template_part( 'inc/template-parts/single-article' ); ?>
+						<?php get_template_part( 'inc/template-parts/single-article' ); ?>
 
-				<?php endwhile; endif; ?>
+						<?php
+				endwhile;
+endif;
+				?>
 
 				<?php do_action( 'wpbf_after_article' ); ?>
 
@@ -51,15 +58,22 @@ get_header();
 
 		<?php do_action( 'wpbf_inner_content_close' ); ?>
 
-	<?php wpbf_inner_content_close(); ?>
+		<?php wpbf_inner_content_close(); ?>
 
 	<?php else : ?>
 
-		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+		<?php
+		if ( have_posts() ) :
+			while ( have_posts() ) :
+				the_post();
+				?>
 
-		<?php the_content(); ?>
+				<?php the_content(); ?>
 
-		<?php endwhile; endif; ?>
+					<?php
+		endwhile;
+endif;
+		?>
 
 	<?php endif; ?>
 

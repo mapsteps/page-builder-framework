@@ -109,7 +109,8 @@ function wpbf_do_lifterlms_customizer_css() {
 			border-color: <?php echo $primary; ?>;
 		}
 
-	<?php } if ( $action ) {
+		<?php
+	} if ( $action ) {
 
 		$action_dark  = wpbf_lifterlms_adjust_hex( $action, -0.12 );
 		$action_light = wpbf_lifterlms_adjust_hex( $action, 0.08 );
@@ -182,7 +183,8 @@ function wpbf_do_lifterlms_customizer_css() {
 				border-bottom-color: <?php echo $accent; ?>;
 		}
 
-	<?php }
+		<?php
+	}
 
 }
 add_action( 'wpbf_after_customizer_css', 'wpbf_do_lifterlms_customizer_css', 10 );

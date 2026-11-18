@@ -21,7 +21,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 		[
 			'label'        => __( 'Pre Header (Replace)', 'page-builder-framework' ),
 			'hook'         => 'wpbf_before_header',
-			'remove_hooks' => ['wpbf_do_pre_header'],
+			'remove_hooks' => [ 'wpbf_do_pre_header' ],
 		]
 	);
 
@@ -30,7 +30,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 		[
 			'label'        => __( 'Header (Replace)', 'page-builder-framework' ),
 			'hook'         => 'wpbf_header',
-			'remove_hooks' => ['wpbf_do_header'],
+			'remove_hooks' => [ 'wpbf_do_header' ],
 		]
 	);
 
@@ -39,7 +39,7 @@ function wpbf_elementor_locations( $elementor_theme_manager ) {
 		[
 			'label'        => __( 'Footer (Replace)', 'page-builder-framework' ),
 			'hook'         => 'wpbf_footer',
-			'remove_hooks' => ['wpbf_do_footer'],
+			'remove_hooks' => [ 'wpbf_do_footer' ],
 		]
 	);
 

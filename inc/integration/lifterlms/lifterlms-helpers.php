@@ -64,13 +64,13 @@ function wpbf_lifterlms_hex_to_rgb( $hex ) {
  */
 function wpbf_lifterlms_adjust_hex( $hex, $percent ) {
 
-	$rgb = wpbf_lifterlms_hex_to_rgb( $hex );
+	$rgb     = wpbf_lifterlms_hex_to_rgb( $hex );
 	$new_hex = '#';
 
 	// convert to decimal and change luminosity
-	foreach( $rgb as $part ) {
-		$dec = min( max( 0, $part + $part * $percent ), 255 );
-		$new_hex .= str_pad( dechex( $dec ) , 2, 0, STR_PAD_LEFT );
+	foreach ( $rgb as $part ) {
+		$dec      = min( max( 0, $part + $part * $percent ), 255 );
+		$new_hex .= str_pad( dechex( $dec ), 2, 0, STR_PAD_LEFT );
 	}
 
 	return $new_hex;

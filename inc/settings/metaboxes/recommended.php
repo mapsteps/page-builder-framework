@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				array(
 					'title'       => __( 'Premium Add-On', 'page-builder-framework' ),
 					'description' => __( 'Take your website to the next level with the Premium Add-On for Page Builder Framework.', 'page-builder-framework' ),
-					'banner'      => WPBF_THEME_URI .'/img/premium-add-on-banner-2.jpg',
+					'banner'      => WPBF_THEME_URI . '/img/premium-add-on-banner-2.jpg',
 					'link'        => 'https://wp-pagebuilderframework.com/premium/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
 					'repo'        => false,
 					'constant'    => 'WPBF_PREMIUM_VERSION',
@@ -58,7 +58,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				array(
 					'title'       => __( 'Toolset', 'page-builder-framework' ),
 					'description' => __( 'A set of plugins to help you build dynamic, advanced websites without programming.', 'page-builder-framework' ),
-					'banner'      => WPBF_THEME_URI .'/img/toolset-banner.png',
+					'banner'      => WPBF_THEME_URI . '/img/toolset-banner.png',
 					'link'        => 'https://toolset.com/',
 					'repo'        => false,
 					'constant'    => 'WPV_VERSION',
@@ -74,7 +74,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 				array(
 					'title'       => __( 'WPML', 'page-builder-framework' ),
 					'description' => __( 'WPML is a popular translation plugin that helps you create a multilingual website for your business or blog.', 'page-builder-framework' ),
-					'banner'      => WPBF_THEME_URI .'/img/banner-wpml.png',
+					'banner'      => WPBF_THEME_URI . '/img/banner-wpml.png',
 					'link'        => 'https://wpml.org/',
 					'repo'        => false,
 					'constant'    => 'WPML_PLUGIN_BASENAME',
@@ -128,7 +128,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			}
 
-		?>
+			?>
 
 	</ul>
 

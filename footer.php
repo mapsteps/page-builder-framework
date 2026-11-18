@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		do_action( 'wpbf_after_footer' );
 
-		?>
+?>
 
 	</div>
 

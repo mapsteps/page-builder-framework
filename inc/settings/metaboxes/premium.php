@@ -89,7 +89,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			}
 
-		?>
+			?>
 
 		<li>
 			<div class="wpbf-premium-list-content">

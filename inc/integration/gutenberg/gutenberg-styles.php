@@ -94,7 +94,7 @@ if ( $page_boxed ) {
 	echo '.editor-styles-wrapper {';
 	echo sprintf( 'background-color: %s;', '#' . esc_attr( $background_color ) );
 	echo '}';
-	
+
 }
 
 // Accent color.

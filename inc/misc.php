@@ -115,10 +115,10 @@ function wpbf_menu_fallback() {
 /**
  * Add description to main menu items.
  *
- * @param string $item_output The menu item's starting HTML output.
- * @param object $item The menu item data object.
+ * @param string  $item_output The menu item's starting HTML output.
+ * @param object  $item The menu item data object.
  * @param integer $depth Depth of menu item.
- * @param object $args The arguments.
+ * @param object  $args The arguments.
  *
  * @return string The updated menu item's starting HTML output.
  */
@@ -169,7 +169,7 @@ function wpbf_remove_background_link() {
 
 	foreach ( $submenu['themes.php'] as $menu_index => $theme_menu ) {
 		if ( 'Background' === $theme_menu[0] ) {
-			unset( $submenu['themes.php'][$menu_index] );
+			unset( $submenu['themes.php'][ $menu_index ] );
 		}
 	}
 

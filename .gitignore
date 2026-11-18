@@ -33,3 +33,6 @@ build
 
 # Composer (dev tools only)
 /vendor/
+
+# Snapshot tool output
+/bin/snapshot/output/

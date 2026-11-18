@@ -67,7 +67,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 			}
 
-		?>
+			?>
 
 	</div>
 

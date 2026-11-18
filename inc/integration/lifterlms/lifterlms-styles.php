@@ -98,7 +98,8 @@ function wpbf_do_lifterlms_customizer_css() {
 			border-color: <?php echo $primary; ?>;
 		}
 
-	<?php } if ( $action ) {
+		<?php
+	} if ( $action ) {
 
 		$action_dark  = $accent_color_alt === '#79c4e0' ? 'var(--accent-color-alt)' : $accent_color_alt;
 		$action_light = $accent_color_alt === '#79c4e0' ? 'var(--accent-color-alt)' : $accent_color_alt;
@@ -171,7 +172,8 @@ function wpbf_do_lifterlms_customizer_css() {
 				border-bottom-color: <?php echo $accent; ?>;
 		}
 
-	<?php }
+		<?php
+	}
 
 }
 add_action( 'wpbf_after_customizer_css', 'wpbf_do_lifterlms_customizer_css', 10 );

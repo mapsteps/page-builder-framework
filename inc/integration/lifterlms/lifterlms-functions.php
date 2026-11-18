@@ -90,7 +90,7 @@ function wpbf_lifterlms_replace_quiz_sidebar_widgets( $widgets ) {
 	$sidebar_id = 'sidebar-1';
 
 	if ( is_singular( 'llms_quiz' ) && array_key_exists( 'llms_lesson_widgets_side', $widgets ) ) {
-		$widgets[$sidebar_id] = $widgets['llms_lesson_widgets_side'];
+		$widgets[ $sidebar_id ] = $widgets['llms_lesson_widgets_side'];
 	}
 
 	return $widgets;
@@ -100,7 +100,6 @@ add_filter( 'sidebars_widgets', 'wpbf_lifterlms_replace_quiz_sidebar_widgets' );
 
 /**
  * Remove post links from lessons, quizzes & memberships.
- *
  */
 function wpbf_lifterlms_remove_post_navigation() {
 
@@ -115,7 +114,6 @@ add_action( 'wp', 'wpbf_lifterlms_remove_post_navigation' );
 
 /**
  * Remove header & footer from certificate pages.
- *
  */
 function wpbf_lifterlms_remove_header_footer() {
 
@@ -137,11 +135,11 @@ add_action( 'wp', 'wpbf_lifterlms_remove_header_footer' );
  * @return array $dirs Updated array of paths
  */
 function wpbf_lifterlms_theme_override_dirs( $dirs ) {
-	
+
 	array_unshift( $dirs, WPBF_THEME_DIR . '/inc/integration/lifterlms/templates' );
 
 	return $dirs;
-	
+
 }
 add_filter( 'lifterlms_theme_override_directories', 'wpbf_lifterlms_theme_override_dirs', 10, 1 );
 

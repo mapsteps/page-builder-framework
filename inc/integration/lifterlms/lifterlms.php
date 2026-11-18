@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 /**
  * LifterLMS theme support.
  */
-function wpbf_lifterlms_theme_support(){
+function wpbf_lifterlms_theme_support() {
 
 	add_theme_support( 'lifterlms-sidebars' );
 
@@ -38,7 +38,6 @@ function wpbf_do_lifterlms_customizer_settings() {
 
 	// LifterLMS Customizer settings.
 	// require_once WPBF_THEME_DIR . '/inc/integration/lifterlms/lifterlms-customizer-settings.php';
-
 }
 add_action( 'after_setup_theme', 'wpbf_do_lifterlms_customizer_settings' );
 

@@ -61,9 +61,9 @@ function wpbf_divi_default_headline_styles() {
 /**
  * Add back theme header.
  *
- * @param int $layout_id The layout ID
+ * @param int  $layout_id The layout ID
  * @param bool $layout_enabled If layout enabled
- * @param int $template_id The template ID
+ * @param int  $template_id The template ID
  */
 function wpbf_divi_theme_builder_custom_header( $layout_id, $layout_enabled, $template_id ) {
 	// Only add the custom header if there is no Theme Builder header
@@ -78,9 +78,9 @@ add_action( 'et_theme_builder_template_before_header', 'wpbf_divi_theme_builder_
 /**
  * Add back theme footer.
  *
- * @param int $layout_id The layout ID
+ * @param int  $layout_id The layout ID
  * @param bool $layout_enabled If layout enabled
- * @param int $template_id The template ID
+ * @param int  $template_id The template ID
  */
 function wpbf_divi_theme_builder_custom_footer( $layout_id, $layout_enabled, $template_id ) {
 	// Only add the custom footer if there is no Theme Builder footer
