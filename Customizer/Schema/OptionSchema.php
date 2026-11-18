@@ -151,16 +151,20 @@ final class OptionSchema {
 	}
 
 	/**
-	 * Record a field declared through the builder that isn't in the schema, so wpbf_mod() knows its default.
+	 * Record a field declared through the builder, so wpbf_mod() knows its default if the schema doesn't list it.
+	 *
+	 * Called for every declared field on every request (Premium declares its fields early), so it only stores:
+	 * the schema itself is only loaded when something is read. find() asks the schema first.
 	 *
 	 * @param string $id The option id.
 	 * @param string $type The control type.
 	 * @param mixed  $default_value The declared default.
 	 * @param bool   $json Whether the value is saved as JSON text.
+	 * @param string $storage 'theme_mod' (default) or 'option'.
 	 */
-	public static function record( $id, $type, $default_value, $json ) {
+	public static function record( $id, $type, $default_value, $json, $storage = 'theme_mod' ) {
 
-		if ( ! is_string( $id ) || '' === $id || null !== self::get( $id ) ) {
+		if ( ! is_string( $id ) || '' === $id ) {
 			return;
 		}
 
@@ -168,7 +172,33 @@ final class OptionSchema {
 			'type'    => (string) $type,
 			'default' => $default_value,
 			'json'    => (bool) $json,
+			'storage' => 'option' === $storage ? 'option' : 'theme_mod',
 		);
+
+	}
+
+	/**
+	 * Get the ids of every option of a type: the theme's (placeholder ids left out) and those recorded from the builder.
+	 *
+	 * @param string $type The control type, e.g. 'typography'.
+	 *
+	 * @return array Entries by id, in schema order, then in the order they were declared.
+	 */
+	public static function ofType( $type ) {
+
+		self::load();
+
+		$found = array();
+
+		foreach ( array( self::$options, self::$recorded ) as $entries ) {
+			foreach ( $entries as $id => $entry ) {
+				if ( isset( $entry['type'] ) && $type === $entry['type'] && ! isset( $found[ $id ] ) ) {
+					$found[ $id ] = null === self::get( $id ) ? $entry : self::get( $id );
+				}
+			}
+		}
+
+		return $found;
 
 	}
 

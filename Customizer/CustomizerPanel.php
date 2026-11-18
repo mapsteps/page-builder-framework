@@ -1,34 +1,33 @@
 <?php
 /**
- * Wpbf customizer panel.
+ * What wpbf_customizer_panel() returns: records every call, builds nothing until the Customizer registers.
  *
- * @package Wpbf
+ * Keeps every method name and argument format (Premium and child themes rely on them). On customize_register the
+ * recorded calls are replayed, in order, on a PanelRegistrar, which does the actual work (see Registry).
+ *
+ * @package Page Builder Framework
  */
 
 namespace Mapsteps\Wpbf\Customizer;
 
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerPanelEntity;
+defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.Found -- The arguments are recorded with func_get_args(), so calls without optional ones replay the same.
+
+use Mapsteps\Wpbf\Customizer\Registry\PanelRegistrar;
+use Mapsteps\Wpbf\Customizer\Registry\Registry;
 
 /**
- * Class to add Wpbf customizer panel.
+ * Records a Customizer panel.
  */
 final class CustomizerPanel {
 
 	/**
-	 * The panel entity object.
+	 * The recorded calls: [ method, arguments ].
 	 *
-	 * @var CustomizerPanelEntity
+	 * @var array[]
 	 */
-	private $panel;
-
-	/**
-	 * Construct the class.
-	 */
-	public function __construct() {
-
-		$this->panel = new CustomizerPanelEntity();
-
-	}
+	private $calls = array();
 
 	/**
 	 * Set the panel id.
@@ -39,11 +38,7 @@ final class CustomizerPanel {
 	 */
 	public function id( $id ) {
 
-		if ( ! empty( $id ) && is_string( $id ) ) {
-			$this->panel->id = $id;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -56,11 +51,7 @@ final class CustomizerPanel {
 	 */
 	public function parentId( $id ) {
 
-		if ( ! empty( $id ) && is_string( $id ) ) {
-			$this->panel->parent_id = $id;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -73,11 +64,7 @@ final class CustomizerPanel {
 	 */
 	public function type( $type ) {
 
-		if ( ! empty( $type ) && is_string( $type ) ) {
-			$this->panel->type = $type;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -90,11 +77,7 @@ final class CustomizerPanel {
 	 */
 	public function priority( $priority ) {
 
-		if ( is_int( $priority ) ) {
-			$this->panel->priority = $priority;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -107,11 +90,7 @@ final class CustomizerPanel {
 	 */
 	public function capability( $capability ) {
 
-		if ( ! empty( $capability ) && is_string( $capability ) ) {
-			$this->panel->capability = $capability;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -124,11 +103,7 @@ final class CustomizerPanel {
 	 */
 	public function title( $title ) {
 
-		if ( ! empty( $title ) && is_string( $title ) ) {
-			$this->panel->title = $title;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -141,11 +116,7 @@ final class CustomizerPanel {
 	 */
 	public function description( $description ) {
 
-		if ( ! empty( $description ) && is_string( $description ) ) {
-			$this->panel->description = $description;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -161,24 +132,61 @@ final class CustomizerPanel {
 	 */
 	public function activeCallback( $active_callback ) {
 
-		if ( ! empty( $active_callback ) && is_callable( $active_callback ) ) {
-			$this->panel->active_callback = $active_callback;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
 	/**
 	 * Add the panel to the singleton.
 	 *
-	 * @return CustomizerPanelEntity
+	 * Recorded like every other call; the panel is built when the Customizer registers.
+	 *
+	 * @return $this
 	 */
 	public function add() {
 
-		CustomizerStore::$added_panels[] = $this->panel;
+		$this->record( __FUNCTION__, func_get_args() );
 
-		return $this->panel;
+		return $this->submit();
+
+	}
+
+	/**
+	 * Record a call.
+	 *
+	 * @param string $method The method.
+	 * @param array  $args The arguments.
+	 *
+	 * @return $this
+	 */
+	private function record( $method, $args ) {
+
+		$this->calls[] = array( $method, $args );
+
+		return $this;
+
+	}
+
+	/**
+	 * Hand the recorded calls to the registry: replayed on a PanelRegistrar when the Customizer registers.
+	 *
+	 * @return $this
+	 */
+	private function submit() {
+
+		$calls = $this->calls;
+
+		Registry::add(
+			function () use ( $calls ) {
+				$registrar = new PanelRegistrar();
+
+				foreach ( $calls as $call ) {
+					call_user_func_array( array( $registrar, $call[0] ), $call[1] );
+				}
+			}
+		);
+
+		return $this;
 
 	}
 

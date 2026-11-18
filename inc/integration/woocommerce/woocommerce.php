@@ -84,7 +84,12 @@ add_action( 'wp_enqueue_scripts', 'wpbf_woo_scripts', 10 );
 function wpbf_do_woo_customizer_settings() {
 
 	// WooCommerce Customizer settings.
-	require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-customizer-settings.php';
+	// Loaded only when the Customizer registers, at this point of the declaration order.
+	Mapsteps\Wpbf\Customizer\Registry\Registry::add(
+		function () {
+			require_once WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-customizer-settings.php';
+		}
+	);
 
 }
 add_action( 'after_setup_theme', 'wpbf_do_woo_customizer_settings' );

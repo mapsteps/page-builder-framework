@@ -110,7 +110,7 @@ function wpbf_mod( $id ) {
 	}
 
 	$entry = OptionSchema::find( $id );
-	$value = get_theme_mod( $id, $not_saved );
+	$value = isset( $entry['storage'] ) && 'option' === $entry['storage'] ? get_option( $id, $not_saved ) : get_theme_mod( $id, $not_saved );
 
 	if ( null === $entry ) {
 		return $not_saved === $value ? false : $value;

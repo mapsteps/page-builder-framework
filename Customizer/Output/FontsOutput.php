@@ -4,8 +4,7 @@ namespace Mapsteps\Wpbf\Customizer\Output;
 
 use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsStore;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsUtil;
-use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
-use Mapsteps\Wpbf\Customizer\CustomizerStore;
+use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
 
 class FontsOutput {
 
@@ -25,6 +24,20 @@ class FontsOutput {
 	 * @var string
 	 */
 	private $min_fonts_system_version = '2.11.0.8';
+
+	/**
+	 * The font variants a typography option can hold (the keys of FontsStore's complete variants).
+	 *
+	 * @var string[]
+	 */
+	const FONT_VARIANTS = array( 'regular', 'italic', '100', '100italic', '200', '200italic', '300', '300italic', '500', '500italic', '600', '600italic', '700', '700italic', '800', '800italic', '900', '900italic' );
+
+	/**
+	 * Whether font families are Google fonts, by family.
+	 *
+	 * @var bool[]
+	 */
+	private $is_google_font = array();
 
 	/**
 	 * `FontsOutput` constructor.
@@ -163,23 +176,17 @@ class FontsOutput {
 	 */
 	private function googleFontsToUse() {
 
-		$control_ids    = TypographyStore::$added_control_ids;
+		// Typography options: the theme's from the schema, others' (child themes, plugins) as their fields declared them.
 		$control_values = [];
 
-		foreach ( $control_ids as $control_id ) {
-			$setting_entity = CustomizerStore::findSettingByControlId( $control_id );
-
-			if ( ! $setting_entity ) {
-				continue;
-			}
-
-			$value = 'theme_mod' === $setting_entity->type ? get_theme_mod( $setting_entity->id ) : get_option( $setting_entity->id );
+		foreach ( OptionSchema::ofType( 'typography' ) as $option_id => $entry ) {
+			$value = isset( $entry['storage'] ) && 'option' === $entry['storage'] ? get_option( $option_id ) : get_theme_mod( $option_id );
 
 			if ( ! $value ) {
 				continue;
 			}
 
-			$control_values[ $setting_entity->id ] = $value;
+			$control_values[ $option_id ] = $value;
 		}
 
 		/**
@@ -203,7 +210,7 @@ class FontsOutput {
 				continue;
 			}
 
-			if ( ! isset( FontsStore::$google_fonts[ $google_font_family ] ) ) {
+			if ( ! $this->isGoogleFont( $google_font_family ) ) {
 				continue;
 			}
 
@@ -217,7 +224,7 @@ class FontsOutput {
 				continue;
 			}
 
-			if ( ! isset( FontsStore::$complete_font_variants[ $font_variant ] ) ) {
+			if ( ! in_array( $font_variant, self::FONT_VARIANTS, true ) ) {
 				continue;
 			}
 
@@ -241,6 +248,48 @@ class FontsOutput {
 		}
 
 		return $google_fonts_to_use;
+
+	}
+
+	/**
+	 * Whether a font family is a Google font.
+	 *
+	 * Avoids loading the Google font list (1,800 fonts) on page views: a family with downloaded CSS is one, a font stack
+	 * (it has a comma) is not. Only other families (custom fonts, Google fonts not downloaded yet) need the list.
+	 *
+	 * @param string $font_family The font family.
+	 *
+	 * @return bool
+	 */
+	private function isGoogleFont( $font_family ) {
+
+		if ( isset( $this->is_google_font[ $font_family ] ) ) {
+			return $this->is_google_font[ $font_family ];
+		}
+
+		$prefix = $this->fonts_util->slugifyFontFamily( $font_family ) . '_';
+
+		foreach ( array_keys( $this->fonts_util->getDownloadedGoogleFontsCss() ) as $key ) {
+			if ( 0 === strpos( $key, $prefix ) ) {
+				$this->is_google_font[ $font_family ] = true;
+
+				return true;
+			}
+		}
+
+		if ( false !== strpos( $font_family, ',' ) ) {
+			$this->is_google_font[ $font_family ] = false;
+
+			return false;
+		}
+
+		if ( ! FontsStore::initialized() ) {
+			FontsStore::init();
+		}
+
+		$this->is_google_font[ $font_family ] = isset( FontsStore::$google_fonts[ $font_family ] );
+
+		return $this->is_google_font[ $font_family ];
 
 	}
 

@@ -12,6 +12,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterSetting;
 use Mapsteps\Wpbf\Customizer\Controls\Typography\TypographyStore;
 use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
+use Mapsteps\Wpbf\Customizer\Registry\Registry;
 use WP_Customize_Manager;
 
 /**
@@ -42,6 +43,9 @@ final class Customizer {
 	 */
 	public function init() {
 
+		// Build everything declared so far (theme, Premium, child themes), before anything below reads the registry.
+		add_action( 'customize_register', array( Registry::class, 'build' ), 1 );
+
 		/**
 		 * Added with priority 5 to ensure that the 'section-tab' fields will be added
 		 * in the next priority where 'register_wpbf_customizer' is called.
@@ -50,8 +54,17 @@ final class Customizer {
 
 		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_tooltips' ) );
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'js_vars_for_controls' ) );
+
+		/**
+		 * These localize scripts that the typography fields register while they're built (on customize_register),
+		 * so they're hooked from the registry right after the theme's settings, as they always ran after them.
+		 */
+		Registry::add(
+			function () {
+				add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_tooltips' ) );
+				add_action( 'customize_controls_enqueue_scripts', array( $this, 'js_vars_for_controls' ) );
+			}
+		);
 
 	}
 

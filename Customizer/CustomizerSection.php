@@ -1,41 +1,33 @@
 <?php
 /**
- * Wpbf customizer section.
+ * What wpbf_customizer_section() returns: records every call, builds nothing until the Customizer registers.
  *
- * @package Wpbf
+ * Keeps every method name and argument format (Premium and child themes rely on them). On customize_register the
+ * recorded calls are replayed, in order, on a SectionRegistrar, which does the actual work (see Registry).
+ *
+ * @package Page Builder Framework
  */
 
 namespace Mapsteps\Wpbf\Customizer;
 
-use Mapsteps\Wpbf\Customizer\Entities\CustomizerSectionEntity;
+defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.Found -- The arguments are recorded with func_get_args(), so calls without optional ones replay the same.
+
+use Mapsteps\Wpbf\Customizer\Registry\SectionRegistrar;
+use Mapsteps\Wpbf\Customizer\Registry\Registry;
 
 /**
- * Class to add Wpbf customizer section.
+ * Records a Customizer section.
  */
 final class CustomizerSection {
 
 	/**
-	 * The section entity object.
+	 * The recorded calls: [ method, arguments ].
 	 *
-	 * @var CustomizerSectionEntity
+	 * @var array[]
 	 */
-	private $section;
-
-	/**
-	 * Tabs for the section.
-	 *
-	 * @var array
-	 */
-	private $section_tabs = [];
-
-	/**
-	 * Construct the class.
-	 */
-	public function __construct() {
-
-		$this->section = new CustomizerSectionEntity();
-
-	}
+	private $calls = array();
 
 	/**
 	 * Set the section id.
@@ -46,11 +38,7 @@ final class CustomizerSection {
 	 */
 	public function id( $id ) {
 
-		if ( ! empty( $id ) && is_string( $id ) ) {
-			$this->section->id = $id;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -63,11 +51,7 @@ final class CustomizerSection {
 	 */
 	public function parentId( $id ) {
 
-		if ( ! empty( $id ) && is_string( $id ) ) {
-			$this->section->parent_id = $id;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -80,11 +64,7 @@ final class CustomizerSection {
 	 */
 	public function priority( $priority ) {
 
-		if ( is_int( $priority ) ) {
-			$this->section->priority = $priority;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -97,11 +77,7 @@ final class CustomizerSection {
 	 */
 	public function capability( $capability ) {
 
-		if ( ! empty( $capability ) && is_string( $capability ) ) {
-			$this->section->capability = $capability;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -114,11 +90,7 @@ final class CustomizerSection {
 	 */
 	public function type( $type ) {
 
-		if ( ! empty( $type ) && is_string( $type ) ) {
-			$this->section->type = $type;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -131,11 +103,7 @@ final class CustomizerSection {
 	 */
 	public function title( $title ) {
 
-		if ( ! empty( $title ) && is_string( $title ) ) {
-			$this->section->title = $title;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -148,11 +116,7 @@ final class CustomizerSection {
 	 */
 	public function description( $description ) {
 
-		if ( ! empty( $description ) && is_string( $description ) ) {
-			$this->section->description = $description;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -168,11 +132,7 @@ final class CustomizerSection {
 	 */
 	public function activeCallback( $active_callback ) {
 
-		if ( ! empty( $active_callback ) && is_callable( $active_callback ) ) {
-			$this->section->active_callback = $active_callback;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -180,14 +140,12 @@ final class CustomizerSection {
 	 * Define tabs for the section.
 	 *
 	 * @param array $tabs Tabs for the section.
+	 *
+	 * @return $this
 	 */
 	public function tabs( $tabs ) {
 
-		if ( ! empty( $tabs ) && is_array( $tabs ) ) {
-			$this->section_tabs = $tabs;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -200,43 +158,78 @@ final class CustomizerSection {
 	 */
 	public function customProperties( $properties = array() ) {
 
-		if ( ! empty( $properties ) && is_array( $properties ) ) {
-			$this->section->custom_properties = $properties;
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
 	/**
 	 * Add the section without a panel.
 	 *
-	 * @return CustomizerSectionEntity
+	 * Recorded like every other call; the section is built when the Customizer registers.
+	 *
+	 * @return $this
 	 */
 	public function add() {
 
-		return $this->addToPanel( '' );
+		$this->record( __FUNCTION__, func_get_args() );
+
+		return $this->submit();
 
 	}
 
 	/**
 	 * Add the section to a panel.
 	 *
+	 * Recorded like every other call; the section is built when the Customizer registers.
+	 *
 	 * @param string $panel_id Panel id.
 	 *
-	 * @return CustomizerSectionEntity
+	 * @return $this
 	 */
 	public function addToPanel( $panel_id ) {
 
-		$this->section->panel_id = $panel_id;
+		$this->record( __FUNCTION__, func_get_args() );
 
-		CustomizerStore::$added_sections[] = $this->section;
+		return $this->submit();
 
-		if ( ! empty( $this->section_tabs ) ) {
-			CustomizerStore::$added_section_tabs[ $this->section->id ] = $this->section_tabs;
-		}
+	}
 
-		return $this->section;
+	/**
+	 * Record a call.
+	 *
+	 * @param string $method The method.
+	 * @param array  $args The arguments.
+	 *
+	 * @return $this
+	 */
+	private function record( $method, $args ) {
+
+		$this->calls[] = array( $method, $args );
+
+		return $this;
+
+	}
+
+	/**
+	 * Hand the recorded calls to the registry: replayed on a SectionRegistrar when the Customizer registers.
+	 *
+	 * @return $this
+	 */
+	private function submit() {
+
+		$calls = $this->calls;
+
+		Registry::add(
+			function () use ( $calls ) {
+				$registrar = new SectionRegistrar();
+
+				foreach ( $calls as $call ) {
+					call_user_func_array( array( $registrar, $call[0] ), $call[1] );
+				}
+			}
+		);
+
+		return $this;
 
 	}
 

@@ -20,6 +20,7 @@
 // phpcs:disable WordPress.WP.GlobalVariablesOverride, WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.PHP.DevelopmentFunctions -- Command line tool.
 
 use Mapsteps\Wpbf\Customizer\CustomizerStore;
+use Mapsteps\Wpbf\Customizer\Registry\Registry;
 use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
 
 if ( 'cli' !== PHP_SAPI ) {
@@ -50,6 +51,9 @@ require dirname( __DIR__, 4 ) . '/wp-load.php';
 if ( ! class_exists( 'WooCommerce' ) ) {
 	require WPBF_THEME_DIR . '/inc/integration/woocommerce/woocommerce-customizer-settings.php';
 }
+
+// Fields are only built when the Customizer registers: build them now.
+Registry::build();
 
 $failures = array();
 $fail     = function ( $message ) use ( &$failures ) {

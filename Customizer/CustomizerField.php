@@ -1,78 +1,34 @@
 <?php
 /**
- * Wpbf customizer field.
+ * What wpbf_customizer_field() returns: records every call, builds nothing until the Customizer registers.
  *
- * @package Wpbf
+ * Keeps every method name and argument format (Premium and child themes rely on them). On customize_register the
+ * recorded calls are replayed, in order, on a FieldRegistrar, which does the actual work (see Registry).
+ *
+ * @package Page Builder Framework
  */
 
 namespace Mapsteps\Wpbf\Customizer;
 
-use Mapsteps\Wpbf\Customizer\Entities\PartialRefreshEntity;
+defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+// phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.Found -- The arguments are recorded with func_get_args(), so calls without optional ones replay the same.
+
+use Mapsteps\Wpbf\Customizer\Registry\FieldRegistrar;
+use Mapsteps\Wpbf\Customizer\Registry\Registry;
 use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
 
 /**
- * Class to add Wpbf customizer control & setting.
+ * Records a Customizer field.
  */
 final class CustomizerField {
 
 	/**
-	 * WPBF customizer setting object.
+	 * The recorded calls: [ method, arguments ].
 	 *
-	 * @var CustomizerSetting
+	 * @var array[]
 	 */
-	private $setting_instance;
-
-	/**
-	 * WPBF customizer control object.
-	 *
-	 * @var CustomizerControl
-	 */
-	private $control_instance;
-
-	/**
-	 * The setting's id.
-	 *
-	 * @var string
-	 */
-	private $setting_id = '';
-
-	/**
-	 * The setting's sanitize_callback.
-	 *
-	 * @var callable
-	 */
-	private $sanitize_callback = '';
-
-	/**
-	 * Field's dependencies.
-	 *
-	 * @var array
-	 */
-	private $field_dependencies = [];
-
-	/**
-	 * Field's raw partial refresh arguments.
-	 *
-	 * @var array
-	 */
-	private $partial_refresh_args = array();
-
-	/**
-	 * Custom properties for the control.
-	 *
-	 * @var array
-	 */
-	private $custom_properties = array();
-
-	/**
-	 * Construct the class.
-	 */
-	public function __construct() {
-
-		$this->setting_instance = new CustomizerSetting();
-		$this->control_instance = new CustomizerControl();
-
-	}
+	private $calls = array();
 
 	/**
 	 * Set the setting id.
@@ -83,23 +39,7 @@ final class CustomizerField {
 	 */
 	public function id( $id ) {
 
-		$this->setting_id = $id;
-		$this->setting_instance->id( $id );
-		$this->control_instance->id( $id );
-
-		// Theme options take type, default and stored format from the schema. Calls after id() can still override them.
-		$entry = OptionSchema::get( $id );
-
-		if ( null !== $entry ) {
-			$this->type( $entry['type'] );
-			$this->defaultValue( OptionSchema::defaultValue( $entry ) );
-
-			if ( ! empty( $entry['json'] ) ) {
-				$this->custom_properties['save_as_json'] = true;
-			}
-		}
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -112,9 +52,7 @@ final class CustomizerField {
 	 */
 	public function type( $type ) {
 
-		$this->control_instance->type( $type );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -127,12 +65,7 @@ final class CustomizerField {
 	 */
 	public function optionType( $option_type ) {
 
-		// Tollerate developer's typo mistake.
-		$option_type = 'options' === $option_type ? 'option' : $option_type;
-
-		$this->setting_instance->type( $option_type );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -145,10 +78,7 @@ final class CustomizerField {
 	 */
 	public function capability( $capability ) {
 
-		$this->setting_instance->capability( $capability );
-		$this->control_instance->capability( $capability );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -161,9 +91,7 @@ final class CustomizerField {
 	 */
 	public function settings( $settings ) {
 
-		$this->control_instance->settings( $settings );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -176,9 +104,7 @@ final class CustomizerField {
 	 */
 	public function setting( $setting ) {
 
-		$this->control_instance->setting( $setting );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -191,9 +117,7 @@ final class CustomizerField {
 	 */
 	public function label( $label ) {
 
-		$this->control_instance->label( $label );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -206,9 +130,7 @@ final class CustomizerField {
 	 */
 	public function description( $description ) {
 
-		$this->control_instance->description( $description );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -221,9 +143,7 @@ final class CustomizerField {
 	 */
 	public function transport( $transport ) {
 
-		$this->setting_instance->transport( $transport );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -236,9 +156,7 @@ final class CustomizerField {
 	 */
 	public function priority( $priority ) {
 
-		$this->control_instance->priority( $priority );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -251,9 +169,7 @@ final class CustomizerField {
 	 */
 	public function defaultValue( $value ) {
 
-		$this->setting_instance->defaultValue( $value );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -266,9 +182,7 @@ final class CustomizerField {
 	 */
 	public function choices( $choices ) {
 
-		$this->control_instance->choices( $choices );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -281,9 +195,7 @@ final class CustomizerField {
 	 */
 	public function inputAttrs( $input_attrs ) {
 
-		$this->control_instance->inputAttrs( $input_attrs );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -296,18 +208,7 @@ final class CustomizerField {
 	 */
 	public function activeCallback( $active_callback ) {
 
-		if ( is_callable( $active_callback ) ) {
-			$this->control_instance->activeCallback( $active_callback );
-			return $this;
-		}
-
-		if ( ! is_array( $active_callback ) ) {
-			return $this;
-		}
-
-		$this->field_dependencies = $active_callback;
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -320,10 +221,7 @@ final class CustomizerField {
 	 */
 	public function sanitizeCallback( $sanitize_callback ) {
 
-		$this->sanitize_callback = $sanitize_callback;
-		$this->setting_instance->sanitizeCallback( $sanitize_callback );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -336,9 +234,7 @@ final class CustomizerField {
 	 */
 	public function sanitizeJsCallback( $sanitize_js_callback ) {
 
-		$this->setting_instance->sanitizeJsCallback( $sanitize_js_callback );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -351,9 +247,7 @@ final class CustomizerField {
 	 */
 	public function json( $json ) {
 
-		$this->control_instance->json( $json );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -366,13 +260,7 @@ final class CustomizerField {
 	 */
 	public function partialRefresh( $args = array() ) {
 
-		if ( empty( $args ) || ! is_array( $args ) ) {
-			return $this;
-		}
-
-		$this->partial_refresh_args = $args;
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -385,9 +273,7 @@ final class CustomizerField {
 	 */
 	public function tooltip( $tooltip = '' ) {
 
-		$this->control_instance->tooltip( $tooltip );
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -395,16 +281,12 @@ final class CustomizerField {
 	 * The section tab where the control belongs to.
 	 *
 	 * @param string $tab_key The section tab key.
+	 *
+	 * @return $this
 	 */
 	public function tab( $tab_key ) {
 
-		if ( empty( $tab_key ) ) {
-			return $this;
-		}
-
-		$this->custom_properties['tab'] = $tab_key;
-
-		return $this;
+		return $this->record( __FUNCTION__, func_get_args() );
 
 	}
 
@@ -417,18 +299,14 @@ final class CustomizerField {
 	 */
 	public function properties( $custom_properties ) {
 
-		if ( empty( $custom_properties ) ) {
-			return $this;
-		}
+		return $this->record( __FUNCTION__, func_get_args() );
 
-		$control_custom_props    = wp_parse_args( $custom_properties, $this->custom_properties );
-		$this->custom_properties = $control_custom_props;
-
-		return $this;
 	}
 
 	/**
 	 * Add control to a section.
+	 *
+	 * Recorded like every other call; the field is built when the Customizer registers.
 	 *
 	 * @param string $section_id Section id.
 	 *
@@ -436,136 +314,83 @@ final class CustomizerField {
 	 */
 	public function addToSection( $section_id ) {
 
-		$field = ( new CustomizerUtil() )->getField( $this->control_instance->control );
+		$this->record( __FUNCTION__, func_get_args() );
 
-		if ( is_null( $field ) ) {
-			return;
-		}
-
-		if ( $field->use_content_template ) {
-			$control_type = $this->control_instance->control->type;
-
-			if ( ! isset( CustomizerStore::$controls_using_content_template[ $control_type ] ) ) {
-				CustomizerStore::$controls_using_content_template[ $control_type ] = $field->control_class_path;
-			}
-		}
-
-		if ( empty( $this->setting_id ) ) {
-			$this->setting_id = uniqid( 'wpbf_control_' );
-
-			$this->id( $this->setting_id );
-		}
-
-		$control_id       = $this->control_instance->control->id;
-		$control_settings = $this->control_instance->control->settings;
-
-		if ( empty( $control_settings ) ) {
-			if ( ! empty( $control_id ) ) {
-				$this->control_instance->settings( $control_id );
-			}
-		} elseif ( empty( $control_id ) ) {
-			if ( is_string( $control_settings ) ) {
-				$this->control_instance->id( $control_settings );
-			}
-		}
-
-		// Update the `$control_id` var.
-		$control_id = $this->control_instance->control->id;
-
-		if ( empty( $this->sanitize_callback ) ) {
-			$this->sanitizeCallback( [ $field, 'sanitizeCallback' ] );
-		}
-
-		if ( ! empty( $this->partial_refresh_args ) ) {
-			$this->setting_instance->transport( 'postMessage' );
-		}
-
-		$this->setting_instance->setting = $field->filterSettingEntity( $this->setting_instance->setting );
-
-		if ( ! empty( $this->custom_properties ) ) {
-			$this->control_instance->customProperties( $this->custom_properties );
-		}
-
-		// Fields outside the schema (Premium, child themes, plugins): remember what they declared, for wpbf_mod().
-		OptionSchema::record(
-			$this->setting_id,
-			$this->control_instance->control->type,
-			$this->setting_instance->setting->default,
-			! empty( $this->custom_properties['save_as_json'] )
-		);
-
-		if ( $field->is_wrapper_field ) {
-			$this->control_instance->control->section_id = $section_id;
-
-			// Update `$field` variable to have the updated setting entity.
-			$field = ( new CustomizerUtil() )->getField( $this->control_instance->control );
-
-			if ( is_null( $field ) ) {
-				return;
-			}
-
-			$callable_active_callback  = $this->control_instance->control->active_callback;
-			$subfields_active_callback = ! empty( $callable_active_callback ) && is_callable( $callable_active_callback ) ? $callable_active_callback : $this->field_dependencies;
-
-			$field->addSubFields( $this->setting_instance->setting, $subfields_active_callback, $this->partial_refresh_args );
-
-			// Stop here if this field is a wrapper that will render other fields.
-			return;
-		}
-
-		$this->setting_instance->control_type( $this->control_instance->control->type );
-
-		$this->setting_instance->add();
-
-		if ( ! empty( $this->field_dependencies ) ) {
-			CustomizerStore::$added_control_dependencies[ $control_id ] = $this->field_dependencies;
-		}
-
-		$this->parsePartialRefreshArgs();
-
-		$this->control_instance->addToSection( $section_id );
+		return $this->submit();
 
 	}
 
 	/**
-	 * Parse the raw partial refresh arguments.
+	 * Record a call.
+	 *
+	 * @param string $method The method.
+	 * @param array  $args The arguments.
+	 *
+	 * @return $this
 	 */
-	private function parsePartialRefreshArgs() {
+	private function record( $method, $args ) {
 
-		if ( empty( $this->partial_refresh_args ) || ! is_array( $this->partial_refresh_args ) ) {
-			return;
+		$this->calls[] = array( $method, $args );
+
+		return $this;
+
+	}
+
+	/**
+	 * Hand the recorded calls to the registry: replayed on a FieldRegistrar when the Customizer registers.
+	 *
+	 * @return $this
+	 */
+	private function submit() {
+
+		$this->declareOption();
+
+		$calls = $this->calls;
+
+		Registry::add(
+			function () use ( $calls ) {
+				$registrar = new FieldRegistrar();
+
+				foreach ( $calls as $call ) {
+					call_user_func_array( array( $registrar, $call[0] ), $call[1] );
+				}
+			}
+		);
+
+		return $this;
+
+	}
+
+	/**
+	 * Tell the option schema what this field declares (id, type, default, stored format), so wpbf_mod() can read
+	 * options the schema doesn't list (Premium, child themes, plugins) on any request.
+	 */
+	private function declareOption() {
+
+		$id         = '';
+		$type       = '';
+		$default    = '';
+		$properties = array();
+		$storage    = 'theme_mod';
+
+		foreach ( $this->calls as $call ) {
+			list( $method, $args ) = $call;
+
+			if ( 'id' === $method && isset( $args[0] ) ) {
+				$id = $args[0];
+			} elseif ( 'type' === $method && isset( $args[0] ) ) {
+				$type = $args[0];
+			} elseif ( 'defaultValue' === $method && array_key_exists( 0, $args ) ) {
+				$default = $args[0];
+			} elseif ( 'properties' === $method && ! empty( $args[0] ) && is_array( $args[0] ) ) {
+				$properties = array_merge( $properties, $args[0] );
+			} elseif ( 'optionType' === $method && isset( $args[0] ) && in_array( $args[0], array( 'option', 'options' ), true ) ) {
+				$storage = 'option';
+			}
 		}
 
-		$control_settings = $this->control_instance->control->settings;
-
-		$partial_refresh_settings = array();
-
-		if ( is_array( $control_settings ) ) {
-			$partial_refresh_settings = $control_settings;
-		} elseif ( is_string( $control_settings ) ) {
-			$partial_refresh_settings = array( $control_settings );
-		}
-
-		foreach ( $this->partial_refresh_args as $partial_refresh_key => $partial_refresh_arg ) {
-			$partial_refresh_entity = new PartialRefreshEntity();
-
-			$partial_refresh_entity->id         = $partial_refresh_key;
-			$partial_refresh_entity->control_id = $this->control_instance->control->id;
-			$partial_refresh_entity->settings   = $partial_refresh_settings;
-
-			if ( isset( $partial_refresh_arg['container_inclusive'] ) ) {
-				$partial_refresh_entity->container_inclusive = $partial_refresh_arg['container_inclusive'];
-			}
-
-			if ( isset( $partial_refresh_arg['selector'] ) ) {
-				$partial_refresh_entity->selector = $partial_refresh_arg['selector'];
-			}
-
-			if ( isset( $partial_refresh_arg['render_callback'] ) ) {
-				$partial_refresh_entity->render_callback = $partial_refresh_arg['render_callback'];
-			}
-
-			CustomizerStore::$added_partial_refreshes[] = $partial_refresh_entity;
+		if ( is_string( $id ) && '' !== $id ) {
+			OptionSchema::record( $id, $type, $default, ! empty( $properties['save_as_json'] ) && is_bool( $properties['save_as_json'] ), $storage );
 		}
 
 	}
