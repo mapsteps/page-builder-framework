@@ -22,7 +22,7 @@ Checks the theme against the full list in `bin/premium-deps.json` (about 200 ite
 6. **Settings**: Premium reads 29 theme settings and shows/hides its options based on them (`menu_position`, `footer_layout`, `button_bg_color` …). Never rename a setting anyway: customers' saved values hang on the name.
 7. **Classes**: `WPBF_Breadcrumbs` and its `trail()` method (Premium's breadcrumbs shortcode).
 8. **Constants**: `WPBF_VERSION`, `WPBF_THEME_URI`.
-9. **Scripts & styles**: Premium loads after the theme's handles (`wpbf-site`, `wpbf-responsive`, `wpbf-woocommerce-smallscreen`, `wpbf-admin-page`, `wpbf-theme-settings`, `heatbox`, `wp-color-picker-alpha`). Keep the handles.
+9. **Scripts & styles**: Premium loads after the theme's handles (`wpbf-site`, `wpbf-responsive`, `wpbf-woocommerce-smallscreen`, `wpbf-admin-page`, `wpbf-theme-settings`, `heatbox`). Keep the handles. (`wp-color-picker-alpha` is Premium's own script on its settings page; the theme's copy, loaded only for the repeater's color fields in the Customizer, is gone since Customizer step 7c.)
 10. **Files**: `img/page-builder-framework-logo.png`.
 11. **Markup and CSS classes**: Premium styles and scripts (mega menu, sticky/transparent header, off-canvas menus, WooCommerce) work on the theme's frontend markup. The check can't see this: don't change classes or structure of the header, menus, footer or WooCommerce templates without testing with Premium active.
 

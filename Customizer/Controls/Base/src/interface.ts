@@ -35,10 +35,7 @@ import { Root } from "react-dom/client";
 import { WpbfCustomizeCheckboxControl } from "../../Checkbox/src/interface";
 import { WpbfCustomizeEditorControl } from "../../Editor/src/editor-interface";
 import { WpbfCustomizeImageControl } from "../../Media/src/image-interface";
-import {
-	WpbfCustomizeRepeaterControl,
-	WpbfRepeaterRow,
-} from "../../Repeater/src/repeater-interface";
+import { WpbfCustomizeRepeaterControl } from "../../Repeater/src/repeater-interface";
 
 export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 	_latestRevision: number;
@@ -83,9 +80,6 @@ export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 
 	// ! There's a mistake or missing part in this type definition.
 	Notification(arg0?: any, arg1?: any): Notification;
-
-	// Specific to PBF.
-	wpbfDynamicControl: WpbfCustomizeControl<any, any>;
 
 	// Missing in the type definition.
 	instance(id: string): WpbfCustomizeSetting<any>;
@@ -220,14 +214,10 @@ export interface WpbfCustomizeControl<SV, CP> {
 	initialized?: boolean;
 	setNotificationContainer?: (el: HTMLElement) => void;
 	destroy?: VoidFunction;
-	updateComponentState?: (val: SV) => void;
 	validateCssValue?: (value: string | number) => boolean;
 	wpbfNotifications?: VoidFunction;
 
-	// Specific to PBF's dynamic control.
-	_setUpSettingRootLinks?: () => void;
-	_setUpSettingPropertyLinks?: () => void;
-	initWpbfControl?: (control?: WpbfCustomizeControl<SV, CP>) => void;
+	// Specific to PBF's React base (react-base.tsx).
 	actuallyEmbed?: () => void;
 
 	// Specific to PBF's select control.
@@ -237,42 +227,6 @@ export interface WpbfCustomizeControl<SV, CP> {
 	// Specific to PBF's sortable control.
 	getNewValues?: () => any[];
 
-	// Specific to PBF's repeater control.
-	settingField?: JQuery<HTMLElement>;
-	setValue?: (
-		newValue: Record<string, any>,
-		refresh?: boolean,
-		filtering?: boolean,
-	) => void;
-	getValue?: () => Record<string, any>[];
-	repeaterFieldsContainer?: JQuery<HTMLElement>;
-	currentIndex?: number;
-	rows?: WpbfRepeaterRow[];
-	addRow?: (
-		data?: Record<string, Record<string, any>>,
-	) => WpbfRepeaterRow | undefined;
-	initColorPicker?: () => void;
-	initSelect?: (theNewRow: WpbfRepeaterRow, data?: Record<string, any>) => void;
-	sort?: () => void;
-	deleteRow?: (index: number) => void;
-	updateField?: (
-		e: JQuery.TriggeredEvent,
-		rowIndex: number,
-		fieldId: string,
-		element: HTMLInputElement | HTMLTextAreaElement,
-	) => void;
-	$thisButton?: JQuery;
-	repeaterTemplate?: () => any;
-	openFrame?: (e: JQuery.TriggeredEvent) => void;
-	removeImage?: (e: JQuery.TriggeredEvent) => void;
-	removeFile?: (e: JQuery.TriggeredEvent) => void;
-	initFrame?: () => void;
-	initCropperFrame?: () => void;
-	onSelect?: (e: JQuery.TriggeredEvent) => void;
-	onSelectForCrop?: () => void;
-	onCropped?: (croppedImage: object) => void;
-	setImageInRepeaterField?: (attachment: Record<string, any>) => void;
-	setFileInRepeaterField?: (attachment: Record<string, any>) => void;
 	// Gave up (still some/many types are missing)
 	[key: string]: any;
 }

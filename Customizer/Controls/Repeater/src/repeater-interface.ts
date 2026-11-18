@@ -1,58 +1,45 @@
-import {
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "../../Base/src/interface";
 
 /**
- * The setting value returned via PHP will be associative array
- * because we handle it via PHP in `RepeaterSetting` class.
- *
- * TS type equivalent of that assoc-array is Record<string, any>.
- *
- * But the control.setting.get() in JS will return string
- * because it will be taken from the linked (hidden) setting field.
+ * One row: field id => value.
  */
-export type WpbfCustomizeRepeaterValue = Record<string, any>[] | string;
+export type RepeaterRowValue = Record<string, any>;
 
-export interface WpbfCustomizeRepeaterControlParams
-	extends WpbfCustomizeControlParams<Record<string, any>[]> {
-	fields: Record<string, Record<string, any>>;
-	rowLabel: Record<string, string>;
+/**
+ * The setting value: the rows as PHP hands them over (a list), or as the form hands them to the setting (the list as
+ * URI-encoded JSON text, decoded by RepeaterSetting on the PHP side).
+ */
+export type WpbfCustomizeRepeaterValue = RepeaterRowValue[] | string;
+
+/**
+ * A sub-field as declared in the field's `fields` property (plus its id).
+ */
+export type RepeaterField = {
+	id: string;
+	type: string;
+	label: string;
+	description?: string;
+	default: any;
+	choices?: Record<string, string> | any;
+	multiple?: number | boolean | string;
+	mime_type?: string | string[];
+	properties?: Record<string, any>;
+	[key: string]: any;
+};
+
+export interface WpbfCustomizeRepeaterControlParams extends WpbfCustomizeControlParams<WpbfCustomizeRepeaterValue> {
+	fields: Record<string, RepeaterField>;
+	rowLabel: { type: string; value: string; field: string | false };
 	buttonLabel: string;
 	limit: number | boolean;
+	l10n: {
+		remove: string;
+		noFile: string;
+		addFile: string;
+		changeFile: string;
+		limit: string;
+	};
 }
 
 export interface WpbfCustomizeRepeaterControl
-	extends WpbfCustomizeControl<
-		WpbfCustomizeRepeaterValue,
-		WpbfCustomizeRepeaterControlParams
-	> {
-	rows?: WpbfRepeaterRow[];
-}
-
-export interface WpbfRepeaterRow {
-	rowIndex: number;
-	container: JQuery<HTMLElement>;
-	label: Record<string, string>;
-	header: JQuery<HTMLElement>;
-	toggleMinimize: () => void;
-	remove: () => void;
-	updateLabel: () => void;
-	setRowIndex: (rowNum: number) => void;
-}
-
-export interface RepeaterImageSelectOptions {
-	handles: boolean;
-	keys: boolean;
-	instance: boolean;
-	persistent: boolean;
-	imageWidth: string | number;
-	imageHeight: string | number;
-	aspectRatio: string;
-	maxHeight: number | boolean;
-	maxWidth: number | boolean;
-	x1: number;
-	y1: number;
-	x2: number;
-	y2: number;
-}
+	extends WpbfCustomizeControl<WpbfCustomizeRepeaterValue, WpbfCustomizeRepeaterControlParams> {}

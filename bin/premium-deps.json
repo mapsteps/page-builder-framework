@@ -230,7 +230,6 @@
 	],
 	"handles": [
 		"heatbox",
-		"wp-color-picker-alpha",
 		"wpbf-admin-page",
 		"wpbf-responsive",
 		"wpbf-site",
