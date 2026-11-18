@@ -58,11 +58,10 @@ function wpbfSetupTooltips() {
 		wp.customize.section(sectionName, function (section) {
 			section.expanded.bind(function (expanded) {
 				if (expanded) {
-					if (
-						section.contentContainer &&
-						section.contentContainer[0].scrollHeight >
-							sidebarOverlay.clientHeight
-					) {
+					// The type definition has contentContainer as a string; it's a jQuery object.
+					const content = section.contentContainer as unknown as JQuery | undefined;
+
+					if (content && content[0].scrollHeight > sidebarOverlay.clientHeight) {
 						tooltipStyleTag.innerHTML =
 							".wpbf-tooltip-wrapper span.tooltip-content {min-width: 258px;}";
 					} else {

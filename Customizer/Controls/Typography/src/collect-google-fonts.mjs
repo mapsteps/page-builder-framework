@@ -39,7 +39,6 @@ async function deleteJsonFile(filePath) {
  * @returns {Promise<void>}
  */
 async function processGoogleFonts() {
-	const fontFiles = {};
 	const fontNames = [];
 	const finalObject = {
 		items: {},
@@ -71,7 +70,6 @@ async function processGoogleFonts() {
 
 			finalObject.order.popularity.push(family);
 			fontNames.push(family);
-			fontFiles[family] = popularityFonts.items[i].files;
 		}
 
 		for (const item of trendingFonts.items) {
@@ -85,11 +83,6 @@ async function processGoogleFonts() {
 		await fs.writeFile(
 			`${distDir}/webfont-names.json`,
 			JSON.stringify(fontNames),
-		);
-
-		await fs.writeFile(
-			`${distDir}/webfont-files.json`,
-			JSON.stringify(fontFiles),
 		);
 
 		console.log("Processed Google Fonts data saved successfully.");
@@ -108,7 +101,6 @@ async function run() {
 	try {
 		await deleteJsonFile(`${distDir}/webfonts.json`);
 		await deleteJsonFile(`${distDir}/webfont-names.json`);
-		await deleteJsonFile(`${distDir}/webfont-files.json`);
 
 		const sortByOptions = ["alpha", "popularity", "trending"];
 

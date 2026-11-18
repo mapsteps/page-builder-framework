@@ -6,7 +6,6 @@ import {
 } from "wordpress__customize-browser/Customize";
 import {
 	SelectControlValue,
-	ChildSelectControlChoice,
 	WpbfCustomizeSelectControl,
 } from "../../Select/src/interface";
 import { Setting } from "wordpress__customize-browser/Setting";
@@ -93,6 +92,9 @@ export interface WpbfCustomize extends Values<WpbfCustomizeSetting<any>> {
 
 	// Specific to PBF.
 	wpbfDynamicControl: WpbfCustomizeControl<any, any>;
+
+	// Missing in the type definition.
+	instance(id: string): WpbfCustomizeSetting<any>;
 }
 
 export interface WpbfCustomizeSetting<T> extends Setting<T> {
@@ -305,7 +307,6 @@ export interface WpbfCustomizeControlParams<SV> {
 	choices: Record<string, any> | any[];
 	link: string;
 	id: string;
-	ajaxurl: string;
 	inputAttrs: Record<string, number | string>;
 	inputId: string;
 	wrapperAttrs: Record<string, number | string>;

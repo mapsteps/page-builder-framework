@@ -60,24 +60,6 @@ class MarginPaddingField extends BaseField {
 	}
 
 	/**
-	 * Enqueue styles & scripts on 'customize_preview_init' action.
-	 */
-	public function enqueuePreviewScripts() {
-
-		wp_enqueue_script(
-			'wpbf-color-preview',
-			WPBF_THEME_URI . '/Customizer/Controls/MarginPadding/dist/margin-padding-preview-min.js',
-			array(
-				'wp-hooks',
-				'customize-preview',
-			),
-			WPBF_VERSION,
-			true
-		);
-
-	}
-
-	/**
 	 * Init control instance.
 	 *
 	 * @param WP_Customize_Manager $wp_customize_manager The customizer manager object.

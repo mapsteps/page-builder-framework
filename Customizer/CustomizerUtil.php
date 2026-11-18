@@ -206,21 +206,6 @@ class CustomizerUtil {
 	}
 
 	/**
-	 * Enqueue customize preview scripts.
-	 *
-	 * @param CustomizerControlEntity $control The control entity object.
-	 */
-	public function enqueuePreviewScripts( $control ) {
-
-		$field = $this->getField( $control );
-
-		if ( null !== $field ) {
-			$field->enqueuePreviewScripts();
-		}
-
-	}
-
-	/**
 	 * Add control to the customizer.
 	 *
 	 * @param WP_Customize_Manager    $wp_customize_manager The customizer manager object.

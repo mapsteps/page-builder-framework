@@ -54,7 +54,6 @@ final class Customizer {
 		add_action( 'customize_register', array( $this, 'add_section_tabs' ), 5 );
 
 		add_action( 'customize_register', array( $this, 'register_wpbf_customizer' ) );
-		add_action( 'customize_preview_init', array( $this, 'customize_preview_init' ) );
 
 		/**
 		 * These localize scripts that the typography fields register while they're built (on customize_register),
@@ -126,21 +125,6 @@ final class Customizer {
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_panel_types' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'enqueue_custom_section_types' ) );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'register_control_dependencies' ) );
-
-	}
-
-	/**
-	 * Enqueue customize preview scripts.
-	 *
-	 * @return void
-	 */
-	public function customize_preview_init() {
-
-		$customizer_util = new CustomizerUtil();
-
-		foreach ( CustomizerStore::$added_controls as $control ) {
-			$customizer_util->enqueuePreviewScripts( $control );
-		}
 
 	}
 

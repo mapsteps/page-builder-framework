@@ -73,12 +73,6 @@ abstract class BaseField {
 	}
 
 	/**
-	 * Enqueue styles & scripts on 'customize_preview_init' action.
-	 */
-	public function enqueuePreviewScripts() {
-	}
-
-	/**
 	 * Setting's sanitize callback.
 	 *
 	 * @param mixed $value The value to sanitize.

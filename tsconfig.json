@@ -12,10 +12,12 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true
   },
   "include": [
     "Customizer/**/*.ts",
+    "Customizer/**/*.tsx",
     "assets/js/*.js",
     "assets/**/*.ts",
     "inc/customizer/**/*.ts",

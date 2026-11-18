@@ -16,24 +16,6 @@ use WP_Customize_Manager;
 class ColorField extends BaseField {
 
 	/**
-	 * Enqueue styles & scripts on 'customize_preview_init' action.
-	 */
-	public function enqueuePreviewScripts() {
-
-		wp_enqueue_script(
-			'wpbf-color-preview',
-			WPBF_THEME_URI . '/Customizer/Controls/Color/dist/color-preview-min.js',
-			array(
-				'wp-hooks',
-				'customize-preview',
-			),
-			WPBF_VERSION,
-			true
-		);
-
-	}
-
-	/**
 	 * Setting's sanitize callback.
 	 *
 	 * @param string|array $value The color value.

@@ -34,7 +34,7 @@ function findEntries(srcDir) {
 
 	// Files imported by another script or stylesheet of the folder are part of that entry, not entries themselves.
 	const sources = files.filter((file) => /\.(tsx?|scss)$/.test(file)).map((file) => readFileSync(join(srcDir, file), "utf8"));
-	const isImported = (file) => {
+	const isImported = (/** @type {string} */ file) => {
 		const name = file.replace(/\.(tsx?|scss)$/, "").replace(/[-.]/g, "\\$&");
 		const pattern = file.endsWith(".scss") ? `["']\\./${name}\\.scss["']` : `["']\\./${name}(\\.tsx?)?["']`;
 		return sources.some((source) => new RegExp(pattern).test(source));
@@ -70,12 +70,7 @@ for (const srcDir of srcDirs) {
 	for (const entry of entries) {
 		const config = getViteConfig(entry, distDir);
 
-		config.configFile = false;
-		config.root = root;
-		config.logLevel = "warn";
-		config.build.sourcemap = false;
-
-		await build(config);
+		await build({ ...config, configFile: false, root, logLevel: "warn", build: { ...config.build, sourcemap: false } });
 		count++;
 
 		// A style-only entry leaves an empty script behind.

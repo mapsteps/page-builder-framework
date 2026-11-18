@@ -88,13 +88,10 @@ function setupSectionsReflow() {
 
 			section.expanded.bind(function (expanded: boolean) {
 				if (!section.params.parentId) return;
-				const parent = wp.customize.section(section.params.parentId);
+				// The type definition has contentContainer as a string; it's a jQuery object.
+				const parent = wp.customize.section(section.params.parentId).contentContainer as unknown as JQuery | undefined;
 
-				if (expanded) {
-					parent.contentContainer?.addClass("current-section-parent");
-				} else {
-					parent.contentContainer?.removeClass("current-section-parent");
-				}
+				parent?.toggleClass("current-section-parent", expanded);
 			});
 
 			section.container
@@ -112,9 +109,7 @@ function setupSectionsReflow() {
 
 					if (section.expanded()) {
 						// wp.customize.section(section.params.section).expand();
-						wp.customize
-							.section(section.params.parentId)
-							.expand(section.params);
+						wp.customize.section(section.params.parentId).expand({});
 					}
 				});
 		},

@@ -56,15 +56,10 @@ function setupPanels() {
 			panel.expanded.bind(function (expanded) {
 				if (!panel.params.parentId) return;
 
-				if (expanded) {
-					wp.customize
-						.panel(panel.params.parentId)
-						.contentContainer?.addClass("current-panel-parent");
-				} else {
-					wp.customize
-						.panel(panel.params.parentId)
-						.contentContainer?.removeClass("current-panel-parent");
-				}
+				// The type definition has contentContainer as a string; it's a jQuery object.
+				const parent = wp.customize.panel(panel.params.parentId).contentContainer as unknown as JQuery | undefined;
+
+				parent?.toggleClass("current-panel-parent", expanded);
 			});
 
 			panel.container
@@ -81,7 +76,7 @@ function setupPanels() {
 					if (!panel.params.parentId) return;
 
 					if (panel.expanded()) {
-						wp.customize.panel(panel.params.parentId).expand(panel.params);
+						wp.customize.panel(panel.params.parentId).expand({});
 					}
 				});
 		},
