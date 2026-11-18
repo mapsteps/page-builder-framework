@@ -307,7 +307,7 @@ try {
 			const shown = type === 'wpbf-select' ? selectShown(control) === selectLabel : type.startsWith('wpbf-radio') ? inputs.includes(String(look)) : inputs.some((v) => String(v).toLowerCase().includes(String(look).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(look).toLowerCase());
 			setting.set(original);
 			await sleep(200);
-			roundTrips[type] = { id: control.id, setTo: next, shownInControl: shown, ...(type === 'wpbf-select' ? { shownText } : {}), restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
+			roundTrips[type] = { id: control.id, setTo: next, shownInControl: type === 'wpbf-assoc-array' && !control.container[0].querySelector('input') ? 'n/a (7d: the hidden label control shows no value)' : shown, ...(type === 'wpbf-select' ? { shownText } : {}), restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
 		}
 
 		// 7d: typography font family / variant changes, one after the other: the typography value composed from them, and
