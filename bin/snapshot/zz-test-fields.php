@@ -97,6 +97,16 @@ function zz_test_7b_fields() {
 		) )
 		->addToSection( $s );
 
+	// 7d: select variants (the theme has one multiple select, with a limit; Premium none).
+	wpbf_customizer_field()->id( 'zz_test_select' )->type( 'select' )->label( 'zz Select' )->description( 'zz select <b>desc</b>' )->defaultValue( 'b' )->choices( array( 'a' => 'Option A', 'b' => 'B & "b"', 'c' => 'Ä Ö ü' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_select_numeric' )->type( 'select' )->label( 'zz Select numeric' )->defaultValue( '20' )->choices( array( 10 => 'Ten', 20 => 'Twenty', '30' => 'Thirty' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_select_missing' )->type( 'select' )->label( 'zz Select missing value' )->defaultValue( 'zz-gone' )->choices( array( 'a' => 'A', 'b' => 'B' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_select_groups' )->type( 'select' )->label( 'zz Select groups' )->defaultValue( 'y2' )->choices( array( 'top' => 'Top', 'g1' => array( 'Group one', array( 'x1' => 'X one', 'x2' => 'X two' ) ), 'g2' => array( 'Group two', array( 'y1' => 'Y one', 'y2' => 'Y two' ) ) ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_select_kirki_groups' )->type( 'select' )->label( 'zz Select Kirki groups' )->defaultValue( 'k2' )->choices( array( array( 'label' => 'Plain', 'value' => 'k0' ), array( 'label' => 'Kirki group', 'options' => array( array( 'label' => 'K one', 'value' => 'k1' ), array( 'label' => 'K two', 'value' => 'k2' ) ) ) ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_select_clearable' )->type( 'select' )->label( 'zz Select clearable' )->defaultValue( '' )->choices( array( 'a' => 'A', 'b' => 'B' ) )->properties( array( 'clearable' => true, 'placeholder' => 'zz pick' ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_select_multi' )->type( 'select' )->label( 'zz Multi' )->defaultValue( array( 'c', 'a' ) )->choices( array( 'a' => 'A', 'b' => 'B', 'c' => 'C', 'd' => 'D' ) )->properties( array( 'multiple' => true ) )->addToSection( $s );
+	wpbf_customizer_field()->id( 'zz_test_select_multi_limit' )->type( 'select' )->label( 'zz Multi limit' )->defaultValue( array( 'b' ) )->choices( array( 'a' => 'A', 'b' => 'B', 'c' => 'C', 'd' => 'D' ) )->properties( array( 'multiple' => true, 'max_selections' => 2, 'placeholder' => 'zz many' ) )->addToSection( $s );
+
 }
 
 if ( did_action( 'after_setup_theme' ) ) {

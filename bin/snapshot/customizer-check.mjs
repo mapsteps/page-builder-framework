@@ -190,6 +190,16 @@ try {
 		const byType = {};
 		const empty = [];
 		const markup = {};
+		// 7d: what a select shows (select2 before, the select form after): the text of the chosen option, or the list of
+		// chosen options of a multiple select.
+		const selectShown = (c) => {
+			const el = c.container[0];
+			const text = (n) => (n.getAttribute('title') || n.textContent).replace(/\\u00d7/g, '').trim();
+			if (c.params.isMulti) return [...el.querySelectorAll('.select2-selection__choice, .wpbf-select-chip')].map(text);
+			const one = el.querySelector('.select2-selection__rendered, .wpbf-select-value');
+			return one ? text(one) : null;
+		};
+		const selects = {};
 		wp.customize.control.each((c) => {
 			const t = c.params.type;
 			byType[t] = byType[t] || { total: 0, rendered: 0 };
@@ -199,6 +209,7 @@ try {
 			if (hasContent) byType[t].rendered++; else empty.push(c.id);
 			// Rendered markup per control (whitespace and select2's random ids collapsed), to compare two runs.
 			if (el && t && 0 === t.indexOf('wpbf-')) markup[c.id] = el.innerHTML.replace(/\\s+/g, ' ').replace(/select2-data-\\d+-\\w+/g, 'select2-data').replace(/select2-\\w+-(container|results)/g, 'select2-$1').replace(/choice-\\w{4}-/g, 'choice-').trim();
+			if ('wpbf-select' === t) selects[c.id] = { value: c.setting ? c.setting.get() : null, shown: selectShown(c), active: c.active() };
 		});
 
 		// Round trips on the React, select and 7b controls: a value set on the setting must show up in the control, and back.
@@ -288,10 +299,12 @@ try {
 			const scope = type === 'wpbf-repeater' ? control.container[0].querySelector('.repeater-fields') : control.container[0];
 			const html = scope.innerHTML;
 			const inputs = [...scope.querySelectorAll('input, select, textarea')].map((i) => i.type === 'checkbox' ? String(i.checked) : i.type === 'radio' ? (i.checked ? i.value : '') : i.value);
-			const shown = type.startsWith('wpbf-radio') ? inputs.includes(String(look)) : inputs.some((v) => String(v).toLowerCase().includes(String(look).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(look).toLowerCase());
+			// Selects: the chosen option's text must show (select2 kept showing the old one).
+			const selectLabel = type === 'wpbf-select' ? ((control.params.choices || []).flatMap((ch) => ch.children ? ch.children : [ch]).find((ch) => String(ch.id) === String(next)) || {}).text : null;
+			const shown = type === 'wpbf-select' ? selectShown(control) === selectLabel : type.startsWith('wpbf-radio') ? inputs.includes(String(look)) : inputs.some((v) => String(v).toLowerCase().includes(String(look).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(look).toLowerCase());
 			setting.set(original);
 			await sleep(200);
-			roundTrips[type] = { id: control.id, setTo: next, shownInControl: shown, restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
+			roundTrips[type] = { id: control.id, setTo: next, shownInControl: shown, ...(type === 'wpbf-select' ? { shownText: selectShown(control) } : {}), restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
 		}
 
 		// Preview CSS: set options in the Customizer, wait for the preview, and compare the preview's CSS of each area
@@ -350,6 +363,7 @@ try {
 			reactColorPickers: document.querySelectorAll('.react-colorful').length,
 			select2: document.querySelectorAll('.select2-container').length,
 			sliders: document.querySelectorAll('input[type=range]').length,
+			selects,
 			roundTrips,
 			changedOnLoad,
 			savedOnLoad,

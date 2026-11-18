@@ -45,7 +45,7 @@ $types = array(
 	'wpbf-checkbox', 'wpbf-toggle', 'wpbf-radio', 'wpbf-radio-buttonset', 'wpbf-radio-image', 'wpbf-generic',
 	'wpbf-responsive-generic', 'wpbf-dimension', 'wpbf-margin-padding', 'wpbf-responsive-margin-padding',
 	'wpbf-editor', 'wpbf-image', 'wpbf-headline', 'wpbf-divider', 'wpbf-custom', 'wpbf-section-tabs', 'wpbf-sortable',
-	'code_editor', 'wpbf-upload', 'upload', 'media', 'wpbf-color', 'wpbf-assoc-array', 'wpbf-repeater',
+	'code_editor', 'wpbf-upload', 'upload', 'media', 'wpbf-color', 'wpbf-assoc-array', 'wpbf-repeater', 'wpbf-select',
 );
 
 // Typography's font family / variant selects (the select family itself is 7d's).
@@ -70,6 +70,8 @@ $inputs = array(
 	rawurlencode( '[{"font_name":"A <b>b</b>","font_css_name":"a","font_variants":["regular","700"],"font_woff":"12"},null]' ),
 	str_replace( '%2C', ',', rawurlencode( '[{"zz_text":"x","zz_select":"b","zz_multi":["a"],"zz_upload":"","zz_checkbox":"1","zz_color":"rgba(0,0,0,0)","bogus":1}]' ) ),
 	array( array( 'zz_text' => '<script>x</script>', 'font_name' => 'n', 'zz_number' => '5' ) ),
+	// 7d: selects (multiple with and without a limit).
+	array( 'a', 'b', 'c', 'd', 'e', 'f', 'g' ), array( 3, '2', '<b>x</b>' ), array( 'front_page', 'single', 'page' ),
 );
 
 $out = array();
