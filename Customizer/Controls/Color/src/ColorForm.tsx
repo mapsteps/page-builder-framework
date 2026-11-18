@@ -368,7 +368,7 @@ export default function ColorForm({ control }: Props) {
 
 	return (
 		<>
-			<div className={formClassName} ref={formRef} tabIndex={1}>
+			<div className={formClassName} ref={formRef} tabIndex={-1}>
 				{pickerHeader}
 				<div ref={pickerRef} className={pickerContainerClassName} style={pickerContainerStyle}>
 					{!useHueMode && <ColorPickerSwatches colors={colorSwatches} onClick={handleSwatchesClick} />}

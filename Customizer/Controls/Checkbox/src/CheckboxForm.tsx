@@ -11,25 +11,15 @@ import { WpbfCustomizeCheckboxControlParams } from "./interface";
 
 type Props = ReactControlFormProps<unknown, WpbfCustomizeCheckboxControlParams>;
 
-/**
- * A value as the old templates printed it into an attribute (`{{ data.value }}`).
- */
-function asText(value: unknown): string {
-	return null === value || "undefined" === typeof value ? "" : String(value);
-}
-
 export default function CheckboxForm({ control }: Props) {
 	const params = control.params;
 	const [value, setValue] = useSettingValue(control, params.value);
 	const inputId = `_customize-input-${params.id}`;
 
-	// The value attribute keeps what the old templates printed; it doesn't do anything.
-	const valueAttr = asText(params.value);
-
 	const onChange = (e: { target: HTMLInputElement }) => setValue(e.target.checked);
 
 	if ("wpbf-toggle" === params.type) {
-		return <Toggle control={control} checked={!!value} valueAttr={valueAttr} onChange={onChange} />;
+		return <Toggle control={control} checked={!!value} onChange={onChange} />;
 	}
 
 	return (
@@ -39,7 +29,6 @@ export default function CheckboxForm({ control }: Props) {
 			<input
 				id={inputId}
 				type="checkbox"
-				value={valueAttr}
 				aria-describedby={params.description ? `_customize-description-${params.id}` : undefined}
 				checked={!!value}
 				onChange={onChange}
@@ -59,7 +48,7 @@ export default function CheckboxForm({ control }: Props) {
 /**
  * wpbf-toggle: the toggle or switch.
  */
-function Toggle(props: Props & { checked: boolean; valueAttr: string; onChange: (e: { target: HTMLInputElement }) => void }) {
+function Toggle(props: Props & { checked: boolean; onChange: (e: { target: HTMLInputElement }) => void }) {
 	const { control } = props;
 	const params = control.params;
 	const kind = params.checkboxType ?? "toggle";
@@ -103,7 +92,6 @@ function Toggle(props: Props & { checked: boolean; valueAttr: string; onChange: 
 						ref={extraAttrs}
 						id={inputId}
 						type="checkbox"
-						value={props.valueAttr}
 						name={`wpbf_${params.id}`}
 						className="screen-reader-text wpbf-toggle-switch-input"
 						checked={props.checked}

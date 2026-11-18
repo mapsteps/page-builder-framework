@@ -306,7 +306,7 @@ export default function RepeaterForm({ control }: Props) {
 						<input
 							type="hidden"
 							className="hidden-field"
-							value={null === (id || fieldValue) || "undefined" === typeof (id || fieldValue) ? "" : String(id || fieldValue)}
+							value={asText(id || fieldValue)}
 							data-field={field.id}
 						/>
 					</div>
@@ -329,7 +329,6 @@ export default function RepeaterForm({ control }: Props) {
 				{renderTitle(field)}
 				<input
 					type={type}
-					name=""
 					value={asText(fieldValue)}
 					data-field={field.id}
 					{...numberAttrs}

@@ -123,7 +123,7 @@ export default function DimensionForm({ control }: Props) {
 		<>
 			{(isBottom || !params.label) && <Notifications control={control} />}
 
-			<div className={`wpbf-control-form ${isBottom ? "has-label-bottom" : ""}`}>
+			<div className={`wpbf-control-form${isBottom ? " has-label-bottom" : ""}`}>
 				{"top" === params.labelPosition && (
 					<label className="wpbf-control-label" htmlFor={params.inputId}>
 						{params.label && (

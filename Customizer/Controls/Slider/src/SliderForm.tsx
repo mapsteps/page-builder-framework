@@ -93,7 +93,7 @@ function PlainSlider({ control, value, setValue }: Omit<PartProps<SliderValue>, 
 	const shown = toNumber(value);
 
 	return (
-		<div className="wpbf-control-form" tabIndex={1}>
+		<div className="wpbf-control-form" tabIndex={-1}>
 			<label className="wpbf-control-label" htmlFor={fieldId}>
 				<span className="customize-control-title">{control.params.label}</span>
 				<span
@@ -202,7 +202,7 @@ function InputSlider({ control, value, setValue, typedText }: PartProps<SliderVa
 	};
 
 	return (
-		<div className="wpbf-control-form" tabIndex={1}>
+		<div className="wpbf-control-form" tabIndex={-1}>
 			{label || description ? (
 				<label className="wpbf-control-label" htmlFor={fieldId}>
 					{label && <span className="customize-control-title">{label}</span>}
@@ -279,7 +279,7 @@ function ResponsiveSlider({ control, value, setValue, typedText }: PartProps<Sli
 		<>
 			<header className="wpbf-control-header">
 				{label && (
-					<label className="customize-control-title" htmlFor={`wpbf-control-input-${control.setting?.id}`}>
+					<label className="customize-control-title" htmlFor={`wpbf-control-input-${control.setting?.id}-${activeDevice}`}>
 						<span className="customize-control-title">{label}</span>
 					</label>
 				)}
@@ -299,7 +299,7 @@ function ResponsiveSlider({ control, value, setValue, typedText }: PartProps<Sli
 			<div className="wpbf-control-form">
 				{devices.map((device) => (
 					<div
-						className={`wpbf-control-device wpbf-control-${device} ${device === activeDevice ? "is-active" : ""}`}
+						className={`wpbf-control-device wpbf-control-${device}${device === activeDevice ? " is-active" : ""}`}
 						data-wpbf-device={device}
 						key={device}
 					>

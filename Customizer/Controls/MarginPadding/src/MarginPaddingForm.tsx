@@ -71,6 +71,10 @@ export default function MarginPaddingForm({ control }: Props) {
 		save(values);
 	};
 
+	// The header label points at the first field shown (the first side, of the shown device).
+	const firstDimension = Object.keys(fields).find((dimension) => !isResponsive || dimension.includes(activeDevice + "_"));
+	const firstFieldId = `_customize-input-${control.id}${isResponsive ? `-${activeDevice}` : ""}-${firstDimension ?? ""}`;
+
 	const renderFields = (device: string) => (
 		<>
 			<button type="button" className="wpbf-control-reset" onClick={() => reset(device)}>
@@ -114,7 +118,7 @@ export default function MarginPaddingForm({ control }: Props) {
 		<>
 			<header className="wpbf-control-header">
 				{params.label && (
-					<label className="customize-control-title" htmlFor={`wpbf-control-input-${params.type}-top`}>
+					<label className="customize-control-title" htmlFor={firstFieldId}>
 						<span className="customize-control-title">{params.label}</span>
 					</label>
 				)}
@@ -135,7 +139,7 @@ export default function MarginPaddingForm({ control }: Props) {
 				{isResponsive && devices.length > 0
 					? devices.map((device) => (
 							<div
-								className={`wpbf-control-device wpbf-control-${device} ${device === activeDevice ? "is-active" : ""}`}
+								className={`wpbf-control-device wpbf-control-${device}${device === activeDevice ? " is-active" : ""}`}
 								data-wpbf-device={device}
 								key={device}
 							>

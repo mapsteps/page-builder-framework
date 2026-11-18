@@ -189,18 +189,16 @@ function ResponsiveGeneric({ control, value, setValue, typedText }: PartProps) {
 		setValue(next);
 	};
 
-	const firstDevice = devices[0] ?? "";
-
 	return (
 		<>
 			<header className="wpbf-control-header">
 				{params.label && (
-					<label className="customize-control-title" htmlFor={`_customize-input-${params.id}-${firstDevice}`}>
+					<label className="customize-control-title" htmlFor={`_customize-input-${params.id}-${activeDevice}`}>
 						{` ${params.label} `}
 					</label>
 				)}
 
-				<DeviceButtons devices={devices} active={activeDevice} icons={params.deviceIcons} tidy />
+				<DeviceButtons devices={devices} active={activeDevice} icons={params.deviceIcons} />
 			</header>
 
 			{params.description && (

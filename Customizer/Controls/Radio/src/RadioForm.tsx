@@ -152,7 +152,7 @@ function Buttonset({ control, isChecked, onChange }: LayoutProps) {
 						/>,
 						<label
 							key={`label-${key}`}
-							className={`switch-label switch-label-${checked ? "on " : "off"}`}
+							className={`switch-label switch-label-${checked ? "on" : "off"}`}
 							htmlFor={inputId}
 							dangerouslySetInnerHTML={{ __html: asText(choices[key]) }}
 						/>,
