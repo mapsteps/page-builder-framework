@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+
 /**
  * Get error message from unknown error type.
  *
@@ -141,6 +144,8 @@ export function getViteConfig(entries, distDir, clearDistDir = false) {
 					// 	".", // Project root as fallback
 					// ],
 					quietDeps: true,
+					// The @import → @use migration happens with the controls rework.
+					silenceDeprecations: ["import"],
 				},
 			},
 		},
@@ -164,7 +169,6 @@ export function getViteConfig(entries, distDir, clearDistDir = false) {
 					"@wordpress/editor",
 					"@wordpress/i18n",
 					"@wordpress/hooks",
-					"choices.js",
 				],
 				/**
 				 * Unfortunately, multiple entries are not supported when "output.inlineDynamicImports" is true.
@@ -210,7 +214,6 @@ export function getViteConfig(entries, distDir, clearDistDir = false) {
 						"@wordpress/editor": "wp.editor",
 						"@wordpress/i18n": "wp.i18n",
 						"@wordpress/hooks": "wp.hooks",
-						"choices.js": "Choices",
 					},
 				},
 			},

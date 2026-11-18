@@ -198,7 +198,7 @@ class RepeaterControl extends BaseControl {
 		wp_enqueue_style( 'wpbf-repeater-control', WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/repeater-control-min.css', array(), WPBF_VERSION );
 
 		// Enqueue the scripts.
-		wp_enqueue_script( 'wp-color-picker-alpha', WPBF_THEME_URI . '/Customizer/Controls/Repeater/dist/wp-color-picker-alpha.min.js', array( 'jquery', 'customize-base', 'wp-color-picker' ), WPBF_VERSION, false );
+		wp_enqueue_script( 'wp-color-picker-alpha', WPBF_THEME_URI . '/Customizer/Controls/Repeater/vendor/wp-color-picker-alpha.min.js', array( 'jquery', 'customize-base', 'wp-color-picker' ), WPBF_VERSION, false );
 
 		wp_enqueue_script(
 			'wpbf-repeater-control',

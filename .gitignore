@@ -1,8 +1,6 @@
 # ignore build tools
 node_modules/
 package-lock.json
-gulpfile.js
-.parcel-cache
 
 # ignore sensitive files
 auth.json
@@ -21,10 +19,6 @@ auth.json
 .idea/
 
 # developer specific
-david-gulpfile.js
-david-package.json
-bagus-gulpfile.js
-bagus-package.json
 manifest.json
 
 # project specific

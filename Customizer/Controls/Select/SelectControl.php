@@ -105,10 +105,10 @@ class SelectControl extends BaseControl {
 		parent::enqueue();
 
 		// Enqueue the styles.
-		wp_enqueue_style( 'select2', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select2.min.css', array(), WPBF_VERSION );
+		wp_enqueue_style( 'select2', WPBF_THEME_URI . '/Customizer/Controls/Select/vendor/select2.min.css', array(), WPBF_VERSION );
 		wp_enqueue_style( 'wpbf-select-control', WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select-control-min.css', array( 'select2' ), WPBF_VERSION );
 
-		$select2_src = WPBF_THEME_URI . '/Customizer/Controls/Select/dist/select2.full.min.js';
+		$select2_src = WPBF_THEME_URI . '/Customizer/Controls/Select/vendor/select2.full.min.js';
 
 		// Enqueue the scripts.
 		wp_enqueue_script( 'select2', $select2_src, array( 'jquery' ), WPBF_VERSION, true );
