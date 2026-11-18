@@ -152,6 +152,7 @@ try {
 				domContentLoadedMs: Math.round(nav.domContentLoadedEventEnd),
 				loadMs: Math.round(nav.loadEventEnd),
 				readyMs: window.__zzReadyMs || null,
+				...(${process.argv.includes("--resources")} ? { resources: all.map((r) => [r.name.replace(location.origin, ''), r.decodedBodySize]) } : {}),
 			};
 		})()`);
 	};
