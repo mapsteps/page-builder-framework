@@ -106,6 +106,14 @@ Checks for every step: `python bin/snapshot/snapshot.py take/diff` (pages), `nod
 8. **Kirki layer and migrations:** freeze the Kirki safety net (one file, documented); the 2019–2021 migrations record "done" so they stop checking on every request.
 9. **Finish:** the Customizer folder lint-clean, dead classes removed, `PREMIUM-DEPENDENCIES.md` updated (incl. removing two false entries: `enqueue`, `init`).
 
+## Later (agreed, not scheduled yet)
+
+1. **Leaner Google Fonts CSS** (user, November 18, 2026: "add this to our list for things to do later"). Today every chosen weight prints one `@font-face` rule per alphabet Google offers (7: Latin, Latin extended, Cyrillic + extended, Greek + extended, Vietnamese). On pbf.local that's 27 rules / 8.7 KB (under 1 KB compressed) where 4 rules / 1.4 KB would do. Suggested:
+   - **A. Only the alphabets the site needs**, picked from the site language (English/German/French → Latin; Russian → + Cyrillic; Vietnamese → + Vietnamese …), plus a filter to add more. Risk: text in another alphabet than the site language falls back to the fallback font.
+   - **B. One rule per variable font** (Inter, Roboto, Open Sans …): one file holds every weight, so `font-weight: 400 700` once instead of the same rules per weight.
+   - **C. Clean up unused fonts** on each cache refresh: delete font files and stored font CSS nothing uses any more (pbf.local keeps ~460 KB of Open Sans/Roboto nobody uses). `wpbf_downloaded_google_fonts_css` (27 KB) doesn't need to load with every page either.
+   - **D. Optional, with the assets module:** preload the main font file so text shows in the right font sooner.
+
 ## Decisions for the user
 
 1. **Old Premium (2.9 and older): decided (November 18, 2026):** keep the safety net frozen + a clearer "update Premium" notice. Blocking it isn't possible cleanly (plugins load before the theme), would take features off live sites of customers who can't renew, and a theme switching off plugins wouldn't pass WordPress.org review. Compatibility is promised for Premium 2.10+ only; older versions just must not crash.
