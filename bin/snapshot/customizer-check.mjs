@@ -3,13 +3,19 @@
  *
  * Opens the Customizer in headless Chrome with a temporary admin login, expands every section,
  * and reports per control type how many controls rendered, plus any JavaScript errors and failed requests.
- * Nothing is saved.
+ *
+ * previewCss: sets General options in the Customizer (each value of the snapshot's general1 variant on its own, then
+ * the general1-4 variants whole), waits for the preview, and compares the preview's CSS of each area written with
+ * wpbf_css() with what the front end prints for the same values (cleaned like the Customizer cleans them). The whole
+ * run uses Premium breakpoints of 1100/700/400px. "matched" must equal "cases".
+ *
+ * Nothing is saved: save, autosave, trash and dismiss requests are blocked; databaseUnchanged proves it.
  *
  *     node bin/snapshot/customizer-check.mjs > before.json
  *     node bin/snapshot/customizer-check.mjs > after.json
  */
 import { spawn, execFileSync } from "node:child_process";
-import { copyFileSync, mkdtempSync, rmSync } from "node:fs";
+import { copyFileSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -19,6 +25,19 @@ const wpRoot = join(here, "..", "..", "..", "..", "..");
 const php = ["-d", "extension=mysqli", "-d", "mysqli.default_port=10035"];
 const chromePath = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const port = 9333;
+
+// The hand-made General variants of the page snapshots (bin/snapshot/output/variants.json, made by snapshot.py).
+let previewVariants = {};
+try {
+	const all = JSON.parse(readFileSync(join(here, "output", "variants.json"), "utf8"));
+	for (const [name, values] of Object.entries(all)) {
+		if (!name.startsWith("general")) continue;
+		const { __wpbf_settings, ...mods } = values;
+		previewVariants[name] = mods;
+	}
+} catch {
+	console.error("No bin/snapshot/output/variants.json (run snapshot.py take first): preview CSS check uses the saved values only.");
+}
 
 const dbState = () => execFileSync("php", [...php, join(here, "login.php"), wpRoot, "dbstate"], { encoding: "utf8" }).trim();
 const dbBefore = dbState();
@@ -87,6 +106,8 @@ try {
 		const [name, ...rest] = pair.split("=");
 		await send("Network.setCookie", { name, value: decodeURIComponent(rest.join("=")), domain: "pbf.local", path: "/" });
 	}
+	// Premium breakpoints that differ from the defaults for every request of the run (see mu-plugin.php).
+	await send("Network.setCookie", { name: "zz_breakpoints", value: "1", domain: "pbf.local", path: "/" });
 	await send("Page.enable");
 	await send("Page.navigate", { url: "http://pbf.local/wp-admin/customize.php?zz_nolock=1" });
 
@@ -146,7 +167,55 @@ try {
 			roundTrips[type] = { id: control.id, setTo: next, shownInControl: shown, restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
 		}
 
+		// Preview CSS: set options in the Customizer, wait for the preview, and compare the preview's CSS of each area
+		// written with wpbf_css() with what the front end prints for the same values (mu-plugin, ?zz_css=1).
+		const previewCss = { cases: 0, matched: 0, customBreakpointSeen: false, defaultBreakpointSeen: false, mismatches: [] };
+		const target = () => wp.customize.previewer.preview && wp.customize.previewer.preview.targetWindow();
+		const previewText = (area) => { const w = target(); const el = w && w.document.getElementById('wpbf-css-' + area); return el ? el.textContent : null; };
+		const settle = async (area) => {
+			await sleep(400);
+			let last = null, same = 0;
+			for (let i = 0; i < 200 && same < 2; i++) {
+				await sleep(150);
+				const w = target();
+				const sr = w && w.wp && w.wp.customize && w.wp.customize.selectiveRefresh;
+				const busy = !w || 'complete' !== w.document.readyState || !w.wpbfPreviewCss || !sr || (sr._currentRequest && 'pending' === sr._currentRequest.state()) || sr._debouncedTimeoutId || wp.customize.previewer.loading;
+				const text = busy ? null : previewText(area);
+				same = null !== text && text === last ? same + 1 : 0;
+				last = text;
+			}
+			return same >= 2 ? last : null;
+		};
+		const compare = async (label, values) => {
+			const originals = {};
+			for (const [sid, v] of Object.entries(values)) {
+				if (!wp.customize(sid)) continue;
+				originals[sid] = wp.customize(sid).get();
+				wp.customize(sid).set(v);
+			}
+			for (const area of ['general']) {
+				const preview = await settle(area);
+				const dirty = wp.customize.dirtyValues ? wp.customize.dirtyValues() : {};
+				const response = await fetch('/?zz_css=1', { method: 'POST', credentials: 'same-origin', body: JSON.stringify({ area, values: dirty, preview: preview || '' }) });
+				const result = await response.json();
+				previewCss.cases++;
+				// The run uses Premium breakpoints of 1100/700/400px: tablet rules must use them, not 1024px.
+				if (preview && preview.includes('(max-width: 1100px)')) previewCss.customBreakpointSeen = true;
+				if (preview && /max-width: ?1024px/.test(preview)) previewCss.defaultBreakpointSeen = true;
+				if (null !== preview && result.front === result.preview) previewCss.matched++;
+				else previewCss.mismatches.push({ case: label, area, front: result.front, preview: null === preview ? '(preview did not settle)' : result.preview });
+			}
+			for (const [sid, v] of Object.entries(originals)) wp.customize(sid).set(v);
+			await settle('general');
+		};
+		const variants = ${JSON.stringify(previewVariants)};
+		await compare('as saved', {});
+		for (const [sid, v] of Object.entries(variants.general1 || {})) await compare('general1: ' + sid, { [sid]: v });
+		for (const [name, values] of Object.entries(variants)) await compare(name, values);
+		await compare('as saved again', {});
+
 		return {
+			previewCss,
 			sections: sections.length,
 			controls: Object.values(byType).reduce((a, b) => a + b.total, 0),
 			byType,

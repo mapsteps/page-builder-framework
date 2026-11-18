@@ -14,6 +14,88 @@
 
 // phpcs:disable -- Dev tool.
 
+// Preview check (customizer-check.mjs): every request of the run (Customizer, preview, partials) uses Premium
+// breakpoints that differ from the defaults, so the check shows the preview takes them from PHP.
+if ( ! empty( $_COOKIE['zz_breakpoints'] ) ) {
+	add_filter(
+		'option_wpbf_settings',
+		function ( $settings ) {
+			return array_merge(
+				(array) $settings,
+				array(
+					'wpbf_breakpoint_desktop' => '1100px',
+					'wpbf_breakpoint_medium'  => '700px',
+					'wpbf_breakpoint_mobile'  => '400px',
+				)
+			);
+		}
+	);
+}
+
+// Preview check: the front-end CSS of the areas written with wpbf_css() for the posted setting values (saved values
+// plus these), and the posted preview CSS, both minified like the front end. Reads only, never saves.
+if ( isset( $_GET['zz_css'] ) ) {
+	$zz_input = json_decode( (string) file_get_contents( 'php://input' ), true );
+	$zz_input = is_array( $zz_input ) ? $zz_input : array();
+
+	add_action(
+		'template_redirect',
+		function () use ( $zz_input ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( 'not allowed', 403 );
+			}
+
+			// Clean the values like the Customizer does before the preview sees them (and before a save would store
+			// them): ranges, colors, JSON. A Customizer object is only built here to reach the settings' checks.
+			require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';
+			$zz_manager = new WP_Customize_Manager();
+			do_action( 'customize_register', $zz_manager );
+
+			$zz_values = array();
+			foreach ( isset( $zz_input['values'] ) ? (array) $zz_input['values'] : array() as $zz_id => $zz_value ) {
+				$zz_setting = $zz_manager->get_setting( $zz_id );
+				$zz_clean   = $zz_setting ? $zz_setting->sanitize( $zz_value ) : $zz_value;
+				if ( null !== $zz_clean && ! is_wp_error( $zz_clean ) ) {
+					$zz_values[ $zz_id ] = $zz_clean;
+				}
+			}
+
+			add_filter(
+				'option_theme_mods_' . get_option( 'stylesheet' ),
+				function ( $live ) use ( $zz_values ) {
+					return array_merge( (array) $live, $zz_values );
+				}
+			);
+
+			ob_start();
+			wpbf_css_area( isset( $zz_input['area'] ) ? $zz_input['area'] : 'general' );
+			$front = ob_get_clean();
+
+			// Hex colors compare without letter case: the preview gets colors lowercased by the Customizer
+			// (a saved #FFFFFF previews as #ffffff, the same color).
+			$zz_normal = function ( $css ) {
+				return preg_replace_callback(
+					'/#[0-9a-fA-F]{3,8}\b/',
+					function ( $hex ) {
+						return strtolower( $hex[0] );
+					},
+					wpbf_minify_css( $css )
+				);
+			};
+
+			wp_send_json(
+				array(
+					'front'   => $zz_normal( $front ),
+					'preview' => $zz_normal( isset( $zz_input['preview'] ) ? (string) $zz_input['preview'] : '' ),
+				)
+			);
+		},
+		0
+	);
+
+	return;
+}
+
 if ( ! isset( $_GET['zz_snap'] ) && ! isset( $_GET['zz_nolock'] ) ) {
 	return;
 }
@@ -53,6 +135,15 @@ ini_set( 'log_errors', '1' );
 
 $zz_variant = preg_replace( '/[^a-z0-9]/', '', $_GET['zz_snap'] );
 
+// Print the Customizer CSS into the page (the site may use a CSS file), so the snapshot shows it.
+add_filter(
+	'wpbf_css_output',
+	function () {
+		return 'inline';
+	},
+	PHP_INT_MAX
+);
+
 if ( ! empty( $_GET['zz_nopremium'] ) ) {
 	add_filter(
 		'option_active_plugins',
@@ -66,9 +157,26 @@ if ( 'live' !== $zz_variant ) {
 	$zz_all  = json_decode( file_get_contents( WP_CONTENT_DIR . '/themes/page-builder-framework/bin/snapshot/output/variants.json' ), true );
 	$zz_mods = isset( $zz_all[ $zz_variant ] ) ? $zz_all[ $zz_variant ] : array();
 
+	// Hand-made variants (general1, ...) change only their own settings on top of the saved ones.
+	$zz_hand = 0 === strpos( $zz_variant, 'general' );
+
+	if ( isset( $zz_mods['__wpbf_settings'] ) ) {
+		$zz_settings = $zz_mods['__wpbf_settings'];
+		unset( $zz_mods['__wpbf_settings'] );
+		add_filter(
+			'option_wpbf_settings',
+			function ( $settings ) use ( $zz_settings ) {
+				return array_merge( (array) $settings, $zz_settings );
+			}
+		);
+	}
+
 	add_filter(
 		'option_theme_mods_' . get_option( 'stylesheet' ),
-		function ( $live ) use ( $zz_mods ) {
+		function ( $live ) use ( $zz_mods, $zz_hand ) {
+			if ( $zz_hand ) {
+				return array_merge( (array) $live, $zz_mods );
+			}
 			$keep = array();
 			foreach ( array( 'nav_menu_locations', 'custom_logo', 'custom_css_post_id', 'sidebars_widgets' ) as $key ) {
 				if ( isset( $live[ $key ] ) ) {

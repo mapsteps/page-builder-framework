@@ -31,8 +31,78 @@ FRONT = ['/', '/related-posts/', '/checkout/', '/category/blog/', '/category/blo
          '/?m=2020']
 ADMIN = ['/wp-admin/themes.php?page=wpbf-premium', '/wp-admin/edit.php', '/wp-admin/edit.php?post_type=page',
          '/wp-admin/customize.php', '/wp-admin/post.php?post=366&action=edit', '/wp-admin/index.php']
-VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synthetic3']
+VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synthetic3', 'general1', 'general2', 'general3',
+            'general4']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
+
+# Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
+# text with numbers and false for empty sides). '__wpbf_settings' swaps in Premium's breakpoints.
+PAD = lambda **k: json.dumps(k, separators=(',', ':'))
+HAND_VARIANTS = {
+    # Everything changed, boxed layout with shadow, custom breakpoints.
+    'general1': {
+        '__wpbf_settings': {'wpbf_breakpoint_desktop': '1100px', 'wpbf_breakpoint_medium': '700px', 'wpbf_breakpoint_mobile': '400px'},
+        'page_max_width': '1100px',
+        'page_padding': PAD(desktop_top=30, desktop_right=25, desktop_bottom=30, desktop_left=25, tablet_top=False, tablet_right=15,
+                            tablet_bottom=False, tablet_left=15, mobile_top=10, mobile_right=False, mobile_bottom=10, mobile_left=False),
+        'page_boxed': True, 'page_boxed_margin': '30', 'page_boxed_padding': '0', 'page_boxed_background': '#eeeeee',
+        'page_boxed_box_shadow': True, 'page_boxed_box_shadow_blur': '0', 'page_boxed_box_shadow_spread': '2',
+        'page_boxed_box_shadow_horizontal': '3', 'page_boxed_box_shadow_vertical': '4', 'page_boxed_box_shadow_color': 'rgba(1,2,3,0.4)',
+        'sidebar_width': '30', 'sidebar_bg_color': '#eaeaea',
+        'sidebar_widget_padding': PAD(desktop_top=20, desktop_right=30, desktop_bottom='20', desktop_left=False, tablet_top=12,
+                                      mobile_bottom=8),
+        'breadcrumbs_alignment': 'center', 'breadcrumbs_background_color': '#cccccc', 'breadcrumbs_font_color': '#111111',
+        'breadcrumbs_accent_color': '#222222', 'breadcrumbs_accent_color_alt': '#333333',
+        'page_accent_color': '#ff6600', 'page_accent_color_alt': 'rgba(255,102,0,0.7)',
+        'button_bg_color': '#010101', 'button_bg_color_alt': '#020202', 'button_text_color': '#030303', 'button_text_color_alt': '#040404',
+        'button_primary_bg_color': '#050505', 'button_primary_bg_color_alt': '#060606', 'button_primary_text_color': '#070707',
+        'button_primary_text_color_alt': '#080808', 'button_border_radius': '5', 'button_border_width': '2',
+        'button_border_color': '#090909', 'button_border_color_alt': '#0a0a0a', 'button_primary_border_color': '#0b0b0b',
+        'button_primary_border_color_alt': '#0c0c0c',
+        'layout_scrolltop': True, 'scrolltop_position': 'left', 'scrolltop_bg_color': 'rgba(1,1,1,0.5)',
+        'scrolltop_bg_color_alt': 'rgba(2,2,2,0.5)', 'scrolltop_icon_color': '#000000', 'scrolltop_icon_color_alt': '#ff0000',
+        'scrolltop_border_radius': '50',
+    },
+    # Everything saved, but equal to the defaults.
+    'general2': {
+        'page_max_width': '1200px',
+        'page_padding': PAD(desktop_top=40, desktop_right=20, desktop_bottom=40, desktop_left=20, tablet_top=False, tablet_right=False,
+                            tablet_bottom=False, tablet_left=False, mobile_top=False, mobile_right=False, mobile_bottom=False,
+                            mobile_left=False),
+        'page_boxed': True, 'page_boxed_margin': '0', 'page_boxed_padding': '20', 'page_boxed_background': '#ffffff',
+        'page_boxed_box_shadow': True, 'page_boxed_box_shadow_blur': '25', 'page_boxed_box_shadow_spread': '0',
+        'page_boxed_box_shadow_horizontal': '0', 'page_boxed_box_shadow_vertical': '0', 'page_boxed_box_shadow_color': 'rgba(0,0,0,.15)',
+        'sidebar_width': '33.3', 'sidebar_bg_color': '#f5f5f7',
+        'sidebar_widget_padding': PAD(**{d + '_' + s: 20 for d in ('desktop', 'tablet', 'mobile') for s in ('top', 'right', 'bottom', 'left')}),
+        'breadcrumbs_alignment': 'left', 'breadcrumbs_background_color': '#dedee5',
+        'page_accent_color': '#3ba9d2', 'page_accent_color_alt': '#79c4e0',
+        'button_border_radius': '0', 'button_border_width': '0',
+        'layout_scrolltop': True, 'scrolltop_position': 'right', 'scrolltop_bg_color': 'rgba(62,67,73,0.5)',
+        'scrolltop_bg_color_alt': 'rgba(62,67,73,0.7)', 'scrolltop_icon_color': '#ffffff', 'scrolltop_border_radius': '0',
+    },
+    # Odd saved values: numbers instead of text, empty values, single sides, options whose switch is off.
+    'general3': {
+        'page_max_width': '', 'page_padding': PAD(tablet_top=12, tablet_bottom=12),
+        'page_boxed': True, 'page_boxed_margin': '', 'page_boxed_padding': 0, 'page_boxed_box_shadow': False,
+        'page_boxed_box_shadow_color': 'rgba(9,9,9,0.9)',
+        'sidebar_width': 33.3, 'sidebar_widget_padding': PAD(desktop_top='20', desktop_right=20, mobile_left='5'),
+        'breadcrumbs_alignment': 'right', 'page_accent_color': '', 'page_accent_color_alt': '#79c4e0',
+        'button_border_width': '0', 'button_border_color': '#111111', 'button_primary_border_color': '#222222',
+        'button_text_color': '#333333', 'button_primary_text_color_alt': '#444444',
+        'layout_scrolltop': False, 'scrolltop_position': 'left', 'scrolltop_bg_color': '#555555', 'scrolltop_border_radius': '9',
+    },
+    # Boxed off with boxed options set, scroll to top on with a few colors, a custom width saved as text.
+    'general4': {
+        'page_max_width': '90%', 'page_boxed': False, 'page_boxed_padding': '40', 'page_boxed_margin': '20',
+        'page_boxed_box_shadow': True, 'page_boxed_box_shadow_blur': '10',
+        'page_padding': PAD(desktop_top='0', desktop_right='0', desktop_bottom='0', desktop_left='0'),
+        'sidebar_width': '25.5', 'button_border_radius': '3', 'button_primary_bg_color': '#123456',
+        'button_primary_bg_color_alt': '#654321',
+        'layout_scrolltop': True, 'scrolltop_position': 'left', 'scrolltop_icon_color_alt': '#abcdef',
+        'scrolltop_bg_color_alt': 'rgba(62,67,73,0.7)', 'scrolltop_icon_color': '#FFFFFF',
+    },
+}
+HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
 
 RULES = [
     (r'(nonce|_wpnonce|_ajax_nonce|security|_wp_http_referer)(["\'=:\s\\]+)[0-9a-f]{10}', r'\1\2NONCE', re.I),
@@ -40,7 +110,8 @@ RULES = [
     (r'\b1[6-9]\d{11}\b', 'MS', 0),
     (r'\b1[6-9]\d{8}\b', 'TS', 0),
     (r'"(nonce|restNonce|ajax_nonce|wpApiSettings)[^"]*"\s*:\s*"[^"]*"', r'"\1":"X"', 0),
-    (r'<!--.*?(generated|queries|seconds|cached).*?-->', '', re.I | re.S),
+    # One comment only: a looser pattern ran from the first comment in <head> to a later one and ate the CSS.
+    (r'<!--(?:(?!-->).)*?(generated|queries|seconds|cached)(?:(?!-->).)*?-->', '', re.I | re.S),
     (r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}', 'UUID', 0),
     (r'post_ID[^0-9]{1,20}\d+', 'post_ID=N', 0),
     (r'data-token="[0-9a-f]+"', 'data-token="X"', 0),
@@ -118,6 +189,7 @@ def build_variants():
     for k in range(4):
         variants['synthetic%d' % k] = {fid: v for fid, f in fields.items() if f['type'] not in SKIP_TYPES
                                        for v in [value(f, k)] if v is not None}
+    variants.update(HAND_VARIANTS)
     json.dump(variants, open(os.path.join(OUT, 'variants.json'), 'w'), indent=1)
     print('variants.json:', len(fields), 'settings found,', len(variants['synthetic0']), 'varied')
 
@@ -125,7 +197,7 @@ def build_variants():
 def jobs():
     for v in VARIANTS:
         for prem in ('', '1'):
-            for u in FRONT:
+            for u in (HAND_ONLY_FRONT if v in HAND_VARIANTS else FRONT):
                 yield (v, prem, u, False)
             if v in ADMIN_VARIANTS:
                 for u in ADMIN:
@@ -151,8 +223,13 @@ def fetch(job, cookie):
 
 def take(name):
     os.makedirs(OUT, exist_ok=True)
-    if not os.path.exists(os.path.join(OUT, 'variants.json')):
+    vfile = os.path.join(OUT, 'variants.json')
+    if not os.path.exists(vfile):
         build_variants()
+    else:  # Keep the generated variants, refresh the hand-made ones.
+        variants = json.load(open(vfile))
+        variants.update(HAND_VARIANTS)
+        json.dump(variants, open(vfile, 'w'), indent=1)
     target = os.path.join(OUT, name)
     shutil.rmtree(target, ignore_errors=True)
     os.makedirs(target)
