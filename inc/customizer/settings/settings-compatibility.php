@@ -20,6 +20,12 @@ ob_start();
 	<?php _e( 'Please update the Premium Add-On to the latest version.', 'page-builder-framework' ); ?>
 </p>
 <p>
+	<?php
+	/* translators: 1: installed Premium Add-On version, 2: minimum version needed */
+	printf( esc_html__( 'You have version %1$s, Page Builder Framework needs %2$s or newer. Until you update, some Premium Add-On features may not work.', 'page-builder-framework' ), esc_html( WPBF_PREMIUM_VERSION ), esc_html( WPBF_PREMIUM_MIN_VERSION ) );
+	?>
+</p>
+<p>
 	<a href="<?php echo esc_url( admin_url( 'update-core.php' ) ); ?>" class="button">
 		<?php _e( 'View Updates', 'page-builder-framework' ); ?>
 	</a>
