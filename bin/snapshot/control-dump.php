@@ -4,6 +4,7 @@
  * the browser and how the field cleans values: setting default, value, json() (incl. the li markup), and the cleaned
  * result of ~40 tricky inputs. Run it before and after changing a control family and compare the two files.
  *
+ * Usage:
  *     php -d extension=mysqli -d mysqli.default_port=10035 bin/snapshot/control-dump.php <wp-root> [extra-fields.php] > out.json
  *
  * extra-fields.php: fields to add for this run (e.g. bin/snapshot/zz-test-fields.php, the variants nobody uses).

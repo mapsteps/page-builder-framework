@@ -9,12 +9,11 @@ class TypographySanitizer {
 	/**
 	 * Sanitize the typography value.
 	 *
-	 * @param mixed       $value The value to sanitize.
-	 * @param string|null $setting_id The setting id.
+	 * @param mixed $value The value to sanitize.
 	 *
 	 * @return array
 	 */
-	public function sanitize( $value, $setting_id = null ) {
+	public function sanitize( $value ) {
 
 		if ( ! is_array( $value ) ) {
 			return [];

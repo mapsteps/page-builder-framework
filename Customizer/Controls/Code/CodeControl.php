@@ -12,7 +12,6 @@ class CodeControl extends BaseControl {
 	 * @var string
 	 */
 	public $type = 'code_editor';
-	// public $type = 'wpbf-code';
 
 	/**
 	 * Type of code that is being edited.

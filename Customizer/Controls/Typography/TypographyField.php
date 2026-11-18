@@ -208,7 +208,7 @@ class TypographyField extends BaseField {
 	 * @return array
 	 */
 	public function sanitizeCallback( $value ) {
-		return ( new TypographySanitizer() )->sanitize( $value, $this->control->id );
+		return ( new TypographySanitizer() )->sanitize( $value );
 	}
 
 	/**

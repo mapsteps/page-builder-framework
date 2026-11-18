@@ -223,11 +223,13 @@ final class CustomizerControl {
 	/**
 	 * Set the control's sanitize_callback.
 	 *
+	 * Does nothing (controls have no sanitize callback; settings do). Kept so existing calls keep working.
+	 *
 	 * @param callable $sanitize_callback Control sanitize_callback.
 	 *
 	 * @return $this
 	 */
-	public function sanitizeCallback( $sanitize_callback ) {
+	public function sanitizeCallback( $sanitize_callback ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 
 		return $this;
 
@@ -236,11 +238,13 @@ final class CustomizerControl {
 	/**
 	 * Set the control's sanitize_js_callback.
 	 *
+	 * Does nothing (controls have no sanitize callback; settings do). Kept so existing calls keep working.
+	 *
 	 * @param callable $sanitize_js_callback Control sanitize_js_callback.
 	 *
 	 * @return $this
 	 */
-	public function sanitizeJsCallback( $sanitize_js_callback ) {
+	public function sanitizeJsCallback( $sanitize_js_callback ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 
 		return $this;
 

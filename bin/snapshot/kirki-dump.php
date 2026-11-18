@@ -5,6 +5,7 @@
  * few values are cleaned. Run it before and after touching Customizer/Compatibility/kirki-compatibility.php or the
  * builder, and compare.
  *
+ * Usage:
  *     php -d extension=mysqli -d mysqli.default_port=10035 bin/snapshot/kirki-dump.php <wp-root> bin/snapshot/zz-test-kirki-fields.php > out.json
  *
  * Database writes are blocked; nothing is saved.

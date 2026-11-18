@@ -16,8 +16,8 @@ ob_start();
 ?>
 
 <p>
-	<?php _e( 'Your version of the <strong>Premium Add-On</strong> is outdated and no longer compatible with the latest version of <strong>Page Builder Framework.</strong>', 'page-builder-framework' ); ?>
-	<?php _e( 'Please update the Premium Add-On to the latest version.', 'page-builder-framework' ); ?>
+	<?php echo wp_kses_post( __( 'Your version of the <strong>Premium Add-On</strong> is outdated and no longer compatible with the latest version of <strong>Page Builder Framework.</strong>', 'page-builder-framework' ) ); ?>
+	<?php echo wp_kses_post( __( 'Please update the Premium Add-On to the latest version.', 'page-builder-framework' ) ); ?>
 </p>
 <p>
 	<?php
@@ -27,10 +27,10 @@ ob_start();
 </p>
 <p>
 	<a href="<?php echo esc_url( admin_url( 'update-core.php' ) ); ?>" class="button">
-		<?php _e( 'View Updates', 'page-builder-framework' ); ?>
+		<?php echo wp_kses_post( __( 'View Updates', 'page-builder-framework' ) ); ?>
 	</a>
 	<a href="https://wp-pagebuilderframework.com/purchase-history/" class="button button-primary">
-		<?php _e( 'Manage Subscription', 'page-builder-framework' ); ?>
+		<?php echo wp_kses_post( __( 'Manage Subscription', 'page-builder-framework' ) ); ?>
 	</a>
 </p>
 
