@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/inc/autoload.php';
 
 // Constants.
 define( 'WPBF_THEME_DIR', get_template_directory() );

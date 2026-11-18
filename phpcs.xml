@@ -5,7 +5,7 @@
 
 	<!-- Exclude some directories. -->
 	<exclude-pattern>*/wp-admin/*</exclude-pattern>
-	<exclude-pattern>*/wp-incudes/*</exclude-pattern>
+	<exclude-pattern>*/wp-includes/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 
 	<!-- Only check PHP files. -->

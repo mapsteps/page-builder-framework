@@ -30,3 +30,6 @@ manifest.json
 # project specific
 *.map
 build
+
+# Composer (dev tools only)
+/vendor/

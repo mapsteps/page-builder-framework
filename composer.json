@@ -1,20 +1,18 @@
 {
-    "name": "mapsteps/aura",
-    "description": "PHP tooling for Aura Theme",
-    "type": "project",
-    "license": "GPL-3.0-or-later",
-    "autoload": {
-        "psr-4": {
-            "Mapsteps\\Wpbf\\": ""
-        }
-    },
-    "authors": [
-        {
-            "name": "David Vongries"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-      "ext-json": "*"
-    }
+	"name": "mapsteps/page-builder-framework",
+	"description": "Page Builder Framework, a fast and lightweight WordPress theme.",
+	"type": "wordpress-theme",
+	"license": "GPL-3.0-or-later",
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^3.1"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"lint": "phpcs --standard=phpcs.xml --exclude=Generic.Files.LineEndings .",
+		"fix": "phpcbf --standard=phpcs.xml --exclude=Generic.Files.LineEndings ."
+	}
 }
