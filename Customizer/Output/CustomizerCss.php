@@ -57,6 +57,27 @@ final class CustomizerCss {
 	const MAX_ENTRIES = 2;
 
 	/**
+	 * Seconds a scheduled refresh may be late before a page view runs it (WP-Cron off, no real cron).
+	 *
+	 * @var int
+	 */
+	const OVERDUE_AFTER = 600;
+
+	/**
+	 * The option used as a lock, so only one page view runs an overdue refresh.
+	 *
+	 * @var string
+	 */
+	const LOCK_OPTION = 'wpbf_customizer_css_refresh_lock';
+
+	/**
+	 * Seconds after which a lock counts as abandoned.
+	 *
+	 * @var int
+	 */
+	const LOCK_TIMEOUT = 120;
+
+	/**
 	 * This request's entry, once known.
 	 *
 	 * @var array|null
@@ -157,7 +178,56 @@ final class CustomizerCss {
 
 		self::syncFile( $key );
 
+		// WP-Cron that never runs (DISABLE_WP_CRON without a real cron): a page view runs the refresh, after its output.
+		$next = wp_next_scheduled( self::REFRESH_HOOK );
+
+		if ( false !== $next && $next < time() - self::OVERDUE_AFTER && apply_filters( 'wpbf_customizer_css_store', true ) ) {
+			add_action( 'shutdown', array( __CLASS__, 'runOverdueRefresh' ), 1000 );
+		}
+
 		return self::$current;
+
+	}
+
+	/**
+	 * Run an overdue scheduled refresh in this request (on shutdown), if no other request does already.
+	 *
+	 * Takes a lock first (add_option() only succeeds once), drops the overdue event so it can't run twice, ends the response
+	 * to the visitor where the server allows it, then refreshes with font downloads. Paused fonts stay paused; a failure schedules the next retry as usual.
+	 */
+	public static function runOverdueRefresh() {
+
+		$next = wp_next_scheduled( self::REFRESH_HOOK );
+
+		if ( false === $next || $next >= time() - self::OVERDUE_AFTER ) {
+			return;
+		}
+
+		if ( ! add_option( self::LOCK_OPTION, time() + self::LOCK_TIMEOUT, '', false ) ) {
+			// Someone else holds it. Take it over only if it's abandoned.
+			if ( (int) get_option( self::LOCK_OPTION ) > time() ) {
+				return;
+			}
+
+			delete_option( self::LOCK_OPTION );
+
+			if ( ! add_option( self::LOCK_OPTION, time() + self::LOCK_TIMEOUT, '', false ) ) {
+				return;
+			}
+		}
+
+		wp_unschedule_event( $next, self::REFRESH_HOOK );
+
+		// Hand the page to the visitor first, where the server allows it (as wp-cron.php does).
+		if ( function_exists( 'fastcgi_finish_request' ) ) {
+			fastcgi_finish_request();
+		} elseif ( function_exists( 'litespeed_finish_request' ) ) {
+			litespeed_finish_request();
+		}
+
+		self::refreshWithFonts();
+
+		delete_option( self::LOCK_OPTION );
 
 	}
 
