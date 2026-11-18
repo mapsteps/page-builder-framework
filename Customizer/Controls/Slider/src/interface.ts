@@ -1,32 +1,28 @@
-import {
-	WpbfCustomizeControl,
-	WpbfCustomizeControlParams,
-} from "../../Base/src/interface";
+import { WpbfCustomizeControl, WpbfCustomizeControlParams } from "../../Base/src/interface";
 import { DevicesValue } from "../../Responsive/src/interface";
 
-export interface WpbfCustomizeSliderControlParams
-	extends WpbfCustomizeControlParams<number | string> {}
+/**
+ * One value of a slider: a number, or text with a unit ("20px"); "" when empty.
+ */
+export type SliderValue = number | string;
 
+/**
+ * The setting value of all three slider types: one value, or for the responsive slider one per device
+ * (an object, or the same object as JSON text when the field saves as JSON).
+ */
+export type SliderSettingValue = SliderValue | DevicesValue;
+
+export interface WpbfCustomizeSliderControlParams extends WpbfCustomizeControlParams<SliderSettingValue> {
+	type: "wpbf-slider" | "wpbf-input-slider" | "wpbf-responsive-input-slider";
+	min: number;
+	max: number;
+	step: number;
+
+	// Responsive slider only.
+	devices?: string[];
+	saveAsJson?: boolean;
+}
+
+// The control of all three slider types.
 export interface WpbfCustomizeSliderControl
-	extends WpbfCustomizeControl<
-		number | string,
-		WpbfCustomizeSliderControlParams
-	> {}
-
-export interface WpbfCustomizeInputSliderControlParams
-	extends WpbfCustomizeControlParams<string | number> {}
-
-export interface WpbfCustomizeInputSliderControl
-	extends WpbfCustomizeControl<
-		string | number,
-		WpbfCustomizeInputSliderControlParams
-	> {}
-
-export interface WpbfCustomizeResponsiveInputSliderControl
-	extends WpbfCustomizeControl<
-		string | DevicesValue,
-		WpbfCustomizeResponsiveInputSliderControlParams
-	> {}
-
-export interface WpbfCustomizeResponsiveInputSliderControlParams
-	extends WpbfCustomizeControlParams<string | DevicesValue> {}
+	extends WpbfCustomizeControl<SliderSettingValue, WpbfCustomizeSliderControlParams> {}

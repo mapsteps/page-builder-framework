@@ -30,8 +30,6 @@ use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioField;
 use Mapsteps\Wpbf\Customizer\Controls\Radio\RadioImageField;
 use Mapsteps\Wpbf\Customizer\Controls\Repeater\RepeaterField;
 use Mapsteps\Wpbf\Customizer\Controls\Select\SelectField;
-use Mapsteps\Wpbf\Customizer\Controls\Slider\InputSliderField;
-use Mapsteps\Wpbf\Customizer\Controls\Slider\ResponsiveInputSliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Slider\SliderField;
 use Mapsteps\Wpbf\Customizer\Controls\Sortable\SortableField;
 use Mapsteps\Wpbf\Customizer\Controls\Tabs\SectionTabsField;
@@ -310,16 +308,12 @@ class CustomizerUtil {
 				$field = new SelectField( $control_entity );
 				break;
 			case 'slider':
-				$field = new SliderField( $control_entity );
-				break;
 			case 'input-slider':
-				$field = new InputSliderField( $control_entity );
+			case 'responsive-input-slider':
+				$field = new SliderField( $control_entity );
 				break;
 			case 'repeater':
 				$field = new RepeaterField( $control_entity );
-				break;
-			case 'responsive-input-slider':
-				$field = new ResponsiveInputSliderField( $control_entity );
 				break;
 			case 'section-tabs':
 				$field = new SectionTabsField( $control_entity );

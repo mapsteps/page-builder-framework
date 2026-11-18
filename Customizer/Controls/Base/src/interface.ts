@@ -12,10 +12,7 @@ import { Setting } from "wordpress__customize-browser/Setting";
 import { WpbfCustomizeColorControl } from "../../Color/src/interface";
 import { WpbfCustomizeDimensionControl } from "../../Dimension/src/interface";
 import { WpbfCustomizeMarginPaddingControl } from "../../MarginPadding/src/interface";
-import {
-	WpbfCustomizeInputSliderControl,
-	WpbfCustomizeResponsiveInputSliderControl,
-} from "../../Slider/src/interface";
+import { WpbfCustomizeSliderControl } from "../../Slider/src/interface";
 import { WpbfCustomizeSortableControl } from "../../Sortable/src/interface";
 import { Section_Constructor } from "wordpress__customize-browser/Section_Constructor";
 import { Section } from "wordpress__customize-browser/Section";
@@ -333,12 +330,9 @@ export interface WpbfCustomizeControlConstructor extends Control_Constructor {
 	"wpbf-radio-image": {};
 	"wpbf-repeater": WpbfCustomizeRepeaterControl;
 	"wpbf-select": WpbfCustomizeSelectControl;
-	"wpbf-slider": WpbfCustomizeControl<
-		number | string,
-		WpbfCustomizeControlParams<number | string>
-	>;
-	"wpbf-input-slider": WpbfCustomizeInputSliderControl;
-	"wpbf-responsive-input-slider": WpbfCustomizeResponsiveInputSliderControl;
+	"wpbf-slider": WpbfCustomizeSliderControl;
+	"wpbf-input-slider": WpbfCustomizeSliderControl;
+	"wpbf-responsive-input-slider": WpbfCustomizeSliderControl;
 	"wpbf-sortable": WpbfCustomizeSortableControl;
 	"wpbf-toggle": WpbfCustomizeCheckboxControl;
 }

@@ -19,6 +19,7 @@
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
     "@types/select2": "^4.0.63",
+    "@wordpress/element": "^6.30.0",
     "@wordpress/hooks": "^4.30.0",
     "@wordpress/i18n": "^5.26.0",
     "colord": "^2.9.3",

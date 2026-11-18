@@ -1,6 +1,6 @@
 <?php
 /**
- * Slider field's default settings.
+ * Slider field.
  *
  * @package Wpbf
  */
@@ -8,30 +8,23 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Slider;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseField;
-use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 use WP_Customize_Manager;
 
 /**
- * Default settings for the slider field.
+ * The field of the three slider types: slider, input-slider and responsive-input-slider.
  */
 class SliderField extends BaseField {
 
 	/**
 	 * Setting's sanitize callback.
 	 *
-	 * @param string|int|float $value The value to sanitize.
+	 * @param mixed $value The value to sanitize.
 	 *
-	 * @return string|int|float
+	 * @return int|float|string|array
 	 */
 	public function sanitizeCallback( $value ) {
 
-		$props = $this->control->custom_properties;
-		$min   = isset( $props['min'] ) && is_numeric( $props['min'] ) ? (float) $props['min'] : null;
-		$min   = is_null( $min ) ? SliderControl::$default_min : $min;
-		$max   = isset( $props['max'] ) && is_numeric( $props['max'] ) ? (float) $props['max'] : null;
-		$max   = is_null( $max ) ? SliderControl::$default_max : $max;
-
-		return ( new NumberUtil() )->limitNumber( $value, $min, $max );
+		return ( new SliderValue( $this->control->type, $this->control->custom_properties ) )->clean( $value );
 
 	}
 
@@ -42,13 +35,10 @@ class SliderField extends BaseField {
 	 */
 	public function addControl( $wp_customize_manager ) {
 
-		$control_args = $this->parseControlArgs();
+		$control_args         = $this->parseControlArgs();
+		$control_args['type'] = 'wpbf-' . $this->control->type;
 
-		$wp_customize_manager->add_control( new SliderControl(
-			$wp_customize_manager,
-			$this->control->id,
-			$control_args
-		) );
+		$wp_customize_manager->add_control( new SliderControl( $wp_customize_manager, $this->control->id, $control_args ) );
 
 	}
 

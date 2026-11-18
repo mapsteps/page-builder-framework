@@ -1,6 +1,6 @@
 <?php
 /**
- * Control slider.
+ * Slider control.
  *
  * @package Wpbf
  */
@@ -8,12 +8,13 @@
 namespace Mapsteps\Wpbf\Customizer\Controls\Slider;
 
 use Mapsteps\Wpbf\Customizer\Controls\Base\BaseControl;
-use Mapsteps\Wpbf\Customizer\Controls\Generic\NumberUtil;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
 
 /**
- * Class to add Wpbf customizer slider control.
+ * One control for the three slider types: wpbf-slider, wpbf-input-slider and wpbf-responsive-input-slider.
+ *
+ * The type comes from `$args['type']` (default wpbf-slider); the form picks its layout from it (slider-control.tsx).
  */
 class SliderControl extends BaseControl {
 
@@ -29,7 +30,14 @@ class SliderControl extends BaseControl {
 	 *
 	 * @var int
 	 */
-	public static $default_min = 0;
+	public static $default_min = SliderValue::DEFAULT_MIN;
+
+	/**
+	 * Default maximum value.
+	 *
+	 * @var int
+	 */
+	public static $default_max = SliderValue::DEFAULT_MAX;
 
 	/**
 	 * Minimum value.
@@ -37,13 +45,6 @@ class SliderControl extends BaseControl {
 	 * @var int|float
 	 */
 	public $min;
-
-	/**
-	 * Default maximum value.
-	 *
-	 * @var int
-	 */
-	public static $default_max = 100;
 
 	/**
 	 * Maximum value.
@@ -60,46 +61,57 @@ class SliderControl extends BaseControl {
 	public $step = 1;
 
 	/**
+	 * Limits and stored format of the type.
+	 *
+	 * @var SliderValue
+	 */
+	protected $slider_value;
+
+	/**
 	 * Constructor.
-	 *
-	 * Supplied `$args` override class property defaults.
-	 *
-	 * If `$args['settings']` is not defined, use the `$id` as the setting ID.
 	 *
 	 * @param WP_Customize_Manager $wp_customize_manager Customizer bootstrap instance.
 	 * @param string               $id                   Control ID.
-	 * @param array                $args                 Optional. Array of properties for the new Control object.
-	 *                                                   Default empty array.
+	 * @param array                $args                 Control arguments, incl. `type`, `min`, `max`, `step`,
+	 *                                                   and for the responsive slider `devices` and `save_as_json`.
 	 */
 	public function __construct( $wp_customize_manager, $id, $args = array() ) {
 
+		$slider_value = new SliderValue( isset( $args['type'] ) ? $args['type'] : $this->type, $args );
+
+		if ( $slider_value->isResponsive() ) {
+			$args['wrapper_attrs'] = $this->responsiveWrapperAttrs( isset( $args['wrapper_attrs'] ) ? $args['wrapper_attrs'] : array() );
+		}
+
 		parent::__construct( $wp_customize_manager, $id, $args );
 
-		if ( isset( $args['min'] ) && is_numeric( $args['min'] ) ) {
-			$this->min = (float) $args['min'];
-		} else {
-			$this->min = static::$default_min;
-		}
-
-		if ( isset( $args['max'] ) && is_numeric( $args['max'] ) ) {
-			$this->max = (float) $args['max'];
-		} else {
-			$this->max = static::$default_max;
-		}
-
-		if ( $this->min > $this->max ) {
-			$this->max = $this->min;
-		}
-
-		if ( isset( $args['step'] ) && is_numeric( $args['step'] ) ) {
-			$this->step = (float) $args['step'];
-		}
+		$this->type         = $slider_value->type;
+		$this->slider_value = $slider_value;
+		$this->min          = $slider_value->min;
+		$this->max          = $slider_value->max;
+		$this->step         = $slider_value->step;
 
 		if ( $this->setting instanceof WP_Customize_Setting ) {
-			$default_value = $this->setting->default;
-
-			$this->setting->default = ( new NumberUtil() )->limitNumber( $default_value, $this->min, $this->max );
+			$this->setting->default = $slider_value->clean( $this->setting->default );
 		}
+
+	}
+
+	/**
+	 * The responsive slider's wrapper classes: the responsive and the input slider styles.
+	 *
+	 * @param array $wrapper_attrs The wrapper attributes.
+	 *
+	 * @return array
+	 */
+	private function responsiveWrapperAttrs( $wrapper_attrs ) {
+
+		$wrapper_attrs = is_array( $wrapper_attrs ) ? $wrapper_attrs : array();
+		$existing      = ! empty( $wrapper_attrs['class'] ) ? str_ireplace( '{default_class}', '', $wrapper_attrs['class'] ) : '';
+
+		$wrapper_attrs['class'] = '{default_class} ' . $existing . ' wpbf-customize-control-responsive wpbf-customize-control-input-slider';
+
+		return $wrapper_attrs;
 
 	}
 
@@ -110,14 +122,12 @@ class SliderControl extends BaseControl {
 
 		parent::enqueue();
 
-		// Enqueue the styles.
 		wp_enqueue_style( 'wpbf-slider-control', WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control-min.css', array(), WPBF_VERSION );
 
-		// Enqueue the scripts.
 		wp_enqueue_script(
 			'wpbf-slider-control',
 			WPBF_THEME_URI . '/Customizer/Controls/Slider/dist/slider-control-min.js',
-			array( 'wpbf-base-control' ),
+			array( 'wpbf-base-control', 'wp-element', 'react-jsx-runtime' ),
 			WPBF_VERSION,
 			false
 		);
@@ -142,7 +152,12 @@ class SliderControl extends BaseControl {
 		$this->json['min']   = $this->min;
 		$this->json['max']   = $this->max;
 		$this->json['step']  = $this->step;
-		$this->json['value'] = ( new NumberUtil() )->limitNumber( $this->value(), $this->min, $this->max );
+		$this->json['value'] = $this->slider_value->clean( $this->value() );
+
+		if ( $this->slider_value->isResponsive() ) {
+			$this->json['devices']    = $this->slider_value->devices;
+			$this->json['saveAsJson'] = $this->slider_value->save_as_json;
+		}
 
 	}
 
