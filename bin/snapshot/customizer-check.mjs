@@ -100,6 +100,8 @@ const evaluate = async (expression) => {
 let report = {};
 try {
 	await send("Network.enable");
+	// Every open is a first visit: sizes and times include every file.
+	await send("Network.setCacheDisabled", { cacheDisabled: true });
 	await send("Runtime.enable");
 	await send("Fetch.enable", { patterns: [{ urlPattern: "*admin-ajax.php*", requestStage: "Request" }] });
 	for (const pair of cookieHeader.split("; ")) {
@@ -109,13 +111,42 @@ try {
 	// Premium breakpoints that differ from the defaults for every request of the run (see mu-plugin.php).
 	await send("Network.setCookie", { name: "zz_breakpoints", value: "1", domain: "pbf.local", path: "/" });
 	await send("Page.enable");
-	await send("Page.navigate", { url: "http://pbf.local/wp-admin/customize.php?zz_nolock=1" });
 
-	// Wait until the Customizer is ready.
-	for (let i = 0; i < 100; i++) {
+	// Open the Customizer and wait until it's ready; returns the load cost of the page itself: theme script and style
+	// files, their size, and how long until DOMContentLoaded / load. --timing=N opens it N times and reports medians.
+	const open = async () => {
+		await send("Page.navigate", { url: "http://pbf.local/wp-admin/customize.php?zz_nolock=1" });
 		await sleep(300);
-		if (await evaluate("!!(window.wp && wp.customize && wp.customize.state && wp.customize.state('processing') && document.body && document.body.classList.contains('ready'))")) break;
+		for (let i = 0; i < 100; i++) {
+			await sleep(300);
+			if (await evaluate("!!(window.wp && wp.customize && wp.customize.state && wp.customize.state('processing') && document.body && document.body.classList.contains('ready') && 'complete' === document.readyState)")) break;
+		}
+		return await evaluate(`(() => {
+			const nav = performance.getEntriesByType('navigation')[0];
+			const all = performance.getEntriesByType('resource');
+			const theme = all.filter((r) => r.name.includes('/themes/page-builder-framework/') && /\\.(js|css)(\\?|$)/.test(r.name));
+			const kb = (bytes) => Math.round(bytes / 102.4) / 10;
+			const sum = (list) => list.reduce((a, r) => a + r.decodedBodySize, 0);
+			return {
+				themeScripts: theme.filter((r) => /\\.js(\\?|$)/.test(r.name)).length,
+				themeStyles: theme.filter((r) => /\\.css(\\?|$)/.test(r.name)).length,
+				themeKB: kb(sum(theme)),
+				htmlKB: kb(nav.decodedBodySize),
+				totalKB: kb(sum(all) + nav.decodedBodySize),
+				domContentLoadedMs: Math.round(nav.domContentLoadedEventEnd),
+				loadMs: Math.round(nav.loadEventEnd),
+			};
+		})()`);
+	};
+	const timingRuns = Math.max(1, parseInt((process.argv.find((a) => a.startsWith("--timing=")) || "--timing=1").slice(9), 10) || 1);
+	const loads = [];
+	for (let i = 0; i < timingRuns; i++) {
+		const metrics = await open();
+		if (!metrics) throw new Error("No load metrics: " + errors.join(" | "));
+		loads.push(metrics);
 	}
+	const median = (key) => { const v = loads.map((l) => l[key]).sort((a, b) => a - b); return v[Math.floor(v.length / 2)]; };
+	const load = { ...loads[loads.length - 1], runs: timingRuns, domContentLoadedMs: median("domContentLoadedMs"), loadMs: median("loadMs") };
 
 	const result = await evaluate(`(async () => {
 		const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -144,6 +175,7 @@ try {
 			'wpbf-color': '#123456',
 			'wpbf-slider': 7,
 			'wpbf-input-slider': '13px',
+			'wpbf-responsive-input-slider': null,
 			'wpbf-select': null,
 			'wpbf-toggle': null,
 			'wpbf-generic': null,
@@ -157,11 +189,19 @@ try {
 			if (type === 'wpbf-select') next = Object.keys(control.params.choices || {}).find((k) => k !== original) ?? original;
 			if (type === 'wpbf-toggle') next = !original;
 			if (type === 'wpbf-generic') next = 'zz-test';
+			// Responsive sliders: 17 on the first device, in the format the setting uses (JSON text or object).
+			let look = next;
+			if (type === 'wpbf-responsive-input-slider') {
+				const parsed = 'string' === typeof original ? JSON.parse(original || '{}') : { ...original };
+				parsed[control.params.devices[0]] = '17';
+				next = 'string' === typeof original ? JSON.stringify(parsed) : parsed;
+				look = '17';
+			}
 			setting.set(next);
 			await sleep(400);
 			const html = control.container[0].innerHTML;
 			const inputs = [...control.container[0].querySelectorAll('input, select, textarea')].map((i) => i.type === 'checkbox' ? String(i.checked) : i.value);
-			const shown = inputs.some((v) => String(v).toLowerCase().includes(String(next).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(next).toLowerCase());
+			const shown = inputs.some((v) => String(v).toLowerCase().includes(String(look).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(look).toLowerCase());
 			setting.set(original);
 			await sleep(200);
 			roundTrips[type] = { id: control.id, setTo: next, shownInControl: shown, restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
@@ -228,7 +268,7 @@ try {
 			markup,
 		};
 	})()`);
-	report = { ...result, jsErrors: [...new Set(errors)], failedRequests: [...new Set(failed)], blockedRequests: blocked };
+	report = { load, ...result, jsErrors: [...new Set(errors)], failedRequests: [...new Set(failed)], blockedRequests: blocked };
 } finally {
 	ws.close();
 	chrome.kill();
