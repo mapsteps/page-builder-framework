@@ -13,6 +13,8 @@
  *
  *     node bin/snapshot/customizer-check.mjs > before.json
  *     node bin/snapshot/customizer-check.mjs > after.json
+ *
+ * --timing=N opens the Customizer N times for the load figures; --layout adds every control's rendered boxes.
  */
 import { spawn, execFileSync } from "node:child_process";
 import { copyFileSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
@@ -111,6 +113,10 @@ try {
 	// Premium breakpoints that differ from the defaults for every request of the run (see mu-plugin.php).
 	await send("Network.setCookie", { name: "zz_breakpoints", value: "1", domain: "pbf.local", path: "/" });
 	await send("Page.enable");
+	// When the Customizer is ready to use (core adds "ready" to the body once every control is set up).
+	await send("Page.addScriptToEvaluateOnNewDocument", {
+		source: `new MutationObserver((list, observer) => { if (document.body && document.body.classList.contains('ready')) { window.__zzReadyMs = Math.round(performance.now()); observer.disconnect(); } }).observe(document, { subtree: true, attributes: true, attributeFilter: ['class'] });`,
+	});
 
 	// Open the Customizer and wait until it's ready; returns the load cost of the page itself: theme script and style
 	// files, their size, and how long until DOMContentLoaded / load. --timing=N opens it N times and reports medians.
@@ -135,6 +141,7 @@ try {
 				totalKB: kb(sum(all) + nav.decodedBodySize),
 				domContentLoadedMs: Math.round(nav.domContentLoadedEventEnd),
 				loadMs: Math.round(nav.loadEventEnd),
+				readyMs: window.__zzReadyMs || null,
 			};
 		})()`);
 	};
@@ -146,13 +153,26 @@ try {
 		loads.push(metrics);
 	}
 	const median = (key) => { const v = loads.map((l) => l[key]).sort((a, b) => a - b); return v[Math.floor(v.length / 2)]; };
-	const load = { ...loads[loads.length - 1], runs: timingRuns, domContentLoadedMs: median("domContentLoadedMs"), loadMs: median("loadMs") };
+	const load = { ...loads[loads.length - 1], runs: timingRuns, domContentLoadedMs: median("domContentLoadedMs"), loadMs: median("loadMs"), readyMs: median("readyMs") };
 
 	const result = await evaluate(`(async () => {
 		const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 		const sections = [];
 		wp.customize.section.each((s) => sections.push(s));
-		for (const s of sections) { s.expand({ duration: 0 }); await sleep(120); }
+		// --layout: each control's rendered boxes (every element's position and size inside the control, while its section is
+		// open), to compare two runs: a change in markup that moves anything shows up here.
+		const layout = {};
+		const measure = (s) => s.controls().forEach((c) => {
+			const el = c.container && c.container[0];
+			if (!el || !c.params.type || 0 !== c.params.type.indexOf('wpbf-') || !el.offsetParent) return;
+			const box = el.getBoundingClientRect();
+			const r = (n) => Math.round(n * 10) / 10;
+			layout[c.id] = [el, ...el.querySelectorAll('*')].filter((n) => !n.closest('.mce-tinymce, .tooltip-content')).map((n) => {
+				const b = n.getBoundingClientRect();
+				return n.tagName.toLowerCase() + (n.className && 'string' === typeof n.className ? '.' + n.className.trim().split(/\s+/).sort().join('.') : '') + ' ' + [r(b.left - box.left), r(b.top - box.top), r(b.width), r(b.height)].join(',');
+			});
+		});
+		for (const s of sections) { s.expand({ duration: 0 }); await sleep(120); if (${process.argv.includes("--layout")}) { await sleep(200); measure(s); } }
 		await sleep(1500);
 		const byType = {};
 		const empty = [];
@@ -168,7 +188,7 @@ try {
 			if (el && t && 0 === t.indexOf('wpbf-')) markup[c.id] = el.innerHTML.replace(/\\s+/g, ' ').replace(/select2-data-\\d+-\\w+/g, 'select2-data').replace(/select2-\\w+-(container|results)/g, 'select2-$1').replace(/choice-\\w{4}-/g, 'choice-').trim();
 		});
 
-		// Round trips on the React and select controls: a value set on the setting must show up in the control, and back.
+		// Round trips on the React, select and 7b controls: a value set on the setting must show up in the control, and back.
 		const roundTrips = {};
 		const firstOf = (type) => { let found; wp.customize.control.each((c) => { if (!found && c.params.type === type) found = c; }); return found; };
 		const tries = {
@@ -179,6 +199,16 @@ try {
 			'wpbf-select': null,
 			'wpbf-toggle': null,
 			'wpbf-generic': null,
+			'wpbf-checkbox': null,
+			'wpbf-radio': null,
+			'wpbf-radio-buttonset': null,
+			'wpbf-radio-image': null,
+			'wpbf-responsive-generic': null,
+			'wpbf-dimension': '37px',
+			'wpbf-margin-padding': null,
+			'wpbf-responsive-margin-padding': null,
+			'wpbf-image': null,
+			'wpbf-editor': '<p>zz-test</p>',
 		};
 		for (const [type, value] of Object.entries(tries)) {
 			const control = firstOf(type);
@@ -186,8 +216,8 @@ try {
 			const setting = control.setting;
 			const original = setting.get();
 			let next = value;
-			if (type === 'wpbf-select') next = Object.keys(control.params.choices || {}).find((k) => k !== original) ?? original;
-			if (type === 'wpbf-toggle') next = !original;
+			if (type === 'wpbf-select' || type.startsWith('wpbf-radio')) next = Object.keys(control.params.choices || {}).find((k) => k !== original) ?? original;
+			if (type === 'wpbf-toggle' || type === 'wpbf-checkbox') next = !original;
 			if (type === 'wpbf-generic') next = 'zz-test';
 			// A value inside the slider's range (one outside shows as the limit).
 			if (type === 'wpbf-slider') next = Math.min(control.params.max, control.params.min + 7 * control.params.step);
@@ -199,11 +229,26 @@ try {
 				next = 'string' === typeof original ? JSON.stringify(parsed) : parsed;
 				look = '17';
 			}
+			// Responsive generic: 17 on the first device; margin/padding: 23 on the first side (same format as the setting).
+			if (type === 'wpbf-responsive-generic' || type.endsWith('margin-padding')) {
+				const parsed = 'string' === typeof original ? JSON.parse(original || '{}') : { ...original };
+				const key = type === 'wpbf-responsive-generic' ? control.params.devices[0] : control.params.dimensions[0];
+				look = type === 'wpbf-responsive-generic' ? '17' : '23';
+				parsed[key] = 'string' === typeof original || control.params.dontSaveUnit ? look : look + control.params.unit;
+				next = 'string' === typeof original ? JSON.stringify(parsed) : parsed;
+			}
+			// Image: an image of the theme, as a URL (or in the format the setting uses).
+			if (type === 'wpbf-image') {
+				look = '/inc/customizer/img/align-left.jpg';
+				const url = location.origin + '/wp-content/themes/page-builder-framework' + look;
+				next = 'array' === control.params.saveAs ? { id: 0, url, width: 0, height: 0 } : url;
+			}
+			if (type === 'wpbf-editor') look = 'zz-test';
 			setting.set(next);
 			await sleep(400);
 			const html = control.container[0].innerHTML;
-			const inputs = [...control.container[0].querySelectorAll('input, select, textarea')].map((i) => i.type === 'checkbox' ? String(i.checked) : i.value);
-			const shown = inputs.some((v) => String(v).toLowerCase().includes(String(look).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(look).toLowerCase());
+			const inputs = [...control.container[0].querySelectorAll('input, select, textarea')].map((i) => i.type === 'checkbox' ? String(i.checked) : i.type === 'radio' ? (i.checked ? i.value : '') : i.value);
+			const shown = type.startsWith('wpbf-radio') ? inputs.includes(String(look)) : inputs.some((v) => String(v).toLowerCase().includes(String(look).toLowerCase().replace(/px$/, ''))) || html.toLowerCase().includes(String(look).toLowerCase());
 			setting.set(original);
 			await sleep(200);
 			roundTrips[type] = { id: control.id, setTo: next, shownInControl: shown, restored: JSON.stringify(setting.get()) === JSON.stringify(original) };
@@ -268,6 +313,7 @@ try {
 			roundTrips,
 			unsavedChanges: Object.keys(wp.customize.dirtyValues ? wp.customize.dirtyValues({ unsaved: true }) : {}).length,
 			markup,
+			layout,
 		};
 	})()`);
 	report = { load, ...result, jsErrors: [...new Set(errors)], failedRequests: [...new Set(failed)], blockedRequests: blocked };
