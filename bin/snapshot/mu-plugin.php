@@ -148,6 +148,21 @@ ini_set( 'log_errors', '1' );
 
 $zz_variant = preg_replace( '/[^a-z0-9]/', '', $_GET['zz_snap'] );
 
+// Snapshot requests never save settings. The variants below are swapped in by filter; anything that saves a theme mod
+// during such a request (the old-settings migrations in inc/backwards-compatibility.php run when their record doesn't
+// match, e.g. after a variant with Premium's blog layouts, and set_theme_mod() writes the whole list) would save the
+// variant's settings as the site's own. Returning the old value makes update_option() stop without writing.
+foreach ( array( 'theme_mods_' . get_option( 'stylesheet' ), 'theme_mods_' . get_option( 'template' ), 'wpbf_migrations_done', 'wpbf_settings' ) as $zz_option ) {
+	add_filter(
+		'pre_update_option_' . $zz_option,
+		function ( $value, $old_value ) {
+			return $old_value;
+		},
+		PHP_INT_MAX,
+		2
+	);
+}
+
 // WooCommerce's "coming soon" mode shows visitors a placeholder instead of the store pages: off for snapshot requests,
 // so the shop, product and category pages are in the snapshot (the site's setting stays as it is). The checkout shows
 // with an empty cart instead of redirecting to the cart (which would drop the snapshot parameters).

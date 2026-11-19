@@ -4,9 +4,10 @@
  * Opens the Customizer in headless Chrome with a temporary admin login, expands every section,
  * and reports per control type how many controls rendered, plus any JavaScript errors and failed requests.
  *
- * previewCss: sets options in the Customizer (each value of the snapshot's typography1, general1, footer1, edd1, blog1
- * and woocommerce1 variants on its own, then the typography1-3, general1-4, footer1-5, edd1-5, blog1-5 and
- * woocommerce1-6 variants whole; the values no control produces, footer4/edd4/typography4/blog4/woocommerce4, left out), waits for the preview, and compares the preview's CSS of each area written with
+ * previewCss: sets options in the Customizer (each value of the snapshot's typography1, general1, footer1, edd1, blog1,
+ * woocommerce1 and header1 variants on its own, then the typography1-3, general1-4, footer1-5, edd1-5, blog1-5,
+ * woocommerce1-6 and header1-8 variants whole; the values no control produces, footer4/edd4/typography4/blog4/
+ * woocommerce4/header4, left out), waits for the preview, and compares the preview's CSS of each area written with
  * wpbf_css() with what the front end prints for the same values (cleaned like the Customizer cleans them). The whole
  * run uses Premium breakpoints of 1100/700/400px. "matched" must equal "cases".
  *
@@ -31,7 +32,7 @@ const port = 9333;
 
 // Areas written with wpbf_css() (CssRules::AREAS) and their hand-made variants of the page snapshots
 // (bin/snapshot/output/variants.json, made by snapshot.py; named after the area: general1, footer1, edd1, ...).
-const cssAreas = ["typography", "general", "footer", "edd", "blog", "woocommerce"];
+const cssAreas = ["typography", "general", "footer", "edd", "blog", "woocommerce", "header"];
 let previewVariants = {};
 try {
 	const all = JSON.parse(readFileSync(join(here, "output", "variants.json"), "utf8"));
@@ -41,8 +42,9 @@ try {
 		// gets them raw while the front-end side here cleans them to the minimum. As saved values (the only way
 		// they occur) preview and front end both skip them; the page snapshot covers that. typography4: a font saved as
 		// text, switches saved as '1' / 0 (no control saves them either). blog4: '0' values, padding that isn't JSON.
-		// woocommerce4: '0' values.
-		if (["footer4", "edd4", "typography4", "blog4", "woocommerce4"].includes(name)) continue;
+		// woocommerce4, header4: '0' values, JSON that isn't JSON. header6: a slider saved as the text '20' (old sites have
+		// it in the database; the slider saves numbers, so set from code the front-end side here gets the cleaned number).
+		if (["footer4", "edd4", "typography4", "blog4", "woocommerce4", "header4", "header6"].includes(name)) continue;
 		const { __wpbf_settings, ...mods } = values;
 		previewVariants[name] = mods;
 	}

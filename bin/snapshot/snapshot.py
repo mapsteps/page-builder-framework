@@ -40,7 +40,8 @@ ADMIN = ['/wp-admin/themes.php?page=wpbf-premium', '/wp-admin/edit.php', '/wp-ad
 VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synthetic3', 'general1', 'general2', 'general3',
             'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5', 'edd1', 'edd2', 'edd3', 'edd4', 'edd5',
             'typography1', 'typography2', 'typography3', 'typography4', 'blog1', 'blog2', 'blog3', 'blog4', 'blog5',
-            'woocommerce1', 'woocommerce2', 'woocommerce3', 'woocommerce4', 'woocommerce5', 'woocommerce6']
+            'woocommerce1', 'woocommerce2', 'woocommerce3', 'woocommerce4', 'woocommerce5', 'woocommerce6',
+            'header1', 'header2', 'header3', 'header4', 'header5', 'header6', 'header7', 'header8']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -412,6 +413,128 @@ HAND_VARIANTS = {
     'woocommerce6': {
         'woocommerce_single_tabs': 'modern', 'menu_font_color': '#121212', 'woocommerce_loop_sale_alignment': 'center',
         'woocommerce_loop_sale_layout': 'round', 'woocommerce_loop_sale_position': 'outside',
+    },
+    # Header: everything changed (text logo with font and tagline, centered menu, sub menu with separator, hamburger
+    # mobile menu, mobile sub menu, one-column pre header), custom breakpoints. Sliders saved as numbers, as the
+    # Customizer saves them.
+    'header1': {
+        '__wpbf_settings': {'wpbf_breakpoint_desktop': '1100px', 'wpbf_breakpoint_medium': '700px', 'wpbf_breakpoint_mobile': '400px'},
+        'custom_logo': '', 'menu_logo_font_toggle': True, 'menu_logo_font_family': {**TYPO('Rubik', '700'), 'color': '#123456'},
+        'menu_logo_color': '#101010', 'menu_logo_color_alt': '#202020',
+        'menu_logo_font_size': json.dumps({'desktop': '26px', 'tablet': '22px', 'mobile': '18'}),
+        'menu_logo_description': True, 'menu_logo_description_toggle': True, 'menu_logo_description_font_family': TYPO('Inter', 'italic'),
+        'menu_logo_description_color': '#303030',
+        'menu_logo_description_font_size': json.dumps({'desktop': '15px', 'tablet': '14', 'mobile': '13px'}),
+        'menu_logo_container_width': 30, 'mobile_menu_logo_container_width': 60,
+        'menu_position': 'menu-centered', 'menu_width': '1000px', 'menu_height': 30, 'menu_padding': 25, 'menu_bg_color': '#eeeeee',
+        'menu_font_color': '#111111', 'menu_font_color_alt': '#222222', 'menu_font_size': '15px',
+        'sub_menu_text_alignment': 'center', 'sub_menu_bg_color': '#fafafa', 'sub_menu_bg_color_alt': '#f0f0f0', 'sub_menu_width': 250,
+        'sub_menu_padding': PAD(top=12, right=22, bottom=12, left=22), 'sub_menu_accent_color': '#333333',
+        'sub_menu_accent_color_alt': '#444444', 'sub_menu_font_size': '13px', 'sub_menu_separator': True, 'sub_menu_separator_color': '#dddddd',
+        'mobile_menu_options': 'menu-mobile-hamburger', 'mobile_menu_height': 15, 'mobile_menu_background_color': '#f8f8f8',
+        'mobile_menu_padding': PAD(top=14, right=24, bottom=14, left=24), 'mobile_menu_font_color': '#121212',
+        'mobile_menu_font_color_alt': '#232323', 'mobile_menu_border_color': '#cccccc', 'mobile_menu_hamburger_color': '#343434',
+        'mobile_menu_hamburger_size': '20px', 'mobile_menu_hamburger_bg_color': '#454545', 'mobile_menu_hamburger_border_radius': 5,
+        'mobile_menu_bg_color': '#fefefe', 'mobile_menu_bg_color_alt': '#efefef', 'mobile_menu_submenu_arrow_color': '#565656',
+        'mobile_menu_font_size': '15px', 'mobile_sub_menu_indent': 10, 'mobile_sub_menu_bg_color': '#f1f1f1',
+        'mobile_sub_menu_bg_color_alt': '#e1e1e1', 'mobile_sub_menu_arrow_color': '#676767', 'mobile_sub_menu_font_size': '13px',
+        'mobile_sub_menu_font_color': '#787878', 'mobile_sub_menu_font_color_alt': '#898989',
+        'pre_header_layout': 'one', 'pre_header_width': '1000px', 'pre_header_height': 12, 'pre_header_bg_color': '#000000',
+        'pre_header_font_color': '#ffffff', 'pre_header_accent_color': '#aaaaaa', 'pre_header_accent_color_alt': '#bbbbbb',
+        'pre_header_font_size': '13px',
+    },
+    # Header: everything saved, but equal to the defaults, as the Customizer saves them (sliders as numbers: the old "is
+    # default" checks compared to text, so most of it printed). Stacked menu, two-column pre header.
+    'header2': {
+        'custom_logo': '', 'menu_logo_font_size': json.dumps({'desktop': '22px', 'tablet': '', 'mobile': ''}),
+        'menu_logo_color': '', 'menu_logo_color_alt': '', 'menu_logo_description': True, 'menu_logo_description_color': '',
+        'menu_logo_description_font_size': json.dumps({'desktop': '', 'tablet': '', 'mobile': ''}),
+        'menu_logo_container_width': 25, 'mobile_menu_logo_container_width': 66,
+        'menu_position': 'menu-stacked', 'menu_width': '', 'menu_height': 20, 'menu_padding': 20, 'menu_bg_color': '#f5f5f7',
+        'menu_font_color': '', 'menu_font_color_alt': '', 'menu_font_size': '16px',
+        'sub_menu_text_alignment': 'left', 'sub_menu_bg_color': '#ffffff', 'sub_menu_bg_color_alt': '#ffffff', 'sub_menu_width': 220,
+        'sub_menu_padding': PAD(top=10, right=20, bottom=10, left=20), 'sub_menu_accent_color': '', 'sub_menu_accent_color_alt': '',
+        'sub_menu_font_size': '', 'sub_menu_separator': True, 'sub_menu_separator_color': '#f5f5f7',
+        'mobile_menu_options': 'menu-mobile-hamburger', 'mobile_menu_height': 20, 'mobile_menu_background_color': '',
+        'mobile_menu_padding': PAD(top=10, right=20, bottom=10, left=20), 'mobile_menu_hamburger_color': '',
+        'mobile_menu_hamburger_size': '16px', 'mobile_menu_hamburger_bg_color': '', 'mobile_menu_hamburger_border_radius': 0,
+        'mobile_menu_bg_color': '#ffffff', 'mobile_menu_bg_color_alt': '#ffffff', 'mobile_menu_border_color': '#d9d9e0',
+        'mobile_menu_font_color': '', 'mobile_menu_font_color_alt': '', 'mobile_menu_submenu_arrow_color': '', 'mobile_menu_font_size': '16px',
+        'mobile_sub_menu_indent': 0, 'mobile_sub_menu_bg_color': '', 'mobile_sub_menu_bg_color_alt': '', 'mobile_sub_menu_font_color': '',
+        'mobile_sub_menu_font_color_alt': '', 'mobile_sub_menu_arrow_color': '', 'mobile_sub_menu_font_size': '',
+        'pre_header_layout': 'two', 'pre_header_width': '', 'pre_header_height': 10, 'pre_header_bg_color': '#ffffff',
+        'pre_header_font_color': '', 'pre_header_accent_color': '', 'pre_header_accent_color_alt': '', 'pre_header_font_size': '14px',
+    },
+    # Header: odd saved values: sliders saved as text (older sites), capitals, sizes without a unit, 1200px widths with
+    # another page width, padding sides as text, custom logo with sizes; Premium's off-canvas menu and mobile menu.
+    'header3': {
+        'page_max_width': '1100px', 'custom_logo': 127346,
+        'menu_logo_size': json.dumps({'desktop': '200', 'tablet': 180, 'mobile': '150px'}),
+        'menu_logo_font_size': json.dumps({'desktop': '30px'}), 'menu_logo_color': '#ABCDEF',
+        'menu_position': 'menu-off-canvas', 'mobile_menu_options': 'menu-mobile-off-canvas',
+        'menu_width': '1200px', 'menu_height': '20', 'menu_padding': 20, 'menu_bg_color': '#F5F5F7', 'menu_font_size': 16,
+        'menu_logo_container_width': '25', 'mobile_menu_logo_container_width': 66,
+        'sub_menu_width': '220', 'sub_menu_bg_color': '#FFFFFF', 'sub_menu_padding': PAD(top='10', right=20, bottom=10, left=30),
+        'sub_menu_separator': True, 'sub_menu_separator_color': '#F5F5F7', 'sub_menu_font_size': 14,
+        'mobile_menu_height': '20', 'mobile_menu_border_color': '#D9D9E0', 'mobile_menu_bg_color': '#FFFFFF',
+        'mobile_menu_padding': PAD(top=10, right='20', bottom=12, left=20), 'mobile_menu_hamburger_size': 18,
+        'mobile_menu_hamburger_color': '#ABABAB', 'mobile_menu_hamburger_border_radius': 4, 'mobile_menu_font_size': '16',
+        'mobile_sub_menu_font_size': 12, 'mobile_sub_menu_indent': '15',
+        'pre_header_layout': 'two', 'pre_header_width': '1200px', 'pre_header_height': '10', 'pre_header_bg_color': '#FFFFFF',
+        'pre_header_font_size': 14,
+    },
+    # Header: values no control produces: '0' and 0, empty values, JSON that isn't JSON. Left menu, default mobile menu.
+    'header4': {
+        'custom_logo': '', 'menu_position': 'menu-left', 'mobile_menu_options': 'menu-mobile-default',
+        'menu_logo_font_size': json.dumps({'desktop': 0, 'tablet': '0', 'mobile': ''}), 'menu_logo_color': '0',
+        'menu_logo_description': True, 'menu_logo_description_font_size': 'not json', 'menu_logo_description_color': '0',
+        'menu_logo_container_width': 0, 'mobile_menu_logo_container_width': '0',
+        'menu_width': '0', 'menu_height': 0, 'menu_padding': '0', 'menu_bg_color': '', 'menu_font_color': '0', 'menu_font_size': '0',
+        'menu_font_color_alt': '0', 'sub_menu_text_alignment': '', 'sub_menu_bg_color': '0', 'sub_menu_bg_color_alt': '0',
+        'sub_menu_width': '0', 'sub_menu_padding': PAD(top='0', right=0, bottom='', left=False), 'sub_menu_accent_color': '0',
+        'sub_menu_font_size': '0', 'mobile_menu_height': '0', 'mobile_menu_padding': 'not json', 'mobile_menu_bg_color_alt': '',
+        'mobile_menu_border_color': '0', 'mobile_menu_font_size': '', 'mobile_menu_bg_color': '0',
+        'mobile_sub_menu_indent': '0', 'mobile_sub_menu_font_color': '0', 'mobile_sub_menu_font_size': '0',
+        'pre_header_layout': 'one', 'pre_header_height': '0', 'pre_header_width': '0', 'pre_header_bg_color': '0',
+        'pre_header_font_size': '0', 'pre_header_accent_color': '0',
+    },
+    # Header: options set whose switch is off (custom logo with text logo options, logo font off, tagline off, no pre header,
+    # separator off, hamburger options with the default mobile menu); options from old versions nobody registers.
+    'header5': {
+        'custom_logo': 127346, 'menu_logo_size': json.dumps({'desktop': '', 'tablet': '', 'mobile': ''}),
+        'menu_logo_font_toggle': True, 'menu_logo_font_family': TYPO('Rubik', '700'), 'menu_logo_color': '#121212',
+        'menu_logo_font_size': json.dumps({'desktop': '30px'}), 'menu_logo_description': False, 'menu_logo_description_color': '#343434',
+        'menu_logo_description_toggle': True, 'menu_logo_description_font_family': TYPO('Inter', '600'),
+        'pre_header_layout': 'none', 'pre_header_bg_color': '#000000', 'pre_header_height': 20, 'pre_header_font_color': '#ffffff',
+        'sub_menu_separator': False, 'sub_menu_separator_color': '#ff0000',
+        'mobile_menu_options': 'menu-mobile-default', 'mobile_menu_hamburger_color': '#ff00ff', 'mobile_menu_hamburger_bg_color': '#00ffff',
+        'mobile_menu_hamburger_size': '22px', 'mobile_menu_hamburger_border_radius': 6, 'menu_position': 'menu-right', 'menu_height': 35,
+        'mobile_sub_menu_border_color': '#abcabc', 'mobile_menu_padding_left': '30', 'mobile_sub_menu_indent': 8,
+    },
+    # Header: Premium's full screen menu with padding saved as text (old sites), a logo font with odd parts, a tagline font
+    # without a variant, the hamburger filled without radius.
+    'header6': {
+        'custom_logo': '', 'menu_position': 'menu-full-screen', 'menu_padding': '20', 'menu_height': 20,
+        'mobile_menu_options': 'menu-mobile-hamburger', 'mobile_menu_hamburger_bg_color': '#123456',
+        'mobile_menu_hamburger_border_radius': 0, 'mobile_menu_hamburger_color': '#ffffff',
+        'menu_logo_font_toggle': True, 'menu_logo_font_family': {'font-family': 'Georgia, serif', 'variant': '700italic', 'color': '#ff0000'},
+        'menu_logo_description': True, 'menu_logo_description_toggle': True, 'menu_logo_description_font_family': {'font-family': 'Inter'},
+        'sub_menu_text_alignment': 'right', 'menu_font_color_alt': '#00b1ff', 'mobile_menu_font_color_alt': '#ff00aa',
+    },
+    # Header: Premium's stacked (advanced) menu, padding saved as the default number, two-column pre header with a hover color.
+    'header7': {
+        'custom_logo': '', 'menu_position': 'menu-stacked-advanced', 'menu_padding': 20, 'menu_height': 15,
+        'menu_logo_container_width': 40, 'mobile_menu_logo_container_width': 50,
+        'pre_header_layout': 'two', 'pre_header_accent_color_alt': '#ff6600', 'pre_header_font_color': '#333333',
+        'mobile_sub_menu_font_color_alt': '#aa00aa', 'sub_menu_accent_color_alt': '#00aa00',
+    },
+    # Header: Premium's off-canvas (left) menu and mobile menu, one padding side changed (the others stay the defaults),
+    # the logo's tablet size with the desktop size at its default.
+    'header8': {
+        'custom_logo': '', 'menu_position': 'menu-off-canvas-left', 'menu_padding': 30, 'mobile_menu_options': 'menu-mobile-off-canvas',
+        'mobile_menu_padding': PAD(top=10, right=20, bottom=10, left=30), 'sub_menu_padding': PAD(top=10, right=30, bottom=10, left=20),
+        'menu_logo_font_size': json.dumps({'desktop': '22px', 'tablet': '18px', 'mobile': ''}),
+        'menu_logo_description': True, 'menu_logo_description_font_size': json.dumps({'desktop': '', 'tablet': '12px', 'mobile': ''}),
     },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
