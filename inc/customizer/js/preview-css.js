@@ -309,6 +309,9 @@
 			return;
 		}
 
+		// A <style> with a title is an alternate style sheet: the browser drops it as soon as any style changes.
+		style.removeAttribute("title");
+
 		style.textContent = area.template.replace(TOKEN, function (token, index) {
 			return area.blocks[index] ? render(area, area.blocks[index]) : "";
 		});
@@ -363,6 +366,11 @@
 			isRelatedSetting: function () {
 				return false;
 			},
+			// No "Shift-click to edit" for the area <style> tags: core would give them a title attribute, which turns a
+			// <style> into an alternate style sheet that browsers switch off on the next style change (every area's CSS
+			// then vanished from the preview after changing any option).
+			ready: function () {},
+			createEditShortcutForPlacement: function () {},
 			renderContent: function (placement) {
 				return update(this.id.replace(/^wpbf_css_/, ""), placement.addedContent);
 			},
