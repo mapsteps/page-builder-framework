@@ -157,7 +157,7 @@ error_reporting( E_ALL );
 ini_set( 'display_errors', '0' );
 ini_set( 'log_errors', '1' );
 
-$zz_variant = preg_replace( '/[^a-z0-9]/', '', $_GET['zz_snap'] );
+$zz_variant = preg_replace( '/[^a-z0-9\-]/', '', $_GET['zz_snap'] ); // Premium's variants: premium-<area>1 …
 
 // Snapshot requests never save settings. The variants below are swapped in by filter; anything that saves a theme mod
 // during such a request (the old-settings migrations in inc/backwards-compatibility.php run when their record doesn't

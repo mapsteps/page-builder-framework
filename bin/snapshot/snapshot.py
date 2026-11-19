@@ -41,7 +41,9 @@ VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synth
             'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5', 'edd1', 'edd2', 'edd3', 'edd4', 'edd5',
             'typography1', 'typography2', 'typography3', 'typography4', 'blog1', 'blog2', 'blog3', 'blog4', 'blog5',
             'woocommerce1', 'woocommerce2', 'woocommerce3', 'woocommerce4', 'woocommerce5', 'woocommerce6',
-            'header1', 'header2', 'header3', 'header4', 'header5', 'header6', 'header7', 'header8']
+            'header1', 'header2', 'header3', 'header4', 'header5', 'header6', 'header7', 'header8',
+            'premium-general1', 'premium-general2', 'premium-general3', 'premium-typography1', 'premium-typography2',
+            'premium-typography3']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -535,6 +537,53 @@ HAND_VARIANTS = {
         'mobile_menu_padding': PAD(top=10, right=20, bottom=10, left=30), 'sub_menu_padding': PAD(top=10, right=30, bottom=10, left=20),
         'menu_logo_font_size': json.dumps({'desktop': '22px', 'tablet': '18px', 'mobile': ''}),
         'menu_logo_description': True, 'menu_logo_description_font_size': json.dumps({'desktop': '', 'tablet': '12px', 'mobile': ''}),
+    },
+    # Premium (its CSS areas, premium-<area>): everything changed, with custom breakpoints and a color palette.
+    'premium-general1': {
+        '__wpbf_settings': {'wpbf_breakpoint_desktop': '1100px', 'wpbf_breakpoint_medium': '700px', 'wpbf_breakpoint_mobile': '400px',
+                            'color_palette': ['#101010', '#202020', '', '#404040']},
+        'base_color_global': '#eeeeee', 'base_color_alt_global': '#dddddd', 'brand_color_global': '#111111',
+        'brand_color_alt_global': '#222222', 'accent_color_global': '#ff6600', 'accent_color_alt_global': 'rgba(255,102,0,0.7)',
+    },
+    # Premium: everything saved equal to the defaults, some in capitals (the old check compared text).
+    'premium-general2': {
+        'base_color_global': '#f5f5f7', 'base_color_alt_global': '#DEDEE5', 'brand_color_global': '#3e4349',
+        'brand_color_alt_global': '#6D7680', 'accent_color_global': '#3ba9d2', 'accent_color_alt_global': '#79c4e0',
+    },
+    # Premium: values no control saves ('0', empty).
+    'premium-general3': {'base_color_global': '0', 'base_color_alt_global': '', 'accent_color_global': 'var(--x)'},
+    # Premium typography: everything changed, custom breakpoints, every heading switch on, sizes with and without a unit.
+    'premium-typography1': {
+        '__wpbf_settings': {'wpbf_breakpoint_desktop': '1100px', 'wpbf_breakpoint_medium': '700px', 'wpbf_breakpoint_mobile': '400px'},
+        'page_font_size': json.dumps({'desktop': '17px', 'tablet': '15', 'mobile': '0.9em'}), 'page_line_height': '1.5',
+        'page_bold_color': '#101010', 'menu_letter_spacing': '1', 'menu_text_transform': 'uppercase',
+        'sub_menu_letter_spacing': '0.5', 'sub_menu_text_transform': 'lowercase',
+        'page_h1_font_color': '#111111', 'page_h1_line_height': '1.4', 'page_h1_letter_spacing': '2', 'page_h1_text_transform': 'uppercase',
+        'page_h1_font_size': json.dumps({'desktop': '40px', 'tablet': '30px', 'mobile': '24'}),
+        **{k % n: v for n in range(2, 7) for k, v in {
+            'page_h%d_toggle': True, 'page_h%d_line_height': '1.3', 'page_h%d_letter_spacing': '1', 'page_h%d_text_transform': 'capitalize',
+            'page_h%d_font_color': '#2%d2%d2%d'.replace('%d', '0'), 'page_h%d_font_size': json.dumps({'desktop': '30px', 'tablet': '', 'mobile': '20'})}.items()},
+    },
+    # Premium typography: everything saved as the defaults, as the Customizer saves them (sliders as numbers), heading
+    # switches on. (Sliders saved as text, as older versions did: premium-typography3.)
+    'premium-typography2': {
+        'page_font_size': json.dumps({'desktop': '16px', 'tablet': '', 'mobile': ''}), 'page_line_height': 1.7, 'page_bold_color': '',
+        'menu_letter_spacing': 0, 'menu_text_transform': 'none', 'sub_menu_letter_spacing': 0, 'sub_menu_text_transform': 'none',
+        'page_h1_font_color': '#000', 'page_h1_line_height': 1.2, 'page_h1_letter_spacing': 0, 'page_h1_text_transform': 'none',
+        'page_h1_font_size': json.dumps({'desktop': '32px', 'tablet': '', 'mobile': ''}),
+        'page_h2_toggle': True, 'page_h2_line_height': 1.2, 'page_h2_letter_spacing': 0, 'page_h2_text_transform': 'none',
+        'page_h2_font_color': '#000', 'page_h2_font_size': json.dumps({'desktop': '28px', 'tablet': '', 'mobile': ''}),
+        'page_h3_toggle': True, 'page_h3_font_size': json.dumps({'desktop': '24px', 'tablet': '', 'mobile': ''}),
+    },
+    # Premium typography: odd saved values (numbers instead of text, zeros, empty parts, missing parts, broken JSON),
+    # heading switches on with nothing else saved, H1 transform/spacing set so the H2-H6 ones override it.
+    'premium-typography3': {
+        'page_line_height': '1.7', 'menu_letter_spacing': '0', 'sub_menu_letter_spacing': '', 'page_h1_letter_spacing': '0',
+        'page_h1_text_transform': 'uppercase', 'page_h1_line_height': 1.2, 'page_h1_font_color': '#000000',
+        'page_font_size': json.dumps({'desktop': 16, 'tablet': '0', 'mobile': ''}), 'page_h1_font_size': json.dumps({'tablet': '20px'}),
+        'page_h2_font_size': 'not json', 'page_h3_font_size': json.dumps({'desktop': '', 'tablet': '', 'mobile': ''}),
+        'page_h2_toggle': True, 'page_h3_toggle': True, 'page_h3_letter_spacing': 0, 'page_h4_toggle': '1', 'page_h4_text_transform': '',
+        'page_h5_font_color': '0', 'page_h6_font_color': '#ABCDEF',
     },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
