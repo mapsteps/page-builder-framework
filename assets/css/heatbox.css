@@ -986,6 +986,12 @@ body {
 		line-height: calc(var(--heatbox-control-height) - 2px);
 		vertical-align: middle;
 	}
+
+	/* …and lines up with it (the field sits on its text baseline, which put the button 2px lower) */
+	.heatbox-wrap :is(input[type="text"], input[type="url"], input[type="email"], input[type="number"], input[type="password"], input[type="search"]):has(~ :is(.button, .button-primary, .button-secondary):not(.button-small)),
+	.heatbox-wrap :is(input[type="text"], input[type="url"], input[type="email"], input[type="number"], input[type="password"], input[type="search"]) ~ :is(.button, .button-primary, .button-secondary):not(.button-small) {
+		vertical-align: top;
+	}
 }
 
 .heatbox-wrap .button-small {
