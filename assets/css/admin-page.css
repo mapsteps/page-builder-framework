@@ -112,6 +112,24 @@
 	}
 }
 
+/* Premium features: more room around the list */
+.wpbf-premium-metabox .heatbox-content {
+	padding-top: 32px;
+	padding-bottom: 32px;
+}
+
+.wpbf-premium-metabox .heatbox-features {
+	gap: 32px 48px;
+}
+
+.wpbf-premium-metabox .heatbox-features li {
+	gap: 16px;
+}
+
+.wpbf-premium-metabox .heatbox-features h3 {
+	margin-bottom: 6px;
+}
+
 /* Premium features: an icon in a soft circle instead of the check mark */
 .wpbf-feature-icon {
 	display: flex;
