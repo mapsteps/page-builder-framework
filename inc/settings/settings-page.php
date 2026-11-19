@@ -60,6 +60,7 @@ $wpbf_tabs = array(
 
 			<div class="heatbox-admin-panel" data-panel="settings">
 				<?php
+				require __DIR__ . '/metaboxes/first-steps.php';
 				require __DIR__ . '/metaboxes/customizer.php';
 				require __DIR__ . '/metaboxes/clear-font-cache.php';
 				?>
