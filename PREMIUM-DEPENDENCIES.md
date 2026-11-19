@@ -36,6 +36,10 @@ Checks the theme against the full list in `bin/premium-deps.json` (about 200 ite
 
 `bin/`, `PREMIUM-DEPENDENCIES.md`, `composer.json`/`composer.lock`, `phpcs.xml` and dev files stay out of the theme zip.
 
+## Since Premium's Customizer rebuild (theme with the extension points below)
+
+Premium declares its options' types and defaults in its own schema files and adds them with the `wpbf_option_schema` filter; its settings files load only in the Customizer through `wpbf_customizer_add_job()`; its CSS is written with `wpbf_css()` in areas it adds with the `wpbf_css_areas` filter and prints with `wpbf_css_area()` (names `premium-<area>`); it reads options with `wpbf_mod()` / `wpbf_css_saved_mod()` and adds its CSS format to `wpbf_customizer_css_key_parts`. All of these are on the list now: keep their names, arguments and behavior (`CssRules` / `preview-css.js` rules, the schema entry format, `{archive}`/`{single}` ids). The theme's block editor styles read Premium's typography defaults from the schema (`OptionSchema::find()`). Premium treats a theme without `wpbf_customizer_add_job()` as outdated and then prints its frozen 2.10.5 CSS.
+
 ## Notes for the Premium pass
 
 - Premium fires some of the theme's hooks itself (`wpbf_header_open`, `wpbf_header_close`, `wpbf_customizer_links` …) in its own templates. The theme's callbacks on those hooks then run inside Premium's markup.
