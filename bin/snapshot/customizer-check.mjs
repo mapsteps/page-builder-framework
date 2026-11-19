@@ -362,7 +362,16 @@ try {
 			const originals = {};
 			for (const [sid, v] of Object.entries(values)) {
 				if (!wp.customize(sid)) continue;
-				originals[sid] = wp.customize(sid).get();
+				const own = wp.customize(sid).get();
+				// Typography: set the font family / variant selects too, as the controls do (the preview lays these
+				// sub-settings over the value; the 7d steps above leave them changed on two fields), then the value.
+				for (const part of ['font-family', 'variant']) {
+					const sub = wp.customize(sid + '[' + part + ']');
+					if (!sub || !v || 'object' !== typeof v) continue;
+					if (!(sid + '[' + part + ']' in originals)) originals[sid + '[' + part + ']'] = sub.get();
+					sub.set(undefined === v[part] ? '' : String(v[part]));
+				}
+				if (!(sid in originals)) originals[sid] = own; // Restored after its selects.
 				wp.customize(sid).set(v);
 			}
 			for (const area of cssAreas) {

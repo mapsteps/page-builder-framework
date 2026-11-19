@@ -60,6 +60,19 @@ if ( isset( $_GET['zz_css'] ) ) {
 				}
 			}
 
+			// Sub-settings (a typography field's id[font-family] / id[variant] selects) are saved into their option,
+			// after it (registered later), as WordPress saves and previews them.
+			foreach ( $zz_values as $zz_id => $zz_value ) {
+				if ( preg_match( '/^([^\[]+)\[([^\]]+)\]$/', $zz_id, $zz_sub ) ) {
+					unset( $zz_values[ $zz_id ] );
+					$zz_base = array_key_exists( $zz_sub[1], $zz_values ) ? $zz_values[ $zz_sub[1] ] : get_theme_mod( $zz_sub[1] );
+					$zz_base = is_array( $zz_base ) ? $zz_base : array();
+
+					$zz_base[ $zz_sub[2] ]     = $zz_value;
+					$zz_values[ $zz_sub[1] ] = $zz_base;
+				}
+			}
+
 			add_filter(
 				'option_theme_mods_' . get_option( 'stylesheet' ),
 				function ( $live ) use ( $zz_values ) {
