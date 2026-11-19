@@ -1,25 +1,15 @@
 /* Theme Settings page: the few layouts heatbox has no component for (heatbox.css holds everything else). */
 
-/* First steps: three cards next to each other, the number on top, the buttons lined up at the bottom */
+/* First steps: the three steps next to each other, their links lined up at the bottom */
 .wpbf-first-steps-metabox .heatbox-steps {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 16px;
+	gap: var(--heatbox-gap) 32px;
 }
 
 .wpbf-first-steps-metabox .heatbox-steps > li {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	padding: 20px;
-	background: var(--heatbox-surface-hover);
-	border: 1px solid var(--heatbox-box-border);
-	border-radius: var(--heatbox-radius-control);
-}
-
-.wpbf-first-steps-metabox .heatbox-steps > li::before {
-	position: static;
-	flex-shrink: 0;
-	margin-bottom: 14px;
 }
 
 .wpbf-first-steps-metabox .heatbox-steps > li > a {
