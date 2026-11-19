@@ -235,7 +235,9 @@ function wpbf_minify_css( $css ) {
  * @param string $selector     The CSS selector.
  * @param array  $declarations Property => value. Values hold option values as {option_id} or {option_id.key}.
  * @param array  $args         'media' (breakpoint name like 'max-desktop', or a media query), 'always' (print even at
- *                             the defaults), 'when' (an option that must be on).
+ *                             the defaults), 'when' (an option that must be on), 'saved' (print whenever saved, even
+ *                             as the default) with 'unless' (not when saved exactly as this text), 'parts' (compare
+ *                             each part of a JSON option on its own). See inc/customizer/styles/general.php.
  */
 function wpbf_css( $selector, $declarations, $args = array() ) {
 
@@ -251,6 +253,65 @@ function wpbf_css( $selector, $declarations, $args = array() ) {
 function wpbf_css_area( $area ) {
 
 	CssRules::area( $area );
+
+}
+
+/**
+ * A theme mod's saved value for Customizer CSS written in plain PHP, false when nothing is saved.
+ *
+ * Visitors get get_theme_mod() without a default: false when nothing is saved. In the Customizer preview
+ * get_theme_mod() hands over the registered default for an option nobody saved or changed; that counts as not saved
+ * too, so the preview prints what visitors get.
+ *
+ * @param string $id The option id.
+ *
+ * @return mixed The saved value, false for none.
+ */
+function wpbf_css_saved_mod( $id ) {
+
+	$value = get_theme_mod( $id );
+
+	return $value && ! CssRules::hasPreviewValue( $id ) ? false : $value;
+
+}
+
+/**
+ * Print a font block for Customizer CSS: the family, weight and style from a typography value (saved value only,
+ * see wpbf_css_saved_mod()), as the theme always printed them.
+ *
+ * '700italic' becomes 700 / italic, 'regular' 400 / normal; saved font-weight / font-style parts aren't used. A value
+ * saved as anything but a list of parts prints an empty block, as before.
+ *
+ * @param string $selector   The selector.
+ * @param mixed  $value      The typography value (nothing prints when it's empty).
+ * @param bool   $with_color Also print its color part (the logo font has one).
+ */
+function wpbf_css_font( $selector, $value, $with_color = false ) {
+
+	if ( ! $value ) {
+		return;
+	}
+
+	echo $selector . ' {'; // phpcs:ignore WordPress.Security.EscapeOutput -- Fixed selectors.
+
+	if ( ! empty( $value['font-family'] ) ) {
+		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $value['font-family'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- Escaped by wpbf_parse_font_family().
+	}
+
+	if ( ! empty( $value['variant'] ) ) {
+		$weight = str_replace( 'italic', '', $value['variant'] );
+		$weight = in_array( $weight, array( '', 'regular' ) ) ? '400' : $weight; // phpcs:ignore WordPress.PHP.StrictInArray -- As before (a variant saved as the number 400).
+		$style  = false !== strpos( $value['variant'], 'italic' ) ? 'italic' : 'normal';
+
+		echo sprintf( 'font-weight: %s;', esc_attr( $weight ) );
+		echo sprintf( 'font-style: %s;', esc_attr( $style ) );
+	}
+
+	if ( $with_color && ! empty( $value['color'] ) ) {
+		echo sprintf( 'color: %s;', esc_attr( $value['color'] ) );
+	}
+
+	echo '}';
 
 }
 

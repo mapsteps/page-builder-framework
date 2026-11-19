@@ -13,7 +13,11 @@
  * - Declarations without an option ('border-style' => 'solid') print along with the others in the block.
  * - $args: 'media' => 'max-desktop' | 'max-medium' | 'max-mobile' | 'min-desktop' | 'min-medium' | 'min-mobile'
  *   (built from Premium's breakpoints) or any media query; 'always' => true prints the block even at the defaults;
- *   'when' => 'option_id' prints it only while that option is on (or not 0).
+ *   'when' => 'option_id' prints it only while that option is on (or not 0), 'option_id.key' while one part is.
+ * - For CSS that old code printed differently (see styles/header.php): 'saved' => true prints a declaration whenever
+ *   its options are saved, even as their defaults, and nothing while they aren't; 'unless' => '20' (with 'saved') not
+ *   when saved exactly as that text (old `=== '20'` checks); 'parts' => true compares each part of a JSON option
+ *   ({padding.top}) with the default's part on its own, exactly (old per-side / per-device checks).
  *
  * In the Customizer preview, changing an option used in wpbf_css() updates instantly. Changing an option read
  * anywhere else in this file (an if, a calculation, an echo) redraws this file's CSS through PHP, which takes a moment.

@@ -32,7 +32,7 @@ final class CssRules {
 	/**
 	 * Areas that are written with wpbf_css() (one file each in inc/customizer/styles/).
 	 */
-	const AREAS = array( 'typography', 'general', 'footer', 'edd', 'blog', 'woocommerce' );
+	const AREAS = array( 'typography', 'general', 'footer', 'edd', 'blog', 'woocommerce', 'header' );
 
 	/**
 	 * Placeholder of an option value in a declaration: {option_id} or {option_id.key} for a part of a JSON option;
@@ -187,7 +187,12 @@ final class CssRules {
 	 * @param array  $declarations Property => value. Values may hold {option_id} or {option_id.key}.
 	 * @param array  $args         media: a breakpoint name (see media()) or a media query; always: print the block
 	 *                             even when its options are at their defaults; when: an option that must be on
-	 *                             ('option_id.key': one part of a JSON option).
+	 *                             ('option_id.key': one part of a JSON option); saved: print a declaration whenever
+	 *                             its options are saved, even as their defaults, and nothing while they aren't
+	 *                             (theme mods; for old checks without a default); unless: with saved, not when the
+	 *                             option is saved exactly as this text (the old `=== '20'` checks); parts: compare
+	 *                             each part of a JSON option with the default's part on its own, exactly (the old
+	 *                             per-device / per-side checks).
 	 */
 	public static function rule( $selector, $declarations, $args = array() ) {
 
@@ -196,6 +201,9 @@ final class CssRules {
 			'media'    => self::media( isset( $args['media'] ) ? $args['media'] : '' ),
 			'always'   => ! empty( $args['always'] ),
 			'when'     => isset( $args['when'] ) ? (string) $args['when'] : '',
+			'saved'    => ! empty( $args['saved'] ),
+			'unless'   => isset( $args['unless'] ) ? (string) $args['unless'] : null,
+			'parts'    => ! empty( $args['parts'] ),
 			'lines'    => array(),
 		);
 
@@ -223,6 +231,7 @@ final class CssRules {
 				'default' => null === $entry ? null : OptionSchema::defaultValue( $entry ),
 				'type'    => isset( $entry['type'] ) ? $entry['type'] : '',
 				'json'    => ! empty( $entry['json'] ),
+				'saved'   => self::isSaved( $id ),
 			);
 		}
 
@@ -241,15 +250,17 @@ final class CssRules {
 	 */
 	public static function breakpoint( $name ) {
 
-		$defaults = array(
-			'desktop' => 1024,
-			'medium'  => 768,
-			'mobile'  => 480,
-		);
+		// Premium's functions, each checked by name (bin/check-premium-deps.php looks for these checks).
+		switch ( $name ) {
+			case 'desktop':
+				return function_exists( 'wpbf_breakpoint_desktop' ) ? (int) wpbf_breakpoint_desktop() : 1024;
+			case 'medium':
+				return function_exists( 'wpbf_breakpoint_medium' ) ? (int) wpbf_breakpoint_medium() : 768;
+			case 'mobile':
+				return function_exists( 'wpbf_breakpoint_mobile' ) ? (int) wpbf_breakpoint_mobile() : 480;
+		}
 
-		$function = 'wpbf_breakpoint_' . $name;
-
-		return function_exists( $function ) ? (int) $function() : ( isset( $defaults[ $name ] ) ? $defaults[ $name ] : 0 );
+		return 0;
 
 	}
 
@@ -302,7 +313,11 @@ final class CssRules {
 			$changed = false;
 
 			foreach ( $refs as $placeholder => $ref ) {
-				$value = self::value( $ref[0] );
+				if ( $block['saved'] && ! self::isSaved( $ref[0] ) ) {
+					continue 2;
+				}
+
+				$value = $block['saved'] ? self::mod( $ref[0] ) : self::value( $ref[0] );
 				$part  = '' === $ref[1] ? $value : ( is_array( $value ) && isset( $value[ $ref[1] ] ) ? $value[ $ref[1] ] : null );
 
 				if ( self::isEmpty( $part ) || is_array( $part ) ) {
@@ -310,7 +325,7 @@ final class CssRules {
 				}
 
 				$parts[ $placeholder ] = esc_attr( self::text( $part ) . ( '' !== $ref[2] && is_numeric( $part ) ? $ref[2] : '' ) );
-				$changed               = $changed || ! self::same( $value, self::defaultOf( $ref[0] ) );
+				$changed               = $changed || self::differs( $block, $ref, $value, $part );
 			}
 
 			if ( $changed || $block['always'] ) {
@@ -375,6 +390,87 @@ final class CssRules {
 		$parts = explode( '.', $when, 2 );
 
 		return $parts[0];
+
+	}
+
+	/**
+	 * Whether one placeholder of a declaration makes it print: its value differs from the default (as a whole for
+	 * JSON options); 'parts': this part differs from the default's part, exactly; 'saved': always (it's saved), unless
+	 * it's saved exactly as the 'unless' text.
+	 *
+	 * @param array  $block The block (see rule()).
+	 * @param array  $ref   The placeholder (see refs()).
+	 * @param mixed  $value The option's value.
+	 * @param string $part  The value or part that prints.
+	 *
+	 * @return bool
+	 */
+	private static function differs( $block, $ref, $value, $part ) {
+
+		if ( $block['saved'] ) {
+			return null === $block['unless'] || self::raw( $ref[0] ) !== $block['unless']; // phpcs:ignore WordPress.PHP.YodaConditions -- Two values.
+		}
+
+		if ( $block['parts'] && '' !== $ref[1] ) {
+			$default_value = self::defaultOf( $ref[0] );
+
+			return ! is_array( $default_value ) || ! array_key_exists( $ref[1], $default_value ) || $part !== $default_value[ $ref[1] ];
+		}
+
+		return ! self::same( $value, self::defaultOf( $ref[0] ) );
+
+	}
+
+	/**
+	 * Whether a theme mod is saved: get_theme_mod() has a value for it, as the old `if ( get_theme_mod( … ) )` checks
+	 * saw it. In the Customizer preview get_theme_mod() hands over the registered default for an option nobody saved
+	 * or changed, so there it also has to be saved or changed (see hasPreviewValue()).
+	 *
+	 * @param string $id The option id.
+	 *
+	 * @return bool
+	 */
+	public static function isSaved( $id ) {
+
+		return false !== self::raw( $id ) && self::hasPreviewValue( $id );
+
+	}
+
+	/**
+	 * In the Customizer preview, whether a theme mod is saved or changed in this session (otherwise get_theme_mod()
+	 * returns its registered default, which visitors don't get). Always true outside the preview.
+	 *
+	 * @param string $id The option id.
+	 *
+	 * @return bool
+	 */
+	public static function hasPreviewValue( $id ) {
+
+		global $wp_customize;
+
+		if ( ! is_customize_preview() || ! $wp_customize instanceof \WP_Customize_Manager ) {
+			return true;
+		}
+
+		return array_key_exists( $id, (array) get_theme_mods() ) || array_key_exists( $id, $wp_customize->unsanitized_post_values() );
+
+	}
+
+	/**
+	 * A theme mod as get_theme_mod() returns it (no default, not typed), read without counting as a read of the area.
+	 *
+	 * @param string $id The option id.
+	 *
+	 * @return mixed The value, false when nothing is saved.
+	 */
+	private static function raw( $id ) {
+
+		$outer         = self::$in_rule;
+		self::$in_rule = true;
+		$value         = get_theme_mod( $id );
+		self::$in_rule = $outer;
+
+		return $value;
 
 	}
 

@@ -1034,6 +1034,7 @@ wpbf_customizer_field()
 	->tab( 'design' )
 	->label( __( 'Sub Menu Separator', 'page-builder-framework' ) )
 	->priority( 9 )
+	->transport( 'postMessage' )
 	->addToSection( 'wpbf_sub_menu_options' );
 
 // Separator color.

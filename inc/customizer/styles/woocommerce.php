@@ -7,6 +7,9 @@
  * (inc/integration/woocommerce/woocommerce-styles.php), which runs on wpbf_after_customizer_css as before. How to write
  * it: see styles/general.php. Premium's WooCommerce CSS is Premium's.
  *
+ * The old code printed the success and error notice colors whenever they were saved, even as their defaults (their
+ * links take the color then, which the stylesheet doesn't do), so they stay plain PHP with wpbf_css_saved_mod().
+ *
  * Each wpbf_css() block has 'when' => its own option (also the accent color as a fallback): the old code skipped values
  * like 0 or '0' (no control saves them, an import can), so they stay skipped. Layouts, alignments and the tabs style
  * are plain ifs, as before (the preview redraws this file through PHP when they change).
@@ -26,32 +29,6 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 $wpbf_accent_default = OptionSchema::defaultValue( OptionSchema::find( 'page_accent_color' ) );
 $wpbf_accent         = get_theme_mod( 'page_accent_color' );
 $wpbf_accent_is_set  = $wpbf_accent && strtolower( (string) $wpbf_accent ) !== strtolower( (string) $wpbf_accent_default );
-
-/*
- * An option's saved value, false when nothing is saved. The old code printed the success and error notice colors
- * whenever they were saved, even as their defaults (their links take the color then, which the stylesheet doesn't
- * do), so they stay plain PHP. In the Customizer preview get_theme_mod() hands over the registered default for an
- * option nobody saved or changed: that counts as not saved, as on the front end.
- *
- * @param string $id The option id.
- *
- * @return mixed The saved value, false for none.
- */
-$wpbf_woo_saved = function ( $id ) {
-
-	$value = get_theme_mod( $id );
-
-	global $wp_customize;
-
-	if ( $value && is_customize_preview() && $wp_customize instanceof WP_Customize_Manager ) {
-		if ( ! array_key_exists( $id, (array) get_theme_mods() ) && ! array_key_exists( $id, $wp_customize->unsanitized_post_values() ) ) {
-			return false;
-		}
-	}
-
-	return $value;
-
-};
 
 /*
  * Notices. Store and info notices: their own color, else the accent color, written from the fallback to the own color
@@ -83,7 +60,7 @@ foreach ( array( 'page_accent_color', 'woocommerce_info_notice_color' ) as $wpbf
 
 foreach ( array( 'message', 'error' ) as $wpbf_notice ) {
 
-	$wpbf_color = $wpbf_woo_saved( 'woocommerce_' . $wpbf_notice . '_notice_color' );
+	$wpbf_color = wpbf_css_saved_mod( 'woocommerce_' . $wpbf_notice . '_notice_color' );
 
 	if ( ! $wpbf_color ) {
 		continue;

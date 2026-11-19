@@ -18,76 +18,17 @@
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
-/**
- * A typography value as saved, or false when it's off or nothing is saved.
- *
- * Visitors get get_theme_mod() without a default: false when nothing is saved, so no CSS. In the Customizer preview
- * get_theme_mod() hands over the registered default for an option nobody saved or changed; that would print the
- * default font in the preview only (switching a font on without picking one), so the preview treats it as not saved
- * too.
- *
- * @param string $toggle_id The option that switches the font on.
- * @param string $font_id   The typography option.
- *
- * @return mixed The saved value, false for none.
+/*
+ * A typography value as saved (wpbf_css_saved_mod()), or false when its switch is off. Printed with wpbf_css_font().
  */
 $wpbf_saved_font = function ( $toggle_id, $font_id ) {
 
-	if ( ! get_theme_mod( $toggle_id ) ) {
-		return false;
-	}
-
-	$value = get_theme_mod( $font_id );
-
-	global $wp_customize;
-
-	if ( $value && is_customize_preview() && $wp_customize instanceof WP_Customize_Manager ) {
-		$saved = (array) get_theme_mods();
-
-		if ( ! array_key_exists( $font_id, $saved ) && ! array_key_exists( $font_id, $wp_customize->unsanitized_post_values() ) ) {
-			return false;
-		}
-	}
-
-	return $value;
-
-};
-
-/**
- * Print one font block, as before: the family, and weight and style from the variant.
- *
- * @param string $selector The selector.
- * @param mixed  $value    The typography value.
- */
-$wpbf_font_css = function ( $selector, $value ) {
-
-	if ( ! $value ) {
-		return;
-	}
-
-	// A value saved as anything but a list of parts prints an empty block, as before.
-	echo $selector . ' {'; // phpcs:ignore WordPress.Security.EscapeOutput -- Fixed selectors.
-
-	if ( ! empty( $value['font-family'] ) ) {
-		echo sprintf( 'font-family: %s;', wpbf_parse_font_family( $value['font-family'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- Escaped by wpbf_parse_font_family().
-	}
-
-	// '700italic' → 700, italic; 'regular' → 400, normal. Saved font-weight / font-style parts aren't used.
-	if ( ! empty( $value['variant'] ) ) {
-		$weight = str_replace( 'italic', '', $value['variant'] );
-		$weight = in_array( $weight, array( '', 'regular' ) ) ? '400' : $weight; // phpcs:ignore WordPress.PHP.StrictInArray -- As before (a variant saved as the number 400).
-		$style  = false !== strpos( $value['variant'], 'italic' ) ? 'italic' : 'normal';
-
-		echo sprintf( 'font-weight: %s;', esc_attr( $weight ) );
-		echo sprintf( 'font-style: %s;', esc_attr( $style ) );
-	}
-
-	echo '}';
+	return get_theme_mod( $toggle_id ) ? wpbf_css_saved_mod( $font_id ) : false;
 
 };
 
 // Page font and color.
-$wpbf_font_css( 'body, button, input, optgroup, select, textarea, h1, h2, h3, h4, h5, h6', $wpbf_saved_font( 'page_font_toggle', 'page_font_family' ) );
+wpbf_css_font( 'body, button, input, optgroup, select, textarea, h1, h2, h3, h4, h5, h6', $wpbf_saved_font( 'page_font_toggle', 'page_font_family' ) );
 
 wpbf_css( 'body', array( 'color' => '{page_font_color}' ), array( 'when' => 'page_font_color' ) );
 
@@ -105,5 +46,5 @@ $wpbf_fonts = array(
 );
 
 foreach ( $wpbf_fonts as $wpbf_selector => $wpbf_font ) {
-	$wpbf_font_css( $wpbf_selector, $wpbf_saved_font( $wpbf_font[0], $wpbf_font[1] ) );
+	wpbf_css_font( $wpbf_selector, $wpbf_saved_font( $wpbf_font[0], $wpbf_font[1] ) );
 }

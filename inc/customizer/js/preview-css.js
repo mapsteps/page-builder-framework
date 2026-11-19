@@ -13,6 +13,9 @@
 
 	var areas = window.wpbfCssAreas || {};
 
+	// Options changed in this preview (they count as saved: publishing saves them).
+	var changedIds = {};
+
 	var REF = /\{([A-Za-z0-9_\-]+)(?:\.([A-Za-z0-9_\-]+))?(?:\|([a-z%]+))?\}/g;
 	var TOKEN = /\/\*wpbf-css:(\d+)\*\//g;
 	var HEX = /^#[0-9a-fA-F]{3,8}$/;
@@ -95,6 +98,35 @@
 
 	function defaultOf(area, id) {
 		return area.options[id] ? area.options[id].default : null;
+	}
+
+	// CssRules::isSaved(): saved (PHP says so) or changed in this preview.
+	function isSaved(area, id) {
+		return Object.prototype.hasOwnProperty.call(changedIds, id) || !!(area.options[id] && area.options[id].saved);
+	}
+
+	// CssRules::raw(): the value as the setting holds it (not typed).
+	function raw(id) {
+		var setting = api(id);
+
+		return setting ? setting.get() : false;
+	}
+
+	// CssRules::differs().
+	function differs(area, block, ref, full, part) {
+		var defaultValue;
+
+		if (block.saved) {
+			return null === block.unless || undefined === block.unless || block.unless !== raw(ref.id);
+		}
+
+		if (block.parts && ref.key) {
+			defaultValue = defaultOf(area, ref.id);
+
+			return !isObject(defaultValue) || !Object.prototype.hasOwnProperty.call(defaultValue, ref.key) || part !== defaultValue[ref.key];
+		}
+
+		return !same(full, defaultOf(area, ref.id));
 	}
 
 	function normalize(value) {
@@ -223,7 +255,12 @@
 					return;
 				}
 
-				full = value(area, ref.id);
+				if (block.saved && !isSaved(area, ref.id)) {
+					ok = false;
+					return;
+				}
+
+				full = block.saved ? mod(area, ref.id) : value(area, ref.id);
 				part = "" === ref.key ? full : isObject(full) && Object.prototype.hasOwnProperty.call(full, ref.key) ? full[ref.key] : null;
 
 				if (isEmpty(part) || isObject(part)) {
@@ -232,7 +269,7 @@
 				}
 
 				parts[ref.placeholder] = escAttr(text(part) + (ref.unit && isNumeric(part) ? ref.unit : ""));
-				changed = changed || !same(full, defaultOf(area, ref.id));
+				changed = changed || differs(area, block, ref, full, part);
 			});
 
 			if (ok && (changed || block.always)) {
@@ -333,6 +370,8 @@
 	}
 
 	api.bind("change", function (setting) {
+		changedIds[setting.id] = true;
+
 		Object.keys(areas).forEach(function (name) {
 			var area = areas[name];
 
