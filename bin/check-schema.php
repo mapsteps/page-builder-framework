@@ -2,10 +2,11 @@
 /**
  * Checks the Customizer option schema against what the theme registers, and that wpbf_mod() reads values right.
  *
- * Usage: php -d extension=mysqli -d mysqli.default_port=10035 bin/check-schema.php
+ * Usage: php -d extension=mysqli -d mysqli.default_port=10035 bin/check-schema.php [--premium]
  *
- * Loads WordPress (pbf.local) with the Premium Add-On switched off for this run and every database write blocked,
- * then checks:
+ * Loads WordPress (pbf.local) with the Premium Add-On switched off for this run (on with --premium: then Premium's
+ * options and its schema entries, added with the `wpbf_option_schema` filter, are checked too) and every database
+ * write blocked, then checks:
  * - every theme option that stores a value has a schema entry, and every entry is registered
  * - registration uses the schema's type, default and stored format (no settings file overrides them)
  * - "Default: …" label texts agree with the schema
@@ -31,14 +32,16 @@ $_SERVER['HTTP_HOST'] = 'pbf.local';
 define( 'WP_USE_THEMES', false );
 define( 'DISABLE_WP_CRON', true );
 
-// Hooks registered before WordPress loads: Premium off for this run, no database writes.
-$GLOBALS['wp_filter']['option_active_plugins'][10][] = array(
-	'function'      => function ( $plugins ) {
-		return array_values( array_diff( (array) $plugins, array( 'wpbf-premium/wpbf-premium.php' ) ) );
-	},
-	'accepted_args' => 1,
-);
-$GLOBALS['wp_filter']['query'][10][]                 = array(
+// Hooks registered before WordPress loads: Premium off for this run (unless --premium), no database writes.
+if ( ! in_array( '--premium', $argv, true ) ) {
+	$GLOBALS['wp_filter']['option_active_plugins'][10][] = array(
+		'function'      => function ( $plugins ) {
+			return array_values( array_diff( (array) $plugins, array( 'wpbf-premium/wpbf-premium.php' ) ) );
+		},
+		'accepted_args' => 1,
+	);
+}
+$GLOBALS['wp_filter']['query'][10][] = array(
 	'function'      => function ( $query ) {
 		return preg_match( '/^\s*(INSERT|UPDATE|DELETE|REPLACE|ALTER|CREATE|DROP|TRUNCATE)\b/i', $query ) ? 'SELECT 1' : $query;
 	},

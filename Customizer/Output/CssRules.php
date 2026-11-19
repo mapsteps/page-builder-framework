@@ -30,9 +30,17 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 final class CssRules {
 
 	/**
-	 * Areas that are written with wpbf_css() (one file each in inc/customizer/styles/).
+	 * The theme's areas that are written with wpbf_css() (one file each in inc/customizer/styles/). Plugins add theirs
+	 * with the `wpbf_css_areas` filter (see areaFiles()).
 	 */
 	const AREAS = array( 'typography', 'general', 'footer', 'edd', 'blog', 'woocommerce', 'header' );
+
+	/**
+	 * Every area's file by area name, or null until asked for.
+	 *
+	 * @var array|null
+	 */
+	private static $files = null;
 
 	/**
 	 * Placeholder of an option value in a declaration: {option_id} or {option_id.key} for a part of a JSON option;
@@ -646,16 +654,58 @@ final class CssRules {
 	 */
 	private static function includeArea( $area ) {
 
-		if ( ! in_array( $area, self::AREAS, true ) ) {
+		$files = self::areaFiles();
+
+		if ( ! isset( $files[ $area ] ) ) {
 			return;
 		}
 
 		$outer        = self::$values;
 		self::$values = array();
 
-		include WPBF_THEME_DIR . '/inc/customizer/styles/' . $area . '.php';
+		include $files[ $area ];
 
 		self::$values = $outer;
+
+	}
+
+	/**
+	 * Every area's file: the theme's (AREAS) and those plugins add.
+	 *
+	 * @return array File paths by area name.
+	 */
+	public static function areaFiles() {
+
+		if ( null !== self::$files ) {
+			return self::$files;
+		}
+
+		$files = array();
+
+		foreach ( self::AREAS as $area ) {
+			$files[ $area ] = WPBF_THEME_DIR . '/inc/customizer/styles/' . $area . '.php';
+		}
+
+		/**
+		 * Filters the Customizer CSS areas a plugin adds (the Premium Add-On): area name => the area's PHP file,
+		 * written like the theme's (inc/customizer/styles/general.php explains how). The plugin prints an area with
+		 * wpbf_css_area( $name ) where its CSS belongs (e.g. from a wpbf_after_customizer_css callback); in the
+		 * Customizer preview it gets its own style tag and instant redraws, like the theme's areas. Read once. Names
+		 * the theme uses can't be replaced.
+		 *
+		 * @param array $areas File paths by area name.
+		 */
+		$added = apply_filters( 'wpbf_css_areas', array() );
+
+		foreach ( is_array( $added ) ? $added : array() as $area => $file ) {
+			if ( is_string( $area ) && '' !== $area && is_string( $file ) && ! isset( $files[ $area ] ) ) {
+				$files[ $area ] = $file;
+			}
+		}
+
+		self::$files = $files;
+
+		return $files;
 
 	}
 

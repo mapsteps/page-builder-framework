@@ -14,8 +14,10 @@
  * ('{archive}_layout' covers archive_layout, search_layout, docs-archive_layout …).
  *
  * Only options that store a value are listed. Fields that only show something (separators, headlines, notes)
- * stay in the settings files. Fields registered by Premium, child themes or plugins are not listed: the builder
- * records their declared type and default (see record()), so wpbf_mod() reads them too.
+ * stay in the settings files. A plugin adds entries for its own options with the `wpbf_option_schema` filter (the
+ * Premium Add-On); its fields then take type and default from here like the theme's. Fields registered
+ * without an entry (older Premium, child themes, plugins) aren't listed: the builder records their declared type and
+ * default (see record()), so wpbf_mod() reads them too.
  *
  * @package Page Builder Framework
  */
@@ -294,7 +296,7 @@ final class OptionSchema {
 	}
 
 	/**
-	 * Load the area files once.
+	 * Load the area files once, then the entries plugins add.
 	 */
 	private static function load() {
 
@@ -305,16 +307,47 @@ final class OptionSchema {
 		self::$options = array();
 
 		foreach ( self::AREAS as $area ) {
-			$entries = require __DIR__ . '/' . $area . '.php';
+			self::addEntries( require __DIR__ . '/' . $area . '.php', true );
+		}
 
-			foreach ( $entries as $id => $entry ) {
-				$placeholder = strpos( $id, '{' ) === 0 ? substr( $id, 0, strpos( $id, '}' ) + 1 ) : '';
+		/**
+		 * Filters the option schema entries a plugin adds for the options it registers (the Premium Add-On), in the
+		 * format of the theme's area files: id => entry, `{archive}` / `{single}` ids included. Read once, the first
+		 * time an option is looked up. The theme's own entries can't be replaced.
+		 *
+		 * @param array $entries Entries by id.
+		 */
+		$entries = apply_filters( 'wpbf_option_schema', array() );
 
-				if ( $placeholder && isset( self::PLACEHOLDERS[ $placeholder ] ) ) {
-					self::$templates[ $placeholder ][ substr( $id, strlen( $placeholder ) ) ] = $entry;
-				} else {
-					self::$options[ $id ] = $entry;
+		if ( is_array( $entries ) ) {
+			self::addEntries( $entries, false );
+		}
+
+	}
+
+	/**
+	 * Add entries to the loaded schema.
+	 *
+	 * @param array $entries The entries, by id.
+	 * @param bool  $replace Whether an entry replaces one with the same id.
+	 */
+	private static function addEntries( $entries, $replace ) {
+
+		foreach ( $entries as $id => $entry ) {
+			if ( ! is_string( $id ) || '' === $id || ! is_array( $entry ) ) {
+				continue;
+			}
+
+			$placeholder = strpos( $id, '{' ) === 0 ? substr( $id, 0, strpos( $id, '}' ) + 1 ) : '';
+
+			if ( $placeholder && isset( self::PLACEHOLDERS[ $placeholder ] ) ) {
+				$rest = substr( $id, strlen( $placeholder ) );
+
+				if ( $replace || ! isset( self::$templates[ $placeholder ][ $rest ] ) ) {
+					self::$templates[ $placeholder ][ $rest ] = $entry;
 				}
+			} elseif ( $replace || ! isset( self::$options[ $id ] ) ) {
+				self::$options[ $id ] = $entry;
 			}
 		}
 

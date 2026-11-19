@@ -16,6 +16,7 @@ use Mapsteps\Wpbf\Customizer\CustomizerSection;
 use Mapsteps\Wpbf\Customizer\CustomizerSetting;
 use Mapsteps\Wpbf\Customizer\Output\CssRules;
 use Mapsteps\Wpbf\Customizer\Output\CustomizerCss;
+use Mapsteps\Wpbf\Customizer\Registry\Registry;
 use Mapsteps\Wpbf\Customizer\Schema\OptionSchema;
 
 /**
@@ -88,6 +89,21 @@ function wpbf_customizer_control() {
 function wpbf_customizer_field() {
 
 	return new CustomizerField();
+
+}
+
+/**
+ * Run code when the Customizer is built (customize_register), at the place in the build order where this is called.
+ *
+ * For settings files that only declare fields, sections and panels (wpbf_customizer_field() …): they then only load in
+ * the Customizer, and the Customizer is built in the same order as if they had loaded right away. Once the Customizer
+ * is built, the callback runs right away.
+ *
+ * @param callable $callback The code to run.
+ */
+function wpbf_customizer_add_job( $callback ) {
+
+	Registry::add( $callback );
 
 }
 
@@ -426,7 +442,7 @@ function wpbf_customizer_css_partials( $wp_customize ) {
 		return;
 	}
 
-	foreach ( CssRules::AREAS as $area ) {
+	foreach ( array_keys( CssRules::areaFiles() ) as $area ) {
 		$wp_customize->selective_refresh->add_partial(
 			'wpbf_css_' . $area,
 			array(

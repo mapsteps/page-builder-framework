@@ -570,13 +570,14 @@ def norm(t):
 
 def build_variants():
     """Every setting registered with wpbf_customizer_field() gets a value per variant (4 combinations)."""
-    # The theme's settings files leave the type to the option schema (Customizer/Schema/*.php).
+    # The theme's and Premium's settings files leave the type to the option schema (Customizer/Schema/*.php,
+    # Premium's inc/customizer/schema/*.php).
     schema_types = {}
-    schema_dir = os.path.join(THEME, 'Customizer', 'Schema')
-    for f in os.listdir(schema_dir):
-        if f.endswith('.php'):
-            s = open(os.path.join(schema_dir, f), encoding='utf-8').read()
-            schema_types.update(re.findall(r"^\t'([a-z0-9_]+)'\s*=> array\(\s*'type'\s*=> '([a-z\-]+)'", s, re.M))
+    for schema_dir in (os.path.join(THEME, 'Customizer', 'Schema'), os.path.join(PREMIUM, 'inc', 'customizer', 'schema')):
+        for f in os.listdir(schema_dir) if os.path.isdir(schema_dir) else ():
+            if f.endswith('.php'):
+                s = open(os.path.join(schema_dir, f), encoding='utf-8').read()
+                schema_types.update(re.findall(r"^\t'([a-z0-9_]+)'\s*=> array\(\s*'type'\s*=> '([a-z\-]+)'", s, re.M))
     fields = {}
     for root in (THEME, PREMIUM):
         for d, dirs, fs in os.walk(root):
