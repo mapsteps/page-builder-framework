@@ -57,17 +57,14 @@
 	color: var(--heatbox-accent);
 }
 
-/* Premium tab: header with the banner's artwork on the left and live text on the right */
+/* Premium tab: the top of the features box, the banner's artwork on the left and live text on the right */
 .wpbf-premium-hero {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
 	aspect-ratio: 1544 / 500;
-	margin-bottom: var(--heatbox-gap);
 	background: #0090fe url(../../img/premium-add-on-art.jpg) left center / cover no-repeat;
-	border-radius: var(--heatbox-radius);
-	box-shadow: var(--heatbox-shadow);
-	overflow: hidden;
+	border-radius: calc(var(--heatbox-radius) - 1px) calc(var(--heatbox-radius) - 1px) 0 0;
 }
 
 .wpbf-premium-hero-content {
@@ -76,7 +73,7 @@
 	color: #fff;
 }
 
-.wpbf-premium-hero h2 {
+.wpbf-premium-hero .wpbf-premium-hero-title {
 	margin: 0 0 8px;
 	font-size: 26px;
 	font-weight: 700;

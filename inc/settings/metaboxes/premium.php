@@ -66,18 +66,18 @@ $wpbf_premium_features = array(
 
 ?>
 
-<div class="wpbf-premium-hero">
-	<div class="wpbf-premium-hero-content">
-		<h2><?php esc_html_e( 'Premium Add-On', 'page-builder-framework' ); ?></h2>
-		<p><?php esc_html_e( 'Take your website to the next level with the Premium Add-On for Page Builder Framework.', 'page-builder-framework' ); ?></p>
-		<a href="<?php echo esc_url( $wpbf_premium_url ); ?>" target="_blank" class="button button-larger wpbf-premium-hero-button">
-			<?php esc_html_e( 'Get Premium', 'page-builder-framework' ); ?>
-			<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'page-builder-framework' ); ?></span>
-		</a>
-	</div>
-</div>
-
 <div class="heatbox wpbf-premium-metabox">
+
+	<div class="wpbf-premium-hero">
+		<div class="wpbf-premium-hero-content">
+			<p class="wpbf-premium-hero-title"><?php esc_html_e( 'Premium Add-On', 'page-builder-framework' ); ?></p>
+			<p><?php esc_html_e( 'Take your website to the next level with the Premium Add-On for Page Builder Framework.', 'page-builder-framework' ); ?></p>
+			<a href="<?php echo esc_url( $wpbf_premium_url ); ?>" target="_blank" class="button button-larger wpbf-premium-hero-button">
+				<?php esc_html_e( 'Get Premium', 'page-builder-framework' ); ?>
+				<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'page-builder-framework' ); ?></span>
+			</a>
+		</div>
+	</div>
 
 	<h2>
 		<?php esc_html_e( 'Premium Add-On Features', 'page-builder-framework' ); ?>
