@@ -35,7 +35,7 @@ const port = 9333;
 // --areas=header,footer limits the preview CSS check to those areas and their variants (quicker re-runs).
 const areasArg = process.argv.find((a) => a.startsWith("--areas="));
 // Premium's areas (its wpbf_css_areas filter) are named premium-<area>: premium-general1, premium-typography1, ...
-const cssAreas = ["typography", "general", "footer", "edd", "blog", "woocommerce", "header", "premium-general", "premium-typography", "premium-blog", "premium-header", "premium-footer"].filter((area) => !areasArg || areasArg.slice(8).split(",").includes(area));
+const cssAreas = ["typography", "general", "footer", "edd", "blog", "woocommerce", "header", "premium-general", "premium-typography", "premium-blog", "premium-header", "premium-footer", "premium-woocommerce"].filter((area) => !areasArg || areasArg.slice(8).split(",").includes(area));
 let previewVariants = {};
 try {
 	const all = JSON.parse(readFileSync(join(here, "output", "variants.json"), "utf8"));

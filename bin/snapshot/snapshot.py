@@ -44,7 +44,8 @@ VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synth
             'header1', 'header2', 'header3', 'header4', 'header5', 'header6', 'header7', 'header8',
             'premium-general1', 'premium-general2', 'premium-general3', 'premium-typography1', 'premium-typography2',
             'premium-typography3', 'premium-blog1', 'premium-blog2', 'premium-footer1', 'premium-footer2', 'premium-footer3',
-            'premium-footer4'] + ['premium-header%d' % n for n in range(1, 12)]
+            'premium-footer4',
+            'premium-woocommerce1', 'premium-woocommerce2', 'premium-woocommerce3', 'premium-edd1'] + ['premium-header%d' % n for n in range(1, 12)]
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -779,6 +780,35 @@ HAND_VARIANTS = {
         'menu_position': 'menu-off-canvas', 'mobile_menu_options': 'menu-mobile-off-canvas', 'menu_effect': 'modern',
         'menu_sticky': True, 'menu_active_box_shadow': True, 'menu_overlay': True, 'mobile_menu_overlay': True,
     },
+    # Premium WooCommerce: everything changed (theme button colors on the cart menu item, quick view, dropdown and popup,
+    # off canvas sidebar with its own colors, sale badge inside), custom breakpoints.
+    'premium-woocommerce1': {
+        '__wpbf_settings': {'wpbf_breakpoint_desktop': '1100px', 'wpbf_breakpoint_medium': '700px', 'wpbf_breakpoint_mobile': '400px'},
+        'button_bg_color': '#101010', 'button_text_color': '#202020', 'button_bg_color_alt': '#303030', 'button_text_color_alt': '#404040',
+        'button_primary_bg_color': '#505050', 'button_primary_text_color': '#606060', 'button_primary_bg_color_alt': '#707070',
+        'button_primary_text_color_alt': '#808080', 'woocommerce_loop_quick_view_overlay_color': 'rgba(1,2,3,0.5)',
+        'woocommerce_loop_quick_view_font_size': '16px', 'woocommerce_loop_quick_view_font_color': '#111111',
+        'woocommerce_loop_quick_view_background_color': '#222222', 'woocommerce_menu_item_dropdown': 'show',
+        'woocommerce_menu_item_dropdown_popup': True, 'woocommerce_loop_off_canvas_sidebar_font_color': '#333333',
+        'woocommerce_loop_off_canvas_sidebar_background_color': '#444444', 'woocommerce_loop_off_canvas_sidebar_overlay_color': 'rgba(4,5,6,0.3)',
+        'woocommerce_loop_sale_position': 'inside',
+    },
+    # Premium WooCommerce: saved as the defaults; off canvas sidebar falls back to the primary button colors.
+    'premium-woocommerce2': {
+        'woocommerce_loop_quick_view_overlay_color': 'rgba(0,0,0,.8)', 'woocommerce_loop_quick_view_font_size': '14px',
+        'woocommerce_loop_quick_view_font_color': '#ffffff', 'woocommerce_loop_quick_view_background_color': 'rgba(0,0,0,.7)',
+        'woocommerce_menu_item_dropdown': 'hide', 'woocommerce_menu_item_dropdown_popup': False,
+        'woocommerce_loop_off_canvas_sidebar_font_color': '#ffffff', 'woocommerce_loop_off_canvas_sidebar_overlay_color': 'rgba(0,0,0,.2)',
+        'button_primary_bg_color': '#123456', 'button_primary_text_color': '#fedcba', 'woocommerce_loop_sale_position': 'outside',
+    },
+    # Premium WooCommerce: odd values (unit-less size, capitals, '0', the sale badge hidden).
+    'premium-woocommerce3': {
+        'woocommerce_loop_quick_view_font_size': '15', 'woocommerce_loop_quick_view_font_color': '#FFFFFF',
+        'woocommerce_loop_off_canvas_sidebar_background_color': '#abcdef', 'button_bg_color': '0',
+        'woocommerce_loop_sale_position': 'none', 'button_primary_text_color': '#fedcba',
+    },
+    # Premium EDD: the cart dropdown hidden / shown.
+    'premium-edd1': {'edd_menu_item_dropdown': 'hide'},
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
 
@@ -876,7 +906,7 @@ def build_variants():
 def jobs(only=None):
     for v in (only or VARIANTS):
         for prem in ('', '1'):
-            pages = HAND_ONLY_FRONT + tuple(WOO_FRONT if v.startswith('woocommerce') else ()) if v in HAND_VARIANTS else FRONT
+            pages = HAND_ONLY_FRONT + tuple(WOO_FRONT if 'woocommerce' in v else ()) if v in HAND_VARIANTS else FRONT
             for u in pages:
                 yield (v, prem, u, False)
             if v in ADMIN_VARIANTS:
