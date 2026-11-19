@@ -6,17 +6,27 @@
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+// The Google Fonts stored on this site: font family => its styles.
+$wpbf_stored_fonts = get_option( 'wpbf_downloaded_google_fonts', array() );
+$wpbf_stored_fonts = is_array( $wpbf_stored_fonts ) ? array_keys( $wpbf_stored_fonts ) : array();
 ?>
 
 <div class="heatbox wpbf-remove-downloaded-fonts-metabox">
 	<h2><?php esc_html_e( 'Clear Font Cache', 'page-builder-framework' ); ?></h2>
 	<div class="heatbox-content">
 		<p>
-			<?php esc_html_e( 'In order to achieve GDPR-compliance, we store Google Fonts locally on your server.', 'page-builder-framework' ); ?>
-			<?php esc_html_e( 'If Google Fonts selected in the Customizer are not displayed correctly, please try clearing the Font Cache.', 'page-builder-framework' ); ?>
+			<?php esc_html_e( 'Google Fonts are stored on your server. If a font doesn\'t show correctly, clear the cache. Safe on live sites.', 'page-builder-framework' ); ?>
 		</p>
 		<p class="description">
-			<?php esc_html_e( 'This is safe to do on production sites.', 'page-builder-framework' ); ?>
+			<?php
+			if ( $wpbf_stored_fonts ) {
+				/* translators: %s: comma-separated list of font names, e.g. "Inter, Rubik" */
+				echo esc_html( sprintf( __( 'Stored now: %s', 'page-builder-framework' ), implode( ', ', $wpbf_stored_fonts ) ) );
+			} else {
+				esc_html_e( 'No Google Fonts are stored right now.', 'page-builder-framework' );
+			}
+			?>
 		</p>
 		<div class="wpbf-button-with-notice">
 			<button

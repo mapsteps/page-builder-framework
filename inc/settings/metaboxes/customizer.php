@@ -22,6 +22,10 @@ function wpbf_do_customizer_links() {
 			'url'  => admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_menu_options' ),
 		),
 		array(
+			'text' => __( 'Mobile Menu', 'page-builder-framework' ),
+			'url'  => admin_url( 'customize.php?autofocus%5Bsection%5D=wpbf_mobile_menu_options' ),
+		),
+		array(
 			'text' => __( 'Header', 'page-builder-framework' ),
 			'url'  => admin_url( 'customize.php?autofocus%5Bpanel%5D=header_panel' ),
 		),
@@ -55,6 +59,13 @@ function wpbf_do_customizer_links() {
 		),
 	);
 
+	if ( class_exists( 'WooCommerce' ) ) {
+		$customizer_links[] = array(
+			'text' => __( 'WooCommerce', 'page-builder-framework' ),
+			'url'  => admin_url( 'customize.php?autofocus%5Bpanel%5D=woocommerce' ),
+		);
+	}
+
 	foreach ( $customizer_links as $link_item ) {
 		?>
 		<li>
@@ -72,7 +83,7 @@ add_action( 'wpbf_customizer_links', 'wpbf_do_customizer_links' );
 
 <div class="heatbox wpbf-customizer-metabox">
 
-	<h2><?php esc_html_e( 'Customizer Settings', 'page-builder-framework' ); ?></h2>
+	<h2><?php esc_html_e( 'Customize your Site', 'page-builder-framework' ); ?></h2>
 
 	<div class="heatbox-content">
 		<ul class="wpbf-customizer-list">
