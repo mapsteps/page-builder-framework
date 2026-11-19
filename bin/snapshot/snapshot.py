@@ -8,6 +8,8 @@ PHP warnings. Take one before a change and one after, then compare.
     python bin/snapshot/snapshot.py take after
     python bin/snapshot/snapshot.py diff before after
 
+`take <name> edd1,edd2` renders only those variants (e.g. new hand-made variants with the old code).
+
 Nothing is written to the database: settings are swapped per request by a temporary mu-plugin
 (copied in for the run, deleted afterwards). Output lives in bin/snapshot/output/ (gitignored).
 variants.json there is generated once from the theme's and Premium's settings; delete it to rebuild.
@@ -32,7 +34,7 @@ FRONT = ['/', '/related-posts/', '/checkout/', '/category/blog/', '/category/blo
 ADMIN = ['/wp-admin/themes.php?page=wpbf-premium', '/wp-admin/edit.php', '/wp-admin/edit.php?post_type=page',
          '/wp-admin/customize.php', '/wp-admin/post.php?post=366&action=edit', '/wp-admin/index.php']
 VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synthetic3', 'general1', 'general2', 'general3',
-            'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5']
+            'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5', 'edd1', 'edd2', 'edd3', 'edd4', 'edd5']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -128,6 +130,42 @@ HAND_VARIANTS = {
         'footer_font_color': '#eeeeee', 'footer_accent_color': '#ff0000', 'footer_accent_color_alt': '#00ff00',
         'footer_font_size': '16px',
     },
+    # EDD: everything changed (accent, theme buttons, menu item colors).
+    'edd1': {
+        'page_accent_color': '#ff6600',
+        'button_bg_color': '#010101', 'button_bg_color_alt': '#020202', 'button_text_color': '#030303', 'button_text_color_alt': '#040404',
+        'button_primary_bg_color': '#050505', 'button_primary_bg_color_alt': '#060606', 'button_primary_text_color': '#070707',
+        'button_primary_text_color_alt': '#080808', 'button_border_radius': '5', 'button_border_width': '2',
+        'button_border_color': '#090909', 'button_border_color_alt': '#0a0a0a', 'button_primary_border_color': '#0b0b0b',
+        'button_primary_border_color_alt': '#0c0c0c',
+        'menu_font_color': '#111111', 'mobile_menu_font_color': '#222222',
+        'edd_menu_item_desktop_color': '#aa0000', 'edd_menu_item_mobile_color': '#00aa00',
+    },
+    # EDD: everything saved, but equal to the defaults.
+    'edd2': {
+        'page_accent_color': '#3ba9d2', 'button_border_radius': '0', 'button_border_width': '0', 'button_bg_color': '',
+        'button_text_color': '', 'edd_menu_item_desktop': 'show', 'edd_menu_item_mobile': 'show',
+        'edd_menu_item_desktop_color': '', 'edd_menu_item_mobile_color': '', 'menu_font_color': '', 'mobile_menu_font_color': '',
+    },
+    # EDD: odd values: accent in capitals, numbers, border colors without a border width, desktop item hidden (mobile
+    # falls back to the desktop color), menu item colors from the menu font colors.
+    'edd3': {
+        'page_accent_color': '#3BA9D2', 'button_border_radius': 7, 'button_border_width': '0', 'button_border_color': '#111111',
+        'button_primary_border_color_alt': '#222222', 'button_bg_color_alt': '#333333', 'button_primary_text_color': '#444444',
+        'edd_menu_item_desktop': 'hide', 'edd_menu_item_desktop_color': '#555555', 'menu_font_color': '#666666',
+    },
+    # EDD: zeros and empty values the controls can't produce.
+    'edd4': {
+        'page_accent_color': '0', 'button_border_width': '0', 'button_border_radius': '0', 'button_bg_color': '0',
+        'button_text_color': '0', 'button_primary_bg_color_alt': '0', 'edd_menu_item_desktop_color': '0',
+        'edd_menu_item_mobile_color': '0', 'menu_font_color': '0', 'mobile_menu_font_color': '#777777',
+    },
+    # EDD: fallbacks: desktop item from the accent color, mobile item hidden, a border width with some colors.
+    'edd5': {
+        'page_accent_color': '#ff0066', 'edd_menu_item_mobile': 'hide', 'edd_menu_item_mobile_color': '#888888',
+        'mobile_menu_font_color': '#999999', 'button_border_width': 3, 'button_border_color_alt': '#abcdef',
+        'button_primary_border_color': '#fedcba', 'button_primary_bg_color': '#123123',
+    },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
 
@@ -221,8 +259,8 @@ def build_variants():
     print('variants.json:', len(fields), 'settings found,', len(variants['synthetic0']), 'varied')
 
 
-def jobs():
-    for v in VARIANTS:
+def jobs(only=None):
+    for v in (only or VARIANTS):
         for prem in ('', '1'):
             for u in (HAND_ONLY_FRONT if v in HAND_VARIANTS else FRONT):
                 yield (v, prem, u, False)
@@ -248,7 +286,7 @@ def fetch(job, cookie):
     return name, code, norm(body.decode('utf-8', 'replace'))
 
 
-def take(name):
+def take(name, only=None):
     os.makedirs(OUT, exist_ok=True)
     vfile = os.path.join(OUT, 'variants.json')
     if not os.path.exists(vfile):
@@ -269,7 +307,7 @@ def take(name):
     bad = []
     try:
         with ThreadPoolExecutor(2) as ex:
-            for page, code, text in ex.map(lambda j: fetch(j, cookie), list(jobs())):
+            for page, code, text in ex.map(lambda j: fetch(j, cookie), list(jobs(only))):
                 open(os.path.join(target, page + '.html'), 'w', encoding='utf-8').write('HTTP %d\n' % code + text)
                 if code >= 500 or 'critical error' in text:
                     bad.append(page)
@@ -329,8 +367,8 @@ def compare(a, b):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 3 and sys.argv[1] == 'take':
-        take(sys.argv[2])
+    if len(sys.argv) in (3, 4) and sys.argv[1] == 'take':
+        take(sys.argv[2], sys.argv[3].split(',') if len(sys.argv) == 4 else None)
     elif len(sys.argv) == 4 and sys.argv[1] == 'diff':
         sys.exit(0 if compare(sys.argv[2], sys.argv[3]) else 1)
     else:

@@ -4,8 +4,8 @@
  * Opens the Customizer in headless Chrome with a temporary admin login, expands every section,
  * and reports per control type how many controls rendered, plus any JavaScript errors and failed requests.
  *
- * previewCss: sets options in the Customizer (each value of the snapshot's general1 and footer1 variants on its own,
- * then the general1-4 and footer1-5 variants whole), waits for the preview, and compares the preview's CSS of each area written with
+ * previewCss: sets options in the Customizer (each value of the snapshot's general1, footer1 and edd1 variants on its
+ * own, then the general1-4, footer1-5 and edd1-5 variants whole), waits for the preview, and compares the preview's CSS of each area written with
  * wpbf_css() with what the front end prints for the same values (cleaned like the Customizer cleans them). The whole
  * run uses Premium breakpoints of 1100/700/400px. "matched" must equal "cases".
  *
@@ -29,17 +29,17 @@ const chromePath = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const port = 9333;
 
 // Areas written with wpbf_css() (CssRules::AREAS) and their hand-made variants of the page snapshots
-// (bin/snapshot/output/variants.json, made by snapshot.py; named after the area: general1, footer1, ...).
-const cssAreas = ["general", "footer"];
+// (bin/snapshot/output/variants.json, made by snapshot.py; named after the area: general1, footer1, edd1, ...).
+const cssAreas = ["general", "footer", "edd"];
 let previewVariants = {};
 try {
 	const all = JSON.parse(readFileSync(join(here, "output", "variants.json"), "utf8"));
 	for (const [name, values] of Object.entries(all)) {
 		if (!cssAreas.some((area) => new RegExp("^" + area + "\\d+$").test(name))) continue;
-		// Saved values no control can produce (0 on sliders with a minimum of 1): set from code, the instant preview
+		// Saved values no control can produce (0 on sliders with a minimum of 1, '0' as a color): set from code, the instant preview
 		// gets them raw while the front-end side here cleans them to the minimum. As saved values (the only way
 		// they occur) preview and front end both skip them; the page snapshot covers that.
-		if ("footer4" === name) continue;
+		if ("footer4" === name || "edd4" === name) continue;
 		const { __wpbf_settings, ...mods } = values;
 		previewVariants[name] = mods;
 	}
