@@ -196,7 +196,36 @@ class TypographyField extends BaseField {
 		if ( isset( $this->default_value['font-family'] ) ) {
 			$this->addFontFamilyField();
 			$this->addFontVariantField();
+
+			add_filter( 'pre_set_theme_mod_' . $this->control->id, array( $this, 'syncWeightAndStyle' ) );
 		}
+
+	}
+
+	/**
+	 * Keep the saved font weight and style in step with the saved variant.
+	 *
+	 * The font family and variant selects are settings of their own (`id[font-family]`, `id[variant]`). WordPress saves
+	 * them after the typography setting, each on top of the value as it was when the save started, so a save that changed
+	 * the variant kept the old weight and style next to it. The front end reads the variant, but the Customizer composed
+	 * the value again on the next visit and opened with unsaved changes.
+	 *
+	 * @param mixed $value The value about to be saved.
+	 *
+	 * @return mixed
+	 */
+	public function syncWeightAndStyle( $value ) {
+
+		if ( ! is_array( $value ) || empty( $value['variant'] ) || ! is_string( $value['variant'] ) ) {
+			return $value;
+		}
+
+		$from_variant = ( new TypographySanitizer() )->sanitize( array( 'variant' => $value['variant'] ) );
+
+		$value['font-weight'] = $from_variant['font-weight'];
+		$value['font-style']  = $from_variant['font-style'];
+
+		return $value;
 
 	}
 
