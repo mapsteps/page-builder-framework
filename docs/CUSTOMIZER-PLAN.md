@@ -184,17 +184,42 @@ Checks for every step: `python bin/snapshot/snapshot.py take/diff` (pages), `nod
 
 **The Customizer module is done** (November 19, 2026). For users: the Customizer opens faster and without false "unsaved changes", every control follows resets and changes made elsewhere, and transparent colors, multi-selects and repeater rows no longer lose data on save. For visitors: CSS and Google Fonts are built once when settings change instead of on every page view (steps 4, 5 and 8 each made page views 3–23 ms faster, and they use about half the memory), and fonts are never downloaded during a visit. For developers: one definition per option (`Customizer/Schema/`, `wpbf_mod()`), one control bundle with a reproducible `pnpm build`, CSS written once with `wpbf_css()` for both the front end and the live preview. Premium 2.10+ works unchanged; older Premium doesn't crash.
 
+## Area modules (CSS moved to `wpbf_css()`, one area at a time)
+
+Order, easiest first: footer, EDD, typography, blog, WooCommerce, header. Recipe: step 6, "For the next area modules".
+
+**Footer area done** (November 19, 2026, 2 commits).
+- **What changed:** the `/* Footer */` section of `styles.php` is now `inc/customizer/styles/footer.php` (8 `wpbf_css()` lines inside one `if` for "no footer"); `footer` is in `CssRules::AREAS`; the 7 footer bindings left `postmessage.js`. All footer CSS options already used `postMessage`, so nothing switched; now every one of them previews instantly from the same declaration as the front end (width, height, background, font color, accent and hover colors, font size). The footer layout (none / one / two columns) redraws the area through PHP, as it's read in an `if`. The footer font stays in `styles.php` (typography area); Premium's footer CSS stays Premium's. `CustomizerCss::FORMAT` 2 → 3.
+- **New in `wpbf_css()`: `{option|px}`** adds the unit only when the value is a plain number (PHP `is_numeric`, the same in `preview-css.js`). Needed because the input slider saves a typed "18" without a unit (seen in the hands-on); the old code and bindings did `is_numeric( $v ) ? 'px' : ''` by hand. Pre header, pagination and other font sizes need the same.
+- **Values the old code skipped stay skipped:** each footer block has `'when' => <its own option>`, so a saved 0 / `'0'` (an import; the height slider's minimum is 1) still prints nothing, in the preview too.
+- **Intended front-end differences** (snapshot with 5 hand-made footer variants: everything changed, saved equal to the defaults, odd values, zeros/empty, no footer with options set; compared by meaning with `css-compare.py`), only in the odd-values variant:
+  - An explicitly saved footer width of `1200px` now applies when the page width differs (the old `=== '1200px'` check dropped it, so the footer followed the page width). With the default page width nothing changes visibly.
+  - A height saved as the number `20` no longer prints (the stylesheet's 20px; the old "is default" check compared to the text `'20'`).
+  - A background saved as `#F5F5F7` (capitals) no longer prints, so the stylesheet's `var(--base-color-alt)` applies: the same `#f5f5f7` unless Premium's global color palette changes that color (then the palette color shows, as for a site that saved `#f5f5f7`). The Customizer saves colors in lowercase, so only imports can have it.
+  - Everything else identical: live settings, defaults, the synthetic variants, the other footer variants (the CSS is split into one block per option: same meaning, other text), all admin pages apart from WooCommerce's own `wcSettings` data, which changes between runs.
+- **Checks:** page snapshot before/after with WooCommerce active (282 pages, none broken; PHP log only AffiliateWP deprecations); `css-compare`: 1 group, the footer3 differences above. Customizer check: 843/843 controls (722 + WooCommerce's 121), preview CSS 122/122 (general and footer areas, each value of general1/footer1 alone and the variants whole; footer4 left out: its 0s can't be entered, see the check's comment), no JS errors or failed requests, nothing changed on open, database unchanged. Hands-on (`footer-hands-on.mjs` in the side-session notes; real mouse/keys, saves blocked): 51/51, the height slider by arrow keys, a change from elsewhere shown in the slider, reset to the default, width typed and emptied (falls back to the page width), the four colors typed on the Design tab, background reset, font size typed and set as a plain number, layout one/none/two (footer redrawn, its CSS gone with no footer and back with the latest values); every CSS change was in the preview within 1–2 ms with no PHP request, and the page's computed styles matched. Premium check 194 OK; schema check 276 OK (needs `-d memory_limit=512M` now that WooCommerce is active: building the registry ran out of 128 MB); lint clean on the new and changed files (CRLF notice only).
+- **For the next areas:**
+  - WooCommerce is active on pbf.local since this step: take before *and* after runs with it on; `variants.json` was rebuilt (534 settings). `css-compare.py` only looked at `wpbf-style` / `wpbf-premium` inline CSS, which WooCommerce moves to `wpbf-woocommerce` / `wpbf-premium-woocommerce`, so it compared nothing: fixed (every `wpbf-*-inline-css` tag, and it reports front-end pages without one).
+  - Old `if ( $x )` checks: add `'when' => 'x'` to keep skipping 0 / `'0'`. Old `=== 'default'` checks: `wpbf_css()` compares by meaning, so list the odd saved values it now treats as default.
+  - Hand-made variants: name them `<area>1..n` (the check picks them up by name; `<area>1` is also run value by value); add the area to `cssAreas` in `customizer-check.mjs`. Values no control can produce belong in a variant the preview check skips.
+  - Hands-on: options on a section's "Design" tab are hidden until the tab is clicked (`[data-wpbf-tab-id="<section>"] [data-wpbf-tab-menu-id="design"] .wpbf-tab-link`); color fields need their circle clicked first.
+
 ## For later (collected from all steps)
 
 Everything the steps above left open, in one place, sorted by the module that should pick it up. Details are in the step named in brackets.
 
-**Each area module (header, blog, footer, WooCommerce, EDD, …)**
+**Each area module (header, blog, WooCommerce, EDD, …; footer done)**
 - Move the area's CSS to `inc/customizer/styles/<area>.php` with `wpbf_css()`; recipe in step 6 ("For the next area modules"). Clean the area's files for lint while there (the whole-theme lint run lists 537 errors / 88 warnings in 70 files, none in `Customizer/`; `inc/customizer/styles.php` alone has 108 / 15).
-- 12 "is it the default?" checks compare text to a number and never match (their CSS prints at the default too): `{archive}_post_space_between`, `{archive}_post_image_width`, `pre_header_height`, `menu_logo_container_width`, `mobile_menu_logo_container_width`, `menu_height`, `menu_padding`, `sub_menu_width`, `mobile_menu_height`, `footer_height`, `woocommerce_single_image_width`, `woocommerce_loop_image_width` (3). `wpbf_css()` fixes them on the way.
-- Custom widths (pre header, navigation, footer, WooCommerce, archive/post) drop an explicitly chosen 1200px when the page width differs (`=== '1200px'` checks) (3).
+- 11 "is it the default?" checks (footer done) compare text to a number and never match (their CSS prints at the default too): `{archive}_post_space_between`, `{archive}_post_image_width`, `pre_header_height`, `menu_logo_container_width`, `mobile_menu_logo_container_width`, `menu_height`, `menu_padding`, `sub_menu_width`, `mobile_menu_height`, `woocommerce_single_image_width`, `woocommerce_loop_image_width` (3). `wpbf_css()` fixes them on the way.
+- Custom widths (pre header, navigation, WooCommerce, archive/post; footer done) drop an explicitly chosen 1200px when the page width differs (`=== '1200px'` checks) (3).
 - Mobile logo area width: preview 66%, live 66.666% when nothing is saved (3).
 - Output code reads options nobody registers: `blog_pagination_background_color_next_prev`, `page_background_*` (6), `mobile_sub_menu_border_color`, `mobile_menu_padding_left`, `menu_custom`, `{single}_post_content_alignment`, `edd_menu_item_icon`. LifterLMS's settings file isn't loaded and `lifterlms-styles-backup.php` is unused (3).
 - Footer column texts: the schema has them untranslated, as the footer prints them; translating them is a possible change (3).
+- Font sizes saved with or without a unit (pre header, pagination, …): use `{option|px}` (footer area).
+
+**Found during the footer area (not footer, not fixed)**
+- The blog category archive (`/category/blog/` on pbf.local) gets no Customizer CSS at all, for visitors too (no inline CSS, no CSS file), with and without Premium, and before WooCommerce was active (step 9's snapshot). Other pages have it. Not looked into.
+- `bin/check-schema.php` needs `-d memory_limit=512M` with WooCommerce active (the registry build ran out of 128 MB).
 
 **Assets module**
 - `wpbf.mjs` still builds the theme's own assets and zip (and is the last user of most `build-scripts/build-utils.mjs` helpers) (2, 9).
