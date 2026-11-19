@@ -21,6 +21,7 @@
 			<key name="menu_logo_url"/>
 			<key name="menu_logo_alt"/>
 			<key name="menu_logo_title"/>
+			<key name="excerpt_more"/>
 			<key name="blog_read_more_text"/>
 			<key name="blog_categories_title"/>
 			<key name="pre_header_column_one"/>
