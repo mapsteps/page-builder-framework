@@ -35,7 +35,7 @@ ADMIN = ['/wp-admin/themes.php?page=wpbf-premium', '/wp-admin/edit.php', '/wp-ad
          '/wp-admin/customize.php', '/wp-admin/post.php?post=366&action=edit', '/wp-admin/index.php']
 VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synthetic3', 'general1', 'general2', 'general3',
             'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5', 'edd1', 'edd2', 'edd3', 'edd4', 'edd5',
-            'typography1', 'typography2', 'typography3', 'typography4']
+            'typography1', 'typography2', 'typography3', 'typography4', 'blog1', 'blog2', 'blog3', 'blog4', 'blog5']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -220,6 +220,90 @@ HAND_VARIANTS = {
         'page_h1_toggle': True, 'page_h1_font_family': {},
         'page_h2_toggle': 0, 'page_h2_font_family': TYPO('Inter', '700'),
         'footer_font_toggle': '1', 'footer_font_family': TYPO('Inter', '600'),
+    },
+    # Blog: everything changed: pagination, the archives pbf.local has (all archives, search, the docs post type's
+    # archive) and the post. Premium's blog/post layouts add the blog page and the docs post type (page snapshots only:
+    # the preview check sets the settings that exist on pbf.local).
+    'blog1': {
+        '__wpbf_settings': {'wpbf_blog_layouts': ['blog', 'search', 'docs-archive'], 'wpbf_post_layouts': ['docs']},
+        'blog_pagination_background_color': '#111111', 'blog_pagination_background_color_alt': '#222222',
+        'blog_pagination_background_color_active': '#333333', 'blog_pagination_font_color': '#444444',
+        'blog_pagination_font_color_alt': '#555555', 'blog_pagination_font_color_active': '#666666',
+        'blog_pagination_border_radius': '4', 'blog_pagination_font_size': '15px',
+        'archive_custom_width': '900px', 'archive_layout': 'default', 'archive_post_style': 'boxed',
+        'archive_boxed_image_streched': True,
+        'archive_boxed_padding': PAD(desktop_top=30, desktop_right=25, desktop_bottom=30, desktop_left=25, tablet_top=20, tablet_right=15,
+                                     tablet_bottom=False, tablet_left=15, mobile_top=10, mobile_right=10, mobile_bottom=10, mobile_left=10),
+        'archive_post_space_between': '30', 'archive_post_content_alignment': 'center', 'archive_post_background_color': '#eeeeee',
+        'archive_post_accent_color': '#aa0000', 'archive_post_accent_color_alt': '#00aa00', 'archive_post_title_size': '24px',
+        'archive_post_font_size': '15',
+        'search_custom_width': '80%', 'search_layout': 'beside', 'search_post_style': 'plain', 'search_post_space_between': '40',
+        'search_post_image_alignment': 'right', 'search_post_image_width': '30', 'search_post_title_size': '20',
+        'search_post_accent_color': '#123456',
+        'docs-archive_custom_width': '1000px', 'docs-archive_layout': 'beside', 'docs-archive_post_style': 'boxed',
+        'docs-archive_boxed_image_streched': True, 'docs-archive_boxed_padding': PAD(desktop_top=15, desktop_left=35, mobile_top=5),
+        'docs-archive_post_background_color': 'rgba(0,0,0,0.05)', 'docs-archive_post_image_alignment': 'left',
+        'docs-archive_post_image_width': '50', 'docs-archive_post_content_alignment': 'right', 'docs-archive_post_font_size': '1.1em',
+        'blog_custom_width': '950px', 'blog_post_style': 'boxed', 'blog_post_background_color': '#dddddd', 'blog_post_space_between': '25',
+        'single_custom_width': '760px', 'single_post_style': 'boxed', 'single_boxed_image_stretched': True,
+        'single_boxed_padding': PAD(desktop_top=40, desktop_right=40, desktop_bottom=40, desktop_left=40, tablet_top=25, tablet_right=25,
+                                    mobile_left=12, mobile_right=12),
+        'single_post_background_color': '#fafafa', 'single_post_title_size': '32px', 'single_post_font_size': '18',
+        'docs_custom_width': '700px', 'docs_post_style': 'boxed', 'docs_boxed_padding': PAD(desktop_top=50), 'docs_post_title_size': '28px',
+    },
+    # Blog: everything saved, but equal to the defaults.
+    'blog2': {
+        **{'blog_pagination_' + k: '' for k in ('background_color', 'background_color_alt', 'background_color_active', 'font_color',
+                                                 'font_color_alt', 'font_color_active', 'font_size')},
+        'blog_pagination_border_radius': '0',
+        'archive_custom_width': '', 'archive_layout': 'beside', 'archive_post_style': 'boxed', 'archive_boxed_image_streched': False,
+        'archive_boxed_padding': PAD(**{d + '_' + s: False for d in ('desktop', 'tablet', 'mobile') for s in ('top', 'right', 'bottom', 'left')}),
+        'archive_post_space_between': '20', 'archive_post_content_alignment': 'left', 'archive_post_background_color': '#f5f5f7',
+        'archive_post_accent_color': '', 'archive_post_accent_color_alt': '', 'archive_post_title_size': '', 'archive_post_font_size': '',
+        'archive_post_image_alignment': 'left', 'archive_post_image_width': '40',
+        'search_layout': 'default', 'search_post_style': 'plain', 'search_post_space_between': '20',
+        'single_custom_width': '', 'single_post_style': 'boxed', 'single_boxed_image_stretched': False, 'single_boxed_padding': PAD(),
+        'single_post_background_color': '#f5f5f7', 'single_post_title_size': '', 'single_post_font_size': '',
+    },
+    # Blog: odd saved values: numbers instead of text, capitals, '0' and empty padding sides, an empty alignment, an image
+    # alignment the old code prints nothing for, stretched images with the beside layout.
+    'blog3': {
+        'blog_pagination_border_radius': 3, 'blog_pagination_font_size': 14, 'blog_pagination_background_color': '#ABCDEF',
+        'blog_pagination_font_color_active': 'rgba(1,2,3,0.5)',
+        'archive_custom_width': '1200px', 'archive_layout': 'beside', 'archive_post_style': 'boxed', 'archive_boxed_image_streched': True,
+        'archive_boxed_padding': PAD(desktop_top='0', desktop_right=0, desktop_bottom='15', desktop_left='', tablet_top='0', mobile_bottom=7),
+        'archive_post_space_between': 20, 'archive_post_background_color': '#F5F5F7', 'archive_post_image_width': 40,
+        'archive_post_image_alignment': 'center', 'archive_post_content_alignment': '', 'archive_post_title_size': 18,
+        'archive_post_font_size': '1.2em',
+        'search_layout': 'default', 'search_post_style': 'plain', 'search_post_space_between': '20.0',
+        'docs-archive_layout': 'default', 'docs-archive_post_style': 'boxed', 'docs-archive_boxed_image_streched': True,
+        'docs-archive_boxed_padding': PAD(desktop_top='0', desktop_right='18', desktop_left='0', tablet_left=9, mobile_top=4),
+        'single_custom_width': '100%', 'single_post_style': 'boxed', 'single_post_background_color': '#F5F5F7',
+        'single_boxed_image_stretched': True, 'single_boxed_padding': PAD(desktop_top='0', desktop_left=22, tablet_top=11),
+        'single_post_title_size': 30,
+    },
+    # Blog: values no control produces: '0' everywhere, padding that isn't JSON or only zeros.
+    'blog4': {
+        'blog_pagination_background_color': '0', 'blog_pagination_border_radius': '0', 'blog_pagination_font_size': '0',
+        'blog_pagination_font_color_alt': '0',
+        'archive_custom_width': '0', 'archive_layout': 'beside', 'archive_post_style': 'boxed', 'archive_post_background_color': '0',
+        'archive_post_space_between': '0', 'archive_post_title_size': '0', 'archive_post_accent_color': '0',
+        'archive_boxed_padding': 'not json', 'archive_post_image_width': '0', 'archive_post_content_alignment': '0',
+        'search_layout': 'default', 'search_post_style': 'plain', 'search_post_space_between': '0',
+        'single_custom_width': '0', 'single_post_style': 'boxed', 'single_post_background_color': '', 'single_post_font_size': '0',
+        'single_boxed_padding': PAD(desktop_top='0', desktop_right='0', desktop_bottom='0', desktop_left='0'),
+    },
+    # Blog: options set whose switch is off (plain style with boxed options, image width without the beside layout).
+    'blog5': {
+        'archive_layout': 'default', 'archive_post_style': 'plain', 'archive_post_background_color': '#123123',
+        'archive_boxed_padding': PAD(desktop_top=50), 'archive_post_image_width': '25', 'archive_post_image_alignment': 'right',
+        'archive_post_space_between': '35', 'archive_boxed_image_streched': True,
+        'search_layout': 'beside', 'search_post_style': 'boxed', 'search_boxed_image_streched': True,
+        'search_boxed_padding': PAD(desktop_top=30, desktop_right=30, desktop_left=30), 'search_post_space_between': '15',
+        'docs-archive_layout': 'default', 'docs-archive_post_style': 'boxed', 'docs-archive_boxed_image_streched': False,
+        'docs-archive_boxed_padding': PAD(desktop_top=21, tablet_left=13),
+        'single_post_style': 'plain', 'single_post_background_color': '#321321', 'single_boxed_padding': PAD(desktop_top=60),
+        'single_boxed_image_stretched': True,
     },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
