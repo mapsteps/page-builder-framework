@@ -9,8 +9,8 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 $wpbf_tabs = array(
 	'settings'    => __( 'Getting Started', 'page-builder-framework' ),
-	'premium'     => __( 'Premium Add-On', 'page-builder-framework' ),
-	'recommended' => __( 'Recommended Plugins', 'page-builder-framework' ),
+	'premium'     => __( 'Premium', 'page-builder-framework' ),
+	'recommended' => __( 'Recommended', 'page-builder-framework' ),
 );
 
 ?>

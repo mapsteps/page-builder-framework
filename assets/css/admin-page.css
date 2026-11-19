@@ -57,6 +57,82 @@
 	color: var(--heatbox-accent);
 }
 
+/* Premium tab: header with the banner's artwork on the left and live text on the right */
+.wpbf-premium-hero {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	aspect-ratio: 1544 / 500;
+	margin-bottom: var(--heatbox-gap);
+	background: #0090fe url(../../img/premium-add-on-art.jpg) left center / cover no-repeat;
+	border-radius: var(--heatbox-radius);
+	box-shadow: var(--heatbox-shadow);
+	overflow: hidden;
+}
+
+.wpbf-premium-hero-content {
+	width: 36%;
+	padding: 24px 28px 24px 0;
+	color: #fff;
+}
+
+.wpbf-premium-hero h2 {
+	margin: 0 0 8px;
+	font-size: 26px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: #fff;
+}
+
+.wpbf-premium-hero p {
+	margin: 0 0 16px;
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.92);
+}
+
+.wpbf-theme-settings-page .button.wpbf-premium-hero-button,
+.wpbf-theme-settings-page .button.wpbf-premium-hero-button:focus {
+	color: #0062e0;
+	background: #fff;
+	border-color: #fff;
+}
+
+.wpbf-theme-settings-page .button.wpbf-premium-hero-button:hover {
+	color: #0050b8;
+	background: rgba(255, 255, 255, 0.88);
+	border-color: transparent;
+}
+
+@media screen and (max-width: 782px) {
+	.wpbf-premium-hero {
+		aspect-ratio: auto;
+		background: linear-gradient(90deg, #00eafc, #006fff);
+	}
+
+	.wpbf-premium-hero-content {
+		width: 100%;
+		padding: 24px;
+	}
+}
+
+/* Premium features: an icon in a soft circle instead of the check mark */
+.wpbf-feature-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 32px;
+	height: 32px;
+	color: var(--heatbox-accent);
+	background: var(--heatbox-accent-soft);
+	border-radius: 50%;
+}
+
+.wpbf-feature-icon svg {
+	width: 17px;
+	height: 17px;
+}
+
 /* Stored fonts: one chip per font, written in that font */
 .wpbf-font-chips {
 	display: flex;
