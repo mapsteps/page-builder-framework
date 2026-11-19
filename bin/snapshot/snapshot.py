@@ -34,12 +34,17 @@ FRONT = ['/', '/related-posts/', '/checkout/', '/category/blog/', '/category/blo
 ADMIN = ['/wp-admin/themes.php?page=wpbf-premium', '/wp-admin/edit.php', '/wp-admin/edit.php?post_type=page',
          '/wp-admin/customize.php', '/wp-admin/post.php?post=366&action=edit', '/wp-admin/index.php']
 VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synthetic3', 'general1', 'general2', 'general3',
-            'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5', 'edd1', 'edd2', 'edd3', 'edd4', 'edd5']
+            'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5', 'edd1', 'edd2', 'edd3', 'edd4', 'edd5',
+            'typography1', 'typography2', 'typography3', 'typography4']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
 # text with numbers and false for empty sides). '__wpbf_settings' swaps in Premium's breakpoints.
 PAD = lambda **k: json.dumps(k, separators=(',', ':'))
+# A typography value as the Customizer saves it (variant, plus the weight and style composed from it).
+TYPO = lambda family, variant: {'font-family': family, 'variant': variant,
+                                'font-weight': '400' if variant in ('regular', 'italic') else variant.replace('italic', ''),
+                                'font-style': 'italic' if 'italic' in variant else 'normal'}
 HAND_VARIANTS = {
     # Everything changed, boxed layout with shadow, custom breakpoints.
     'general1': {
@@ -165,6 +170,56 @@ HAND_VARIANTS = {
         'page_accent_color': '#ff0066', 'edd_menu_item_mobile': 'hide', 'edd_menu_item_mobile_color': '#888888',
         'mobile_menu_font_color': '#999999', 'button_border_width': 3, 'button_border_color_alt': '#abcdef',
         'button_primary_border_color': '#fedcba', 'button_primary_bg_color': '#123123',
+    },
+    # Typography: everything changed, as the Customizer saves it (family, variant, weight, style). Google fonts that
+    # pbf.local has downloaded (Inter, Rubik, Open Sans, Roboto), font stacks with quotes, Premium's custom font, italics.
+    'typography1': {
+        'page_font_toggle': True, 'page_font_family': TYPO('Inter', '600'), 'page_font_color': '#112233',
+        'menu_font_family_toggle': True, 'menu_font_family': TYPO('Rubik', 'regular'),
+        'sub_menu_font_family_toggle': True, 'sub_menu_font_family': TYPO('Georgia, serif', 'italic'),
+        'page_h1_toggle': True, 'page_h1_font_family': TYPO('Open Sans', '700'),
+        'page_h2_toggle': True, 'page_h2_font_family': TYPO('"Times New Roman", Times, serif', '700italic'),
+        'page_h3_toggle': True, 'page_h3_font_family': TYPO("'Helvetica Neue', Arial, sans-serif", '300'),
+        'page_h4_toggle': True, 'page_h4_font_family': TYPO('Roboto', '700'),
+        'page_h5_toggle': True, 'page_h5_font_family': TYPO('kitten, sans-serif', 'regular'),
+        'page_h6_toggle': True, 'page_h6_font_family': TYPO('Inter', 'regular'),
+        'footer_font_toggle': True, 'footer_font_family': TYPO('Rubik', '700'),
+    },
+    # Typography: everything switched on and saved, but equal to the defaults (the old code prints the fonts anyway).
+    'typography2': {
+        'page_font_toggle': True, 'page_font_family': {'font-family': 'Helvetica, Arial, sans-serif', 'variant': 'regular'},
+        'page_font_color': '#6d7680',
+        'menu_font_family_toggle': True, 'menu_font_family': {'font-family': 'Helvetica, Arial, sans-serif', 'variant': 'regular'},
+        'sub_menu_font_family_toggle': True, 'sub_menu_font_family': {'font-family': 'Helvetica, Arial, sans-serif', 'variant': 'regular'},
+        **{'page_h%d_toggle' % n: True for n in range(1, 7)},
+        **{'page_h%d_font_family' % n: {'font-family': 'Helvetica, Arial, sans-serif', 'variant': '700'} for n in range(1, 7)},
+        'footer_font_toggle': True, 'footer_font_family': {'font-family': 'Helvetica, Arial, sans-serif', 'variant': 'regular'},
+    },
+    # Typography: odd saved values: missing parts, extra parts (older sites, Premium), variant as a number, empty parts,
+    # a switch off with a font set, a color in capitals, a font stack saved with HTML entities.
+    'typography3': {
+        'page_font_toggle': True, 'page_font_family': {'font-family': 'Inter'}, 'page_font_color': '#6D7680',
+        'menu_font_family_toggle': True, 'menu_font_family': {'variant': '600'},
+        'sub_menu_font_family_toggle': True,
+        'sub_menu_font_family': {'font-family': 'Rubik', 'variant': '700', 'font-size': '20px', 'color': '#ff0000',
+                                 'text-transform': 'uppercase', 'subsets': ['latin-ext'], 'downloadFont': '1'},
+        'page_h1_toggle': True, 'page_h1_font_family': {'font-family': 'Inter', 'variant': 400},
+        'page_h2_toggle': True, 'page_h2_font_family': {'font-family': '', 'variant': ''},
+        'page_h3_toggle': True, 'page_h3_font_family': {'font-family': 'Helvetica, Arial, sans-serif', 'variant': '700'},
+        'page_h4_toggle': False, 'page_h4_font_family': TYPO('Roboto', '700'),
+        'page_h5_toggle': True, 'page_h5_font_family': {'font-family': '&quot;Times New Roman&quot;, serif', 'variant': 'italic'},
+        'page_h6_toggle': True, 'page_h6_font_family': {'font-family': ' Georgia, serif ', 'variant': '900italic', 'font-style': 'normal'},
+        'footer_font_toggle': True, 'footer_font_family': {'font-family': 'Georgia, serif', 'variant': '300italic'},
+    },
+    # Typography: values no control produces: '0' as a color, switches on with nothing saved, a font saved as text,
+    # an empty font, switches saved as '1' / 0.
+    'typography4': {
+        'page_font_toggle': '1', 'page_font_color': '0',
+        'menu_font_family_toggle': True,
+        'sub_menu_font_family_toggle': True, 'sub_menu_font_family': '{"font-family":"Inter","variant":"700"}',
+        'page_h1_toggle': True, 'page_h1_font_family': {},
+        'page_h2_toggle': 0, 'page_h2_font_family': TYPO('Inter', '700'),
+        'footer_font_toggle': '1', 'footer_font_family': TYPO('Inter', '600'),
     },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
