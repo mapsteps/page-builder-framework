@@ -1,5 +1,27 @@
 /* Theme Settings page: the few layouts heatbox has no component for (heatbox.css holds everything else). */
 
+/* First steps: the three steps next to each other, their links lined up at the bottom */
+.wpbf-first-steps-metabox .heatbox-steps {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--heatbox-gap) 32px;
+}
+
+.wpbf-first-steps-metabox .heatbox-steps > li {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.wpbf-first-steps-metabox .heatbox-steps > li > a {
+	margin-top: auto;
+}
+
+@media screen and (max-width: 782px) {
+	.wpbf-first-steps-metabox .heatbox-steps {
+		grid-template-columns: 1fr;
+	}
+}
+
 /* Customizer links: a grid of tiles with an icon */
 .wpbf-customizer-list {
 	display: grid;
