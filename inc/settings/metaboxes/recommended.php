@@ -13,11 +13,11 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
  */
 $wpbf_recommended_plugins = array(
 	array(
-		'title'       => __( 'Better Admin Bar', 'page-builder-framework' ),
-		'description' => __( 'The admin bar reimagined: a quick access panel, auto-hide and more.', 'page-builder-framework' ),
-		'banner'      => 'https://ps.w.org/better-admin-bar/assets/banner-772x250.png',
-		'slug'        => 'better-admin-bar',
-		'files'       => array( 'better-admin-bar/better-admin-bar.php', 'swift-control-pro/swift-control-pro.php' ),
+		'title'       => __( 'Swift SMTP', 'page-builder-framework' ),
+		'description' => __( 'Send your emails through SMTP, log them and customize welcome emails.', 'page-builder-framework' ),
+		'banner'      => 'https://ps.w.org/welcome-email-editor/assets/banner-772x250.jpg',
+		'slug'        => 'welcome-email-editor',
+		'files'       => array( 'welcome-email-editor/sb_welcome_email_editor.php' ),
 	),
 	array(
 		'title'       => __( 'Ultimate Dashboard', 'page-builder-framework' ),
@@ -27,18 +27,18 @@ $wpbf_recommended_plugins = array(
 		'files'       => array( 'ultimate-dashboard/ultimate-dashboard.php' ),
 	),
 	array(
+		'title'       => __( 'Better Admin Bar', 'page-builder-framework' ),
+		'description' => __( 'The admin bar reimagined: a quick access panel, auto-hide and more.', 'page-builder-framework' ),
+		'banner'      => 'https://ps.w.org/better-admin-bar/assets/banner-772x250.png',
+		'slug'        => 'better-admin-bar',
+		'files'       => array( 'better-admin-bar/better-admin-bar.php', 'swift-control-pro/swift-control-pro.php' ),
+	),
+	array(
 		'title'       => __( 'WP Video Popup', 'page-builder-framework' ),
 		'description' => __( 'Lightweight, privacy-friendly YouTube, Vimeo & Rumble video popups.', 'page-builder-framework' ),
 		'banner'      => 'https://ps.w.org/responsive-youtube-vimeo-popup/assets/banner-772x250.jpg',
 		'slug'        => 'responsive-youtube-vimeo-popup',
 		'files'       => array( 'responsive-youtube-vimeo-popup/responsive-youtube-vimeo-popup.php', 'wp-video-popup-pro/wp-video-popup-pro.php' ),
-	),
-	array(
-		'title'       => __( 'Swift SMTP', 'page-builder-framework' ),
-		'description' => __( 'Send your emails through SMTP, log them and customize welcome emails.', 'page-builder-framework' ),
-		'banner'      => 'https://ps.w.org/welcome-email-editor/assets/banner-772x250.jpg',
-		'slug'        => 'welcome-email-editor',
-		'files'       => array( 'welcome-email-editor/sb_welcome_email_editor.php' ),
 	),
 	array(
 		'title'       => __( 'Media Toolkit', 'page-builder-framework' ),
@@ -53,14 +53,6 @@ $wpbf_recommended_plugins = array(
 		'banner'      => 'https://ps.w.org/customizer-reset/assets/banner-772x250.jpg',
 		'slug'        => 'customizer-reset',
 		'files'       => array( 'customizer-reset/customizer-reset.php' ),
-	),
-	array(
-		'title'       => __( 'Toolset', 'page-builder-framework' ),
-		'description' => __( 'Build dynamic, advanced websites without programming.', 'page-builder-framework' ),
-		'banner'      => WPBF_THEME_URI . '/img/toolset-banner.png',
-		'link'        => 'https://toolset.com/',
-		'slug'        => '',
-		'files'       => array( 'toolset-blocks/wp-views.php', 'wp-views/wp-views.php', 'types/wpcf.php' ),
 	),
 	array(
 		'title'       => 'Weglot',
