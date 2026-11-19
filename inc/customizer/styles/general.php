@@ -6,7 +6,8 @@
  *
  * wpbf_css( $selector, $declarations, $args ) writes one CSS block.
  * - Declaration values hold option values as {option_id}, or {option_id.key} for one part of a JSON option
- *   (like {page_padding.desktop_top}). Text around it is kept: '{button_border_radius}px'.
+ *   (like {page_padding.desktop_top}). Text around it is kept: '{button_border_radius}px'. {option_id|px} adds px only
+ *   when the value is a plain number (for options saved with or without a unit, like '14px' or '14').
  * - A declaration prints when its options are set and at least one differs from its default. Values with several
  *   parts (padding) compare as a whole; when they differ, every part that has a value prints.
  * - Declarations without an option ('border-style' => 'solid') print along with the others in the block.

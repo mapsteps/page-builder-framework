@@ -13,7 +13,7 @@
 
 	var areas = window.wpbfCssAreas || {};
 
-	var REF = /\{([A-Za-z0-9_\-]+)(?:\.([A-Za-z0-9_\-]+))?\}/g;
+	var REF = /\{([A-Za-z0-9_\-]+)(?:\.([A-Za-z0-9_\-]+))?(?:\|([a-z%]+))?\}/g;
 	var TOKEN = /\/\*wpbf-css:(\d+)\*\//g;
 	var HEX = /^#[0-9a-fA-F]{3,8}$/;
 	var BOOLEAN_TYPES = ["toggle", "checkbox", "headline-toggle"];
@@ -171,7 +171,7 @@
 		REF.lastIndex = 0;
 
 		while ((match = REF.exec(template))) {
-			found.push({ placeholder: match[0], id: match[1], key: match[2] || "" });
+			found.push({ placeholder: match[0], id: match[1], key: match[2] || "", unit: match[3] || "" });
 		}
 
 		return found;
@@ -212,7 +212,7 @@
 					return;
 				}
 
-				parts[ref.placeholder] = escAttr(text(part));
+				parts[ref.placeholder] = escAttr(text(part) + (ref.unit && isNumeric(part) ? ref.unit : ""));
 				changed = changed || !same(full, defaultOf(area, ref.id));
 			});
 

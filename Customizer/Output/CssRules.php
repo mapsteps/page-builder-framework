@@ -31,12 +31,13 @@ final class CssRules {
 	/**
 	 * Areas that are written with wpbf_css() (one file each in inc/customizer/styles/).
 	 */
-	const AREAS = array( 'general' );
+	const AREAS = array( 'general', 'footer' );
 
 	/**
-	 * Placeholder of an option value in a declaration: {option_id} or {option_id.key} for a part of a JSON option.
+	 * Placeholder of an option value in a declaration: {option_id} or {option_id.key} for a part of a JSON option;
+	 * {option_id|px} adds the unit when the value is a plain number ('14' → 14px, '1em' stays).
 	 */
-	const REF = '/\{([A-Za-z0-9_\-]+)(?:\.([A-Za-z0-9_\-]+))?\}/';
+	const REF = '/\{([A-Za-z0-9_\-]+)(?:\.([A-Za-z0-9_\-]+))?(?:\|([a-z%]+))?\}/';
 
 	/**
 	 * Placeholder of a block in a preview template.
@@ -306,7 +307,7 @@ final class CssRules {
 					continue 2;
 				}
 
-				$parts[ $placeholder ] = esc_attr( self::text( $part ) );
+				$parts[ $placeholder ] = esc_attr( self::text( $part ) . ( '' !== $ref[2] && is_numeric( $part ) ? $ref[2] : '' ) );
 				$changed               = $changed || ! self::same( $value, self::defaultOf( $ref[0] ) );
 			}
 
@@ -344,7 +345,7 @@ final class CssRules {
 	 *
 	 * @param string $value The declaration value.
 	 *
-	 * @return array Placeholder => array( option id, key or '' ).
+	 * @return array Placeholder => array( option id, key or '', unit for plain numbers or '' ).
 	 */
 	private static function refs( $value ) {
 
@@ -357,7 +358,7 @@ final class CssRules {
 		$refs = array();
 
 		foreach ( $found as $ref ) {
-			$refs[ $ref[0] ] = array( $ref[1], isset( $ref[2] ) ? $ref[2] : '' );
+			$refs[ $ref[0] ] = array( $ref[1], isset( $ref[2] ) ? $ref[2] : '', isset( $ref[3] ) ? $ref[3] : '' );
 		}
 
 		self::$parsed[ $value ] = $refs;

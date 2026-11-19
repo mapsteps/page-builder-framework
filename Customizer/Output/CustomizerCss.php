@@ -40,7 +40,7 @@ final class CustomizerCss {
 	 *
 	 * @var int
 	 */
-	const FORMAT = 2;
+	const FORMAT = 3;
 
 	/**
 	 * The cron hook that refreshes the cache (after saves, for font downloads and their retries).
