@@ -32,7 +32,7 @@ final class CssRules {
 	/**
 	 * Areas that are written with wpbf_css() (one file each in inc/customizer/styles/).
 	 */
-	const AREAS = array( 'general', 'footer', 'edd' );
+	const AREAS = array( 'typography', 'general', 'footer', 'edd' );
 
 	/**
 	 * Placeholder of an option value in a declaration: {option_id} or {option_id.key} for a part of a JSON option;

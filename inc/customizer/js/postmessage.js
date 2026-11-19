@@ -26,16 +26,6 @@
 		return tag;
 	}
 
-	/* Typography */
-
-	wp.customize('page_font_color', function (value) {
-		var styleTag = setupStyleTag('page_font_color');
-
-		value.bind(function (newval) {
-			styleTag.innerHTML = 'body {color: ' + newval + ';}';
-		});
-	});
-
 	/* 404 */
 
 	wp.customize('404_headline', function (value) {

@@ -3,7 +3,7 @@
  * Customizer CSS: Footer (width, height, colors, font size).
  *
  * Plain PHP, included from styles.php with wpbf_css_area( 'footer' ). How to write it: see styles/general.php.
- * The footer font (Typography) is in styles.php with the typography area; Premium's footer CSS is Premium's.
+ * The footer font is in styles/typography.php; Premium's footer CSS is Premium's.
  *
  * Each block has 'when' => its own option: the old code skipped values like 0 or '0' (a slider can't save them, an
  * import can), so they stay skipped.
