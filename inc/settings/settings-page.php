@@ -8,10 +8,9 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 $wpbf_tabs = array(
-	'settings'      => __( 'Getting Started', 'page-builder-framework' ),
-	'premium'       => __( 'Premium Add-On', 'page-builder-framework' ),
-	'recommended'   => __( 'Recommended Plugins', 'page-builder-framework' ),
-	'documentation' => __( 'Help', 'page-builder-framework' ),
+	'settings'    => __( 'Getting Started', 'page-builder-framework' ),
+	'premium'     => __( 'Premium Add-On', 'page-builder-framework' ),
+	'recommended' => __( 'Recommended Plugins', 'page-builder-framework' ),
 );
 
 ?>
@@ -74,15 +73,10 @@ $wpbf_tabs = array(
 				<?php require __DIR__ . '/metaboxes/recommended.php'; ?>
 			</div>
 
-			<div class="heatbox-admin-panel" data-panel="documentation">
-				<?php require __DIR__ . '/metaboxes/documentation.php'; ?>
-			</div>
-
 		</div>
 
 		<div class="heatbox-sidebar">
 			<?php
-			require __DIR__ . '/metaboxes/community.php';
 			require __DIR__ . '/metaboxes/review.php';
 			require __DIR__ . '/metaboxes/resources.php';
 			?>

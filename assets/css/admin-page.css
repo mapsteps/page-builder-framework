@@ -29,22 +29,19 @@
 	gap: 12px;
 }
 
-/* Recommended plugins & help boxes: the button sits at the bottom, so it lines up across a row */
-.wpbf-recommended-list .heatbox,
-.wpbf-documentation-boxes .heatbox {
+/* Recommended plugins: the button sits at the bottom, so it lines up across a row */
+.wpbf-recommended-list .heatbox {
 	display: flex;
 	flex-direction: column;
 }
 
-.wpbf-recommended-list .heatbox-content,
-.wpbf-documentation-boxes .heatbox-content {
+.wpbf-recommended-list .heatbox-content {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
 }
 
-.wpbf-recommended-list .heatbox-content > :last-child,
-.wpbf-documentation-boxes .heatbox-content > :last-child {
+.wpbf-recommended-list .heatbox-content > :last-child {
 	align-self: flex-start;
 	margin-top: auto;
 }

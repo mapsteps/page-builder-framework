@@ -14,6 +14,11 @@ $wpbf_resources = array(
 		'link'  => 'https://wp-pagebuilderframework.com/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
 	),
 	array(
+		'icon'  => 'dashicons-book-alt',
+		'title' => __( 'Documentation', 'page-builder-framework' ),
+		'link'  => 'https://wp-pagebuilderframework.com/docs/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+	),
+	array(
 		'icon'  => 'dashicons-download',
 		'title' => __( 'Child Theme', 'page-builder-framework' ),
 		'link'  => 'https://wp-pagebuilderframework.com/child-theme-generator/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',

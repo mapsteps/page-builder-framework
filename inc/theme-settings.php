@@ -134,6 +134,13 @@ function wpbf_show_activation_notice() {
 		return;
 	}
 
+	// Stop here on the Theme Settings page itself (the notice points there).
+	$screen = get_current_screen();
+
+	if ( $screen && 'appearance_page_wpbf-premium' === $screen->id ) {
+		return;
+	}
+
 	require __DIR__ . '/settings/activation-notice.php';
 
 }
