@@ -44,7 +44,7 @@ VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synth
             'header1', 'header2', 'header3', 'header4', 'header5', 'header6', 'header7', 'header8',
             'premium-general1', 'premium-general2', 'premium-general3', 'premium-typography1', 'premium-typography2',
             'premium-typography3', 'premium-blog1', 'premium-blog2', 'premium-footer1', 'premium-footer2', 'premium-footer3',
-            'premium-footer4']
+            'premium-footer4'] + ['premium-header%d' % n for n in range(1, 12)]
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -616,6 +616,168 @@ HAND_VARIANTS = {
         'footer_widgets': 'disabled', 'footer_widgets_bg_color': '#101010', 'footer_widgets_font_size': '20px',
         'social_shapes': 'wpbf-social-shape-plain', 'social_background_color': '#123456', 'social_styles': 'wpbf-social-style-grey',
         'social_color': '#654321',
+    },
+    # Premium header: everything changed, custom breakpoints: off-canvas (right) menu with push and overlay, off-canvas
+    # mobile menu, text logo with tagline, transparent header, sticky header (hidden logo, shadow, off on mobile), CTA
+    # button in all states, underlined hover effect.
+    'premium-header1': {
+        '__wpbf_settings': {'wpbf_breakpoint_desktop': '1100px', 'wpbf_breakpoint_medium': '700px', 'wpbf_breakpoint_mobile': '400px'},
+        'custom_logo': '', 'menu_logo_description': True, 'menu_position': 'menu-off-canvas', 'menu_padding': 25,
+        'menu_width': '1000px', 'mobile_menu_options': 'menu-mobile-off-canvas', 'mobile_menu_width': '300px',
+        'mobile_menu_bg_color': '#fafafa', 'mobile_menu_overlay': True, 'mobile_menu_overlay_color': 'rgba(0,0,0,0.6)',
+        'mobile_menu_padding': PAD(top=12, right=24, bottom=12, left=26), 'mobile_menu_hamburger_bg_color': '#454545',
+        'menu_off_canvas_hamburger_size': '22px', 'menu_off_canvas_bg_color': '#101010', 'menu_off_canvas_hamburger_color': '#202020',
+        'menu_off_canvas_submenu_arrow_color': '#303030', 'menu_off_canvas_width': 350, 'menu_off_canvas_push': True,
+        'menu_overlay': True, 'menu_overlay_color': 'rgba(0,0,0,0.7)',
+        'menu_transparent_width': '1000px', 'menu_transparent_background_color': 'rgba(0,0,0,0.2)',
+        'menu_transparent_font_color': '#111111', 'menu_transparent_font_color_alt': '#121212', 'menu_transparent_logo_color': '#131313',
+        'menu_transparent_logo_color_alt': '#141414', 'menu_transparent_tagline_color': '#151515',
+        'menu_transparent_hamburger_color': '#161616', 'menu_transparent_hamburger_color_mobile': '#171717',
+        'menu_transparent_hamburger_bg_color_mobile': '#181818',
+        'menu_sticky': True, 'menu_active_hide_logo': True,
+        'menu_active_logo_size': json.dumps({'desktop': '120', 'tablet': '100px', 'mobile': '80'}), 'menu_active_width': '1000px',
+        'menu_active_height': 12, 'menu_active_stacked_bg_color': '#212121', 'menu_active_bg_color': '#222222',
+        'menu_active_font_color': '#232323', 'menu_active_font_color_alt': '#242424', 'menu_active_logo_color': '#252525',
+        'menu_active_logo_color_alt': '#262626', 'menu_active_tagline_color': '#272727', 'menu_active_box_shadow': True,
+        'menu_active_box_shadow_blur': 10, 'menu_active_box_shadow_color': 'rgba(0,0,0,0.3)',
+        'menu_active_off_canvas_hamburger_color': '#282828', 'menu_active_mobile_disabled': True,
+        'mobile_menu_active_hamburger_color': '#292929', 'mobile_menu_active_hamburger_bg_color': '#2a2a2a',
+        'cta_button': True, 'cta_button_border_radius': 5, 'cta_button_background_color': '#313131',
+        'cta_button_background_color_alt': '#323232', 'cta_button_font_color': '#333333', 'cta_button_font_color_alt': '#343434',
+        'cta_button_transparent_background_color': '#353535', 'cta_button_transparent_background_color_alt': '#363636',
+        'cta_button_transparent_font_color': '#373737', 'cta_button_transparent_font_color_alt': '#383838',
+        'cta_button_sticky_background_color': '#393939', 'cta_button_sticky_background_color_alt': '#3a3a3a',
+        'cta_button_sticky_font_color': '#3b3b3b', 'cta_button_sticky_font_color_alt': '#3c3c3c',
+        'menu_effect': 'underlined', 'menu_effect_underlined_size': 3, 'menu_effect_color': '#404040',
+    },
+    # Premium header: everything saved equal to the defaults as the Customizer saves them (sliders as numbers, colors
+    # lowercase, JSON as text): stacked advanced menu, off-canvas mobile menu, sticky header, boxed hover effect.
+    'premium-header2': {
+        'custom_logo': '', 'menu_logo_description': True, 'menu_position': 'menu-stacked-advanced', 'menu_width': '',
+        'menu_padding': 20, 'menu_stacked_bg_color': '#ffffff', 'menu_stacked_logo_height': 20,
+        'mobile_menu_options': 'menu-mobile-off-canvas', 'mobile_menu_width': '320px', 'mobile_menu_bg_color': '#ffffff',
+        'mobile_menu_overlay': False, 'mobile_menu_overlay_color': 'rgba(0,0,0,.5)',
+        'mobile_menu_padding': PAD(top=10, right=20, bottom=10, left=20), 'mobile_menu_hamburger_bg_color': '',
+        'menu_off_canvas_hamburger_size': '18px', 'menu_off_canvas_bg_color': '#ffffff', 'menu_off_canvas_hamburger_color': '#6d7680',
+        'menu_off_canvas_submenu_arrow_color': '', 'menu_off_canvas_width': 400, 'menu_overlay': False,
+        'menu_overlay_color': 'rgba(0,0,0,.5)', 'menu_transparent_width': '', 'menu_transparent_background_color': '',
+        'menu_transparent_font_color': '', 'menu_transparent_font_color_alt': '', 'menu_transparent_logo_color': '',
+        'menu_transparent_hamburger_color': '', 'menu_transparent_hamburger_color_mobile': '',
+        'menu_sticky': True, 'menu_active_hide_logo': False, 'menu_active_logo_size': json.dumps({'desktop': '', 'tablet': '', 'mobile': ''}),
+        'menu_active_width': '', 'menu_active_height': 20, 'menu_active_stacked_bg_color': '#ffffff', 'menu_active_bg_color': '#f5f5f7',
+        'menu_active_font_color': '', 'menu_active_font_color_alt': '', 'menu_active_box_shadow': False,
+        'menu_active_box_shadow_blur': 5, 'menu_active_box_shadow_color': 'rgba(0,0,0,.15)', 'menu_active_mobile_disabled': False,
+        'cta_button': True, 'cta_button_border_radius': 0, 'cta_button_background_color': '', 'cta_button_font_color': '',
+        'cta_button_background_color_alt': '', 'cta_button_font_color_alt': '',
+        'menu_effect': 'boxed', 'menu_effect_boxed_radius': 0, 'menu_effect_underlined_size': 2, 'menu_effect_color': '',
+    },
+    # Premium header: the defaults on Premium's off-canvas (left) menu with both overlays on, underlined hover effect.
+    'premium-header3': {
+        'menu_position': 'menu-off-canvas-left', 'menu_padding': 20, 'menu_off_canvas_hamburger_size': '18px',
+        'menu_off_canvas_bg_color': '#ffffff', 'menu_off_canvas_hamburger_color': '#6d7680', 'menu_off_canvas_width': 400,
+        'menu_overlay': True, 'menu_overlay_color': 'rgba(0,0,0,.5)', 'mobile_menu_options': 'menu-mobile-off-canvas',
+        'mobile_menu_overlay': True, 'mobile_menu_overlay_color': 'rgba(0,0,0,.5)', 'mobile_menu_width': '320px',
+        'menu_effect': 'underlined', 'menu_effect_underlined_size': 2, 'menu_effect_color': '',
+        'menu_sticky': True, 'menu_active_box_shadow': True, 'menu_active_box_shadow_blur': 5,
+        'menu_active_box_shadow_color': 'rgba(0,0,0,.15)',
+    },
+    # Premium header: odd values: sliders saved as text (older sites), capitals, sizes without a unit, 1200px widths with
+    # another page width, a padding side as text, a shadow blur of '0' and an empty shadow color.
+    'premium-header4': {
+        'page_max_width': '1100px', 'custom_logo': '', 'menu_logo_description': True, 'menu_position': 'menu-stacked-advanced',
+        'menu_width': '1200px', 'menu_stacked_bg_color': '#FFFFFF', 'menu_stacked_logo_height': '20', 'menu_padding': '20',
+        'mobile_menu_options': 'menu-mobile-off-canvas', 'mobile_menu_width': '300', 'mobile_menu_bg_color': '#FFFFFF',
+        'mobile_menu_overlay': True, 'mobile_menu_overlay_color': 'rgba(0,0,0,0.5)',
+        'mobile_menu_padding': PAD(top=10, right='20', bottom=10, left=20),
+        'menu_transparent_width': '1200px', 'menu_transparent_font_color': '#ABCDEF',
+        'menu_sticky': True, 'menu_active_hide_logo': True, 'menu_active_width': '1200px', 'menu_active_height': '20',
+        'menu_active_stacked_bg_color': '#f5f5f7', 'menu_active_bg_color': '#F5F5F7',
+        'menu_active_logo_size': json.dumps({'desktop': '120px', 'tablet': 100, 'mobile': '5em'}),
+        'menu_active_box_shadow': True, 'menu_active_box_shadow_blur': '0', 'menu_active_box_shadow_color': '',
+        'cta_button_border_radius': '6', 'cta_button_font_color': '#FFFFFF',
+        'menu_effect': 'underlined', 'menu_effect_underlined_size': '2', 'menu_effect_color': '#ABCDEF',
+    },
+    # Premium header: odd values on the off-canvas (right) menu: a toggle size without a unit, the width as text, colors
+    # as the defaults in capitals, the overlay color as the default; modern hover effect with the menu padding 20.
+    'premium-header5': {
+        'menu_position': 'menu-off-canvas', 'menu_off_canvas_hamburger_size': '20', 'menu_off_canvas_width': '400',
+        'menu_off_canvas_bg_color': '#FFFFFF', 'menu_off_canvas_hamburger_color': '#6D7680', 'menu_overlay': True,
+        'menu_overlay_color': 'rgba(0,0,0,.5)', 'menu_padding': 20, 'menu_effect': 'modern', 'menu_effect_color': '#ff0000',
+        'mobile_menu_options': 'menu-mobile-off-canvas', 'mobile_menu_width': '320', 'mobile_menu_overlay_color': 'rgba(0,0,0,0.5)',
+        'mobile_menu_overlay': True,
+    },
+    # Premium header: full screen menu (menu padding, toggle size 16px, off-canvas only options set), hamburger mobile menu
+    # with transparent and sticky hamburger colors, CTA hover colors only, transparent font color only, sticky background only.
+    'premium-header6': {
+        'menu_position': 'menu-full-screen', 'menu_padding': 30, 'menu_off_canvas_hamburger_size': '16px',
+        'menu_off_canvas_bg_color': '#202020', 'menu_off_canvas_hamburger_color': '#303030', 'menu_off_canvas_submenu_arrow_color': '#404040',
+        'menu_off_canvas_width': 350, 'menu_overlay': True, 'menu_overlay_color': 'rgba(0,0,0,0.7)',
+        'menu_effect': 'modern', 'menu_effect_color': '#00ff00',
+        'mobile_menu_options': 'menu-mobile-hamburger', 'mobile_menu_hamburger_bg_color': '#505050',
+        'menu_transparent_hamburger_color_mobile': '#515151', 'menu_transparent_hamburger_bg_color_mobile': '#525252',
+        'mobile_menu_active_hamburger_color': '#535353', 'mobile_menu_active_hamburger_bg_color': '#545454',
+        'mobile_menu_overlay': True, 'mobile_menu_overlay_color': 'rgba(0,0,0,0.6)', 'mobile_menu_width': '280px',
+        'menu_sticky': True, 'menu_active_hide_logo': True, 'menu_active_off_canvas_hamburger_color': '#555555',
+        'cta_button': True, 'cta_button_background_color_alt': '#606060', 'cta_button_font_color_alt': '#616161',
+        'cta_button_transparent_font_color': '#626262', 'cta_button_sticky_background_color': '#636363',
+    },
+    # Premium header: the theme's stacked menu with the sticky header hiding the logo and a height; boxed hover effect.
+    'premium-header7': {
+        'menu_position': 'menu-stacked', 'menu_sticky': True, 'menu_active_hide_logo': True, 'menu_active_height': 25,
+        'menu_effect': 'boxed', 'menu_effect_boxed_radius': 8, 'menu_effect_color': '#ff0000', 'menu_padding': 15,
+        'mobile_menu_options': 'menu-mobile-hamburger', 'mobile_menu_hamburger_bg_color': '#123456',
+        'menu_transparent_hamburger_bg_color_mobile': '#234567', 'mobile_menu_active_hamburger_bg_color': '#345678',
+    },
+    # Premium header: centered menu with the sticky header hiding the logo, a custom logo with transparent and sticky logo
+    # and tagline colors set (not printed with a logo), the tagline on, transparent header off on mobile.
+    'premium-header8': {
+        'custom_logo': 127346, 'menu_logo_description': True, 'menu_position': 'menu-centered', 'menu_sticky': True,
+        'menu_active_hide_logo': True, 'menu_transparent_logo_color': '#101010', 'menu_transparent_logo_color_alt': '#202020',
+        'menu_transparent_tagline_color': '#303030', 'menu_active_logo_color': '#404040', 'menu_active_logo_color_alt': '#505050',
+        'menu_active_tagline_color': '#606060', 'menu_transparent_mobile_disabled': True, 'menu_active_height': 18,
+        'menu_effect': 'modern', 'menu_padding': 18,
+    },
+    # Premium header: switches off with their options set: right menu with off-canvas options, sticky header off with its
+    # switches on, default mobile menu with off-canvas and hamburger options, overlays off, no hover effect with its
+    # options, text logo with the tagline off, CTA font colors only (the hover fallbacks).
+    'premium-header9': {
+        'custom_logo': '', 'menu_logo_description': False, 'menu_position': 'menu-right', 'menu_padding': 25,
+        'menu_off_canvas_hamburger_size': '22px', 'menu_off_canvas_bg_color': '#101010', 'menu_off_canvas_hamburger_color': '#202020',
+        'menu_off_canvas_submenu_arrow_color': '#303030', 'menu_off_canvas_width': 350, 'menu_overlay': False,
+        'menu_overlay_color': 'rgba(0,0,0,0.7)', 'menu_sticky': False, 'menu_active_hide_logo': True, 'menu_active_box_shadow': True,
+        'menu_active_mobile_disabled': True, 'menu_active_off_canvas_hamburger_color': '#404040',
+        'menu_transparent_tagline_color': '#505050', 'menu_active_tagline_color': '#606060',
+        'menu_transparent_logo_color': '#707070', 'menu_active_font_color': '#808080',
+        'mobile_menu_options': 'menu-mobile-default', 'mobile_menu_width': '300px', 'mobile_menu_bg_color': '#fafafa',
+        'mobile_menu_overlay': False, 'mobile_menu_overlay_color': 'rgba(0,0,0,0.6)', 'mobile_menu_padding': PAD(top=10, right=30, bottom=10, left=30),
+        'mobile_menu_hamburger_bg_color': '#909090', 'menu_transparent_hamburger_color_mobile': '#a0a0a0',
+        'menu_transparent_hamburger_bg_color_mobile': '#b0b0b0', 'mobile_menu_active_hamburger_color': '#c0c0c0',
+        'mobile_menu_active_hamburger_bg_color': '#d0d0d0', 'menu_transparent_mobile_disabled': True,
+        'menu_effect': 'none', 'menu_effect_color': '#e0e0e0', 'menu_effect_underlined_size': 4, 'menu_effect_boxed_radius': 6,
+        'cta_button': True, 'cta_button_font_color': '#f0f0f0', 'cta_button_transparent_font_color_alt': '#f1f1f1',
+        'cta_button_sticky_font_color': '#f2f2f2', 'cta_button_sticky_background_color_alt': '#f3f3f3',
+    },
+    # Premium header: values no control saves: '0' and 0, empty values, JSON that isn't JSON.
+    'premium-header10': {
+        'custom_logo': '', 'menu_logo_description': '0', 'menu_position': 'menu-off-canvas', 'menu_padding': '0',
+        'menu_off_canvas_hamburger_size': '0', 'menu_off_canvas_bg_color': '0', 'menu_off_canvas_hamburger_color': '',
+        'menu_off_canvas_submenu_arrow_color': '0', 'menu_off_canvas_width': 0, 'menu_overlay': '1', 'menu_overlay_color': '0',
+        'mobile_menu_options': 'menu-mobile-off-canvas', 'mobile_menu_width': '0', 'mobile_menu_bg_color': '0',
+        'mobile_menu_overlay': '1', 'mobile_menu_overlay_color': '', 'mobile_menu_padding': 'not json',
+        'menu_transparent_width': '0', 'menu_transparent_font_color': '0', 'menu_transparent_font_color_alt': '',
+        'menu_sticky': '1', 'menu_active_hide_logo': '0', 'menu_active_logo_size': 'not json', 'menu_active_width': '0',
+        'menu_active_height': 0, 'menu_active_bg_color': '0', 'menu_active_box_shadow': '1', 'menu_active_box_shadow_blur': 0,
+        'menu_active_box_shadow_color': '0', 'menu_active_mobile_disabled': '0',
+        'cta_button_border_radius': '0', 'cta_button_background_color': '0', 'cta_button_font_color': '#ffffff',
+        'cta_button_background_color_alt': '', 'cta_button_font_color_alt': '0',
+        'cta_button_transparent_background_color': '#123456', 'cta_button_transparent_font_color': '0',
+        'menu_effect': 'boxed', 'menu_effect_boxed_radius': '0', 'menu_effect_color': '0',
+    },
+    # Premium header: the menu positions and switches with nothing else saved (the menu padding isn't saved, so the
+    # off-canvas menu keeps its item padding; the shadow uses its fallbacks).
+    'premium-header11': {
+        'menu_position': 'menu-off-canvas', 'mobile_menu_options': 'menu-mobile-off-canvas', 'menu_effect': 'modern',
+        'menu_sticky': True, 'menu_active_box_shadow': True, 'menu_overlay': True, 'mobile_menu_overlay': True,
     },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')

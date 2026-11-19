@@ -236,6 +236,18 @@ if ( 'live' !== $zz_variant ) {
 			return array_merge( $keep, $zz_mods );
 		}
 	);
+
+	// WordPress reads the logo from the site_logo option when it exists (pbf.local has one), so a variant's custom_logo
+	// only counts with that option filtered too. Premium's variants only: the theme's header1-8 were taken without it
+	// (their text logo branch never rendered in page snapshots), so earlier runs stay comparable.
+	if ( 0 === strpos( $zz_variant, 'premium-' ) && array_key_exists( 'custom_logo', $zz_mods ) ) {
+		add_filter(
+			'pre_option_site_logo',
+			function () use ( $zz_mods ) {
+				return $zz_mods['custom_logo'];
+			}
+		);
+	}
 }
 
 // Stable nonces within a run (only valid for snapshot requests).

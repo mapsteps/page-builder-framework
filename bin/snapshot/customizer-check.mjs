@@ -35,7 +35,7 @@ const port = 9333;
 // --areas=header,footer limits the preview CSS check to those areas and their variants (quicker re-runs).
 const areasArg = process.argv.find((a) => a.startsWith("--areas="));
 // Premium's areas (its wpbf_css_areas filter) are named premium-<area>: premium-general1, premium-typography1, ...
-const cssAreas = ["typography", "general", "footer", "edd", "blog", "woocommerce", "header", "premium-general", "premium-typography", "premium-blog", "premium-footer"].filter((area) => !areasArg || areasArg.slice(8).split(",").includes(area));
+const cssAreas = ["typography", "general", "footer", "edd", "blog", "woocommerce", "header", "premium-general", "premium-typography", "premium-blog", "premium-header", "premium-footer"].filter((area) => !areasArg || areasArg.slice(8).split(",").includes(area));
 let previewVariants = {};
 try {
 	const all = JSON.parse(readFileSync(join(here, "output", "variants.json"), "utf8"));
@@ -48,7 +48,9 @@ try {
 		// woocommerce4, header4: '0' values, JSON that isn't JSON. header6: a slider saved as the text '20' (old sites have
 		// it in the database; the slider saves numbers, so set from code the front-end side here gets the cleaned number).
 		// premium-general3, premium-typography3, premium-footer3: '0' / empty values, numbers saved as text, JSON that isn't JSON.
-		if (["footer4", "edd4", "typography4", "blog4", "woocommerce4", "header4", "header6", "premium-general3", "premium-typography3", "premium-footer3"].includes(name)) continue;
+		// premium-header4, premium-header5: sliders saved as text ('20', '400', '2'; old sites), premium-header10: '0' / empty
+		// values, JSON that isn't JSON.
+		if (["footer4", "edd4", "typography4", "blog4", "woocommerce4", "header4", "header6", "premium-general3", "premium-typography3", "premium-footer3", "premium-header4", "premium-header5", "premium-header10"].includes(name)) continue;
 		const { __wpbf_settings, ...mods } = values;
 		previewVariants[name] = mods;
 	}
