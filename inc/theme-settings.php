@@ -6,6 +6,8 @@
  */
 
 use Mapsteps\Wpbf\Customizer\Controls\Typography\FontsUtil;
+use Mapsteps\Wpbf\Customizer\Output\CustomizerCss;
+use Mapsteps\Wpbf\Customizer\Output\FontsOutput;
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
@@ -209,6 +211,14 @@ function wpbf_clear_font_cache() {
 
 	if ( is_wp_error( $result ) ) {
 		wp_send_json_error( $result->get_error_message() );
+	}
+
+	// Download the fonts again right away, so pages never go without them until the scheduled refresh runs on cron.
+	// The user asked for fresh fonts: fonts paused after failed downloads get a new try too.
+	delete_option( FontsOutput::FAILED_OPTION );
+
+	if ( CustomizerCss::enabled() ) {
+		CustomizerCss::refreshWithFonts();
 	}
 
 	wp_send_json_success( 'Font Cache cleared.', 'page-builder-framework' );
