@@ -32,7 +32,7 @@ FRONT = ['/', '/related-posts/', '/checkout/', '/category/blog/', '/category/blo
          '/?s=page', '/?s=zzznothing', '/zz-test-404-not-found/', '/?p=366', '/?p=202', '/?post_type=download',
          '/?m=2020'] + [
     # WooCommerce (shop, a product on sale, cart, checkout (redirects to the empty cart), account, a category), with
-    # zz-test products made for the WooCommerce area's runs.
+    # zz-test products: create them with zz-test-products.php before a run (they 404 otherwise), delete them afterwards.
     '/shop/', '/product/zz-test-sale/', '/cart/', '/checkout-2/', '/my-account/', '/product-category/zz-test-category/']
 WOO_FRONT = FRONT[-6:]
 ADMIN = ['/wp-admin/themes.php?page=wpbf-premium', '/wp-admin/edit.php', '/wp-admin/edit.php?post_type=page',
