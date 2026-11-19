@@ -109,7 +109,11 @@ foreach ( CustomizerStore::$added_settings as $setting ) {
 	// "Default: 1200px" in the label/description. An empty default means "same as the parent setting", the text names that.
 	$text = ( $control ? $control->label . ' ' . $control->description : '' );
 
-	if ( preg_match( '/Default:\s*([^<\s]+)/', $text, $match ) && '' !== OptionSchema::defaultValue( $entry ) && (string) OptionSchema::defaultValue( $entry ) !== $match[1] ) {
+	// Per-device values (Premium's font sizes) name the desktop value.
+	$labeled = OptionSchema::defaultValue( $entry );
+	$labeled = is_array( $labeled ) && isset( $labeled['desktop'] ) ? $labeled['desktop'] : $labeled;
+
+	if ( preg_match( '/Default:\s*([^<\s]+)/', $text, $match ) && '' !== $labeled && ( is_array( $labeled ) || (string) $labeled !== $match[1] ) ) {
 		$fail( "{$setting->id}: label says \"Default: {$match[1]}\", the schema says " . wp_json_encode( OptionSchema::defaultValue( $entry ) ) );
 	}
 }
