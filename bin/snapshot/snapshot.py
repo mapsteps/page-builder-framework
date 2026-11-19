@@ -43,7 +43,8 @@ VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synth
             'woocommerce1', 'woocommerce2', 'woocommerce3', 'woocommerce4', 'woocommerce5', 'woocommerce6',
             'header1', 'header2', 'header3', 'header4', 'header5', 'header6', 'header7', 'header8',
             'premium-general1', 'premium-general2', 'premium-general3', 'premium-typography1', 'premium-typography2',
-            'premium-typography3']
+            'premium-typography3', 'premium-blog1', 'premium-blog2', 'premium-footer1', 'premium-footer2', 'premium-footer3',
+            'premium-footer4']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -584,6 +585,37 @@ HAND_VARIANTS = {
         'page_h2_font_size': 'not json', 'page_h3_font_size': json.dumps({'desktop': '', 'tablet': '', 'mobile': ''}),
         'page_h2_toggle': True, 'page_h3_toggle': True, 'page_h3_letter_spacing': 0, 'page_h4_toggle': '1', 'page_h4_text_transform': '',
         'page_h5_font_color': '0', 'page_h6_font_color': '#ABCDEF',
+    },
+    # Premium blog layouts: grid with space between (saved as a number, as the text default, and nothing saved).
+    'premium-blog1': {'archive_layout': 'grid', 'archive_post_space_between': 30, 'search_layout': 'grid',
+                      'search_post_space_between': '20', 'docs-archive_layout': 'grid'},
+    # Premium blog layouts: space between saved without the grid layout.
+    'premium-blog2': {'archive_layout': 'default', 'archive_post_space_between': 40, 'search_post_space_between': 0},
+    # Premium footer: everything changed (sticky footer, widget footer, social icons in the grey style).
+    'premium-footer1': {
+        'footer_sticky': True, 'footer_widgets': 'three', 'footer_widgets_width': '1000px', 'footer_widgets_bg_color': '#101010',
+        'footer_widgets_headline_color': '#202020', 'footer_widgets_font_color': '#303030', 'footer_widgets_accent_color': '#404040',
+        'footer_widgets_accent_color_alt': '#505050', 'footer_widgets_font_size': '15',
+        'social_shapes': 'wpbf-social-shape-rounded', 'social_styles': 'wpbf-social-style-grey', 'social_background_color': '#606060',
+        'social_background_color_alt': '#707070', 'social_color': '#808080', 'social_color_alt': '#909090', 'social_font_size': 18,
+    },
+    # Premium footer: saved as the defaults (as the Customizer saves them), social icons rounded / grey.
+    'premium-footer2': {
+        'footer_widgets': 'two', 'footer_widgets_width': '', 'footer_widgets_bg_color': '#f5f5f7', 'footer_widgets_font_size': '14px',
+        'social_shapes': 'wpbf-social-shape-rounded', 'social_styles': 'wpbf-social-style-grey', 'social_background_color': '#f5f5f7',
+        'social_background_color_alt': '#f5f5f7', 'social_color': '#aaaaaa', 'social_color_alt': '#f5f5f7', 'social_font_size': 14,
+    },
+    # Premium footer: odd values (width 1200px, capitals, text sizes, '0'), sticky with the boxed layout, filled style.
+    'premium-footer3': {
+        'footer_sticky': True, 'page_boxed': True, 'footer_widgets': 'one', 'footer_widgets_width': '1200px', 'page_max_width': '1100px',
+        'footer_widgets_bg_color': '#F5F5F7', 'footer_widgets_font_size': '14', 'footer_widgets_font_color': '0',
+        'social_styles': 'wpbf-social-style-filled', 'social_background_color': '#123456', 'social_font_size': '14',
+    },
+    # Premium footer: widget footer off with its options set; social icons plain with colors set.
+    'premium-footer4': {
+        'footer_widgets': 'disabled', 'footer_widgets_bg_color': '#101010', 'footer_widgets_font_size': '20px',
+        'social_shapes': 'wpbf-social-shape-plain', 'social_background_color': '#123456', 'social_styles': 'wpbf-social-style-grey',
+        'social_color': '#654321',
     },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
