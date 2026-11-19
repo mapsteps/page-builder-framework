@@ -976,6 +976,8 @@ body {
 		line-height: 32px;
 	}
 
+	/* A button next to a text field (e.g. "Upload" after a URL field, a license key's buttons) matches its height */
+	.heatbox-wrap :is(input[type="text"], input[type="url"], input[type="email"], input[type="number"], input[type="password"], input[type="search"]) ~ :is(.button, .button-primary, .button-secondary):not(.button-small),
 	.heatbox-wrap .button-large,
 	.heatbox-wrap .button-larger {
 		min-height: var(--heatbox-control-height);
