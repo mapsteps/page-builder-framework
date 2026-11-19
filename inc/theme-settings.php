@@ -103,6 +103,19 @@ function wpbf_bfcm_year() {
 }
 
 /**
+ * Whether the Black Friday sale is on (November 23 – 30 of wpbf_bfcm_year()).
+ *
+ * @return bool
+ */
+function wpbf_is_bfcm_sale() {
+
+	$now = time();
+
+	return $now >= strtotime( 'november 23rd, ' . wpbf_bfcm_year() ) && $now <= strtotime( 'december 1st, ' . wpbf_bfcm_year() );
+
+}
+
+/**
  * Save BFCM notice dismissal.
  */
 function wpbf_bfcm_notice_dismissal() {
@@ -177,12 +190,9 @@ function wpbf_show_bfcm_notice() {
 
 	$this_year = wpbf_bfcm_year();
 	$last_year = $this_year - 1;
-	$start     = strtotime( 'november 23rd, ' . $this_year );
-	$end       = strtotime( 'december 1st, ' . $this_year );
-	$now       = time();
 
 	// Stop here if we are not in the sales period.
-	if ( $now < $start || $now > $end ) {
+	if ( ! wpbf_is_bfcm_sale() ) {
 		return;
 	}
 
