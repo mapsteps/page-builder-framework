@@ -186,7 +186,7 @@ Checks for every step: `python bin/snapshot/snapshot.py take/diff` (pages), `nod
 
 ## Area modules (CSS moved to `wpbf_css()`, one area at a time)
 
-Order, easiest first: footer, EDD, typography, blog, WooCommerce, header. Recipe: step 6, "For the next area modules".
+Order, easiest first: footer, EDD, typography, blog, WooCommerce, header (footer and EDD done). Recipe: step 6, "For the next area modules".
 
 **Footer area done** (November 19, 2026, 2 commits).
 - **What changed:** the `/* Footer */` section of `styles.php` is now `inc/customizer/styles/footer.php` (8 `wpbf_css()` lines inside one `if` for "no footer"); `footer` is in `CssRules::AREAS`; the 7 footer bindings left `postmessage.js`. All footer CSS options already used `postMessage`, so nothing switched; now every one of them previews instantly from the same declaration as the front end (width, height, background, font color, accent and hover colors, font size). The footer layout (none / one / two columns) redraws the area through PHP, as it's read in an `if`. The footer font stays in `styles.php` (typography area); Premium's footer CSS stays Premium's. `CustomizerCss::FORMAT` 2 → 3.
@@ -204,11 +204,23 @@ Order, easiest first: footer, EDD, typography, blog, WooCommerce, header. Recipe
   - Hand-made variants: name them `<area>1..n` (the check picks them up by name; `<area>1` is also run value by value); add the area to `cssAreas` in `customizer-check.mjs`. Values no control can produce belong in a variant the preview check skips.
   - Hands-on: options on a section's "Design" tab are hidden until the tab is clicked (`[data-wpbf-tab-id="<section>"] [data-wpbf-tab-menu-id="design"] .wpbf-tab-link`); color fields need their circle clicked first.
 
+**EDD area done** (November 19, 2026, 2 commits + this note).
+- **What changed:** the EDD CSS (`inc/integration/edd/edd-styles.php`) is now `inc/customizer/styles/edd.php`. It's still printed by `wpbf_do_edd_customizer_css()` on `wpbf_after_customizer_css`, at the same place (the function now calls `wpbf_css_area( 'edd' )`; the preview's split works for an area printed from a hook). `edd` is in `CssRules::AREAS`; the 3 EDD bindings left `postmessage.js` (cart count desktop/mobile color, the EDD `button_border_radius`). `CustomizerCss::FORMAT` 3 → 4.
+- **Now instant on EDD's buttons and cart count:** all 14 theme button options (before only the border radius, and only on `.edd-submit.button`, not the gray ones), the menu and mobile menu font colors and the accent color as the count's fallbacks, the two count colors (clearing one used to leave `background-color: ;`, so the old color stayed until a reload; now the fallback shows). No transport changed: the two EDD colors already used `postMessage`; the other EDD options change markup (sidebars, show/hide menu item, count) and stay full reloads; the accent color stays a full reload (LifterLMS CSS and the theme-color tag read it).
+- **Cart count fallbacks** (desktop: own color → menu font color → accent; mobile: own color → desktop count color → mobile menu font color → menu font color → accent): written as one block per color from the last fallback to the first, so the first one that's set comes last and wins. Same result as the old if/elseif, each color instant. Show/hide (`'hide'`) stays an `if`.
+- **Values the old code skipped stay skipped:** `'when'` on every block (its own option; the border colors: the border width). One block per option (the old code combined radius/background/color in one block): same meaning, other text.
+- **Intended front-end difference** (5 hand-made variants `edd1..5`: everything changed, equal to the defaults, odd values, zeros the controls can't produce, fallbacks; compared by meaning with `css-compare.py`): an accent color saved in capitals (`#3BA9D2`) no longer prints for the checked price option radio, so the stylesheet's `var(--accent-color)` applies (the same color unless Premium's global palette changes it), as in the general area. Everything else identical.
+- **Checks:** page snapshot (before: `footer-after`, plus `edd-before` for the new variants with the old code; after: `edd-full-after`, 332 pages, none broken): `css-compare` 0 differences against the footer step, the one above for the EDD variants; text differences only in the CSS line (one block per option) and WooCommerce's `wcSettings`. Customizer check: 843/843 controls, preview CSS 252/252 (general, footer and EDD areas; each value of general1/footer1/edd1 alone and the variants whole, edd4 left out like footer4), no JS errors or failed requests, nothing changed on open, database unchanged. Lighter set (user's decision): no `--timing`/`--layout`, control dump or hands-on run. Premium check 194 OK; schema check 276 OK; lint clean on the new and changed files (CRLF notice only).
+- **For the next areas** (typography, blog, WooCommerce, header):
+  - `python bin/snapshot/snapshot.py take <name> blog1,blog2` renders only those variants: take the new hand-made variants with the old code before changing it (seconds), then the full "after".
+  - An if/elseif fallback between options for one property can be written as `wpbf_css()` blocks in reverse order (the cascade picks the first one that's set); it stays instant.
+  - WooCommerce has its own `button_border_radius` binding in `postmessage.js` and the same "theme buttons on plugin buttons" CSS: write it like `styles/edd.php`.
+
 ## For later (collected from all steps)
 
 Everything the steps above left open, in one place, sorted by the module that should pick it up. Details are in the step named in brackets.
 
-**Each area module (header, blog, WooCommerce, EDD, …; footer done)**
+**Each area module (typography, blog, WooCommerce, header; footer and EDD done)**
 - Move the area's CSS to `inc/customizer/styles/<area>.php` with `wpbf_css()`; recipe in step 6 ("For the next area modules"). Clean the area's files for lint while there (the whole-theme lint run lists 537 errors / 88 warnings in 70 files, none in `Customizer/`; `inc/customizer/styles.php` alone has 108 / 15).
 - 11 "is it the default?" checks (footer done) compare text to a number and never match (their CSS prints at the default too): `{archive}_post_space_between`, `{archive}_post_image_width`, `pre_header_height`, `menu_logo_container_width`, `mobile_menu_logo_container_width`, `menu_height`, `menu_padding`, `sub_menu_width`, `mobile_menu_height`, `woocommerce_single_image_width`, `woocommerce_loop_image_width` (3). `wpbf_css()` fixes them on the way.
 - Custom widths (pre header, navigation, WooCommerce, archive/post; footer done) drop an explicitly chosen 1200px when the page width differs (`=== '1200px'` checks) (3).
