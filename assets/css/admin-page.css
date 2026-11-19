@@ -204,6 +204,18 @@
 	margin-top: auto;
 }
 
+/* Recommended plugins: a heading above our plugins and above the partners' */
+.wpbf-recommended-heading {
+	margin: 0 0 12px;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--heatbox-text);
+}
+
+.wpbf-recommended-list + .wpbf-recommended-heading {
+	margin-top: var(--heatbox-section-gap);
+}
+
 /* Recommended plugins: "Active" is shaped like the buttons, in green, and not clickable */
 .wpbf-theme-settings-page .button.wpbf-plugin-active {
 	display: inline-flex;

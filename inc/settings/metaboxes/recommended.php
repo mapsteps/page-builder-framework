@@ -10,6 +10,7 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 /*
  * "slug": the plugin's wordpress.org slug (one-click install), or empty for plugins that aren't on wordpress.org.
  * "files": the plugin files (folder/file.php) that count as this plugin, e.g. its free and PRO version.
+ * "partner": a partner's plugin (listed in its own section after ours).
  */
 $wpbf_recommended_plugins = array(
 	array(
@@ -60,6 +61,7 @@ $wpbf_recommended_plugins = array(
 		'banner'      => 'https://ps.w.org/weglot/assets/banner-772x250.png',
 		'slug'        => 'weglot',
 		'files'       => array( 'weglot/weglot.php' ),
+		'partner'     => true,
 	),
 	array(
 		'title'       => 'WPML',
@@ -68,17 +70,27 @@ $wpbf_recommended_plugins = array(
 		'link'        => 'https://wpml.org/',
 		'slug'        => '',
 		'files'       => array( 'sitepress-multilingual-cms/sitepress.php' ),
+		'partner'     => true,
 	),
 );
 
 $wpbf_installed_plugins = get_plugins();
 
+$wpbf_plugin_groups = array(
+	__( 'From the makers of Page Builder Framework', 'page-builder-framework' ) => wp_list_filter( $wpbf_recommended_plugins, array( 'partner' => true ), 'NOT' ),
+	__( 'Partners', 'page-builder-framework' ) => wp_list_filter( $wpbf_recommended_plugins, array( 'partner' => true ) ),
+);
+
 ?>
+
+<?php foreach ( $wpbf_plugin_groups as $wpbf_group_title => $wpbf_group_plugins ) : ?>
+
+<h2 class="wpbf-recommended-heading"><?php echo esc_html( $wpbf_group_title ); ?></h2>
 
 <div class="heatbox-columns wpbf-recommended-list">
 
 	<?php
-	foreach ( $wpbf_recommended_plugins as $wpbf_plugin ) :
+	foreach ( $wpbf_group_plugins as $wpbf_plugin ) :
 
 		// Where the plugin stands: active, installed (switched off) or not installed.
 		$wpbf_status    = 'missing';
@@ -144,3 +156,5 @@ $wpbf_installed_plugins = get_plugins();
 	<?php endforeach; ?>
 
 </div>
+
+<?php endforeach; ?>
