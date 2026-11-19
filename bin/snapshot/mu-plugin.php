@@ -148,6 +148,17 @@ ini_set( 'log_errors', '1' );
 
 $zz_variant = preg_replace( '/[^a-z0-9]/', '', $_GET['zz_snap'] );
 
+// WooCommerce's "coming soon" mode shows visitors a placeholder instead of the store pages: off for snapshot requests,
+// so the shop, product and category pages are in the snapshot (the site's setting stays as it is). The checkout shows
+// with an empty cart instead of redirecting to the cart (which would drop the snapshot parameters).
+add_filter(
+	'pre_option_woocommerce_coming_soon',
+	function () {
+		return 'no';
+	}
+);
+add_filter( 'woocommerce_checkout_redirect_empty_cart', '__return_false' );
+
 // Print the Customizer CSS into the page (the site may use a CSS file), so the snapshot shows it.
 add_filter(
 	'wpbf_css_output',

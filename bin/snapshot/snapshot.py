@@ -30,12 +30,17 @@ PHP = ['php', '-d', 'extension=mysqli', '-d', 'mysqli.default_port=10035']  # pb
 BASE = 'http://pbf.local'
 FRONT = ['/', '/related-posts/', '/checkout/', '/category/blog/', '/category/blog/page/2/', '/author/davidv/',
          '/?s=page', '/?s=zzznothing', '/zz-test-404-not-found/', '/?p=366', '/?p=202', '/?post_type=download',
-         '/?m=2020']
+         '/?m=2020'] + [
+    # WooCommerce (shop, a product on sale, cart, checkout (redirects to the empty cart), account, a category), with
+    # zz-test products made for the WooCommerce area's runs.
+    '/shop/', '/product/zz-test-sale/', '/cart/', '/checkout-2/', '/my-account/', '/product-category/zz-test-category/']
+WOO_FRONT = FRONT[-6:]
 ADMIN = ['/wp-admin/themes.php?page=wpbf-premium', '/wp-admin/edit.php', '/wp-admin/edit.php?post_type=page',
          '/wp-admin/customize.php', '/wp-admin/post.php?post=366&action=edit', '/wp-admin/index.php']
 VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synthetic3', 'general1', 'general2', 'general3',
             'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5', 'edd1', 'edd2', 'edd3', 'edd4', 'edd5',
-            'typography1', 'typography2', 'typography3', 'typography4', 'blog1', 'blog2', 'blog3', 'blog4', 'blog5']
+            'typography1', 'typography2', 'typography3', 'typography4', 'blog1', 'blog2', 'blog3', 'blog4', 'blog5',
+            'woocommerce1', 'woocommerce2', 'woocommerce3', 'woocommerce4', 'woocommerce5', 'woocommerce6']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -305,6 +310,109 @@ HAND_VARIANTS = {
         'single_post_style': 'plain', 'single_post_background_color': '#321321', 'single_boxed_padding': PAD(desktop_top=60),
         'single_boxed_image_stretched': True,
     },
+    # WooCommerce: everything changed (notices, cart menu item, theme buttons on WooCommerce buttons, shop loop with the
+    # list layout, sale badge, product page, checkout side by side), custom breakpoints.
+    'woocommerce1': {
+        '__wpbf_settings': {'wpbf_breakpoint_desktop': '1100px', 'wpbf_breakpoint_medium': '700px', 'wpbf_breakpoint_mobile': '400px'},
+        'page_accent_color': '#ff0066',
+        'woocommerce_store_notice_color': '#101010', 'woocommerce_info_notice_color': '#202020',
+        'woocommerce_message_notice_color': '#303030', 'woocommerce_error_notice_color': '#404040',
+        'woocommerce_notice_bg_color': '#505050', 'woocommerce_notice_text_color': 'rgba(1,2,3,0.6)',
+        'woocommerce_menu_item_desktop': 'show', 'woocommerce_menu_item_desktop_color': '#aa0000',
+        'woocommerce_menu_item_mobile': 'show', 'woocommerce_menu_item_mobile_color': '#00aa00',
+        'menu_font_color': '#111111', 'mobile_menu_font_color': '#222222',
+        'button_border_width': '2', 'button_primary_border_color': '#123456', 'button_primary_border_color_alt': '#654321',
+        'button_primary_bg_color': '#0000aa', 'button_primary_text_color': '#fafafa', 'button_border_radius': '6',
+        'button_primary_bg_color_alt': '#0000cc', 'button_primary_text_color_alt': '#eeeeee',
+        'woocommerce_loop_custom_width': '1100px', 'woocommerce_loop_content_alignment': 'center', 'woocommerce_loop_layout': 'list',
+        'woocommerce_loop_image_alignment': 'right', 'woocommerce_loop_image_width': '40',
+        'woocommerce_loop_sale_alignment': 'center', 'woocommerce_loop_sale_layout': 'square', 'woocommerce_loop_sale_position': 'inside',
+        'woocommerce_loop_sale_font_size': '16px', 'woocommerce_loop_sale_font_color': '#000000',
+        'woocommerce_loop_sale_background_color': '#ffcc00',
+        'woocommerce_loop_title_size': '18px', 'woocommerce_loop_title_color': '#333333', 'woocommerce_loop_price_size': '17px',
+        'woocommerce_loop_price_color': '#444444', 'woocommerce_loop_out_of_stock_font_size': '12px',
+        'woocommerce_loop_out_of_stock_font_color': '#eeeeee', 'woocommerce_loop_out_of_stock_background_color': 'rgba(200,0,0,0.8)',
+        'woocommerce_single_custom_width': '1000px', 'woocommerce_single_alignment': 'right', 'woocommerce_single_image_width': '60',
+        'woocommerce_single_summary_separator': 'show', 'woocommerce_single_tabs': 'default', 'woocommerce_single_tabs_font_size': '18px',
+        'woocommerce_single_tabs_font_color': '#555555', 'woocommerce_single_tabs_font_color_alt': '#666666',
+        'woocommerce_single_tabs_font_color_active': '#777777', 'woocommerce_single_tabs_background_color': '#dddddd',
+        'woocommerce_single_tabs_background_color_alt': '#cccccc', 'woocommerce_single_tabs_background_color_active': '#bbbbbb',
+        'woocommerce_single_price_size': '26px', 'woocommerce_single_price_color': '#888888', 'woocommerce_checkout_layout': 'side',
+    },
+    # WooCommerce: everything saved, but equal to the defaults (the old code prints the success and error notice colors
+    # whenever they're saved).
+    'woocommerce2': {
+        'page_accent_color': '#3ba9d2', 'woocommerce_store_notice_color': '', 'woocommerce_info_notice_color': '',
+        'woocommerce_message_notice_color': '#4fe190', 'woocommerce_error_notice_color': '#ff6347', 'woocommerce_notice_bg_color': '',
+        'woocommerce_notice_text_color': '', 'woocommerce_menu_item_desktop': 'show', 'woocommerce_menu_item_desktop_color': '',
+        'woocommerce_menu_item_mobile': 'show', 'woocommerce_menu_item_mobile_color': '', 'menu_font_color': '', 'mobile_menu_font_color': '',
+        'button_border_width': '0', 'button_border_radius': '0', 'button_primary_border_color': '', 'button_primary_bg_color': '',
+        'button_primary_text_color': '',
+        'woocommerce_loop_custom_width': '', 'woocommerce_loop_content_alignment': 'left', 'woocommerce_loop_layout': 'default',
+        'woocommerce_loop_image_alignment': 'left', 'woocommerce_loop_image_width': '50', 'woocommerce_loop_sale_alignment': 'left',
+        'woocommerce_loop_sale_layout': 'round', 'woocommerce_loop_sale_position': 'outside', 'woocommerce_loop_sale_font_size': '14px',
+        'woocommerce_loop_sale_font_color': '#ffffff', 'woocommerce_loop_sale_background_color': '#4fe190',
+        'woocommerce_loop_title_size': '16px', 'woocommerce_loop_title_color': '#3e4349', 'woocommerce_loop_price_size': '16px',
+        'woocommerce_loop_price_color': '#3e4349', 'woocommerce_loop_out_of_stock_font_size': '14px',
+        'woocommerce_loop_out_of_stock_font_color': '#ffffff', 'woocommerce_loop_out_of_stock_background_color': 'rgba(0,0,0,.7)',
+        'woocommerce_single_custom_width': '', 'woocommerce_single_alignment': 'left', 'woocommerce_single_image_width': '50',
+        'woocommerce_single_summary_separator': 'hide', 'woocommerce_single_tabs': 'default', 'woocommerce_single_tabs_font_size': '16px',
+        'woocommerce_single_tabs_font_color': '#3e4349', 'woocommerce_single_tabs_font_color_alt': '',
+        'woocommerce_single_tabs_font_color_active': '', 'woocommerce_single_tabs_background_color': '#e7e7ec',
+        'woocommerce_single_tabs_background_color_alt': '#f5f5f7', 'woocommerce_single_tabs_background_color_active': '#ffffff',
+        'woocommerce_single_price_size': '22px', 'woocommerce_single_price_color': '#3e4349', 'woocommerce_checkout_layout': 'default',
+    },
+    # WooCommerce: odd saved values: capitals, numbers instead of text, sizes without a unit, 1200px widths, alignments the
+    # old code prints nothing for, the modern tabs with tab colors set, a border width without a border color.
+    'woocommerce3': {
+        'page_accent_color': '#3BA9D2', 'woocommerce_message_notice_color': '#4FE190',
+        'woocommerce_loop_sale_font_color': '#FFFFFF', 'woocommerce_single_price_color': '#3E4349', 'woocommerce_loop_price_color': '#abcabc',
+        'woocommerce_loop_layout': 'list', 'woocommerce_loop_image_width': 50, 'woocommerce_loop_image_alignment': 'center',
+        'woocommerce_single_image_width': 50, 'woocommerce_single_alignment': 'Right',
+        'woocommerce_loop_sale_font_size': '18', 'woocommerce_loop_title_size': '1.2em', 'woocommerce_loop_price_size': 15,
+        'woocommerce_single_tabs_font_size': '17', 'woocommerce_single_price_size': '24', 'woocommerce_loop_out_of_stock_font_size': '13',
+        'woocommerce_single_custom_width': '1200px', 'woocommerce_loop_custom_width': '1200px',
+        'woocommerce_loop_content_alignment': 'right', 'woocommerce_loop_sale_alignment': 'right', 'woocommerce_loop_sale_position': 'inside',
+        'woocommerce_loop_sale_layout': 'square', 'woocommerce_single_tabs': 'modern', 'woocommerce_single_tabs_font_color_active': '#ABCDEF',
+        'woocommerce_single_tabs_background_color': '#123123', 'woocommerce_loop_out_of_stock_background_color': 'rgba(0, 0, 0, .7)',
+        'button_border_width': 1, 'button_border_radius': 4, 'button_primary_border_color': '', 'woocommerce_checkout_layout': 'side',
+    },
+    # WooCommerce: values no control produces: '0' everywhere, an empty sale alignment with the badge inside.
+    'woocommerce4': {
+        'page_accent_color': '0', 'woocommerce_single_tabs': 'modern',
+        **{'woocommerce_%s_notice_color' % k: '0' for k in ('store', 'info', 'message', 'error')},
+        'woocommerce_notice_bg_color': '0', 'woocommerce_notice_text_color': '0',
+        'woocommerce_menu_item_desktop_color': '0', 'menu_font_color': '0', 'woocommerce_menu_item_mobile_color': '0', 'mobile_menu_font_color': '0',
+        'button_border_width': '0', 'button_primary_border_color': '#111111', 'button_border_radius': '0', 'button_primary_bg_color': '0',
+        'button_primary_text_color': '0', 'button_primary_bg_color_alt': '0', 'button_primary_text_color_alt': '0',
+        'woocommerce_loop_custom_width': '0', 'woocommerce_single_custom_width': '0', 'woocommerce_loop_content_alignment': '0',
+        'woocommerce_loop_layout': 'list', 'woocommerce_loop_image_width': '0', 'woocommerce_single_image_width': '0',
+        'woocommerce_loop_sale_alignment': '', 'woocommerce_loop_sale_position': 'inside',
+        **{'woocommerce_loop_' + k: '0' for k in ('sale_font_size', 'sale_font_color', 'sale_background_color', 'title_size', 'title_color',
+                                                   'price_size', 'price_color', 'out_of_stock_font_size', 'out_of_stock_font_color',
+                                                   'out_of_stock_background_color')},
+        **{'woocommerce_single_' + k: '0' for k in ('price_size', 'price_color', 'tabs_font_size', 'tabs_font_color', 'tabs_font_color_alt',
+                                                     'tabs_font_color_active')},
+    },
+    # WooCommerce: fallbacks (accent color for the store and info notices, the desktop count color on mobile, the loop
+    # price color on the product page), options whose switch is off (hidden menu item, image options without the list
+    # layout), empty tabs style (the default tabs), a hover border color only.
+    'woocommerce5': {
+        'page_accent_color': '#ff0066', 'woocommerce_menu_item_desktop': 'hide', 'woocommerce_menu_item_desktop_color': '#aa0000',
+        'woocommerce_menu_item_mobile': 'show', 'menu_font_color': '#888888', 'mobile_menu_font_color': '#999999',
+        'woocommerce_message_notice_color': '#4fe190', 'woocommerce_loop_price_color': '#777777',
+        'woocommerce_loop_layout': 'default', 'woocommerce_loop_image_alignment': 'right', 'woocommerce_loop_image_width': '30',
+        'woocommerce_single_tabs': '', 'woocommerce_single_tabs_background_color': '#121212',
+        'woocommerce_single_tabs_background_color_alt': '#232323', 'woocommerce_loop_sale_alignment': 'left',
+        'woocommerce_loop_sale_position': 'inside', 'woocommerce_loop_sale_layout': 'round', 'button_border_width': '3',
+        'button_primary_border_color_alt': '#999000', 'woocommerce_checkout_layout': 'default',
+    },
+    # WooCommerce: modern tabs with nothing else set (the fixed accent blue), the menu font color as the only count color,
+    # a centered round sale badge.
+    'woocommerce6': {
+        'woocommerce_single_tabs': 'modern', 'menu_font_color': '#121212', 'woocommerce_loop_sale_alignment': 'center',
+        'woocommerce_loop_sale_layout': 'round', 'woocommerce_loop_sale_position': 'outside',
+    },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')
 
@@ -401,7 +509,8 @@ def build_variants():
 def jobs(only=None):
     for v in (only or VARIANTS):
         for prem in ('', '1'):
-            for u in (HAND_ONLY_FRONT if v in HAND_VARIANTS else FRONT):
+            pages = HAND_ONLY_FRONT + tuple(WOO_FRONT if v.startswith('woocommerce') else ()) if v in HAND_VARIANTS else FRONT
+            for u in pages:
                 yield (v, prem, u, False)
             if v in ADMIN_VARIANTS:
                 for u in ADMIN:
