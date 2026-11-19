@@ -302,6 +302,24 @@ The Customizer used like a real user on pbf.local, with real saves: real mouse a
 - **Settings restored and proven:** the 19 settings rows (`theme_mods_*`, every `wpbf*` option, `site_logo`, `site_icon`, site title/tagline, widgets, menu options, WooCommerce store notice) were backed up raw before the first save and restored at the end: all 19 byte-for-byte identical. The 81 Customizer save records the runs created and their meta, the "dismissed" flag WordPress put on an older unsaved draft, the `zz-test` products and the font files the runs downloaded were deleted; posts and post meta are back to their counts and highest ids; the CSS file was rebuilt from the restored cache (a raw restore leaves the file from the last test: delete it, one page view rewrites it).
 - **Page snapshot after the restore** (`battle-after`, 706 pages, none broken, PHP log only AffiliateWP as before) against `header-full-after`: `css-compare` 0 differences. The other differences aren't the theme's: the `zz-test` products' new ids, WooCommerce's random quantity ids and related products, Yoast/WooCommerce admin counters, Inter italic `@font-face` rules on one header variant (downloaded at 06:54 by an earlier session, after `header-full-after` and before the battle test), and `srcset` lists with one more size: WooCommerce creates missing thumbnail sizes (300×300, 800 wide) when pages show images, so 97 thumbnail files and their image data were added during the runs' page views. Not undone: WooCommerce does the same on any visitor's page view.
 
+## Premium compatibility check (November 19, 2026)
+
+Sites update the theme before Premium, so the theme at `61c5b5ee` ran with older Premium versions on pbf.local (child theme, WooCommerce, EDD, AffiliateWP active). Each Premium tag was exported with `git archive` (the tags hold every file Premium ships: same file count as 2.10.5) and loaded instead of the real Premium per request by a temporary mu-plugin (cookie), with all database writes, cron and outgoing requests blocked; the real Premium stayed active (sites updating the theme already have Premium active, so activation never runs). Pages: home, a post, shop, cart, an EDD download and the download archive, Dashboard, Theme Settings (`themes.php?page=wpbf-premium`), Plugins, and the Customizer in headless Chrome (ready, preview loaded, JS errors, failed requests).
+
+| Premium | Fatal | New PHP warnings | Customizer opens | "Premium outdated" notice |
+|---|---|---|---|---|
+| 2.10.5 (current) | no | none | yes, no JS errors | no (as expected) |
+| 2.10 | no | none | yes, no JS errors | no (as expected, minimum is 2.10) |
+| 2.9.2 | no | none | yes, no JS errors | yes: Theme Settings, Plugins, Customizer |
+| 2.9 | no | none | yes, no JS errors | yes: Theme Settings, Plugins, Customizer |
+| 2.8 | no | none | yes, no JS errors | yes: Theme Settings, Plugins, Customizer |
+| 2.7.12 | no | none | yes, no JS errors | yes: Theme Settings, Plugins, Customizer |
+
+- Old Premium's direct Kirki calls (2.9 and older) with EDD active: no fatal, the Kirki safety net (step 8) holds.
+- The notice doesn't show on the Dashboard with any Premium version, the current one included: another plugin on pbf.local removes the theme's notices there. Not caused by the update.
+- Not covered: single WooCommerce product page (pbf.local has no products, none created), writes old Premium might do on page views (blocked), Customizer saves.
+- Settings: `active_plugins`, `theme_mods_wpbf-child` and all 11 `wpbf%` options were dumped raw before and after: byte-identical (nothing to restore). Temporary plugin folders, the mu-plugin and the login were removed.
+
 ## For later (collected from all steps)
 
 Everything the steps above left open, in one place, sorted by the module that should pick it up. Details are in the step named in brackets.
