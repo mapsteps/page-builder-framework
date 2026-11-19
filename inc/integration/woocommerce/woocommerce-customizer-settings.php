@@ -267,6 +267,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'woocommerce_single_summary_separator' )
 	->label( __( 'Summary Separator', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
 	->choices( [
 		'hide' => __( 'Hide', 'page-builder-framework' ),
 		'show' => __( 'Show', 'page-builder-framework' ),
@@ -327,6 +328,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'woocommerce_single_tabs' )
 	->label( __( 'Tabs Layout', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
 	->choices( [
 		'default' => __( 'Default', 'page-builder-framework' ),
 		'modern'  => __( 'Modern', 'page-builder-framework' ),
@@ -480,6 +482,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'woocommerce_store_notice_color' )
 	->label( __( 'Store Notice', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
 	// The woocommerce_store_notice priority is 10.
 	->priority( 10 )
 	->properties( [
@@ -569,6 +572,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'woocommerce_checkout_layout' )
 	->label( __( 'Layout', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
 	->priority( 1 )
 	->choices( [
 		'default' => __( 'Default', 'page-builder-framework' ),
@@ -767,6 +771,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'woocommerce_loop_sale_layout' )
 	->label( __( 'Layout', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
 	->priority( $shop_priority++ )
 	->choices( [
 		'round'  => __( 'Round', 'page-builder-framework' ),
@@ -785,6 +790,7 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'woocommerce_loop_sale_alignment' )
 	->label( __( 'Alignment', 'page-builder-framework' ) )
+	->transport( 'postMessage' )
 	->choices( [
 		'left'   => WPBF_THEME_URI . '/inc/customizer/img/align-left.jpg',
 		'center' => WPBF_THEME_URI . '/inc/customizer/img/align-center.jpg',

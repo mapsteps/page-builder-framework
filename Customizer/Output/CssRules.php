@@ -3,7 +3,7 @@
  * Customizer CSS written with wpbf_css(), and its instant preview.
  *
  * An area's CSS lives in plain PHP (inc/customizer/styles/<area>.php), included with wpbf_css_area() from styles.php
- * (EDD: from its wpbf_after_customizer_css callback).
+ * (EDD, WooCommerce: from their wpbf_after_customizer_css callbacks).
  * Simple lines are written with wpbf_css( $selector, $declarations, $args ); everything else is plain echo.
  *
  * Front end: wpbf_css() prints the block right away. A declaration prints when the options it uses are set and at
@@ -32,7 +32,7 @@ final class CssRules {
 	/**
 	 * Areas that are written with wpbf_css() (one file each in inc/customizer/styles/).
 	 */
-	const AREAS = array( 'typography', 'general', 'footer', 'edd', 'blog' );
+	const AREAS = array( 'typography', 'general', 'footer', 'edd', 'blog', 'woocommerce' );
 
 	/**
 	 * Placeholder of an option value in a declaration: {option_id} or {option_id.key} for a part of a JSON option;
