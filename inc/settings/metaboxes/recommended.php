@@ -118,11 +118,14 @@ $wpbf_installed_plugins = get_plugins();
 				<div class="wpbf-recommended-action">
 					<?php if ( 'active' === $wpbf_status ) : ?>
 
-						<span class="heatbox-badge is-success"><?php esc_html_e( 'Active', 'page-builder-framework' ); ?></span>
+						<span class="button wpbf-plugin-active">
+							<?php wpbf_theme_settings_icon( '<path d="M20 6 9 17l-5-5"/>', 'wpbf-plugin-active-icon' ); ?>
+							<?php esc_html_e( 'Active', 'page-builder-framework' ); ?>
+						</span>
 
 					<?php elseif ( 'installed' === $wpbf_status && current_user_can( 'activate_plugins' ) ) : ?>
 
-						<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( $wpbf_installed ) ), 'activate-plugin_' . $wpbf_installed ) ); ?>" class="button">
+						<a href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . rawurlencode( $wpbf_installed ) ), 'activate-plugin_' . $wpbf_installed ) ); ?>" class="button button-primary">
 							<?php esc_html_e( 'Activate', 'page-builder-framework' ); ?>
 							<span class="screen-reader-text"><?php echo esc_html( $wpbf_plugin['title'] ); ?></span>
 						</a>

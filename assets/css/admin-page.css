@@ -204,6 +204,23 @@
 	margin-top: auto;
 }
 
+/* Recommended plugins: "Active" is shaped like the buttons, in green, and not clickable */
+.wpbf-theme-settings-page .button.wpbf-plugin-active {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--heatbox-success);
+	background: var(--heatbox-success-soft);
+	border-color: color-mix(in srgb, var(--heatbox-success) 30%, #fff);
+	cursor: default;
+	pointer-events: none;
+}
+
+.wpbf-plugin-active-icon {
+	width: 16px;
+	height: 16px;
+}
+
 /* Additional resources: links with an icon */
 .wpbf-resources-list {
 	margin: 0;
