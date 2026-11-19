@@ -85,6 +85,10 @@ $wpbf_plugin_groups = array(
 
 <?php foreach ( $wpbf_plugin_groups as $wpbf_group_title => $wpbf_group_plugins ) : ?>
 
+	<?php if ( key( array_slice( $wpbf_plugin_groups, 0, 1, true ) ) !== $wpbf_group_title ) : ?>
+		<div class="heatbox-divider"></div>
+	<?php endif; ?>
+
 <h2 class="wpbf-recommended-heading"><?php echo esc_html( $wpbf_group_title ); ?></h2>
 
 <div class="heatbox-columns wpbf-recommended-list">
