@@ -11,7 +11,9 @@ import os, re, sys
 from collections import defaultdict
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'output')
-STYLE = re.compile(r'<style id=["\'](?:wpbf-style|wpbf-premium)-inline-css["\']>(.*?)</style>', re.S)  # Premium moves it.
+# Premium, WooCommerce and EDD move it (filter wpbf_add_inline_style): wpbf-style, wpbf-premium, wpbf-woocommerce,
+# wpbf-premium-woocommerce, ...
+STYLE = re.compile(r'<style id=["\'](wpbf-[a-z-]*?)-inline-css["\']>(.*?)</style>', re.S)
 
 
 def declarations(css):
@@ -58,8 +60,13 @@ def winners(decls):
 
 
 def page_css(path):
-    m = STYLE.search(open(path, encoding='utf-8').read())
-    return m.group(1) if m else ''
+    found = STYLE.findall(open(path, encoding='utf-8').read())
+    if not found:
+        MISSING.append(path)
+    return ''.join(css for _, css in found)
+
+
+MISSING = []  # Pages without the theme's inline CSS (the tool would be blind there).
 
 
 def main(a, b):
@@ -91,6 +98,9 @@ def main(a, b):
         print('== %d pages: %s%s' % (len(files), ', '.join(files[:4]), ' ...' if len(files) > 4 else ''))
         print(text)
     print('%d groups of differences' % len(groups))
+    front = [p for p in MISSING if 'wp_admin' not in p]
+    if front:
+        print('No theme CSS found on %d front-end pages, e.g. %s' % (len(front), os.path.basename(front[0])))
 
 
 if __name__ == '__main__':

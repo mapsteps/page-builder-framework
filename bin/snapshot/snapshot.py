@@ -32,7 +32,7 @@ FRONT = ['/', '/related-posts/', '/checkout/', '/category/blog/', '/category/blo
 ADMIN = ['/wp-admin/themes.php?page=wpbf-premium', '/wp-admin/edit.php', '/wp-admin/edit.php?post_type=page',
          '/wp-admin/customize.php', '/wp-admin/post.php?post=366&action=edit', '/wp-admin/index.php']
 VARIANTS = ['live', 'defaults', 'synthetic0', 'synthetic1', 'synthetic2', 'synthetic3', 'general1', 'general2', 'general3',
-            'general4']
+            'general4', 'footer1', 'footer2', 'footer3', 'footer4', 'footer5']
 ADMIN_VARIANTS = ('live', 'synthetic0', 'synthetic1')
 
 # Hand-made variants for the General area, saved the way the Customizer saves them (sliders as text, padding as JSON
@@ -100,6 +100,33 @@ HAND_VARIANTS = {
         'button_primary_bg_color_alt': '#654321',
         'layout_scrolltop': True, 'scrolltop_position': 'left', 'scrolltop_icon_color_alt': '#abcdef',
         'scrolltop_bg_color_alt': 'rgba(62,67,73,0.7)', 'scrolltop_icon_color': '#FFFFFF',
+    },
+    # Footer: everything changed.
+    'footer1': {
+        'footer_layout': 'one', 'footer_width': '1000px', 'footer_height': '35', 'footer_bg_color': '#222222',
+        'footer_font_color': '#eeeeee', 'footer_accent_color': '#ff0000', 'footer_accent_color_alt': 'rgba(1,2,3,0.5)',
+        'footer_font_size': '16px',
+    },
+    # Footer: everything saved, but equal to the defaults.
+    'footer2': {
+        'footer_layout': 'two', 'footer_width': '', 'footer_height': '20', 'footer_bg_color': '#f5f5f7',
+        'footer_font_color': '', 'footer_accent_color': '', 'footer_accent_color_alt': '', 'footer_font_size': '14px',
+    },
+    # Footer: odd saved values: numbers instead of text, capitals, 1200px with another page width.
+    'footer3': {
+        'page_max_width': '1100px', 'footer_width': '1200px', 'footer_height': 20, 'footer_bg_color': '#F5F5F7',
+        'footer_font_color': '#FFFFFF', 'footer_accent_color_alt': '#ABCDEF', 'footer_font_size': 15,
+    },
+    # Footer: zeros the controls can't produce, empty values.
+    'footer4': {
+        'footer_width': '0', 'footer_height': '0', 'footer_font_size': '0', 'footer_accent_color': '0', 'footer_bg_color': '',
+        'footer_font_color': '#123456',
+    },
+    # Footer: no footer, with options set.
+    'footer5': {
+        'footer_layout': 'none', 'footer_width': '1000px', 'footer_height': '35', 'footer_bg_color': '#222222',
+        'footer_font_color': '#eeeeee', 'footer_accent_color': '#ff0000', 'footer_accent_color_alt': '#00ff00',
+        'footer_font_size': '16px',
     },
 }
 HAND_ONLY_FRONT = ('/', '/related-posts/', '/category/blog/', '/?p=366', '/checkout/')

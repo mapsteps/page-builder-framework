@@ -4,8 +4,8 @@
  * Opens the Customizer in headless Chrome with a temporary admin login, expands every section,
  * and reports per control type how many controls rendered, plus any JavaScript errors and failed requests.
  *
- * previewCss: sets General options in the Customizer (each value of the snapshot's general1 variant on its own, then
- * the general1-4 variants whole), waits for the preview, and compares the preview's CSS of each area written with
+ * previewCss: sets options in the Customizer (each value of the snapshot's general1 and footer1 variants on its own,
+ * then the general1-4 and footer1-5 variants whole), waits for the preview, and compares the preview's CSS of each area written with
  * wpbf_css() with what the front end prints for the same values (cleaned like the Customizer cleans them). The whole
  * run uses Premium breakpoints of 1100/700/400px. "matched" must equal "cases".
  *
@@ -28,12 +28,18 @@ const php = ["-d", "extension=mysqli", "-d", "mysqli.default_port=10035"];
 const chromePath = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const port = 9333;
 
-// The hand-made General variants of the page snapshots (bin/snapshot/output/variants.json, made by snapshot.py).
+// Areas written with wpbf_css() (CssRules::AREAS) and their hand-made variants of the page snapshots
+// (bin/snapshot/output/variants.json, made by snapshot.py; named after the area: general1, footer1, ...).
+const cssAreas = ["general", "footer"];
 let previewVariants = {};
 try {
 	const all = JSON.parse(readFileSync(join(here, "output", "variants.json"), "utf8"));
 	for (const [name, values] of Object.entries(all)) {
-		if (!name.startsWith("general")) continue;
+		if (!cssAreas.some((area) => new RegExp("^" + area + "\\d+$").test(name))) continue;
+		// Saved values no control can produce (0 on sliders with a minimum of 1): set from code, the instant preview
+		// gets them raw while the front-end side here cleans them to the minimum. As saved values (the only way
+		// they occur) preview and front end both skip them; the page snapshot covers that.
+		if ("footer4" === name) continue;
 		const { __wpbf_settings, ...mods } = values;
 		previewVariants[name] = mods;
 	}
@@ -358,7 +364,7 @@ try {
 				originals[sid] = wp.customize(sid).get();
 				wp.customize(sid).set(v);
 			}
-			for (const area of ['general']) {
+			for (const area of cssAreas) {
 				const preview = await settle(area);
 				const dirty = wp.customize.dirtyValues ? wp.customize.dirtyValues() : {};
 				const response = await fetch('/?zz_css=1', { method: 'POST', credentials: 'same-origin', body: JSON.stringify({ area, values: dirty, preview: preview || '' }) });
@@ -371,11 +377,14 @@ try {
 				else previewCss.mismatches.push({ case: label, area, front: result.front, preview: null === preview ? '(preview did not settle)' : result.preview });
 			}
 			for (const [sid, v] of Object.entries(originals)) wp.customize(sid).set(v);
-			await settle('general');
+			for (const area of cssAreas) await settle(area);
 		};
+		const cssAreas = ${JSON.stringify(cssAreas)};
 		const variants = ${JSON.stringify(previewVariants)};
 		await compare('as saved', {});
-		for (const [sid, v] of Object.entries(variants.general1 || {})) await compare('general1: ' + sid, { [sid]: v });
+		for (const area of cssAreas) {
+			for (const [sid, v] of Object.entries(variants[area + '1'] || {})) await compare(area + '1: ' + sid, { [sid]: v });
+		}
 		for (const [name, values] of Object.entries(variants)) await compare(name, values);
 		await compare('as saved again', {});
 
