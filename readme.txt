@@ -47,3 +47,9 @@ normalize.css
 -------------------------------------------------------
 normalize.css is licensed under the MIT License (MIT)
 created by Nicolas Gallagher and Jonathan Neal – https://github.com/necolas/normalize.css
+
+-------------------------------------------------------
+Lucide
+-------------------------------------------------------
+Lucide icons are licensed under the ISC License
+Copyright (c) Lucide Icons and Contributors – https://lucide.dev
