@@ -177,13 +177,32 @@
 		return found;
 	}
 
+	// CssRules::whenId(): 'option_id' or 'option_id.key' (one part of a JSON option).
+	function whenId(when) {
+		return when.split(".")[0];
+	}
+
+	// CssRules::isOn().
+	function whenOn(area, when) {
+		var dot = when.indexOf(".");
+		var current = mod(area, whenId(when));
+		var key;
+
+		if (-1 !== dot) {
+			key = when.slice(dot + 1);
+			current = isObject(current) && Object.prototype.hasOwnProperty.call(current, key) ? current[key] : null;
+		}
+
+		return isOn(current);
+	}
+
 	// CssRules::render().
 	function render(area, block) {
 		var printed = {};
 		var any = false;
 		var css = "";
 
-		if (block.when && !isOn(mod(area, block.when))) {
+		if (block.when && !whenOn(area, block.when)) {
 			return "";
 		}
 
@@ -297,7 +316,7 @@
 		}
 
 		return area.blocks.some(function (block) {
-			return block.when === id;
+			return block.when && whenId(block.when) === id;
 		});
 	}
 

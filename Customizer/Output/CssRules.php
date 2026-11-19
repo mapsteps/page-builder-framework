@@ -32,7 +32,7 @@ final class CssRules {
 	/**
 	 * Areas that are written with wpbf_css() (one file each in inc/customizer/styles/).
 	 */
-	const AREAS = array( 'typography', 'general', 'footer', 'edd' );
+	const AREAS = array( 'typography', 'general', 'footer', 'edd', 'blog' );
 
 	/**
 	 * Placeholder of an option value in a declaration: {option_id} or {option_id.key} for a part of a JSON option;
@@ -186,7 +186,8 @@ final class CssRules {
 	 * @param string $selector     The selector.
 	 * @param array  $declarations Property => value. Values may hold {option_id} or {option_id.key}.
 	 * @param array  $args         media: a breakpoint name (see media()) or a media query; always: print the block
-	 *                             even when its options are at their defaults; when: an option that must be on.
+	 *                             even when its options are at their defaults; when: an option that must be on
+	 *                             ('option_id.key': one part of a JSON option).
 	 */
 	public static function rule( $selector, $declarations, $args = array() ) {
 
@@ -207,7 +208,7 @@ final class CssRules {
 			return;
 		}
 
-		$ids = '' === $block['when'] ? array() : array( $block['when'] );
+		$ids = '' === $block['when'] ? array() : array( self::whenId( $block['when'] ) );
 
 		foreach ( $block['lines'] as $line ) {
 			foreach ( self::refs( $line[1] ) as $ref ) {
@@ -284,7 +285,7 @@ final class CssRules {
 	 */
 	private static function render( $block ) {
 
-		if ( '' !== $block['when'] && ! self::mod( $block['when'] ) ) {
+		if ( '' !== $block['when'] && ! self::isOn( $block['when'] ) ) {
 			return '';
 		}
 
@@ -338,6 +339,42 @@ final class CssRules {
 		$css = $block['selector'] . '{' . $css . '}';
 
 		return '' === $block['media'] ? $css : '@media ' . $block['media'] . '{' . $css . '}';
+
+	}
+
+	/**
+	 * Whether a block's 'when' option is on: 'option_id', or 'option_id.key' for one part of a JSON option (a padding
+	 * side). On means PHP truthiness, as the old `if ( $value )` checks.
+	 *
+	 * @param string $when The option id, or id.key.
+	 *
+	 * @return bool
+	 */
+	private static function isOn( $when ) {
+
+		$parts = explode( '.', $when, 2 );
+		$value = self::mod( $parts[0] );
+
+		if ( isset( $parts[1] ) ) {
+			$value = is_array( $value ) && isset( $value[ $parts[1] ] ) ? $value[ $parts[1] ] : null;
+		}
+
+		return (bool) $value;
+
+	}
+
+	/**
+	 * The option id of a block's 'when' ('option_id' or 'option_id.key').
+	 *
+	 * @param string $when The option id, or id.key.
+	 *
+	 * @return string The option id.
+	 */
+	private static function whenId( $when ) {
+
+		$parts = explode( '.', $when, 2 );
+
+		return $parts[0];
 
 	}
 

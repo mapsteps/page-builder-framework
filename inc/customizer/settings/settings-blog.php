@@ -355,6 +355,7 @@ foreach ( $archives as $archive ) {
 		->label( __( 'Custom Content Width', 'page-builder-framework' ) )
 		->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 		->priority( 0 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	if ( 'blog' !== $archive && 'search' !== $archive ) {
@@ -494,6 +495,7 @@ foreach ( $archives as $archive ) {
 		->properties( [
 			'dont_save_unit' => true,
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Space between.
@@ -520,6 +522,7 @@ foreach ( $archives as $archive ) {
 			'right'  => WPBF_THEME_URI . '/inc/customizer/img/align-right.jpg',
 		] )
 		->priority( 40 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Background color.
@@ -537,6 +540,7 @@ foreach ( $archives as $archive ) {
 				'value'    => 'boxed',
 			),
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Accent color.
@@ -547,6 +551,7 @@ foreach ( $archives as $archive ) {
 		->properties( [
 			'mode' => 'alpha',
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Hover.
@@ -557,6 +562,7 @@ foreach ( $archives as $archive ) {
 		->properties( [
 			'mode' => 'alpha',
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Title size.
@@ -569,6 +575,7 @@ foreach ( $archives as $archive ) {
 			'step' => 1,
 		] )
 		->priority( 80 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Font size.
@@ -581,6 +588,7 @@ foreach ( $archives as $archive ) {
 			'step' => 1,
 		] )
 		->priority( 90 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	/* Beside */
@@ -616,6 +624,7 @@ foreach ( $archives as $archive ) {
 				'value'    => 'beside',
 			),
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 	// Image width.
@@ -635,6 +644,7 @@ foreach ( $archives as $archive ) {
 				'value'    => 'beside',
 			),
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
 
 }
@@ -649,6 +659,7 @@ foreach ( $singles as $single ) {
 		->label( __( 'Custom Content Width', 'page-builder-framework' ) )
 		->description( __( 'Default: 1200px', 'page-builder-framework' ) )
 		->priority( 0 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $single . '_options' );
 
 	// Sidebar layout.
@@ -772,6 +783,7 @@ foreach ( $singles as $single ) {
 		->properties( [
 			'dont_save_unit' => true,
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $single . '_options' );
 
 	// Background color.
@@ -789,6 +801,7 @@ foreach ( $singles as $single ) {
 				'value'    => 'boxed',
 			),
 		] )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $single . '_options' );
 
 	// Title size.
@@ -801,6 +814,7 @@ foreach ( $singles as $single ) {
 			'step' => 1,
 		] )
 		->priority( 20 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $single . '_options' );
 
 	// Font size.
@@ -813,6 +827,7 @@ foreach ( $singles as $single ) {
 			'step' => 1,
 		] )
 		->priority( 20 )
+		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $single . '_options' );
 
 }
