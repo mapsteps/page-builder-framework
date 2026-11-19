@@ -136,16 +136,16 @@
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-	width: 32px;
-	height: 32px;
+	width: 36px;
+	height: 36px;
 	color: var(--heatbox-accent);
 	background: var(--heatbox-accent-soft);
-	border-radius: 50%;
+	border-radius: var(--heatbox-radius-small);
 }
 
 .wpbf-feature-icon svg {
-	width: 17px;
-	height: 17px;
+	width: 20px;
+	height: 20px;
 }
 
 /* Stored fonts: one chip per font, written in that font */
