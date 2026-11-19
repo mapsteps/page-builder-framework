@@ -32,6 +32,20 @@ function wpbf_theme_settings_admin_body_class( $classes ) {
 add_action( 'admin_body_class', 'wpbf_theme_settings_admin_body_class' );
 
 /**
+ * Print a Lucide icon (https://lucide.dev, ISC License) on the Theme Settings page.
+ *
+ * @param string $inner The icon's inner SVG markup (paths, circles, rects), fixed markup from the theme's templates.
+ * @param string $css_class The CSS class of the icon.
+ */
+function wpbf_theme_settings_icon( $inner, $css_class ) {
+
+	?>
+	<svg class="<?php echo esc_attr( $css_class ); ?>" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><?php echo $inner; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Fixed SVG markup from the theme's templates. ?></svg>
+	<?php
+
+}
+
+/**
  * Add theme settings.
  */
 function wpbf_theme_settings_page() {

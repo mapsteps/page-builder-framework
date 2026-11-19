@@ -39,7 +39,7 @@ $wpbf_resources = array(
 			<?php foreach ( $wpbf_resources as $wpbf_resource ) : ?>
 				<li>
 					<a href="<?php echo esc_url( $wpbf_resource['link'] ); ?>" target="_blank">
-						<svg class="wpbf-resource-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><?php echo $wpbf_resource['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Fixed SVG markup from this file. ?></svg>
+						<?php wpbf_theme_settings_icon( $wpbf_resource['icon'], 'wpbf-resource-icon' ); ?>
 						<?php echo esc_html( $wpbf_resource['title'] ); ?>
 						<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'page-builder-framework' ); ?></span>
 					</a>

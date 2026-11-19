@@ -1,13 +1,19 @@
 /* Theme Settings page: the few layouts heatbox has no component for (heatbox.css holds everything else). */
 
-/* Customizer links: a grid of links */
+/* Customizer links: a grid of tiles with an icon */
 .wpbf-customizer-list {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 12px var(--heatbox-gap);
+	gap: 12px;
 	margin: 0;
 	padding: 0;
 	list-style: none;
+}
+
+@media screen and (max-width: 1100px) {
+	.wpbf-customizer-list {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
 }
 
 @media screen and (max-width: 782px) {
@@ -21,10 +27,71 @@
 }
 
 .wpbf-customizer-list a {
-	display: block;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	height: 100%;
+	padding: 12px 14px;
 	font-size: 14px;
 	font-weight: 500;
+	line-height: 1.3;
+	color: var(--heatbox-text);
 	text-decoration: none;
+	background: var(--heatbox-surface);
+	border: 1px solid var(--heatbox-box-border);
+	border-radius: var(--heatbox-radius-control);
+	transition: color var(--heatbox-transition), background-color var(--heatbox-transition), border-color var(--heatbox-transition);
+}
+
+.wpbf-customizer-list a:hover,
+.wpbf-customizer-list a:focus {
+	color: var(--heatbox-accent);
+	background: var(--heatbox-accent-soft);
+	border-color: var(--heatbox-accent-soft-border);
+	box-shadow: none;
+}
+
+.wpbf-customizer-list a:focus-visible {
+	outline: 2px solid var(--heatbox-accent);
+	outline-offset: 2px;
+}
+
+.wpbf-customizer-link-icon {
+	flex-shrink: 0;
+	width: 20px;
+	height: 20px;
+	color: var(--heatbox-accent);
+}
+
+/* Stored fonts: one chip per font, written in that font */
+.wpbf-font-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0 0 var(--heatbox-gap);
+	padding: 0;
+	list-style: none;
+}
+
+.wpbf-font-chip {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 8px;
+	margin: 0;
+	padding: 6px 14px;
+	background: var(--heatbox-surface-muted);
+	border: 1px solid var(--heatbox-box-border);
+	border-radius: 999px;
+}
+
+.wpbf-font-chip-name {
+	font-size: 15px;
+	color: var(--heatbox-text);
+}
+
+.wpbf-font-chip-styles {
+	font-size: 12px;
+	color: var(--heatbox-text-muted);
 }
 
 /* Button with its status message next to it (Clear Font Cache) */
