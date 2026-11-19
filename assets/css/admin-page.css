@@ -11,7 +11,7 @@
 	flex-direction: column;
 	align-items: flex-start;
 	padding: 20px;
-	background: var(--heatbox-surface);
+	background: var(--heatbox-surface-hover);
 	border: 1px solid var(--heatbox-box-border);
 	border-radius: var(--heatbox-radius-control);
 }
