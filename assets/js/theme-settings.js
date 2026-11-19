@@ -1,122 +1,89 @@
-(function ($) {
-	$(".heatbox-tab-nav-item").on("click", function (event) {
-		$(".heatbox-tab-nav-item").removeClass("active");
-		$(this).addClass("active");
-	});
+/**
+ * Theme Settings page: tabs and the "Clear Font Cache" button.
+ */
+(function () {
+	var page = document.querySelector(".wpbf-theme-settings-page");
 
-	$(".settings-panel").on("click", function (event) {
-		$(".heatbox-admin-panel").css("display", "none");
-		$(".wpbf-settings-panel").css("display", "block");
-	});
+	if (!page) return;
 
-	$(".recommended-panel").on("click", function (event) {
-		$(".heatbox-admin-panel").css("display", "none");
-		$(".wpbf-recommended-panel").css("display", "block");
-	});
+	// Tabs: each tab and its panel share data-panel; the address' #hash picks the tab.
+	var tabs = page.querySelectorAll(".heatbox-tab-nav-item");
+	var panels = page.querySelectorAll(".heatbox-admin-panel");
 
-	$(".premium-panel").on("click", function (event) {
-		$(".heatbox-admin-panel").css("display", "none");
-		$(".wpbf-premium-panel").css("display", "block");
-	});
+	function showPanel(name) {
+		var found = false;
 
-	$(".documentation-panel").on("click", function (event) {
-		$(".heatbox-admin-panel").css("display", "none");
-		$(".wpbf-documentation-panel").css("display", "block");
-	});
+		panels.forEach(function (panel) {
+			if (panel.dataset.panel === name) found = true;
+		});
 
-	$(window).on("load", function (event) {
-		let hash = window.location.hash;
+		if (!found) name = "settings";
 
-		if (!hash) {
-			hash = "#settings";
-		}
+		panels.forEach(function (panel) {
+			panel.style.display = panel.dataset.panel === name ? "block" : "none";
+		});
 
-		if ("#settings" === hash) {
-			$(".heatbox-tab-nav-item.settings-panel").addClass("active");
-			$(".wpbf-settings-panel").css("display", "block");
-		}
+		tabs.forEach(function (tab) {
+			var active = tab.dataset.panel === name;
+			var link = tab.querySelector("a");
 
-		if ("#recommended" === hash) {
-			$(".heatbox-tab-nav-item.recommended-panel").addClass("active");
-			$(".wpbf-recommended-panel").css("display", "block");
-		}
+			tab.classList.toggle("active", active);
 
-		if ("#premium" === hash) {
-			$(".heatbox-tab-nav-item.premium-panel").addClass("active");
-			$(".wpbf-premium-panel").css("display", "block");
-		}
-
-		if ("#documentation" === hash) {
-			$(".heatbox-tab-nav-item.documentation-panel").addClass("active");
-			$(".wpbf-documentation-panel").css("display", "block");
-		}
-
-		setupClearFontCache();
-
-		function setupClearFontCache() {
-			const notice = document.querySelector(
-				".wpbf-remove-downloaded-fonts-metabox .submission-status",
-			);
-			if (!(notice instanceof HTMLElement)) return;
-			let doingAjax = false;
-			$(".wpbf-remove-downloaded-fonts").on("click", clearFontCache);
-
-			/**
-			 * Clear font cache.
-			 *
-			 * @param {JQuery.ClickEvent} e - The click event.
-			 * @this {HTMLElement}
-			 */
-			function clearFontCache(e) {
-				if (doingAjax) return;
-				doingAjax = true;
-				const button = this;
-				button.classList.add("is-loading");
-
-				$.ajax({
-					// @ts-ignore
-					url: window.ajaxurl,
-					type: "POST",
-					data: {
-						action: "wpbf_clear_font_cache",
-						nonce: button.dataset.nonce,
-					},
-				})
-					.done(function (r) {
-						showNotice(r.success ? "success" : "error", r.data);
-					})
-					.fail(function (r) {
-						showNotice("error", "Something went wrong.");
-					})
-					.always(function (r) {
-						doingAjax = false;
-						button.classList.remove("is-loading");
-						setTimeout(function () {
-							hideNotice();
-						}, 4000);
-					});
+			if (active) {
+				link.setAttribute("aria-current", "page");
+			} else {
+				link.removeAttribute("aria-current");
 			}
+		});
+	}
 
-			/**
-			 * Show notice.
-			 *
-			 * @param {"success"|"error"} status - The status.
-			 * @param {string} textContent - The text content.
-			 */
-			function showNotice(status, textContent) {
-				if (!(notice instanceof HTMLElement)) return;
-				notice.textContent = textContent;
-				notice.classList.add(status === "success" ? "is-success" : "is-error");
-				notice.classList.remove("is-hidden");
-			}
-
-			function hideNotice() {
-				if (!(notice instanceof HTMLElement)) return;
-				notice.textContent = "";
-				notice.classList.remove("is-success");
-				notice.classList.remove("is-error");
-				notice.classList.add("is-hidden");
-			}
-		}
+	window.addEventListener("hashchange", function () {
+		showPanel(window.location.hash.slice(1));
 	});
-})(jQuery);
+
+	showPanel(window.location.hash.slice(1));
+
+	// Clear font cache.
+	var button = page.querySelector(".wpbf-remove-downloaded-fonts");
+	var notice = page.querySelector(".wpbf-remove-downloaded-fonts-notice");
+	var noticeTimer;
+
+	if (!button || !notice) return;
+
+	function showNotice(text, type) {
+		notice.textContent = text;
+		notice.classList.remove("is-success", "is-error");
+		notice.classList.add("is-shown", "is-" + type);
+		clearTimeout(noticeTimer);
+		noticeTimer = setTimeout(function () {
+			notice.classList.remove("is-shown");
+		}, 4000);
+	}
+
+	button.addEventListener("click", function () {
+		if (button.classList.contains("is-loading")) return;
+
+		button.classList.add("is-loading");
+
+		fetch(window.ajaxurl, {
+			method: "POST",
+			credentials: "same-origin",
+			body: new URLSearchParams({
+				action: "wpbf_clear_font_cache",
+				nonce: button.dataset.nonce,
+			}),
+		})
+			.then(function (response) {
+				return response.json();
+			})
+			.then(function (response) {
+				showNotice(response.data || notice.dataset.error, response.success ? "success" : "error");
+			})
+			.catch(function () {
+				showNotice(notice.dataset.error, "error");
+			})
+			.finally(function () {
+				button.classList.remove("is-loading");
+			});
+	});
+})();

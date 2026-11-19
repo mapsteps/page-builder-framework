@@ -221,13 +221,15 @@ function wpbf_enqueue_admin_scripts() {
 	$post_types     = get_post_types( array( 'public' => true ) );
 
 	if ( 'appearance_page_wpbf-premium' === $current_screen->id ) {
-		// Enqueue on "Theme Settings" page.
+		// Enqueue on "Theme Settings" page. With the Premium Add-On active, the page is Premium's and it brings its own
+		// files under the same handles.
 
-		wp_enqueue_style( 'heatbox', WPBF_THEME_URI . '/assets/css/heatbox.css', array(), WPBF_VERSION );
-		wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array(), WPBF_VERSION );
+		if ( ! wpbf_is_premium() ) {
+			wp_enqueue_style( 'heatbox', WPBF_THEME_URI . '/assets/css/heatbox.css', array(), WPBF_VERSION );
+			wp_enqueue_style( 'wpbf-admin-page', WPBF_THEME_URI . '/assets/css/admin-page.css', array( 'heatbox' ), WPBF_VERSION );
 
-		wp_enqueue_script( 'wpbf-theme-settings', WPBF_THEME_URI . '/js/min/theme-settings-min.js', array( 'jquery' ), WPBF_VERSION, true );
-
+			wp_enqueue_script( 'wpbf-theme-settings', WPBF_THEME_URI . '/assets/js/theme-settings.js', array(), WPBF_VERSION, true );
+		}
 	} elseif ( in_array( $current_screen->post_type, $post_types, true ) ) {
 
 		if ( "edit-{$current_screen->post_type}" === $current_screen->id ) {

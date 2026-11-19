@@ -1,11 +1,18 @@
 <?php
 /**
- * Theme setting's template.
+ * Theme settings page template.
  *
  * @package Page Builder Framework
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+$wpbf_tabs = array(
+	'settings'      => __( 'Getting Started', 'page-builder-framework' ),
+	'premium'       => __( 'Premium Add-On', 'page-builder-framework' ),
+	'recommended'   => __( 'Recommended Plugins', 'page-builder-framework' ),
+	'documentation' => __( 'Help', 'page-builder-framework' ),
+);
 
 ?>
 
@@ -18,24 +25,26 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 			<div class="logo-container">
 
 				<div>
-					<span class="title">
+					<h1 class="title">
 						<?php echo esc_html( get_admin_page_title() ); ?>
 						<span class="version"><?php echo esc_html( WPBF_VERSION ); ?></span>
-					</span>
+					</h1>
+					<p class="subtitle"><?php esc_html_e( 'A modern, fast & minimalistic theme designed for the new WordPress era.', 'page-builder-framework' ); ?></p>
 				</div>
 
 				<div class="heatbox-logo-wide">
-					<img src="<?php echo esc_url( WPBF_THEME_URI ); ?>/img/page-builder-framework-logo.png">
+					<img src="<?php echo esc_url( WPBF_THEME_URI . '/img/page-builder-framework-logo.png' ); ?>" alt="">
 				</div>
 
 			</div>
 
-			<nav>
+			<nav aria-label="<?php esc_attr_e( 'Theme Settings', 'page-builder-framework' ); ?>">
 				<ul class="heatbox-tab-nav">
-					<li class="heatbox-tab-nav-item settings-panel"><a href="#settings"><?php _e( 'Getting Started', 'page-builder-framework' ); ?></a></li>
-					<li class="heatbox-tab-nav-item premium-panel"><a href="#premium"><?php _e( 'Premium Add-On', 'page-builder-framework' ); ?></a></li>
-					<li class="heatbox-tab-nav-item recommended-panel"><a href="#recommended"><?php _e( 'Recommended Plugins', 'page-builder-framework' ); ?></a></li>
-					<li class="heatbox-tab-nav-item documentation-panel"><a href="#documentation"><?php _e( 'Help', 'page-builder-framework' ); ?></a></li>
+					<?php foreach ( $wpbf_tabs as $wpbf_tab => $wpbf_tab_title ) : ?>
+						<li class="heatbox-tab-nav-item" data-panel="<?php echo esc_attr( $wpbf_tab ); ?>">
+							<a href="#<?php echo esc_attr( $wpbf_tab ); ?>"><?php echo esc_html( $wpbf_tab_title ); ?></a>
+						</li>
+					<?php endforeach; ?>
 				</ul>
 			</nav>
 
@@ -47,37 +56,36 @@ defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 		<div class="heatbox-main">
 
-			<div class="heatbox-admin-panel wpbf-settings-panel">
-				<!-- Faking H1 tag to place admin notices -->
-				<h1 style="display: none;"></h1>
+			<!-- WordPress places admin notices after this marker -->
+			<hr class="wp-header-end">
+
+			<div class="heatbox-admin-panel" data-panel="settings">
 				<?php
 				require __DIR__ . '/metaboxes/customizer.php';
 				require __DIR__ . '/metaboxes/clear-font-cache.php';
 				?>
 			</div>
 
-			<div class="heatbox-admin-panel wpbf-premium-panel">
+			<div class="heatbox-admin-panel" data-panel="premium">
 				<?php require __DIR__ . '/metaboxes/premium.php'; ?>
 			</div>
 
-			<div class="heatbox-admin-panel wpbf-recommended-panel">
+			<div class="heatbox-admin-panel" data-panel="recommended">
 				<?php require __DIR__ . '/metaboxes/recommended.php'; ?>
 			</div>
 
-			<div class="heatbox-admin-panel wpbf-documentation-panel">
+			<div class="heatbox-admin-panel" data-panel="documentation">
 				<?php require __DIR__ . '/metaboxes/documentation.php'; ?>
 			</div>
 
 		</div>
 
 		<div class="heatbox-sidebar">
-
 			<?php
 			require __DIR__ . '/metaboxes/community.php';
 			require __DIR__ . '/metaboxes/review.php';
 			require __DIR__ . '/metaboxes/resources.php';
 			?>
-
 		</div>
 
 	</div>

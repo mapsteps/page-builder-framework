@@ -1,8 +1,86 @@
-/* Init */
+/**
+ * Heatbox – shared admin UI for Mapsteps plugins.
+ *
+ * Drop-in stylesheet. Override any --heatbox-* token on .heatbox-wrap
+ * (or any element inside body) to theme a plugin.
+ *
+ * 1.  Tokens
+ * 2.  Base
+ * 3.  Layout
+ * 4.  Header & tab navigation
+ * 5.  Typography
+ * 6.  Box
+ * 7.  Settings & form controls
+ * 8.  Buttons & color picker
+ * 9.  Call to action
+ * 10. Status indicator
+ * 11. Tags
+ * 12. Steps
+ * 13. Copy field
+ * 14. Tooltip
+ * 15. Misc
+ * 16. Animations
+ * 17. Form footer & save notice
+ * 18. Products
+ */
+
+/* 1. Tokens
+   Declared on body because WP sets --wp-admin-theme-color on body.admin-color-*.
+   ========================================================================== */
+
+body {
+	--heatbox-accent: var(--wp-admin-theme-color, #3858e9);
+	--heatbox-accent-darker: var(--wp-admin-theme-color-darker-10, #2c448f);
+	--heatbox-accent-soft: color-mix(in srgb, var(--heatbox-accent) 7%, #fff);
+	--heatbox-accent-soft-border: color-mix(in srgb, var(--heatbox-accent) 20%, #fff);
+
+	--heatbox-text: #1e1e1e;
+	--heatbox-text-muted: #646970;
+	--heatbox-text-on-accent: #fff;
+	--heatbox-surface: #fff;
+	--heatbox-surface-muted: #f0f0f1;
+	--heatbox-surface-hover: #f6f7f7;
+	--heatbox-surface-disabled: #f5f5f5;
+	--heatbox-border: #c3c4c7;
+	--heatbox-box-border: #e2e4e7;
+	--heatbox-control: #f0f0f1;
+	--heatbox-control-border: #8c8f94;
+	--heatbox-control-off: #c3c4c7;
+	--heatbox-control-disabled: #a7aaad;
+
+	--heatbox-success: #00a32a;
+	--heatbox-success-soft: #edfaef;
+	--heatbox-error: #d63638;
+	--heatbox-error-soft: #fcf0f1;
+	--heatbox-warning: #dba617;
+	--heatbox-warning-soft: #fcf9e8;
+
+	--heatbox-gap: 20px;
+	--heatbox-box-padding: 24px;
+	--heatbox-section-gap: 40px;
+	--heatbox-header-padding: 36px;
+	--heatbox-divider: #dcdcde;
+	--heatbox-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 32px -16px rgba(0, 0, 0, 0.14);
+	--heatbox-shadow-raised: 0 4px 16px rgba(0, 0, 0, 0.12);
+	--heatbox-radius: 8px;
+	--heatbox-radius-control: 8px;
+	--heatbox-radius-small: 4px;
+	--heatbox-control-height: 40px;
+	--heatbox-label-offset: 9px; /* Pushes a row label down to the middle of its field */
+	--heatbox-transition: 0.2s ease-in-out;
+}
+
+/* 2. Base
+   ========================================================================== */
+
 .heatbox-wrap,
 .heatbox-wrap * {
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+}
+
+/* The hidden attribute wins over display rules (e.g. on .button) */
+.heatbox-wrap [hidden] {
+	display: none !important;
 }
 
 .heatbox-admin.has-header .update-nag {
@@ -18,46 +96,13 @@
 	margin: 0;
 }
 
-/* Tab navigation */
-.heatbox-tab-nav {
-	padding: 20px 0;
-	margin: 10px 0 0 0;
-}
-
-.heatbox-tab-nav li {
-	display: inline-flex;
-	padding: 10px 30px 10px 0;
-	font-weight: 600;
-	font-size: 20px;
-}
-
-.heatbox-tab-nav li a {
-	color: #23282d;
-	text-decoration: none;
-}
-
-.heatbox-tab-nav li.active a {
-	color: #0073aa;
-}
-
-/* Divider */
-.heatbox-divider {
-	width: 100%;
-	height: 1px;
-	margin: 40px 0;
-	background: #ccc;
-}
-
-@media screen and (max-width: 991px) {
-	.heatbox-divider {
-		margin: 20px 0;
-	}
-}
+/* 3. Layout
+   ========================================================================== */
 
 /* Container */
 .heatbox-container {
 	max-width: 1200px;
-	padding: 0 20px;
+	padding: 0 var(--heatbox-gap);
 }
 
 .heatbox-container-wide {
@@ -68,105 +113,21 @@
 	margin: 0 auto;
 }
 
-/* Header */
-.heatbox-header {
-	background: #fff;
-	padding-top: 40px;
-	border-bottom: 1px solid #ddd;
-}
-
-.heatbox-header.heatbox-has-tab-nav .logo-container {
-	margin-bottom: 0;
-}
-
-.heatbox-header .logo-container {
-	display: flex;
-	align-items: center;
-	margin-bottom: 40px;
-}
-
-.heatbox-header .logo-container div {
-	width: 50%;
-}
-
-.heatbox-header .logo-container .heatbox-logo-wide img {
-	width: 180px;
-}
-
-.heatbox-header .logo-container img {
-	width: 100px;
-	height: auto;
-	float: right;
-}
-
-.heatbox-header .tab-navigation {
-	margin: -20px 0 20px 0;
-	padding: 0;
-}
-
-.heatbox-header .tab-navigation li {
-	display: inline-flex;
-	padding: 10px 30px 10px 0;
-	font-weight: 600;
-	font-size: 20px;
-}
-
-.heatbox-header .tab-navigation li a {
-	color: #23282d;
-	text-decoration: none;
-}
-
-.heatbox-header .tab-navigation li.active a {
-	color: #0073aa;
-}
-
-/* Title */
-.heatbox-wrap .title {
-	margin: 0;
-	padding: 0;
-	font-size: 34px;
-	font-weight: 700;
-	line-height: 1;
-}
-
-.heatbox-wrap .subtitle {
-	margin: 20px 0 0 0;
-	padding: 0;
-	font-size: 20px;
-	line-height: 1;
-}
-
-/* Version */
-.heatbox-wrap .version {
-	font-size: 45%;
-	opacity: 0.6;
-	font-weight: 600;
-	background: #ccc;
-	border-radius: 5px;
-	padding: 5px 12px;
-	line-height: 1;
-	vertical-align: middle;
-	margin: 0 5px;
-}
-
-/* 2 Column Layout - Wrapper */
+/* Two columns: main + sidebar */
 .heatbox-column-container {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-/* 2 Column Layout - Main Content */
 .heatbox-main {
 	width: 73%;
-	margin-right: 2%;
+	margin-inline-end: 2%;
 }
 
-/* 2 Column Layout - Sidebar */
 .heatbox-sidebar {
 	width: 25%;
 }
 
-/* 2 Column Layout - Responsiveness */
 @media screen and (max-width: 991px) {
 	.heatbox-main,
 	.heatbox-sidebar {
@@ -174,30 +135,313 @@
 	}
 
 	.heatbox-main {
-		margin-right: 0;
+		margin-inline-end: 0;
 	}
 }
 
-/* Panels */
+/* Boxes side by side: <div class="heatbox-columns"><div class="heatbox">…</div><div class="heatbox">…</div></div> */
+.heatbox-columns {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--heatbox-gap);
+	margin-bottom: var(--heatbox-gap);
+}
+
+/* Three per row, e.g. a grid of modules: .heatbox-columns.is-three (two per row on medium screens) */
+.heatbox-columns.is-three {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.heatbox-columns > .heatbox {
+	margin-bottom: 0;
+}
+
+@media screen and (max-width: 1100px) {
+	.heatbox-columns.is-three {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media screen and (max-width: 782px) {
+	.heatbox-columns,
+	.heatbox-columns.is-three {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Divider */
+.heatbox-divider {
+	width: 100%;
+	height: 1px;
+	margin: var(--heatbox-section-gap) 0;
+	background: var(--heatbox-divider);
+}
+
+@media screen and (max-width: 991px) {
+	.heatbox-divider {
+		margin: var(--heatbox-gap) 0;
+	}
+}
+
+/* Spacing utilities (the second selector wins over ".heatbox p" inside a box) */
+.heatbox-margin-top,
+.heatbox .heatbox-margin-top {
+	margin-top: var(--heatbox-gap);
+}
+
+.heatbox-margin-bottom,
+.heatbox .heatbox-margin-bottom {
+	margin-bottom: var(--heatbox-gap);
+}
+
+/* Panels (shown/hidden by plugin JS) */
 .heatbox-admin-panel {
 	display: none;
 }
 
-/* Heatbox */
-.heatbox {
-	background: #fff;
+/* 4. Header & tab navigation
+   ========================================================================== */
+
+/**
+ * Markup (title on the left, logo on the right):
+ *
+ * <div class="heatbox-header [heatbox-has-tab-nav]">
+ *   <div class="heatbox-container heatbox-container-center">
+ *     <div class="logo-container">
+ *       <div><span class="title">Name <span class="version">1.0</span></span><p class="subtitle">…</p></div>
+ *       <div [class="heatbox-logo-wide"]><img src="logo.png"></div>
+ *     </div>
+ *     <nav><ul class="heatbox-tab-nav"><li class="active"><a href="#">Tab</a></li></ul></nav>
+ *   </div>
+ * </div>
+ */
+.heatbox-header {
+	background: var(--heatbox-surface);
+	padding-top: var(--heatbox-header-padding);
+	border-bottom: 1px solid var(--heatbox-border);
+}
+
+.heatbox-header .logo-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	margin-bottom: var(--heatbox-header-padding);
+}
+
+.heatbox-header.heatbox-has-tab-nav .logo-container {
 	margin-bottom: 20px;
-	border: 1px solid #ddd;
+}
+
+.heatbox-header .logo-container > div {
+	width: auto;
+	min-width: 0;
+}
+
+.heatbox-header .logo-container img {
+	display: block;
+	width: 76px;
+	height: auto;
+}
+
+.heatbox-header .logo-container .heatbox-logo-wide img {
+	width: 156px;
+}
+
+/* The logo keeps its size; the title wraps instead. */
+.heatbox-header .logo-container > div:last-child {
+	flex-shrink: 0;
+}
+
+@media screen and (max-width: 782px) {
+	.heatbox-header .logo-container {
+		gap: 16px;
+	}
+
+	.heatbox-header .logo-container img {
+		width: 56px;
+	}
+
+	.heatbox-header .logo-container .heatbox-logo-wide img {
+		width: 112px;
+	}
+
+	.heatbox-wrap .heatbox-header .title {
+		font-size: 26px;
+	}
+
+	.heatbox-wrap .heatbox-header .subtitle {
+		font-size: 16px;
+	}
+}
+
+/* Tabs: .heatbox-tab-nav (preferred) and legacy .tab-navigation */
+.heatbox-tab-nav,
+.heatbox-header .tab-navigation {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 36px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.heatbox-tab-nav li,
+.heatbox-header .tab-navigation li {
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.heatbox-tab-nav li a,
+.heatbox-header .tab-navigation li a {
+	display: block;
+	padding: 16px 2px 14px;
+	color: var(--heatbox-text-muted);
+	text-decoration: none;
+	border-bottom: 3px solid transparent;
+	transition: color var(--heatbox-transition), border-color var(--heatbox-transition);
+}
+
+.heatbox-tab-nav li a:hover,
+.heatbox-header .tab-navigation li a:hover {
+	color: var(--heatbox-text);
+}
+
+.heatbox-tab-nav li a:focus,
+.heatbox-header .tab-navigation li a:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+.heatbox-tab-nav li a:focus-visible,
+.heatbox-header .tab-navigation li a:focus-visible {
+	color: var(--heatbox-text);
+	outline: 2px solid var(--heatbox-accent);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+.heatbox-tab-nav li.active a,
+.heatbox-header .tab-navigation li.active a {
+	color: var(--heatbox-accent);
+	border-bottom-color: var(--heatbox-accent);
+}
+
+/* Inside the header the active underline sits on the header border */
+.heatbox-header .heatbox-tab-nav,
+.heatbox-header .tab-navigation {
+	margin-bottom: -1px;
+}
+
+/* 5. Typography
+   ========================================================================== */
+
+.heatbox-wrap .title {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	font-size: 34px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--heatbox-text);
+}
+
+.heatbox-wrap .subtitle {
+	margin: 6px 0 0 0;
+	padding: 0;
+	font-size: 18px;
+	line-height: 1.5;
+	color: var(--heatbox-text-muted);
+}
+
+.heatbox-wrap .version {
+	margin: 0;
+	padding: 5px 12px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.2;
+	color: var(--heatbox-text-muted);
+	background: var(--heatbox-surface-muted);
+	border-radius: 999px;
+}
+
+/* Badge, e.g. next to a box title: <span class="heatbox-badge">PRO</span> */
+.heatbox-badge {
+	display: inline-block;
+	margin-inline-start: 6px;
+	padding: 2px 8px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.4;
+	vertical-align: middle;
+	color: var(--heatbox-text-on-accent);
+	background: var(--heatbox-accent);
+	border-radius: 999px;
+}
+
+/* Status badges: <span class="heatbox-badge is-success">Active</span> (also is-info, is-error, is-warning, is-neutral) */
+/* is-info: soft accent color, e.g. "Active" in the admin color scheme */
+.heatbox-badge.is-info {
+	color: var(--heatbox-accent);
+	background: var(--heatbox-accent-soft);
+}
+
+.heatbox-badge.is-success {
+	color: var(--heatbox-success);
+	background: var(--heatbox-success-soft);
+}
+
+.heatbox-badge.is-error {
+	color: var(--heatbox-error);
+	background: var(--heatbox-error-soft);
+}
+
+.heatbox-badge.is-warning {
+	color: #8a6d0b;
+	background: var(--heatbox-warning-soft);
+}
+
+.heatbox-badge.is-neutral {
+	color: var(--heatbox-text-muted);
+	background: var(--heatbox-surface-muted);
+}
+
+/* 6. Box
+   ========================================================================== */
+
+/**
+ * <div class="heatbox [is-grouped]">
+ *   <h2>Title</h2>
+ *   <div class="heatbox-content">…</div>
+ * </div>
+ */
+.heatbox {
+	background: var(--heatbox-surface);
+	margin-bottom: var(--heatbox-gap);
+	border: 1px solid var(--heatbox-box-border);
+	border-radius: var(--heatbox-radius);
+	box-shadow: var(--heatbox-shadow);
 }
 
 .heatbox h2 {
-	border-bottom: 1px solid #ddd;
+	position: relative;
 	margin: 0;
-	padding: 20px;
+	padding: 16px var(--heatbox-box-padding);
+	font-size: 17px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--heatbox-text);
+	border-bottom: 1px solid var(--heatbox-box-border);
 }
 
 .heatbox.is-grouped h2 {
-	border-top: 1px solid #ddd;
+	border-top: 1px solid var(--heatbox-box-border);
 }
 
 .heatbox.is-grouped h2:first-child {
@@ -205,62 +449,587 @@
 }
 
 .heatbox h3 {
-	margin: 0 0 10px 0;
+	margin: 0 0 8px 0;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--heatbox-text);
 }
 
 .heatbox p {
-	margin: 0 0 20px 0;
+	margin: 0 0 var(--heatbox-gap) 0;
 }
 
 .heatbox-content {
 	margin: 0;
-	padding: 20px;
+	padding: var(--heatbox-box-padding);
 }
 
 .heatbox-content p:first-child {
 	margin-top: 0;
 }
 
-/* Margins */
-.heatbox-margin-top {
-	margin-top: 20px;
+.heatbox-content > :last-child {
+	margin-bottom: 0;
 }
 
-.heatbox-margin-bottom {
-	margin-bottom: 20px;
+/* Round the corners of a full-bleed image at the top of a box */
+.heatbox > img:first-child,
+.heatbox > a:first-child img {
+	display: block;
+	width: 100%;
+	border-radius: calc(var(--heatbox-radius) - 1px) calc(var(--heatbox-radius) - 1px) 0 0;
 }
 
-/* Paddings */
-.heatbox-margin-top {
-	margin-top: 20px;
+/* A box with an attached CTA below loses its bottom corners and border
+   (the CTA's top border takes its place) */
+.heatbox:has(+ .heatbox-cta-container.is-attached) {
+	border-bottom: none;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	box-shadow: none;
 }
 
-.heatbox-margin-bottom {
-	margin-bottom: 20px;
+/**
+ * Locked box (e.g. PRO-only settings): everything except the title is faded
+ * and not clickable. Add the inert attribute to the content for keyboard users.
+ *
+ * <div class="heatbox is-locked"><h2>Title <span class="heatbox-badge">PRO</span></h2><table class="form-table" inert>…</table></div>
+ */
+.heatbox.is-locked > :not(h2) {
+	opacity: 0.55;
+	pointer-events: none;
+	user-select: none;
 }
 
-/* Loading Button */
-@-webkit-keyframes heatboxLoadingSpinner {
-	from {
-		transform: rotate(0);
+/**
+ * Feature list: two columns with check marks, one column on small screens.
+ *
+ * <ul class="heatbox-features">
+ *   <li><span class="dashicons dashicons-yes"></span><div><h3>Feature</h3><p class="description">…</p></div></li>
+ * </ul>
+ */
+.heatbox-features {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 20px 32px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.heatbox-features li {
+	display: flex;
+	gap: 12px;
+	margin: 0;
+}
+
+.heatbox-features .dashicons {
+	flex-shrink: 0;
+	width: 22px;
+	height: 22px;
+	font-size: 22px;
+	color: var(--heatbox-accent);
+	background: var(--heatbox-accent-soft);
+	border-radius: 50%;
+}
+
+.heatbox .heatbox-features h3 {
+	margin: 1px 0 4px;
+}
+
+.heatbox .heatbox-features p {
+	margin: 0;
+}
+
+@media screen and (max-width: 782px) {
+	.heatbox-features {
+		grid-template-columns: 1fr;
 	}
-	to {
-		transform: rotate(359deg);
+}
+
+/* 7. Settings & form controls
+   ========================================================================== */
+
+/* The bottom margin matches the label offset, so the space below the last row
+   equals the space above the first label (works with hidden rows too). */
+.heatbox .form-table {
+	margin: 0 0 var(--heatbox-label-offset);
+}
+
+.heatbox .form-table th,
+.heatbox .form-table td {
+	padding: 16px var(--heatbox-box-padding);
+	vertical-align: top;
+}
+
+.heatbox .form-table td {
+	padding-inline-start: 0;
+}
+
+/* Labels line up with the middle of a field.
+   A wider label column keeps descriptions from wrapping into tall rows. */
+.heatbox .form-table th {
+	width: 240px;
+	padding-top: calc(16px + var(--heatbox-label-offset));
+}
+
+/* Toggles line up with the row label */
+.heatbox .form-table td > .toggle-switch {
+	margin-top: 10px;
+}
+
+/* Small number field with a unit: <input type="number" class="small-text"> <span class="heatbox-unit">px</span> */
+.heatbox input.small-text {
+	width: 100px;
+}
+
+.heatbox-unit {
+	margin-inline-start: 6px;
+	color: var(--heatbox-text-muted);
+}
+
+@media screen and (max-width: 782px) {
+	/* Labels sit above their field here, so no offset is needed */
+	.heatbox .form-table {
+		margin-bottom: 0;
+	}
+
+	.heatbox .form-table th {
+		width: auto;
+		padding-top: 16px;
+		padding-bottom: 0;
+	}
+
+	.heatbox .form-table td {
+		padding: 8px var(--heatbox-box-padding) 16px;
 	}
 }
 
-@keyframes heatboxLoadingSpinner {
-	from {
-		transform: rotate(0);
+.heatbox .form-table th .description {
+	margin: 6px 0 0;
+}
+
+.heatbox .setting-fields .setting-field {
+	margin-bottom: 7px;
+}
+
+.heatbox .setting-fields .setting-field:last-of-type {
+	margin-bottom: 0;
+}
+
+.heatbox-wrap p.submit {
+	margin: var(--heatbox-gap) 0;
+	padding: 0;
+}
+
+/**
+ * Text fields & selects inside a box: taller, rounded, with a clear border
+ * and a focus ring in the accent color.
+ */
+.heatbox input[type="text"],
+.heatbox input[type="url"],
+.heatbox input[type="email"],
+.heatbox input[type="number"],
+.heatbox input[type="password"],
+.heatbox input[type="search"],
+.heatbox input[type="tel"],
+.heatbox input[type="datetime-local"],
+.heatbox select,
+.heatbox textarea {
+	min-height: var(--heatbox-control-height);
+	padding: 0 12px;
+	font-size: 14px;
+	color: var(--heatbox-text);
+	background-color: var(--heatbox-surface);
+	border: 1px solid var(--heatbox-border);
+	border-radius: var(--heatbox-radius-control);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.03);
+	transition: border-color var(--heatbox-transition), box-shadow var(--heatbox-transition);
+}
+
+.heatbox textarea {
+	padding: 10px 12px;
+}
+
+.heatbox select {
+	padding-inline-end: 32px;
+}
+
+.heatbox input[type="text"]:hover,
+.heatbox input[type="url"]:hover,
+.heatbox input[type="email"]:hover,
+.heatbox input[type="number"]:hover,
+.heatbox input[type="password"]:hover,
+.heatbox input[type="search"]:hover,
+.heatbox input[type="tel"]:hover,
+.heatbox input[type="datetime-local"]:hover,
+.heatbox select:hover,
+.heatbox textarea:hover {
+	border-color: var(--heatbox-control-border);
+}
+
+.heatbox input[type="text"]:focus,
+.heatbox input[type="url"]:focus,
+.heatbox input[type="email"]:focus,
+.heatbox input[type="number"]:focus,
+.heatbox input[type="password"]:focus,
+.heatbox input[type="search"]:focus,
+.heatbox input[type="tel"]:focus,
+.heatbox input[type="datetime-local"]:focus,
+.heatbox select:focus,
+.heatbox textarea:focus {
+	border-color: var(--heatbox-accent);
+	outline: none;
+	box-shadow: 0 0 0 3px var(--heatbox-accent-soft-border);
+}
+
+.heatbox input::placeholder,
+.heatbox textarea::placeholder {
+	color: var(--heatbox-control-disabled);
+}
+
+/**
+ * Field with a prefix, e.g. the site address in front of a slug:
+ * <div class="heatbox-input-group"><span class="heatbox-input-prefix">https://example.com/</span><input type="text"></div>
+ * A long prefix is cut off with "…" (the full text shows on hover via title="").
+ */
+.heatbox-input-group {
+	display: flex;
+	width: 100%;
+	max-width: 480px;
+	border-radius: var(--heatbox-radius-control);
+	transition: box-shadow var(--heatbox-transition);
+}
+
+/* Focus: the ring goes around the whole field, prefix included */
+.heatbox-input-group:focus-within {
+	box-shadow: 0 0 0 3px var(--heatbox-accent-soft-border);
+}
+
+.heatbox-input-group:focus-within .heatbox-input-prefix {
+	border-color: var(--heatbox-accent);
+}
+
+.heatbox-input-prefix {
+	display: block;
+	flex-shrink: 1;
+	min-width: 0;
+	max-width: 60%;
+	padding: 0 12px;
+	overflow: hidden;
+	font-size: 13px;
+	line-height: calc(var(--heatbox-control-height) - 2px);
+	color: var(--heatbox-text-muted);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	background: var(--heatbox-surface-muted);
+	border: 1px solid var(--heatbox-border);
+	border-inline-end: none;
+	border-start-start-radius: var(--heatbox-radius-control);
+	border-end-start-radius: var(--heatbox-radius-control);
+	transition: border-color var(--heatbox-transition);
+}
+
+.heatbox .heatbox-input-group input {
+	flex: 1;
+	min-width: 0;
+	margin: 0;
+	border-start-start-radius: 0;
+	border-end-start-radius: 0;
+}
+
+.heatbox .heatbox-input-group input:focus {
+	box-shadow: none;
+}
+
+/* WordPress' code editor (wp.codeEditor / CodeMirror), styled like the fields */
+.heatbox .CodeMirror {
+	border: 1px solid var(--heatbox-border);
+	border-radius: var(--heatbox-radius-control);
+	transition: border-color var(--heatbox-transition), box-shadow var(--heatbox-transition);
+}
+
+.heatbox .CodeMirror:hover {
+	border-color: var(--heatbox-control-border);
+}
+
+.heatbox .CodeMirror.CodeMirror-focused {
+	border-color: var(--heatbox-accent);
+	box-shadow: 0 0 0 3px var(--heatbox-accent-soft-border);
+}
+
+.heatbox .CodeMirror-gutters {
+	border-start-start-radius: var(--heatbox-radius-control);
+	border-end-start-radius: var(--heatbox-radius-control);
+}
+
+/**
+ * Checkboxes & radio buttons.
+ *
+ * <label class="label checkbox-label">Text<input type="checkbox"><div class="indicator"></div></label>
+ * <label class="label radio-label">Text<input type="radio"><div class="indicator"></div></label>
+ */
+.heatbox .label {
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+	line-height: 18px;
+}
+
+.heatbox .checkbox-label,
+.heatbox .radio-label {
+	padding-inline-start: 28px;
+}
+
+.heatbox .radio-label {
+	margin-inline-end: 24px;
+}
+
+.heatbox .label input {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+}
+
+.heatbox .label .indicator {
+	position: absolute;
+	top: 0;
+	inset-inline-start: 0;
+	width: 18px;
+	height: 18px;
+	background-color: var(--heatbox-surface);
+	border: 1px solid var(--heatbox-control-border);
+	border-radius: var(--heatbox-radius-small);
+	transition: background-color var(--heatbox-transition), border-color var(--heatbox-transition);
+}
+
+.heatbox .radio-label .indicator {
+	border-radius: 50%;
+}
+
+.heatbox .label:hover input:not(:disabled) ~ .indicator {
+	border-color: var(--heatbox-accent);
+}
+
+.heatbox .label input:focus-visible ~ .indicator {
+	outline: 2px solid var(--heatbox-accent);
+	outline-offset: 2px;
+}
+
+.heatbox .label input:checked ~ .indicator {
+	background-color: var(--heatbox-accent);
+	border-color: var(--heatbox-accent);
+}
+
+.heatbox .label:hover input:not(:disabled):checked ~ .indicator {
+	background-color: var(--heatbox-accent-darker);
+	border-color: var(--heatbox-accent-darker);
+}
+
+.heatbox .label:has(input:disabled) {
+	cursor: default;
+	color: var(--heatbox-text-muted);
+}
+
+.heatbox .label input:disabled ~ .indicator,
+.heatbox .label input:disabled:checked ~ .indicator {
+	background-color: var(--heatbox-control);
+	border-color: var(--heatbox-control-off);
+	pointer-events: none;
+}
+
+.heatbox .label .indicator::after {
+	display: none;
+	position: absolute;
+	content: "";
+}
+
+.heatbox .label input:checked ~ .indicator::after {
+	display: block;
+}
+
+/* Check mark */
+.heatbox .checkbox-label .indicator::after {
+	left: 5px;
+	top: 1px;
+	width: 4px;
+	height: 9px;
+	border: solid var(--heatbox-text-on-accent);
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+.heatbox .checkbox-label input:disabled ~ .indicator::after {
+	border-color: var(--heatbox-control-disabled);
+}
+
+/* Radio dot */
+.heatbox .radio-label .indicator::after {
+	left: 4px;
+	top: 4px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: var(--heatbox-text-on-accent);
+}
+
+.heatbox .radio-label input:disabled ~ .indicator::after {
+	background-color: var(--heatbox-control-disabled);
+}
+
+/**
+ * Toggle switch.
+ *
+ * <label class="toggle-switch"><input type="checkbox"><span class="switch-track"><span class="switch-thumb"></span></span></label>
+ */
+:is(.heatbox-wrap, .heatbox) .toggle-switch {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	width: 36px;
+	height: 20px;
+}
+
+:is(.heatbox-wrap, .heatbox) .toggle-switch input {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+:is(.heatbox-wrap, .heatbox) .toggle-switch .switch-track {
+	position: absolute;
+	inset: 0;
+	background-color: var(--heatbox-control-off);
+	border-radius: 999px;
+	cursor: pointer;
+	transition: background-color var(--heatbox-transition);
+}
+
+:is(.heatbox-wrap, .heatbox) .switch-thumb {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 16px;
+	height: 16px;
+	background-color: var(--heatbox-surface);
+	border-radius: 50%;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	transition: transform var(--heatbox-transition);
+}
+
+:is(.heatbox-wrap, .heatbox) .toggle-switch:hover .switch-track {
+	background-color: var(--heatbox-control-border);
+}
+
+:is(.heatbox-wrap, .heatbox) .toggle-switch input:checked + .switch-track {
+	background-color: var(--heatbox-accent);
+}
+
+:is(.heatbox-wrap, .heatbox) .toggle-switch:hover input:checked + .switch-track {
+	background-color: var(--heatbox-accent-darker);
+}
+
+:is(.heatbox-wrap, .heatbox) .toggle-switch input:checked + .switch-track .switch-thumb {
+	transform: translateX(16px);
+}
+
+.rtl :is(.heatbox-wrap, .heatbox) .toggle-switch input:checked + .switch-track .switch-thumb {
+	transform: translateX(-16px);
+}
+
+.rtl :is(.heatbox-wrap, .heatbox) .switch-thumb {
+	left: auto;
+	right: 2px;
+}
+
+:is(.heatbox-wrap, .heatbox) .toggle-switch input:focus-visible + .switch-track {
+	outline: 2px solid var(--heatbox-accent);
+	outline-offset: 2px;
+}
+
+:is(.heatbox-wrap, .heatbox) .toggle-switch input:disabled + .switch-track {
+	opacity: 0.5;
+	cursor: default;
+}
+
+/* 8. Buttons & color picker
+   ========================================================================== */
+
+/**
+ * WP buttons, modernized: rounded like the fields, a little roomier, medium weight.
+ * Colors, hover & focus stay WordPress' own (primary follows the admin color scheme).
+ */
+.heatbox-wrap .button {
+	border-radius: var(--heatbox-radius-control);
+	font-weight: 500;
+	transition: background-color var(--heatbox-transition), border-color var(--heatbox-transition), color var(--heatbox-transition);
+}
+
+/* WP already enlarges buttons below 783px */
+@media screen and (min-width: 783px) {
+	.heatbox-wrap .button:not(.button-small) {
+		min-height: 34px;
+		padding: 0 14px;
+		line-height: 32px;
 	}
-	to {
-		transform: rotate(359deg);
+
+	.heatbox-wrap .button-large,
+	.heatbox-wrap .button-larger {
+		min-height: var(--heatbox-control-height);
+		padding: 0 18px;
+		font-size: 14px;
+		line-height: calc(var(--heatbox-control-height) - 2px);
+		vertical-align: middle;
 	}
 }
 
-/* Buttons */
-.heatbox-wrap .button-larger {
-	padding: 5px 20px;
+.heatbox-wrap .button-small {
+	border-radius: var(--heatbox-radius-small);
+}
+
+/* File picker: a field with a button like the others (the browser's "No file chosen" text stays) */
+.heatbox-wrap input[type="file"] {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 360px;
+	min-height: var(--heatbox-control-height);
+	padding: 3px;
+	font-size: 13px;
+	color: var(--heatbox-text-muted);
+	background: var(--heatbox-surface);
+	border: 1px solid var(--heatbox-border);
+	border-radius: var(--heatbox-radius-control);
+	cursor: pointer;
+	transition: border-color var(--heatbox-transition);
+}
+
+.heatbox-wrap input[type="file"]:hover {
+	border-color: var(--heatbox-accent);
+}
+
+.heatbox-wrap input[type="file"]:focus-visible {
+	border-color: var(--heatbox-accent);
+	outline: 1px solid var(--heatbox-accent);
+}
+
+.heatbox-wrap input[type="file"]::file-selector-button {
+	min-height: 32px;
+	margin-inline-end: 12px;
+	padding: 0 14px;
+	font: inherit;
+	font-weight: 500;
+	color: var(--heatbox-accent);
+	background: var(--heatbox-accent-soft);
+	border: 1px solid var(--heatbox-accent-soft-border);
+	border-radius: var(--heatbox-radius-small);
+	cursor: pointer;
+	transition: background-color var(--heatbox-transition), border-color var(--heatbox-transition);
+}
+
+.heatbox-wrap input[type="file"]:hover::file-selector-button {
+	border-color: var(--heatbox-accent);
 }
 
 .heatbox-wrap .button-full {
@@ -279,274 +1048,248 @@
 .heatbox-wrap .button.is-loading::after {
 	content: "";
 	position: absolute;
-	width: 1em;
 	display: block;
+	width: 1em;
 	height: 1em;
-	border: 2px solid #dbdbdb;
-	/* border: 2px solid $accent-color; */
-	border-color: transparent transparent #fff #fff !important;
-	/* border-color: transparent transparent $accent-color $accent-color !important; */
-	border-radius: 290486px;
-	-webkit-animation: heatboxLoadingSpinner 0.5s infinite linear;
+	border: 2px solid transparent;
+	border-bottom-color: currentColor;
+	border-left-color: currentColor;
+	border-radius: 50%;
+	color: var(--heatbox-text-on-accent);
 	animation: heatboxLoadingSpinner 0.5s infinite linear;
 }
 
-/* Settings */
-.heatbox .form-table {
-	margin: 0;
+.heatbox-wrap .button.is-loading:not(.button-primary)::after {
+	color: var(--heatbox-accent);
 }
 
-.heatbox .form-table th,
-.heatbox .form-table td {
-	padding: 20px;
-	vertical-align: top;
+/* Buttons with a dashicon: <a class="button"><span class="dashicons dashicons-book"></span> Text</a> */
+.heatbox-wrap .button:has(> .dashicons) {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
 }
 
-.heatbox .form-table th .description {
-	margin-top: 10px;
+.heatbox-wrap .button > .dashicons {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+	line-height: 1;
+	vertical-align: middle;
 }
 
-.heatbox .setting-fields {
+/* Destructive action, e.g. Reset: <button class="button is-destructive"> */
+.heatbox-wrap .button.is-destructive {
+	color: var(--heatbox-error);
+	border-color: var(--heatbox-error);
 }
 
-.heatbox .setting-fields .setting-field {
-	margin-bottom: 7px;
-}
-
-.heatbox .setting-fields .setting-field:last-of-type {
-	margin-bottom: 0;
-}
-
-/* Submit button */
-.heatbox-wrap p.submit {
-	margin: 20px 0;
-	padding: 0;
+.heatbox-wrap .button.is-destructive:hover,
+.heatbox-wrap .button.is-destructive:focus {
+	color: #fff;
+	background-color: var(--heatbox-error);
+	border-color: var(--heatbox-error);
 }
 
 /**
- * Checkboxes & Radio Buttons
- * Copied & modified from https://codepen.io/KenanYusuf/pen/PZKEKd/
+ * Color picker: WP's wp-color-picker (incl. the wp-color-picker-alpha add-on),
+ * styled like the fields: input border & focus, 40px high, evenly spaced.
  */
-.heatbox .label {
-	display: inline-block;
-	position: relative;
-	cursor: pointer;
+.heatbox-wrap .wp-picker-container .button.wp-color-result {
+	height: var(--heatbox-control-height);
+	min-height: var(--heatbox-control-height);
+	margin: 0;
+	padding: 0 0 0 40px;
+	overflow: hidden; /* The rounded corners clip the swatch */
+	color: var(--heatbox-text);
+	border-color: var(--heatbox-border);
+	border-radius: var(--heatbox-radius-control);
+	box-shadow: none;
 }
 
-.heatbox .radio-label {
-	padding-left: 30px;
-	margin-right: 25px;
+.heatbox-wrap .wp-picker-container .button.wp-color-result:hover,
+.heatbox-wrap .wp-picker-container.wp-picker-active .button.wp-color-result {
+	color: var(--heatbox-text);
+	border-color: var(--heatbox-control-border);
+	box-shadow: none;
 }
 
-.heatbox .label input {
-	position: absolute;
-	z-index: -1;
-	opacity: 0;
+.heatbox-wrap .wp-picker-container .button.wp-color-result:focus {
+	color: var(--heatbox-text);
+	border-color: var(--heatbox-accent);
+	outline: none;
+	box-shadow: 0 0 0 3px var(--heatbox-accent-soft-border);
 }
 
-.heatbox .label .indicator {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 20px;
-	width: 20px;
-	background-color: #e6e6e6;
-	-webkit-transition: all 0.2s ease-in-out;
-	transition: all 0.2s ease-in-out;
+.heatbox-wrap .wp-color-result .wp-color-result-text {
+	height: 100%;
+	padding: 0 12px;
+	line-height: calc(var(--heatbox-control-height) - 2px);
+	background: var(--heatbox-surface);
+	border-left-color: var(--heatbox-border);
+	border-radius: 0;
 }
 
-.heatbox .radio-label .indicator {
-	border-radius: 50%;
+/* The alpha add-on's swatch is 30px wide by default */
+.heatbox-wrap .wp-color-result .color-alpha {
+	width: 40px !important;
+	height: 100% !important;
+	border-radius: 0 !important;
 }
 
-.heatbox .label:hover input ~ .indicator,
-.heatbox .label input:focus ~ .indicator {
-	background-color: #ccc;
+.heatbox-wrap .wp-picker-input-wrap:not(.hidden) {
+	display: inline-flex;
+	gap: 6px;
+	margin-inline-start: 6px;
+	vertical-align: top;
 }
 
-.heatbox .label input:checked ~ .indicator {
-	background-color: #007cba;
+.heatbox-wrap .wp-picker-container .wp-picker-input-wrap > label,
+.heatbox-wrap .wp-picker-container .wp-picker-input-wrap .button.wp-picker-default {
+	margin: 0;
 }
 
-.heatbox .label:hover input:not([disabled]):checked ~ .indicator,
-.heatbox .label input:checked:focus ~ .indicator {
-	background-color: #00669b;
+.heatbox-wrap .wp-picker-container input[type="text"].wp-color-picker {
+	width: 90px;
+	height: var(--heatbox-control-height);
+	min-height: var(--heatbox-control-height);
+	margin: 0;
+	vertical-align: top;
 }
 
-.heatbox .label input:disabled ~ .indicator {
-	background-color: #e6e6e6;
-	opacity: 0.6;
-	pointer-events: none;
+.heatbox-wrap .wp-picker-input-wrap .button {
+	min-height: var(--heatbox-control-height);
 }
 
-.heatbox .label .indicator::after {
-	display: none;
-	position: absolute;
-	content: "";
+/* Square, hue & alpha side by side (the alpha add-on otherwise pushes the sliders below the panel) */
+.heatbox-wrap .iris-picker-inner {
+	display: grid;
+	grid-template-columns: 1fr 20px 20px;
+	gap: 7px;
 }
 
-.heatbox .label input:checked ~ .indicator::after {
-	display: block;
+.heatbox-wrap .iris-picker-inner > * {
+	width: 100% !important;
+	margin-left: 0 !important;
 }
 
-.heatbox .radio-label,
-.heatbox .checkbox-label {
-	padding-left: 30px;
-}
+/* 9. Call to action
+   ========================================================================== */
 
-.heatbox .checkbox-label .indicator::after {
-	left: 8px;
-	top: 4px;
-	width: 3px;
-	height: 8px;
-	border: solid #fff;
-	border-width: 0 2px 2px 0;
-	transform: rotate(45deg);
-}
-
-.heatbox .checkbox-label input:disabled ~ .indicator::after {
-	border-color: #7b7b7b;
-}
-
-.heatbox .radio-label .indicator::after {
-	left: 7px;
-	top: 7px;
-	height: 6px;
-	width: 6px;
-	border-radius: 50%;
-	background-color: #fff;
-}
-
-.heatbox .radio-label input:disabled ~ .indicator::after {
-	background-color: #7b7b7b;
-}
-
-/* Call to action */
-.heatbox-cta-container.is-attached {
-	padding: 20px;
-	background: #fff;
-	margin-top: -20px;
-	margin-bottom: 20px;
-	border: 1px solid #ddd;
-	border-top: none;
-}
-
+/**
+ * <div class="heatbox-cta [primary|secondary]"><p>Text</p><a class="button button-primary">Action</a></div>
+ *
+ * Attach below a box (the box above loses its bottom corners):
+ * <div class="heatbox-cta-container is-attached">…text, buttons or a .heatbox-cta…</div>
+ */
 .heatbox-cta {
 	width: 100%;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20px;
-	font-weight: 700;
-	border: 1px solid #ddd;
-	background: #fff;
+	gap: 12px var(--heatbox-gap);
+	padding: 16px var(--heatbox-gap);
+	font-weight: 600;
+	color: var(--heatbox-text);
+	background: var(--heatbox-surface);
+	border: 1px solid var(--heatbox-border);
+	border-radius: var(--heatbox-radius);
 }
 
 .heatbox-cta > * {
 	margin: 0 !important;
 }
 
-.heatbox-cta .button {
-	padding: 5px 15px !important;
-}
-
 .heatbox-cta.primary {
-	background: #197cff;
-	color: #fff;
-	border: none;
+	background: var(--heatbox-accent-soft);
+	border-color: var(--heatbox-accent-soft-border);
 }
 
 .heatbox-cta.secondary {
-	background: #f1f1f1;
+	font-weight: 400;
+	background: var(--heatbox-surface-muted);
 }
 
-.heatbox-cta.primary .button {
-	background: rgba(0, 45, 96, 0.5);
+/* Stack & center text and button on small screens */
+@media screen and (max-width: 782px) {
+	.heatbox-cta {
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
 }
 
-.heatbox-cta.primary .button:hover {
-	background: rgba(0, 45, 96, 0.6);
+/* Attached to the bottom of the box above it */
+.heatbox-cta-container.is-attached {
+	padding: var(--heatbox-gap) var(--heatbox-box-padding);
+	margin-top: calc(var(--heatbox-gap) * -1);
+	margin-bottom: var(--heatbox-gap);
+	background: var(--heatbox-surface);
+	border: 1px solid var(--heatbox-box-border);
+	border-radius: 0 0 var(--heatbox-radius) var(--heatbox-radius);
+	box-shadow: var(--heatbox-shadow);
 }
 
-/* Toggle switch */
-.heatbox-wrap .toggle-switch {
-	position: relative;
-	display: inline-block;
-	width: 36px;
-	height: 20px;
+/* A container holding just a CTA turns the CTA into the box footer */
+.heatbox-cta-container.is-attached:has(> .heatbox-cta:only-child) {
+	padding: 0;
+	background: none;
 }
 
-.heatbox-wrap .toggle-switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
+.heatbox-cta-container.is-attached > .heatbox-cta:only-child {
+	border: none;
+	border-radius: 0 0 calc(var(--heatbox-radius) - 1px) calc(var(--heatbox-radius) - 1px);
 }
 
-.heatbox-wrap .toggle-switch .switch-track {
+/* 10. Status indicator
+   Place inside a box h2: <span class="heatbox-status-indicator is-loading|is-done"></span>
+   ========================================================================== */
+
+.heatbox-status-indicator {
+	display: inline-flex;
+	align-items: center;
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #ccc;
-	border-radius: 10px;
-	cursor: pointer;
-	transition: background-color 0.3s;
-}
-
-.heatbox-wrap .switch-thumb {
-	position: absolute;
-	top: 2px;
-	left: 2px;
-	width: 16px;
-	height: 16px;
-	background-color: #fff;
-	border-radius: 50%;
-	transition: transform 0.3s;
-}
-
-.heatbox-wrap .toggle-switch input:checked + .switch-track {
-	background-color: #5bcb86;
-}
-
-.heatbox-wrap .toggle-switch input:checked + .switch-track .switch-thumb {
-	transform: translateX(16px);
-}
-
-/* Tags / chips */
-.tags-heatbox .action-status {
-	height: auto;
-}
-
-.tags-heatbox .tags-wrapper {
-	line-height: 1.8;
-}
-
-.tags-heatbox h2 {
-	position: relative;
-}
-
-.tags-heatbox h2 .action-status {
-	display: inline-block;
-	position: absolute;
-	right: 20px;
+	inset-inline-end: var(--heatbox-gap);
 	top: 50%;
-	padding: 10px;
-	height: 30px;
-	line-height: 10px;
-	font-size: 11px;
-	color: #fff;
-	background-color: #444;
-	border-radius: 4px;
+	transform: translateY(-50%);
+	font-size: 14px;
+	line-height: 1;
 	opacity: 0;
 	visibility: hidden;
-	transform: translateY(-50%);
-	transition: all 0.3s ease-in-out;
+	transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-.tags-heatbox h2 .action-status.is-shown {
+.heatbox-status-indicator.is-loading {
 	opacity: 1;
 	visibility: visible;
+}
+
+.heatbox-status-indicator.is-loading::after {
+	content: "";
+	display: block;
+	width: 1em;
+	height: 1em;
+	border: 2px solid transparent;
+	border-bottom-color: var(--heatbox-text-muted);
+	border-left-color: var(--heatbox-text-muted);
+	border-radius: 50%;
+	animation: heatboxLoadingSpinner 0.5s infinite linear;
+}
+
+.heatbox-status-indicator.is-done {
+	opacity: 1;
+	visibility: visible;
+	animation: heatboxFadeOut 1.5s ease-in-out forwards;
+}
+
+/* 11. Tags
+   ========================================================================== */
+
+.tags-heatbox .tags-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
 }
 
 .tags-heatbox .heatbox-content p:last-child {
@@ -555,96 +1298,409 @@
 
 .heatbox .tags-wrapper code {
 	display: inline-block;
-	margin-bottom: 5px;
-	padding: 8px 13px;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	border-radius: 3px;
+	margin: 0;
+	padding: 5px 10px;
+	font-size: 12px;
+	color: var(--heatbox-text);
+	background-color: var(--heatbox-surface);
+	border: 1px solid var(--heatbox-border);
+	border-radius: var(--heatbox-radius-small);
 	cursor: pointer;
+	transition: border-color var(--heatbox-transition), color var(--heatbox-transition), background-color var(--heatbox-transition);
+}
 
-	&:hover {
-		background-color: #f8f8f8;
+.heatbox .tags-wrapper code:hover {
+	color: var(--heatbox-accent);
+	background-color: var(--heatbox-accent-soft);
+	border-color: var(--heatbox-accent-soft-border);
+}
+
+.tags-heatbox .action-status {
+	height: auto;
+}
+
+.tags-heatbox h2 .action-status {
+	display: inline-block;
+	position: absolute;
+	inset-inline-end: var(--heatbox-gap);
+	top: 50%;
+	padding: 4px 8px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.4;
+	color: var(--heatbox-text-on-accent);
+	background-color: var(--heatbox-text);
+	border-radius: var(--heatbox-radius-small);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-50%);
+	transition: opacity var(--heatbox-transition), visibility var(--heatbox-transition);
+}
+
+.tags-heatbox h2 .action-status.is-shown {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* 12. Steps
+   Numbered steps, e.g. a getting started guide.
+
+   <ol class="heatbox-steps">
+     <li><h3>Step title</h3><p class="description">…</p></li>
+   </ol>
+   ========================================================================== */
+
+.heatbox-steps {
+	display: grid;
+	gap: var(--heatbox-gap);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: heatbox-step;
+}
+
+.heatbox-steps > li {
+	position: relative;
+	min-width: 0;
+	margin: 0;
+	padding-inline-start: 40px;
+	counter-increment: heatbox-step;
+}
+
+.heatbox-steps > li::before {
+	content: counter(heatbox-step);
+	position: absolute;
+	top: -2px;
+	inset-inline-start: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--heatbox-accent);
+	background: var(--heatbox-accent-soft);
+	border: 1px solid var(--heatbox-accent-soft-border);
+	border-radius: 50%;
+}
+
+.heatbox .heatbox-steps h3 {
+	margin: 1px 0 4px;
+}
+
+.heatbox .heatbox-steps p {
+	margin: 0 0 12px;
+}
+
+.heatbox .heatbox-steps li > :last-child {
+	margin-bottom: 0;
+}
+
+/* 13. Copy field
+   A code snippet with a copy button, one line high like the button.
+   The plugin handles the copying.
+
+   <div class="heatbox-copy"><code>…</code><button type="button" class="button">Copy</button></div>
+   ========================================================================== */
+
+.heatbox-copy {
+	display: flex;
+	align-items: stretch;
+	gap: 8px;
+	max-width: 100%;
+}
+
+.heatbox-copy code {
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+	min-width: 0;
+	min-height: 30px;
+	margin: 0;
+	padding: 4px 10px;
+	font-size: 13px;
+	line-height: 20px;
+	overflow-wrap: anywhere;
+	color: var(--heatbox-text);
+	background: var(--heatbox-surface-muted);
+	border: 1px solid var(--heatbox-border);
+	border-radius: var(--heatbox-radius-small);
+}
+
+.heatbox-copy .button {
+	flex-shrink: 0;
+	align-self: flex-start;
+	margin: 0;
+}
+
+/* Match the taller WP buttons on small screens */
+@media screen and (max-width: 782px) {
+	.heatbox-copy code {
+		min-height: 40px;
+		padding: 9px 10px;
 	}
 }
 
-/* Tooltip */
+.heatbox-copy .button.is-copied {
+	color: var(--heatbox-accent);
+	border-color: var(--heatbox-accent);
+}
+
+/* 14. Tooltip
+   <span class="heatbox-tooltip" tabindex="0">icon<span class="tooltip-content">Text</span></span>
+   Add .has-image and an <img> before the text for an image card.
+   ========================================================================== */
+
 .heatbox-tooltip {
 	position: relative;
-	cursor: pointer;
-	padding: 5px;
+	display: inline-block;
+	padding: 4px;
+	cursor: help;
+}
+
+.heatbox-tooltip:focus-visible {
+	outline: 2px solid var(--heatbox-accent);
+	outline-offset: 0;
+	border-radius: var(--heatbox-radius-small);
 }
 
 .heatbox-tooltip .tooltip-content {
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 2px);
+	z-index: 10;
+	width: max-content;
+	max-width: 240px;
+	padding: 6px 10px;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.5;
+	text-align: center;
+	color: var(--heatbox-text-on-accent);
+	background-color: var(--heatbox-text);
+	border-radius: var(--heatbox-radius-small);
+	box-shadow: var(--heatbox-shadow-raised);
 	visibility: hidden;
 	opacity: 0;
-	width: 220px;
-	background-color: #fff;
-	text-align: center;
-	padding: 10px;
-	font-size: 12px;
-	-webkit-transition: all 0.2s ease-in-out;
-	transition: all 0.2s ease-in-out;
-	position: absolute;
-	left: -100px;
-	border: 1px solid #ddd;
-	bottom: 23px;
-	z-index: 1;
+	transform: translate(-50%, 4px);
+	transition: opacity var(--heatbox-transition), transform var(--heatbox-transition), visibility var(--heatbox-transition);
+	pointer-events: none;
 }
 
-.heatbox-tooltip:hover .tooltip-content {
+.heatbox-tooltip:hover .tooltip-content,
+.heatbox-tooltip:focus-within .tooltip-content {
 	visibility: visible;
 	opacity: 1;
-	bottom: 28px;
+	transform: translate(-50%, 0);
 }
 
 .heatbox-tooltip.has-image .tooltip-content {
-	padding: 0;
-	text-align: left;
 	display: flex;
-	align-content: center;
 	align-items: center;
-	width: 370px;
+	width: 360px;
+	max-width: 360px;
+	padding: 0;
+	overflow: hidden;
+	text-align: start;
+	color: var(--heatbox-text);
+	background-color: var(--heatbox-surface);
+	border: 1px solid var(--heatbox-border);
+	border-radius: var(--heatbox-radius);
 }
 
 .heatbox-tooltip.has-image .tooltip-content img {
-	width: 35%;
-	border-right: 1px solid #eee;
+	display: block;
+	width: 40%;
+	align-self: stretch;
+	object-fit: cover;
+	border-inline-end: 1px solid var(--heatbox-divider);
 }
 
 .heatbox-tooltip.has-image .tooltip-content span {
-	width: 65%;
-	padding: 20px;
+	width: 60%;
+	padding: 12px 16px;
 }
 
-/* Footer */
-.heatbox-footer .button .dashicons {
-	line-height: 1;
-}
+/* 15. Misc
+   ========================================================================== */
 
-/* Misc */
 .heatbox .row-disabled {
-	background-color: #f5f5f5;
+	background-color: var(--heatbox-surface-disabled);
 	opacity: 0.5;
 }
 
 .heatbox .row-disabled input[type="text"]:read-only,
 .heatbox .row-disabled input[type="number"]:read-only {
-	background-color: #e0e0e0;
+	background-color: var(--heatbox-control);
 	cursor: not-allowed;
 	opacity: 0.7;
 }
 
-/* RTL */
-.rtl .heatbox-header .logo-container img {
-	float: left;
+/* 16. Animations
+   ========================================================================== */
+
+@keyframes heatboxLoadingSpinner {
+	from {
+		transform: rotate(0);
+	}
+
+	to {
+		transform: rotate(359deg);
+	}
 }
 
-.rtl .heatbox-main {
-	margin-right: 0;
-	margin-left: 2%;
+@keyframes heatboxFadeOut {
+	0% {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	70% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
 }
 
-.rtl .heatbox .label .indicator {
-	left: auto;
-	right: -30px;
+@media (prefers-reduced-motion: reduce) {
+	.heatbox-wrap *,
+	.heatbox-wrap *::before,
+	.heatbox-wrap *::after {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+	}
+
+	.heatbox-wrap .button.is-loading::after,
+	.heatbox-status-indicator.is-loading::after,
+	.heatbox-status-indicator.is-done {
+		animation-duration: 1.5s !important;
+	}
+}
+
+/* 17. Form footer & save notice
+   <div class="heatbox-form-footer">
+     <div><button class="button button-primary button-larger">Save</button> <span class="heatbox-notice" role="status"></span></div>
+     <div><button class="button button-larger is-destructive">Reset</button></div>
+   </div>
+   Show a message: add .is-shown and .is-success or .is-error to .heatbox-notice.
+   (.heatbox-status-indicator is the spinner/check inside a box title instead.)
+   ========================================================================== */
+
+.heatbox-form-footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.heatbox-form-footer > div {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+}
+
+.heatbox-notice {
+	font-weight: 500;
+	opacity: 0;
+	transition: opacity var(--heatbox-transition);
+}
+
+.heatbox-notice.is-shown {
+	opacity: 1;
+}
+
+.heatbox-notice.is-success {
+	color: var(--heatbox-success);
+}
+
+.heatbox-notice.is-error {
+	color: var(--heatbox-error);
+}
+
+@media screen and (max-width: 782px) {
+	.heatbox-form-footer {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
+
+/* 18. Products
+   "Our other products" below the settings:
+   <div class="heatbox-container heatbox-container-wide heatbox-container-center heatbox-products">
+     <h2>Title</h2>
+     <ul class="products">
+       <li class="heatbox">
+         <a href="…" aria-hidden="true" tabindex="-1"><img src="…" alt=""></a>
+         <div class="heatbox-content"><h3>Name</h3><p class="subheadline">Tagline</p><p>Text</p><a class="button" href="…">Learn more</a></div>
+       </li>
+     </ul>
+     <p class="credit">Made with ❤ in …</p>
+   </div>
+   .featured-products is the old class name & still works.
+   ========================================================================== */
+
+:is(.heatbox-products, .featured-products).heatbox-container-wide {
+	max-width: 1200px;
+}
+
+:is(.heatbox-products, .featured-products) > h2 {
+	margin: 0 0 24px;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: center;
+	color: var(--heatbox-text);
+}
+
+:is(.heatbox-products, .featured-products) .products {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--heatbox-gap);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+:is(.heatbox-products, .featured-products) .products li {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+}
+
+:is(.heatbox-products, .featured-products) .products .heatbox-content {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+:is(.heatbox-products, .featured-products) .products .heatbox-content .button {
+	align-self: flex-start;
+	margin-top: auto;
+}
+
+:is(.heatbox-products, .featured-products) .products .subheadline {
+	margin: 0 0 8px;
+	font-weight: 500;
+	color: var(--heatbox-text);
+}
+
+:is(.heatbox-products, .featured-products) .products img {
+	max-width: 100%;
+}
+
+:is(.heatbox-products, .featured-products) .credit {
+	margin: 32px 0 20px;
+	text-align: center;
+	color: var(--heatbox-text-muted);
+}
+
+@media screen and (max-width: 782px) {
+	:is(.heatbox-products, .featured-products) .products {
+		grid-template-columns: 1fr;
+	}
 }

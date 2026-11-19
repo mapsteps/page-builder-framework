@@ -20,7 +20,7 @@ function wpbf_theme_settings_admin_body_class( $classes ) {
 
 	$screen = get_current_screen();
 
-	if ( $screen->id !== 'appearance_page_wpbf-premium' ) {
+	if ( 'appearance_page_wpbf-premium' !== $screen->id ) {
 		return $classes;
 	}
 
@@ -58,7 +58,7 @@ function wpbf_theme_settings_callback() {
  */
 function wpbf_activation_notice_dismissal() {
 
-	$nonce   = isset( $_POST['nonce'] ) ? $_POST['nonce'] : 0;
+	$nonce   = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 	$dismiss = isset( $_POST['dismiss'] ) ? absint( $_POST['dismiss'] ) : 0;
 
 	if ( empty( $dismiss ) ) {
@@ -67,6 +67,10 @@ function wpbf_activation_notice_dismissal() {
 
 	if ( ! wp_verify_nonce( $nonce, 'WPBF_Dismiss_Activation_Notice' ) ) {
 		wp_send_json_error( 'Invalid Token' );
+	}
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( 'Not allowed' );
 	}
 
 	update_option( 'wpbf_activation_notice_dismissed', 1 );
@@ -201,10 +205,14 @@ add_action( 'admin_notices', 'wpbf_compatibility_notice' );
  */
 function wpbf_clear_font_cache() {
 
-	$nonce = isset( $_POST['nonce'] ) ? $_POST['nonce'] : 0;
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
 	if ( ! wp_verify_nonce( $nonce, 'WPBF_Clear_Font_Cache' ) ) {
-		wp_send_json_error( 'Invalid Token' );
+		wp_send_json_error( __( 'The page has expired. Please reload it and try again.', 'page-builder-framework' ) );
+	}
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( __( 'You are not allowed to do this.', 'page-builder-framework' ) );
 	}
 
 	$result = ( new FontsUtil() )->clearDownloadedGoogleFonts();
@@ -221,7 +229,7 @@ function wpbf_clear_font_cache() {
 		CustomizerCss::refreshWithFonts();
 	}
 
-	wp_send_json_success( 'Font Cache cleared.', 'page-builder-framework' );
+	wp_send_json_success( __( 'Font cache cleared.', 'page-builder-framework' ) );
 
 }
 add_action( 'wp_ajax_wpbf_clear_font_cache', 'wpbf_clear_font_cache' );

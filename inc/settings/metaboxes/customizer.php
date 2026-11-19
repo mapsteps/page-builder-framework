@@ -56,17 +56,13 @@ function wpbf_do_customizer_links() {
 	);
 
 	foreach ( $customizer_links as $link_item ) {
-
 		?>
-
 		<li>
 			<a href="<?php echo esc_url( $link_item['url'] ); ?>">
 				<?php echo esc_html( $link_item['text'] ); ?>
 			</a>
 		</li>
-
 		<?php
-
 	}
 
 }
@@ -76,28 +72,23 @@ add_action( 'wpbf_customizer_links', 'wpbf_do_customizer_links' );
 
 <div class="heatbox wpbf-customizer-metabox">
 
-	<h2>
-		<?php _e( 'Customizer Settings', 'page-builder-framework' ); ?>
-	</h2>
+	<h2><?php esc_html_e( 'Customizer Settings', 'page-builder-framework' ); ?></h2>
 
-	<ul class="wpbf-customizer-list">
+	<div class="heatbox-content">
+		<ul class="wpbf-customizer-list">
+			<?php
+			do_action( 'wpbf_before_customizer_links' );
+			do_action( 'wpbf_customizer_links' );
+			do_action( 'wpbf_after_customizer_links' );
+			?>
+		</ul>
+	</div>
 
-		<?php
-		do_action( 'wpbf_before_customizer_links' );
-		do_action( 'wpbf_customizer_links' );
-		do_action( 'wpbf_after_customizer_links' );
-		?>
+</div>
 
-		<li>
-			<h3>
-				<?php _e( 'Launch WordPress Customizer', 'page-builder-framework' ); ?>
-			</h3>
-			<p>
-				<?php _e( 'Explore all of the Page Builder Framework features.', 'page-builder-framework' ); ?>
-			</p>
-			<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" target="_blank" class="button button-larger button-primary"><?php _e( 'Customize', 'page-builder-framework' ); ?></a>
-		</li>
-
-	</ul>
-
+<div class="heatbox-cta-container is-attached">
+	<div class="heatbox-cta primary">
+		<p><?php esc_html_e( 'Explore all of the Page Builder Framework features.', 'page-builder-framework' ); ?></p>
+		<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Launch WordPress Customizer', 'page-builder-framework' ); ?></a>
+	</div>
 </div>

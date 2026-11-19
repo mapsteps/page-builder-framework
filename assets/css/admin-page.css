@@ -1,302 +1,72 @@
-/* Customizer Metabox */
+/* Theme Settings page: the few layouts heatbox has no component for (heatbox.css holds everything else). */
+
+/* Customizer links: a grid of links */
 .wpbf-customizer-list {
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+	gap: 12px var(--heatbox-gap);
 	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .wpbf-customizer-list li {
 	margin: 0;
-	flex: 0 50%;
-	border-bottom: 1px solid #ddd;
 }
 
-.wpbf-customizer-list li:nth-child(odd) {
-	border-right: 1px solid #ddd;
-}
-
-.wpbf-customizer-list li p {
-	font-size: 16px;
-}
-
-.wpbf-customizer-list li a {
-	text-decoration: none;
-	font-size: 16px;
-}
-
-.wpbf-customizer-list li:last-child {
-	width: 100%;
-	flex: 0 100%;
-	border: none;
-	padding: 20px;
-	background: #f9f9f9;
-}
-
-.wpbf-customizer-list li a {
-	display: inline-block;
-	padding: 20px;
-}
-
-/* Review Metabox */
-.wpbf-review-metabox {
-}
-
-/* Resources Metabox */
-.wpbf-resources-metabox ul {
-	margin: 0;
-}
-
-.wpbf-resources-metabox li {
-	margin-bottom: 15px;
-}
-
-.wpbf-resources-metabox li:last-child {
-	margin-bottom: 0;
-}
-
-.wpbf-resources-metabox a {
-	text-decoration: none;
-}
-
-/* Premium Add-On Metabox */
-.wpbf-premium-add-on-banner-link {
+.wpbf-customizer-list a {
 	display: block;
-	margin-bottom: 20px;
-	box-shadow: none !important;
-}
-.wpbf-premium-add-on-banner {
-	max-width: 100%;
-	border: 1px solid #ddd;
-}
-
-.wpbf-premium-list {
-	margin: 0;
-}
-
-.wpbf-premium-list li {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	margin: 0;
-	padding: 25px 20px;
-	border-bottom: 1px solid #ddd;
-}
-
-.wpbf-premium-list li:last-child {
-	border: none;
-	background: #f9f9f9;
-}
-
-.wpbf-premium-list li:last-child h3 {
-	margin-bottom: 10px;
-}
-
-.wpbf-premium-list li:last-child p {
-	margin-bottom: 0;
-}
-
-.wpbf-premium-list li div {
-	flex: 0 50%;
-}
-
-.wpbf-premium-list li h3 {
-	display: inline-block;
-	margin-bottom: 0;
-	font-weight: 400;
-}
-
-.wpbf-premium-list li p {
-	font-size: 16px;
-}
-
-.wpbf-premium-list .tooltip {
-	position: relative;
-	display: inline-block;
-	cursor: pointer;
-	color: #ccc;
-	margin-left: 8px;
-}
-
-.wpbf-premium-list .tooltip:hover {
-	color: #0073aa;
-}
-
-.wpbf-premium-list .tooltip:hover p {
-	opacity: 1;
-	z-index: 1;
-}
-
-.wpbf-premium-list .tooltip p {
-	z-index: -1;
-	opacity: 0;
-	position: absolute;
-	bottom: 15px;
-	left: -40px;
-	width: 250px;
-	background: #fff;
-	padding: 15px;
-	border: 1px solid #ddd;
-	color: initial;
-	-webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
-	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
-	border-radius: 4px;
-}
-
-.wpbf-premium-list-icon {
-	text-align: right;
-	color: #47d87c;
-	left: 0;
-	bottom: 0;
-}
-
-.wpbf-premium-list-icon i {
-	margin-right: 20px;
-	position: relative;
-}
-
-/* Recommended Metabox */
-.wpbf-recommended-list {
-	display: flex;
-	flex-wrap: wrap;
-	margin: 0;
-}
-
-.wpbf-recommended-list li {
-	display: flex;
-	flex-direction: column;
-	flex: 0 49%;
-	margin-right: 2%;
-}
-
-.wpbf-recommended-list li:nth-child(even) {
-	margin-right: 0;
-}
-
-.wpbf-recommended-list li > a {
-	box-shadow: none;
-}
-
-.wpbf-recommended-list img {
-	max-width: 100%;
-}
-
-.wpbf-recommended-content {
-	padding: 20px;
-	flex: 1 0 auto;
-	min-height: 150px;
-}
-
-.wpbf-recommended-content p {
-	font-size: 16px;
-}
-
-.wpbf-recommended-status {
-	display: flex;
-	align-items: center;
-	padding: 20px;
-	background: #f9f9f9;
-	border-top: 1px solid #ddd;
-}
-
-.wpbf-recommended-status div {
-	flex: 0 50%;
-}
-
-.wpbf-recommended-status-icon {
-	text-align: right;
-	color: #aaa;
-}
-
-.wpbf-recommended-status-icon.green {
-	color: #47d87c;
-}
-
-.wpbf-recommended-status-icon i {
-	font-size: 22px !important;
-}
-
-/* Documentation Metabox */
-.wpbf-documentation-metabox {
-}
-
-.wpbf-documentation-metabox h2 a {
+	font-size: 14px;
+	font-weight: 500;
 	text-decoration: none;
-	box-shadow: none;
 }
 
-.wpbf-documentation-boxes {
+/* Button with its status message next to it (Clear Font Cache) */
+.wpbf-button-with-notice {
 	display: flex;
 	flex-wrap: wrap;
-	margin: 0;
+	align-items: center;
+	gap: 12px;
 }
 
+/* Recommended plugins & help boxes: the button sits at the bottom, so it lines up across a row */
+.wpbf-recommended-list .heatbox,
 .wpbf-documentation-boxes .heatbox {
 	display: flex;
 	flex-direction: column;
-	flex: 0 49%;
-	margin-right: 2%;
 }
 
-.wpbf-documentation-boxes .heatbox:nth-child(even) {
-	margin-right: 0;
+.wpbf-recommended-list .heatbox-content,
+.wpbf-documentation-boxes .heatbox-content {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
 }
 
-/* Loading Button */
-@-webkit-keyframes loadingSpinAround {
-	from {
-		transform: rotate(0);
-	}
-	to {
-		transform: rotate(359deg);
-	}
+.wpbf-recommended-list .heatbox-content > :last-child,
+.wpbf-documentation-boxes .heatbox-content > :last-child {
+	align-self: flex-start;
+	margin-top: auto;
 }
 
-@keyframes loadingSpinAround {
-	from {
-		transform: rotate(0);
-	}
-	to {
-		transform: rotate(359deg);
-	}
+/* Additional resources: links with an icon */
+.wpbf-resources-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
-.wpbf-theme-settings-page .button.is-loading {
+.wpbf-resources-list li {
+	margin: 0 0 12px;
+}
+
+.wpbf-resources-list li:last-child {
+	margin-bottom: 0;
+}
+
+.wpbf-resources-list a {
 	display: inline-flex;
 	align-items: center;
-	justify-content: center;
-	color: transparent !important;
-	pointer-events: none;
-}
-
-.wpbf-theme-settings-page .button.is-loading::after {
-	content: "";
-	position: absolute;
-	width: 1em;
-	display: block;
-	height: 1em;
-	border: 2px solid #dbdbdb;
-	/* border: 2px solid $accent-color; */
-	border-color: transparent transparent #fff #fff !important;
-	/* border-color: transparent transparent $accent-color $accent-color !important; */
-	border-radius: 290486px;
-	-webkit-animation: loadingSpinAround 0.5s infinite linear;
-	animation: loadingSpinAround 0.5s infinite linear;
-}
-
-.wpbf-theme-settings-page .submission-status {
-	margin-left: 15px;
-	line-height: 39px;
-}
-
-.wpbf-theme-settings-page .submission-status.is-hidden {
-	display: none;
-}
-
-.wpbf-theme-settings-page .submission-status.is-success {
-	color: #0fa953;
-}
-
-.wpbf-theme-settings-page .submission-status.is-error {
-	color: tomato;
+	gap: 8px;
+	text-decoration: none;
 }

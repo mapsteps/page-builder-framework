@@ -1,26 +1,4 @@
 .rtl {
-	/* Theme settings */
-	.wpbf-documentation-boxes .heatbox {
-		margin-right: 0;
-	}
-
-	.wpbf-documentation-boxes .heatbox:nth-child(even) {
-		margin-right: 2%;
-	}
-
-	.wpbf-recommended-list li {
-		margin-right: 0;
-	}
-
-	.wpbf-recommended-list li:nth-child(even) {
-		margin-right: 2%;
-	}
-
-	.wpbf-customizer-list li:nth-child(odd) {
-		border-right-width: 0;
-		border-left: 1px solid #ddd;
-	}
-
 	/* Customizer */
 	.wpbf-input-slider-control input[type=text] {
 		margin-left: 0;

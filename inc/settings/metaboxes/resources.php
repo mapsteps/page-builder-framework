@@ -6,32 +6,39 @@
  */
 
 defined( 'ABSPATH' ) || die( "Can't access directly" );
+
+$wpbf_resources = array(
+	array(
+		'icon'  => 'dashicons-admin-site-alt',
+		'title' => __( 'Page Builder Framework Website', 'page-builder-framework' ),
+		'link'  => 'https://wp-pagebuilderframework.com/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+	),
+	array(
+		'icon'  => 'dashicons-download',
+		'title' => __( 'Child Theme', 'page-builder-framework' ),
+		'link'  => 'https://wp-pagebuilderframework.com/child-theme-generator/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf',
+	),
+	array(
+		'icon'  => 'dashicons-sos',
+		'title' => __( 'Support Forum', 'page-builder-framework' ),
+		'link'  => 'https://wordpress.org/support/theme/page-builder-framework/',
+	),
+);
 ?>
 
 <div class="heatbox wpbf-resources-metabox">
-	<h2>
-		<?php _e( 'Additional Resources', 'page-builder-framework' ); ?>
-	</h2>
+	<h2><?php esc_html_e( 'Additional Resources', 'page-builder-framework' ); ?></h2>
 	<div class="heatbox-content">
-		<ul>
-			<li>
-				<a href="https://wp-pagebuilderframework.com/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">
-					<span class="dashicons dashicons-admin-site-alt"></span>
-					<?php _e( 'Page Builder Framework Website', 'page-builder-framework' ); ?>
-				</a>
-			</li>
-			<li>
-				<a href="https://wp-pagebuilderframework.com/child-theme-generator/?utm_source=repository&utm_medium=theme_settings&utm_campaign=wpbf" target="_blank">
-					<span class="dashicons dashicons-download"></span>
-					<?php _e( 'Child Theme', 'page-builder-framework' ); ?>
-				</a>
-			</li>
-			<li>
-				<a href="https://wordpress.org/support/theme/page-builder-framework/" target="_blank">
-					<span class="dashicons dashicons-sos"></span>
-					<?php _e( 'Support Forum', 'page-builder-framework' ); ?>
-				</a>
-			</li>
+		<ul class="wpbf-resources-list">
+			<?php foreach ( $wpbf_resources as $wpbf_resource ) : ?>
+				<li>
+					<a href="<?php echo esc_url( $wpbf_resource['link'] ); ?>" target="_blank">
+						<span class="dashicons <?php echo esc_attr( $wpbf_resource['icon'] ); ?>" aria-hidden="true"></span>
+						<?php echo esc_html( $wpbf_resource['title'] ); ?>
+						<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'page-builder-framework' ); ?></span>
+					</a>
+				</li>
+			<?php endforeach; ?>
 		</ul>
 	</div>
 </div>
