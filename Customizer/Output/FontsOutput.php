@@ -177,7 +177,29 @@ class FontsOutput {
 			}
 		}
 
-		return $google_fonts_css_to_print;
+		return $this->schemeRelativeFontUrls( $google_fonts_css_to_print );
+
+	}
+
+	/**
+	 * Make the local font file URLs scheme-relative (//example.com/wp-content/fonts/...).
+	 *
+	 * The stored @font-face rules carry the scheme of the request that downloaded them. Since downloads run on cron, that
+	 * can be http on an https site (a server cron), and browsers refuse to load http fonts on https pages.
+	 *
+	 * @param string $css The Google Fonts CSS.
+	 *
+	 * @return string
+	 */
+	private function schemeRelativeFontUrls( $css ) {
+
+		$fonts_url = content_url( '/fonts' );
+
+		return str_replace(
+			array( set_url_scheme( $fonts_url, 'https' ), set_url_scheme( $fonts_url, 'http' ) ),
+			preg_replace( '#^https?:#i', '', $fonts_url ),
+			$css
+		);
 
 	}
 
