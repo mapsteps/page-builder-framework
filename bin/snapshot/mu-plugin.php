@@ -80,6 +80,17 @@ if ( isset( $_GET['zz_css'] ) ) {
 				}
 			);
 
+			// WordPress reads the logo from the site_logo option when it exists, and saving custom_logo updates that
+			// option (_sync_custom_logo_to_site_logo()); the preview uses the posted value directly.
+			if ( array_key_exists( 'custom_logo', $zz_values ) ) {
+				add_filter(
+					'pre_option_site_logo',
+					function () use ( $zz_values ) {
+						return $zz_values['custom_logo'];
+					}
+				);
+			}
+
 			ob_start();
 			wpbf_css_area( isset( $zz_input['area'] ) ? $zz_input['area'] : 'general' );
 			$front = ob_get_clean();

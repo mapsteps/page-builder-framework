@@ -32,7 +32,9 @@ const port = 9333;
 
 // Areas written with wpbf_css() (CssRules::AREAS) and their hand-made variants of the page snapshots
 // (bin/snapshot/output/variants.json, made by snapshot.py; named after the area: general1, footer1, edd1, ...).
-const cssAreas = ["typography", "general", "footer", "edd", "blog", "woocommerce", "header"];
+// --areas=header,footer limits the preview CSS check to those areas and their variants (quicker re-runs).
+const areasArg = process.argv.find((a) => a.startsWith("--areas="));
+const cssAreas = ["typography", "general", "footer", "edd", "blog", "woocommerce", "header"].filter((area) => !areasArg || areasArg.slice(8).split(",").includes(area));
 let previewVariants = {};
 try {
 	const all = JSON.parse(readFileSync(join(here, "output", "variants.json"), "utf8"));
@@ -362,9 +364,13 @@ try {
 			}
 			return same >= 2 ? last : null;
 		};
+		// A hex color as the color control hands it over (lowercase; saving cleans it to that too). Restoring a color
+		// saved in capitals from code would otherwise leave the preview with capitals and the saved side lowercase.
+		const asControl = (v) => ('string' === typeof v && /^#[0-9a-fA-F]{3,8}$/.test(v) ? v.toLowerCase() : v);
 		const compare = async (label, values) => {
 			const originals = {};
-			for (const [sid, v] of Object.entries(values)) {
+			for (let [sid, v] of Object.entries(values)) {
+				v = asControl(v);
 				if (!wp.customize(sid)) continue;
 				const own = wp.customize(sid).get();
 				// Typography: set the font family / variant selects too, as the controls do (the preview lays these
@@ -390,7 +396,7 @@ try {
 				if (null !== preview && result.front === result.preview) previewCss.matched++;
 				else previewCss.mismatches.push({ case: label, area, front: result.front, preview: null === preview ? '(preview did not settle)' : result.preview });
 			}
-			for (const [sid, v] of Object.entries(originals)) wp.customize(sid).set(v);
+			for (const [sid, v] of Object.entries(originals)) wp.customize(sid).set(asControl(v));
 			for (const area of cssAreas) await settle(area);
 		};
 		const cssAreas = ${JSON.stringify(cssAreas)};
