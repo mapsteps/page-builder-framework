@@ -960,8 +960,9 @@ body {
 /**
  * WP buttons, modernized: rounded like the fields, a little roomier, medium weight.
  * Colors, hover & focus stay WordPress' own (primary follows the admin color scheme).
+ * WordPress also draws .button-primary / .button-secondary without .button as buttons (older markup): those too.
  */
-.heatbox-wrap .button {
+.heatbox-wrap :is(.button, .button-primary, .button-secondary) {
 	border-radius: var(--heatbox-radius-control);
 	font-weight: 500;
 	transition: background-color var(--heatbox-transition), border-color var(--heatbox-transition), color var(--heatbox-transition);
@@ -969,7 +970,7 @@ body {
 
 /* WP already enlarges buttons below 783px */
 @media screen and (min-width: 783px) {
-	.heatbox-wrap .button:not(.button-small) {
+	.heatbox-wrap :is(.button, .button-primary, .button-secondary):not(.button-small) {
 		min-height: 34px;
 		padding: 0 14px;
 		line-height: 32px;
