@@ -139,6 +139,10 @@ final class CustomizerCss {
 			// Media URLs in the CSS (Premium's custom fonts) follow the site URL and the request's scheme.
 			'url'       => get_option( 'siteurl' ),
 			'ssl'       => is_ssl(),
+			// Downloaded Google Fonts: once missing fonts arrive (cron, Customizer preview), every fingerprint's entry is rebuilt
+			// with them. Without this, an entry built while fonts were missing kept lacking them when the download ran under
+			// another fingerprint (e.g. a server cron without https).
+			'fonts'     => md5( maybe_serialize( get_option( 'wpbf_downloaded_google_fonts_css' ) ) ),
 		);
 
 		return md5( maybe_serialize( apply_filters( 'wpbf_customizer_css_key_parts', $parts ) ) );
