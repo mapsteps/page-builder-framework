@@ -1,0 +1,17 @@
+/bin
+/build-scripts
+/docs
+/node_modules
+/vendor
+/composer.json
+/composer.lock
+/package.json
+/phpcs.xml
+/pnpm-lock.yaml
+/pnpm-workspace.yaml
+/PREMIUM-DEPENDENCIES.md
+/readme.md
+/tsconfig.json
+/types.js
+/wpbf.mjs
+/.distignore
