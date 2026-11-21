@@ -878,6 +878,22 @@ body {
 	background-color: var(--heatbox-control-disabled);
 }
 
+/*
+ * Choices below each other, for longer labels:
+ * <div class="choice-list" role="radiogroup" aria-labelledby="…"><label class="label radio-label">…</label>…</div>
+ * Works the same for checkbox labels.
+ */
+.heatbox .choice-list {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 14px;
+}
+
+.heatbox .choice-list .label {
+	margin-inline-end: 0;
+}
+
 /**
  * Toggle switch.
  *
