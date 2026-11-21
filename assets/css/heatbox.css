@@ -248,8 +248,8 @@ body {
 	width: 156px;
 }
 
-/* The logo keeps its size; the title wraps instead. */
-.heatbox-header .logo-container > div:last-child {
+/* The logo keeps its size; the title wraps instead (a header without a logo has only the title, which must wrap). */
+.heatbox-header .logo-container > div:last-child:not(:first-child) {
 	flex-shrink: 0;
 }
 
@@ -358,6 +358,15 @@ body {
 	font-size: 18px;
 	line-height: 1.5;
 	color: var(--heatbox-text-muted);
+}
+
+.heatbox-wrap .subtitle a {
+	color: var(--heatbox-accent);
+	text-decoration: none;
+}
+
+.heatbox-wrap .subtitle a:hover {
+	text-decoration: underline;
 }
 
 .heatbox-wrap .version {
@@ -576,7 +585,12 @@ body {
 
 /* Toggles line up with the row label */
 .heatbox .form-table td > .toggle-switch {
-	margin-top: 10px;
+	margin-top: 7px;
+}
+
+/* Checkboxes & radios at the top of a cell: the first one lines up with the row label */
+.heatbox .form-table td > :is(.setting-fields, .choice-list, .label):first-child {
+	margin-top: var(--heatbox-label-offset);
 }
 
 /* Small number field with a unit: <input type="number" class="small-text"> <span class="heatbox-unit">px</span> */
@@ -603,6 +617,10 @@ body {
 
 	.heatbox .form-table td {
 		padding: 8px var(--heatbox-box-padding) 16px;
+	}
+
+	.heatbox .form-table td > :is(.toggle-switch, .setting-fields, .choice-list, .label):first-child {
+		margin-top: 0;
 	}
 }
 
@@ -741,6 +759,115 @@ body {
 
 .heatbox .heatbox-input-group input:focus {
 	box-shadow: none;
+}
+
+/**
+ * Rows people add and remove (e.g. a redirect per role, a code per group, old → new addresses). Each row: its
+ * fields, then a remove button lined up with the other rows'; an optional label above. Below the rows, whatever adds
+ * one (a button, a select). The fields share the row's width; a .heatbox-repeater-separator (e.g. →) sits between
+ * them and is left out on phones, where the fields stack. .is-wide: rows as wide as the box instead of 480px.
+ *
+ * <div class="heatbox-repeater">
+ *   <div class="heatbox-repeater-item">
+ *     <label class="heatbox-repeater-label">Optional</label>
+ *     <div class="heatbox-repeater-fields">…fields or .heatbox-input-group, optionally <span class="heatbox-repeater-separator" aria-hidden="true">→</span> between…</div>
+ *     <button type="button" class="heatbox-remove-button"><span class="dashicons dashicons-no-alt" aria-hidden="true"></span><span class="screen-reader-text">Remove …</span></button>
+ *   </div>
+ * </div>
+ * <button type="button" class="button">Add …</button>
+ */
+.heatbox-repeater {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+/* No rows yet: no gap above the add button (works with the whitespace templates leave, and rows added later show it) */
+.heatbox-repeater:not(:has(.heatbox-repeater-item)) {
+	display: none;
+}
+
+/* Every row's fields get the same width (480px, less when the space is narrower), so the remove buttons line up */
+.heatbox-repeater-item {
+	display: grid;
+	grid-template-columns: min(480px, 100% - 32px) auto;
+	justify-content: start;
+	align-items: center;
+	gap: 6px 10px;
+}
+
+.heatbox-repeater-label {
+	grid-column: 1 / -1;
+	font-weight: 600;
+}
+
+.heatbox-repeater-fields {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+}
+
+.heatbox-repeater.is-wide .heatbox-repeater-item {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.heatbox-repeater-fields > :is(.heatbox-input-group, input, select) {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
+.heatbox-repeater-separator {
+	color: var(--heatbox-text-muted);
+}
+
+/* Remove: a small, quiet "x", red on hover */
+.heatbox .heatbox-remove-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	min-height: 0;
+	padding: 0;
+	color: var(--heatbox-text-muted);
+	text-decoration: none;
+	background: none;
+	border: 0;
+	border-radius: var(--heatbox-radius-small);
+	box-shadow: none;
+	cursor: pointer;
+	transition: color var(--heatbox-transition), background-color var(--heatbox-transition);
+}
+
+.heatbox .heatbox-remove-button .dashicons {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+}
+
+.heatbox .heatbox-remove-button:hover,
+.heatbox .heatbox-remove-button:focus-visible {
+	color: var(--heatbox-error);
+	background: var(--heatbox-error-soft);
+	outline: none;
+	box-shadow: none;
+}
+
+/* Phones: a row's fields below each other, without the separator; the remove button stays beside them, centered */
+@media screen and (max-width: 782px) {
+	.heatbox-repeater-fields {
+		flex-wrap: wrap;
+	}
+
+	.heatbox-repeater-fields > :is(.heatbox-input-group, input, select) {
+		flex-basis: 100%;
+	}
+
+	.heatbox-repeater-separator {
+		display: none;
+	}
 }
 
 /* WordPress' code editor (wp.codeEditor / CodeMirror), styled like the fields */
@@ -1317,6 +1444,11 @@ body {
 	gap: 8px;
 }
 
+/* Several groups of tags, each under its own explanation: a paragraph's space below each */
+.tags-heatbox .tags-wrapper:not(:last-child) {
+	margin-bottom: var(--heatbox-gap);
+}
+
 .tags-heatbox .heatbox-content p:last-child {
 	margin-bottom: 0;
 }
@@ -1334,10 +1466,17 @@ body {
 	transition: border-color var(--heatbox-transition), color var(--heatbox-transition), background-color var(--heatbox-transition);
 }
 
-.heatbox .tags-wrapper code:hover {
+.heatbox .tags-wrapper code:hover,
+.heatbox .tags-wrapper code:focus-visible {
 	color: var(--heatbox-accent);
 	background-color: var(--heatbox-accent-soft);
 	border-color: var(--heatbox-accent-soft-border);
+}
+
+/* Tags reached with the keyboard (tabindex="0" role="button") */
+.heatbox .tags-wrapper code:focus-visible {
+	outline: 2px solid var(--heatbox-accent);
+	outline-offset: 2px;
 }
 
 .tags-heatbox .action-status {
@@ -1434,6 +1573,11 @@ body {
 	align-items: stretch;
 	gap: 8px;
 	max-width: 100%;
+}
+
+/* Space below it like a paragraph's, when more follows (e.g. the next shortcode's explanation) */
+.heatbox-copy:not(:last-child) {
+	margin-bottom: var(--heatbox-gap);
 }
 
 .heatbox-copy code {
@@ -1621,6 +1765,7 @@ body {
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
+	margin-bottom: var(--heatbox-gap); /* e.g. the sidebar stacked below it on small screens */
 }
 
 .heatbox-form-footer > div {
