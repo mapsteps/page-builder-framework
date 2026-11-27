@@ -27,8 +27,17 @@ $wpbf_saved_font = function ( $toggle_id, $font_id ) {
 
 };
 
-// Page font and color.
-wpbf_css_font( 'body, button, input, optgroup, select, textarea, h1, h2, h3, h4, h5, h6', $wpbf_saved_font( 'page_font_toggle', 'page_font_family' ) );
+// Page font and color. Headings only take the family: the text weight (usually 400) would take away their bold
+// (700 in the stylesheet) when their own font settings are off.
+$wpbf_page_font = $wpbf_saved_font( 'page_font_toggle', 'page_font_family' );
+
+wpbf_css_font( 'body, button, input, optgroup, select, textarea', $wpbf_page_font );
+
+if ( is_array( $wpbf_page_font ) ) {
+	unset( $wpbf_page_font['variant'] );
+}
+
+wpbf_css_font( 'h1, h2, h3, h4, h5, h6', $wpbf_page_font );
 
 wpbf_css( 'body', array( 'color' => '{page_font_color}' ), array( 'when' => 'page_font_color' ) );
 
