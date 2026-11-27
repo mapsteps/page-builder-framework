@@ -284,7 +284,15 @@ wpbf_css(
 );
 
 wpbf_css( '.wpbf-mobile-menu .wpbf-submenu-toggle', array( 'color' => '{mobile_menu_submenu_arrow_color}' ), array( 'when' => 'mobile_menu_submenu_arrow_color' ) );
-wpbf_css( '.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle', array( 'font-size' => '{mobile_menu_font_size|px}' ), array( 'when' => 'mobile_menu_font_size' ) );
+// Printed whenever saved, like the menu font size: a saved 16px (the default) must beat a desktop size other than 16.
+wpbf_css(
+	'.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle',
+	array( 'font-size' => '{mobile_menu_font_size|px}' ),
+	array(
+		'saved' => true,
+		'when'  => 'mobile_menu_font_size',
+	)
+);
 
 /*
  * Mobile sub menu. The indent is added to the mobile menu's left padding of old versions (mobile_menu_padding_left,
