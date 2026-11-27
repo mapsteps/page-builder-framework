@@ -331,7 +331,7 @@ Everything the steps above left open, in one place, sorted by the module that sh
 - Footer column texts: the schema has them untranslated, as the footer prints them; translating them is a possible change (3).
 
 **Found during the footer area (not footer, not fixed)**
-- The blog category archive (`/category/blog/` on pbf.local) gets no Customizer CSS at all, for visitors too (no inline CSS, no CSS file), with and without Premium, and before WooCommerce was active (step 9's snapshot). Other pages have it. Not looked into.
+- ~~The blog category archive (`/category/blog/`) gets no Customizer CSS.~~ Not a bug (checked November 28, 2026): Yoast redirects `/category/blog/` to `/blog/` and drops the query string, so the snapshot's `?zz_snap=` request landed on the plain page without its test settings. `/blog/` (the same category archive) loads the Customizer CSS like every other page.
 - `bin/check-schema.php` needs `-d memory_limit=512M` with WooCommerce active (the registry build ran out of 128 MB).
 
 **Assets module**
