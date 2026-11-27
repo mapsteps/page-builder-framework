@@ -81,20 +81,12 @@
 		width: 25%;
 	}
 
+	// Looks like any WordPress text field (core's field styles apply).
 	.wpbf-control-input {
 		padding-left: 3px;
 		padding-right: 3px;
-		font-size: 12px;
 		text-align: center;
-		background-color: #f7f7f7;
-		border-color: #bbb;
-		border-radius: 4px;
 		z-index: 2;
-		transition: box-shadow 0.15s;
-
-		&:focus {
-			background-color: #fff;
-		}
 	}
 
 	.wpbf-control-unit {
