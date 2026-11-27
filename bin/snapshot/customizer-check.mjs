@@ -26,7 +26,17 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const wpRoot = join(here, "..", "..", "..", "..", "..");
-const php = ["-d", "extension=mysqli", "-d", "mysqli.default_port=10035"];
+// pbf.local's MySQL port from Local's sites.json (Local can move it when sites restart).
+const mysqlPort = (() => {
+	try {
+		const sites = JSON.parse(readFileSync(join(process.env.APPDATA, "Local", "sites.json"), "utf8"));
+		const site = Object.values(sites).find((s) => s.domain === "pbf.local");
+		return site.services.mysql.ports.MYSQL[0];
+	} catch {
+		return 10035;
+	}
+})();
+const php = ["-d", "extension=mysqli", "-d", `mysqli.default_port=${mysqlPort}`];
 const chromePath = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const port = 9333;
 

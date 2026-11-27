@@ -25,7 +25,19 @@ PREMIUM = os.path.join(CONTENT, 'plugins', 'wpbf-premium')
 OUT = os.path.join(HERE, 'output')
 MU = os.path.join(CONTENT, 'mu-plugins', 'zz-test-snapshot.php')
 LOG = os.path.normpath(os.path.join(WP_ROOT, '..', '..', 'logs', 'php', 'error.log'))
-PHP = ['php', '-d', 'extension=mysqli', '-d', 'mysqli.default_port=10035']  # pbf.local's MySQL port (Local).
+def local_mysql_port(domain='pbf.local', fallback=10035):
+    """The site's MySQL port from Local's sites.json (Local can move it when sites restart)."""
+    try:
+        sites = json.load(open(os.path.join(os.environ['APPDATA'], 'Local', 'sites.json'), encoding='utf-8'))
+        for site in sites.values():
+            if site.get('domain') == domain:
+                return site['services']['mysql']['ports']['MYSQL'][0]
+    except (KeyError, IndexError, OSError, ValueError):
+        pass
+    return fallback
+
+
+PHP = ['php', '-d', 'extension=mysqli', '-d', 'mysqli.default_port=%s' % local_mysql_port()]  # pbf.local's MySQL (Local).
 
 BASE = 'http://pbf.local'
 FRONT = ['/', '/related-posts/', '/checkout/', '/category/blog/', '/category/blog/page/2/', '/author/davidv/',
