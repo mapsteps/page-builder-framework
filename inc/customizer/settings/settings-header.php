@@ -688,6 +688,14 @@ wpbf_customizer_field()
 	->label( __( 'Logo Container Width', 'page-builder-framework' ) )
 	->description( __( 'Defines the space in % the logo area takes in the navigation.', 'page-builder-framework' ) )
 	->priority( 40 )
+	// Centered and Stacked have no logo area beside the menu: the width does nothing there.
+	->activeCallback( [
+		array(
+			'id'       => 'menu_position',
+			'operator' => 'not in',
+			'value'    => array( 'menu-centered', 'menu-stacked' ),
+		),
+	] )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 10,
@@ -703,6 +711,14 @@ wpbf_customizer_field()
 	->label( __( 'Logo Container Width (Mobile)', 'page-builder-framework' ) )
 	->description( __( 'Defines the space in % the logo area takes in the navigation.', 'page-builder-framework' ) )
 	->priority( 41 )
+	// The Default mobile menu has no logo area beside the toggle: the width does nothing there.
+	->activeCallback( [
+		array(
+			'id'       => 'mobile_menu_options',
+			'operator' => '!=',
+			'value'    => 'menu-mobile-default',
+		),
+	] )
 	->transport( 'postMessage' )
 	->properties( [
 		'min'  => 10,
