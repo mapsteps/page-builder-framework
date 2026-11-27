@@ -707,8 +707,7 @@ foreach ( $singles as $single ) {
 	wpbf_customizer_field()
 		->id( $single . '_sortable_footer' )
 		->label( __( 'Footer', 'page-builder-framework' ) )
-		->choices( array(
-			'readmore'   => __( 'Read More', 'page-builder-framework' ),
+		->choices( array( // No "Read More": a single post has nothing more to read (and no template for it).
 			'categories' => __( 'Categories', 'page-builder-framework' ),
 			'tags'       => __( 'Tags', 'page-builder-framework' ),
 		) )
