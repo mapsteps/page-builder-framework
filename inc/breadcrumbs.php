@@ -39,10 +39,22 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 	}
 
 	$breadcrumbs          = array( 'archive', 'single', 'search', '404', 'page', 'front_page' );
-	$included_breadcrumbs = wpbf_mod( 'breadcrumbs' );
+	$included_breadcrumbs = (array) wpbf_mod( 'breadcrumbs' );
 	$excluded_breadcrumbs = array_diff( $breadcrumbs, $included_breadcrumbs );
 
-	if ( is_array( $excluded_breadcrumbs ) && ! empty( $excluded_breadcrumbs ) ) {
+	if ( is_front_page() ) {
+
+		// The front page follows "Front Page" only (a static front page is a page too, "Pages" mustn't decide).
+		if ( ! in_array( 'front_page', $included_breadcrumbs, true ) ) {
+			return;
+		}
+	} elseif ( is_home() ) {
+
+		// The posts page lists posts like an archive: it follows "Archives" (no choice covered it).
+		if ( ! in_array( 'archive', $included_breadcrumbs, true ) ) {
+			return;
+		}
+	} elseif ( ! empty( $excluded_breadcrumbs ) ) {
 
 		foreach ( $excluded_breadcrumbs as $excluded_breadcrumb ) {
 
