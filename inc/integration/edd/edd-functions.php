@@ -125,7 +125,8 @@ function wpbf_edd_sidebar_layout( $sidebar ) {
 			$sidebar = $edd_single_sidebar_layout;
 		}
 
-		if ( 'global' !== $single_sidebar_layout ) {
+		// A download without its own choice has no meta (''): keep the Customizer's / global layout then.
+		if ( $single_sidebar_layout && 'global' !== $single_sidebar_layout ) {
 			$sidebar = $single_sidebar_layout;
 		}
 
