@@ -48,14 +48,18 @@ $wpbf_custom_logo = get_theme_mod( 'custom_logo' );
 
 if ( ! $wpbf_custom_logo ) {
 
-	wpbf_css_font( '.wpbf-logo a, .wpbf-mobile-logo a', get_theme_mod( 'menu_logo_font_toggle' ) ? wpbf_css_saved_mod( 'menu_logo_font_family' ) : false, true );
+	// The centered menu holds the logo inside the menu: the extra selector beats the menu's own color and size
+	// (.wpbf-navigation .wpbf-menu a). Logo options left empty still follow the menu there.
+	$wpbf_logo_link = '.wpbf-logo a, .wpbf-mobile-logo a, .wpbf-menu-centered .wpbf-menu .wpbf-logo a';
 
-	wpbf_css( '.wpbf-logo a, .wpbf-mobile-logo a', array( 'color' => '{menu_logo_color}' ), array( 'when' => 'menu_logo_color' ) );
-	wpbf_css( '.wpbf-logo a:hover, .wpbf-mobile-logo a:hover', array( 'color' => '{menu_logo_color_alt}' ), array( 'when' => 'menu_logo_color_alt' ) );
+	wpbf_css_font( $wpbf_logo_link, get_theme_mod( 'menu_logo_font_toggle' ) ? wpbf_css_saved_mod( 'menu_logo_font_family' ) : false, true );
+
+	wpbf_css( $wpbf_logo_link, array( 'color' => '{menu_logo_color}' ), array( 'when' => 'menu_logo_color' ) );
+	wpbf_css( '.wpbf-logo a:hover, .wpbf-mobile-logo a:hover, .wpbf-menu-centered .wpbf-menu .wpbf-logo a:hover', array( 'color' => '{menu_logo_color_alt}' ), array( 'when' => 'menu_logo_color_alt' ) );
 
 	foreach ( $wpbf_devices as $wpbf_device => $wpbf_media ) {
 		wpbf_css(
-			'.wpbf-logo a, .wpbf-mobile-logo a',
+			$wpbf_logo_link,
 			array( 'font-size' => '{menu_logo_font_size.' . $wpbf_device . '|px}' ),
 			array(
 				'media' => $wpbf_media,
