@@ -264,6 +264,11 @@ final class CustomizerCss {
 	 */
 	public static function refreshWithFonts() {
 
+		// Downloaded fonts nothing uses any more go first, so the fingerprint below already counts without them.
+		if ( apply_filters( 'wpbf_customizer_css_store', true ) ) {
+			( new FontsOutput() )->removeUnusedFonts();
+		}
+
 		$key = self::key();
 
 		self::refresh( true, $key );

@@ -177,7 +177,188 @@ class FontsOutput {
 			}
 		}
 
-		return $this->schemeRelativeFontUrls( $google_fonts_css_to_print );
+		return $this->schemeRelativeFontUrls( $this->mergeVariableFontWeights( $google_fonts_css_to_print ) );
+
+	}
+
+	/**
+	 * Remove downloaded Google Fonts nothing uses any more (a font switched off or replaced): their stored CSS and their
+	 * files. Runs before a cache refresh (CustomizerCss::refreshWithFonts()); a font picked again is downloaded again.
+	 *
+	 * Only files the theme downloaded go (the ones its stored CSS points to), so other fonts in wp-content/fonts (the
+	 * WordPress Font Library's) stay. Not on multisite: the sites share that folder but each has its own font list.
+	 */
+	public function removeUnusedFonts() {
+
+		if ( is_multisite() ) {
+			return;
+		}
+
+		$stored = $this->fonts_util->getDownloadedGoogleFontsCss();
+
+		if ( empty( $stored ) ) {
+			return;
+		}
+
+		$in_use = array();
+
+		foreach ( $this->googleFontsToUse() as $font_family => $variants ) {
+			$slug = $this->fonts_util->slugifyFontFamily( $font_family );
+
+			foreach ( array_keys( $variants ) as $variant ) {
+				$in_use[ $slug . '_' . ( '400' === (string) $variant ? 'regular' : $variant ) ] = true;
+			}
+		}
+
+		$kept    = array_intersect_key( $stored, $in_use );
+		$removed = array_diff_key( $stored, $in_use );
+
+		if ( empty( $removed ) ) {
+			return;
+		}
+
+		// Files the kept fonts still use (a variable font shares one file across weights).
+		$kept_files = array();
+
+		foreach ( $kept as $css ) {
+			foreach ( $this->fontFiles( $css ) as $file ) {
+				$kept_files[ $file ] = true;
+			}
+		}
+
+		$fonts_dir = wp_normalize_path( WP_CONTENT_DIR . '/fonts' );
+		$dirs      = array();
+
+		foreach ( $removed as $css ) {
+			foreach ( $this->fontFiles( $css ) as $file ) {
+				if ( isset( $kept_files[ $file ] ) ) {
+					continue;
+				}
+
+				$path = wp_normalize_path( $fonts_dir . '/' . $file );
+
+				// Only files inside wp-content/fonts/<family>/.
+				if ( 0 !== strpos( $path, $fonts_dir . '/' ) || false !== strpos( $file, '..' ) ) {
+					continue;
+				}
+
+				if ( is_file( $path ) ) {
+					wp_delete_file( $path );
+				}
+
+				$dirs[ dirname( $path ) ] = true;
+			}
+		}
+
+		// Family folders left empty.
+		foreach ( array_keys( $dirs ) as $dir ) {
+			if ( is_dir( $dir ) && ! ( new \FilesystemIterator( $dir ) )->valid() ) {
+				rmdir( $dir ); // phpcs:ignore WordPress.WP.AlternativeFunctions -- An empty folder we created.
+			}
+		}
+
+		update_option( 'wpbf_downloaded_google_fonts_css', $kept );
+
+		// The list of downloaded families and variants, without the removed ones.
+		$list = get_option( 'wpbf_downloaded_google_fonts', array() );
+
+		if ( is_array( $list ) ) {
+			foreach ( $list as $font_family => $variants ) {
+				$slug                 = $this->fonts_util->slugifyFontFamily( $font_family );
+				$list[ $font_family ] = array_values(
+					array_filter(
+						(array) $variants,
+						function ( $variant ) use ( $slug, $kept ) {
+							return isset( $kept[ $slug . '_' . $variant ] );
+						}
+					)
+				);
+
+				if ( empty( $list[ $font_family ] ) ) {
+					unset( $list[ $font_family ] );
+				}
+			}
+
+			update_option( 'wpbf_downloaded_google_fonts', $list );
+		}
+
+	}
+
+	/**
+	 * The font files a stored @font-face CSS points to, as "<family folder>/<file>" below wp-content/fonts.
+	 *
+	 * @param string $css The stored CSS of one font variant.
+	 *
+	 * @return string[]
+	 */
+	private function fontFiles( $css ) {
+
+		preg_match_all( '#/fonts/([^/\s\'")]+/[^/\s\'")]+\.(?:woff2?|ttf|otf))#i', (string) $css, $matches );
+
+		return array_unique( $matches[1] );
+
+	}
+
+	/**
+	 * One @font-face rule per font file: variable fonts (Inter, Roboto, Open Sans ...) serve every weight from the same
+	 * file, so Google's CSS repeats the rule per weight with only the weight changed. Rules that differ in nothing but
+	 * the weight become one rule with a weight range ("font-weight: 400 700"). Static fonts have a file per weight and
+	 * stay as they are.
+	 *
+	 * @param string $css The Google Fonts CSS (@font-face rules only).
+	 *
+	 * @return string
+	 */
+	private function mergeVariableFontWeights( $css ) {
+
+		if ( ! preg_match_all( '/@font-face\s*\{[^}]*\}/i', $css, $matches ) ) {
+			return $css;
+		}
+
+		$weight_pattern = '/font-weight\s*:\s*(\d+)\s*;/i';
+		$groups         = array();
+		$order          = array();
+
+		foreach ( $matches[0] as $block ) {
+			if ( ! preg_match( $weight_pattern, $block, $weight ) ) {
+				$order[] = array( 'block' => $block );
+				continue;
+			}
+
+			// Everything but the weight: family, style, file and character range.
+			$key = preg_replace( $weight_pattern, '', $block );
+
+			if ( ! isset( $groups[ $key ] ) ) {
+				$groups[ $key ] = array(
+					'block'   => $block,
+					'weights' => array(),
+				);
+				$order[]        = array( 'key' => $key );
+			}
+
+			$groups[ $key ]['weights'][] = (int) $weight[1];
+		}
+
+		$merged = '';
+
+		foreach ( $order as $item ) {
+			if ( isset( $item['block'] ) ) {
+				$merged .= $item['block'] . "\n";
+				continue;
+			}
+
+			$group   = $groups[ $item['key'] ];
+			$weights = array_unique( $group['weights'] );
+			$block   = $group['block'];
+
+			if ( count( $weights ) > 1 ) {
+				$block = preg_replace( $weight_pattern, 'font-weight: ' . min( $weights ) . ' ' . max( $weights ) . ';', $block, 1 );
+			}
+
+			$merged .= $block . "\n";
+		}
+
+		return $merged;
 
 	}
 
@@ -215,9 +396,69 @@ class FontsOutput {
 			return;
 		}
 
+		$preload = $this->textFontFile( $css );
+
+		if ( $preload ) {
+			// The text font's Latin file, so body text shows in it sooner.
+			echo '<link rel="preload" href="' . esc_url( $preload ) . '" as="font" type="font/woff2" crossorigin>' . "\n";
+		}
+
 		?>
 		<style class="wpbf-google-fonts"><?php echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Font-face rules built from Google's stylesheet. ?></style>
 		<?php
+
+	}
+
+	/**
+	 * The Latin woff2 file of the text font (Typography -> Text, when its Font Settings switch is on) at its chosen weight
+	 * and style, from the printed Google Fonts CSS. Empty when the text font isn't a downloaded Google font.
+	 *
+	 * @param string $css The printed Google Fonts CSS.
+	 *
+	 * @return string The file URL, or ''.
+	 */
+	private function textFontFile( $css ) {
+
+		$font = get_theme_mod( 'page_font_toggle' ) ? get_theme_mod( 'page_font_family' ) : false;
+
+		if ( ! is_array( $font ) || empty( $font['font-family'] ) ) {
+			return '';
+		}
+
+		$variant = isset( $font['variant'] ) ? (string) $font['variant'] : 'regular';
+		$style   = false !== strpos( $variant, 'italic' ) ? 'italic' : 'normal';
+		$weight  = (int) str_replace( array( 'regular', 'italic' ), '', $variant );
+		$weight  = $weight ? $weight : 400;
+
+		preg_match_all( '/@font-face\s*\{[^}]*\}/i', $css, $blocks );
+
+		foreach ( $blocks[0] as $block ) {
+			$is_family = preg_match( "/font-family\s*:\s*['\"]?" . preg_quote( $font['font-family'], '/' ) . "['\"]?\s*;/i", $block );
+			$is_style  = preg_match( '/font-style\s*:\s*' . $style . '\s*;/i', $block );
+			$is_latin  = preg_match( '/unicode-range\s*:\s*U\+0000-00FF/i', $block );
+
+			if ( ! $is_family || ! $is_style || ! $is_latin ) {
+				continue;
+			}
+
+			// A single weight or a range ("400 700").
+			if ( ! preg_match( '/font-weight\s*:\s*(\d+)(?:\s+(\d+))?\s*;/i', $block, $w ) ) {
+				continue;
+			}
+
+			$min = (int) $w[1];
+			$max = isset( $w[2] ) ? (int) $w[2] : $min;
+
+			if ( $weight < $min || $weight > $max ) {
+				continue;
+			}
+
+			if ( preg_match( '/url\(\s*[\'"]?([^\'")]+\.woff2)[\'"]?\s*\)/i', $block, $url ) ) {
+				return $url[1];
+			}
+		}
+
+		return '';
 
 	}
 
