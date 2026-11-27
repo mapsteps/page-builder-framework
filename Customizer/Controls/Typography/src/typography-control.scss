@@ -1,11 +1,6 @@
+// The typography parts (font family, variant, ...): their labels look like every other label (WordPress' own style).
 .customize-control[data-wpbf-typography-type] {
 	margin-bottom: 10px;
-
-	.customize-control-title {
-		margin-bottom: 0;
-		font-weight: 500;
-		font-size: 12px;
-	}
 }
 
 .customize-control[data-wpbf-typography-css-prop="text-decoration"] {
