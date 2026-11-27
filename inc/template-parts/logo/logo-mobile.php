@@ -47,7 +47,7 @@ if ( has_custom_logo() ) {
 } else {
 
 	$tagline        = get_bloginfo( 'description' );
-	$tagline_toggle = get_theme_mod( 'menu_logo_description_mobile' );
+	$tagline_toggle = get_theme_mod( 'menu_logo_description' ) && get_theme_mod( 'menu_logo_description_mobile' ); // The mobile switch only shows (and applies) with Display Tagline on.
 
 	echo '<div class="wpbf-mobile-logo" itemscope="itemscope" itemtype="https://schema.org/Organization">';
 	do_action( 'wpbf_before_mobile_logo' );
