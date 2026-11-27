@@ -196,10 +196,7 @@ foreach ( array( 'top', 'right', 'bottom', 'left' ) as $wpbf_side ) {
 	wpbf_css(
 		$wpbf_sub_menu . ' .sub-menu a',
 		array( 'padding-' . $wpbf_side => '{sub_menu_padding.' . $wpbf_side . '}px' ),
-		array(
-			'when'  => 'sub_menu_padding.' . $wpbf_side,
-			'parts' => true,
-		)
+		array( 'parts' => true ) // No 'when': a saved 0 must print too.
 	);
 }
 
@@ -222,10 +219,7 @@ foreach ( array( 'top', 'right', 'bottom', 'left' ) as $wpbf_side ) {
 	wpbf_css(
 		'.wpbf-mobile-menu a, .wpbf-mobile-menu .menu-item-has-children .wpbf-submenu-toggle',
 		array( 'padding-' . $wpbf_side => '{mobile_menu_padding.' . $wpbf_side . '}px' ),
-		array(
-			'when'  => 'mobile_menu_padding.' . $wpbf_side,
-			'parts' => true,
-		)
+		array( 'parts' => true ) // No 'when': a saved 0 must print too.
 	);
 }
 

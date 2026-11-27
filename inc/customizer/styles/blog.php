@@ -50,10 +50,7 @@ $wpbf_boxed_padding = function ( $option, $box, $content, $stretched ) {
 			wpbf_css(
 				$box,
 				array( 'padding-' . $side => '{' . $part . '}px' ),
-				array(
-					'media' => $media,
-					'when'  => $part,
-				)
+				array( 'media' => $media ) // No 'when': a saved 0 must print too.
 			);
 		}
 
@@ -67,10 +64,7 @@ $wpbf_boxed_padding = function ( $option, $box, $content, $stretched ) {
 			wpbf_css(
 				$content . ' .wpbf-post-style-boxed.stretched .wpbf-post-image-wrapper',
 				array( 'margin-' . $side => '-{' . $part . '}px' ),
-				array(
-					'media' => $media,
-					'when'  => $part,
-				)
+				array( 'media' => $media ) // No 'when': a saved 0 must print too.
 			);
 		}
 
@@ -134,13 +128,13 @@ foreach ( apply_filters( 'wpbf_archives', array( 'archive' ) ) as $wpbf_archive 
 				'margin-bottom'  => '{' . $wpbf_archive . '_post_space_between}px',
 				'padding-bottom' => '{' . $wpbf_archive . '_post_space_between}px',
 			),
-			array( 'when' => $wpbf_archive . '_post_space_between' )
+			array() // No 'when': a saved 0 must print too.
 		);
 	}
 
 	if ( 'boxed' === $wpbf_style ) {
 		wpbf_css( $wpbf_content . ' .wpbf-post-style-boxed', array( 'background-color' => '{' . $wpbf_archive . '_post_background_color}' ), array( 'when' => $wpbf_archive . '_post_background_color' ) );
-		wpbf_css( $wpbf_content . ' .wpbf-post-style-boxed', array( 'margin-bottom' => '{' . $wpbf_archive . '_post_space_between}px' ), array( 'when' => $wpbf_archive . '_post_space_between' ) );
+		wpbf_css( $wpbf_content . ' .wpbf-post-style-boxed', array( 'margin-bottom' => '{' . $wpbf_archive . '_post_space_between}px' ) ); // A saved 0 prints too.
 
 		$wpbf_boxed_padding(
 			$wpbf_archive . '_boxed_padding',
