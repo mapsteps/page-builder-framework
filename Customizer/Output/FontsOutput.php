@@ -670,6 +670,8 @@ class FontsOutput {
 			}
 		}
 
+		$google_fonts_to_use = $this->withMoreWeights( $google_fonts_to_use );
+
 		$existing_downloaded_css = $this->fonts_util->getDownloadedGoogleFontsCss();
 
 		foreach ( $google_fonts_to_use as $google_font_family => $google_font_variants ) {
@@ -685,6 +687,98 @@ class FontsOutput {
 		}
 
 		return $google_fonts_to_use;
+
+	}
+
+	/**
+	 * More weights than the one picked, so bold and italic text (and other weights a page uses) show in the real font
+	 * instead of one the browser fakes:
+	 * - every font: regular, bold (700), italic and bold italic, where the font has them;
+	 * - variable fonts: every weight. One file holds them all, so they cost no extra download. A font counts as variable
+	 *   once two of its downloaded weights share a file (see variableStyles()); until then it has the four above.
+	 * Browsers only download the files a page actually uses.
+	 *
+	 * @param array $fonts Font family => [ variant => CSS ].
+	 *
+	 * @return array The same, with the added variants (CSS '' until downloaded).
+	 */
+	private function withMoreWeights( $fonts ) {
+
+		if ( empty( $fonts ) ) {
+			return $fonts;
+		}
+
+		if ( ! FontsStore::initialized() ) {
+			FontsStore::init();
+		}
+
+		$stored = $this->fonts_util->getDownloadedGoogleFontsCss();
+
+		foreach ( $fonts as $font_family => $variants ) {
+			$entry     = isset( FontsStore::$google_fonts[ $font_family ] ) ? FontsStore::$google_fonts[ $font_family ] : null;
+			$available = $entry && is_array( $entry->variants ) ? $entry->variants : array();
+
+			if ( empty( $available ) ) {
+				continue;
+			}
+
+			$wanted = array( 'regular', '700', 'italic', '700italic' );
+
+			foreach ( $this->variableStyles( $font_family, $stored ) as $style ) {
+				foreach ( $available as $variant ) {
+					if ( ( 'italic' === $style ) === ( false !== strpos( $variant, 'italic' ) ) ) {
+						$wanted[] = $variant;
+					}
+				}
+			}
+
+			foreach ( array_unique( $wanted ) as $variant ) {
+				if ( ! isset( $fonts[ $font_family ][ $variant ] ) && in_array( $variant, $available, true ) && in_array( $variant, self::FONT_VARIANTS, true ) ) {
+					$fonts[ $font_family ][ $variant ] = '';
+				}
+			}
+		}
+
+		return $fonts;
+
+	}
+
+	/**
+	 * The styles ('normal', 'italic') in which a downloaded font is variable: two of its weights in that style use the
+	 * same file for the same characters.
+	 *
+	 * @param string $font_family The font family.
+	 * @param array  $stored The downloaded fonts' CSS (FontsUtil::getDownloadedGoogleFontsCss()).
+	 *
+	 * @return string[]
+	 */
+	private function variableStyles( $font_family, $stored ) {
+
+		$prefix = $this->fonts_util->slugifyFontFamily( $font_family ) . '_';
+		$seen   = array();
+		$styles = array();
+
+		foreach ( $stored as $key => $css ) {
+			if ( 0 !== strpos( $key, $prefix ) || ! preg_match_all( '/@font-face\s*\{[^}]*\}/i', (string) $css, $blocks ) ) {
+				continue;
+			}
+
+			foreach ( $blocks[0] as $block ) {
+				if ( ! preg_match( '/font-style\s*:\s*(\w+)/i', $block, $style ) || ! preg_match( '/font-weight\s*:\s*(\d+)/i', $block, $weight ) || ! preg_match( '/url\(\s*[\'"]?([^\'")]+)/i', $block, $url ) ) {
+					continue;
+				}
+
+				$file = $style[1] . '|' . basename( $url[1] );
+
+				if ( isset( $seen[ $file ] ) && $seen[ $file ] !== $weight[1] ) {
+					$styles[ strtolower( $style[1] ) ] = true;
+				}
+
+				$seen[ $file ] = $weight[1];
+			}
+		}
+
+		return array_keys( $styles );
 
 	}
 

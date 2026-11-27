@@ -354,14 +354,19 @@ class GoogleFontsDownload {
 			return '';
 		}
 
+		$font_file_name = basename( wp_parse_url( $font_url, PHP_URL_PATH ) );
+		$font_file_path = $dir . '/' . $font_file_name;
+
+		// Google names files by their content: one already here is the same file (a variable font's weights share it).
+		if ( is_file( $font_file_path ) && filesize( $font_file_path ) > 0 ) {
+			return $font_file_path;
+		}
+
 		$tmp_path = download_url( $font_url );
 
 		if ( is_wp_error( $tmp_path ) ) {
 			return '';
 		}
-
-		$font_file_name = basename( wp_parse_url( $font_url, PHP_URL_PATH ) );
-		$font_file_path = $dir . '/' . $font_file_name;
 
 		$success = $this->getFilesystem()->move( $tmp_path, $font_file_path, true );
 
