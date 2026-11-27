@@ -1,12 +1,13 @@
 /*
- * The select form (SelectForm.tsx). Looks like select2's default theme, which it replaces: same sizes, borders and
- * colors. The list opens inside the control (select2 put it at the end of the page) and over the controls below it.
+ * The select form (SelectForm.tsx). Looks like WordPress' own select fields: same height, border, corners and arrow;
+ * focus and the highlighted option in the admin color. The list opens inside the control and over the controls below it.
  */
+@import "../../Base/src/wp-colors";
 .wpbf-select {
 	position: relative;
 	box-sizing: border-box;
 	width: 100%;
-	color: #444;
+	color: $wpbf-text;
 
 	*,
 	*::before,
@@ -24,14 +25,15 @@
 	display: block;
 	position: relative;
 	width: 100%;
-	height: 28px;
+	height: $wpbf-field-height;
 	margin: 0;
-	padding: 0 20px 0 8px;
+	padding: 0 28px 0 12px;
 	background-color: #fff;
-	border: 1px solid #aaa;
-	border-radius: 4px;
-	color: #444;
-	line-height: 26px;
+	border: 1px solid $wpbf-field-border;
+	border-radius: $wpbf-field-radius;
+	color: $wpbf-text;
+	font-size: 14px;
+	line-height: $wpbf-field-height - 2px;
 	text-align: left;
 	cursor: pointer;
 	user-select: none;
@@ -46,57 +48,58 @@
 	}
 
 	.wpbf-select-placeholder {
-		color: #999;
+		color: $wpbf-text-muted;
 	}
+
+	&:focus {
+		outline: none;
+	}
+}
+
+/* Focus and open: the admin color, as on WordPress' own fields. */
+.wpbf-select-single .wpbf-select-selection:focus-visible,
+.wpbf-select.is-open .wpbf-select-selection,
+.wpbf-select-multiple:focus-within .wpbf-select-selection {
+	border-color: $wpbf-accent;
+	box-shadow: 0 0 0 1px $wpbf-accent;
 }
 
 .wpbf-select-single.is-clearable .wpbf-select-selection {
-	padding-right: 40px;
+	padding-right: 48px;
 }
 
+/* The arrow: WordPress' select chevron (points up while the list is open). */
 .wpbf-select-arrow {
 	position: absolute;
 	top: 0;
-	right: 1px;
-	width: 20px;
-	height: 26px;
+	right: 6px;
+	width: 16px;
+	height: $wpbf-field-height - 2px;
+	background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E")
+		no-repeat center / 16px 16px;
 
 	b {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 0;
-		height: 0;
-		margin-top: -2px;
-		margin-left: -4px;
-		border-color: #888 transparent transparent transparent;
-		border-style: solid;
-		border-width: 5px 4px 0 4px;
+		display: none;
 	}
 }
 
-.wpbf-select.is-open .wpbf-select-arrow b {
-	border-color: transparent transparent #888 transparent;
-	border-width: 0 4px 5px 4px;
+.wpbf-select.is-open .wpbf-select-arrow {
+	transform: rotate(180deg);
 }
 
 /* Several choices: chips and an inline search field. */
 .wpbf-select-multiple .wpbf-select-selection {
 	position: relative;
-	min-height: 32px;
-	padding: 0 5px 5px 0;
+	min-height: $wpbf-field-height;
+	padding: 0 7px 7px 2px;
 	background-color: #fff;
-	border: 1px solid #aaa;
-	border-radius: 4px;
+	border: 1px solid $wpbf-field-border;
+	border-radius: $wpbf-field-radius;
 	cursor: text;
 }
 
 .wpbf-select-multiple.is-clearable .wpbf-select-selection {
 	padding-right: 25px;
-}
-
-.wpbf-select-multiple:focus-within .wpbf-select-selection {
-	border-color: #000;
 }
 
 .wpbf-select-chips {
@@ -114,11 +117,11 @@
 	display: inline-block;
 	position: relative;
 	max-width: 100%;
-	margin: 5px 0 0 5px;
-	padding: 0 0 0 20px;
-	background-color: #e4e4e4;
-	border: 1px solid #aaa;
-	border-radius: 4px;
+	margin: 7px 0 0 5px;
+	padding: 2px 0 2px 20px;
+	background-color: #f0f0f0;
+	border: 1px solid $wpbf-light-border;
+	border-radius: $wpbf-field-radius;
 	vertical-align: bottom;
 	white-space: nowrap;
 	overflow: hidden;
@@ -139,17 +142,17 @@
 	padding: 0 4px;
 	background-color: transparent;
 	border: none;
-	border-right: 1px solid #aaa;
-	border-radius: 4px 0 0 4px;
-	color: #999;
+	border-right: 1px solid $wpbf-light-border;
+	border-radius: $wpbf-field-radius 0 0 $wpbf-field-radius;
+	color: $wpbf-text-muted;
 	font-weight: bold;
 	line-height: 1;
 	cursor: pointer;
 
 	&:hover,
 	&:focus {
-		background-color: #f1f1f1;
-		color: #333;
+		background-color: #e0e0e0;
+		color: $wpbf-text;
 		outline: none;
 	}
 }
@@ -163,9 +166,9 @@
 		width: auto;
 		min-width: 3em;
 		max-width: 100%;
-		height: 18px;
+		height: 22px;
 		min-height: 0;
-		margin: 5px 0 0 5px;
+		margin: 7px 0 0 5px;
 		padding: 0;
 		background: transparent;
 		border: none;
@@ -173,7 +176,7 @@
 		outline: 0;
 		box-shadow: none;
 		font-size: 100%;
-		line-height: 18px;
+		line-height: 22px;
 		vertical-align: bottom;
 		-webkit-appearance: textfield;
 	}
@@ -191,19 +194,19 @@
 /* Clear button (clearable selects). */
 .wpbf-select-clear {
 	position: absolute;
-	top: 1px;
-	right: 20px;
-	height: 26px;
+	top: 0;
+	right: 24px;
+	height: $wpbf-field-height - 2px;
 	padding: 0 4px;
 	background-color: transparent;
 	border: none;
-	color: #444;
+	color: $wpbf-text-muted;
 	font-weight: bold;
 	cursor: pointer;
 }
 
 .wpbf-select-multiple .wpbf-select-clear {
-	top: 5px;
+	top: 9px;
 	right: 10px;
 	height: 20px;
 	padding: 1px;
@@ -216,8 +219,9 @@
 	z-index: 100;
 	width: 100%;
 	background-color: #fff;
-	border: 1px solid #aaa;
-	border-radius: 4px;
+	border: 1px solid $wpbf-accent;
+	border-radius: $wpbf-field-radius;
+	box-shadow: 0 0 0 1px $wpbf-accent;
 }
 
 .wpbf-select.is-below .wpbf-select-dropdown {
@@ -249,10 +253,10 @@
 
 	.wpbf-select-search {
 		width: 100%;
-		min-height: 0;
-		padding: 4px;
-		border: 1px solid #aaa;
-		border-radius: 0;
+		min-height: 32px;
+		padding: 0 8px;
+		border: 1px solid $wpbf-field-border;
+		border-radius: $wpbf-field-radius;
 		box-shadow: none;
 		line-height: normal;
 
@@ -271,7 +275,7 @@
 
 	> li {
 		margin: 0;
-		padding: 6px;
+		padding: 6px 12px;
 		user-select: none;
 		-webkit-user-select: none;
 	}
@@ -281,20 +285,20 @@
 	cursor: pointer;
 
 	&.is-nested {
-		padding-left: 1em;
+		padding-left: 24px;
 	}
 
 	&.is-selected {
-		background-color: #ddd;
+		background-color: #f0f0f0;
 	}
 
 	&.is-highlighted {
-		background-color: #5897fb;
+		background-color: $wpbf-accent;
 		color: #fff;
 	}
 
 	&.is-disabled {
-		color: #999;
+		color: $wpbf-text-muted;
 		cursor: default;
 	}
 }
