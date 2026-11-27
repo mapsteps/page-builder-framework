@@ -322,6 +322,46 @@ class FontsOutput {
 	}
 
 	/**
+	 * Whether a typography option's font is used at all: its "Font Settings" switch is on (the CSS only prints it then,
+	 * see inc/customizer/styles/typography.php and header.php), and for the logo / tagline fonts there's a text logo.
+	 * Options without a known switch (child themes, plugins) always count.
+	 *
+	 * @param string $option_id The typography option.
+	 *
+	 * @return bool
+	 */
+	private function isFontInUse( $option_id ) {
+
+		$toggles = array(
+			'page_font_family'                  => 'page_font_toggle',
+			'menu_logo_font_family'             => 'menu_logo_font_toggle',
+			'menu_logo_description_font_family' => 'menu_logo_description_toggle',
+			'menu_font_family'                  => 'menu_font_family_toggle',
+			'sub_menu_font_family'              => 'sub_menu_font_family_toggle',
+			'page_h1_font_family'               => 'page_h1_toggle',
+			'page_h2_font_family'               => 'page_h2_toggle',
+			'page_h3_font_family'               => 'page_h3_toggle',
+			'page_h4_font_family'               => 'page_h4_toggle',
+			'page_h5_font_family'               => 'page_h5_toggle',
+			'page_h6_font_family'               => 'page_h6_toggle',
+			'footer_font_family'                => 'footer_font_toggle',
+		);
+
+		if ( ! isset( $toggles[ $option_id ] ) ) {
+			return true;
+		}
+
+		if ( ! get_theme_mod( $toggles[ $option_id ] ) ) {
+			return false;
+		}
+
+		$logo_fonts = array( 'menu_logo_font_family', 'menu_logo_description_font_family' );
+
+		return ! ( in_array( $option_id, $logo_fonts, true ) && get_theme_mod( 'custom_logo' ) );
+
+	}
+
+	/**
 	 * Collect Google Fonts used by the theme that are not already downloaded.
 	 *
 	 * @return array Associative array of font-family as the key and associative array of variants to use and their CSS content.
@@ -332,6 +372,10 @@ class FontsOutput {
 		$control_values = [];
 
 		foreach ( OptionSchema::ofType( 'typography' ) as $option_id => $entry ) {
+			if ( ! $this->isFontInUse( $option_id ) ) {
+				continue;
+			}
+
 			$value = isset( $entry['storage'] ) && 'option' === $entry['storage'] ? get_option( $option_id ) : get_theme_mod( $option_id );
 
 			if ( ! $value ) {
