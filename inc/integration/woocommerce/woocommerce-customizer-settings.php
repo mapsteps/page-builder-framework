@@ -212,7 +212,6 @@ $product_priority = 0;
 wpbf_customizer_field()
 	->id( 'woocommerce_single_custom_width' )
 	->label( __( 'Custom Content Width', 'page-builder-framework' ) )
-	->description( __( 'Default: Inherits General → Layout → Page Width.', 'page-builder-framework' ) )
 	->priority( $product_priority++ )
 	->transport( 'postMessage' )
 	->addToSection( 'wpbf_woocommerce_product_options' );
@@ -602,7 +601,6 @@ wpbf_customizer_field()
 wpbf_customizer_field()
 	->id( 'woocommerce_loop_custom_width' )
 	->label( __( 'Custom Content Width', 'page-builder-framework' ) )
-	->description( __( 'Default: Inherits General → Layout → Page Width.', 'page-builder-framework' ) )
 	->priority( $shop_priority++ )
 	->transport( 'postMessage' )
 	->addToSection( 'woocommerce_product_catalog' );

@@ -204,7 +204,6 @@ wpbf_customizer_field()
 	->id( 'footer_width' )
 	->tab( 'general' )
 	->label( __( 'Footer Width', 'page-builder-framework' ) )
-	->description( __( 'Default: Inherits General → Layout → Page Width.', 'page-builder-framework' ) )
 	->priority( 5 )
 	->transport( 'postMessage' )
 	->activeCallback( [

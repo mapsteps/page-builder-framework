@@ -362,7 +362,6 @@ foreach ( $archives as $archive ) {
 	wpbf_customizer_field()
 		->id( $archive . '_custom_width' )
 		->label( __( 'Custom Content Width', 'page-builder-framework' ) )
-		->description( __( 'Default: Inherits General → Layout → Page Width.', 'page-builder-framework' ) )
 		->priority( 0 )
 		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $archive . '_options' );
@@ -666,7 +665,6 @@ foreach ( $singles as $single ) {
 	wpbf_customizer_field()
 		->id( $single . '_custom_width' )
 		->label( __( 'Custom Content Width', 'page-builder-framework' ) )
-		->description( __( 'Default: Inherits General → Layout → Page Width.', 'page-builder-framework' ) )
 		->priority( 0 )
 		->transport( 'postMessage' )
 		->addToSection( 'wpbf_' . $single . '_options' );
