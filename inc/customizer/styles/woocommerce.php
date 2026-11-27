@@ -259,7 +259,10 @@ wpbf_css( '.single.woocommerce #inner-content', array( 'max-width' => '{woocomme
 if ( 'right' === get_theme_mod( 'woocommerce_single_alignment' ) ) {
 	echo esc_attr( $wpbf_product_summary ) . ' {float: left;}';
 	echo esc_attr( $wpbf_product_images ) . ' {float: right;}';
-	echo '.single-product.woocommerce span.onsale {display: none;}';
+	// The product's sale badge (top left by default) moves to the image's corner, mirroring its margin. Related
+	// products' badges sit inside their links and stay as they are.
+	$wpbf_badge_margin = 'inside' === get_theme_mod( 'woocommerce_loop_sale_position' ) ? '10px 10px 0 0' : '-10px -10px 0 0';
+	echo '.single-product.woocommerce div.product > span.onsale {left: auto; right: 0; margin: ' . esc_attr( $wpbf_badge_margin ) . ';}';
 }
 
 // Image width (above the medium breakpoint): 2% of it is the gap.
