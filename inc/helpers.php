@@ -1103,10 +1103,15 @@ add_action( 'wpbf_sidebar_left', 'wpbf_do_sidebar_left' );
 function wpbf_sidebar_layout() {
 
 	// Set default sidebar position.
-	$sidebar = wpbf_mod( 'sidebar_position' );
+	$global_sidebar = wpbf_mod( 'sidebar_position' );
+	$sidebar        = $global_sidebar;
 
-	$archive_sidebar_position = wpbf_mod( 'archive_sidebar_layout' );
-	$sidebar                  = 'global' !== $archive_sidebar_position ? $archive_sidebar_position : $sidebar;
+	// Blog / Archive Layout is for archives only (see docs/sidebars): posts on "Inherit Global Settings" get the
+	// global position, not the archive's.
+	if ( ! is_singular() ) {
+		$archive_sidebar_position = wpbf_mod( 'archive_sidebar_layout' );
+		$sidebar                  = 'global' !== $archive_sidebar_position ? $archive_sidebar_position : $sidebar;
+	}
 
 	if ( is_singular() && ! is_page() ) {
 
@@ -1128,7 +1133,7 @@ function wpbf_sidebar_layout() {
 
 		// Backwards compatibility. For pages that have the sidebar template selected, we inherit the global settings.
 		if ( is_page_template( 'page-sidebar.php' ) ) {
-			$sidebar = 'global' !== $single_sidebar_position_global ? $single_sidebar_position_global : $sidebar;
+			$sidebar = 'global' !== $single_sidebar_position_global ? $single_sidebar_position_global : $global_sidebar;
 		}
 
 		$sidebar = $single_sidebar_position && 'global' !== $single_sidebar_position ? $single_sidebar_position : $sidebar;
