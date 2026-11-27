@@ -81,9 +81,6 @@ foreach ( $singles as $single ) {
 
 /* Fields - General */
 
-// No partial refresh for these fields: a partial renders one post's meta / excerpt / read more / categories and puts it
-// into every post of the page. They reload the preview instead.
-
 // Meta sortable.
 wpbf_customizer_field()
 	->id( 'blog_sortable_meta' )
@@ -94,6 +91,15 @@ wpbf_customizer_field()
 		'comments' => __( 'Comments', 'page-builder-framework' ),
 	) )
 	->priority( 1 )
+	->partialRefresh( [
+		'metasortable' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-meta',
+			'render_callback'     => function () {
+				return wpbf_article_meta();
+			},
+		),
+	] )
 	->addToSection( 'wpbf_blog_settings' );
 
 // Separator.
@@ -101,6 +107,15 @@ wpbf_customizer_field()
 	->id( 'blog_meta_separator' )
 	->label( __( 'Separator', 'page-builder-framework' ) )
 	->priority( 1 )
+	->partialRefresh( [
+		'metaseparator' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-meta',
+			'render_callback'     => function () {
+				return wpbf_article_meta();
+			},
+		),
+	] )
 	->addToSection( 'wpbf_blog_settings' );
 
 // Author avatar.
@@ -113,6 +128,15 @@ wpbf_customizer_field()
 			'id'       => 'blog_sortable_meta',
 			'operator' => 'in',
 			'value'    => 'author',
+		),
+	] )
+	->partialRefresh( [
+		'metaavatar' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-meta',
+			'render_callback'     => function () {
+				return wpbf_article_meta();
+			},
 		),
 	] )
 	->addToSection( 'wpbf_blog_settings' );
@@ -135,6 +159,14 @@ wpbf_customizer_field()
 		'step' => 1,
 	] )
 	->priority( 1 )
+	->partialRefresh( [
+		'blogexcerpt' => array(
+			'selector'        => '.entry-summary',
+			'render_callback' => function () {
+				return the_excerpt();
+			},
+		),
+	] )
 	->addToSection( 'wpbf_blog_settings' );
 
 // Excerpt more.
@@ -151,6 +183,14 @@ wpbf_customizer_field()
 			return $space . sanitize_text_field( $value );
 		}
 	)
+	->partialRefresh( [
+		'blogexcerptindicator' => array(
+			'selector'        => '.entry-summary',
+			'render_callback' => function () {
+				return the_excerpt();
+			},
+		),
+	] )
 	->addToSection( 'wpbf_blog_settings' );
 
 // Separator.
@@ -170,6 +210,15 @@ wpbf_customizer_field()
 		'primary' => __( 'Button (Primary)', 'page-builder-framework' ),
 	] )
 	->priority( 1 )
+	->partialRefresh( [
+		'blogreadmore' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-footer .wpbf-read-more',
+			'render_callback'     => function () {
+				return get_template_part( 'inc/template-parts/blog/blog-readmore' );
+			},
+		),
+	] )
 	->addToSection( 'wpbf_blog_settings' );
 
 // Read more text.
@@ -177,6 +226,15 @@ wpbf_customizer_field()
 	->id( 'blog_read_more_text' )
 	->label( __( 'Read More Text', 'page-builder-framework' ) )
 	->priority( 1 )
+	->partialRefresh( [
+		'blogreadmoretext' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-footer .wpbf-read-more',
+			'render_callback'     => function () {
+				return get_template_part( 'inc/template-parts/blog/blog-readmore' );
+			},
+		),
+	] )
 	->addToSection( 'wpbf_blog_settings' );
 
 // Separator.
@@ -191,6 +249,15 @@ wpbf_customizer_field()
 	->id( 'blog_categories_title' )
 	->label( __( 'Categories Title', 'page-builder-framework' ) )
 	->priority( 1 )
+	->partialRefresh( [
+		'catstitle' => array(
+			'container_inclusive' => true,
+			'selector'            => '.article-footer .footer-categories',
+			'render_callback'     => function () {
+				return get_template_part( 'inc/template-parts/blog/blog-categories' );
+			},
+		),
+	] )
 	->addToSection( 'wpbf_blog_settings' );
 
 /* Fields - Pagination */
