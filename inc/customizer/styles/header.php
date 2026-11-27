@@ -296,13 +296,8 @@ wpbf_css(
 	)
 );
 
-/*
- * Mobile sub menu. The indent is added to the mobile menu's left padding of old versions (mobile_menu_padding_left,
- * moved into the padding option by inc/backwards-compatibility.php; 20 when it's gone), as before.
- */
-$wpbf_indent_base = (float) get_theme_mod( 'mobile_menu_padding_left', '20' );
-
-wpbf_css( '.wpbf-mobile-menu .sub-menu a', array( 'padding-left' => 'calc({mobile_sub_menu_indent}px + ' . $wpbf_indent_base . 'px)' ), array( 'when' => 'mobile_sub_menu_indent' ) );
+// Mobile sub menu. The indent is added to the mobile menu's left padding (Mobile Navigation -> Padding, 20 by default).
+wpbf_css( '.wpbf-mobile-menu .sub-menu a', array( 'padding-left' => 'calc({mobile_sub_menu_indent}px + {mobile_menu_padding.left}px)' ), array( 'when' => 'mobile_sub_menu_indent' ) );
 wpbf_css( '.wpbf-mobile-menu .sub-menu a', array( 'background-color' => '{mobile_sub_menu_bg_color}' ), array( 'when' => 'mobile_sub_menu_bg_color' ) );
 wpbf_css( '.wpbf-mobile-menu .sub-menu a:hover', array( 'background-color' => '{mobile_sub_menu_bg_color_alt}' ), array( 'when' => 'mobile_sub_menu_bg_color_alt' ) );
 wpbf_css( '.wpbf-mobile-menu .sub-menu .wpbf-submenu-toggle', array( 'color' => '{mobile_sub_menu_arrow_color}' ), array( 'when' => 'mobile_sub_menu_arrow_color' ) );
