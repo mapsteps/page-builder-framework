@@ -1,5 +1,8 @@
-@import "./vars";
+// The toggle and switch: looks like WordPress' own toggle in the block editor (a pill with a dot, filled with the
+// admin color when on).
+@import "../../Base/src/wp-colors";
 
+// Toggle: label left, toggle right.
 .wpbf-customize-control-toggle {
 	.wpbf-toggle {
 		display: flex;
@@ -24,12 +27,13 @@
 			}
 
 			&::after {
-				right: 18px;
+				right: 21px; // 36px track - 3px inset - 12px dot.
 			}
 		}
 	}
 }
 
+// Switch: toggle left, followed by its on/off text.
 .customize-control-wpbf-switch {
 	.wpbf-switch {
 		.wpbf-toggle-switch-label {
@@ -41,7 +45,7 @@
 			}
 
 			&::after {
-				left: 0;
+				left: 3px;
 			}
 		}
 
@@ -54,12 +58,12 @@
 
 		.toggle-on {
 			display: none;
-			color: $color-wp-blue;
+			color: $wpbf-accent;
 		}
 
 		.toggle-off {
 			display: inline-block;
-			color: $color-dark-silver-gray;
+			color: $wpbf-text-muted;
 		}
 	}
 }
@@ -78,41 +82,49 @@
 		outline: 0;
 		top: 50%;
 		transform: translate3d(0, -50%, 0);
-		transition: all 350ms cubic-bezier(0, 0.95, 0.38, 0.98),
-		background-color 150ms ease;
+		transition:
+			transform 0.2s ease,
+			background-color 0.2s ease,
+			border-color 0.2s ease;
 	}
 
+	// The track.
 	&::before {
-		width: 37px;
-		height: 14px;
-		// background-color: $color-silver-gray;
-		background-color: $color-light-silver-gray;
-		border: 1px solid $color-light-silver-gray;
-		border-radius: 8px;
+		width: 36px;
+		height: 18px;
+		background-color: #fff;
+		border: 1px solid $wpbf-text;
+		border-radius: 9px;
 	}
 
+	// The dot.
 	&::after {
-		width: 22px;
-		height: 22px;
-		background-color: $color-medium-gray;
+		width: 12px;
+		height: 12px;
+		background-color: $wpbf-text;
 		border-radius: 50%;
-		// box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
-		border: 1px solid rgba(0, 0, 0, 0.1);
 	}
 }
 
 .wpbf-toggle-switch-input {
 	opacity: 0;
 
+	&:focus-visible + .wpbf-toggle-switch-label::before {
+		box-shadow:
+			0 0 0 2px #fff,
+			0 0 0 4px $wpbf-accent;
+	}
+
 	&:checked {
 		+ .wpbf-toggle-switch-label {
 			&::before {
-				// background-color: desaturate(lighten($color-wp-blue, 40%), 40%);
+				background-color: $wpbf-accent;
+				border-color: $wpbf-accent;
 			}
 
 			&::after {
-				background-color: $color-wp-blue;
-				transform: translate3d(100%, -50%, 0);
+				background-color: #fff;
+				transform: translate3d(18px, -50%, 0);
 			}
 
 			.toggle-on {
@@ -123,5 +135,12 @@
 				display: none;
 			}
 		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wpbf-toggle-switch-label::before,
+	.wpbf-toggle-switch-label::after {
+		transition: none;
 	}
 }
