@@ -282,6 +282,27 @@ function wpbf_disable_comments( $display_comments ) {
 add_filter( 'wpbf_display_comments', 'wpbf_disable_comments' );
 
 /**
+ * Disable Comments also closes comments and pings on posts, so nothing can be posted around the hidden form (spam
+ * bots post to wp-comments-post.php directly).
+ *
+ * @param bool $open    Whether comments (or pings) are open.
+ * @param int  $post_id The post ID.
+ *
+ * @return bool Whether they stay open.
+ */
+function wpbf_disable_comments_close( $open, $post_id ) {
+
+	if ( $open && get_theme_mod( 'single_disable_comments' ) && 'post' === get_post_type( $post_id ) ) {
+		return false;
+	}
+
+	return $open;
+
+}
+add_filter( 'comments_open', 'wpbf_disable_comments_close', 10, 2 );
+add_filter( 'pings_open', 'wpbf_disable_comments_close', 10, 2 );
+
+/**
  * Categories title.
  *
  * @param string $title The categories title.
