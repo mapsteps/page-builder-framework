@@ -3,6 +3,16 @@
 Does each theme setting do what its label says? Checked on pbf.local with Premium 2.11 active, theme branch `redo`
 (= `master`). Nothing fixed, nothing committed.
 
+## Status (fixing started November 27, 2026)
+
+Worked through one by one in the fix order below, each reproduced on pbf.local first, then pushed.
+
+- Fixed: #1 EDD download sidebar, #2 "Inherit Global" sidebar on posts (+ Sidebar page template; posts now inherit General -> Sidebar, not the archive), #3 primary buttons taking the Theme Button color, #5 headings losing bold, #6 centered menu text logo, #7 mobile menu 16px, #14 tablet logo/tagline size (now up to 1024px), #15 mobile sub menu indent.
+- Kept on purpose (user): #8 hamburger icon stays white on a colored Icon Button (Icon Color also colors the search/cart icons).
+- Left out (user): #4 block editor buttons and the Accent Color. Block editor styles are their own construction zone.
+- Not covered by this audit: Premium's own settings (see CUSTOMIZER-PLAN.md -> For later -> Premium pass).
+- Next: #16 mobile tagline.
+
 ## In short (plain language)
 
 Most settings work: about 230 checks passed, in the preview and on the live site alike. The real problems:

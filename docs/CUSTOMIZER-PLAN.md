@@ -344,6 +344,10 @@ Everything the steps above left open, in one place, sorted by the module that sh
 - The Gutenberg editor styles read Premium's typography options with their own hard-coded fallbacks (3).
 - Notes in `PREMIUM-DEPENDENCIES.md` ("Notes for the Premium pass").
 - From the battle test: unsaved options preview as their registered defaults (H2 color `#000`) while the front end prints nothing; line height / letter spacing bindings cover fewer elements than the CSS; the off canvas / full screen background isn't redrawn when the menu position changes; `footer_widgets_font_size` (and any other size Premium prints raw) needs px for a typed plain number.
+- **Premium settings audit (not done yet, user November 27, 2026: "we need to keep track of that").** The theme's settings audit (`docs/SETTINGS-AUDIT.md`) ran with Premium active, but Premium's own Customizer settings were never checked one by one. Do the same round for them: does each setting do what its label says, live and in the preview.
+- Found while fixing the theme audit (November 27, 2026):
+  - Post Layouts (`inc/post-layouts.php`): a post type's Sidebar setting beats the sidebar chosen on a single post's edit screen (Premium filters after the theme applied the post's own choice). The order should be the other way around.
+  - Mini cart buttons (`inc/customizer/styles/woocommerce.php`, `.wpbf-woo-menu-item .wpbf-button`): same as the theme's fixed primary button bug. The Theme Button background also hits `.wpbf-button-primary` there (needs `:not(.wpbf-button-primary)` like theme commit f9c0e1c6).
 
 **From the battle test (theme)**
 - The preview prints the Customizer CSS after every stylesheet, the live page before the child theme's: same-selector child theme rules win only live (e.g. `wpbf-child`'s button radius). Printing the preview CSS at the live position would make them agree (preview split, step 6).
