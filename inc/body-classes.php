@@ -41,8 +41,9 @@ function wpbf_body_classes( $classes ) {
 		$classes[] = 'wpbf-full-width';
 	}
 
-	// WooCommerce list layout.
-	if ( 'list' === get_theme_mod( 'woocommerce_loop_layout' ) ) {
+	// WooCommerce list layout: shop and product category/tag pages only (Shop -> Layout). Related products, upsells and
+	// product blocks on other pages keep the grid.
+	if ( 'list' === get_theme_mod( 'woocommerce_loop_layout' ) && function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) {
 		$classes[] = 'wpbf-woo-list-view';
 	}
 
