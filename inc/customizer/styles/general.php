@@ -220,23 +220,21 @@ wpbf_css( '.wpbf-button:hover, input[type="submit"]:hover', array( 'border-color
 wpbf_css( '.wpbf-button-primary', array( 'border-color' => '{button_primary_border_color}' ), array( 'when' => 'button_border_width' ) );
 wpbf_css( '.wpbf-button-primary:hover', array( 'border-color' => '{button_primary_border_color_alt}' ), array( 'when' => 'button_border_width' ) );
 
-// Theme buttons: shape and colors.
+// Theme buttons: shape and colors. The background leaves out primary buttons (also .wpbf-button): they keep the
+// accent color unless their own colors are set below, whatever the order and even at the default accent color.
 wpbf_css(
 	'.wpbf-button, input[type="submit"]',
 	array(
 		'border-radius' => '{button_border_radius}px',
-		'background'    => '{button_bg_color}',
 		'color'         => '{button_text_color}',
 	)
 );
 
-wpbf_css(
-	'.wpbf-button:hover, input[type="submit"]:hover',
-	array(
-		'background' => '{button_bg_color_alt}',
-		'color'      => '{button_text_color_alt}',
-	)
-);
+wpbf_css( '.wpbf-button:not(.wpbf-button-primary), input[type="submit"]', array( 'background' => '{button_bg_color}' ) );
+
+wpbf_css( '.wpbf-button:hover, input[type="submit"]:hover', array( 'color' => '{button_text_color_alt}' ) );
+
+wpbf_css( '.wpbf-button:not(.wpbf-button-primary):hover, input[type="submit"]:hover', array( 'background' => '{button_bg_color_alt}' ) );
 
 wpbf_css(
 	'.wpbf-button-primary',
@@ -253,6 +251,13 @@ wpbf_css(
 		'color'      => '{button_primary_text_color_alt}',
 	)
 );
+
+// Block editor buttons follow the accent color, like the stylesheet does with the default one; the primary button
+// colors below (same selectors, printed later) win when set.
+wpbf_css( '.wp-block-button__link:not(.has-background)', array( 'background' => '{page_accent_color}' ) );
+wpbf_css( '.is-style-outline .wp-block-button__link:not(.has-text-color)', array( 'border-color' => '{page_accent_color}', 'color' => '{page_accent_color}' ) );
+wpbf_css( '.wp-block-button:not(.is-style-outline) .wp-block-button__link:not(.has-background):not(.has-text-color):hover', array( 'background' => '{page_accent_color_alt}' ) );
+wpbf_css( '.is-style-outline .wp-block-button__link:not(.has-text-color):not(.has-background):hover', array( 'border-color' => '{page_accent_color_alt}', 'color' => '{page_accent_color_alt}' ) );
 
 // Block editor buttons. Gutenberg sets the hover text color to white, so a custom color is repeated for hover.
 wpbf_css( '.wp-block-button__link:not(.has-text-color)', array( 'color' => '{button_primary_text_color}' ) );
