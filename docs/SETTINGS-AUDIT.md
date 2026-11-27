@@ -3,15 +3,14 @@
 Does each theme setting do what its label says? Checked on pbf.local with Premium 2.11 active, theme branch `redo`
 (= `master`). Nothing fixed, nothing committed.
 
-## Status (fixing started November 27, 2026)
+## Status (worked through November 27-28, 2026)
 
-Worked through one by one in the fix order below, each reproduced on pbf.local first, then pushed.
+All 30 looked at, one by one, each reproduced on pbf.local first (or from the code where the site can't show it), then pushed.
 
-- Fixed: #1 EDD download sidebar, #2 "Inherit Global" sidebar on posts (+ Sidebar page template; posts now inherit General -> Sidebar, not the archive), #3 primary buttons taking the Theme Button color, #5 headings losing bold, #6 centered menu text logo, #7 mobile menu 16px, #14 tablet logo/tagline size (now up to 1024px), #15 mobile sub menu indent.
-- Kept on purpose (user): #8 hamburger icon stays white on a colored Icon Button (Icon Color also colors the search/cart icons).
+- Fixed: #1 EDD download sidebar; #2 "Inherit Global" sidebar (posts now inherit General -> Sidebar, not the archive; also the Sidebar page template); #3 primary buttons taking the Theme Button color; #5 headings losing bold; #6 centered menu text logo; #7 mobile menu 16px (saved 16 prints; an untouched field still follows the desktop size, to save 16 move away and back); #9 sale badge with Image Alignment Right (moves to the image corner); #10 shop list layout leaking to product pages; #11 Image Beside Post without Featured Image; #12 breadcrumbs Front Page / posts page; #13 SEO plugin breadcrumbs get the theme's markup (colors, alignment, Below Header bar) and SEOPress no longer prints twice; #14 tablet logo/tagline size up to 1024px; #15 mobile sub menu indent; #16 mobile tagline; #17 Page Padding only prints changed sides (boxed padding keeps working); #18 unitless widths get px; #19 padding 0; #20 Excerpt Indicator keeps a typed leading space (0 length stays "standard"); #22 Disable Comments also closes comments; #23 Post Layout footer without "Read More"; #24 width fields show the current Page Width greyed out when empty (no hint); #25 Logo Container Width hides where it does nothing; #26 footer menus follow the Footer font; #28 Customizer defaults match the stylesheet (Scroll to Top, mobile divider, WooCommerce tabs); #30 switched-off fonts don't load.
+- Kept on purpose (user): #8 hamburger icon white on a colored Icon Button; #21 empty 404 texts / separators fall back to the default; #27 sub menu font color without a sub menu hover (mobile behaves the same, so intended); #29 accent hover on the current menu item (in the stylesheet since 2018); the blog fields' partial refresh repeating one post's line in the preview (speed preferred, change reverted).
 - Left out (user): #4 block editor buttons and the Accent Color. Block editor styles are their own construction zone.
-- Not covered by this audit: Premium's own settings (see CUSTOMIZER-PLAN.md -> For later -> Premium pass).
-- Next: #16 mobile tagline.
+- Not covered by this audit: Premium's own settings (see CUSTOMIZER-PLAN.md -> For later -> Premium pass). Not done either: the WooCommerce/EDD code-only list, the preview-only list and the blog category page without Customizer CSS (below / in CUSTOMIZER-PLAN.md).
 
 ## In short (plain language)
 
