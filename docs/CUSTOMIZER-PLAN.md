@@ -348,6 +348,7 @@ Everything the steps above left open, in one place, sorted by the module that sh
 - Found while fixing the theme audit (November 27, 2026):
   - Post Layouts (`inc/post-layouts.php`): a post type's Sidebar setting beats the sidebar chosen on a single post's edit screen (Premium filters after the theme applied the post's own choice). The order should be the other way around.
   - Mini cart buttons (`inc/customizer/styles/woocommerce.php`, `.wpbf-woo-menu-item .wpbf-button`): same as the theme's fixed primary button bug. The Theme Button background also hits `.wpbf-button-primary` there (needs `:not(.wpbf-button-primary)` like theme commit f9c0e1c6).
+  - Navigation Width typed without a unit (`1400`): the theme adds px since November 27, 2026 (`{menu_width|px}`); Premium's stacked advanced menu (`inc/customizer/styles/header.php`, `{menu_width}`) still prints it raw.
 
 **From the battle test (theme)**
 - The preview prints the Customizer CSS after every stylesheet, the live page before the child theme's: same-selector child theme rules win only live (e.g. `wpbf-child`'s button radius). Printing the preview CSS at the live position would make them agree (preview split, step 6).

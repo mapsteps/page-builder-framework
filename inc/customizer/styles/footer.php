@@ -28,7 +28,7 @@ wpbf_css(
 );
 
 // Empty: the page width (.wpbf-container).
-wpbf_css( '.wpbf-inner-footer', array( 'max-width' => '{footer_width}' ), array( 'when' => 'footer_width' ) );
+wpbf_css( '.wpbf-inner-footer', array( 'max-width' => '{footer_width|px}' ), array( 'when' => 'footer_width' ) );
 
 wpbf_css( '.wpbf-page-footer', array( 'background-color' => '{footer_bg_color}' ), array( 'when' => 'footer_bg_color' ) );
 wpbf_css( '.wpbf-inner-footer', array( 'color' => '{footer_font_color}' ), array( 'when' => 'footer_font_color' ) );

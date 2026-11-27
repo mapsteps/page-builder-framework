@@ -112,7 +112,7 @@ if ( ! $wpbf_custom_logo && get_theme_mod( 'menu_logo_description' ) ) {
 }
 
 // Navigation. The height prints for a saved 0 too, as before.
-wpbf_css( '.wpbf-nav-wrapper', array( 'max-width' => '{menu_width}' ), array( 'when' => 'menu_width' ) );
+wpbf_css( '.wpbf-nav-wrapper', array( 'max-width' => '{menu_width|px}' ), array( 'when' => 'menu_width' ) );
 
 wpbf_css(
 	'.wpbf-nav-wrapper',
@@ -325,7 +325,7 @@ if ( 'none' !== wpbf_mod( 'pre_header_layout' ) ) {
 		array( 'when' => 'pre_header_height' )
 	);
 
-	wpbf_css( '.wpbf-inner-pre-header', array( 'max-width' => '{pre_header_width}' ), array( 'when' => 'pre_header_width' ) );
+	wpbf_css( '.wpbf-inner-pre-header', array( 'max-width' => '{pre_header_width|px}' ), array( 'when' => 'pre_header_width' ) );
 	wpbf_css( '.wpbf-pre-header', array( 'background-color' => '{pre_header_bg_color}' ), array( 'when' => 'pre_header_bg_color' ) );
 	wpbf_css( '.wpbf-pre-header', array( 'color' => '{pre_header_font_color}' ), array( 'when' => 'pre_header_font_color' ) );
 	wpbf_css( '.wpbf-pre-header a', array( 'color' => '{pre_header_accent_color}' ), array( 'when' => 'pre_header_accent_color' ) );

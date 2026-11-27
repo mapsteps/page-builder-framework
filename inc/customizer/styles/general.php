@@ -61,7 +61,7 @@ foreach ( $wpbf_devices as $wpbf_device => $wpbf_media ) {
 }
 
 // Page width.
-wpbf_css( '.wpbf-container', array( 'max-width' => '{page_max_width}' ) );
+wpbf_css( '.wpbf-container', array( 'max-width' => '{page_max_width|px}' ) );
 
 // Boxed layout.
 if ( wpbf_mod( 'page_boxed' ) ) {
@@ -77,7 +77,7 @@ if ( wpbf_mod( 'page_boxed' ) ) {
 	wpbf_css(
 		'.wpbf-page',
 		array(
-			'max-width'        => '{page_max_width}',
+			'max-width'        => '{page_max_width|px}',
 			'margin'           => '0 auto',
 			'background-color' => '{page_boxed_background}',
 		),

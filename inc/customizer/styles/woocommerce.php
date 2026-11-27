@@ -129,7 +129,7 @@ wpbf_css( $wpbf_woo_buttons_hover, array( 'background' => '{button_primary_bg_co
 wpbf_css( $wpbf_woo_buttons_hover, array( 'color' => '{button_primary_text_color_alt}' ), array( 'when' => 'button_primary_text_color_alt' ) );
 
 // Shop loop.
-wpbf_css( '.archive.woocommerce #inner-content', array( 'max-width' => '{woocommerce_loop_custom_width}' ), array( 'when' => 'woocommerce_loop_custom_width' ) );
+wpbf_css( '.archive.woocommerce #inner-content', array( 'max-width' => '{woocommerce_loop_custom_width|px}' ), array( 'when' => 'woocommerce_loop_custom_width' ) );
 wpbf_css( '.woocommerce ul.products li.product, .woocommerce-page ul.products li.product', array( 'text-align' => '{woocommerce_loop_content_alignment}' ), array( 'when' => 'woocommerce_loop_content_alignment' ) );
 
 $wpbf_loop_alignment = get_theme_mod( 'woocommerce_loop_content_alignment' );
@@ -254,7 +254,7 @@ wpbf_css( $wpbf_out_of_stock, array( 'background-color' => '{woocommerce_loop_ou
 $wpbf_product_images  = '.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images';
 $wpbf_product_summary = '.woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary';
 
-wpbf_css( '.single.woocommerce #inner-content', array( 'max-width' => '{woocommerce_single_custom_width}' ), array( 'when' => 'woocommerce_single_custom_width' ) );
+wpbf_css( '.single.woocommerce #inner-content', array( 'max-width' => '{woocommerce_single_custom_width|px}' ), array( 'when' => 'woocommerce_single_custom_width' ) );
 
 if ( 'right' === get_theme_mod( 'woocommerce_single_alignment' ) ) {
 	echo esc_attr( $wpbf_product_summary ) . ' {float: left;}';

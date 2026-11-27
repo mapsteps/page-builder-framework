@@ -107,7 +107,7 @@ foreach ( apply_filters( 'wpbf_archives', array( 'archive' ) ) as $wpbf_archive 
 		$wpbf_width_selector = '.' . $wpbf_archive . ' #inner-content';
 	}
 
-	wpbf_css( $wpbf_width_selector, array( 'max-width' => '{' . $wpbf_archive . '_custom_width}' ), array( 'when' => $wpbf_archive . '_custom_width' ) );
+	wpbf_css( $wpbf_width_selector, array( 'max-width' => '{' . $wpbf_archive . '_custom_width|px}' ), array( 'when' => $wpbf_archive . '_custom_width' ) );
 
 	$wpbf_layout = wpbf_mod( $wpbf_archive . '_layout' );
 	$wpbf_style  = wpbf_mod( $wpbf_archive . '_post_style' );
@@ -189,12 +189,12 @@ foreach ( apply_filters( 'wpbf_singles', array( 'single' ) ) as $wpbf_single ) {
 	$wpbf_content = '.wpbf-' . $wpbf_single . '-content';
 	$wpbf_page    = 'single' === $wpbf_single ? '.single' : '.single-' . $wpbf_single;
 
-	wpbf_css( $wpbf_page . ' #inner-content', array( 'max-width' => '{' . $wpbf_single . '_custom_width}' ), array( 'when' => $wpbf_single . '_custom_width' ) );
+	wpbf_css( $wpbf_page . ' #inner-content', array( 'max-width' => '{' . $wpbf_single . '_custom_width|px}' ), array( 'when' => $wpbf_single . '_custom_width' ) );
 
 	// The content width of cover and group blocks follows.
 	wpbf_css(
 		$wpbf_page . ' .wp-block-cover .wp-block-cover__inner-container, ' . $wpbf_page . ' .wp-block-group .wp-block-group__inner-container',
-		array( 'max-width' => '{' . $wpbf_single . '_custom_width}' ),
+		array( 'max-width' => '{' . $wpbf_single . '_custom_width|px}' ),
 		array( 'when' => $wpbf_single . '_custom_width' )
 	);
 
