@@ -1,3 +1,5 @@
+@import "../../Base/src/wp-colors";
+
 .wpbf-customize-control-responsive {
 	position: relative;
 
@@ -12,11 +14,12 @@
 		margin-bottom: 0;
 	}
 
+	// Device switcher: plain icons, the active one in the admin color.
 	.wpbf-device-buttons {
 		display: flex;
 		justify-content: flex-start;
 		position: relative;
-		margin-left: 12px;
+		margin-left: 8px;
 		font-weight: 600;
 		font-size: 14px;
 	}
@@ -26,24 +29,34 @@
 		align-items: center;
 		justify-content: center;
 		position: relative;
-		margin-right: 3px;
-		width: 22px;
-		height: 22px;
-		background-color: #eee;
-		border-radius: 50%;
+		margin: 0;
+		padding: 0;
+		width: 24px;
+		height: 24px;
+		color: $wpbf-text-muted;
+		background-color: transparent;
 		border-width: 0;
+		border-radius: $wpbf-field-radius;
 		cursor: pointer;
-		transition: all 0.2s;
+		transition: color 0.15s;
 
 		i {
-			width: 11px;
-			height: 11px;
-			font-size: 11px;
+			width: 16px;
+			height: 16px;
+			font-size: 16px;
 		}
 
-		&.is-active,
 		&:hover {
-			background-color: #ddd;
+			color: $wpbf-text;
+		}
+
+		&.is-active {
+			color: $wpbf-accent;
+		}
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 2px $wpbf-accent;
 		}
 	}
 
