@@ -1,11 +1,18 @@
+@import "../../Base/src/wp-colors";
+
 .wpbf-customize-control-sortable {
 	ul.ui-sortable {
+		// Light borders, like the items on WordPress' menu screen.
 		li {
 			padding: 5px 10px;
-			border: 1px solid #333;
+			color: $wpbf-text;
 			background: #fff;
+			border: 1px solid $wpbf-light-border;
+			border-radius: $wpbf-field-radius;
 
 			.dashicons {
+				color: $wpbf-text-muted;
+
 				&.dashicons-menu {
 					float: right;
 				}
@@ -15,12 +22,14 @@
 				}
 			}
 
+			// Hidden parts: faded, with a dashed border.
 			&.invisible {
-				color: #aaa;
-				border: 1px dashed #aaa;
+				color: #a7aaad;
+				background: transparent;
+				border: 1px dashed #ccc;
 
-				.dashicons.visibility {
-					color: #aaa;
+				.dashicons {
+					color: #a7aaad;
 				}
 			}
 		}

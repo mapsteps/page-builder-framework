@@ -1,3 +1,5 @@
+@import "../../Base/src/wp-colors";
+
 .wpbf-customize-control-color {
 	.wpbf-control-form {
 		position: relative;
@@ -146,9 +148,9 @@
 
 	.wpbf-color-input:focus,
 	.wpbf-color-input:active {
-		box-shadow: 0 0 0 1px #2271b1;
+		box-shadow: 0 0 0 1px $wpbf-accent;
 		outline: none;
-		border-color: #2271b1;
+		border-color: $wpbf-accent;
 	}
 
 	.wpbf-color-preview-wrapper {

@@ -1,3 +1,5 @@
+@import "../../Base/src/wp-colors";
+
 .rtl {
 	.wpbf-customize-control-section-tabs {
 		left: 0;
@@ -50,13 +52,13 @@
 
 			&:active,
 			&:focus {
-				color: #2271b1;
+				color: $wpbf-accent;
 			}
 		}
 
 		&.is-active {
 			a {
-				border-color: #2271b1;
+				border-color: $wpbf-accent;
 			}
 		}
 	}

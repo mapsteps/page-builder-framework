@@ -1,26 +1,52 @@
+@import "../../Base/src/wp-colors";
+
 .wpbf-customize-control-radio-buttonset {
 	.buttonset {
 		display: flex;
 		flex-wrap: wrap;
 
+		// White buttons with a border, joined into one group; the chosen one in the admin color.
 		.switch-label {
-			background: rgba(0, 0, 0, 0.1);
-			border: 1px rgba(0, 0, 0, 0.1);
-			color: #555d66;
-			margin: 0;
-			text-align: center;
-			padding: 0.5em 0.9em;
+			position: relative;
+			margin: 0 0 0 -1px;
+			padding: 0 10px;
 			flex-grow: 1;
+			line-height: $wpbf-field-height - 2px;
+			text-align: center;
+			color: $wpbf-text;
+			background: #fff;
+			border: 1px solid $wpbf-field-border;
+			transition: color 0.15s;
+
+			&:first-of-type {
+				margin-left: 0;
+				border-radius: $wpbf-field-radius 0 0 $wpbf-field-radius;
+			}
+
+			&:last-of-type {
+				border-radius: 0 $wpbf-field-radius $wpbf-field-radius 0;
+			}
+
+			&:hover {
+				color: $wpbf-accent;
+			}
 		}
 
 		.switch-input {
 			position: absolute;
 
-			&:checked {
-				+ .switch-label {
-					background-color: #00a0d2;
-					color: rgba(255, 255, 255, 0.8);
-				}
+			&:checked + .switch-label {
+				z-index: 1;
+				color: #fff;
+				background-color: $wpbf-accent;
+				border-color: $wpbf-accent;
+			}
+
+			&:focus-visible + .switch-label {
+				z-index: 2;
+				box-shadow:
+					0 0 0 1px #fff,
+					0 0 0 3px $wpbf-accent;
 			}
 		}
 	}
