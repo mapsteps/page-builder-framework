@@ -103,19 +103,23 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 		$yoast_titles = get_option( 'wpseo_titles', array() );
 
 		if ( isset( $yoast_titles['breadcrumbs-enable'] ) && $yoast_titles['breadcrumbs-enable'] == 1 ) {
-			return yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' );
+			return wpbf_seo_breadcrumbs(
+				function () {
+					yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' );
+				}
+			);
 		}
 
 	}
 
 	// Use Rank Math SEO Breadcrumbs if enabled.
 	if ( function_exists( 'rank_math_the_breadcrumbs' ) ) {
-		return rank_math_the_breadcrumbs();
+		return wpbf_seo_breadcrumbs( 'rank_math_the_breadcrumbs' );
 	}
 
 	// Use SEOPress Breadcrumbs if enabled.
 	if ( function_exists( 'seopress_display_breadcrumbs' ) ) {
-		seopress_display_breadcrumbs();
+		return wpbf_seo_breadcrumbs( 'seopress_display_breadcrumbs' );
 	}
 
 	// Stop if we're on WooCommerce Pages as they handle breadcrumbs themselves.
@@ -138,6 +142,33 @@ function wpbf_do_breadcrumbs( $args = array() ) {
 	}
 
 	return $breadcrumb->trail();
+
+}
+
+/**
+ * Print an SEO plugin's breadcrumbs (Yoast, Rank Math, SEOPress) in the theme's breadcrumb markup, so the
+ * Customizer's colors, alignment, background and "Below Header" bar apply to them too. The separator stays the
+ * plugin's own.
+ *
+ * @param callable $print_breadcrumbs Prints the plugin's breadcrumbs.
+ */
+function wpbf_seo_breadcrumbs( $print_breadcrumbs ) {
+
+	ob_start();
+	call_user_func( $print_breadcrumbs );
+	$breadcrumb = trim( ob_get_clean() );
+
+	if ( '' === $breadcrumb ) {
+		return;
+	}
+
+	$breadcrumb = '<div class="wpbf-breadcrumbs">' . $breadcrumb . '</div>';
+
+	if ( 'header' === get_theme_mod( 'breadcrumbs_position' ) ) {
+		$breadcrumb = '<div class="wpbf-breadcrumbs-container"><div class="wpbf-container wpbf-container-center">' . $breadcrumb . '</div></div>';
+	}
+
+	echo $breadcrumb; // phpcs:ignore WordPress.Security.EscapeOutput -- The SEO plugin's own breadcrumb markup.
 
 }
 
