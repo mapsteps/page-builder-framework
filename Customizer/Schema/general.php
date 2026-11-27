@@ -221,11 +221,11 @@ return array(
 	),
 	'scrolltop_bg_color' => array(
 		'type'    => 'color',
-		'default' => 'rgba(62,67,73,0.5)',
+		'default' => 'rgba(0,0,0,0.5)', // As the stylesheet (it moved to black in 2020).
 	),
 	'scrolltop_bg_color_alt' => array(
 		'type'    => 'color',
-		'default' => 'rgba(62,67,73,0.7)',
+		'default' => 'rgba(0,0,0,0.7)', // As the stylesheet.
 	),
 	'scrolltop_icon_color' => array(
 		'type'    => 'color',

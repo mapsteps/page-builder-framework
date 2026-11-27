@@ -276,7 +276,7 @@ return array(
 	),
 	'mobile_menu_border_color' => array(
 		'type'    => 'color',
-		'default' => '#d9d9e0',
+		'default' => '#dedee5', // As the stylesheet (var(--base-color)).
 	),
 	'mobile_menu_submenu_arrow_color' => array(
 		'type'    => 'color',

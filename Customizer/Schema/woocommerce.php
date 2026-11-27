@@ -85,7 +85,7 @@ return array(
 	),
 	'woocommerce_single_tabs_background_color' => array(
 		'type'    => 'color',
-		'default' => '#e7e7ec',
+		'default' => '#dedee5', // As the stylesheet (var(--base-color)).
 	),
 	'woocommerce_single_tabs_background_color_alt' => array(
 		'type'    => 'color',
