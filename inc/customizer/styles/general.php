@@ -45,7 +45,10 @@ foreach ( $wpbf_devices as $wpbf_device => $wpbf_media ) {
 			'padding-bottom' => '{page_padding.' . $wpbf_device . '_bottom}px',
 			'padding-left'   => '{page_padding.' . $wpbf_device . '_left}px',
 		),
-		array( 'media' => $wpbf_media )
+		array(
+			'media' => $wpbf_media,
+			'parts' => true, // Only the sides that differ from the default: untouched sides must not beat the boxed padding.
+		)
 	);
 }
 
@@ -56,7 +59,10 @@ foreach ( $wpbf_devices as $wpbf_device => $wpbf_media ) {
 			'padding-right' => '{page_padding.' . $wpbf_device . '_right}px',
 			'padding-left'  => '{page_padding.' . $wpbf_device . '_left}px',
 		),
-		array( 'media' => $wpbf_media )
+		array(
+			'media' => $wpbf_media,
+			'parts' => true, // Only the sides that differ from the default: untouched sides must not beat the boxed padding.
+		)
 	);
 }
 
