@@ -16,11 +16,14 @@ $style                  = $template_parts['style'];
 $post_classes           = array( 'wpbf-blog-layout-beside' );
 $post_classes[]         = 'wpbf-post-style-' . $style;
 
+// The image column only with Featured Image switched on in the header parts (Blog / Archive Layout -> Header).
+$show_featured = has_post_thumbnail() && is_array( $template_parts_header ) && in_array( 'featured', $template_parts_header, true );
+
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_classes ); ?> <?php wpbf_archive_schema_markup(); ?>>
 
-	<?php if ( has_post_thumbnail() ) { ?>
+	<?php if ( $show_featured ) { ?>
 
 	<div class="wpbf-grid wpbf-grid-medium">
 
@@ -85,7 +88,7 @@ $post_classes[]         = 'wpbf-post-style-' . $style;
 
 		<?php } ?>
 
-	<?php if ( has_post_thumbnail() ) { ?>
+	<?php if ( $show_featured ) { ?>
 
 		</div>
 
