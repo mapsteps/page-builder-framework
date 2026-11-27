@@ -23,9 +23,11 @@
 defined( 'ABSPATH' ) || die( "Can't access directly" );
 
 $wpbf_menu_position = wpbf_mod( 'menu_position' );
+// Text logo and tagline sizes. Tablet up to the desktop breakpoint, where the mobile header (and the image logo's
+// tablet width) starts.
 $wpbf_devices       = array(
 	'desktop' => '',
-	'tablet'  => 'max-medium',
+	'tablet'  => 'max-desktop',
 	'mobile'  => 'max-mobile',
 );
 
