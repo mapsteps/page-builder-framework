@@ -174,6 +174,15 @@ wpbf_customizer_field()
 	->id( 'excerpt_more' )
 	->label( __( 'Excerpt Indicator', 'page-builder-framework' ) )
 	->priority( 1 )
+	// The indicator is glued to the last word ("many..."); a space typed at the start is kept for " Read on".
+	->sanitizeCallback(
+		function ( $value ) {
+			$value = (string) $value;
+			$space = '' !== $value && ' ' === $value[0] ? ' ' : '';
+
+			return $space . sanitize_text_field( $value );
+		}
+	)
 	->partialRefresh( [
 		'blogexcerptindicator' => array(
 			'selector'        => '.entry-summary',
