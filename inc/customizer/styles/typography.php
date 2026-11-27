@@ -51,7 +51,8 @@ $wpbf_fonts = array(
 	'h4'                                                => array( 'page_h4_toggle', 'page_h4_font_family' ),
 	'h5'                                                => array( 'page_h5_toggle', 'page_h5_font_family' ),
 	'h6'                                                => array( 'page_h6_toggle', 'page_h6_font_family' ),
-	'.wpbf-page-footer'                                 => array( 'footer_font_toggle', 'footer_font_family' ),
+	// The footer's menus too: .wpbf-menu gets the Navigation font directly, which beat the inherited footer font.
+	'.wpbf-page-footer, .wpbf-page-footer .wpbf-menu'   => array( 'footer_font_toggle', 'footer_font_family' ),
 );
 
 foreach ( $wpbf_fonts as $wpbf_selector => $wpbf_font ) {
