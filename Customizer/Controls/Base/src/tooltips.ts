@@ -103,5 +103,13 @@ function wpbfInjectTooltip(
 		// Append the trigger & content next to the control's title.
 		target.appendChild(trigger);
 		target.appendChild(content);
+
+		// The tooltip's pointer points at the "?" (the tooltip starts at the label's left edge).
+		trigger.addEventListener("mouseenter", function () {
+			const triggerBox = trigger.getBoundingClientRect();
+			const pointer = triggerBox.left + triggerBox.width / 2 - target.getBoundingClientRect().left;
+
+			content.style.setProperty("--wpbf-tooltip-pointer", pointer + "px");
+		});
 	});
 }

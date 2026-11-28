@@ -1,0 +1,49 @@
+// One tooltip look for every Customizer tooltip (the help "?" tooltips, the color swatch names): a dark box like
+// WordPress' own tooltips with a small pointer down to what it explains, fading in while moving up a little.
+// Mixins only (prints nothing until included). The pointer sits at --wpbf-tooltip-pointer from the box's left edge
+// (the middle by default).
+@import "wp-colors";
+
+$wpbf-tooltip-shift: 4px; // How far the tooltip moves up while it fades in.
+
+@mixin wpbf-tooltip-box {
+	padding: 6px 8px;
+	color: #fff;
+	background: $wpbf-text;
+	border-radius: $wpbf-field-radius;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.4;
+	text-align: left;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition:
+		opacity 0.2s ease,
+		visibility 0.2s ease,
+		transform 0.2s ease;
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: 100%;
+		left: var(--wpbf-tooltip-pointer, 50%);
+		margin-left: -5px;
+		border: 5px solid transparent;
+		border-top-color: $wpbf-text;
+	}
+
+	a {
+		color: #72aee6;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+	}
+}
+
+@mixin wpbf-tooltip-shown {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+}

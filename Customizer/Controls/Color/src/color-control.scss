@@ -1,5 +1,6 @@
 @import "../../Base/src/wp-colors";
 @import "../../Base/src/reset-button";
+@import "../../Base/src/tooltip-look";
 
 $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 
@@ -226,41 +227,29 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 		transform: scale(1.1, 1.1);
 	}
 
+	// The 'tooltip' label style: the label as a tooltip above the color circle (the shared tooltip look).
 	.wpbf-label-tooltip {
+		@include wpbf-tooltip-box;
 		position: absolute;
-		bottom: 45px;
+		bottom: calc(100% + 8px);
 		left: -8px;
-		padding: 7px 10px 3px; // The 4px of bottom side is handled by label / description's margin-bottom.
-		width: auto; // just for fallback for max-content.
 		width: max-content;
-		max-width: 100px;
-		color: #fff;
-		background-color: rgba(0, 0, 0, 0.7);
-		border-radius: 4px;
-		opacity: 0;
-		visibility: hidden;
-		transition: all 0.2s;
+		max-width: 160px;
+		transform: translateY($wpbf-tooltip-shift);
+		--wpbf-tooltip-pointer: 24px;
 
-		&::before {
-			content: "";
-			position: absolute;
-			bottom: -8px;
-			left: 19px;
-			border-width: 8px 7px 0 7px;
-			border-style: solid;
-			border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
-		}
-
-		.customize-control-title {
-			line-height: 1.2;
+		.customize-control-title,
+		.customize-control-description {
+			margin: 0;
+			color: inherit;
+			font-size: inherit;
+			line-height: inherit;
 		}
 	}
 
-	.wpbf-trigger-circle-wrapper {
-		&:hover ~ .wpbf-label-tooltip {
-			opacity: 1;
-			visibility: visible;
-		}
+	.wpbf-trigger-circle-wrapper:hover ~ .wpbf-label-tooltip {
+		@include wpbf-tooltip-shown;
+		transform: translateY(0);
 	}
 
 	&[data-wpbf-parent-control-type="wpbf-multicolor"] {
@@ -308,8 +297,8 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 		width: $wpbf-color-group-swatch;
 	}
 
-	// A swatch's name ("Normal", "Hover", "Active") shows as a tooltip above it, like WordPress' own tooltips: on hover
-	// and for keyboard focus.
+	// A swatch's name ("Normal", "Hover", "Active") shows as a tooltip above it (the shared tooltip look), on hover and
+	// for keyboard focus.
 	.wpbf-color-group-swatch {
 		display: flex;
 		justify-content: center;
@@ -318,30 +307,20 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 	}
 
 	.wpbf-color-group-caption {
+		@include wpbf-tooltip-box;
 		position: absolute;
 		bottom: calc(100% + 8px);
 		left: 50%;
-		padding: 4px 8px;
-		color: #fff;
-		background: $wpbf-text;
-		border-radius: $wpbf-field-radius;
-		font-size: 12px;
-		line-height: 1.4;
 		white-space: nowrap;
-		opacity: 0;
-		visibility: hidden;
-		pointer-events: none;
-		transform: translateX(-50%);
-		transition:
-			opacity 0.15s,
-			visibility 0.15s;
+		transform: translate(-50%, $wpbf-tooltip-shift);
 		z-index: 10;
 	}
 
 	.wpbf-color-group-swatch:hover .wpbf-color-group-caption,
 	.wpbf-color-group-swatch:has(:focus-visible) .wpbf-color-group-caption {
-		opacity: 1;
-		visibility: visible;
+		@include wpbf-tooltip-shown;
+		pointer-events: none;
+		transform: translate(-50%, 0);
 	}
 
 	// The swatch whose picker is open.
