@@ -87,11 +87,11 @@
 	transform: rotate(180deg);
 }
 
-/* Several choices: chips and an inline search field. */
+/* Several choices: chips and a search field filling the rest of the last line (like the block editor's tag field). */
 .wpbf-select-multiple .wpbf-select-selection {
 	position: relative;
 	min-height: $wpbf-field-height;
-	padding: 0 7px 7px 2px;
+	padding: 5px 6px;
 	background-color: #fff;
 	border: 1px solid $wpbf-field-border;
 	border-radius: $wpbf-field-radius;
@@ -99,95 +99,93 @@
 }
 
 .wpbf-select-multiple.is-clearable .wpbf-select-selection {
-	padding-right: 25px;
+	padding-right: 28px;
 }
 
 .wpbf-select-chips {
-	display: block;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px;
 	margin: 0;
 	padding: 0;
 	list-style: none;
 
 	> li {
-		margin-bottom: 0;
+		margin: 0;
 	}
 }
 
+// A chip: its text, then the × to remove it.
 .wpbf-select-chip {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
 	position: relative;
 	max-width: 100%;
-	margin: 7px 0 0 5px;
-	padding: 2px 0 2px 20px;
+	height: 28px;
+	padding: 0 24px 0 8px;
+	color: $wpbf-text;
 	background-color: #f0f0f0;
-	border: 1px solid $wpbf-light-border;
 	border-radius: $wpbf-field-radius;
-	vertical-align: bottom;
+	font-size: 13px;
+	line-height: 28px;
 	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	line-height: 18px;
 }
 
 .wpbf-select-chip-text {
-	padding: 0 5px 0 2px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	cursor: default;
 }
 
 .wpbf-select-chip-remove {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: absolute;
 	top: 0;
-	left: 0;
+	right: 0;
+	width: 24px;
 	height: 100%;
-	padding: 0 4px;
+	padding: 0;
+	color: $wpbf-text-muted;
 	background-color: transparent;
 	border: none;
-	border-right: 1px solid $wpbf-light-border;
-	border-radius: $wpbf-field-radius 0 0 $wpbf-field-radius;
-	color: $wpbf-text-muted;
-	font-weight: bold;
+	border-radius: 0 $wpbf-field-radius $wpbf-field-radius 0;
+	font-size: 16px;
 	line-height: 1;
 	cursor: pointer;
 
 	&:hover,
 	&:focus {
-		background-color: #e0e0e0;
-		color: $wpbf-text;
+		color: $wpbf-accent;
 		outline: none;
 	}
 }
 
 .wpbf-select-inline-search {
-	display: inline-block;
-	max-width: 100%;
-	vertical-align: bottom;
+	flex: 1 1 60px;
+	min-width: 60px;
 
 	.wpbf-select-search {
-		width: auto;
-		min-width: 3em;
-		max-width: 100%;
-		height: 22px;
+		width: 100%;
+		height: 28px;
 		min-height: 0;
-		margin: 7px 0 0 5px;
-		padding: 0;
+		margin: 0;
+		padding: 0 4px;
 		background: transparent;
 		border: none;
 		border-radius: 0;
 		outline: 0;
 		box-shadow: none;
-		font-size: 100%;
-		line-height: 22px;
-		vertical-align: bottom;
+		font-size: 14px;
+		line-height: 28px;
 		-webkit-appearance: textfield;
-	}
-}
 
-.wpbf-select-multiple .wpbf-select-chips:only-child .wpbf-select-inline-search,
-.wpbf-select-multiple .wpbf-select-inline-search:first-child {
-	width: 100%;
-
-	.wpbf-select-search {
-		width: 100%;
+		&:focus {
+			border: none;
+			box-shadow: none;
+		}
 	}
 }
 
@@ -206,10 +204,10 @@
 }
 
 .wpbf-select-multiple .wpbf-select-clear {
-	top: 9px;
-	right: 10px;
-	height: 20px;
-	padding: 1px;
+	top: 5px;
+	right: 4px;
+	height: 28px;
+	padding: 0 4px;
 }
 
 /* The open list. */

@@ -2,23 +2,34 @@
 
 .wpbf-customize-control-sortable {
 	ul.ui-sortable {
-		// Light borders, like the items on WordPress' menu screen.
+		// Light borders, like the items on WordPress' menu screen; as tall as the other fields. The whole row drags
+		// (move cursor), the eye shows or hides the part.
 		li {
-			padding: 5px 10px;
+			display: flex;
+			align-items: center;
+			min-height: $wpbf-field-height;
+			padding: 0 10px;
 			color: $wpbf-text;
 			background: #fff;
 			border: 1px solid $wpbf-light-border;
 			border-radius: $wpbf-field-radius;
+			cursor: move;
 
 			.dashicons {
 				color: $wpbf-text-muted;
 
 				&.dashicons-menu {
-					float: right;
+					order: 2;
+					margin-left: auto;
 				}
 
 				&.visibility {
 					margin-right: 10px;
+					cursor: pointer;
+
+					&:hover {
+						color: $wpbf-accent;
+					}
 				}
 			}
 
