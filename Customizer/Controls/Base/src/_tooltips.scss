@@ -6,11 +6,18 @@
 	position: relative;
 	z-index: 5;
 
+	// The "?": centered on the label's text, gray like the other small icons, the admin color on hover.
 	.tooltip-trigger {
 		position: relative;
-		top: 0;
+		top: 2.5px;
 		left: 3px;
+		color: $wpbf-text-muted;
 		text-decoration: none;
+		transition: color 0.15s;
+
+		&:hover {
+			color: $wpbf-accent;
+		}
 
 		.dashicons {
 			font-size: 18px;

@@ -19,8 +19,8 @@
 		line-height: 1.3;
 	}
 
+	// The headline's tighter line height puts its text higher: the "?" follows, to stay centered on it.
 	.wpbf-tooltip-wrapper .tooltip-trigger {
-		top: -4px;
-		left: 2px;
+		top: -1.5px;
 	}
 }

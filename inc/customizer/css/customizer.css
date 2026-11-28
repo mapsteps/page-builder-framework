@@ -8,15 +8,6 @@
 	color: #3ba9d2;
 }
 
-/* Tooltips  */
-.tooltip-trigger {
-	color: #999;
-}
-
-.tooltip-trigger:hover {
-	color: #50575e;
-}
-
 /* Hide "Font Family" labels */
 .wpbf-typography-label-description,
 #customize-control-menu_logo_font_family,
