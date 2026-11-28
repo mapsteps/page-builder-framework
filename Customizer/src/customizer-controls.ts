@@ -22,7 +22,6 @@ import "../Controls/MarginPadding/src/margin-padding-control.scss";
 import "../Controls/Headline/src/headline-toggle-control.scss";
 import "../Controls/Repeater/src/repeater-control.scss";
 import "../Controls/Editor/src/editor-control.scss";
-import "../Controls/Typography/src/typography-control.scss";
 import "../Sections/src/section-types.scss";
 
 // Scripts.

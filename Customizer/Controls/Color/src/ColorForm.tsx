@@ -361,42 +361,25 @@ export default function ColorForm({ control }: Props) {
 		: pickerComponent + " colorPickerContainer";
 
 	const pickerTrigger = (
-		<>
-			<button
-				type="button"
-				ref={resetRef}
-				className="wpbf-control-reset"
-				onClick={handleReset}
-				style={{ display: isPickerOpen ? "flex" : "none" }}
-			>
-				<i className="dashicons dashicons-image-rotate"></i>
-			</button>
-
-			<ColorPickerCircle
-				pickerComponent={pickerComponent}
-				useHueMode={useHueMode}
-				color={!useHueMode ? inputValue : colord({ h: inputValue, s: 100, l: 50 }).toHex()}
-				isPickerOpen={isPickerOpen}
-				togglePickerHandler={togglePicker}
-			/>
-		</>
+		<ColorPickerCircle
+			pickerComponent={pickerComponent}
+			useHueMode={useHueMode}
+			color={!useHueMode ? inputValue : colord({ h: inputValue, s: 100, l: 50 }).toHex()}
+			isPickerOpen={isPickerOpen}
+			togglePickerHandler={togglePicker}
+		/>
 	);
 
-	// In a row of states: the swatch with its name (a tooltip); the reset sits in the picker (no room beside the swatch).
+	// In a row of states: the swatch with its name (a tooltip).
 	const groupSwatch = group && (
-		<div className={"wpbf-color-group-swatch" + (isPickerOpen ? " is-open" : "")}>
-			<ColorPickerCircle
-				pickerComponent={pickerComponent}
-				useHueMode={useHueMode}
-				color={!useHueMode ? inputValue : colord({ h: inputValue, s: 100, l: 50 }).toHex()}
-				isPickerOpen={isPickerOpen}
-				togglePickerHandler={togglePicker}
-			/>
+		<div className="wpbf-color-group-swatch">
+			{pickerTrigger}
 			<span className="wpbf-color-group-caption">{group.caption}</span>
 		</div>
 	);
 
-	const groupReset = group && (
+	// The reset sits in the picker, beside the color code (the same place for every color).
+	const resetButton = (
 		<button
 			type="button"
 			ref={resetRef}
@@ -476,7 +459,7 @@ export default function ColorForm({ control }: Props) {
 							color={inputValue}
 							onChange={handleInputChange}
 						/>
-						{groupReset}
+						{resetButton}
 					</div>
 				</div>
 			</div>

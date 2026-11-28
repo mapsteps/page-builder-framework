@@ -125,10 +125,6 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 		height: 20px;
 	}
 
-	.wpbf-color-input-wrapper {
-		margin-top: 15px;
-	}
-
 	.wpbf-color-input-control {
 		position: relative;
 		display: flex;
@@ -171,8 +167,7 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 		z-index: 2;
 	}
 
-	.wpbf-color-preview,
-	.wpbf-control-reset {
+	.wpbf-color-preview {
 		position: absolute;
 		padding: 0;
 		background-color: transparent;
@@ -187,11 +182,24 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 		border-width: 0;
 	}
 
-	// The reset button (shows while the picker is open), left of the color circle.
-	.wpbf-control-reset {
-		@include wpbf-reset-button;
-		top: 5px;
-		right: 38px;
+	// The picker's last row: the color code and the reset beside it, centered on each other.
+	.wpbf-color-input-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-top: 15px;
+
+		.wpbf-color-input-wrapper {
+			flex: 1;
+		}
+
+		.wpbf-control-reset {
+			@include wpbf-reset-button;
+			position: static;
+			flex-shrink: 0;
+			width: 30px;
+			height: 30px;
+		}
 	}
 
 	.wpbf-color-swatches {
@@ -257,22 +265,11 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 		margin-bottom: 20px;
 		padding-right: 0;
 		width: 35px;
-
-		.wpbf-control-reset {
-			top: -19px;
-			right: 8px;
-		}
 	}
 
 	&[data-wpbf-parent-control-type="wpbf-typography"] {
 		.colorPickerContainer {
 			top: 55px;
-		}
-
-		.wpbf-control-reset {
-			top: 30px;
-			right: auto;
-			left: 35px;
 		}
 	}
 
@@ -287,7 +284,6 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 		}
 
 		.wpbf-control-right-col {
-			justify-content: center;
 			width: $wpbf-color-group-swatch;
 		}
 	}
@@ -297,22 +293,23 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 		width: $wpbf-color-group-swatch;
 	}
 
-	// A swatch's name ("Normal", "Hover", "Active") shows as a tooltip above it (the shared tooltip look), on hover and
-	// for keyboard focus.
+	// Each swatch's circle sits at the right of its room, so the last one ends where a single color's circle ends.
 	.wpbf-color-group-swatch {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-end;
 		position: relative;
 		width: $wpbf-color-group-swatch;
 	}
 
+	// A swatch's name ("Normal", "Hover", "Active") shows as a tooltip above its circle (the shared tooltip look), on
+	// hover and for keyboard focus.
 	.wpbf-color-group-caption {
 		@include wpbf-tooltip-box;
 		position: absolute;
 		bottom: calc(100% + 8px);
-		left: 50%;
+		right: 16.5px; // The middle of the 33px circle.
 		white-space: nowrap;
-		transform: translate(-50%, $wpbf-tooltip-shift);
+		transform: translate(50%, $wpbf-tooltip-shift);
 		z-index: 10;
 	}
 
@@ -320,32 +317,12 @@ $wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
 	.wpbf-color-group-swatch:has(:focus-visible) .wpbf-color-group-caption {
 		@include wpbf-tooltip-shown;
 		pointer-events: none;
-		transform: translate(-50%, 0);
+		transform: translate(50%, 0);
 	}
 
-	// The swatch whose picker is open.
-	.wpbf-color-group-swatch.is-open .wpbf-trigger-circle-wrapper {
+	// The color whose picker is open (a single color or a swatch in a row of states).
+	.wpbf-control-form:has(.colorPickerContainer.is-open) .wpbf-trigger-circle-wrapper {
 		border-color: $wpbf-accent;
 		box-shadow: 0 0 0 1px $wpbf-accent;
-	}
-
-	&:is(.wpbf-color-group-leader, .wpbf-color-group-member) {
-		// The reset sits in the picker, beside the color code.
-		.wpbf-color-input-row {
-			display: flex;
-			align-items: flex-end;
-			gap: 8px;
-
-			.wpbf-color-input-wrapper {
-				flex: 1;
-			}
-
-			.wpbf-control-reset {
-				position: static;
-				flex-shrink: 0;
-				width: 30px;
-				height: 30px;
-			}
-		}
 	}
 }

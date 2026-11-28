@@ -17,11 +17,6 @@
 	color: #50575e;
 }
 
-/* Adjust Headline (Description) on Theme Colors Panel */
-#customize-control-theme_colors_headline {
-	margin-bottom: 30px;
-}
-
 /* Hide "Font Family" labels */
 .wpbf-typography-label-description,
 #customize-control-menu_logo_font_family,

@@ -13,13 +13,13 @@
 	// Static, so the reset button lines up with the control's label row (its first row).
 	.wpbf-control-form {
 		position: static;
-		// margin-bottom: 12px;
+	}
 
-		&:hover {
-			.wpbf-control-reset {
-				opacity: 1;
-			}
-		}
+	// The reset button shows while the pointer is anywhere on the control (not just on the fields, so it doesn't
+	// flicker on the way to it), fading in like the tooltips.
+	&:hover .wpbf-control-reset {
+		opacity: 1;
+		visibility: visible;
 	}
 
 	// The reset button: shows on hover and keyboard focus, on the label row.
@@ -28,10 +28,12 @@
 		top: 3px; // The label row.
 		right: 0;
 		opacity: 0;
+		visibility: hidden;
 
 		// Stays visible for the keyboard only (after a click it hides again once the pointer leaves).
 		&:focus-visible {
 			opacity: 1;
+			visibility: visible;
 		}
 	}
 
