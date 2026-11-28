@@ -5,8 +5,12 @@
  * The value is the setting's (useSettingValue): the circle, picker and field all show it and follow every change
  * (this form, another control, a reset, a restored draft). What each part hands to the setting is unchanged: the
  * picker's color in the format of the mode / form component (convert-color-for-customizer.ts), the hue as a number.
+ *
+ * Colors with states (params.colorGroup) share one row: the first one shows the label and its swatch, each state joins
+ * that row as a swatch, named in a tooltip ("Normal", "Hover", "Active"). Only the layout differs: every swatch is its own
+ * control with its own setting, picker and reset.
  */
-import { useMemo, useRef, useState } from "@wordpress/element";
+import { useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import {
 	HexColorPicker,
 	HslaColorPicker,
@@ -35,6 +39,11 @@ import ColorPickerCircle from "./components/ColorPickerCircle";
 import jQuery from "jquery";
 import { WpbfCustomizeColorControlParams, WpbfCustomizeColorControlValue } from "./interface";
 import { Notifications, ReactControlFormProps, useSettingValue } from "../../Base/src/react-base";
+import { WpbfCustomize } from "../../Base/src/interface";
+
+declare var wp: {
+	customize: WpbfCustomize;
+};
 
 // Declare global extends jQuery to have wp property.
 declare global {
@@ -62,6 +71,7 @@ export default function ColorForm({ control }: Props) {
 	const useHueMode = "hue" === params.mode;
 	const pickerComponent = pickerComponentOf(params);
 	const labelStyle = params.labelStyle;
+	const group = "default" === labelStyle ? params.colorGroup : undefined;
 
 	const [value, setValue] = useSettingValue(control, params.value);
 
@@ -187,6 +197,20 @@ export default function ColorForm({ control }: Props) {
 	const getPickerContainerStyle = () => {
 		let pickerContainerStyle: Record<string, any> = {};
 
+		// A swatch in a row of states: the picker opens below the row, as wide as the section's controls.
+		if (group && formRef.current) {
+			const list = control.container[0].parentNode as HTMLElement;
+			const listBox = list.getBoundingClientRect();
+			const listStyle = window.getComputedStyle(list);
+			const formBox = (formRef.current as HTMLElement).getBoundingClientRect();
+			const paddingLeft = parseFloat(listStyle.paddingLeft);
+
+			pickerContainerStyle.left = listBox.left + paddingLeft - formBox.left + "px";
+			pickerContainerStyle.width = listBox.width - paddingLeft - parseFloat(listStyle.paddingRight) + "px";
+
+			return pickerContainerStyle;
+		}
+
 		if (!usePositionFixed) return pickerContainerStyle;
 
 		const rawPadding = window.getComputedStyle(control.container[0].parentNode as HTMLElement).paddingLeft;
@@ -271,6 +295,31 @@ export default function ColorForm({ control }: Props) {
 
 	useWindowResize(handleWindowResize);
 
+	// A row of states: mark the controls for the layout; the first one leaves room for the shown states' swatches.
+	useEffect(() => {
+		if (!group) return;
+
+		const item = control.container[0];
+
+		item.classList.add("wpbf-color-group-" + group.role);
+
+		if ("leader" !== group.role) return;
+
+		const members = (group.members ?? [])
+			.map((id) => wp.customize.control(id))
+			.filter((member): member is NonNullable<typeof member> => !!member);
+
+		const update = () => {
+			const shown = members.filter((member) => member.active()).length;
+			item.style.setProperty("--wpbf-color-group-members", String(shown));
+		};
+
+		update();
+		members.forEach((member) => member.active.bind(update));
+
+		return () => members.forEach((member) => member.active.unbind(update));
+	}, []);
+
 	// Handle outside focus to close the picker popup.
 	useFocusOutside(formRef, closePicker);
 
@@ -333,9 +382,54 @@ export default function ColorForm({ control }: Props) {
 		</>
 	);
 
+	// In a row of states: the swatch with its name (a tooltip); the reset sits in the picker (no room beside the swatch).
+	const groupSwatch = group && (
+		<div className={"wpbf-color-group-swatch" + (isPickerOpen ? " is-open" : "")}>
+			<ColorPickerCircle
+				pickerComponent={pickerComponent}
+				useHueMode={useHueMode}
+				color={!useHueMode ? inputValue : colord({ h: inputValue, s: 100, l: 50 }).toHex()}
+				isPickerOpen={isPickerOpen}
+				togglePickerHandler={togglePicker}
+			/>
+			<span className="wpbf-color-group-caption">{group.caption}</span>
+		</div>
+	);
+
+	const groupReset = group && (
+		<button
+			type="button"
+			ref={resetRef}
+			className="wpbf-control-reset"
+			onClick={handleReset}
+		>
+			<i className="dashicons dashicons-image-rotate"></i>
+		</button>
+	);
+
 	let pickerHeader;
 
-	switch (labelStyle) {
+	switch (group ? "group-" + group.role : labelStyle) {
+		case "group-leader":
+			pickerHeader = (
+				<div className="wpbf-control-cols">
+					<div className="wpbf-control-left-col">{controlHeader}</div>
+					<div className="wpbf-control-right-col">{groupSwatch}</div>
+				</div>
+			);
+			break;
+
+		case "group-member":
+			// The label stays for screen readers ("Hover" alone says little on its own row).
+			pickerHeader = (
+				<>
+					<span className="screen-reader-text" dangerouslySetInnerHTML={{ __html: params.label }} />
+					<Notifications control={control} />
+					{groupSwatch}
+				</>
+			);
+			break;
+
 		case "tooltip":
 			pickerHeader = (
 				<>
@@ -375,12 +469,15 @@ export default function ColorForm({ control }: Props) {
 
 					{renderColorPickerComponent()}
 
-					<ColorPickerInput
-						pickerComponent={pickerComponent}
-						useHueMode={useHueMode}
-						color={inputValue}
-						onChange={handleInputChange}
-					/>
+					<div className="wpbf-color-input-row">
+						<ColorPickerInput
+							pickerComponent={pickerComponent}
+							useHueMode={useHueMode}
+							color={inputValue}
+							onChange={handleInputChange}
+						/>
+						{groupReset}
+					</div>
 				</div>
 			</div>
 		</>

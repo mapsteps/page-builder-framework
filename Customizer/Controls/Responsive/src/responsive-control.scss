@@ -7,19 +7,20 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		margin-bottom: 4px;
+		margin-bottom: 8px;
 	}
 
 	.customize-control-title {
 		margin-bottom: 0;
 	}
 
-	// Device switcher: plain icons, the active one in the admin color.
+	// Device switcher: round white buttons, the active one outlined in the admin color.
 	.wpbf-device-buttons {
 		display: flex;
 		justify-content: flex-start;
+		gap: 4px;
 		position: relative;
-		margin-left: 8px;
+		margin-left: 10px;
 		font-weight: 600;
 		font-size: 14px;
 	}
@@ -31,19 +32,21 @@
 		position: relative;
 		margin: 0;
 		padding: 0;
-		width: 24px;
-		height: 24px;
+		width: 26px;
+		height: 26px;
 		color: $wpbf-text-muted;
-		background-color: transparent;
+		background-color: #fff;
 		border-width: 0;
-		border-radius: $wpbf-field-radius;
+		border-radius: 50%;
 		cursor: pointer;
-		transition: color 0.15s;
+		transition:
+			color 0.15s,
+			box-shadow 0.15s;
 
 		i {
-			width: 16px;
-			height: 16px;
-			font-size: 16px;
+			width: 14px;
+			height: 14px;
+			font-size: 14px;
 		}
 
 		&:hover {
@@ -52,6 +55,7 @@
 
 		&.is-active {
 			color: $wpbf-accent;
+			box-shadow: inset 0 0 0 1px $wpbf-accent;
 		}
 
 		&:focus-visible {

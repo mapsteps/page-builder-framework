@@ -10,6 +10,18 @@ export interface WpbfCustomizeColorControlParams
 	labelStyle: string;
 	colorSwatches: string[];
 	formComponent?: string;
+	colorGroup?: WpbfColorGroup;
+}
+
+/**
+ * A color's place in a row of states (ColorControl::get_color_group()): the row's first color ("Normal") lists the
+ * others, each other one ("Hover", "Active") names the first.
+ */
+export interface WpbfColorGroup {
+	role: "leader" | "member";
+	caption: string;
+	members?: string[];
+	leader?: string;
 }
 
 export interface WpbfCustomizeColorControl

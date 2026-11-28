@@ -58,6 +58,18 @@ class ColorControl extends BaseControl {
 	public $color_swatches = array();
 
 	/**
+	 * Whether the color may share a row with its states (display only, every color keeps its own setting).
+	 *
+	 * A color whose id ends in `_alt` (hover) or `_active` (active) shows as a second or third swatch on the row of the
+	 * color with the base id, when both are color controls in the same section: "Font Color" with "Normal", "Hover" (and
+	 * "Active") swatches instead of a row per state. false keeps the color on its own row. Set with the field's
+	 * `color_group` property.
+	 *
+	 * @var bool
+	 */
+	public $color_group = true;
+
+	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.
 	 */
 	public function to_json() {
@@ -87,6 +99,78 @@ class ColorControl extends BaseControl {
 		if ( ! empty( $this->form_component ) ) {
 			$this->json['formComponent'] = $this->form_component;
 		}
+
+		$color_group = $this->get_color_group();
+
+		if ( $color_group ) {
+			$this->json['colorGroup'] = $color_group;
+		}
+
+	}
+
+	/**
+	 * The color's place in a row of states (see `$color_group`).
+	 *
+	 * @return array|null [ 'role' => 'leader', 'members' => ids, 'caption' ] for the first color of a row,
+	 *                    [ 'role' => 'member', 'leader' => id, 'caption' ] for a state joining it, null for a row of its own.
+	 */
+	public function get_color_group() {
+
+		$captions = array(
+			'alt'    => __( 'Hover', 'page-builder-framework' ),
+			'active' => __( 'Active', 'page-builder-framework' ),
+		);
+
+		if ( preg_match( '/^(.+)_(alt|active)$/', $this->id, $matches ) ) {
+			$leader = $this->manager->get_control( $matches[1] );
+
+			if ( $this->can_group_with( $leader ) ) {
+				return array(
+					'role'    => 'member',
+					'leader'  => $leader->id,
+					'caption' => $captions[ $matches[2] ],
+				);
+			}
+		}
+
+		$members = array();
+
+		foreach ( array_keys( $captions ) as $suffix ) {
+			$member = $this->manager->get_control( $this->id . '_' . $suffix );
+
+			if ( $this->can_group_with( $member ) ) {
+				$members[] = $member->id;
+			}
+		}
+
+		if ( empty( $members ) ) {
+			return null;
+		}
+
+		return array(
+			'role'    => 'leader',
+			'members' => $members,
+			'caption' => __( 'Normal', 'page-builder-framework' ),
+		);
+
+	}
+
+	/**
+	 * Whether this color and another one may share a row: both color controls with the default label style, in the
+	 * same section, and neither kept on its own row.
+	 *
+	 * @param mixed $other The other control (or null).
+	 *
+	 * @return bool
+	 */
+	private function can_group_with( $other ) {
+
+		return $other instanceof self
+			&& false !== $this->color_group
+			&& false !== $other->color_group
+			&& 'default' === $this->label_style
+			&& 'default' === $other->label_style
+			&& $this->section === $other->section;
 
 	}
 

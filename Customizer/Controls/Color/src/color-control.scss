@@ -1,6 +1,8 @@
 @import "../../Base/src/wp-colors";
 @import "../../Base/src/reset-button";
 
+$wpbf-color-group-swatch: 42px; // The room of a swatch in a row of states.
+
 .wpbf-customize-control-color {
 	.wpbf-control-form {
 		position: relative;
@@ -282,6 +284,89 @@
 			top: 30px;
 			right: auto;
 			left: 35px;
+		}
+	}
+
+	// Rows of states (ColorForm.tsx): the first color's row leaves room on the right for the other swatches, which sit
+	// on the same row (the controls float, like all Customizer controls). Every swatch has its caption below it.
+	&.wpbf-color-group-leader {
+		width: calc(100% - var(--wpbf-color-group-members, 0) * #{$wpbf-color-group-swatch});
+
+		.wpbf-control-left-col {
+			padding-right: 4px;
+			width: calc(100% - #{$wpbf-color-group-swatch});
+		}
+
+		.wpbf-control-right-col {
+			justify-content: center;
+			width: $wpbf-color-group-swatch;
+		}
+	}
+
+	&.wpbf-color-group-member {
+		clear: none;
+		width: $wpbf-color-group-swatch;
+	}
+
+	// A swatch's name ("Normal", "Hover", "Active") shows as a tooltip above it, like WordPress' own tooltips: on hover
+	// and for keyboard focus.
+	.wpbf-color-group-swatch {
+		display: flex;
+		justify-content: center;
+		position: relative;
+		width: $wpbf-color-group-swatch;
+	}
+
+	.wpbf-color-group-caption {
+		position: absolute;
+		bottom: calc(100% + 8px);
+		left: 50%;
+		padding: 4px 8px;
+		color: #fff;
+		background: $wpbf-text;
+		border-radius: $wpbf-field-radius;
+		font-size: 12px;
+		line-height: 1.4;
+		white-space: nowrap;
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transform: translateX(-50%);
+		transition:
+			opacity 0.15s,
+			visibility 0.15s;
+		z-index: 10;
+	}
+
+	.wpbf-color-group-swatch:hover .wpbf-color-group-caption,
+	.wpbf-color-group-swatch:has(:focus-visible) .wpbf-color-group-caption {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	// The swatch whose picker is open.
+	.wpbf-color-group-swatch.is-open .wpbf-trigger-circle-wrapper {
+		border-color: $wpbf-accent;
+		box-shadow: 0 0 0 1px $wpbf-accent;
+	}
+
+	&:is(.wpbf-color-group-leader, .wpbf-color-group-member) {
+		// The reset sits in the picker, beside the color code.
+		.wpbf-color-input-row {
+			display: flex;
+			align-items: flex-end;
+			gap: 8px;
+
+			.wpbf-color-input-wrapper {
+				flex: 1;
+			}
+
+			.wpbf-control-reset {
+				position: static;
+				flex-shrink: 0;
+				width: 30px;
+				height: 30px;
+			}
 		}
 	}
 }

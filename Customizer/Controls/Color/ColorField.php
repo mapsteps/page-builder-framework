@@ -53,6 +53,10 @@ class ColorField extends BaseField {
 			$color_control->label_style = $custom_props['label_style'];
 		}
 
+		if ( isset( $custom_props['color_group'] ) ) {
+			$color_control->color_group = (bool) $custom_props['color_group'];
+		}
+
 		if ( isset( $custom_props['form_component'] ) ) {
 			$color_control->form_component = $custom_props['form_component'];
 		}
