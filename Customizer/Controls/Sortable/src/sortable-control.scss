@@ -33,6 +33,11 @@
 				}
 			}
 
+			// The control's own 12px follow the last part.
+			&:last-child {
+				margin-bottom: 0;
+			}
+
 			// Hidden parts: faded, with a dashed border.
 			&.invisible {
 				color: #a7aaad;

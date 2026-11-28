@@ -25,7 +25,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		position: relative;
-		margin-bottom: 12px;
+		margin-bottom: 0; // The control's own 12px follow, as below every control.
 		font-weight: 600;
 		font-size: 14px;
 		border-bottom: 1px solid #ddd;
