@@ -1,4 +1,5 @@
 @import "../../Base/src/wp-colors";
+@import "../../Base/src/reset-button";
 
 .wpbf-customize-control-color {
 	.wpbf-control-form {
@@ -183,30 +184,11 @@
 		border-width: 0;
 	}
 
+	// The reset button (shows while the picker is open), left of the color circle.
 	.wpbf-control-reset {
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		@include wpbf-reset-button;
 		top: 4px;
-		right: 35px;
-		width: 17px;
-		height: 17px;
-		border-radius: 50%;
-		border-width: 0;
-		z-index: 3;
-	}
-
-	.wpbf-control-reset:hover i {
-		color: #f00;
-		transform: rotate(-45deg);
-	}
-
-	.wpbf-control-reset i {
-		font-size: 12px;
-		width: auto;
-		height: auto;
-		transform: rotate(45deg);
-		transition: transform 0.2s;
+		right: 38px;
 	}
 
 	.wpbf-color-swatches {

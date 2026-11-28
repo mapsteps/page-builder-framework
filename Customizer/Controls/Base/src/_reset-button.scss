@@ -1,0 +1,37 @@
+// The reset ("undo") button of the slider, padding and color controls: one calm arrow, gray, in the admin color on
+// hover, no spinning. Each control places it (prints nothing until included).
+@import "wp-colors";
+
+@mixin wpbf-reset-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	padding: 0;
+	width: 20px;
+	height: 20px;
+	color: $wpbf-text-muted;
+	background-color: transparent;
+	border-width: 0;
+	border-radius: $wpbf-field-radius;
+	cursor: pointer;
+	transition:
+		opacity 0.15s,
+		color 0.15s;
+	z-index: 3;
+
+	i {
+		width: 16px;
+		height: 16px;
+		font-size: 16px;
+	}
+
+	&:hover {
+		color: $wpbf-accent;
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px $wpbf-accent;
+	}
+}
