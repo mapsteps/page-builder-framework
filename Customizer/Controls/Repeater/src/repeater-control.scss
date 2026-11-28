@@ -1,157 +1,171 @@
+// The repeater (e.g. Premium's Custom Fonts and Adobe Fonts): rows like WordPress' widget and menu item boxes, with
+// the same fields, labels and colors as the other controls.
+@import "../../Base/src/wp-colors";
+
 .wpbf-customize-control-repeater {
 	position: relative;
-}
 
-.wpbf-customize-control-repeater .repeater-fields .repeater-row {
-	border: 1px solid #e5e5e5;
-	margin-top: 0.5rem;
-	background: #eee;
-	position: relative;
-}
+	// A row: a box with a header (drag it to reorder, click it to open or close) and its fields.
+	.repeater-fields .repeater-row {
+		position: relative;
+		margin-top: 8px;
+		background: #fff;
+		border: 1px solid $wpbf-light-border;
+		border-radius: $wpbf-field-radius;
+	}
 
-.wpbf-customize-control-repeater .repeater-fields .repeater-row.minimized {
-	border: 1px solid #dfdfdf;
-	padding: 0;
-}
+	.repeater-fields .repeater-row.minimized .repeater-row-content {
+		display: none;
+	}
 
-.wpbf-customize-control-repeater .repeater-fields .repeater-row.minimized:hover {
-	border: 1px solid #e5e5e5;
-}
+	.repeater-row-header {
+		display: flex;
+		align-items: center;
+		position: relative;
+		min-height: $wpbf-field-height - 2px;
+		padding: 0 12px;
+		overflow: hidden;
+		word-wrap: break-word;
+		cursor: move;
 
-.wpbf-customize-control-repeater
-	.repeater-fields
-	.repeater-row.minimized
+		.dashicons {
+			flex-shrink: 0;
+			margin-left: auto;
+			font-size: 18px;
+			color: $wpbf-text-muted;
+			cursor: pointer;
+		}
+
+		&:hover .dashicons {
+			color: $wpbf-accent;
+		}
+	}
+
+	.repeater-row:not(.minimized) .repeater-row-header {
+		border-bottom: 1px solid $wpbf-light-border;
+	}
+
+	.repeater-row-label {
+		display: block;
+		overflow: hidden;
+		color: $wpbf-text;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 20px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
 	.repeater-row-content {
-	display: none;
-}
+		padding: 12px;
+	}
 
-.wpbf-customize-control-repeater .repeater-fields .repeater-row label {
-	margin-bottom: 12px;
-	clear: both;
-}
+	// A field in a row: the same label and spacing as the controls outside.
+	.repeater-field {
+		clear: both;
+		width: 100%;
+		margin-bottom: 12px;
 
-.wpbf-customize-control-repeater
-	.repeater-fields
-	.repeater-row
-	.repeater-field.repeater-field- {
-	display: none;
-}
+		&.repeater-field-hidden {
+			margin: 0;
+		}
 
-.wpbf-customize-control-repeater
-	.repeater-fields
-	.repeater-row
-	.repeater-field:last-child {
-	border-bottom: none;
-	padding-bottom: 0;
-}
+		label {
+			display: block;
+		}
 
-.wpbf-customize-control-repeater button.repeater-add {
-	margin-top: 1rem;
-}
+		input[type="text"],
+		input[type="url"],
+		input[type="email"],
+		input[type="tel"],
+		input[type="number"],
+		input[type="date"],
+		select {
+			width: 100%;
+			margin: 0;
+		}
+	}
 
-.wpbf-customize-control-repeater .repeater-row-content {
-	padding: 10px 15px;
-	background: #fff;
-}
+	.repeater-fields .repeater-row .repeater-field.repeater-field- {
+		display: none;
+	}
 
-.wpbf-customize-control-repeater .repeater-field {
-	margin-bottom: 12px;
-	width: 100%;
-	clear: both;
-	padding-bottom: 12px;
-	border-bottom: 1px dotted #ccc;
-}
+	// Several choices (a list box): bordered like the other fields, chosen entries in the admin color.
+	.repeater-field select[multiple] {
+		height: auto;
+		min-height: 120px;
+		padding: 4px;
+		border-color: $wpbf-field-border;
+		border-radius: $wpbf-field-radius;
+		background-image: none;
 
-.wpbf-customize-control-repeater .repeater-field .customize-control-title {
-	font-size: 13px;
-	line-height: initial;
-}
+		option {
+			padding: 4px 8px;
+			border-radius: $wpbf-field-radius;
+			color: $wpbf-text;
+		}
 
-.wpbf-customize-control-repeater .repeater-field .customize-control-description {
-	font-size: 13px;
-	line-height: initial;
-}
+		option:checked {
+			color: #fff;
+			background: $wpbf-accent linear-gradient(0deg, $wpbf-accent 0%, $wpbf-accent 100%);
+		}
+	}
 
-.wpbf-customize-control-repeater .repeater-field.repeater-field-hidden {
-	margin: 0;
-	padding: 0;
-	border: 0;
-}
+	// Files: the chosen file's name in a dashed box, the buttons below it. Without a file only the "Add File" button shows.
+	.wpbf-file-attachment:not(:has(.file)) {
+		display: none;
+	}
 
-.wpbf-customize-control-repeater .repeater-field-select select {
-	margin-left: 0;
-}
+	.wpbf-file-attachment {
+		margin: 0 0 8px;
+		padding: 10px;
+		color: $wpbf-text-muted;
+		text-align: center;
+		border: 1px dashed #c3c4c7;
+		border-radius: $wpbf-field-radius;
 
-.wpbf-customize-control-repeater .repeater-row-header {
-	background: white;
-	border-bottom: 1px solid #dfdfdf;
-	position: relative;
-	padding: 10px 15px;
-	height: auto;
-	min-height: 20px;
-	line-height: 30px;
-	overflow: hidden;
-	word-wrap: break-word;
-}
+		.file {
+			display: block;
+			color: $wpbf-text;
+			word-break: break-all;
+		}
+	}
 
-.wpbf-customize-control-repeater .repeater-row-header:hover {
-	cursor: move;
-}
+	.actions {
+		display: flex;
+		gap: 8px;
 
-.wpbf-customize-control-repeater .repeater-row-header .dashicons {
-	font-size: 18px;
-	position: absolute;
-	right: 12px;
-	top: 2px;
-	color: #a0a5aa;
-}
+		.button {
+			flex: 1;
+			justify-content: center;
+		}
 
-.wpbf-customize-control-repeater .repeater-row-label {
-	font-size: 13px;
-	font-weight: 600;
-	line-height: 20px;
-	display: block;
-	width: 90%;
-	overflow: hidden;
-	height: 18px;
-}
+		.hidden {
+			display: none;
+		}
+	}
 
-.wpbf-customize-control-repeater .repeater-row-remove {
-	color: #a00;
-}
+	.repeater-row-remove {
+		color: #b32d2e;
+		text-decoration: none;
 
-.wpbf-customize-control-repeater .repeater-row-remove:hover {
-	color: #f00;
-}
+		&:hover,
+		&:focus {
+			color: #a00;
+		}
+	}
 
-.wpbf-customize-control-repeater .repeater-minimize {
-	line-height: 36px;
-}
+	button.repeater-add {
+		margin-top: 12px;
+	}
 
-.wpbf-customize-control-repeater .remove-button,
-.wpbf-customize-control-repeater .upload-button {
-	width: 48%;
-}
+	.limit {
+		padding: 3px;
+		border-radius: $wpbf-field-radius;
 
-.wpbf-file-attachment {
-	margin: 0;
-	text-align: center;
-	margin-bottom: 10px;
-}
-
-.wpbf-file-attachment .file {
-	display: block;
-	padding: 10px 5px;
-	border: 1px dotted #c3c3c3;
-	background: #f9f9f9;
-}
-
-.wpbf-customize-control-repeater .limit {
-	padding: 3px;
-	border-radius: 3px;
-}
-
-.wpbf-customize-control-repeater .limit.highlight {
-	background: #d32f2f;
-	color: #fff;
+		&.highlight {
+			color: #fff;
+			background: #b32d2e;
+		}
+	}
 }

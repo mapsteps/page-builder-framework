@@ -94,7 +94,6 @@ class ImageControl extends BaseControl {
 			'change'       => __( 'Change image', 'page-builder-framework' ),
 			'default'      => __( 'Default', 'page-builder-framework' ),
 			'remove'       => __( 'Remove', 'page-builder-framework' ),
-			'placeholder'  => __( 'No image selected', 'page-builder-framework' ),
 			'frame_title'  => __( 'Select image', 'page-builder-framework' ),
 			'frame_button' => __( 'Choose image', 'page-builder-framework' ),
 		];

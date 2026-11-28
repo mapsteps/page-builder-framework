@@ -1,6 +1,6 @@
 /**
  * The form of the image type (see image-control.tsx): the chosen image with Remove, Default and Change buttons, or a
- * "No image selected" button that opens the media library.
+ * "Select image" button that opens the media library (as in WordPress' own image controls).
  *
  * Saves the image's URL, attachment id or { id, url, width, height } (`saveAs`). Keeps the markup of the old control.
  */
@@ -118,7 +118,7 @@ export default function ImageForm({ control }: Props) {
 					className={`upload-button button-add-media${hasImage ? " hidden" : ""}`}
 					onClick={openMediaLibrary}
 				>
-					{params.labels.placeholder}
+					{params.labels.select}
 				</button>
 
 				<div className="actions">
