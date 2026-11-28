@@ -32,6 +32,9 @@ and in the preview. Already found (details in `CUSTOMIZER-PLAN.md` -> Premium pa
 - Premium's sizes need "px" when a plain number is typed; some previews (line height, letter spacing, off canvas
   background) cover less than the live page.
 - Housekeeping: Premium's backwards compatibility and settings files run on every page.
+- Infinite scroll loader (blog and shop): an old animated GIF (`assets/img/loader.gif`, used by `js/infinite-scroll.js`
+  and `js/wpbf-premium-woo-infinite-scroll.js`). Give it a modern look, e.g. the theme's own CSS spinner
+  (`.wpbf-button.is-loading`). User, November 28, 2026: not now, note it.
 
 ## 3. Settings and grouping review (your decisions)
 
