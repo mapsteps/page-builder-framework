@@ -12,8 +12,9 @@
 		padding-right: 30px;
 	}
 
+	// Static, so the reset button lines up with the control's label row (its first row), whatever sits in between.
 	.wpbf-control-form {
-		position: relative;
+		position: static;
 		margin-bottom: 12px;
 
 		&:hover {
@@ -26,11 +27,12 @@
 	// The reset button: shows on hover and keyboard focus, on the label row.
 	.wpbf-control-reset {
 		@include wpbf-reset-button;
-		top: -26px; // The label row above the fields.
+		top: 3px; // The label row.
 		right: 0;
 		opacity: 0;
 
-		&:focus {
+		// Stays visible for the keyboard only (after a click it hides again once the pointer leaves).
+		&:focus-visible {
 			opacity: 1;
 		}
 	}
@@ -125,10 +127,6 @@
 
 // wpbf-slider: the number takes little room.
 .wpbf-customize-control-slider {
-	.wpbf-control-reset {
-		top: 2px; // The label is inside the form here.
-	}
-
 	.wpbf-control-left-col {
 		width: 90%;
 	}
@@ -153,5 +151,4 @@
 	.wpbf-control-right-col {
 		width: 25%;
 	}
-
 }

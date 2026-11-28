@@ -267,6 +267,7 @@
 }
 
 .wpbf-select-options {
+	position: relative; // Option positions count from the list (not the box with the search field), so scrolling to the highlighted option lands right.
 	max-height: 200px;
 	margin: 0;
 	padding: 0;

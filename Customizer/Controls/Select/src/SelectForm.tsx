@@ -125,6 +125,9 @@ export default function SelectForm({ control: baseControl }: Props) {
 	const [above, setAbove] = useState(false);
 	const [term, setTerm] = useState("");
 	const [highlighted, setHighlighted] = useState(-1);
+	// True while the mouse picked the highlight: the list then stays where it is (scrolling it would move the next option
+	// under the pointer, which highlights and scrolls again, so the list ran away when the pointer sat near its edge).
+	const highlightedByMouse = useRef(false);
 
 	const root = useRef<HTMLDivElement>(null);
 	const trigger = useRef<HTMLButtonElement>(null);
@@ -222,6 +225,11 @@ export default function SelectForm({ control: baseControl }: Props) {
 	// Keep the highlighted option in view.
 	useLayoutEffect(() => {
 		if (!open || !list.current) return;
+
+		if (highlightedByMouse.current) {
+			highlightedByMouse.current = false;
+			return;
+		}
 
 		const item = list.current.querySelector<HTMLElement>(`[data-index="${highlighted}"]`);
 		if (!item) return;
@@ -460,7 +468,11 @@ export default function SelectForm({ control: baseControl }: Props) {
 												role="option"
 												aria-selected={chosen.includes(row.option.id)}
 												aria-disabled={row.option.disabled || undefined}
-												onMouseEnter={() => !row.option.disabled && setHighlighted(row.index)}
+												onMouseEnter={() => {
+													if (row.option.disabled || row.index === highlighted) return;
+													highlightedByMouse.current = true;
+													setHighlighted(row.index);
+												}}
 												onMouseDown={(e) => e.preventDefault()}
 												onClick={() => choose(row.option)}
 											>
