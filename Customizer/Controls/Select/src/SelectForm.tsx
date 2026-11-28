@@ -1,6 +1,7 @@
 /**
- * The select form (wpbf-select): one choice, or several (`multiple`, optionally with a limit), from a list that can be
- * searched and that may be grouped (the font families: font stacks, ~1,840 Google fonts, Premium's custom fonts).
+ * The select form (wpbf-select): one choice, or several (`multiple`, optionally with a limit), from a list that may be
+ * grouped (the font families: font stacks, ~1,840 Google fonts, Premium's custom fonts). There's no search field: as
+ * in a native select, typing jumps to the first option starting with the typed letters.
  *
  * It replaces select2 and hands the setting exactly what select2 did:
  * - one choice: the option's id as text; "" when cleared;
@@ -56,32 +57,26 @@ export function asOne(value: SelectControlValue | undefined | null): string {
 }
 
 /**
- * Text for searching: without accents, in capitals (as select2 matched).
+ * Text for matching typed letters: without accents, in capitals.
  */
-function searchable(text: string): string {
-	return text.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
+function comparable(text: string): string {
+	return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
 }
 
 /**
- * The rows of the open list: group labels and the options matching the search (a group shows when one of its options
- * matches).
+ * The rows of the open list: group labels and the options.
  */
-function listRows(choices: SelectControlChoices, term: string): Row[] {
-	const search = searchable(term.trim());
-	const matches = (text: string) => !search || searchable(text).includes(search);
+function listRows(choices: SelectControlChoices): Row[] {
 	const rows: Row[] = [];
 	let index = 0;
 
 	for (const choice of choices) {
 		if (Array.isArray(choice.children) && choice.children.length) {
-			const children = flattenChoices(choice.children).filter((option) => matches(option.text));
-			if (!children.length) continue;
-
 			rows.push({ group: String(choice.text ?? "") });
-			for (const option of children) rows.push({ option, nested: true, index: index++ });
+			for (const option of flattenChoices(choice.children)) rows.push({ option, nested: true, index: index++ });
 		} else if (undefined !== choice.id && null !== choice.id) {
 			const [option] = flattenChoices([choice]);
-			if (matches(option.text)) rows.push({ option, nested: false, index: index++ });
+			rows.push({ option, nested: false, index: index++ });
 		}
 	}
 
@@ -123,15 +118,18 @@ export default function SelectForm({ control: baseControl }: Props) {
 
 	const [open, setOpen] = useState(false);
 	const [above, setAbove] = useState(false);
-	const [term, setTerm] = useState("");
 	const [highlighted, setHighlighted] = useState(-1);
+	// Letters typed in a row (within a second of each other), to jump to the first option starting with them.
+	const typed = useRef({ text: "", at: 0 });
+	// The option typed on the closed select, highlighted once the list is open.
+	const pendingJump = useRef(-1);
 	// True while the mouse picked the highlight: the list then stays where it is (scrolling it would move the next option
 	// under the pointer, which highlights and scrolls again, so the list ran away when the pointer sat near its edge).
 	const highlightedByMouse = useRef(false);
 
 	const root = useRef<HTMLDivElement>(null);
-	const trigger = useRef<HTMLButtonElement>(null);
-	const search = useRef<HTMLInputElement>(null);
+	// What has the focus: the button of a single select, the box of a multiple one.
+	const trigger = useRef<HTMLElement | null>(null);
 	const list = useRef<HTMLUListElement>(null);
 
 	const chosen = isMulti ? asList(shown) : [asOne(shown)];
@@ -139,7 +137,7 @@ export default function SelectForm({ control: baseControl }: Props) {
 	const single = isMulti ? undefined : options.find((option) => option.id === chosen[0]);
 	const atLimit = limit > 0 && chosenOptions.length >= limit;
 
-	const rows = useMemo(() => (open ? listRows(choices, term) : []), [open, choices, term]);
+	const rows = useMemo(() => (open ? listRows(choices) : []), [open, choices]);
 	const optionRows = rows.filter((row): row is Extract<Row, { option: SelectOption }> => "option" in row);
 
 	/**
@@ -183,7 +181,7 @@ export default function SelectForm({ control: baseControl }: Props) {
 		close(false);
 	};
 
-	const openList = (startTerm = "") => {
+	const openList = () => {
 		if (open) return;
 
 		// Open upwards when there's more room above than below in the Customizer's scrolling pane.
@@ -195,32 +193,45 @@ export default function SelectForm({ control: baseControl }: Props) {
 			setAbove(below < 260 && box.top - pane.top > below);
 		}
 
-		setTerm(startTerm);
 		setOpen(true);
 	};
 
 	const close = (focusTrigger: boolean) => {
 		setOpen(false);
-		setTerm("");
 
-		if (focusTrigger) (isMulti ? search.current : trigger.current)?.focus();
+		if (focusTrigger) trigger.current?.focus();
 	};
 
-	// Opening highlights the chosen option (or the first one); searching the first match.
+	/**
+	 * The first option starting with the letters typed so far (or with the latest letter alone if none does).
+	 */
+	const typedMatch = (key: string) => {
+		const now = Date.now();
+		const text = now - typed.current.at < 1000 ? typed.current.text + key : key;
+
+		typed.current = { text, at: now };
+
+		const enabled = listRows(choices).filter(
+			(row): row is Extract<Row, { option: SelectOption }> => "option" in row && !row.option.disabled,
+		);
+		const startingWith = (letters: string) =>
+			enabled.find((row) => comparable(row.option.text).startsWith(comparable(letters)));
+
+		return startingWith(text) ?? startingWith(key);
+	};
+
+	// Opening highlights the option typed on the closed select, else the chosen one (or the first one).
 	useEffect(() => {
 		if (!open) return;
 
+		const jumpedTo = optionRows.find((row) => row.index === pendingJump.current);
 		const first = optionRows.find((row) => !row.option.disabled);
-		const current = !term && !isMulti ? optionRows.find((row) => row.option.id === chosen[0]) : undefined;
+		const current = !isMulti ? optionRows.find((row) => row.option.id === chosen[0]) : undefined;
 
-		setHighlighted((current ?? first)?.index ?? -1);
+		pendingJump.current = -1;
+		setHighlighted((jumpedTo ?? current ?? first)?.index ?? -1);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [open, term]);
-
-	// The single select's search field takes the focus when the list opens.
-	useLayoutEffect(() => {
-		if (open && !isMulti) search.current?.focus();
-	}, [open, isMulti]);
+	}, [open]);
 
 	// Keep the highlighted option in view.
 	useLayoutEffect(() => {
@@ -267,20 +278,31 @@ export default function SelectForm({ control: baseControl }: Props) {
 		setHighlighted(enabled[next].index);
 	};
 
+	const isLetter = (e: ReactKeyboardEvent<HTMLElement>) =>
+		1 === e.key.length && " " !== e.key && !e.ctrlKey && !e.metaKey && !e.altKey;
+
 	const onKeyDown = (e: ReactKeyboardEvent<HTMLElement>) => {
 		if (!open) {
-			if (["ArrowDown", "ArrowUp", "Enter"].includes(e.key) || (" " === e.key && !isMulti)) {
+			if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) {
 				e.preventDefault();
 				openList();
-			} else if (isMulti && "Backspace" === e.key && !term && chosenOptions.length) {
-				// Backspace in an empty search removes the last choice (as select2 did).
+			} else if (isMulti && ("Backspace" === e.key || "Delete" === e.key) && chosenOptions.length) {
+				// Backspace removes the last choice (as select2 did).
 				e.preventDefault();
 				remove(chosenOptions[chosenOptions.length - 1]);
-			} else if (!isMulti && 1 === e.key.length && !e.ctrlKey && !e.metaKey && !e.altKey) {
-				// Typing on the closed select starts a search.
+			} else if (isLetter(e)) {
+				// Typing on the closed select opens it at the first option starting with the letters.
 				e.preventDefault();
-				openList(e.key);
+				pendingJump.current = typedMatch(e.key)?.index ?? -1;
+				openList();
 			}
+			return;
+		}
+
+		if (isLetter(e)) {
+			e.preventDefault();
+			const match = typedMatch(e.key);
+			if (match) setHighlighted(match.index);
 			return;
 		}
 
@@ -301,38 +323,10 @@ export default function SelectForm({ control: baseControl }: Props) {
 			close(true);
 		} else if ("Tab" === e.key) {
 			close(false);
-		} else if (isMulti && "Backspace" === e.key && !term && chosenOptions.length) {
-			e.preventDefault();
-			remove(chosenOptions[chosenOptions.length - 1]);
 		}
 	};
 
 	const activeId = open && highlighted > -1 ? `${listId}-${highlighted}` : undefined;
-
-	const searchField = (
-		<input
-			ref={search}
-			className="wpbf-select-search"
-			type="search"
-			id={isMulti ? inputId : undefined}
-			value={term}
-			placeholder={isMulti && !chosenOptions.length ? params.placeholder : undefined}
-			autoComplete="off"
-			autoCorrect="off"
-			autoCapitalize="none"
-			spellCheck={false}
-			role={isMulti ? "combobox" : "searchbox"}
-			aria-expanded={isMulti ? open : undefined}
-			aria-controls={open ? listId : undefined}
-			aria-activedescendant={activeId}
-			aria-autocomplete="list"
-			onChange={(e) => {
-				setTerm(e.target.value);
-				if (!open) openList(e.target.value);
-			}}
-			onKeyDown={onKeyDown}
-		/>
-	);
 
 	return (
 		<>
@@ -364,37 +358,55 @@ export default function SelectForm({ control: baseControl }: Props) {
 					}
 				>
 					{isMulti ? (
-						<div className="wpbf-select-selection" onMouseDown={(e) => {
-							if (e.target === e.currentTarget) {
+						<div
+							ref={(el) => {
+								trigger.current = el;
+							}}
+							id={inputId}
+							className="wpbf-select-selection"
+							tabIndex={0}
+							role="combobox"
+							aria-haspopup="listbox"
+							aria-expanded={open}
+							aria-controls={open ? listId : undefined}
+							aria-activedescendant={activeId}
+							onMouseDown={(e) => {
 								e.preventDefault();
-								search.current?.focus();
+								trigger.current?.focus();
 								open ? close(false) : openList();
-							}
-						}}>
-							<ul className="wpbf-select-chips">
-								{chosenOptions.map((option) => (
-									<li key={option.id} className="wpbf-select-chip" title={option.text}>
-										<button
-											type="button"
-											className="wpbf-select-chip-remove"
-											tabIndex={-1}
-											aria-label={messages.remove ?? "Remove item"}
-											onMouseDown={(e) => e.preventDefault()}
-											onClick={() => remove(option)}
-										>
-											<span aria-hidden="true">×</span>
-										</button>
-										<span className="wpbf-select-chip-text">{option.text}</span>
-									</li>
-								))}
-								<li className="wpbf-select-inline-search" onMouseDown={() => openList()}>
-									{searchField}
-								</li>
-							</ul>
+							}}
+							onKeyDown={onKeyDown}
+						>
+							{chosenOptions.length ? (
+								<ul className="wpbf-select-chips">
+									{chosenOptions.map((option) => (
+										<li key={option.id} className="wpbf-select-chip" title={option.text}>
+											<span className="wpbf-select-chip-text">{option.text}</span>
+											<button
+												type="button"
+												className="wpbf-select-chip-remove"
+												tabIndex={-1}
+												aria-label={messages.remove ?? "Remove item"}
+												onMouseDown={(e) => {
+													e.preventDefault();
+													e.stopPropagation();
+												}}
+												onClick={() => remove(option)}
+											>
+												<span aria-hidden="true">×</span>
+											</button>
+										</li>
+									))}
+								</ul>
+							) : (
+								<span className="wpbf-select-placeholder">{params.placeholder}</span>
+							)}
 						</div>
 					) : (
 						<button
-							ref={trigger}
+							ref={(el) => {
+								trigger.current = el;
+							}}
 							type="button"
 							id={inputId}
 							className="wpbf-select-selection"
@@ -402,6 +414,7 @@ export default function SelectForm({ control: baseControl }: Props) {
 							aria-haspopup="listbox"
 							aria-expanded={open}
 							aria-controls={open ? listId : undefined}
+							aria-activedescendant={activeId}
 							onMouseDown={(e) => {
 								e.preventDefault();
 								trigger.current?.focus();
@@ -437,8 +450,6 @@ export default function SelectForm({ control: baseControl }: Props) {
 
 					{open && (
 						<div className="wpbf-select-dropdown">
-							{!isMulti && <div className="wpbf-select-search-box">{searchField}</div>}
-
 							{atLimit ? (
 								<ul className="wpbf-select-options">
 									<li className="wpbf-select-message" role="alert">
